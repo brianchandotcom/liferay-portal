@@ -860,16 +860,11 @@ public abstract class BaseRegionResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			regionUnsafeFunction = region -> patchRegion(
-				region.getId() != null ? region.getId() :
-					_parseLong((String)parameters.get("regionId")),
-				region);
+				region.getId(), region);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			regionUnsafeFunction = region -> putRegion(
-				region.getId() != null ? region.getId() :
-					_parseLong((String)parameters.get("regionId")),
-				region);
+			regionUnsafeFunction = region -> putRegion(region.getId(), region);
 		}
 
 		if (regionUnsafeFunction == null) {

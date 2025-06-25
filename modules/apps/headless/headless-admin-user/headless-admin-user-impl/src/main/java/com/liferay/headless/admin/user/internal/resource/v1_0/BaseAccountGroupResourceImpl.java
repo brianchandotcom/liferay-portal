@@ -949,12 +949,7 @@ public abstract class BaseAccountGroupResourceImpl
 								accountGroup.getExternalReferenceCode());
 
 						persistedAccountGroup = patchAccountGroup(
-							getAccountGroup.getId() != null ?
-								getAccountGroup.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"accountGroupId")),
-							accountGroup);
+							getAccountGroup.getId(), accountGroup);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedAccountGroup = postAccountGroup(accountGroup);
@@ -1132,16 +1127,12 @@ public abstract class BaseAccountGroupResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			accountGroupUnsafeFunction = accountGroup -> patchAccountGroup(
-				accountGroup.getId() != null ? accountGroup.getId() :
-					_parseLong((String)parameters.get("accountGroupId")),
-				accountGroup);
+				accountGroup.getId(), accountGroup);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			accountGroupUnsafeFunction = accountGroup -> putAccountGroup(
-				accountGroup.getId() != null ? accountGroup.getId() :
-					_parseLong((String)parameters.get("accountGroupId")),
-				accountGroup);
+				accountGroup.getId(), accountGroup);
 		}
 
 		if (accountGroupUnsafeFunction == null) {

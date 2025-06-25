@@ -1891,9 +1891,7 @@ public abstract class BaseKeywordResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			keywordUnsafeFunction = keyword -> putKeyword(
-				keyword.getId() != null ? keyword.getId() :
-					_parseLong((String)parameters.get("keywordId")),
-				keyword);
+				keyword.getId(), keyword);
 		}
 
 		if (keywordUnsafeFunction == null) {
@@ -1915,14 +1913,6 @@ public abstract class BaseKeywordResourceImpl
 				keywordUnsafeFunction.apply(keyword);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

@@ -612,10 +612,7 @@ public abstract class BaseTermResourceImpl
 						getTerm = getTermByExternalReferenceCode(
 							term.getExternalReferenceCode());
 
-						persistedTerm = patchTerm(
-							getTerm.getId() != null ? getTerm.getId() :
-								_parseLong((String)parameters.get("termId")),
-							term);
+						persistedTerm = patchTerm(getTerm.getId(), term);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedTerm = postTerm(term);
@@ -776,10 +773,7 @@ public abstract class BaseTermResourceImpl
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			termUnsafeFunction = term -> patchTerm(
-				term.getId() != null ? term.getId() :
-					_parseLong((String)parameters.get("termId")),
-				term);
+			termUnsafeFunction = term -> patchTerm(term.getId(), term);
 		}
 
 		if (termUnsafeFunction == null) {
@@ -799,14 +793,6 @@ public abstract class BaseTermResourceImpl
 				termUnsafeFunction.apply(term);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

@@ -646,10 +646,7 @@ public abstract class BaseCatalogResourceImpl
 						getCatalog = getCatalogByExternalReferenceCode(
 							catalog.getExternalReferenceCode());
 
-						patchCatalog(
-							getCatalog.getId() != null ? getCatalog.getId() :
-								_parseLong((String)parameters.get("catalogId")),
-							catalog);
+						patchCatalog(getCatalog.getId(), catalog);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedCatalog = postCatalog(catalog);
@@ -817,10 +814,7 @@ public abstract class BaseCatalogResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			catalogUnsafeFunction = catalog -> {
-				patchCatalog(
-					catalog.getId() != null ? catalog.getId() :
-						_parseLong((String)parameters.get("catalogId")),
-					catalog);
+				patchCatalog(catalog.getId(), catalog);
 
 				return null;
 			};
@@ -845,14 +839,6 @@ public abstract class BaseCatalogResourceImpl
 				catalogUnsafeFunction.apply(catalog);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

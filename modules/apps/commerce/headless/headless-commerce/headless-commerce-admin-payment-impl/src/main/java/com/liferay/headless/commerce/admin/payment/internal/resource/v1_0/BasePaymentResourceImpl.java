@@ -724,9 +724,7 @@ public abstract class BasePaymentResourceImpl
 							payment.getExternalReferenceCode());
 
 						persistedPayment = patchPayment(
-							getPayment.getId() != null ? getPayment.getId() :
-								_parseLong((String)parameters.get("paymentId")),
-							payment);
+							getPayment.getId(), payment);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedPayment = postPayment(payment);
@@ -894,9 +892,7 @@ public abstract class BasePaymentResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			paymentUnsafeFunction = payment -> patchPayment(
-				payment.getId() != null ? payment.getId() :
-					_parseLong((String)parameters.get("paymentId")),
-				payment);
+				payment.getId(), payment);
 		}
 
 		if (paymentUnsafeFunction == null) {
@@ -918,14 +914,6 @@ public abstract class BasePaymentResourceImpl
 				paymentUnsafeFunction.apply(payment);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

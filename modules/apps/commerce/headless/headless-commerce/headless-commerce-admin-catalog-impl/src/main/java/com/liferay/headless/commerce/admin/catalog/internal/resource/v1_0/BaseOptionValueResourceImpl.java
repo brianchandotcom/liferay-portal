@@ -703,10 +703,7 @@ public abstract class BaseOptionValueResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			optionValueUnsafeFunction = optionValue -> {
-				patchOptionValue(
-					optionValue.getId() != null ? optionValue.getId() :
-						_parseLong((String)parameters.get("optionValueId")),
-					optionValue);
+				patchOptionValue(optionValue.getId(), optionValue);
 
 				return null;
 			};
@@ -731,14 +728,6 @@ public abstract class BaseOptionValueResourceImpl
 				optionValueUnsafeFunction.apply(optionValue);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

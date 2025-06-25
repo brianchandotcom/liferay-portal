@@ -2205,10 +2205,7 @@ public abstract class BaseDocumentResourceImpl
 						}
 
 						persistedDocument = patchDocument(
-							getDocument.getId() != null ? getDocument.getId() :
-								_parseLong(
-									(String)parameters.get("documentId")),
-							null);
+							getDocument.getId(), null);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("assetLibraryId")) {
@@ -2409,16 +2406,12 @@ public abstract class BaseDocumentResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			documentUnsafeFunction = document -> patchDocument(
-				document.getId() != null ? document.getId() :
-					_parseLong((String)parameters.get("documentId")),
-				null);
+				document.getId(), null);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			documentUnsafeFunction = document -> putDocument(
-				document.getId() != null ? document.getId() :
-					_parseLong((String)parameters.get("documentId")),
-				null);
+				document.getId(), null);
 		}
 
 		if (documentUnsafeFunction == null) {

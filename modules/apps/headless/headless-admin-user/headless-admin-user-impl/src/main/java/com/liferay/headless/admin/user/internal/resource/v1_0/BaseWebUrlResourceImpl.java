@@ -873,9 +873,7 @@ public abstract class BaseWebUrlResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			webUrlUnsafeFunction = webUrl -> patchWebUrl(
-				webUrl.getId() != null ? webUrl.getId() :
-					_parseLong((String)parameters.get("webUrlId")),
-				webUrl);
+				webUrl.getId(), webUrl);
 		}
 
 		if (webUrlUnsafeFunction == null) {

@@ -601,10 +601,7 @@ public abstract class BaseSLAResourceImpl
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			slaUnsafeFunction = sla -> putSLA(
-				sla.getId() != null ? sla.getId() :
-					_parseLong((String)parameters.get("slaId")),
-				sla);
+			slaUnsafeFunction = sla -> putSLA(sla.getId(), sla);
 		}
 
 		if (slaUnsafeFunction == null) {

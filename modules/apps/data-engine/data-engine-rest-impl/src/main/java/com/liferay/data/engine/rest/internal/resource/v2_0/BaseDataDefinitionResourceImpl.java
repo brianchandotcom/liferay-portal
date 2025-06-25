@@ -1091,16 +1091,12 @@ public abstract class BaseDataDefinitionResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			dataDefinitionUnsafeFunction =
 				dataDefinition -> patchDataDefinition(
-					dataDefinition.getId() != null ? dataDefinition.getId() :
-						_parseLong((String)parameters.get("dataDefinitionId")),
-					dataDefinition);
+					dataDefinition.getId(), dataDefinition);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			dataDefinitionUnsafeFunction = dataDefinition -> putDataDefinition(
-				dataDefinition.getId() != null ? dataDefinition.getId() :
-					_parseLong((String)parameters.get("dataDefinitionId")),
-				dataDefinition);
+				dataDefinition.getId(), dataDefinition);
 		}
 
 		if (dataDefinitionUnsafeFunction == null) {
@@ -1122,14 +1118,6 @@ public abstract class BaseDataDefinitionResourceImpl
 				dataDefinitionUnsafeFunction.apply(dataDefinition);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

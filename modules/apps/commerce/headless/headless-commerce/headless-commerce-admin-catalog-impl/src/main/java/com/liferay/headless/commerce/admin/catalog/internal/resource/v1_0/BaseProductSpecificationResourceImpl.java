@@ -729,12 +729,7 @@ public abstract class BaseProductSpecificationResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			productSpecificationUnsafeFunction =
 				productSpecification -> patchProductSpecification(
-					productSpecification.getId() != null ?
-						productSpecification.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"productSpecificationId")),
-					productSpecification);
+					productSpecification.getId(), productSpecification);
 		}
 
 		if (productSpecificationUnsafeFunction == null) {
@@ -759,14 +754,6 @@ public abstract class BaseProductSpecificationResourceImpl
 				productSpecificationUnsafeFunction.apply(productSpecification);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

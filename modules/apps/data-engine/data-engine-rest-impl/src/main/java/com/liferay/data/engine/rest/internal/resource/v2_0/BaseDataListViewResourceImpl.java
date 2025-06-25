@@ -659,9 +659,7 @@ public abstract class BaseDataListViewResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			dataListViewUnsafeFunction = dataListView -> putDataListView(
-				dataListView.getId() != null ? dataListView.getId() :
-					_parseLong((String)parameters.get("dataListViewId")),
-				dataListView);
+				dataListView.getId(), dataListView);
 		}
 
 		if (dataListViewUnsafeFunction == null) {

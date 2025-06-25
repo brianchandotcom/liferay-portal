@@ -967,12 +967,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			dataRecordCollectionUnsafeFunction =
 				dataRecordCollection -> putDataRecordCollection(
-					dataRecordCollection.getId() != null ?
-						dataRecordCollection.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"dataRecordCollectionId")),
-					dataRecordCollection);
+					dataRecordCollection.getId(), dataRecordCollection);
 		}
 
 		if (dataRecordCollectionUnsafeFunction == null) {

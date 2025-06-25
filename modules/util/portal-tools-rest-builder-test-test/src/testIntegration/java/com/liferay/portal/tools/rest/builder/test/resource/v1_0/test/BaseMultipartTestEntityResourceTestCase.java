@@ -46,14 +46,26 @@ import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
 import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.MultipartTestEntityResource;
 import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.MultipartTestEntitySerDes;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilderRegistry;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import jakarta.annotation.Generated;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.PathSegment;
+import jakarta.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriInfo;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
+
+import java.net.URI;
 
 import java.text.Format;
 
@@ -64,6 +76,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -75,6 +88,9 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Alejandro Tardín
@@ -190,17 +206,288 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 
 	@Test
 	public void testGetMultipartTestEntity() throws Exception {
-		Assert.assertTrue(false);
+		MultipartTestEntity postMultipartTestEntity =
+			testGetMultipartTestEntity_addMultipartTestEntity();
+
+		MultipartTestEntity getMultipartTestEntity =
+			multipartTestEntityResource.getMultipartTestEntity(
+				postMultipartTestEntity.getId());
+
+		assertEquals(postMultipartTestEntity, getMultipartTestEntity);
+		assertValid(getMultipartTestEntity);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		MultipartTestEntity postMultipartTestEntity =
+			testGetMultipartTestEntity_addMultipartTestEntity();
+
+		MultipartTestEntity getMultipartTestEntity =
+			multipartTestEntityResource.getMultipartTestEntity(
+				postMultipartTestEntity.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.portal.tools.rest.builder.test.dto.v1_0.MultipartTestEntity"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(
+			postMultipartTestEntity.getId());
+
+		assertEquals(
+			getMultipartTestEntity,
+			MultipartTestEntitySerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected MultipartTestEntity
+			testGetMultipartTestEntity_addMultipartTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testPatchMultipartTestEntity() throws Exception {
-		Assert.assertTrue(false);
+		MultipartTestEntity postMultipartTestEntity =
+			testPatchMultipartTestEntity_addMultipartTestEntity();
+
+		MultipartTestEntity randomPatchMultipartTestEntity =
+			randomPatchMultipartTestEntity();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MultipartTestEntity patchMultipartTestEntity =
+			multipartTestEntityResource.patchMultipartTestEntity(
+				postMultipartTestEntity.getId(),
+				randomPatchMultipartTestEntity);
+
+		MultipartTestEntity expectedPatchMultipartTestEntity =
+			postMultipartTestEntity.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchMultipartTestEntity, expectedPatchMultipartTestEntity);
+
+		MultipartTestEntity getMultipartTestEntity =
+			multipartTestEntityResource.getMultipartTestEntity(
+				patchMultipartTestEntity.getId());
+
+		assertEquals(expectedPatchMultipartTestEntity, getMultipartTestEntity);
+		assertValid(getMultipartTestEntity);
+	}
+
+	protected MultipartTestEntity
+			testPatchMultipartTestEntity_addMultipartTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testPutMultipartTestEntity() throws Exception {
-		Assert.assertTrue(false);
+		MultipartTestEntity postMultipartTestEntity =
+			testPutMultipartTestEntity_addMultipartTestEntity();
+
+		MultipartTestEntity randomMultipartTestEntity =
+			randomMultipartTestEntity();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		MultipartTestEntity putMultipartTestEntity =
+			multipartTestEntityResource.putMultipartTestEntity(
+				postMultipartTestEntity.getId(), randomMultipartTestEntity,
+				multipartFiles);
+
+		assertEquals(randomMultipartTestEntity, putMultipartTestEntity);
+		assertValid(putMultipartTestEntity);
+
+		MultipartTestEntity getMultipartTestEntity =
+			multipartTestEntityResource.getMultipartTestEntity(
+				putMultipartTestEntity.getId());
+
+		assertEquals(randomMultipartTestEntity, getMultipartTestEntity);
+		assertValid(getMultipartTestEntity);
+
+		assertValid(getMultipartTestEntity, multipartFiles);
+	}
+
+	protected MultipartTestEntity
+			testPutMultipartTestEntity_addMultipartTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -295,6 +582,10 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 
 		boolean valid = true;
 
+		if (multipartTestEntity.getId() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -312,6 +603,15 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(
+			MultipartTestEntity multipartTestEntity,
+			Map<String, File> multipartFiles)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertValid(Page<MultipartTestEntity> page) {
@@ -426,6 +726,17 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						multipartTestEntity1.getId(),
+						multipartTestEntity2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -546,6 +857,11 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("name")) {
 			Object object = multipartTestEntity.getName();
 
@@ -596,6 +912,11 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected Map<String, File> getMultipartFiles() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected String invoke(String query) throws Exception {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -637,6 +958,7 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 	protected MultipartTestEntity randomMultipartTestEntity() throws Exception {
 		return new MultipartTestEntity() {
 			{
+				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

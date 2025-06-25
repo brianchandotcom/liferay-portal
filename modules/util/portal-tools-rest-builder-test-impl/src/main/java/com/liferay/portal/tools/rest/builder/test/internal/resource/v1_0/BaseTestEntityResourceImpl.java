@@ -723,16 +723,14 @@ public abstract class BaseTestEntityResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			testEntityUnsafeFunction = testEntity -> patchTestEntity(
-				testEntity.getId() != null ? testEntity.getId() :
-					_parseLong((String)parameters.get("testEntityId")),
+				testEntity.getId(),
 				_parseLong((String)parameters.get("optionalParameter")),
 				testEntity);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			testEntityUnsafeFunction = testEntity -> putTestEntity(
-				testEntity.getId() != null ? testEntity.getId() :
-					_parseLong((String)parameters.get("testEntityId")),
+				testEntity.getId(),
 				_parseLong((String)parameters.get("optionalParameter")),
 				testEntity);
 		}

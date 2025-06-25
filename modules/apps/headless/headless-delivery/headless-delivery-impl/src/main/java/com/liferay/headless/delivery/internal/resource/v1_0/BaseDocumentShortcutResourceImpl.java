@@ -950,12 +950,7 @@ public abstract class BaseDocumentShortcutResourceImpl
 						}
 
 						persistedDocumentShortcut = patchDocumentShortcut(
-							getDocumentShortcut.getId() != null ?
-								getDocumentShortcut.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"documentShortcutId")),
-							documentShortcut);
+							getDocumentShortcut.getId(), documentShortcut);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("assetLibraryId")) {
@@ -1140,21 +1135,13 @@ public abstract class BaseDocumentShortcutResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			documentShortcutUnsafeFunction =
 				documentShortcut -> patchDocumentShortcut(
-					documentShortcut.getId() != null ?
-						documentShortcut.getId() :
-							_parseLong(
-								(String)parameters.get("documentShortcutId")),
-					documentShortcut);
+					documentShortcut.getId(), documentShortcut);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			documentShortcutUnsafeFunction =
 				documentShortcut -> putDocumentShortcut(
-					documentShortcut.getId() != null ?
-						documentShortcut.getId() :
-							_parseLong(
-								(String)parameters.get("documentShortcutId")),
-					documentShortcut);
+					documentShortcut.getId(), documentShortcut);
 		}
 
 		if (documentShortcutUnsafeFunction == null) {
@@ -1176,14 +1163,6 @@ public abstract class BaseDocumentShortcutResourceImpl
 				documentShortcutUnsafeFunction.apply(documentShortcut);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

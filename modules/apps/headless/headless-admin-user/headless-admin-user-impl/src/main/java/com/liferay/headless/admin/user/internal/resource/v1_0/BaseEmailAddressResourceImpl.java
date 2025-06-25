@@ -889,9 +889,7 @@ public abstract class BaseEmailAddressResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			emailAddressUnsafeFunction = emailAddress -> patchEmailAddress(
-				emailAddress.getId() != null ? emailAddress.getId() :
-					_parseLong((String)parameters.get("emailAddressId")),
-				emailAddress);
+				emailAddress.getId(), emailAddress);
 		}
 
 		if (emailAddressUnsafeFunction == null) {

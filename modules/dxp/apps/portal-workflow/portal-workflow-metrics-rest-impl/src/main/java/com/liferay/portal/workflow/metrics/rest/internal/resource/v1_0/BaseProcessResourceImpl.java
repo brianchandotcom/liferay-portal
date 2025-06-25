@@ -480,10 +480,7 @@ public abstract class BaseProcessResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			processUnsafeFunction = process -> {
-				putProcess(
-					process.getId() != null ? process.getId() :
-						_parseLong((String)parameters.get("processId")),
-					process);
+				putProcess(process.getId(), process);
 
 				return null;
 			};
@@ -508,14 +505,6 @@ public abstract class BaseProcessResourceImpl
 				processUnsafeFunction.apply(process);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

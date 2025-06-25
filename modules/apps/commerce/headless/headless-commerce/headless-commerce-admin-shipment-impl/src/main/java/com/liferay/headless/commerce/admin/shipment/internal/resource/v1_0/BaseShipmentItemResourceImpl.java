@@ -619,9 +619,7 @@ public abstract class BaseShipmentItemResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			shipmentItemUnsafeFunction = shipmentItem -> patchShipmentItem(
-				shipmentItem.getId() != null ? shipmentItem.getId() :
-					_parseLong((String)parameters.get("shipmentItemId")),
-				shipmentItem);
+				shipmentItem.getId(), shipmentItem);
 		}
 
 		if (shipmentItemUnsafeFunction == null) {
@@ -643,14 +641,6 @@ public abstract class BaseShipmentItemResourceImpl
 				shipmentItemUnsafeFunction.apply(shipmentItem);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

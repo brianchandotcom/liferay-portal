@@ -1221,9 +1221,7 @@ public abstract class BaseWikiNodeResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			wikiNodeUnsafeFunction = wikiNode -> putWikiNode(
-				wikiNode.getId() != null ? wikiNode.getId() :
-					_parseLong((String)parameters.get("wikiNodeId")),
-				wikiNode);
+				wikiNode.getId(), wikiNode);
 		}
 
 		if (wikiNodeUnsafeFunction == null) {
@@ -1245,14 +1243,6 @@ public abstract class BaseWikiNodeResourceImpl
 				wikiNodeUnsafeFunction.apply(wikiNode);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

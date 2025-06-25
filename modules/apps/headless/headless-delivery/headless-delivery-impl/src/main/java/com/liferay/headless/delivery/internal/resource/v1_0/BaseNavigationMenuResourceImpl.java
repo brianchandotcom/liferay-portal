@@ -1193,9 +1193,7 @@ public abstract class BaseNavigationMenuResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			navigationMenuUnsafeFunction = navigationMenu -> putNavigationMenu(
-				navigationMenu.getId() != null ? navigationMenu.getId() :
-					_parseLong((String)parameters.get("navigationMenuId")),
-				navigationMenu);
+				navigationMenu.getId(), navigationMenu);
 		}
 
 		if (navigationMenuUnsafeFunction == null) {
@@ -1217,14 +1215,6 @@ public abstract class BaseNavigationMenuResourceImpl
 				navigationMenuUnsafeFunction.apply(navigationMenu);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

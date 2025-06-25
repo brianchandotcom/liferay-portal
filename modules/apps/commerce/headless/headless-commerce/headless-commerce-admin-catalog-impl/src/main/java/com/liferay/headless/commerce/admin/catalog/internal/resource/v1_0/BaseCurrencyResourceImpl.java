@@ -655,9 +655,7 @@ public abstract class BaseCurrencyResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			currencyUnsafeFunction = currency -> patchCurrency(
-				currency.getId() != null ? currency.getId() :
-					_parseLong((String)parameters.get("currencyId")),
-				currency);
+				currency.getId(), currency);
 		}
 
 		if (currencyUnsafeFunction == null) {
@@ -679,14 +677,6 @@ public abstract class BaseCurrencyResourceImpl
 				currencyUnsafeFunction.apply(currency);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

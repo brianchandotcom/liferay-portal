@@ -530,10 +530,7 @@ public abstract class BasePinResourceImpl
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			pinUnsafeFunction = pin -> patchPin(
-				pin.getId() != null ? pin.getId() :
-					_parseLong((String)parameters.get("pinId")),
-				pin);
+			pinUnsafeFunction = pin -> patchPin(pin.getId(), pin);
 		}
 
 		if (pinUnsafeFunction == null) {
@@ -553,14 +550,6 @@ public abstract class BasePinResourceImpl
 				pinUnsafeFunction.apply(pin);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

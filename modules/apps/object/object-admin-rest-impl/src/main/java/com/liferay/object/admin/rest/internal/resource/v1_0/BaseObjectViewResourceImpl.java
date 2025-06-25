@@ -757,9 +757,7 @@ public abstract class BaseObjectViewResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			objectViewUnsafeFunction = objectView -> putObjectView(
-				objectView.getId() != null ? objectView.getId() :
-					_parseLong((String)parameters.get("objectViewId")),
-				objectView);
+				objectView.getId(), objectView);
 		}
 
 		if (objectViewUnsafeFunction == null) {

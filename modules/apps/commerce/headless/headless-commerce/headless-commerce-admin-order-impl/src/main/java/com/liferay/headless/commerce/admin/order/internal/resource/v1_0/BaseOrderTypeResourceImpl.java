@@ -661,11 +661,7 @@ public abstract class BaseOrderTypeResourceImpl
 							orderType.getExternalReferenceCode());
 
 						persistedOrderType = patchOrderType(
-							getOrderType.getId() != null ?
-								getOrderType.getId() :
-									_parseLong(
-										(String)parameters.get("orderTypeId")),
-							orderType);
+							getOrderType.getId(), orderType);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedOrderType = postOrderType(orderType);
@@ -835,9 +831,7 @@ public abstract class BaseOrderTypeResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			orderTypeUnsafeFunction = orderType -> patchOrderType(
-				orderType.getId() != null ? orderType.getId() :
-					_parseLong((String)parameters.get("orderTypeId")),
-				orderType);
+				orderType.getId(), orderType);
 		}
 
 		if (orderTypeUnsafeFunction == null) {
@@ -859,14 +853,6 @@ public abstract class BaseOrderTypeResourceImpl
 				orderTypeUnsafeFunction.apply(orderType);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

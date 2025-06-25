@@ -1376,12 +1376,7 @@ public abstract class BaseBlogPostingResourceImpl
 						}
 
 						persistedBlogPosting = patchBlogPosting(
-							getBlogPosting.getId() != null ?
-								getBlogPosting.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"blogPostingId")),
-							blogPosting);
+							getBlogPosting.getId(), blogPosting);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("siteId")) {
@@ -1554,16 +1549,12 @@ public abstract class BaseBlogPostingResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			blogPostingUnsafeFunction = blogPosting -> patchBlogPosting(
-				blogPosting.getId() != null ? blogPosting.getId() :
-					_parseLong((String)parameters.get("blogPostingId")),
-				blogPosting);
+				blogPosting.getId(), blogPosting);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			blogPostingUnsafeFunction = blogPosting -> putBlogPosting(
-				blogPosting.getId() != null ? blogPosting.getId() :
-					_parseLong((String)parameters.get("blogPostingId")),
-				blogPosting);
+				blogPosting.getId(), blogPosting);
 		}
 
 		if (blogPostingUnsafeFunction == null) {
@@ -1585,14 +1576,6 @@ public abstract class BaseBlogPostingResourceImpl
 				blogPostingUnsafeFunction.apply(blogPosting);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

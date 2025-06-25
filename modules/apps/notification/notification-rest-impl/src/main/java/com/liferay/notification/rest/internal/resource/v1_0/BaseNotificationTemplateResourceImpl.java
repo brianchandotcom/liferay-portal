@@ -754,11 +754,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 
 						persistedNotificationTemplate =
 							patchNotificationTemplate(
-								getNotificationTemplate.getId() != null ?
-									getNotificationTemplate.getId() :
-										_parseLong(
-											(String)parameters.get(
-												"notificationTemplateId")),
+								getNotificationTemplate.getId(),
 								notificationTemplate);
 					}
 					catch (NoSuchModelException noSuchModelException) {
@@ -919,23 +915,13 @@ public abstract class BaseNotificationTemplateResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			notificationTemplateUnsafeFunction =
 				notificationTemplate -> patchNotificationTemplate(
-					notificationTemplate.getId() != null ?
-						notificationTemplate.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"notificationTemplateId")),
-					notificationTemplate);
+					notificationTemplate.getId(), notificationTemplate);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			notificationTemplateUnsafeFunction =
 				notificationTemplate -> putNotificationTemplate(
-					notificationTemplate.getId() != null ?
-						notificationTemplate.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"notificationTemplateId")),
-					notificationTemplate);
+					notificationTemplate.getId(), notificationTemplate);
 		}
 
 		if (notificationTemplateUnsafeFunction == null) {
@@ -960,14 +946,6 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplateUnsafeFunction.apply(notificationTemplate);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

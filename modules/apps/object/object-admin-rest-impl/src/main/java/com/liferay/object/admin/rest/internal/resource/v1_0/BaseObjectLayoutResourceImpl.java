@@ -731,9 +731,7 @@ public abstract class BaseObjectLayoutResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			objectLayoutUnsafeFunction = objectLayout -> putObjectLayout(
-				objectLayout.getId() != null ? objectLayout.getId() :
-					_parseLong((String)parameters.get("objectLayoutId")),
-				objectLayout);
+				objectLayout.getId(), objectLayout);
 		}
 
 		if (objectLayoutUnsafeFunction == null) {

@@ -677,10 +677,7 @@ public abstract class BaseTierPriceResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			tierPriceUnsafeFunction = tierPrice -> {
-				patchTierPrice(
-					tierPrice.getId() != null ? tierPrice.getId() :
-						_parseLong((String)parameters.get("tierPriceId")),
-					tierPrice);
+				patchTierPrice(tierPrice.getId(), tierPrice);
 
 				return null;
 			};
@@ -705,14 +702,6 @@ public abstract class BaseTierPriceResourceImpl
 				tierPriceUnsafeFunction.apply(tierPrice);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

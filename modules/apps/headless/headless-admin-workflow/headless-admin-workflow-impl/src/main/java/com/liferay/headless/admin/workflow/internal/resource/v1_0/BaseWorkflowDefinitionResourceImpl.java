@@ -773,11 +773,7 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			workflowDefinitionUnsafeFunction =
 				workflowDefinition -> putWorkflowDefinition(
-					workflowDefinition.getId() != null ?
-						workflowDefinition.getId() :
-							_parseLong(
-								(String)parameters.get("workflowDefinitionId")),
-					workflowDefinition);
+					workflowDefinition.getId(), workflowDefinition);
 		}
 
 		if (workflowDefinitionUnsafeFunction == null) {
@@ -804,14 +800,6 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 	private Boolean _parseBoolean(String value) {
 		if (value != null) {
 			return Boolean.parseBoolean(value);
-		}
-
-		return null;
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
 		}
 
 		return null;

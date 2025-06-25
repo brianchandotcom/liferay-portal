@@ -720,12 +720,7 @@ public abstract class BaseMeasurementUnitResourceImpl
 								measurementUnit.getExternalReferenceCode());
 
 						patchMeasurementUnit(
-							getMeasurementUnit.getId() != null ?
-								getMeasurementUnit.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"measurementUnitId")),
-							measurementUnit);
+							getMeasurementUnit.getId(), measurementUnit);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedMeasurementUnit = postMeasurementUnit(
@@ -900,10 +895,7 @@ public abstract class BaseMeasurementUnitResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			measurementUnitUnsafeFunction = measurementUnit -> {
-				patchMeasurementUnit(
-					measurementUnit.getId() != null ? measurementUnit.getId() :
-						_parseLong((String)parameters.get("measurementUnitId")),
-					measurementUnit);
+				patchMeasurementUnit(measurementUnit.getId(), measurementUnit);
 
 				return null;
 			};
@@ -928,14 +920,6 @@ public abstract class BaseMeasurementUnitResourceImpl
 				measurementUnitUnsafeFunction.apply(measurementUnit);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

@@ -833,11 +833,7 @@ public abstract class BaseUserGroupResourceImpl
 							userGroup.getExternalReferenceCode());
 
 						persistedUserGroup = patchUserGroup(
-							getUserGroup.getId() != null ?
-								getUserGroup.getId() :
-									_parseLong(
-										(String)parameters.get("userGroupId")),
-							userGroup);
+							getUserGroup.getId(), userGroup);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedUserGroup = postUserGroup(userGroup);
@@ -1007,16 +1003,12 @@ public abstract class BaseUserGroupResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			userGroupUnsafeFunction = userGroup -> patchUserGroup(
-				userGroup.getId() != null ? userGroup.getId() :
-					_parseLong((String)parameters.get("userGroupId")),
-				userGroup);
+				userGroup.getId(), userGroup);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			userGroupUnsafeFunction = userGroup -> putUserGroup(
-				userGroup.getId() != null ? userGroup.getId() :
-					_parseLong((String)parameters.get("userGroupId")),
-				userGroup);
+				userGroup.getId(), userGroup);
 		}
 
 		if (userGroupUnsafeFunction == null) {
@@ -1038,14 +1030,6 @@ public abstract class BaseUserGroupResourceImpl
 				userGroupUnsafeFunction.apply(userGroup);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

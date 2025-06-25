@@ -872,10 +872,7 @@ public abstract class BasePhoneResourceImpl
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			phoneUnsafeFunction = phone -> patchPhone(
-				phone.getId() != null ? phone.getId() :
-					_parseLong((String)parameters.get("phoneId")),
-				phone);
+			phoneUnsafeFunction = phone -> patchPhone(phone.getId(), phone);
 		}
 
 		if (phoneUnsafeFunction == null) {

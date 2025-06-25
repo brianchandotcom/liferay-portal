@@ -534,9 +534,7 @@ public abstract class BaseGroupedProductResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			groupedProductUnsafeFunction =
 				groupedProduct -> patchGroupedProduct(
-					groupedProduct.getId() != null ? groupedProduct.getId() :
-						_parseLong((String)parameters.get("groupedProductId")),
-					groupedProduct);
+					groupedProduct.getId(), groupedProduct);
 		}
 
 		if (groupedProductUnsafeFunction == null) {
@@ -558,14 +556,6 @@ public abstract class BaseGroupedProductResourceImpl
 				groupedProductUnsafeFunction.apply(groupedProduct);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

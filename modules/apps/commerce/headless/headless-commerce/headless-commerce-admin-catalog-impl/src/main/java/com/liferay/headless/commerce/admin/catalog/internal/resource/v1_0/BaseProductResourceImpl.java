@@ -787,10 +787,7 @@ public abstract class BaseProductResourceImpl
 						getProduct = getProductByExternalReferenceCode(
 							product.getExternalReferenceCode());
 
-						patchProduct(
-							getProduct.getId() != null ? getProduct.getId() :
-								_parseLong((String)parameters.get("productId")),
-							product);
+						patchProduct(getProduct.getId(), product);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedProduct = postProduct(product);
@@ -958,10 +955,7 @@ public abstract class BaseProductResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			productUnsafeFunction = product -> {
-				patchProduct(
-					product.getId() != null ? product.getId() :
-						_parseLong((String)parameters.get("productId")),
-					product);
+				patchProduct(product.getId(), product);
 
 				return null;
 			};
@@ -986,14 +980,6 @@ public abstract class BaseProductResourceImpl
 				productUnsafeFunction.apply(product);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

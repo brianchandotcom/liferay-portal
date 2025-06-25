@@ -774,16 +774,12 @@ public abstract class BaseCartCommentResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			cartCommentUnsafeFunction = cartComment -> patchCartComment(
-				cartComment.getId() != null ? cartComment.getId() :
-					_parseLong((String)parameters.get("cartCommentId")),
-				cartComment);
+				cartComment.getId(), cartComment);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			cartCommentUnsafeFunction = cartComment -> putCartComment(
-				cartComment.getId() != null ? cartComment.getId() :
-					_parseLong((String)parameters.get("cartCommentId")),
-				cartComment);
+				cartComment.getId(), cartComment);
 		}
 
 		if (cartCommentUnsafeFunction == null) {
@@ -805,14 +801,6 @@ public abstract class BaseCartCommentResourceImpl
 				cartCommentUnsafeFunction.apply(cartComment);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

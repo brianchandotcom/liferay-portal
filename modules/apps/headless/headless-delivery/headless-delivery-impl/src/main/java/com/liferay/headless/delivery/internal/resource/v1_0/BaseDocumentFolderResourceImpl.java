@@ -2120,16 +2120,12 @@ public abstract class BaseDocumentFolderResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			documentFolderUnsafeFunction =
 				documentFolder -> patchDocumentFolder(
-					documentFolder.getId() != null ? documentFolder.getId() :
-						_parseLong((String)parameters.get("documentFolderId")),
-					documentFolder);
+					documentFolder.getId(), documentFolder);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			documentFolderUnsafeFunction = documentFolder -> putDocumentFolder(
-				documentFolder.getId() != null ? documentFolder.getId() :
-					_parseLong((String)parameters.get("documentFolderId")),
-				documentFolder);
+				documentFolder.getId(), documentFolder);
 		}
 
 		if (documentFolderUnsafeFunction == null) {
@@ -2156,14 +2152,6 @@ public abstract class BaseDocumentFolderResourceImpl
 	private Boolean _parseBoolean(String value) {
 		if (value != null) {
 			return Boolean.parseBoolean(value);
-		}
-
-		return null;
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
 		}
 
 		return null;

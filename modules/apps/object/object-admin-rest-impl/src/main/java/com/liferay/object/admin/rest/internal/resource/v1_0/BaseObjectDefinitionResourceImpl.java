@@ -773,12 +773,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 								objectDefinition.getExternalReferenceCode());
 
 						persistedObjectDefinition = patchObjectDefinition(
-							getObjectDefinition.getId() != null ?
-								getObjectDefinition.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"objectDefinitionId")),
-							objectDefinition);
+							getObjectDefinition.getId(), objectDefinition);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedObjectDefinition = postObjectDefinition(
@@ -932,21 +927,13 @@ public abstract class BaseObjectDefinitionResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			objectDefinitionUnsafeFunction =
 				objectDefinition -> patchObjectDefinition(
-					objectDefinition.getId() != null ?
-						objectDefinition.getId() :
-							_parseLong(
-								(String)parameters.get("objectDefinitionId")),
-					objectDefinition);
+					objectDefinition.getId(), objectDefinition);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			objectDefinitionUnsafeFunction =
 				objectDefinition -> putObjectDefinition(
-					objectDefinition.getId() != null ?
-						objectDefinition.getId() :
-							_parseLong(
-								(String)parameters.get("objectDefinitionId")),
-					objectDefinition);
+					objectDefinition.getId(), objectDefinition);
 		}
 
 		if (objectDefinitionUnsafeFunction == null) {
@@ -968,14 +955,6 @@ public abstract class BaseObjectDefinitionResourceImpl
 				objectDefinitionUnsafeFunction.apply(objectDefinition);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

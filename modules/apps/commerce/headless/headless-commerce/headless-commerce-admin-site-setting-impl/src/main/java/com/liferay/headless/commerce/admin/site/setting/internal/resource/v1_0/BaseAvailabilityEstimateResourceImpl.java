@@ -481,12 +481,7 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			availabilityEstimateUnsafeFunction = availabilityEstimate -> {
 				putAvailabilityEstimate(
-					availabilityEstimate.getId() != null ?
-						availabilityEstimate.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"availabilityEstimateId")),
-					availabilityEstimate);
+					availabilityEstimate.getId(), availabilityEstimate);
 
 				return null;
 			};
@@ -514,14 +509,6 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 				availabilityEstimateUnsafeFunction.apply(availabilityEstimate);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

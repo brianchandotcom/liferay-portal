@@ -1156,11 +1156,7 @@ public abstract class BaseOrderItemResourceImpl
 							orderItem.getExternalReferenceCode());
 
 						persistedOrderItem = patchOrderItem(
-							getOrderItem.getId() != null ?
-								getOrderItem.getId() :
-									_parseLong(
-										(String)parameters.get("orderItemId")),
-							orderItem);
+							getOrderItem.getId(), orderItem);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("externalReferenceCode")) {
@@ -1340,16 +1336,12 @@ public abstract class BaseOrderItemResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			orderItemUnsafeFunction = orderItem -> patchOrderItem(
-				orderItem.getId() != null ? orderItem.getId() :
-					_parseLong((String)parameters.get("orderItemId")),
-				orderItem);
+				orderItem.getId(), orderItem);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			orderItemUnsafeFunction = orderItem -> putOrderItem(
-				orderItem.getId() != null ? orderItem.getId() :
-					_parseLong((String)parameters.get("orderItemId")),
-				orderItem);
+				orderItem.getId(), orderItem);
 		}
 
 		if (orderItemUnsafeFunction == null) {
@@ -1371,14 +1363,6 @@ public abstract class BaseOrderItemResourceImpl
 				orderItemUnsafeFunction.apply(orderItem);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

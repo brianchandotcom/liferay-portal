@@ -2394,11 +2394,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 						}
 
 						persistedTaxonomyCategory = patchTaxonomyCategory(
-							getTaxonomyCategory.getId() != null ?
-								getTaxonomyCategory.getId() :
-									(String)parameters.get(
-										"taxonomyCategoryId"),
-							taxonomyCategory);
+							getTaxonomyCategory.getId(), taxonomyCategory);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("assetLibraryId")) {
@@ -2617,19 +2613,13 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			taxonomyCategoryUnsafeFunction =
 				taxonomyCategory -> patchTaxonomyCategory(
-					taxonomyCategory.getId() != null ?
-						taxonomyCategory.getId() :
-							(String)parameters.get("taxonomyCategoryId"),
-					taxonomyCategory);
+					taxonomyCategory.getId(), taxonomyCategory);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			taxonomyCategoryUnsafeFunction =
 				taxonomyCategory -> putTaxonomyCategory(
-					taxonomyCategory.getId() != null ?
-						taxonomyCategory.getId() :
-							(String)parameters.get("taxonomyCategoryId"),
-					taxonomyCategory);
+					taxonomyCategory.getId(), taxonomyCategory);
 		}
 
 		if (taxonomyCategoryUnsafeFunction == null) {

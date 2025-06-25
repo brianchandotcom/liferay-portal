@@ -767,7 +767,7 @@ public class ObjectEntryResourceImpl
 
 		return defaultObjectEntryManager.restoreObjectEntryByVersion(
 			_getDTOConverterContext(null), externalReferenceCode,
-			_objectDefinition, version);
+			_objectDefinition, null, version);
 	}
 
 	@Override

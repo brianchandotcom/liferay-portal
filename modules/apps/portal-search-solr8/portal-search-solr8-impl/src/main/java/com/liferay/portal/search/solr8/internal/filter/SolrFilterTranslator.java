@@ -26,7 +26,11 @@ import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
 import com.liferay.portal.search.solr8.internal.query.BaseQueryVisitor;
 
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermRangeQuery;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,7 +92,16 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(MissingFilter missingFilter) {
-		return _missingFilterTranslator.translate(missingFilter);
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
+
+		builder.add(new MatchAllDocsQuery(), BooleanClause.Occur.SHOULD);
+
+		builder.add(
+			TermRangeQuery.newStringRange(
+				missingFilter.getField(), "*", "*", true, true),
+			BooleanClause.Occur.MUST_NOT);
+
+		return builder.build();
 	}
 
 	@Override
@@ -151,9 +164,6 @@ public class SolrFilterTranslator
 
 	@Reference
 	private GeoPolygonFilterTranslator _geoPolygonFilterTranslator;
-
-	@Reference
-	private MissingFilterTranslator _missingFilterTranslator;
 
 	@Reference
 	private PrefixFilterTranslator _prefixFilterTranslator;

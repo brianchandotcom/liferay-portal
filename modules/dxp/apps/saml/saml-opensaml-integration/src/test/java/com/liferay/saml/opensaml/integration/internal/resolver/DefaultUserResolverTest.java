@@ -5,6 +5,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
@@ -40,6 +41,7 @@ import com.liferay.saml.opensaml.integration.internal.field.expression.handler.D
 import com.liferay.saml.opensaml.integration.internal.field.expression.handler.MembershipsUserFieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.internal.processor.factory.UserProcessorFactoryImpl;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
+import com.liferay.saml.opensaml.integration.internal.util.SamlProvisioningUtil;
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
@@ -57,12 +59,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.internal.util.collections.Sets;
 import org.mockito.stubbing.Answer;
@@ -100,6 +104,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		_expandoValueLocalService = _mockExpandoValueLocalService();
 		_mockDigesterUtil();
 		_mockLanguageUtil();
+		_mockSamlProvisioningUtil();
 		_prefsProps = _mockPrefsProps();
 		_samlProviderConfigurationHelper =
 			_mockSamlProviderConfigurationHelper();
@@ -143,6 +148,11 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_userProcessorFactory",
 			new UserProcessorFactoryImpl());
+	}
+
+	@After
+	public void tearDown() {
+		_samlProvisioningUtilMockedStatic.close();
 	}
 
 	@Test
@@ -903,6 +913,33 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		return samlProviderConfigurationHelper;
 	}
 
+	private void _mockSamlProvisioningUtil() {
+		ExpandoColumn expandoColumn = Mockito.mock(ExpandoColumn.class);
+
+		Mockito.when(
+			expandoColumn.getColumnId()
+		).thenReturn(
+			_EXPANDO_COLUMN_ID
+		);
+
+		Mockito.when(
+			expandoColumn.getTableId()
+		).thenReturn(
+			_EXPANDO_TABLE_ID
+		);
+
+		_samlProvisioningUtilMockedStatic = Mockito.mockStatic(
+			SamlProvisioningUtil.class);
+
+		_samlProvisioningUtilMockedStatic.when(
+			() -> SamlProvisioningUtil.getOrAddExpandoColumn(
+				Mockito.any(Long.class), Mockito.any(String.class),
+				Mockito.any(String.class))
+		).thenReturn(
+			expandoColumn
+		);
+	}
+
 	private SamlSpIdpConnection _mockSamlSpIdConnection() throws Exception {
 		SamlSpIdpConnection samlSpIdpConnection = Mockito.mock(
 			SamlSpIdpConnection.class);
@@ -1076,6 +1113,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	private MessageContext<Response> _messageContext;
 	private PrefsProps _prefsProps;
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
+	private MockedStatic<SamlProvisioningUtil>
+		_samlProvisioningUtilMockedStatic;
 	private SamlSpIdpConnection _samlSpIdpConnection;
 	private TestUserFieldExpressionResolver _testUserFieldExpressionResolver;
 	private UserGroupLocalService _userGroupLocalService;

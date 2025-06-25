@@ -141,13 +141,27 @@ public class ObjectEntryEntityModel implements EntityModel {
 		else if (Objects.equals(
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_CLOB) ||
-				 Objects.equals(
+				 (Objects.equals(
 					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_STRING)) {
+					 ObjectFieldConstants.DB_TYPE_STRING) &&
+				  !Objects.equals(
+					  objectField.getBusinessType(),
+					  ObjectFieldConstants.BUSINESS_TYPE_PICKLIST))) {
 
 			return ListUtil.fromArray(
 				new StringEntityField(
 					objectField.getName(), locale -> objectField.getName()));
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			return ListUtil.fromArray(
+				new StringEntityField(
+					objectField.getName(), locale -> objectField.getName()),
+				new StringEntityField(
+					objectField.getName() + "Key",
+					locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),

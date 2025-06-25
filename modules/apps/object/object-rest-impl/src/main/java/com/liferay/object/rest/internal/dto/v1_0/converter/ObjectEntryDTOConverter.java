@@ -1044,8 +1044,6 @@ public class ObjectEntryDTOConverter
 				return null;
 			}
 
-			// TODO Fill also the {picklist}Key field
-
 			return _getListEntry(
 				dtoConverterContext, (String)serializable,
 				objectField.getListTypeDefinitionId());
@@ -1310,6 +1308,32 @@ public class ObjectEntryDTOConverter
 					() -> _getValue(
 						dtoConverterContext, objectDefinition, objectEntry,
 						objectField, finalSerializable));
+
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+					String keyFieldName = objectFieldName + "Key";
+
+					unsafeSuppliers.put(keyFieldName, () -> finalSerializable);
+				}
+				else if (objectField.compareBusinessType(
+							ObjectFieldConstants.
+								BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+					String keyFieldName = objectFieldName + "Key";
+
+					unsafeSuppliers.put(
+						keyFieldName,
+						() -> {
+							if (Validator.isNull(finalSerializable)) {
+								return null;
+							}
+
+							return StringUtil.split(
+								(String)finalSerializable,
+								StringPool.COMMA_AND_SPACE);
+						});
+				}
 			}
 		}
 

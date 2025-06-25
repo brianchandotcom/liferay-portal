@@ -104,7 +104,16 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(ExistsFilter existsFilter) {
-		return _existsFilterTranslator.translate(existsFilter);
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
+
+		builder.add(new MatchAllDocsQuery(), BooleanClause.Occur.SHOULD);
+
+		builder.add(
+			TermRangeQuery.newStringRange(
+				existsFilter.getField(), null, null, true, true),
+			BooleanClause.Occur.MUST);
+
+		return builder.build();
 	}
 
 	@Override
@@ -241,9 +250,6 @@ public class SolrFilterTranslator
 
 	@Reference
 	private DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;
-
-	@Reference
-	private ExistsFilterTranslator _existsFilterTranslator;
 
 	@Reference
 	private GeoDistanceFilterTranslator _geoDistanceFilterTranslator;

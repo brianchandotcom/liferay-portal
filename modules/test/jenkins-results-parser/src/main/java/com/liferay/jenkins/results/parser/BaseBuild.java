@@ -432,14 +432,6 @@ public abstract class BaseBuild implements Build {
 		buildReportJSONObject.put(
 			"testrayAttachmentURLs", getTestrayAttachmentURLs());
 
-		JSONArray testResultsJSONArray = new JSONArray();
-
-		for (TestResult testResult : getTestResults(null)) {
-			testResultsJSONArray.put(testResult.getTestReportJSONObject());
-		}
-
-		buildReportJSONObject.put("testResults", testResultsJSONArray);
-
 		return buildReportJSONObject;
 	}
 

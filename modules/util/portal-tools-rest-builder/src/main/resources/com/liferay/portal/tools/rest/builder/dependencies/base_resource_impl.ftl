@@ -584,6 +584,7 @@ public abstract class Base${schemaName}ResourceImpl
 	<#if generateBatch>
 		<#assign
 			createStrategies = freeMarkerTool.getVulcanBatchImplementationCreateStrategies(javaMethodSignatures, properties)
+			getIdMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id")
 			updateStrategies = freeMarkerTool.getVulcanBatchImplementationUpdateStrategies(javaMethodSignatures)
 
 			parserMethodDataTypes = []
@@ -753,16 +754,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 									<#list patchBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 										<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName)>
-											<#if properties?keys?seq_contains("id")>
-												get${schemaName}.getId() != null ? get${schemaName}.getId() :
-											<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-												(get${schemaName}.get${schemaName}Id() != null) ? get${schemaName}.get${schemaName}Id() :
-											</#if>
-
-											<@castParameters
-												type = javaMethodParameter.parameterType
-												value = "${schemaVarName}Id"
-											/>
+											get${schemaName}.${getIdMethodName}()
 										<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 											${schemaVarName}
 										<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
@@ -1208,16 +1200,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					<#list patchBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 						<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName)>
-							<#if properties?keys?seq_contains("id")>
-								${schemaVarName}.getId() != null ? ${schemaVarName}.getId() :
-							<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-								(${schemaVarName}.get${schemaName}Id() != null) ? ${schemaVarName}.get${schemaName}Id() :
-							</#if>
-
-							<@castParameters
-								type = javaMethodParameter.parameterType
-								value = "${schemaVarName}Id"
-							/>
+							${schemaVarName}.${getIdMethodName}()
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 							${schemaVarName}
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
@@ -1251,16 +1234,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					<#list putBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 						<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName)>
-							<#if properties?keys?seq_contains("id")>
-								${schemaVarName}.getId() != null ? ${schemaVarName}.getId() :
-							<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-								(${schemaVarName}.get${schemaName}Id() != null) ? ${schemaVarName}.get${schemaName}Id() :
-							</#if>
-
-							<@castParameters
-								type = javaMethodParameter.parameterType
-								value = "${schemaVarName}Id"
-							/>
+							${schemaVarName}.${getIdMethodName}()
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "flatten")>
 							(Boolean)parameters.get("flatten")
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>

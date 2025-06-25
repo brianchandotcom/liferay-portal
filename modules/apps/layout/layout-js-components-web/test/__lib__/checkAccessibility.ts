@@ -19,7 +19,7 @@ export default async function checkAccessibility({
 	bestPractices = false,
 	context,
 }: {
-	bestPractices: boolean;
+	bestPractices?: boolean;
 	context: ContextObject;
 }) {
 	if (bestPractices) {

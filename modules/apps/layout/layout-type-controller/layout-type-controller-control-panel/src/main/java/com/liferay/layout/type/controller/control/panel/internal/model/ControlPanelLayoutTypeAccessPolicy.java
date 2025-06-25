@@ -6,6 +6,7 @@
 package com.liferay.layout.type.controller.control.panel.internal.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
@@ -45,11 +46,15 @@ public class ControlPanelLayoutTypeAccessPolicy
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (PortletPermissionUtil.hasControlPanelAccessPermission(
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if ((scopeGroup != null) &&
+			(scopeGroup.isSite() || scopeGroup.isControlPanel()) &&
+			(PortletPermissionUtil.hasControlPanelAccessPermission(
 				permissionChecker, themeDisplay.getScopeGroupId(), portlet) ||
-			isAccessGrantedByRuntimePortlet(httpServletRequest) ||
-			isAccessGrantedByPortletAuthenticationToken(
-				httpServletRequest, layout, portlet)) {
+			 isAccessGrantedByRuntimePortlet(httpServletRequest) ||
+			 isAccessGrantedByPortletAuthenticationToken(
+				 httpServletRequest, layout, portlet))) {
 
 			return;
 		}

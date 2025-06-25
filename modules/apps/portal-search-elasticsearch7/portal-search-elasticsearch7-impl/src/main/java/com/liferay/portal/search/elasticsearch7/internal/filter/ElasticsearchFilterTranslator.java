@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.geolocation.GeoDistance;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
 import com.liferay.portal.search.filter.DateRangeFilter;
@@ -45,6 +47,7 @@ import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.index.query.TermsSetQueryBuilder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -282,7 +285,16 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(TermsSetFilter termsSetFilter) {
-		return termsSetFilterTranslator.translate(termsSetFilter);
+		TermsSetQueryBuilder termsSetQueryBuilder = new TermsSetQueryBuilder(
+			termsSetFilter.getFieldName(),
+			ListUtil.toList(termsSetFilter.getValues()));
+
+		if (!Validator.isBlank(termsSetFilter.getMinimumShouldMatchField())) {
+			termsSetQueryBuilder.setMinimumShouldMatchField(
+				termsSetFilter.getMinimumShouldMatchField());
+		}
+
+		return termsSetQueryBuilder;
 	}
 
 	@Activate
@@ -307,9 +319,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected TermFilterTranslator termFilterTranslator;
-
-	@Reference
-	protected TermsSetFilterTranslator termsSetFilterTranslator;
 
 	private QueryTranslator<QueryBuilder> _queryTranslator;
 

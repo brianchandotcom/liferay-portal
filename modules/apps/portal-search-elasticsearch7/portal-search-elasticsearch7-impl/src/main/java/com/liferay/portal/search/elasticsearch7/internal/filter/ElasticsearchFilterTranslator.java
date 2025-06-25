@@ -156,7 +156,20 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(GeoDistanceFilter geoDistanceFilter) {
-		return geoDistanceFilterTranslator.translate(geoDistanceFilter);
+		GeoDistanceQueryBuilder geoDistanceQueryBuilder =
+			QueryBuilders.geoDistanceQuery(geoDistanceFilter.getField());
+
+		geoDistanceQueryBuilder.distance(
+			String.valueOf(geoDistanceFilter.getGeoDistance()));
+
+		GeoLocationPoint pinGeoLocationPoint =
+			geoDistanceFilter.getPinGeoLocationPoint();
+
+		geoDistanceQueryBuilder.point(
+			pinGeoLocationPoint.getLatitude(),
+			pinGeoLocationPoint.getLongitude());
+
+		return geoDistanceQueryBuilder;
 	}
 
 	@Override
@@ -285,9 +298,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected DateRangeTermFilterTranslator dateRangeTermFilterTranslator;
-
-	@Reference
-	protected GeoDistanceFilterTranslator geoDistanceFilterTranslator;
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;

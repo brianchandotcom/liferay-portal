@@ -81,15 +81,6 @@ public class ObjectFieldUpgradeProcessTest {
 
 		Assert.assertNull(
 			_objectFieldLocalService.fetchObjectField(
-				objectDefinition.getObjectDefinitionId(), "displayDate"));
-		Assert.assertNull(
-			_objectFieldLocalService.fetchObjectField(
-				objectDefinition.getObjectDefinitionId(), "expirationDate"));
-		Assert.assertNull(
-			_objectFieldLocalService.fetchObjectField(
-				objectDefinition.getObjectDefinitionId(), "reviewDate"));
-		Assert.assertNull(
-			_objectFieldLocalService.fetchObjectField(
 				modifiableSystemObjectDefinition.getObjectDefinitionId(),
 				"displayDate"));
 		Assert.assertNull(
@@ -100,6 +91,15 @@ public class ObjectFieldUpgradeProcessTest {
 			_objectFieldLocalService.fetchObjectField(
 				modifiableSystemObjectDefinition.getObjectDefinitionId(),
 				"reviewDate"));
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getObjectDefinitionId(), "displayDate"));
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getObjectDefinitionId(), "expirationDate"));
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getObjectDefinitionId(), "reviewDate"));
 
 		ObjectDefinition userObjectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -129,15 +129,6 @@ public class ObjectFieldUpgradeProcessTest {
 
 		Assert.assertNotNull(
 			_objectFieldLocalService.getObjectField(
-				objectDefinition.getObjectDefinitionId(), "displayDate"));
-		Assert.assertNotNull(
-			_objectFieldLocalService.getObjectField(
-				objectDefinition.getObjectDefinitionId(), "expirationDate"));
-		Assert.assertNotNull(
-			_objectFieldLocalService.getObjectField(
-				objectDefinition.getObjectDefinitionId(), "reviewDate"));
-		Assert.assertNotNull(
-			_objectFieldLocalService.getObjectField(
 				modifiableSystemObjectDefinition.getObjectDefinitionId(),
 				"displayDate"));
 		Assert.assertNotNull(
@@ -148,6 +139,15 @@ public class ObjectFieldUpgradeProcessTest {
 			_objectFieldLocalService.getObjectField(
 				modifiableSystemObjectDefinition.getObjectDefinitionId(),
 				"reviewDate"));
+		Assert.assertNotNull(
+			_objectFieldLocalService.getObjectField(
+				objectDefinition.getObjectDefinitionId(), "displayDate"));
+		Assert.assertNotNull(
+			_objectFieldLocalService.getObjectField(
+				objectDefinition.getObjectDefinitionId(), "expirationDate"));
+		Assert.assertNotNull(
+			_objectFieldLocalService.getObjectField(
+				objectDefinition.getObjectDefinitionId(), "reviewDate"));
 		Assert.assertNull(
 			_objectFieldLocalService.fetchObjectField(
 				userObjectDefinition.getObjectDefinitionId(), "displayDate"));

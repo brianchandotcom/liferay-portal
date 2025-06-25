@@ -164,12 +164,6 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 		throws Exception;
 
 	public Page<ObjectEntry> getVersionedObjectEntries(
-			DTOConverterContext dtoConverterContext, long companyId,
-			ObjectDefinition objectDefinition, Pagination pagination,
-			String scopeKey, String externalReferenceCode)
-		throws Exception;
-
-	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext, long objectEntryId,
 			Pagination pagination)
 		throws Exception;
@@ -177,7 +171,7 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			Pagination pagination)
+			String scopeKey, Pagination pagination)
 		throws Exception;
 
 	public ObjectEntry partialUpdateObjectEntry(

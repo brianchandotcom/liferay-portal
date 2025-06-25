@@ -944,37 +944,6 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext.getUser());
 	}
 
-	public Page<ObjectEntry> getVersionedObjectEntries(
-			DTOConverterContext dtoConverterContext, long companyId,
-			ObjectDefinition objectDefinition, Pagination pagination,
-			String scopeKey, String externalReferenceCode)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(
-				externalReferenceCode, companyId,
-				getGroupId(objectDefinition, scopeKey));
-
-		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
-			dtoConverterContext, serviceBuilderObjectEntry);
-
-		return Page.of(
-			TransformUtil.transform(
-				_objectEntryVersionService.getObjectEntryVersions(
-					objectEntry.getId(), _getStartPosition(pagination),
-					_getEndPosition(pagination)),
-				objectEntryVersion -> {
-					dtoConverterContext.setAttribute(
-						"objectEntryVersion", objectEntryVersion);
-
-					return _objectEntryDTOConverter.toDTO(
-						dtoConverterContext, serviceBuilderObjectEntry);
-				}),
-			pagination,
-			_objectEntryVersionService.getObjectEntryVersionsCount(
-				objectEntry.getId()));
-	}
-
 	@Override
 	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext, long objectEntryId,
@@ -1005,13 +974,13 @@ public class DefaultObjectEntryManagerImpl
 	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			Pagination pagination)
+			String scopeKey, Pagination pagination)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			objectEntryLocalService.getObjectEntry(
-				externalReferenceCode,
-				objectDefinition.getObjectDefinitionId());
+				externalReferenceCode, objectDefinition.getCompanyId(),
+				getGroupId(objectDefinition, scopeKey));
 
 		return getVersionedObjectEntries(
 			dtoConverterContext, serviceBuilderObjectEntry.getObjectEntryId(),

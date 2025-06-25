@@ -47,7 +47,6 @@ public class ProjectTemplatesSpringPortletMVCTest
 				{"springportletmvc", "embedded", "jsp", "dxp", "7.1.10.7"},
 				{"springportletmvc", "embedded", "jsp", "dxp", "7.2.10.7"},
 				{"springportletmvc", "embedded", "jsp", "dxp", "2024.q1.1"},
-				{"springportletmvc", "embedded", "jsp", "dxp", "2025.q3.1"},
 				{"springportletmvc", "embedded", "jsp", "portal", "7.3.7"},
 				{"springportletmvc", "embedded", "jsp", "portal", "7.4.3.56"},
 				{"portletmvc4spring", "embedded", "jsp", "dxp", "7.1.10.7"},

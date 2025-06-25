@@ -27,6 +27,7 @@ import {
 } from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import findChild from '../utils/findChild';
+import {getFieldUuids} from '../utils/getFieldUuids';
 import getRandomId from '../utils/getRandomId';
 import getRandomName from '../utils/getRandomName';
 import getUuid from '../utils/getUuid';
@@ -375,11 +376,7 @@ function reducer(state: State, action: Action): State {
 				...state,
 				error: INITIAL_STATE.error,
 				history: INITIAL_STATE.history,
-				publishedFields: new Set(
-					Array.from(structure.fields.values()).map(
-						(field) => field.uuid
-					)
-				),
+				publishedFields: getFieldUuids(structure),
 				structure: nextStructure,
 				unsavedChanges: false,
 			};

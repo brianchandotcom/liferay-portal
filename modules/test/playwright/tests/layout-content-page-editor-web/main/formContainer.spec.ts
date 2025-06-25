@@ -11207,7 +11207,7 @@ test.describe('Drag and Drop Upload Fragment', () => {
 
 		await expect(
 			page.getByLabel(
-				'Change file, current file: file_upload_image_1.jpg'
+				'Change the file, the current file is file_upload_image_1.jpg'
 			)
 		).toBeVisible();
 
@@ -11226,7 +11226,7 @@ test.describe('Drag and Drop Upload Fragment', () => {
 		});
 
 		await expect(
-			page.getByLabel('Change file, current file: balinese.jpg')
+			page.getByLabel('Change the file, the current file is balinese.jpg')
 		).toBeVisible();
 
 		// Change the translation to spanish and update the files
@@ -11247,7 +11247,7 @@ test.describe('Drag and Drop Upload Fragment', () => {
 
 		await expect(
 			page.getByLabel(
-				'Change file, current file: file_upload_image_2.jpg'
+				'Change the file, the current file is file_upload_image_2.jpg'
 			)
 		).toBeVisible();
 
@@ -11260,7 +11260,7 @@ test.describe('Drag and Drop Upload Fragment', () => {
 		});
 
 		await expect(
-			page.getByLabel('Change file, current file: cats.jpg')
+			page.getByLabel('Change the file, the current file is cats.jpg')
 		).toBeVisible();
 
 		// Choose other language to check the default values
@@ -11273,12 +11273,12 @@ test.describe('Drag and Drop Upload Fragment', () => {
 
 		await expect(
 			page.getByLabel(
-				'Change file, current file: file_upload_image_1.jpg'
+				'Change the file, the current file is file_upload_image_1.jpg'
 			)
 		).toBeVisible();
 
 		await expect(
-			page.getByLabel('Change file, current file: balinese.jpg')
+			page.getByLabel('Change the file, the current file is balinese.jpg')
 		).toBeVisible();
 
 		// Submit the form
@@ -11492,7 +11492,7 @@ test.describe('Drag and Drop Upload Fragment', () => {
 
 		await expect(
 			page.getByLabel(
-				'Change file, current file: file_upload_image_1.jpg'
+				'Change the file, the current file is file_upload_image_1.jpg'
 			)
 		).toBeVisible();
 
@@ -11511,7 +11511,7 @@ test.describe('Drag and Drop Upload Fragment', () => {
 		});
 
 		await expect(
-			page.getByLabel('Change file, current file: balinese.jpg')
+			page.getByLabel('Change the file, the current file is balinese.jpg')
 		).toBeVisible();
 
 		// Check you can't change the language

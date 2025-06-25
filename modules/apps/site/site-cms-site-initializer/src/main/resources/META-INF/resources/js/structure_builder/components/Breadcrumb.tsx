@@ -11,7 +11,11 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
-import {ReferencedStructure, Structures} from '../types/Structure';
+import {
+	ReferencedStructure,
+	RepeatableGroup,
+	Structures,
+} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import {Field} from '../utils/field';
 import getFieldsArray from '../utils/getFieldsArray';
@@ -66,7 +70,7 @@ export default function Breadcrumb({uuid}: {uuid: Uuid}) {
 
 function getPath(
 	uuid: Uuid,
-	fields: (Field | ReferencedStructure)[],
+	fields: (Field | ReferencedStructure | RepeatableGroup)[],
 	structures: Structures,
 	path: Path = []
 ): Path | null {
@@ -109,6 +113,25 @@ function getPath(
 				if (nextPath) {
 					return nextPath;
 				}
+			}
+		}
+		else if (field.type === 'repeatable-group') {
+			path.push({
+				label: field!.label[
+					Liferay.ThemeDisplay.getDefaultLanguageId()
+				]!,
+				uuid: field.uuid,
+			});
+
+			const nextPath = getPath(
+				uuid,
+				getFieldsArray(field),
+				structures,
+				path
+			);
+
+			if (nextPath) {
+				return nextPath;
 			}
 		}
 	}

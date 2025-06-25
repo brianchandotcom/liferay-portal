@@ -99,13 +99,13 @@ public class PageSettingsSerDes {
 				String.valueOf(pageSettings.getHiddenFromNavigation()));
 		}
 
-		if (pageSettings.getNavigationMenuSettings() == null) {
-			map.put("navigationMenuSettings", null);
+		if (pageSettings.getNavigationSettings() == null) {
+			map.put("navigationSettings", null);
 		}
 		else {
 			map.put(
-				"navigationMenuSettings",
-				String.valueOf(pageSettings.getNavigationMenuSettings()));
+				"navigationSettings",
+				String.valueOf(pageSettings.getNavigationSettings()));
 		}
 
 		if (pageSettings.getOpenGraphSettings() == null) {
@@ -166,7 +166,7 @@ public class PageSettingsSerDes {
 				return false;
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "navigationMenuSettings")) {
+						jsonParserFieldName, "navigationSettings")) {
 
 				return false;
 			}
@@ -241,11 +241,11 @@ public class PageSettingsSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "navigationMenuSettings")) {
+						jsonParserFieldName, "navigationSettings")) {
 
 				if (jsonParserFieldValue != null) {
-					pageSettings.setNavigationMenuSettings(
-						NavigationMenuSettingsSerDes.toDTO(
+					pageSettings.setNavigationSettings(
+						NavigationSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

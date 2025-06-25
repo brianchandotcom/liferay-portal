@@ -1814,10 +1814,10 @@ components:
                 showNotification:
                     type: boolean
             type: object
-        NavigationMenuSettings:
+        NavigationSettings:
             # @review
             description:
-                Represents settings related with the site navigation menu of a page.
+                Represents settings related with the site navigation of a page.
             properties:
                 queryString:
                     # @review
@@ -2130,11 +2130,11 @@ components:
                     description:
                         A flag that indicates whether the page is hidden from navigation.
                     type: boolean
-                navigationMenuSettings:
-                    $ref: "#/components/schemas/NavigationMenuSettings"
+                navigationSettings:
+                    $ref: "#/components/schemas/NavigationSettings"
                     # @review
                     description:
-                        The page's site navigation menu settings.
+                        The page's site navigation settings.
                 openGraphSettings:
                     $ref: "#/components/schemas/OpenGraphSettings"
                     # @review
@@ -3143,10 +3143,10 @@ components:
                             description:
                                 The identifier of the layout template.
                             type: string
-                        navigationMenuSettings:
+                        navigationSettings:
                             # @review
                             description:
-                                The widget page template's site navigation menu settings.
+                                The widget page template's site navigation settings.
                             properties:
                                 target:
                                     # @review

@@ -137,10 +137,10 @@ public class PublicationsConfigurationDisplayContext {
 		).put(
 			"roles",
 			() -> {
-				List<Map<String, Object>> rolesList = new ArrayList<>();
+				List<Map<String, Object>> roles = new ArrayList<>();
 
 				for (String roleName : RoleConstants.SYSTEM_ROLES) {
-					rolesList.add(
+					roles.add(
 						HashMapBuilder.<String, Object>put(
 							"label",
 							LanguageUtil.get(
@@ -150,7 +150,7 @@ public class PublicationsConfigurationDisplayContext {
 						).build());
 				}
 
-				return rolesList;
+				return roles;
 			}
 		).put(
 			"updatePermissionsURL",

@@ -22,7 +22,6 @@ public class ElasticsearchFilterTranslatorFixture {
 
 		_elasticsearchFilterTranslator = new ElasticsearchFilterTranslator() {
 			{
-				booleanFilterTranslator = new BooleanFilterTranslatorImpl();
 				dateRangeTermFilterTranslator =
 					new DateRangeTermFilterTranslatorImpl();
 				existsFilterTranslator = new ExistsFilterTranslatorImpl();

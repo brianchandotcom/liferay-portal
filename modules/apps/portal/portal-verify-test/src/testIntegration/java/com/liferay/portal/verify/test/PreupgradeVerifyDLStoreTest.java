@@ -114,11 +114,10 @@ public class PreupgradeVerifyDLStoreTest extends BaseVerifyProcessTestCase {
 			Assert.fail();
 		}
 		catch (Exception exception) {
+			String message = exception.getMessage();
+
 			Assert.assertTrue(
-				exception.getMessage(
-				).contains(
-					FileNotFoundException.class.getName()
-				));
+				message.contains(FileNotFoundException.class.getName()));
 		}
 		finally {
 			Files.deleteIfExists(originalPath);

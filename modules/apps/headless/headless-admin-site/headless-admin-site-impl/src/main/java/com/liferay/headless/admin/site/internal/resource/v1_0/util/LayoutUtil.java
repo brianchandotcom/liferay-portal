@@ -654,14 +654,14 @@ public class LayoutUtil {
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			unicodeProperties.toString());
 
+		String themeId = null;
 		String colorSchemeId = null;
 		String css = null;
-		String themeId = null;
 
 		if (settings != null) {
+			themeId = settings.getThemeName();
 			colorSchemeId = settings.getColorSchemeName();
 			css = settings.getCss();
-			themeId = settings.getThemeName();
 		}
 
 		return LayoutServiceUtil.updateLookAndFeel(

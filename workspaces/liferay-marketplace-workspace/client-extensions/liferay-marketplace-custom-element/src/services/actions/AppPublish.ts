@@ -272,40 +272,52 @@ export default class AppPublish extends BaseAppPublish {
 	}
 
 	async syncBuild(product: Product) {
+		if (this.config.isEdit) {
+			return;
+		}
+
 		const {
 			build: {appType, resourceRequirements},
 		} = this.context;
+
 		const specifications = [
 			{
 				key: ProductSpecificationKey.APP_TYPE,
 				value: appType as string,
 			},
 		];
+
 		if (appType === ProductType.CLOUD) {
-			const resourceRequirementSpecifications = [
-				{
-					key: ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS,
-					value: resourceRequirements.cpu as string,
-				},
-				{
-					key: ProductSpecificationKey.APP_BUILD_RAM_IN_GBS,
-					value: resourceRequirements.ram as string,
-				},
-			];
-			specifications.push(...resourceRequirementSpecifications);
+			specifications.push(
+				...[
+					{
+						key: ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS,
+						value: resourceRequirements.cpu as string,
+					},
+					{
+						key: ProductSpecificationKey.APP_BUILD_RAM_IN_GBS,
+						value: resourceRequirements.ram as string,
+					},
+				]
+			);
 		}
+
 		const {
 			[ProductVocabulary.LIFERAY_PLATFORM_OFFERING]:
 				compatibleOfferingVocabulary,
 		} = this.context.references.vocabulariesAndCategories;
+
 		const platformOfferingLabels = getOfferingTypes(appType);
+
 		const compatibleOfferingCategories =
 			compatibleOfferingVocabulary.categories ?? [];
+
 		const compatibleOfferings = compatibleOfferingCategories
 			.filter(({label}: {label: string}) =>
 				platformOfferingLabels.includes(label as ProductOfferingTypes)
 			)
 			.map(normalizeCategory);
+
 		await HeadlessCommerceAdminCatalogImpl.updateProduct(
 			product.productId,
 			{
@@ -313,7 +325,9 @@ export default class AppPublish extends BaseAppPublish {
 				...this.getProductStatus(),
 			}
 		);
+
 		this.processLiferayPackages(product);
+
 		await BaseAppPublish.updateSpecifications(product, [...specifications]);
 	}
 
@@ -453,9 +467,6 @@ export default class AppPublish extends BaseAppPublish {
 				this.syncLicensing.bind(this),
 				this.syncSupport.bind(this),
 			]) {
-				if (config.isEdit && sync.name === 'bound syncBuild') {
-					continue;
-				}
 				this.context._product = product;
 
 				try {
@@ -660,17 +671,22 @@ export default class AppPublish extends BaseAppPublish {
 		} = this.context;
 
 		const liferayVersions = [];
+
 		for (const liferayPackage of liferayPackages) {
 			const {file, versions} = liferayPackage;
+
 			if (file && file.file) {
-				await PublisherAsset.processPublisherAsset(
+				const publisherAsset = new PublisherAsset(
 					file,
 					product,
 					versions.toString()
 				);
+
+				await publisherAsset.process();
 			}
 			liferayVersions.push(...versions);
 		}
+
 		const liferayVersionSpecifications = Array.from(
 			new Set(liferayVersions)
 		)
@@ -682,7 +698,7 @@ export default class AppPublish extends BaseAppPublish {
 
 		await BaseAppPublish.updateSpecifications(
 			product,
-			[...liferayVersionSpecifications],
+			liferayVersionSpecifications,
 			{exactMatch: true}
 		);
 	}

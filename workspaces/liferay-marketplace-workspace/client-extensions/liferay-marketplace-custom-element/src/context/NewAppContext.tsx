@@ -23,6 +23,7 @@ import {
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
 import HeadlessDelivery from '../services/rest/HeadlessDelivery';
+import HeadlessPublisherAsset from '../services/rest/HeadlessPublisherAsset';
 
 export type LicensePrice = {key: number; value: number};
 export type LicenseType = 'Perpetual' | 'Subscription';
@@ -691,7 +692,10 @@ export default function NewAppContextProvider({
 
 	useSWR(
 		product ? `/product/publisher-assetses/${productId}` : null,
-		() => new MarketplaceProduct(product!).getPublisherAssetses(),
+		() =>
+			HeadlessPublisherAsset.getProductPublisherAssetsByProductId(
+				product!.id
+			).then((response) => response.items),
 		{
 			onSuccess: async (publisherAssetses) => {
 				const liferayPackages = await Promise.all(

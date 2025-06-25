@@ -25,11 +25,13 @@ const NewAppBuildOutlet = () => {
 		dispatch({payload: true, type: NewAppTypes.SET_LOADING});
 
 		const appPublish = new AppPublish(context);
+
 		const product = context._product;
 
 		if (product) {
 			try {
 				await appPublish.processLiferayPackages(product);
+
 				await HeadlessCommerceAdminCatalog.updateProduct(
 					context._product?.productId as number,
 					{
@@ -55,7 +57,7 @@ const NewAppBuildOutlet = () => {
 			canSaveAsDraft={false}
 			context={context}
 			flowItems={NEW_APP_BUILD_FLOW_ITEMS}
-			isEditingApp={true}
+			isEditingApp
 			onClickExit={() => onExitModal.onOpenChange(true)}
 			onSave={onSave}
 		>

@@ -13,17 +13,11 @@ const PICK_LIST_ASSET_TYPE = 'package';
 const PUBLISHER_ASSETS_FOLDER = 'publisher_assets';
 
 export default class PublisherAsset {
-	private file: any;
-	private appFolderName: string;
-	private product: Product;
-	private versions: string;
-
-	constructor(file: any, product: Product, versions: string) {
-		this.file = file;
-		this.product = product;
-		this.versions = versions;
-		this.appFolderName = `app_${this.product.productId}`;
-	}
+	constructor(
+		protected file: any,
+		protected product: Product,
+		protected versions: string
+	) {}
 
 	private async createPublisherAssetsFolderId(): Promise<number> {
 		const response = await HeadlessDelivery.createDocumentFolder(
@@ -35,20 +29,22 @@ export default class PublisherAsset {
 	}
 
 	private async getAppFolderId(publisherFolderId: number): Promise<number> {
+		const folderName = `app_${this.product.productId}`;
+
 		const {items: appFolders} =
 			await HeadlessDelivery.getDocumentFolderDocuments(
 				publisherFolderId
 			);
 
 		const appFolder = appFolders.find(
-			(document: any) => document.name === this.appFolderName
+			(document: any) => document.name === folderName
 		);
 
 		let appFolderId = appFolder?.id;
 
 		if (!appFolderId) {
 			const packageFolder = await HeadlessDelivery.createDocumentFolder(
-				this.appFolderName,
+				folderName,
 				publisherFolderId
 			);
 
@@ -102,39 +98,31 @@ export default class PublisherAsset {
 		}
 
 		if (!publisherFolderId) {
-			publisherFolderId = this.createPublisherAssetsFolderId();
+			publisherFolderId = await this.createPublisherAssetsFolderId();
 		}
 
 		return publisherFolderId;
 	}
 
-	static async processPublisherAsset(
-		file: any,
-		product: Product,
-		versions: string
-	) {
+	public async process() {
 		try {
-			const publisherAsset = new PublisherAsset(file, product, versions);
+			const publisherFolderId = await this.getPublisherFolderId();
 
-			const publisherFolderId =
-				await publisherAsset.getPublisherFolderId();
-
-			const appFolderId =
-				await publisherAsset.getAppFolderId(publisherFolderId);
+			const appFolderId = await this.getAppFolderId(publisherFolderId);
 
 			const appDocumentId =
-				await publisherAsset.getPublisherAssetDocumentId(appFolderId);
+				await this.getPublisherAssetDocumentId(appFolderId);
 
 			const accountId = Liferay.CommerceContext.account?.accountId;
 
 			await HeadlessPublisherAssetses.createPublisherAsset({
-				name: publisherAsset.product.name.en_US,
+				name: this.product.name.en_US,
 				publisherAssetType: PICK_LIST_ASSET_TYPE,
 				r_accountEntryToPublisherAssets_accountEntryId: accountId,
-				r_productEntryToPublisherAssets_CPDefinitionId: publisherAsset
-					.product.id as unknown as string,
+				r_productEntryToPublisherAssets_CPDefinitionId: this.product
+					.id as unknown as string,
 				sourceCode: appDocumentId,
-				version: publisherAsset.versions,
+				version: this.versions,
 			});
 		}
 		catch {

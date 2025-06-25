@@ -1269,6 +1269,43 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testIncludeMappedImageFile() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_layout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put(
+			"mapped-openGraphImage", "mappedImageFileFieldName");
+		typeSettingsUnicodeProperties.put(
+			"mapped-openGraphImageAlt", "mappedImageAltFieldName");
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		_testWithMockInfoItem(
+			httpServletRequest,
+			() -> _testWithLayoutSEOCompanyConfiguration(
+				() -> _dynamicInclude.include(
+					httpServletRequest, mockHttpServletResponse,
+					RandomTestUtil.randomString()),
+				false, true));
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(
+			document, "og:image", "http://localhost:8080/imageFileURL");
+		_assertMetaTag(document, "og:image:alt", "mappedImageAlt");
+		_assertMetaTag(
+			document, "og:image:url", "http://localhost:8080/imageFileURL");
+	}
+
+	@Test
 	public void testIncludeMappedTitleAndDescription() throws Exception {
 		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
 
@@ -2178,6 +2215,17 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 						"mappedImageAltFieldName"
 					).build(),
 					"mappedImageAlt")
+			).infoFieldValue(
+				new InfoFieldValue<>(
+					InfoField.builder(
+					).infoFieldType(
+						ImageInfoFieldType.INSTANCE
+					).namespace(
+						StringPool.BLANK
+					).name(
+						"mappedImageFileFieldName"
+					).build(),
+					"/imageFileURL")
 			).build();
 		}
 

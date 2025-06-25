@@ -697,6 +697,10 @@ public class ObjectEntryResourceImpl
 			String scopeKey, String externalReferenceCode, Integer version)
 		throws Exception {
 
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
+			throw new UnsupportedOperationException();
+		}
+
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
@@ -711,6 +715,10 @@ public class ObjectEntryResourceImpl
 	public ObjectEntry postScopeScopeKeyByExternalReferenceCodeByVersionExpire(
 			String scopeKey, String externalReferenceCode, Integer version)
 		throws Exception {
+
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
+			throw new UnsupportedOperationException();
+		}
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -895,6 +903,10 @@ public class ObjectEntryResourceImpl
 	public ObjectEntry putScopeScopeKeyByExternalReferenceCodeByVersionRestore(
 			String scopeKey, String externalReferenceCode, Integer version)
 		throws Exception {
+
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
+			throw new UnsupportedOperationException();
+		}
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(

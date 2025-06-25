@@ -10,7 +10,8 @@ import ClayPanel from '@clayui/panel';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
-import SpaceSticker, {LogoColor} from '../components/SpaceSticker';
+import {LogoColor} from '../../types/Space';
+import SpaceSticker from '../components/SpaceSticker';
 
 export interface AssetLibrary {
 	id: number;

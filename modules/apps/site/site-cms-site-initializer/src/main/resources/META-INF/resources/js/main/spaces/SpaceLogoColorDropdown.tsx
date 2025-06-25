@@ -13,7 +13,8 @@ import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import React, {useId, useMemo, useState} from 'react';
 
-import {LogoColor, logoColors} from '../components/SpaceSticker';
+import {LogoColor} from '../../types/Space';
+import {logoColors} from '../components/SpaceSticker';
 
 interface SpaceColorDropdownProps {
 	className?: string;

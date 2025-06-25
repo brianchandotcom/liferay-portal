@@ -12,7 +12,8 @@ import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 import SpaceService from '../../services/SpaceService';
-import SpaceSticker, {LogoColor} from '../components/SpaceSticker';
+import {LogoColor} from '../../types/Space';
+import SpaceSticker from '../components/SpaceSticker';
 import {FieldText} from '../components/forms';
 import {
 	invalidCharacters,

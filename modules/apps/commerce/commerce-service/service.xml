@@ -695,6 +695,11 @@
 			<finder-column name="commerceOrderItemId" />
 			<finder-column name="commerceInventoryWarehouseId" />
 		</finder>
+		<finder name="C_NotC_GteQ" return-type="Collection">
+			<finder-column name="commerceShipmentId" />
+			<finder-column comparator="!=" name="commerceInventoryWarehouseId" />
+			<finder-column comparator="&gt;=" name="quantity" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceShippingMethod" remote-service="true">
 

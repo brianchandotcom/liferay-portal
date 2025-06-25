@@ -6,15 +6,14 @@
 package com.liferay.login.web.internal.portlet;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.login.web.internal.portlet.util.LoginUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.TicketLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.Portlet;
@@ -66,7 +65,10 @@ public class ForgotPasswordPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		if (!_isAllowedToRenderView(renderRequest)) {
+		if (!LoginUtil.isAllowedToRenderView(
+				"/forgot_password.jsp", "/login/forgot_password",
+				renderRequest)) {
+
 			renderRequest.setAttribute(
 				getMVCPathAttributeName(renderResponse.getNamespace()),
 				"/login.jsp");
@@ -76,22 +78,20 @@ public class ForgotPasswordPortlet extends MVCPortlet {
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(renderRequest));
 
-		String currentUrl = (String)httpServletRequest.getAttribute(
-			"CURRENT_URL");
+		String currentURL = URLCodec.decodeURL(
+			(String)httpServletRequest.getAttribute("CURRENT_URL"));
 
-		currentUrl = URLCodec.decodeURL(currentUrl);
+		if (currentURL.contains("/login/update_password")) {
+			Ticket ticket = _ticketLocalService.fetchTicket(
+				ParamUtil.getLong(httpServletRequest, "ticketId"));
 
-		if (currentUrl.contains("/portal/update_password") ||
-			currentUrl.contains("/login/update_password")) {
-
-			if (currentUrl.contains("/login/update_password")) {
-				Ticket ticket = _ticketLocalService.fetchTicket(
-					ParamUtil.getLong(httpServletRequest, "ticketId"));
-
-				if (ticket != null) {
-					httpServletRequest.setAttribute(WebKeys.TICKET, ticket);
-				}
+			if (ticket != null) {
+				httpServletRequest.setAttribute(WebKeys.TICKET, ticket);
 			}
+		}
+
+		if (currentURL.contains("/portal/update_password") ||
+			currentURL.contains("/login/update_password")) {
 
 			renderRequest.setAttribute(
 				getMVCPathAttributeName(renderResponse.getNamespace()),
@@ -99,29 +99,6 @@ public class ForgotPasswordPortlet extends MVCPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
-	}
-
-	private boolean _isAllowedToRenderView(RenderRequest renderRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!themeDisplay.isSignedIn()) {
-			return true;
-		}
-
-		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
-		String mvcRenderCommandName = ParamUtil.getString(
-			renderRequest, "mvcRenderCommandName");
-
-		if ((Validator.isNull(mvcPath) &&
-			 Validator.isNull(mvcRenderCommandName)) ||
-			mvcPath.equals("/forgot_password.jsp") ||
-			mvcRenderCommandName.equals("/login/forgot_password")) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	@Reference

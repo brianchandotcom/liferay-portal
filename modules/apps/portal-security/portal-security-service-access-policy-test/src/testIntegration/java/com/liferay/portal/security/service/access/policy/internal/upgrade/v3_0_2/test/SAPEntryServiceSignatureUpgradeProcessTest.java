@@ -59,21 +59,20 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			String deprecatedSignature = StringBundler.concat(
+			String oldAllowedServiceSignatures = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
 				"ObjectEntryResourceImpl#",
 				"putByExternalReferenceCodeCurrentExternalReference",
 				"CodeObjectRelationshipNameRelatedExternalReferenceCode");
 
-			String preUpgradeSignatures = StringBundler.concat(
-				"com.liferay.object.rest.internal.resource.v1_0.",
-				"ObjectEntryResourceImpl#getObjectEntry\n",
-				deprecatedSignature);
-
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
 				company.getDefaultUser(
 				).getUserId(),
-				preUpgradeSignatures, false, true,
+				StringBundler.concat(
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#getObjectEntry\n",
+					oldAllowedServiceSignatures),
+				false, true,
 				RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(
@@ -90,7 +89,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
-			String afterFirstUpgradeSignatures =
+			String afterFirstUpgradeAllowedServiceSignatures =
 				sapEntry.getAllowedServiceSignatures();
 
 			_runUpgrade();
@@ -102,10 +101,10 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				sapEntry.getAllowedServiceSignatures();
 
 			Assert.assertEquals(
-				afterFirstUpgradeSignatures, afterSecondUpgradeSignatures);
+				afterFirstUpgradeAllowedServiceSignatures, afterSecondUpgradeSignatures);
 
 			Assert.assertFalse(
-				afterSecondUpgradeSignatures.contains(deprecatedSignature));
+				afterSecondUpgradeSignatures.contains(oldAllowedServiceSignatures));
 		}
 	}
 
@@ -119,7 +118,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			String deprecatedSignature = StringBundler.concat(
+			String oldAllowedServiceSignatures = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
 				"ObjectEntryResourceImpl#",
 				"putByExternalReferenceCodeCurrentExternalReference",
@@ -136,7 +135,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				"ObjectEntryResourceImpl#postObjectEntry\n",
 				"com.liferay.object.rest.internal.resource.v1_0.",
 				"ObjectEntryResourceImpl#postScopeScopeKey\n",
-				deprecatedSignature);
+				oldAllowedServiceSignatures);
 
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
 				company.getDefaultUser(
@@ -160,7 +159,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				preUpgradeSignatures, sapEntry.getAllowedServiceSignatures());
 
 			Assert.assertTrue(
-				preUpgradeSignatures.contains(deprecatedSignature));
+				preUpgradeSignatures.contains(oldAllowedServiceSignatures));
 
 			String expectedUpgradedSignature = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
@@ -180,7 +179,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				sapEntry.getAllowedServiceSignatures();
 
 			Assert.assertFalse(
-				afterUpgradeSignatures.contains(deprecatedSignature));
+				afterUpgradeSignatures.contains(oldAllowedServiceSignatures));
 			Assert.assertTrue(
 				afterUpgradeSignatures.contains(expectedUpgradedSignature));
 			Assert.assertTrue(
@@ -202,7 +201,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			String preUpgradeSignatures = StringBundler.concat(
+			String allowedServiceSignatures = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
 				"ObjectEntryResourceImpl#getByExternalReferenceCode\n",
 				"com.liferay.object.rest.internal.resource.v1_0.",
@@ -213,7 +212,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
 				company.getDefaultUser(
 				).getUserId(),
-				preUpgradeSignatures, false, true,
+				allowedServiceSignatures, false, true,
 				RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(
@@ -226,7 +225,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			_testSAPEntries.add(sapEntry);
 
 			Assert.assertEquals(
-				preUpgradeSignatures, sapEntry.getAllowedServiceSignatures());
+				allowedServiceSignatures, sapEntry.getAllowedServiceSignatures());
 
 			_runUpgrade();
 
@@ -234,7 +233,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				sapEntry.getSapEntryId());
 
 			Assert.assertEquals(
-				preUpgradeSignatures, sapEntry.getAllowedServiceSignatures());
+				allowedServiceSignatures, sapEntry.getAllowedServiceSignatures());
 		}
 	}
 
@@ -244,9 +243,10 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(company.getCompanyId());
-		serviceContext.setUserId(
-			company.getDefaultUser(
-			).getUserId());
+
+		User defaultUser = company.getDefaultUser();
+
+		serviceContext.setUserId(defaultUser.getUserId());
 
 		return serviceContext;
 	}

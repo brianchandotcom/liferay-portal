@@ -907,6 +907,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ThreadLocalVariableNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks for consistent naming on variables of type '*ThreadLocal'." />
+			<property name="enabled" value="false" />
 			<message key="literal.string.incorrect" value="The literal string in the variable assignment for &quot;{0}&quot; should be &quot;{1}&quot;" />
 			<message key="variable.incorrect.ending" value="Name of variable with type &quot;{0}&quot; should not end with &quot;{1}&quot;" />
 		</module>

@@ -3,10 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useLocation} from 'react-router-dom';
+
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
 const UnexpectedError = () => {
-	return <AttachmentMessage icon="warning-full" title="unexpected-error" />;
+	const {state} = useLocation();
+
+	return (
+		<AttachmentMessage
+			icon="warning-full"
+			subtitle={state?.message}
+			title="unexpected-error"
+		/>
+	);
 };
 
 export default UnexpectedError;

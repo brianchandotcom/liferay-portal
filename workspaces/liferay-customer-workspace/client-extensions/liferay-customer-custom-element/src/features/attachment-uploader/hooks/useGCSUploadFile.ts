@@ -36,7 +36,6 @@ const useGCSUploadFile = (): IProps => {
 		error: gcsGetUploadOffsetError,
 		getUploadOffset,
 		loading: gcsGetUploadOffsetLoading,
-		offset: currentOffset,
 	} = useGCSGetUploadOffset();
 
 	const {
@@ -73,7 +72,7 @@ const useGCSUploadFile = (): IProps => {
 				const chunkSize = 25 * 1024 * 1024;
 				const totalSize = file.size;
 
-				await getUploadOffset({
+				const offset = await getUploadOffset({
 					sessionURL,
 					totalSize,
 				});
@@ -82,7 +81,7 @@ const useGCSUploadFile = (): IProps => {
 					throw gcsGetUploadOffsetError;
 				}
 
-				let chunkStart = currentOffset || 0;
+				let chunkStart = offset;
 
 				if (chunkStart >= totalSize && totalSize > 0) {
 					setProgress(100);
@@ -118,7 +117,7 @@ const useGCSUploadFile = (): IProps => {
 								body: chunk,
 								headers: {
 									'Content-Length': chunk.size.toString(),
-									'Range': contentRange,
+									'Content-Range': contentRange,
 								},
 								method: 'PUT',
 								signal: controller.signal,
@@ -178,16 +177,6 @@ const useGCSUploadFile = (): IProps => {
 				setAbortController(null);
 
 				if (uploadFailed || controller.signal.aborted) {
-					if (!controller.signal.aborted) {
-						navigate(`/${ticketId}/unexpected-error`, {
-							state: {
-								attachmentName: file.name,
-								ticketId,
-								uploadAccountKey: accountKey,
-							},
-						});
-					}
-
 					return false;
 				}
 
@@ -212,25 +201,15 @@ const useGCSUploadFile = (): IProps => {
 					return true;
 				}
 				else {
-					navigate(`/${ticketId}/unexpected-error`, {
-						state: {
-							attachmentName: file.name,
-							ticketId,
-							uploadAccountKey: accountKey,
-						},
-					});
+					navigate(`/${ticketId}/unexpected-error`);
 
 					return false;
 				}
 			}
 			catch (uploadError) {
-				console.error('Error during GCS upload process:', uploadError);
-
 				navigate(`/${ticketId}/unexpected-error`, {
 					state: {
-						attachmentName: file.name,
-						ticketId,
-						uploadAccountKey: accountKey,
+						message: String(uploadError),
 					},
 				});
 
@@ -247,7 +226,6 @@ const useGCSUploadFile = (): IProps => {
 			completeUpload,
 			completeUploadError,
 			completeUploadLoading,
-			currentOffset,
 			gcsGetUploadOffsetError,
 			getUploadOffset,
 			gcsGetUploadOffsetLoading,
@@ -259,6 +237,7 @@ const useGCSUploadFile = (): IProps => {
 		if (abortController) {
 			abortController.abort();
 
+			sessionStorage.removeItem('gcsSessionURL');
 			setLoading(false);
 			setProgress(0);
 		}

@@ -12,16 +12,13 @@ interface IParams {
 
 interface IProps {
 	deleteAttachment: (params: IParams) => Promise<void>;
-	error: Error | null;
 	loading: boolean;
 }
 
 const useTicketAttachmentsDelete = (): IProps => {
-	const [error, setError] = useState<Error | null>(null);
 	const [loading, setLoading] = useState(false);
 
 	const deleteAttachment = useCallback(async (params: IParams) => {
-		setError(null);
 		setLoading(true);
 
 		const {ticketAttachmentId} = params;
@@ -41,19 +38,14 @@ const useTicketAttachmentsDelete = (): IProps => {
 			}
 		}
 		catch (deleteError) {
-			console.error('Delete attachment error:', deleteError);
-			setError(
-				deleteError instanceof Error
-					? deleteError
-					: new Error(String(deleteError))
-			);
+			console.error(deleteError);
 		}
 		finally {
 			setLoading(false);
 		}
 	}, []);
 
-	return {deleteAttachment, error, loading};
+	return {deleteAttachment, loading};
 };
 
 export default useTicketAttachmentsDelete;

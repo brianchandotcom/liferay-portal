@@ -73,8 +73,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 					"com.liferay.object.rest.internal.resource.v1_0.",
 					"ObjectEntryResourceImpl#getObjectEntry\n",
 					oldAllowedServiceSignatures),
-				false, true,
-				RandomTestUtil.randomString(),
+				false, true, RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(
@@ -102,10 +101,12 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				sapEntry.getAllowedServiceSignatures();
 
 			Assert.assertEquals(
-				afterFirstUpgradeAllowedServiceSignatures, afterSecondUpgradeSignatures);
+				afterFirstUpgradeAllowedServiceSignatures,
+				afterSecondUpgradeSignatures);
 
 			Assert.assertFalse(
-				afterSecondUpgradeSignatures.contains(oldAllowedServiceSignatures));
+				afterSecondUpgradeSignatures.contains(
+					oldAllowedServiceSignatures));
 		}
 	}
 
@@ -226,7 +227,8 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			_testSAPEntries.add(sapEntry);
 
 			Assert.assertEquals(
-				allowedServiceSignatures, sapEntry.getAllowedServiceSignatures());
+				allowedServiceSignatures,
+				sapEntry.getAllowedServiceSignatures());
 
 			_runUpgrade();
 
@@ -234,7 +236,8 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				sapEntry.getSapEntryId());
 
 			Assert.assertEquals(
-				allowedServiceSignatures, sapEntry.getAllowedServiceSignatures());
+				allowedServiceSignatures,
+				sapEntry.getAllowedServiceSignatures());
 		}
 	}
 

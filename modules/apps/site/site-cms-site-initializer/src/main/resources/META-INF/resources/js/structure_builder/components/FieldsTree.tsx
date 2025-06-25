@@ -26,7 +26,12 @@ import selectStructureError from '../selectors/selectStructureError';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
-import {ReferencedStructure, Structure, Structures} from '../types/Structure';
+import {
+	ReferencedStructure,
+	RepeatableGroup,
+	Structure,
+	Structures,
+} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import getFieldsArray from '../utils/getFieldsArray';
 import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
@@ -39,7 +44,7 @@ type TreeItem = {
 	id: string;
 	label: string;
 	name?: string;
-	type?: FieldType | 'referenced-structure';
+	type?: FieldType | 'referenced-structure' | 'repeatable-group';
 	uuid: Uuid;
 };
 
@@ -183,6 +188,8 @@ export default function FieldsTree({search}: {search: string}) {
 								'structure-builder__fields-tree-node--field-icon':
 									item.type &&
 									item.type !== 'referenced-structure',
+								'structure-builder__fields-tree-node--group-icon':
+									item.type === 'repeatable-group',
 								'structure-builder__fields-tree-node--structure-icon':
 									item.type === 'referenced-structure',
 							})}
@@ -310,14 +317,17 @@ function buildItems({
 	structureERC,
 	structures,
 }: {
-	fields: (Field | ReferencedStructure)[];
+	fields: (Field | ReferencedStructure | RepeatableGroup)[];
 	path?: string[];
 	search: string;
 	structureERC: Structure['erc'];
 	structures: Structures;
 }): TreeItem[] {
 	return fields.reduce(
-		(items: TreeItem[], field: Field | ReferencedStructure) => {
+		(
+			items: TreeItem[],
+			field: Field | ReferencedStructure | RepeatableGroup
+		) => {
 			if (field.type === 'referenced-structure') {
 				const structure = structures.get(field.erc)!;
 				const label = getReferencedStructureLabel(
@@ -340,6 +350,30 @@ function buildItems({
 					icon: 'edit-layout',
 					id: buildId(path, field),
 					label: getReferencedStructureLabel(field.erc, structures),
+					type: field.type,
+					uuid: field.uuid,
+				};
+
+				if (match(label, search) || item.children?.length) {
+					items.push(item);
+				}
+			}
+			else if (field.type === 'repeatable-group') {
+				const label =
+					field.label[Liferay.ThemeDisplay.getDefaultLanguageId()]!;
+
+				const item: TreeItem = {
+					children: buildItems({
+						fields: getFieldsArray(field),
+						path: [...path, field.name],
+						search,
+						structureERC,
+						structures,
+					}),
+					erc: field.erc,
+					icon: 'fieldset',
+					id: buildId(path, field),
+					label,
 					type: field.type,
 					uuid: field.uuid,
 				};
@@ -371,7 +405,10 @@ function buildItems({
 	);
 }
 
-function buildId(path: string[], field: Field | ReferencedStructure) {
+function buildId(
+	path: string[],
+	field: Field | ReferencedStructure | RepeatableGroup
+) {
 	return [...path, field.name].join('_');
 }
 

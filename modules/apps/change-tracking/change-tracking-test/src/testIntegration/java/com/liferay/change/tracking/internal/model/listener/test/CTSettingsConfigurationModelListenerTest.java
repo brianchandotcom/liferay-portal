@@ -57,36 +57,42 @@ public class CTSettingsConfigurationModelListenerTest {
 
 	@Test
 	public void testUpdateOwnerPermissions() throws Exception {
-		UserTestUtil.setUser(_user);
+		try {
+			UserTestUtil.setUser(_user);
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+			CTCollection ctCollection =
+				_ctCollectionLocalService.addCTCollection(
+					null, TestPropsValues.getCompanyId(), _user.getUserId(), 0,
+					RandomTestUtil.randomString(), null);
 
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), _user.getUserId(), 0,
-			RandomTestUtil.randomString(), null);
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
 
-		Assert.assertTrue(
-			_ctCollectionModelResourcePermission.contains(
-				permissionChecker, ctCollection, CTActionKeys.PUBLISH));
+			Assert.assertTrue(
+				_ctCollectionModelResourcePermission.contains(
+					permissionChecker, ctCollection, CTActionKeys.PUBLISH));
 
-		String pid = ConfigurationTestUtil.createFactoryConfiguration(
-			CTSettingsConfiguration.class.getName(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", TestPropsValues.getCompanyId()
-			).put(
-				"defaultOwnerActionIds",
-				new String[] {
-					ActionKeys.UPDATE, ActionKeys.VIEW,
-					CTActionKeys.INVITE_USERS
-				}
-			).build());
+			String pid = ConfigurationTestUtil.createFactoryConfiguration(
+				CTSettingsConfiguration.class.getName(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", TestPropsValues.getCompanyId()
+				).put(
+					"defaultOwnerActionIds",
+					new String[] {
+						ActionKeys.UPDATE, ActionKeys.VIEW,
+						CTActionKeys.INVITE_USERS
+					}
+				).build());
 
-		Assert.assertFalse(
-			_ctCollectionModelResourcePermission.contains(
-				permissionChecker, ctCollection, CTActionKeys.PUBLISH));
+			Assert.assertFalse(
+				_ctCollectionModelResourcePermission.contains(
+					permissionChecker, ctCollection, CTActionKeys.PUBLISH));
 
-		ConfigurationTestUtil.deleteConfiguration(pid);
+			ConfigurationTestUtil.deleteConfiguration(pid);
+		}
+		finally {
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
 	}
 
 	@Inject

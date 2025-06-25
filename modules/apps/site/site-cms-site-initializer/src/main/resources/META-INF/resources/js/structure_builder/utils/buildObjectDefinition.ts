@@ -11,7 +11,11 @@ import {
 	ObjectField,
 	ObjectRelationship,
 } from '../types/ObjectDefinition';
-import {ReferencedStructure, Structure} from '../types/Structure';
+import {
+	ReferencedStructure,
+	RepeatableGroup,
+	Structure,
+} from '../types/Structure';
 import {
 	FIELD_TYPE_TO_BUSINESS_TYPE,
 	FIELD_TYPE_TO_DB_TYPE,
@@ -29,7 +33,7 @@ export default function buildObjectDefinition({
 	status = 'draft',
 }: {
 	erc: Structure['erc'];
-	fields?: (Field | ReferencedStructure)[];
+	fields?: (Field | ReferencedStructure | RepeatableGroup)[];
 	id?: Structure['id'];
 	label: Structure['label'];
 	name: Structure['name'];
@@ -86,14 +90,17 @@ export default function buildObjectDefinition({
 	return objectDefinition;
 }
 
-function getFields(fields: (Field | ReferencedStructure)[]): Field[] {
+function getFields(
+	fields: (Field | ReferencedStructure | RepeatableGroup)[]
+): Field[] {
 	return fields.filter(
-		(field) => field.type !== 'referenced-structure'
+		(field) =>
+			!['referenced-structure', 'repeatable-group'].includes(field.type)
 	) as Field[];
 }
 
 function getReferencedStructures(
-	fields: (Field | ReferencedStructure)[]
+	fields: (Field | ReferencedStructure | RepeatableGroup)[]
 ): ReferencedStructure[] {
 	return fields.filter(
 		(field) => field.type === 'referenced-structure'

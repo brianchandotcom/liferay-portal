@@ -5,7 +5,11 @@
 
 import selectSelection from '../../selectors/selectSelection';
 import selectStructureFields from '../../selectors/selectStructureFields';
-import {ReferencedStructure, Structures} from '../../types/Structure';
+import {
+	ReferencedStructure,
+	RepeatableGroup,
+	Structures,
+} from '../../types/Structure';
 import {Uuid} from '../../types/Uuid';
 import {Field} from '../../utils/field';
 import getFieldsArray from '../../utils/getFieldsArray';
@@ -15,7 +19,8 @@ import {useSelector} from '../StateContext';
 type SelectedField =
 	| {field: Field; type: 'field'}
 	| {field: Field; type: 'referenced-field'}
-	| {referencedStructure: ReferencedStructure; type: 'referenced-structure'};
+	| {referencedStructure: ReferencedStructure; type: 'referenced-structure'}
+	| {group: RepeatableGroup; type: 'repeatable-group'};
 
 type SelectedItem =
 	| {type: 'main-structure'}
@@ -38,7 +43,7 @@ export default function useSelectedItem(): SelectedItem {
 		return {type: 'multiselection'};
 	}
 
-	const field = findField(uuid, fields, structures);
+	const field = findSelectedField(uuid, fields, structures);
 
 	if (field) {
 		return field;
@@ -47,11 +52,11 @@ export default function useSelectedItem(): SelectedItem {
 	return {type: 'main-structure'};
 }
 
-function findField(
+function findSelectedField(
 	uuid: Uuid,
-	fields: (Field | ReferencedStructure)[],
+	fields: (Field | ReferencedStructure | RepeatableGroup)[],
 	structures: Structures,
-	parentType: SelectedItem['type'] = 'main-structure'
+	isReferenced: boolean = false
 ): SelectedField | null {
 	for (const field of fields) {
 		if (field.uuid === uuid) {
@@ -61,13 +66,16 @@ function findField(
 					type: 'referenced-structure',
 				};
 			}
+			else if (field.type === 'repeatable-group') {
+				return {
+					group: field,
+					type: 'repeatable-group',
+				};
+			}
 			else {
 				return {
 					field,
-					type:
-						parentType === 'main-structure'
-							? 'field'
-							: 'referenced-field',
+					type: isReferenced ? 'referenced-field' : 'field',
 				};
 			}
 		}
@@ -76,16 +84,27 @@ function findField(
 			const structure = structures.get(field.erc);
 
 			if (structure) {
-				const child = findField(
+				const child = findSelectedField(
 					uuid,
 					getFieldsArray(structure),
 					structures,
-					field.type
+					true
 				);
 
 				if (child) {
 					return child;
 				}
+			}
+		}
+		else if (field.type === 'repeatable-group') {
+			const child = findSelectedField(
+				uuid,
+				getFieldsArray(field),
+				structures
+			);
+
+			if (child) {
+				return child;
 			}
 		}
 	}

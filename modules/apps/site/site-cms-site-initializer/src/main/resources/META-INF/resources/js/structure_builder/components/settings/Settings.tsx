@@ -9,6 +9,7 @@ import React from 'react';
 import {getImage} from '../../../main/util/getImage';
 import useSelectedItem from '../../contexts/hooks/useSelectedItem';
 import ReferencedStructureSettings from './ReferencedStructureSettings';
+import RepeatableGroupSettings from './RepeatableGroupSettings';
 import StructureFieldSettings from './StructureFieldSettings';
 import StructureSettings from './StructureSettings';
 
@@ -25,6 +26,12 @@ export default function Settings() {
 				key={item.referencedStructure.uuid}
 				referencedStructure={item.referencedStructure}
 			/>
+		);
+	}
+
+	if (item.type === 'repeatable-group') {
+		return (
+			<RepeatableGroupSettings group={item.group} key={item.group.uuid} />
 		);
 	}
 

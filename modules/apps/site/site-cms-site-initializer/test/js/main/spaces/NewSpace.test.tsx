@@ -8,10 +8,10 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import NewSpace, {
 	NewSpaceProps,
 } from '../../../../src/main/resources/META-INF/resources/js/main/spaces/NewSpace';
-import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/services/ApiHelper';
 
 describe('NewSpace', () => {
 	const props: NewSpaceProps = {

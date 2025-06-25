@@ -31,7 +31,6 @@ import com.liferay.portal.search.solr8.internal.document.DefaultSolrDocumentFact
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.filter.FilterTranslator;
 import com.liferay.portal.search.solr8.internal.filter.SolrFilterTranslator;
-import com.liferay.portal.search.solr8.internal.filter.TermFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.query.BaseQueryVisitor;
 import com.liferay.portal.search.solr8.internal.query.SolrQueryTranslator;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.SolrSearchEngineAdapterFixture;
@@ -131,8 +130,7 @@ public class SolrIndexingFixture implements IndexingFixture {
 	}
 
 	protected static SolrQueryTranslator createSolrQueryTranslator() {
-		SolrFilterTranslator solrFilterTranslator =
-			_createSolrFilterTranslator();
+		SolrFilterTranslator solrFilterTranslator = new SolrFilterTranslator();
 
 		ReflectionTestUtil.setFieldValue(
 			BaseQueryVisitor.class, "_filterTranslatorSnapshot",
@@ -304,16 +302,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 			searchEngineAdapter);
 
 		return solrSpellCheckIndexWriter;
-	}
-
-	private static SolrFilterTranslator _createSolrFilterTranslator() {
-		SolrFilterTranslator solrFilterTranslator = new SolrFilterTranslator();
-
-		ReflectionTestUtil.setFieldValue(
-			solrFilterTranslator, "_termFilterTranslator",
-			new TermFilterTranslatorImpl());
-
-		return solrFilterTranslator;
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();

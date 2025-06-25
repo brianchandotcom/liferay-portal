@@ -127,7 +127,7 @@ public class StreamHubConfigurationRestController extends BaseRestController {
 		objectAction.setExternalReferenceCode(
 			() -> new StringBuilder(
 			).append(
-				"STREAM_"
+				"T4L9_STREAM_HUB_EVENT_"
 			).append(
 				objectDefinitionId
 			).append(
@@ -225,7 +225,7 @@ public class StreamHubConfigurationRestController extends BaseRestController {
 			String externalReferenceCode =
 				objectAction.getExternalReferenceCode();
 
-			if (externalReferenceCode.startsWith("STREAM_")) {
+			if (externalReferenceCode.startsWith("T4L9_STREAM_HUB_EVENT_")) {
 				objectActionResource.deleteObjectAction(objectAction.getId());
 			}
 		}

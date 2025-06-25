@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.geolocation.GeoDistance;
+import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
@@ -30,8 +32,11 @@ import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
+import org.elasticsearch.common.geo.GeoPoint;
+import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.ExistsQueryBuilder;
+import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 
 import org.osgi.service.component.annotations.Activate;
@@ -86,8 +91,26 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(GeoDistanceRangeFilter geoDistanceRangeFilter) {
-		return geoDistanceRangeFilterTranslator.translate(
-			geoDistanceRangeFilter);
+		GeoDistanceQueryBuilder geoDistanceQueryBuilder =
+			new GeoDistanceQueryBuilder(geoDistanceRangeFilter.getField());
+
+		GeoDistance geoDistance =
+			geoDistanceRangeFilter.getUpperBoundGeoDistance();
+
+		geoDistanceQueryBuilder.distance(
+			String.valueOf(geoDistance.getDistance()),
+			DistanceUnit.fromString(
+				String.valueOf(geoDistance.getDistanceUnit())));
+
+		GeoLocationPoint geoLocationPoint =
+			geoDistanceRangeFilter.getPinGeoLocationPoint();
+
+		geoDistanceQueryBuilder.point(
+			new GeoPoint(
+				geoLocationPoint.getLatitude(),
+				geoLocationPoint.getLongitude()));
+
+		return geoDistanceQueryBuilder;
 	}
 
 	@Override
@@ -171,9 +194,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected GeoDistanceFilterTranslator geoDistanceFilterTranslator;
-
-	@Reference
-	protected GeoDistanceRangeFilterTranslator geoDistanceRangeFilterTranslator;
 
 	@Reference
 	protected GeoPolygonFilterTranslator geoPolygonFilterTranslator;

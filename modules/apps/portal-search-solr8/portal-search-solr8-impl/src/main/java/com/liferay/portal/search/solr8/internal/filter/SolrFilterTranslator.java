@@ -91,8 +91,7 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(GeoDistanceRangeFilter geoDistanceRangeFilter) {
-		return _geoDistanceRangeFilterTranslator.translate(
-			geoDistanceRangeFilter);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -197,9 +196,6 @@ public class SolrFilterTranslator
 
 	@Reference
 	private GeoDistanceFilterTranslator _geoDistanceFilterTranslator;
-
-	@Reference
-	private GeoDistanceRangeFilterTranslator _geoDistanceRangeFilterTranslator;
 
 	@Reference
 	private GeoPolygonFilterTranslator _geoPolygonFilterTranslator;

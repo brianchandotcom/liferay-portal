@@ -150,7 +150,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
-	public void testAddFragmentWithFragmentElementId() throws Exception {
+	public void testAddFragmentEntryWithFragmentElementId() throws Exception {
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			null, _group.getGroupId(),
 			_fragmentCollection.getFragmentCollectionId(), "fragment-entry",
@@ -181,7 +181,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 
 	@Test
 	@TestInfo("LPD-57548")
-	public void testAddFragmentWithFragmentName() throws Exception {
+	public void testAddFragmentEntryWithFragmentName() throws Exception {
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			null, _group.getGroupId(),
 			_fragmentCollection.getFragmentCollectionId(), "fragment-entry",
@@ -211,7 +211,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
-	public void testAddFragmentWithLayoutMode() throws Exception {
+	public void testAddFragmentEntryWithLayoutMode() throws Exception {
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			null, _group.getGroupId(),
 			_fragmentCollection.getFragmentCollectionId(), "fragment-entry",

@@ -15,8 +15,9 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
+import {LogoColor} from '../../../common/types/Space';
 import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
-import SpaceSticker, {LogoColor} from '../../components/SpaceSticker';
+import SpaceSticker from '../../components/SpaceSticker';
 
 type Tag = {
 	label: string;

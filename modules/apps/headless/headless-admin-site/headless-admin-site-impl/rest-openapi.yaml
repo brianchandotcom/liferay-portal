@@ -2358,8 +2358,8 @@ components:
                 The settings of the page template.
             discriminator:
                 mapping:
-                    ContentPageTemplate: "#/components/schemas/ContentPageTemplateSettings"
-                    WidgetPageTemplate: "#/components/schemas/WidgetPageTemplateSettings"
+                    ContentPageTemplateSettings: "#/components/schemas/ContentPageTemplateSettings"
+                    WidgetPageTemplateSettings: "#/components/schemas/WidgetPageTemplateSettings"
                 propertyName: type
             properties:
                 type:

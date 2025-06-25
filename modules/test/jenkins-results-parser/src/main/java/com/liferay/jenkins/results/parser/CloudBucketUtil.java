@@ -52,6 +52,19 @@ public class CloudBucketUtil {
 			_getFileTransferCommand("gcloud storage cp", destination, source));
 	}
 
+	public static void copyS3FileToS3(
+			String s3DestinationPath, String s3SourcePath)
+		throws IOException {
+
+		_executeCommands(
+			_getFileTransferCommand(
+				"aws s3 cp --no-progress", s3DestinationPath, s3SourcePath));
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Copied ", s3SourcePath, " to ", s3DestinationPath));
+	}
+
 	public static void createS3ObjectRef(String s3ObjectPath) {
 		_validateS3ObjectPath(s3ObjectPath);
 

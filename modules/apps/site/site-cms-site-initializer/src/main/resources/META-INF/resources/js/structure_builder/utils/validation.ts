@@ -6,12 +6,17 @@
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {useCallback} from 'react';
 
-import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
 import selectStructureFields from '../selectors/selectStructureFields';
-import {Structure} from '../types/Structure';
+import {
+	ReferencedStructure,
+	RepeatableGroup,
+	Structure,
+} from '../types/Structure';
 import {Field, MultiselectField, SingleSelectField} from './field';
 import focusInvalidElement from './focusInvalidElement';
+import getFieldsArray from './getFieldsArray';
 
 export type ValidationError =
 	| 'no-erc'
@@ -59,6 +64,26 @@ export function validateField({
 	return errors;
 }
 
+export function validateRepeatableGroup({
+	currentErrors,
+	data,
+}: {
+	currentErrors?: Set<ValidationError>;
+	data: Partial<RepeatableGroup>;
+}): Set<ValidationError> {
+	const {label} = data;
+
+	const errors = new Set(currentErrors);
+
+	if (!isNullOrUndefined(label)) {
+		Object.values(label ?? {}).every(Boolean)
+			? errors.delete('no-label')
+			: errors.add('no-label');
+	}
+
+	return errors;
+}
+
 export function validateStructure({
 	currentErrors,
 	data,
@@ -98,6 +123,39 @@ export function useValidate() {
 
 	const {structure} = state;
 
+	const validateItem = useCallback(
+		(
+			item: Field | RepeatableGroup | ReferencedStructure,
+			invalids: State['invalids']
+		) => {
+			let errors: Set<ValidationError> = new Set();
+
+			if (item.type === 'repeatable-group') {
+				errors = validateRepeatableGroup({data: item});
+
+				if (errors.size) {
+					invalids.set(item.uuid, errors);
+				}
+
+				for (const child of getFieldsArray(item)) {
+					if (child.type === 'referenced-structure') {
+						continue;
+					}
+
+					validateItem(child, invalids);
+				}
+			}
+			else {
+				errors = validateField({data: item as Field});
+
+				if (errors.size) {
+					invalids.set(item.uuid, errors);
+				}
+			}
+		},
+		[]
+	);
+
 	return useCallback(() => {
 
 		// Check at least one field is added
@@ -128,11 +186,7 @@ export function useValidate() {
 		// Validate fields
 
 		for (const field of fields) {
-			errors = validateField({data: field});
-
-			if (errors.size) {
-				invalids.set(field.uuid, errors);
-			}
+			validateItem(field, invalids);
 		}
 
 		// If there's some invalid, dispatch validate action
@@ -151,5 +205,5 @@ export function useValidate() {
 		// It's valid
 
 		return true;
-	}, [dispatch, fields, state, structure]);
+	}, [dispatch, fields, state.invalids, structure, validateItem]);
 }

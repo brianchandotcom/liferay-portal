@@ -328,7 +328,7 @@ public class ScimUtil {
 
 				Object value = operation.getValue();
 
-				if (!(value instanceof ArrayList)) {
+				if (!(value instanceof List)) {
 					operationJSONObject.put(
 						SCIMConstants.OperationalConstants.VALUE,
 						JSONUtil.put(
@@ -398,7 +398,7 @@ public class ScimUtil {
 
 				Object value = operation.getValue();
 
-				if (value instanceof ArrayList) {
+				if (value instanceof List) {
 					operationJSONObject.put(
 						SCIMConstants.OperationalConstants.VALUE,
 						JSONFactoryUtil.createJSONArray((ArrayList)value));

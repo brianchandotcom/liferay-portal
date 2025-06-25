@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.report.record.csv;
+package com.liferay.test.report.generator;
 
-import com.liferay.report.record.csv.playwright.PlaywrightTestSelector;
+import com.liferay.test.report.generator.record.csv.playwright.PlaywrightTestSelector;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;

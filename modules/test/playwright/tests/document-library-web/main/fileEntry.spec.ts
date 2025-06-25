@@ -897,3 +897,63 @@ test(
 		);
 	}
 );
+
+test(
+	'Cannot revert to version with missing required fields',
+	{
+		tag: '@LPD-57911',
+	},
+
+	async ({
+		documentLibraryEditDocumentTypesPage,
+		documentLibraryEditFilePage,
+		documentLibraryPage,
+		page,
+		site,
+	}) => {
+		const dlTypeTitle = getRandomString();
+		const fileEntryTitle = getRandomString();
+
+		await documentLibraryEditDocumentTypesPage.createNewDLTypeWithTextField(
+			dlTypeTitle,
+			false,
+			site.friendlyUrlPath
+		);
+
+		await documentLibraryEditFilePage.goToNewFileDifferentType(
+			dlTypeTitle,
+			site.friendlyUrlPath
+		);
+		await page.getByLabel('Title Required').fill(fileEntryTitle);
+		await documentLibraryEditFilePage.publishButton.click();
+		await documentLibraryPage.waitForSuccessAlert();
+
+		await documentLibraryPage.page
+			.getByRole('link', {exact: true, name: fileEntryTitle})
+			.click();
+		await documentLibraryPage.clickFileEntryAction('Edit');
+		await documentLibraryEditFilePage.descriptionInput.fill(fileEntryTitle);
+		await documentLibraryEditFilePage.publishButton.click();
+		await documentLibraryPage.waitForSuccessAlert();
+
+		await documentLibraryEditDocumentTypesPage.updateDLTypeTextField(
+			dlTypeTitle,
+			true,
+			site.friendlyUrlPath
+		);
+
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+		await documentLibraryPage.page
+			.getByRole('link', {exact: true, name: fileEntryTitle})
+			.click();
+		await documentLibraryPage.clickFileEntryAction('View History');
+		await page
+			.locator('tr', {hasText: '1.0'})
+			.locator('[aria-label="Actions"], .dropdown-toggle')
+			.click();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Revert'})
+		).not.toBeVisible();
+	}
+);

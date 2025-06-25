@@ -21,13 +21,12 @@ public class SAPEntryServiceSignatureUpgradeProcess extends UpgradeProcess {
 	private void _updateObjectEntryRelationshipServiceSignature()
 		throws Exception {
 
-		String deprecatedSignature = StringBundler.concat(
+		String oldAllowedServiceSignatures = StringBundler.concat(
 			"com.liferay.object.rest.internal.resource.v1_0.",
 			"ObjectEntryResourceImpl#",
 			"putByExternalReferenceCodeCurrentExternalReferenceCode",
 			"ObjectRelationshipNameRelatedExternalReferenceCode");
-
-		String updatedSignature = StringBundler.concat(
+		String newAllowedServiceSignatures = StringBundler.concat(
 			"com.liferay.object.rest.internal.resource.v1_0.",
 			"ObjectEntryRelatedObjectsResourceImpl#",
 			"putByExternalReferenceCodeCurrentExternalReferenceCode",
@@ -36,9 +35,10 @@ public class SAPEntryServiceSignatureUpgradeProcess extends UpgradeProcess {
 		runSQL(
 			StringBundler.concat(
 				"update SAPEntry set allowedServiceSignatures = ",
-				"REPLACE(allowedServiceSignatures, '", deprecatedSignature,
+				"REPLACE(allowedServiceSignatures, '",
+				oldAllowedServiceSignatures,
 				"', '", updatedSignature, "') where allowedServiceSignatures ",
-				"like '%", deprecatedSignature, "%'"));
+				"like '%", newAllowedServiceSignatures, "%'"));
 	}
 
 }

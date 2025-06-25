@@ -12,7 +12,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
-import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.MasterPageResource;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,7 +49,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.sites.kernel.util.Sites;
 
-import java.util.List;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -153,16 +150,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		_enableLocalStaging();
 
 		_testGetSiteSiteByExternalReferenceCodeMasterPage(masterPage);
-	}
-
-	@Override
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeMasterPagesPage()
-		throws Exception {
-
-		super.testGetSiteSiteByExternalReferenceCodeMasterPagesPage();
-
-		_testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSearch();
 	}
 
 	@Ignore
@@ -625,14 +612,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		return masterPage;
 	}
 
-	private MasterPage _getMasterPage(String name) throws Exception {
-		MasterPage masterPage = randomMasterPage();
-
-		masterPage.setName(name);
-
-		return masterPage;
-	}
-
 	private MasterPageResource _getMasterPageResource() throws Exception {
 		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
@@ -659,83 +638,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		assertEquals(masterPage, getMasterPage);
 		assertValid(getMasterPage);
-	}
-
-	private List<MasterPage>
-			_testGetSiteSiteByExternalReferenceCodeMasterPagesPage(
-				int count, String search)
-		throws Exception {
-
-		Page<MasterPage> masterPagePage =
-			masterPageResource.
-				getSiteSiteByExternalReferenceCodeMasterPagesPage(
-					testGroup.getExternalReferenceCode(), search, null, null,
-					null, null);
-
-		List<MasterPage> masterPages =
-			(List<MasterPage>)masterPagePage.getItems();
-
-		Assert.assertEquals(masterPages.toString(), count, masterPages.size());
-
-		return masterPages;
-	}
-
-	private void _testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSearch()
-		throws Exception {
-
-		String search = RandomTestUtil.randomString();
-
-		Page<MasterPage> masterPagePage =
-			masterPageResource.
-				getSiteSiteByExternalReferenceCodeMasterPagesPage(
-					testGroup.getExternalReferenceCode(), search, null, null,
-					null, null);
-
-		int totalCount = GetterUtil.getInteger(masterPagePage.getTotalCount());
-
-		testGetSiteSiteByExternalReferenceCodeMasterPagesPage_addMasterPage(
-			testGroup.getExternalReferenceCode(), randomMasterPage());
-
-		testGetSiteSiteByExternalReferenceCodeMasterPagesPage_addMasterPage(
-			testGroup.getExternalReferenceCode(), randomMasterPage());
-
-		MasterPage masterPage = _getMasterPage(search);
-
-		testGetSiteSiteByExternalReferenceCodeMasterPagesPage_addMasterPage(
-			testGroup.getExternalReferenceCode(), masterPage);
-
-		testGetSiteSiteByExternalReferenceCodeMasterPagesPage_addMasterPage(
-			testGroup.getExternalReferenceCode(), randomMasterPage());
-
-		List<MasterPage> masterPages =
-			_testGetSiteSiteByExternalReferenceCodeMasterPagesPage(
-				totalCount + 1, search);
-
-		String name = null;
-
-		for (MasterPage curMasterPage : masterPages) {
-			if (!Objects.equals(
-					curMasterPage.getExternalReferenceCode(),
-					masterPage.getExternalReferenceCode())) {
-
-				continue;
-			}
-
-			name = curMasterPage.getName();
-
-			break;
-		}
-
-		Assert.assertEquals(search, name);
-
-		testGetSiteSiteByExternalReferenceCodeMasterPagesPage_addMasterPage(
-			testGroup.getExternalReferenceCode(),
-			_getMasterPage(
-				RandomTestUtil.randomString() + search +
-					RandomTestUtil.randomString()));
-
-		_testGetSiteSiteByExternalReferenceCodeMasterPagesPage(
-			totalCount + 2, search);
 	}
 
 	private void

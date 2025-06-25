@@ -295,7 +295,15 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(RangeTermFilter rangeTermFilter) {
-		return rangeTermFilterTranslator.translate(rangeTermFilter);
+		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
+			rangeTermFilter.getField());
+
+		rangeQueryBuilder.from(rangeTermFilter.getLowerBound());
+		rangeQueryBuilder.includeLower(rangeTermFilter.isIncludesLower());
+		rangeQueryBuilder.includeUpper(rangeTermFilter.isIncludesUpper());
+		rangeQueryBuilder.to(rangeTermFilter.getUpperBound());
+
+		return rangeQueryBuilder;
 	}
 
 	@Override
@@ -336,9 +344,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
-
-	@Reference
-	protected RangeTermFilterTranslator rangeTermFilterTranslator;
 
 	@Reference
 	protected TermFilterTranslator termFilterTranslator;

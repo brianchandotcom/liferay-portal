@@ -12,10 +12,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import java.util.List;
+import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
+import java.util.List;
 
 /**
  * @author Davi Santos
@@ -25,25 +24,37 @@ public class TestReportCSVWriter {
 	public static void write(
 		OutputStream outputStream, List<PlaywrightTest> playwrightTests) {
 
-		try (CSVPrinter csvPrinter = new CSVPrinter(
-				new BufferedWriter(new OutputStreamWriter(outputStream)),
-				CSVFormat.DEFAULT.builder(
-				).setHeader(
-					"Class Name", "Test Name", "Ignored", "File Path"
-				).build())) {
+		try {
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+				outputStream, StandardCharsets.UTF_8);
+
+			BufferedWriter bufferedWriter = new BufferedWriter(
+				outputStreamWriter);
+
+			bufferedWriter.write(_CSV_HEADER);
+			bufferedWriter.newLine();
 
 			for (PlaywrightTest playwrightTest : playwrightTests) {
-				csvPrinter.printRecord(
-					playwrightTest.getClassName(), playwrightTest.getTestName(),
-					playwrightTest.isIgnored(),
-					playwrightTest.getTestFilePath());
+				bufferedWriter.write(
+					String.format(
+						_CSV_FORMAT, playwrightTest.getClassName(),
+						playwrightTest.getTestName(),
+						playwrightTest.isIgnored(),
+						playwrightTest.getTestFilePath()));
+
+				bufferedWriter.newLine();
 			}
 
-			csvPrinter.flush();
+			bufferedWriter.flush();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
+
+	private static final String _CSV_FORMAT = "%s,\"%s\",%s,%s";
+
+	private static final String _CSV_HEADER = String.join(
+		",", "Class Name", "Test Name", "Ignored", "File Path");
 
 }

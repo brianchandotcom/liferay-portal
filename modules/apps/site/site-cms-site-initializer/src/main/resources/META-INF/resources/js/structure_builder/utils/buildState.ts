@@ -6,6 +6,7 @@
 import {State} from '../contexts/StateContext';
 import {ObjectDefinition} from '../types/ObjectDefinition';
 import buildStructure from './buildStructure';
+import {getFieldUuids} from './getFieldUuids';
 
 export default function buildState(
 	objectDefinition: ObjectDefinition
@@ -24,7 +25,7 @@ export default function buildState(
 		invalids: new Map(),
 		publishedFields:
 			structure.status === 'published'
-				? new Set(structure.fields.keys())
+				? getFieldUuids(structure)
 				: new Set(),
 		selection: [],
 		structure,

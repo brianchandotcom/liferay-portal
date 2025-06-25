@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Alan Huang
  */
-public class ThreadLocalVariableNameCheck extends VariableNameCheck {
+public class ThreadLocalVariableNameCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

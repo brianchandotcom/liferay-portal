@@ -108,7 +108,7 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(GeoBoundingBoxFilter geoBoundingBoxFilter) {
-		return _geoBoundingBoxFilterTranslator.translate(geoBoundingBoxFilter);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -241,9 +241,6 @@ public class SolrFilterTranslator
 
 	@Reference
 	private ExistsFilterTranslator _existsFilterTranslator;
-
-	@Reference
-	private GeoBoundingBoxFilterTranslator _geoBoundingBoxFilterTranslator;
 
 	@Reference
 	private GeoDistanceFilterTranslator _geoDistanceFilterTranslator;

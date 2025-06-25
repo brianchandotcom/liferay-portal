@@ -40,6 +40,7 @@ import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.ExistsQueryBuilder;
+import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -130,7 +131,27 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(GeoBoundingBoxFilter geoBoundingBoxFilter) {
-		return geoBoundingBoxFilterTranslator.translate(geoBoundingBoxFilter);
+		GeoBoundingBoxQueryBuilder geoBoundingBoxQueryBuilder =
+			QueryBuilders.geoBoundingBoxQuery(geoBoundingBoxFilter.getField());
+
+		GeoLocationPoint bottomRightGeoLocationPoint =
+			geoBoundingBoxFilter.getBottomRightGeoLocationPoint();
+
+		GeoPoint bottomRightGeoPoint = new GeoPoint(
+			bottomRightGeoLocationPoint.getLatitude(),
+			bottomRightGeoLocationPoint.getLongitude());
+
+		GeoLocationPoint topLeftGeoLocationPoint =
+			geoBoundingBoxFilter.getTopLeftGeoLocationPoint();
+
+		GeoPoint topLeftGeoPoint = new GeoPoint(
+			topLeftGeoLocationPoint.getLatitude(),
+			topLeftGeoLocationPoint.getLongitude());
+
+		geoBoundingBoxQueryBuilder.setCorners(
+			topLeftGeoPoint, bottomRightGeoPoint);
+
+		return geoBoundingBoxQueryBuilder;
 	}
 
 	@Override
@@ -266,9 +287,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected ExistsFilterTranslator existsFilterTranslator;
-
-	@Reference
-	protected GeoBoundingBoxFilterTranslator geoBoundingBoxFilterTranslator;
 
 	@Reference
 	protected GeoDistanceFilterTranslator geoDistanceFilterTranslator;

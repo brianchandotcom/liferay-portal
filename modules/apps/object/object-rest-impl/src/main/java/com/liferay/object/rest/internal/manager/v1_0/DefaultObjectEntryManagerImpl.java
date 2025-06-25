@@ -273,7 +273,7 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		ObjectEntry objectEntry = getObjectEntryByVersion(
-			dtoConverterContext, externalReferenceCode, objectDefinition,
+			dtoConverterContext, externalReferenceCode, objectDefinition, null,
 			version);
 
 		return _copyVersionedObjectEntry(
@@ -292,8 +292,8 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		ObjectEntry objectEntry = getObjectEntryByVersion(
-			dtoConverterContext, objectDefinition.getCompanyId(),
-			objectDefinition, scopeKey, externalReferenceCode, version);
+			dtoConverterContext, externalReferenceCode, objectDefinition,
+			scopeKey, version);
 
 		return _copyVersionedObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
@@ -772,30 +772,6 @@ public class DefaultObjectEntryManagerImpl
 
 	@Override
 	public ObjectEntry getObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext, long companyId,
-			ObjectDefinition objectDefinition, String scopeKey,
-			String externalReferenceCode, Integer version)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(
-				externalReferenceCode, companyId,
-				getGroupId(objectDefinition, scopeKey));
-
-		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
-			dtoConverterContext, serviceBuilderObjectEntry);
-
-		dtoConverterContext.setAttribute(
-			"objectEntryVersion",
-			_objectEntryVersionService.getObjectEntryVersion(
-				objectEntry.getId(), version));
-
-		return _objectEntryDTOConverter.toDTO(
-			dtoConverterContext, serviceBuilderObjectEntry);
-	}
-
-	@Override
-	public ObjectEntry getObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext, Long objectEntryId,
 			int version)
 		throws Exception {
@@ -816,12 +792,12 @@ public class DefaultObjectEntryManagerImpl
 	public ObjectEntry getObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			int version)
+			String scopeKey, int version)
 		throws Exception {
 
 		ObjectEntry objectEntry = getObjectEntry(
 			objectDefinition.getCompanyId(), dtoConverterContext,
-			externalReferenceCode, objectDefinition, null);
+			externalReferenceCode, objectDefinition, scopeKey);
 
 		return getObjectEntryByVersion(
 			dtoConverterContext, objectEntry.getId(), version);
@@ -1083,7 +1059,7 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext, objectDefinition,
 			getObjectEntryByVersion(
 				dtoConverterContext, externalReferenceCode, objectDefinition,
-				version));
+				null, version));
 	}
 
 	@Override

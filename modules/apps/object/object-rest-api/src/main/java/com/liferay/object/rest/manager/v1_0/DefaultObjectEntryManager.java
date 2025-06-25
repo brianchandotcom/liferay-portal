@@ -137,12 +137,6 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 		throws Exception;
 
 	public ObjectEntry getObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext, long companyId,
-			ObjectDefinition objectDefinition, String scopeKey,
-			String externalReferenceCode, Integer version)
-		throws Exception;
-
-	public ObjectEntry getObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext, Long objectEntryId,
 			int version)
 		throws Exception;
@@ -150,7 +144,7 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 	public ObjectEntry getObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			int version)
+			String scopeKey, int version)
 		throws Exception;
 
 	public Page<ObjectEntry> getObjectEntryRelatedObjectEntries(

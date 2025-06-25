@@ -38,7 +38,7 @@ public class SAPEntryServiceSignatureUpgradeProcess extends UpgradeProcess {
 				"REPLACE(allowedServiceSignatures, '",
 				oldAllowedServiceSignatures, "', '",
 				newAllowedServiceSignatures,
-				"') where allowedServiceSignatures ", "like '%",
+				"') where allowedServiceSignatures like '%",
 				oldAllowedServiceSignatures, "%'"));
 	}
 

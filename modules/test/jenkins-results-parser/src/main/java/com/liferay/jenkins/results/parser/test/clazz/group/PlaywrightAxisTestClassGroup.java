@@ -24,20 +24,16 @@ public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 			return false;
 		}
 
-		Boolean analyticsCloudEnabled = false;
-
 		for (TestClass testClass : testClasses) {
 			PlaywrightJUnitTestClass playwrightJUnitTestClass =
 				(PlaywrightJUnitTestClass)testClass;
 
 			if (playwrightJUnitTestClass.getAnalyticsCloudEnabled()) {
-				analyticsCloudEnabled = true;
-
-				break;
+				return true;
 			}
 		}
 
-		return analyticsCloudEnabled;
+		return false;
 	}
 
 	@Override

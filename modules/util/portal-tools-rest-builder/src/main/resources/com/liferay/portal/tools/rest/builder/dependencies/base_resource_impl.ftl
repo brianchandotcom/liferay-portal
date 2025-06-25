@@ -1807,7 +1807,7 @@ public abstract class Base${schemaName}ResourceImpl
 	<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 		<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 			${schemaVarName}
-		<#elseif freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && (properties?keys?seq_contains(schemaVarName + "externalReferenceCode") || properties?keys?seq_contains("externalReferenceCode")) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
+		<#elseif freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && properties?keys?seq_contains("externalReferenceCode") && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
 			${schemaVarName}.getExternalReferenceCode()
 		<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
 			null

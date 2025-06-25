@@ -949,13 +949,18 @@ test(
 			await editAccountPage.usersLink.click();
 			await accountUsersPage.usersTable.newButton.click();
 			await accountUsersPage.assignUserMenuItem.click();
-			await accountUserSelectorPage.usersTable.newButton.click();
 
 			const randomString = getRandomString();
 
-			await editUserPage.emailAddressInput.fill(
-				`${randomString}@liferay.com`
-			);
+			await expect(async () => {
+				await accountUserSelectorPage.usersTable.newButton.click();
+
+				await editUserPage.emailAddressInput.fill(
+					`${randomString}@liferay.com`,
+					{timeout: 500}
+				);
+			}).toPass();
+
 			await editUserPage.firstNameInput.fill(randomString);
 			await editUserPage.lastNameInput.fill(randomString);
 			await editUserPage.screenNameInput.fill(randomString);

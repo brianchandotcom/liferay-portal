@@ -6,9 +6,11 @@
 package com.liferay.portal.search.elasticsearch7.internal.filter;
 
 import com.liferay.portal.kernel.search.query.QueryTranslator;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
 import org.elasticsearch.index.query.QueryBuilder;
+
+import org.mockito.Mockito;
 
 /**
  * @author Michael C. Han
@@ -31,24 +33,34 @@ public class ElasticsearchFilterTranslatorFixture {
 					new GeoDistanceFilterTranslatorImpl();
 				geoDistanceRangeFilterTranslator =
 					new GeoDistanceRangeFilterTranslatorImpl();
+				indexNameBuilder = _createIndexNameBuilder();
 				missingFilterTranslator = new MissingFilterTranslatorImpl();
 				prefixFilterTranslator = new PrefixFilterTranslatorImpl();
-
-				queryFilterTranslator = new QueryFilterTranslatorImpl();
-
-				ReflectionTestUtil.setFieldValue(
-					queryFilterTranslator, "_queryTranslator", queryTranslator);
-
 				rangeTermFilterTranslator = new RangeTermFilterTranslatorImpl();
 				termFilterTranslator = new TermFilterTranslatorImpl();
 				termsFilterTranslator = new TermsFilterTranslatorImpl();
 				termsSetFilterTranslator = new TermsSetFilterTranslatorImpl();
+
+				activate();
 			}
 		};
 	}
 
 	public ElasticsearchFilterTranslator getElasticsearchFilterTranslator() {
 		return _elasticsearchFilterTranslator;
+	}
+
+	private IndexNameBuilder _createIndexNameBuilder() {
+		IndexNameBuilder indexNameBuilder = Mockito.mock(
+			IndexNameBuilder.class);
+
+		Mockito.when(
+			indexNameBuilder.getIndexName(Mockito.anyLong())
+		).then(
+			invocation -> String.valueOf(invocation.getArgument(0, Long.class))
+		);
+
+		return indexNameBuilder;
 	}
 
 	private final ElasticsearchFilterTranslator _elasticsearchFilterTranslator;

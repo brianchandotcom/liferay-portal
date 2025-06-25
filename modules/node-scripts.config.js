@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'cac6b8ea804d21118a3e2177c78eb5f99eebaa49455dc1992c173ebfdf65f2b3',
+	hash: '7e807c553e2376ead052287c80d4e20a3b4b217c3f9ecd7da6682e2304431f6e',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -134,6 +134,7 @@ module.exports = {
 			'text-mask-core',
 		],
 		'@liferay/frontend-js-importmaps-extender': [],
+		'@liferay/frontend-js-item-selector-sample-web': [],
 		'@liferay/frontend-js-react-web': [
 			'classnames',
 			'formik',
@@ -183,6 +184,7 @@ module.exports = {
 		'@liferay/object-dynamic-data-mapping-form-field-type': [],
 		'@liferay/object-js-components-web': [],
 		'@liferay/object-web': [],
+		'@liferay/osb-patcher-web': [],
 		'@liferay/portal-company-log-web': [],
 		'@liferay/portal-defaultpermissions-web': [],
 		'@liferay/portal-instances-web': [],
@@ -272,6 +274,7 @@ module.exports = {
 		'frontend-js-aui-web': [],
 		'frontend-js-clay-sample-web': [],
 		'frontend-js-components-web': [],
+		'frontend-js-item-selector-web': [],
 		'frontend-js-loader-modules-extender': [],
 		'frontend-js-lodash-web': [],
 		'frontend-js-recharts': ['recharts'],

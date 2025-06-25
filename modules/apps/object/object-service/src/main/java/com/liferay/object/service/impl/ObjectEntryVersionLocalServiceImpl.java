@@ -18,6 +18,8 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -25,6 +27,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 import java.util.Date;
 import java.util.List;
@@ -66,6 +71,53 @@ public class ObjectEntryVersionLocalServiceImpl
 		}
 
 		return objectEntryVersion;
+	}
+
+	public void checkObjectEntryVersions(long companyId)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			return;
+		}
+
+		ObjectEntryVersionConfiguration objectEntryVersionConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				ObjectEntryVersionConfiguration.class, companyId);
+
+		Date endDate = Date.from(
+			LocalDate.now(
+			).minusMonths(
+				objectEntryVersionConfiguration.maximumRetentionPeriod()
+			).atStartOfDay(
+				ZoneId.systemDefault()
+			).toInstant());
+
+		List<ObjectEntryVersion> objectEntryVersions =
+			objectEntryVersionPersistence.findByC_LtCD(companyId, endDate);
+
+		for (ObjectEntryVersion objectEntryVersion : objectEntryVersions) {
+			try {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Deleting object entry version " +
+							objectEntryVersion.getObjectEntryVersionId());
+				}
+
+				deleteObjectEntryVersion(
+					objectEntryVersion.getObjectEntryId(),
+					objectEntryVersion.getVersion());
+			}
+			catch (RequiredObjectEntryVersionException
+						requiredObjectEntryVersionException) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to delete object entry version " +
+							objectEntryVersion.getObjectEntryVersionId(),
+						requiredObjectEntryVersionException);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -295,6 +347,9 @@ public class ObjectEntryVersionLocalServiceImpl
 
 		return objectEntryVersionPersistence.update(objectEntryVersion);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryVersionLocalServiceImpl.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

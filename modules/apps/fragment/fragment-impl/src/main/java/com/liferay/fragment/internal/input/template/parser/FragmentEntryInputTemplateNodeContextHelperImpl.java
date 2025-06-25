@@ -6,6 +6,7 @@
 package com.liferay.fragment.internal.input.template.parser;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.input.template.parser.FragmentEntryInputTemplateNodeContextHelper;
 import com.liferay.fragment.input.template.parser.InputTemplateNode;
@@ -62,6 +63,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -70,6 +72,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -418,6 +421,28 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		inputTemplateNode.addAttribute(
 			"fileNameI18n", _jsonFactory.createJSONObject(fileNameI18n));
+
+		String previewURL = _getPreviewURL(httpServletRequest, value);
+
+		if (previewURL != null) {
+			inputTemplateNode.addAttribute("previewURL", previewURL);
+		}
+
+		Map<String, String> previewURLI18n = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : valueI18n.entrySet()) {
+			String localizedPreviewURL = _getPreviewURL(
+				httpServletRequest, entry.getValue());
+
+			if (localizedPreviewURL != null) {
+				previewURLI18n.put(
+					_language.getLanguageId(entry.getKey()),
+					localizedPreviewURL);
+			}
+		}
+
+		inputTemplateNode.addAttribute(
+			"previewURLI18n", _jsonFactory.createJSONObject(previewURLI18n));
 
 		boolean selectFromDocumentLibrary = false;
 
@@ -793,6 +818,33 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		return defaultInputLabel;
 	}
 
+	private String _getPreviewURL(
+		HttpServletRequest httpServletRequest, Object value) {
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		FileEntry fileEntry = _fetchFileEntry(GetterUtil.getLong(value));
+
+		if (fileEntry != null) {
+			try {
+				return _dlURLHelper.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(),
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY),
+					StringPool.BLANK, false, false);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+
+				return null;
+			}
+		}
+
+		return null;
+	}
+
 	private List<String> _getSelectedOptions(
 		List<OptionInfoFieldType> optionInfoFieldTypes,
 		List<KeyLocalizedLabelPair> keyLocalizedLabelPairs) {
@@ -1063,6 +1115,9 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

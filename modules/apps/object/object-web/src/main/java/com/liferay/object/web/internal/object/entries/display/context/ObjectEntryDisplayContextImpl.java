@@ -1153,6 +1153,10 @@ public class ObjectEntryDisplayContextImpl
 				ddmFormField.setProperty(
 					"parameterObjectFieldName", parameterObjectField.getName());
 			}
+
+			if (objectRelationship.isEdge()) {
+				ddmFormField.setProperty("visible", false);
+			}
 		}
 		else if (StringUtil.equals(
 					objectField.getBusinessType(),
@@ -1436,10 +1440,6 @@ public class ObjectEntryDisplayContextImpl
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByObjectFieldId2(
 					objectField.getObjectFieldId());
-
-		if (objectRelationship.isEdge()) {
-			return false;
-		}
 
 		ObjectDefinition relatedObjectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(

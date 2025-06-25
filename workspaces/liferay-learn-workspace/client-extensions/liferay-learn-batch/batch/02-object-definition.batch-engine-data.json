@@ -143,13 +143,107 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3assessments",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
 				"label_i18n": "Approved"
 			},
 			"titleObjectFieldName": "name"
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableLocalization": true,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "P2S3_AUDIO_LESSON",
+			"label": {
+				"en_US": "P2S3 Audio Lesson"
+			},
+			"modifiable": true,
+			"name": "P2S3AudioLesson",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"externalReferenceCode": "AUDIO",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Audio"
+					},
+					"localized": false,
+					"name": "audio",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "mp3, mp4"
+						},
+						{
+							"name": "fileSource",
+							"value": "documentsAndMedia"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "LANGUAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Language"
+					},
+					"localized": false,
+					"name": "language",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "VOICE_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Voice Name"
+					},
+					"localized": false,
+					"name": "voiceName",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"pluralLabel": {
+				"en_US": "P2S3 Audio Lessons"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/p2s3audiolessons",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
 		},
 		{
 			"active": true,
@@ -260,7 +354,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3badges",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -385,7 +479,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3certifications",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -706,7 +800,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3enrollments",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -883,7 +977,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3examresults",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -977,7 +1071,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3examresultssynchronizations",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -1112,7 +1206,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3externalmedias",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -1385,7 +1479,7 @@
 					"type": "oneToMany"
 				}
 			],
-			"panelCategoryKey": "site_administration.content",
+			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
 				"en_US": "P2S3 FAQ Topics"
@@ -2311,12 +2405,25 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_LESSON_TO_P2S3_AUDIO_LESSONS",
+					"label": {
+						"en_US": "P2S3 Lesson to P2S3 Audio Lessons"
+					},
+					"name": "p2s3LessonToP2S3AudioLessons",
+					"objectDefinitionExternalReferenceCode1": "P2S3_LESSON",
+					"objectDefinitionExternalReferenceCode2": "P2S3_AUDIO_LESSON",
+					"type": "oneToMany"
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 Lessons"
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3lessons",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2463,7 +2570,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3modules",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2647,7 +2754,7 @@
 				"en_US": "P2S3 Quizzes"
 			},
 			"restContextPath": "/o/c/p2s3quizzes",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2748,7 +2855,7 @@
 				"en_US": "P2S3 Quiz Answers"
 			},
 			"restContextPath": "/o/c/p2s3quizanswers",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2881,7 +2988,7 @@
 				"en_US": "P2S3 Quiz Questions"
 			},
 			"restContextPath": "/o/c/p2s3quizquestions",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2957,7 +3064,7 @@
 			},
 			"portlet": false,
 			"restContextPath": "/o/c/p2s3quizresults",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -3693,7 +3800,7 @@
 				"en_US": "P2S3 User Badges"
 			},
 			"restContextPath": "/o/c/p2s3userbadges",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",

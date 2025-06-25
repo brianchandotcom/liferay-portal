@@ -29,6 +29,7 @@ SessionKeysCheck | .java | Checks that messages send to `SessionsErrors` or `Ses
 [StaticVariableNameCheck](https://checkstyle.sourceforge.io/checks/naming/staticvariablename.html) | .java, .java, .jsp, .jsp, .jspf, .jspf, .jspx, .jspx, .tag, .tag, .tpl, .tpl, .vm, or .vm | Checks that static, non-final variable names conform to a specified pattern. |
 StringBundlerNamingCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks for consistent naming on variables of type 'StringBundler'. |
 TestClassCheck | .java | Checks that names of test classes follow naming conventions. |
+ThreadLocalVariableNameCheck | .java | Checks for consistent naming on variables of type '*ThreadLocal'. |
 ThreadNameCheck | .java | Checks that names of threads follow naming conventions. |
 [TypeNameCheck](https://checkstyle.sourceforge.io/checks/naming/typename.html) | .java | Checks that type names conform to a specified pattern. |
 VariableNameCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that variable names follow naming conventions. |

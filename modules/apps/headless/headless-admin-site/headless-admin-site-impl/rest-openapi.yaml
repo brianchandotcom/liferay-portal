@@ -1752,19 +1752,11 @@ components:
                     description:
                         The master page's key.
                     type: string
-                keywordItemExternalReferences:
-                    description:
-                        The external references to the associated keywords.
-                    items:
-                        $ref: "#/components/schemas/ItemExternalReference"
-                    type: array
                 keywords:
                     description:
-                        The associated keywords. They are not returned by default. They can be embedded via
-                        nestedFields.
+                        A list of keywords describing the master page.
                     items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword
-                    readOnly: true
+                        type: string
                     type: array
                 markedAsDefault:
                     # @review
@@ -1784,15 +1776,6 @@ components:
                         default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
-                    type: array
-                taxonomyCategories:
-                    # @review
-                    description:
-                        The associated categories. They are not returned by default. They can be embedded via
-                        nestedFields.
-                    items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory
-                    readOnly: true
                     type: array
                 taxonomyCategoryItemExternalReferences:
                     # @review
@@ -2254,19 +2237,11 @@ components:
                     description:
                         The page template's key.
                     type: string
-                keywordItemExternalReferences:
-                    description:
-                        The external references to the associated keywords.
-                    items:
-                        $ref: "#/components/schemas/ItemExternalReference"
-                    type: array
                 keywords:
                     description:
-                        The associated keywords. They are not returned by default. They can be embedded via
-                        nestedFields.
+                        A list of keywords describing the page template.
                     items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword
-                    readOnly: true
+                        type: string
                     type: array
                 name:
                     # @review
@@ -2293,15 +2268,6 @@ components:
                     # @review
                     description:
                         The settings of the page template.
-                taxonomyCategories:
-                    # @review
-                    description:
-                        The associated categories. They are not returned by default. They can be embedded via
-                        nestedFields.
-                    items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory
-                    readOnly: true
-                    type: array
                 taxonomyCategoryItemExternalReferences:
                     # @review
                     description:
@@ -2694,20 +2660,11 @@ components:
                     description:
                         The localized relative URLs to the page's rendered content.
                     type: object
-                keywordItemExternalReferences:
-                    description:
-                        The external references to the associated keywords.
-                    items:
-                        $ref: "#/components/schemas/ItemExternalReference"
-                    type: array
                 keywords:
-                    # @review
                     description:
-                        The associated keywords. They are not returned by default. They can be embedded via
-                        nestedFields.
+                        A list of keywords describing the site page.
                     items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword
-                    readOnly: true
+                        type: string
                     type: array
                 name_i18n:
                     additionalProperties:
@@ -2736,15 +2693,6 @@ components:
                     description:
                         The parent page external reference code or null if it is a top level page.
                     type: string
-                taxonomyCategories:
-                    # @review
-                    description:
-                        The associated categories. They are not returned by default. They can be embedded via
-                        nestedFields.
-                    items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory
-                    readOnly: true
-                    type: array
                 taxonomyCategoryItemExternalReferences:
                     # @review
                     description:
@@ -3532,7 +3480,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.site.client', and version '1.0.11'."
+        'com.liferay.headless.admin.site.client', and version '1.0.12'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

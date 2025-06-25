@@ -4,7 +4,6 @@
  */
 
 import {OrderTypes, OrderWorkflowStatusCode} from '../enums/Order';
-import {safeJSONParse} from '../utils/util';
 
 export default class MarketplaceDeliveryOrder {
 	constructor(private order: PlacedOrder) {}
@@ -13,7 +12,7 @@ export default class MarketplaceDeliveryOrder {
 		return this.order.createDate;
 	}
 
-	get isDownloadable() {
+	get canDownload() {
 		return [
 			OrderTypes.CLIENT_EXTENSION,
 			OrderTypes.COMPOSITE_APP,
@@ -24,20 +23,20 @@ export default class MarketplaceDeliveryOrder {
 	}
 
 	get isFreeApp() {
-		const orderOptions = safeJSONParse<
-			Array<{key: string; value: string[]}>
-		>(this.order.placedOrderItems?.[0]?.options, []);
-
-		return (
-			this.order.placedOrderItems?.[0]?.price?.price === 0 &&
-			!orderOptions.some(({value}) => value.includes('trial'))
-		);
+		return this.order.placedOrderItems?.[0]?.price?.price === 0;
 	}
 
-	get isOrderStatusCompleted() {
+	get isOrderCompleted() {
 		return (
 			this.order.orderStatusInfo?.code ===
 			OrderWorkflowStatusCode.COMPLETED
+		);
+	}
+
+	get dxpProvisioningEnabled() {
+		return (
+			this.order.orderTypeExternalReferenceCode === OrderTypes.DXPAPP &&
+			!this.isFreeApp
 		);
 	}
 }

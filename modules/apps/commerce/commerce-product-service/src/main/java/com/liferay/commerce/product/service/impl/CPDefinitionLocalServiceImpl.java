@@ -960,32 +960,6 @@ public class CPDefinitionLocalServiceImpl
 			targetCPDefinition.setVersion(
 				_cProductLocalService.increment(
 					sourceCPDefinition.getCProductId()));
-
-			if (status == WorkflowConstants.STATUS_APPROVED) {
-				CPDefinition publishedCPDefinition =
-					cpDefinitionLocalService.getCPDefinition(
-						sourceCProduct.getPublishedCPDefinitionId());
-
-				publishedCPDefinition.setPublished(false);
-
-				publishedCPDefinition = cpDefinitionPersistence.update(
-					publishedCPDefinition);
-
-				_cProductLocalService.updatePublishedCPDefinitionId(
-					publishedCPDefinition.getCProductId(),
-					targetCPDefinition.getCPDefinitionId());
-
-				long companyId = publishedCPDefinition.getCompanyId();
-				long cProductId = publishedCPDefinition.getCProductId();
-
-				TransactionCommitCallbackUtil.registerCallback(
-					() -> {
-						cpDefinitionLocalService.maintainVersionThreshold(
-							companyId, cProductId);
-
-						return null;
-					});
-			}
 		}
 
 		targetCPDefinition.setStatus(status);
@@ -2512,8 +2486,9 @@ public class CPDefinitionLocalServiceImpl
 			if (_isVersioningEnabled(cpDefinition.getCompanyId())) {
 				CProduct cProduct = cpDefinition.getCProduct();
 
-				if (cpDefinition.getCPDefinitionId() !=
-						cProduct.getPublishedCPDefinitionId()) {
+				if ((status == WorkflowConstants.STATUS_APPROVED) &&
+					(cpDefinition.getCPDefinitionId() !=
+						cProduct.getPublishedCPDefinitionId())) {
 
 					CPDefinition publishedCPDefinition =
 						cpDefinitionLocalService.fetchCPDefinition(
@@ -2524,6 +2499,19 @@ public class CPDefinitionLocalServiceImpl
 
 						cpDefinitionPersistence.update(publishedCPDefinition);
 					}
+
+					_cProductLocalService.updatePublishedCPDefinitionId(
+						cProduct.getCProductId(),
+						cpDefinition.getCPDefinitionId());
+
+					TransactionCommitCallbackUtil.registerCallback(
+						() -> {
+							cpDefinitionLocalService.maintainVersionThreshold(
+								cProduct.getCompanyId(),
+								cProduct.getCProductId());
+
+							return null;
+						});
 				}
 			}
 

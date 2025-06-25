@@ -49,11 +49,10 @@ public class MasterPageDTOConverter
 				setExternalReferenceCode(
 					layoutPageTemplateEntry::getExternalReferenceCode);
 				setKey(layoutPageTemplateEntry::getLayoutPageTemplateEntryKey);
-				setKeywordItemExternalReferences(
-					() -> AssetUtil.getKeywordItemExternalReferences(
+				setKeywords(
+					() -> AssetUtil.getKeywords(
 						Layout.class.getName(),
-						layoutPageTemplateEntry.getPlid(),
-						layoutPageTemplateEntry.getGroupId()));
+						layoutPageTemplateEntry.getPlid()));
 				setMarkedAsDefault(layoutPageTemplateEntry::isDefaultTemplate);
 				setName(layoutPageTemplateEntry::getName);
 				setTaxonomyCategoryItemExternalReferences(

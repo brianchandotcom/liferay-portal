@@ -8,10 +8,10 @@ package com.liferay.portal.kernel.util.comparator;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.PortletCategory;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-
-import java.util.Collections;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class PortletCategoryComparatorTest {
 
 	@Test
 	public void testCompareLocalized() {
-		PropsTestUtil.setProps(Collections.emptyMap());
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 
 		LanguageUtil languageUtil = new LanguageUtil();
 

@@ -1,0 +1,52 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<%@ include file="/osb_patcher/views/init.jsp" %>
+
+<%
+long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersionId");
+
+PatcherProductVersion patcherProductVersion = PatcherProductVersionLocalServiceUtil.fetchPatcherProductVersion(patcherProductVersionId);
+%>
+
+<liferay-util:include page="/osb_patcher/views/toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="tabs1" value="product-versions" />
+</liferay-util:include>
+
+<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="title" value="<%= patcherProductVersion.getName() %>" />
+	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_product_versions" />
+</liferay-util:include>
+
+<aui:model-context bean="<%= patcherProductVersion %>" model="<%= PatcherProductVersion.class %>" />
+
+<portlet:actionURL name="/patcher/update_product_versions" var="updatePatcherProductVersionURL" />
+
+<aui:form action="<%= updatePatcherProductVersionURL %>" method="post">
+	<portlet:renderURL var="viewPatcherProductVersionsURL">
+		<portlet:param name="mvcRenderCommandName" value="/patcher/index_product_versions" />
+	</portlet:renderURL>
+
+	<aui:input name="redirect" type="hidden" value="<%= viewPatcherProductVersionsURL %>" />
+	<aui:input name="patcherProductVersionId" type="hidden" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
+
+	<aui:input name="name" />
+
+	<aui:select label="fix-delivery-method" name="fixDeliveryMethod">
+		<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_FIX_PACK_20 %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_FIX_PACK_20 %>" />
+		<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_FIX_PACK_30 %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_FIX_PACK_30 %>" />
+		<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_MARKETPLACE_RELEASE %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_MARKETPLACE_RELEASE %>" />
+	</aui:select>
+
+	<aui:input label="module-folder-name" name="moduleFolderName" />
+
+	<aui:button-row>
+		<aui:button type="submit" value="update" />
+
+		<aui:button href="<%= viewPatcherProductVersionsURL %>" value="cancel" />
+	</aui:button-row>
+</aui:form>

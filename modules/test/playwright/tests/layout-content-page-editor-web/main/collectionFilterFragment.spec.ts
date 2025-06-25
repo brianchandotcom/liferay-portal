@@ -524,10 +524,16 @@ test(
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		await firstFilter.fill('rabbit');
-		await firstFilter.press('Enter');
+		await expect(async () => {
+			await firstFilter.fill('', {timeout: 1000});
+			await firstFilter.fill('rabbit', {timeout: 1000});
 
-		await expect(page.getByText('No Results Found')).toBeVisible();
+			await firstFilter.press('Enter', {timeout: 1000});
+
+			await expect(page.getByText('No Results Found')).toBeVisible({
+				timeout: 1000,
+			});
+		}).toPass();
 
 		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 	}

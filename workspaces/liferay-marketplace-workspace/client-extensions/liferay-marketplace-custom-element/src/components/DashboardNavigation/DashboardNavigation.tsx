@@ -5,7 +5,7 @@
 
 import useAccounts from '../../hooks/data/useAccounts';
 import AccountSearchDropdown from './AccountSearchDropdown';
-import {DashboardNavigationList} from './DashboardNavigationList';
+import DashboardNavigationItem from './DashboardNavigationItem';
 
 import './DashboardNavigation.scss';
 
@@ -13,6 +13,7 @@ export type DashboardListItems = {
 	itemTitle: string;
 	path: string;
 	symbol: string;
+	visible?: boolean;
 };
 
 export type DashboardNavigationProps = {
@@ -43,7 +44,7 @@ export function DashboardNavigation({
 
 			<div className="dashboard-navigation-body">
 				{dashboardNavigationItems.map((dashboardNavigation, index) => (
-					<DashboardNavigationList
+					<DashboardNavigationItem
 						dashboardNavigation={dashboardNavigation}
 						key={index}
 					/>

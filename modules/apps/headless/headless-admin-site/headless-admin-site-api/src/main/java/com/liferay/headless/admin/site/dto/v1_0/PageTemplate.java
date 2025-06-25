@@ -14,8 +14,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
-import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -383,61 +381,9 @@ public abstract class PageTemplate implements Serializable {
 	private Supplier<String> _keySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The external references to the associated keywords."
+		description = "A list of keywords describing the page template."
 	)
-	@Valid
-	public ItemExternalReference[] getKeywordItemExternalReferences() {
-		if (_keywordItemExternalReferencesSupplier != null) {
-			keywordItemExternalReferences =
-				_keywordItemExternalReferencesSupplier.get();
-
-			_keywordItemExternalReferencesSupplier = null;
-		}
-
-		return keywordItemExternalReferences;
-	}
-
-	public void setKeywordItemExternalReferences(
-		ItemExternalReference[] keywordItemExternalReferences) {
-
-		this.keywordItemExternalReferences = keywordItemExternalReferences;
-
-		_keywordItemExternalReferencesSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setKeywordItemExternalReferences(
-		UnsafeSupplier<ItemExternalReference[], Exception>
-			keywordItemExternalReferencesUnsafeSupplier) {
-
-		_keywordItemExternalReferencesSupplier = () -> {
-			try {
-				return keywordItemExternalReferencesUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The external references to the associated keywords."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ItemExternalReference[] keywordItemExternalReferences;
-
-	@JsonIgnore
-	private Supplier<ItemExternalReference[]>
-		_keywordItemExternalReferencesSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The associated keywords. They are not returned by default. They can be embedded via nestedFields."
-	)
-	@Valid
-	public Keyword[] getKeywords() {
+	public String[] getKeywords() {
 		if (_keywordsSupplier != null) {
 			keywords = _keywordsSupplier.get();
 
@@ -447,7 +393,7 @@ public abstract class PageTemplate implements Serializable {
 		return keywords;
 	}
 
-	public void setKeywords(Keyword[] keywords) {
+	public void setKeywords(String[] keywords) {
 		this.keywords = keywords;
 
 		_keywordsSupplier = null;
@@ -455,7 +401,7 @@ public abstract class PageTemplate implements Serializable {
 
 	@JsonIgnore
 	public void setKeywords(
-		UnsafeSupplier<Keyword[], Exception> keywordsUnsafeSupplier) {
+		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
 
 		_keywordsSupplier = () -> {
 			try {
@@ -471,13 +417,13 @@ public abstract class PageTemplate implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The associated keywords. They are not returned by default. They can be embedded via nestedFields."
+		description = "A list of keywords describing the page template."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Keyword[] keywords;
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] keywords;
 
 	@JsonIgnore
-	private Supplier<Keyword[]> _keywordsSupplier;
+	private Supplier<String[]> _keywordsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page template's name."
@@ -658,53 +604,6 @@ public abstract class PageTemplate implements Serializable {
 
 	@JsonIgnore
 	private Supplier<PageTemplateSettings> _pageTemplateSettingsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The associated categories. They are not returned by default. They can be embedded via nestedFields."
-	)
-	@Valid
-	public TaxonomyCategory[] getTaxonomyCategories() {
-		if (_taxonomyCategoriesSupplier != null) {
-			taxonomyCategories = _taxonomyCategoriesSupplier.get();
-
-			_taxonomyCategoriesSupplier = null;
-		}
-
-		return taxonomyCategories;
-	}
-
-	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
-		this.taxonomyCategories = taxonomyCategories;
-
-		_taxonomyCategoriesSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setTaxonomyCategories(
-		UnsafeSupplier<TaxonomyCategory[], Exception>
-			taxonomyCategoriesUnsafeSupplier) {
-
-		_taxonomyCategoriesSupplier = () -> {
-			try {
-				return taxonomyCategoriesUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The associated categories. They are not returned by default. They can be embedded via nestedFields."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected TaxonomyCategory[] taxonomyCategories;
-
-	@JsonIgnore
-	private Supplier<TaxonomyCategory[]> _taxonomyCategoriesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The external references to the associated categories."
@@ -994,30 +893,7 @@ public abstract class PageTemplate implements Serializable {
 			sb.append("\"");
 		}
 
-		ItemExternalReference[] keywordItemExternalReferences =
-			getKeywordItemExternalReferences();
-
-		if (keywordItemExternalReferences != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"keywordItemExternalReferences\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < keywordItemExternalReferences.length; i++) {
-				sb.append(String.valueOf(keywordItemExternalReferences[i]));
-
-				if ((i + 1) < keywordItemExternalReferences.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		Keyword[] keywords = getKeywords();
+		String[] keywords = getKeywords();
 
 		if (keywords != null) {
 			if (sb.length() > 1) {
@@ -1029,7 +905,11 @@ public abstract class PageTemplate implements Serializable {
 			sb.append("[");
 
 			for (int i = 0; i < keywords.length; i++) {
-				sb.append(keywords[i]);
+				sb.append("\"");
+
+				sb.append(_escape(keywords[i]));
+
+				sb.append("\"");
 
 				if ((i + 1) < keywords.length) {
 					sb.append(", ");
@@ -1099,28 +979,6 @@ public abstract class PageTemplate implements Serializable {
 			sb.append("\"pageTemplateSettings\": ");
 
 			sb.append(String.valueOf(pageTemplateSettings));
-		}
-
-		TaxonomyCategory[] taxonomyCategories = getTaxonomyCategories();
-
-		if (taxonomyCategories != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taxonomyCategories\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategories.length; i++) {
-				sb.append(taxonomyCategories[i]);
-
-				if ((i + 1) < taxonomyCategories.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		ItemExternalReference[] taxonomyCategoryItemExternalReferences =

@@ -70,6 +70,14 @@ export class CommerceThemeClassicCatalogPage {
 			});
 	}
 
+	async addToCart(productName: string) {
+		await this.page.waitForLoadState('networkidle');
+
+		await this.productCardAddToCartButton(productName).click();
+
+		await this.page.waitForLoadState('networkidle');
+	}
+
 	async selectSorting(orderByText: string) {
 		await this.orderByButton.click();
 		const orderByLink = this.page.getByText(orderByText);

@@ -13,6 +13,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -87,59 +89,80 @@ public class EditableValuesMappingExportImportContentProcessor
 	public void validateContentReferences(long groupId, JSONObject jsonObject) {
 	}
 
-	private void _exportDDMTemplateReference(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableJSONObject)
+	private void _exportLayoutPageTemplateEntryReference(
+			String mappedField, PortletDataContext portletDataContext,
+			StagedModel stagedModel)
 		throws Exception {
 
-		String mappedField = editableJSONObject.getString(
-			"mappedField", editableJSONObject.getString("fieldId"));
+		long layoutPageTemplateEntryId = GetterUtil.getLong(
+			mappedField.substring(_LAYOUT_PAGE_TEMPLATE_ENTRY.length()));
 
-		if (!mappedField.startsWith(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
 
-			return;
-		}
-
-		String ddmTemplateKey = mappedField.substring(
-			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
-
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-			portletDataContext.getScopeGroupId(),
-			_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
-
-		if (ddmTemplate != null) {
+		if (layoutPageTemplateEntry != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, ddmTemplate,
+				portletDataContext, stagedModel, layoutPageTemplateEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 	}
 
 	private void _exportTemplateReference(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableJSONObject)
+			String mappedField, PortletDataContext portletDataContext,
+			StagedModel referrerStagedModel)
 		throws Exception {
 
-		String mappedField = editableJSONObject.getString(
-			"collectionFieldId",
-			editableJSONObject.getString(
-				"mappedField", editableJSONObject.getString("fieldId")));
+		StagedModel stagedModel;
 
-		if (!mappedField.startsWith(_TEMPLATE)) {
-			return;
+		if (mappedField.startsWith(_TEMPLATE)) {
+			stagedModel = _templateEntryLocalService.fetchTemplateEntry(
+				GetterUtil.getLong(mappedField.substring(_TEMPLATE.length())));
+		}
+		else {
+			stagedModel = _ddmTemplateLocalService.fetchTemplate(
+				portletDataContext.getScopeGroupId(),
+				_portal.getClassNameId(DDMStructure.class),
+				mappedField.substring(
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length()));
 		}
 
-		String templateEntryId = mappedField.substring(_TEMPLATE.length());
-
-		TemplateEntry templateEntry =
-			_templateEntryLocalService.fetchTemplateEntry(
-				GetterUtil.getLong(templateEntryId));
-
-		if (templateEntry != null) {
+		if (stagedModel != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, templateEntry,
+				portletDataContext, referrerStagedModel, stagedModel,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
+	}
+
+	private String _getTemplateEditableFieldValue(
+		String mappedField, PortletDataContext portletDataContext) {
+
+		if (mappedField.startsWith(_TEMPLATE)) {
+			long templateEntryId = GetterUtil.getLong(
+				mappedField.substring(_TEMPLATE.length()));
+
+			Map<Long, Long> templateEntryIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					TemplateEntry.class);
+
+			long importedTemplateEntryId = MapUtil.getLong(
+				templateEntryIds, templateEntryId, templateEntryId);
+
+			return _TEMPLATE + importedTemplateEntryId;
+		}
+
+		String ddmTemplateKey = mappedField.substring(
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
+
+		Map<String, String> ddmTemplateKeys =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				DDMTemplate.class + ".ddmTemplateKey");
+
+		String importedDDMTemplateKey = MapUtil.getString(
+			ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
+
+		return PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+			importedDDMTemplateKey;
 	}
 
 	private void _replaceAllEditableExportContentReferences(
@@ -216,10 +239,21 @@ public class EditableValuesMappingExportImportContentProcessor
 			return;
 		}
 
-		_exportDDMTemplateReference(
-			portletDataContext, stagedModel, editableJSONObject);
-		_exportTemplateReference(
-			portletDataContext, stagedModel, editableJSONObject);
+		mappedField = GetterUtil.getString(
+			collectionFieldId,
+			GetterUtil.getString(
+				mappedField, editableJSONObject.getString("fieldId")));
+
+		if (mappedField.startsWith(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
+			_exportTemplateReference(
+				mappedField, portletDataContext, stagedModel);
+		}
+		else if (mappedField.startsWith(_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
+			_exportLayoutPageTemplateEntryReference(
+				mappedField, portletDataContext, stagedModel);
+		}
 
 		if ((classNameId == 0) || (classPK == 0)) {
 			return;
@@ -237,60 +271,41 @@ public class EditableValuesMappingExportImportContentProcessor
 	private void _replaceMappedFieldImportContentReferences(
 		PortletDataContext portletDataContext, JSONObject editableJSONObject) {
 
-		String mappedField = editableJSONObject.getString(
-			"collectionFieldId",
-			editableJSONObject.getString(
-				"mappedField", editableJSONObject.getString("fieldId")));
+		String key = "fieldId";
 
-		if (mappedField.startsWith(_TEMPLATE)) {
-			long templateEntryId = GetterUtil.getLong(
-				mappedField.substring(_TEMPLATE.length()));
-
-			Map<Long, Long> templateEntryIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					TemplateEntry.class);
-
-			long importedTemplateEntryId = MapUtil.getLong(
-				templateEntryIds, templateEntryId, templateEntryId);
-
-			if (editableJSONObject.has("collectionFieldId")) {
-				editableJSONObject.put(
-					"collectionFieldId", _TEMPLATE + importedTemplateEntryId);
-			}
-			else if (editableJSONObject.has("mappedField")) {
-				editableJSONObject.put(
-					"mappedField", _TEMPLATE + importedTemplateEntryId);
-			}
-			else {
-				editableJSONObject.put(
-					"fieldId", _TEMPLATE + importedTemplateEntryId);
-			}
+		if (editableJSONObject.has("collectionFieldId")) {
+			key = "collectionFieldId";
 		}
-		else if (mappedField.startsWith(
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+		else if (editableJSONObject.has("mappedField")) {
+			key = "mappedField";
+		}
 
-			String ddmTemplateKey = mappedField.substring(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
+		String mappedField = editableJSONObject.getString(key);
 
-			Map<String, String> ddmTemplateKeys =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					DDMTemplate.class + ".ddmTemplateKey");
+		if (mappedField.startsWith(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
-			String importedDDMTemplateKey = MapUtil.getString(
-				ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
+			editableJSONObject.put(
+				key,
+				_getTemplateEditableFieldValue(
+					mappedField, portletDataContext));
+		}
+		else if (mappedField.startsWith(_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
+			long layoutPageTemplateEntryId = GetterUtil.getLong(
+				mappedField.substring(_LAYOUT_PAGE_TEMPLATE_ENTRY.length()));
 
-			if (editableJSONObject.has("mappedField")) {
-				editableJSONObject.put(
-					"mappedField",
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						importedDDMTemplateKey);
-			}
-			else {
-				editableJSONObject.put(
-					"fieldId",
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						importedDDMTemplateKey);
-			}
+			Map<Long, Long> layoutPageTemplateEntryIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					LayoutPageTemplateEntry.class);
+
+			long importedLayoutPageTemplateEntryId = MapUtil.getLong(
+				layoutPageTemplateEntryIds, layoutPageTemplateEntryId,
+				layoutPageTemplateEntryId);
+
+			editableJSONObject.put(
+				key,
+				_LAYOUT_PAGE_TEMPLATE_ENTRY +
+					importedLayoutPageTemplateEntryId);
 		}
 
 		ExportImportContentProcessorUtil.replaceImportContentReferences(
@@ -302,6 +317,9 @@ public class EditableValuesMappingExportImportContentProcessor
 		}
 	}
 
+	private static final String _LAYOUT_PAGE_TEMPLATE_ENTRY =
+		LayoutPageTemplateEntry.class.getSimpleName() + StringPool.UNDERLINE;
+
 	private static final String _TEMPLATE =
 		PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + StringPool.UNDERLINE +
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX;
@@ -311,6 +329,10 @@ public class EditableValuesMappingExportImportContentProcessor
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;

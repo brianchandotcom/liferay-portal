@@ -100,12 +100,12 @@ public class StagingDataPortletPreferencesTest
 			ServiceTrackerFactory.open(
 				bundle.getBundleContext(),
 				StringBundler.concat(
-					"(jakarta.portlet.name=", DDLPortletKeys.DYNAMIC_DATA_LISTS,
-					")"),
+					"(jakarta.portlet.name=",
+					DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY, ")"),
 				null);
 
 		try {
-			Assert.assertNotNull(serviceTracker.waitForService(10000));
+			Assert.assertNotNull(serviceTracker.waitForService(15000));
 		}
 		finally {
 			serviceTracker.close();

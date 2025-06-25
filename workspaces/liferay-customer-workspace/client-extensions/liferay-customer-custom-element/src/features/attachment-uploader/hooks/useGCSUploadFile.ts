@@ -4,8 +4,7 @@
  */
 
 import {useCallback, useState} from 'react';
-import {Liferay} from '~/services/liferay';
-import i18n from '~/utils/I18n';
+import {useNavigate} from 'react-router-dom';
 
 import useGCSGetUploadOffset from './useGCSGetUploadOffset';
 import useTicketAttachmentsCompleteUpload from './useTicketAttachmentsCompleteUpload';
@@ -14,7 +13,6 @@ interface IParams {
 	accountKey: string;
 	comment: string;
 	file: File;
-	navigateFn: (path: string, options: {state: any}) => void;
 	sessionURL: string;
 	ticketAttachmentId: string;
 	ticketId: string;
@@ -22,7 +20,6 @@ interface IParams {
 
 interface IProps {
 	abortUpload: () => void;
-	error: Error | null;
 	loading: boolean;
 	progress: number;
 	uploadFile: (params: IParams) => Promise<boolean>;
@@ -31,8 +28,8 @@ interface IProps {
 const useGCSUploadFile = (): IProps => {
 	const [abortController, setAbortController] =
 		useState<AbortController | null>(null);
-	const [error, setError] = useState<Error | null>(null);
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 	const [progress, setProgress] = useState(0);
 
 	const {
@@ -54,14 +51,12 @@ const useGCSUploadFile = (): IProps => {
 				accountKey,
 				comment,
 				file,
-				navigateFn,
 				sessionURL,
 				ticketAttachmentId,
 				ticketId,
 			} = params;
 
 			setLoading(true);
-			setError(null);
 			setProgress(0);
 
 			let uploadFailed = false;
@@ -184,12 +179,12 @@ const useGCSUploadFile = (): IProps => {
 
 				if (uploadFailed || controller.signal.aborted) {
 					if (!controller.signal.aborted) {
-						Liferay.Util.openToast({
-							message: i18n.translate(
-								'an-unexpected-error-occurred'
-							),
-							title: i18n.translate('error'),
-							type: 'danger',
+						navigate(`/${ticketId}/unexpected-error`, {
+							state: {
+								attachmentName: file.name,
+								ticketId,
+								uploadAccountKey: accountKey,
+							},
 						});
 					}
 
@@ -206,7 +201,7 @@ const useGCSUploadFile = (): IProps => {
 				}
 
 				if (!gcsGetUploadOffsetLoading && !completeUploadLoading) {
-					navigateFn(`/${ticketId}/upload-confirmation`, {
+					navigate(`/${ticketId}/upload-confirmation`, {
 						state: {
 							attachmentName: file.name,
 							ticketId,
@@ -217,10 +212,12 @@ const useGCSUploadFile = (): IProps => {
 					return true;
 				}
 				else {
-					Liferay.Util.openToast({
-						message: i18n.translate('an-unexpected-error-occurred'),
-						title: i18n.translate('error'),
-						type: 'danger',
+					navigate(`/${ticketId}/unexpected-error`, {
+						state: {
+							attachmentName: file.name,
+							ticketId,
+							uploadAccountKey: accountKey,
+						},
 					});
 
 					return false;
@@ -229,11 +226,13 @@ const useGCSUploadFile = (): IProps => {
 			catch (uploadError) {
 				console.error('Error during GCS upload process:', uploadError);
 
-				setError(
-					uploadError instanceof Error
-						? uploadError
-						: new Error(String(uploadError))
-				);
+				navigate(`/${ticketId}/unexpected-error`, {
+					state: {
+						attachmentName: file.name,
+						ticketId,
+						uploadAccountKey: accountKey,
+					},
+				});
 
 				setProgress(0);
 
@@ -245,13 +244,14 @@ const useGCSUploadFile = (): IProps => {
 			}
 		},
 		[
-			getUploadOffset,
 			completeUpload,
+			completeUploadError,
+			completeUploadLoading,
 			currentOffset,
 			gcsGetUploadOffsetError,
-			completeUploadError,
+			getUploadOffset,
 			gcsGetUploadOffsetLoading,
-			completeUploadLoading,
+			navigate,
 		]
 	);
 
@@ -264,7 +264,7 @@ const useGCSUploadFile = (): IProps => {
 		}
 	}, [abortController]);
 
-	return {abortUpload, error, loading, progress, uploadFile};
+	return {abortUpload, loading, progress, uploadFile};
 };
 
 export default useGCSUploadFile;

@@ -1,0 +1,133 @@
+{
+	"pageElement": {
+		"id": "d1e41c34-3c53-17e1-368e-89a3f402b01b",
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"maxWidth": "var(--container-max-xl)",
+						"paddingBottom": "4",
+						"paddingLeft": "4",
+						"paddingRight": "4",
+						"paddingTop": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 2,
+						"paddingLeft": 2,
+						"paddingRight": 2,
+						"paddingTop": 2,
+						"widthType": "Fixed"
+					}
+				},
+				"id": "3f3e8675-719f-af17-2865-6b3693cff831",
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "cp-text",
+								"siteKey": "Customer Portal"
+							},
+							"fragmentConfig": {
+								"textType": "h1",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"mapping": {
+												"fieldKey": "JournalArticle_title",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"id": "5cd5c76f-854e-76c3-8f15-f8536d7e4981",
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "cp-text",
+								"siteKey": "Customer Portal"
+							},
+							"fragmentConfig": {
+								"textType": "text-paragraph-lg",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"mapping": {
+												"fieldKey": "JournalArticle_description",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"id": "611f1a7d-7a71-0b4e-6cbe-a53795254cc5",
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "cp-text",
+								"siteKey": "Customer Portal"
+							},
+							"fragmentConfig": {
+								"textType": "text-paragraph",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"mapping": {
+												"fieldKey": "DDMStructure_AnnouncementContent",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"id": "16377757-f090-461d-0ae2-ff7b5dbc7462",
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "home"
+		}
+	},
+	"version": 1.1
+}

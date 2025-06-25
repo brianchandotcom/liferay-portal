@@ -118,8 +118,9 @@ export class CommerceMiniCartPage {
 	}
 
 	async submitCart() {
-		this.miniCartButton.waitFor();
-		this.miniCartButton.click();
-		this.submitButton.click();
+		await this.page.waitForLoadState('networkidle');
+
+		await this.miniCartButton.click();
+		await this.submitButton.click();
 	}
 }

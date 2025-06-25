@@ -39,7 +39,6 @@ export const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-20379': {enabled: true},
-		'LPD-43000': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -1796,11 +1795,13 @@ test(
 			await commerceAdminShipmentsPage.addProductsToShipment.click();
 			await (
 				await commerceAdminShipmentsPage.shipmentItemsTableRowAction(
+					1,
 					sku1.sku
 				)
 			).check();
 			await (
 				await commerceAdminShipmentsPage.shipmentItemsTableRowAction(
+					1,
 					sku2.sku
 				)
 			).check();

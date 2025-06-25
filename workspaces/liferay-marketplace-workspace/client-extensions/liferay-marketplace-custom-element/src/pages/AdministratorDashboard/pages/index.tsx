@@ -22,6 +22,7 @@ export default function AdministratorSummary() {
 	const {data: accounts} = useAccountsMetrics('week');
 	const {visitorsMetric} = useAnalyticsViewsMetrics();
 	const {data: orderMetrics} = useOrderMetrics('week');
+	const {data: {kpis = [], projectsKPI} = {}} = useKPI();
 
 	const infoCards = useMemo(
 		() => [
@@ -40,7 +41,7 @@ export default function AdministratorSummary() {
 						&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
 					</span>
 				),
-				value: formatCurrency(orderMetrics?.paidAmount),
+				value: formatCurrency(projectsKPI?.totalAmount?.USD || 0),
 			},
 			{
 				growth: orderMetrics?.growth ?? 0,
@@ -61,13 +62,11 @@ export default function AdministratorSummary() {
 			accounts?.totalCount,
 			orderMetrics?.growth,
 			orderMetrics?.lastPeriod,
-			orderMetrics?.paidAmount,
 			orderMetrics?.totalCount,
+			projectsKPI?.totalAmount?.USD,
 			visitorsMetric,
 		]
 	);
-
-	const {data: kpis = []} = useKPI();
 
 	return (
 		<Page

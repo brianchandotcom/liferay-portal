@@ -50,10 +50,25 @@ const ProjectRoutes = () => {
 		koroneikiData?.koroneikiAccountByExternalReferenceCode;
 
 	if (koroneikiAccount) {
-		localStorage.setItem(
-			`@liferayCP:${Liferay.ThemeDisplay.getUserId()}:lastViewedProject`,
-			koroneikiAccount.accountKey
-		);
+		const userId = Liferay.ThemeDisplay.getUserId();
+		
+		const cookieKey = `CP_LAST_VIEWED_PROJECT_${userId}`;
+		const cookieValue = encodeURIComponent(koroneikiAccount.accountKey);
+		const expires = new Date();
+
+		expires.setDate(expires.getDate() + 30);
+
+		if (Liferay?.Util?.Cookie) {
+			Liferay.Util.Cookie.set?.(
+				cookieKey,
+				cookieValue,
+				Liferay?.Util?.Cookie?.TYPES?.FUNCTIONAL,
+				{
+					expires,
+					secure: true,
+				}
+			);
+		}
 	}
 
 	const {data: myUserAccountData} =

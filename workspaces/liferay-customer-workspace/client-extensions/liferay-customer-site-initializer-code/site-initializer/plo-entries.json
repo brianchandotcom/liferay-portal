@@ -9,6 +9,33 @@
 		}
 	},
 	{
+		"key": "activations-keys",
+		"value": {
+			"en-US": "Activations Keys",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "active",
+		"value": {
+			"en-US": "Active",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "business-event",
+		"value": {
+			"en-US": "Business Event",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
 		"key": "choose-an-organization",
 		"value": {
 			"en-US": "Search or choose your organization",
@@ -24,12 +51,57 @@
 		}
 	},
 	{
+		"key": "contact-support",
+		"value": {
+			"en-US": "Contact Support",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "ended-on",
+		"value": {
+			"en-US": "Ended on",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "ends-on",
+		"value": {
+			"en-US": "Ends on",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "expired",
+		"value": {
+			"en-US": "Expired",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
 		"key": "for-more-information-please-click-x",
 		"value": {
 			"en-US": "For more information, please click {0}.",
 			"es-ES": "Para más información, haz clic {0}.",
 			"ja-JP": "詳細については、{0} をクリックしてください。",
 			"pt-BR": "Para mais informações, por favor clique {0}."
+		}
+	},
+	{
+		"key": "future",
+		"value": {
+			"en-US": "Future",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
 		}
 	},
 	{
@@ -45,6 +117,24 @@
 			"es-ES": "aquí",
 			"ja-JP": "こちら",
 			"pt-BR": "aqui"
+		}
+	},
+	{
+		"key": "last-created-project",
+		"value": {
+			"en-US": "Last Created Project",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "last-viewed-project",
+		"value": {
+			"en-US": "Last Viewed Project",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
 		}
 	},
 	{
@@ -105,9 +195,36 @@
 		}
 	},
 	{
+		"key": "sign-in",
+		"value": {
+			"en-US": "Sign in",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "sign-in-to-access-the-customer-portal-features",
+		"value": {
+			"en-US": "Sign in to access the Customer Portal features",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
 		"key": "sites",
 		"value": {
 			"en-US": "Sites"
+		}
+	},
+	{
+		"key": "see-project-details",
+		"value": {
+			"en-US": "See Project Details",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
 		}
 	},
 	{
@@ -129,12 +246,48 @@
 		}
 	},
 	{
+		"key": "starts-on",
+		"value": {
+			"en-US": "Starts on",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "support-region",
+		"value": {
+			"en-US": "Support Region",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "team-members",
+		"value": {
+			"en-US": "Team Members",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
 		"key": "there-are-no-breaking-changes-in-out-of-the-box-features-and-capabilities-for-this-quarterly-release",
 		"value": {
 			"en-US": "There are no breaking changes in out-of-the-box features and capabilities for this quarterly release.",
 			"es-ES": "No hay cambios rupturistas (breaking changes) en funcionalidades o capacidades listas para su uso en esta versión trimestral (Quarterly Release).",
 			"ja-JP": "この四半期ごとのリリースでは、基本機能および性能に重大な変更点はありません。",
 			"pt-BR": "Não há alterações significativas nos recursos e capacidades prontos para uso nesta versão trimestral (Quarterly Release)."
+		}
+	},
+	{
+		"key": "view-all",
+		"value": {
+			"en-US": "View All",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
 		}
 	},
 	{
@@ -146,7 +299,28 @@
 	{
 		"key": "welcome-x",
 		"value": {
-			"en-US": "Welcome, {0}"
+			"en-US": "Welcome, {0}",
+			"es-ES": "Te damos la bienvenida, {0}",
+			"ja-JP": "ようこそ、○○さん {0}",
+			"pt-BR": "Bem vindo, {0}"
+		}
+	},
+	{
+		"key": "you-dont-have-any-projects-on-customer-portal",
+		"value": {
+			"en-US": "You don't have any projects on Customer Portal.",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "your-project",
+		"value": {
+			"en-US": "Your Project",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
 		}
 	}
 ]

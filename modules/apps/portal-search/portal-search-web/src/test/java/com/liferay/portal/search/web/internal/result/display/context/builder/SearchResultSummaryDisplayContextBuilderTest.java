@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
@@ -42,7 +41,6 @@ import jakarta.portlet.PortletURL;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -69,7 +67,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		setUpAssetRenderer();
 		_setUpGroupLocalService();
 		_setUpLocaleThreadLocal();
-		_setUpPropsUtil();
 		_setUpUser();
 		_setUpUserLocalService();
 
@@ -580,10 +577,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 	private void _setUpLocaleThreadLocal() {
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
-	}
-
-	private void _setUpPropsUtil() {
-		PropsTestUtil.setProps(Collections.emptyMap());
 	}
 
 	private void _setUpUser() throws Exception {

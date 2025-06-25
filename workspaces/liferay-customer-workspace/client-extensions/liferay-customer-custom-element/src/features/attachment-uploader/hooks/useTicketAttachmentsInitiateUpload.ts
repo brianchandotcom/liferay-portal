@@ -4,6 +4,7 @@
  */
 
 import {useCallback, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {Liferay} from '~/services/liferay';
 
 interface IParams {
@@ -20,20 +21,18 @@ interface IResponse {
 }
 
 interface IProps {
-	error: Error | null;
 	initiateUpload: (params: IParams) => Promise<IResponse | null>;
 	loading: boolean;
 	ticketAttachmentId: string;
 }
 
 const useTicketAttachmentsInitiateUpload = (): IProps => {
-	const [error, setError] = useState<Error | null>(null);
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 	const [ticketAttachmentId, setTicketAttachmentId] = useState('');
 
 	const initiateUpload = useCallback(
 		async (params: IParams): Promise<IResponse | null> => {
-			setError(null);
 			setLoading(true);
 
 			const {fileMd5, fileName, fileSize, ticketId} = params;
@@ -54,12 +53,6 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 						method: 'POST',
 					})) as unknown as Response;
 
-				if (!response.ok) {
-					throw new Error(
-						`Failed to initiate upload: ${response.text()}`
-					);
-				}
-
 				const responseJSON = await response.json();
 
 				setTicketAttachmentId(responseJSON.ticketAttachmentId);
@@ -72,11 +65,24 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 			}
 			catch (uploadError) {
 				console.error('Initiate upload error:', uploadError);
-				setError(
-					uploadError instanceof Error
-						? uploadError
-						: new Error(String(uploadError))
-				);
+
+				if ((uploadError as any).status === 409) {
+					navigate(`/${ticketId}/attachment-already-exists`, {
+						state: {
+							attachmentName: fileName,
+							ticketId,
+						},
+					});
+
+					return null;
+				}
+
+				navigate(`/${ticketId}/unexpected-error`, {
+					state: {
+						attachmentName: fileName,
+						ticketId,
+					},
+				});
 
 				return null;
 			}
@@ -84,11 +90,10 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 				setLoading(false);
 			}
 		},
-		[]
+		[navigate]
 	);
 
 	return {
-		error,
 		initiateUpload,
 		loading,
 		ticketAttachmentId,

@@ -7,12 +7,11 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.security.auth.DefaultScreenNameValidator;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,8 +33,7 @@ public class DefaultScreenNameValidatorTest extends DefaultScreenNameValidator {
 
 	@Test
 	public void testGetJSEscapedSpecialChars() {
-		PropsTestUtil.setProps(
-			PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS, "-._'");
+		PropsUtil.set(PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS, "-._'");
 
 		String expected = HtmlUtil.escapeJS(_escapeRegexCharacters("-._'"));
 
@@ -45,12 +43,11 @@ public class DefaultScreenNameValidatorTest extends DefaultScreenNameValidator {
 	@Test
 	public void testValidateSpecialCharacters() {
 		for (String regexReservedCharacter : _REGEX_RESERVED_CHARACTERS) {
-			PropsTestUtil.setProps(
-				PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS, "");
+			PropsUtil.set(PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS, "");
 
 			Assert.assertFalse(validate(0, regexReservedCharacter));
 
-			PropsTestUtil.setProps(
+			PropsUtil.set(
 				PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS,
 				regexReservedCharacter);
 

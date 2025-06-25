@@ -32,9 +32,13 @@ class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 	}
 
 	async getMarketplaceProjectsKPI() {
-		return this.get<{[key: string]: any[]}>('/projects/kpi').catch(
-			() => ({})
-		);
+		return this.get<{
+			projectsUsingMarketplace: any[];
+			totalAmount: {USD: number};
+		}>('/kpi').catch(() => ({
+			projectsUsingMarketplace: [],
+			totalAmount: {USD: 0},
+		}));
 	}
 }
 

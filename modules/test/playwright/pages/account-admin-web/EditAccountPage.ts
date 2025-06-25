@@ -255,9 +255,11 @@ export class EditAccountPage {
 		}
 
 		if (domains && domains.length) {
-			await this.addDomainLink.click();
+			await expect(async () => {
+				await this.addDomainLink.click();
 
-			await expect(this.frameDomainInput).toBeEnabled();
+				await expect(this.frameDomainInput).toBeEnabled({timeout: 500});
+			}).toPass();
 
 			await this.frameDomainInput.fill(domains.join());
 			await this.frameSaveButton.click();

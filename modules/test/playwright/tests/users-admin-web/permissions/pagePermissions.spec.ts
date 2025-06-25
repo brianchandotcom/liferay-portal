@@ -16,8 +16,14 @@ export const test = mergeTests(
 test('LPD-34368 page role permission should be saved when permissions.propagation.enabled is true', async ({
 	portletConfigurationPermissionsPage,
 }) => {
-	await portletConfigurationPermissionsPage.goToEditPagePermissions();
-	await portletConfigurationPermissionsPage.saveButton.click();
+	await expect(async () => {
+		await portletConfigurationPermissionsPage.goToEditPagePermissions();
+
+		await portletConfigurationPermissionsPage.saveButton.click({
+			timeout: 1000,
+		});
+	}).toPass();
+
 	await expect(
 		portletConfigurationPermissionsPage.successMessage
 	).toBeVisible();

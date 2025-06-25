@@ -59,6 +59,12 @@ public class ObjectEntryVersionLocalServiceUtil {
 		return getService().addObjectEntryVersion(objectEntryVersion);
 	}
 
+	public static void checkObjectEntryVersions(long companyId)
+		throws PortalException {
+
+		getService().checkObjectEntryVersions(companyId);
+	}
+
 	/**
 	 * Creates a new object entry version with the primary key. Does not add the object entry version to the database.
 	 *

@@ -28,13 +28,10 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -647,18 +644,12 @@ public class PageSpecificationResourceTest
 			Layout layout, Settings settings)
 		throws Exception {
 
-		if (Validator.isNull(layout.getColorSchemeId()) ||
-			Validator.isNull(layout.getThemeId())) {
-
+		if (Validator.isNull(layout.getColorSchemeId())) {
 			Assert.assertTrue(Validator.isNull(settings.getColorSchemeName()));
 		}
 		else {
-			ColorScheme colorScheme = _themeLocalService.getColorScheme(
-				layout.getCompanyId(), layout.getThemeId(),
-				layout.getColorSchemeId());
-
 			Assert.assertEquals(
-				colorScheme.getName(), settings.getColorSchemeName());
+				layout.getColorSchemeId(), settings.getColorSchemeName());
 		}
 
 		if (Validator.isNull(layout.getCss())) {
@@ -712,10 +703,7 @@ public class PageSpecificationResourceTest
 			Assert.assertTrue(Validator.isNull(settings.getThemeName()));
 		}
 		else {
-			Theme theme = _themeLocalService.getTheme(
-				layout.getCompanyId(), layout.getThemeId());
-
-			Assert.assertEquals(theme.getName(), settings.getThemeName());
+			Assert.assertEquals(layout.getThemeId(), settings.getThemeName());
 		}
 
 		UnicodeProperties themeSettingsUnicodeProperties =
@@ -1771,8 +1759,5 @@ public class PageSpecificationResourceTest
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
-
-	@Inject
-	private ThemeLocalService _themeLocalService;
 
 }

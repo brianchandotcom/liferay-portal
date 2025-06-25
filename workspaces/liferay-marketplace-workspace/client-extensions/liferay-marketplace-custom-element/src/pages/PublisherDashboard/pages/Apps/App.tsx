@@ -8,7 +8,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useMemo, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import useSWR, {KeyedMutator} from 'swr';
 
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
@@ -126,6 +126,8 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 
 	const isNewAppEnabled = properties.featureFlags.includes('LPD-24546');
 
+	const isSolutionsPage = useLocation().pathname.includes('/solutions');
+
 	const {
 		data: selectedApp,
 		isLoading,
@@ -167,7 +169,9 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 			>
 				<ClayIcon className="mr-2" symbol="order-arrow-left" />
 				<span className="h5 mt-1">
-					{i18n.translate('back-to-apps')}
+					{isSolutionsPage
+						? i18n.translate('back-to-solutions')
+						: i18n.translate('back-to-apps')}
 				</span>
 			</ClayButton>
 

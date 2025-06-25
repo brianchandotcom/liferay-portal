@@ -10,7 +10,10 @@ import {fetch} from 'frontend-js-web';
 import CustomAuthorTableCell from './CustomAuthorTableCell';
 import SampleInfoPanel from './SampleInfoPanel';
 
-import type {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import type {
+	IFileDropSettings,
+	IInternalRenderer,
+} from '@liferay/frontend-data-set-web';
 
 export default function propsTransformer({
 	additionalProps: {greeting},
@@ -23,11 +26,17 @@ export default function propsTransformer({
 		type: 'internal',
 	};
 
+	const fileDropSettings: IFileDropSettings = {
+		enabled: true,
+		isDropTarget: ({item}: {item: any}) => item.color !== 'Green',
+	};
+
 	return {
 		...otherProps,
 		customRenderers: {
 			tableCell: [customAuthorTableCellRenderer],
 		},
+		fileDropSettings,
 		infoPanelComponent: SampleInfoPanel,
 		onActionDropdownItemClick({
 			action,

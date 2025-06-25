@@ -21,13 +21,17 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.query.QueryTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -100,7 +104,7 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(QueryFilter queryFilter) {
-		return queryFilterTranslator.translate(queryFilter);
+		return _queryTranslator.translate(queryFilter.getQuery(), null);
 	}
 
 	@Override
@@ -128,6 +132,11 @@ public class ElasticsearchFilterTranslator
 		return termsSetFilterTranslator.translate(termsSetFilter);
 	}
 
+	@Activate
+	protected void activate() {
+		_queryTranslator = new ElasticsearchQueryTranslator(indexNameBuilder);
+	}
+
 	@Reference
 	protected BooleanFilterTranslator booleanFilterTranslator;
 
@@ -153,13 +162,13 @@ public class ElasticsearchFilterTranslator
 	protected GeoPolygonFilterTranslator geoPolygonFilterTranslator;
 
 	@Reference
+	protected IndexNameBuilder indexNameBuilder;
+
+	@Reference
 	protected MissingFilterTranslator missingFilterTranslator;
 
 	@Reference
 	protected PrefixFilterTranslator prefixFilterTranslator;
-
-	@Reference
-	protected QueryFilterTranslator queryFilterTranslator;
 
 	@Reference
 	protected RangeFilterTranslator rangeFilterTranslator;
@@ -175,5 +184,7 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected TermsSetFilterTranslator termsSetFilterTranslator;
+
+	private QueryTranslator<QueryBuilder> _queryTranslator;
 
 }

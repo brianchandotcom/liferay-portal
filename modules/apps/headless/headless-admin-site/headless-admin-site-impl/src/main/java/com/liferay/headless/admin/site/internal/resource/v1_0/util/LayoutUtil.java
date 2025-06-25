@@ -18,18 +18,14 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
-import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -658,72 +654,13 @@ public class LayoutUtil {
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			unicodeProperties.toString());
 
-		Theme theme = null;
 		String themeId = null;
-
-		if ((settings != null) &&
-			Validator.isNotNull(settings.getThemeName())) {
-
-			for (Theme curTheme :
-					ThemeLocalServiceUtil.getThemes(layout.getCompanyId())) {
-
-				if (!Objects.equals(
-						curTheme.getName(), settings.getThemeName())) {
-
-					continue;
-				}
-
-				theme = curTheme;
-				themeId = curTheme.getThemeId();
-
-				break;
-			}
-
-			if (themeId == null) {
-				throw new UnsupportedOperationException();
-			}
-		}
-
 		String colorSchemeId = null;
-
-		if ((settings != null) &&
-			Validator.isNotNull(settings.getColorSchemeName())) {
-
-			if (theme == null) {
-				throw new UnsupportedOperationException();
-			}
-
-			for (ColorScheme colorScheme : theme.getColorSchemes()) {
-				if (!Objects.equals(
-						colorScheme.getName(), settings.getColorSchemeName())) {
-
-					continue;
-				}
-
-				colorSchemeId = colorScheme.getColorSchemeId();
-
-				break;
-			}
-
-			if (colorSchemeId == null) {
-				ColorScheme colorScheme =
-					ColorSchemeFactoryUtil.getDefaultRegularColorScheme();
-
-				if (Objects.equals(
-						colorScheme.getName(), settings.getColorSchemeName())) {
-
-					colorSchemeId = colorScheme.getColorSchemeId();
-				}
-			}
-
-			if (colorSchemeId == null) {
-				throw new UnsupportedOperationException();
-			}
-		}
-
 		String css = null;
 
 		if (settings != null) {
+			themeId = settings.getThemeName();
+			colorSchemeId = settings.getColorSchemeName();
 			css = settings.getCss();
 		}
 

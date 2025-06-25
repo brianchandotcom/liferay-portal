@@ -25,11 +25,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -177,22 +174,11 @@ public class PageSpecificationDTOConverter
 			{
 				setColorSchemeName(
 					() -> {
-						if (Validator.isNull(layout.getColorSchemeId()) ||
-							Validator.isNull(layout.getThemeId())) {
-
+						if (Validator.isNull(layout.getColorSchemeId())) {
 							return null;
 						}
 
-						ColorScheme colorScheme =
-							_themeLocalService.getColorScheme(
-								layout.getCompanyId(), layout.getThemeId(),
-								layout.getColorSchemeId());
-
-						if (colorScheme == null) {
-							return null;
-						}
-
-						return colorScheme.getName();
+						return layout.getColorSchemeId();
 					});
 				setCss(
 					() -> {
@@ -294,14 +280,7 @@ public class PageSpecificationDTOConverter
 							return null;
 						}
 
-						Theme theme = _themeLocalService.fetchTheme(
-							layout.getCompanyId(), layout.getThemeId());
-
-						if (theme == null) {
-							return null;
-						}
-
-						return theme.getName();
+						return layout.getThemeId();
 					});
 				setThemeSettings(
 					() -> {
@@ -455,8 +434,5 @@ public class PageSpecificationDTOConverter
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
-
-	@Reference
-	private ThemeLocalService _themeLocalService;
 
 }

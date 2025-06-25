@@ -7,10 +7,10 @@ package com.liferay.portal.kernel.util.comparator;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupWrapper;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-
-import java.util.Collections;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,7 +23,7 @@ public class GroupNameComparatorTest {
 
 	@Before
 	public void setUp() {
-		PropsTestUtil.setProps(Collections.emptyMap());
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 
 		setUpGroups();
 	}

@@ -7,7 +7,7 @@ import fetcher from '../fetcher';
 
 export default class HeadlessAdminUser {
 	static async getAccount(accountId: string | number) {
-		return fetcher<UserAccount>(
+		return fetcher<Account>(
 			`/o/headless-admin-user/v1.0/accounts/${accountId}`
 		);
 	}
@@ -31,7 +31,7 @@ export default class HeadlessAdminUser {
 	}
 
 	static async getUserAccountById(accountId: string | number) {
-		return fetcher(
+		return fetcher<UserAccount>(
 			`/o/headless-admin-user/v1.0/user-accounts/${accountId}`
 		);
 	}

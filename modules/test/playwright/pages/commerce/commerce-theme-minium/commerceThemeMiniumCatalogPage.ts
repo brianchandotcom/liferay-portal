@@ -188,6 +188,14 @@ export class CommerceThemeMiniumCatalogPage {
 		);
 	}
 
+	async addToCart(productName: string) {
+		await this.page.waitForLoadState('networkidle');
+
+		await this.productCardAddToCartButton(productName).click();
+
+		await this.page.waitForLoadState('networkidle');
+	}
+
 	async checkQuantitiesInPopOverMessages(
 		maxQuantity: number,
 		minQuantity: number,
@@ -249,6 +257,8 @@ export class CommerceThemeMiniumCatalogPage {
 	}
 
 	async focusGlobalSearchBarInput() {
+		await this.page.waitForLoadState('networkidle');
+
 		await expect(async () => {
 			await this.globalSearchBarButton.click();
 

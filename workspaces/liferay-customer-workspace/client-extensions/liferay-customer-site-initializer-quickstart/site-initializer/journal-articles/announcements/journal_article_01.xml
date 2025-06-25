@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="AnnouncementContent" index-type="text" instance-id="mZO2CZEV" name="AnnouncementContent" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Here</strong> it is!</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

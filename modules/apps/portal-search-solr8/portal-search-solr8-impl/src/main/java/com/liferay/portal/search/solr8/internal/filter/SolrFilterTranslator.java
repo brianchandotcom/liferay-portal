@@ -36,6 +36,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.search.TermRangeQuery;
@@ -142,7 +143,9 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(PrefixFilter prefixFilter) {
-		return _prefixFilterTranslator.translate(prefixFilter);
+		Term term = new Term(prefixFilter.getField(), prefixFilter.getPrefix());
+
+		return new PrefixQuery(term);
 	}
 
 	@Override
@@ -244,9 +247,6 @@ public class SolrFilterTranslator
 
 	@Reference
 	private GeoDistanceFilterTranslator _geoDistanceFilterTranslator;
-
-	@Reference
-	private PrefixFilterTranslator _prefixFilterTranslator;
 
 	private final QueryVisitor<Query> _queryVisitor = new BaseQueryVisitor() {
 	};

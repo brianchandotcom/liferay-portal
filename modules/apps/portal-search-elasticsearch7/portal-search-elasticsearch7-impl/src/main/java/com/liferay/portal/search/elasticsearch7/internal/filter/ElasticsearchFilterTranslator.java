@@ -220,7 +220,8 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(PrefixFilter prefixFilter) {
-		return prefixFilterTranslator.translate(prefixFilter);
+		return QueryBuilders.prefixQuery(
+			prefixFilter.getField(), prefixFilter.getPrefix());
 	}
 
 	@Override
@@ -293,9 +294,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
-
-	@Reference
-	protected PrefixFilterTranslator prefixFilterTranslator;
 
 	@Reference
 	protected RangeTermFilterTranslator rangeTermFilterTranslator;

@@ -355,10 +355,6 @@ public class Sidecar {
 				ioException);
 		}
 
-		arguments.add(
-			"--enable-native-access=org.elasticsearch.nativeaccess," +
-				"org.apache.lucene.core");
-		arguments.add("--enable-native-access=ALL-UNNAMED");
 		arguments.add("-Des.distribution.type=tar");
 		arguments.add("-Des.networkaddress.cache.negative.ttl=10");
 		arguments.add("-Des.networkaddress.cache.ttl=60");
@@ -375,6 +371,10 @@ public class Sidecar {
 		arguments.add("-Dlog4j2.formatMsgNoLookups=true");
 		arguments.add(
 			"-Dorg.apache.lucene.vectorization.upperJavaFeatureVersion=21");
+		arguments.add("--enable-native-access=ALL-UNNAMED");
+		arguments.add(
+			"--enable-native-access=org.elasticsearch.nativeaccess," +
+				"org.apache.lucene.core");
 
 		if (JavaDetector.isJDK21() && OSDetector.isLinux()) {
 			arguments.add("-XX:-UseContainerSupport");

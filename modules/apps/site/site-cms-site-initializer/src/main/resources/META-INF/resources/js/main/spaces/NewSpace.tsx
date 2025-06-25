@@ -11,8 +11,8 @@ import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 import SpaceService from '../../common/services/SpaceService';
+import {LogoColor} from '../../common/types/Space';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
-import {LogoColor} from '../components/SpaceSticker';
 import {
 	invalidCharacters,
 	maxLength,

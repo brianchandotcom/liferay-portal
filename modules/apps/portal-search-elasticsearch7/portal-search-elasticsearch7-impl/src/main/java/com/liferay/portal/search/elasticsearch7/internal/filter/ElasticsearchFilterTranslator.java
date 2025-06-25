@@ -33,6 +33,9 @@ import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -91,14 +94,6 @@ public class ElasticsearchFilterTranslator
 		}
 
 		return boolQueryBuilder;
-	}
-
-	protected QueryBuilder translate(
-		BooleanClause<Filter> booleanClause) {
-
-		Filter filter = booleanClause.getClause();
-
-		return filter.accept(this);
 	}
 
 	@Override
@@ -169,7 +164,19 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(GeoPolygonFilter geoPolygonFilter) {
-		return geoPolygonFilterTranslator.translate(geoPolygonFilter);
+		List<GeoPoint> geoPoints = new ArrayList<>();
+
+		for (GeoLocationPoint geoLocationPoint :
+				geoPolygonFilter.getGeoLocationPoints()) {
+
+			geoPoints.add(
+				new GeoPoint(
+					geoLocationPoint.getLatitude(),
+					geoLocationPoint.getLongitude()));
+		}
+
+		return QueryBuilders.geoPolygonQuery(
+			geoPolygonFilter.getField(), geoPoints);
 	}
 
 	@Override
@@ -248,6 +255,12 @@ public class ElasticsearchFilterTranslator
 		_queryTranslator = new ElasticsearchQueryTranslator(indexNameBuilder);
 	}
 
+	protected QueryBuilder translate(BooleanClause<Filter> booleanClause) {
+		Filter filter = booleanClause.getClause();
+
+		return filter.accept(this);
+	}
+
 	@Reference
 	protected DateRangeTermFilterTranslator dateRangeTermFilterTranslator;
 
@@ -259,9 +272,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected GeoDistanceFilterTranslator geoDistanceFilterTranslator;
-
-	@Reference
-	protected GeoPolygonFilterTranslator geoPolygonFilterTranslator;
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;

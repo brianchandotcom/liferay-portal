@@ -123,7 +123,7 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(GeoPolygonFilter geoPolygonFilter) {
-		return _geoPolygonFilterTranslator.translate(geoPolygonFilter);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -247,9 +247,6 @@ public class SolrFilterTranslator
 
 	@Reference
 	private GeoDistanceFilterTranslator _geoDistanceFilterTranslator;
-
-	@Reference
-	private GeoPolygonFilterTranslator _geoPolygonFilterTranslator;
 
 	@Reference
 	private PrefixFilterTranslator _prefixFilterTranslator;

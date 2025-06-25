@@ -591,7 +591,10 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "Announcements"
+														"en_US": "Announcements",
+														"es_ES": "Anuncios",
+														"ja_JP": "アナウンスメント",
+														"pt_BR": "Avisos"
 													}
 												}
 											}
@@ -634,7 +637,10 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "View all"
+														"en_US": "View all",
+														"es_ES": "Ver todos",
+														"ja_JP": "全てを見る",
+														"pt_BR": "Ver tudo"
 													}
 												}
 											}
@@ -884,7 +890,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Read more&nbsp;→"
+																		"en_US": "Read more&nbsp;→",
+																		"es_ES": "Lee más&nbsp;→",
+																		"ja_JP": "さらに読む&nbsp;→",
+																		"pt_BR": "Ler mais&nbsp;→"
 																	}
 																}
 															}

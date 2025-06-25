@@ -27,12 +27,12 @@
 		}
 	},
 	{
-		"key": "business-event",
+		"key": "business-events",
 		"value": {
-			"en-US": "Business Event",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"en-US": "Business Events",
+			"es-ES": "Eventos de negocio",
+			"ja-JP": "ビジネスイベント",
+			"pt-BR": "Eventos de Negócios"
 		}
 	},
 	{
@@ -123,18 +123,18 @@
 		"key": "last-created-project",
 		"value": {
 			"en-US": "Last Created Project",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Último proyecto creado",
+			"ja-JP": "最後に作成されたプロジェクト",
+			"pt-BR": "Último projeto criado"
 		}
 	},
 	{
 		"key": "last-viewed-project",
 		"value": {
 			"en-US": "Last Viewed Project",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Último proyecto visualizado",
+			"ja-JP": "最後に見たプロジェクト",
+			"pt-BR": "Último projeto visualizado"
 		}
 	},
 	{
@@ -222,9 +222,9 @@
 		"key": "see-project-details",
 		"value": {
 			"en-US": "See Project Details",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Ver detalles del proyecto",
+			"ja-JP": "プロジェクトの詳細を見る",
+			"pt-BR": "Ver detalhes do projeto"
 		}
 	},
 	{
@@ -249,27 +249,27 @@
 		"key": "starts-on",
 		"value": {
 			"en-US": "Starts on",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Comienza el",
+			"ja-JP": "開始",
+			"pt-BR": "Começa em"
 		}
 	},
 	{
 		"key": "support-region",
 		"value": {
 			"en-US": "Support Region",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Región de soporte",
+			"ja-JP": "サポート地域",
+			"pt-BR": "Região de suporte"
 		}
 	},
 	{
 		"key": "team-members",
 		"value": {
 			"en-US": "Team Members",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Miembros del equipo",
+			"ja-JP": "チームメンバー",
+			"pt-BR": "Membros da equipe"
 		}
 	},
 	{
@@ -293,7 +293,10 @@
 	{
 		"key": "welcome-to-customer-portal",
 		"value": {
-			"en-US": "Welcome to Customer Portal"
+			"en-US": "Welcome to Customer Portal",
+			"es-ES": "Te damos la bienvenida al Portal del cliente",
+			"ja-JP": "カスタマーポータルへようこそ",
+			"pt-BR": "Bem vindo ao Portal do cliente"
 		}
 	},
 	{

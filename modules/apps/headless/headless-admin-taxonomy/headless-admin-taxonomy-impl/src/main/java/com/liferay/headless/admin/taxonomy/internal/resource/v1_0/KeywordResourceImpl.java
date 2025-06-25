@@ -308,7 +308,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			TaxonomyGroupUtil.getAssetLibraryGroupIds(
 				keyword.getAssetLibraries()));
 
-		return keyword;
+		return postKeyword;
 	}
 
 	@Override

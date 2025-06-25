@@ -203,22 +203,19 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				try (DirectoryStream<Path> folderIdDirectoryStream =
 						Files.newDirectoryStream(folderIdPath)) {
 
-					for (Path numericFileEntryNameDirectory :
-							folderIdDirectoryStream) {
-
-						if (!Files.isDirectory(numericFileEntryNameDirectory)) {
+					for (Path fileEntryDirectory : folderIdDirectoryStream) {
+						if (!Files.isDirectory(fileEntryDirectory)) {
 							_log.error(
 								"Found file in file system structure " +
 									"directory (only directories expected): " +
-										numericFileEntryNameDirectory);
+										fileEntryDirectory);
 
 							return false;
 						}
 
 						if (StringUtil.contains(
 								String.valueOf(
-									numericFileEntryNameDirectory.
-										getFileName()),
+									fileEntryDirectory.getFileName()),
 								StringPool.PERIOD, StringPool.BLANK)) {
 
 							_log.error(
@@ -226,18 +223,18 @@ public class PreupgradeVerifyFileSystemStoreStructure
 									"Found directory with extension in file ",
 									"system structure (no extensions ",
 									"expected): ",
-									numericFileEntryNameDirectory.toString()));
+									fileEntryDirectory.toString()));
 
 							return false;
 						}
 
-						if (!_hasVersionFile(numericFileEntryNameDirectory)) {
+						if (!_hasVersionFile(fileEntryDirectory)) {
 							_log.error(
 								StringBundler.concat(
 									"Directory does not contain valid version ",
 									"files as expected in file system ",
 									"structure: ",
-									numericFileEntryNameDirectory.toString()));
+									fileEntryDirectory.toString()));
 
 							return false;
 						}
@@ -259,9 +256,9 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _hasVersionFile(Path numericFileEntryNameDirectory) {
+	private boolean _hasVersionFile(Path fileEntryDirectory) {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				numericFileEntryNameDirectory)) {
+				fileEntryDirectory)) {
 
 			for (Path versionNumberFile : directoryStream) {
 				if (Files.isDirectory(versionNumberFile)) {
@@ -274,8 +271,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				if (!versionNumberFileName.matches("\\d+\\.\\d+.*")) {
 					_log.error(
 						"Found file that does not match version structure " +
-							"(expected \\d+\\.\\d+.*): " +
-								versionNumberFile);
+							"(expected \\d+\\.\\d+.*): " + versionNumberFile);
 
 					return false;
 				}
@@ -287,7 +283,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to check for version file in: " +
-						numericFileEntryNameDirectory,
+						fileEntryDirectory,
 					exception);
 			}
 
@@ -301,37 +297,35 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				folderIdPath)) {
 
-			for (Path numericFileEntryNameDirectory : directoryStream) {
-				if (!Files.isDirectory(numericFileEntryNameDirectory)) {
+			for (Path fileEntryDirectory : directoryStream) {
+				if (!Files.isDirectory(fileEntryDirectory)) {
 					_log.error(
 						"Found file in advanced file system structure " +
 							"directory (only directories expected): " +
-								numericFileEntryNameDirectory);
+								fileEntryDirectory);
 
 					return false;
 				}
 
-				String numericFileEntryNameDirectoryName = String.valueOf(
-					numericFileEntryNameDirectory.getFileName());
+				String fileEntryDirectoryName = String.valueOf(
+					fileEntryDirectory.getFileName());
 
-				if (numericFileEntryNameDirectoryName.equals("DLFE")) {
+				if (fileEntryDirectoryName.equals("DLFE")) {
 					if (!_validateAdvancedFileSystemSubdirectories(
-							numericFileEntryNameDirectory)) {
+							fileEntryDirectory)) {
 
 						return false;
 					}
 				}
-				else if ((numericFileEntryNameDirectoryName.length() > 2) &&
+				else if ((fileEntryDirectoryName.length() > 2) &&
 						 Validator.isNull(
-							 FileUtil.getExtension(
-								 numericFileEntryNameDirectoryName))) {
+							 FileUtil.getExtension(fileEntryDirectoryName))) {
 
 					_log.error(
 						StringBundler.concat(
 							"Found directory with name longer than 2 without ",
 							"extension in advanced file system structure ",
-							"directory: ",
-							numericFileEntryNameDirectory.toString()));
+							"directory: ", fileEntryDirectory.toString()));
 
 					return false;
 				}

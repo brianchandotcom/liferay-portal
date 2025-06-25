@@ -34,7 +34,6 @@ public class ElasticsearchFilterTranslatorFixture {
 				geoDistanceRangeFilterTranslator =
 					new GeoDistanceRangeFilterTranslatorImpl();
 				indexNameBuilder = _createIndexNameBuilder();
-				missingFilterTranslator = new MissingFilterTranslatorImpl();
 				prefixFilterTranslator = new PrefixFilterTranslatorImpl();
 				rangeTermFilterTranslator = new RangeTermFilterTranslatorImpl();
 				termFilterTranslator = new TermFilterTranslatorImpl();

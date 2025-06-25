@@ -36,9 +36,10 @@ public class SAPEntryServiceSignatureUpgradeProcess extends UpgradeProcess {
 			StringBundler.concat(
 				"update SAPEntry set allowedServiceSignatures = ",
 				"REPLACE(allowedServiceSignatures, '",
-				oldAllowedServiceSignatures,
-				"', '", updatedSignature, "') where allowedServiceSignatures ",
-				"like '%", newAllowedServiceSignatures, "%'"));
+				oldAllowedServiceSignatures, "', '",
+				newAllowedServiceSignatures,
+				"') where allowedServiceSignatures ", "like '%",
+				oldAllowedServiceSignatures, "%'"));
 	}
 
 }

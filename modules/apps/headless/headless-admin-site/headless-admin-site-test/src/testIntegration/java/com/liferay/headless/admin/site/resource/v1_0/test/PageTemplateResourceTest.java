@@ -11,9 +11,11 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
+import com.liferay.headless.admin.site.client.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
+import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplateSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.PageTemplateResource;
@@ -506,7 +508,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"active", "description_i18n", "externalReferenceCode", "keywords",
-			"name", "name_i18n", "pageTemplateSet",
+			"name", "name_i18n", "pageTemplateSet", "pageTemplateSettings",
 			"taxonomyCategoryItemExternalReferences"
 		};
 	}
@@ -843,6 +845,20 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					randomName
 				).build();
 				pageTemplateSet = _getPageTemplateSet(group);
+				pageTemplateSettings = new WidgetPageTemplateSettings() {
+					{
+						setLayoutTemplateId("2_columns_ii");
+						setNavigationSettings(
+							new NavigationSettings() {
+								{
+									setTarget(RandomTestUtil::randomString);
+									setTargetType(
+										() -> TargetType.SPECIFIC_FRAME);
+								}
+							});
+						setType(Type.WIDGET_PAGE_TEMPLATE_SETTINGS);
+					}
+				};
 				taxonomyCategoryItemExternalReferences =
 					AssetTestUtil.randomTaxonomyCategoryItemExternalReferences(
 						testCompany.getGroupId(), serviceContext);

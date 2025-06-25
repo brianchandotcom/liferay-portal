@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,16 +78,18 @@ public class PreupgradeVerifyDatabaseCharacterSet
 					continue;
 				}
 
-				throw new VerifyException(
-					StringBundler.concat(
-						"Mixed character set and collation: ", tableName,
-						" has ", resultSet.getString("character_set_name"),
-						" character set and ",
-						resultSet.getString("collation_name"),
-						" collation, but database has ",
-						resultSet.getString("default_character_set_name"),
-						" character set and ",
-						resultSet.getString("default_collation_name")));
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Mixed character set and collation: ", tableName,
+							" has ", resultSet.getString("character_set_name"),
+							" character set and ",
+							resultSet.getString("collation_name"),
+							" collation, but database has ",
+							resultSet.getString("default_character_set_name"),
+							" character set and ",
+							resultSet.getString("default_collation_name")));
+				}
 			}
 		}
 	}
@@ -94,5 +98,8 @@ public class PreupgradeVerifyDatabaseCharacterSet
 	protected boolean isSkipDBPartitions() {
 		return true;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PreupgradeVerifyDatabaseCharacterSet.class);
 
 }

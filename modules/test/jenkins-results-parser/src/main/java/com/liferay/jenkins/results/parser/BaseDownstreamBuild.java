@@ -49,6 +49,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -243,6 +244,14 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 				"skipCount", testReportJSONObject.optInt("skipCount")
 			);
 		}
+
+		JSONArray testResultsJSONArray = new JSONArray();
+
+		for (TestResult testResult : getTestResults(null)) {
+			testResultsJSONArray.put(testResult.getTestReportJSONObject());
+		}
+
+		buildReportJSONObject.put("testResults", testResultsJSONArray);
 
 		return buildReportJSONObject;
 	}

@@ -20,7 +20,6 @@ import com.liferay.portal.search.internal.stats.StatsResponseBuilderFactoryImpl;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.filter.DateRangeTermFilterTranslatorImpl;
-import com.liferay.portal.search.solr8.internal.filter.ExistsFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.filter.GeoDistanceFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.filter.RangeTermFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.filter.SolrFilterTranslator;
@@ -217,9 +216,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			solrFilterTranslator, "_dateRangeTermFilterTranslator",
 			new DateRangeTermFilterTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
-			solrFilterTranslator, "_existsFilterTranslator",
-			new ExistsFilterTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
 			solrFilterTranslator, "_geoDistanceFilterTranslator",
 			new GeoDistanceFilterTranslatorImpl());

@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import {Space} from '../../../types/Space';
+import {Space} from '../../../common/types/Space';
 import SpacesDisplay from '../../components/SpacesDisplay';
 
 export interface MultipleSpacesRendererProps {

@@ -65,6 +65,7 @@ const FieldText = ({
 				disabled={disabled}
 				id={fieldId}
 				name={name}
+				required={required}
 				type={type}
 				value={value}
 			/>

@@ -358,17 +358,16 @@ public class ConfigurationModelRetrieverImpl
 					filter = FrameworkUtil.createFilter(propertyFilterString);
 				}
 
-				for (Configuration configuration : configurations) {
-					if (filter == null) {
-						configurationList.add(configuration);
-					}
-					else {
-						Dictionary<String, Object> properties =
-							configuration.getProcessedProperties(null);
+				if (filter == null) {
+					return configurations;
+				}
 
-						if (filter.match(properties)) {
-							configurationList.add(configuration);
-						}
+				for (Configuration configuration : configurations) {
+					Dictionary<String, Object> properties =
+						configuration.getProcessedProperties(null);
+
+					if (filter.match(properties)) {
+						configurationList.add(configuration);
 					}
 				}
 			}

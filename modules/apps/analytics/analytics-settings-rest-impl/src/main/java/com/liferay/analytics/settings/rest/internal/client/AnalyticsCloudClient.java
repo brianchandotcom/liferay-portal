@@ -480,20 +480,22 @@ public class AnalyticsCloudClient {
 					return null;
 				}
 
-				String id = String.valueOf(group.getGroupId());
-
-				if (!Objects.equals(
-						group.getClassNameId(),
-						PortalUtil.getClassNameId(Group.class)) &&
-					!Objects.equals(
-						group.getClassNameId(),
-						PortalUtil.getClassNameId(Organization.class))) {
-
-					id = String.valueOf(group.getClassPK());
-				}
-
 				return JSONUtil.put(
-					"id", id
+					"id",
+					() -> {
+						if (!Objects.equals(
+								group.getClassNameId(),
+								PortalUtil.getClassNameId(Group.class)) &&
+							!Objects.equals(
+								group.getClassNameId(),
+								PortalUtil.getClassNameId(
+									Organization.class))) {
+
+							return String.valueOf(group.getClassPK());
+						}
+
+						return String.valueOf(group.getGroupId());
+					}
 				).put(
 					"name",
 					() -> {

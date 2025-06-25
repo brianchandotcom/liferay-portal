@@ -74,74 +74,22 @@ public class StreamHubConfigurationRestController extends BaseRestController {
 		throws Exception {
 
 		ObjectActionResource objectActionResource = _getObjectActionResource();
+
 		List<ObjectAction> objectActions = new ArrayList<>();
 
-		Status status = new Status();
-
-		status.setCode(() -> 0);
-		status.setLabel(() -> "Never Ran");
-
-		Map<String, String[]> actionConfigs = Map.of(
-			"onAfterAdd",
-			new String[] {
-				"function#liferay-streamhub-etc-spring-boot-object-action-1",
-				"Stream Events - On Add", ""
-			},
-			"onAfterUpdate",
-			new String[] {
-				"function#liferay-streamhub-etc-spring-boot-object-action-2",
-				"Stream Events - On Update", ""
-			},
-			"onAfterDelete",
-			new String[] {
-				"function#liferay-streamhub-etc-spring-boot-object-action-3",
-				"Stream Events - On Delete", ""
-			},
-			"standalone",
-			new String[] {
-				"function#liferay-streamhub-etc-spring-boot-object-action-4",
-				"Stream Events - Standalone",
-				"Error while executing Event Streaming for Standalone"
-			});
-
 		for (String type : types) {
-			if (!actionConfigs.containsKey(type)) {
+			ObjectAction objectAction = _getObjectAction(
+				objectDefinitionId, type);
+
+			if (objectAction == null) {
 				continue;
 			}
-
-			String[] config = actionConfigs.get(type);
-
-			ObjectAction objectAction = new ObjectAction();
-
-			objectAction.setActive(() -> true);
-
-			if (!config[2].isEmpty()) {
-				objectAction.setErrorMessage(() -> Map.of("en_US", config[2]));
-			}
-
-			objectAction.setExternalReferenceCode(
-				() -> new StringBuilder(
-				).append(
-					"STREAM_"
-				).append(
-					objectDefinitionId
-				).append(
-					"_"
-				).append(
-					type
-				).toString());
-			objectAction.setLabel(() -> Map.of("en_US", config[1]));
-			objectAction.setName(() -> "stream" + objectDefinitionId + type);
-			objectAction.setObjectActionExecutorKey(() -> config[0]);
-			objectAction.setObjectActionTriggerKey(() -> type);
-			objectAction.setParameters(Collections::emptyMap);
-			objectAction.setStatus(() -> status);
 
 			objectActions.add(objectAction);
 		}
 
 		objectActionResource.postObjectDefinitionObjectActionBatch(
-			Long.valueOf(objectDefinitionId), "", objectActions);
+			objectDefinitionId, "", objectActions);
 	}
 
 	private JSONObject _getConfigurationJSONObject(String json) {
@@ -154,6 +102,89 @@ public class StreamHubConfigurationRestController extends BaseRestController {
 			"values");
 
 		return new JSONObject(valuesJSONObject.get("configuration"));
+	}
+
+	private ObjectAction _getObjectAction(
+		long objectDefinitionId, String type) {
+
+		if (!type.equals("onAfterAdd") && !type.equals("onAfterDelete") &&
+			!type.equals("onAfterUpdate") && !type.equals("standalone")) {
+
+			return null;
+		}
+
+		ObjectAction objectAction = new ObjectAction();
+
+		objectAction.setActive(() -> true);
+
+		if (type.equals("standalone")) {
+			objectAction.setErrorMessage(
+				() -> Map.of(
+					"en_US",
+					"Error while executing Event Streaming for Standalone"));
+		}
+
+		objectAction.setExternalReferenceCode(
+			() -> new StringBuilder(
+			).append(
+				"STREAM_"
+			).append(
+				objectDefinitionId
+			).append(
+				"_"
+			).append(
+				type
+			).toString());
+		objectAction.setLabel(
+			() -> {
+				String value = null;
+
+				String prefix = "Stream Events - ";
+
+				if (type.equals("onAfterAdd")) {
+					value = prefix + "On Add";
+				}
+				else if (type.equals("onAfterDelete")) {
+					value = prefix + "On Delete";
+				}
+				else if (type.equals("onAfterUpdate")) {
+					value = prefix + "On Update";
+				}
+				else {
+					value = prefix + "Standalone";
+				}
+
+				return Map.of("en_US", value);
+			});
+		objectAction.setName(() -> "stream" + objectDefinitionId + type);
+		objectAction.setObjectActionExecutorKey(
+			() -> {
+				String prefix =
+					"function#liferay-streamhub-etc-spring-boot-object-action-";
+
+				if (type.equals("onAfterAdd")) {
+					return prefix + "1";
+				}
+				else if (type.equals("onAfterDelete")) {
+					return prefix + "3";
+				}
+				else if (type.equals("onAfterUpdate")) {
+					return prefix + "2";
+				}
+
+				return prefix + "4";
+			});
+		objectAction.setObjectActionTriggerKey(() -> type);
+		objectAction.setParameters(Collections::emptyMap);
+		objectAction.setStatus(
+			() -> new Status() {
+				{
+					setCode(() -> 0);
+					setLabel(() -> "Never Ran");
+				}
+			});
+
+		return objectAction;
 	}
 
 	private ObjectActionResource _getObjectActionResource() {

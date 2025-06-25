@@ -403,6 +403,12 @@ public class ScimUtil {
 						SCIMConstants.OperationalConstants.VALUE,
 						JSONFactoryUtil.createJSONArray((ArrayList)value));
 				}
+				else if (value instanceof Map valueMap) {
+					valueMap.remove(SCIMConstants.CommonSchemaConstants.ID);
+
+					operationJSONObject.put(
+						SCIMConstants.OperationalConstants.VALUE, valueMap);
+				}
 				else {
 					operationJSONObject.put(
 						SCIMConstants.OperationalConstants.VALUE, value);

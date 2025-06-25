@@ -100,16 +100,21 @@ const FiltersDropdown = () => {
 
 					{filters.length ? (
 						<ClayDropDown.ItemList>
-							{filters.map((filter) => (
-								<ClayDropDown.Item
-									key={filter.id}
-									onClick={() => {
-										setActiveFilter(filter);
-									}}
-								>
-									{filter.label}
-								</ClayDropDown.Item>
-							))}
+							{filters
+								.filter(
+									(filter) =>
+										!filter.clientExtensionFilterResolutionError
+								)
+								.map((filter) => (
+									<ClayDropDown.Item
+										key={filter.id}
+										onClick={() => {
+											setActiveFilter(filter);
+										}}
+									>
+										{filter.label}
+									</ClayDropDown.Item>
+								))}
 						</ClayDropDown.ItemList>
 					) : (
 						<ClayDropDown.Caption>

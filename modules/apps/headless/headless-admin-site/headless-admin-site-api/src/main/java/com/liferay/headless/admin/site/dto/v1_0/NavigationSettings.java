@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -39,24 +39,23 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The widget page template's site navigation menu settings.",
-	value = "NavigationMenuSettings"
+	description = "The widget page template's site navigation settings.",
+	value = "NavigationSettings"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "NavigationMenuSettings")
-public class NavigationMenuSettings implements Serializable {
+@XmlRootElement(name = "NavigationSettings")
+public class NavigationSettings implements Serializable {
 
-	public static NavigationMenuSettings toDTO(String json) {
-		return ObjectMapperUtil.readValue(NavigationMenuSettings.class, json);
+	public static NavigationSettings toDTO(String json) {
+		return ObjectMapperUtil.readValue(NavigationSettings.class, json);
 	}
 
-	public static NavigationMenuSettings unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			NavigationMenuSettings.class, json);
+	public static NavigationSettings unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(NavigationSettings.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page's description to be used as summary for search engines."
+		description = "The ID of the target specific frame."
 	)
 	public String getTarget() {
 		if (_targetSupplier != null) {
@@ -91,9 +90,7 @@ public class NavigationMenuSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "The page's description to be used as summary for search engines."
-	)
+	@GraphQLField(description = "The ID of the target specific frame.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String target;
 
@@ -164,14 +161,13 @@ public class NavigationMenuSettings implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof NavigationMenuSettings)) {
+		if (!(object instanceof NavigationSettings)) {
 			return false;
 		}
 
-		NavigationMenuSettings navigationMenuSettings =
-			(NavigationMenuSettings)object;
+		NavigationSettings navigationSettings = (NavigationSettings)object;
 
-		return Objects.equals(toString(), navigationMenuSettings.toString());
+		return Objects.equals(toString(), navigationSettings.toString());
 	}
 
 	@Override
@@ -225,7 +221,7 @@ public class NavigationMenuSettings implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.NavigationMenuSettings",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.NavigationSettings",
 		name = "x-class-name"
 	)
 	public String xClassName;

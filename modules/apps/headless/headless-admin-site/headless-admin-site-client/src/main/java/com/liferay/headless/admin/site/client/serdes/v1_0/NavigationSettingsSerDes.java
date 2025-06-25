@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.NavigationMenuSettings;
+import com.liferay.headless.admin.site.client.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,24 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class NavigationMenuSettingsSerDes {
+public class NavigationSettingsSerDes {
 
-	public static NavigationMenuSettings toDTO(String json) {
-		NavigationMenuSettingsJSONParser navigationMenuSettingsJSONParser =
-			new NavigationMenuSettingsJSONParser();
+	public static NavigationSettings toDTO(String json) {
+		NavigationSettingsJSONParser navigationSettingsJSONParser =
+			new NavigationSettingsJSONParser();
 
-		return navigationMenuSettingsJSONParser.parseToDTO(json);
+		return navigationSettingsJSONParser.parseToDTO(json);
 	}
 
-	public static NavigationMenuSettings[] toDTOs(String json) {
-		NavigationMenuSettingsJSONParser navigationMenuSettingsJSONParser =
-			new NavigationMenuSettingsJSONParser();
+	public static NavigationSettings[] toDTOs(String json) {
+		NavigationSettingsJSONParser navigationSettingsJSONParser =
+			new NavigationSettingsJSONParser();
 
-		return navigationMenuSettingsJSONParser.parseToDTOs(json);
+		return navigationSettingsJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(NavigationMenuSettings navigationMenuSettings) {
-		if (navigationMenuSettings == null) {
+	public static String toJSON(NavigationSettings navigationSettings) {
+		if (navigationSettings == null) {
 			return "null";
 		}
 
@@ -46,7 +46,7 @@ public class NavigationMenuSettingsSerDes {
 
 		sb.append("{");
 
-		if (navigationMenuSettings.getTarget() != null) {
+		if (navigationSettings.getTarget() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -55,12 +55,12 @@ public class NavigationMenuSettingsSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(navigationMenuSettings.getTarget()));
+			sb.append(_escape(navigationSettings.getTarget()));
 
 			sb.append("\"");
 		}
 
-		if (navigationMenuSettings.getTargetType() != null) {
+		if (navigationSettings.getTargetType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -69,7 +69,7 @@ public class NavigationMenuSettingsSerDes {
 
 			sb.append("\"");
 
-			sb.append(navigationMenuSettings.getTargetType());
+			sb.append(navigationSettings.getTargetType());
 
 			sb.append("\"");
 		}
@@ -80,52 +80,51 @@ public class NavigationMenuSettingsSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		NavigationMenuSettingsJSONParser navigationMenuSettingsJSONParser =
-			new NavigationMenuSettingsJSONParser();
+		NavigationSettingsJSONParser navigationSettingsJSONParser =
+			new NavigationSettingsJSONParser();
 
-		return navigationMenuSettingsJSONParser.parseToMap(json);
+		return navigationSettingsJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		NavigationMenuSettings navigationMenuSettings) {
+		NavigationSettings navigationSettings) {
 
-		if (navigationMenuSettings == null) {
+		if (navigationSettings == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (navigationMenuSettings.getTarget() == null) {
+		if (navigationSettings.getTarget() == null) {
 			map.put("target", null);
 		}
 		else {
-			map.put(
-				"target", String.valueOf(navigationMenuSettings.getTarget()));
+			map.put("target", String.valueOf(navigationSettings.getTarget()));
 		}
 
-		if (navigationMenuSettings.getTargetType() == null) {
+		if (navigationSettings.getTargetType() == null) {
 			map.put("targetType", null);
 		}
 		else {
 			map.put(
 				"targetType",
-				String.valueOf(navigationMenuSettings.getTargetType()));
+				String.valueOf(navigationSettings.getTargetType()));
 		}
 
 		return map;
 	}
 
-	public static class NavigationMenuSettingsJSONParser
-		extends BaseJSONParser<NavigationMenuSettings> {
+	public static class NavigationSettingsJSONParser
+		extends BaseJSONParser<NavigationSettings> {
 
 		@Override
-		protected NavigationMenuSettings createDTO() {
-			return new NavigationMenuSettings();
+		protected NavigationSettings createDTO() {
+			return new NavigationSettings();
 		}
 
 		@Override
-		protected NavigationMenuSettings[] createDTOArray(int size) {
-			return new NavigationMenuSettings[size];
+		protected NavigationSettings[] createDTOArray(int size) {
+			return new NavigationSettings[size];
 		}
 
 		@Override
@@ -142,19 +141,18 @@ public class NavigationMenuSettingsSerDes {
 
 		@Override
 		protected void setField(
-			NavigationMenuSettings navigationMenuSettings,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			NavigationSettings navigationSettings, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "target")) {
 				if (jsonParserFieldValue != null) {
-					navigationMenuSettings.setTarget(
-						(String)jsonParserFieldValue);
+					navigationSettings.setTarget((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "targetType")) {
 				if (jsonParserFieldValue != null) {
-					navigationMenuSettings.setTargetType(
-						NavigationMenuSettings.TargetType.create(
+					navigationSettings.setTargetType(
+						NavigationSettings.TargetType.create(
 							(String)jsonParserFieldValue));
 				}
 			}

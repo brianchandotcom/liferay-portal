@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.NavigationMenuSettingsSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.NavigationSettingsSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class NavigationMenuSettings implements Cloneable, Serializable {
+public class NavigationSettings implements Cloneable, Serializable {
 
-	public static NavigationMenuSettings toDTO(String json) {
-		return NavigationMenuSettingsSerDes.toDTO(json);
+	public static NavigationSettings toDTO(String json) {
+		return NavigationSettingsSerDes.toDTO(json);
 	}
 
 	public String getTarget() {
@@ -76,8 +76,8 @@ public class NavigationMenuSettings implements Cloneable, Serializable {
 	protected TargetType targetType;
 
 	@Override
-	public NavigationMenuSettings clone() throws CloneNotSupportedException {
-		return (NavigationMenuSettings)super.clone();
+	public NavigationSettings clone() throws CloneNotSupportedException {
+		return (NavigationSettings)super.clone();
 	}
 
 	@Override
@@ -86,14 +86,13 @@ public class NavigationMenuSettings implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof NavigationMenuSettings)) {
+		if (!(object instanceof NavigationSettings)) {
 			return false;
 		}
 
-		NavigationMenuSettings navigationMenuSettings =
-			(NavigationMenuSettings)object;
+		NavigationSettings navigationSettings = (NavigationSettings)object;
 
-		return Objects.equals(toString(), navigationMenuSettings.toString());
+		return Objects.equals(toString(), navigationSettings.toString());
 	}
 
 	@Override
@@ -104,7 +103,7 @@ public class NavigationMenuSettings implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return NavigationMenuSettingsSerDes.toJSON(this);
+		return NavigationSettingsSerDes.toJSON(this);
 	}
 
 	public static enum TargetType {

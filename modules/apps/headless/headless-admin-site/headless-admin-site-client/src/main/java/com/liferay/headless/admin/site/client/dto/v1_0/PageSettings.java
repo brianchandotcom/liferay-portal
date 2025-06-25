@@ -68,29 +68,27 @@ public abstract class PageSettings implements Cloneable, Serializable {
 
 	protected Boolean hiddenFromNavigation;
 
-	public NavigationMenuSettings getNavigationMenuSettings() {
-		return navigationMenuSettings;
+	public NavigationSettings getNavigationSettings() {
+		return navigationSettings;
 	}
 
-	public void setNavigationMenuSettings(
-		NavigationMenuSettings navigationMenuSettings) {
-
-		this.navigationMenuSettings = navigationMenuSettings;
+	public void setNavigationSettings(NavigationSettings navigationSettings) {
+		this.navigationSettings = navigationSettings;
 	}
 
-	public void setNavigationMenuSettings(
-		UnsafeSupplier<NavigationMenuSettings, Exception>
-			navigationMenuSettingsUnsafeSupplier) {
+	public void setNavigationSettings(
+		UnsafeSupplier<NavigationSettings, Exception>
+			navigationSettingsUnsafeSupplier) {
 
 		try {
-			navigationMenuSettings = navigationMenuSettingsUnsafeSupplier.get();
+			navigationSettings = navigationSettingsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected NavigationMenuSettings navigationMenuSettings;
+	protected NavigationSettings navigationSettings;
 
 	public OpenGraphSettings getOpenGraphSettings() {
 		return openGraphSettings;

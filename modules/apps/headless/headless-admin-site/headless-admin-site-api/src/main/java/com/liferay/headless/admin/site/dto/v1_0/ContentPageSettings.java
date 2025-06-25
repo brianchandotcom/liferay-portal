@@ -106,17 +106,16 @@ public class ContentPageSettings extends PageSettings implements Serializable {
 			sb.append(hiddenFromNavigation);
 		}
 
-		NavigationMenuSettings navigationMenuSettings =
-			getNavigationMenuSettings();
+		NavigationSettings navigationSettings = getNavigationSettings();
 
-		if (navigationMenuSettings != null) {
+		if (navigationSettings != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"navigationMenuSettings\": ");
+			sb.append("\"navigationSettings\": ");
 
-			sb.append(String.valueOf(navigationMenuSettings));
+			sb.append(String.valueOf(navigationSettings));
 		}
 
 		OpenGraphSettings openGraphSettings = getOpenGraphSettings();

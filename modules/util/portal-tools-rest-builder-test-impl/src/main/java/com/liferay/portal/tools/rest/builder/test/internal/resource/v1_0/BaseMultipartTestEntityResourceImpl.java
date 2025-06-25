@@ -110,7 +110,7 @@ public abstract class BaseMultipartTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}' -d $'{"name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}' -d $'{"id": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -329,15 +329,13 @@ public abstract class BaseMultipartTestEntityResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			multipartTestEntityUnsafeFunction =
 				multipartTestEntity -> patchMultipartTestEntity(
-					_parseLong((String)parameters.get("multipartTestEntityId")),
-					multipartTestEntity);
+					multipartTestEntity.getId(), multipartTestEntity);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			multipartTestEntityUnsafeFunction =
 				multipartTestEntity -> putMultipartTestEntity(
-					_parseLong((String)parameters.get("multipartTestEntityId")),
-					null);
+					multipartTestEntity.getId(), null);
 		}
 
 		if (multipartTestEntityUnsafeFunction == null) {
@@ -362,14 +360,6 @@ public abstract class BaseMultipartTestEntityResourceImpl
 				multipartTestEntityUnsafeFunction.apply(multipartTestEntity);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

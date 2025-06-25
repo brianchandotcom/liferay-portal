@@ -405,9 +405,7 @@ public abstract class BaseDiagramResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			diagramUnsafeFunction = diagram -> patchDiagram(
-				diagram.getId() != null ? diagram.getId() :
-					_parseLong((String)parameters.get("diagramId")),
-				diagram);
+				diagram.getId(), diagram);
 		}
 
 		if (diagramUnsafeFunction == null) {
@@ -429,14 +427,6 @@ public abstract class BaseDiagramResourceImpl
 				diagramUnsafeFunction.apply(diagram);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

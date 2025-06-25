@@ -705,11 +705,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			objectEntryFolderUnsafeFunction =
 				objectEntryFolder -> patchObjectEntryFolder(
-					objectEntryFolder.getId() != null ?
-						objectEntryFolder.getId() :
-							_parseLong(
-								(String)parameters.get("objectEntryFolderId")),
-					objectEntryFolder);
+					objectEntryFolder.getId(), objectEntryFolder);
 		}
 
 		if (objectEntryFolderUnsafeFunction == null) {
@@ -731,14 +727,6 @@ public abstract class BaseObjectEntryFolderResourceImpl
 				objectEntryFolderUnsafeFunction.apply(objectEntryFolder);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

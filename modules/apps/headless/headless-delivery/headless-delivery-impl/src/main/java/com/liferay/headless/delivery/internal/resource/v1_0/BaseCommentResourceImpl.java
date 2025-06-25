@@ -2001,9 +2001,7 @@ public abstract class BaseCommentResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			commentUnsafeFunction = comment -> putComment(
-				comment.getId() != null ? comment.getId() :
-					_parseLong((String)parameters.get("commentId")),
-				comment);
+				comment.getId(), comment);
 		}
 
 		if (commentUnsafeFunction == null) {

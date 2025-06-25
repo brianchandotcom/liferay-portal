@@ -450,10 +450,7 @@ public abstract class BaseWarehouseResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			warehouseUnsafeFunction = warehouse -> {
-				putWarehouse(
-					warehouse.getId() != null ? warehouse.getId() :
-						_parseLong((String)parameters.get("warehouseId")),
-					warehouse);
+				putWarehouse(warehouse.getId(), warehouse);
 
 				return null;
 			};
@@ -478,14 +475,6 @@ public abstract class BaseWarehouseResourceImpl
 				warehouseUnsafeFunction.apply(warehouse);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

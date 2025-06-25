@@ -447,12 +447,7 @@ public abstract class BaseProductVirtualSettingsFileEntryResourceImpl
 			productVirtualSettingsFileEntryUnsafeFunction =
 				productVirtualSettingsFileEntry ->
 					patchProductVirtualSettingsFileEntry(
-						productVirtualSettingsFileEntry.getId() != null ?
-							productVirtualSettingsFileEntry.getId() :
-								_parseLong(
-									(String)parameters.get(
-										"productVirtualSettingsFileEntryId")),
-						null);
+						productVirtualSettingsFileEntry.getId(), null);
 		}
 
 		if (productVirtualSettingsFileEntryUnsafeFunction == null) {
@@ -480,14 +475,6 @@ public abstract class BaseProductVirtualSettingsFileEntryResourceImpl
 					productVirtualSettingsFileEntry);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

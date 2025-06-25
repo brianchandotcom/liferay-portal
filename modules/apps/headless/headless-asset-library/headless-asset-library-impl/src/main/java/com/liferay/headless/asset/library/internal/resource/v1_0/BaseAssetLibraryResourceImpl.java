@@ -743,10 +743,7 @@ public abstract class BaseAssetLibraryResourceImpl
 								assetLibrary.getExternalReferenceCode());
 
 						persistedAssetLibrary = patchAssetLibrary(
-							getAssetLibrary.getId() != null ?
-								getAssetLibrary.getId() :
-									(Long)parameters.get("assetLibraryId"),
-							assetLibrary);
+							getAssetLibrary.getId(), assetLibrary);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedAssetLibrary = postAssetLibrary(assetLibrary);
@@ -920,9 +917,7 @@ public abstract class BaseAssetLibraryResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			assetLibraryUnsafeFunction = assetLibrary -> patchAssetLibrary(
-				assetLibrary.getId() != null ? assetLibrary.getId() :
-					(Long)parameters.get("assetLibraryId"),
-				assetLibrary);
+				assetLibrary.getId(), assetLibrary);
 		}
 
 		if (assetLibraryUnsafeFunction == null) {

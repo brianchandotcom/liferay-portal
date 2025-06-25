@@ -937,12 +937,7 @@ public abstract class BaseProductConfigurationResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			productConfigurationUnsafeFunction =
 				productConfiguration -> patchProductConfiguration(
-					productConfiguration.getId() != null ?
-						productConfiguration.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"productConfigurationId")),
-					productConfiguration);
+					productConfiguration.getId(), productConfiguration);
 		}
 
 		if (productConfigurationUnsafeFunction == null) {
@@ -967,14 +962,6 @@ public abstract class BaseProductConfigurationResourceImpl
 				productConfigurationUnsafeFunction.apply(productConfiguration);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

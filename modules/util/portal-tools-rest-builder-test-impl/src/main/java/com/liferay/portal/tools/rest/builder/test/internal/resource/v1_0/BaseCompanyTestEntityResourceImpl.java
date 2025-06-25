@@ -831,12 +831,7 @@ public abstract class BaseCompanyTestEntityResourceImpl
 								companyTestEntity.getExternalReferenceCode());
 
 						persistedCompanyTestEntity = patchCompanyTestEntity(
-							getCompanyTestEntity.getId() != null ?
-								getCompanyTestEntity.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"companyTestEntityId")),
-							companyTestEntity);
+							getCompanyTestEntity.getId(), companyTestEntity);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedCompanyTestEntity = postCompanyTestEntity(
@@ -971,21 +966,13 @@ public abstract class BaseCompanyTestEntityResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			companyTestEntityUnsafeFunction =
 				companyTestEntity -> patchCompanyTestEntity(
-					companyTestEntity.getId() != null ?
-						companyTestEntity.getId() :
-							_parseLong(
-								(String)parameters.get("companyTestEntityId")),
-					companyTestEntity);
+					companyTestEntity.getId(), companyTestEntity);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			companyTestEntityUnsafeFunction =
 				companyTestEntity -> putCompanyTestEntity(
-					companyTestEntity.getId() != null ?
-						companyTestEntity.getId() :
-							_parseLong(
-								(String)parameters.get("companyTestEntityId")),
-					companyTestEntity);
+					companyTestEntity.getId(), companyTestEntity);
 		}
 
 		if (companyTestEntityUnsafeFunction == null) {
@@ -1007,14 +994,6 @@ public abstract class BaseCompanyTestEntityResourceImpl
 				companyTestEntityUnsafeFunction.apply(companyTestEntity);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

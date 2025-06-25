@@ -2281,12 +2281,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 						}
 
 						persistedTaxonomyVocabulary = patchTaxonomyVocabulary(
-							getTaxonomyVocabulary.getId() != null ?
-								getTaxonomyVocabulary.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"taxonomyVocabularyId")),
-							taxonomyVocabulary);
+							getTaxonomyVocabulary.getId(), taxonomyVocabulary);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("assetLibraryId")) {
@@ -2480,21 +2475,13 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			taxonomyVocabularyUnsafeFunction =
 				taxonomyVocabulary -> patchTaxonomyVocabulary(
-					taxonomyVocabulary.getId() != null ?
-						taxonomyVocabulary.getId() :
-							_parseLong(
-								(String)parameters.get("taxonomyVocabularyId")),
-					taxonomyVocabulary);
+					taxonomyVocabulary.getId(), taxonomyVocabulary);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			taxonomyVocabularyUnsafeFunction =
 				taxonomyVocabulary -> putTaxonomyVocabulary(
-					taxonomyVocabulary.getId() != null ?
-						taxonomyVocabulary.getId() :
-							_parseLong(
-								(String)parameters.get("taxonomyVocabularyId")),
-					taxonomyVocabulary);
+					taxonomyVocabulary.getId(), taxonomyVocabulary);
 		}
 
 		if (taxonomyVocabularyUnsafeFunction == null) {
@@ -2516,14 +2503,6 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				taxonomyVocabularyUnsafeFunction.apply(taxonomyVocabulary);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

@@ -873,16 +873,12 @@ public abstract class BaseObjectFieldResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			objectFieldUnsafeFunction = objectField -> patchObjectField(
-				objectField.getId() != null ? objectField.getId() :
-					_parseLong((String)parameters.get("objectFieldId")),
-				objectField);
+				objectField.getId(), objectField);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			objectFieldUnsafeFunction = objectField -> putObjectField(
-				objectField.getId() != null ? objectField.getId() :
-					_parseLong((String)parameters.get("objectFieldId")),
-				objectField);
+				objectField.getId(), objectField);
 		}
 
 		if (objectFieldUnsafeFunction == null) {

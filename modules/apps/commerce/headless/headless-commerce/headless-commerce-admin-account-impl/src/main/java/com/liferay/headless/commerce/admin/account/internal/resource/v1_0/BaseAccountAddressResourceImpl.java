@@ -885,16 +885,12 @@ public abstract class BaseAccountAddressResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			accountAddressUnsafeFunction =
 				accountAddress -> patchAccountAddress(
-					accountAddress.getId() != null ? accountAddress.getId() :
-						_parseLong((String)parameters.get("accountAddressId")),
-					accountAddress);
+					accountAddress.getId(), accountAddress);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			accountAddressUnsafeFunction = accountAddress -> putAccountAddress(
-				accountAddress.getId() != null ? accountAddress.getId() :
-					_parseLong((String)parameters.get("accountAddressId")),
-				accountAddress);
+				accountAddress.getId(), accountAddress);
 		}
 
 		if (accountAddressUnsafeFunction == null) {
@@ -916,14 +912,6 @@ public abstract class BaseAccountAddressResourceImpl
 				accountAddressUnsafeFunction.apply(accountAddress);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

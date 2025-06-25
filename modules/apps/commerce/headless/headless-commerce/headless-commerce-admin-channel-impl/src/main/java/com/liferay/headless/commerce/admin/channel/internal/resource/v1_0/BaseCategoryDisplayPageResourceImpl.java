@@ -581,12 +581,7 @@ public abstract class BaseCategoryDisplayPageResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			categoryDisplayPageUnsafeFunction =
 				categoryDisplayPage -> patchCategoryDisplayPage(
-					categoryDisplayPage.getId() != null ?
-						categoryDisplayPage.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"categoryDisplayPageId")),
-					categoryDisplayPage);
+					categoryDisplayPage.getId(), categoryDisplayPage);
 		}
 
 		if (categoryDisplayPageUnsafeFunction == null) {
@@ -610,14 +605,6 @@ public abstract class BaseCategoryDisplayPageResourceImpl
 				categoryDisplayPageUnsafeFunction.apply(categoryDisplayPage);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

@@ -631,12 +631,7 @@ public abstract class BaseSpecificationResourceImpl
 								specification.getExternalReferenceCode());
 
 						persistedSpecification = patchSpecification(
-							getSpecification.getId() != null ?
-								getSpecification.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"specificationId")),
-							specification);
+							getSpecification.getId(), specification);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedSpecification = postSpecification(
@@ -809,9 +804,7 @@ public abstract class BaseSpecificationResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			specificationUnsafeFunction = specification -> patchSpecification(
-				specification.getId() != null ? specification.getId() :
-					_parseLong((String)parameters.get("specificationId")),
-				specification);
+				specification.getId(), specification);
 		}
 
 		if (specificationUnsafeFunction == null) {
@@ -833,14 +826,6 @@ public abstract class BaseSpecificationResourceImpl
 				specificationUnsafeFunction.apply(specification);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

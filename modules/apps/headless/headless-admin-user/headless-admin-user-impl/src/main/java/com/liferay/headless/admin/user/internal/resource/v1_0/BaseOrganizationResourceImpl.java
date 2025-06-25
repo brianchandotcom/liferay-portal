@@ -1742,10 +1742,7 @@ public abstract class BaseOrganizationResourceImpl
 								organization.getExternalReferenceCode());
 
 						persistedOrganization = patchOrganization(
-							getOrganization.getId() != null ?
-								getOrganization.getId() :
-									(String)parameters.get("organizationId"),
-							organization);
+							getOrganization.getId(), organization);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedOrganization = postOrganization(organization);
@@ -1926,16 +1923,12 @@ public abstract class BaseOrganizationResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			organizationUnsafeFunction = organization -> patchOrganization(
-				organization.getId() != null ? organization.getId() :
-					(String)parameters.get("organizationId"),
-				organization);
+				organization.getId(), organization);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			organizationUnsafeFunction = organization -> putOrganization(
-				organization.getId() != null ? organization.getId() :
-					(String)parameters.get("organizationId"),
-				organization);
+				organization.getId(), organization);
 		}
 
 		if (organizationUnsafeFunction == null) {

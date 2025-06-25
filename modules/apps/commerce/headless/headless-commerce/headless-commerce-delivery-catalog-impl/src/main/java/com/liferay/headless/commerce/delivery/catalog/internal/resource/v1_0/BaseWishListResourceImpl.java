@@ -528,8 +528,7 @@ public abstract class BaseWishListResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			wishListUnsafeFunction = wishList -> patchWishList(
-				wishList.getId() != null ? wishList.getId() :
-					_parseLong((String)parameters.get("wishListId")),
+				wishList.getId(),
 				_parseLong((String)parameters.get("accountId")), wishList);
 		}
 

@@ -1247,11 +1247,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 						}
 
 						persistedKnowledgeBaseFolder = patchKnowledgeBaseFolder(
-							getKnowledgeBaseFolder.getId() != null ?
-								getKnowledgeBaseFolder.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"knowledgeBaseFolderId")),
+							getKnowledgeBaseFolder.getId(),
 							knowledgeBaseFolder);
 					}
 					catch (NoSuchModelException noSuchModelException) {
@@ -1431,23 +1427,13 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			knowledgeBaseFolderUnsafeFunction =
 				knowledgeBaseFolder -> patchKnowledgeBaseFolder(
-					knowledgeBaseFolder.getId() != null ?
-						knowledgeBaseFolder.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"knowledgeBaseFolderId")),
-					knowledgeBaseFolder);
+					knowledgeBaseFolder.getId(), knowledgeBaseFolder);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			knowledgeBaseFolderUnsafeFunction =
 				knowledgeBaseFolder -> putKnowledgeBaseFolder(
-					knowledgeBaseFolder.getId() != null ?
-						knowledgeBaseFolder.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"knowledgeBaseFolderId")),
-					knowledgeBaseFolder);
+					knowledgeBaseFolder.getId(), knowledgeBaseFolder);
 		}
 
 		if (knowledgeBaseFolderUnsafeFunction == null) {
@@ -1471,14 +1457,6 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				knowledgeBaseFolderUnsafeFunction.apply(knowledgeBaseFolder);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

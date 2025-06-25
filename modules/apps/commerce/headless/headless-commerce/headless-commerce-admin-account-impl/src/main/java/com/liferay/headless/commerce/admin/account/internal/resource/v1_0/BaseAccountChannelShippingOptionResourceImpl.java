@@ -612,11 +612,7 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 			accountChannelShippingOptionUnsafeFunction =
 				accountChannelShippingOption ->
 					patchAccountChannelShippingOption(
-						accountChannelShippingOption.getId() != null ?
-							accountChannelShippingOption.getId() :
-								_parseLong(
-									(String)parameters.get(
-										"accountChannelShippingOptionId")),
+						accountChannelShippingOption.getId(),
 						accountChannelShippingOption);
 		}
 
@@ -644,14 +640,6 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 					accountChannelShippingOption);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

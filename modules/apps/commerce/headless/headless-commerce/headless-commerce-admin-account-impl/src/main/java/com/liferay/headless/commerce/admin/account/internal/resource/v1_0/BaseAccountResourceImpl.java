@@ -844,10 +844,7 @@ public abstract class BaseAccountResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			accountUnsafeFunction = account -> {
-				patchAccount(
-					account.getId() != null ? account.getId() :
-						_parseLong((String)parameters.get("accountId")),
-					account);
+				patchAccount(account.getId(), account);
 
 				return null;
 			};
@@ -872,14 +869,6 @@ public abstract class BaseAccountResourceImpl
 				accountUnsafeFunction.apply(account);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

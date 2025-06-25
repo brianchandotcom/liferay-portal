@@ -569,9 +569,7 @@ public abstract class BaseDiscountRuleResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			discountRuleUnsafeFunction = discountRule -> patchDiscountRule(
-				discountRule.getId() != null ? discountRule.getId() :
-					_parseLong((String)parameters.get("discountRuleId")),
-				discountRule);
+				discountRule.getId(), discountRule);
 		}
 
 		if (discountRuleUnsafeFunction == null) {
@@ -593,14 +591,6 @@ public abstract class BaseDiscountRuleResourceImpl
 				discountRuleUnsafeFunction.apply(discountRule);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

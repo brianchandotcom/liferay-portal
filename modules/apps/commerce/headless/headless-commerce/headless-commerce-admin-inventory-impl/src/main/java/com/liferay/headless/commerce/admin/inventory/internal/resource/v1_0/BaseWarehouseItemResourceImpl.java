@@ -681,12 +681,7 @@ public abstract class BaseWarehouseItemResourceImpl
 								warehouseItem.getExternalReferenceCode());
 
 						patchWarehouseItem(
-							getWarehouseItem.getId() != null ?
-								getWarehouseItem.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"warehouseItemId")),
-							warehouseItem);
+							getWarehouseItem.getId(), warehouseItem);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("externalReferenceCode")) {
@@ -869,10 +864,7 @@ public abstract class BaseWarehouseItemResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			warehouseItemUnsafeFunction = warehouseItem -> {
-				patchWarehouseItem(
-					warehouseItem.getId() != null ? warehouseItem.getId() :
-						_parseLong((String)parameters.get("warehouseItemId")),
-					warehouseItem);
+				patchWarehouseItem(warehouseItem.getId(), warehouseItem);
 
 				return null;
 			};
@@ -897,14 +889,6 @@ public abstract class BaseWarehouseItemResourceImpl
 				warehouseItemUnsafeFunction.apply(warehouseItem);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

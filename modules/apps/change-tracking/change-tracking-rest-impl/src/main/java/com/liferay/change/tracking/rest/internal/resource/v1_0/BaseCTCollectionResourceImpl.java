@@ -977,16 +977,12 @@ public abstract class BaseCTCollectionResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			ctCollectionUnsafeFunction = ctCollection -> patchCTCollection(
-				ctCollection.getId() != null ? ctCollection.getId() :
-					_parseLong((String)parameters.get("ctCollectionId")),
-				ctCollection);
+				ctCollection.getId(), ctCollection);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			ctCollectionUnsafeFunction = ctCollection -> putCTCollection(
-				ctCollection.getId() != null ? ctCollection.getId() :
-					_parseLong((String)parameters.get("ctCollectionId")),
-				ctCollection);
+				ctCollection.getId(), ctCollection);
 		}
 
 		if (ctCollectionUnsafeFunction == null) {
@@ -1008,14 +1004,6 @@ public abstract class BaseCTCollectionResourceImpl
 				ctCollectionUnsafeFunction.apply(ctCollection);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

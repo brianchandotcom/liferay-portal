@@ -880,23 +880,13 @@ public abstract class BaseObjectValidationRuleResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			objectValidationRuleUnsafeFunction =
 				objectValidationRule -> patchObjectValidationRule(
-					objectValidationRule.getId() != null ?
-						objectValidationRule.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"objectValidationRuleId")),
-					objectValidationRule);
+					objectValidationRule.getId(), objectValidationRule);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			objectValidationRuleUnsafeFunction =
 				objectValidationRule -> putObjectValidationRule(
-					objectValidationRule.getId() != null ?
-						objectValidationRule.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"objectValidationRuleId")),
-					objectValidationRule);
+					objectValidationRule.getId(), objectValidationRule);
 		}
 
 		if (objectValidationRuleUnsafeFunction == null) {

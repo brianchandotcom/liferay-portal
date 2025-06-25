@@ -760,9 +760,7 @@ public abstract class BaseChannelResourceImpl
 							channel.getExternalReferenceCode());
 
 						persistedChannel = patchChannel(
-							getChannel.getId() != null ? getChannel.getId() :
-								_parseLong((String)parameters.get("channelId")),
-							channel);
+							getChannel.getId(), channel);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedChannel = postChannel(channel);
@@ -930,16 +928,12 @@ public abstract class BaseChannelResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			channelUnsafeFunction = channel -> patchChannel(
-				channel.getId() != null ? channel.getId() :
-					_parseLong((String)parameters.get("channelId")),
-				channel);
+				channel.getId(), channel);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			channelUnsafeFunction = channel -> putChannel(
-				channel.getId() != null ? channel.getId() :
-					_parseLong((String)parameters.get("channelId")),
-				channel);
+				channel.getId(), channel);
 		}
 
 		if (channelUnsafeFunction == null) {
@@ -961,14 +955,6 @@ public abstract class BaseChannelResourceImpl
 				channelUnsafeFunction.apply(channel);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

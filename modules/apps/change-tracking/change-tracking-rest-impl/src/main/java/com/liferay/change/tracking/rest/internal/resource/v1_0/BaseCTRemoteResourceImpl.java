@@ -626,16 +626,12 @@ public abstract class BaseCTRemoteResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			ctRemoteUnsafeFunction = ctRemote -> patchCTRemote(
-				ctRemote.getId() != null ? ctRemote.getId() :
-					_parseLong((String)parameters.get("ctRemoteId")),
-				ctRemote);
+				ctRemote.getId(), ctRemote);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			ctRemoteUnsafeFunction = ctRemote -> putCTRemote(
-				ctRemote.getId() != null ? ctRemote.getId() :
-					_parseLong((String)parameters.get("ctRemoteId")),
-				ctRemote);
+				ctRemote.getId(), ctRemote);
 		}
 
 		if (ctRemoteUnsafeFunction == null) {
@@ -657,14 +653,6 @@ public abstract class BaseCTRemoteResourceImpl
 				ctRemoteUnsafeFunction.apply(ctRemote);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

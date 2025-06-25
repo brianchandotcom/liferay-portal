@@ -1162,12 +1162,7 @@ public abstract class BaseScopedTestEntityResourceImpl
 								scopedTestEntity.getExternalReferenceCode());
 
 						persistedScopedTestEntity = patchScopedTestEntity(
-							getScopedTestEntity.getId() != null ?
-								getScopedTestEntity.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"scopedTestEntityId")),
-							scopedTestEntity);
+							getScopedTestEntity.getId(), scopedTestEntity);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("assetLibraryId")) {
@@ -1368,11 +1363,7 @@ public abstract class BaseScopedTestEntityResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			scopedTestEntityUnsafeFunction =
 				scopedTestEntity -> patchScopedTestEntity(
-					scopedTestEntity.getId() != null ?
-						scopedTestEntity.getId() :
-							_parseLong(
-								(String)parameters.get("scopedTestEntityId")),
-					scopedTestEntity);
+					scopedTestEntity.getId(), scopedTestEntity);
 		}
 
 		if (scopedTestEntityUnsafeFunction == null) {
@@ -1394,14 +1385,6 @@ public abstract class BaseScopedTestEntityResourceImpl
 				scopedTestEntityUnsafeFunction.apply(scopedTestEntity);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

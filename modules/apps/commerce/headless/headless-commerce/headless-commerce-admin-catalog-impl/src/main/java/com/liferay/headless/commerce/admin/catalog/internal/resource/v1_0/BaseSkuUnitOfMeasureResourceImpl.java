@@ -568,11 +568,7 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			skuUnitOfMeasureUnsafeFunction =
 				skuUnitOfMeasure -> patchSkuUnitOfMeasure(
-					skuUnitOfMeasure.getId() != null ?
-						skuUnitOfMeasure.getId() :
-							_parseLong(
-								(String)parameters.get("skuUnitOfMeasureId")),
-					skuUnitOfMeasure);
+					skuUnitOfMeasure.getId(), skuUnitOfMeasure);
 		}
 
 		if (skuUnitOfMeasureUnsafeFunction == null) {
@@ -594,14 +590,6 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 				skuUnitOfMeasureUnsafeFunction.apply(skuUnitOfMeasure);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

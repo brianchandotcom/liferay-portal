@@ -792,16 +792,12 @@ public abstract class BaseCountryResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			countryUnsafeFunction = country -> patchCountry(
-				country.getId() != null ? country.getId() :
-					_parseLong((String)parameters.get("countryId")),
-				country);
+				country.getId(), country);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			countryUnsafeFunction = country -> putCountry(
-				country.getId() != null ? country.getId() :
-					_parseLong((String)parameters.get("countryId")),
-				country);
+				country.getId(), country);
 		}
 
 		if (countryUnsafeFunction == null) {
@@ -828,14 +824,6 @@ public abstract class BaseCountryResourceImpl
 	private Boolean _parseBoolean(String value) {
 		if (value != null) {
 			return Boolean.parseBoolean(value);
-		}
-
-		return null;
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
 		}
 
 		return null;

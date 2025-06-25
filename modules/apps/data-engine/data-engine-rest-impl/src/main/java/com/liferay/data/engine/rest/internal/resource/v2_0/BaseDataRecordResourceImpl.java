@@ -987,16 +987,12 @@ public abstract class BaseDataRecordResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			dataRecordUnsafeFunction = dataRecord -> patchDataRecord(
-				dataRecord.getId() != null ? dataRecord.getId() :
-					_parseLong((String)parameters.get("dataRecordId")),
-				dataRecord);
+				dataRecord.getId(), dataRecord);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			dataRecordUnsafeFunction = dataRecord -> putDataRecord(
-				dataRecord.getId() != null ? dataRecord.getId() :
-					_parseLong((String)parameters.get("dataRecordId")),
-				dataRecord);
+				dataRecord.getId(), dataRecord);
 		}
 
 		if (dataRecordUnsafeFunction == null) {

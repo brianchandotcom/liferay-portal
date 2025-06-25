@@ -828,11 +828,7 @@ public abstract class BaseObjectRelationshipResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			objectRelationshipUnsafeFunction =
 				objectRelationship -> putObjectRelationship(
-					objectRelationship.getId() != null ?
-						objectRelationship.getId() :
-							_parseLong(
-								(String)parameters.get("objectRelationshipId")),
-					objectRelationship);
+					objectRelationship.getId(), objectRelationship);
 		}
 
 		if (objectRelationshipUnsafeFunction == null) {

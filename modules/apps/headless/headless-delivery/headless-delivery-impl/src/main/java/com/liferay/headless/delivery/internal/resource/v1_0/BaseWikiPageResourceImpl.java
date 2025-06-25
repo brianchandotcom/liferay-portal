@@ -1152,9 +1152,7 @@ public abstract class BaseWikiPageResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			wikiPageUnsafeFunction = wikiPage -> putWikiPage(
-				wikiPage.getId() != null ? wikiPage.getId() :
-					_parseLong((String)parameters.get("wikiPageId")),
-				wikiPage);
+				wikiPage.getId(), wikiPage);
 		}
 
 		if (wikiPageUnsafeFunction == null) {

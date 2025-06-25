@@ -785,9 +785,7 @@ public abstract class BaseListTypeEntryResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			listTypeEntryUnsafeFunction = listTypeEntry -> putListTypeEntry(
-				listTypeEntry.getId() != null ? listTypeEntry.getId() :
-					_parseLong((String)parameters.get("listTypeEntryId")),
-				listTypeEntry);
+				listTypeEntry.getId(), listTypeEntry);
 		}
 
 		if (listTypeEntryUnsafeFunction == null) {

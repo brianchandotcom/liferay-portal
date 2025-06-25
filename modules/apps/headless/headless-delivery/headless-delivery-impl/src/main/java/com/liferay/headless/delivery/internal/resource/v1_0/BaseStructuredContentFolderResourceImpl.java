@@ -2032,11 +2032,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 							persistedStructuredContentFolder =
 								patchStructuredContentFolder(
-									getStructuredContentFolder.getId() != null ?
-										getStructuredContentFolder.getId() :
-											_parseLong(
-												(String)parameters.get(
-													"structuredContentFolderId")),
+									getStructuredContentFolder.getId(),
 									structuredContentFolder);
 						}
 						catch (NoSuchModelException noSuchModelException) {
@@ -2251,23 +2247,13 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			structuredContentFolderUnsafeFunction =
 				structuredContentFolder -> patchStructuredContentFolder(
-					structuredContentFolder.getId() != null ?
-						structuredContentFolder.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"structuredContentFolderId")),
-					structuredContentFolder);
+					structuredContentFolder.getId(), structuredContentFolder);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			structuredContentFolderUnsafeFunction =
 				structuredContentFolder -> putStructuredContentFolder(
-					structuredContentFolder.getId() != null ?
-						structuredContentFolder.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"structuredContentFolderId")),
-					structuredContentFolder);
+					structuredContentFolder.getId(), structuredContentFolder);
 		}
 
 		if (structuredContentFolderUnsafeFunction == null) {
@@ -2299,14 +2285,6 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	private Boolean _parseBoolean(String value) {
 		if (value != null) {
 			return Boolean.parseBoolean(value);
-		}
-
-		return null;
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
 		}
 
 		return null;

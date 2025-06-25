@@ -746,12 +746,7 @@ public abstract class BaseProductConfigurationListResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			productConfigurationListUnsafeFunction =
 				productConfigurationList -> patchProductConfigurationList(
-					productConfigurationList.getId() != null ?
-						productConfigurationList.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"productConfigurationListId")),
-					productConfigurationList);
+					productConfigurationList.getId(), productConfigurationList);
 		}
 
 		if (productConfigurationListUnsafeFunction == null) {

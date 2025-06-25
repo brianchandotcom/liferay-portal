@@ -444,12 +444,7 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			skuVirtualSettingsFileEntryUnsafeFunction =
 				skuVirtualSettingsFileEntry -> patchSkuVirtualSettingsFileEntry(
-					skuVirtualSettingsFileEntry.getId() != null ?
-						skuVirtualSettingsFileEntry.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"skuVirtualSettingsFileEntryId")),
-					null);
+					skuVirtualSettingsFileEntry.getId(), null);
 		}
 
 		if (skuVirtualSettingsFileEntryUnsafeFunction == null) {
@@ -476,14 +471,6 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceImpl
 					skuVirtualSettingsFileEntry);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

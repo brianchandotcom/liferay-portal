@@ -561,11 +561,7 @@ public abstract class BaseProductDisplayPageResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			productDisplayPageUnsafeFunction =
 				productDisplayPage -> patchProductDisplayPage(
-					productDisplayPage.getId() != null ?
-						productDisplayPage.getId() :
-							_parseLong(
-								(String)parameters.get("productDisplayPageId")),
-					productDisplayPage);
+					productDisplayPage.getId(), productDisplayPage);
 		}
 
 		if (productDisplayPageUnsafeFunction == null) {
@@ -587,14 +583,6 @@ public abstract class BaseProductDisplayPageResourceImpl
 				productDisplayPageUnsafeFunction.apply(productDisplayPage);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

@@ -1158,12 +1158,7 @@ public abstract class BasePostalAddressResourceImpl
 								postalAddress.getExternalReferenceCode());
 
 						persistedPostalAddress = patchPostalAddress(
-							getPostalAddress.getId() != null ?
-								getPostalAddress.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"postalAddressId")),
-							postalAddress);
+							getPostalAddress.getId(), postalAddress);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("accountId")) {
@@ -1358,16 +1353,12 @@ public abstract class BasePostalAddressResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			postalAddressUnsafeFunction = postalAddress -> patchPostalAddress(
-				postalAddress.getId() != null ? postalAddress.getId() :
-					_parseLong((String)parameters.get("postalAddressId")),
-				postalAddress);
+				postalAddress.getId(), postalAddress);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			postalAddressUnsafeFunction = postalAddress -> putPostalAddress(
-				postalAddress.getId() != null ? postalAddress.getId() :
-					_parseLong((String)parameters.get("postalAddressId")),
-				postalAddress);
+				postalAddress.getId(), postalAddress);
 		}
 
 		if (postalAddressUnsafeFunction == null) {

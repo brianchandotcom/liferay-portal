@@ -554,9 +554,7 @@ public abstract class BaseFormRecordResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			formRecordUnsafeFunction = formRecord -> putFormRecord(
-				formRecord.getId() != null ? formRecord.getId() :
-					_parseLong((String)parameters.get("formRecordId")),
-				formRecord);
+				formRecord.getId(), formRecord);
 		}
 
 		if (formRecordUnsafeFunction == null) {

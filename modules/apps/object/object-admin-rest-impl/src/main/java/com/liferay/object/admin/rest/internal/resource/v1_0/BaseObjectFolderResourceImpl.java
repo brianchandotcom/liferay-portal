@@ -566,12 +566,7 @@ public abstract class BaseObjectFolderResourceImpl
 								objectFolder.getExternalReferenceCode());
 
 						persistedObjectFolder = patchObjectFolder(
-							getObjectFolder.getId() != null ?
-								getObjectFolder.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"objectFolderId")),
-							objectFolder);
+							getObjectFolder.getId(), objectFolder);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedObjectFolder = postObjectFolder(objectFolder);
@@ -722,16 +717,12 @@ public abstract class BaseObjectFolderResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			objectFolderUnsafeFunction = objectFolder -> patchObjectFolder(
-				objectFolder.getId() != null ? objectFolder.getId() :
-					_parseLong((String)parameters.get("objectFolderId")),
-				objectFolder);
+				objectFolder.getId(), objectFolder);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			objectFolderUnsafeFunction = objectFolder -> putObjectFolder(
-				objectFolder.getId() != null ? objectFolder.getId() :
-					_parseLong((String)parameters.get("objectFolderId")),
-				objectFolder);
+				objectFolder.getId(), objectFolder);
 		}
 
 		if (objectFolderUnsafeFunction == null) {
@@ -753,14 +744,6 @@ public abstract class BaseObjectFolderResourceImpl
 				objectFolderUnsafeFunction.apply(objectFolder);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

@@ -1399,23 +1399,13 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			messageBoardSectionUnsafeFunction =
 				messageBoardSection -> patchMessageBoardSection(
-					messageBoardSection.getId() != null ?
-						messageBoardSection.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"messageBoardSectionId")),
-					messageBoardSection);
+					messageBoardSection.getId(), messageBoardSection);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			messageBoardSectionUnsafeFunction =
 				messageBoardSection -> putMessageBoardSection(
-					messageBoardSection.getId() != null ?
-						messageBoardSection.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"messageBoardSectionId")),
-					messageBoardSection);
+					messageBoardSection.getId(), messageBoardSection);
 		}
 
 		if (messageBoardSectionUnsafeFunction == null) {
@@ -1444,14 +1434,6 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	private Boolean _parseBoolean(String value) {
 		if (value != null) {
 			return Boolean.parseBoolean(value);
-		}
-
-		return null;
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
 		}
 
 		return null;

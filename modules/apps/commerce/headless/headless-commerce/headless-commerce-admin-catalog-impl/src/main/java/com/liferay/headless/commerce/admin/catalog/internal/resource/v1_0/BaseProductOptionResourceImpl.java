@@ -518,10 +518,7 @@ public abstract class BaseProductOptionResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			productOptionUnsafeFunction = productOption -> {
-				patchProductOption(
-					productOption.getId() != null ? productOption.getId() :
-						_parseLong((String)parameters.get("productOptionId")),
-					productOption);
+				patchProductOption(productOption.getId(), productOption);
 
 				return null;
 			};
@@ -546,14 +543,6 @@ public abstract class BaseProductOptionResourceImpl
 				productOptionUnsafeFunction.apply(productOption);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

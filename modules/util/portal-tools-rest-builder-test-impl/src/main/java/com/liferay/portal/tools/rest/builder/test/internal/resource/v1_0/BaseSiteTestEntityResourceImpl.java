@@ -930,12 +930,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 						}
 
 						persistedSiteTestEntity = patchSiteTestEntity(
-							getSiteTestEntity.getId() != null ?
-								getSiteTestEntity.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"siteTestEntityId")),
-							siteTestEntity);
+							getSiteTestEntity.getId(), siteTestEntity);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("siteId")) {
@@ -1089,16 +1084,12 @@ public abstract class BaseSiteTestEntityResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			siteTestEntityUnsafeFunction =
 				siteTestEntity -> patchSiteTestEntity(
-					siteTestEntity.getId() != null ? siteTestEntity.getId() :
-						_parseLong((String)parameters.get("siteTestEntityId")),
-					siteTestEntity);
+					siteTestEntity.getId(), siteTestEntity);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			siteTestEntityUnsafeFunction = siteTestEntity -> putSiteTestEntity(
-				siteTestEntity.getId() != null ? siteTestEntity.getId() :
-					_parseLong((String)parameters.get("siteTestEntityId")),
-				siteTestEntity);
+				siteTestEntity.getId(), siteTestEntity);
 		}
 
 		if (siteTestEntityUnsafeFunction == null) {
@@ -1120,14 +1111,6 @@ public abstract class BaseSiteTestEntityResourceImpl
 				siteTestEntityUnsafeFunction.apply(siteTestEntity);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

@@ -1287,10 +1287,7 @@ public abstract class BaseRoleResourceImpl
 						getRole = getRoleByExternalReferenceCode(
 							role.getExternalReferenceCode());
 
-						persistedRole = patchRole(
-							getRole.getId() != null ? getRole.getId() :
-								_parseLong((String)parameters.get("roleId")),
-							role);
+						persistedRole = patchRole(getRole.getId(), role);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedRole = postRole(role);
@@ -1452,17 +1449,11 @@ public abstract class BaseRoleResourceImpl
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			roleUnsafeFunction = role -> patchRole(
-				role.getId() != null ? role.getId() :
-					_parseLong((String)parameters.get("roleId")),
-				role);
+			roleUnsafeFunction = role -> patchRole(role.getId(), role);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			roleUnsafeFunction = role -> putRole(
-				role.getId() != null ? role.getId() :
-					_parseLong((String)parameters.get("roleId")),
-				role);
+			roleUnsafeFunction = role -> putRole(role.getId(), role);
 		}
 
 		if (roleUnsafeFunction == null) {
@@ -1482,14 +1473,6 @@ public abstract class BaseRoleResourceImpl
 				roleUnsafeFunction.apply(role);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

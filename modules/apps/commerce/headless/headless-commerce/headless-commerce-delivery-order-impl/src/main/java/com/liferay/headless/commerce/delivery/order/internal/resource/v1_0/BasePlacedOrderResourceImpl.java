@@ -647,9 +647,7 @@ public abstract class BasePlacedOrderResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			placedOrderUnsafeFunction = placedOrder -> patchPlacedOrder(
-				placedOrder.getId() != null ? placedOrder.getId() :
-					_parseLong((String)parameters.get("placedOrderId")),
-				placedOrder);
+				placedOrder.getId(), placedOrder);
 		}
 
 		if (placedOrderUnsafeFunction == null) {
@@ -671,14 +669,6 @@ public abstract class BasePlacedOrderResourceImpl
 				placedOrderUnsafeFunction.apply(placedOrder);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

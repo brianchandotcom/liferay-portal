@@ -2712,12 +2712,7 @@ public abstract class BaseStructuredContentResourceImpl
 						}
 
 						persistedStructuredContent = patchStructuredContent(
-							getStructuredContent.getId() != null ?
-								getStructuredContent.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"structuredContentId")),
-							structuredContent);
+							getStructuredContent.getId(), structuredContent);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("assetLibraryId")) {
@@ -2934,21 +2929,13 @@ public abstract class BaseStructuredContentResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			structuredContentUnsafeFunction =
 				structuredContent -> patchStructuredContent(
-					structuredContent.getId() != null ?
-						structuredContent.getId() :
-							_parseLong(
-								(String)parameters.get("structuredContentId")),
-					structuredContent);
+					structuredContent.getId(), structuredContent);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			structuredContentUnsafeFunction =
 				structuredContent -> putStructuredContent(
-					structuredContent.getId() != null ?
-						structuredContent.getId() :
-							_parseLong(
-								(String)parameters.get("structuredContentId")),
-					structuredContent);
+					structuredContent.getId(), structuredContent);
 		}
 
 		if (structuredContentUnsafeFunction == null) {

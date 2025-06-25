@@ -1975,11 +1975,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 						}
 
 						persistedMessageBoardMessage = patchMessageBoardMessage(
-							getMessageBoardMessage.getId() != null ?
-								getMessageBoardMessage.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"messageBoardMessageId")),
+							getMessageBoardMessage.getId(),
 							messageBoardMessage);
 					}
 					catch (NoSuchModelException noSuchModelException) {
@@ -2168,23 +2164,13 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			messageBoardMessageUnsafeFunction =
 				messageBoardMessage -> patchMessageBoardMessage(
-					messageBoardMessage.getId() != null ?
-						messageBoardMessage.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"messageBoardMessageId")),
-					messageBoardMessage);
+					messageBoardMessage.getId(), messageBoardMessage);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			messageBoardMessageUnsafeFunction =
 				messageBoardMessage -> putMessageBoardMessage(
-					messageBoardMessage.getId() != null ?
-						messageBoardMessage.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"messageBoardMessageId")),
-					messageBoardMessage);
+					messageBoardMessage.getId(), messageBoardMessage);
 		}
 
 		if (messageBoardMessageUnsafeFunction == null) {

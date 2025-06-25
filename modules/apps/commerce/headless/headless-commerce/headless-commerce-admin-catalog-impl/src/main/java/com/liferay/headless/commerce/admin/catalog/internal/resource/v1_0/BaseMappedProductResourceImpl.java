@@ -642,9 +642,7 @@ public abstract class BaseMappedProductResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			mappedProductUnsafeFunction = mappedProduct -> patchMappedProduct(
-				mappedProduct.getId() != null ? mappedProduct.getId() :
-					_parseLong((String)parameters.get("mappedProductId")),
-				mappedProduct);
+				mappedProduct.getId(), mappedProduct);
 		}
 
 		if (mappedProductUnsafeFunction == null) {
@@ -666,14 +664,6 @@ public abstract class BaseMappedProductResourceImpl
 				mappedProductUnsafeFunction.apply(mappedProduct);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

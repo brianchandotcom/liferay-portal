@@ -529,11 +529,7 @@ public abstract class BaseDiscountResourceImpl
 						getDiscount = getDiscountByExternalReferenceCode(
 							discount.getExternalReferenceCode());
 
-						patchDiscount(
-							getDiscount.getId() != null ? getDiscount.getId() :
-								_parseLong(
-									(String)parameters.get("discountId")),
-							discount);
+						patchDiscount(getDiscount.getId(), discount);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedDiscount = postDiscount(discount);
@@ -703,10 +699,7 @@ public abstract class BaseDiscountResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			discountUnsafeFunction = discount -> {
-				patchDiscount(
-					discount.getId() != null ? discount.getId() :
-						_parseLong((String)parameters.get("discountId")),
-					discount);
+				patchDiscount(discount.getId(), discount);
 
 				return null;
 			};
@@ -731,14 +724,6 @@ public abstract class BaseDiscountResourceImpl
 				discountUnsafeFunction.apply(discount);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

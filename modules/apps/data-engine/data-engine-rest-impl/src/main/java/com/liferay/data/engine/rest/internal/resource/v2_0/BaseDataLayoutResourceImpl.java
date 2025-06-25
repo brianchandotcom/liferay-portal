@@ -742,9 +742,7 @@ public abstract class BaseDataLayoutResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			dataLayoutUnsafeFunction = dataLayout -> putDataLayout(
-				dataLayout.getId() != null ? dataLayout.getId() :
-					_parseLong((String)parameters.get("dataLayoutId")),
-				dataLayout);
+				dataLayout.getId(), dataLayout);
 		}
 
 		if (dataLayoutUnsafeFunction == null) {

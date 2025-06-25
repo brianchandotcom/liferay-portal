@@ -816,16 +816,12 @@ public abstract class BaseObjectActionResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			objectActionUnsafeFunction = objectAction -> patchObjectAction(
-				objectAction.getId() != null ? objectAction.getId() :
-					_parseLong((String)parameters.get("objectActionId")),
-				objectAction);
+				objectAction.getId(), objectAction);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			objectActionUnsafeFunction = objectAction -> putObjectAction(
-				objectAction.getId() != null ? objectAction.getId() :
-					_parseLong((String)parameters.get("objectActionId")),
-				objectAction);
+				objectAction.getId(), objectAction);
 		}
 
 		if (objectActionUnsafeFunction == null) {

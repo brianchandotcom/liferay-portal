@@ -677,10 +677,7 @@ public abstract class BaseOrderNoteResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			orderNoteUnsafeFunction = orderNote -> {
-				patchOrderNote(
-					orderNote.getId() != null ? orderNote.getId() :
-						_parseLong((String)parameters.get("orderNoteId")),
-					orderNote);
+				patchOrderNote(orderNote.getId(), orderNote);
 
 				return null;
 			};
@@ -705,14 +702,6 @@ public abstract class BaseOrderNoteResourceImpl
 				orderNoteUnsafeFunction.apply(orderNote);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

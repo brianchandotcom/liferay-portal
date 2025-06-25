@@ -713,12 +713,7 @@ public abstract class BaseSXPBlueprintResourceImpl
 								sxpBlueprint.getExternalReferenceCode());
 
 						persistedSXPBlueprint = patchSXPBlueprint(
-							getSXPBlueprint.getId() != null ?
-								getSXPBlueprint.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"sxpBlueprintId")),
-							sxpBlueprint);
+							getSXPBlueprint.getId(), sxpBlueprint);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedSXPBlueprint = postSXPBlueprint(sxpBlueprint);
@@ -869,16 +864,12 @@ public abstract class BaseSXPBlueprintResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			sxpBlueprintUnsafeFunction = sxpBlueprint -> patchSXPBlueprint(
-				sxpBlueprint.getId() != null ? sxpBlueprint.getId() :
-					_parseLong((String)parameters.get("sxpBlueprintId")),
-				sxpBlueprint);
+				sxpBlueprint.getId(), sxpBlueprint);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			sxpBlueprintUnsafeFunction = sxpBlueprint -> putSXPBlueprint(
-				sxpBlueprint.getId() != null ? sxpBlueprint.getId() :
-					_parseLong((String)parameters.get("sxpBlueprintId")),
-				sxpBlueprint);
+				sxpBlueprint.getId(), sxpBlueprint);
 		}
 
 		if (sxpBlueprintUnsafeFunction == null) {
@@ -900,14 +891,6 @@ public abstract class BaseSXPBlueprintResourceImpl
 				sxpBlueprintUnsafeFunction.apply(sxpBlueprint);
 			}
 		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
 	}
 
 	@Override

@@ -682,12 +682,7 @@ public abstract class BaseReplenishmentItemResourceImpl
 								replenishmentItem.getExternalReferenceCode());
 
 						persistedReplenishmentItem = patchReplenishmentItem(
-							getReplenishmentItem.getId() != null ?
-								getReplenishmentItem.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"replenishmentItemId")),
-							replenishmentItem);
+							getReplenishmentItem.getId(), replenishmentItem);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedReplenishmentItem = postReplenishmentItem(
@@ -865,11 +860,7 @@ public abstract class BaseReplenishmentItemResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			replenishmentItemUnsafeFunction =
 				replenishmentItem -> patchReplenishmentItem(
-					replenishmentItem.getId() != null ?
-						replenishmentItem.getId() :
-							_parseLong(
-								(String)parameters.get("replenishmentItemId")),
-					replenishmentItem);
+					replenishmentItem.getId(), replenishmentItem);
 		}
 
 		if (replenishmentItemUnsafeFunction == null) {

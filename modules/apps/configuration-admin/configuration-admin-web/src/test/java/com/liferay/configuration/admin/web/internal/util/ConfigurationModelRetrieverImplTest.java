@@ -292,33 +292,6 @@ public class ConfigurationModelRetrieverImplTest {
 		).doesNotMatch();
 	}
 
-	public class FilterAsserter {
-
-		public FilterAsserter(Filter filter, Map<String, String> payload) {
-			_filter = filter;
-			_payload = payload;
-		}
-
-		public void doesMatch() throws Exception {
-			if (!_filter.matches(_payload)) {
-				throw new AssertionFailedError(
-					StringBundler.concat(
-						_filter, " does not match ", _payload));
-			}
-		}
-
-		public void doesNotMatch() throws Exception {
-			if (_filter.matches(_payload)) {
-				throw new AssertionFailedError(
-					StringBundler.concat(_filter, " matches ", _payload));
-			}
-		}
-
-		private final Filter _filter;
-		private final Map<String, String> _payload;
-
-	}
-
 	private FilterAsserter _filterAsserter(
 			String pidFilterString, Map<String, String> payload)
 		throws Exception {
@@ -329,5 +302,32 @@ public class ConfigurationModelRetrieverImplTest {
 	}
 
 	private ConfigurationModelRetrieverImpl _configurationModelRetrieverImpl;
+
+	private static class FilterAsserter {
+
+		public FilterAsserter(Filter filter, Map<String, String> payload) {
+			_filter = filter;
+			_payload = payload;
+		}
+
+		public void doesMatch() {
+			if (!_filter.matches(_payload)) {
+				throw new AssertionFailedError(
+					StringBundler.concat(
+						_filter, " does not match ", _payload));
+			}
+		}
+
+		public void doesNotMatch() {
+			if (_filter.matches(_payload)) {
+				throw new AssertionFailedError(
+					StringBundler.concat(_filter, " matches ", _payload));
+			}
+		}
+
+		private final Filter _filter;
+		private final Map<String, String> _payload;
+
+	}
 
 }

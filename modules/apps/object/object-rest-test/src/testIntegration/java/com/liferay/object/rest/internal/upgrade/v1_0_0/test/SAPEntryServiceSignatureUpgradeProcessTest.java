@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.security.service.access.policy.internal.upgrade.v3_0_2.test;
+package com.liferay.object.rest.internal.upgrade.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
@@ -257,7 +257,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 
 	private void _runUpgrade() throws Exception {
 		UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
-			_upgradeStepRegistrator, new Version(3, 0, 2));
+			_upgradeStepRegistrator, new Version(1, 0, 0));
 
 		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
 			upgradeProcess.upgrade();
@@ -267,7 +267,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 	}
 
 	@Inject(
-		filter = "(&(component.name=com.liferay.portal.security.service.access.policy.internal.upgrade.registry.SAPServiceUpgradeStepRegistrator))"
+		filter = "(&(component.name=com.liferay.object.rest.internal.upgrade.registry.ObjectRESTImplUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 

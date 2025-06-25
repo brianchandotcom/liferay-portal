@@ -5,10 +5,10 @@ definition {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		OSGiConfig.deployOSGiConfigFile(
-			osgiConfigFileName = "com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration.config",
+			osgiConfigFileName = "com.liferay.portal.db.migration.schema.exporter.internal.configuration.DBMigrationSchemaExportConfiguration.config",
 			osgiConfigs = "exportFilesPath=\"${liferayHome}\"");
 
-		OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration.config");
+		OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.db.migration.schema.exporter.internal.configuration.DBMigrationSchemaExportConfiguration.config");
 	}
 
 	@summary = "Switch JDBC to use PostgreSQL"

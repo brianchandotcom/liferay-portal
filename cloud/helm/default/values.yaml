@@ -39,10 +39,22 @@ env:
         value: ${env.POD_IP}:8080
     -   name: LIFERAY_TOMCAT_SESSION_REPLICATION_ENABLED
         value: "true"
+    -   name: POD_APP
+        valueFrom:
+            fieldRef:
+                fieldPath: metadata.labels['app.kubernetes.io/name']
     -   name: POD_IP
         valueFrom:
             fieldRef:
                 fieldPath: status.podIP
+    -   name: POD_NAME
+        valueFrom:
+            fieldRef:
+                fieldPath: metadata.name
+    -   name: POD_NAMESPACE
+        valueFrom:
+            fieldRef:
+                fieldPath: metadata.namespace
 envFrom:
     -   secretRef:
             name: liferay-default
@@ -259,6 +271,9 @@ volumeMounts:
     -   mountPath: /opt/liferay/logs
         name: liferay-persistent-volume
         subPath: liferay/logs
+    -   mountPath: /opt/liferay/metrics
+        name: liferay-persistent-volume
+        subPath: liferay/metrics
     -   mountPath: /opt/liferay/osgi/configs
         name: liferay-persistent-volume
         subPath: osgi/configs
@@ -310,6 +325,9 @@ volumeMounts:
     -   mountPath: /usr/local/liferay/scripts/pre-configure/000_jdk_java_options.sh
         name: liferay-configmap
         subPath: 000_jdk_java_options.sh
+    -   mountPath: /usr/local/liferay/scripts/pre-configure/010_install_prometheus_jmx_agent.sh
+        name: liferay-configmap
+        subPath: 010_install_prometheus_jmx_agent.sh
 volumes:
     -   configMap:
             name: liferay-default

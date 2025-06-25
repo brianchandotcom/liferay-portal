@@ -55,6 +55,11 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 
 				const responseJSON = await response.json();
 
+				sessionStorage.setItem(
+					'gcsSessionURL',
+					responseJSON.gcsSessionURL
+				);
+
 				setTicketAttachmentId(responseJSON.ticketAttachmentId);
 
 				return {
@@ -64,8 +69,6 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 				};
 			}
 			catch (uploadError) {
-				console.error('Initiate upload error:', uploadError);
-
 				if ((uploadError as any).status === 409) {
 					navigate(`/${ticketId}/attachment-already-exists`, {
 						state: {
@@ -79,8 +82,7 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 
 				navigate(`/${ticketId}/unexpected-error`, {
 					state: {
-						attachmentName: fileName,
-						ticketId,
+						message: String(uploadError),
 					},
 				});
 

@@ -99,7 +99,11 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(DateRangeTermFilter dateRangeTermFilter) {
-		return _dateRangeTermFilterTranslator.translate(dateRangeTermFilter);
+		return TermRangeQuery.newStringRange(
+			dateRangeTermFilter.getField(), dateRangeTermFilter.getLowerBound(),
+			dateRangeTermFilter.getUpperBound(),
+			dateRangeTermFilter.isIncludesLower(),
+			dateRangeTermFilter.isIncludesUpper());
 	}
 
 	@Override
@@ -247,9 +251,6 @@ public class SolrFilterTranslator
 
 		return !booleanClauses.isEmpty();
 	}
-
-	@Reference
-	private DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;
 
 	private final QueryVisitor<Query> _queryVisitor = new BaseQueryVisitor() {
 	};

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.geolocation.GeoDistance;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslator;
@@ -34,6 +35,9 @@ import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
 import com.liferay.portal.search.index.IndexNameBuilder;
+
+import java.text.Format;
+import java.text.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +128,29 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(DateRangeTermFilter dateRangeTermFilter) {
-		return dateRangeTermFilterTranslator.translate(dateRangeTermFilter);
+		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
+			dateRangeTermFilter.getField());
+
+		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			dateRangeTermFilter.getDateFormat(),
+			dateRangeTermFilter.getTimeZone());
+
+		try {
+			rangeQueryBuilder.from(
+				format.parseObject(dateRangeTermFilter.getLowerBound()));
+			rangeQueryBuilder.includeLower(
+				dateRangeTermFilter.isIncludesLower());
+			rangeQueryBuilder.includeUpper(
+				dateRangeTermFilter.isIncludesUpper());
+			rangeQueryBuilder.to(
+				format.parseObject(dateRangeTermFilter.getUpperBound()));
+		}
+		catch (ParseException parseException) {
+			throw new IllegalArgumentException(
+				"Invalid date range " + dateRangeTermFilter, parseException);
+		}
+
+		return rangeQueryBuilder;
 	}
 
 	@Override
@@ -307,9 +333,6 @@ public class ElasticsearchFilterTranslator
 
 		return filter.accept(this);
 	}
-
-	@Reference
-	protected DateRangeTermFilterTranslator dateRangeTermFilterTranslator;
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;

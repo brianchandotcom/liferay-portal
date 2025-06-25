@@ -340,7 +340,7 @@ public class ObjectEntryResourceImpl
 
 		return defaultObjectEntryManager.getVersionedObjectEntries(
 			_getDTOConverterContext(null), externalReferenceCode,
-			_objectDefinition, pagination);
+			_objectDefinition, null, pagination);
 	}
 
 	@Override
@@ -496,8 +496,8 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.getVersionedObjectEntries(
-			_getDTOConverterContext(null), contextCompany.getCompanyId(),
-			_objectDefinition, pagination, scopeKey, externalReferenceCode);
+			_getDTOConverterContext(null), externalReferenceCode,
+			_objectDefinition, scopeKey, pagination);
 	}
 
 	@Override

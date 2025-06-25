@@ -42,6 +42,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,113 +65,43 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_objectDefinition1 = _addObjectDefinition(
-			new TextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"objectDefinition1TextObjectFieldName"
-			).build());
-
-		_objectDefinition1 =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId());
-
-		_objectDefinition2 = _addObjectDefinition(
-			new TextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"objectDefinition2TextObjectFieldName"
-			).build());
-
-		_objectDefinition2 =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				_objectDefinition2.getObjectDefinitionId());
-
-		_objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				_objectDefinition2.getObjectDefinitionId(),
-				_objectDefinition1.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 	}
 
 	@Test
 	public void testManyToManyObjectRelationshipRelatedInfoCollectionProvider()
 		throws Exception {
 
-		ObjectEntry objectDefinition1ObjectEntry1 =
-			_objectEntryLocalService.addObjectEntry(
-				_group.getGroupId(), TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null,
-				HashMapBuilder.<String, Serializable>put(
-					"objectDefinition1TextObjectFieldName",
-					RandomTestUtil.randomString()
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+		// Company scoped object definition 1 and
+		// Company scoped object definition 2
 
-		ObjectEntry objectDefinition1ObjectEntry2 =
-			_objectEntryLocalService.addObjectEntry(
-				_group.getGroupId(), TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null,
-				HashMapBuilder.<String, Serializable>put(
-					"objectDefinition1TextObjectFieldName",
-					RandomTestUtil.randomString()
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+		_testManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		ObjectEntry objectDefinition2ObjectEntry =
-			_objectEntryLocalService.addObjectEntry(
-				_group.getGroupId(), TestPropsValues.getUserId(),
-				_objectDefinition2.getObjectDefinitionId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null,
-				HashMapBuilder.<String, Serializable>put(
-					"objectDefinition2TextObjectFieldName",
-					RandomTestUtil.randomString()
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+		// Company scoped object definition 1 and
+		// Site scoped object definition 2
 
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			_objectRelationship.getObjectRelationshipId(),
-			objectDefinition2ObjectEntry.getObjectEntryId(),
-			objectDefinition1ObjectEntry1.getObjectEntryId(),
-			new ServiceContext());
+		_testManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			ObjectDefinitionConstants.SCOPE_SITE);
 
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			_objectRelationship.getObjectRelationshipId(),
-			objectDefinition2ObjectEntry.getObjectEntryId(),
-			objectDefinition1ObjectEntry2.getObjectEntryId(),
-			new ServiceContext());
+		// Site scoped object definition 1 and
+		// Company scoped object definition 2
 
-		_assertRelatedInfoCollectionProvider(
-			_objectDefinition1, objectDefinition1ObjectEntry1,
-			objectDefinition2ObjectEntry);
-		_assertRelatedInfoCollectionProvider(
-			_objectDefinition1, objectDefinition1ObjectEntry2,
-			objectDefinition2ObjectEntry);
-		_assertRelatedInfoCollectionProvider(
-			_objectDefinition2, objectDefinition2ObjectEntry,
-			objectDefinition1ObjectEntry1, objectDefinition1ObjectEntry2);
+		_testManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+			ObjectDefinitionConstants.SCOPE_SITE,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		// Site scoped object definition 1 and
+		// Site scoped object definition 2
+
+		_testManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+			ObjectDefinitionConstants.SCOPE_SITE,
+			ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
-	private ObjectDefinition _addObjectDefinition(ObjectField objectField)
+	private ObjectDefinition _addObjectDefinition(
+			ObjectField objectField, String scope)
 		throws Exception {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
@@ -179,8 +110,7 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionTestUtil.getRandomName(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			true, ObjectDefinitionConstants.SCOPE_SITE,
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			Collections.emptyList(), Arrays.asList(objectField));
 	}
 
@@ -219,6 +149,124 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 		for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
 			Assert.assertTrue(objectEntries.contains(relatedObjectEntry));
 		}
+	}
+
+	private void _testManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+			String scope1, String scope2)
+		throws Exception {
+
+		_objectDefinition1 = _addObjectDefinition(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"objectDefinition1TextObjectFieldName"
+			).build(),
+			scope1);
+
+		_objectDefinition1 =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId());
+
+		_objectDefinition2 = _addObjectDefinition(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"objectDefinition2TextObjectFieldName"
+			).build(),
+			scope2);
+
+		_objectDefinition2 =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				_objectDefinition2.getObjectDefinitionId());
+
+		_objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				_objectDefinition2.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
+		long groupId1 = 0L;
+
+		if (Objects.equals(scope1, ObjectDefinitionConstants.SCOPE_SITE)) {
+			groupId1 = _group.getGroupId();
+		}
+
+		ObjectEntry objectDefinition1ObjectEntry1 =
+			_objectEntryLocalService.addObjectEntry(
+				groupId1, TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"objectDefinition1TextObjectFieldName",
+					RandomTestUtil.randomString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntry objectDefinition1ObjectEntry2 =
+			_objectEntryLocalService.addObjectEntry(
+				groupId1, TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"objectDefinition1TextObjectFieldName",
+					RandomTestUtil.randomString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+		long groupId2 = 0L;
+
+		if (Objects.equals(scope2, ObjectDefinitionConstants.SCOPE_SITE)) {
+			groupId2 = _group.getGroupId();
+		}
+
+		ObjectEntry objectDefinition2ObjectEntry =
+			_objectEntryLocalService.addObjectEntry(
+				groupId2, TestPropsValues.getUserId(),
+				_objectDefinition2.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"objectDefinition2TextObjectFieldName",
+					RandomTestUtil.randomString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
+			TestPropsValues.getUserId(),
+			_objectRelationship.getObjectRelationshipId(),
+			objectDefinition2ObjectEntry.getObjectEntryId(),
+			objectDefinition1ObjectEntry1.getObjectEntryId(),
+			new ServiceContext());
+
+		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
+			TestPropsValues.getUserId(),
+			_objectRelationship.getObjectRelationshipId(),
+			objectDefinition2ObjectEntry.getObjectEntryId(),
+			objectDefinition1ObjectEntry2.getObjectEntryId(),
+			new ServiceContext());
+
+		_assertRelatedInfoCollectionProvider(
+			_objectDefinition1, objectDefinition1ObjectEntry1,
+			objectDefinition2ObjectEntry);
+		_assertRelatedInfoCollectionProvider(
+			_objectDefinition1, objectDefinition1ObjectEntry2,
+			objectDefinition2ObjectEntry);
+		_assertRelatedInfoCollectionProvider(
+			_objectDefinition2, objectDefinition2ObjectEntry,
+			objectDefinition1ObjectEntry1, objectDefinition1ObjectEntry2);
 	}
 
 	@DeleteAfterTestRun

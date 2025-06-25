@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.solr8.internal.indexing;
 
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
@@ -29,9 +28,6 @@ import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.connection.TestSolrClientManager;
 import com.liferay.portal.search.solr8.internal.document.DefaultSolrDocumentFactory;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
-import com.liferay.portal.search.solr8.internal.filter.FilterTranslator;
-import com.liferay.portal.search.solr8.internal.filter.SolrFilterTranslator;
-import com.liferay.portal.search.solr8.internal.query.BaseQueryVisitor;
 import com.liferay.portal.search.solr8.internal.query.SolrQueryTranslator;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.SolrSearchEngineAdapterFixture;
 import com.liferay.portal.search.solr8.internal.suggest.NGramHolderBuilderImpl;
@@ -44,7 +40,6 @@ import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.Map;
 
-import org.apache.lucene.search.Query;
 import org.apache.solr.client.solrj.SolrQuery;
 
 import org.mockito.Mockito;
@@ -129,22 +124,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 		_serviceRegistration.unregister();
 	}
 
-	protected static SolrQueryTranslator createSolrQueryTranslator() {
-		SolrFilterTranslator solrFilterTranslator = new SolrFilterTranslator();
-
-		ReflectionTestUtil.setFieldValue(
-			BaseQueryVisitor.class, "_filterTranslatorSnapshot",
-			new Snapshot<FilterTranslator<Query>>(null, null) {
-
-				public FilterTranslator<Query> get() {
-					return solrFilterTranslator;
-				}
-
-			});
-
-		return new SolrQueryTranslator();
-	}
-
 	protected static SolrSearchEngineAdapterFixture
 		createSolrSearchEngineAdapterFixture(
 			SolrClientManager solrClientManager,
@@ -155,7 +134,7 @@ public class SolrIndexingFixture implements IndexingFixture {
 			{
 				setFacetProcessor(facetProcessor);
 				setProperties(properties);
-				setQueryTranslator(createSolrQueryTranslator());
+				setQueryTranslator(new SolrQueryTranslator());
 				setSolrClientManager(solrClientManager);
 				setSolrDocumentFactory(new DefaultSolrDocumentFactory());
 			}

@@ -104,8 +104,6 @@ public class StreamHubConfigurationRestController extends BaseRestController {
 				"Error while executing Event Streaming for Standalone"
 			});
 
-		StringBuilder sb = new StringBuilder();
-
 		for (String action : types) {
 			if (!actionConfigs.containsKey(action)) {
 				continue;
@@ -117,10 +115,9 @@ public class StreamHubConfigurationRestController extends BaseRestController {
 
 			objectAction.setObjectActionExecutorKey(() -> config[0]);
 
-			StringBuilder finalSb = sb;
-
 			objectAction.setExternalReferenceCode(
-				() -> finalSb.append(
+				() -> new StringBuilder(
+				).append(
 					"STREAM_"
 				).append(
 					objectDefinitionId
@@ -142,7 +139,6 @@ public class StreamHubConfigurationRestController extends BaseRestController {
 			}
 
 			objectActions.add(objectAction);
-			sb = new StringBuilder();
 		}
 
 		objectActionResource.postObjectDefinitionObjectActionBatch(

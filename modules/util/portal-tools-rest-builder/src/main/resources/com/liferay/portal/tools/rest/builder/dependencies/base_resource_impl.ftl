@@ -615,7 +615,6 @@ public abstract class Base${schemaName}ResourceImpl
 
 								<@getCREATEBatchJavaMethodParameters
 									javaMethodSignature = postParentBatchJavaMethodSignature
-									parentSchemaName = postParentBatchJavaMethodSignature.parentSchemaName
 									schemaVarName = schemaVarName
 								/>);
 
@@ -649,7 +648,6 @@ public abstract class Base${schemaName}ResourceImpl
 
 								<@getCREATEBatchJavaMethodParameters
 									javaMethodSignature = postParentByExternalReferenceCodeBatchJavaMethodSignature
-									parentSchemaName = postParentByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName
 									schemaVarName = schemaVarName
 								/>);
 
@@ -720,7 +718,6 @@ public abstract class Base${schemaName}ResourceImpl
 											get${schemaName} = ${getParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 												<@getCREATEBatchJavaMethodParameters
 													javaMethodSignature = getParentByExternalReferenceCodeBatchJavaMethodSignature
-													parentSchemaName = getParentByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName
 													schemaVarName = schemaVarName
 												/>);
 										}
@@ -794,7 +791,6 @@ public abstract class Base${schemaName}ResourceImpl
 
 												<@getCREATEBatchJavaMethodParameters
 													javaMethodSignature = postParentBatchJavaMethodSignature
-													parentSchemaName = postParentBatchJavaMethodSignature.parentSchemaName
 													schemaVarName = schemaVarName
 												/>);
 											}
@@ -822,7 +818,6 @@ public abstract class Base${schemaName}ResourceImpl
 
 												<@getCREATEBatchJavaMethodParameters
 													javaMethodSignature = postParentByExternalReferenceCodeBatchJavaMethodSignature
-													parentSchemaName = postParentByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName
 													schemaVarName = schemaVarName
 												/>);
 											}
@@ -886,7 +881,6 @@ public abstract class Base${schemaName}ResourceImpl
 
 											<@getCREATEBatchJavaMethodParameters
 												javaMethodSignature = putParentByExternalReferenceCodeBatchJavaMethodSignature
-												parentSchemaName = putParentByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName
 												schemaVarName = schemaVarName
 											/>);
 										}
@@ -1809,7 +1803,6 @@ public abstract class Base${schemaName}ResourceImpl
 <#macro getCREATEBatchJavaMethodParameters
 	javaMethodSignature
 	schemaVarName
-	parentSchemaName=""
 >
 	<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 		<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>

@@ -205,15 +205,9 @@ public class ConfigurationModelRetrieverImpl
 
 		String pidProperty = Constants.SERVICE_PID;
 
-		boolean factory = false;
-
 		if (!scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM) ||
 			pid.contains("~")) {
 
-			factory = true;
-		}
-
-		if (factory) {
 			pidProperty = ConfigurationAdmin.SERVICE_FACTORYPID;
 			pid = _getUnscopedPid(pid);
 		}

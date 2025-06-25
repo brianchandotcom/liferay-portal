@@ -8,8 +8,6 @@ import React, {useState} from 'react';
 import {FilterDropdown, Item} from './FilterDropdown';
 import {IAllFiltersDropdown} from './InventoryAnalysisCard';
 
-interface IGroupByDropdown extends IAllFiltersDropdown {}
-
 const defaultStructureTypes: Item[] = [
 	{
 		label: Liferay.Language.get('category'),
@@ -29,7 +27,7 @@ const defaultStructureTypes: Item[] = [
 	},
 ];
 
-const GroupByDropdown: React.FC<IGroupByDropdown> = ({
+const GroupByDropdown: React.FC<IAllFiltersDropdown> = ({
 	className,
 	item,
 	onSelectItem,

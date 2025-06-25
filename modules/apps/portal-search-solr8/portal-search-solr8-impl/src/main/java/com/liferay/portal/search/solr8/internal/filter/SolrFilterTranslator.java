@@ -66,7 +66,10 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(DateRangeFilter dateRangeFilter) {
-		return _dateRangeFilterTranslator.translate(dateRangeFilter);
+		return TermRangeQuery.newStringRange(
+			dateRangeFilter.getFieldName(), dateRangeFilter.getFrom(),
+			dateRangeFilter.getTo(), dateRangeFilter.isIncludeLower(),
+			dateRangeFilter.isIncludeUpper());
 	}
 
 	@Override
@@ -181,9 +184,6 @@ public class SolrFilterTranslator
 
 	@Reference
 	private BooleanFilterTranslator _booleanFilterTranslator;
-
-	@Reference
-	private DateRangeFilterTranslator _dateRangeFilterTranslator;
 
 	@Reference
 	private DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;

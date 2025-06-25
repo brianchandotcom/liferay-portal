@@ -38,6 +38,8 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.ExistsQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -66,7 +68,24 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(DateRangeFilter dateRangeFilter) {
-		return dateRangeFilterTranslator.translate(dateRangeFilter);
+		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
+			dateRangeFilter.getFieldName());
+
+		if (dateRangeFilter.getFormat() != null) {
+			rangeQueryBuilder.format(dateRangeFilter.getFormat());
+		}
+
+		rangeQueryBuilder.from(dateRangeFilter.getFrom());
+		rangeQueryBuilder.includeLower(dateRangeFilter.isIncludeLower());
+		rangeQueryBuilder.includeUpper(dateRangeFilter.isIncludeUpper());
+
+		if (dateRangeFilter.getTimeZoneId() != null) {
+			rangeQueryBuilder.timeZone(dateRangeFilter.getTimeZoneId());
+		}
+
+		rangeQueryBuilder.to(dateRangeFilter.getTo());
+
+		return rangeQueryBuilder;
 	}
 
 	@Override
@@ -179,9 +198,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected BooleanFilterTranslator booleanFilterTranslator;
-
-	@Reference
-	protected DateRangeFilterTranslator dateRangeFilterTranslator;
 
 	@Reference
 	protected DateRangeTermFilterTranslator dateRangeTermFilterTranslator;

@@ -84,7 +84,7 @@ export default function ObjectEntryStatusDataRenderer({
 	}, [versionNumber, itemData.id, restContextPath]);
 
 	return (
-		<>
+		<div className="lfr-objects__object-entry-status">
 			{showApprovedVersionLabel && (
 				<ClayLabel displayType="success">
 					{Liferay.Language.get('approved')}
@@ -113,6 +113,6 @@ export default function ObjectEntryStatusDataRenderer({
 					</ClayLabel.ItemAfter>
 				)}
 			</ClayLabel>
-		</>
+		</div>
 	);
 }

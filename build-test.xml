@@ -12303,6 +12303,8 @@ ${update.properties}</echo>
 
 liferay.home=${liferay.home}
 
+upgrade.database.dl.storage.check.disabled=true
+
 jdbc.default.jndi.name=
 jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url}
@@ -12334,8 +12336,7 @@ com.liferay.portal.servlet.filters.strip.StripFilter=true
 web.server.http.port=8080
 admin.email.from.address=test@liferay.com
 announcements.email.to.address=noreply@liferay.com
-login.secure.forgot.password=false
-upgrade.database.dl.storage.check.disabled=true</echo>
+login.secure.forgot.password=false</echo>
 
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />

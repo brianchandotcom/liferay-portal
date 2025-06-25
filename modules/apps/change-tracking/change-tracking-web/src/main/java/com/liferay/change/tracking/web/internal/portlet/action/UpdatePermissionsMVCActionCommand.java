@@ -51,15 +51,12 @@ public class UpdatePermissionsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		Map<String, List<String>> permissions =
+			(Map<String, List<String>>)_jsonFactory.looseDeserialize(
+				ParamUtil.getString(actionRequest, "permissions"));
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		String permissionsJSON = ParamUtil.getString(
-			actionRequest, "permissions");
-
-		Map<String, List<String>> rolePermissions =
-			(Map<String, List<String>>)_jsonFactory.looseDeserialize(
-				permissionsJSON);
 
 		_ctSettingsConfigurationHelper.save(
 			themeDisplay.getCompanyId(),
@@ -69,7 +66,7 @@ public class UpdatePermissionsMVCActionCommand extends BaseMVCActionCommand {
 					Role role = _roleLocalService.getRole(
 						themeDisplay.getCompanyId(), RoleConstants.OWNER);
 
-					List<String> ownerActionIds = rolePermissions.remove(
+					List<String> ownerActionIds = permissions.remove(
 						String.valueOf(role.getRoleId()));
 
 					return ArrayUtil.toStringArray(ownerActionIds);
@@ -80,7 +77,7 @@ public class UpdatePermissionsMVCActionCommand extends BaseMVCActionCommand {
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
 			for (Map.Entry<String, List<String>> entry :
-					rolePermissions.entrySet()) {
+					permissions.entrySet()) {
 
 				_resourcePermissionLocalService.setResourcePermissions(
 					themeDisplay.getCompanyId(), CTCollection.class.getName(),

@@ -116,8 +116,8 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 	private void _insertObjectField(
 			long companyId, String key, Locale locale, String name,
 			long objectDefinitionId, PreparedStatement preparedStatement2,
-			PreparedStatement preparedStatement3,
-			Timestamp timestamp, long userId, String userName)
+			PreparedStatement preparedStatement3, Timestamp timestamp,
+			long userId, String userName)
 		throws SQLException {
 
 		preparedStatement2.setLong(1, 0);
@@ -169,8 +169,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 		preparedStatement2.addBatch();
 
 		preparedStatement3.setLong(1, 0);
-		preparedStatement3.setString(
-			2, PortalUUIDUtil.generate());
+		preparedStatement3.setString(2, PortalUUIDUtil.generate());
 		preparedStatement3.setLong(3, increment());
 		preparedStatement3.setLong(4, companyId);
 		preparedStatement3.setLong(5, userId);

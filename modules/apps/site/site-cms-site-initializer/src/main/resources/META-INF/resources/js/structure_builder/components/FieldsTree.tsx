@@ -18,7 +18,12 @@ import {
 	FieldType,
 } from '../../structure_builder/utils/field';
 import {useCache} from '../contexts/CacheContext';
-import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
+import {
+	Action,
+	State,
+	useSelector,
+	useStateDispatch,
+} from '../contexts/StateContext';
 import selectInvalids from '../selectors/selectInvalids';
 import selectSelection from '../selectors/selectSelection';
 import selectStructureERC from '../selectors/selectStructureERC';
@@ -146,12 +151,6 @@ export default function FieldsTree({search}: {search: string}) {
 		});
 	};
 
-	const deleteField = (uuid: Uuid) =>
-		dispatch({
-			type: 'delete-field',
-			uuid,
-		});
-
 	useEffect(() => {
 		if (structuresStatus === 'stale' && hasReferencedStructure) {
 			loadStructures();
@@ -212,8 +211,8 @@ export default function FieldsTree({search}: {search: string}) {
 					<ClayTreeView.Group items={item.children}>
 						{(childItem, selectedKeys) => {
 							const actions = getItemActions({
+								dispatch,
 								item: childItem,
-								onDelete: deleteField,
 								parent: item,
 								structures,
 							});
@@ -421,13 +420,13 @@ function match(value: string, keyword: string) {
 }
 
 function getItemActions({
+	dispatch,
 	item,
-	onDelete,
 	parent,
 	structures,
 }: {
+	dispatch: React.Dispatch<Action>;
 	item: TreeItem;
-	onDelete: (id: Uuid) => void;
 	parent: TreeItem;
 	structures: Structures;
 }) {
@@ -448,9 +447,27 @@ function getItemActions({
 	}
 
 	if (parent.type !== 'referenced-structure') {
+		if (
+			item.type !== 'referenced-structure' &&
+			item.type !== 'repeatable-group'
+		) {
+			actions.push({
+				label: Liferay.Language.get('create-repeatable-group'),
+				onClick: () =>
+					dispatch({
+						type: 'add-repeatable-group',
+					}),
+				symbolLeft: 'repeat',
+			});
+		}
+
 		actions.push({
 			label: Liferay.Language.get('delete-field'),
-			onClick: () => onDelete(item.uuid),
+			onClick: () =>
+				dispatch({
+					type: 'delete-field',
+					uuid: item.uuid,
+				}),
 			symbolLeft: 'trash',
 		});
 	}

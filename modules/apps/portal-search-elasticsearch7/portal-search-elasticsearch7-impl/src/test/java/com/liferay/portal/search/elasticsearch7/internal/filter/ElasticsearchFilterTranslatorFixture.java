@@ -24,8 +24,6 @@ public class ElasticsearchFilterTranslatorFixture {
 			{
 				dateRangeTermFilterTranslator =
 					new DateRangeTermFilterTranslatorImpl();
-				geoDistanceFilterTranslator =
-					new GeoDistanceFilterTranslatorImpl();
 				indexNameBuilder = _createIndexNameBuilder();
 				rangeTermFilterTranslator = new RangeTermFilterTranslatorImpl();
 				termFilterTranslator = new TermFilterTranslatorImpl();

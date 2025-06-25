@@ -1777,55 +1777,6 @@ public class DefaultObjectEntryManagerImpl
 		return false;
 	}
 
-	private void _processAttachment(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			ObjectField objectField, Map<String, Object> properties,
-			String scopeKey, ServiceContext serviceContext)
-		throws Exception {
-
-		if (objectField.isLocalized()) {
-			Object propertyValue = objectEntry.getPropertyValue(
-				objectField.getI18nObjectFieldName());
-
-			if ((propertyValue == null) ||
-				!(propertyValue instanceof Map<?, ?>)) {
-
-				return;
-			}
-
-			Map<String, Serializable> localizedValues =
-				(Map<String, Serializable>)propertyValue;
-
-			for (Map.Entry<String, Serializable> entry :
-					localizedValues.entrySet()) {
-
-				long fileEntryId = _processAttachment(
-					objectDefinition, objectField, entry.getValue(), scopeKey,
-					serviceContext);
-
-				if (fileEntryId > 0) {
-					entry.setValue(fileEntryId);
-				}
-			}
-
-			return;
-		}
-
-		long fileEntryId = _processAttachment(
-			objectDefinition, objectField,
-			objectEntry.getPropertyValue(objectField.getName()), scopeKey,
-			serviceContext);
-
-		if (fileEntryId > 0) {
-			Map<String, Object> objectEntryProperties =
-				objectEntry.getProperties();
-
-			objectEntryProperties.put(objectField.getName(), fileEntryId);
-
-			properties.put(objectField.getName(), fileEntryId);
-		}
-	}
-
 	private long _processAttachment(
 			ObjectDefinition objectDefinition, ObjectField objectField,
 			Object propertyValue, String scopeKey,
@@ -1960,6 +1911,46 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		return serviceBuilderFileEntry.getFileEntryId();
+	}
+
+	private void _processAttachment(
+			ObjectDefinition objectDefinition, ObjectField objectField,
+			String scopeKey, ServiceContext serviceContext,
+			Map<String, Object> values)
+		throws Exception {
+
+		if (objectField.isLocalized()) {
+			Object value = values.get(objectField.getI18nObjectFieldName());
+
+			if ((value == null) || !(value instanceof Map<?, ?>)) {
+				return;
+			}
+
+			Map<String, Serializable> localizedValues =
+				(Map<String, Serializable>)value;
+
+			for (Map.Entry<String, Serializable> entry :
+					localizedValues.entrySet()) {
+
+				long fileEntryId = _processAttachment(
+					objectDefinition, objectField, entry.getValue(), scopeKey,
+					serviceContext);
+
+				if (fileEntryId > 0) {
+					entry.setValue(fileEntryId);
+				}
+			}
+
+			return;
+		}
+
+		long fileEntryId = _processAttachment(
+			objectDefinition, objectField, values.get(objectField.getName()),
+			scopeKey, serviceContext);
+
+		if (fileEntryId > 0) {
+			values.put(objectField.getName(), fileEntryId);
+		}
 	}
 
 	private void _processVulcanAggregation(
@@ -2259,8 +2250,8 @@ public class DefaultObjectEntryManagerImpl
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 				_processAttachment(
-					objectDefinition, objectEntry, objectField, properties,
-					scopeKey, serviceContext);
+					objectDefinition, objectField, scopeKey, serviceContext,
+					properties);
 			}
 
 			Object value = ObjectEntryValuesUtil.getValue(

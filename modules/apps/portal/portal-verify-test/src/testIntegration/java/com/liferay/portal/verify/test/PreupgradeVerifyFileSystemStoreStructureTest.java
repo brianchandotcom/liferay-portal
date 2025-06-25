@@ -220,25 +220,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	}
 
 	@Test
-	public void testFileSystemStoreWithFileInsteadOfFolderIdDirectory()
-		throws Exception {
-
-		Path companyIdPath = Paths.get(
-			_fileSystemStoreRootDir, String.valueOf(_companyId));
-
-		Path invalidFilePath = companyIdPath.resolve("invalidFile.txt");
-
-		String expectedLogEntry =
-			"Found file in file system structure directory when only " +
-				"directories are expected: " + invalidFilePath;
-
-		_assertVerify(
-			_FILE_SYSTEM_STORE, null, invalidFilePath, null, 1,
-			expectedLogEntry);
-	}
-
-	@Test
-	public void testFileSystemStoreWithFileInsteadOfNumericFileEntryNameDirectory()
+	public void testFileSystemStoreWithFileInsteadOfFileEntryDirectory()
 		throws Exception {
 
 		Path folderIdPath = Paths.get(
@@ -250,6 +232,24 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 		String expectedLogEntry =
 			"Found file in file system structure directory (only directories " +
 				"expected): " + invalidFilePath;
+
+		_assertVerify(
+			_FILE_SYSTEM_STORE, null, invalidFilePath, null, 1,
+			expectedLogEntry);
+	}
+
+	@Test
+	public void testFileSystemStoreWithFileInsteadOfFolderIdDirectory()
+		throws Exception {
+
+		Path companyIdPath = Paths.get(
+			_fileSystemStoreRootDir, String.valueOf(_companyId));
+
+		Path invalidFilePath = companyIdPath.resolve("invalidFile.txt");
+
+		String expectedLogEntry =
+			"Found file in file system structure directory when only " +
+				"directories are expected: " + invalidFilePath;
 
 		_assertVerify(
 			_FILE_SYSTEM_STORE, null, invalidFilePath, null, 1,
@@ -273,11 +273,11 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	public void testFileSystemStoreWithMissingValidVersionFiles()
 		throws Exception {
 
-		Path numericFileEntryNamePath = Paths.get(
+		Path fileEntryDirectoryPath = Paths.get(
 			_fileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_REPOSITORY_ID), "100");
 
-		Path invalidVersionFile = numericFileEntryNamePath.resolve(
+		Path invalidVersionFile = fileEntryDirectoryPath.resolve(
 			"invalidVersion");
 
 		String expectedLogEntry1 =
@@ -286,7 +286,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 
 		String expectedLogEntry2 =
 			"Directory does not contain valid version files as expected in " +
-				"file system structure: " + numericFileEntryNamePath;
+				"file system structure: " + fileEntryDirectoryPath;
 
 		_assertVerify(
 			_FILE_SYSTEM_STORE, null, invalidVersionFile, null, 2,

@@ -10,8 +10,8 @@ import {render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
+import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 import {useCache} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/CacheContext';
-import {Space} from '../../../../src/main/resources/META-INF/resources/js/types/Space';
 import {MockCacheProvider} from '../mocks/MockCacheProvider';
 import {MockStateProvider} from '../mocks/MockStateProvider';
 

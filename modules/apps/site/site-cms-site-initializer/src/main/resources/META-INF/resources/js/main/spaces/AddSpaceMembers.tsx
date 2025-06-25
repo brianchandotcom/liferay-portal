@@ -12,7 +12,7 @@ import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
 import SpaceService from '../../common/services/SpaceService';
-import {UserAccount, UserGroup} from '../../types/UserAccount';
+import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 import {getImage} from '../util/getImage';
 import {MembersListItem} from './MemberListItem';
 import {NewSpaceFormSection} from './NewSpaceFormSection';

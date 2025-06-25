@@ -9,7 +9,7 @@ import {FormikHelpers, useFormik} from 'formik';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
-import {AssetLibrary} from '../../../types/AssetLibrary';
+import {AssetLibrary} from '../../../common/types/AssetLibrary';
 import {AssetData} from '../../FDSPropsTransformer/actions/createAssetAction';
 import {FolderData} from '../../FDSPropsTransformer/actions/createFolderAction';
 import {FieldPicker, FieldText} from '../forms';

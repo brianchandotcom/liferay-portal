@@ -7,7 +7,7 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {Option, Options} from '../../../types/Picklist';
+import {Option, Options} from '../../../common/types/Picklist';
 import {
 	useOptions,
 	useRemoveOptions,

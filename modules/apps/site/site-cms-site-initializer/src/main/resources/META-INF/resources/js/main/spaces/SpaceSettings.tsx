@@ -9,7 +9,7 @@ import React, {useEffect, useState} from 'react';
 import Toolbar from '../../common/components/Toolbar';
 import VerticalNavigation from '../../common/components/VerticalNavigation';
 import SpaceService from '../../common/services/SpaceService';
-import {Space} from '../../types/Space';
+import {Space} from '../../common/types/Space';
 import SpaceGeneralSettings from './SpaceGeneralSettings';
 
 interface SpaceSettingsProps {

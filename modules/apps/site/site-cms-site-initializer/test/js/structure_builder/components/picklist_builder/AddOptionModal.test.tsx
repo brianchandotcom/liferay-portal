@@ -8,9 +8,9 @@ import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import {Option} from '../../../../../src/main/resources/META-INF/resources/js/common/types/Picklist';
 import AddOptionModal from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/components/picklist_builder/AddOptionModal';
 import * as PicklistContext from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
-import {Option} from '../../../../../src/main/resources/META-INF/resources/js/types/Picklist';
 import {MockStateProvider} from '../../mocks/MockPicklistStateProvider';
 
 const onCloseModal = jest.fn();

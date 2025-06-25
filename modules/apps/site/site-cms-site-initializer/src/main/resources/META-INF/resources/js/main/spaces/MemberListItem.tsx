@@ -9,7 +9,7 @@ import ClaySticker from '@clayui/sticker';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {UserAccount, UserGroup} from '../../types/UserAccount';
+import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 
 interface MembersListItemProps {
 	assetLibraryCreatorUserId?: string;

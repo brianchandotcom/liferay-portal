@@ -8,7 +8,7 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {AssetLibrary} from '../../../types/AssetLibrary';
+import {AssetLibrary} from '../../../common/types/AssetLibrary';
 import MultipleFileUploader from '../MultipleFileUploader';
 
 export default function MultipleFilesUploadModalContent({

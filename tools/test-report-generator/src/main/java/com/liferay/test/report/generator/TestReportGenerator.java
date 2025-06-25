@@ -5,8 +5,8 @@
 
 package com.liferay.test.report.generator;
 
-import com.liferay.test.report.generator.record.csv.RecordTestCSVReportWriter;
-import com.liferay.test.report.generator.record.csv.playwright.PlaywrightTestSelector;
+import com.liferay.test.report.generator.csv.TestReportCSVWriter;
+import com.liferay.test.report.generator.csv.playwright.PlaywrightTestSelector;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -23,7 +23,7 @@ public class TestReportGenerator {
 		OutputStream outputStream = new FileOutputStream(
 			"record-test-playwright-report.csv");
 
-		RecordTestCSVReportWriter.write(
+		TestReportCSVWriter.write(
 			outputStream, playwrightTestSelector.getPlaywrightTests());
 	}
 

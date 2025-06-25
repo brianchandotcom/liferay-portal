@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.test.report.generator.record.csv;
+package com.liferay.test.report.generator.csv;
 
-import com.liferay.test.report.generator.record.csv.playwright.PlaywrightTest;
+import com.liferay.test.report.generator.csv.playwright.PlaywrightTest;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import org.apache.commons.csv.CSVPrinter;
 /**
  * @author Davi Santos
  */
-public class RecordTestCSVReportWriter {
+public class TestReportCSVWriter {
 
 	public static void write(
 		OutputStream outputStream, List<PlaywrightTest> playwrightTests) {

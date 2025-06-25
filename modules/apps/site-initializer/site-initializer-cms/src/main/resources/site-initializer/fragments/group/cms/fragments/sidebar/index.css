@@ -24,10 +24,6 @@
 		grid-template-columns: var(--sidebar-layout-width) minmax(0, 1fr);
 	}
 
-	.btn-monospaced.btn-xs {
-		border-radius: 4px;
-	}
-
 	.sidebar {
 		background-color: #f7f8f9;
 		max-height: var(--sidebar-layout-height);

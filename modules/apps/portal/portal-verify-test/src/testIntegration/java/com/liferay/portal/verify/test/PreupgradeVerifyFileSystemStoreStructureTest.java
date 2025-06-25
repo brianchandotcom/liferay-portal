@@ -147,46 +147,46 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	public void testAdvancedFileSystemStoreWithLongDirectoryNameWithoutExtension()
 		throws Exception {
 
-		Path directoryWithoutExtension = Paths.get(
+		Path directoryWithoutExtensionPath = Paths.get(
 			_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_REPOSITORY_ID), "100");
 
 		String expectedLogEntry =
 			"Found directory with name longer than 2 without extension in " +
 				"advanced file system structure directory: " +
-					directoryWithoutExtension;
+					directoryWithoutExtensionPath;
 
 		_assertVerify(
-			_ADVANCED_FILE_SYSTEM_STORE, directoryWithoutExtension, null, null,
-			1, expectedLogEntry);
+			_ADVANCED_FILE_SYSTEM_STORE, directoryWithoutExtensionPath, null,
+			null, 1, expectedLogEntry);
 	}
 
 	@Test
 	public void testAdvancedFileSystemStoreWithValidStructure()
 		throws Exception {
 
-		Path validDirectory = Paths.get(
+		Path validDirectoryPath = Paths.get(
 			_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_REPOSITORY_ID), "10", "100.afsh");
 
 		_assertVerify(
-			_ADVANCED_FILE_SYSTEM_STORE, validDirectory, null, null, 0);
+			_ADVANCED_FILE_SYSTEM_STORE, validDirectoryPath, null, null, 0);
 	}
 
 	@Test
 	public void testFileSystemStoreWithDirectoryContainingExtension()
 		throws Exception {
 
-		Path directoryWithExtension = Paths.get(
+		Path directoryWithExtensionPath = Paths.get(
 			_fileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_REPOSITORY_ID), "100.txt");
 
 		String expectedLogEntry =
 			"Found directory with extension in file system structure (no " +
-				"extensions expected): " + directoryWithExtension;
+				"extensions expected): " + directoryWithExtensionPath;
 
 		_assertVerify(
-			_FILE_SYSTEM_STORE, directoryWithExtension, null, null, 1,
+			_FILE_SYSTEM_STORE, directoryWithExtensionPath, null, null, 1,
 			expectedLogEntry);
 	}
 
@@ -273,33 +273,32 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	public void testFileSystemStoreWithMissingValidVersionFiles()
 		throws Exception {
 
-		Path fileEntryDirectoryPath = Paths.get(
+		Path fileEntryPath = Paths.get(
 			_fileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_REPOSITORY_ID), "100");
 
-		Path invalidVersionFile = fileEntryDirectoryPath.resolve(
-			"invalidVersion");
+		Path invalidVersionFilePath = fileEntryPath.resolve("invalidVersion");
 
 		String expectedLogEntry1 =
 			"Found file that does not match version structure (expected " +
-				"\\d+\\.\\d+.*): " + invalidVersionFile;
+				"\\d+\\.\\d+.*): " + invalidVersionFilePath;
 
 		String expectedLogEntry2 =
 			"Directory does not contain valid version files as expected in " +
-				"file system structure: " + fileEntryDirectoryPath;
+				"file system structure: " + fileEntryPath;
 
 		_assertVerify(
-			_FILE_SYSTEM_STORE, null, invalidVersionFile, null, 2,
+			_FILE_SYSTEM_STORE, null, invalidVersionFilePath, null, 2,
 			expectedLogEntry1, expectedLogEntry2);
 	}
 
 	@Test
 	public void testFileSystemStoreWithValidStructure() throws Exception {
-		Path validDirectory = Paths.get(
+		Path validDirectoryPath = Paths.get(
 			_fileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_REPOSITORY_ID), "100", "1.0");
 
-		_assertVerify(_FILE_SYSTEM_STORE, validDirectory, null, null, 0);
+		_assertVerify(_FILE_SYSTEM_STORE, validDirectoryPath, null, null, 0);
 	}
 
 	@Override

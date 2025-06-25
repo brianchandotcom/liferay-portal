@@ -40,6 +40,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../utils/performLogin';
+import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {waitForLoading} from '../../osb-faro-web/main/utils/loading';
 import {
@@ -1685,6 +1686,90 @@ test('LPD-32214 AC1 TC1: Verify SP initiated SLO logs user out of IdP and SP, th
 	await newPage.goto(DEFAULT_IDP_URL);
 
 	expect(await newPage.getByRole('button', {name: 'Sign In'})).toBeVisible();
+});
+
+test('LPD-57886: Verify SP initiated SSO redirects to the IdP from a staged site', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create new site in SP instance
+
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	liferayConfig.environment.baseUrl = DEFAULT_SP_URL;
+
+	const apiHelpers = new ApiHelpers(spAdminPage);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+		templateKey: 'com.liferay.site.initializer.welcome',
+		templateType: 'site-initializer',
+	});
+
+	// Enable local live staging from the SP instance
+
+	liferayConfig.environment.baseUrl = DEFAULT_SP_URL;
+
+	await apiHelpers.jsonWebServicesStaging.enableLocalStaging({
+		groupId: site.id,
+	});
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	// Verify the staging site page is valid by visiting it as an admin
+
+	const stagingSitePageUrl =
+		DEFAULT_SP_URL + '/web' + site.friendlyUrlPath + '-staging';
+
+	await spAdminPage.goto(stagingSitePageUrl);
+
+	// Enabling local staging takes time, so reload the page until finished
+
+	await reloadUntilVisible({
+		maxAttempts: 10,
+		myLocator: spAdminPage.getByText('You are viewing the staged version'),
+		page: spAdminPage,
+	});
+
+	await expect(
+		await spAdminPage.getByText('You are viewing the staged version')
+	).toBeVisible();
+
+	// Go to staging site and expect auto
+
+	const spStagingSitePage = await browser.newPage();
+
+	await spStagingSitePage.goto(stagingSitePageUrl);
+
+	await spStagingSitePage.waitForTimeout(1000);
+
+	// Perform SP initiated SSO
+
+	await clickSignInButton(spStagingSitePage);
+
+	await spStagingSitePage.waitForTimeout(2000);
+
+	await expect(await spStagingSitePage.url()).toContain(DEFAULT_IDP_URL);
 });
 
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({

@@ -987,33 +987,14 @@ public class DefaultObjectEntryManagerImpl
 	public ObjectEntry restoreObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			int version)
+			String scopeKey, int version)
 		throws Exception {
 
 		return _restoreVersionedObjectEntry(
 			dtoConverterContext, objectDefinition,
 			getObjectEntryByVersion(
 				dtoConverterContext, externalReferenceCode, objectDefinition,
-				null, version));
-	}
-
-	@Override
-	public ObjectEntry restoreObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectDefinition objectDefinition,
-			String scopeKey, int version)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(
-				externalReferenceCode, objectDefinition.getCompanyId(),
-				getGroupId(objectDefinition, scopeKey));
-
-		return _restoreVersionedObjectEntry(
-			dtoConverterContext, objectDefinition,
-			getObjectEntryByVersion(
-				dtoConverterContext,
-				serviceBuilderObjectEntry.getObjectEntryId(), version));
+				scopeKey, version));
 	}
 
 	@Override

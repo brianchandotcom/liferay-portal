@@ -176,12 +176,6 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 	public ObjectEntry restoreObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			int version)
-		throws Exception;
-
-	public ObjectEntry restoreObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, int version)
 		throws Exception;
 

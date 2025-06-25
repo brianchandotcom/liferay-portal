@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.math.BigDecimal;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -51,6 +54,20 @@ public class DefaultCommerceOrderValidatorImpl
 	implements CommerceOrderValidator {
 
 	public static final String KEY = "default";
+
+	public DefaultCommerceOrderValidatorImpl() {
+		DecimalFormat decimalFormat = new DecimalFormat("#####0.00");
+
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+
+		symbols.setDecimalSeparator('.');
+
+		decimalFormat.setDecimalFormatSymbols(symbols);
+
+		decimalFormat.setGroupingUsed(false);
+
+		_quantityDecimalFormat = decimalFormat;
+	}
 
 	@Override
 	public String getKey() {
@@ -152,7 +169,7 @@ public class DefaultCommerceOrderValidatorImpl
 
 		if ((allowedOrderQuantities.length > 0) &&
 			!ArrayUtil.contains(
-				allowedOrderQuantities, String.valueOf(quantity.intValue()))) {
+				allowedOrderQuantities, _formatQuantity(quantity))) {
 
 			return new CommerceOrderValidatorResult(
 				false,
@@ -270,7 +287,7 @@ public class DefaultCommerceOrderValidatorImpl
 
 		if ((allowedOrderQuantities.length > 0) &&
 			!ArrayUtil.contains(
-				allowedOrderQuantities, String.valueOf(quantity.intValue()))) {
+				allowedOrderQuantities, _formatQuantity(quantity))) {
 
 			return new CommerceOrderValidatorResult(
 				commerceOrderItem.getCommerceOrderItemId(), false,
@@ -293,6 +310,10 @@ public class DefaultCommerceOrderValidatorImpl
 		}
 
 		return new CommerceOrderValidatorResult(true);
+	}
+
+	private String _formatQuantity(BigDecimal quantity) {
+		return _quantityDecimalFormat.format(quantity);
 	}
 
 	private String _getLocalizedMessage(
@@ -334,5 +355,7 @@ public class DefaultCommerceOrderValidatorImpl
 
 	@Reference
 	private Language _language;
+
+	private final DecimalFormat _quantityDecimalFormat;
 
 }

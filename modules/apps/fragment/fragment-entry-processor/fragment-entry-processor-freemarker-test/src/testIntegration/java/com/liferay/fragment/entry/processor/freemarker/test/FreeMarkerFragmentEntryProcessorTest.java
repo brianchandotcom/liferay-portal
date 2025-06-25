@@ -116,40 +116,6 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
-	public void testAddFragmentEntryWithFreeMarkerVariable() throws Exception {
-		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_freemarker_variable.html", null);
-
-		Assert.assertNotNull(fragmentEntry);
-	}
-
-	@Test(expected = FragmentEntryContentException.class)
-	public void testAddFragmentEntryWithInvalidFreeMarkerVariable()
-		throws Exception {
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"freemarker.runtime", LoggerTestUtil.ERROR)) {
-
-			_serviceContext.setRequest(_getMockHttpServletRequest());
-
-			FragmentEntry draftFragmentEntry =
-				_fragmentEntryService.addFragmentEntry(
-					null, _group.getGroupId(),
-					_fragmentCollection.getFragmentCollectionId(),
-					"fragment-entry", "Fragment Entry", null,
-					_readFileToString(
-						"fragment_entry_with_invalid_freemarker_variable.html"),
-					null, false, null, null, 0, false, false,
-					FragmentConstants.TYPE_COMPONENT, null,
-					WorkflowConstants.STATUS_DRAFT, _serviceContext);
-
-			ServiceContextThreadLocal.pushServiceContext(_serviceContext);
-
-			_fragmentEntryService.publishDraft(draftFragmentEntry);
-		}
-	}
-
-	@Test
 	public void testAddFragmentEntryWithFragmentElementId() throws Exception {
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			null, _group.getGroupId(),
@@ -208,6 +174,40 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			_getProcessedHTML(
 				_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 					fragmentEntryLink, defaultFragmentEntryProcessorContext)));
+	}
+
+	@Test
+	public void testAddFragmentEntryWithFreeMarkerVariable() throws Exception {
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry_with_freemarker_variable.html", null);
+
+		Assert.assertNotNull(fragmentEntry);
+	}
+
+	@Test(expected = FragmentEntryContentException.class)
+	public void testAddFragmentEntryWithInvalidFreeMarkerVariable()
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"freemarker.runtime", LoggerTestUtil.ERROR)) {
+
+			_serviceContext.setRequest(_getMockHttpServletRequest());
+
+			FragmentEntry draftFragmentEntry =
+				_fragmentEntryService.addFragmentEntry(
+					null, _group.getGroupId(),
+					_fragmentCollection.getFragmentCollectionId(),
+					"fragment-entry", "Fragment Entry", null,
+					_readFileToString(
+						"fragment_entry_with_invalid_freemarker_variable.html"),
+					null, false, null, null, 0, false, false,
+					FragmentConstants.TYPE_COMPONENT, null,
+					WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+			ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
+			_fragmentEntryService.publishDraft(draftFragmentEntry);
+		}
 	}
 
 	@Test

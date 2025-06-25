@@ -8,15 +8,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
-
-String ticketId = ParamUtil.getString(httpServletRequest, "ticketId");
+HttpServletRequest originalHttpServletRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 
 String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
-
 Ticket ticket = (Ticket)request.getAttribute(WebKeys.TICKET);
-
-String ticketKey = ParamUtil.getString(httpServletRequest, "ticketKey");
+String ticketId = ParamUtil.getString(originalHttpServletRequest, "ticketId");
+String ticketKey = ParamUtil.getString(originalHttpServletRequest, "ticketKey");
 
 if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") && Validator.isNotNull(ticketKey)) {
 	referer = themeDisplay.getPathMain();

@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -70,6 +70,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alvaro Saugar
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @FeatureFlag("LPD-6378")
 @RunWith(Arquillian.class)
 public class ForgotPasswordActionTest {
@@ -83,23 +84,23 @@ public class ForgotPasswordActionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		_company = CompanyLocalServiceUtil.getCompany(_group.getCompanyId());
+		_company = CompanyLocalServiceUtil.getCompany(group.getCompanyId());
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		_layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
+				null, serviceContext.getUserId(), group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
 				LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD, 0,
-				_serviceContext);
+				serviceContext);
 
-		_user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
+		_user = UserTestUtil.addGroupUser(group, RoleConstants.POWER_USER);
 
 		_layout = _layoutLocalService.fetchLayout(
 			_layoutUtilityPageEntry.getPlid());
@@ -108,34 +109,34 @@ public class ForgotPasswordActionTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				null, _group.getGroupId(), "Fragment Collection",
-				StringPool.BLANK, serviceContext);
+				null, group.getGroupId(), "Fragment Collection",
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
 
 		_fragmentTextNondefaultSite = RandomTestUtil.randomString();
 
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			null, _group.getGroupId(),
+			null, group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry",
 			"Fragment Entry", null,
 			"<div>" + _fragmentTextNondefaultSite + "</div>", null, false, null,
 			null, 0, false, false, FragmentConstants.TYPE_SECTION, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				null, _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
-				_layout.getPlid(), StringPool.BLANK, fragmentEntry.getHtml(),
-				StringPool.BLANK, "{fieldSets: []}", StringPool.BLANK,
-				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				null, group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
+				defaultSegmentsExperienceId, _layout.getPlid(),
+				StringPool.BLANK, fragmentEntry.getHtml(), StringPool.BLANK,
+				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
+				fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(
-					_group, _user.getUserId()));
+					group, _user.getUserId()));
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -160,7 +161,7 @@ public class ForgotPasswordActionTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), _layout.getPlid(),
+				group.getGroupId(), _layout.getPlid(),
 				defaultSegmentsExperienceId, dataJSONObject1.toString());
 
 		Group defaultGroup = _groupLocalService.getGroup(
@@ -168,10 +169,10 @@ public class ForgotPasswordActionTest {
 
 		_layoutUtilityPageEntryDefaultSite =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, _serviceContext.getUserId(), defaultGroup.getGroupId(), 0,
+				null, serviceContext.getUserId(), defaultGroup.getGroupId(), 0,
 				0, true, RandomTestUtil.randomString(),
 				LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD, 0,
-				_serviceContext);
+				serviceContext);
 
 		Layout defaultLayout = _layoutLocalService.fetchLayout(
 			_layoutUtilityPageEntryDefaultSite.getPlid());
@@ -183,27 +184,28 @@ public class ForgotPasswordActionTest {
 		FragmentCollection fragmentCollectionDefaultSite =
 			_fragmentCollectionService.addFragmentCollection(
 				null, defaultGroup.getGroupId(), "Fragment Collection",
-				StringPool.BLANK, _serviceContext);
+				StringPool.BLANK, serviceContext);
 
 		_fragmentTextDefaultSite = RandomTestUtil.randomString();
 
-		_fragmentEntryDefaultSite = _fragmentEntryService.addFragmentEntry(
-			null, defaultGroup.getGroupId(),
-			fragmentCollectionDefaultSite.getFragmentCollectionId(),
-			"fragment-entry-2", "Fragment Entry", null,
-			"<div>" + _fragmentTextDefaultSite + "</div>", null, false, null,
-			null, 0, false, false, FragmentConstants.TYPE_SECTION, null,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+		FragmentEntry fragmentEntryDefaultSite =
+			_fragmentEntryService.addFragmentEntry(
+				null, defaultGroup.getGroupId(),
+				fragmentCollectionDefaultSite.getFragmentCollectionId(),
+				"fragment-entry-2", "Fragment Entry", null,
+				"<div>" + _fragmentTextDefaultSite + "</div>", null, false,
+				null, null, 0, false, false, FragmentConstants.TYPE_SECTION,
+				null, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntryLink fragmentEntryLinkDefaultSite =
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, defaultGroup.getGroupId(), 0,
-				_fragmentEntryDefaultSite.getFragmentEntryId(),
+				fragmentEntryDefaultSite.getFragmentEntryId(),
 				defaultSegmentsExperienceIdDefaultSite, defaultLayout.getPlid(),
-				StringPool.BLANK, _fragmentEntryDefaultSite.getHtml(),
+				StringPool.BLANK, fragmentEntryDefaultSite.getHtml(),
 				StringPool.BLANK, "{fieldSets: []}", StringPool.BLANK,
-				StringPool.BLANK, 0, null, _fragmentEntryDefaultSite.getType(),
-				_serviceContext);
+				StringPool.BLANK, 0, null, fragmentEntryDefaultSite.getType(),
+				serviceContext);
 
 		LayoutPageTemplateStructure layoutPageTemplateStructureDefaultSite =
 			_layoutPageTemplateStructureLocalService.
@@ -256,8 +258,8 @@ public class ForgotPasswordActionTest {
 				_layoutUtilityPageEntryDefaultSite);
 
 		Assert.assertFalse(
-			_fragmentIsShown(false, _fragmentTextNondefaultSite));
-		Assert.assertTrue(_fragmentIsShown(false, _fragmentTextDefaultSite));
+			_isFragmentRendered(_fragmentTextNondefaultSite, false));
+		Assert.assertTrue(_isFragmentRendered(_fragmentTextDefaultSite, false));
 	}
 
 	@Test
@@ -278,8 +280,9 @@ public class ForgotPasswordActionTest {
 				_layoutUtilityPageEntry);
 
 		Assert.assertFalse(
-			_fragmentIsShown(false, _fragmentTextNondefaultSite));
-		Assert.assertFalse(_fragmentIsShown(false, _fragmentTextDefaultSite));
+			_isFragmentRendered(_fragmentTextNondefaultSite, false));
+		Assert.assertFalse(
+			_isFragmentRendered(_fragmentTextDefaultSite, false));
 	}
 
 	@Test
@@ -299,8 +302,9 @@ public class ForgotPasswordActionTest {
 			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 				_layoutUtilityPageEntry);
 
-		Assert.assertFalse(_fragmentIsShown(true, _fragmentTextNondefaultSite));
-		Assert.assertFalse(_fragmentIsShown(true, _fragmentTextDefaultSite));
+		Assert.assertFalse(
+			_isFragmentRendered(_fragmentTextNondefaultSite, true));
+		Assert.assertFalse(_isFragmentRendered(_fragmentTextDefaultSite, true));
 	}
 
 	@Test
@@ -320,11 +324,13 @@ public class ForgotPasswordActionTest {
 			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 				_layoutUtilityPageEntry);
 
-		Assert.assertTrue(_fragmentIsShown(true, _fragmentTextNondefaultSite));
-		Assert.assertFalse(_fragmentIsShown(true, _fragmentTextDefaultSite));
+		Assert.assertTrue(
+			_isFragmentRendered(_fragmentTextNondefaultSite, true));
+		Assert.assertFalse(_isFragmentRendered(_fragmentTextDefaultSite, true));
 	}
 
-	private boolean _fragmentIsShown(boolean hasPlid, String fragmentText)
+	private boolean _isFragmentRendered(
+			String expectedText, boolean includePlid)
 		throws Exception {
 
 		Ticket ticket = _ticketLocalService.addDistinctTicket(
@@ -338,7 +344,7 @@ public class ForgotPasswordActionTest {
 
 		URL url;
 
-		if (hasPlid) {
+		if (includePlid) {
 			url = new URL(
 				StringBundler.concat(
 					"http://", _company.getVirtualHostname(),
@@ -358,16 +364,13 @@ public class ForgotPasswordActionTest {
 		_ticketLocalService.updateTicket(ticket);
 
 		return StringUtil.contains(
-			URLUtil.toString(url), fragmentText, StringPool.BLANK);
+			URLUtil.toString(url), expectedText, StringPool.BLANK);
 	}
 
 	private Company _company;
 
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;
-
-	@DeleteAfterTestRun
-	private FragmentEntry _fragmentEntryDefaultSite;
 
 	@Inject
 	private FragmentEntryLinkService _fragmentEntryLinkService;
@@ -377,9 +380,6 @@ public class ForgotPasswordActionTest {
 
 	private String _fragmentTextDefaultSite;
 	private String _fragmentTextNondefaultSite;
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
@@ -393,10 +393,7 @@ public class ForgotPasswordActionTest {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
-	@DeleteAfterTestRun
 	private LayoutUtilityPageEntry _layoutUtilityPageEntry;
-
-	@DeleteAfterTestRun
 	private LayoutUtilityPageEntry _layoutUtilityPageEntryDefaultSite;
 
 	@Inject
@@ -405,8 +402,6 @@ public class ForgotPasswordActionTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
-
-	private ServiceContext _serviceContext;
 
 	@Inject
 	private TicketLocalService _ticketLocalService;

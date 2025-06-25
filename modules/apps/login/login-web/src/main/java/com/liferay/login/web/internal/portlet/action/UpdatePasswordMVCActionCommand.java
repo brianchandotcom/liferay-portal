@@ -8,7 +8,6 @@ package com.liferay.login.web.internal.portlet.action;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.portal.action.UpdatePasswordAction;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
@@ -84,9 +83,9 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 
 		actionRequest.setAttribute(WebKeys.TICKET, ticket);
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		if (Validator.isNull(
+				ParamUtil.getString(actionRequest, Constants.CMD))) {
 
-		if (Validator.isNull(cmd)) {
 			if (ticket != null) {
 				User user = _userLocalService.getUser(ticket.getClassPK());
 
@@ -144,7 +143,6 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 		throws PortalException {
 
 		String ticketId = ParamUtil.getString(actionRequest, "ticketId");
-
 		String ticketKey = ParamUtil.getString(actionRequest, "ticketKey");
 
 		if (Validator.isNull(ticketId) || Validator.isNull(ticketKey)) {
@@ -208,7 +206,7 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 				_portal.getHttpServletRequest(actionRequest));
 
 		AuthTokenUtil.checkCSRFToken(
-			httpServletRequest, UpdatePasswordAction.class.getName());
+			httpServletRequest, UpdatePasswordMVCActionCommand.class.getName());
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
@@ -222,18 +220,16 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		String password1 = actionRequest.getParameter("password1");
-		String password2 = actionRequest.getParameter("password2");
-		boolean passwordReset = false;
 
 		boolean previousValidate = PwdToolkitUtilThreadLocal.isValidate();
 
 		try {
-			boolean currentValidate = isValidatePassword(httpServletRequest);
-
-			PwdToolkitUtilThreadLocal.setValidate(currentValidate);
+			PwdToolkitUtilThreadLocal.setValidate(
+				isValidatePassword(httpServletRequest));
 
 			User user = _userLocalService.updatePassword(
-				userId, password1, password2, passwordReset);
+				userId, password1, actionRequest.getParameter("password2"),
+				false);
 
 			String reminderQueryAnswer = user.getReminderQueryAnswer();
 

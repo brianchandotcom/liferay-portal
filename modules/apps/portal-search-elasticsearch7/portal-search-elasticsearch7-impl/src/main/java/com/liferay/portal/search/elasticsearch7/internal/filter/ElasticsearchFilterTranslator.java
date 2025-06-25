@@ -308,7 +308,8 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(TermFilter termFilter) {
-		return termFilterTranslator.translate(termFilter);
+		return QueryBuilders.termQuery(
+			termFilter.getField(), termFilter.getValue());
 	}
 
 	@Override
@@ -344,9 +345,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
-
-	@Reference
-	protected TermFilterTranslator termFilterTranslator;
 
 	private QueryTranslator<QueryBuilder> _queryTranslator;
 

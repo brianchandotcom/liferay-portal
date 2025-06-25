@@ -39,12 +39,12 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermInSetQuery;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.BytesRef;
 import org.apache.solr.client.solrj.util.ClientUtils;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -186,7 +186,17 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(TermFilter termFilter) {
-		return _termFilterTranslator.translate(termFilter);
+		String value = termFilter.getValue();
+
+		if (value.isEmpty()) {
+			value = StringPool.DOUBLE_APOSTROPHE;
+		}
+
+		Term term = new Term(
+			_escape(termFilter.getField()),
+			ClientUtils.escapeQueryChars(value));
+
+		return new TermQuery(term);
 	}
 
 	@Override
@@ -257,8 +267,5 @@ public class SolrFilterTranslator
 
 	private final QueryVisitor<Query> _queryVisitor = new BaseQueryVisitor() {
 	};
-
-	@Reference
-	private TermFilterTranslator _termFilterTranslator;
 
 }

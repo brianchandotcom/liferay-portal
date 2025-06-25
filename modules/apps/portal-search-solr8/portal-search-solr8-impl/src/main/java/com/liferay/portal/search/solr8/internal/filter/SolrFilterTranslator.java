@@ -123,7 +123,7 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(GeoDistanceFilter geoDistanceFilter) {
-		return _geoDistanceFilterTranslator.translate(geoDistanceFilter);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -250,9 +250,6 @@ public class SolrFilterTranslator
 
 	@Reference
 	private DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;
-
-	@Reference
-	private GeoDistanceFilterTranslator _geoDistanceFilterTranslator;
 
 	private final QueryVisitor<Query> _queryVisitor = new BaseQueryVisitor() {
 	};

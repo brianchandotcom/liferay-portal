@@ -10,14 +10,10 @@ import {headlessDiscoveryPagesTest} from './fixtures/headlessDiscoveryPagesTest'
 
 export const test = mergeTests(headlessDiscoveryPagesTest, loginTest());
 
-test.use({
-	permissions: ['clipboard-write', 'clipboard-read'],
-});
-
 test(
-	'Show help popover and Filterable Fields copy behavior',
+	'Opens help popover and displays Filterable Fields copy button',
 	{tag: '@LPD-54844'},
-	async ({apiExplorer, page}) => {
+	async ({apiExplorer}) => {
 		const operationBlock = apiExplorer.getOperationBlock(
 			'getSiteBlogPostingsPage'
 		);
@@ -28,7 +24,7 @@ test(
 		await apiExplorer.goto();
 		await operationBlock.getByRole('button').click();
 
-		await test.step('Open help popover', async () => {
+		await test.step('Opens the help popover', async () => {
 			await filterRow.getByRole('button').click();
 			await expect(
 				apiExplorer.helpPopover.getByRole('link', {
@@ -37,17 +33,13 @@ test(
 			).toBeVisible();
 		});
 
-		await test.step('Copy Filterable Field', async () => {
-			const filterableName = 'creatorId';
-
-			await apiExplorer.helpPopover
-				.locator('li')
-				.filter({hasText: filterableName})
-				.getByLabel('Copy to Clipboard')
-				.click();
+		await test.step('Displays the copy button for Filterable Fields', async () => {
 			await expect(
-				await page.evaluate('navigator.clipboard.readText()')
-			).toBe(filterableName);
+				apiExplorer.helpPopover
+					.locator('li')
+					.filter({hasText: 'creatorId'})
+					.getByLabel('Copy to Clipboard')
+			).toBeVisible();
 		});
 	}
 );

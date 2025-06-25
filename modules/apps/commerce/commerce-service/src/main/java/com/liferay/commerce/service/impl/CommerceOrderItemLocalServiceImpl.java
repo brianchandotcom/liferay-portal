@@ -1694,6 +1694,19 @@ public class CommerceOrderItemLocalServiceImpl
 				cpDefinitionOptionRel.getCommerceOptionTypeKey());
 
 		if ((commerceOptionType != null) &&
+			CPConstants.PRODUCT_OPTION_DOCUMENT_LIBRARY_KEY.equals(
+				commerceOptionType.getKey()) &&
+			JSONUtil.isJSONObject(valueJSONArray.getString(0))) {
+
+			JSONObject valueJSONObject = _jsonFactory.createJSONObject(
+				valueJSONArray.getString(0));
+
+			if (JSONUtil.isEmpty(valueJSONObject)) {
+				valueJSONArray = _jsonFactory.createJSONArray();
+			}
+		}
+
+		if ((commerceOptionType != null) &&
 			commerceOptionType.isValid(
 				cpDefinitionOptionRel,
 				JSONUtil.toStringArray(valueJSONArray))) {

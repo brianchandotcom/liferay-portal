@@ -23,7 +23,7 @@ import org.apache.commons.csv.CSVPrinter;
 public class RecordTestCSVReportWriter {
 
 	public static void write(
-		List<PlaywrightTest> playwrightTests, OutputStream outputStream) {
+		OutputStream outputStream, List<PlaywrightTest> playwrightTests) {
 
 		try (CSVPrinter csvPrinter = new CSVPrinter(
 				new BufferedWriter(new OutputStreamWriter(outputStream)),

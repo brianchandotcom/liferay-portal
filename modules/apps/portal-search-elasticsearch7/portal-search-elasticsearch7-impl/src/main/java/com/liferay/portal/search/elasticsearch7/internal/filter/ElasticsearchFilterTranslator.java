@@ -126,7 +126,7 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(ExistsFilter existsFilter) {
-		return existsFilterTranslator.translate(existsFilter);
+		return QueryBuilders.existsQuery(existsFilter.getField());
 	}
 
 	@Override
@@ -285,9 +285,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected DateRangeTermFilterTranslator dateRangeTermFilterTranslator;
-
-	@Reference
-	protected ExistsFilterTranslator existsFilterTranslator;
 
 	@Reference
 	protected GeoDistanceFilterTranslator geoDistanceFilterTranslator;

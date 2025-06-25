@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
 import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.RangeFilter;
@@ -139,7 +140,8 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(TermsFilter termsFilter) {
-		return termsFilterTranslator.translate(termsFilter);
+		return QueryUtil.translateTerms(
+			termsFilter.getField(), termsFilter.getValues());
 	}
 
 	@Override
@@ -190,9 +192,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected TermFilterTranslator termFilterTranslator;
-
-	@Reference
-	protected TermsFilterTranslator termsFilterTranslator;
 
 	@Reference
 	protected TermsSetFilterTranslator termsSetFilterTranslator;

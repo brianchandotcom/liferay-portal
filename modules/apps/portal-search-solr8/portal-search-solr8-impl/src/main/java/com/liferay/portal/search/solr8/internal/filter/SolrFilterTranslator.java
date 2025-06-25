@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.solr8.internal.filter;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
@@ -20,17 +22,25 @@ import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
 import com.liferay.portal.search.solr8.internal.query.BaseQueryVisitor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.search.TermRangeQuery;
+import org.apache.lucene.util.BytesRef;
+import org.apache.solr.client.solrj.util.ClientUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -133,12 +143,41 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(TermsFilter termsFilter) {
-		return _termsFilterTranslator.translate(termsFilter);
+		String field = _escape(termsFilter.getField());
+
+		List<BytesRef> bytesRefs = new ArrayList<>();
+
+		for (String value : termsFilter.getValues()) {
+			if (value.isEmpty()) {
+				value = StringPool.DOUBLE_APOSTROPHE;
+			}
+
+			Term term = new Term(field, ClientUtils.escapeQueryChars(value));
+
+			bytesRefs.add(term.bytes());
+		}
+
+		Query query = new TermInSetQuery(field, bytesRefs);
+
+		if (bytesRefs.size() == 1) {
+			return query;
+		}
+
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
+
+		builder.add(query, BooleanClause.Occur.SHOULD);
+
+		return builder.build();
 	}
 
 	@Override
 	public Query visit(TermsSetFilter termsSetFilter) {
 		throw new UnsupportedOperationException();
+	}
+
+	private String _escape(String value) {
+		return StringUtil.replace(
+			value, CharPool.SPACE, StringPool.BACK_SLASH + StringPool.SPACE);
 	}
 
 	@Reference
@@ -179,8 +218,5 @@ public class SolrFilterTranslator
 
 	@Reference
 	private TermFilterTranslator _termFilterTranslator;
-
-	@Reference
-	private TermsFilterTranslator _termsFilterTranslator;
 
 }

@@ -37,7 +37,6 @@ public class ElasticsearchFilterTranslatorFixture {
 				prefixFilterTranslator = new PrefixFilterTranslatorImpl();
 				rangeTermFilterTranslator = new RangeTermFilterTranslatorImpl();
 				termFilterTranslator = new TermFilterTranslatorImpl();
-				termsFilterTranslator = new TermsFilterTranslatorImpl();
 				termsSetFilterTranslator = new TermsSetFilterTranslatorImpl();
 
 				activate();

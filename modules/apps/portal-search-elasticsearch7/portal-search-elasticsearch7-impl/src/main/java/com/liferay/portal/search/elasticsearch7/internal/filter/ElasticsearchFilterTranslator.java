@@ -29,6 +29,8 @@ import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.ExistsQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 
 import org.osgi.service.component.annotations.Activate;
@@ -94,7 +96,20 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(MissingFilter missingFilter) {
-		return missingFilterTranslator.translate(missingFilter);
+		BoolQueryBuilder missingQueryBuilder = new BoolQueryBuilder(
+		).mustNot(
+			new ExistsQueryBuilder(missingFilter.getField())
+		);
+
+		if (missingFilter.isExists() != null) {
+			missingFilter.setExists(missingFilter.isExists());
+		}
+
+		if (missingFilter.isNullValue() != null) {
+			missingFilter.setNullValue(missingFilter.isNullValue());
+		}
+
+		return missingQueryBuilder;
 	}
 
 	@Override
@@ -163,9 +178,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
-
-	@Reference
-	protected MissingFilterTranslator missingFilterTranslator;
 
 	@Reference
 	protected PrefixFilterTranslator prefixFilterTranslator;

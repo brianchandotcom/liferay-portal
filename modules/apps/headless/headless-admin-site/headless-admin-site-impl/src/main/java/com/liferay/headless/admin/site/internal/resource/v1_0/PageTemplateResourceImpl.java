@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplateSettings;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageTemplateResource;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
@@ -29,6 +30,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.search.Sort;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -377,14 +380,19 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			long layoutPageTemplateCollectionId)
 		throws Exception {
 
+		ServiceContext serviceContext = _getServiceContext(
+			groupId, contentPageTemplate);
+
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				contentPageTemplate.getExternalReferenceCode(), groupId,
-				layoutPageTemplateCollectionId, contentPageTemplate.getKey(),
-				contentPageTemplate.getName(),
-				LayoutPageTemplateEntryTypeConstants.BASIC, 0L,
-				WorkflowConstants.STATUS_DRAFT,
-				_getServiceContext(groupId, contentPageTemplate)));
+				layoutPageTemplateCollectionId, contentPageTemplate.getKey(), 0,
+				0, contentPageTemplate.getName(),
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0L, false, 0,
+				_getLayoutPlid(contentPageTemplate, groupId, serviceContext), 0,
+				PageSpecificationUtil.getPublishedStatus(
+					contentPageTemplate.getPageSpecifications()),
+				serviceContext));
 	}
 
 	private PageTemplate _addPageTemplate(
@@ -513,6 +521,34 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		}
 
 		return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+	}
+
+	private long _getLayoutPlid(
+			ContentPageTemplate contentPageTemplate, long groupId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			_portal.getSiteDefaultLocale(groupId),
+			contentPageTemplate.getName());
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+		serviceContext.setAttribute(
+			"layout.page.template.entry.type",
+			LayoutPageTemplateEntryTypeConstants.BASIC);
+
+		Layout layout = LayoutUtil.addContentLayout(
+			groupId, contentPageTemplate.getPageSpecifications(), true, nameMap,
+			nameMap, nameMap, null, LayoutConstants.TYPE_CONTENT, null, true,
+			true, Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		if (layout == null) {
+			return 0;
+		}
+
+		return layout.getPlid();
 	}
 
 	private ServiceContext _getServiceContext(
@@ -716,5 +752,8 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	)
 	private DTOConverter<LayoutPageTemplateEntry, PageTemplate>
 		_pageTemplateDTOConverter;
+
+	@Reference
+	private Portal _portal;
 
 }

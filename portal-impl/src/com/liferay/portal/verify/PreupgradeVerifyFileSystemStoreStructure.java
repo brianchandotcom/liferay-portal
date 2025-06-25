@@ -5,6 +5,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
@@ -229,6 +230,13 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				}
 
 				String versionName = String.valueOf(versionPath.getFileName());
+
+				if (StringUtil.equals(
+						versionName,
+						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+
+					continue;
+				}
 
 				if (!versionName.matches("\\d+\\.\\d+.*")) {
 					_log.error(

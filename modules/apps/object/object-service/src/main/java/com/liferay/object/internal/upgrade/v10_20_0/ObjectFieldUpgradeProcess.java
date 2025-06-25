@@ -99,6 +99,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 					timestamp, userId, userName);
 
 				preparedStatement2.executeBatch();
+
 				preparedStatement3.executeBatch();
 			}
 		}
@@ -114,41 +115,40 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 
 	private void _insertObjectField(
 			long companyId, String key, Locale locale, String name,
-			long objectDefinitionId,
-			PreparedStatement objectFieldPreparedStatement,
-			PreparedStatement objectFieldSettingPreparedStatement,
+			long objectDefinitionId, PreparedStatement preparedStatement2,
+			PreparedStatement preparedStatement3,
 			Timestamp timestamp, long userId, String userName)
 		throws SQLException {
 
-		objectFieldPreparedStatement.setLong(1, 0);
+		preparedStatement2.setLong(1, 0);
 
 		String uuid = PortalUUIDUtil.generate();
 
-		objectFieldPreparedStatement.setString(2, uuid);
-		objectFieldPreparedStatement.setString(3, uuid);
+		preparedStatement2.setString(2, uuid);
+		preparedStatement2.setString(3, uuid);
 
 		long objectFieldId = increment();
 
-		objectFieldPreparedStatement.setLong(4, objectFieldId);
+		preparedStatement2.setLong(4, objectFieldId);
 
-		objectFieldPreparedStatement.setLong(5, companyId);
-		objectFieldPreparedStatement.setLong(6, userId);
-		objectFieldPreparedStatement.setString(7, userName);
-		objectFieldPreparedStatement.setTimestamp(8, timestamp);
-		objectFieldPreparedStatement.setTimestamp(9, timestamp);
-		objectFieldPreparedStatement.setLong(10, 0);
-		objectFieldPreparedStatement.setLong(11, objectDefinitionId);
-		objectFieldPreparedStatement.setString(
+		preparedStatement2.setLong(5, companyId);
+		preparedStatement2.setLong(6, userId);
+		preparedStatement2.setString(7, userName);
+		preparedStatement2.setTimestamp(8, timestamp);
+		preparedStatement2.setTimestamp(9, timestamp);
+		preparedStatement2.setLong(10, 0);
+		preparedStatement2.setLong(11, objectDefinitionId);
+		preparedStatement2.setString(
 			12, ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME);
-		objectFieldPreparedStatement.setString(13, name);
-		objectFieldPreparedStatement.setString(
+		preparedStatement2.setString(13, name);
+		preparedStatement2.setString(
 			14, ObjectEntryTable.INSTANCE.getTableName());
-		objectFieldPreparedStatement.setString(
+		preparedStatement2.setString(
 			15, ObjectFieldConstants.DB_TYPE_DATE_TIME);
-		objectFieldPreparedStatement.setBoolean(16, false);
-		objectFieldPreparedStatement.setBoolean(17, false);
-		objectFieldPreparedStatement.setString(18, null);
-		objectFieldPreparedStatement.setString(
+		preparedStatement2.setBoolean(16, false);
+		preparedStatement2.setBoolean(17, false);
+		preparedStatement2.setString(18, null);
+		preparedStatement2.setString(
 			19,
 			LocalizationUtil.getXml(
 				new LocalizedValuesMap() {
@@ -157,33 +157,33 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 					}
 				},
 				"Label"));
-		objectFieldPreparedStatement.setBoolean(20, false);
-		objectFieldPreparedStatement.setString(21, name);
-		objectFieldPreparedStatement.setBoolean(22, true);
-		objectFieldPreparedStatement.setString(23, null);
-		objectFieldPreparedStatement.setString(24, null);
-		objectFieldPreparedStatement.setBoolean(25, false);
-		objectFieldPreparedStatement.setBoolean(26, false);
-		objectFieldPreparedStatement.setBoolean(27, true);
+		preparedStatement2.setBoolean(20, false);
+		preparedStatement2.setString(21, name);
+		preparedStatement2.setBoolean(22, true);
+		preparedStatement2.setString(23, null);
+		preparedStatement2.setString(24, null);
+		preparedStatement2.setBoolean(25, false);
+		preparedStatement2.setBoolean(26, false);
+		preparedStatement2.setBoolean(27, true);
 
-		objectFieldPreparedStatement.addBatch();
+		preparedStatement2.addBatch();
 
-		objectFieldSettingPreparedStatement.setLong(1, 0);
-		objectFieldSettingPreparedStatement.setString(
+		preparedStatement3.setLong(1, 0);
+		preparedStatement3.setString(
 			2, PortalUUIDUtil.generate());
-		objectFieldSettingPreparedStatement.setLong(3, increment());
-		objectFieldSettingPreparedStatement.setLong(4, companyId);
-		objectFieldSettingPreparedStatement.setLong(5, userId);
-		objectFieldSettingPreparedStatement.setString(6, userName);
-		objectFieldSettingPreparedStatement.setTimestamp(7, timestamp);
-		objectFieldSettingPreparedStatement.setTimestamp(8, timestamp);
-		objectFieldSettingPreparedStatement.setLong(9, objectFieldId);
-		objectFieldSettingPreparedStatement.setString(
+		preparedStatement3.setLong(3, increment());
+		preparedStatement3.setLong(4, companyId);
+		preparedStatement3.setLong(5, userId);
+		preparedStatement3.setString(6, userName);
+		preparedStatement3.setTimestamp(7, timestamp);
+		preparedStatement3.setTimestamp(8, timestamp);
+		preparedStatement3.setLong(9, objectFieldId);
+		preparedStatement3.setString(
 			10, ObjectFieldSettingConstants.NAME_TIME_STORAGE);
-		objectFieldSettingPreparedStatement.setString(
+		preparedStatement3.setString(
 			11, ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC);
 
-		objectFieldSettingPreparedStatement.addBatch();
+		preparedStatement3.addBatch();
 	}
 
 }

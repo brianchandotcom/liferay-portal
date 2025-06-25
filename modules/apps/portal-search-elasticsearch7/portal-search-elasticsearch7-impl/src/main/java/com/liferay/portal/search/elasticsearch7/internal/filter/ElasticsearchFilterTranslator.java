@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.filter;
 
+import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
@@ -63,7 +64,41 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(BooleanFilter booleanFilter) {
-		return booleanFilterTranslator.translate(booleanFilter, this);
+		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+		for (BooleanClause<Filter> booleanClause :
+				booleanFilter.getMustBooleanClauses()) {
+
+			QueryBuilder queryBuilder = translate(booleanClause);
+
+			boolQueryBuilder.must(queryBuilder);
+		}
+
+		for (BooleanClause<Filter> booleanClause :
+				booleanFilter.getMustNotBooleanClauses()) {
+
+			QueryBuilder queryBuilder = translate(booleanClause);
+
+			boolQueryBuilder.mustNot(queryBuilder);
+		}
+
+		for (BooleanClause<Filter> booleanClause :
+				booleanFilter.getShouldBooleanClauses()) {
+
+			QueryBuilder queryBuilder = translate(booleanClause);
+
+			boolQueryBuilder.should(queryBuilder);
+		}
+
+		return boolQueryBuilder;
+	}
+
+	protected QueryBuilder translate(
+		BooleanClause<Filter> booleanClause) {
+
+		Filter filter = booleanClause.getClause();
+
+		return filter.accept(this);
 	}
 
 	@Override
@@ -212,9 +247,6 @@ public class ElasticsearchFilterTranslator
 	protected void activate() {
 		_queryTranslator = new ElasticsearchQueryTranslator(indexNameBuilder);
 	}
-
-	@Reference
-	protected BooleanFilterTranslator booleanFilterTranslator;
 
 	@Reference
 	protected DateRangeTermFilterTranslator dateRangeTermFilterTranslator;

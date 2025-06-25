@@ -61,7 +61,31 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(BooleanFilter booleanFilter) {
-		return _booleanFilterTranslator.translate(booleanFilter, this);
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
+
+		for (com.liferay.portal.kernel.search.BooleanClause<Filter>
+				booleanClause : booleanFilter.getMustBooleanClauses()) {
+
+			builder.add(translate(booleanClause), BooleanClause.Occur.MUST);
+		}
+
+		for (com.liferay.portal.kernel.search.BooleanClause<Filter>
+				booleanClause : booleanFilter.getMustNotBooleanClauses()) {
+
+			builder.add(translate(booleanClause), BooleanClause.Occur.MUST_NOT);
+		}
+
+		if (_isOnlyMustNotClauses(booleanFilter)) {
+			builder.add(new MatchAllDocsQuery(), BooleanClause.Occur.SHOULD);
+		}
+
+		for (com.liferay.portal.kernel.search.BooleanClause<Filter>
+				booleanClause : booleanFilter.getShouldBooleanClauses()) {
+
+			builder.add(translate(booleanClause), BooleanClause.Occur.SHOULD);
+		}
+
+		return builder.build();
 	}
 
 	@Override
@@ -180,13 +204,37 @@ public class SolrFilterTranslator
 		throw new UnsupportedOperationException();
 	}
 
+	protected Query translate(
+		com.liferay.portal.kernel.search.BooleanClause<Filter> booleanClause) {
+
+		Filter filter = booleanClause.getClause();
+
+		return filter.accept(this);
+	}
+
 	private String _escape(String value) {
 		return StringUtil.replace(
 			value, CharPool.SPACE, StringPool.BACK_SLASH + StringPool.SPACE);
 	}
 
-	@Reference
-	private BooleanFilterTranslator _booleanFilterTranslator;
+	private boolean _isOnlyMustNotClauses(BooleanFilter booleanFilter) {
+		List<com.liferay.portal.kernel.search.BooleanClause<Filter>>
+			booleanClauses = booleanFilter.getMustBooleanClauses();
+
+		if (!booleanClauses.isEmpty()) {
+			return false;
+		}
+
+		booleanClauses = booleanFilter.getShouldBooleanClauses();
+
+		if (!booleanClauses.isEmpty()) {
+			return false;
+		}
+
+		booleanClauses = booleanFilter.getMustNotBooleanClauses();
+
+		return !booleanClauses.isEmpty();
+	}
 
 	@Reference
 	private DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;

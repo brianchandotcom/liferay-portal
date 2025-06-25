@@ -103,6 +103,11 @@ function Toolbar({
 						onClick: () => dispatch({type: 'delete-selection'}),
 						symbolLeft: 'trash',
 					},
+					{
+						label: Liferay.Language.get('create-repeatable-group'),
+						onClick: () => dispatch({type: 'add-repeatable-group'}),
+						symbolLeft: 'repeat',
+					},
 				]}
 				trigger={
 					<ClayButtonWithIcon

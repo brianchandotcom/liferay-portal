@@ -107,14 +107,14 @@ public class UpdatePasswordAction implements Action {
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				Layout updatePasswordUtilityPage =
+				Layout layout =
 					LayoutUtilityPageEntryLayoutProviderUtil.
 						getDefaultLayoutUtilityPageEntryLayout(
 							themeDisplay.getScopeGroupId(),
 							LayoutUtilityPageEntryConstants.
 								TYPE_FORGOT_PASSWORD);
 
-				if (updatePasswordUtilityPage != null) {
+				if (layout != null) {
 					return actionMapping.getActionForward(
 						"portal.update_password_utility_page");
 				}
@@ -172,7 +172,6 @@ public class UpdatePasswordAction implements Action {
 		throws PortalException {
 
 		String ticketId = ParamUtil.getString(httpServletRequest, "ticketId");
-
 		String ticketKey = ParamUtil.getString(httpServletRequest, "ticketKey");
 
 		if (Validator.isNull(ticketId) || Validator.isNull(ticketKey)) {

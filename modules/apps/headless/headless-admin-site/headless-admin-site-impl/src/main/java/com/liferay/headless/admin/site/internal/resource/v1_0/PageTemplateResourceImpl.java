@@ -658,9 +658,19 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
-		ServiceContextThreadLocal.pushServiceContext(
-			_getServiceContext(
-				layoutPageTemplateEntry.getGroupId(), contentPageTemplate));
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		ServiceContext serviceContext = _getServiceContext(
+			layoutPageTemplateEntry.getGroupId(), contentPageTemplate);
+
+		LayoutUtil.updateContentLayout(
+			layout, layout.getNameMap(), layout.getTitleMap(),
+			layout.getDescriptionMap(), layout.getRobotsMap(),
+			layout.getFriendlyURLMap(),
+			contentPageTemplate.getPageSpecifications(), serviceContext);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
 			return _pageTemplateDTOConverter.toDTO(

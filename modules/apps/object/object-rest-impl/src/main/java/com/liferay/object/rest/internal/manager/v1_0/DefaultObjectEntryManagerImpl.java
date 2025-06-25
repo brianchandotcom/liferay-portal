@@ -258,7 +258,7 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext, objectEntryId, version);
 
 		return _copyVersionedObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry, null);
+			dtoConverterContext, objectDefinition, objectEntry);
 	}
 
 	@Override
@@ -277,7 +277,7 @@ public class DefaultObjectEntryManagerImpl
 			scopeKey, version);
 
 		return _copyVersionedObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
+			dtoConverterContext, objectDefinition, objectEntry);
 	}
 
 	@Override
@@ -1293,8 +1293,7 @@ public class DefaultObjectEntryManagerImpl
 
 	private ObjectEntry _copyVersionedObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			String scopeKey)
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
 		objectEntry.setExternalReferenceCode(() -> null);
@@ -1302,12 +1301,9 @@ public class DefaultObjectEntryManagerImpl
 
 		_removeReadOnlyProperties(objectDefinition, objectEntry);
 
-		if (scopeKey == null) {
-			scopeKey = String.valueOf(objectEntry.getScopeKey());
-		}
-
 		return addObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
+			dtoConverterContext, objectDefinition, objectEntry,
+			objectEntry.getScopeKey());
 	}
 
 	private ServiceContext _createServiceContext(

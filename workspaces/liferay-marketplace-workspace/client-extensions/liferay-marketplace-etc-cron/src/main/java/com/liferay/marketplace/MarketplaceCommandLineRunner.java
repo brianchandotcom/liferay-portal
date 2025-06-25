@@ -15,6 +15,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -29,7 +30,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -64,7 +64,9 @@ public class MarketplaceCommandLineRunner
 		_processProjectsUsingMarketplaceApps();
 	}
 
-	private void _forEachOrder(String filterString, Consumer<Order> callback)
+	private void _forEachOrder(
+			String filterString,
+			UnsafeConsumer<Order, Exception> unsafeConsumer)
 		throws Exception {
 
 		for (int i = 1;; i++) {
@@ -72,14 +74,14 @@ public class MarketplaceCommandLineRunner
 
 			for (Order order : page.getItems()) {
 				try {
-					callback.accept(order);
+					unsafeConsumer.accept(order);
 				}
 				catch (Exception exception) {
 					_log.error(exception);
 				}
 			}
 
-			if (i >= page.getLastPage()) {
+			if (i > page.getLastPage()) {
 				break;
 			}
 		}
@@ -155,7 +157,7 @@ public class MarketplaceCommandLineRunner
 		return finalTeamsJSONArray.toString();
 	}
 
-	private String _getKoroneikiProjects(Order order, UserAccount userAccount) {
+	private String _getKoroneikiProject(Order order, UserAccount userAccount) {
 		String accountExternalReferenceCode =
 			order.getAccountExternalReferenceCode();
 
@@ -506,7 +508,7 @@ public class MarketplaceCommandLineRunner
 				String koroneikiProject = customFields.get("koroneiki-project");
 
 				if (Validator.isNull(koroneikiProject)) {
-					koroneikiProject = _getKoroneikiProjects(
+					koroneikiProject = _getKoroneikiProject(
 						order,
 						_getUserAccount(
 							order.getCreatorEmailAddress(), userAccounts));
@@ -517,12 +519,7 @@ public class MarketplaceCommandLineRunner
 
 					customFields.put("koroneiki-project", koroneikiProject);
 
-					try {
-						orderResource.patchOrder(order.getId(), order);
-					}
-					catch (Exception exception) {
-						_log.error(exception);
-					}
+					orderResource.patchOrder(order.getId(), order);
 				}
 
 				JSONObject jsonObject = new JSONArray(

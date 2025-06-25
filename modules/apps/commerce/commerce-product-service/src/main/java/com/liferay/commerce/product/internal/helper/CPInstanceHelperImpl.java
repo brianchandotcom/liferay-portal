@@ -569,16 +569,6 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			return null;
 		}
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			cpInstance.getCPDefinitionId());
-
-		if (!_commerceProductViewPermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
-				cpDefinition.getCPDefinitionId())) {
-
-			return null;
-		}
-
 		JSONArray jsonArray = CPJSONUtil.toJSONArray(
 			_cpDefinitionOptionRelLocalService.
 				getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
@@ -601,6 +591,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 					return fileEntry.getFileVersion();
 				}
 			}
+
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(
+					cpInstance.getCPDefinitionId());
 
 			FileEntry fileEntry =
 				_commerceMediaProvider.getDefaultImageFileEntry(
@@ -654,7 +648,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		return _commerceMediaResolver.getThumbnailURL(
 			commerceAccountId,
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId(), false);
 	}
 
 	@Override

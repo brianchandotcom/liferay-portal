@@ -264,7 +264,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 
 		return CommerceMediaResolverUtil.getThumbnailURL(
 			commerceAccountId,
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId(), false);
 	}
 
 	@Override

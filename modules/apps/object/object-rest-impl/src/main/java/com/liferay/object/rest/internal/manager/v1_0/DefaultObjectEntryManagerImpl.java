@@ -428,13 +428,11 @@ public class DefaultObjectEntryManagerImpl
 			String scopeKey, int version)
 		throws Exception {
 
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+		return _expireObjectEntryVersion(
+			dtoConverterContext, objectDefinition,
 			_objectEntryService.getObjectEntry(
 				externalReferenceCode, objectDefinition.getCompanyId(),
-				getGroupId(objectDefinition, scopeKey));
-
-		return _expireObjectEntryVersion(
-			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry,
+				getGroupId(objectDefinition, scopeKey)),
 			version);
 	}
 

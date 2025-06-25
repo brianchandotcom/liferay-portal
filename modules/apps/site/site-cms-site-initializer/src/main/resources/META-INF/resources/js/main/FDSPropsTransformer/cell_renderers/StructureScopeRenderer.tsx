@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import SpaceService from '../../../services/SpaceService';
+import SpaceService from '../../../common/services/SpaceService';
 import SpaceSticker, {LogoColor} from '../../components/SpaceSticker';
 
 const {useEffect, useState} = React;

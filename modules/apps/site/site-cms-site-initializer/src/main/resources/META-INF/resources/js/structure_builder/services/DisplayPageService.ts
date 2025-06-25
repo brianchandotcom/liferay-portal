@@ -5,7 +5,7 @@
 
 import {addParams} from 'frontend-js-web';
 
-import ApiHelper from '../../services/ApiHelper';
+import ApiHelper from '../../common/services/ApiHelper';
 import {config} from '../config';
 import {Structure} from '../types/Structure';
 

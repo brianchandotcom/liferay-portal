@@ -8,7 +8,7 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import ApiHelper from '../../../services/ApiHelper';
+import ApiHelper from '../../../common/services/ApiHelper';
 import {AssetLibrary} from '../../../types/AssetLibrary';
 import MultipleFileUploader, {
 	FileData,

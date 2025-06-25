@@ -7,8 +7,8 @@ import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {ReactElement, useEffect, useState} from 'react';
 
-import CategorizationPermissionService from '../../../services/CategorizationPermissionService';
-import CategoryService from '../../../services/CategoryService';
+import CategorizationPermissionService from '../../../common/services/CategorizationPermissionService';
+import CategoryService from '../../../common/services/CategoryService';
 import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import {
 	displayCreateSuccessToast,

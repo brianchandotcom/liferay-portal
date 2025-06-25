@@ -6,7 +6,7 @@
 import {openModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
-import FolderService from '../../../services/FolderService';
+import FolderService from '../../../common/services/FolderService';
 import {AssetLibrary} from '../../../types/AssetLibrary';
 import CreationModalContent from '../../components/modal/CreationModalContent';
 

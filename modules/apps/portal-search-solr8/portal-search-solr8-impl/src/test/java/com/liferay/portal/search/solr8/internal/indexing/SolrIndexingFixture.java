@@ -36,7 +36,6 @@ import com.liferay.portal.search.solr8.internal.filter.ExistsFilterTranslatorImp
 import com.liferay.portal.search.solr8.internal.filter.FilterTranslator;
 import com.liferay.portal.search.solr8.internal.filter.GeoBoundingBoxFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.filter.GeoDistanceFilterTranslatorImpl;
-import com.liferay.portal.search.solr8.internal.filter.GeoDistanceRangeFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.filter.GeoPolygonFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.filter.PrefixFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.filter.RangeTermFilterTranslatorImpl;
@@ -337,9 +336,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 		ReflectionTestUtil.setFieldValue(
 			solrFilterTranslator, "_geoDistanceFilterTranslator",
 			new GeoDistanceFilterTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
-			solrFilterTranslator, "_geoDistanceRangeFilterTranslator",
-			new GeoDistanceRangeFilterTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
 			solrFilterTranslator, "_geoPolygonFilterTranslator",
 			new GeoPolygonFilterTranslatorImpl());

@@ -101,6 +101,17 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		super.setUp();
 
 		_company = _mockCompany();
+		_expandoValueLocalService = _mockExpandoValueLocalService();
+		_mockDigesterUtil();
+		_mockLanguageUtil();
+		_prefsProps = _mockPrefsProps();
+		_samlProviderConfigurationHelper =
+			_mockSamlProviderConfigurationHelper();
+		_samlSpIdpConnection = _mockSamlSpIdConnection();
+		_testUserFieldExpressionResolver =
+			new TestUserFieldExpressionResolver();
+		_userGroupLocalService = _mockUserGroupLocalService();
+		_userLocalService = _mockUserLocalService();
 
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_classNameLocalService",
@@ -142,18 +153,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_userProcessorFactory",
 			new UserProcessorFactoryImpl());
-
-		_expandoValueLocalService = _mockExpandoValueLocalService();
-		_mockDigesterUtil();
-		_mockLanguageUtil();
-		_prefsProps = _mockPrefsProps();
-		_samlProviderConfigurationHelper =
-			_mockSamlProviderConfigurationHelper();
-		_samlSpIdpConnection = _mockSamlSpIdConnection();
-		_testUserFieldExpressionResolver =
-			new TestUserFieldExpressionResolver();
-		_userGroupLocalService = _mockUserGroupLocalService();
-		_userLocalService = _mockUserLocalService();
 	}
 
 	@Test

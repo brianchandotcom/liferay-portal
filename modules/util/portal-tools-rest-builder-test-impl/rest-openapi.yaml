@@ -189,6 +189,9 @@ components:
             type: object
         MultipartTestEntity:
             properties:
+                id:
+                    format: int64
+                    type: integer
                 name:
                     type: string
             type: object

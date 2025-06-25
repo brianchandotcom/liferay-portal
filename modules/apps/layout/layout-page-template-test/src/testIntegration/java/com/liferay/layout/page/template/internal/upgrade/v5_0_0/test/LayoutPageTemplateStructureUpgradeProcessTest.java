@@ -71,7 +71,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		_db.alterTableAddColumn(
 			_connection, "LayoutPageTemplateStructure", "classPK", "LONG");
 
-		_indexMetadataList = _db.dropIndexes(
+		_indexMetadatas = _db.dropIndexes(
 			_connection, "LayoutPageTemplateStructure", "plid");
 
 		_addIndex(
@@ -91,8 +91,8 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		_db.alterTableDropColumn(
 			_connection, "LayoutPageTemplateStructure", "classPK");
 
-		if (ListUtil.isNotEmpty(_indexMetadataList)) {
-			_db.addIndexes(_connection, _indexMetadataList);
+		if (ListUtil.isNotEmpty(_indexMetadatas)) {
+			_db.addIndexes(_connection, _indexMetadatas);
 		}
 
 		DataAccess.cleanUp(_connection);
@@ -222,7 +222,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	private static Connection _connection;
 	private static DB _db;
-	private static List<IndexMetadata> _indexMetadataList;
+	private static List<IndexMetadata> _indexMetadatas;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"

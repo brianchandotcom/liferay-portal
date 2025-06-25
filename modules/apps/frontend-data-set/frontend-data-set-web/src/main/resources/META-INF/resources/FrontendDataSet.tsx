@@ -8,7 +8,13 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted, useThunk} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {IHTMLElementBuilder, openToast} from 'frontend-js-components-web';
-import {fetch, loadClientExtensions, loadModule} from 'frontend-js-web';
+import {
+	ClientExtensionDefinition,
+	ClientExtensionResolution,
+	fetch,
+	loadClientExtensions,
+	loadModule,
+} from 'frontend-js-web';
 import React, {
 	RefObject,
 	useCallback,
@@ -356,20 +362,29 @@ const FrontendDataSetContent = ({
 								importDeclaration: `default from ${filter.clientExtensionFilterURL}`,
 							}))
 					: [],
-				onLoad: (bindingContexts: any) => {
+				onLoad: (
+					resolutions: Array<ClientExtensionResolution<any>>
+				) => {
 					const newFilters = initialFilters?.map((filter) => {
-						const bindingContext = bindingContexts.find(
-							(bindingContext: any) =>
-								bindingContext.context
-									.clientExtensionFilterURL ===
+						const resolution = resolutions.find(
+							(resolution: ClientExtensionResolution<any>) =>
+								resolution.context.clientExtensionFilterURL ===
 								filter.clientExtensionFilterURL
 						);
 
-						if (bindingContext) {
+						if (resolution) {
+							if (resolution.error) {
+								return {
+									...filter,
+									clientExtensionFilterResolutionError:
+										resolution.error,
+								};
+							}
+
 							return {
 								...filter,
 								clientExtensionFilterImplementation:
-									bindingContext.binding,
+									resolution.binding,
 							};
 						}
 
@@ -384,7 +399,12 @@ const FrontendDataSetContent = ({
 			},
 			{
 				clientExtensionDefinitions: views.reduce(
-					(clientExtensionDefinitions: Array<any>, view: TViews) => {
+					(
+						clientExtensionDefinitions: Array<
+							ClientExtensionDefinition<any>
+						>,
+						view: TViews
+					) => {
 						if (view.schema && 'fields' in view.schema) {
 							if (!view.schema.fields.length) {
 								return clientExtensionDefinitions;
@@ -412,8 +432,10 @@ const FrontendDataSetContent = ({
 					},
 					[]
 				),
-				onLoad: (bindingContexts: any) => {
-					bindingContexts.forEach(
+				onLoad: (
+					resolutions: Array<ClientExtensionResolution<any>>
+				) => {
+					resolutions.forEach(
 						({
 							binding: htmlElementBuilder,
 							context: field,
@@ -662,6 +684,17 @@ const FrontendDataSetContent = ({
 			return;
 		}
 
+		const clientExtensionFiltersLoading = filters.some(
+			(filter: any) =>
+				filter.clientExtensionFilterURL &&
+				!filter.clientExtensionFilterImplementation &&
+				!filter.clientExtensionFilterResolutionError
+		);
+
+		if (clientExtensionFiltersLoading) {
+			return;
+		}
+
 		setDataLoading(true);
 
 		requestData()!.then(({data, ok, status: statusCode}) => {
@@ -692,7 +725,7 @@ const FrontendDataSetContent = ({
 				setDataLoading(false);
 			}
 		});
-	}, [apiURL, isMounted, requestData, setDataLoading]);
+	}, [apiURL, filters, isMounted, requestData, setDataLoading]);
 
 	useEffect(() => {
 		function handleRefreshFromTheOutside(event: any) {

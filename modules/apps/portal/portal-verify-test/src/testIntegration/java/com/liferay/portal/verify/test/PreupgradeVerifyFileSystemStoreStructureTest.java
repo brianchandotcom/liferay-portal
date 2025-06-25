@@ -358,9 +358,9 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 				}
 
 				expectedExceptionMessage = StringBundler.concat(
-					"File system store directory structure is an invalid ",
-					advancedFileSystemStore ? "advanced" : "",
-					" file system structure: ", rootDirPath);
+					advancedFileSystemStore ? "Advanced file" : "File",
+					" system store directory structure ", rootDirPath,
+					" is invalid");
 			}
 
 			Assert.assertEquals(

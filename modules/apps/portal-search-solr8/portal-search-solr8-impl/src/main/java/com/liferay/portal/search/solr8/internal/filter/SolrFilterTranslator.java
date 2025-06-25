@@ -130,7 +130,10 @@ public class SolrFilterTranslator
 
 	@Override
 	public Query visit(RangeFilter rangeFilter) {
-		return _rangeFilterTranslator.translate(rangeFilter);
+		return TermRangeQuery.newStringRange(
+			rangeFilter.getFieldName(), rangeFilter.getFrom(),
+			rangeFilter.getTo(), rangeFilter.isIncludeLower(),
+			rangeFilter.isIncludeUpper());
 	}
 
 	@Override
@@ -205,9 +208,6 @@ public class SolrFilterTranslator
 
 	private final QueryVisitor<Query> _queryVisitor = new BaseQueryVisitor() {
 	};
-
-	@Reference
-	private RangeFilterTranslator _rangeFilterTranslator;
 
 	@Reference
 	private RangeTermFilterTranslator _rangeTermFilterTranslator;

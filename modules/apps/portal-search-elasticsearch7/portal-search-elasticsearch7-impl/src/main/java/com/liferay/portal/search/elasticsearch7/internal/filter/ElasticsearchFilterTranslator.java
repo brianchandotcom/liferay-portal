@@ -167,7 +167,24 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(RangeFilter rangeFilter) {
-		return rangeFilterTranslator.translate(rangeFilter);
+		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
+			rangeFilter.getFieldName());
+
+		if (rangeFilter.getFormat() != null) {
+			rangeQueryBuilder.format(rangeFilter.getFormat());
+		}
+
+		rangeQueryBuilder.from(rangeFilter.getFrom());
+		rangeQueryBuilder.includeLower(rangeFilter.isIncludeLower());
+		rangeQueryBuilder.includeUpper(rangeFilter.isIncludeUpper());
+
+		if (rangeFilter.getTimeZoneId() != null) {
+			rangeQueryBuilder.timeZone(rangeFilter.getTimeZoneId());
+		}
+
+		rangeQueryBuilder.to(rangeFilter.getTo());
+
+		return rangeQueryBuilder;
 	}
 
 	@Override
@@ -219,9 +236,6 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected PrefixFilterTranslator prefixFilterTranslator;
-
-	@Reference
-	protected RangeFilterTranslator rangeFilterTranslator;
 
 	@Reference
 	protected RangeTermFilterTranslator rangeTermFilterTranslator;

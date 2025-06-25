@@ -424,21 +424,6 @@ public class DefaultObjectEntryManagerImpl
 	public ObjectEntry expireObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			int version)
-		throws Exception {
-
-		return _expireObjectEntryVersion(
-			dtoConverterContext, objectDefinition,
-			_objectEntryService.getObjectEntry(
-				externalReferenceCode, objectDefinition.getCompanyId(),
-				getGroupId(objectDefinition, null)),
-			version);
-	}
-
-	@Override
-	public ObjectEntry expireObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, int version)
 		throws Exception {
 

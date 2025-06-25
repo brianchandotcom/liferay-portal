@@ -4,13 +4,7 @@
  */
 
 import {Text} from '@clayui/core';
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import ApiHelper from '../../../services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
@@ -34,87 +28,106 @@ export type InventoryAnalysisDataType = {
 	totalCount: number;
 };
 
-export const initialStructureType = {
-	label: Liferay.Language.get('category'),
-	value: 'category',
+export const initialFilters = {
+	category: {
+		label: Liferay.Language.get('all-categories'),
+		value: 'all',
+	},
+	structure: {
+		label: Liferay.Language.get('all-structures'),
+		value: 'all',
+	},
+	structureType: {
+		label: Liferay.Language.get('category'),
+		value: 'category',
+	},
+	tag: {
+		label: Liferay.Language.get('all-tags'),
+		value: 'all',
+	},
+	vocabulary: {
+		label: Liferay.Language.get('all-vocabularies'),
+		value: 'all',
+	},
 };
 
-export const initialCategory = {
-	label: Liferay.Language.get('all-categories'),
-	value: 'all',
-};
+async function fetchStructureData({
+	filters,
+	language,
+	space,
+}: {
+	filters: {
+		category: Item;
+		structure: Item;
+		structureType: Item;
+		tag: Item;
+		vocabulary: Item;
+	};
+	language: Item;
+	space: Item;
+}) {
+	const params = {
+		categoryId: filters.category?.value,
+		groupBy: filters.structureType?.value,
+		languageId: language?.value,
+		spaceId: space?.value,
+		structureId: filters.structure?.value,
+		vocabularyId: filters.vocabulary?.value,
+	};
 
-export const initialStructure = {
-	label: Liferay.Language.get('all-structures'),
-	value: 'all',
-};
+	const filteredParams = Object.fromEntries(
+		Object.entries(params).filter(
+			([, value]) => value !== null && value !== ''
+		)
+	);
+	const queryParams = buildQueryString(filteredParams);
+	const endpoint = `/o/analytics-cms-rest/v1.0/inventory-analysis${queryParams}`;
 
-export const initialTag = {
-	label: Liferay.Language.get('all-tags'),
-	value: 'all',
-};
+	const {data, error} =
+		await ApiHelper.get<InventoryAnalysisDataType>(endpoint);
 
-export const initialVocabulary = {
-	label: Liferay.Language.get('all-vocabularies'),
-	value: 'all',
-};
+	if (error) {
+		console.error(error);
+	}
+
+	if (data) {
+		return data;
+	}
+
+	return null;
+}
 
 export function InventoryAnalysisCard() {
 	const {
 		filters: {language, space},
 	} = useContext(ViewDashboardContext);
 
-	const [category, setCategory] = useState<Item>(initialCategory);
-	const [structure, setStructure] = useState<Item>(initialStructure);
-	const [structureType, setStructureType] =
-		useState<Item>(initialStructureType);
+	const [filters, setFilters] = useState<{
+		category: Item;
+		structure: Item;
+		structureType: Item;
+		tag: Item;
+		vocabulary: Item;
+	}>(initialFilters);
+
 	const [inventoryAnalysisData, setInventoryAnalysisData] =
 		useState<InventoryAnalysisDataType>();
-	const [tag, setTag] = useState<Item>(initialTag);
-	const [vocabulary, setVocabulary] = useState<Item>(initialVocabulary);
-
-	const params = useMemo(
-		() => ({
-			categoryId: category?.value,
-			groupBy: structureType?.value,
-			languageId: language?.value,
-			spaceId: space?.value,
-			structureId: structure?.value,
-			vocabularyId: vocabulary?.value,
-		}),
-		[category, language, space, structure, structureType, vocabulary]
-	);
-
-	const fetchStructureData = useCallback(async () => {
-		const filteredParams = Object.fromEntries(
-			Object.entries(params).filter(
-				([, value]) => value !== null && value !== ''
-			)
-		);
-		const queryParams = buildQueryString(filteredParams);
-		const endpoint = `/o/analytics-cms-rest/v1.0/inventory-analysis${queryParams}`;
-
-		const {data, error} =
-			await ApiHelper.get<InventoryAnalysisDataType>(endpoint);
-
-		if (data) {
-			setInventoryAnalysisData({...data});
-		}
-		if (error) {
-			console.error(error);
-		}
-	}, [params]);
 
 	useEffect(() => {
-		setCategory(initialCategory);
-		setStructure(initialStructure);
-		setTag(initialTag);
-		setVocabulary(initialVocabulary);
+		setFilters(initialFilters);
 	}, [space?.value]);
 
 	useEffect(() => {
-		fetchStructureData();
-	}, [fetchStructureData]);
+		async function fetchData() {
+			const data = await fetchStructureData({filters, language, space});
+
+			if (data) {
+				setInventoryAnalysisData(data);
+			}
+		}
+
+		fetchData();
+	}, [filters, language, space]);
 
 	return (
 		<div className="cms-dashboard__inventory-analysis">
@@ -133,8 +146,10 @@ export function InventoryAnalysisCard() {
 						</span>
 
 						<GroupByDropdown
-							item={structureType}
-							onSelectItem={setStructureType}
+							item={filters.structureType}
+							onSelectItem={(structureType) =>
+								setFilters({...filters, structureType})
+							}
 						/>
 					</div>
 
@@ -150,29 +165,49 @@ export function InventoryAnalysisCard() {
 						<div className="d-flex flex-wrap">
 							<div className="mb-2 mb-lg-0 mr-2">
 								<AllStructureTypesDropdown
-									item={structure}
-									onSelectItem={setStructure}
+									item={filters.structure}
+									onSelectItem={(structure) =>
+										setFilters({
+											...filters,
+											structure,
+										})
+									}
 								/>
 							</div>
 
 							<div className="mb-2 mb-lg-0 mr-2">
 								<AllVocabulariesDropdown
-									item={vocabulary}
-									onSelectItem={setVocabulary}
+									item={filters.vocabulary}
+									onSelectItem={(vocabulary) => {
+										setFilters({
+											...filters,
+											vocabulary,
+										});
+									}}
 								/>
 							</div>
 
 							<div className="mb-2 mb-lg-0 mr-2">
 								<AllCategoriesDropdown
-									item={category}
-									onSelectItem={setCategory}
+									item={filters.category}
+									onSelectItem={(category) => {
+										setFilters({
+											...filters,
+											category,
+										});
+									}}
 								/>
 							</div>
 
 							<div className="mb-2 mb-lg-0">
 								<AllTagsDropdown
-									item={tag}
-									onSelectItem={setTag}
+									item={filters.tag}
+									onSelectItem={(tag) =>
+										setFilters({
+											...filters,
+											tag,
+										})
+									}
 								/>
 							</div>
 						</div>
@@ -180,7 +215,7 @@ export function InventoryAnalysisCard() {
 				</div>
 
 				<PaginatedTable
-					currentStructureTypeLabel={structureType.label}
+					currentStructureTypeLabel={filters.structureType.label}
 					inventoryAnalysisData={inventoryAnalysisData}
 				/>
 			</BaseCard>

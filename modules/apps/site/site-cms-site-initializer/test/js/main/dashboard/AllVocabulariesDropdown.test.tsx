@@ -17,7 +17,7 @@ import React from 'react';
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/ViewDashboardContext';
 import {AllVocabulariesDropdown} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/AllVocabulariesDropdown';
 import {Item} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/FilterDropdown';
-import {initialVocabulary} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/InventoryAnalysisCard';
+import {initialFilters} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/InventoryAnalysisCard';
 
 const mockVocabularies = (items: {id: string; name: string}[] = []) => {
 	global.fetch = jest.fn().mockReturnValue({
@@ -31,8 +31,9 @@ const WrappedComponent = ({
 }: {
 	onSelectItem: (item: Item) => void;
 }) => {
-	const [selectedItem, setSelectedItem] =
-		React.useState<Item>(initialVocabulary);
+	const [selectedItem, setSelectedItem] = React.useState<Item>(
+		initialFilters.vocabulary
+	);
 
 	return (
 		<ViewDashboardContextProvider value={{}}>

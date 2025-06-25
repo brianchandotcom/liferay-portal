@@ -9,7 +9,7 @@ import ApiHelper from '../../../services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
 import {buildQueryString} from '../utils/buildQueryString';
 import {FilterDropdown, Item} from './FilterDropdown';
-import {IAllFiltersDropdown, initialStructure} from './InventoryAnalysisCard';
+import {IAllFiltersDropdown, initialFilters} from './InventoryAnalysisCard';
 
 const AllStructureTypesDropdown: React.FC<IAllFiltersDropdown> = ({
 	className,
@@ -18,7 +18,9 @@ const AllStructureTypesDropdown: React.FC<IAllFiltersDropdown> = ({
 }) => {
 	const {constants} = useContext(ViewDashboardContext);
 
-	const [structures, setStructures] = useState<Item[]>([initialStructure]);
+	const [structures, setStructures] = useState<Item[]>([
+		initialFilters.structure,
+	]);
 	const [loading, setLoading] = useState(false);
 	const [dropdownActive, setDropdownActive] = useState(false);
 
@@ -63,7 +65,9 @@ const AllStructureTypesDropdown: React.FC<IAllFiltersDropdown> = ({
 				const structures = await fetchStructures(value);
 
 				setStructures(
-					value ? structures : [initialStructure, ...structures]
+					value
+						? structures
+						: [initialFilters.structure, ...structures]
 				);
 
 				setLoading(false);
@@ -78,7 +82,7 @@ const AllStructureTypesDropdown: React.FC<IAllFiltersDropdown> = ({
 
 				const structures = await fetchStructures();
 
-				setStructures([initialStructure, ...structures]);
+				setStructures([initialFilters.structure, ...structures]);
 
 				setLoading(false);
 			}}

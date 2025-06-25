@@ -9,7 +9,7 @@ import ApiHelper from '../../../services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
 import {buildQueryString} from '../utils/buildQueryString';
 import {FilterDropdown, Item} from './FilterDropdown';
-import {IAllFiltersDropdown, initialTag} from './InventoryAnalysisCard';
+import {IAllFiltersDropdown, initialFilters} from './InventoryAnalysisCard';
 
 const AllTagsDropdown: React.FC<IAllFiltersDropdown> = ({
 	className,
@@ -20,7 +20,7 @@ const AllTagsDropdown: React.FC<IAllFiltersDropdown> = ({
 		filters: {space},
 	} = useContext(ViewDashboardContext);
 
-	const [tags, setTags] = useState<Item[]>([initialTag]);
+	const [tags, setTags] = useState<Item[]>([initialFilters.tag]);
 
 	const [dropdownActive, setDropdownActive] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -76,7 +76,7 @@ const AllTagsDropdown: React.FC<IAllFiltersDropdown> = ({
 
 				const tags = await fetchTags(value);
 
-				setTags(value ? tags : [initialTag, ...tags]);
+				setTags(value ? tags : [initialFilters.tag, ...tags]);
 
 				setLoading(false);
 			}}
@@ -90,7 +90,7 @@ const AllTagsDropdown: React.FC<IAllFiltersDropdown> = ({
 
 				const tags = await fetchTags();
 
-				setTags([initialTag, ...tags]);
+				setTags([initialFilters.tag, ...tags]);
 
 				setLoading(false);
 			}}

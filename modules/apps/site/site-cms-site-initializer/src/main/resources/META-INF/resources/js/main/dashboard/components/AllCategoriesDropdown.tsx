@@ -9,12 +9,7 @@ import ApiHelper from '../../../services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
 import {buildQueryString} from '../utils/buildQueryString';
 import {FilterDropdown} from './FilterDropdown';
-import {IAllFiltersDropdown} from './InventoryAnalysisCard';
-
-const initialCategory = {
-	label: Liferay.Language.get('all-categories'),
-	value: 'all',
-};
+import {IAllFiltersDropdown, initialFilters} from './InventoryAnalysisCard';
 
 export type CategoryData = {
 	assetLibraries: {id: number}[];
@@ -50,8 +45,8 @@ const AllCategoriesDropdown: React.FC<IAllFiltersDropdown> = ({
 		filters: {space},
 	} = useContext(ViewDashboardContext);
 
-	const [categories, setCategories] = useState([initialCategory]);
-	const [vocabularies, setVocabularies] = useState([initialCategory]);
+	const [categories, setCategories] = useState([initialFilters.category]);
+	const [vocabularies, setVocabularies] = useState([initialFilters.category]);
 	const [parentCategory, setParentCategory] = useState<Category | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [dropdownActive, setDropdownActive] = useState(false);
@@ -181,7 +176,7 @@ const AllCategoriesDropdown: React.FC<IAllFiltersDropdown> = ({
 					const data = await fetchVocabularies({keywords});
 
 					const categories = !keywords
-						? [initialCategory, ...data]
+						? [initialFilters.category, ...data]
 						: data;
 
 					setCategories(categories);
@@ -213,7 +208,7 @@ const AllCategoriesDropdown: React.FC<IAllFiltersDropdown> = ({
 			onTrigger={async () => {
 				const data = await fetchVocabularies();
 
-				const categories = [initialCategory, ...data];
+				const categories = [initialFilters.category, ...data];
 
 				setCategories(categories);
 				setVocabularies(categories);

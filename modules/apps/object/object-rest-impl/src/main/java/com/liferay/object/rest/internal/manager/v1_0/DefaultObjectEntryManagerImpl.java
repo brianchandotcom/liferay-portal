@@ -266,25 +266,6 @@ public class DefaultObjectEntryManagerImpl
 	public ObjectEntry copyObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			int version)
-		throws Exception {
-
-		if (!objectDefinition.isEnableObjectEntryVersioning()) {
-			throw new UnsupportedOperationException();
-		}
-
-		ObjectEntry objectEntry = getObjectEntryByVersion(
-			dtoConverterContext, externalReferenceCode, objectDefinition, null,
-			version);
-
-		return _copyVersionedObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry, null);
-	}
-
-	@Override
-	public ObjectEntry copyObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, int version)
 		throws Exception {
 
@@ -1357,6 +1338,10 @@ public class DefaultObjectEntryManagerImpl
 		objectEntry.setId(() -> null);
 
 		_removeReadOnlyProperties(objectDefinition, objectEntry);
+
+		if (scopeKey == null) {
+			scopeKey = String.valueOf(objectEntry.getScopeKey());
+		}
 
 		return addObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntry, scopeKey);

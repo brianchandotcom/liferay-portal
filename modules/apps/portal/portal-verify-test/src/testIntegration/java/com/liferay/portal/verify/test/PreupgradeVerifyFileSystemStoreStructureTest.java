@@ -100,6 +100,8 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 		_originalCacheEnabled = ReflectionTestUtil.getAndSetFieldValue(
 			PortalInstancePool.class, "_cacheEnabled", false);
 
+		_repositoryId = RandomTestUtil.nextLong();
+
 		_upgradeDatabaseDLStorageCheckDisabledSafeCloseable =
 			PropsValuesTestUtil.swapWithSafeCloseable(
 				"UPGRADE_DATABASE_DL_STORAGE_CHECK_DISABLED", false);
@@ -149,7 +151,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 
 		Path directoryWithoutExtensionPath = Paths.get(
 			_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "100");
+			String.valueOf(_repositoryId), "100");
 
 		String expectedLogEntry =
 			"Found directory with name longer than 2 without extension in " +
@@ -167,7 +169,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 
 		Path validDirectoryPath = Paths.get(
 			_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "10", "100.afsh");
+			String.valueOf(_repositoryId), "10", "100.afsh");
 
 		_assertVerify(
 			_ADVANCED_FILE_SYSTEM_STORE, validDirectoryPath, null, null, 0);
@@ -179,7 +181,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 
 		Path directoryWithExtensionPath = Paths.get(
 			_fileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "100.txt");
+			String.valueOf(_repositoryId), "100.txt");
 
 		String expectedLogEntry =
 			"Found directory with extension in file system structure (no " +
@@ -225,7 +227,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 
 		Path folderIdPath = Paths.get(
 			_fileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID));
+			String.valueOf(_repositoryId));
 
 		Path invalidFilePath = folderIdPath.resolve("invalidFile.txt");
 
@@ -275,7 +277,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 
 		Path fileEntryPath = Paths.get(
 			_fileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "100");
+			String.valueOf(_repositoryId), "100");
 
 		Path invalidVersionFilePath = fileEntryPath.resolve("invalidVersion");
 
@@ -296,7 +298,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	public void testFileSystemStoreWithValidStructure() throws Exception {
 		Path validDirectoryPath = Paths.get(
 			_fileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "100", "1.0");
+			String.valueOf(_repositoryId), "100", "1.0");
 
 		_assertVerify(_FILE_SYSTEM_STORE, validDirectoryPath, null, null, 0);
 	}
@@ -400,8 +402,6 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	private static final String _FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.FileSystemStore";
 
-	private static final long _REPOSITORY_ID = RandomTestUtil.nextLong();
-
 	private static Configuration _advancedFileSystemStoreConfiguration;
 	private static String _advancedFileSystemStoreRootDir;
 	private static long _companyId;
@@ -416,6 +416,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	@Inject
 	private static Props _props;
 
+	private static long _repositoryId;
 	private static SafeCloseable
 		_upgradeDatabaseDLStorageCheckDisabledSafeCloseable;
 

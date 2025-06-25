@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import {FieldFeedback, useId} from 'frontend-js-components-web';
 import React from 'react';
 
-import {Space} from '../../types/Space';
+import {Space} from '../../common/types/Space';
 import {useCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectValidationErrors from '../selectors/selectValidationErrors';

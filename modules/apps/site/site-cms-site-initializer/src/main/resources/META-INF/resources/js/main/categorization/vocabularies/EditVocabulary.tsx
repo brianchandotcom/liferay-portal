@@ -13,7 +13,7 @@ import React, {useEffect, useState} from 'react';
 import Toolbar from '../../../common/components/Toolbar';
 import CategorizationPermissionService from '../../../common/services/CategorizationPermissionService';
 import VocabularyService from '../../../common/services/VocabularyService';
-import {IVocabulary} from '../../../types/IVocabulary';
+import {IVocabulary} from '../../../common/types/IVocabulary';
 import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import {
 	displayNameInUseErrorToast,

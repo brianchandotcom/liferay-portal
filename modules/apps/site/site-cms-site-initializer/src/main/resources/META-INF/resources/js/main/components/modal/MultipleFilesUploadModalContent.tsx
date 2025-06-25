@@ -9,7 +9,7 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
-import {AssetLibrary} from '../../../types/AssetLibrary';
+import {AssetLibrary} from '../../../common/types/AssetLibrary';
 import MultipleFileUploader, {
 	FileData,
 } from '../multiple_file_uploader/MultipleFileUploader';

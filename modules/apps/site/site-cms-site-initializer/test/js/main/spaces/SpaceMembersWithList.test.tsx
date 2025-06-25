@@ -9,15 +9,15 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
+import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
+import {
+	UserAccount,
+	UserGroup,
+} from '../../../../src/main/resources/META-INF/resources/js/common/types/UserAccount';
 import {
 	AddSpaceMembers,
 	AddSpaceMembersProps,
 } from '../../../../src/main/resources/META-INF/resources/js/main/spaces/AddSpaceMembers';
-import {Space} from '../../../../src/main/resources/META-INF/resources/js/types/Space';
-import {
-	UserAccount,
-	UserGroup,
-} from '../../../../src/main/resources/META-INF/resources/js/types/UserAccount';
 
 describe('SpaceMembersWithList', () => {
 	const testSpace = {

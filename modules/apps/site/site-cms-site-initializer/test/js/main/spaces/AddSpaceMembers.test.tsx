@@ -8,11 +8,11 @@ import {act, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
+import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 import {
 	AddSpaceMembers,
 	AddSpaceMembersProps,
 } from '../../../../src/main/resources/META-INF/resources/js/main/spaces/AddSpaceMembers';
-import {Space} from '../../../../src/main/resources/META-INF/resources/js/types/Space';
 
 describe('AddSpaceMembers', () => {
 	const testSpace = {

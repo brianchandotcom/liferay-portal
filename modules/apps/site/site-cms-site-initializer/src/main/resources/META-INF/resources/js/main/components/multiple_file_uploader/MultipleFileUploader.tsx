@@ -19,7 +19,7 @@ import DragZoneBackground from './DragZoneBackground';
 import {LoadingMessage} from './LoadingMessage';
 
 import '../../../../css/components/MultipleFileUploader.scss';
-import {AssetLibrary} from '../../../types/AssetLibrary';
+import {AssetLibrary} from '../../../common/types/AssetLibrary';
 import {required, validate} from '../forms/validations';
 import FailedFiles from './FailedFiles';
 export interface FileData {

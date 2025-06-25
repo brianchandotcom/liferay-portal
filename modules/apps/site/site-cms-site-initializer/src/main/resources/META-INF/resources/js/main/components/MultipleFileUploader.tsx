@@ -15,7 +15,7 @@ import {FieldPicker} from './forms';
 
 import '../../../css/components/MultipleFileUploader.scss';
 import ApiHelper from '../../common/services/ApiHelper';
-import {AssetLibrary} from '../../types/AssetLibrary';
+import {AssetLibrary} from '../../common/types/AssetLibrary';
 import DragZoneBackground from './multiple_file_uploader/DragZoneBackground';
 import {LoadingMessage} from './multiple_file_uploader/LoadingMessage';
 

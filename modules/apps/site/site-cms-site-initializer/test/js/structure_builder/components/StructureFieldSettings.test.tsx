@@ -10,6 +10,7 @@ import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/common/types/Picklist';
 import StructureFieldSettings from '../../../../src/main/resources/META-INF/resources/js/structure_builder/components/settings/StructureFieldSettings';
 import {State} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
 import {Uuid} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Uuid';
@@ -18,7 +19,6 @@ import {
 	getDefaultField,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
-import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/types/Picklist';
 import {MockCacheProvider} from '../mocks/MockCacheProvider';
 import {MockState, MockStateProvider} from '../mocks/MockStateProvider';
 

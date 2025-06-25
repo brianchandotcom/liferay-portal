@@ -85,7 +85,6 @@ const ProductOptionCheckbox = ({
 						...(skuOptionsAtomState[skuOptionsKey] || []),
 						{
 							key: productOption.key,
-							required: productOption.required,
 							skuOptionKey: productOption.key,
 							skuOptionName: productOption.name,
 							value: checked ? [value] : [],
@@ -125,7 +124,6 @@ const ProductOptionCheckbox = ({
 				if (skuOption.skuOptionKey === productOption.key) {
 					return {
 						key: productOption.key,
-						required: productOption.required,
 						skuOptionKey: productOption.key,
 						skuOptionName: productOption.name,
 						value: checked ? [value] : [],
@@ -140,7 +138,6 @@ const ProductOptionCheckbox = ({
 				...currentSkuOptions,
 				{
 					key: productOption.key,
-					required: productOption.required,
 					skuOptionKey: productOption.key,
 					skuOptionName: productOption.name,
 					value: checked ? [value] : [],

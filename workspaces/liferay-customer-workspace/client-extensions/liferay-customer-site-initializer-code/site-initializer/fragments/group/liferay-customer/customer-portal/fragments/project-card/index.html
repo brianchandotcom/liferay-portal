@@ -1,7 +1,10 @@
 [#assign
 	currentURL = (themeDisplay.getURLCurrent()!"")?keep_before("/home")!""
 	koroneikiAccounts = restClient.get("/c/koroneikiaccounts?pageSize=1&sort=dateCreated:desc")
+	lastCreatedProjectERC = ""
 	lastViewedProjectERC = ""
+	parsedDate = ""
+	projectCount = 0
 /]
 
 [#list request.getCookies() as cookie]
@@ -12,15 +15,18 @@
 	[/#if]
 [/#list]
 
-[#assign
-	lastCreatedProjectERC = (koroneikiAccounts.items[0].externalReferenceCode)!""
-	projectCount = (koroneikiAccounts.totalCount)!0
-/]
+[#if koroneikiAccounts?is_hash && koroneikiAccounts.items?? && koroneikiAccounts.totalCount??]
+	[#assign
+		lastCreatedProjectERC = (koroneikiAccounts.items[0].externalReferenceCode)!""
+		projectCount = (koroneikiAccounts.totalCount)!0
+	/]
+[/#if]
 
 [#assign projectERC = lastViewedProjectERC?has_content?then(lastViewedProjectERC, lastCreatedProjectERC) /]
 
 [#if projectERC?has_content]
 	[#assign
+		parsedDate = ""
 		project = restClient.get("/c/koroneikiaccounts/by-external-reference-code/" + projectERC)
 		slaProjectCardDate = ""
 		status = ""
@@ -43,7 +49,9 @@
 		/]
 	[/#if]
 
-	[#assign parsedDate = slaProjectCardDate?datetime("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")!""]
+	[#if slaProjectCardDate?has_content]
+		[#assign parsedDate = slaProjectCardDate?datetime("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")!""]
+	[/#if]
 [/#if]
 
 [#assign
@@ -59,7 +67,7 @@
 	hasDXP = false
 /]
 
-[#if dxpSubscription.hasActivation?? && dxpSubscription.activationProductName?? && dxpSubscription.hasActivation == true && dxpSubscription.activationProductName == "DXP"]
+[#if dxpSubscription?is_hash && dxpSubscription.hasActivation?? && dxpSubscription.activationProductName?? && dxpSubscription.hasActivation == true && dxpSubscription.activationProductName == "DXP"]
 	[#assign hasDXP = true]
 [/#if]
 
@@ -98,9 +106,9 @@
 		<div class="project-card-container">
 			<div class="d-flex justify-content-between project-card-name-section">
 				<div>
-					<h2 class="product-title">${project.name}</h2>
+					<h2 class="product-title">${project.name!}</h2>
 
-					<div class="font-weight-semi-bold">${project.code}</div>
+					<div class="font-weight-semi-bold">${project.code!}</div>
 				</div>
 
 				<div class="d-flex">
@@ -158,7 +166,7 @@
 						[/#if]
 					</div>
 
-					<div>${languageUtil.get(locale, "support-region")}: <b>${project.region}</b></div>
+					<div>${languageUtil.get(locale, "support-region")}: <b>${project.region!}</b></div>
 				</div>
 
 				<div class="font-weight-bold project-details-button">

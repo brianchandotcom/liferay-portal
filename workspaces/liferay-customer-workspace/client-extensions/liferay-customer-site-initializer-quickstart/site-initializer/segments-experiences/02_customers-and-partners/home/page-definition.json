@@ -105,6 +105,9 @@
 							},
 							"fragmentFields": [
 							],
+							"fragmentStyle": {
+								"marginBottom": "4"
+							},
 							"indexed": true
 						},
 						"id": "5bc7c00d-68f0-327a-9c46-6a12f633c649",

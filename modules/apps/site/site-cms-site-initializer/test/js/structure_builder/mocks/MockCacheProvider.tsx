@@ -7,11 +7,11 @@ import React, {ReactNode} from 'react';
 
 import PicklistService from '../../../../src/main/resources/META-INF/resources/js/common/services/PicklistService';
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
+import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/common/types/Picklist';
+import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 import {CacheContext} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/CacheContext';
 import StructureService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/StructureService';
 import {Structures} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Structure';
-import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/types/Picklist';
-import {Space} from '../../../../src/main/resources/META-INF/resources/js/types/Space';
 
 function getCache({
 	picklists,

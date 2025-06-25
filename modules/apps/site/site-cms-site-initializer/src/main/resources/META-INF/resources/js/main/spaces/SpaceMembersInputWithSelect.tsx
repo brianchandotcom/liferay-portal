@@ -14,7 +14,7 @@ import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import React, {useId, useState} from 'react';
 
-import {UserAccount, UserGroup} from '../../types/UserAccount';
+import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 
 export enum SelectOptions {
 	USERS = 'users',

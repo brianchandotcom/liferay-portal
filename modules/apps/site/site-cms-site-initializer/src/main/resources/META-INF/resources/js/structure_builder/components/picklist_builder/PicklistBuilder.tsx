@@ -7,7 +7,7 @@ import ClayLayout from '@clayui/layout';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {useEffect} from 'react';
 
-import {Picklist} from '../../../types/Picklist';
+import {Picklist} from '../../../common/types/Picklist';
 import PicklistBuilderContextProvider, {
 	buildState,
 	useId,

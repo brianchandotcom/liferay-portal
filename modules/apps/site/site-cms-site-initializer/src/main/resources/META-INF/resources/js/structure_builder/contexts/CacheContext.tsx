@@ -16,8 +16,8 @@ import React, {
 
 import PicklistService from '../../common/services/PicklistService';
 import SpaceService from '../../common/services/SpaceService';
-import {Picklist} from '../../types/Picklist';
-import {Space} from '../../types/Space';
+import {Picklist} from '../../common/types/Picklist';
+import {Space} from '../../common/types/Space';
 import StructureService from '../services/StructureService';
 import {Structures} from '../types/Structure';
 

@@ -17,7 +17,7 @@ import {FieldPicker} from './forms';
 
 import '../../../css/components/MultipleFileUploader.scss';
 import ApiHelper from '../../common/services/ApiHelper';
-import {AssetLibrary} from '../../types/AssetLibrary';
+import {AssetLibrary} from '../../common/types/AssetLibrary';
 
 interface FileData {
 	errorMessage: string;

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -112,37 +111,17 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		if (Validator.isNull(search)) {
-			return Page.of(
-				transform(
-					_layoutPageTemplateEntryService.
-						getLayoutPageTemplateEntries(
-							groupId,
-							LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
-							pagination.getStartPosition(),
-							pagination.getEndPosition(), null),
-					layoutPageTemplateEntry -> _masterPageDTOConverter.toDTO(
-						layoutPageTemplateEntry)),
-				pagination,
-				_layoutPageTemplateEntryService.
-					getLayoutPageTemplateEntriesCount(
-						groupId,
-						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
-		}
-
 		return Page.of(
 			transform(
 				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
-					groupId, 0, 0, search,
-					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+					groupId, LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				layoutPageTemplateEntry -> _masterPageDTOConverter.toDTO(
 					layoutPageTemplateEntry)),
 			pagination,
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntriesCount(
-				groupId, 0, 0, search,
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
+				groupId, LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
 	}
 
 	@Override

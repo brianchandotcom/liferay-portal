@@ -2844,7 +2844,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, 2),
+				_objectDefinition1, null, 2),
 			objectEntry2);
 
 		// Site scope
@@ -2889,9 +2889,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectDefinition.getCompanyId(),
-				objectDefinition, objectEntry3.getScopeKey(),
-				objectEntry3.getExternalReferenceCode(), 2),
+				dtoConverterContext, objectEntry3.getExternalReferenceCode(),
+				objectDefinition, objectEntry3.getScopeKey(), 2),
 			objectEntry4);
 	}
 
@@ -3051,7 +3050,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, 1),
+				_objectDefinition1, null, 1),
 			objectEntry1);
 
 		long objectEntryId = objectEntry1.getId();
@@ -3068,7 +3067,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, 2),
+				_objectDefinition1, null, 2),
 			objectEntry1);
 
 		Assert.assertEquals(
@@ -4886,7 +4885,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, 1),
+				_objectDefinition1, null, 1),
 			objectEntry1);
 
 		objectEntry1 = _updateObjectEntryVersion(
@@ -4895,7 +4894,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, 2),
+				_objectDefinition1, null, 2),
 			objectEntry1);
 
 		// Site scope
@@ -4935,16 +4934,14 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectDefinition.getCompanyId(),
-				objectDefinition, objectEntry3.getScopeKey(),
-				objectEntry3.getExternalReferenceCode(), 2),
+				dtoConverterContext, objectEntry3.getExternalReferenceCode(),
+				objectDefinition, objectEntry3.getScopeKey(), 2),
 			objectEntry3);
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectDefinition.getCompanyId(),
-				objectDefinition, objectEntry3.getScopeKey(),
-				objectEntry3.getExternalReferenceCode(), 1),
+				dtoConverterContext, objectEntry3.getExternalReferenceCode(),
+				objectDefinition, objectEntry3.getScopeKey(), 1),
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry3.getId(), 1));
 	}
@@ -5343,9 +5340,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectDefinition.getCompanyId(),
-				objectDefinition, objectEntry3.getScopeKey(),
-				objectEntry3.getExternalReferenceCode(), 2),
+				dtoConverterContext, objectEntry3.getExternalReferenceCode(),
+				objectDefinition, objectEntry3.getScopeKey(), 2),
 			objectEntry3);
 
 		objectEntry3 = _updateObjectEntryVersion(
@@ -5876,7 +5872,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, 1),
+				_objectDefinition1, null, 1),
 			objectEntry1);
 
 		ObjectEntry objectEntry2 = new ObjectEntry() {
@@ -5906,7 +5902,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry2.getExternalReferenceCode(),
-				_objectDefinition1, 2),
+				_objectDefinition1, null, 2),
 			objectEntry2);
 
 		assertEquals(
@@ -5987,9 +5983,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectDefinition.getCompanyId(),
-				objectDefinition, group.getGroupKey(),
-				objectEntry3.getExternalReferenceCode(), 1),
+				dtoConverterContext, objectEntry3.getExternalReferenceCode(),
+				objectDefinition, group.getGroupKey(), 1),
 			objectEntry3);
 
 		ObjectEntry objectEntry4 = new ObjectEntry() {
@@ -6018,9 +6013,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectDefinition.getCompanyId(),
-				objectDefinition, group.getGroupKey(),
-				objectEntry4.getExternalReferenceCode(), 2),
+				dtoConverterContext, objectEntry4.getExternalReferenceCode(),
+				objectDefinition, group.getGroupKey(), 2),
 			objectEntry4);
 
 		assertEquals(

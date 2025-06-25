@@ -6,7 +6,7 @@
 import ClaySticker from '@clayui/sticker';
 import React from 'react';
 
-import {LogoColor} from '../../types/Space';
+import {LogoColor} from '../../common/types/Space';
 
 export const logoColors: Record<LogoColor, string> = {
 	'outline-0': Liferay.Language.get('gray'),

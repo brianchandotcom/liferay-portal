@@ -150,6 +150,24 @@ describe('NewSpace', () => {
 		it('disables the Continue button when the name field is empty', async () => {
 			render(<NewSpace {...props} />);
 
+			const continueButton = screen.getByRole('button', {
+				name: 'continue',
+			});
+
+			const spaceNameInput = screen.getByRole('textbox', {
+				name: /space-name/i,
+			});
+
+			await userEvent.click(continueButton);
+
+			expect(apiPostSpy).not.toHaveBeenCalled();
+
+			await userEvent.type(spaceNameInput, 'space');
+
+			await userEvent.click(continueButton);
+
+			await userEvent.clear(spaceNameInput);
+
 			expect(
 				screen.getByRole('button', {
 					name: 'continue',

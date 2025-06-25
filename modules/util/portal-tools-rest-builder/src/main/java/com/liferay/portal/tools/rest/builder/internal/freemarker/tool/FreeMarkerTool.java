@@ -1062,23 +1062,6 @@ public class FreeMarkerTool {
 		return mediaTypes.contains(mediaType);
 	}
 
-	public boolean isAssetLibraryExternalReferenceCodeParameter(
-		JavaMethodParameter javaMethodParameter, String schemaName) {
-
-		if (StringUtil.equals(
-				javaMethodParameter.getParameterName(),
-				"assetLibraryExternalReferenceCode") ||
-			StringUtil.equals(
-				javaMethodParameter.getParameterName(),
-				TextFormatter.format(schemaName, TextFormatter.I) +
-					"AssetLibraryExternalReferenceCode")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isAssetLibraryIdParameter(
 		JavaMethodParameter javaMethodParameter, String schemaName) {
 

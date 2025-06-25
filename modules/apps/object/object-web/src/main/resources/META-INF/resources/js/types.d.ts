@@ -263,6 +263,7 @@ interface ObjectEntry {
 	};
 	dateCreated: string;
 	dateModified: string;
+	displayDate?: string | null;
 	externalReferenceCode: string;
 	id: number;
 	name: string;
@@ -270,6 +271,11 @@ interface ObjectEntry {
 		code: number;
 		label: string;
 		label_i18n: string;
+	};
+	systemProperties?: {
+		version?: {
+			number: number;
+		};
 	};
 	[key: string]: string | number | unknown;
 }

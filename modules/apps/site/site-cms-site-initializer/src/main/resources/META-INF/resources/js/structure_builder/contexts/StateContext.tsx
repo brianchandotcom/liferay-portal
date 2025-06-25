@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openConfirmModal} from '@liferay/layout-js-components-web';
 import React, {
 	Dispatch,
 	ReactNode,
@@ -11,7 +12,11 @@ import React, {
 	useReducer,
 } from 'react';
 
-import {ReferencedStructure, Structure} from '../types/Structure';
+import {
+	ReferencedStructure,
+	RepeatableGroup,
+	Structure,
+} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import actionGeneratesChanges from '../utils/actionGeneratesChanges';
 import {
@@ -21,14 +26,17 @@ import {
 	getDefaultField,
 } from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
+import findChild from '../utils/findChild';
 import getRandomId from '../utils/getRandomId';
 import getRandomName from '../utils/getRandomName';
 import getUuid from '../utils/getUuid';
+import insertGroup from '../utils/insertGroup';
 import normalizeName from '../utils/normalizeName';
 import openDeletionModal from '../utils/openDeletionModal';
 import {
 	ValidationError,
 	validateField,
+	validateRepeatableGroup,
 	validateStructure,
 } from '../utils/validation';
 
@@ -79,6 +87,10 @@ type AddReferencedStructuresAction = {
 	type: 'add-referenced-structures';
 };
 
+type AddRepeatableGroup = {
+	type: 'add-repeatable-group';
+};
+
 type AddValidationError = {
 	error: ValidationError;
 	type: 'add-validation-error';
@@ -121,6 +133,12 @@ type UpdateFieldAction = {
 	uuid: Uuid;
 };
 
+type UpdateRepeatableGroupAction = {
+	label: Liferay.Language.LocalizedValue<string>;
+	type: 'update-repeatable-group';
+	uuid: Uuid;
+};
+
 type UpdateStructureAction = {
 	erc?: string;
 	label?: Liferay.Language.LocalizedValue<string>;
@@ -137,6 +155,7 @@ type ValidateAction = {
 export type Action =
 	| AddFieldAction
 	| AddReferencedStructuresAction
+	| AddRepeatableGroup
 	| AddValidationError
 	| ClearErrorAction
 	| CreateStructureAction
@@ -146,6 +165,7 @@ export type Action =
 	| SetErrorAction
 	| SetSelection
 	| UpdateFieldAction
+	| UpdateRepeatableGroupAction
 	| UpdateStructureAction
 	| ValidateAction;
 
@@ -203,6 +223,39 @@ function reducer(state: State, action: Action): State {
 			return {
 				...state,
 				selection,
+				structure: {...structure, fields: nextFields},
+			};
+		}
+		case 'add-repeatable-group': {
+			const {publishedFields, selection, structure} = state;
+
+			if (selection.some((uuid) => publishedFields.has(uuid))) {
+				openConfirmModal({
+					buttonLabel: Liferay.Language.get('done'),
+					center: true,
+					hideCancel: true,
+					status: 'warning',
+					text: Liferay.Language.get(
+						'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-already-published'
+					),
+					title: Liferay.Language.get(
+						'repeatable-group-creation-not-allowed'
+					),
+				});
+
+				return state;
+			}
+
+			const fields = selection.map((uuid) => findChild(structure, uuid)!);
+
+			const nextFields = insertGroup({
+				groupFields: fields,
+				groupParent: fields[0].parent,
+				root: structure,
+			});
+
+			return {
+				...state,
 				structure: {...structure, fields: nextFields},
 			};
 		}
@@ -413,6 +466,57 @@ function reducer(state: State, action: Action): State {
 					...structure,
 					fields: nextFields,
 				},
+			};
+		}
+		case 'update-repeatable-group': {
+			const {label, uuid} = action;
+
+			const {structure} = state;
+
+			const field = findChild(structure, uuid);
+
+			if (!field || field.type !== 'repeatable-group') {
+				return state;
+			}
+
+			const group: RepeatableGroup = {
+				...field,
+				label,
+			};
+
+			const nextFields = new Map(structure.fields);
+
+			nextFields.set(uuid, group);
+
+			const nextState: State = {
+				...state,
+				structure: {
+					...structure,
+					fields: nextFields,
+				},
+			};
+
+			// Validate the data sent in the action
+
+			const invalids = new Map(state.invalids);
+
+			const errors = validateRepeatableGroup({
+				currentErrors: invalids.get(structure.uuid),
+				data: {label},
+			});
+
+			if (errors.size) {
+				invalids.set(structure.uuid, errors);
+			}
+			else {
+				invalids.delete(structure.uuid);
+			}
+
+			// Return new state
+
+			return {
+				...nextState,
+				invalids,
 			};
 		}
 		case 'update-structure': {

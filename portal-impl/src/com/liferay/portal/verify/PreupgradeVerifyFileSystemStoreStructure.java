@@ -264,18 +264,20 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				numericFileEntryNameDirectory)) {
 
 			for (Path versionNumberFile : directoryStream) {
-				if (!Files.isDirectory(versionNumberFile)) {
-					String versionNumberFileName = String.valueOf(
-						versionNumberFile.getFileName());
+				if (Files.isDirectory(versionNumberFile)) {
+					continue;
+				}
 
-					if (!versionNumberFileName.matches("\\d+\\.\\d+.*")) {
-						_log.error(
-							"Found file that does not match version " +
-								"structure (expected \\d+\\.\\d+.*): " +
-									versionNumberFile);
+				String versionNumberFileName = String.valueOf(
+					versionNumberFile.getFileName());
 
-						return false;
-					}
+				if (!versionNumberFileName.matches("\\d+\\.\\d+.*")) {
+					_log.error(
+						"Found file that does not match version structure " +
+							"(expected \\d+\\.\\d+.*): " +
+								versionNumberFile);
+
+					return false;
 				}
 			}
 

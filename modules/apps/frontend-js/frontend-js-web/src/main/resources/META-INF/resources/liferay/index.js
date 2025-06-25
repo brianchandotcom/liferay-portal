@@ -120,7 +120,7 @@ import toggleControls from './util/toggle_controls';
 import toggleDisabled from './util/toggle_disabled';
 import toggleRadio from './util/toggle_radio';
 import toggleSelectBox from './util/toggle_select_box';
-import loadClientExtensions from './utils/client_extensions/loadClientExtensions';
+import {loadClientExtensions} from './utils/client_extensions/loadClientExtensions';
 import loadEditorClientExtensions from './utils/client_extensions/loadEditorClientExtensions';
 import {loadModule} from './utils/client_extensions/loadModule';
 

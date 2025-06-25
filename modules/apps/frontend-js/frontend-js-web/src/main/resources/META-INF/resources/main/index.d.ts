@@ -850,7 +850,12 @@ export function isReducedMotion(): boolean;
 /**
  * Client Extensions API
  */
-export {default as loadClientExtensions} from './utils/client_extensions/loadClientExtensions';
+export {
+	ClientExtensionDefinition,
+	ClientExtensionHandler,
+	ClientExtensionResolution,
+	loadClientExtensions,
+} from './utils/client_extensions/loadClientExtensions';
 export {default as loadEditorClientExtensions} from './utils/client_extensions/loadEditorClientExtensions';
 export {loadModule} from './utils/client_extensions/loadModule';
 

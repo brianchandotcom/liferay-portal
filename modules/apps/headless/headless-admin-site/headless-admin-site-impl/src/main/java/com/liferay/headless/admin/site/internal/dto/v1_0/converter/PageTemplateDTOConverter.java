@@ -6,9 +6,11 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageTemplate;
+import com.liferay.headless.admin.site.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplateSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.AssetUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -16,12 +18,16 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -149,6 +155,8 @@ public class PageTemplateDTOConverter
 						true, layoutPrototype.getNameMap()));
 				setPageTemplateSet(
 					() -> _getPageTemplateSet(layoutPageTemplateEntry));
+				setPageTemplateSettings(
+					() -> _getWidgetPageTemplateSettings(layout));
 				setTaxonomyCategoryItemExternalReferences(
 					() -> AssetUtil.getTaxonomyCategoryItemExternalReferences(
 						Layout.class.getName(),
@@ -156,6 +164,43 @@ public class PageTemplateDTOConverter
 						layoutPageTemplateEntry.getGroupId()));
 				setType(() -> Type.WIDGET_PAGE_TEMPLATE);
 				setUuid(layoutPageTemplateEntry::getUuid);
+			}
+		};
+	}
+
+	private WidgetPageTemplateSettings _getWidgetPageTemplateSettings(
+		Layout layout) {
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		return new WidgetPageTemplateSettings() {
+			{
+				setLayoutTemplateId(
+					() -> unicodeProperties.getProperty(
+						LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+
+				setNavigationSettings(
+					() -> new NavigationSettings() {
+						{
+							setTarget(
+								() -> unicodeProperties.getProperty("target"));
+							setTargetType(
+								() -> {
+									if (Objects.equals(
+											unicodeProperties.getProperty(
+												"targetType"),
+											"useNewTab")) {
+
+										return TargetType.NEW_TAB;
+									}
+
+									return TargetType.SPECIFIC_FRAME;
+								});
+						}
+					});
+
+				setType(Type.WIDGET_PAGE_TEMPLATE_SETTINGS);
 			}
 		};
 	}

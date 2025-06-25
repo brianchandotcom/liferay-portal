@@ -413,6 +413,8 @@ public class CloudBucketUtil {
 
 		uploadS3File(
 			s3DestinationPath + _CHECKSUM_FILE_EXTENSION, sourceChecksumFile);
+
+		sourceChecksumFile.delete();
 	}
 
 	private static String _escapeParentheses(String s) {

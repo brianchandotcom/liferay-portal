@@ -3279,7 +3279,9 @@ definition {
 			key_entryTitle = "Test Blueprint 1",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
-		Button.clickTrash();
+		Click(locator1 = "Icon#NAVBAR_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "Delete");
 
 		Blueprints.viewNoEntry(title = "Test Blueprint 1");
 
@@ -3309,7 +3311,9 @@ definition {
 
 		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
-		Button.clickTrash();
+		Click(locator1 = "Icon#NAVBAR_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "Delete");
 
 		Blueprints.viewNoEntry(title = "Test Blueprint 2");
 
@@ -3321,9 +3325,7 @@ definition {
 			key_entryTitle = "Test Blueprint 3",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
-		Click(
-			key_text = "Select All",
-			locator1 = "Link#ANY");
+		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
 		AssertChecked.assertCheckedNotVisible(
 			key_entryTitle = "Test Blueprint 3",
@@ -3333,7 +3335,9 @@ definition {
 			key_entryTitle = "Test Blueprint 4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
-		Button.clickTrash();
+		Click(locator1 = "Icon#NAVBAR_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "Delete");
 
 		Blueprints.viewNoEntry(title = "Test Blueprint 3");
 
@@ -4518,7 +4522,9 @@ definition {
 			key_entryTitle = "Test Element 1",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
-		Button.clickTrash();
+		Click(locator1 = "Icon#NAVBAR_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "Delete");
 
 		Blueprints.viewNoEntry(title = "Test Element 1");
 
@@ -4548,7 +4554,9 @@ definition {
 
 		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
-		Button.clickTrash();
+		Click(locator1 = "Icon#NAVBAR_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "Delete");
 
 		Blueprints.viewNoEntry(title = "Test Element 2");
 
@@ -4560,9 +4568,7 @@ definition {
 			key_entryTitle = "Test Element 3",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
-		Click(
-			key_text = "Select All",
-			locator1 = "Link#ANY");
+		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
 		AssertChecked.assertCheckedNotVisible(
 			key_entryTitle = "Test Element 3",
@@ -4572,7 +4578,9 @@ definition {
 			key_entryTitle = "Test Element 4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
-		Button.clickTrash();
+		Click(locator1 = "Icon#NAVBAR_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "Delete");
 
 		Alert.viewErrorMessage(errorMessage = "System read only elements cannot be deleted.");
 

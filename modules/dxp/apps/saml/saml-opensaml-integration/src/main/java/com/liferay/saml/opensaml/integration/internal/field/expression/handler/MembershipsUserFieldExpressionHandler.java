@@ -96,6 +96,9 @@ public class MembershipsUserFieldExpressionHandler
 								samlIdpEntityId.equals(
 									expandoValue.getString())) {
 
+								_expandoValueLocalService.deleteExpandoValue(
+									expandoValue);
+
 								continue;
 							}
 

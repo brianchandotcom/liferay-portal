@@ -112,6 +112,7 @@ const Head = ({
 							<ClayTableCell
 								key="select"
 								scope="col"
+								textValue="select-item"
 								width="51px"
 							>
 								{null}
@@ -126,6 +127,7 @@ const Head = ({
 						columnName={field.fieldName}
 						key={field.fieldName}
 						sortable={(field as any).sortable}
+						textValue="select"
 					>
 						{(field as any).label}
 					</HeadCellResizer>
@@ -166,6 +168,7 @@ const Row = ({
 			className={classNames({'table-active': active})}
 			item={item}
 			items={columns}
+			onItemSelectionChange={onItemSelectionChange}
 		>
 			{(cell: Column) => {
 				const cellColumnName = getCellColumnClassName(cell.fieldName);
@@ -208,7 +211,10 @@ const Row = ({
 									<SelectionComponent
 										checked={active}
 										onChange={() =>
-											onItemSelectionChange(item)
+											onItemSelectionChange({
+												item,
+												trigger: 'checkbox',
+											})
 										}
 										title={Liferay.Language.get(
 											'select-item'
@@ -370,13 +376,23 @@ function ClayTableRowOptionalDropTarget({
 	className,
 	item,
 	items,
-}: React.ComponentProps<typeof ClayTableRow<Column>> & {item: any}) {
+	onItemSelectionChange,
+}: React.ComponentProps<typeof ClayTableRow<Column>> & {
+	item: any;
+	onItemSelectionChange: Function;
+}) {
 	const {className: dropClassName, dropRef} = useFDSDrop({item});
 
 	return (
 		<ClayTableRow
 			className={classNames(className, dropClassName)}
 			items={items}
+			onClick={() => {
+				onItemSelectionChange({
+					item,
+					trigger: 'row',
+				});
+			}}
 			ref={dropRef}
 		>
 			{children}

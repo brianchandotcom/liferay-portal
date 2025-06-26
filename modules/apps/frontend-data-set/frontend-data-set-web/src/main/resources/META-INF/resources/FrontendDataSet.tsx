@@ -460,8 +460,14 @@ const FrontendDataSetContent = ({
 		);
 	}
 
-	function selectItems(value: any) {
-		if (selectionType === 'single') {
+	function selectItems({
+		trigger,
+		value,
+	}: {
+		trigger: 'input' | 'body';
+		value: any;
+	}) {
+		if (selectionType === 'single' || trigger === 'body') {
 			return setSelectedItemsValue(
 				Array.isArray(value) ? value : [value]
 			);
@@ -718,7 +724,9 @@ const FrontendDataSetContent = ({
 				onSelectAll={(value: boolean) =>
 					setAllItemsSelectedActive(value)
 				}
-				selectItems={(items: Array<any>) => selectItems(items)}
+				selectItems={(items: Array<any>) =>
+					selectItems({trigger: 'input', value: items})
+				}
 				selectedItems={selectedItems}
 				selectedItemsKey={selectedItemsKey}
 				selectedItemsValue={selectedItemsValue}
@@ -750,7 +758,13 @@ const FrontendDataSetContent = ({
 						header={header}
 						items={items}
 						itemsActions={itemsActions}
-						onItemSelectionChange={(selectedItem: any) => {
+						onItemSelectionChange={({
+							item: selectedItem,
+							trigger,
+						}: {
+							item: any;
+							trigger: 'input' | 'body';
+						}) => {
 							if (allItemsSelectedActive) {
 								setSelectedItemsValue(
 									items
@@ -765,7 +779,10 @@ const FrontendDataSetContent = ({
 								setAllItemsSelectedActive(false);
 							}
 							else {
-								selectItems(selectedItem[selectedItemsKey]);
+								selectItems({
+									trigger,
+									value: selectedItem[selectedItemsKey],
+								});
 							}
 						}}
 						style={style}

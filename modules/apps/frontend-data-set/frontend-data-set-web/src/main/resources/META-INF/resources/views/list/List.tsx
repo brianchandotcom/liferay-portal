@@ -78,13 +78,6 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 					active: selectedItemsValue?.includes(itemId),
 				})}
 				flex
-				onClick={() => {
-					if (selectable) {
-						selectItems(itemId);
-
-						onSelect?.({selectedItems: [item]});
-					}
-				}}
 				ref={ref}
 			>
 				{selectable && (
@@ -97,7 +90,14 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 											.includes(String(itemId))
 									: false
 							}
-							onChange={() => {}}
+							onChange={() => {
+								selectItems({
+									trigger: 'checkbox',
+									value: itemId,
+								});
+
+								onSelect?.({selectedItems: [item]});
+							}}
 							value={itemId}
 						/>
 					</ClayList.ItemField>
@@ -123,7 +123,17 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 					)
 				)}
 
-				<ClayList.ItemField className="justify-content-center" expand>
+				<ClayList.ItemField
+					className="justify-content-center"
+					expand
+					onClick={() => {
+						if (selectable) {
+							selectItems({trigger: 'row', value: itemId});
+
+							onSelect?.({selectedItems: [item]});
+						}
+					}}
+				>
 					<Title
 						item={item}
 						title={title}

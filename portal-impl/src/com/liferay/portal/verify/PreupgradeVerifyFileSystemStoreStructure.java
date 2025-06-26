@@ -75,16 +75,20 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				}
 
 				if (!Files.isDirectory(companyIdPath)) {
-					throw new VerifyException(companyIdPath + " is not a directory");
+					throw new VerifyException(
+						companyIdPath + " is not a directory");
 				}
 
 				if (advancedFileSystemStore &&
-					_hasAdvancedFileSystemStructureCompanyIdPath(companyIdPath)) {
+					_hasAdvancedFileSystemStructureCompanyIdPath(
+						companyIdPath)) {
 
 					continue;
 				}
 
-				if (fileSystemStore && _hasFileSystemStructureCompanyIdPath(companyIdPath)) {
+				if (fileSystemStore &&
+					_hasFileSystemStructureCompanyIdPath(companyIdPath)) {
+
 					continue;
 				}
 
@@ -139,7 +143,9 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		return rootDir.toPath();
 	}
 
-	private boolean _hasAdvancedFileSystemStructureCompanyIdPath(Path companyIdPath) {
+	private boolean _hasAdvancedFileSystemStructureCompanyIdPath(
+		Path companyIdPath) {
+
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				companyIdPath)) {
 
@@ -160,7 +166,9 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					return false;
 				}
 
-				if (!_hasAdvancedFileSystemStructureFolderIdPath(folderIdPath)) {
+				if (!_hasAdvancedFileSystemStructureFolderIdPath(
+						folderIdPath)) {
+
 					return false;
 				}
 			}
@@ -172,85 +180,6 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				_log.warn(
 					"Unable to check advanced file system structure in: " +
 						companyIdPath,
-					exception);
-			}
-
-			return false;
-		}
-	}
-
-	private boolean _hasFileSystemStructureCompanyIdPath(Path companyIdPath) {
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				companyIdPath)) {
-
-			for (Path folderIdPath : directoryStream) {
-				if (StringUtil.equals(
-						String.valueOf(folderIdPath.getFileName()),
-						_ADAPTIVE_MEDIA_FOLDER_NAME)) {
-
-					continue;
-				}
-
-				if (!Files.isDirectory(folderIdPath)) {
-					_log.error(
-						"Found file in file system structure directory when " +
-							"only directories are expected: " + folderIdPath);
-
-					return false;
-				}
-
-				if (!_hasFileSystemStructureFolderIdPath(folderIdPath)) {
-					return false;
-				}
-			}
-
-			return true;
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to check file system structure in: " +
-						companyIdPath,
-					exception);
-			}
-
-			return false;
-		}
-	}
-
-	private boolean _hasVersionFile(Path fileEntryPath) {
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				fileEntryPath)) {
-
-			for (Path versionPath : directoryStream) {
-				if (Files.isDirectory(versionPath)) {
-					continue;
-				}
-
-				String versionName = String.valueOf(versionPath.getFileName());
-
-				if (StringUtil.equals(
-						versionName,
-						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
-					continue;
-				}
-
-				if (!versionName.matches("\\d+\\.\\d+.*")) {
-					_log.error(
-						"Found file that does not match version structure " +
-							"(expected \\d+\\.\\d+.*): " + versionPath);
-
-					return false;
-				}
-			}
-
-			return true;
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to check for version file in: " + fileEntryPath,
 					exception);
 			}
 
@@ -311,6 +240,45 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
+	private boolean _hasFileSystemStructureCompanyIdPath(Path companyIdPath) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				companyIdPath)) {
+
+			for (Path folderIdPath : directoryStream) {
+				if (StringUtil.equals(
+						String.valueOf(folderIdPath.getFileName()),
+						_ADAPTIVE_MEDIA_FOLDER_NAME)) {
+
+					continue;
+				}
+
+				if (!Files.isDirectory(folderIdPath)) {
+					_log.error(
+						"Found file in file system structure directory when " +
+							"only directories are expected: " + folderIdPath);
+
+					return false;
+				}
+
+				if (!_hasFileSystemStructureFolderIdPath(folderIdPath)) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to check file system structure in: " +
+						companyIdPath,
+					exception);
+			}
+
+			return false;
+		}
+	}
+
 	private boolean _hasFileSystemStructureFolderIdPath(Path folderIdPath) {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				folderIdPath)) {
@@ -354,6 +322,46 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to validate subdirectories in: " + folderIdPath,
+					exception);
+			}
+
+			return false;
+		}
+	}
+
+	private boolean _hasVersionFile(Path fileEntryPath) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				fileEntryPath)) {
+
+			for (Path versionPath : directoryStream) {
+				if (Files.isDirectory(versionPath)) {
+					continue;
+				}
+
+				String versionName = String.valueOf(versionPath.getFileName());
+
+				if (StringUtil.equals(
+						versionName,
+						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+
+					continue;
+				}
+
+				if (!versionName.matches("\\d+\\.\\d+.*")) {
+					_log.error(
+						"Found file that does not match version structure " +
+							"(expected \\d+\\.\\d+.*): " + versionPath);
+
+					return false;
+				}
+			}
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to check for version file in: " + fileEntryPath,
 					exception);
 			}
 

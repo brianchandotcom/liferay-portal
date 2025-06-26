@@ -24,7 +24,7 @@ public class InvalidClientExtensionFDSFilter
 
 	@Override
 	public String getCETExternalReferenceCode() {
-		return null;
+		return "invalid";
 	}
 
 	@Override

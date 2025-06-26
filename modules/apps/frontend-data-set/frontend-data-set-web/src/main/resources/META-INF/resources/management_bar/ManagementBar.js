@@ -77,7 +77,10 @@ function ManagementBar({
 				/>
 			)}
 
-			<ActiveFiltersBar disabled={!!selectedItemsValue.length} />
+			<ActiveFiltersBar
+				disabled={!!selectedItemsValue.length}
+				total={total}
+			/>
 		</>
 	);
 }

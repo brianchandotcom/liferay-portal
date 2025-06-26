@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -11,7 +12,7 @@ import ViewsContext from '../../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
 import FilterResume from './FilterResume';
 
-function ActiveFiltersBar({disabled}) {
+function ActiveFiltersBar({disabled, total}) {
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const resetFiltersValue = () => {
@@ -35,6 +36,19 @@ function ActiveFiltersBar({disabled}) {
 					<ul className="tbar-nav">
 						<li className="p-0 tbar-item tbar-item-expand">
 							<div className="tbar-section">
+								<span className="mr-2">
+									{sub(
+										total === 1
+											? Liferay.Language.get(
+													'x-result-found-for-colon'
+												)
+											: Liferay.Language.get(
+													'x-results-found-for-colon'
+												),
+										total
+									)}
+								</span>
+
 								{activeFilters.map((filter) => {
 									return (
 										<FilterResume

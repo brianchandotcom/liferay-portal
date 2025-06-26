@@ -37,6 +37,11 @@ public class ControlPanelLayoutTypeAccessPolicyTest {
 
 	@Test
 	public void testCheckAccessAllowedToPortlet() throws PortalException {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
@@ -51,16 +56,11 @@ public class ControlPanelLayoutTypeAccessPolicyTest {
 			false
 		);
 
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
 		Mockito.when(
 			themeDisplay.getScopeGroup()
 		).thenReturn(
 			group
 		);
-
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
 
 		Mockito.when(
 			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)

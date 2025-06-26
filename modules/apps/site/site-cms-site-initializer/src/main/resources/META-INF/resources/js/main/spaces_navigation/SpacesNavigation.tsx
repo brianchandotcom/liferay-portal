@@ -37,6 +37,7 @@ interface VerticalNavItem {
 	menubarAction?: {
 		'aria-label'?: string;
 		'onClick'?: Function;
+		'role'?: string;
 		'title'?: string;
 	};
 	sticker?: {
@@ -96,6 +97,7 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 									'aria-label':
 										Liferay.Language.get('add-space'),
 									'onClick': onAddButtonClick,
+									'role': 'menuitem',
 									'title': Liferay.Language.get('add-space'),
 								},
 							},

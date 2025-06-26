@@ -106,6 +106,35 @@ const Card = forwardRef<HTMLDivElement, any>(
 			});
 		};
 
+		const getEventTarget = (event: any): string | boolean => {
+			if (
+				event.nativeEvent?.target['classList'].contains(
+					'card-item-first'
+				) ||
+				(event.nativeEvent?.target['classList'].contains(
+					'lexicon-icon'
+				) &&
+					!event.nativeEvent?.target['classList'].contains(
+						'lexicon-icon-ellipsis-v'
+					)) ||
+				(event.nativeEvent?.target.nodeName === 'use' &&
+					!event.nativeEvent?.target.parentNode['classList'].contains(
+						'lexicon-icon-ellipsis-v'
+					))
+			) {
+				return 'body';
+			}
+			else if (
+				event.nativeEvent?.target['classList'].contains(
+					'custom-control-input'
+				)
+			) {
+				return 'input';
+			}
+
+			return false;
+		};
+
 		return (
 			<div ref={ref}>
 				<ClayCardWithInfo
@@ -137,6 +166,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 									onInfoPanelToggleButtonClick,
 									openModal,
 									openSidePanel,
+									selectItems,
 									toggleItemInlineEdit,
 								});
 							},
@@ -146,13 +176,21 @@ const Card = forwardRef<HTMLDivElement, any>(
 					href={(schema.link && item[schema.link]) || null}
 					imgProps={imageProps}
 					labels={getLabels(item)}
-					onSelectChange={
+					onClick={
 						selectable
-							? () => {
-									selectItems(selectedItemKey);
+							? (event: any) => {
+									const target = getEventTarget(event);
+									!!target &&
+										selectItems({
+											trigger: target,
+											value: selectedItemKey,
+										});
+
+									event.preventDefault();
 								}
 							: undefined
 					}
+					onSelectChange={() => undefined}
 					selected={cardSelected}
 					stickerProps={
 						(schema.sticker && item[schema.sticker]) || null

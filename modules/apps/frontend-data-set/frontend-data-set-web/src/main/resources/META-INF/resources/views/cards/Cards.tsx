@@ -41,6 +41,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 			selectable,
 			selectedItemsKey,
 			selectedItemsValue,
+			selectionType,
 			toggleItemInlineEdit,
 		}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
@@ -191,6 +192,9 @@ const Card = forwardRef<HTMLDivElement, any>(
 							: undefined
 					}
 					onSelectChange={() => undefined}
+					selectableType={
+						selectionType === 'single' ? 'radio' : 'checkbox'
+					}
 					selected={cardSelected}
 					stickerProps={
 						(schema.sticker && item[schema.sticker]) || null

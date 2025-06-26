@@ -11,20 +11,12 @@ import {
 	waitFor,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/ViewDashboardContext';
 import {AllStructureTypesDropdown} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/AllStructureTypesDropdown';
 import {Item} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/FilterDropdown';
 import {initialFilters} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/InventoryAnalysisCard';
-
-const mockStructures = (items: {id: string; name: string}[] = []) => {
-	global.fetch = jest.fn().mockReturnValue({
-		json: jest.fn().mockReturnValue({items}),
-		ok: true,
-	});
-};
 
 const WrappedComponent = ({
 	onSelectItem,
@@ -49,12 +41,17 @@ const WrappedComponent = ({
 };
 
 describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
-	afterEach(() => {
+	beforeEach(() => {
+		global.fetch = jest.fn().mockResolvedValue({});
+
 		jest.clearAllMocks();
 	});
 
 	it('renders correctly', async () => {
-		mockStructures();
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({items: []}),
+			ok: true,
+		});
 
 		const onSelectItem = jest.fn();
 
@@ -95,16 +92,21 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 	});
 
 	it('renders a structure list', async () => {
-		mockStructures([
-			{
-				id: '01',
-				name: 'structure 01',
-			},
-			{
-				id: '02',
-				name: 'structure 02',
-			},
-		]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{
+						id: '01',
+						name: 'structure 01',
+					},
+					{
+						id: '02',
+						name: 'structure 02',
+					},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -131,56 +133,76 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		).toBeInTheDocument();
 	});
 
-	xit('search by a structure and returns a filtered result', async () => {
-		mockStructures([
-			{id: '01', name: 'structure 01'},
-			{id: '02', name: 'structure 02'},
-		]);
+	it('searches by structure name and returns a filtered result', async () => {
+		jest.useFakeTimers();
+
+		global.fetch = jest
+			.fn()
+			.mockResolvedValueOnce({
+				json: jest.fn().mockResolvedValue({
+					items: [
+						{id: '01', name: 'structure 01'},
+						{id: '02', name: 'structure 02'},
+					],
+				}),
+				ok: true,
+			})
+			.mockResolvedValueOnce({
+				json: jest.fn().mockResolvedValue({
+					items: [{id: '02', name: 'structure 02'}],
+				}),
+				ok: true,
+			});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
-		const structuresDropdownButton = screen.getByRole('button', {
+		const dropdownButton = screen.getByRole('button', {
 			name: 'all-structures',
 		});
 
-		fireEvent.click(structuresDropdownButton);
+		fireEvent.click(dropdownButton);
 
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		mockStructures([{id: '02', name: 'structure 02'}]);
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {value: 'structure 02'},
+		});
 
-		await userEvent.type(
-			screen.getByPlaceholderText('search'),
-			'structure 02'
-		);
+		jest.advanceTimersByTime(300);
 
-		await waitFor(
-			() => {
-				expect(screen.getAllByRole('menuitem').length).toBe(1);
+		await waitFor(() => {
+			expect(screen.getAllByRole('menuitem').length).toBe(1);
 
-				expect(
-					screen.queryByRole('menuitem', {name: 'all-structures'})
-				).not.toBeInTheDocument();
+			expect(
+				screen.getByRole('menuitem', {name: 'structure 02'})
+			).toBeInTheDocument();
+		});
 
-				expect(
-					screen.queryByRole('menuitem', {name: 'structure 01'})
-				).not.toBeInTheDocument();
+		expect(
+			screen.queryByRole('menuitem', {name: 'structure 01'})
+		).not.toBeInTheDocument();
 
-				expect(
-					screen.queryByRole('menuitem', {name: 'structure 02'})
-				).toBeInTheDocument();
-			},
-			{timeout: 100}
-		);
+		expect(
+			screen.queryByRole('menuitem', {name: 'all-structures'})
+		).not.toBeInTheDocument();
+
+		jest.useRealTimers();
 	});
 
-	xit('search by a structure and returns a empty result', async () => {
-		mockStructures([
-			{id: '01', name: 'structure 01'},
-			{id: '02', name: 'structure 02'},
-		]);
+	it('search by a structure and returns a empty result', async () => {
+		jest.useFakeTimers();
+
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{id: '01', name: 'structure 01'},
+					{id: '02', name: 'structure 02'},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -194,33 +216,46 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		mockStructures();
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({items: []}),
+			ok: true,
+		});
 
-		await userEvent.type(screen.getByPlaceholderText('search'), 'empty?');
-
-		await waitFor(
-			() => {
-				expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-				expect(
-					screen.queryByRole('menuitem', {name: 'all-structures'})
-				).not.toBeInTheDocument();
-
-				expect(
-					screen.queryByRole('menuitem', {
-						name: 'no-filters-were-found',
-					})
-				).toBeInTheDocument();
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {
+				value: 'empty?',
 			},
-			{timeout: 100}
-		);
+		});
+
+		jest.advanceTimersByTime(300);
+
+		await waitFor(() => {
+			expect(screen.getAllByRole('menuitem').length).toBe(1);
+
+			expect(
+				screen.queryByRole('menuitem', {
+					name: 'no-filters-were-found',
+				})
+			).toBeInTheDocument();
+		});
+
+		expect(
+			screen.queryByRole('menuitem', {name: 'all-structures'})
+		).not.toBeInTheDocument();
+
+		jest.useRealTimers();
 	});
 
 	it('selects a new strucuture', async () => {
-		mockStructures([
-			{id: '01', name: 'structure 01'},
-			{id: '02', name: 'structure 02'},
-		]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{id: '01', name: 'structure 01'},
+					{id: '02', name: 'structure 02'},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={() => {}} />);
 

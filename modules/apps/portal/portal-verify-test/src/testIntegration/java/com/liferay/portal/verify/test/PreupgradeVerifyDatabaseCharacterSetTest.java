@@ -31,6 +31,7 @@ import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.sql.Connection;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -126,7 +127,8 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 				" (testColumn VARCHAR(75) primary key) collate utf8_bin"));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-			PreupgradeVerifyDatabaseCharacterSet.class.getName(), LoggerTestUtil.WARN)) {
+				PreupgradeVerifyDatabaseCharacterSet.class.getName(),
+				LoggerTestUtil.WARN)) {
 
 			testVerify();
 
@@ -139,7 +141,6 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 			Assert.assertEquals(
 				"Mixed character set and collation: testtable",
 				logEntry.getMessage());
-
 		}
 		finally {
 			_serviceComponentLocalService.deleteServiceComponent(

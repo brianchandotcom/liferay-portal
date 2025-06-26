@@ -37,6 +37,7 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.suggestions.Suggestion;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
+import com.liferay.portal.search.test.util.SearchHitsTestHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.portlet.MutableRenderParameters;
@@ -88,9 +89,9 @@ public class SXPBlueprintSuggestionsContributorTest {
 		_setUpAssetRendererFactoryRegistryUtil(
 			"Asset Renderer Title", "Asset Renderer Summary");
 
-		SetUpSearcherMockData mockData = _setUpSearcher(totalHits);
-
 		_setUpSuggestionsContributorConfiguration("testField");
+
+		SearchHitsTestHelper searchHitsTestHelper = _setUpSearcher(totalHits);
 
 		SuggestionsContributorResults suggestionsContributorResults =
 			_getSuggestionsContributorResults();
@@ -112,7 +113,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 			Assert.assertEquals("Document Text " + i, suggestion.getText());
 			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
 
-			SearchHit searchHit = mockData.getSearchHits(
+			SearchHit searchHit = searchHitsTestHelper.getSearchHits(
 			).get(
 				i
 			);
@@ -166,12 +167,13 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 		int totalHits = 2;
 
-		SetUpSearcherMockData mockData = _setUpSearcher(totalHits);
+		SearchHitsTestHelper searchHitsTestHelper = _setUpSearcher(totalHits);
 
-		ClassName classNameWithoutAssetRenderer = mockData.getClassNames(
-		).get(
-			0
-		);
+		ClassName classNameWithoutAssetRenderer =
+			searchHitsTestHelper.getClassNames(
+			).get(
+				0
+			);
 
 		_setUpAssetRendererFactoryRegistryUtil(
 			"Asset Renderer Title", "Asset Renderer Summary",
@@ -445,14 +447,14 @@ public class SXPBlueprintSuggestionsContributorTest {
 		);
 	}
 
-	private SetUpSearcherMockData _setUpSearcher(long totalHits)
+	private SearchHitsTestHelper _setUpSearcher(long totalHits)
 		throws Exception {
 
 		SearchResponse searchResponse = Mockito.mock(SearchResponse.class);
 
 		SearchHits searchHits = Mockito.mock(SearchHits.class);
 
-		SetUpSearcherMockData mockData = new SetUpSearcherMockData();
+		SearchHitsTestHelper searchHitsTestHelper = new SearchHitsTestHelper();
 
 		for (int i = 0; i < totalHits; i++) {
 			SearchHit searchHit = Mockito.mock(SearchHit.class);
@@ -461,7 +463,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 			ClassName className = Mockito.mock(ClassName.class);
 
-			mockData.add(i, className);
+			searchHitsTestHelper.add(i, className);
 
 			long classNameId = RandomTestUtil.randomLong();
 			long classPK = RandomTestUtil.randomLong();
@@ -532,11 +534,11 @@ public class SXPBlueprintSuggestionsContributorTest {
 				searchHit
 			).getScore();
 
-			mockData.add(i, searchHit);
+			searchHitsTestHelper.add(i, searchHit);
 		}
 
 		Mockito.doReturn(
-			mockData.getSearchHits()
+			searchHitsTestHelper.getSearchHits()
 		).when(
 			searchHits
 		).getSearchHits();
@@ -561,7 +563,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 			Mockito.any()
 		);
 
-		return mockData;
+		return searchHitsTestHelper;
 	}
 
 	private void _setUpSearchRequestBuilderFactory() {

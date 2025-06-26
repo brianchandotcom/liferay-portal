@@ -5,6 +5,7 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
@@ -116,23 +117,11 @@ public class UpdatePasswordActionUtil {
 		return null;
 	}
 
-	public static boolean isUserDefaultAdmin(User user) {
-		User defaultAdminUser = DefaultAdminUtil.fetchDefaultAdmin(
-			user.getCompanyId());
-
-		if ((defaultAdminUser != null) &&
-			(defaultAdminUser.getUserId() == user.getUserId())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public static void updatePassword(
 			String csrfOrigin, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, ThemeDisplay themeDisplay,
-			Ticket ticket)
+			HttpServletResponse httpServletResponse, String redirect,
+			UnsafeConsumer<String, Exception> redirectUnsafeConsumer,
+			ThemeDisplay themeDisplay, Ticket ticket)
 		throws Exception {
 
 		AuthTokenUtil.checkCSRFToken(httpServletRequest, csrfOrigin);
@@ -164,7 +153,7 @@ public class UpdatePasswordActionUtil {
 
 			String reminderQueryAnswer = user.getReminderQueryAnswer();
 
-			if (isUserDefaultAdmin(user) &&
+			if (_isUserDefaultAdmin(user) &&
 				reminderQueryAnswer.equals(WorkflowConstants.LABEL_PENDING) &&
 				Validator.isNull(user.getReminderQueryQuestion())) {
 
@@ -228,6 +217,55 @@ public class UpdatePasswordActionUtil {
 		AuthenticatedSessionManagerUtil.login(
 			httpServletRequest, httpServletResponse, login, password1, false,
 			null);
+
+		if (Validator.isNotNull(redirect)) {
+			redirect = PortalUtil.escapeRedirect(redirect);
+		}
+
+		if (Validator.isNull(redirect)) {
+			redirect = themeDisplay.getPathMain();
+		}
+
+		redirectUnsafeConsumer.accept(redirect);
+	}
+
+	public static User verifyUser(
+			HttpServletRequest httpServletRequest, Ticket ticket)
+		throws PortalException {
+
+		if (ticket != null) {
+			User user = UserLocalServiceUtil.getUser(ticket.getClassPK());
+
+			UserLocalServiceUtil.updatePasswordReset(user.getUserId(), true);
+		}
+
+		User user = PortalUtil.getUser(httpServletRequest);
+
+		if ((user != null) && _isUserDefaultAdmin(user)) {
+			String reminderQueryAnswer = user.getReminderQueryAnswer();
+
+			if (Validator.isNotNull(reminderQueryAnswer) &&
+				reminderQueryAnswer.equals(WorkflowConstants.LABEL_PENDING)) {
+
+				httpServletRequest.setAttribute(
+					WebKeys.TITLE_SET_PASSWORD, "set-password");
+			}
+		}
+
+		return user;
+	}
+
+	private static boolean _isUserDefaultAdmin(User user) {
+		User defaultAdminUser = DefaultAdminUtil.fetchDefaultAdmin(
+			user.getCompanyId());
+
+		if ((defaultAdminUser != null) &&
+			(defaultAdminUser.getUserId() == user.getUserId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _isValidatePassword(

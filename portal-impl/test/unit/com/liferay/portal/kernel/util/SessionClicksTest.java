@@ -46,10 +46,10 @@ public class SessionClicksTest {
 
 	@Test
 	public void testPutMaxAllowedValues() {
-		com.liferay.portal.util.PropsUtil.set(
+		PropsUtil.set(
 			PropsKeys.SESSION_CLICKS_MAX_ALLOWED_VALUES,
 			String.valueOf(_MAX_ALLOWED_VALUES));
-		com.liferay.portal.util.PropsUtil.set(
+		PropsUtil.set(
 			PropsKeys.SESSION_CLICKS_MAX_SIZE_TERMS,
 			String.valueOf(Integer.MAX_VALUE));
 
@@ -111,10 +111,10 @@ public class SessionClicksTest {
 
 	@Test
 	public void testPutMaxSizeTerms() {
-		com.liferay.portal.util.PropsUtil.set(
+		PropsUtil.set(
 			PropsKeys.SESSION_CLICKS_MAX_ALLOWED_VALUES,
 			String.valueOf(Integer.MAX_VALUE));
-		com.liferay.portal.util.PropsUtil.set(
+		PropsUtil.set(
 			PropsKeys.SESSION_CLICKS_MAX_SIZE_TERMS,
 			String.valueOf(_MAX_SIZE_TERMS));
 

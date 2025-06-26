@@ -1798,9 +1798,8 @@ public class WabProcessor {
 	static {
 		List<AutoDeployListener> autoDeployListeners = new ArrayList<>();
 
-		String[] autoDeployListenerClassNames =
-			com.liferay.portal.util.PropsUtil.getArray(
-				PropsKeys.AUTO_DEPLOY_LISTENERS);
+		String[] autoDeployListenerClassNames = PropsUtil.getArray(
+			PropsKeys.AUTO_DEPLOY_LISTENERS);
 
 		for (String autoDeployListenerClassName :
 				autoDeployListenerClassNames) {

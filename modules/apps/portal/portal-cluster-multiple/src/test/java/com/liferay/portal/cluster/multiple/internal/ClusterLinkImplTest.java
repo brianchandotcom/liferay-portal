@@ -13,11 +13,11 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.io.Serializable;
 
@@ -267,8 +267,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 
 		ReflectionTestUtil.setFieldValue(
-			clusterLinkImpl, "_props",
-			com.liferay.portal.kernel.util.PropsUtil.getProps());
+			clusterLinkImpl, "_props", PropsUtil.getProps());
 
 		clusterLinkImpl.activate(Collections.emptyMap());
 

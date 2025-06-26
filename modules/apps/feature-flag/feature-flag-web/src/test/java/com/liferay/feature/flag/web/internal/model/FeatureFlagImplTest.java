@@ -11,10 +11,10 @@ import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.function.Consumer;
 
@@ -37,7 +37,7 @@ public class FeatureFlagImplTest {
 
 	@Before
 	public void setUp() {
-		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 	@Test

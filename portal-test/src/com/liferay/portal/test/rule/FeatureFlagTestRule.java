@@ -8,7 +8,7 @@ package com.liferay.portal.test.rule;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -307,7 +307,7 @@ public class LayoutModelImpl
 	public static final long UUID_COLUMN_BITMASK = 524288L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.util.PropsUtil.get(
+		com.liferay.portal.kernel.util.PropsUtil.get(
 			"lock.expiration.time.com.liferay.portal.kernel.model.Layout"));
 
 	public LayoutModelImpl() {

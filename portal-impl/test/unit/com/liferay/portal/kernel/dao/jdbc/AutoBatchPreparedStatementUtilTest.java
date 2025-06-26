@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.util.PropsUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
@@ -84,7 +84,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				new PortalExecutorManagerInvocationHandler()),
 			null);
 
-		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 	@After

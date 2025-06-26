@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
@@ -52,7 +53,6 @@ import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import jakarta.servlet.ServletContext;

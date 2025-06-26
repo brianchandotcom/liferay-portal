@@ -311,7 +311,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final boolean FINDER_CACHE_ENABLED_USERS_GROUPS = true;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.util.PropsUtil.get(
+		com.liferay.portal.kernel.util.PropsUtil.get(
 			"lock.expiration.time.com.liferay.portal.kernel.model.Group"));
 
 	public GroupModelImpl() {

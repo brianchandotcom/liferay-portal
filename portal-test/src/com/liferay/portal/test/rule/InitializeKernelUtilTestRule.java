@@ -52,7 +52,8 @@ public class InitializeKernelUtilTestRule
 			ClassLoader classLoader = thread.getContextClassLoader();
 
 			ReflectionTestUtil.invoke(
-				classLoader.loadClass("com.liferay.portal.util.PropsUtil"),
+				classLoader.loadClass(
+					"com.liferay.portal.kernel.util.PropsUtil"),
 				"removeProperties", new Class<?>[] {Properties.class},
 				properties);
 		}
@@ -178,7 +179,8 @@ public class InitializeKernelUtilTestRule
 
 		if (!properties.isEmpty()) {
 			ReflectionTestUtil.invoke(
-				classLoader.loadClass("com.liferay.portal.util.PropsUtil"),
+				classLoader.loadClass(
+					"com.liferay.portal.kernel.util.PropsUtil"),
 				"addProperties", new Class<?>[] {Properties.class}, properties);
 		}
 

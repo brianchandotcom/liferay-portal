@@ -17,12 +17,12 @@ import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerB
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -102,7 +102,7 @@ public class FeatureFlagsBagTest {
 	@NewEnv(type = NewEnv.Type.JVM)
 	@Test
 	public void testIsEnabled() {
-		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+		PropsUtil.setProps(new PropsImpl());
 
 		for (FeatureFlag expectedFeatureFlag : _expectedFeatureFlags) {
 			Assert.assertEquals(

@@ -70,8 +70,7 @@ public class PortletLocalServiceTest {
 
 			String enabledFFKey = RandomTestUtil.randomString();
 
-			com.liferay.portal.util.PropsUtil.set(
-				"feature.flag." + enabledFFKey, "true");
+			PropsUtil.set("feature.flag." + enabledFFKey, "true");
 
 			TestCustomAttributesDisplay enabledFFCustomAttributesDisplay =
 				new TestCustomAttributesDisplay(enabledFFKey);

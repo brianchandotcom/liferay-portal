@@ -8,7 +8,7 @@ package com.liferay.portal.kernel.test.util;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**

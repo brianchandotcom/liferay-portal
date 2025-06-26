@@ -9,9 +9,9 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.security.auth.DefaultScreenNameValidator;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

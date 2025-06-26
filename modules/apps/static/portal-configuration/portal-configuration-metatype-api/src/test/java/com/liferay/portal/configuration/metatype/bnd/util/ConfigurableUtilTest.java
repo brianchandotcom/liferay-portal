@@ -165,7 +165,7 @@ public class ConfigurableUtilTest {
 
 		// Test dictionary override
 
-		com.liferay.portal.util.PropsUtil.set(
+		PropsUtil.set(
 			"configuration.override." + TestConfiguration.class.getName() +
 				"_testReqiredString",
 			"\"testReqiredString3\"");

@@ -288,10 +288,10 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 			clusterExecutorImpl, "_portalExecutorManager",
 			new MockPortalExecutorManager());
 
-		com.liferay.portal.util.PropsUtil.set(
+		PropsUtil.set(
 			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL,
 			"test-channel-name-control");
-		com.liferay.portal.util.PropsUtil.set(
+		PropsUtil.set(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
 			"test-channel-properties-control");
 

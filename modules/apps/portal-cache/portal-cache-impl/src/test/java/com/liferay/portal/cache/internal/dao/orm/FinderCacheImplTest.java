@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.io.Serializable;
 
@@ -184,8 +184,7 @@ public class FinderCacheImplTest {
 		ReflectionTestUtil.setFieldValue(
 			finderCacheImpl, "_multiVMPool", multiVMPool);
 		ReflectionTestUtil.setFieldValue(
-			finderCacheImpl, "_props",
-			com.liferay.portal.kernel.util.PropsUtil.getProps());
+			finderCacheImpl, "_props", PropsUtil.getProps());
 
 		finderCacheImpl.activate(
 			(BundleContext)ProxyUtil.newProxyInstance(

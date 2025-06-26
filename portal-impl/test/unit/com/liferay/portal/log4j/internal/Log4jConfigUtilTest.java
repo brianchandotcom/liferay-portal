@@ -15,13 +15,13 @@ import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.util.PropsUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -63,7 +63,7 @@ public class Log4jConfigUtilTest {
 
 	@Before
 	public void setUp() {
-		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)

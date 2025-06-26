@@ -272,8 +272,8 @@ public class ServiceBuilder {
 					"\n", "\tservice.model.hints.file=",
 					"${basedir}/src/META-INF/portal-model-hints.xml\n",
 					"\tservice.osgi.module=false\n", "\tservice.plugin.name=\n",
-					"\tservice.props.util=com.liferay.portal.util.PropsUtil\n",
-					"\tservice.read.only.prefixes=",
+					"\tservice.props.util=com.liferay.portal.kernel.util.",
+					"PropsUtil\n\tservice.read.only.prefixes=",
 					StringUtil.merge(ServiceBuilderArgs.READ_ONLY_PREFIXES),
 					"\n", "\tservice.resource.actions.configs=",
 					StringUtil.merge(

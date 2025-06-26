@@ -97,6 +97,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadUtil;
@@ -109,7 +110,6 @@ import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryU
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
 import com.liferay.portal.util.MaintenanceUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.server.admin.web.internal.constants.ImageMagickResourceLimitConstants;
 import com.liferay.server.admin.web.internal.scripting.util.ServerScriptingUtil;

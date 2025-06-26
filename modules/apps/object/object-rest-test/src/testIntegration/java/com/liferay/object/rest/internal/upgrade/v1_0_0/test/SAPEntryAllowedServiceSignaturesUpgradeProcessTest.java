@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  * @author Mauricio Valdivia
  */
 @RunWith(Arquillian.class)
-public class SAPEntryServiceSignatureUpgradeProcessTest {
+public class SAPEntryAllowedServiceSignaturesUpgradeProcessTest {
 
 	@ClassRule
 	@Rule

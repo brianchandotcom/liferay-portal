@@ -128,7 +128,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 					expand
 					onClick={() => {
 						if (selectable) {
-							selectItems({trigger: 'row', value: itemId});
+							selectItems({trigger: 'body', value: itemId});
 
 							onSelect?.({selectedItems: [item]});
 						}

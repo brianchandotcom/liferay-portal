@@ -390,7 +390,7 @@ function ClayTableRowOptionalDropTarget({
 			onClick={() => {
 				onItemSelectionChange({
 					item,
-					trigger: 'row',
+					trigger: 'body',
 				});
 			}}
 			ref={dropRef}

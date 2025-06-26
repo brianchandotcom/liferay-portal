@@ -202,25 +202,24 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					return false;
 				}
 
-				String fileEntryName = String.valueOf(
-					fileEntryPath.getFileName());
+				String fileName = String.valueOf(fileEntryPath.getFileName());
 
-				if (fileEntryName.equals("DLFE")) {
+				if (fileName.equals("DLFE")) {
 					if (!_hasAdvancedFileSystemStructureFolderIdPath(
 							fileEntryPath)) {
 
 						return false;
 					}
 				}
-				else if ((fileEntryName.length() > 2) &&
-						 Validator.isNull(
-							 FileUtil.getExtension(fileEntryName))) {
+				else if ((fileName.length() > 2) &&
+						 Validator.isNull(FileUtil.getExtension(fileName))) {
 
 					_log.error(
 						StringBundler.concat(
-							"Found directory with name longer than 2 without ",
-							"extension in advanced file system structure ",
-							"directory: ", fileEntryPath.toString()));
+							"Found directory with name longer than 2 ",
+							"characters without a file extension in advanced ",
+							"file system structure directory: ",
+							fileEntryPath.toString()));
 
 					return false;
 				}

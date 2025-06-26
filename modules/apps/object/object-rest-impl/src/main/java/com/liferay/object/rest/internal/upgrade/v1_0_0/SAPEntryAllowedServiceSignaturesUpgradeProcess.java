@@ -16,12 +16,12 @@ public class SAPEntryAllowedServiceSignaturesUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String oldAllowedServiceSignatures = StringBundler.concat(
+		String oldAllowedServiceSignature = StringBundler.concat(
 			"com.liferay.object.rest.internal.resource.v1_0.",
 			"ObjectEntryResourceImpl#",
 			"putByExternalReferenceCodeCurrentExternalReferenceCode",
 			"ObjectRelationshipNameRelatedExternalReferenceCode");
-		String newAllowedServiceSignatures = StringBundler.concat(
+		String newAllowedServiceSignature = StringBundler.concat(
 			"com.liferay.object.rest.internal.resource.v1_0.",
 			"ObjectEntryRelatedObjectsResourceImpl#",
 			"putByExternalReferenceCodeCurrentExternalReferenceCode",
@@ -31,10 +31,9 @@ public class SAPEntryAllowedServiceSignaturesUpgradeProcess
 			StringBundler.concat(
 				"update SAPEntry set allowedServiceSignatures = ",
 				"REPLACE(allowedServiceSignatures, '",
-				oldAllowedServiceSignatures, "', '",
-				newAllowedServiceSignatures,
+				oldAllowedServiceSignature, "', '", newAllowedServiceSignature,
 				"') where allowedServiceSignatures like '%",
-				oldAllowedServiceSignatures, "%'"));
+				oldAllowedServiceSignature, "%'"));
 	}
 
 }

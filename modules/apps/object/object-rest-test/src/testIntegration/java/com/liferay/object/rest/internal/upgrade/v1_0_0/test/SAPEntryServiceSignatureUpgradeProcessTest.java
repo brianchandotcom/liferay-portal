@@ -84,24 +84,27 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
-			String afterFirstUpgradeAllowedServiceSignatures =
+			String newAllowedServiceSignatures =
 				sapEntry.getAllowedServiceSignatures();
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#getObjectEntry\n",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryRelatedObjectsResourceImpl#",
+					"putByExternalReferenceCodeCurrentExternalReferenceCode",
+					"ObjectRelationshipNameRelatedExternalReferenceCode"),
+				newAllowedServiceSignatures);
 
 			_runUpgrade();
 
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
-			String afterSecondUpgradeSignatures =
-				sapEntry.getAllowedServiceSignatures();
-
 			Assert.assertEquals(
-				afterFirstUpgradeAllowedServiceSignatures,
-				afterSecondUpgradeSignatures);
-
-			Assert.assertFalse(
-				afterSecondUpgradeSignatures.contains(
-					oldAllowedServiceSignatures));
+				newAllowedServiceSignatures,
+				sapEntry.getAllowedServiceSignatures());
 		}
 	}
 

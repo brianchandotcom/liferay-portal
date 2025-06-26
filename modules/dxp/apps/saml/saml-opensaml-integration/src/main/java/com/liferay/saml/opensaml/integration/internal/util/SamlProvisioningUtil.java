@@ -51,7 +51,6 @@ public class SamlProvisioningUtil {
 		unicodeProperties.setProperty(
 			ExpandoColumnConstants.INDEX_TYPE,
 			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
-
 		unicodeProperties.setProperty(
 			ExpandoColumnConstants.PROPERTY_HIDDEN, Boolean.TRUE.toString());
 

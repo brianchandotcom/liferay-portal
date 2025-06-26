@@ -1587,8 +1587,8 @@ public class DBPartitionUtil {
 			public int executeUpdate(String sql) throws SQLException {
 				String lowerCaseSQL = StringUtil.toLowerCase(sql);
 
-				// Do not use at this point getNonsystemCompanyId because
-				// DataAccess might not been yet initialized
+				// Do not use getNonsystemCompanyId at this point because
+				// DataAccess might not be initialized
 
 				boolean defaultCompany = false;
 

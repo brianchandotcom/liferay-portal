@@ -69,7 +69,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 					LocaleUtil.fromLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(
 							TestPropsValues.getCompanyId())),
-					"Test SAP Entry for Upgrade"
+					RandomTestUtil.randomString()
 				).build(),
 				_createServiceContext());
 
@@ -132,7 +132,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 					LocaleUtil.fromLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(
 							TestPropsValues.getCompanyId())),
-					"Test SAP Entry for Upgrade"
+					RandomTestUtil.randomString()
 				).build(),
 				_createServiceContext());
 
@@ -182,7 +182,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 					LocaleUtil.fromLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(
 							TestPropsValues.getCompanyId())),
-					"Test SAP Entry for Upgrade"
+					RandomTestUtil.randomString()
 				).build(),
 				_createServiceContext());
 

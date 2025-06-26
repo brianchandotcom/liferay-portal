@@ -460,17 +460,17 @@ public class ContentManager {
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
 		return _generateUniqueLayoutClassedModelUsageKey(
+			layoutClassedModelUsage.getClassExternalReferenceCode(),
 			layoutClassedModelUsage.getClassNameId(),
-			layoutClassedModelUsage.getClassPK(),
-			layoutClassedModelUsage.getClassExternalReferenceCode());
+			layoutClassedModelUsage.getClassPK());
 	}
 
 	private String _generateUniqueLayoutClassedModelUsageKey(
-		long classNameId, long classPK, String externalReferenceCode) {
+		String classExternalReferenceCode, long classNameId, long classPK) {
 
 		return StringBundler.concat(
 			classNameId, StringPool.DASH, classPK, StringPool.DASH,
-			externalReferenceCode);
+			classExternalReferenceCode);
 	}
 
 	private JSONObject _getActionsJSONObject(
@@ -485,9 +485,9 @@ public class ContentManager {
 				InfoItemPermissionProvider.class, className);
 
 		InfoItemReference infoItemReference = _getInfoItemIdentifier(
+			layoutClassedModelUsage.getClassExternalReferenceCode(),
 			layoutClassedModelUsage.getClassName(),
-			layoutClassedModelUsage.getClassPK(),
-			layoutClassedModelUsage.getClassExternalReferenceCode());
+			layoutClassedModelUsage.getClassPK());
 
 		boolean hasUpdatePermission = false;
 
@@ -1001,7 +1001,7 @@ public class ContentManager {
 	}
 
 	private InfoItemReference _getInfoItemIdentifier(
-		String className, long classPK, String externalReferenceCode) {
+		String classExternalReferenceCode, String className, long classPK) {
 
 		InfoItemIdentifier infoItemIdentifier = null;
 
@@ -1010,7 +1010,7 @@ public class ContentManager {
 		}
 		else {
 			infoItemIdentifier = new ERCInfoItemIdentifier(
-				externalReferenceCode);
+				classExternalReferenceCode);
 		}
 
 		return new InfoItemReference(className, infoItemIdentifier);
@@ -1106,10 +1106,9 @@ public class ContentManager {
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 					_getInfoItemIdentifier(
+						layoutClassedModelUsage.getClassExternalReferenceCode(),
 						layoutClassedModelUsage.getClassName(),
-						layoutClassedModelUsage.getClassPK(),
-						layoutClassedModelUsage.
-							getClassExternalReferenceCode()));
+						layoutClassedModelUsage.getClassPK()));
 
 			if (layoutDisplayPageObjectProvider == null) {
 				_layoutClassedModelUsageLocalService.
@@ -1162,7 +1161,7 @@ public class ContentManager {
 
 		String uniqueLayoutClassedModelUsageKey =
 			_generateUniqueLayoutClassedModelUsageKey(
-				classNameId, classPK, externalReferenceCode);
+				externalReferenceCode, classNameId, classPK);
 
 		if (((classPK <= 0) && Validator.isNull(externalReferenceCode)) ||
 			uniqueLayoutClassedModelUsageKeys.contains(
@@ -1186,7 +1185,7 @@ public class ContentManager {
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				_getInfoItemIdentifier(
-					className, classPK, externalReferenceCode));
+					externalReferenceCode, className, classPK));
 
 		if (layoutDisplayPageObjectProvider == null) {
 			return;

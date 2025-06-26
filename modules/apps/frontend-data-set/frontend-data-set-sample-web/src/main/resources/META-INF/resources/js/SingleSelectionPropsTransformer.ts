@@ -3,20 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {DEFAULT_FETCH_HEADERS} from '@liferay/frontend-data-set-web';
-import {openModal} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
-
 import CustomAuthorTableCell from './CustomAuthorTableCell';
 import SampleInfoPanel from './SampleInfoPanel';
 
 import type {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
-export default function propsTransformer({
-	additionalProps: {greeting},
-	selectedItemsKey,
-	...otherProps
-}: any) {
+export default function propsTransformer({...otherProps}: any) {
 	const customAuthorTableCellRenderer: IInternalRenderer = {
 		component: CustomAuthorTableCell,
 		name: 'customAuthorTableCellRenderer',
@@ -29,64 +21,5 @@ export default function propsTransformer({
 			tableCell: [customAuthorTableCellRenderer],
 		},
 		infoPanelComponent: SampleInfoPanel,
-		onActionDropdownItemClick({
-			action,
-			itemData,
-			loadData,
-			openSidePanel,
-		}: any) {
-			if (action.data.id === 'openSidePanel') {
-				openSidePanel({url: 'about:blank'});
-			}
-			else if (action.data.id === 'reload') {
-				loadData();
-			}
-			else if (action.data.id === 'sampleMessage') {
-				alert(`${greeting} ${itemData.title}!`);
-			}
-		},
-		onBulkActionItemClick({
-			action,
-			loadData,
-			selectedData: {items, keyValues, selectAll},
-		}: any) {
-			if (action.data.id === 'sampleBulkAction') {
-				openModal({
-					bodyHTML: `
-						<ol>
-							${items.map((item: any) => `<li>${item.title}</li>`).join('')}
-						</ol>
-
-						<p>
-							Key field: <code>${selectedItemsKey}</code> <br>
-							Values of key fields of selected items:
-							<ol>
-								${keyValues.map((keyValue: any) => `<li>${keyValue}</li>`).join('')}
-							</ol>
-						</p>
-					`,
-					buttons: [
-						{
-							label: 'OK',
-							onClick: ({processClose}) => {
-								processClose();
-
-								loadData();
-							},
-						},
-					],
-					size: 'md',
-					title: 'You selected:',
-				});
-			}
-
-			if (action.data.id === 'testBulkAction') {
-				fetch(action.href, {
-					body: JSON.stringify({items, keyValues, selectAll}),
-					headers: DEFAULT_FETCH_HEADERS,
-					method: action.data.method,
-				});
-			}
-		},
 	};
 }

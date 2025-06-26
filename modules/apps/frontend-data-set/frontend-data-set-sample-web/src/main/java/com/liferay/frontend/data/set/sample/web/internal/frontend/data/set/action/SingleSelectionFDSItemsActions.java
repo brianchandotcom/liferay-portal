@@ -5,11 +5,9 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set.action;
 
-import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
-import com.liferay.portal.kernel.language.Language;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -17,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Arroyo
@@ -37,13 +34,5 @@ public class SingleSelectionFDSItemsActions implements FDSItemsActions {
 				null, "info-circle-open", "showDetails", "Show Details", null,
 				null, "infoPanel"));
 	}
-
-	@Override
-	public FDSEntryItemImportPolicy getFDSEntryItemImportPolicy() {
-		return FDSEntryItemImportPolicy.ITEM_PROXY;
-	}
-
-	@Reference
-	private Language _language;
 
 }

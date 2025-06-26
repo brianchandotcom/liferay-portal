@@ -13,13 +13,9 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 
 <frontend-data-set:headless-display
 	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
-	customViewsEnabled="<%= true %>"
-	formId="fm"
 	id="<%= FDSSampleFDSNames.SINGLE_SELECTION %>"
-	itemsPerPage="<%= 10 %>"
 	propsTransformer="{SingleSelectionPropsTransformer} from frontend-data-set-sample-web"
 	selectedItemsKey="id"
 	selectionType="single"
-	showSelectAll="<%= true %>"
 	style="fluid"
 />

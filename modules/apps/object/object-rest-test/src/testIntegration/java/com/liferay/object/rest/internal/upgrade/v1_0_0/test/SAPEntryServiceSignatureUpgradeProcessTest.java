@@ -110,28 +110,24 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					TestPropsValues.getCompanyId())) {
 
-			String oldAllowedServiceSignatures = StringBundler.concat(
-				"com.liferay.object.rest.internal.resource.v1_0.",
-				"ObjectEntryResourceImpl#",
-				"putByExternalReferenceCodeCurrentExternalReference",
-				"CodeObjectRelationshipNameRelatedExternalReferenceCode");
-
-			String preUpgradeSignatures = StringBundler.concat(
-				"com.liferay.object.rest.internal.resource.v1_0.",
-				"ObjectEntryResourceImpl#getByExternalReferenceCode\n",
-				"com.liferay.object.rest.internal.resource.v1_0.",
-				"ObjectEntryResourceImpl#getObjectEntriesPage\n",
-				"com.liferay.object.rest.internal.resource.v1_0.",
-				"ObjectEntryResourceImpl#getObjectEntry\n",
-				"com.liferay.object.rest.internal.resource.v1_0.",
-				"ObjectEntryResourceImpl#postObjectEntry\n",
-				"com.liferay.object.rest.internal.resource.v1_0.",
-				"ObjectEntryResourceImpl#postScopeScopeKey\n",
-				oldAllowedServiceSignatures);
-
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
-				TestPropsValues.getUserId(), preUpgradeSignatures, false, true,
-				RandomTestUtil.randomString(),
+				TestPropsValues.getUserId(),
+				StringBundler.concat(
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#",
+					"putByExternalReferenceCodeCurrentExternalReference",
+					"CodeObjectRelationshipNameRelatedExternalReferenceCode",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#getByExternalReferenceCode\n",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#getObjectEntriesPage\n",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#getObjectEntry\n",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#postObjectEntry\n",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#postScopeScopeKey\n"),
+				false, true, RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(
@@ -140,41 +136,28 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				).build(),
 				_createServiceContext());
 
-			Assert.assertEquals(
-				preUpgradeSignatures, sapEntry.getAllowedServiceSignatures());
-
-			Assert.assertTrue(
-				preUpgradeSignatures.contains(oldAllowedServiceSignatures));
-
-			String expectedUpgradedSignature = StringBundler.concat(
-				"com.liferay.object.rest.internal.resource.v1_0.",
-				"ObjectEntryRelatedObjectsResourceImpl#",
-				"putByExternalReferenceCodeCurrentExternalReference",
-				"CodeObjectRelationshipNameRelatedExternalReferenceCode");
-
-			Assert.assertFalse(
-				preUpgradeSignatures.contains(expectedUpgradedSignature));
-
 			_runUpgrade();
 
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
-			String afterUpgradeSignatures =
-				sapEntry.getAllowedServiceSignatures();
-
-			Assert.assertFalse(
-				afterUpgradeSignatures.contains(oldAllowedServiceSignatures));
-			Assert.assertTrue(
-				afterUpgradeSignatures.contains(expectedUpgradedSignature));
-			Assert.assertTrue(
-				afterUpgradeSignatures.contains(
-					"com.liferay.object.rest.internal.resource.v1_0." +
-						"ObjectEntryResourceImpl#getByExternalReferenceCode"));
-			Assert.assertTrue(
-				afterUpgradeSignatures.contains(
-					"com.liferay.object.rest.internal.resource.v1_0." +
-						"ObjectEntryResourceImpl#postObjectEntry"));
+			Assert.assertEquals(
+				StringBundler.concat(
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#getObjectEntriesPage\n",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#getObjectEntry\n",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#postObjectEntry\n",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#postScopeScopeKey\n",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryRelatedObjectsResourceImpl#putByExternal",
+					"ReferenceCodeCurrentExternalReferenceCodeObject",
+					"RelationshipNameRelatedExternalReferenceCode",
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#getByExternalReferenceCode"),
+				sapEntry.getAllowedServiceSignatures());
 		}
 	}
 
@@ -202,10 +185,6 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 					"Test SAP Entry for Upgrade"
 				).build(),
 				_createServiceContext());
-
-			Assert.assertEquals(
-				allowedServiceSignatures,
-				sapEntry.getAllowedServiceSignatures());
 
 			_runUpgrade();
 

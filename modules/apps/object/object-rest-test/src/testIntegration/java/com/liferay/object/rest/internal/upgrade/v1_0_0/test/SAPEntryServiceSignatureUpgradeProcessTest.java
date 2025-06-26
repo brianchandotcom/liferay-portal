@@ -140,9 +140,6 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				).build(),
 				_createServiceContext());
 
-			sapEntry = _sapEntryLocalService.getSAPEntry(
-				sapEntry.getSapEntryId());
-
 			Assert.assertEquals(
 				preUpgradeSignatures, sapEntry.getAllowedServiceSignatures());
 

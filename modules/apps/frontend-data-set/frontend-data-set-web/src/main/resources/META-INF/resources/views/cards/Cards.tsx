@@ -156,6 +156,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 				<ClayCardWithInfo
 					actions={formattedActions?.map((action: IItemsActions) => {
 						const actionItemProps = {
+							disabled: action.disabled,
 							label: action.label,
 							symbolLeft: action.icon,
 						};

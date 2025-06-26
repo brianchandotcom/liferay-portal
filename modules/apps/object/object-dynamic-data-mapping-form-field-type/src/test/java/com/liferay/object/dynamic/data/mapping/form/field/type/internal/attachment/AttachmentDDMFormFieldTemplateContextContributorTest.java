@@ -11,6 +11,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTemplateContextContributorTestCase;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
+import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -50,6 +51,7 @@ public class AttachmentDDMFormFieldTemplateContextContributorTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_setUpAttachmentManager();
 		_setUpDLAppLocalService();
 		_setUpDLURLHelper();
 		_setUpJSONFactory();
@@ -131,6 +133,12 @@ public class AttachmentDDMFormFieldTemplateContextContributorTest
 		).thenReturn(
 			fileEntry
 		);
+	}
+
+	private void _setUpAttachmentManager() {
+		ReflectionTestUtil.setFieldValue(
+			_attachmentDDMFormFieldTemplateContextContributor,
+			"_attachmentManager", Mockito.mock(AttachmentManager.class));
 	}
 
 	private void _setUpDLAppLocalService() throws Exception {

@@ -823,17 +823,17 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	private AssetCategory _moveCategory(
-		long categoryId, long parentCategoryId, long vocabularyId)
+			AssetCategory category, long parentCategoryId, long vocabularyId)
 		throws PortalException {
 
-		AssetCategory category = assetCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
 		validate(
-			categoryId, parentCategoryId, category.getName(), vocabularyId);
+			category.getCategoryId(), parentCategoryId, category.getName(),
+			vocabularyId);
 
-		if (categoryId == parentCategoryId) {
-			throw new InvalidAssetCategoryException(parentCategoryId, 2);
+		if (category.getCategoryId() == parentCategoryId) {
+			throw new InvalidAssetCategoryException(
+				parentCategoryId,
+				InvalidAssetCategoryException.CANNOT_MOVE_INTO_ITSELF);
 		}
 
 		AssetCategory parentCategory = null;
@@ -845,7 +845,10 @@ public class AssetCategoryLocalServiceImpl
 			String treePath = parentCategory.getTreePath();
 
 			if (treePath.startsWith(category.getTreePath())) {
-				throw new InvalidAssetCategoryException(categoryId, 1);
+				throw new InvalidAssetCategoryException(
+					category.getCategoryId(),
+					InvalidAssetCategoryException.
+						CANNOT_MOVE_INTO_CHILD_CATEGORY);
 			}
 		}
 

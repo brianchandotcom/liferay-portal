@@ -92,10 +92,10 @@ public class UpdatePasswordActionTest {
 
 		_user = UserTestUtil.addGroupUser(group, RoleConstants.POWER_USER);
 
-		_nonguestFragmentContent = RandomTestUtil.randomString();
+		_nonguestFragmentEntryHtml = RandomTestUtil.randomString();
 
 		_nonguestLayoutUtilityPageEntry = _addLayoutUtilityPageEntry(
-			_nonguestFragmentContent, group, serviceContext);
+			_nonguestFragmentEntryHtml, group, serviceContext);
 
 		_nonguestLayout = _layoutLocalService.fetchLayout(
 			_nonguestLayoutUtilityPageEntry.getPlid());
@@ -103,10 +103,10 @@ public class UpdatePasswordActionTest {
 		Group guestGroup = _groupLocalService.getGroup(
 			_company.getCompanyId(), GroupConstants.GUEST);
 
-		_guestFragmentContent = RandomTestUtil.randomString();
+		_guestFragmentEntryHtml = RandomTestUtil.randomString();
 
 		_guestLayoutUtilityPageEntry = _addLayoutUtilityPageEntry(
-			_guestFragmentContent, guestGroup, serviceContext);
+			_guestFragmentEntryHtml, guestGroup, serviceContext);
 
 		UserTestUtil.setUser(
 			_userLocalService.getGuestUser(_company.getCompanyId()));
@@ -126,7 +126,8 @@ public class UpdatePasswordActionTest {
 	}
 
 	private LayoutUtilityPageEntry _addLayoutUtilityPageEntry(
-			String fragmentContent, Group group, ServiceContext serviceContext)
+			String fragmentEntryHtml, Group group,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
@@ -152,7 +153,7 @@ public class UpdatePasswordActionTest {
 			null, group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), "Fragment Entry", null,
-			"<div>" + fragmentContent + "</div>", null, false, null, null, 0,
+			"<div>" + fragmentEntryHtml + "</div>", null, false, null, null, 0,
 			false, false, FragmentConstants.TYPE_SECTION, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -254,10 +255,10 @@ public class UpdatePasswordActionTest {
 
 		Assert.assertEquals(
 			expectedNonguestFragmentRendered,
-			_isFragmentRendered(_nonguestFragmentContent, usePlid));
+			_isFragmentRendered(_nonguestFragmentEntryHtml, usePlid));
 		Assert.assertEquals(
 			expectedGuestFragmentRendered,
-			_isFragmentRendered(_guestFragmentContent, usePlid));
+			_isFragmentRendered(_guestFragmentEntryHtml, usePlid));
 	}
 
 	private Company _company;
@@ -274,7 +275,7 @@ public class UpdatePasswordActionTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
-	private String _guestFragmentContent;
+	private String _guestFragmentEntryHtml;
 	private LayoutUtilityPageEntry _guestLayoutUtilityPageEntry;
 
 	@Inject
@@ -288,7 +289,7 @@ public class UpdatePasswordActionTest {
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
 
-	private String _nonguestFragmentContent;
+	private String _nonguestFragmentEntryHtml;
 	private Layout _nonguestLayout;
 	private LayoutUtilityPageEntry _nonguestLayoutUtilityPageEntry;
 

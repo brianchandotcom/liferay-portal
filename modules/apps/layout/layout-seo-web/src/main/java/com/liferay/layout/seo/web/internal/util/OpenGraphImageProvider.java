@@ -198,9 +198,9 @@ public class OpenGraphImageProvider {
 			null, "openGraphImage", infoItemFieldValues, layout,
 			themeDisplay.getLocale());
 
-		if (!(mappedImageObject instanceof WebImage) &&
-			(!(mappedImageObject instanceof String) ||
-			 !Validator.isUri((String)mappedImageObject))) {
+		if ((!(mappedImageObject instanceof String) ||
+			 !Validator.isUri((String)mappedImageObject)) &&
+			!(mappedImageObject instanceof WebImage)) {
 
 			return null;
 		}

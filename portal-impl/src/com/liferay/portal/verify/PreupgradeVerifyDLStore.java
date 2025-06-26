@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Collection;
 import java.util.Random;
 import java.util.Set;
 
@@ -37,15 +36,15 @@ public class PreupgradeVerifyDLStore extends PreupgradeVerifyProcess {
 			return;
 		}
 
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-		Collection<ServiceReference<Store>> serviceReferences =
-			bundleContext.getServiceReferences(
-				Store.class, "(store.type=" + PropsValues.DL_STORE_IMPL + ")");
-
 		Store store = null;
 
-		for (ServiceReference<Store> serviceReference : serviceReferences) {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		for (ServiceReference<Store> serviceReference :
+				bundleContext.getServiceReferences(
+					Store.class,
+					"(store.type=" + PropsValues.DL_STORE_IMPL + ")")) {
+
 			store = bundleContext.getService(serviceReference);
 
 			break;
@@ -90,7 +89,6 @@ public class PreupgradeVerifyDLStore extends PreupgradeVerifyProcess {
 	private long _getRandomCompanyId() {
 		Set<Long> companyIds = SetUtil.fromArray(
 			PortalInstancePool.getCompanyIds());
-
 		Random random = new Random();
 
 		while (true) {

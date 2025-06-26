@@ -14,17 +14,18 @@ import {performLoginViaApi} from '../utils/performLogin';
  *
  * The provided `remotePage` is guaranteed to be at the home page.
  */
-function remotePageTest(port: string) {
+function remotePageTest(
+	port: string,
+	url: string = liferayConfig.environment.baseUrl,
+	performLogin: boolean = true
+) {
 	return test.extend<{
 		remotePage: Page;
 	}>({
 		remotePage: async ({browser, page}, use) => {
 			await page.goto('/');
 
-			const remoteUrl = liferayConfig.environment.baseUrl.replace(
-				'8080',
-				port
-			);
+			const remoteUrl = url.replace('8080', port);
 
 			const remoteContext = await browser.newContext({
 				baseURL: remoteUrl,
@@ -32,12 +33,13 @@ function remotePageTest(port: string) {
 
 			const remotePage = await remoteContext.newPage();
 
-			await performLoginViaApi({
-				loginUrl: remoteUrl,
-				page: remotePage,
-				screenName: 'test',
-			});
-
+			if (performLogin) {
+				await performLoginViaApi({
+					loginUrl: remoteUrl,
+					page: remotePage,
+					screenName: 'test',
+				});
+			}
 			try {
 				await use(remotePage);
 			}

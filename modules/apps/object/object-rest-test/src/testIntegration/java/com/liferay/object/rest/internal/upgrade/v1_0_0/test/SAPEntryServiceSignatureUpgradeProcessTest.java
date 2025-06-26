@@ -113,7 +113,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 					"com.liferay.object.rest.internal.resource.v1_0.",
 					"ObjectEntryResourceImpl#",
 					"putByExternalReferenceCodeCurrentExternalReference",
-					"CodeObjectRelationshipNameRelatedExternalReferenceCode",
+					"CodeObjectRelationshipNameRelatedExternalReferenceCode\n",
 					"com.liferay.object.rest.internal.resource.v1_0.",
 					"ObjectEntryResourceImpl#getByExternalReferenceCode\n",
 					"com.liferay.object.rest.internal.resource.v1_0.",
@@ -141,6 +141,8 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#getByExternalReferenceCode\n",
+					"com.liferay.object.rest.internal.resource.v1_0.",
 					"ObjectEntryResourceImpl#getObjectEntriesPage\n",
 					"com.liferay.object.rest.internal.resource.v1_0.",
 					"ObjectEntryResourceImpl#getObjectEntry\n",
@@ -151,9 +153,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 					"com.liferay.object.rest.internal.resource.v1_0.",
 					"ObjectEntryRelatedObjectsResourceImpl#putByExternal",
 					"ReferenceCodeCurrentExternalReferenceCodeObject",
-					"RelationshipNameRelatedExternalReferenceCode",
-					"com.liferay.object.rest.internal.resource.v1_0.",
-					"ObjectEntryResourceImpl#getByExternalReferenceCode"),
+					"RelationshipNameRelatedExternalReferenceCode"),
 				sapEntry.getAllowedServiceSignatures());
 		}
 	}

@@ -129,7 +129,7 @@ public class TicketAttachmentService extends BaseService {
 					).build(
 					).toUri()));
 
-			if (jsonObject.isNull("ticketAttachmentId")) {
+			if (jsonObject.isNull("id")) {
 				throw new TicketAttachmentNotFoundException();
 			}
 

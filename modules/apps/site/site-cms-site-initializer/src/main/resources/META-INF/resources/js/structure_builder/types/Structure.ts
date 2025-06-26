@@ -13,6 +13,7 @@ type Spaces = 'all' | string[];
 export type ReferencedStructure = {
 	erc: string;
 	name: string;
+	parent: Uuid;
 	type: 'referenced-structure';
 	uuid: Uuid;
 };

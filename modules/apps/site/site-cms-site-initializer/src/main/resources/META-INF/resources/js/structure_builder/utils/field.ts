@@ -96,6 +96,7 @@ type BaseField = {
 	label: Liferay.Language.LocalizedValue<string>;
 	localized: boolean;
 	name: string;
+	parent: Uuid;
 	required: boolean;
 	settings: {};
 	uuid: Uuid;
@@ -188,10 +189,12 @@ export type FieldBusinessType =
 export function getDefaultField({
 	label,
 	name,
+	parent,
 	type,
 }: {
 	label?: string;
 	name?: string;
+	parent: Uuid;
 	type: FieldType;
 }): Field {
 	const base = {
@@ -207,6 +210,7 @@ export function getDefaultField({
 		},
 		localized: Liferay.FeatureFlags['LPD-32050'],
 		name: name ?? normalizeName(type),
+		parent,
 		required: false,
 		settings: {},
 		uuid: getUuid(),

@@ -14,6 +14,7 @@ export default function buildStructure(
 	objectDefinition: ObjectDefinition
 ): Structure {
 	const fields: Structure['fields'] = new Map();
+	const structureUuid = getUuid();
 
 	objectDefinition.objectFields?.forEach((objectField) => {
 		if (objectField.system || objectField.businessType === 'Relationship') {
@@ -41,6 +42,7 @@ export default function buildStructure(
 			label: objectField.label,
 			localized: objectField.localized,
 			name: objectField.name,
+			parent: structureUuid,
 			required: objectField.required,
 			settings: getFieldSettings(objectField),
 			type: getFieldType(objectField),
@@ -64,6 +66,7 @@ export default function buildStructure(
 		const referencedStructure: ReferencedStructure = {
 			erc: objectRelationship.objectDefinitionExternalReferenceCode2,
 			name: objectRelationship.name,
+			parent: structureUuid,
 			type: 'referenced-structure',
 			uuid,
 		};

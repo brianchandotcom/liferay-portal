@@ -188,6 +188,7 @@ function reducer(state: State, action: Action): State {
 				const referencedStructure: ReferencedStructure = {
 					erc,
 					name,
+					parent: structure.uuid,
 					type: 'referenced-structure',
 					uuid,
 				};
@@ -485,7 +486,7 @@ function initState(state: State): State {
 		structure: {
 			...structure,
 			erc: getRandomId(),
-			fields: getDefaultFields(),
+			fields: getDefaultFields(structure.uuid),
 		},
 	};
 }
@@ -528,7 +529,7 @@ function useStateDispatch() {
 	return useContext(StateContext).dispatch;
 }
 
-function getDefaultFields() {
+function getDefaultFields(structureUuid: Uuid) {
 	const url = new URL(window.location.href);
 
 	const type = url.searchParams.get('objectFolderExternalReferenceCode');
@@ -538,6 +539,7 @@ function getDefaultFields() {
 	const title = getDefaultField({
 		label: Liferay.Language.get('title'),
 		name: 'title',
+		parent: structureUuid,
 		type: 'text',
 	});
 
@@ -547,6 +549,7 @@ function getDefaultFields() {
 		const file = getDefaultField({
 			label: Liferay.Language.get('file'),
 			name: 'file',
+			parent: structureUuid,
 			type: 'upload',
 		});
 

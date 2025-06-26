@@ -31,6 +31,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 		const {
 			executeAsyncItemAction,
 			highlightItems,
+			infoPanelOpen,
 			itemsActions,
 			loadData,
 			onActionDropdownItemClick,
@@ -67,7 +68,13 @@ const Card = forwardRef<HTMLDivElement, any>(
 		const selectedItemKey = selectedItemsKey && item[selectedItemsKey];
 		const formattedActions =
 			actionsRef.current &&
-			(filterItemActions(actionsRef.current, item) as any);
+			(filterItemActions({
+				actions: actionsRef.current,
+				infoPanelOpen,
+				itemData: item,
+				selectedItemsKey,
+				selectedItemsValue,
+			}) as any);
 
 		const getLabels = (
 			item: any
@@ -160,6 +167,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 									event,
 									executeAsyncItemAction,
 									highlightItems,
+									infoPanelOpen,
 									itemData: item,
 									itemId: selectedItemKey,
 									loadData,

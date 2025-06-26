@@ -18,6 +18,7 @@ function QuickActions({actions, itemData, itemId, onClick}: IQuickActions) {
 					<LinkOrButton
 						aria-label={action.label || action.icon}
 						className="component-action quick-action-item"
+						disabled={action.disabled}
 						displayType="unstyled"
 						href={
 							action.href &&

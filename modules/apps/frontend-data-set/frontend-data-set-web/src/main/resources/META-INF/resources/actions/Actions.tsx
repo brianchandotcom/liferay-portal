@@ -30,12 +30,15 @@ function Actions({
 		allItemsSelectedActive,
 		executeAsyncItemAction,
 		highlightItems,
+		infoPanelOpen,
 		inlineEditingSettings,
 		loadData,
 		onActionDropdownItemClick,
 		onInfoPanelToggleButtonClick,
 		openModal,
 		openSidePanel,
+		selectItems,
+		selectedItemsKey,
 		selectedItemsValue,
 		toggleItemInlineEdit,
 	}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
@@ -61,10 +64,17 @@ function Actions({
 	const inlineEditingAlwaysOn =
 		inlineEditingAvailable && inlineEditingSettings.alwaysOn;
 
-	const formattedActions = filterItemActions(actions, itemData);
+	const formattedActions = filterItemActions({
+		actions,
+		infoPanelOpen,
+		itemData,
+		selectedItemsKey,
+		selectedItemsValue,
+	});
 
 	if (inlineEditingAvailable && !inlineEditingAlwaysOn) {
 		formattedActions.unshift({
+			disabled: false,
 			icon: 'fieldset',
 			label: Liferay.Language.get('inline-edit'),
 			target: 'inlineEdit',
@@ -86,6 +96,7 @@ function Actions({
 			event,
 			executeAsyncItemAction,
 			highlightItems,
+			infoPanelOpen,
 			itemData,
 			itemId,
 			loadData,
@@ -93,6 +104,7 @@ function Actions({
 			onInfoPanelToggleButtonClick,
 			openModal,
 			openSidePanel,
+			selectItems,
 			setLoading,
 			toggleItemInlineEdit,
 		});

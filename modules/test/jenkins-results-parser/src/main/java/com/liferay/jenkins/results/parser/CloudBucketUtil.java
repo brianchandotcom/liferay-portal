@@ -378,7 +378,8 @@ public class CloudBucketUtil {
 	public static void uploadS3File(String s3DestinationPath, File sourceFile)
 		throws IOException {
 
-		s3DestinationPath = _replaceS3ObjectPath(s3DestinationPath);
+		String replacedS3DestinationPath = _replaceS3ObjectPath(
+			s3DestinationPath);
 
 		String sourceFileName = sourceFile.getName();
 
@@ -386,19 +387,25 @@ public class CloudBucketUtil {
 
 		_executeCommands(
 			_getFileTransferCommand(
-				"aws s3 cp --no-progress", s3DestinationPath,
+				"aws s3 cp --no-progress", replacedS3DestinationPath,
 				sourceFile.getCanonicalPath()));
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Uploaded ", sourceFile.getPath(), " with file size ",
 				JenkinsResultsParserUtil.toFileSizeString(sourceFile.length()),
-				" to ", s3DestinationPath, " in ",
+				" to ", replacedS3DestinationPath, " in ",
 				JenkinsResultsParserUtil.toDurationString(
 					System.currentTimeMillis() - start)));
 
+		if (!s3DestinationPath.equals(replacedS3DestinationPath)) {
+			createS3ObjectRef(replacedS3DestinationPath);
+
+			return;
+		}
+
 		if (!sourceFileName.endsWith(_CHECKSUM_FILE_EXTENSION)) {
-			_createChecksumFile(s3DestinationPath, sourceFile);
+			_createChecksumFile(replacedS3DestinationPath, sourceFile);
 		}
 	}
 

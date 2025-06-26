@@ -241,24 +241,27 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			System.getProperty("java.io.tmpdir"),
 			"cached-build-report-files/" + getBatchName());
 
-		sb.append("/");
+		if (!baseDir.exists()) {
+			sb.append("/");
 
-		Workspace workspace = workspaces.get(0);
+			Workspace workspace = workspaces.get(0);
 
-		WorkspaceGitRepository workspaceGitRepository =
-			workspace.getPrimaryWorkspaceGitRepository();
+			WorkspaceGitRepository workspaceGitRepository =
+				workspace.getPrimaryWorkspaceGitRepository();
 
-		sb.append(workspaceGitRepository.getName());
+			sb.append(workspaceGitRepository.getName());
 
-		sb.append("/");
-		sb.append(workspaceGitRepository.getBaseBranchSHA());
-		sb.append("/");
-		sb.append(workspaceGitRepository.getSenderBranchSHA());
-		sb.append("/");
-		sb.append(getBatchName());
+			sb.append("/");
+			sb.append(workspaceGitRepository.getBaseBranchSHA());
+			sb.append("/");
+			sb.append(workspaceGitRepository.getSenderBranchSHA());
+			sb.append("/");
+			sb.append(getBatchName());
 
-		CloudBucketUtil.syncS3Files(
-			JenkinsResultsParserUtil.getCanonicalPath(baseDir), sb.toString());
+			CloudBucketUtil.syncS3Files(
+				JenkinsResultsParserUtil.getCanonicalPath(baseDir),
+				sb.toString());
+		}
 
 		File[] buildReportFiles = baseDir.listFiles();
 

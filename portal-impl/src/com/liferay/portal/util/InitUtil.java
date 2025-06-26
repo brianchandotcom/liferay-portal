@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -118,10 +117,6 @@ public class InitUtil {
 				_log.debug(exception);
 			}
 		}
-
-		// Properties
-
-		PropsUtil.setProps(new PropsImpl());
 
 		// Shared log
 

@@ -10,10 +10,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -57,8 +55,6 @@ public class ServletContextClassLoaderPoolTest {
 
 	@Test
 	public void testMisc() {
-		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
-
 		new ServletContextClassLoaderPool();
 
 		ServletContextClassLoaderPool.unregister(_TEST_SERVLET_CONTEXT_NAME);

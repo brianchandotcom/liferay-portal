@@ -22,7 +22,6 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.PropsImpl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -102,8 +101,6 @@ public class FeatureFlagsBagTest {
 	@NewEnv(type = NewEnv.Type.JVM)
 	@Test
 	public void testIsEnabled() {
-		PropsUtil.setProps(new PropsImpl());
-
 		for (FeatureFlag expectedFeatureFlag : _expectedFeatureFlags) {
 			Assert.assertEquals(
 				expectedFeatureFlag.isEnabled(),

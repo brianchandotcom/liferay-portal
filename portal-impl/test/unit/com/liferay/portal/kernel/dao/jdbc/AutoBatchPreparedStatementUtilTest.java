@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
@@ -83,8 +82,6 @@ public class AutoBatchPreparedStatementUtilTest {
 				new Class<?>[] {PortalExecutorManager.class},
 				new PortalExecutorManagerInvocationHandler()),
 			null);
-
-		PropsUtil.setProps(new PropsImpl());
 	}
 
 	@After

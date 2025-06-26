@@ -39,8 +39,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -86,7 +84,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 		_setUpItemSelector();
 		_setUpJSONFactory();
 		_setUpJSONFactoryUtil();
-		_setUpParamUtil();
 		_setUpPortal();
 		_setUpPortletFileRepository();
 		_setUpRequestBackedPortletURLFactory();
@@ -675,10 +672,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
-
-	private void _setUpParamUtil() {
-		PropsUtil.setProps(Mockito.mock(Props.class));
 	}
 
 	private void _setUpPortal() throws Exception {

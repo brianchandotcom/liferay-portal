@@ -14,9 +14,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
 
 import jakarta.servlet.ServletOutputStream;
 
@@ -686,8 +683,6 @@ public class BufferCacheServletResponseTest {
 				}
 
 			};
-
-		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 
 		// Clean
 

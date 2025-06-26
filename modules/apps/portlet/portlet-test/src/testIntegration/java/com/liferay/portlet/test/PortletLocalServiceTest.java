@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -128,8 +127,6 @@ public class PortletLocalServiceTest {
 				customAttributesDisplays.size());
 		}
 		finally {
-			PropsUtil.setProps(_props);
-
 			for (ServiceRegistration<?> serviceRegistration :
 					serviceRegistrations) {
 
@@ -140,9 +137,6 @@ public class PortletLocalServiceTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
-
-	@Inject
-	private Props _props;
 
 	private class TestCustomAttributesDisplay
 		extends BaseCustomAttributesDisplay {

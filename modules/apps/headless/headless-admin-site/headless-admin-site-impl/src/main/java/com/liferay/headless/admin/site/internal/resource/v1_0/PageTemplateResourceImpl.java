@@ -598,6 +598,11 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			existingWidgetPageTemplate.setName_i18n(
 				widgetPageTemplate::getName_i18n);
 		}
+
+		if (widgetPageTemplate.getPageTemplateSettings() != null) {
+			existingWidgetPageTemplate.setPageTemplateSettings(
+				widgetPageTemplate::getPageTemplateSettings);
+		}
 	}
 
 	private PageTemplate _updatePageTemplate(

@@ -1266,22 +1266,6 @@ public class GitWorkingDirectory {
 		return configProperty;
 	}
 
-	public Boolean getGitConfigPropertyBoolean(
-		String gitConfigPropertyName, Boolean defaultValue) {
-
-		String gitConfigProperty = getGitConfigProperty(gitConfigPropertyName);
-
-		if (gitConfigProperty == null) {
-			if (defaultValue != null) {
-				return defaultValue;
-			}
-
-			return null;
-		}
-
-		return Boolean.parseBoolean(gitConfigProperty);
-	}
-
 	public File getGitDirectory() {
 		return _gitDirectory;
 	}
@@ -2515,6 +2499,22 @@ public class GitWorkingDirectory {
 		_executionResults.put(command, executionResult);
 
 		return executionResult;
+	}
+
+	protected Boolean getGitConfigPropertyBoolean(
+		String gitConfigPropertyName, Boolean defaultValue) {
+
+		String gitConfigProperty = getGitConfigProperty(gitConfigPropertyName);
+
+		if (gitConfigProperty == null) {
+			if (defaultValue != null) {
+				return defaultValue;
+			}
+
+			return null;
+		}
+
+		return Boolean.parseBoolean(gitConfigProperty);
 	}
 
 	protected Map<String, String> getLocalGitBranchesShaMap() {

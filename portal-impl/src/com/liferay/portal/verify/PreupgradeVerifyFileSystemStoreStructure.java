@@ -60,10 +60,10 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		Set<Long> companyIds = SetUtil.fromArray(
 			PortalInstancePool.getCompanyIds());
 
-		Path fileSystemStoreRootDirPath = _getFileSystemStoreRootDirPath();
+		Path rootDirPath = _getRootDirPath();
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				fileSystemStoreRootDirPath)) {
+				rootDirPath)) {
 
 			for (Path companyIdPath : directoryStream) {
 				String fileName = String.valueOf(companyIdPath.getFileName());
@@ -96,7 +96,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					StringBundler.concat(
 						advancedFileSystemStore ? "Advanced file" : "File",
 						" system store directory structure ",
-						fileSystemStoreRootDirPath.toString(), " is invalid"));
+						rootDirPath.toString(), " is invalid"));
 			}
 		}
 
@@ -104,7 +104,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			throw new VerifyException(
 				StringBundler.concat(
 					"Missing directories in ",
-					fileSystemStoreRootDirPath.toString(), " for companies: ",
+					rootDirPath.toString(), " for companies: ",
 					companyIds.toString()));
 		}
 	}
@@ -114,7 +114,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		return true;
 	}
 
-	private Path _getFileSystemStoreRootDirPath() throws Exception {
+	private Path _getRootDirPath() throws Exception {
 		File rootDir = null;
 
 		try {

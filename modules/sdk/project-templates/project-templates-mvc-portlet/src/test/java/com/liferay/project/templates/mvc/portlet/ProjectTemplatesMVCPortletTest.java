@@ -77,7 +77,6 @@ public class ProjectTemplatesMVCPortletTest
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Export-Package: foo.constants");
-
 		testContains(
 			gradleProjectDir, "src/main/java/foo/constants/FooPortletKeys.java",
 			"public class FooPortletKeys", "public static final String FOO");

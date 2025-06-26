@@ -30,12 +30,14 @@ export class FDSSamplePage {
 	readonly fileDropModal: Locator;
 	readonly infoPanel: Locator;
 	readonly itemActionButton: Locator;
+	readonly itemActionsButtons: Locator;
 	readonly list: {
 		container: Locator;
 		items: Locator;
 	};
 	readonly managementToolbar: Locator;
 	readonly page: Page;
+	readonly showViewOptionsButton: Locator;
 	readonly sidePanel: Locator;
 	readonly sidePanelFrame: FrameLocator;
 	readonly selectAllCheckbox: Locator;
@@ -105,6 +107,15 @@ export class FDSSamplePage {
 			container: selectionToolbarContainer,
 		};
 
+		this.itemActionsButtons = page.locator(
+			'button.dropdown-toggle.component-action.btn-unstyled'
+		);
+
+		this.managementToolbar = page.getByTestId('management-toolbar');
+		this.page = page;
+		this.showViewOptionsButton = page.getByLabel('Show View Options', {
+			exact: true,
+		});
 		this.sidePanel = page.locator('.fds-side-panel');
 		this.sidePanelFrame = this.sidePanel.frameLocator('iframe');
 		this.tablist = page.getByRole('tablist');
@@ -142,18 +153,12 @@ export class FDSSamplePage {
 			.click();
 	}
 
-	async clickItemAction(itemAction: string) {
-		const firstItemActionsCell = this.table.itemActionsCells.first();
+	async clickItemAction(action: string, item: number = 0) {
+		const dropdownId = await this.itemActionsButtons
+			.nth(item)
+			.getAttribute('aria-controls');
 
-		const firstItemActionButton = firstItemActionsCell.getByRole('button', {
-			exact: true,
-			name: 'Actions',
-		});
-
-		const dropdownId =
-			await firstItemActionButton.getAttribute('aria-controls');
-
-		await firstItemActionButton.click();
+		await this.itemActionsButtons.nth(item).click();
 
 		await this.page
 			.locator(`#${dropdownId}`)
@@ -164,7 +169,7 @@ export class FDSSamplePage {
 			.locator(`#${dropdownId}`)
 			.getByRole('menuitem', {
 				exact: true,
-				name: itemAction,
+				name: action,
 			})
 			.click();
 	}
@@ -207,5 +212,26 @@ export class FDSSamplePage {
 		await this.page.goto(url);
 
 		return {layout, url};
+	}
+
+	async selectVisualizationMode(
+		modeId: 'cards' | 'list' | 'customizedTable'
+	) {
+		await this.showViewOptionsButton.click();
+
+		const showViewOptionsDropdownId =
+			await this.showViewOptionsButton.getAttribute('aria-controls');
+
+		const showViewOptionsDropdown = this.page.locator(
+			`#${showViewOptionsDropdownId}`
+		);
+
+		await showViewOptionsDropdown.waitFor();
+
+		const menuItem = await showViewOptionsDropdown.locator(`#${modeId}`);
+
+		await expect(menuItem).toBeVisible();
+
+		await menuItem.click();
 	}
 }

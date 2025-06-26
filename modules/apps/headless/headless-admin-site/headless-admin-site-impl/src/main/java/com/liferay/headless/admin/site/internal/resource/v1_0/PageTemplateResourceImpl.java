@@ -656,6 +656,24 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			_getServiceContext(
 				layoutPageTemplateEntry.getGroupId(), widgetPageTemplate));
 
+		PageTemplateSettings pageTemplateSettings =
+			widgetPageTemplate.getPageTemplateSettings();
+
+		if (pageTemplateSettings != null) {
+			if (!(pageTemplateSettings instanceof WidgetPageTemplateSettings)) {
+				throw new UnsupportedOperationException();
+			}
+
+			Layout layout = _layoutLocalService.getLayout(
+				layoutPageTemplateEntry.getPlid());
+
+			_layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(),
+				_getTypeSettings(
+					layout, (WidgetPageTemplateSettings)pageTemplateSettings));
+		}
+
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));

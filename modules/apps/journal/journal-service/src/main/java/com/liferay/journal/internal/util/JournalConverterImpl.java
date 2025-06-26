@@ -456,7 +456,14 @@ public class JournalConverterImpl implements JournalConverter {
 			ddmField.addValue(locale, serializable);
 		}
 
-		_addMissingFieldValues(ddmField, defaultLanguageId, missingLanguageIds);
+		String type = ddmField.getType();
+
+		if (!StringUtil.equals(type, DDMFormFieldTypeConstants.RICH_TEXT) &&
+			!StringUtil.equals(type, DDMFormFieldTypeConstants.TEXT)) {
+
+			_addMissingFieldValues(
+				ddmField, defaultLanguageId, missingLanguageIds);
+		}
 
 		return ddmField;
 	}

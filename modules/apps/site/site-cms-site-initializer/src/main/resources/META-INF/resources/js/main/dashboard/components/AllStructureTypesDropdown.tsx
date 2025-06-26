@@ -33,12 +33,14 @@ const AllStructureTypesDropdown: React.FC<IAllFiltersDropdown> = ({
 		const endpoint = `/o/object-admin/v1.0/object-definitions${queryParams}`;
 
 		const {data, error} = await ApiHelper.get<{
-			items: {id: string; name: string}[];
+			items: {id: string; label: Record<string, string>}[];
 		}>(endpoint);
 
 		if (data) {
-			return data.items.map(({id, name}) => ({
-				label: name,
+			return data.items.map(({id, label}) => ({
+				label:
+					label[Liferay.ThemeDisplay.getDefaultLanguageId()] ||
+					label['en_US'],
 				value: String(id),
 			}));
 		}

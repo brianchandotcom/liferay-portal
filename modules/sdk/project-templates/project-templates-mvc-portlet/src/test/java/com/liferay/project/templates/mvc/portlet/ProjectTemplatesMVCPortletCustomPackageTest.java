@@ -76,13 +76,13 @@ public class ProjectTemplatesMVCPortletCustomPackageTest
 			_liferayProduct, _liferayVersion, mavenExecutor,
 			_gradleDistribution);
 
-		String packagePrefix = getJavaxOrJakartaPackagePrefix(_liferayVersion);
 		String portletFilePath =
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java";
 
 		testContains(
 			gradleProjectDir, portletFilePath,
-			packagePrefix + ".portlet.name=\" + FooPortletKeys.FOO",
+			getJavaxOrJakartaPackagePrefix(_liferayVersion) +
+				".portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends MVCPortlet {");
 	}
 

@@ -77,19 +77,20 @@ public class ProjectTemplatesMVCPortletSuffixTest
 			_liferayProduct, _liferayVersion, mavenExecutor,
 			_gradleDistribution);
 
-		String packagePrefix = getJavaxOrJakartaPackagePrefix(_liferayVersion);
-		String portletFilePath =
-			"src/main/java/portlet/portlet/portlet/PortletPortlet.java";
-
 		testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/constants/PortletPortletKeys.java",
 			"public class PortletPortletKeys",
 			"public static final String PORTLET",
 			"\"portlet_portlet_PortletPortlet\";");
+
+		String portletFilePath =
+			"src/main/java/portlet/portlet/portlet/PortletPortlet.java";
+
 		testContains(
 			gradleProjectDir, portletFilePath,
-			packagePrefix + ".portlet.name=\" + PortletPortletKeys.PORTLET",
+			getJavaxOrJakartaPackagePrefix(_liferayVersion) +
+				".portlet.name=\" + PortletPortletKeys.PORTLET",
 			"public class PortletPortlet extends MVCPortlet {");
 
 		if (VersionUtil.isJakartaCompatibleVersion(_liferayVersion)) {

@@ -45,11 +45,6 @@ import org.osgi.util.tracker.ServiceTracker;
 @Component(service = UpgradeRecorder.class)
 public class UpgradeRecorder {
 
-	public static boolean isPreupgradeVerifyFailure() {
-		return _errorMessages.containsKey(
-			PreupgradeVerifyProcessSuite.class.getName());
-	}
-
 	public Map<String, Map<String, Integer>> getDataCleanUpMessages() {
 		return _dataCleanUpMessages;
 	}
@@ -94,6 +89,17 @@ public class UpgradeRecorder {
 
 	public Map<String, Map<String, Integer>> getWarningMessages() {
 		return _warningMessages;
+	}
+
+	public boolean isPreupgradeVerifyFailure() {
+		ReleaseManager releaseManager = _serviceTracker.getService();
+
+		if (releaseManager != null) {
+			return false;
+		}
+
+		return _errorMessages.containsKey(
+			PreupgradeVerifyProcessSuite.class.getName());
 	}
 
 	public void recordErrorMessage(

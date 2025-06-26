@@ -163,7 +163,8 @@ public class ProjectGenerator {
 		}
 
 		if (VersionUtil.isJakartaCompatibleVersion(liferayVersion)) {
-			JakartaCompatabilityUtil.updateForJakarta(destinationDir);
+			JakartaCompatabilityUtil.updateForJakarta(
+				new File(destinationDir, artifactId));
 		}
 
 		return archetypeGenerationResult;

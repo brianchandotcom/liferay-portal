@@ -4,13 +4,11 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import {VerticalNav} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
-import ClayPanel from '@clayui/panel';
+import ClaySticker, {DisplayType} from '@clayui/sticker';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
-
-import SpaceSticker, {LogoColor} from '../components/SpaceSticker';
 
 export interface AssetLibrary {
 	id: number;
@@ -29,6 +27,24 @@ interface SpacesNavigationProps {
 	showAddButton: boolean;
 }
 
+interface VerticalNavItem {
+	active?: boolean;
+	href?: string;
+	icon?: string;
+	itemClass?: string;
+	items?: VerticalNavItem[];
+	label: string;
+	menubarAction?: {
+		'aria-label'?: string;
+		'onClick'?: Function;
+		'title'?: string;
+	};
+	sticker?: {
+		displayType: string;
+		label: string;
+	};
+}
+
 const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 	allSpacesURL,
 	assetLibraries,
@@ -44,66 +60,88 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 		event.stopPropagation();
 	};
 
+	const spacesNavigationItem = {
+		items: [
+			...assetLibraries.map(({name, settings, url}) => ({
+				href: url,
+				label: name,
+				sticker: {
+					displayType: settings?.logoColor as string,
+					label: name.charAt(0).toUpperCase(),
+				},
+			})),
+			{
+				href: allSpacesURL,
+				icon: 'box-container',
+				label: sub(
+					Liferay.Language.get('all-spaces-x'),
+					assetLibrariesCount
+				),
+			},
+		],
+		label: Liferay.Language.get('spaces'),
+	};
+
 	return (
-		<ClayPanel
-			collapsable
-			defaultExpanded
-			displayTitle={
-				<ClayPanel.Title className="align-items-center d-flex font-weight-semi-bold justify-content-between text-2 text-uppercase">
-					<span>{Liferay.Language.get('spaces')}</span>
-
-					{showAddButton && (
-						<span className="float-right mr-2">
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('add-space')}
-								displayType="secondary"
-								onClick={onAddButtonClick}
-								size="xs"
-								symbol="plus"
-								title={Liferay.Language.get('add-space')}
-								type="button"
-							/>
-						</span>
-					)}
-				</ClayPanel.Title>
+		<VerticalNav
+			aria-label="vertical navbar"
+			defaultExpandedKeys={new Set([Liferay.Language.get('spaces')])}
+			displayType="primary"
+			items={
+				showAddButton
+					? [
+							{
+								...spacesNavigationItem,
+								menubarAction: {
+									'aria-label':
+										Liferay.Language.get('add-space'),
+									'onClick': onAddButtonClick,
+									'title': Liferay.Language.get('add-space'),
+								},
+							},
+						]
+					: [spacesNavigationItem]
 			}
-			showCollapseIcon
 		>
-			<ClayPanel.Body className="p-0">
-				<ul className="menubar-primary nav nav-stacked" role="menu">
-					{assetLibraries.map((assetLibrary) => (
-						<li className="nav-item" key={assetLibrary.id}>
-							<ClayLink
-								className="nav-link"
-								href={assetLibrary.url}
+			{(item: VerticalNavItem) => {
+				return (
+					<VerticalNav.Item
+						href={item.href}
+						items={item.items}
+						key={item.label}
+						menubarAction={
+							item.menubarAction as React.ComponentProps<
+								typeof ClayButtonWithIcon
 							>
-								<SpaceSticker
+						}
+						textValue={item.label}
+					>
+						<div className="autofit-row">
+							{item.sticker && (
+								<ClaySticker
 									displayType={
-										assetLibrary.settings
-											?.logoColor as LogoColor
+										item.sticker.displayType as DisplayType
 									}
-									name={assetLibrary.name}
 									size="sm"
-								/>
-							</ClayLink>
-						</li>
-					))}
-
-					<li className="nav-item" role="none">
-						<ClayLink className="nav-link" href={allSpacesURL}>
-							<span className="mr-2 sticker sticker-sm">
-								<ClayIcon symbol="box-container" />
-							</span>
-
-							{sub(
-								Liferay.Language.get('all-spaces-x'),
-								assetLibrariesCount
+								>
+									{item.sticker.label}
+								</ClaySticker>
 							)}
-						</ClayLink>
-					</li>
-				</ul>
-			</ClayPanel.Body>
-		</ClayPanel>
+
+							{item.icon && (
+								<div className="autofit-col">
+									<ClayIcon symbol={item.icon} />
+								</div>
+							)}
+
+							<div className="autofit-col autofit-col-expand">
+								{item.label}
+							</div>
+						</div>
+					</VerticalNav.Item>
+				);
+			}}
+		</VerticalNav>
 	);
 };
 

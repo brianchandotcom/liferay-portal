@@ -128,6 +128,8 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private String _getKoroneikiContactTeams(String emailAddress) {
+		JSONArray jsonArray = new JSONArray();
+
 		JSONObject jsonObject = new JSONObject(
 			get(
 				_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -138,14 +140,12 @@ public class MarketplaceCommandLineRunner
 				).build(
 				).toUri()));
 
-		JSONArray finalTeamsJSONArray = new JSONArray();
-
 		JSONArray teamsJSONArray = jsonObject.getJSONArray("teams");
 
 		for (int i = 0; i < teamsJSONArray.length(); i++) {
 			JSONObject teamJSONObject = teamsJSONArray.getJSONObject(i);
 
-			finalTeamsJSONArray.put(
+			jsonArray.put(
 				new JSONObject(
 				).put(
 					"key", teamJSONObject.getString("key")
@@ -154,7 +154,7 @@ public class MarketplaceCommandLineRunner
 				));
 		}
 
-		return finalTeamsJSONArray.toString();
+		return jsonArray.toString();
 	}
 
 	private String _getKoroneikiProject(Order order, UserAccount userAccount) {

@@ -852,18 +852,18 @@ public class AssetCategoryLocalServiceImpl
 			}
 		}
 
+		if (parentCategoryId != category.getParentCategoryId()) {
+			_rebuildTreePath(category, parentCategory);
+
+			category.setParentCategoryId(parentCategoryId);
+		}
+
 		if (vocabularyId != category.getVocabularyId()) {
 			_assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
 
 			updateChildrenVocabularyId(category, vocabularyId);
 
 			category.setVocabularyId(vocabularyId);
-		}
-
-		if (parentCategoryId != category.getParentCategoryId()) {
-			_rebuildTreePath(category, parentCategory);
-
-			category.setParentCategoryId(parentCategoryId);
 		}
 
 		return assetCategoryPersistence.update(category);

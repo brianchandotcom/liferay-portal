@@ -11,9 +11,9 @@ import React, {useEffect, useState} from 'react';
 import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import Asterisk from './Asterisk';
 import {
+	INITIAL_SKU_OPTIONS_ATOM_STATE,
 	getProductOptionName,
 	getSkuOptionsErrors,
-	initialSkuOptionsAtomState,
 	isRequired,
 } from './utils';
 
@@ -99,7 +99,7 @@ const ProductOptionCheckbox = ({
 						miniCartErrors: [],
 						miniCartSkuOptions: [],
 					})
-				: setSkuOptionsAtomState(initialSkuOptionsAtomState);
+				: setSkuOptionsAtomState(INITIAL_SKU_OPTIONS_ATOM_STATE);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

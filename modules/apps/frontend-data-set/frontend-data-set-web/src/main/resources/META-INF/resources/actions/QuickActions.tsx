@@ -29,14 +29,16 @@ function QuickActions({actions, itemData, itemId, onClick}: IQuickActions) {
 						}
 						key={action.data?.id || action.label}
 						monospaced={false}
-						onClick={(event: any) =>
+						onClick={(event: any) => {
+							event.stopPropagation();
+
 							onClick({
 								action,
 								event,
 								itemData,
 								itemId,
-							})
-						}
+							});
+						}}
 						symbol={action.icon}
 						title={action.label}
 					>

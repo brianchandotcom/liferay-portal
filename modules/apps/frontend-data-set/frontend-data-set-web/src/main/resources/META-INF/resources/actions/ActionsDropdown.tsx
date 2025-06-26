@@ -161,6 +161,8 @@ function ActionsDropdown({
 				}
 				monospaced={Boolean(action.icon)}
 				onClick={(event: any) => {
+					event.stopPropagation();
+
 					onClick({
 						action,
 						event,
@@ -215,6 +217,7 @@ function ActionsDropdown({
 				onActiveChange={() =>
 					onMenuActiveChange && onMenuActiveChange(!menuActive)
 				}
+				onClick={(event) => event.stopPropagation()}
 				trigger={
 					<ClayButton
 						className="component-action dropdown-toggle"

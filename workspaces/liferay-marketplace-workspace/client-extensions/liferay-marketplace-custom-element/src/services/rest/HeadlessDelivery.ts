@@ -37,6 +37,12 @@ export default class HeadlessDelivery {
 		return response.data;
 	}
 
+	static async deleteDocument(documentId: number | string) {
+		return fetcher.delete(
+			`o/headless-delivery/v1.0/documents/${documentId}`
+		);
+	}
+
 	static async getDocument(documentId: number | string) {
 		return fetcher(`o/headless-delivery/v1.0/documents/${documentId}`);
 	}
@@ -50,9 +56,21 @@ export default class HeadlessDelivery {
 		);
 	}
 
-	static async getDocumentFolderDocuments(folderId: number | string) {
+	static async getDocumentFolderDocument(
+		folderId: number | string,
+		searchParams: URLSearchParams = new URLSearchParams()
+	) {
 		return fetcher(
-			`o/headless-delivery/v1.0/document-folders/${folderId}/document-folders`
+			`o/headless-delivery/v1.0/document-folders/${folderId}/documents?${searchParams.toString()}`
+		);
+	}
+
+	static async getDocumentFolderDocuments(
+		folderId: number | string,
+		searchParams: URLSearchParams = new URLSearchParams()
+	) {
+		return fetcher(
+			`o/headless-delivery/v1.0/document-folders/${folderId}/document-folders?${searchParams.toString()}`
 		);
 	}
 }

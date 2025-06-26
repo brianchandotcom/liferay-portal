@@ -28,6 +28,13 @@ type ProductConfig = {
 	isEdit?: boolean;
 };
 
+type TemporaryData = {
+	compatibleOfferings: any | null;
+	description: {[key: string]: string} | null;
+	name: {[key: string]: string} | null;
+	productCategories: Partial<Categories>[] | null;
+};
+
 function normalizeCategory(category: {
 	label: string;
 	value: number;
@@ -65,6 +72,12 @@ function isTierPriceChanged(
 
 export default class AppPublish extends BaseAppPublish {
 	private config: ProductConfig = {isDraft: false};
+	private temporary: TemporaryData = {
+		compatibleOfferings: null,
+		description: null,
+		name: null,
+		productCategories: null,
+	};
 
 	constructor(private context: NewAppInitialState) {
 		super();
@@ -208,25 +221,11 @@ export default class AppPublish extends BaseAppPublish {
 				);
 			}
 
-			await HeadlessCommerceAdminCatalogImpl.updateProduct(
-				_product.productId as number,
-				{
-					categories: productCategories,
-					description: {en_US: description},
-					name: {en_US: name},
-					...this.getProductStatus(),
-				}
-			);
+			this.temporary.description = {en_US: description};
+			this.temporary.name = {en_US: name};
+			this.temporary.productCategories = productCategories;
 
-			const product = await HeadlessCommerceAdminCatalogImpl.getProduct(
-				_product.productId,
-				new URLSearchParams({
-					nestedFields:
-						'attachments,catalog,images,productSpecifications,productOptions,skus',
-				})
-			);
-
-			return product;
+			return _product;
 		}
 
 		const product =
@@ -280,6 +279,24 @@ export default class AppPublish extends BaseAppPublish {
 			build: {appType, resourceRequirements},
 		} = this.context;
 
+		const {
+			[ProductVocabulary.LIFERAY_PLATFORM_OFFERING]:
+				compatibleOfferingVocabulary,
+		} = this.context.references.vocabulariesAndCategories;
+
+		const platformOfferingLabels = getOfferingTypes(appType);
+
+		const compatibleOfferingCategories =
+			compatibleOfferingVocabulary.categories ?? [];
+
+		const compatibleOfferings = compatibleOfferingCategories
+			.filter(({label}: {label: string}) =>
+				platformOfferingLabels.includes(label as ProductOfferingTypes)
+			)
+			.map(normalizeCategory);
+
+		this.temporary.compatibleOfferings = compatibleOfferings;
+
 		const specifications = [
 			{
 				key: ProductSpecificationKey.APP_TYPE,
@@ -302,31 +319,7 @@ export default class AppPublish extends BaseAppPublish {
 			);
 		}
 
-		const {
-			[ProductVocabulary.LIFERAY_PLATFORM_OFFERING]:
-				compatibleOfferingVocabulary,
-		} = this.context.references.vocabulariesAndCategories;
-
-		const platformOfferingLabels = getOfferingTypes(appType);
-
-		const compatibleOfferingCategories =
-			compatibleOfferingVocabulary.categories ?? [];
-
-		const compatibleOfferings = compatibleOfferingCategories
-			.filter(({label}: {label: string}) =>
-				platformOfferingLabels.includes(label as ProductOfferingTypes)
-			)
-			.map(normalizeCategory);
-
-		await HeadlessCommerceAdminCatalogImpl.updateProduct(
-			product.productId,
-			{
-				categories: [...product.categories, ...compatibleOfferings],
-				...this.getProductStatus(),
-			}
-		);
-
-		this.processLiferayPackages(product);
+		await this.processLiferayPackages(product);
 
 		await BaseAppPublish.updateSpecifications(product, [...specifications]);
 	}
@@ -455,9 +448,7 @@ export default class AppPublish extends BaseAppPublish {
 
 			this.context._product = product;
 
-			await AppPublish.deleteReferences(
-				this.context.references.imagesToDelete
-			);
+			await this.cleanUp();
 
 			for (const sync of [
 				this.syncBuild.bind(this),
@@ -476,12 +467,24 @@ export default class AppPublish extends BaseAppPublish {
 					console.error(`Unable to sync ${sync.name}`, error);
 				}
 			}
+
+			await this.updateProduct(product);
 		}
 		catch (error) {
 			console.error(error);
 		}
 
 		return product;
+	}
+
+	private async cleanUp() {
+		await AppPublish.deleteReferences(
+			this.context.references.imagesToDelete
+		);
+
+		await AppPublish.deleteLiferayPackages(
+			this.context.references.buildsToDelete
+		);
 	}
 
 	private getNonTrialSKUs() {
@@ -642,6 +645,21 @@ export default class AppPublish extends BaseAppPublish {
 				tierPrices: tierPricesWithExternalReferenceCode,
 			},
 			priceEntry.priceEntryId
+		);
+	}
+
+	private async updateProduct(product: Product) {
+		await HeadlessCommerceAdminCatalogImpl.updateProduct(
+			product.productId,
+			{
+				categories: [
+					...(this.temporary.productCategories ?? product.categories),
+					...(this.temporary.compatibleOfferings ?? []),
+				],
+				description: this.temporary.description ?? product.description,
+				name: this.temporary.name ?? product.name,
+				...this.getProductStatus(),
+			}
 		);
 	}
 

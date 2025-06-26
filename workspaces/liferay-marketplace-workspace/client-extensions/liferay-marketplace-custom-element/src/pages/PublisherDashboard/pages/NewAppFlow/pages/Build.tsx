@@ -35,11 +35,14 @@ type ProductTypeOption = {
 const BuildContent = () => {
 	const [
 		{
+			_product,
 			build: {appType, liferayPackages},
 			loading,
 		},
 		dispatch,
 	] = useNewAppContext();
+
+	const isDraft = _product?.productStatus === ProductWorkflowStatusCode.DRAFT;
 
 	const [visibleSelectVersionModal, setVisibleSelectVersionModal] =
 		useState(false);
@@ -106,7 +109,7 @@ const BuildContent = () => {
 							<span>
 								{i18n.translate('package')} {index + 1}
 							</span>
-							{!liferayPackage.uploaded && (
+							{(!liferayPackage.uploaded || isDraft) && (
 								<ClayButton
 									displayType="unstyled"
 									onClick={() => {
@@ -115,6 +118,20 @@ const BuildContent = () => {
 												(_, itemIndex) =>
 													itemIndex !== index
 											);
+
+										if (isDraft) {
+											const liferayPackagesToRemove =
+												liferayPackages.filter(
+													(_, itemIndex) =>
+														itemIndex === index
+												);
+
+											dispatch({
+												payload:
+													liferayPackagesToRemove[0],
+												type: NewAppTypes.SET_DELETE_BUILD,
+											});
+										}
 
 										dispatch({
 											payload: {
@@ -209,12 +226,7 @@ const Build = () => {
 	};
 
 	return (
-		<div
-			className={classNames('new-app-form-build', {
-				'section-disabled':
-					_product?.productStatus === ProductWorkflowStatusCode.DRAFT,
-			})}
-		>
+		<div className="new-app-form-build">
 			<Section
 				label={i18n.translate('app-type')}
 				required
@@ -222,7 +234,12 @@ const Build = () => {
 			>
 				<div className="provide-app-build-page-cloud-compatible-container">
 					<ClayDropDown
-						active={active && !_product?.id}
+						active={
+							active &&
+							(!_product?.id ||
+								_product?.productStatus ===
+									ProductWorkflowStatusCode.DRAFT)
+						}
 						alignmentPosition={Align.BottomLeft}
 						className="app-type-dropdown"
 						onActiveChange={setActive}

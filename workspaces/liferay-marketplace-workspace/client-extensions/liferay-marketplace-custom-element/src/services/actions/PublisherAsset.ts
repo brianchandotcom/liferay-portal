@@ -33,7 +33,10 @@ export default class PublisherAsset {
 
 		const {items: appFolders} =
 			await HeadlessDelivery.getDocumentFolderDocuments(
-				publisherFolderId
+				publisherFolderId,
+				new URLSearchParams({
+					filter: SearchBuilder.contains('name', folderName),
+				})
 			);
 
 		const appFolder = appFolders.find(
@@ -45,7 +48,8 @@ export default class PublisherAsset {
 		if (!appFolderId) {
 			const packageFolder = await HeadlessDelivery.createDocumentFolder(
 				folderName,
-				publisherFolderId
+				publisherFolderId,
+				'Members'
 			);
 
 			appFolderId = packageFolder.id;
@@ -57,30 +61,17 @@ export default class PublisherAsset {
 	private async getPublisherAssetDocumentId(
 		appFolderId: number
 	): Promise<number> {
-		const {items} =
-			await HeadlessDelivery.getDocumentFolderDocuments(appFolderId);
+		const formData = new FormData();
+		const blob = new Blob([this.file.file]);
 
-		const appDocument = items.find(
-			(document: any) => document.name === this.file.fileName
-		);
+		formData.append('file', blob, this.file.fileName);
+		const sourceDocument =
+			await HeadlessDelivery.createDocumentFolderDocument(
+				appFolderId,
+				formData
+			);
 
-		let appDocumentId = appDocument?.id;
-
-		if (!appDocumentId) {
-			const formData = new FormData();
-			const blob = new Blob([this.file.file]);
-
-			formData.append('file', blob, this.file.fileName);
-			const sourceDocument =
-				await HeadlessDelivery.createDocumentFolderDocument(
-					appFolderId,
-					formData
-				);
-
-			appDocumentId = sourceDocument.id;
-		}
-
-		return appDocumentId;
+		return sourceDocument.id;
 	}
 
 	private async getPublisherFolderId(): Promise<number> {

@@ -8,6 +8,16 @@ import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
 
 export default class HeadlessPublisherAsset {
+	static async createPublisherAsset(body: any) {
+		const response = await axios.post('o/c/publisherassetses', body);
+
+		return response.data;
+	}
+
+	static async deletePublisherAsset(id: number | string) {
+		return fetcher.delete(`o/c/publisherassetses/${id}`);
+	}
+
 	static getProductPublisherAssetsByProductId(productId: number | string) {
 		const searchParams = new URLSearchParams({
 			filter: SearchBuilder.eq(
@@ -19,11 +29,5 @@ export default class HeadlessPublisherAsset {
 		return fetcher<APIResponse>(
 			`o/c/publisherassetses?${searchParams.toString()}`
 		);
-	}
-
-	static async createPublisherAsset(body: any) {
-		const response = await axios.post('o/c/publisherassetses', body);
-
-		return response.data;
 	}
 }

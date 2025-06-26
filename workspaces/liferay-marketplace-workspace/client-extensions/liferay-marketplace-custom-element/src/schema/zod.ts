@@ -147,8 +147,8 @@ const zodSchema = {
 		},
 		termsAndConditions: z.boolean().refine((data) => data === true),
 		version: z.object({
-			notes: z.string(),
-			version: z.string(),
+			notes: z.string().optional(),
+			version: z.string().min(1),
 		}),
 	},
 	becomePublisherForm: z.object({

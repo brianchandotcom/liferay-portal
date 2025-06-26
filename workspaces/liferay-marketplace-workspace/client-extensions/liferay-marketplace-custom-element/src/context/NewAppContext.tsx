@@ -62,6 +62,7 @@ export enum NewAppTypes {
 	SET_BUILD = 'SET_BUILD',
 	SET_CLEANUP = 'SET_CLEANUP',
 	SET_CONTEXT = 'SET_CONTEXT',
+	SET_DELETE_BUILD = 'SET_DELETE_BUILD',
 	SET_DELETE_IMAGE = 'SET_DELETE_IMAGE',
 	SET_LICENSING = 'SET_LICENSING',
 	SET_LICENSING_ADD_PRICE = 'SET_LICENSING_ADD_PRICE',
@@ -119,6 +120,7 @@ export type NewAppInitialState = {
 		}[];
 	};
 	references: {
+		buildsToDelete: LiferayPackage[];
 		flags: {
 			canModifyProductProfileCategory: boolean;
 		};
@@ -149,6 +151,7 @@ type NewAppPayload = {
 	[NewAppTypes.SET_BUILD]: Partial<NewAppInitialState['build']>;
 	[NewAppTypes.SET_CLEANUP]: undefined;
 	[NewAppTypes.SET_CONTEXT]: Product;
+	[NewAppTypes.SET_DELETE_BUILD]: LiferayPackage;
 	[NewAppTypes.SET_DELETE_IMAGE]: string;
 	[NewAppTypes.SET_LICENSING]: Partial<NewAppInitialState['licensing']>;
 	[NewAppTypes.SET_LICENSING_ADD_PRICE]: {
@@ -216,6 +219,7 @@ const newAppInitialState: NewAppInitialState = {
 		tags: [],
 	},
 	references: {
+		buildsToDelete: [],
 		flags: {canModifyProductProfileCategory: false},
 		imagesToDelete: [],
 		vocabulariesAndCategories: {},
@@ -258,6 +262,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				action.payload.appType &&
 				action.payload.appType !== state.build.appType
 			) {
+				state.references.buildsToDelete = state.build.liferayPackages;
 				state.build.liferayPackages = [];
 			}
 
@@ -266,6 +271,19 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				build: {
 					...state.build,
 					...action.payload,
+				},
+			};
+		}
+
+		case NewAppTypes.SET_DELETE_BUILD: {
+			return {
+				...state,
+				references: {
+					...state.references,
+					buildsToDelete: [
+						...(state?.references?.buildsToDelete || []),
+						action.payload,
+					],
 				},
 			};
 		}
@@ -715,7 +733,7 @@ export default function NewAppContextProvider({
 								),
 								src: publisherAsset.sourceCode.link.href,
 							},
-							id: publisherAsset.sourceCode.id,
+							id: publisherAsset.id,
 							uploaded: true,
 							versions: publisherAsset.version.split(','),
 						};

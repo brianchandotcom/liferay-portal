@@ -139,6 +139,8 @@ export default {
 	'continue': 'Continue',
 	'continue-to-install': 'Continue to Install',
 	'copied-x-to-the-clipboard': 'Copied {0} to the clipboard',
+	'could-not-upload-the-file-package-with-this-filename-already-exists':
+		'Could not upload the file. Package with this filename already exists.',
 	'coupon-code': 'Coupon Code',
 	'create': 'Create',
 	'create-a-cloud-app-to-be-delivered-as-a-live-service':

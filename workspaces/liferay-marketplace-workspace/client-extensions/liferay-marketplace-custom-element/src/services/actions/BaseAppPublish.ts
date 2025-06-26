@@ -4,9 +4,12 @@
  */
 
 import {UploadedFile} from '../../components/FileList/FileList';
+import {LiferayPackage} from '../../context/NewAppContext';
 import {ProductSpecificationKey} from '../../enums/Product';
 import {base64ToText, fileToBase64} from '../../utils/file';
 import HeadlessCommerceAdminCatalogImpl from '../rest/HeadlessCommerceAdminCatalog';
+import HeadlessDelivery from '../rest/HeadlessDelivery';
+import HeadlessPublisherAsset from '../rest/HeadlessPublisherAsset';
 
 export default class BaseAppPublish {
 	public static addOrUpdateImages = async (
@@ -60,6 +63,22 @@ export default class BaseAppPublish {
 			);
 		}
 	};
+
+	public static async deleteLiferayPackages(
+		liferayPackages: LiferayPackage[]
+	) {
+		try {
+			for (const liferayPackage of liferayPackages) {
+				await HeadlessDelivery.deleteDocument(liferayPackage.file.id);
+				await HeadlessPublisherAsset.deletePublisherAsset(
+					liferayPackage.id
+				);
+			}
+		}
+		catch (error) {
+			console.error(error);
+		}
+	}
 
 	public static async deleteReferences(externalReferenceCodes: string[]) {
 		try {

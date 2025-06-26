@@ -21,6 +21,7 @@ import {
 import {ProductType} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {getRandomID} from '../../../../../utils/string';
+import {Liferay} from '../../../../../liferay/liferay';
 
 type NewAppUploadAppPackagesComponentProps = {
 	isProcessing: boolean;
@@ -86,6 +87,22 @@ export function NewAppUploadAppPackagesComponent({
 			readableSize: filesize(file.size),
 			uploaded: false,
 		}));
+
+		if (
+			liferayPackages.some(
+				(liferayPackage) =>
+					liferayPackage.file?.fileName ===
+					newUploadedPackage[0].fileName
+			)
+		) {
+			Liferay.Util.openToast({
+				message: i18n.translate(
+					'could-not-upload-the-file-package-with-this-filename-already-exists'
+				),
+				type: 'danger',
+			});
+			return;
+		}
 
 		const _liferayPackages = liferayPackages.map((_liferayPackage) => {
 			if (liferayPackage.id === _liferayPackage.id) {

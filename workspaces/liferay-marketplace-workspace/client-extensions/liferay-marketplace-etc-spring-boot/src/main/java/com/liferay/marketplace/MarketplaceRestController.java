@@ -267,7 +267,7 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	@PostMapping("kpi")
-	public void postProjectsKPI(
+	public void postKPI(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
 		if (_log.isInfoEnabled()) {

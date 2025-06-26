@@ -101,8 +101,6 @@ public class ProjectTemplatesPortletConfigurationIconTest
 
 		testGradlePortalReleaseDependency(gradleProjectDir, _liferayVersion);
 
-		String packagePrefix = getJavaxOrJakartaPackagePrefix(_liferayVersion);
-
 		String portletConfigurationIconFile =
 			"src/main/java/blade/test/portlet/configuration/icon" +
 				"/IcontestPortletConfigurationIcon.java";
@@ -111,7 +109,7 @@ public class ProjectTemplatesPortletConfigurationIconTest
 			gradleProjectDir, portletConfigurationIconFile,
 			"public class IcontestPortletConfigurationIcon",
 			"extends BasePortletConfigurationIcon",
-			packagePrefix + ".portlet.name=");
+			getJavaxOrJakartaPackagePrefix(_liferayVersion) + ".portlet.name=");
 
 		if (VersionUtil.isJakartaCompatibleVersion(_liferayVersion)) {
 			testFileUpdatedForJakarta(

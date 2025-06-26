@@ -103,9 +103,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		if (!companyIds.isEmpty()) {
 			throw new VerifyException(
 				StringBundler.concat(
-					"Missing directories in ",
-					rootDirPath.toString(), " for companies: ",
-					companyIds.toString()));
+					"Missing directories in ", rootDirPath.toString(),
+					" for companies: ", companyIds.toString()));
 		}
 	}
 

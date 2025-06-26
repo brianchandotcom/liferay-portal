@@ -588,21 +588,20 @@ public class JournalArticleLocalServiceTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				ArticleVersionComparator.getInstance(false));
 
+		journalArticle = journalArticles.get(0);
+
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_SCHEDULED,
-			journalArticles.get(
-				0
-			).getStatus());
+			WorkflowConstants.STATUS_SCHEDULED, journalArticle.getStatus());
+
+		journalArticle = journalArticles.get(1);
+
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			journalArticles.get(
-				1
-			).getStatus());
+			WorkflowConstants.STATUS_APPROVED, journalArticle.getStatus());
+
+		journalArticle = journalArticles.get(2);
+
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_SCHEDULED,
-			journalArticles.get(
-				2
-			).getStatus());
+			WorkflowConstants.STATUS_SCHEDULED, journalArticle.getStatus());
 	}
 
 	@Test

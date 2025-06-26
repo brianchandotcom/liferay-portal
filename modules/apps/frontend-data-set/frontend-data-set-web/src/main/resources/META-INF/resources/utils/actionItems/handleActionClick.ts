@@ -29,7 +29,6 @@ const handleActionClick = ({
 	onItemSelectionChange,
 	openModal,
 	openSidePanel,
-	selectItems,
 	setLoading,
 	toggleItemInlineEdit,
 }: {
@@ -68,14 +67,9 @@ const handleActionClick = ({
 
 	const doAction = ({defaultPrevented}: {defaultPrevented: boolean}) => {
 		if (target === INFO_PANEL && onInfoPanelToggleButtonClick) {
-			selectItems?.({
-				trigger: ESelectionTrigger.CONTAINER,
-				value: itemId,
-			});
-
 			onItemSelectionChange?.({
+				item: itemData,
 				trigger: ESelectionTrigger.CONTAINER,
-				value: itemId,
 			});
 
 			!infoPanelOpen && onInfoPanelToggleButtonClick();

@@ -21,10 +21,12 @@ function Actions({
 	actions,
 	itemData,
 	itemId,
+	onItemSelectionChange,
 }: {
 	actions: Array<IItemsActions>;
 	itemData: any;
 	itemId: string | number;
+	onItemSelectionChange?: Function;
 }) {
 	const {
 		allItemsSelectedActive,
@@ -102,6 +104,7 @@ function Actions({
 			loadData,
 			onActionDropdownItemClick,
 			onInfoPanelToggleButtonClick,
+			onItemSelectionChange,
 			openModal,
 			openSidePanel,
 			selectItems,

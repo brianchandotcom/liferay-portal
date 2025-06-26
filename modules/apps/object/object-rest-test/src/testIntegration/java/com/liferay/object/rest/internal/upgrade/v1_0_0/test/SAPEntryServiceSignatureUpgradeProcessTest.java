@@ -52,18 +52,15 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					TestPropsValues.getCompanyId())) {
 
-			String oldAllowedServiceSignatures = StringBundler.concat(
-				"com.liferay.object.rest.internal.resource.v1_0.",
-				"ObjectEntryResourceImpl#",
-				"putByExternalReferenceCodeCurrentExternalReference",
-				"CodeObjectRelationshipNameRelatedExternalReferenceCode");
-
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
 				TestPropsValues.getUserId(),
 				StringBundler.concat(
 					"com.liferay.object.rest.internal.resource.v1_0.",
 					"ObjectEntryResourceImpl#getObjectEntry\n",
-					oldAllowedServiceSignatures),
+					"com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#",
+					"putByExternalReferenceCodeCurrentExternalReference",
+					"CodeObjectRelationshipNameRelatedExternalReferenceCode"),
 				false, true, RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(

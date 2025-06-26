@@ -71,12 +71,13 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 
 	@Override
 	public TestEntity getTestEntity(Long testEntityId) throws Exception {
-		try {
-			return _testEntities.get(Math.toIntExact(testEntityId));
+		for (TestEntity testEntity : _testEntities) {
+			if (Objects.equals(testEntity.getId(), testEntityId)) {
+				return testEntity;
+			}
 		}
-		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
-			throw new NoSuchModelException(indexOutOfBoundsException);
-		}
+
+		throw new NoSuchModelException();
 	}
 
 	@Override
@@ -93,11 +94,11 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 
 	@Override
 	public TestEntity postTestEntity(TestEntity testEntity) {
-		_testEntities.add(testEntity);
-
 		testEntity.setDateCreated(new Date());
 		testEntity.setDateModified(new Date());
-		testEntity.setId(_testEntities.size() - 1L);
+		testEntity.setId((long)_testEntities.size());
+
+		_testEntities.add(testEntity);
 
 		return testEntity;
 	}

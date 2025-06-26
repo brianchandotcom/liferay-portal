@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageTemplate;
+import com.liferay.headless.admin.site.dto.v1_0.ContentPageTemplateSettings;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
@@ -84,6 +85,12 @@ public class PageTemplateDTOConverter
 				setName(layoutPageTemplateEntry::getName);
 				setPageTemplateSet(
 					() -> _getPageTemplateSet(layoutPageTemplateEntry));
+				setPageTemplateSettings(
+					() -> new ContentPageTemplateSettings() {
+						{
+							setType(Type.CONTENT_PAGE_TEMPLATE_SETTINGS);
+						}
+					});
 				setTaxonomyCategoryItemExternalReferences(
 					() -> AssetUtil.getTaxonomyCategoryItemExternalReferences(
 						Layout.class.getName(),

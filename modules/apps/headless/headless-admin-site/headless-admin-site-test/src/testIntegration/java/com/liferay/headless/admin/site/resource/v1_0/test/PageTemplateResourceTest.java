@@ -11,6 +11,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
+import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplateSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
@@ -676,6 +677,11 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				keywords = AssetTestUtil.randomKeywords(serviceContext);
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				pageTemplateSet = _getPageTemplateSet(group);
+				pageTemplateSettings = new ContentPageTemplateSettings() {
+					{
+						setType(Type.CONTENT_PAGE_TEMPLATE_SETTINGS);
+					}
+				};
 				taxonomyCategoryItemExternalReferences =
 					AssetTestUtil.randomTaxonomyCategoryItemExternalReferences(
 						testCompany.getGroupId(), serviceContext);

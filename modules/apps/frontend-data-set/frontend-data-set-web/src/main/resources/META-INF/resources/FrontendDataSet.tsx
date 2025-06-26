@@ -62,6 +62,7 @@ import {loadData} from './utils/loadData';
 
 import {logError} from './utils/logError';
 import {
+	ESelectionTrigger,
 	IField,
 	IFrontendDataSetProps,
 	IModalConfig,
@@ -464,10 +465,13 @@ const FrontendDataSetContent = ({
 		trigger,
 		value,
 	}: {
-		trigger: 'input' | 'body';
+		trigger: ESelectionTrigger;
 		value: any;
 	}) {
-		if (selectionType === 'single' || trigger === 'body') {
+		if (
+			selectionType === 'single' ||
+			trigger === ESelectionTrigger.CONTAINER
+		) {
 			return setSelectedItemsValue((previousValues) => {
 				const newValue = Array.isArray(value) ? value : [value];
 
@@ -733,7 +737,10 @@ const FrontendDataSetContent = ({
 					setAllItemsSelectedActive(value)
 				}
 				selectItems={(items: Array<any>) =>
-					selectItems({trigger: 'input', value: items})
+					selectItems({
+						trigger: ESelectionTrigger.INPUT,
+						value: items,
+					})
 				}
 				selectedItems={selectedItems}
 				selectedItemsKey={selectedItemsKey}
@@ -771,7 +778,7 @@ const FrontendDataSetContent = ({
 							trigger,
 						}: {
 							item: any;
-							trigger: 'input' | 'body';
+							trigger: ESelectionTrigger;
 						}) => {
 							if (allItemsSelectedActive) {
 								setSelectedItemsValue(

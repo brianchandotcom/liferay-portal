@@ -8,7 +8,7 @@ import {navigate} from 'frontend-js-web';
 
 import {openPermissionsModal} from '../modals/openPermissionsModal';
 import {resolveModalSize} from '../modals/resolveModalSize';
-import {IItemsActions} from '../types';
+import {ESelectionTrigger, IItemsActions} from '../types';
 import {ACTION_ITEM_TARGETS} from './constants';
 import formatActionURL from './formatActionURL';
 
@@ -66,7 +66,10 @@ const handleActionClick = ({
 
 	const doAction = ({defaultPrevented}: {defaultPrevented: boolean}) => {
 		if (target === INFO_PANEL && onInfoPanelToggleButtonClick) {
-			selectItems?.({trigger: 'body', value: itemId});
+			selectItems?.({
+				trigger: ESelectionTrigger.CONTAINER,
+				value: itemId,
+			});
 
 			!infoPanelOpen && onInfoPanelToggleButtonClick();
 		}

@@ -17,7 +17,12 @@ import ImageRenderer from '../../cell_renderers/ImageRenderer';
 import FDSDndProvider from '../../dnd/FDSDndProvider';
 import useFDSDrop from '../../dnd/useFDSDrop';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
-import {IHeader, IListSchema, IListTitleRenderer} from '../../utils/types';
+import {
+	ESelectionTrigger,
+	IHeader,
+	IListSchema,
+	IListTitleRenderer,
+} from '../../utils/types';
 
 const Title = ({
 	item,
@@ -92,7 +97,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 							}
 							onChange={() => {
 								selectItems({
-									trigger: 'checkbox',
+									trigger: ESelectionTrigger.INPUT,
 									value: itemId,
 								});
 
@@ -128,7 +133,10 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 					expand
 					onClick={() => {
 						if (selectable) {
-							selectItems({trigger: 'body', value: itemId});
+							selectItems({
+								trigger: ESelectionTrigger.CONTAINER,
+								value: itemId,
+							});
 
 							onSelect?.({selectedItems: [item]});
 						}

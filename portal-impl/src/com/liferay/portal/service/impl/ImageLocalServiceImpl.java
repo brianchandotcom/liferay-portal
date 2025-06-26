@@ -54,9 +54,10 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 
 		Store store = _storeSnapshot.get();
 
-		store.deleteDirectory(
+		store.deleteFile(
 			image.getCompanyId(), _REPOSITORY_ID,
-			_getFileName(image.getImageId(), image.getType()));
+			_getFileName(image.getImageId(), image.getType()),
+			Store.VERSION_DEFAULT);
 
 		return image;
 	}
@@ -269,8 +270,9 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 				image.getCompanyId(), _REPOSITORY_ID, fileName,
 				Store.VERSION_DEFAULT)) {
 
-			store.deleteDirectory(
-				image.getCompanyId(), _REPOSITORY_ID, fileName);
+			store.deleteFile(
+				image.getCompanyId(), _REPOSITORY_ID, fileName,
+				Store.VERSION_DEFAULT);
 		}
 
 		try (InputStream inputStream = new UnsyncByteArrayInputStream(bytes)) {

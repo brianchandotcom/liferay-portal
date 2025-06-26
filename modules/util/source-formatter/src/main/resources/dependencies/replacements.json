@@ -148,8 +148,8 @@
 	},
 	{
 		"from": "new InfoItemFormVariation(String paramName, InfoLocalizedValue<String> paramName)",
-		"issueKey": "LPD-8024",
-		"sendMessage": true
+		"hasMessage": true,
+		"issueKey": "LPD-8024"
 	},
 	{
 		"from": "LayoutFriendlyURLComposite(Layout paramName, String paramName)",
@@ -3300,8 +3300,8 @@
 			"JournalArticle"
 		],
 		"from": "setDDMStructureKey(String paramName)",
-		"issueKey": "LPD-30559",
-		"sendMessage": true
+		"hasMessage": true,
+		"issueKey": "LPD-30559"
 	},
 	{
 		"classNames": [
@@ -4288,8 +4288,8 @@
 	},
 	{
 		"from": "Liferay.Notification",
+		"hasMessage": true,
 		"issueKey": "LPD-44043",
-		"sendMessage": true,
 		"validExtensions": [
 			"jsp"
 		]
@@ -5235,8 +5235,8 @@
 			"AssetCategoryLocalServiceUtil"
 		],
 		"from": "fetchAssetCategoryByExternalReferenceCode(long paramName, String paramName)",
-		"issueKey": "LPS-196608",
-		"sendMessage": true
+		"hasMessage": true,
+		"issueKey": "LPS-196608"
 	},
 	{
 		"classNames": [
@@ -5490,8 +5490,8 @@
 			"AssetVocabularyLocalServiceUtil"
 		],
 		"from": "fetchAssetVocabularyByExternalReferenceCode(long paramName, String paramName)",
-		"issueKey": "LPS-198292",
-		"sendMessage": true
+		"hasMessage": true,
+		"issueKey": "LPS-198292"
 	},
 	{
 		"classNames": [
@@ -5511,8 +5511,8 @@
 	},
 	{
 		"from": "ConfigurationBeanDeclaration",
-		"issueKey": "LPS-198405",
-		"sendMessage": true
+		"hasMessage": true,
+		"issueKey": "LPS-198405"
 	},
 	{
 		"classNames": [

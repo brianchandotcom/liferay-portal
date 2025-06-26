@@ -91,8 +91,7 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 						value.put("fileTypes", fileTypes);
 
 						value.put(
-							"sendMessage",
-							jsonObject.getBoolean("sendMessage"));
+							"hasMessage", jsonObject.getBoolean("hasMessage"));
 
 						return value;
 					});
@@ -107,8 +106,8 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 			for (String fileType : (Set<String>)jsonObject.get("fileTypes")) {
 				objectsArray.add(
 					new Object[] {
-						entry.getKey(), fileType,
-						jsonObject.getBoolean("sendMessage")
+						jsonObject.getBoolean("hasMessage"), entry.getKey(),
+						fileType
 					});
 			}
 		}
@@ -117,11 +116,11 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 	}
 
 	public UpgradeCatchAllCheckTest(
-		String issueKey, String fileType, boolean sendMessage) {
+		boolean hasMessage, String issueKey, String fileType) {
 
+		_hasMessage = hasMessage;
 		_issueKey = issueKey;
 		_fileType = fileType;
-		_sendMessage = sendMessage;
 	}
 
 	@Before
@@ -153,7 +152,7 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 			"src/test/resources/com/liferay/source/formatter/dependencies" +
 				"/expected/upgrade/upgrade-catch-all-check/" + fileName);
 
-		if (_sendMessage) {
+		if (_hasMessage) {
 			Assert.assertFalse(
 				"Unexpected unit test in " + expectedFilePath,
 				Files.exists(expectedFilePath));
@@ -203,7 +202,7 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 	private static final String _UPGRADE_TO_RELEASE_VERSION = "2024.q1.1";
 
 	private final String _fileType;
+	private final boolean _hasMessage;
 	private final String _issueKey;
-	private final boolean _sendMessage;
 
 }

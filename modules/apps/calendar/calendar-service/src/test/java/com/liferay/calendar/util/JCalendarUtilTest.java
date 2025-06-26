@@ -37,7 +37,6 @@ public class JCalendarUtilTest {
 					2025, Calendar.JUNE, 1, 12, 0, 0, 0, TimeZoneUtil.GMT),
 				JCalendarUtil.getJCalendar(
 					2025, Calendar.JUNE, 1, 12, 30, 0, 0, TimeZoneUtil.GMT)));
-
 		Assert.assertEquals(
 			1,
 			JCalendarUtil.getDaysBetween(
@@ -45,7 +44,6 @@ public class JCalendarUtilTest {
 					2025, Calendar.JUNE, 1, 12, 0, 0, 0, TimeZoneUtil.GMT),
 				JCalendarUtil.getJCalendar(
 					2025, Calendar.JUNE, 2, 0, 0, 0, 0, TimeZoneUtil.GMT)));
-
 		Assert.assertEquals(
 			2,
 			JCalendarUtil.getDaysBetween(
@@ -129,7 +127,6 @@ public class JCalendarUtilTest {
 			JCalendarUtil.isMidnight(
 				JCalendarUtil.getJCalendar(
 					2025, Calendar.JUNE, 1, 0, 0, 0, 0, TimeZoneUtil.GMT)));
-
 		Assert.assertFalse(
 			JCalendarUtil.isMidnight(
 				JCalendarUtil.getJCalendar(

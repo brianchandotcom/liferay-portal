@@ -468,9 +468,17 @@ const FrontendDataSetContent = ({
 		value: any;
 	}) {
 		if (selectionType === 'single' || trigger === 'body') {
-			return setSelectedItemsValue(
-				Array.isArray(value) ? value : [value]
-			);
+			return setSelectedItemsValue((previousValues) => {
+				const newValue = Array.isArray(value) ? value : [value];
+
+				if (previousValues.length === 1) {
+					return selectedItemsValue.includes(newValue[0])
+						? []
+						: [value];
+				}
+
+				return newValue;
+			});
 		}
 
 		if (Array.isArray(value)) {

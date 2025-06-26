@@ -1427,6 +1427,74 @@ test('InfoPanel behavior', async ({fdsSamplePage, page}) => {
 	});
 });
 
+test(
+	'Check selection style behavior',
+	{tag: '@LPD-49159'},
+	async ({fdsSamplePage, page}) => {
+		await test.step('Change visualization mode to List', async () => {
+			await fdsSamplePage.selectVisualizationMode('list');
+
+			const listItem = fdsSamplePage.list.container
+				.locator('.list-group-item')
+				.first();
+
+			await listItem.click();
+
+			await expect(listItem).toHaveClass(/active/);
+
+			await listItem.click();
+
+			await expect(listItem).not.toHaveClass(/active/);
+
+			await fdsSamplePage.clickItemAction('View Details');
+
+			await expect(listItem).toHaveClass(/active/);
+		});
+
+		await test.step('Change visualization mode to Cards', async () => {
+			await page.getByText('Clear').click();
+
+			await fdsSamplePage.selectVisualizationMode('cards');
+
+			const cardItem = fdsSamplePage.cards.container
+				.locator('.file-card')
+				.first();
+
+			await cardItem.click();
+
+			await expect(cardItem).toHaveClass(/active/);
+
+			await cardItem.click();
+
+			await expect(cardItem).not.toHaveClass(/active/);
+
+			await fdsSamplePage.clickItemAction('View Details');
+
+			await expect(cardItem).toHaveClass(/active/);
+		});
+
+		await test.step('Change visualization mode to Table', async () => {
+			await page.getByText('Clear').click();
+
+			await fdsSamplePage.selectVisualizationMode('customizedTable');
+
+			const tableItem = fdsSamplePage.table.bodyRows.nth(0);
+
+			await tableItem.click();
+
+			await expect(tableItem).toHaveClass(/active/);
+
+			await tableItem.click();
+
+			await expect(tableItem).not.toHaveClass(/active/);
+
+			await fdsSamplePage.clickItemAction('View Details');
+
+			await expect(tableItem).toHaveClass(/active/);
+		});
+	}
+);
+
 const accountSettingsTest = mergeTests(test, accountSettingsPagesTest);
 
 accountSettingsTest(

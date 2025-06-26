@@ -34,7 +34,6 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderFactoryImpl;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.LocalizationImpl;
 
 import java.util.Map;
@@ -197,8 +196,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		ElasticsearchSpellCheckIndexWriter elasticsearchSpellCheckIndexWriter =
 			new ElasticsearchSpellCheckIndexWriter() {
 				{
-					digester = new DigesterImpl();
-
 					setLocalization(localization);
 				}
 			};

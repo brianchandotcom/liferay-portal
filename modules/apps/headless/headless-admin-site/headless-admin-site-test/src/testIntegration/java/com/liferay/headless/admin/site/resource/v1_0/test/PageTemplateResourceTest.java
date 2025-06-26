@@ -816,6 +816,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		widgetPageTemplate.setPageTemplateSet(_getPageTemplateSet(group));
 
+		widgetPageTemplate.setPageTemplateSettings(
+			_getWidgetPageTemplateSettings());
+
 		return widgetPageTemplate;
 	}
 
@@ -851,25 +854,41 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					randomName
 				).build();
 				pageTemplateSet = _getPageTemplateSet(group);
-				pageTemplateSettings = new WidgetPageTemplateSettings() {
-					{
-						setLayoutTemplateId("2_columns_ii");
-						setNavigationSettings(
-							new NavigationSettings() {
-								{
-									setTarget(RandomTestUtil::randomString);
-									setTargetType(
-										() -> TargetType.SPECIFIC_FRAME);
-								}
-							});
-						setType(Type.WIDGET_PAGE_TEMPLATE_SETTINGS);
-					}
-				};
+				pageTemplateSettings = _getWidgetPageTemplateSettings();
 				taxonomyCategoryItemExternalReferences =
 					AssetTestUtil.randomTaxonomyCategoryItemExternalReferences(
 						testCompany.getGroupId(), serviceContext);
 				type = PageTemplate.Type.WIDGET_PAGE_TEMPLATE;
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	private WidgetPageTemplateSettings _getWidgetPageTemplateSettings() {
+		return new WidgetPageTemplateSettings() {
+			{
+				setLayoutTemplateId(
+					() -> {
+						if (RandomTestUtil.randomBoolean()) {
+							return "1_column";
+						}
+
+						return "2_columns_ii";
+					});
+				setNavigationSettings(
+					new NavigationSettings() {
+						{
+							if (RandomTestUtil.randomBoolean()) {
+								setTarget("_blank");
+								setTargetType(() -> TargetType.NEW_TAB);
+							}
+							else {
+								setTarget(RandomTestUtil::randomString);
+								setTargetType(() -> TargetType.SPECIFIC_FRAME);
+							}
+						}
+					});
+				setType(Type.WIDGET_PAGE_TEMPLATE_SETTINGS);
 			}
 		};
 	}

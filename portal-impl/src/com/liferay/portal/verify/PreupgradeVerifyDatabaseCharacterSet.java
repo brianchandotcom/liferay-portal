@@ -89,8 +89,8 @@ public class PreupgradeVerifyDatabaseCharacterSet
 							resultSet.getString("default_character_set_name"),
 							" character set and ",
 							resultSet.getString("default_collation_name"),
-							". Recommended configuration is ",
-							"utf8mb4/utf8mb4_unicode_ci."));
+							". Recommended character set is utf8mb4 and ",
+							"recommended collation is utf8mb4_unicode_ci."));
 				}
 			}
 		}

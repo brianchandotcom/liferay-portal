@@ -486,7 +486,8 @@ modules/util/portal-tools-benchmarks/    @liferay-core-infra
 modules/util/portal-tools-db-partition-migration-validator    @liferay-database-infra
 modules/util/portal-tools-db-partition-migration-validator-test    @liferay-database-infra
 modules/util/portal-tools-db-partition-schema-validator    @liferay-database-infra
-modules/util/portal-tools-db-schema-importer    @liferay-database-infra
+modules/util/portal-tools-db-migration-schema-importer    @liferay-database-infra
+modules/util/portal-tools-db-migration-schema-importer-test    @liferay-database-infra
 modules/util/portal-tools-db-upgrade-client    @liferay-database-infra
 modules/util/portal-tools-rest-builder-test-api/    @liferay-headless
 modules/util/portal-tools-rest-builder-test-client-js/    @liferay-headless

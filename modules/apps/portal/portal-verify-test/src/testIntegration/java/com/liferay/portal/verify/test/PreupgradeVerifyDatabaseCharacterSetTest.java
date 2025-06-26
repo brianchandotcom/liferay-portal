@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -28,6 +31,7 @@ import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.sql.Connection;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -105,7 +109,7 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 			_serviceComponentLocalService.createServiceComponent(
 				RandomTestUtil.nextLong());
 
-		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+		DBInspector dbInspector = new DBInspector(_connection);
 
 		String tableName = dbInspector.normalizeName("TestTable");
 
@@ -121,13 +125,21 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 				"create table ", tableName,
 				" (testColumn VARCHAR(75) primary key) collate utf8_bin"));
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+			PreupgradeVerifyDatabaseCharacterSet.class.getName(), LoggerTestUtil.WARN)) {
+
 			testVerify();
 
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			_verifyException(exception, "Mixed character set and collation:");
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Mixed character set and collation: testtable",
+				logEntry.getMessage());
+
 		}
 		finally {
 			_serviceComponentLocalService.deleteServiceComponent(

@@ -166,6 +166,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 							actions={itemsActions || item.actionDropdownItems}
 							itemData={item}
 							itemId={itemId}
+							onItemSelectionChange={onItemSelectionChange}
 						/>
 					)}
 				</ClayList.ItemField>

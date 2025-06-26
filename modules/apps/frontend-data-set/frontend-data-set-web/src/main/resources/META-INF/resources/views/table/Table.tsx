@@ -199,6 +199,9 @@ const Row = ({
 											}
 											itemData={item}
 											itemId={id}
+											onItemSelectionChange={
+												onItemSelectionChange
+											}
 										/>
 									)
 								)}

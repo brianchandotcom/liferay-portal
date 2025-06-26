@@ -22,6 +22,7 @@ import {
 } from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import getRandomId from '../utils/getRandomId';
+import getRandomName from '../utils/getRandomName';
 import getUuid from '../utils/getUuid';
 import normalizeName from '../utils/normalizeName';
 import openDeletionModal from '../utils/openDeletionModal';
@@ -182,16 +183,16 @@ function reducer(state: State, action: Action): State {
 
 			for (const [i, erc] of ercs.entries()) {
 				const uuid = getUuid();
-				const name = getRelationshipName();
+				const name = getRandomName();
 
-				const structure: ReferencedStructure = {
+				const referencedStructure: ReferencedStructure = {
 					erc,
 					name,
 					type: 'referenced-structure',
 					uuid,
 				};
 
-				nextFields.set(structure.uuid, structure);
+				nextFields.set(referencedStructure.uuid, referencedStructure);
 
 				if (i === 0) {
 					selection = [uuid];
@@ -553,10 +554,6 @@ function getDefaultFields() {
 	}
 
 	return fields;
-}
-
-function getRelationshipName() {
-	return normalizeName(`rel${getUuid()}`, {limit: 30});
 }
 
 export {StateContext, StateContextProvider, useSelector, useStateDispatch};

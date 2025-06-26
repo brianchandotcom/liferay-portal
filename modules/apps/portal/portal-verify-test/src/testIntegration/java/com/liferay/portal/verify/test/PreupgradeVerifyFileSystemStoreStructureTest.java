@@ -149,18 +149,18 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	public void testAdvancedFileSystemStoreWithLongDirectoryNameWithoutExtension()
 		throws Exception {
 
-		Path directoryWithoutExtensionPath = Paths.get(
+		Path directoryNameWithoutExtensionPath = Paths.get(
 			_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_repositoryId), "100");
 
 		String expectedLogEntry =
-			"Found directory with name longer than 2 without extension in " +
-				"advanced file system structure directory: " +
-					directoryWithoutExtensionPath;
+			"Found directory with name longer than 2 characters without a " +
+				"file extension in advanced file system structure directory: " +
+					directoryNameWithoutExtensionPath;
 
 		_assertVerify(
-			_ADVANCED_FILE_SYSTEM_STORE, directoryWithoutExtensionPath, null,
-			null, 1, expectedLogEntry);
+			_ADVANCED_FILE_SYSTEM_STORE, directoryNameWithoutExtensionPath,
+			null, null, 1, expectedLogEntry);
 	}
 
 	@Test
@@ -176,19 +176,19 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	}
 
 	@Test
-	public void testFileSystemStoreWithDirectoryContainingExtension()
+	public void testFileSystemStoreWithDirectoryNameContainingExtension()
 		throws Exception {
 
-		Path directoryWithExtensionPath = Paths.get(
+		Path directoryNameWithExtensionPath = Paths.get(
 			_fileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_repositoryId), "100.txt");
 
 		String expectedLogEntry =
-			"Found directory with extension in file system structure (no " +
-				"extensions expected): " + directoryWithExtensionPath;
+			"Found directory with extension in file system structure when no " +
+				"extensions are expected: " + directoryNameWithExtensionPath;
 
 		_assertVerify(
-			_FILE_SYSTEM_STORE, directoryWithExtensionPath, null, null, 1,
+			_FILE_SYSTEM_STORE, directoryNameWithExtensionPath, null, null, 1,
 			expectedLogEntry);
 	}
 
@@ -232,8 +232,8 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 		Path invalidFilePath = folderIdPath.resolve("invalidFile.txt");
 
 		String expectedLogEntry =
-			"Found file in file system structure directory (only directories " +
-				"expected): " + invalidFilePath;
+			"Found file in file system structure directory when only " +
+				"directories are expected: " + invalidFilePath;
 
 		_assertVerify(
 			_FILE_SYSTEM_STORE, null, invalidFilePath, null, 1,
@@ -259,7 +259,9 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	}
 
 	@Test
-	public void testFileSystemStoreWithMissingCompanyFolder() throws Exception {
+	public void testFileSystemStoreWithMissingCompanyIdDirectory()
+		throws Exception {
+
 		Files.deleteIfExists(
 			Paths.get(_fileSystemStoreRootDir, String.valueOf(_companyId)));
 

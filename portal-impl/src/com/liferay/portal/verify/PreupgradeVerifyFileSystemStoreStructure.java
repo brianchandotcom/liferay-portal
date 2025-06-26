@@ -149,10 +149,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				companyIdPath)) {
 
 			for (Path folderIdPath : directoryStream) {
-				if (StringUtil.equals(
-						String.valueOf(folderIdPath.getFileName()),
-						_ADAPTIVE_MEDIA_FOLDER_NAME)) {
-
+				if (_isAdaptiveMediaFolderIdPath(folderIdPath)) {
 					continue;
 				}
 
@@ -244,10 +241,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				companyIdPath)) {
 
 			for (Path folderIdPath : directoryStream) {
-				if (StringUtil.equals(
-						String.valueOf(folderIdPath.getFileName()),
-						_ADAPTIVE_MEDIA_FOLDER_NAME)) {
-
+				if (_isAdaptiveMediaFolderIdPath(folderIdPath)) {
 					continue;
 				}
 
@@ -369,7 +363,10 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private static final String _ADAPTIVE_MEDIA_FOLDER_NAME = "0";
+	private boolean _isAdaptiveMediaFolderIdPath(Path folderIdPath) {
+		return StringUtil.equals(
+			String.valueOf(folderIdPath.getFileName()), "0");
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PreupgradeVerifyFileSystemStoreStructure.class);

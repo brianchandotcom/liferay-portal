@@ -137,6 +137,21 @@ public class MarketplaceRestController extends BaseRestController {
 		return _marketplaceKPIJSONObject.toString();
 	}
 
+	@PostMapping("kpi")
+	public void postKPI(
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("POST projects KPI " + json);
+		}
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		for (String key : jsonObject.keySet()) {
+			_marketplaceKPIJSONObject.put(key, jsonObject.get(key));
+		}
+	}
+
 	@PostMapping("product/purchase")
 	public void postProductPurchase(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
@@ -264,21 +279,6 @@ public class MarketplaceRestController extends BaseRestController {
 						"MMMM d, yyyy", LocaleUtil.ENGLISH)
 				)
 			).build());
-	}
-
-	@PostMapping("kpi")
-	public void postKPI(
-		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("POST projects KPI " + json);
-		}
-
-		JSONObject jsonObject = new JSONObject(json);
-
-		for (String key : jsonObject.keySet()) {
-			_marketplaceKPIJSONObject.put(key, jsonObject.get(key));
-		}
 	}
 
 	private void _setUpCloudProductPurchase(

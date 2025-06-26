@@ -143,6 +143,38 @@
 	},
 	{
 		"actionIds": [
+			"UPDATE"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:BusinessEvent$]",
+		"roleName": "Account Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:BusinessEvent$]",
+		"roleName": "Liferay Staff",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:BusinessEvent$]",
+		"roleName": "Organization User",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:BusinessEvent$]",
+		"roleName": "Requester",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
 			"DELETE",
 			"UPDATE",
 			"VIEW"
@@ -806,8 +838,7 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:BusinessEvent$]",
 		"roleName": "Account Administrator",
@@ -815,8 +846,7 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:BusinessEvent$]",
 		"roleName": "Liferay Staff",
@@ -824,8 +854,7 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:BusinessEvent$]",
 		"roleName": "Organization User",
@@ -833,8 +862,7 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:BusinessEvent$]",
 		"roleName": "Requester",

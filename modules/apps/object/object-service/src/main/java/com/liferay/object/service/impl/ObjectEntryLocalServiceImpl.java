@@ -810,23 +810,9 @@ public class ObjectEntryLocalServiceImpl
 			long userId, long objectEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
-			objectEntryId);
-
-		objectEntry = updateStatus(
-			userId, objectEntry, WorkflowConstants.STATUS_EXPIRED,
-			serviceContext);
-
-		List<ObjectEntryVersion> objectEntryVersions =
-			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId());
-
-		for (ObjectEntryVersion objectEntryVersion : objectEntryVersions) {
-			_objectEntryVersionLocalService.expireObjectEntryVersion(
-				userId, objectEntryVersion);
-		}
-
-		return objectEntry;
+		return updateStatus(
+			userId, objectEntryPersistence.findByPrimaryKey(objectEntryId),
+			WorkflowConstants.STATUS_EXPIRED, serviceContext);
 	}
 
 	@Override

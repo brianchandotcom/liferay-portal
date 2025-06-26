@@ -183,6 +183,20 @@ public class ObjectEntryVersionLocalServiceImpl
 	}
 
 	@Override
+	public void expireObjectEntryVersions(
+			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
+		throws Exception {
+
+		for (ObjectEntryVersion objectEntryVersion :
+				getObjectEntryVersions(objectEntry.getObjectEntryId())) {
+
+			expireObjectEntryVersion(
+				userId, objectEntry, objectEntryVersion.getVersion(),
+				serviceContext);
+		}
+	}
+
+	@Override
 	public ObjectEntryVersion getObjectEntryVersion(
 			long objectEntryId, int version)
 		throws PortalException {

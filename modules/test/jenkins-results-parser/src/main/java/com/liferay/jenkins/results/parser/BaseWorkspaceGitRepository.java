@@ -230,7 +230,7 @@ public abstract class BaseWorkspaceGitRepository
 		return getString("sender_branch_username");
 	}
 
-	public boolean getSnapshot() {
+	public boolean isSnapshot() {
 		return getBoolean("snapshot");
 	}
 
@@ -523,7 +523,7 @@ public abstract class BaseWorkspaceGitRepository
 		validateKeys(_REQUIRED_KEYS);
 
 		if (JenkinsResultsParserUtil.isCloudCINode()) {
-			_snapshot = getSnapshot();
+			_snapshot = isSnapshot();
 		}
 	}
 

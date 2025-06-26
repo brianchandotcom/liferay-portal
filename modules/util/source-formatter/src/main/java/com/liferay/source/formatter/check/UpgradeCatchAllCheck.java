@@ -80,7 +80,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 			if ((from.contains(StringPool.OPEN_PARENTHESIS) &&
 				 !skipValidation && fileName.endsWith("java")) ||
-				keys.contains("sendMessage")) {
+				keys.contains("hasMessage")) {
 
 				expectedMessages.add(_getMessage(jsonObject));
 			}
@@ -144,12 +144,12 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			}
 
 			if (_testMode) {
-				boolean sendMessage = jsonObject.getBoolean("sendMessage");
+				boolean hasMessage = jsonObject.getBoolean("hasMessage");
 
-				if (!oldContent.equals(content) && !sendMessage) {
+				if (!oldContent.equals(content) && !hasMessage) {
 					continue;
 				}
-				else if (oldContent.equals(content) && sendMessage &&
+				else if (oldContent.equals(content) && hasMessage &&
 						 _newMessage) {
 
 					continue;
@@ -518,7 +518,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		else if (!_newMessage) {
 			Set<String> keys = jsonObject.keySet();
 
-			if (keys.contains("sendMessage")) {
+			if (keys.contains("hasMessage")) {
 				Pattern pattern = _getPattern(jsonObject);
 
 				Matcher matcher = pattern.matcher(content);
@@ -560,7 +560,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			else {
 				Set<String> keys = jsonObject.keySet();
 
-				if (keys.contains("sendMessage")) {
+				if (keys.contains("hasMessage")) {
 					addMessage(fileName, _getMessage(jsonObject));
 
 					_newMessage = true;
@@ -820,12 +820,12 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			return true;
 		}
 
-		boolean sendMessage = false;
+		boolean hasMessage = false;
 
 		Set<String> keys = jsonObject.keySet();
 
-		if (keys.contains("sendMessage")) {
-			sendMessage = true;
+		if (keys.contains("hasMessage")) {
+			hasMessage = true;
 		}
 		else if (fileName.endsWith(".java")) {
 			for (int i = 0; i < fromParameters.size(); i++) {
@@ -836,7 +836,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 					parameterName.trim(), true, false);
 
 				if (variableTypeName == null) {
-					sendMessage = true;
+					hasMessage = true;
 				}
 				else if (!StringUtil.equals(
 							fromParameters.get(i), variableTypeName)) {
@@ -846,7 +846,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			}
 		}
 
-		if (sendMessage) {
+		if (hasMessage) {
 			addMessage(fileName, _getMessage(jsonObject));
 
 			_newMessage = true;

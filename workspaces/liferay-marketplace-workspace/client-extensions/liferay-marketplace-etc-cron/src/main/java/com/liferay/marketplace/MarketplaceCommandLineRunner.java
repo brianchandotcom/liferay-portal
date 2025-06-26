@@ -249,7 +249,7 @@ public class MarketplaceCommandLineRunner
 		).build();
 	}
 
-	private void _postProjectsKPI(String data) {
+	private void _postKPI(String data) {
 		post(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				_liferayOAuthApplicationExternalReferenceCodes),
@@ -442,7 +442,7 @@ public class MarketplaceCommandLineRunner
 			_log.info("Orders total amount " + _totalAmount);
 		}
 
-		_postProjectsKPI(
+		_postKPI(
 			new JSONObject(
 			).put(
 				"totalAmount", _totalAmount
@@ -488,7 +488,6 @@ public class MarketplaceCommandLineRunner
 		Map<String, JSONObject> projectsUsingMarketplace = new HashMap<>();
 
 		OrderResource orderResource = _getOrderResource();
-
 		Collection<UserAccount> userAccounts = _getCustomerUserAccounts();
 
 		_forEachOrder(
@@ -528,13 +527,11 @@ public class MarketplaceCommandLineRunner
 					0
 				);
 
-				String koroneikiProjectKey = jsonObject.getString("key");
+				String key = jsonObject.getString("key");
 
-				if (!projectsUsingMarketplace.containsKey(
-						koroneikiProjectKey)) {
-
+				if (!projectsUsingMarketplace.containsKey(key)) {
 					projectsUsingMarketplace.put(
-						koroneikiProjectKey,
+						key,
 						new JSONObject(
 						).put(
 							"accountName", jsonObject.getString("name")
@@ -544,7 +541,7 @@ public class MarketplaceCommandLineRunner
 				}
 
 				projectsUsingMarketplace.get(
-					koroneikiProjectKey
+					key
 				).getJSONArray(
 					"orders"
 				).put(
@@ -565,7 +562,7 @@ public class MarketplaceCommandLineRunner
 				);
 			});
 
-		_postProjectsKPI(
+		_postKPI(
 			new JSONObject(
 			).put(
 				"projectsUsingMarketplace", projectsUsingMarketplace

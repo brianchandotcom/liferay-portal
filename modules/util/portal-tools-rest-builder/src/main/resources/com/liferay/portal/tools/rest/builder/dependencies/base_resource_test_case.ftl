@@ -1754,7 +1754,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 							javaMethodSignature = javaMethodSignature
 							newVarName = "random" + schemaName
 							varName = "post" + schemaName
-						/>);
+						/>
+					);
 
 					assertEquals(random${schemaName}, put${schemaName});
 					assertValid(put${schemaName});
@@ -1802,7 +1803,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 								javaMethodSignature = javaMethodSignature
 								newVarName = "randomPermissions" + schemaName
 								varName = "post" + schemaName
-							/>);
+							/>
+						);
 
 						assertEquals(randomPermissions${schemaName}, put${schemaName});
 						assertValid(put${schemaName});
@@ -1815,7 +1817,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 								javaMethodSignature = javaMethodSignature
 								newVarName = "randomPermissions" + schemaName
 								varName = "post" + schemaName
-							/>);
+							/>
+						);
 
 						Assert.assertNotNull(put${schemaName}.getPermissions());
 					</#if>
@@ -1829,7 +1832,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 								javaMethodSignature = javaMethodSignature
 								newVarName = "new" + schemaName
 								varName = "new" + schemaName
-							/>);
+							/>
+						);
 
 						assertEquals(new${schemaName}, put${schemaName});
 						assertValid(put${schemaName});

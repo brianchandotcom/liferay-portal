@@ -158,6 +158,9 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 										},
 									});
 								}
+								else {
+									event.stopPropagation();
+								}
 							}
 				}
 			>

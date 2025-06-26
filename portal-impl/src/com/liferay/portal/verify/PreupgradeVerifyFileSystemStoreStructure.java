@@ -279,8 +279,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			for (Path fileEntryPath : directoryStream) {
 				if (!Files.isDirectory(fileEntryPath)) {
 					_log.error(
-						"Found file in file system structure directory (only " +
-							"directories expected): " + fileEntryPath);
+						"Found file in file system structure directory when " +
+							"only directories are expected: " + fileEntryPath);
 
 					return false;
 				}
@@ -292,7 +292,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					_log.error(
 						StringBundler.concat(
 							"Found directory with extension in file system ",
-							"structure (no extensions expected): ",
+							"structure when no extensions are expected: ",
 							fileEntryPath.toString()));
 
 					return false;

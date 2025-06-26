@@ -97,16 +97,16 @@ public class PreupgradeVerifyDLStoreTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testVerifyNonexistentRootDirectory() throws Exception {
-		Path originalPath = Paths.get(_rootDir);
+		Path originalRootDirPath = Paths.get(_rootDir);
 
-		Path renamedPath = Paths.get(
+		Path renamedRootDirPath = Paths.get(
 			StringUtil.replace(_rootDir, "file_system", "file_system2"));
 
-		if (Files.exists(originalPath)) {
-			Files.move(originalPath, renamedPath);
+		if (Files.exists(originalRootDirPath)) {
+			Files.move(originalRootDirPath, renamedRootDirPath);
 		}
 
-		Files.createFile(originalPath);
+		Files.createFile(originalRootDirPath);
 
 		try {
 			testVerify();
@@ -120,10 +120,10 @@ public class PreupgradeVerifyDLStoreTest extends BaseVerifyProcessTestCase {
 				message.contains(FileNotFoundException.class.getName()));
 		}
 		finally {
-			Files.deleteIfExists(originalPath);
+			Files.deleteIfExists(originalRootDirPath);
 
-			if (Files.exists(renamedPath)) {
-				Files.move(renamedPath, originalPath);
+			if (Files.exists(renamedRootDirPath)) {
+				Files.move(renamedRootDirPath, originalRootDirPath);
 			}
 		}
 	}

@@ -49,6 +49,8 @@ public class ObjectEntriesPanelAppTest {
 
 	@Test
 	public void testGetPortlet() throws Exception {
+		Portlet portlet = null;
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, null, false, true, true, false,
@@ -73,8 +75,6 @@ public class ObjectEntriesPanelAppTest {
 
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			objectDefinition.getPanelCategoryKey());
-
-		Portlet portlet = null;
 
 		for (PanelApp panelApp : panelApps) {
 			if (Objects.equals(

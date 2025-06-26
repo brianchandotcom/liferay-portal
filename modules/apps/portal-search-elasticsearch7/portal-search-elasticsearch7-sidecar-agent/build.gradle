@@ -1,0 +1,11 @@
+dependencies {
+	compileInclude group: "org.ow2.asm", name: "asm", version: "9.7"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/elasticsearch-sidecar")
+}
+
+liferayOSGi {
+	expandCompileInclude = true
+}

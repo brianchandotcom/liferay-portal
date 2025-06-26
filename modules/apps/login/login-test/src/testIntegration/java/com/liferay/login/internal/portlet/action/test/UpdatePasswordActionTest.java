@@ -70,7 +70,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlag("LPD-6378")
 @RunWith(Arquillian.class)
-public class ForgotPasswordActionTest {
+public class UpdatePasswordActionTest {
 
 	@ClassRule
 	@Rule

@@ -468,10 +468,13 @@ const FrontendDataSetContent = ({
 		trigger: ESelectionTrigger;
 		value: any;
 	}) {
-		if (
-			selectionType === 'single' ||
-			trigger === ESelectionTrigger.CONTAINER
-		) {
+		if (selectionType === 'single') {
+			return setSelectedItemsValue(
+				Array.isArray(value) ? value : [value]
+			);
+		}
+
+		if (trigger === ESelectionTrigger.CONTAINER) {
 			return setSelectedItemsValue((previousValues) => {
 				const newValue = Array.isArray(value) ? value : [value];
 

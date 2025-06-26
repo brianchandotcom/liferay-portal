@@ -132,12 +132,12 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 		catch (Exception exception) {
 			throw new VerifyException(
-				"Unable to get file system store root directory", exception);
+				"Unable to get root directory", exception);
 		}
 
 		if ((rootDir == null) || !rootDir.exists()) {
 			throw new VerifyException(
-				"File system store root directory does not exist: " + rootDir);
+				"Root directory does not exist: " + rootDir);
 		}
 
 		return rootDir.toPath();

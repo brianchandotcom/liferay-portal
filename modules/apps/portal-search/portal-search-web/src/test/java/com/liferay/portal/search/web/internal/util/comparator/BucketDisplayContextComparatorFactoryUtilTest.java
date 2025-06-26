@@ -5,12 +5,13 @@
 
 package com.liferay.portal.search.web.internal.util.comparator;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -30,98 +31,66 @@ public class BucketDisplayContextComparatorFactoryUtilTest {
 
 	@Test
 	public void testGetBucketDisplayContextComparatorByBucketTextAsc() {
-		Comparator<BucketDisplayContext> comparator =
-			BucketDisplayContextComparatorFactoryUtil.
-				getBucketDisplayContextComparator("key:asc");
-
 		List<BucketDisplayContext> bucketDisplayContexts =
-			_createBucketDisplayContextsWithBucketText();
+			_createBucketDisplayContexts();
 
-		bucketDisplayContexts.sort(comparator);
+		bucketDisplayContexts.sort(
+			BucketDisplayContextComparatorFactoryUtil.
+				getBucketDisplayContextComparator("key:asc"));
 
-		List<String> expectedOrder = List.of(
-			"1", "01", "2", "11", "albert", "Allen", "Elizabeth", "Norman",
-			"Taylor", "tom");
-
-		for (int i = 0; i < expectedOrder.size(); i++) {
-			Assert.assertEquals(
-				expectedOrder.get(i),
-				bucketDisplayContexts.get(
-					i
-				).getBucketText());
-		}
+		_assertOrder(
+			bucketDisplayContexts,
+			List.of(
+				"01:1", "1:1", "2:3", "11:1", "albert:2", "Allen:1", "Árbol:2",
+				"Aslan:1", "tom:2", "tom:1"));
 	}
 
 	@Test
 	public void testGetBucketDisplayContextComparatorByBucketTextDesc() {
-		Comparator<BucketDisplayContext> comparator =
-			BucketDisplayContextComparatorFactoryUtil.
-				getBucketDisplayContextComparator("key:desc");
-
 		List<BucketDisplayContext> bucketDisplayContexts =
-			_createBucketDisplayContextsWithBucketText();
+			_createBucketDisplayContexts();
 
-		bucketDisplayContexts.sort(comparator);
+		bucketDisplayContexts.sort(
+			BucketDisplayContextComparatorFactoryUtil.
+				getBucketDisplayContextComparator("key:desc"));
 
-		List<String> expectedOrder = List.of(
-			"tom", "Taylor", "Norman", "Elizabeth", "Allen", "albert", "11",
-			"2", "01", "1");
-
-		for (int i = 0; i < expectedOrder.size(); i++) {
-			Assert.assertEquals(
-				expectedOrder.get(i),
-				bucketDisplayContexts.get(
-					i
-				).getBucketText());
-		}
+		_assertOrder(
+			bucketDisplayContexts,
+			List.of(
+				"tom:2", "tom:1", "Aslan:1", "Árbol:2", "Allen:1", "albert:2",
+				"11:1", "2:3", "1:1", "01:1"));
 	}
 
 	@Test
 	public void testGetBucketDisplayContextComparatorByFrequencyAsc() {
-		Comparator<BucketDisplayContext> comparator =
-			BucketDisplayContextComparatorFactoryUtil.
-				getBucketDisplayContextComparator("count:asc");
-
 		List<BucketDisplayContext> bucketDisplayContexts =
-			_createBucketDisplayContextsWithFrequency();
+			_createBucketDisplayContexts();
 
-		bucketDisplayContexts.sort(comparator);
+		bucketDisplayContexts.sort(
+			BucketDisplayContextComparatorFactoryUtil.
+				getBucketDisplayContextComparator("count:asc"));
 
-		List<Integer> expectedOrder = List.of(1, 2, 11, 22);
-
-		for (int i = 0; i < expectedOrder.size(); i++) {
-			Assert.assertEquals(
-				expectedOrder.get(
-					i
-				).intValue(),
-				bucketDisplayContexts.get(
-					i
-				).getFrequency());
-		}
+		_assertOrder(
+			bucketDisplayContexts,
+			List.of(
+				"01:1", "1:1", "11:1", "Allen:1", "Aslan:1", "tom:1",
+				"albert:2", "Árbol:2", "tom:2", "2:3"));
 	}
 
 	@Test
 	public void testGetBucketDisplayContextComparatorByFrequencyDesc() {
-		Comparator<BucketDisplayContext> comparator =
-			BucketDisplayContextComparatorFactoryUtil.
-				getBucketDisplayContextComparator("count:desc");
-
 		List<BucketDisplayContext> bucketDisplayContexts =
-			_createBucketDisplayContextsWithFrequency();
+			_createBucketDisplayContexts();
 
-		bucketDisplayContexts.sort(comparator);
+		bucketDisplayContexts.sort(
+			BucketDisplayContextComparatorFactoryUtil.
+				getBucketDisplayContextComparator("count:desc"));
 
-		List<Integer> expectedOrder = List.of(22, 11, 2, 1);
-
-		for (int i = 0; i < expectedOrder.size(); i++) {
-			Assert.assertEquals(
-				expectedOrder.get(
-					i
-				).intValue(),
-				bucketDisplayContexts.get(
-					i
-				).getFrequency());
-		}
+		_assertOrder(
+			bucketDisplayContexts,
+			List.of(
+				"2:3", "albert:2", "Árbol:2", "tom:2", "01:1", "1:1", "11:1",
+				"Allen:1", "Aslan:1", "tom:1"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -130,56 +99,46 @@ public class BucketDisplayContextComparatorFactoryUtilTest {
 			getBucketDisplayContextComparator("invalid");
 	}
 
-	private List<BucketDisplayContext>
-		_createBucketDisplayContextsWithBucketText() {
+	private void _assertOrder(
+		List<BucketDisplayContext> bucketDisplayContexts,
+		List<String> expected) {
 
-		return Arrays.asList(
-			_createBucketDisplayContextWithBucketText("2"),
-			_createBucketDisplayContextWithBucketText("tom"),
-			_createBucketDisplayContextWithBucketText("01"),
-			_createBucketDisplayContextWithBucketText("Elizabeth"),
-			_createBucketDisplayContextWithBucketText("albert"),
-			_createBucketDisplayContextWithBucketText("11"),
-			_createBucketDisplayContextWithBucketText("Taylor"),
-			_createBucketDisplayContextWithBucketText("Norman"),
-			_createBucketDisplayContextWithBucketText("1"),
-			_createBucketDisplayContextWithBucketText("Allen"));
+		for (int i = 0; i < expected.size(); i++) {
+			BucketDisplayContext bucketDisplayContext =
+				bucketDisplayContexts.get(i);
+			String[] parts = StringUtil.split(
+				expected.get(i), StringPool.COLON);
+
+			Assert.assertEquals(parts[0], bucketDisplayContext.getBucketText());
+			Assert.assertEquals(
+				parts[1], String.valueOf(bucketDisplayContext.getFrequency()));
+		}
 	}
 
-	private List<BucketDisplayContext>
-		_createBucketDisplayContextsWithFrequency() {
-
-		return Arrays.asList(
-			_createBucketDisplayContextWithFrequency(2),
-			_createBucketDisplayContextWithFrequency(22),
-			_createBucketDisplayContextWithFrequency(11),
-			_createBucketDisplayContextWithFrequency(1));
-	}
-
-	private BucketDisplayContext _createBucketDisplayContextWithBucketText(
-		String bucketText) {
+	private BucketDisplayContext _createBucketDisplayContext(
+		String bucketText, int frequency) {
 
 		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
-		bucketDisplayContext.setBucketText(
-			String.format("Bucket with bucketText %s", bucketText));
 		bucketDisplayContext.setBucketText(bucketText);
-		bucketDisplayContext.setLocale(LocaleUtil.getDefault());
-
-		return bucketDisplayContext;
-	}
-
-	private BucketDisplayContext _createBucketDisplayContextWithFrequency(
-		int frequency) {
-
-		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
-
-		bucketDisplayContext.setBucketText(
-			String.format("Bucket with frequency %s", frequency));
 		bucketDisplayContext.setFrequency(frequency);
 		bucketDisplayContext.setLocale(LocaleUtil.getDefault());
 
 		return bucketDisplayContext;
+	}
+
+	private List<BucketDisplayContext> _createBucketDisplayContexts() {
+		return Arrays.asList(
+			_createBucketDisplayContext("01", 1),
+			_createBucketDisplayContext("1", 1),
+			_createBucketDisplayContext("2", 3),
+			_createBucketDisplayContext("11", 1),
+			_createBucketDisplayContext("albert", 2),
+			_createBucketDisplayContext("Allen", 1),
+			_createBucketDisplayContext("Árbol", 2),
+			_createBucketDisplayContext("Aslan", 1),
+			_createBucketDisplayContext("tom", 1),
+			_createBucketDisplayContext("tom", 2));
 	}
 
 }

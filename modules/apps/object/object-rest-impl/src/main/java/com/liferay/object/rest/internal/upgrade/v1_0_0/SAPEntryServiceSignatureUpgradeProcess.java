@@ -15,12 +15,6 @@ public class SAPEntryServiceSignatureUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_updateObjectEntryRelationshipServiceSignature();
-	}
-
-	private void _updateObjectEntryRelationshipServiceSignature()
-		throws Exception {
-
 		String oldAllowedServiceSignatures = StringBundler.concat(
 			"com.liferay.object.rest.internal.resource.v1_0.",
 			"ObjectEntryResourceImpl#",

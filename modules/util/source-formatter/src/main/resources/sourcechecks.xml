@@ -152,6 +152,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that `CODEOWNERS` files are located in `.github` directory." />
 		</check>
+		<check name="CodeownersOrderCheck">
+			<category name="Styling" />
+			<description name="Sorts code owners in `CODEOWNERS` files." />
+		</check>
 		<check name="CodeownersWhitespaceCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace in `CODEOWNERS` files." />

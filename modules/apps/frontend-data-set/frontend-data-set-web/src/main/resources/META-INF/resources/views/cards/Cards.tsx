@@ -109,28 +109,39 @@ const Card = forwardRef<HTMLDivElement, any>(
 		return (
 			<div ref={ref}>
 				<ClayCardWithInfo
-					actions={formattedActions?.map((action: IItemsActions) => ({
-						...action,
-						href: isLink(action.target, null)
-							? formatActionURL(action.href, item, action.target)
-							: null,
-						onClick: (event: Event) => {
-							handleActionClick({
-								action,
-								event,
-								executeAsyncItemAction,
-								highlightItems,
-								itemData: item,
-								itemId: selectedItemKey,
-								loadData,
-								onActionDropdownItemClick,
-								onInfoPanelToggleButtonClick,
-								openModal,
-								openSidePanel,
-								toggleItemInlineEdit,
-							});
-						},
-					}))}
+					actions={formattedActions?.map((action: IItemsActions) => {
+						const actionItemProps = {
+							label: action.label,
+							symbolLeft: action.icon,
+						};
+
+						return {
+							...actionItemProps,
+							href: isLink(action.target, null)
+								? formatActionURL(
+										action.href,
+										item,
+										action.target
+									)
+								: null,
+							onClick: (event: Event) => {
+								handleActionClick({
+									action,
+									event,
+									executeAsyncItemAction,
+									highlightItems,
+									itemData: item,
+									itemId: selectedItemKey,
+									loadData,
+									onActionDropdownItemClick,
+									onInfoPanelToggleButtonClick,
+									openModal,
+									openSidePanel,
+									toggleItemInlineEdit,
+								});
+							},
+						};
+					})}
 					description={localizedDescription}
 					href={(schema.link && item[schema.link]) || null}
 					imgProps={imageProps}

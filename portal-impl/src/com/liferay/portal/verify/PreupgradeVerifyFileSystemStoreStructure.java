@@ -12,6 +12,7 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -149,7 +150,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				companyIdPath)) {
 
 			for (Path folderIdPath : directoryStream) {
-				if (_isAdaptiveMediaFolderIdPath(folderIdPath)) {
+				if (_isSystemCompanyPath(folderIdPath)) {
 					continue;
 				}
 
@@ -241,7 +242,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				companyIdPath)) {
 
 			for (Path folderIdPath : directoryStream) {
-				if (_isAdaptiveMediaFolderIdPath(folderIdPath)) {
+				if (_isSystemCompanyPath(folderIdPath)) {
 					continue;
 				}
 
@@ -363,9 +364,10 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _isAdaptiveMediaFolderIdPath(Path folderIdPath) {
+	private boolean _isSystemCompanyPath(Path folderIdPath) {
 		return StringUtil.equals(
-			String.valueOf(folderIdPath.getFileName()), "0");
+			String.valueOf(folderIdPath.getFileName()),
+			String.valueOf(CompanyConstants.SYSTEM));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

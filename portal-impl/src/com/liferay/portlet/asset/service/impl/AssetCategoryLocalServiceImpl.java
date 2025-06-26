@@ -822,6 +822,50 @@ public class AssetCategoryLocalServiceImpl
 		return trimmedTitleMap;
 	}
 
+	private AssetCategory _moveCategory(
+		long categoryId, long parentCategoryId, long vocabularyId)
+		throws PortalException {
+
+		AssetCategory category = assetCategoryPersistence.findByPrimaryKey(
+			categoryId);
+
+		validate(
+			categoryId, parentCategoryId, category.getName(), vocabularyId);
+
+		if (categoryId == parentCategoryId) {
+			throw new InvalidAssetCategoryException(parentCategoryId, 2);
+		}
+
+		AssetCategory parentCategory = null;
+
+		if (parentCategoryId > 0) {
+			parentCategory = assetCategoryPersistence.findByPrimaryKey(
+				parentCategoryId);
+
+			String treePath = parentCategory.getTreePath();
+
+			if (treePath.startsWith(category.getTreePath())) {
+				throw new InvalidAssetCategoryException(categoryId, 1);
+			}
+		}
+
+		if (vocabularyId != category.getVocabularyId()) {
+			_assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
+
+			updateChildrenVocabularyId(category, vocabularyId);
+
+			category.setVocabularyId(vocabularyId);
+		}
+
+		if (parentCategoryId != category.getParentCategoryId()) {
+			_rebuildTreePath(category, parentCategory);
+
+			category.setParentCategoryId(parentCategoryId);
+		}
+
+		return assetCategoryPersistence.update(category);
+	}
+
 	private void _rebuildTreePath(
 		AssetCategory category, AssetCategory parentCategory) {
 

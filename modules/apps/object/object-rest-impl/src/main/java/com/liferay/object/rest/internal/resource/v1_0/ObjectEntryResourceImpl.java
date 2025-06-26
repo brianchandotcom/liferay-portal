@@ -900,6 +900,7 @@ public class ObjectEntryResourceImpl
 			externalReferenceCode, _objectDefinition, objectEntry, scopeKey);
 	}
 
+	@Override
 	public ObjectEntry putScopeScopeKeyByExternalReferenceCodeByVersionRestore(
 			String scopeKey, String externalReferenceCode, Integer version)
 		throws Exception {

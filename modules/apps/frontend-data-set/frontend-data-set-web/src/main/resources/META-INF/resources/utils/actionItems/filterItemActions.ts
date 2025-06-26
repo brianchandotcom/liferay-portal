@@ -117,9 +117,9 @@ const filterItemActions = ({
 	selectedItemsKey: string;
 	selectedItemsValue?: Array<any>;
 }): Array<IItemsActions> => {
-	const selectedItem = !!selectedItemsValue?.includes(
-		itemData[selectedItemsKey]
-	);
+	const selectedItem =
+		selectedItemsValue?.length === 1 &&
+		!!selectedItemsValue?.includes(itemData[selectedItemsKey]);
 
 	return actions
 		? actions

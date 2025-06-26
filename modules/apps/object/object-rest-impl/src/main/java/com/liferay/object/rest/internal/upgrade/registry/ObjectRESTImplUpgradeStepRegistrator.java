@@ -5,7 +5,7 @@
 
 package com.liferay.object.rest.internal.upgrade.registry;
 
-import com.liferay.object.rest.internal.upgrade.v1_0_0.SAPEntryServiceSignatureUpgradeProcess;
+import com.liferay.object.rest.internal.upgrade.v1_0_0.SAPEntryAllowedServiceSignaturesUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,7 +22,8 @@ public class ObjectRESTImplUpgradeStepRegistrator
 		registry.registerInitialization();
 
 		registry.register(
-			"0.0.1", "1.0.0", new SAPEntryServiceSignatureUpgradeProcess());
+			"0.0.1", "1.0.0",
+			new SAPEntryAllowedServiceSignaturesUpgradeProcess());
 	}
 
 }

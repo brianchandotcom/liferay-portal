@@ -613,17 +613,17 @@ public class Sidecar {
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
-				"org.elasticsearch.common.settings.KeyStoreWrapper", "save",
-				_wipingLogicMethodVisitorFunction, classLoader);
-
-			_patchModuleClass(
-				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Security", "configure",
 				_wipingLogicMethodVisitorFunction, classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Spawner", "spawnNativeControllers",
+				_wipingLogicMethodVisitorFunction, classLoader);
+
+			_patchModuleClass(
+				patchModulePaths, "org.elasticsearch.server",
+				"org.elasticsearch.common.settings.KeyStoreWrapper", "save",
 				_wipingLogicMethodVisitorFunction, classLoader);
 
 			_patchModuleClass(

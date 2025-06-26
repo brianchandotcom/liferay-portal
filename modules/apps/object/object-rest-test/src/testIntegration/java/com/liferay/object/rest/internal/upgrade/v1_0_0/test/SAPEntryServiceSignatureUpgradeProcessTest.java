@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -27,9 +26,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -76,8 +72,6 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 					"Test SAP Entry for Upgrade"
 				).build(),
 				_createServiceContext());
-
-			_testSAPEntries.add(sapEntry);
 
 			_runUpgrade();
 
@@ -146,8 +140,6 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				).build(),
 				_createServiceContext());
 
-			_testSAPEntries.add(sapEntry);
-
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
@@ -214,8 +206,6 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				).build(),
 				_createServiceContext());
 
-			_testSAPEntries.add(sapEntry);
-
 			Assert.assertEquals(
 				allowedServiceSignatures,
 				sapEntry.getAllowedServiceSignatures());
@@ -258,8 +248,5 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 
 	@Inject
 	private SAPEntryLocalService _sapEntryLocalService;
-
-	@DeleteAfterTestRun
-	private final List<SAPEntry> _testSAPEntries = new ArrayList<>();
 
 }

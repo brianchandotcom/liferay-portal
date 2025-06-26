@@ -269,11 +269,11 @@ modules/apps/portal/portal-dao-orm-custom-sql-impl/    @liferay-core-infra
 modules/apps/portal/portal-dao-orm-custom-sql-test/    @liferay-core-infra
 modules/apps/portal/portal-dao-test    @liferay-database-infra
 modules/apps/portal/portal-db-index-test    @liferay-database-infra
+modules/apps/portal/portal-db-migration-schema-exporter    @liferay-database-infra
+modules/apps/portal/portal-db-migration-schema-exporter-test    @liferay-database-infra
 modules/apps/portal/portal-db-partition    @liferay-database-infra
 modules/apps/portal/portal-db-partition-test    @liferay-database-infra
 modules/apps/portal/portal-db-partition-test-util    @liferay-database-infra
-modules/apps/portal/portal-db-migration-schema-exporter    @liferay-database-infra
-modules/apps/portal/portal-db-migration-schema-exporter-test    @liferay-database-infra
 modules/apps/portal/portal-default-permissions-api/    @liferay-commerce
 modules/apps/portal/portal-default-permissions-web/    @liferay-commerce
 modules/apps/portal/portal-deploy-hot-test/    @liferay-core-infra

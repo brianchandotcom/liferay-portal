@@ -100,7 +100,8 @@ public class MembershipsUserFieldExpressionHandler
 							ExpandoColumn expandoColumn =
 								SamlProvisioningUtil.getOrAddExpandoColumn(
 									userGroup.getCompanyId(),
-									UserGroup.class.getName(), "idpId");
+									UserGroup.class.getName(),
+									"samlIdpEntityId");
 
 							_expandoValueLocalService.addValue(
 								_classNameLocalService.getClassNameId(

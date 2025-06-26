@@ -134,7 +134,8 @@ public class DefaultUserResolver implements UserResolver {
 
 		ExpandoColumn expandoColumn =
 			SamlProvisioningUtil.getOrAddExpandoColumn(
-				serviceContext.getCompanyId(), User.class.getName(), "idpId");
+				serviceContext.getCompanyId(), User.class.getName(),
+				"samlIdpEntityId");
 
 		_expandoValueLocalService.addValue(
 			_classNameLocalService.getClassNameId(User.class.getName()),

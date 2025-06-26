@@ -1879,7 +1879,7 @@ test('LPD-56043 and LPD-56046: Verify User and User Group Provisioning source is
 		out.println(
 			ExpandoValueLocalServiceUtil.getValue(
 				${spCompany.companyId}, User.class.getName(), "CUSTOM_FIELDS",
-						"idpId", ${spUserAccount.id}));
+						"samlIdpEntityId", ${spUserAccount.id}));
 		`;
 
 	const serverAdministrationPage = new ServerAdministrationPage(
@@ -1905,7 +1905,7 @@ test('LPD-56043 and LPD-56046: Verify User and User Group Provisioning source is
 		out.println(
 			ExpandoValueLocalServiceUtil.getValue(
 				${spCompany.companyId}, UserGroup.class.getName(),
-				"CUSTOM_FIELDS", "idpId", ${spUserGroup.id}));
+				"CUSTOM_FIELDS", "samlIdpEntityId", ${spUserGroup.id}));
 		`;
 
 	await serverAdministrationPage.executeScript(script);

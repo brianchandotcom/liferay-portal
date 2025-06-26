@@ -43,7 +43,7 @@ public class SamlProvisioningUtil {
 		}
 
 		expandoColumn = ExpandoColumnLocalServiceUtil.addColumn(
-			expandoTable.getTableId(), name, ExpandoColumnConstants.LONG);
+			expandoTable.getTableId(), name, ExpandoColumnConstants.STRING);
 
 		UnicodeProperties unicodeProperties =
 			expandoColumn.getTypeSettingsProperties();

@@ -56,7 +56,7 @@ public class CTSettingsConfigurationModelListenerTest {
 	}
 
 	@Test
-	public void testUpdateOwnerPermissions() throws Exception {
+	public void testOnAfterSave() throws Exception {
 		try {
 			UserTestUtil.setUser(_user);
 

@@ -42,13 +42,7 @@ public class CTSettingsConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
-			long companyId = GetterUtil.getLong(properties.get("companyId"));
-
-			if (companyId == 0) {
-				return;
-			}
-
-			_updateOwnerPermissions(companyId, properties);
+			_onAfterSave(properties);
 		}
 		catch (PortalException portalException) {
 			throw new ConfigurationModelListenerException(
@@ -57,9 +51,14 @@ public class CTSettingsConfigurationModelListener
 		}
 	}
 
-	private void _updateOwnerPermissions(
-			long companyId, Dictionary<String, Object> properties)
+	private void _onAfterSave(Dictionary<String, Object> properties)
 		throws PortalException {
+
+		long companyId = GetterUtil.getLong(properties.get("companyId"));
+
+		if (companyId == 0) {
+			return;
+		}
 
 		String[] defaultOwnerActionIds = GetterUtil.getStringValues(
 			properties.get("defaultOwnerActionIds"));

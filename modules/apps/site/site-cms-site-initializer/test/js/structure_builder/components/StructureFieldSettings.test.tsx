@@ -35,6 +35,7 @@ const FIELD: Field = {
 	},
 	localized: false,
 	name: 'TextField',
+	parent: getUuid(),
 	required: false,
 	settings: {},
 	type: 'text',
@@ -212,7 +213,10 @@ describe('StructureFieldSettings', () => {
 						[
 							uuid,
 							{
-								...getDefaultField({type: 'datetime'}),
+								...getDefaultField({
+									parent: getUuid(),
+									type: 'datetime',
+								}),
 								uuid,
 							},
 						],
@@ -247,7 +251,10 @@ describe('StructureFieldSettings', () => {
 						[
 							uuid,
 							{
-								...getDefaultField({type: 'long-text'}),
+								...getDefaultField({
+									parent: getUuid(),
+									type: 'long-text',
+								}),
 								uuid,
 							},
 						],
@@ -292,7 +299,10 @@ describe('StructureFieldSettings', () => {
 						[
 							uuid,
 							{
-								...getDefaultField({type: 'integer'}),
+								...getDefaultField({
+									parent: getUuid(),
+									type: 'integer',
+								}),
 								uuid,
 							},
 						],
@@ -365,7 +375,10 @@ describe('StructureFieldSettings', () => {
 						[
 							uuid,
 							{
-								...getDefaultField({type: 'upload'}),
+								...getDefaultField({
+									parent: getUuid(),
+									type: 'upload',
+								}),
 								uuid,
 							},
 						],
@@ -443,7 +456,13 @@ describe('StructureFieldSettings', () => {
 					fields: new Map([
 						[
 							uuid,
-							{...getDefaultField({type: 'single-select'}), uuid},
+							{
+								...getDefaultField({
+									parent: getUuid(),
+									type: 'single-select',
+								}),
+								uuid,
+							},
 						],
 					]),
 				},
@@ -472,7 +491,13 @@ describe('StructureFieldSettings', () => {
 					fields: new Map([
 						[
 							uuid,
-							{...getDefaultField({type: 'multiselect'}), uuid},
+							{
+								...getDefaultField({
+									parent: getUuid(),
+									type: 'multiselect',
+								}),
+								uuid,
+							},
 						],
 					]),
 				},
@@ -502,7 +527,13 @@ describe('StructureFieldSettings', () => {
 					fields: new Map([
 						[
 							uuid,
-							{...getDefaultField({type: 'single-select'}), uuid},
+							{
+								...getDefaultField({
+									parent: getUuid(),
+									type: 'single-select',
+								}),
+								uuid,
+							},
 						],
 					]),
 				},

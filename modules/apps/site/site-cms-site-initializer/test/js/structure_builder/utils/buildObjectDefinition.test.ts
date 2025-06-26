@@ -13,6 +13,7 @@ const DATE_TIME_FIELD: Field = {
 	label: {en_US: 'Date and Time Field'},
 	localized: true,
 	name: 'datetimeField',
+	parent: getUuid(),
 	required: false,
 	settings: {
 		timeStorage: 'convertToUTC',
@@ -27,6 +28,7 @@ const TEXT_FIELD: Field = {
 	label: {en_US: 'Text Field'},
 	localized: false,
 	name: 'textField',
+	parent: getUuid(),
 	required: true,
 	settings: {},
 	type: 'text',

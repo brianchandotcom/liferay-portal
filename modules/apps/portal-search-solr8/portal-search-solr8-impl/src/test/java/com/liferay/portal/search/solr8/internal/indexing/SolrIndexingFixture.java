@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.suggest.NGramHolderBuilder;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Props;
@@ -34,8 +33,6 @@ import com.liferay.portal.search.solr8.internal.suggest.NGramHolderBuilderImpl;
 import com.liferay.portal.search.solr8.internal.suggest.NGramQueryBuilderImpl;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.util.LocalizationImpl;
-
-import java.nio.ByteBuffer;
 
 import java.util.Collections;
 import java.util.Map;
@@ -139,26 +136,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 				setSolrDocumentFactory(new DefaultSolrDocumentFactory());
 			}
 		};
-	}
-
-	protected Digester createDigester() {
-		Digester digester = Mockito.mock(Digester.class);
-
-		Mockito.doAnswer(
-			invocation -> {
-				Object[] args = invocation.getArguments();
-
-				ByteBuffer byteBuffer = (ByteBuffer)args[1];
-
-				return byteBuffer.array();
-			}
-		).when(
-			digester
-		).digestRaw(
-			Mockito.anyString(), (ByteBuffer)Mockito.any()
-		);
-
-		return digester;
 	}
 
 	protected IndexSearcher createIndexSearcher(
@@ -270,8 +247,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 		SolrSpellCheckIndexWriter solrSpellCheckIndexWriter =
 			new SolrSpellCheckIndexWriter() {
 				{
-					digester = createDigester();
-
 					activate(_properties);
 				}
 			};

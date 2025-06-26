@@ -35,7 +35,6 @@ import com.liferay.portal.search.opensearch2.internal.connection.helper.IndexCre
 import com.liferay.portal.search.opensearch2.internal.facet.FacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.OpenSearchEngineAdapterFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.LocalizationImpl;
 
 import java.io.IOException;
@@ -303,8 +302,6 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 		OpenSearchSpellCheckIndexWriter openSearchSpellCheckIndexWriter =
 			new OpenSearchSpellCheckIndexWriter() {
 				{
-					digester = new DigesterImpl();
-
 					setLocalization(localization);
 				}
 			};

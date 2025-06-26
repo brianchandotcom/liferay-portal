@@ -6,6 +6,7 @@
 package com.liferay.saml.opensaml.integration.internal.field.expression.handler;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.internal.util.SamlProvisioningUtil;
 import com.liferay.saml.opensaml.integration.processor.context.UserProcessorContext;
@@ -61,6 +63,43 @@ public class MembershipsUserFieldExpressionHandler
 				(currentUser, newUser, serviceContext) -> {
 					if (userProcessorContext.isDefined(
 							String.class, "userGroups")) {
+
+						String samlIdpEntityId = GetterUtil.getString(
+							serviceContext.getAttribute("SamlIdpEntityId"));
+
+						if (Validator.isNotNull(samlIdpEntityId)) {
+							ExpandoColumn expandoColumn =
+								SamlProvisioningUtil.getOrAddExpandoColumn(
+									newUser.getCompanyId(),
+									UserGroup.class.getName(),
+									"samlIdpEntityId");
+
+							for (UserGroup userGroup :
+									_userGroupLocalService.getUserUserGroups(
+										newUser.getUserId())) {
+
+								if (userGroupIds.contains(
+										userGroup.getUserGroupId())) {
+
+									continue;
+								}
+
+								ExpandoValue expandoValue =
+									_expandoValueLocalService.getValue(
+										expandoColumn.getTableId(),
+										expandoColumn.getColumnId(),
+										userGroup.getUserGroupId());
+
+								if ((expandoValue != null) &&
+									samlIdpEntityId.equals(
+										expandoValue.getString())) {
+
+									continue;
+								}
+
+								userGroupIds.add(userGroup.getUserGroupId());
+							}
+						}
 
 						_userGroupLocalService.setUserUserGroups(
 							newUser.getUserId(),

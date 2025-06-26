@@ -72,6 +72,7 @@ async function fetchStructureData({
 		languageId: language?.value,
 		spaceId: space?.value,
 		structureId: filters.structure?.value,
+		tagId: filters.tag?.value,
 		vocabularyId: filters.vocabulary?.value,
 	};
 

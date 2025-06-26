@@ -16,9 +16,15 @@ import {
 	ProductTypeLabels,
 	ProductTypeVocabulary,
 	ProductWorkflowStatusCode,
+	ProductWorkflowStatusLabel,
 } from '../../../../enums/Product';
 import i18n from '../../../../i18n';
+import {
+	PAGINATION_DELTA,
+	PAGINATION_DELTA_SIMPLE,
+} from '../../../../utils/constants';
 import {formatDate} from '../../../../utils/date';
+import {filterLatestProductVersions} from '../../../../utils/productUtils';
 import {usePublisherDashboardOutletContext} from '../../PublisherDashboardOutlet';
 
 const Apps = () => {
@@ -68,6 +74,10 @@ const Apps = () => {
 					type: 'BLANK',
 				}}
 				id={`publisher-apps/${catalogId}`}
+				initialContext={{
+					pageSize: PAGINATION_DELTA[1],
+					paginationDeltaOptions: PAGINATION_DELTA_SIMPLE,
+				}}
 				resource={`/o/headless-commerce-admin-catalog/v1.0/products?${new URLSearchParams(
 					{
 						'accountId': '-1',
@@ -184,7 +194,11 @@ const Apps = () => {
 									<OrderStatus
 										orderStatus={workflowStatusInfo.label}
 									>
-										{workflowStatusInfo.label}
+										{
+											ProductWorkflowStatusLabel[
+												workflowStatusInfo.code as keyof typeof ProductWorkflowStatusLabel
+											]
+										}
 									</OrderStatus>
 								);
 							},
@@ -192,6 +206,7 @@ const Apps = () => {
 					],
 					navigateTo: (item) => `/app/${item.productId}`,
 				}}
+				transformData={filterLatestProductVersions}
 			/>
 		</Page>
 	);

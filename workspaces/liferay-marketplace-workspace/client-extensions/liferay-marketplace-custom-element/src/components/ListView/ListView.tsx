@@ -90,6 +90,14 @@ export type ListViewProps<T extends Record<string, any>> = {
 		TableProps<T>,
 		'items' | 'mutate' | 'onSelectAllRows' | 'onSort'
 	>;
+
+	/**
+	 * A function to transform the data before rendering.
+	 * It can be used to format or filter the data.
+	 *
+	 * @default undefined
+	 */
+	transformData?: (data: T[]) => T[];
 };
 
 const ListView = <T extends Record<string, any>>({
@@ -103,6 +111,7 @@ const ListView = <T extends Record<string, any>>({
 	paginationOptions = {displayType: true},
 	resource,
 	tableProps,
+	transformData,
 }: ListViewProps<T>) => {
 	const [listViewContext, dispatch] = useContext(ListViewContext);
 
@@ -182,7 +191,7 @@ const ListView = <T extends Record<string, any>>({
 		actions = {},
 		items = [],
 		page = 1,
-		pageSize,
+		pageSize = listViewContext.pageSize,
 		totalCount = 0,
 	} = response || {};
 
@@ -190,11 +199,15 @@ const ListView = <T extends Record<string, any>>({
 		return <Loading />;
 	}
 
+	const transformedItems = transformData ? transformData(items) : items;
+
 	const Pagination = (
 		<ClayPaginationBarWithBasicItems
 			activeDelta={pageSize}
 			activePage={page}
-			deltas={PAGINATION.delta.map((label) => ({label}))}
+			deltas={listViewContext.paginationDeltaOptions.map((label) => ({
+				label,
+			}))}
 			ellipsisBuffer={PAGINATION.ellipsisBuffer}
 			labels={{
 				paginationResults: i18n.translate('showing-x-to-x-of-x'),
@@ -211,7 +224,7 @@ const ListView = <T extends Record<string, any>>({
 
 				dispatch({payload: page, type: ListViewTypes.SET_PAGE});
 			}}
-			totalItems={totalCount || 0}
+			totalItems={transformData ? transformedItems.length : totalCount}
 		/>
 	);
 
@@ -236,7 +249,7 @@ const ListView = <T extends Record<string, any>>({
 				<>
 					<Table
 						{...tableProps}
-						items={items}
+						items={transformedItems}
 						mutate={mutate}
 						onSort={onSort}
 						sort={sort}
@@ -255,7 +268,6 @@ const ListView = <T extends Record<string, any>>({
 		</>
 	);
 };
-
 const ListViewWithContext = <T extends Record<string, any>>({
 	initialContext,
 	...otherProps

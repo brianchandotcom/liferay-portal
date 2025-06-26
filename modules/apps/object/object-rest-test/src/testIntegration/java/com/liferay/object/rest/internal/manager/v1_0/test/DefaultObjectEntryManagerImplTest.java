@@ -3069,7 +3069,7 @@ public class DefaultObjectEntryManagerImplTest
 	@Test
 	public void testDeleteObjectEntryByVersion() throws Exception {
 
-		// Company Scope
+		// Company scope
 
 		_enableObjectEntryVersioning();
 
@@ -3110,7 +3110,7 @@ public class DefaultObjectEntryManagerImplTest
 			).getItems(
 			).size());
 
-		// Site Scope
+		// Site scope
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			_objectDefinition4, _group.getGroupKey(), 1);

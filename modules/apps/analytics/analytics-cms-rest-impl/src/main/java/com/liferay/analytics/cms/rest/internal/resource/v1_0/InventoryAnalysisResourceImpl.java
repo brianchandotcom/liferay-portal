@@ -387,9 +387,9 @@ public class InventoryAnalysisResourceImpl
 				DSLFunctionFactoryUtil.countDistinct(
 					ObjectEntryTable.INSTANCE.objectEntryId
 				).as(
-					"count"
+					"count_"
 				),
-				AssetCategoryTable.INSTANCE.externalReferenceCode.as("key"),
+				AssetCategoryTable.INSTANCE.externalReferenceCode.as("key_"),
 				AssetCategoryTable.INSTANCE.name.as("title")
 			};
 		}
@@ -398,9 +398,9 @@ public class InventoryAnalysisResourceImpl
 				DSLFunctionFactoryUtil.countDistinct(
 					ObjectEntryTable.INSTANCE.objectEntryId
 				).as(
-					"count"
+					"count_"
 				),
-				AssetTagTable.INSTANCE.externalReferenceCode.as("key"),
+				AssetTagTable.INSTANCE.externalReferenceCode.as("key_"),
 				AssetTagTable.INSTANCE.name.as("title")
 			};
 		}
@@ -409,9 +409,9 @@ public class InventoryAnalysisResourceImpl
 				DSLFunctionFactoryUtil.countDistinct(
 					ObjectEntryTable.INSTANCE.objectEntryId
 				).as(
-					"count"
+					"count_"
 				),
-				AssetVocabularyTable.INSTANCE.externalReferenceCode.as("key"),
+				AssetVocabularyTable.INSTANCE.externalReferenceCode.as("key_"),
 				AssetVocabularyTable.INSTANCE.name.as("title")
 			};
 		}
@@ -420,9 +420,9 @@ public class InventoryAnalysisResourceImpl
 			DSLFunctionFactoryUtil.countDistinct(
 				ObjectEntryTable.INSTANCE.objectEntryId
 			).as(
-				"count"
+				"count_"
 			),
-			ObjectDefinitionTable.INSTANCE.externalReferenceCode.as("key"),
+			ObjectDefinitionTable.INSTANCE.externalReferenceCode.as("key_"),
 			ObjectDefinitionTable.INSTANCE.label.as("title")
 		};
 	}

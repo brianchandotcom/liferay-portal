@@ -4698,7 +4698,9 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Search Blueprints Elements Reference - Liferay Learn");
+		var documentationSuffix = "Liferay Official Documentation - Liferay Learn";
+
+		SelectWindow(value1 = "Search Blueprints Elements Reference - ${documentationSuffix}");
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -4713,7 +4715,7 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Creating and Managing Search Blueprints - Liferay Learn");
+		SelectWindow(value1 = "Creating and Managing Search Blueprints - ${documentationSuffix}");
 
 		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
@@ -4728,7 +4730,7 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Creating and Managing Search Blueprints - Liferay Learn");
+		SelectWindow(value1 = "Creating and Managing Search Blueprints - ${documentationSuffix}");
 
 		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
@@ -4743,7 +4745,7 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - ${documentationSuffix}");
 
 		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
@@ -4752,7 +4754,7 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - ${documentationSuffix}");
 
 		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
@@ -4761,7 +4763,7 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - ${documentationSuffix}");
 
 		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
@@ -4770,7 +4772,7 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - ${documentationSuffix}");
 
 		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
@@ -4779,7 +4781,7 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - ${documentationSuffix}");
 
 		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
@@ -4788,7 +4790,7 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - ${documentationSuffix}");
 
 		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
@@ -4805,7 +4807,7 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Creating Elements - Liferay Learn");
+		SelectWindow(value1 = "Creating Elements - ${documentationSuffix}");
 
 		Close.closeAndSelectWindow(value1 = "View Element - ${siteName}");
 
@@ -4829,7 +4831,7 @@ definition {
 			key_linkText = "Learn how",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(value1 = "Using a Search Blueprint on a Search Page - Liferay Learn");
+		SelectWindow(value1 = "Using a Search Blueprint on a Search Page - ${documentationSuffix}");
 	}
 
 	@priority = 3

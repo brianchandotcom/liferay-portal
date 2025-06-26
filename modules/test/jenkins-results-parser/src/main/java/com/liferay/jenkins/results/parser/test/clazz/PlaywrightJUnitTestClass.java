@@ -104,6 +104,16 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			Properties testProperties = JenkinsResultsParserUtil.getProperties(
 				testPropertiesFile);
 
+			String analyticsCloudEnabled = JenkinsResultsParserUtil.getProperty(
+				testProperties, "analytics.cloud.enabled");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					analyticsCloudEnabled) &&
+				analyticsCloudEnabled.equals("true")) {
+
+				_analyticsCloudEnabled = true;
+			}
+
 			String minimumSlaveRAM = JenkinsResultsParserUtil.getProperty(
 				testProperties, "test.batch.minimum.slave.ram");
 
@@ -121,16 +131,6 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			}
 
 			_slaveLabel = slaveLabel;
-
-			String analyticsCloudEnabled = JenkinsResultsParserUtil.getProperty(
-				testProperties, "analytics.cloud.enabled");
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(
-					analyticsCloudEnabled) &&
-				analyticsCloudEnabled.equals("true")) {
-
-				_analyticsCloudEnabled = true;
-			}
 		}
 		else {
 			_minimumSlaveRAM = null;

@@ -27,7 +27,6 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import java.util.Collection;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -66,8 +65,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				fileSystemStoreRootDirPath)) {
 
-			for (Path path : directoryStream) {
-				String fileName = String.valueOf(path.getFileName());
+			for (Path companyIdPath : directoryStream) {
+				String fileName = String.valueOf(companyIdPath.getFileName());
 
 				long companyId = GetterUtil.getLong(fileName);
 
@@ -75,17 +74,17 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					continue;
 				}
 
-				if (!Files.isDirectory(path)) {
-					throw new VerifyException(path + " is not a directory");
+				if (!Files.isDirectory(companyIdPath)) {
+					throw new VerifyException(companyIdPath + " is not a directory");
 				}
 
 				if (advancedFileSystemStore &&
-					_hasAdvancedFileSystemStructure(path)) {
+					_hasAdvancedFileSystemStructureCompanyIdPath(companyIdPath)) {
 
 					continue;
 				}
 
-				if (fileSystemStore && _hasFileSystemStructure(path)) {
+				if (fileSystemStore && _hasFileSystemStructureCompanyIdPath(companyIdPath)) {
 					continue;
 				}
 
@@ -114,15 +113,14 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	private Path _getFileSystemStoreRootDirPath() throws Exception {
 		File rootDir = null;
 
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
 		try {
-			Collection<ServiceReference<Store>> serviceReferences =
-				bundleContext.getServiceReferences(
-					Store.class,
-					"(store.type=" + PropsValues.DL_STORE_IMPL + ")");
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-			for (ServiceReference<Store> serviceReference : serviceReferences) {
+			for (ServiceReference<Store> serviceReference :
+					bundleContext.getServiceReferences(
+						Store.class,
+						"(store.type=" + PropsValues.DL_STORE_IMPL + ")")) {
+
 				rootDir = (File)serviceReference.getProperty("rootDir");
 
 				break;
@@ -141,7 +139,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		return rootDir.toPath();
 	}
 
-	private boolean _hasAdvancedFileSystemStructure(Path companyIdPath) {
+	private boolean _hasAdvancedFileSystemStructureCompanyIdPath(Path companyIdPath) {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				companyIdPath)) {
 
@@ -162,7 +160,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					return false;
 				}
 
-				if (!_validateAdvancedFileSystemSubdirectories(folderIdPath)) {
+				if (!_hasAdvancedFileSystemStructureFolderIdPath(folderIdPath)) {
 					return false;
 				}
 			}
@@ -181,7 +179,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _hasFileSystemStructure(Path companyIdPath) {
+	private boolean _hasFileSystemStructureCompanyIdPath(Path companyIdPath) {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				companyIdPath)) {
 
@@ -201,7 +199,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					return false;
 				}
 
-				if (!_validateFileSystemSubdirectories(folderIdPath)) {
+				if (!_hasFileSystemStructureFolderIdPath(folderIdPath)) {
 					return false;
 				}
 			}
@@ -260,7 +258,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _validateAdvancedFileSystemSubdirectories(
+	private boolean _hasAdvancedFileSystemStructureFolderIdPath(
 		Path folderIdPath) {
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
@@ -280,7 +278,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					fileEntryPath.getFileName());
 
 				if (fileEntryName.equals("DLFE")) {
-					if (!_validateAdvancedFileSystemSubdirectories(
+					if (!_hasAdvancedFileSystemStructureFolderIdPath(
 							fileEntryPath)) {
 
 						return false;
@@ -313,7 +311,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _validateFileSystemSubdirectories(Path folderIdPath) {
+	private boolean _hasFileSystemStructureFolderIdPath(Path folderIdPath) {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				folderIdPath)) {
 

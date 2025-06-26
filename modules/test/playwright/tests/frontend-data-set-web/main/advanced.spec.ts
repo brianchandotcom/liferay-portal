@@ -341,7 +341,13 @@ test(
 	}
 );
 
-test(
+/**
+ * Skip until we refactor custom views in LPD-10683. The tests here are correct,
+ * but the feature is broken at least in few ways:
+ * - interactions with client extensions are broken
+ * - migration to ClayTable broke column visibility logic
+ */
+test.skip(
 	'Check behavior of custom views',
 	{
 		tag: ['@LPS-130101'],

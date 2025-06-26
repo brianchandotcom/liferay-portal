@@ -143,7 +143,7 @@ public class YMLIndentationCheck extends BaseFileCheck {
 
 			for (String line : lines) {
 				if (line.length() == 0) {
-					sb2.append(line);
+					sb2.append(StringPool.BLANK);
 				}
 				else {
 					sb2.append(StringPool.FOUR_SPACES + line);

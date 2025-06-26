@@ -13,14 +13,12 @@ import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Ticket;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -73,27 +70,7 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
-			if (ticket != null) {
-				User user = _userLocalService.getUser(ticket.getClassPK());
-
-				_userLocalService.updatePasswordReset(user.getUserId(), true);
-			}
-
-			User user = _portal.getUser(actionRequest);
-
-			if ((user != null) &&
-				UpdatePasswordActionUtil.isUserDefaultAdmin(user)) {
-
-				String reminderQueryAnswer = user.getReminderQueryAnswer();
-
-				if (Validator.isNotNull(reminderQueryAnswer) &&
-					reminderQueryAnswer.equals(
-						WorkflowConstants.LABEL_PENDING)) {
-
-					actionRequest.setAttribute(
-						WebKeys.TITLE_SET_PASSWORD, "set-password");
-				}
-			}
+			UpdatePasswordActionUtil.verifyUser(httpServletRequest, ticket);
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -103,20 +80,9 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 			UpdatePasswordActionUtil.updatePassword(
 				UpdatePasswordMVCActionCommand.class.getName(),
 				httpServletRequest,
-				_portal.getHttpServletResponse(actionResponse), themeDisplay,
-				ticket);
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			if (Validator.isNotNull(redirect)) {
-				redirect = _portal.escapeRedirect(redirect);
-			}
-
-			if (Validator.isNull(redirect)) {
-				redirect = themeDisplay.getPathMain();
-			}
-
-			actionResponse.sendRedirect(redirect);
+				_portal.getHttpServletResponse(actionResponse),
+				ParamUtil.getString(actionRequest, "redirect"),
+				actionResponse::sendRedirect, themeDisplay, ticket);
 		}
 		catch (Exception exception) {
 			if (exception instanceof UserPasswordException) {
@@ -142,7 +108,6 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			String ticketId = ParamUtil.getString(actionRequest, "ticketId");
-
 			String ticketKey = ParamUtil.getString(actionRequest, "ticketKey");
 
 			PortletURL portletURL = PortletURLBuilder.create(
@@ -191,8 +156,5 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

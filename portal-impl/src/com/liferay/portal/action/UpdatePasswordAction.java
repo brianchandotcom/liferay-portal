@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
@@ -66,29 +64,10 @@ public class UpdatePasswordAction implements Action {
 		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
-			if (ticket != null) {
-				User user = UserLocalServiceUtil.getUser(ticket.getClassPK());
+			User user = UpdatePasswordActionUtil.verifyUser(
+				httpServletRequest, ticket);
 
-				UserLocalServiceUtil.updatePasswordReset(
-					user.getUserId(), true);
-			}
-
-			User user = PortalUtil.getUser(httpServletRequest);
-
-			if ((user != null) &&
-				UpdatePasswordActionUtil.isUserDefaultAdmin(user)) {
-
-				String reminderQueryAnswer = user.getReminderQueryAnswer();
-
-				if (Validator.isNotNull(reminderQueryAnswer) &&
-					reminderQueryAnswer.equals(
-						WorkflowConstants.LABEL_PENDING)) {
-
-					httpServletRequest.setAttribute(
-						WebKeys.TITLE_SET_PASSWORD, "set-password");
-				}
-			}
-			else if (user == null) {
+			if (user == null) {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
@@ -116,20 +95,9 @@ public class UpdatePasswordAction implements Action {
 		try {
 			UpdatePasswordActionUtil.updatePassword(
 				UpdatePasswordAction.class.getName(), httpServletRequest,
-				httpServletResponse, themeDisplay, ticket);
-
-			String redirect = ParamUtil.getString(
-				httpServletRequest, WebKeys.REFERER);
-
-			if (Validator.isNotNull(redirect)) {
-				redirect = PortalUtil.escapeRedirect(redirect);
-			}
-
-			if (Validator.isNull(redirect)) {
-				redirect = themeDisplay.getPathMain();
-			}
-
-			httpServletResponse.sendRedirect(redirect);
+				httpServletResponse,
+				ParamUtil.getString(httpServletRequest, WebKeys.REFERER),
+				httpServletResponse::sendRedirect, themeDisplay, ticket);
 
 			return null;
 		}

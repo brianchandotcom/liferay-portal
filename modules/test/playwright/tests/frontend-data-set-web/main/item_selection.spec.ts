@@ -23,6 +23,8 @@ const test = mergeTests(
 );
 
 test.beforeEach(async ({fdsSamplePage, page, site}) => {
+	await fdsSamplePage.setupFDSSampleWidget({site});
+
 	await fdsSamplePage.selectTab('Advanced');
 
 	await expect(

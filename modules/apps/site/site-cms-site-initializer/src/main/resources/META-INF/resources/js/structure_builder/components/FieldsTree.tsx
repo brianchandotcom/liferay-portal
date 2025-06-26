@@ -78,7 +78,12 @@ export default function FieldsTree({search}: {search: string}) {
 
 		return [
 			{
-				children: buildItems(fields, structures, structureERC, search),
+				children: buildItems({
+					fields,
+					search,
+					structureERC,
+					structures,
+				}),
 				icon: 'edit-layout',
 				id: structureUuid,
 				label: structureLabel,
@@ -298,13 +303,19 @@ function useSelectionMode() {
 	return multiple ? 'multiple' : 'single';
 }
 
-function buildItems(
-	fields: (Field | ReferencedStructure)[],
-	structures: Structures,
-	structureERC: Structure['erc'],
-	search: string,
-	path: string[] = []
-): TreeItem[] {
+function buildItems({
+	fields,
+	path = [],
+	search,
+	structureERC,
+	structures,
+}: {
+	fields: (Field | ReferencedStructure)[];
+	path?: string[];
+	search: string;
+	structureERC: Structure['erc'];
+	structures: Structures;
+}): TreeItem[] {
 	return fields.reduce(
 		(items: TreeItem[], field: Field | ReferencedStructure) => {
 			if (field.type === 'referenced-structure') {
@@ -314,17 +325,17 @@ function buildItems(
 					structures
 				);
 
-				const item = {
+				const item: TreeItem = {
 					children:
 						field.erc === structureERC
 							? []
-							: buildItems(
-									getFieldsArray(structure),
-									structures,
-									structureERC,
+							: buildItems({
+									fields: getFieldsArray(structure),
+									path: [...path, field.name],
 									search,
-									[...path, field.name]
-								),
+									structureERC,
+									structures,
+								}),
 					erc: field.erc,
 					icon: 'edit-layout',
 					id: buildId(path, field),
@@ -333,7 +344,7 @@ function buildItems(
 					uuid: field.uuid,
 				};
 
-				if (match(label, search) || item.children.length) {
+				if (match(label, search) || item.children?.length) {
 					items.push(item);
 				}
 			}

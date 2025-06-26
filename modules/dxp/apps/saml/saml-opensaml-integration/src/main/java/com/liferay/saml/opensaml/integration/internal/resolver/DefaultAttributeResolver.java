@@ -600,10 +600,6 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		try {
 			List<UserGroup> userGroups = user.getUserGroups();
 
-			if (userGroups.isEmpty()) {
-				return;
-			}
-
 			String name = null;
 			String nameFormat = null;
 

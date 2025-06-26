@@ -19,7 +19,9 @@ import {AllStructureTypesDropdown} from '../../../../src/main/resources/META-INF
 import {Item} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/FilterDropdown';
 import {initialFilters} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/InventoryAnalysisCard';
 
-const mockStructures = (items: {id: string; name: string}[] = []) => {
+const mockStructures = (
+	items: {id: string; label: Record<string, string>}[] = []
+) => {
 	global.fetch = jest.fn().mockReturnValue({
 		json: jest.fn().mockReturnValue({items}),
 		ok: true,
@@ -98,11 +100,11 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		mockStructures([
 			{
 				id: '01',
-				name: 'structure 01',
+				label: {en_US: 'structure 01'},
 			},
 			{
 				id: '02',
-				name: 'structure 02',
+				label: {en_US: 'structure 02'},
 			},
 		]);
 
@@ -133,8 +135,8 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 
 	xit('search by a structure and returns a filtered result', async () => {
 		mockStructures([
-			{id: '01', name: 'structure 01'},
-			{id: '02', name: 'structure 02'},
+			{id: '01', label: {en_US: 'structure 01'}},
+			{id: '02', label: {en_US: 'structure 02'}},
 		]);
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -149,7 +151,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		mockStructures([{id: '02', name: 'structure 02'}]);
+		mockStructures([{id: '02', label: {en_US: 'structure 02'}}]);
 
 		await userEvent.type(
 			screen.getByPlaceholderText('search'),
@@ -178,8 +180,8 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 
 	xit('search by a structure and returns a empty result', async () => {
 		mockStructures([
-			{id: '01', name: 'structure 01'},
-			{id: '02', name: 'structure 02'},
+			{id: '01', label: {en_US: 'structure 01'}},
+			{id: '02', label: {en_US: 'structure 02'}},
 		]);
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -218,8 +220,8 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 
 	it('selects a new strucuture', async () => {
 		mockStructures([
-			{id: '01', name: 'structure 01'},
-			{id: '02', name: 'structure 02'},
+			{id: '01', label: {en_US: 'structure 01'}},
+			{id: '02', label: {en_US: 'structure 02'}},
 		]);
 
 		render(<WrappedComponent onSelectItem={() => {}} />);

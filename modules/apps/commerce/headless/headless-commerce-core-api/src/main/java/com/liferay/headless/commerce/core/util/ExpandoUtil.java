@@ -40,13 +40,11 @@ public class ExpandoUtil {
 				continue;
 			}
 
-			Class<?> expandoAttributeClass = expandoAttributes.get(
-				attributeName
-			).getClass();
+			Object attributeValue = expandoAttributes.get(attributeName);
 
 			if ((ExpandoColumnConstants.DATE == expandoBridge.getAttributeType(
 					attributeName)) &&
-				(expandoAttributeClass != Date.class)) {
+				(attributeValue.getClass() != Date.class)) {
 
 				expandoBridge.setAttribute(
 					attributeName,

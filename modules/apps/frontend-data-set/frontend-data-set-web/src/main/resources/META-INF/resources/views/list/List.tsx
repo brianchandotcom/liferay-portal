@@ -55,14 +55,19 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 		{
 			className,
 			item,
+			onItemSelectionChange,
 			schema,
-		}: {className: string; item: any; schema: IListSchema},
+		}: {
+			className: string;
+			item: any;
+			onItemSelectionChange: Function;
+			schema: IListSchema;
+		},
 		ref
 	) => {
 		const {
 			itemsActions,
 			onSelect,
-			selectItems,
 			selectable,
 			selectedItemsKey,
 			selectedItemsValue,
@@ -96,9 +101,9 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 									: false
 							}
 							onChange={() => {
-								selectItems({
+								onItemSelectionChange({
+									item,
 									trigger: ESelectionTrigger.INPUT,
-									value: itemId,
 								});
 
 								onSelect?.({selectedItems: [item]});
@@ -133,9 +138,9 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 					expand
 					onClick={() => {
 						if (selectable) {
-							selectItems({
+							onItemSelectionChange({
+								item,
 								trigger: ESelectionTrigger.CONTAINER,
-								value: itemId,
 							});
 
 							onSelect?.({selectedItems: [item]});
@@ -171,9 +176,11 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 
 const ListItemOptionalDropTarget = ({
 	item,
+	onItemSelectionChange,
 	schema,
 }: {
 	item: any;
+	onItemSelectionChange: Function;
 	schema: IListSchema;
 }) => {
 	const {className, dropRef} = useFDSDrop({item});
@@ -182,6 +189,7 @@ const ListItemOptionalDropTarget = ({
 		<ListItem
 			className={className}
 			item={item}
+			onItemSelectionChange={onItemSelectionChange}
 			ref={dropRef}
 			schema={schema}
 		/>
@@ -191,10 +199,12 @@ const ListItemOptionalDropTarget = ({
 const List = ({
 	header,
 	items,
+	onItemSelectionChange,
 	schema,
 }: {
 	header: IHeader;
 	items: any[];
+	onItemSelectionChange: Function;
 	schema: IListSchema;
 }) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
@@ -225,6 +235,7 @@ const List = ({
 									? item[selectedItemsKey]
 									: index
 							}
+							onItemSelectionChange={onItemSelectionChange}
 							schema={schema}
 						/>
 					))}

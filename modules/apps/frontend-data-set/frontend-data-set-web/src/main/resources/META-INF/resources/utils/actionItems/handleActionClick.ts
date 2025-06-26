@@ -26,6 +26,7 @@ const handleActionClick = ({
 	loadData,
 	onActionDropdownItemClick,
 	onInfoPanelToggleButtonClick,
+	onItemSelectionChange,
 	openModal,
 	openSidePanel,
 	selectItems,
@@ -43,6 +44,7 @@ const handleActionClick = ({
 	loadData: Function;
 	onActionDropdownItemClick: Function;
 	onInfoPanelToggleButtonClick?: Function;
+	onItemSelectionChange?: Function;
 	openModal: Function;
 	openSidePanel: Function;
 	selectItems?: Function;
@@ -67,6 +69,11 @@ const handleActionClick = ({
 	const doAction = ({defaultPrevented}: {defaultPrevented: boolean}) => {
 		if (target === INFO_PANEL && onInfoPanelToggleButtonClick) {
 			selectItems?.({
+				trigger: ESelectionTrigger.CONTAINER,
+				value: itemId,
+			});
+
+			onItemSelectionChange?.({
 				trigger: ESelectionTrigger.CONTAINER,
 				value: itemId,
 			});

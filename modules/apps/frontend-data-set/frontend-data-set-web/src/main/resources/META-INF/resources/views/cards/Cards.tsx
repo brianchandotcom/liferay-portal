@@ -28,7 +28,14 @@ import {
 import imagePropsTransformer from '../utils/imagePropsTransformer';
 
 const Card = forwardRef<HTMLDivElement, any>(
-	({item, schema}: {item: any; schema: ICardSchema}, ref) => {
+	(
+		{
+			item,
+			onItemSelectionChange,
+			schema,
+		}: {item: any; onItemSelectionChange: Function; schema: ICardSchema},
+		ref
+	) => {
 		const {
 			executeAsyncItemAction,
 			highlightItems,
@@ -174,6 +181,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 									loadData,
 									onActionDropdownItemClick,
 									onInfoPanelToggleButtonClick,
+									onItemSelectionChange,
 									openModal,
 									openSidePanel,
 									selectItems,
@@ -219,6 +227,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 
 function ClayCardOptionalDropTarget({
 	item,
+	onItemSelectionChange,
 	schema,
 }: React.ComponentProps<typeof Card>) {
 	const cardRef = useRef<HTMLDivElement>(null);
@@ -234,12 +243,25 @@ function ClayCardOptionalDropTarget({
 
 	return (
 		<div className="col-md-3">
-			<Card item={item} ref={cardRef} schema={schema} />
+			<Card
+				item={item}
+				onItemSelectionChange={onItemSelectionChange}
+				ref={cardRef}
+				schema={schema}
+			/>
 		</div>
 	);
 }
 
-const Cards = ({items, schema}: {items: Array<any>; schema: ICardSchema}) => {
+const Cards = ({
+	items,
+	onItemSelectionChange,
+	schema,
+}: {
+	items: Array<any>;
+	onItemSelectionChange: Function;
+	schema: ICardSchema;
+}) => {
 	const {selectedItemsKey, style}: IFrontendDataSetContext = useContext(
 		FrontendDataSetContext
 	);
@@ -266,6 +288,7 @@ const Cards = ({items, schema}: {items: Array<any>; schema: ICardSchema}) => {
 										? item[selectedItemsKey]
 										: getRandomId()
 								}
+								onItemSelectionChange={onItemSelectionChange}
 								schema={schema}
 							/>
 						);

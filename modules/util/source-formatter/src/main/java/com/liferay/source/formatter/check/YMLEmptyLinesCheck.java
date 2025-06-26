@@ -41,7 +41,6 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 
 				if (insideBlockStyle) {
 					sb.append(line);
-
 					sb.append("\n");
 
 					leadingSpaces = SourceUtil.getLeadingSpaces(line);
@@ -62,7 +61,6 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 				}
 
 				sb.append(line);
-
 				sb.append("\n");
 
 				if (YMLSourceUtil.isBlockStyle(line)) {

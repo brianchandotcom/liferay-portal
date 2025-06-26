@@ -17,6 +17,7 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -215,43 +216,60 @@ public class PlaywrightBatchBuildTestrayCaseResult
 	protected TestrayAttachment getPlaywrightReportTestrayAttachment() {
 		return getTestrayAttachment(
 			getBuildReport(), "Playwright Report",
-			getAxisBuildURLPath() + "/playwright-report/index.html");
+			"/playwright-report/index.html");
 	}
 
 	protected TestrayAttachment getPlaywrightTraceViewerTestrayAttachment() {
 		StringBuilder sb = new StringBuilder();
 
-		Matcher matcher = _traceZipDirPattern.matcher(
-			_playwrightJUnitTestClass.getSpecFilePath());
+		TestReport testReport = getTestReport();
 
-		if (matcher.matches()) {
-			String fullTestName = getName();
+		String errorStackTrace = testReport.getErrorStackTrace();
 
-			String testName = fullTestName.substring(
-				fullTestName.indexOf(">") + 1);
+		Matcher matcher = _traceZipPattern.matcher(errorStackTrace);
 
-			testName = testName.trim();
-			testName = testName.replace(" ", "-");
+		if (!matcher.find()) {
+			return null;
+		}
 
-			sb.append(getAxisBuildURLPath());
-			sb.append("/test-results/");
-			sb.append(matcher.group("fileName"));
-			sb.append("-");
-			sb.append(testName);
-			sb.append("-");
+		String traceZipFilePath = matcher.group("traceZipFilePath");
 
-			String projectDir = matcher.group("projectDir");
+		URL traceZipURL = null;
 
-			sb.append(projectDir.replace("/", "-"));
+		BuildReport buildReport = getBuildReport();
 
-			sb.append("/trace.zip");
+		for (URL testrayAttachmentURL :
+				buildReport.getTestrayAttachmentURLs()) {
+
+			String testrayAttachmentURLString = String.valueOf(
+				testrayAttachmentURL);
+
+			if (testrayAttachmentURLString.endsWith(traceZipFilePath)) {
+				traceZipURL = testrayAttachmentURL;
+
+				break;
+			}
+		}
+
+		if (traceZipURL == null) {
+			return null;
+		}
+
+		String traceZipURLPath = String.valueOf(traceZipURL);
+
+		try {
+			traceZipURLPath = traceZipURLPath.replace(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"build.base.artifact.url"),
+				"https://playwright.liferay.com/testray-results");
+		}
+		catch (IOException ioException) {
+			return null;
 		}
 
 		try {
 			URL url = new URL(
-				"https://playwright.liferay.com/?trace=" +
-					"https://playwright.liferay.com/testray-results/" +
-						sb.toString());
+				"https://playwright.liferay.com/?trace=" + traceZipURLPath);
 
 			return new DefaultTestrayAttachment(
 				this, "Trace Viewer", sb.toString(), url);
@@ -261,8 +279,9 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		}
 	}
 
-	private static final Pattern _traceZipDirPattern = Pattern.compile(
-		"(?<projectDir>\\S*/\\S*)/(?<fileName>\\S*)\\.spec\\.ts");
+	private static final Pattern _traceZipPattern = Pattern.compile(
+		"npx playwright show-trace " +
+			"(?<traceZipFilePath>test-results/[^/]+/trace.zip)");
 
 	private final PlaywrightJUnitTestClass _playwrightJUnitTestClass;
 	private final PlaywrightTestClassMethod _playwrightTestClassMethod;

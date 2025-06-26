@@ -12,6 +12,7 @@ import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
 import java.io.File;
 
+import java.io.IOException;
 import java.net.URL;
 
 import java.util.Date;
@@ -97,12 +98,24 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			String testrayS3AttachmentURLString = String.valueOf(
 				testrayS3AttachmentURL);
 
-			if (!testrayS3AttachmentURLString.contains(key)) {
+			if (!testrayS3AttachmentURLString.endsWith(key)) {
+				continue;
+			}
+
+			String s3ObjectPath = null;
+
+			try {
+				s3ObjectPath = testrayS3AttachmentURLString.replace(
+					JenkinsResultsParserUtil.getBuildProperty(
+						"build.base.artifact.url") + "/",
+					"");
+			}
+			catch (IOException ioException) {
 				continue;
 			}
 
 			TestrayAttachment testrayAttachment = new S3TestrayAttachment(
-				this, name, key);
+				this, name, s3ObjectPath);
 
 			_testrayAttachments.put(key, testrayAttachment);
 

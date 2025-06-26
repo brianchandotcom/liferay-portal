@@ -286,11 +286,6 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		return null;
 	}
 
-	protected String getAxisBuildURLPath() {
-		return JenkinsResultsParserUtil.combine(
-			getTopLevelBuildURLPath(), "/", getAxisName());
-	}
-
 	protected AxisTestClassGroup getAxisTestClassGroup() {
 		return _axisTestClassGroup;
 	}
@@ -299,8 +294,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
 		TestrayAttachment testrayAttachment = getTestrayAttachment(
-			getBuildReport(), "Liferay Log",
-			getAxisBuildURLPath() + "/liferay-log.txt.gz");
+			getBuildReport(), "Liferay Log", "/liferay-log.txt.gz");
 
 		if (testrayAttachment == null) {
 			return testrayAttachments;
@@ -312,9 +306,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			TestrayAttachment liferayLogTestrayAttachment =
 				getTestrayAttachment(
 					getBuildReport(), "Liferay Log (" + i + ")",
-					JenkinsResultsParserUtil.combine(
-						getAxisBuildURLPath(), "/liferay-log-",
-						String.valueOf(i), ".txt.gz"));
+					"/liferay-log-" + i + ".txt.gz");
 
 			if (liferayLogTestrayAttachment == null) {
 				break;
@@ -330,8 +322,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
 		TestrayAttachment testrayAttachment = getTestrayAttachment(
-			getBuildReport(), "Liferay OSGi Log",
-			getAxisBuildURLPath() + "/liferay-osgi-log.txt.gz");
+			getBuildReport(), "Liferay OSGi Log", "/liferay-osgi-log.txt.gz");
 
 		if (testrayAttachment == null) {
 			return testrayAttachments;
@@ -343,9 +334,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			TestrayAttachment liferayOSGiLogTestrayAttachment =
 				getTestrayAttachment(
 					getBuildReport(), "Liferay OSGi Log (" + i + ")",
-					JenkinsResultsParserUtil.combine(
-						getAxisBuildURLPath(), "/liferay-osgi-log-",
-						String.valueOf(i), ".txt.gz"));
+					"/liferay-osgi-log-" + i + ".txt.gz");
 
 			if (liferayOSGiLogTestrayAttachment == null) {
 				break;
@@ -561,7 +550,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 				getTestrayAttachment(
 					buildReport,
 					"Docker Log (" + matcher.group("fileName") + ")",
-					getAxisBuildURLPath() + "/" + matcher.group("key")));
+					"/" + matcher.group("key")));
 		}
 
 		return testrayAttachments;
@@ -589,7 +578,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			testrayAttachments.add(
 				getTestrayAttachment(
 					buildReport, "GC Log (" + matcher.group("fileName") + ")",
-					getAxisBuildURLPath() + "/" + matcher.group("key")));
+					"/" + matcher.group("key")));
 		}
 
 		return testrayAttachments;
@@ -598,12 +587,12 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 	private TestrayAttachment _getGradlePluginsAttachment() {
 		return getTestrayAttachment(
 			getBuildReport(), "Gradle Plugins Test Report",
-			getAxisBuildURLPath() + "/gradle_plugins.tar.gz");
+			"/gradle_plugins.tar.gz");
 	}
 
 	private TestrayAttachment _getJenkinsConsoleTestrayAttachment() {
 		String name = "Jenkins Console";
-		String key = getAxisBuildURLPath() + "/jenkins-console.txt.gz";
+		String key = "/jenkins-console.txt.gz";
 
 		TestrayAttachment testrayAttachment = getTestrayAttachment(
 			getBuildReport(), name, key);
@@ -697,7 +686,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 				getTestrayAttachment(
 					buildReport,
 					"Docker Log (" + matcher.group("fileName") + ")",
-					getAxisBuildURLPath() + "/" + matcher.group("key")));
+					"/" + matcher.group("key")));
 		}
 
 		return testrayAttachments;
@@ -705,8 +694,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 	private TestrayAttachment _getWarningsTestrayAttachment() {
 		return getTestrayAttachment(
-			getBuildReport(), "Warnings",
-			getAxisBuildURLPath() + "/warnings.html.gz");
+			getBuildReport(), "Warnings", "/warnings.html.gz");
 	}
 
 	private static final Pattern _dockerLogsURLPattern = Pattern.compile(

@@ -108,9 +108,11 @@ export interface ICreationActionItem {
 
 export interface IItemsActions {
 	data?: IItemActionsData;
+	disabled?: boolean;
 	href?: string;
 	icon?: string;
 	id?: string | number;
+	isDisabled?: (item: any) => boolean;
 	isVisible?: (item: any) => boolean;
 	items?: IItemsActions[];
 	label?: string;

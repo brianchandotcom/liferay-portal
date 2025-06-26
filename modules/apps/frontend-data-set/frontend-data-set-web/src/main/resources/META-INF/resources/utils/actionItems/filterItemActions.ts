@@ -39,6 +39,23 @@ const matchesVisibilityFilters = (
 	);
 };
 
+const isDisabled = (
+	action: IItemsActions,
+	infoPanelOpen: boolean,
+	itemData: any,
+	selectedItem: boolean
+): boolean => {
+	if (action?.isDisabled) {
+		return action.isDisabled(itemData);
+	}
+
+	if (infoPanelOpen && action.target === 'infoPanel' && selectedItem) {
+		return true;
+	}
+
+	return false;
+};
+
 const isVisible = (action: IItemsActions, itemData: any): boolean => {
 	if (
 		!hasPermission(action, itemData) ||
@@ -54,10 +71,19 @@ const isVisible = (action: IItemsActions, itemData: any): boolean => {
 	return true;
 };
 
-const transformAction = (
-	action: IItemsActions,
-	itemData: any
-): IItemsActions => {
+const transformAction = ({
+	action,
+	infoPanelOpen,
+	itemData,
+	selectedItem,
+}: {
+	action: IItemsActions;
+	infoPanelOpen: boolean;
+	itemData: any;
+	selectedItem: boolean;
+}): IItemsActions => {
+	action.disabled = isDisabled(action, infoPanelOpen, itemData, selectedItem);
+
 	if (!action?.data?.permissionKey || action?.target !== 'headless') {
 		return action;
 	}
@@ -78,15 +104,33 @@ const transformAction = (
 	};
 };
 
-const filterItemActions = (
-	actions: Array<IItemsActions>,
-	itemData: any
-): Array<IItemsActions> => {
+const filterItemActions = ({
+	actions,
+	infoPanelOpen = false,
+	itemData,
+	selectedItemsKey,
+	selectedItemsValue,
+}: {
+	actions: Array<IItemsActions>;
+	infoPanelOpen?: boolean;
+	itemData: any;
+	selectedItemsKey: string;
+	selectedItemsValue?: Array<any>;
+}): Array<IItemsActions> => {
+	const selectedItem = !!selectedItemsValue?.includes(
+		itemData[selectedItemsKey]
+	);
+
 	return actions
 		? actions
 				.filter((action: IItemsActions) => isVisible(action, itemData))
 				.map((action: IItemsActions) =>
-					transformAction(action, itemData)
+					transformAction({
+						action,
+						infoPanelOpen,
+						itemData,
+						selectedItem,
+					})
 				)
 		: [];
 };

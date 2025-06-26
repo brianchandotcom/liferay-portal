@@ -66,7 +66,7 @@ export interface IFrontendDataSetContext {
 	selectItems: Function;
 	selectable?: boolean;
 	selectedItems?: Array<any>;
-	selectedItemsKey?: string;
+	selectedItemsKey: string;
 	selectedItemsValue?: Array<any>;
 	selectionType?: string;
 	showBulkActionsManagementBar: boolean;

@@ -10,16 +10,14 @@ import type {Page, TestType} from '@playwright/test';
 
 function dataRemoteApiHelpersTest(
 	test: TestType<{remotePage: Page}, any>,
-	port: string
+	port: string,
+	url: string = liferayConfig.environment.baseUrl
 ) {
 	return test.extend<{
 		remoteApiHelpers: DataApiHelpers;
 	}>({
 		remoteApiHelpers: async ({remotePage}, use) => {
-			const remoteUrl = liferayConfig.environment.baseUrl.replace(
-				'8080',
-				port
-			);
+			const remoteUrl = url.replace('8080', port);
 
 			const dataApiHelpers = new DataApiHelpers(remotePage, remoteUrl);
 

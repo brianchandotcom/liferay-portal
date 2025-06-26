@@ -20,6 +20,7 @@ import getRandomId from '../../utils/getRandomId';
 import isLink from '../../utils/isLink';
 import {
 	DisplayType,
+	ESelectionTrigger,
 	ICardLabelSchema,
 	ICardSchema,
 	IItemsActions,
@@ -114,7 +115,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 			});
 		};
 
-		const getEventTarget = (event: any): string | boolean => {
+		const getSelectionTrigger = (event: any): string | boolean => {
 			if (
 				event.nativeEvent?.target['classList'].contains(
 					'card-item-first'
@@ -130,14 +131,14 @@ const Card = forwardRef<HTMLDivElement, any>(
 						'lexicon-icon-ellipsis-v'
 					))
 			) {
-				return 'body';
+				return ESelectionTrigger.CONTAINER;
 			}
 			else if (
 				event.nativeEvent?.target['classList'].contains(
 					'custom-control-input'
 				)
 			) {
-				return 'input';
+				return ESelectionTrigger.INPUT;
 			}
 
 			return false;
@@ -188,7 +189,8 @@ const Card = forwardRef<HTMLDivElement, any>(
 					onClick={
 						selectable
 							? (event: any) => {
-									const target = getEventTarget(event);
+									const target = getSelectionTrigger(event);
+
 									!!target &&
 										selectItems({
 											trigger: target,

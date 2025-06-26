@@ -36,7 +36,12 @@ import {
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
 import {getInputRendererById} from '../../utils/renderer';
-import {IItemsActions, ITableSchema, TSort} from '../../utils/types';
+import {
+	ESelectionTrigger,
+	IItemsActions,
+	ITableSchema,
+	TSort,
+} from '../../utils/types';
 import ViewsContext, {
 	IViewsContext,
 	TViewsContextDispatch,
@@ -213,7 +218,8 @@ const Row = ({
 										onChange={() =>
 											onItemSelectionChange({
 												item,
-												trigger: 'checkbox',
+												trigger:
+													ESelectionTrigger.INPUT,
 											})
 										}
 										title={Liferay.Language.get(
@@ -390,7 +396,7 @@ function ClayTableRowOptionalDropTarget({
 			onClick={() => {
 				onItemSelectionChange({
 					item,
-					trigger: 'body',
+					trigger: ESelectionTrigger.CONTAINER,
 				});
 			}}
 			ref={dropRef}

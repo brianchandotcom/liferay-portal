@@ -64,6 +64,11 @@ export enum DisplayType {
 	WARNING = 'warning',
 }
 
+export enum ESelectionTrigger {
+	CONTAINER = 'container',
+	INPUT = 'input',
+}
+
 export interface IInlineEditingSettings {
 	alwaysOn: boolean;
 	defaultBodyContent: object;

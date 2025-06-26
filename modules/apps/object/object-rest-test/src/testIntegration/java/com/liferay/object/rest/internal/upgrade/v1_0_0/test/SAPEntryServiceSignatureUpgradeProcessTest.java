@@ -9,14 +9,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -54,11 +52,9 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeIsIdempotent() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
+					TestPropsValues.getCompanyId())) {
 
 			String oldAllowedServiceSignatures = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
@@ -67,8 +63,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				"CodeObjectRelationshipNameRelatedExternalReferenceCode");
 
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
-				company.getDefaultUser(
-				).getUserId(),
+				TestPropsValues.getUserId(),
 				StringBundler.concat(
 					"com.liferay.object.rest.internal.resource.v1_0.",
 					"ObjectEntryResourceImpl#getObjectEntry\n",
@@ -77,10 +72,10 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(
-							company.getCompanyId())),
+							TestPropsValues.getCompanyId())),
 					"Test SAP Entry for Upgrade"
 				).build(),
-				_createServiceContext(company));
+				_createServiceContext());
 
 			_testSAPEntries.add(sapEntry);
 
@@ -114,11 +109,9 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 	public void testUpgradeObjectEntryRelationshipServiceSignature()
 		throws Exception {
 
-		Company company = CompanyTestUtil.addCompany();
-
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
+					TestPropsValues.getCompanyId())) {
 
 			String oldAllowedServiceSignatures = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
@@ -140,17 +133,15 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				oldAllowedServiceSignatures);
 
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
-				company.getDefaultUser(
-				).getUserId(),
-				preUpgradeSignatures, false, true,
+				TestPropsValues.getUserId(), preUpgradeSignatures, false, true,
 				RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(
-							company.getCompanyId())),
+							TestPropsValues.getCompanyId())),
 					"Test SAP Entry for Upgrade"
 				).build(),
-				_createServiceContext(company));
+				_createServiceContext());
 
 			_testSAPEntries.add(sapEntry);
 
@@ -197,11 +188,9 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeWithNoMatchingSignatures() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
+					TestPropsValues.getCompanyId())) {
 
 			String allowedServiceSignatures = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
@@ -212,17 +201,15 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				"ObjectEntryResourceImpl#postObjectEntry");
 
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
-				company.getDefaultUser(
-				).getUserId(),
-				allowedServiceSignatures, false, true,
-				RandomTestUtil.randomString(),
+				TestPropsValues.getUserId(), allowedServiceSignatures, false,
+				true, RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(
-							company.getCompanyId())),
+							TestPropsValues.getCompanyId())),
 					"Test SAP Entry for Upgrade"
 				).build(),
-				_createServiceContext(company));
+				_createServiceContext());
 
 			_testSAPEntries.add(sapEntry);
 
@@ -241,16 +228,11 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 		}
 	}
 
-	private ServiceContext _createServiceContext(Company company)
-		throws Exception {
-
+	private ServiceContext _createServiceContext() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setCompanyId(company.getCompanyId());
-
-		User defaultUser = company.getDefaultUser();
-
-		serviceContext.setUserId(defaultUser.getUserId());
+		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+		serviceContext.setUserId(TestPropsValues.getUserId());
 
 		return serviceContext;
 	}

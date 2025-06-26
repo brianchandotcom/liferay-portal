@@ -6,7 +6,6 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 import {useState} from 'react';
 
 import {RadioCard} from '../../../../../components/RadioCard/RadioCard';

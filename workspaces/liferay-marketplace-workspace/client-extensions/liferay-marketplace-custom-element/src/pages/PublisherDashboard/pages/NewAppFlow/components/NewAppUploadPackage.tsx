@@ -20,8 +20,8 @@ import {
 } from '../../../../../enums/File';
 import {ProductType} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
-import {getRandomID} from '../../../../../utils/string';
 import {Liferay} from '../../../../../liferay/liferay';
+import {getRandomID} from '../../../../../utils/string';
 
 type NewAppUploadAppPackagesComponentProps = {
 	isProcessing: boolean;
@@ -101,6 +101,7 @@ export function NewAppUploadAppPackagesComponent({
 				),
 				type: 'danger',
 			});
+
 			return;
 		}
 

@@ -22,6 +22,7 @@ import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.model.ObjectEntryTable;
+import com.liferay.object.model.ObjectEntryVersionTable;
 import com.liferay.object.model.ObjectFolderTable;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
@@ -30,6 +31,12 @@ import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -218,6 +225,8 @@ public class InventoryAnalysisResourceImpl
 		ObjectDefinitionTable objectDefinitionTable =
 			ObjectDefinitionTable.INSTANCE;
 		ObjectEntryTable objectEntryTable = ObjectEntryTable.INSTANCE;
+		ObjectEntryVersionTable objectEntryVersionTable =
+			ObjectEntryVersionTable.INSTANCE;
 		ObjectFolderTable objectFolderTable = ObjectFolderTable.INSTANCE;
 
 		Long[] assetGroupIds = groupIds;
@@ -236,6 +245,16 @@ public class InventoryAnalysisResourceImpl
 			objectEntryTable,
 			objectEntryTable.objectDefinitionId.eq(
 				objectDefinitionTable.objectDefinitionId)
+		).innerJoinON(
+			objectEntryVersionTable,
+			objectEntryVersionTable.objectEntryId.eq(
+				objectEntryTable.objectEntryId
+			).and(
+				objectEntryVersionTable.version.eq(objectEntryTable.version)
+			).and(
+				objectEntryVersionTable.status.eq(
+					WorkflowConstants.STATUS_APPROVED)
+			)
 		).innerJoinON(
 			assetEntryTable,
 			assetEntryTable.classPK.eq(objectEntryTable.objectEntryId)
@@ -323,8 +342,11 @@ public class InventoryAnalysisResourceImpl
 
 		if (Validator.isNotNull(languageId)) {
 			predicate = predicate.and(
-				AssetEntryTable.INSTANCE.title.like(
-					"%language-id=\"" + languageId + "\"%"));
+				_jsonExtract(
+					ObjectEntryVersionTable.INSTANCE.content, "$.properties"
+				).like(
+					"%\"" + languageId + "\":%"
+				));
 		}
 
 		if (Validator.isNotNull(rangeStart)) {
@@ -466,6 +488,24 @@ public class InventoryAnalysisResourceImpl
 			});
 
 		return depotEntries;
+	}
+
+	private <T> Expression<T> _jsonExtract(
+		Expression<T> expression, String value) {
+
+		DB db = DBManagerUtil.getDB();
+
+		if ((db.getDBType() == DBType.MYSQL) ||
+			(db.getDBType() == DBType.MARIADB)) {
+
+			return new DSLFunction<>(
+				new DSLFunctionType("JSON_EXTRACT(", ")"), expression,
+				new Scalar<>(value));
+		}
+
+		return new DSLFunction<>(
+			new DSLFunctionType("JSON_QUERY(", ")"), expression,
+			new Scalar<>(value));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

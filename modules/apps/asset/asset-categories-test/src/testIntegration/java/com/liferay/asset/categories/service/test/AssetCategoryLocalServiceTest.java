@@ -991,7 +991,7 @@ public class AssetCategoryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateAssetCategoryWithUpdatedVocabulary()
+	public void testUpdateAssetCategoryWithUpdatedAssetVocabulary()
 		throws Exception {
 
 		ServiceContext serviceContext =

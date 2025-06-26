@@ -177,7 +177,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to check advanced file system structure in: " +
+					"Unable to verify advanced file system structure in: " +
 						companyIdPath,
 					exception);
 			}
@@ -196,7 +196,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				if (!Files.isDirectory(fileEntryPath)) {
 					_log.error(
 						"Found file in advanced file system structure " +
-							"directory (only directories expected): " +
+							"directory when only directories are expected: " +
 								fileEntryPath);
 
 					return false;
@@ -231,7 +231,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to validate subdirectories in: " + folderIdPath,
+					"Unable to verify file system structure in: " +
+						folderIdPath,
 					exception);
 			}
 
@@ -269,7 +270,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to check file system structure in: " +
+					"Unable to verify file system structure in: " +
 						companyIdPath,
 					exception);
 			}
@@ -320,7 +321,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to validate subdirectories in: " + folderIdPath,
+					"Unable to verify file system structure in: " +
+						folderIdPath,
 					exception);
 			}
 

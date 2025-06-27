@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -150,11 +149,11 @@ public class JSUnitModulesBatchTestClassGroup
 			}
 
 			if (!testClassMethods.isEmpty()) {
-				testClasses.add(testClass);
+				addTestClass(testClass);
 			}
 		}
 
-		Collections.sort(testClasses);
+		sortTestClasses();
 	}
 
 }

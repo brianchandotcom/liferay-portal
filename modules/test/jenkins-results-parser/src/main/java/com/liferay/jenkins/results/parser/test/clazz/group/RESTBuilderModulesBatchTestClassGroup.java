@@ -16,7 +16,6 @@ import java.io.IOException;
 
 import java.nio.file.PathMatcher;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -33,7 +32,7 @@ public class RESTBuilderModulesBatchTestClassGroup
 			return 0;
 		}
 
-		if ((_buildType == BuildType.FULL) || testClasses.isEmpty()) {
+		if ((_buildType == BuildType.FULL) || !containsTestClasses()) {
 			return 1;
 		}
 
@@ -80,11 +79,9 @@ public class RESTBuilderModulesBatchTestClassGroup
 
 	@Override
 	protected void setAxisTestClassGroups() {
-		int testClassCount = testClasses.size();
-
 		int axisCount = getAxisCount();
 
-		if ((testClassCount == 0) && (axisCount == 1)) {
+		if (!containsTestClasses() && (axisCount == 1)) {
 			axisTestClassGroups.add(
 				0, TestClassGroupFactory.newAxisTestClassGroup(this));
 
@@ -146,10 +143,10 @@ public class RESTBuilderModulesBatchTestClassGroup
 				continue;
 			}
 
-			testClasses.add(testClass);
+			addTestClass(testClass);
 		}
 
-		Collections.sort(testClasses);
+		sortTestClasses();
 	}
 
 	private BuildType _buildType;

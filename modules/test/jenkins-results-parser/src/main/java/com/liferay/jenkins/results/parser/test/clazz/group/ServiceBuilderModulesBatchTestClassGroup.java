@@ -16,7 +16,6 @@ import java.io.IOException;
 
 import java.nio.file.PathMatcher;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -34,7 +33,7 @@ public class ServiceBuilderModulesBatchTestClassGroup
 		}
 
 		if ((_buildType == BuildType.FULL) ||
-			(testClasses.isEmpty() && (_buildType == BuildType.CORE))) {
+			(!containsTestClasses() && (_buildType == BuildType.CORE))) {
 
 			return 1;
 		}
@@ -82,11 +81,9 @@ public class ServiceBuilderModulesBatchTestClassGroup
 
 	@Override
 	protected void setAxisTestClassGroups() {
-		int testClassCount = testClasses.size();
-
 		int axisCount = getAxisCount();
 
-		if ((testClassCount == 0) && (axisCount == 1)) {
+		if (!containsTestClasses() && (axisCount == 1)) {
 			axisTestClassGroups.add(
 				0, TestClassGroupFactory.newAxisTestClassGroup(this));
 
@@ -173,10 +170,10 @@ public class ServiceBuilderModulesBatchTestClassGroup
 				continue;
 			}
 
-			testClasses.add(testClass);
+			addTestClass(testClass);
 		}
 
-		Collections.sort(testClasses);
+		sortTestClasses();
 	}
 
 	private BuildType _buildType;

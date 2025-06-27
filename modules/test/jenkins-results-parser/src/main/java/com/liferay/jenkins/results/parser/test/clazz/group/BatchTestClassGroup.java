@@ -148,9 +148,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return Integer.parseInt(jobPropertyValue);
 		}
 
-		int testClassCount = testClasses.size();
-
-		if (testClassCount == 0) {
+		if (!containsTestClasses()) {
 			return 0;
 		}
 
@@ -161,7 +159,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				"'test.batch.axis.max.size' cannot be 0 or less");
 		}
 
-		return (int)Math.ceil((double)testClassCount / axisMaxSize);
+		return (int)Math.ceil((double)getTestClassCount() / axisMaxSize);
 	}
 
 	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
@@ -599,6 +597,13 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		_setIncludeStableTestSuite();
 	}
 
+	@Override
+	protected void addTestClass(TestClass testClass) {
+		super.addTestClass(testClass);
+
+		testClass.setBatchTestClassGroup(this);
+	}
+
 	protected int getAxisMaxSize() {
 		JobProperty jobProperty = getJobProperty("test.batch.axis.max.size");
 
@@ -956,15 +961,15 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected void setAxisTestClassGroups() {
-		int testClassCount = testClasses.size();
-
-		if (testClassCount == 0) {
+		if (!containsTestClasses()) {
 			return;
 		}
 
 		int axisCount = getAxisCount();
 
-		int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
+		int axisSize = (int)Math.ceil((double)getTestClassCount() / axisCount);
+
+		List<TestClass> testClasses = getTestClasses();
 
 		for (List<TestClass> axisTestClasses :
 				Lists.partition(testClasses, axisSize)) {

@@ -230,10 +230,17 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 				continue;
 			}
 
-			testClasses.add(
+			addTestClass(
 				TestClassFactory.newTestClass(
 					batchTestClassGroup, testClassJSONObject));
 		}
+	}
+
+	@Override
+	protected void addTestClass(TestClass testClass) {
+		super.addTestClass(testClass);
+
+		testClass.setAxisTestClassGroup(this);
 	}
 
 	protected void setBatchTestClassGroup(

@@ -215,6 +215,13 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
+	public void setBatchTestClassGroup(
+		BatchTestClassGroup batchTestClassGroup) {
+
+		_batchTestClassGroup = batchTestClassGroup;
+	}
+
+	@Override
 	public void setSegmentTestClassGroup(
 		SegmentTestClassGroup segmentTestClassGroup) {
 
@@ -309,7 +316,7 @@ public abstract class BaseTestClass implements TestClass {
 	private Long _averageOverheadDuration;
 	private Long _averageTestTaskDuration;
 	private AxisTestClassGroup _axisTestClassGroup;
-	private final BatchTestClassGroup _batchTestClassGroup;
+	private BatchTestClassGroup _batchTestClassGroup;
 	private SegmentTestClassGroup _segmentTestClassGroup;
 	private final File _testClassFile;
 	private final List<TestClassMethod> _testClassMethods = new ArrayList<>();

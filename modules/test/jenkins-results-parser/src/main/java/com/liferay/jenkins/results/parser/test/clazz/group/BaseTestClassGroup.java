@@ -13,6 +13,7 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -23,14 +24,14 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 
 	@Override
 	public List<TestClass> getTestClasses() {
-		return testClasses;
+		return _testClasses;
 	}
 
 	@Override
 	public List<File> getTestClassFiles() {
 		List<File> testClassFiles = new ArrayList<>();
 
-		for (TestClass testClass : testClasses) {
+		for (TestClass testClass : _testClasses) {
 			testClassFiles.add(testClass.getTestClassFile());
 		}
 
@@ -49,8 +50,8 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 	}
 
 	protected void addTestClass(TestClass testClass) {
-		if (!testClasses.contains(testClass)) {
-			testClasses.add(testClass);
+		if (!_testClasses.contains(testClass)) {
+			_testClasses.add(testClass);
 		}
 	}
 
@@ -58,6 +59,10 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 		for (TestClass testClass : testClasses) {
 			addTestClass(testClass);
 		}
+	}
+
+	protected boolean containsTestClasses() {
+		return !_testClasses.isEmpty();
 	}
 
 	protected String getBuildStartProperty(String propertyName) {
@@ -74,10 +79,18 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 		return null;
 	}
 
-	protected void removeTestClass(TestClass testClass) {
-		testClasses.remove(testClass);
+	protected int getTestClassCount() {
+		return _testClasses.size();
 	}
 
-	protected final List<TestClass> testClasses = new ArrayList<>();
+	protected void removeTestClass(TestClass testClass) {
+		_testClasses.remove(testClass);
+	}
+
+	protected void sortTestClasses() {
+		Collections.sort(_testClasses);
+	}
+
+	private final List<TestClass> _testClasses = new ArrayList<>();
 
 }

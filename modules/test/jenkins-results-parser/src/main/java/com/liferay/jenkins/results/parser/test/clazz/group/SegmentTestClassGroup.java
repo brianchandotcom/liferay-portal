@@ -221,6 +221,13 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		}
 	}
 
+	@Override
+	protected void addTestClass(TestClass testClass) {
+		super.addTestClass(testClass);
+
+		testClass.setSegmentTestClassGroup(this);
+	}
+
 	private String _getSlaveLabel() {
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 

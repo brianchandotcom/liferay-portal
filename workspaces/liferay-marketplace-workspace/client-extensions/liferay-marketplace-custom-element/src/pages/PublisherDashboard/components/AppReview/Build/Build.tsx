@@ -5,6 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 
+import {LiferayPackage} from '../../../../../context/NewAppContext';
 import i18n from '../../../../../i18n';
 import {ProductTypeOptions} from '../../../pages/Apps/AppCreationFlow/ProvideAppBuildPage/constants/productTypes';
 import {AppReviewProps} from '../AppReview';
@@ -19,6 +20,25 @@ const Build = ({
 	const productTypeOption = ProductTypeOptions.find(
 		(productType) => productType.value === context.build.appType
 	);
+
+	const FileContent = ({
+		liferayPackage,
+	}: {
+		liferayPackage: LiferayPackage;
+	}) => {
+		return liferayPackage.uploaded ? (
+			<a
+				className="app-review-file-name ml-3"
+				href={liferayPackage?.file?.src}
+			>
+				{liferayPackage?.file?.fileName}
+			</a>
+		) : (
+			<span className="app-review-file-name ml-3">
+				{liferayPackage?.file?.fileName}
+			</span>
+		);
+	};
 
 	return (
 		<AppReviewSection
@@ -57,9 +77,9 @@ const Build = ({
 										/>
 									</div>
 									<div className="d-flex flex-column">
-										<span className="app-review-file-name ml-3">
-											{liferayPackage?.file?.fileName}
-										</span>
+										<FileContent
+											liferayPackage={liferayPackage}
+										/>
 										<small className="document-file-list-item-left-content-text-file-size ml-3">
 											{liferayPackage.file?.readableSize}
 										</small>

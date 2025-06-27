@@ -5,14 +5,21 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -40,14 +47,14 @@ public class PreupgradeVerifyStoreFileSystemStructure
 			return;
 		}
 
-		if (!StringUtil.equals(
-				PropsValues.DL_STORE_IMPL,
-				"com.liferay.portal.store.file.system." +
-					"AdvancedFileSystemStore") &&
-			!StringUtil.equals(
-				PropsValues.DL_STORE_IMPL,
-				"com.liferay.portal.store.file.system.FileSystemStore")) {
+		boolean advancedFileSystemStore = StringUtil.equals(
+			PropsValues.DL_STORE_IMPL,
+			"com.liferay.portal.store.file.system.AdvancedFileSystemStore");
+		boolean fileSystemStore = StringUtil.equals(
+			PropsValues.DL_STORE_IMPL,
+			"com.liferay.portal.store.file.system.FileSystemStore");
 
+		if (!advancedFileSystemStore && !fileSystemStore) {
 			return;
 		}
 
@@ -72,6 +79,25 @@ public class PreupgradeVerifyStoreFileSystemStructure
 					throw new VerifyException(
 						companyIdPath + " is not a directory");
 				}
+
+				if (advancedFileSystemStore &&
+					_hasAdvancedFileSystemStructureCompanyIdPath(
+						companyIdPath)) {
+
+					continue;
+				}
+
+				if (fileSystemStore &&
+					_hasFileSystemStructureCompanyIdPath(companyIdPath)) {
+
+					continue;
+				}
+
+				throw new VerifyException(
+					StringBundler.concat(
+						advancedFileSystemStore ? "Advanced file" : "File",
+						" system store directory structure ",
+						rootDirPath.toString(), " is invalid"));
 			}
 		}
 
@@ -116,5 +142,238 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 		return rootDir.toPath();
 	}
+
+	private boolean _hasAdvancedFileSystemStructureCompanyIdPath(
+		Path companyIdPath) {
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				companyIdPath)) {
+
+			for (Path folderIdPath : directoryStream) {
+				if (_isSystemCompanyPath(folderIdPath)) {
+					continue;
+				}
+
+				if (!Files.isDirectory(folderIdPath)) {
+					_log.error(
+						"Found file in advanced file system structure " +
+							"directory when only directories are expected: " +
+								folderIdPath);
+
+					return false;
+				}
+
+				if (!_hasAdvancedFileSystemStructureFolderIdPath(
+						folderIdPath)) {
+
+					return false;
+				}
+			}
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to verify advanced file system structure in: " +
+						companyIdPath,
+					exception);
+			}
+
+			return false;
+		}
+	}
+
+	private boolean _hasAdvancedFileSystemStructureFolderIdPath(
+		Path folderIdPath) {
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				folderIdPath)) {
+
+			for (Path fileNamePath : directoryStream) {
+				if (!Files.isDirectory(fileNamePath)) {
+					_log.error(
+						"Found file in advanced file system structure " +
+							"directory when only directories are expected: " +
+								fileNamePath);
+
+					return false;
+				}
+
+				String fileName = String.valueOf(fileNamePath.getFileName());
+
+				if (fileName.equals("DLFE")) {
+					if (!_hasAdvancedFileSystemStructureFolderIdPath(
+							fileNamePath)) {
+
+						return false;
+					}
+				}
+				else if ((fileName.length() > 2) &&
+						 Validator.isNull(FileUtil.getExtension(fileName))) {
+
+					_log.error(
+						StringBundler.concat(
+							"Found file name directory with name longer than ",
+							"2 characters without an extension in advanced ",
+							"file system structure directory: ",
+							fileNamePath.toString()));
+
+					return false;
+				}
+			}
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to verify advanced file system structure in: " +
+						folderIdPath,
+					exception);
+			}
+
+			return false;
+		}
+	}
+
+	private boolean _hasFileSystemStructureCompanyIdPath(Path companyIdPath) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				companyIdPath)) {
+
+			for (Path folderIdPath : directoryStream) {
+				if (_isSystemCompanyPath(folderIdPath)) {
+					continue;
+				}
+
+				if (!Files.isDirectory(folderIdPath)) {
+					_log.error(
+						"Found file in file system structure directory when " +
+							"only directories are expected: " + folderIdPath);
+
+					return false;
+				}
+
+				if (!_hasFileSystemStructureFolderIdPath(folderIdPath)) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to verify file system structure in: " +
+						companyIdPath,
+					exception);
+			}
+
+			return false;
+		}
+	}
+
+	private boolean _hasFileSystemStructureFolderIdPath(Path folderIdPath) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				folderIdPath)) {
+
+			for (Path fileNamePath : directoryStream) {
+				if (!Files.isDirectory(fileNamePath)) {
+					_log.error(
+						"Found file in file system structure directory when " +
+							"only directories are expected: " + fileNamePath);
+
+					return false;
+				}
+
+				if (StringUtil.contains(
+						String.valueOf(fileNamePath.getFileName()),
+						StringPool.PERIOD, StringPool.BLANK)) {
+
+					_log.error(
+						StringBundler.concat(
+							"Found file name directory with extension in file ",
+							"system structure when no extensions are ",
+							"expected: ", fileNamePath.toString()));
+
+					return false;
+				}
+
+				if (!_hasVersionLabelFile(fileNamePath)) {
+					_log.error(
+						StringBundler.concat(
+							"File name directory does not contain valid ",
+							"version label files as expected in file system ",
+							"structure: ", fileNamePath.toString()));
+
+					return false;
+				}
+			}
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to verify file system structure in: " +
+						folderIdPath,
+					exception);
+			}
+
+			return false;
+		}
+	}
+
+	private boolean _hasVersionLabelFile(Path fileNamePath) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				fileNamePath)) {
+
+			for (Path versionLabelPath : directoryStream) {
+				if (Files.isDirectory(versionLabelPath)) {
+					continue;
+				}
+
+				String versionLabelName = String.valueOf(
+					versionLabelPath.getFileName());
+
+				if (StringUtil.equals(
+						versionLabelName,
+						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+
+					continue;
+				}
+
+				if (!versionLabelName.matches("\\d+\\.\\d+.*")) {
+					_log.error(
+						"Found file that does not match version label " +
+							"structure (expected \\d+\\.\\d+.*): " +
+								versionLabelPath);
+
+					return false;
+				}
+			}
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to verify file entry version label in: " +
+						fileNamePath,
+					exception);
+			}
+
+			return false;
+		}
+	}
+
+	private boolean _isSystemCompanyPath(Path folderIdPath) {
+		return StringUtil.equals(
+			String.valueOf(folderIdPath.getFileName()),
+			String.valueOf(CompanyConstants.SYSTEM));
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PreupgradeVerifyFileSystemStoreStructure.class);
 
 }

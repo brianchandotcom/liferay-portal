@@ -39,23 +39,17 @@ public class ObjectDefinitionTreeFactory extends BaseTreeFactory {
 		_objectDefinitionPersistence = objectDefinitionPersistence;
 	}
 
-	public Tree create(
-			boolean excludeDifferentStatus,
-			boolean excludeDifferentRootObjectDefinitionIds,
-			long objectDefinitionId)
+	public Tree create(boolean excludeDifferentStatus, long objectDefinitionId)
 		throws PortalException {
 
 		return create(
-			excludeDifferentStatus, excludeDifferentRootObjectDefinitionIds,
-			objectDefinitionId,
+			excludeDifferentStatus, objectDefinitionId,
 			pk -> objectRelationshipLocalService.getObjectRelationships(
 				pk, true));
 	}
 
 	public Tree create(
-			boolean excludeDifferentStatus,
-			boolean excludeDifferentRootObjectDefinitionIds,
-			long objectDefinitionId,
+			boolean excludeDifferentStatus, long objectDefinitionId,
 			UnsafeFunction<Long, List<ObjectRelationship>, PortalException>
 				unsafeFunction)
 		throws PortalException {
@@ -74,9 +68,8 @@ public class ObjectDefinitionTreeFactory extends BaseTreeFactory {
 					if ((excludeDifferentStatus &&
 						 (rootObjectDefinition.getStatus() !=
 							 objectDefinition2.getStatus())) ||
-						(excludeDifferentRootObjectDefinitionIds &&
-						 !objectDefinition2.isNode(
-							 rootObjectDefinition.getObjectDefinitionId()))) {
+						(rootObjectDefinition.getObjectDefinitionId() !=
+							objectDefinition2.getRootObjectDefinitionId())) {
 
 						return null;
 					}
@@ -88,7 +81,7 @@ public class ObjectDefinitionTreeFactory extends BaseTreeFactory {
 	}
 
 	public Tree create(long objectDefinitionId) throws PortalException {
-		return create(true, true, objectDefinitionId);
+		return create(true, objectDefinitionId);
 	}
 
 	private ObjectDefinition _getObjectDefinition(long objectDefinitionId)

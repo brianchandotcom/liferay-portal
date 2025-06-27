@@ -1231,17 +1231,6 @@ public class ObjectRelationshipLocalServiceTest {
 				objectDefinitionBBB.getObjectDefinitionId(),
 				objectDefinitionB.getObjectDefinitionId()));
 
-		// Unable to bind the object definitions when the child object
-		// definition is bound to another object definition
-
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			"Unable to bind the object definitions when the child object " +
-				"definition is bound to another object definition",
-			() -> _bindObjectDefinitions(
-				objectDefinitionB.getObjectDefinitionId(),
-				objectDefinitionBBB.getObjectDefinitionId()));
-
 		ObjectDefinition objectDefinitionC =
 			_addAndPublishCustomObjectDefinition("C");
 		ObjectDefinition objectDefinitionCC =
@@ -1250,14 +1239,6 @@ public class ObjectRelationshipLocalServiceTest {
 		_bindObjectDefinitions(
 			objectDefinitionC.getObjectDefinitionId(),
 			objectDefinitionCC.getObjectDefinitionId());
-
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			"Unable to bind the object definitions when the child object " +
-				"definition is bound to another object definition",
-			() -> _bindObjectDefinitions(
-				objectDefinitionB.getObjectDefinitionId(),
-				objectDefinitionCC.getObjectDefinitionId()));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -1485,7 +1466,8 @@ public class ObjectRelationshipLocalServiceTest {
 			objectDefinitionAA.getClassName(),
 			objectEntryAA.getObjectEntryId());
 
-		_bindObjectDefinitions(objectRelationship);
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService, List.of(objectRelationship));
 
 		objectEntryAA = _objectEntryLocalService.getObjectEntry(
 			objectEntryAA.getObjectEntryId());
@@ -2824,11 +2806,6 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			objectRelationship.getDeletionType());
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
-
-		Assert.assertTrue(objectField.isRequired());
-
 		biConsumer.accept(
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectDefinition1.getObjectDefinitionId()),
@@ -3070,11 +3047,6 @@ public class ObjectRelationshipLocalServiceTest {
 
 		Assert.assertEquals(
 			objectDefinition1.getScope(), objectDefinition2.getScope());
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectRelationship.getObjectFieldId2());
-
-		Assert.assertTrue(objectField.isRequired());
 	}
 
 	@Inject

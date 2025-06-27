@@ -174,6 +174,18 @@ public class ScopedTestEntityResourceTest
 	}
 
 	@Override
+	protected ScopedTestEntity testGraphQLScopedTestEntity_addScopedTestEntity()
+		throws Exception {
+
+		ScopedTestEntity scopedTestEntity = randomScopedTestEntity();
+
+		return scopedTestEntityResource.
+			postSiteScopedTestEntityByExternalReferenceCode(
+				scopedTestEntity.getSiteId(),
+				scopedTestEntity.getExternalReferenceCode(), scopedTestEntity);
+	}
+
+	@Override
 	protected ScopedTestEntity
 			testPatchAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {

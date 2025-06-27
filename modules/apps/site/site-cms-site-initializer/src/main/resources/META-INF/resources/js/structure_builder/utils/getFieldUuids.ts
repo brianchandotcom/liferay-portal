@@ -5,13 +5,12 @@
 
 import {RepeatableGroup, Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import getFieldsArray from './getFieldsArray';
 
 export function getFieldUuids(
 	item: Structure | RepeatableGroup,
 	uuids: Set<Uuid> = new Set()
 ) {
-	for (const field of getFieldsArray(item)) {
+	for (const field of item.fields.values()) {
 		uuids.add(field.uuid);
 
 		if (field.type === 'repeatable-group') {

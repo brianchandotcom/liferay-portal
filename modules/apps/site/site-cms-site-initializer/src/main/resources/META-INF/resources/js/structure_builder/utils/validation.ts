@@ -16,7 +16,6 @@ import {
 } from '../types/Structure';
 import {Field, MultiselectField, SingleSelectField} from './field';
 import focusInvalidElement from './focusInvalidElement';
-import getFieldsArray from './getFieldsArray';
 
 export type ValidationError =
 	| 'no-erc'
@@ -137,7 +136,7 @@ export function useValidate() {
 					invalids.set(item.uuid, errors);
 				}
 
-				for (const child of getFieldsArray(item)) {
+				for (const child of item.fields.values()) {
 					if (child.type === 'referenced-structure') {
 						continue;
 					}
@@ -160,7 +159,7 @@ export function useValidate() {
 
 		// Check at least one field is added
 
-		if (!fields.length) {
+		if (!fields.size) {
 			dispatch({
 				error: Liferay.Language.get(
 					'at-least-one-field-must-be-added-to-save-or-publish-the-structure'
@@ -185,7 +184,7 @@ export function useValidate() {
 
 		// Validate fields
 
-		for (const field of fields) {
+		for (const field of fields.values()) {
 			validateItem(field, invalids);
 		}
 

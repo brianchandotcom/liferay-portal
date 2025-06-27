@@ -10,7 +10,6 @@ import {
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import {Field} from './field';
-import getFieldsArray from './getFieldsArray';
 import getRandomId from './getRandomId';
 import getRandomName from './getRandomName';
 import getUuid from './getUuid';
@@ -30,7 +29,7 @@ export default function insertGroup({
 
 	// Iterate over fields
 
-	for (const field of getFieldsArray(root)) {
+	for (const field of root.fields.values()) {
 
 		// Don't insert the field if it belongs to the new group
 

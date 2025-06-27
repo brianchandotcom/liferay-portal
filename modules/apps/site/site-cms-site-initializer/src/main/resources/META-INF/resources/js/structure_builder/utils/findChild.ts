@@ -10,13 +10,12 @@ import {
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import {Field} from './field';
-import getFieldsArray from './getFieldsArray';
 
 export default function findChild(
 	parent: Structure | RepeatableGroup,
 	uuid: Uuid
 ): Field | ReferencedStructure | RepeatableGroup | null {
-	for (const field of getFieldsArray(parent)) {
+	for (const field of parent.fields.values()) {
 		if (field.uuid === uuid) {
 			return field;
 		}

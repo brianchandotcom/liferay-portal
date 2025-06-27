@@ -35,7 +35,7 @@ function StructureFields() {
 
 	const [search, setSearch] = useState('');
 
-	if (!fields.length) {
+	if (!fields.size) {
 		return <EmptyState />;
 	}
 

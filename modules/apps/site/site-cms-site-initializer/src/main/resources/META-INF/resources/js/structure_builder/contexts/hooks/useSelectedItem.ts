@@ -8,11 +8,11 @@ import selectStructureFields from '../../selectors/selectStructureFields';
 import {
 	ReferencedStructure,
 	RepeatableGroup,
+	Structure,
 	Structures,
 } from '../../types/Structure';
 import {Uuid} from '../../types/Uuid';
 import {Field} from '../../utils/field';
-import getFieldsArray from '../../utils/getFieldsArray';
 import {useCache} from '../CacheContext';
 import {useSelector} from '../StateContext';
 
@@ -54,11 +54,11 @@ export default function useSelectedItem(): SelectedItem {
 
 function findSelectedField(
 	uuid: Uuid,
-	fields: (Field | ReferencedStructure | RepeatableGroup)[],
+	fields: (Structure | RepeatableGroup)['fields'],
 	structures: Structures,
 	isReferenced: boolean = false
 ): SelectedField | null {
-	for (const field of fields) {
+	for (const field of fields.values()) {
 		if (field.uuid === uuid) {
 			if (field.type === 'referenced-structure') {
 				return {
@@ -86,7 +86,7 @@ function findSelectedField(
 			if (structure) {
 				const child = findSelectedField(
 					uuid,
-					getFieldsArray(structure),
+					structure.fields,
 					structures,
 					true
 				);
@@ -97,11 +97,7 @@ function findSelectedField(
 			}
 		}
 		else if (field.type === 'repeatable-group') {
-			const child = findSelectedField(
-				uuid,
-				getFieldsArray(field),
-				structures
-			);
+			const child = findSelectedField(uuid, field.fields, structures);
 
 			if (child) {
 				return child;

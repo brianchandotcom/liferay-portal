@@ -11,14 +11,8 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
-import {
-	ReferencedStructure,
-	RepeatableGroup,
-	Structures,
-} from '../types/Structure';
+import {RepeatableGroup, Structure, Structures} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import {Field} from '../utils/field';
-import getFieldsArray from '../utils/getFieldsArray';
 import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
 
 type Path = {label: string; uuid: Uuid}[];
@@ -70,11 +64,11 @@ export default function Breadcrumb({uuid}: {uuid: Uuid}) {
 
 function getPath(
 	uuid: Uuid,
-	fields: (Field | ReferencedStructure | RepeatableGroup)[],
+	fields: (Structure | RepeatableGroup)['fields'],
 	structures: Structures,
 	path: Path = []
 ): Path | null {
-	for (const field of fields) {
+	for (const field of fields.values()) {
 		if (field.uuid === uuid) {
 			if (field.type === 'referenced-structure') {
 				path.push({
@@ -105,7 +99,7 @@ function getPath(
 			if (structure) {
 				const nextPath = getPath(
 					uuid,
-					getFieldsArray(structure),
+					structure.fields,
 					structures,
 					path
 				);
@@ -123,12 +117,7 @@ function getPath(
 				uuid: field.uuid,
 			});
 
-			const nextPath = getPath(
-				uuid,
-				getFieldsArray(field),
-				structures,
-				path
-			);
+			const nextPath = getPath(uuid, field.fields, structures, path);
 
 			if (nextPath) {
 				return nextPath;

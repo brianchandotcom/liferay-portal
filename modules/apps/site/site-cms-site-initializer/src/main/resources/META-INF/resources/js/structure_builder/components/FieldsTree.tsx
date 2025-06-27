@@ -38,7 +38,6 @@ import {
 	Structures,
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import getFieldsArray from '../utils/getFieldsArray';
 import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
 import getStructureEditURL from '../utils/getStructureEditURL';
 
@@ -77,7 +76,7 @@ export default function FieldsTree({search}: {search: string}) {
 	);
 	const [selectedKeys, setSelectedKeys] = useState<Set<Key>>(new Set());
 
-	const hasReferencedStructure = fields.some(
+	const hasReferencedStructure = Array.from(fields.values()).some(
 		({type}) => type === 'referenced-structure'
 	);
 
@@ -110,6 +109,10 @@ export default function FieldsTree({search}: {search: string}) {
 		structures,
 		structuresStatus,
 	]);
+
+	useEffect(() => {
+		console.log('🔄 fields changed');
+	}, [fields]);
 
 	const onSelect = (item: TreeItem) => {
 		let nextSelection: State['selection'] = selection;
@@ -316,13 +319,13 @@ function buildItems({
 	structureERC,
 	structures,
 }: {
-	fields: (Field | ReferencedStructure | RepeatableGroup)[];
+	fields: (Structure | RepeatableGroup)['fields'];
 	path?: string[];
 	search: string;
 	structureERC: Structure['erc'];
 	structures: Structures;
 }): TreeItem[] {
-	return fields.reduce(
+	return Array.from(fields.values()).reduce(
 		(
 			items: TreeItem[],
 			field: Field | ReferencedStructure | RepeatableGroup
@@ -339,7 +342,7 @@ function buildItems({
 						field.erc === structureERC
 							? []
 							: buildItems({
-									fields: getFieldsArray(structure),
+									fields: structure.fields,
 									path: [...path, field.name],
 									search,
 									structureERC,
@@ -363,7 +366,7 @@ function buildItems({
 
 				const item: TreeItem = {
 					children: buildItems({
-						fields: getFieldsArray(field),
+						fields: field.fields,
 						path: [...path, field.name],
 						search,
 						structureERC,

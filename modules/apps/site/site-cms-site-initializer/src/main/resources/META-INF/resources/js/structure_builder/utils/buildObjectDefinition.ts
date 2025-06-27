@@ -11,11 +11,7 @@ import {
 	ObjectField,
 	ObjectRelationship,
 } from '../types/ObjectDefinition';
-import {
-	ReferencedStructure,
-	RepeatableGroup,
-	Structure,
-} from '../types/Structure';
+import {ReferencedStructure, Structure} from '../types/Structure';
 import {
 	FIELD_TYPE_TO_BUSINESS_TYPE,
 	FIELD_TYPE_TO_DB_TYPE,
@@ -25,7 +21,7 @@ import {isFieldTextSearchable} from './isFieldTextSearchable';
 
 export default function buildObjectDefinition({
 	erc,
-	fields = [],
+	fields = new Map(),
 	id,
 	label,
 	name,
@@ -33,7 +29,7 @@ export default function buildObjectDefinition({
 	status = 'draft',
 }: {
 	erc: Structure['erc'];
-	fields?: (Field | ReferencedStructure | RepeatableGroup)[];
+	fields?: Structure['fields'];
 	id?: Structure['id'];
 	label: Structure['label'];
 	name: Structure['name'];
@@ -90,19 +86,17 @@ export default function buildObjectDefinition({
 	return objectDefinition;
 }
 
-function getFields(
-	fields: (Field | ReferencedStructure | RepeatableGroup)[]
-): Field[] {
-	return fields.filter(
+function getFields(fields: Structure['fields']): Field[] {
+	return Array.from(fields.values()).filter(
 		(field) =>
 			!['referenced-structure', 'repeatable-group'].includes(field.type)
 	) as Field[];
 }
 
 function getReferencedStructures(
-	fields: (Field | ReferencedStructure | RepeatableGroup)[]
+	fields: Structure['fields']
 ): ReferencedStructure[] {
-	return fields.filter(
+	return Array.from(fields.values()).filter(
 		(field) => field.type === 'referenced-structure'
 	) as ReferencedStructure[];
 }

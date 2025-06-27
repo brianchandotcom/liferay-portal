@@ -5,15 +5,9 @@
 
 import ApiHelper from '../../services/ApiHelper';
 import {ObjectDefinition} from '../types/ObjectDefinition';
-import {
-	ReferencedStructure,
-	RepeatableGroup,
-	Structure,
-	Structures,
-} from '../types/Structure';
+import {Structure, Structures} from '../types/Structure';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
 import buildStructures from '../utils/buildStructures';
-import {Field} from '../utils/field';
 import getRandomId from '../utils/getRandomId';
 
 async function createStructure({
@@ -25,7 +19,7 @@ async function createStructure({
 	status,
 }: {
 	erc?: Structure['erc'];
-	fields: (Field | ReferencedStructure | RepeatableGroup)[];
+	fields: Structure['fields'];
 	label: Structure['label'];
 	name: Structure['name'];
 	spaces: Structure['spaces'];
@@ -71,7 +65,7 @@ async function updateStructure({
 	status,
 }: {
 	erc: Structure['erc'];
-	fields: (Field | ReferencedStructure | RepeatableGroup)[];
+	fields: Structure['fields'];
 	id: Structure['id'];
 	label: Structure['label'];
 	name: Structure['name'];

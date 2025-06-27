@@ -13,7 +13,7 @@ interface IParams {
 	accountKey: string;
 	comment: string;
 	file: File;
-	sessionURL: string;
+	gcsSessionURL: string;
 	ticketAttachmentId: string;
 	ticketId: string;
 }
@@ -50,7 +50,7 @@ const useGCSUploadFile = (): IProps => {
 				accountKey,
 				comment,
 				file,
-				sessionURL,
+				gcsSessionURL,
 				ticketAttachmentId,
 				ticketId,
 			} = params;
@@ -73,7 +73,7 @@ const useGCSUploadFile = (): IProps => {
 				const totalSize = file.size;
 
 				const offset = await getUploadOffset({
-					sessionURL,
+					gcsSessionURL,
 					totalSize,
 				});
 
@@ -113,7 +113,7 @@ const useGCSUploadFile = (): IProps => {
 							break;
 						}
 						try {
-							const response = await fetch(sessionURL, {
+							const response = await fetch(gcsSessionURL, {
 								body: chunk,
 								headers: {
 									'Content-Length': chunk.size.toString(),

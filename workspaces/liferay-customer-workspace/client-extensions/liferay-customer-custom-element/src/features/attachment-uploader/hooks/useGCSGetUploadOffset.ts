@@ -6,7 +6,7 @@
 import {useCallback, useState} from 'react';
 
 interface IParams {
-	sessionURL: string;
+	gcsSessionURL: string;
 	totalSize: number;
 }
 
@@ -25,10 +25,10 @@ const useGCSGetUploadOffset = (): IProps => {
 			setLoading(true);
 			setError(null);
 
-			const {sessionURL, totalSize} = params;
+			const {gcsSessionURL, totalSize} = params;
 
 			try {
-				const response = await fetch(sessionURL, {
+				const response = await fetch(gcsSessionURL, {
 					headers: {
 						'Content-Length': '0',
 						'Content-Range': `bytes */${totalSize}`,

@@ -10,7 +10,6 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -33,6 +32,8 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.util.Map;
 import java.util.Set;
@@ -76,8 +77,11 @@ public class ObjectEntryFolderModelListenerTest {
 				_group.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
 
 			if (role == null) {
-				_portalInstanceLifecycleListener.portalInstanceRegistered(
-					_companyLocalService.getCompany(_group.getCompanyId()));
+				SiteInitializer siteInitializer =
+					_siteInitializerRegistry.getSiteInitializer(
+						"com.liferay.site.initializer.cms");
+
+				siteInitializer.initialize(_group.getGroupId());
 			}
 		}
 		finally {
@@ -135,11 +139,6 @@ public class ObjectEntryFolderModelListenerTest {
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
-	@Inject(
-		filter = "component.name=com.liferay.site.cms.site.initializer.internal.instance.lifecycle.AddCMSAdministratorRolePortalInstanceLifecycleListener"
-	)
-	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
-
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;
 
@@ -148,5 +147,8 @@ public class ObjectEntryFolderModelListenerTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

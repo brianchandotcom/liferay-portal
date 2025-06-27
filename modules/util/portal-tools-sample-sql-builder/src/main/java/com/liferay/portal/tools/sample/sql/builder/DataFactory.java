@@ -5543,6 +5543,7 @@ public class DataFactory {
 	public LayoutPageTemplateStructureRelModel
 			newObjectDefinitionLayoutPageTemplateStructureRelModel(
 				List<FragmentEntryLinkModel> fragmentEntryLinkModels,
+				LayoutModel layoutModel,
 				LayoutPageTemplateStructureModel
 					layoutPageTemplateStructureModel,
 				ObjectDefinition objectDefinition)
@@ -5583,6 +5584,8 @@ public class DataFactory {
 			data, "${objectDefinitionClassName}",
 			objectDefinition.getClassName());
 
+		FragmentEntryLinkModel correspondingFragmentEntryLinkModel = null;
+
 		for (FragmentEntryLinkModel fragmentEntryLinkModel :
 				fragmentEntryLinkModels) {
 
@@ -5590,13 +5593,14 @@ public class DataFactory {
 				data, "${fragmentEntryLinkId}",
 				String.valueOf(
 					fragmentEntryLinkModel.getFragmentEntryLinkId()));
+
+			if (layoutModel.getPlid() == fragmentEntryLinkModel.getPlid()) {
+				correspondingFragmentEntryLinkModel = fragmentEntryLinkModel;
+			}
 		}
 
-		FragmentEntryLinkModel fragmentEntryLinkModel =
-			fragmentEntryLinkModels.get(0);
-
 		layoutPageTemplateStructureRelModel.setSegmentsExperienceId(
-			fragmentEntryLinkModel.getSegmentsExperienceId());
+			correspondingFragmentEntryLinkModel.getSegmentsExperienceId());
 
 		layoutPageTemplateStructureRelModel.setData(data);
 

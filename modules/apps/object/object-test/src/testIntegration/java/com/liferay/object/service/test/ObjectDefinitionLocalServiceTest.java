@@ -105,6 +105,7 @@ import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -2543,6 +2544,7 @@ public class ObjectDefinitionLocalServiceTest {
 		_addObjectAction("C_AA");
 
 		_assertModelResourceNames(ListUtil.fromArray("C_A", "C_AA"));
+		_assertRootDescendantNodeObjectDefinition("C_AA");
 
 		_testCreateObjectDefinitionTree(
 			true,
@@ -2557,6 +2559,7 @@ public class ObjectDefinitionLocalServiceTest {
 		_addObjectAction("C_AAAAA");
 
 		_assertModelResourceNames(ListUtil.fromArray("C_AAAA", "C_AAAAA"));
+		_assertRootDescendantNodeObjectDefinition("C_AAAAA");
 
 		ObjectDefinition objectDefinitionAAA =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition("AAA");
@@ -2579,6 +2582,8 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinitionAAA.getObjectDefinitionId());
 
 		_assertModelResourceNames(ListUtil.fromArray("C_A", "C_AA", "C_AAAAA"));
+		_assertRootDescendantNodeObjectDefinition("C_AAA");
+		_assertRootDescendantNodeObjectDefinition("C_AAAA");
 
 		ObjectDefinition objectDefinitionA =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -3648,6 +3653,37 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(required, objectField.isRequired());
 	}
 
+	private void _assertRootDescendantNodeObjectDefinition(String name)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), name);
+
+		Assert.assertEquals(
+			StringPool.BLANK, objectDefinition.getPanelCategoryKey());
+		Assert.assertFalse(objectDefinition.isPortlet());
+
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				objectDefinition.getClassName(), ActionKeys.DELETE));
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				objectDefinition.getClassName(), ActionKeys.PERMISSIONS));
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				objectDefinition.getClassName(), ActionKeys.UPDATE));
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				objectDefinition.getClassName(), ActionKeys.VIEW));
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+					objectDefinition.getCompanyId(),
+					objectDefinition.getClassName())));
+	}
+
 	private void _assertSystemObjectFields(
 		ObjectField expectedObjectField, ObjectField objectField) {
 
@@ -3887,6 +3923,11 @@ public class ObjectDefinitionLocalServiceTest {
 		TreeTestUtil.bind(_objectRelationshipLocalService, objectRelationships);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+				objectRelationship.getObjectFieldId2());
+
+			Assert.assertTrue(objectField2.isRequired());
+
 			objectRelationship =
 				_objectRelationshipLocalService.getObjectRelationship(
 					objectRelationship.getObjectRelationshipId());
@@ -3894,6 +3935,22 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertEquals(
 				objectRelationship.getDeletionType(),
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
+
+			ObjectDefinition objectDefinition1 =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			if (objectDefinition1.isRootDescendantNode()) {
+				Assert.assertFalse(objectDefinition1.isPortlet());
+			}
+
+			ObjectDefinition objectDefinition2 =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
+
+			if (objectDefinition2.isRootDescendantNode()) {
+				Assert.assertFalse(objectDefinition2.isPortlet());
+			}
 		}
 
 		TreeTestUtil.assertObjectDefinitionTree(

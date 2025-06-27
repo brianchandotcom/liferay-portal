@@ -88,7 +88,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -141,7 +140,6 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Brian Wing Shun Chan
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
 @FeatureFlag("LPD-34594")
 @RunWith(Arquillian.class)
 public class ObjectRelationshipLocalServiceTest {
@@ -961,66 +959,6 @@ public class ObjectRelationshipLocalServiceTest {
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
 			_objectEntryLocalService, _objectRelationshipLocalService);
-
-		// Bind two non-root draft object definitions from different object
-		// definition trees
-
-		Tree treeA = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			false,
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[0]
-			).build());
-		Tree treeB = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			false,
-			LinkedHashMapBuilder.put(
-				"B", new String[] {"BB"}
-			).put(
-				"BB", new String[] {"BBB"}
-			).put(
-				"BBB", new String[0]
-			).build());
-
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService,
-			List.of(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService,
-					_objectDefinitionLocalService.getObjectDefinition(
-						TestPropsValues.getCompanyId(), "C_AA"),
-					_objectDefinitionLocalService.getObjectDefinition(
-						TestPropsValues.getCompanyId(), "C_BB"))));
-
-		Node rootNodeA = treeA.getRootNode();
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[] {"BB"}
-			).put(
-				"BB", new String[] {"BBB"}
-			).put(
-				"BBB", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(rootNodeA.getPrimaryKey()),
-			_objectDefinitionLocalService);
-
-		Node rootNodeB = treeB.getRootNode();
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"B", new String[] {"BB"}
-			).put(
-				"BB", new String[] {"BBB"}
-			).put(
-				"BBB", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(rootNodeB.getPrimaryKey()),
-			_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -1293,6 +1231,17 @@ public class ObjectRelationshipLocalServiceTest {
 				objectDefinitionBBB.getObjectDefinitionId(),
 				objectDefinitionB.getObjectDefinitionId()));
 
+		// Unable to bind the object definitions when the child object
+		// definition is bound to another object definition
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"Unable to bind the object definitions when the child object " +
+				"definition is bound to another object definition",
+			() -> _bindObjectDefinitions(
+				objectDefinitionB.getObjectDefinitionId(),
+				objectDefinitionBBB.getObjectDefinitionId()));
+
 		ObjectDefinition objectDefinitionC =
 			_addAndPublishCustomObjectDefinition("C");
 		ObjectDefinition objectDefinitionCC =
@@ -1301,6 +1250,14 @@ public class ObjectRelationshipLocalServiceTest {
 		_bindObjectDefinitions(
 			objectDefinitionC.getObjectDefinitionId(),
 			objectDefinitionCC.getObjectDefinitionId());
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"Unable to bind the object definitions when the child object " +
+				"definition is bound to another object definition",
+			() -> _bindObjectDefinitions(
+				objectDefinitionB.getObjectDefinitionId(),
+				objectDefinitionCC.getObjectDefinitionId()));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -1528,8 +1485,7 @@ public class ObjectRelationshipLocalServiceTest {
 			objectDefinitionAA.getClassName(),
 			objectEntryAA.getObjectEntryId());
 
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService, List.of(objectRelationship));
+		_bindObjectDefinitions(objectRelationship);
 
 		objectEntryAA = _objectEntryLocalService.getObjectEntry(
 			objectEntryAA.getObjectEntryId());
@@ -2868,6 +2824,11 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			objectRelationship.getDeletionType());
 
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		Assert.assertTrue(objectField.isRequired());
+
 		biConsumer.accept(
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectDefinition1.getObjectDefinitionId()),
@@ -3109,6 +3070,11 @@ public class ObjectRelationshipLocalServiceTest {
 
 		Assert.assertEquals(
 			objectDefinition1.getScope(), objectDefinition2.getScope());
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		Assert.assertTrue(objectField.isRequired());
 	}
 
 	@Inject

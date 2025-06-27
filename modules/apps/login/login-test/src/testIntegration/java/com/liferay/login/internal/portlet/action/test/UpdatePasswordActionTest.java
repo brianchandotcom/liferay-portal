@@ -92,21 +92,19 @@ public class UpdatePasswordActionTest {
 
 		_user = UserTestUtil.addGroupUser(group, RoleConstants.POWER_USER);
 
-		_nonguestFragmentEntryHtml = RandomTestUtil.randomString();
+		_layoutUtilityPageEntry1 = _addLayoutUtilityPageEntry(
+			_FRAGMENT_ENTRY_HTML_1, group, serviceContext);
 
-		_nonguestLayoutUtilityPageEntry = _addLayoutUtilityPageEntry(
-			_nonguestFragmentEntryHtml, group, serviceContext);
-
-		_nonguestLayout = _layoutLocalService.fetchLayout(
-			_nonguestLayoutUtilityPageEntry.getPlid());
+		_layout1 = _layoutLocalService.fetchLayout(
+			_layoutUtilityPageEntry1.getPlid());
 
 		Group guestGroup = _groupLocalService.getGroup(
 			_company.getCompanyId(), GroupConstants.GUEST);
 
-		_guestFragmentEntryHtml = RandomTestUtil.randomString();
+		_FRAGMENT_ENTRY_HTML_2 = RandomTestUtil.randomString();
 
-		_guestLayoutUtilityPageEntry = _addLayoutUtilityPageEntry(
-			_guestFragmentEntryHtml, guestGroup, serviceContext);
+		_layoutUtilityPageEntry2 = _addLayoutUtilityPageEntry(
+			_FRAGMENT_ENTRY_HTML_2, guestGroup, serviceContext);
 
 		UserTestUtil.setUser(
 			_userLocalService.getGuestUser(_company.getCompanyId()));
@@ -213,7 +211,7 @@ public class UpdatePasswordActionTest {
 				StringBundler.concat(
 					"http://", _company.getVirtualHostname(),
 					":8080/c/portal/update_password?p_l_id=",
-					_nonguestLayout.getPlid(), "&ticketId=", ticketId,
+					_layout1.getPlid(), "&ticketId=", ticketId,
 					"&ticketId=", ticketKey));
 		}
 		else {
@@ -239,26 +237,26 @@ public class UpdatePasswordActionTest {
 			boolean nonguestDefaultLayoutUtilityPageEntry, boolean usePlid)
 		throws Exception {
 
-		_guestLayoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(
+		_layoutUtilityPageEntry2.setDefaultLayoutUtilityPageEntry(
 			guestDefaultLayoutUtilityPageEntry);
 
-		_guestLayoutUtilityPageEntry =
+		_layoutUtilityPageEntry2 =
 			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
-				_guestLayoutUtilityPageEntry);
+				_layoutUtilityPageEntry2);
 
-		_nonguestLayoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(
+		_layoutUtilityPageEntry1.setDefaultLayoutUtilityPageEntry(
 			nonguestDefaultLayoutUtilityPageEntry);
 
-		_nonguestLayoutUtilityPageEntry =
+		_layoutUtilityPageEntry1 =
 			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
-				_nonguestLayoutUtilityPageEntry);
+				_layoutUtilityPageEntry1);
 
 		Assert.assertEquals(
 			expectedNonguestFragmentRendered,
-			_isFragmentRendered(_nonguestFragmentEntryHtml, usePlid));
+			_isFragmentRendered(_FRAGMENT_ENTRY_HTML_1, usePlid));
 		Assert.assertEquals(
 			expectedGuestFragmentRendered,
-			_isFragmentRendered(_guestFragmentEntryHtml, usePlid));
+			_isFragmentRendered(_FRAGMENT_ENTRY_HTML_2, usePlid));
 	}
 
 	private Company _company;
@@ -275,8 +273,8 @@ public class UpdatePasswordActionTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
-	private String _guestFragmentEntryHtml;
-	private LayoutUtilityPageEntry _guestLayoutUtilityPageEntry;
+	private static final String _FRAGMENT_ENTRY_HTML_2 = RandomTestUtil.randomString();
+	private LayoutUtilityPageEntry _layoutUtilityPageEntry2;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
@@ -289,9 +287,9 @@ public class UpdatePasswordActionTest {
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
 
-	private String _nonguestFragmentEntryHtml;
-	private Layout _nonguestLayout;
-	private LayoutUtilityPageEntry _nonguestLayoutUtilityPageEntry;
+	private String _FRAGMENT_ENTRY_HTML_1 = RandomTestUtil.randomString();
+	private Layout _layout1;
+	private LayoutUtilityPageEntry _layoutUtilityPageEntry1;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

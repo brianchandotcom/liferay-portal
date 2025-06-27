@@ -598,8 +598,6 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		boolean namespaceEnabled) {
 
 		try {
-			List<UserGroup> userGroups = user.getUserGroups();
-
 			String name = null;
 			String nameFormat = null;
 
@@ -615,7 +613,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			attributePublisher.publish(
 				name, nameFormat,
 				TransformUtil.transformToArray(
-					userGroups, UserGroup::getName, String.class));
+					user.getUserGroups(), UserGroup::getName, String.class));
 		}
 		catch (Exception exception) {
 			String message = StringBundler.concat(

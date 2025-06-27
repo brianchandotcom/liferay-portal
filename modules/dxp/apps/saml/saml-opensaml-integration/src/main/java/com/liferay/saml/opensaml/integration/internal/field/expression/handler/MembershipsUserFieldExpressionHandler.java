@@ -67,48 +67,7 @@ public class MembershipsUserFieldExpressionHandler
 						return newUser;
 					}
 
-					String samlIdpEntityId = GetterUtil.getString(
-						serviceContext.getAttribute("SamlIdpEntityId"));
-
-					if (Validator.isNotNull(samlIdpEntityId)) {
-						ExpandoColumn expandoColumn =
-							SamlProvisioningUtil.getOrAddExpandoColumn(
-								newUser.getCompanyId(),
-								UserGroup.class.getName(), "samlIdpEntityId");
-
-						for (UserGroup userGroup :
-								_userGroupLocalService.getUserUserGroups(
-									newUser.getUserId())) {
-
-							if (userGroupIds.contains(
-									userGroup.getUserGroupId())) {
-
-								continue;
-							}
-
-							ExpandoValue expandoValue =
-								_expandoValueLocalService.getValue(
-									expandoColumn.getTableId(),
-									expandoColumn.getColumnId(),
-									userGroup.getUserGroupId());
-
-							if ((expandoValue != null) &&
-								samlIdpEntityId.equals(
-									expandoValue.getString())) {
-
-								_expandoValueLocalService.deleteExpandoValue(
-									expandoValue);
-
-								continue;
-							}
-
-							userGroupIds.add(userGroup.getUserGroupId());
-						}
-					}
-
-					_userGroupLocalService.setUserUserGroups(
-						newUser.getUserId(),
-						ArrayUtil.toArray(userGroupIds.toArray(new Long[0])));
+					_setUserUserGroups(newUser, serviceContext, userGroupIds);
 
 					return newUser;
 				});
@@ -209,6 +168,49 @@ public class MembershipsUserFieldExpressionHandler
 	protected void activate(Map<String, Object> properties) {
 		_processingIndex = GetterUtil.getInteger(
 			properties.get("processing.index"));
+	}
+
+	private void _setUserUserGroups(
+			User newUser, ServiceContext serviceContext,
+			List<Long> userGroupIds)
+		throws PortalException {
+
+		String samlIdpEntityId = GetterUtil.getString(
+			serviceContext.getAttribute("SamlIdpEntityId"));
+
+		if (Validator.isNotNull(samlIdpEntityId)) {
+			ExpandoColumn expandoColumn =
+				SamlProvisioningUtil.getOrAddExpandoColumn(
+					newUser.getCompanyId(), UserGroup.class.getName(),
+					"samlIdpEntityId");
+
+			for (UserGroup userGroup :
+					_userGroupLocalService.getUserUserGroups(
+						newUser.getUserId())) {
+
+				if (userGroupIds.contains(userGroup.getUserGroupId())) {
+					continue;
+				}
+
+				ExpandoValue expandoValue = _expandoValueLocalService.getValue(
+					expandoColumn.getTableId(), expandoColumn.getColumnId(),
+					userGroup.getUserGroupId());
+
+				if ((expandoValue != null) &&
+					samlIdpEntityId.equals(expandoValue.getString())) {
+
+					_expandoValueLocalService.deleteExpandoValue(expandoValue);
+
+					continue;
+				}
+
+				userGroupIds.add(userGroup.getUserGroupId());
+			}
+		}
+
+		_userGroupLocalService.setUserUserGroups(
+			newUser.getUserId(),
+			ArrayUtil.toArray(userGroupIds.toArray(new Long[0])));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

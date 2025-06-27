@@ -47,6 +47,15 @@ public class ObjectEntryVersionServiceUtil {
 			objectEntry, serviceContext, userId, version);
 	}
 
+	public static void expireObjectEntryVersions(
+			long userId, com.liferay.object.model.ObjectEntry objectEntry,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws Exception {
+
+		getService().expireObjectEntryVersions(
+			userId, objectEntry, serviceContext);
+	}
+
 	public static ObjectEntryVersion getObjectEntryVersion(
 			long objectEntryId, int version)
 		throws PortalException {

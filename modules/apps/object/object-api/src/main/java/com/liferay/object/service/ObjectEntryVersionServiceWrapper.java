@@ -49,6 +49,16 @@ public class ObjectEntryVersionServiceWrapper
 	}
 
 	@Override
+	public void expireObjectEntryVersions(
+			long userId, com.liferay.object.model.ObjectEntry objectEntry,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws Exception {
+
+		_objectEntryVersionService.expireObjectEntryVersions(
+			userId, objectEntry, serviceContext);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntryVersion getObjectEntryVersion(
 			long objectEntryId, int version)
 		throws com.liferay.portal.kernel.exception.PortalException {

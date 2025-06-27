@@ -12303,6 +12303,8 @@ ${update.properties}</echo>
 
 liferay.home=${liferay.home}
 
+upgrade.database.dl.storage.check.disabled=true
+
 jdbc.default.jndi.name=
 jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url}

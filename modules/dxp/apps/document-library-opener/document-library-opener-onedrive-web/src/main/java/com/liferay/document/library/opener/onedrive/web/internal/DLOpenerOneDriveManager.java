@@ -72,10 +72,18 @@ public class DLOpenerOneDriveManager {
 		BackgroundTask backgroundTask = _addBackgroundTask(
 			userId, fileEntry, locale);
 
-		_dlOpenerFileEntryReferenceLocalService.
-			addPlaceholderDLOpenerFileEntryReference(
-				userId, DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
-				fileEntry, DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				fetchDLOpenerFileEntryReference(
+					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileEntry);
+
+		if (dlOpenerFileEntryReference == null) {
+			_dlOpenerFileEntryReferenceLocalService.
+				addPlaceholderDLOpenerFileEntryReference(
+					userId, DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileEntry, DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
+		}
 
 		return new DLOpenerOneDriveFileReference<>(
 			fileEntry.getFileEntryId(),

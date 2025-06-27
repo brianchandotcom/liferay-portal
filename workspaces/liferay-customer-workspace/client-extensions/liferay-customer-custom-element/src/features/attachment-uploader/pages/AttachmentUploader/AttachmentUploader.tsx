@@ -38,6 +38,7 @@ const AttachmentUploader = () => {
 	const {deleteAttachment} = useTicketAttachmentsDelete();
 
 	const {
+		gcsSessionURL: initiatedGCSSessionURL,
 		initiateUpload,
 		loading: ticketAttachmentInitiateUploadLoading,
 		ticketAttachmentId: initiatedTicketAttachmentId,
@@ -103,7 +104,7 @@ const AttachmentUploader = () => {
 			accountKey: initiationResult.accountKey,
 			comment,
 			file,
-			sessionURL: initiationResult.gcsSessionURL,
+			gcsSessionURL: initiationResult.gcsSessionURL,
 			ticketAttachmentId: initiationResult.ticketAttachmentId,
 			ticketId: ticketId as string,
 		});
@@ -127,8 +128,9 @@ const AttachmentUploader = () => {
 		abortGCSUpload();
 		abortGenerateMd5();
 
-		if (initiatedTicketAttachmentId) {
+		if (initiatedGCSSessionURL && initiatedTicketAttachmentId) {
 			await deleteAttachment({
+				gcsSessionURL: initiatedGCSSessionURL,
 				ticketAttachmentId: initiatedTicketAttachmentId,
 			});
 		}
@@ -140,6 +142,7 @@ const AttachmentUploader = () => {
 		abortGCSUpload,
 		abortGenerateMd5,
 		deleteAttachment,
+		initiatedGCSSessionURL,
 		initiatedTicketAttachmentId,
 		setComment,
 		setFile,

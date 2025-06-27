@@ -21,6 +21,7 @@ interface IResponse {
 }
 
 interface IProps {
+	gcsSessionURL: string;
 	initiateUpload: (params: IParams) => Promise<IResponse | null>;
 	loading: boolean;
 	ticketAttachmentId: string;
@@ -29,6 +30,7 @@ interface IProps {
 const useTicketAttachmentsInitiateUpload = (): IProps => {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const [gcsSessionURL, setGCSSessionURL] = useState('');
 	const [ticketAttachmentId, setTicketAttachmentId] = useState('');
 
 	const initiateUpload = useCallback(
@@ -60,6 +62,7 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 					responseJSON.gcsSessionURL
 				);
 
+				setGCSSessionURL(responseJSON.gcsSessionURL);
 				setTicketAttachmentId(responseJSON.ticketAttachmentId);
 
 				return {
@@ -96,6 +99,7 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 	);
 
 	return {
+		gcsSessionURL,
 		initiateUpload,
 		loading,
 		ticketAttachmentId,

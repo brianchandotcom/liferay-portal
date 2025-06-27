@@ -22,7 +22,21 @@ $structureFieldsWidth: 448px;
 		}
 	}
 
-	&__fields-tree {
+	&__sidebar {
+		background-color: $cadmin-light-l1;
+		border-radius: 8px;
+		width: $structureFieldsWidth;
+
+		& .management-bar {
+			min-height: 3rem;
+		}
+	}
+
+	&__title-input {
+		font-size: 28px;
+	}
+
+	&__tree {
 		&-node {
 			&--field-icon {
 				color: $cadmin-blue-l1;
@@ -36,20 +50,6 @@ $structureFieldsWidth: 448px;
 				color: $cadmin-orange-l1;
 			}
 		}
-	}
-
-	&__structure-fields {
-		background-color: $cadmin-light-l1;
-		border-radius: 8px;
-		width: $structureFieldsWidth;
-
-		& .management-bar {
-			min-height: 3rem;
-		}
-	}
-
-	&__title-input {
-		font-size: 28px;
 	}
 
 	&__wrapper {

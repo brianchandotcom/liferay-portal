@@ -158,7 +158,7 @@ export default function StructureTree({search}: {search: string}) {
 
 	return (
 		<ClayTreeView
-			className="px-4 structure-builder__fields-tree"
+			className="px-4 structure-builder__tree"
 			expandedKeys={expandedKeys}
 			items={items}
 			nestedKey="children"
@@ -179,12 +179,12 @@ export default function StructureTree({search}: {search: string}) {
 					>
 						<ClayIcon
 							className={classNames({
-								'structure-builder__fields-tree-node--field-icon':
+								'structure-builder__tree-node--field-icon':
 									item.type &&
 									item.type !== 'referenced-structure',
-								'structure-builder__fields-tree-node--group-icon':
+								'structure-builder__tree-node--group-icon':
 									item.type === 'repeatable-group',
-								'structure-builder__fields-tree-node--structure-icon':
+								'structure-builder__tree-node--structure-icon':
 									item.type === 'referenced-structure',
 							})}
 							symbol={item.icon}
@@ -240,7 +240,7 @@ export default function StructureTree({search}: {search: string}) {
 									})}
 								>
 									<ClayIcon
-										className="structure-builder__fields-tree-node--field-icon"
+										className="structure-builder__tree-node--field-icon"
 										symbol={childItem.icon}
 									/>
 

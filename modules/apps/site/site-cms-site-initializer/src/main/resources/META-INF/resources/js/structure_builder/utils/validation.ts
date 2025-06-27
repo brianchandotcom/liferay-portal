@@ -9,11 +9,7 @@ import {useCallback} from 'react';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
 import selectStructureChildren from '../selectors/selectStructureChildren';
-import {
-	ReferencedStructure,
-	RepeatableGroup,
-	Structure,
-} from '../types/Structure';
+import {RepeatableGroup, Structure, StructureChild} from '../types/Structure';
 import {Field, MultiselectField, SingleSelectField} from './field';
 import focusInvalidElement from './focusInvalidElement';
 
@@ -123,10 +119,7 @@ export function useValidate() {
 	const {structure} = state;
 
 	const validateChild = useCallback(
-		(
-			child: Field | RepeatableGroup | ReferencedStructure,
-			invalids: State['invalids']
-		) => {
+		(child: StructureChild, invalids: State['invalids']) => {
 			let errors: Set<ValidationError> = new Set();
 
 			if (child.type === 'repeatable-group') {

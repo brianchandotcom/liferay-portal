@@ -3,13 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	ReferencedStructure,
-	RepeatableGroup,
-	Structure,
-} from '../types/Structure';
+import {RepeatableGroup, Structure, StructureChild} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import {Field} from './field';
 import getRandomId from './getRandomId';
 import getRandomName from './getRandomName';
 import getUuid from './getUuid';
@@ -21,7 +16,7 @@ export default function insertGroup({
 	groupParent,
 	root,
 }: {
-	groupChildren: (Field | ReferencedStructure | RepeatableGroup)[];
+	groupChildren: StructureChild[];
 	groupParent: Uuid;
 	root: Structure | RepeatableGroup;
 }): Structure['children'] | RepeatableGroup['children'] {

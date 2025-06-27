@@ -27,13 +27,13 @@ import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import {
-	ReferencedStructure,
 	RepeatableGroup,
 	Structure,
+	StructureChild,
 	Structures,
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import {FIELD_TYPE_ICON, Field, FieldType} from '../utils/field';
+import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
 import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
 import getStructureEditURL from '../utils/getStructureEditURL';
 
@@ -318,10 +318,7 @@ function buildItems({
 	structures: Structures;
 }): TreeItem[] {
 	return Array.from(children.values()).reduce(
-		(
-			items: TreeItem[],
-			child: Field | ReferencedStructure | RepeatableGroup
-		) => {
+		(items: TreeItem[], child: StructureChild) => {
 			if (child.type === 'referenced-structure') {
 				const structure = structures.get(child.erc)!;
 				const label = getReferencedStructureLabel(
@@ -399,10 +396,7 @@ function buildItems({
 	);
 }
 
-function buildId(
-	path: string[],
-	child: Field | ReferencedStructure | RepeatableGroup
-) {
+function buildId(path: string[], child: StructureChild) {
 	return [...path, child.name].join('_');
 }
 

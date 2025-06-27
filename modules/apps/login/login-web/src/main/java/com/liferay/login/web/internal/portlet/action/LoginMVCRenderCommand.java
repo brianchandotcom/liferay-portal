@@ -40,10 +40,10 @@ public class LoginMVCRenderCommand implements MVCRenderCommand {
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(renderRequest));
 
-		String currentUrl = (String)httpServletRequest.getAttribute(
+		String currentURL = (String)httpServletRequest.getAttribute(
 			"CURRENT_URL");
 
-		if (currentUrl.contains("/portal/update_password")) {
+		if (currentURL.contains("/portal/update_password")) {
 			return "/update_password.jsp";
 		}
 

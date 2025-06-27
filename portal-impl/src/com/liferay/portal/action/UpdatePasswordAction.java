@@ -48,7 +48,9 @@ public class UpdatePasswordAction implements Action {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		Ticket ticket = UpdatePasswordActionUtil.getTicket(httpServletRequest);
+		Ticket ticket = UpdatePasswordActionUtil.getTicket(
+			ParamUtil.getString(httpServletRequest, "ticketId"),
+			ParamUtil.getString(httpServletRequest, "ticketKey"));
 
 		if ((ticket != null) &&
 			StringUtil.equals(
@@ -96,6 +98,8 @@ public class UpdatePasswordAction implements Action {
 			UpdatePasswordActionUtil.updatePassword(
 				UpdatePasswordAction.class.getName(), httpServletRequest,
 				httpServletResponse,
+				httpServletRequest.getParameter("password1"),
+				httpServletRequest.getParameter("password2"),
 				ParamUtil.getString(httpServletRequest, WebKeys.REFERER),
 				httpServletResponse::sendRedirect, themeDisplay, ticket);
 

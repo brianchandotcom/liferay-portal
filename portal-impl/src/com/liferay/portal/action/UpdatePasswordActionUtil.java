@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -77,11 +76,8 @@ public class UpdatePasswordActionUtil {
 		return sb.toString();
 	}
 
-	public static Ticket getTicket(HttpServletRequest httpServletRequest)
+	public static Ticket getTicket(String ticketId, String ticketKey)
 		throws PortalException {
-
-		String ticketId = ParamUtil.getString(httpServletRequest, "ticketId");
-		String ticketKey = ParamUtil.getString(httpServletRequest, "ticketKey");
 
 		if (Validator.isNull(ticketId) || Validator.isNull(ticketKey)) {
 			return null;
@@ -119,7 +115,8 @@ public class UpdatePasswordActionUtil {
 
 	public static void updatePassword(
 			String csrfOrigin, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String redirect,
+			HttpServletResponse httpServletResponse, String password1,
+			String password2, String redirect,
 			UnsafeConsumer<String, Exception> redirectUnsafeConsumer,
 			ThemeDisplay themeDisplay, Ticket ticket)
 		throws Exception {
@@ -137,8 +134,6 @@ public class UpdatePasswordActionUtil {
 			userId = themeDisplay.getUserId();
 		}
 
-		String password1 = httpServletRequest.getParameter("password1");
-		String password2 = httpServletRequest.getParameter("password2");
 		boolean passwordReset = false;
 
 		boolean previousValidate = PwdToolkitUtilThreadLocal.isValidate();

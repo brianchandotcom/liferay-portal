@@ -962,7 +962,7 @@ public class ObjectRelationshipLocalServiceTest {
 			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
 			_objectEntryLocalService, _objectRelationshipLocalService);
 
-		// Bind two nonroot draft object definitions from different object
+		// Bind two non-root draft object definitions from different object
 		// definition trees
 
 		Tree treeA = TreeTestUtil.createObjectDefinitionTree(

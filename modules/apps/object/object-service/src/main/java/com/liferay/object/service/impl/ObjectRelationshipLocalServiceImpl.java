@@ -2004,6 +2004,8 @@ public class ObjectRelationshipLocalServiceImpl
 			return;
 		}
 
+		String previousRESTContextPath = objectDefinition.getRESTContextPath();
+
 		long[] addRootObjectDefinitionIds = new long[0];
 
 		if (newRootObjectDefinitionId != 0) {
@@ -2021,8 +2023,7 @@ public class ObjectRelationshipLocalServiceImpl
 		objectDefinition.setRootObjectDefinitionIds(
 			addRootObjectDefinitionIds, removeRootObjectDefinitionIds);
 
-		objectDefinition.setPreviousRESTContextPath(
-			objectDefinition.getRESTContextPath());
+		objectDefinition.setPreviousRESTContextPath(previousRESTContextPath);
 
 		_deployObjectDefinition(objectDefinition);
 	}

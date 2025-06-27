@@ -46,7 +46,8 @@ public class ControlPanelLayoutTypeAccessPolicy
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if ((scopeGroup != null) &&
-			(scopeGroup.isSite() || scopeGroup.isControlPanel()) &&
+			(scopeGroup.isControlPanel() || scopeGroup.isDepot() ||
+			 scopeGroup.isSite()) &&
 			(PortletPermissionUtil.hasControlPanelAccessPermission(
 				PermissionThreadLocal.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), portlet) ||

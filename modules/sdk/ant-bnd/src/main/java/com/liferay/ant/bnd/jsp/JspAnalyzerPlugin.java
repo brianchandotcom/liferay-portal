@@ -96,7 +96,13 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		}
 
 		if (matches) {
-			addRequiredPackageImports(analyzer, _REQUIRED_PACKAGE_NAMES_JAKARTA);
+			String[] requiredPackageImports = _REQUIRED_PACKAGE_NAMES_JAKARTA;
+
+			if (_isUseJavaxImports(taglibURIs)) {
+				requiredPackageImports = _REQUIRED_PACKAGE_NAMES_JAVAX;
+			}
+
+			addRequiredPackageImports(analyzer, requiredPackageImports);
 		}
 
 		return false;
@@ -553,6 +559,36 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			analyzer.error(
 				"Unexpected exception in processing TLD " + path + ": " +
 					exception);
+		}
+
+		return false;
+	}
+
+	private boolean _isUseJavaxImports(Set<String> taglibURIs) {
+		if (taglibURIs.isEmpty()) {
+			return false;
+		}
+
+		for (String javaxURI : _JSTL_CORE_URIS_JAVAX) {
+			if (taglibURIs.contains(javaxURI)) {
+				return true;
+			}
+		}
+
+		for (String jakartaURI : _JSTL_CORE_URIS_JAKARTA) {
+			if (taglibURIs.contains(jakartaURI)) {
+				return false;
+			}
+		}
+
+		for (String uri : taglibURIs) {
+			if (uri.contains("javax")) {
+				return true;
+			}
+
+			if (uri.contains("jakarta")) {
+				return false;
+			}
 		}
 
 		return false;

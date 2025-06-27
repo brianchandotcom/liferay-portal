@@ -17,6 +17,7 @@ export class CommerceAdminProductConfigurationListPage {
 	readonly commerceAvailabilityEstimateIdInput: Locator;
 	readonly CPDefinitionInventoryEngineInput: Locator;
 	readonly CPTaxCategoryIdInput: Locator;
+	readonly customFieldInput: (name: string) => Locator;
 	readonly depthInput: Locator;
 	readonly detailsMenuItem: Locator;
 	readonly displayAvailabilityInput: Locator;
@@ -65,6 +66,8 @@ export class CommerceAdminProductConfigurationListPage {
 			'CPDefinitionInventoryEngineInput'
 		);
 		this.CPTaxCategoryIdInput = page.getByTestId('CPTaxCategoryIdInput');
+		this.customFieldInput = (name) =>
+			page.locator(`.field[name*="${name}"]`);
 		this.depthInput = page.getByTestId('depthInput');
 		this.detailsMenuItem = page.getByRole('link', {name: 'Details'});
 		this.displayAvailabilityInput = page.getByTestId(

@@ -179,7 +179,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList2 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -187,7 +188,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList3 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -195,7 +197,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList4 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -203,7 +206,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList5 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -211,7 +215,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList6 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -219,7 +224,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList7 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -227,7 +233,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList8 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -235,7 +242,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList9 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -243,7 +251,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList10 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -251,7 +260,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList11 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -259,7 +269,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 1D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 		_cpConfigurationList12 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -267,7 +278,8 @@ public class CPConfigurationListHierarchyDiscoveryTest {
 				RandomTestUtil.randomString(), 2D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 
 		_cpConfigurationListRelLocalService.addCPConfigurationListRel(
 			_user.getUserId(), AccountEntry.class.getName(),

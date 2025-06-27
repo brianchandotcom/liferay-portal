@@ -310,7 +310,8 @@ public class CPConfigurationListEligibilityCommerceHealthStatus
 					calendar.get(Calendar.DAY_OF_MONTH),
 					calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.HOUR_OF_DAY),
-					calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+					calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+					new ServiceContext());
 
 			for (String type : currentSet) {
 				long resourceId = GetterUtil.getLong(type.substring(1));

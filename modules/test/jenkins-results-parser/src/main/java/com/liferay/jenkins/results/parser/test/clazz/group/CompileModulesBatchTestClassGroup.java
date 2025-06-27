@@ -16,7 +16,6 @@ import java.io.IOException;
 
 import java.nio.file.PathMatcher;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -77,10 +76,10 @@ public class CompileModulesBatchTestClassGroup
 				continue;
 			}
 
-			testClasses.add(testClass);
+			addTestClass(testClass);
 		}
 
-		Collections.sort(testClasses);
+		sortTestClasses();
 	}
 
 }

@@ -646,9 +646,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				return;
 			}
 
-			int testClassCount = testClasses.size();
-
-			if (testClassCount == 0) {
+			if (!containsTestClasses()) {
 				if (!_includeAutoBalanceTests) {
 					return;
 				}
@@ -657,8 +655,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					0, TestClassGroupFactory.newAxisTestClassGroup(this));
 			}
 			else {
+				List<TestClass> testClasses = getTestClasses();
+
 				int axisSize = (int)Math.ceil(
-					(double)testClassCount / axisCount);
+					(double)getTestClassCount() / axisCount);
 
 				for (List<TestClass> axisTestClasses :
 						Lists.partition(testClasses, axisSize)) {
@@ -731,7 +731,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			if ((testClass != null) && !testClass.isIgnored() &&
 				testClass.hasTestClassMethods()) {
 
-				testClasses.add(testClass);
+				addTestClass(testClass);
 			}
 		}
 
@@ -740,10 +740,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"[", getBatchName(), "] Found ",
-				String.valueOf(testClasses.size()), " test classes in ",
+				String.valueOf(getTestClassCount()), " test classes in ",
 				JenkinsResultsParserUtil.toDurationString(duration)));
 
-		Collections.sort(testClasses);
+		sortTestClasses();
 	}
 
 	protected void setTestClasses(JUnitTestSelector jUnitTestSelector) {
@@ -792,7 +792,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			if ((testClass != null) && !testClass.isIgnored() &&
 				testClass.hasTestClassMethods()) {
 
-				testClasses.add(testClass);
+				addTestClass(testClass);
 			}
 		}
 
@@ -801,10 +801,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"[", getBatchName(), "] Found ",
-				String.valueOf(testClasses.size()), " test classes in ",
+				String.valueOf(getTestClassCount()), " test classes in ",
 				JenkinsResultsParserUtil.toDurationString(duration)));
 
-		Collections.sort(testClasses);
+		sortTestClasses();
 	}
 
 	private File _getWorkingDirectory() {
@@ -936,7 +936,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private void _setIncludeAutoBalanceTests() {
-		if (!testClasses.isEmpty()) {
+		if (containsTestClasses()) {
 			_includeAutoBalanceTests = true;
 
 			return;

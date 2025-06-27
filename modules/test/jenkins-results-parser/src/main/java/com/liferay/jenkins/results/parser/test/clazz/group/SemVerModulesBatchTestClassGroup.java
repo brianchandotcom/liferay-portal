@@ -16,7 +16,6 @@ import java.io.IOException;
 
 import java.nio.file.PathMatcher;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -140,10 +139,10 @@ public class SemVerModulesBatchTestClassGroup
 				continue;
 			}
 
-			testClasses.add(testClass);
+			addTestClass(testClass);
 		}
 
-		Collections.sort(testClasses);
+		sortTestClasses();
 	}
 
 	private static final Pattern _quarterlyReleaseNamePattern = Pattern.compile(

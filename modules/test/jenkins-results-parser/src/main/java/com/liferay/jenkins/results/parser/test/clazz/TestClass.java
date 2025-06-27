@@ -53,6 +53,8 @@ public interface TestClass extends Comparable<TestClass> {
 
 	public void setAxisTestClassGroup(AxisTestClassGroup axisTestClassGroup);
 
+	public void setBatchTestClassGroup(BatchTestClassGroup batchTestClassGroup);
+
 	public void setSegmentTestClassGroup(
 		SegmentTestClassGroup axisTestClassGroup);
 

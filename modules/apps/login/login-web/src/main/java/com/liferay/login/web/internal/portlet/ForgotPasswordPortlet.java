@@ -90,8 +90,8 @@ public class ForgotPasswordPortlet extends MVCPortlet {
 			}
 		}
 
-		if (currentURL.contains("/portal/update_password") ||
-			currentURL.contains("/login/update_password")) {
+		if (currentURL.contains("/login/update_password") ||
+			currentURL.contains("/portal/update_password")) {
 
 			renderRequest.setAttribute(
 				getMVCPathAttributeName(renderResponse.getNamespace()),

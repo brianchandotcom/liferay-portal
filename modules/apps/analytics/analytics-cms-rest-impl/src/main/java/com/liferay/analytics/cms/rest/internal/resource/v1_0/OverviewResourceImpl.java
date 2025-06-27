@@ -389,6 +389,24 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 		return GetterUtil.getLong(results.get(0));
 	}
 
+	private <T> Expression<T> _getPropertyValueExpression(
+		Expression<T> expression, String propertyName) {
+
+		DB db = DBManagerUtil.getDB();
+
+		if ((db.getDBType() == DBType.MYSQL) ||
+			(db.getDBType() == DBType.MARIADB)) {
+
+			return new DSLFunction<>(
+				new DSLFunctionType("JSON_EXTRACT(", ")"), expression,
+				new Scalar<>(propertyName));
+		}
+
+		return new DSLFunction<>(
+			new DSLFunctionType("JSON_QUERY(", ")"), expression,
+			new Scalar<>(propertyName));
+	}
+
 	private Date _getStartDate(Integer rangeKey, String rangeStart) {
 		Calendar calendar = Calendar.getInstance();
 
@@ -472,7 +490,7 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 
 		if (!Validator.isBlank(languageId)) {
 			predicate = predicate.and(
-				_jsonExtract(
+				_getPropertyValueExpression(
 					ObjectEntryVersionTable.INSTANCE.content, "$.properties"
 				).like(
 					"%\"" + languageId + "\":%"
@@ -501,24 +519,6 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 		}
 
 		return predicate;
-	}
-
-	private <T> Expression<T> _jsonExtract(
-		Expression<T> expression, String value) {
-
-		DB db = DBManagerUtil.getDB();
-
-		if ((db.getDBType() == DBType.MYSQL) ||
-			(db.getDBType() == DBType.MARIADB)) {
-
-			return new DSLFunction<>(
-				new DSLFunctionType("JSON_EXTRACT(", ")"), expression,
-				new Scalar<>(value));
-		}
-
-		return new DSLFunction<>(
-			new DSLFunctionType("JSON_QUERY(", ")"), expression,
-			new Scalar<>(value));
 	}
 
 	private Overview _toOverview(

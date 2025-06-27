@@ -8,7 +8,7 @@ import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
 
 export default class HeadlessPublisherAsset {
-	static async createPublisherAsset(body: any) {
+	static async createPublisherAsset(body: unknown) {
 		const response = await axios.post('o/c/publisherassetses', body);
 
 		return response.data;

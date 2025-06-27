@@ -11,6 +11,25 @@ import {ProductTypeOptions} from '../../../pages/Apps/AppCreationFlow/ProvideApp
 import {AppReviewProps} from '../AppReview';
 import AppReviewSection from '../AppReviewSection';
 
+const FileContent = ({liferayPackage}: {liferayPackage: LiferayPackage}) => {
+	if (liferayPackage.uploaded) {
+		return (
+			<a
+				className="app-review-file-name ml-3"
+				href={liferayPackage?.file?.src}
+			>
+				{liferayPackage?.file?.fileName}
+			</a>
+		);
+	}
+
+	return (
+		<span className="app-review-file-name ml-3">
+			{liferayPackage?.file?.fileName}
+		</span>
+	);
+};
+
 const Build = ({
 	context,
 	editNavigate,
@@ -20,25 +39,6 @@ const Build = ({
 	const productTypeOption = ProductTypeOptions.find(
 		(productType) => productType.value === context.build.appType
 	);
-
-	const FileContent = ({
-		liferayPackage,
-	}: {
-		liferayPackage: LiferayPackage;
-	}) => {
-		return liferayPackage.uploaded ? (
-			<a
-				className="app-review-file-name ml-3"
-				href={liferayPackage?.file?.src}
-			>
-				{liferayPackage?.file?.fileName}
-			</a>
-		) : (
-			<span className="app-review-file-name ml-3">
-				{liferayPackage?.file?.fileName}
-			</span>
-		);
-	};
 
 	return (
 		<AppReviewSection

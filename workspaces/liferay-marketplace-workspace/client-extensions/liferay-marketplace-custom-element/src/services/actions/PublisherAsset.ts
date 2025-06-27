@@ -4,6 +4,7 @@
  */
 
 import SearchBuilder from '../../core/SearchBuilder';
+import {DOCUMENT_FOLDER_PERMISSIONS} from '../../enums/File';
 import {Liferay} from '../../liferay/liferay';
 import HeadlessDelivery from '../rest/HeadlessDelivery';
 import HeadlessPublisherAssetses from '../rest/HeadlessPublisherAsset';
@@ -49,7 +50,7 @@ export default class PublisherAsset {
 			const packageFolder = await HeadlessDelivery.createDocumentFolder(
 				folderName,
 				publisherFolderId,
-				'Members'
+				DOCUMENT_FOLDER_PERMISSIONS.SITE_MEMBERS
 			);
 
 			appFolderId = packageFolder.id;

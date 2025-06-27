@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -350,10 +349,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
-	public void setRootObjectDefinitionIds(
-		long[] rootObjectDefinitionIdsToAdd,
-		long[] rootObjectDefinitionIdsToRemove) {
-
+	public void setRootObjectDefinitionIds(long[] rootObjectDefinitionIds) {
 		ObjectDefinitionSetting objectDefinitionSetting =
 			ObjectDefinitionSettingLocalServiceUtil.
 				fetchObjectDefinitionSetting(
@@ -368,28 +364,15 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 						getUserId(), getObjectDefinitionId(),
 						ObjectDefinitionSettingConstants.
 							NAME_ROOT_OBJECT_DEFINITION_IDS,
-						StringUtil.merge(rootObjectDefinitionIdsToAdd));
+						StringUtil.merge(rootObjectDefinitionIds));
 			}
 			else {
-				List<String> rootObjectDefinitionIds = ListUtil.fromArray(
-					StringUtil.split(objectDefinitionSetting.getValue()));
-
-				for (long rootObjectDefinitionIdToAdd :
-						rootObjectDefinitionIdsToAdd) {
-
-					rootObjectDefinitionIds.add(
-						String.valueOf(rootObjectDefinitionIdToAdd));
-				}
-
-				for (long rootObjectDefinitionIdToRemove :
-						rootObjectDefinitionIdsToRemove) {
-
-					rootObjectDefinitionIds.remove(
-						String.valueOf(rootObjectDefinitionIdToRemove));
-				}
-
 				objectDefinitionSetting.setValue(
-					StringUtil.merge(rootObjectDefinitionIds));
+					StringUtil.merge(
+						ArrayUtil.append(
+							StringUtil.split(
+								objectDefinitionSetting.getValue()),
+							StringUtil.merge(rootObjectDefinitionIds))));
 
 				ObjectDefinitionSettingLocalServiceUtil.
 					updateObjectDefinitionSetting(objectDefinitionSetting);

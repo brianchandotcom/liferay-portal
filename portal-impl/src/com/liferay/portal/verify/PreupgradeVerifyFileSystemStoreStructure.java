@@ -40,14 +40,14 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			return;
 		}
 
-		boolean advancedFileSystemStore = StringUtil.equals(
-			PropsValues.DL_STORE_IMPL,
-			"com.liferay.portal.store.file.system.AdvancedFileSystemStore");
-		boolean fileSystemStore = StringUtil.equals(
-			PropsValues.DL_STORE_IMPL,
-			"com.liferay.portal.store.file.system.FileSystemStore");
+		if (!StringUtil.equals(
+				PropsValues.DL_STORE_IMPL,
+				"com.liferay.portal.store.file.system." +
+					"AdvancedFileSystemStore") &&
+			!StringUtil.equals(
+				PropsValues.DL_STORE_IMPL,
+				"com.liferay.portal.store.file.system.FileSystemStore")) {
 
-		if (!advancedFileSystemStore && !fileSystemStore) {
 			return;
 		}
 

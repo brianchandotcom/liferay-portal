@@ -420,6 +420,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		for (Layout layout : layouts) {
 			_assertProblemException(
+				null,
 				() ->
 					sitePageResource.
 						deleteSiteSiteByExternalReferenceCodeSitePage(
@@ -528,6 +529,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		_assertProblemException(
+			null,
 			() -> sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode(), sitePage));
@@ -539,6 +541,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		_assertProblemException(
+			null,
 			() ->
 				sitePageResource.
 					postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
@@ -589,6 +592,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		_assertProblemException(
+			null,
 			() -> sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode(), sitePage));

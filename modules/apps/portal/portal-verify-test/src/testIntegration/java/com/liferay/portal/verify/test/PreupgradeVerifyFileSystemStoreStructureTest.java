@@ -146,25 +146,25 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	}
 
 	@Test
-	public void testAdvancedFileSystemStoreWithLongDirectoryNameWithoutExtension()
+	public void testAdvancedFileSystemStoreWithLongFileNameDirectoryWithoutExtension()
 		throws Exception {
 
-		Path directoryNameWithoutExtensionPath = Paths.get(
+		Path fileNameDirectoryWithoutExtensionPath = Paths.get(
 			_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_repositoryId), "100");
 
-		String expectedLogEntry =
-			"Found directory with name longer than 2 characters without a " +
-				"file extension in advanced file system structure directory: " +
-					directoryNameWithoutExtensionPath;
+		String expectedLogEntry = StringBundler.concat(
+			"Found file name directory with name longer than 2 characters ",
+			"without an extension in advanced file system structure ",
+			"directory: ", fileNameDirectoryWithoutExtensionPath);
 
 		_assertVerify(
-			_ADVANCED_FILE_SYSTEM_STORE, directoryNameWithoutExtensionPath,
+			_ADVANCED_FILE_SYSTEM_STORE, fileNameDirectoryWithoutExtensionPath,
 			null, null, 1, expectedLogEntry);
 	}
 
 	@Test
-	public void testAdvancedFileSystemStoreWithValidStructure()
+	public void testAdvancedFileSystemStoreWithValidDirectory()
 		throws Exception {
 
 		Path validDirectoryPath = Paths.get(
@@ -173,23 +173,6 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 
 		_assertVerify(
 			_ADVANCED_FILE_SYSTEM_STORE, validDirectoryPath, null, null, 0);
-	}
-
-	@Test
-	public void testFileSystemStoreWithDirectoryNameContainingExtension()
-		throws Exception {
-
-		Path directoryNameWithExtensionPath = Paths.get(
-			_fileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_repositoryId), "100.txt");
-
-		String expectedLogEntry =
-			"Found directory with extension in file system structure when no " +
-				"extensions are expected: " + directoryNameWithExtensionPath;
-
-		_assertVerify(
-			_FILE_SYSTEM_STORE, directoryNameWithExtensionPath, null, null, 1,
-			expectedLogEntry);
 	}
 
 	@Test
@@ -222,7 +205,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	}
 
 	@Test
-	public void testFileSystemStoreWithFileInsteadOfFileEntryDirectory()
+	public void testFileSystemStoreWithFileInsteadOfFileNameDirectory()
 		throws Exception {
 
 		Path folderIdPath = Paths.get(
@@ -259,6 +242,48 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	}
 
 	@Test
+	public void testFileSystemStoreWithFileNameDirectoryContainingExtension()
+		throws Exception {
+
+		Path fileNameDirectoryWithExtensionPath = Paths.get(
+			_fileSystemStoreRootDir, String.valueOf(_companyId),
+			String.valueOf(_repositoryId), "100.txt");
+
+		String expectedLogEntry =
+			"Found file name directory with extension in file system " +
+				"structure when no extensions are expected: " +
+					fileNameDirectoryWithExtensionPath;
+
+		_assertVerify(
+			_FILE_SYSTEM_STORE, fileNameDirectoryWithExtensionPath, null, null,
+			1, expectedLogEntry);
+	}
+
+	@Test
+	public void testFileSystemStoreWithInvalidVersionLabelFile()
+		throws Exception {
+
+		Path fileNamePath = Paths.get(
+			_fileSystemStoreRootDir, String.valueOf(_companyId),
+			String.valueOf(_repositoryId), "100");
+
+		Path invalidVersionLabelPath = fileNamePath.resolve(
+			"invalidVersionLabel");
+
+		String expectedLogEntry1 =
+			"Found file that does not match version label structure " +
+				"(expected \\d+\\.\\d+.*): " + invalidVersionLabelPath;
+
+		String expectedLogEntry2 =
+			"File name directory does not contain valid version label files " +
+				"as expected in file system structure: " + fileNamePath;
+
+		_assertVerify(
+			_FILE_SYSTEM_STORE, null, invalidVersionLabelPath, null, 2,
+			expectedLogEntry1, expectedLogEntry2);
+	}
+
+	@Test
 	public void testFileSystemStoreWithMissingCompanyIdDirectory()
 		throws Exception {
 
@@ -274,30 +299,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 	}
 
 	@Test
-	public void testFileSystemStoreWithMissingValidVersionFiles()
-		throws Exception {
-
-		Path fileEntryPath = Paths.get(
-			_fileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_repositoryId), "100");
-
-		Path invalidVersionFilePath = fileEntryPath.resolve("invalidVersion");
-
-		String expectedLogEntry1 =
-			"Found file that does not match version structure (expected " +
-				"\\d+\\.\\d+.*): " + invalidVersionFilePath;
-
-		String expectedLogEntry2 =
-			"Directory does not contain valid version files as expected in " +
-				"file system structure: " + fileEntryPath;
-
-		_assertVerify(
-			_FILE_SYSTEM_STORE, null, invalidVersionFilePath, null, 2,
-			expectedLogEntry1, expectedLogEntry2);
-	}
-
-	@Test
-	public void testFileSystemStoreWithValidStructure() throws Exception {
+	public void testFileSystemStoreWithValidDirectory() throws Exception {
 		Path validDirectoryPath = Paths.get(
 			_fileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_repositoryId), "100", "1.0");

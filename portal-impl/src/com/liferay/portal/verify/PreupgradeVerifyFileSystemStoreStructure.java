@@ -190,21 +190,21 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				folderIdPath)) {
 
-			for (Path fileEntryPath : directoryStream) {
-				if (!Files.isDirectory(fileEntryPath)) {
+			for (Path fileNamePath : directoryStream) {
+				if (!Files.isDirectory(fileNamePath)) {
 					_log.error(
 						"Found file in advanced file system structure " +
 							"directory when only directories are expected: " +
-								fileEntryPath);
+								fileNamePath);
 
 					return false;
 				}
 
-				String fileName = String.valueOf(fileEntryPath.getFileName());
+				String fileName = String.valueOf(fileNamePath.getFileName());
 
 				if (fileName.equals("DLFE")) {
 					if (!_hasAdvancedFileSystemStructureFolderIdPath(
-							fileEntryPath)) {
+							fileNamePath)) {
 
 						return false;
 					}
@@ -214,10 +214,10 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 					_log.error(
 						StringBundler.concat(
-							"Found directory with name longer than 2 ",
-							"characters without a file extension in advanced ",
+							"Found file name directory with name longer than ",
+							"2 characters without an extension in advanced ",
 							"file system structure directory: ",
-							fileEntryPath.toString()));
+							fileNamePath.toString()));
 
 					return false;
 				}
@@ -277,34 +277,34 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				folderIdPath)) {
 
-			for (Path fileEntryIdPath : directoryStream) {
-				if (!Files.isDirectory(fileEntryIdPath)) {
+			for (Path fileNamePath : directoryStream) {
+				if (!Files.isDirectory(fileNamePath)) {
 					_log.error(
 						"Found file in file system structure directory when " +
-							"only directories are expected: " + fileEntryIdPath);
+							"only directories are expected: " + fileNamePath);
 
 					return false;
 				}
 
 				if (StringUtil.contains(
-						String.valueOf(fileEntryIdPath.getFileName()),
+						String.valueOf(fileNamePath.getFileName()),
 						StringPool.PERIOD, StringPool.BLANK)) {
 
 					_log.error(
 						StringBundler.concat(
-							"Found directory with extension in file system ",
-							"structure when no extensions are expected: ",
-							fileEntryIdPath.toString()));
+							"Found file name directory with extension in file ",
+							"system structure when no extensions are ",
+							"expected: ", fileNamePath.toString()));
 
 					return false;
 				}
 
-				if (!_hasVersionFile(fileEntryIdPath)) {
+				if (!_hasVersionLabelFile(fileNamePath)) {
 					_log.error(
 						StringBundler.concat(
-							"Directory does not contain valid version files ",
-							"as expected in file system structure: ",
-							fileEntryIdPath.toString()));
+							"File name directory does not contain valid ",
+							"version label files as expected in file system ",
+							"structure: ", fileNamePath.toString()));
 
 					return false;
 				}
@@ -324,28 +324,30 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _hasFileSystemStructureFileEntryIdPath(Path fileEntryIdPath) {
+	private boolean _hasVersionLabelFile(Path fileNamePath) {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				fileEntryIdPath)) {
+				fileNamePath)) {
 
-			for (Path versionPath : directoryStream) {
-				if (Files.isDirectory(versionPath)) {
+			for (Path versionLabelPath : directoryStream) {
+				if (Files.isDirectory(versionLabelPath)) {
 					continue;
 				}
 
-				String versionName = String.valueOf(versionPath.getFileName());
+				String versionLabelName = String.valueOf(
+					versionLabelPath.getFileName());
 
 				if (StringUtil.equals(
-						versionName,
+						versionLabelName,
 						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 
 					continue;
 				}
 
-				if (!versionName.matches("\\d+\\.\\d+.*")) {
+				if (!versionLabelName.matches("\\d+\\.\\d+.*")) {
 					_log.error(
-						"Found file that does not match version structure " +
-							"(expected \\d+\\.\\d+.*): " + versionPath);
+						"Found file that does not match version label " +
+							"structure (expected \\d+\\.\\d+.*): " +
+								versionLabelPath);
 
 					return false;
 				}
@@ -356,7 +358,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to verify file entry version in: " + fileEntryPath,
+					"Unable to verify file entry version label in: " +
+						fileNamePath,
 					exception);
 			}
 

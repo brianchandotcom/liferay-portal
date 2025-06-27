@@ -1287,6 +1287,8 @@ public class ObjectDefinitionLocalServiceImpl
 	public ObjectDefinition updateRootDescendantNodeObjectDefinition(
 		ObjectDefinition objectDefinition, long rootObjectDefinitionId) {
 
+		objectDefinition.setPanelCategoryKey(StringPool.BLANK);
+		objectDefinition.setPortlet(false);
 		objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);

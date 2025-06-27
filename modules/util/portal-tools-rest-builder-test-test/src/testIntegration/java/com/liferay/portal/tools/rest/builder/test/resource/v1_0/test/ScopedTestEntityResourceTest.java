@@ -30,6 +30,51 @@ public class ScopedTestEntityResourceTest
 	}
 
 	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		super.
+			testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		super.
+			testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCodeNotFound();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetScopedTestEntitiesPage() throws Exception {
+		super.testGraphQLGetScopedTestEntitiesPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetScopedTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		super.testGraphQLGetScopedTestEntityByExternalReferenceCode();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetScopedTestEntityByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		super.testGraphQLGetScopedTestEntityByExternalReferenceCodeNotFound();
+	}
+
+	@Ignore
 	@Test
 	public void testPatchScopedTestEntity() throws Exception {
 		super.testPatchScopedTestEntity();

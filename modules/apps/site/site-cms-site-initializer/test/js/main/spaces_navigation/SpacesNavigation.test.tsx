@@ -42,7 +42,7 @@ describe('SpacesNavigation', () => {
 	it('renders "Add Space" button when showAddButton is true', () => {
 		renderComponent({showAddButton: true});
 		expect(
-			screen.getByRole('button', {name: 'add-space'})
+			screen.getByRole('menuitem', {name: 'add-space'})
 		).toBeInTheDocument();
 	});
 

@@ -9514,49 +9514,6 @@ information. Make sure to commit in all build REST results.
 		</run-batch-test>
 	</target>
 
-	<target name="ruby-sass-compiler">
-		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
-
-		<setup-test-environment />
-
-		<echo file="build.${user.name}.properties">sass.compiler.class.name=ruby</echo>
-
-		<antcall inheritAll="false" target="setup-sdk" />
-
-		<antcall inheritAll="false" target="setup-yarn" />
-
-		<record action="start" name="${project.dir}/sass-compiler-log" />
-
-		<gradle-execute dir="modules" task="buildCSS">
-			<arg value="-Dbuild.exclude.ant.plugin=true" />
-		</gradle-execute>
-
-		<record action="stop" name="${project.dir}/sass-compiler-log" />
-
-		<fail message="The Sass compiler is not using Ruby.">
-			<condition>
-				<and>
-					<not>
-						<resourcecontains
-							resource="${project.dir}/sass-compiler-log"
-							substring="Using Ruby Sass compiler"
-						/>
-					</not>
-					<or>
-						<resourcecontains
-							resource="${project.dir}/sass-compiler-log"
-							substring="Unable to load Ruby compiler, falling back to native"
-						/>
-						<resourcecontains
-							resource="${project.dir}/sass-compiler-log"
-							substring="Using native Sass compiler"
-						/>
-					</or>
-				</and>
-			</condition>
-		</fail>
-	</target>
-
 	<target name="semantic-versioning">
 		<run-batch-test>
 			<test-action>

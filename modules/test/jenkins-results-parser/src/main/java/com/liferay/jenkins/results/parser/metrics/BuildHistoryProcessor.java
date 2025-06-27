@@ -554,7 +554,6 @@ public class BuildHistoryProcessor {
 					jobVariant.startsWith("jsp-runtime-compile") ||
 					jobVariant.startsWith("patching-tool") ||
 					jobVariant.startsWith("poshi-validation") ||
-					jobVariant.startsWith("ruby-sass-compiler") ||
 					jobVariant.startsWith("source-format") ||
 					jobVariant.startsWith("tck")) {
 

@@ -9,6 +9,17 @@ import buildState from '../../../../src/main/resources/META-INF/resources/js/str
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/structure_builder/config',
+	() => {
+		return {
+			config: {
+				objectFolderExternalReferenceCode: 'L_CMS_CONTENT_STRUCTURES',
+			},
+		};
+	}
+);
+
 const DATE_TIME_FIELD_UUID = getUuid();
 const TEXT_FIELD_UUID = getUuid();
 
@@ -44,16 +55,15 @@ const TEXT_FIELD: Field = {
 	uuid: TEXT_FIELD_UUID,
 };
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/structure_builder/config',
-	() => {
-		return {
-			config: {
-				objectFolderExternalReferenceCode: 'L_CMS_CONTENT_STRUCTURES',
-			},
-		};
+function getFields(fields: Field[]) {
+	const nextFields = new Map();
+
+	for (const field of fields) {
+		nextFields.set(field.uuid, field);
 	}
-);
+
+	return nextFields;
+}
 
 describe('buildState', () => {
 	it('Builds state with two fields ', () => {
@@ -81,7 +91,7 @@ describe('buildState', () => {
 
 		const objectDefinition = buildObjectDefinition({
 			erc: structure.erc,
-			fields: Array.from([TEXT_FIELD, DATE_TIME_FIELD]),
+			fields: getFields([TEXT_FIELD, DATE_TIME_FIELD]),
 			id: structure.id,
 			label: structure.label,
 			name: structure.name,
@@ -129,7 +139,7 @@ describe('buildState', () => {
 
 		const objectDefinition = buildObjectDefinition({
 			erc: structure.erc,
-			fields: Array.from([TEXT_FIELD, DATE_TIME_FIELD]),
+			fields: getFields([TEXT_FIELD, DATE_TIME_FIELD]),
 			id: structure.id,
 			label: structure.label,
 			name: structure.name,
@@ -185,7 +195,7 @@ describe('buildState', () => {
 
 		const objectDefinition = buildObjectDefinition({
 			erc: structure.erc,
-			fields: Array.from([TEXT_FIELD, DATE_TIME_FIELD]),
+			fields: getFields([TEXT_FIELD, DATE_TIME_FIELD]),
 			id: structure.id,
 			label: structure.label,
 			name: structure.name,

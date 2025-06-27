@@ -7,6 +7,16 @@ import buildObjectDefinition from '../../../../src/main/resources/META-INF/resou
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/structure_builder/config',
+	() => ({
+		config: {
+			acceptedGroupExternalReferenceCodes:
+				'acceptedGroupExternalReferenceCodesConfig',
+		},
+	})
+);
+
 const DATE_TIME_FIELD: Field = {
 	erc: 'datetime-field',
 	indexableConfig: {indexed: false},
@@ -35,21 +45,21 @@ const TEXT_FIELD: Field = {
 	uuid: getUuid(),
 };
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/structure_builder/config',
-	() => ({
-		config: {
-			acceptedGroupExternalReferenceCodes:
-				'acceptedGroupExternalReferenceCodesConfig',
-		},
-	})
-);
+function getFields(fields: Field[]) {
+	const nextFields = new Map();
+
+	for (const field of fields) {
+		nextFields.set(field.uuid, field);
+	}
+
+	return nextFields;
+}
 
 describe('buildObjectDefinition', () => {
 	it('Builds objectDefinition with a field without settings', () => {
 		const result = buildObjectDefinition({
 			erc: 'structureERC',
-			fields: [TEXT_FIELD],
+			fields: new Map([[TEXT_FIELD.uuid, TEXT_FIELD]]),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -94,7 +104,7 @@ describe('buildObjectDefinition', () => {
 	it('Builds objectDefinition with a field with settings', () => {
 		const result = buildObjectDefinition({
 			erc: 'structureERC',
-			fields: [DATE_TIME_FIELD],
+			fields: getFields([DATE_TIME_FIELD]),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -139,7 +149,7 @@ describe('buildObjectDefinition', () => {
 	it('Builds objectDefinition with spaces selected', () => {
 		const result = buildObjectDefinition({
 			erc: 'structureERC',
-			fields: [TEXT_FIELD],
+			fields: getFields([TEXT_FIELD]),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',

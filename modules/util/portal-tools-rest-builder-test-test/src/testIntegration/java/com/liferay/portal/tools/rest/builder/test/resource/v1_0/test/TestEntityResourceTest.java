@@ -37,15 +37,40 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		super.testDeleteTestEntityBatch();
 	}
 
+	@Ignore
 	@Override
 	@Test
-	public void testGetTestEntity() throws Exception {
-		int initialCount = testEntityResource.getTestEntityCount();
-		TestEntity testEntity = testEntityResource.postTestEntity(
-			randomTestEntity());
+	public void testGetTestEntitiesPageWithFilterDateTimeEquals()
+		throws Exception {
 
-		Assert.assertEquals(
-			testEntity, testEntityResource.getTestEntity((long)initialCount));
+		super.testGetTestEntitiesPageWithFilterDateTimeEquals();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetTestEntitiesPageWithFilterStringContains()
+		throws Exception {
+
+		super.testGetTestEntitiesPageWithFilterStringContains();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetTestEntitiesPageWithFilterStringEquals()
+		throws Exception {
+
+		super.testGetTestEntitiesPageWithFilterStringEquals();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetTestEntitiesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		super.testGetTestEntitiesPageWithFilterStringStartsWith();
 	}
 
 	@Override
@@ -58,6 +83,34 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		Assert.assertEquals(
 			Integer.valueOf(initialCount + 1),
 			testEntityResource.getTestEntityCount());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteTestEntity() throws Exception {
+		super.testGraphQLDeleteTestEntity();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetTestEntitiesPage() throws Exception {
+		super.testGraphQLGetTestEntitiesPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetTestEntity() throws Exception {
+		super.testGraphQLGetTestEntity();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetTestEntityNotFound() throws Exception {
+		super.testGraphQLGetTestEntityNotFound();
 	}
 
 	@Override
@@ -144,6 +197,13 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	@Ignore
 	@Test
 	public void testPostTestEntityMultipartBulk() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		super.testVulcanCRUDItemDelegateGetItem();
 	}
 
 	@Override

@@ -277,34 +277,34 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				folderIdPath)) {
 
-			for (Path fileEntryPath : directoryStream) {
-				if (!Files.isDirectory(fileEntryPath)) {
+			for (Path fileEntryIdPath : directoryStream) {
+				if (!Files.isDirectory(fileEntryIdPath)) {
 					_log.error(
 						"Found file in file system structure directory when " +
-							"only directories are expected: " + fileEntryPath);
+							"only directories are expected: " + fileEntryIdPath);
 
 					return false;
 				}
 
 				if (StringUtil.contains(
-						String.valueOf(fileEntryPath.getFileName()),
+						String.valueOf(fileEntryIdPath.getFileName()),
 						StringPool.PERIOD, StringPool.BLANK)) {
 
 					_log.error(
 						StringBundler.concat(
 							"Found directory with extension in file system ",
 							"structure when no extensions are expected: ",
-							fileEntryPath.toString()));
+							fileEntryIdPath.toString()));
 
 					return false;
 				}
 
-				if (!_hasVersionFile(fileEntryPath)) {
+				if (!_hasVersionFile(fileEntryIdPath)) {
 					_log.error(
 						StringBundler.concat(
 							"Directory does not contain valid version files ",
 							"as expected in file system structure: ",
-							fileEntryPath.toString()));
+							fileEntryIdPath.toString()));
 
 					return false;
 				}
@@ -324,9 +324,9 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _hasVersionFile(Path fileEntryPath) {
+	private boolean _hasFileSystemStructureFileEntryIdPath(Path fileEntryIdPath) {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				fileEntryPath)) {
+				fileEntryIdPath)) {
 
 			for (Path versionPath : directoryStream) {
 				if (Files.isDirectory(versionPath)) {
@@ -356,7 +356,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to check for version file in: " + fileEntryPath,
+					"Unable to verify file entry version in: " + fileEntryPath,
 					exception);
 			}
 

@@ -56,48 +56,6 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 		super(buildURL);
 	}
 
-	@Override
-	protected File getJenkinsConsoleLocalFile() {
-		if (_jenkinsConsoleLocalFile != null) {
-			return _jenkinsConsoleLocalFile;
-		}
-
-		JobReport jobReport = getJobReport();
-
-		JenkinsMaster jenkinsMaster = jobReport.getJenkinsMaster();
-
-		try {
-			URL jenkinsConsoleURL = new URL(
-				JenkinsResultsParserUtil.combine(
-					"https://storage.cloud.google.com/testray-results/",
-					getStartYearMonth(), "/", jenkinsMaster.getName(), "/",
-					jobReport.getJobName(), "/",
-					String.valueOf(getBuildNumber()),
-					"/jenkins-console.txt.gz"));
-
-			File jenkinsConsoleLocalGzipFile = new File(
-				System.getenv("WORKSPACE"),
-				JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
-
-			JenkinsResultsParserUtil.toFile(
-				jenkinsConsoleURL, jenkinsConsoleLocalGzipFile);
-
-			File jenkinsConsoleLocalFile = new File(
-				System.getenv("WORKSPACE"),
-				JenkinsResultsParserUtil.getDistinctTimeStamp());
-
-			JenkinsResultsParserUtil.unGzip(
-				jenkinsConsoleLocalGzipFile, jenkinsConsoleLocalFile);
-
-			_jenkinsConsoleLocalFile = jenkinsConsoleLocalFile;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		return _jenkinsConsoleLocalFile;
-	}
-
 	protected JSONObject getJSONObjectFromURL(URL url) {
 		if (!JenkinsResultsParserUtil.exists(url)) {
 			return null;
@@ -138,7 +96,5 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 			}
 		}
 	}
-
-	private File _jenkinsConsoleLocalFile;
 
 }

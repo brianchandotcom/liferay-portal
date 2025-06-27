@@ -5,9 +5,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,28 +131,11 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 		super(topLevelBuild);
 
 		_topLevelBuild = topLevelBuild;
-
-		_jenkinsConsoleLocalFile = new File(
-			System.getenv("WORKSPACE"),
-			JenkinsResultsParserUtil.getDistinctTimeStamp());
-
-		try {
-			JenkinsResultsParserUtil.write(
-				_jenkinsConsoleLocalFile, topLevelBuild.getConsoleText());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	@Override
 	protected JSONObject getBuildJSONObject() {
 		return _topLevelBuild.getBuildJSONObject();
-	}
-
-	@Override
-	protected File getJenkinsConsoleLocalFile() {
-		return _jenkinsConsoleLocalFile;
 	}
 
 	private static final long _TIMEOUT = 60L * 60L * 6L;
@@ -165,7 +145,6 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(30, true);
 
-	private final File _jenkinsConsoleLocalFile;
 	private final TopLevelBuild _topLevelBuild;
 
 }

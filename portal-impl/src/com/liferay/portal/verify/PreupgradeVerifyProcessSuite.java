@@ -25,6 +25,7 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 		_verify(new PreupgradeVerifyDatabaseCharacterSet());
 		_verify(new PreupgradeVerifyDatabasePrivileges());
 		_verify(new PreupgradeVerifyDatabaseState());
+		_verify(new PreupgradeVerifyDLStore());
 		_verify(new PreupgradeVerifyProperties());
 
 		if (ListUtil.isNotEmpty(_exceptionMessages)) {

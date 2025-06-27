@@ -96,6 +96,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -3457,6 +3458,42 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, _objectDefinition1, objectEntry.getId(),
 				2));
 
+		objectEntry = _updateObjectEntryVersion(
+			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
+			2);
+
+		objectEntry = _defaultObjectEntryManager.expireObjectEntryByVersion(
+			dtoConverterContext, _objectDefinition1, objectEntry.getId(), 2);
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			objectEntry.getStatus(
+			).getCode());
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getId(), 1
+			).getStatus());
+
+		objectEntry = _updateObjectEntryVersion(
+			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
+			2);
+
+		objectEntry = _defaultObjectEntryManager.expireObjectEntry(
+			dtoConverterContext, objectEntry.getId());
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			objectEntry.getStatus(
+			).getCode());
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getId(), 1
+			).getStatus());
+
 		// Site scope
 
 		objectEntry = _updateObjectEntryVersion(
@@ -3473,6 +3510,43 @@ public class DefaultObjectEntryManagerImplTest
 			_defaultObjectEntryManager.expireObjectEntryByVersion(
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition4, _group.getGroupKey(), 2));
+
+		objectEntry = _updateObjectEntryVersion(
+			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
+			2);
+
+		objectEntry = _defaultObjectEntryManager.expireObjectEntryByVersion(
+			dtoConverterContext, objectEntry.getExternalReferenceCode(),
+			_objectDefinition1, objectEntry.getScopeKey(), 2);
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			objectEntry.getStatus(
+			).getCode());
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getId(), 1
+			).getStatus());
+
+		objectEntry = _updateObjectEntryVersion(
+			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
+			2);
+
+		objectEntry = _defaultObjectEntryManager.expireObjectEntry(
+			dtoConverterContext, objectEntry.getId());
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			objectEntry.getStatus(
+			).getCode());
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getId(), 1
+			).getStatus());
 	}
 
 	@Test
@@ -8148,6 +8222,9 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

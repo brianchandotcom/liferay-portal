@@ -150,6 +150,8 @@ deploySidecar {
 	}
 
 	doLast {
+		delete file("${destinationDir}/jdk")
+
 		logger.lifecycle "Deployed Elasticsearch Sidecar: {}", destinationDir
 	}
 }

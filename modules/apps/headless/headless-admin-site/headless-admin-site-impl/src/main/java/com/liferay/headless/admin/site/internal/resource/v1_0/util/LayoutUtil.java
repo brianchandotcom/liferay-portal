@@ -204,6 +204,14 @@ public class LayoutUtil {
 			serviceContext.setAttribute("published", Boolean.FALSE.toString());
 		}
 
+		if ((externalReferenceCode != null) &&
+			(publishedContentPageSpecification.getExternalReferenceCode() ==
+				null)) {
+
+			publishedContentPageSpecification.setExternalReferenceCode(
+				externalReferenceCode);
+		}
+
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			publishedContentPageSpecification.getExternalReferenceCode(),
 			serviceContext.getUserId(), groupId, privateLayout, 0, 0, 0,

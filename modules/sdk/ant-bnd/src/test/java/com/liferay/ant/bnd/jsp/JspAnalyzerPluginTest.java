@@ -7,7 +7,10 @@ package com.liferay.ant.bnd.jsp;
 
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
+import aQute.bnd.osgi.EmbeddedResource;
+import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Packages;
+import aQute.bnd.osgi.Resource;
 
 import aQute.lib.io.IO;
 
@@ -15,7 +18,12 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.time.Instant;
+
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -62,6 +70,21 @@ public class JspAnalyzerPluginTest {
 		int size = taglibURIs.size();
 
 		Assert.assertEquals(8, size);
+	}
+
+	@Test
+	public void testImplicitImports() throws Exception {
+		List<String> jakartaFQNs = Arrays.asList(
+			"jakarta.servlet", "jakarta.servlet.http");
+		List<String> javaxFQNs = Arrays.asList(
+			"javax.servlet", "javax.servlet.http");
+
+		_testImplicitImports(
+			"dependencies/imports_without_comments_with_javax.jsp", javaxFQNs,
+			jakartaFQNs);
+		_testImplicitImports(
+			"dependencies/imports_without_comments.jsp", jakartaFQNs,
+			javaxFQNs);
 	}
 
 	@Test
@@ -161,6 +184,47 @@ public class JspAnalyzerPluginTest {
 		Class<?> clazz = getClass();
 
 		return clazz.getResource(path);
+	}
+
+	private void _testImplicitImports(
+			String jspPath, List<String> expectedFQNs,
+			List<String> notExpectedFQNs)
+		throws Exception {
+
+		try (Jar jar = new Jar("test.jar")) {
+			Builder builder = new Builder();
+
+			Map<String, Resource> resources = jar.getResources();
+
+			Instant instant = Instant.now();
+
+			resources.put(
+				"resources/init.jsp",
+				new EmbeddedResource(
+					IO.read(getResource(jspPath)), instant.toEpochMilli()));
+
+			builder.setJar(jar);
+
+			builder.setProperty("-jsp", "*.jsp");
+
+			JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
+
+			jspAnalyzerPlugin.analyzeJar(builder);
+
+			Packages referred = builder.getReferred();
+
+			for (String expectedFQN : expectedFQNs) {
+				Assert.assertTrue(
+					"Expected: " + expectedFQN,
+					referred.containsFQN(expectedFQN));
+			}
+
+			for (String notExpectedFQN : notExpectedFQNs) {
+				Assert.assertFalse(
+					"Not expected: " + notExpectedFQN,
+					referred.containsFQN(notExpectedFQN));
+			}
+		}
 	}
 
 }

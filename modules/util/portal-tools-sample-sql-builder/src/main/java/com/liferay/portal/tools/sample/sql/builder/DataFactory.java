@@ -2702,7 +2702,7 @@ public class DataFactory {
 		layoutModels.add(
 			_newContentPageLayoutModel(
 				groupId, getClassNameId(Layout.class),
-				publicLayoutModel.getPlid(), name + "1",
+				publicLayoutModel.getPlid(), name,
 				String.valueOf(
 					new UUID(
 						SecureRandomUtil.nextLong(),

@@ -8,6 +8,7 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {DisplayPageTemplatesPage} from '../../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
@@ -221,6 +222,19 @@ export class NavigationMenusPage {
 		);
 	}
 
+	async addNavigationMenuToGlobalSite(navigationMenuName: string) {
+		await this.gotoGlobalSiteNavigationMenuPortlet();
+
+		await this.page
+			.getByRole('button', {name: 'Add'})
+			.getByText('New')
+			.click();
+
+		await this.page.getByPlaceholder('Name').fill(navigationMenuName);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+	}
+
 	async addOrChangeIcon(iconName: string) {
 		await this.page.getByLabel('Select an Icon').click();
 
@@ -241,6 +255,26 @@ export class NavigationMenusPage {
 		await waitForAlert(this.page, 'Success');
 	}
 
+	async addChildPage(parentPage: string, childPage: string) {
+		await this.page.getByText(parentPage).hover();
+
+		await this.page
+			.getByRole('button', {name: 'View ' + parentPage + ' Options'})
+			.click();
+
+		await this.page.getByRole('menuitem', {name: 'Add Child'}).hover();
+
+		await this.page.waitForTimeout(500);
+
+		await this.page.getByRole('menuitem', {name: 'Page'}).click();
+
+		await this.pagesModal.getByText(childPage, {exact: true}).click();
+
+		await this.selectButton.click();
+
+		await waitForAlert(this.page, 'Success:1 Page was added to this menu.');
+	}
+
 	async addSubmenuItem(submenuName: string) {
 		await this.addMenuItemButton.click();
 
@@ -251,6 +285,8 @@ export class NavigationMenusPage {
 		await this.page.waitForTimeout(1000);
 
 		const textBox = this.submenuModal.getByPlaceholder('Name');
+
+		await textBox.click();
 
 		await textBox.fill(submenuName);
 
@@ -367,6 +403,29 @@ export class NavigationMenusPage {
 		await this.saveButton.click();
 
 		await waitForAlert(this.page);
+	}
+
+	async fillNavagationMenuItemCustomField(
+		menuItemName: string,
+		customFieldName: string
+	): Promise<string> {
+		await this.page.getByText(menuItemName).click();
+
+		const encodedcustomFieldName = customFieldName.replace(/-/g, '_2d_');
+
+		const randomValue = getRandomString();
+
+		await this.page
+			.locator(
+				`[id^="_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet_"][id$="${encodedcustomFieldName}"]`
+			)
+			.fill(randomValue);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(this.page);
+
+		return randomValue;
 	}
 
 	async openAddCategoryModal() {

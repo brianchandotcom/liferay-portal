@@ -728,17 +728,6 @@ public class ObjectDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition
-		updateRootDescendantNodeObjectDefinition(
-			com.liferay.object.model.ObjectDefinition objectDefinition,
-			long rootObjectDefinitionId) {
-
-		return _objectDefinitionLocalService.
-			updateRootDescendantNodeObjectDefinition(
-				objectDefinition, rootObjectDefinitionId);
-	}
-
-	@Override
-	public com.liferay.object.model.ObjectDefinition
 			updateSystemObjectDefinition(
 				String externalReferenceCode, long objectDefinitionId,
 				long objectFolderId, long titleObjectFieldId,

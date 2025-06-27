@@ -351,8 +351,8 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public void setRootObjectDefinitionIds(
-		long[] addRootObjectDefinitionIds,
-		long[] removeRootObjectDefinitionIds) {
+		long[] rootObjectDefinitionIdsToAdd,
+		long[] rootObjectDefinitionIdsToRemove) {
 
 		ObjectDefinitionSetting objectDefinitionSetting =
 			ObjectDefinitionSettingLocalServiceUtil.
@@ -368,21 +368,21 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 						getUserId(), getObjectDefinitionId(),
 						ObjectDefinitionSettingConstants.
 							NAME_ROOT_OBJECT_DEFINITION_IDS,
-						StringUtil.merge(addRootObjectDefinitionIds));
+						StringUtil.merge(rootObjectDefinitionIdsToAdd));
 			}
 			else {
 				List<String> rootObjectDefinitionIds = ListUtil.fromArray(
 					StringUtil.split(objectDefinitionSetting.getValue()));
 
 				for (long rootObjectDefinitionIdToAdd :
-						addRootObjectDefinitionIds) {
+						rootObjectDefinitionIdsToAdd) {
 
 					rootObjectDefinitionIds.add(
 						String.valueOf(rootObjectDefinitionIdToAdd));
 				}
 
 				for (long rootObjectDefinitionIdToRemove :
-						removeRootObjectDefinitionIds) {
+						rootObjectDefinitionIdsToRemove) {
 
 					rootObjectDefinitionIds.remove(
 						String.valueOf(rootObjectDefinitionIdToRemove));

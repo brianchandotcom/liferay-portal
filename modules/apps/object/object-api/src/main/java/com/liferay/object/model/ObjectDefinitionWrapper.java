@@ -1685,11 +1685,11 @@ public class ObjectDefinitionWrapper
 
 	@Override
 	public void setRootObjectDefinitionIds(
-		long[] addRootObjectDefinitionIds,
-		long[] removeRootObjectDefinitionIds) {
+		long[] rootObjectDefinitionIdsToAdd,
+		long[] rootObjectDefinitionIdsToRemove) {
 
 		model.setRootObjectDefinitionIds(
-			addRootObjectDefinitionIds, removeRootObjectDefinitionIds);
+			rootObjectDefinitionIdsToAdd, rootObjectDefinitionIdsToRemove);
 	}
 
 	/**

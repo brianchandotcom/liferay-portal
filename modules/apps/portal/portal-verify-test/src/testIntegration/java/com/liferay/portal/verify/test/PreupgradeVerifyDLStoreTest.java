@@ -15,8 +15,8 @@ import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -68,7 +68,7 @@ public class PreupgradeVerifyDLStoreTest extends BaseVerifyProcessTestCase {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_rootDir =
-			_props.get(PropsKeys.LIFERAY_HOME) + "/test/store/file_system";
+			PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/test/store/file_system";
 
 		_configuration = _configurationAdmin.getConfiguration(
 			"com.liferay.portal.store.file.system.configuration." +
@@ -137,9 +137,6 @@ public class PreupgradeVerifyDLStoreTest extends BaseVerifyProcessTestCase {
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private static Props _props;
 
 	private static String _rootDir;
 	private static SafeCloseable

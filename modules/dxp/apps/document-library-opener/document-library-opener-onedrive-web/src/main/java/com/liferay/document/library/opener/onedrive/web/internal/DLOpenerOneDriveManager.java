@@ -72,18 +72,7 @@ public class DLOpenerOneDriveManager {
 		BackgroundTask backgroundTask = _addBackgroundTask(
 			userId, fileEntry, locale);
 
-		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			_dlOpenerFileEntryReferenceLocalService.
-				fetchDLOpenerFileEntryReference(
-					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
-					fileEntry);
-
-		if (dlOpenerFileEntryReference == null) {
-			_dlOpenerFileEntryReferenceLocalService.
-				addPlaceholderDLOpenerFileEntryReference(
-					userId, DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
-					fileEntry, DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
-		}
+		_addPlaceholderDLOpenerFileEntryReference(fileEntry, userId);
 
 		return new DLOpenerOneDriveFileReference<>(
 			fileEntry.getFileEntryId(),
@@ -296,6 +285,24 @@ public class DLOpenerOneDriveManager {
 				OneDriveBackgroundTaskConstants.USER_ID, userId
 			).build(),
 			new ServiceContext());
+	}
+
+	private void _addPlaceholderDLOpenerFileEntryReference(
+			FileEntry fileEntry, long userId)
+		throws PortalException {
+
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				fetchDLOpenerFileEntryReference(
+					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileEntry);
+
+		if (dlOpenerFileEntryReference == null) {
+			_dlOpenerFileEntryReferenceLocalService.
+				addPlaceholderDLOpenerFileEntryReference(
+					userId, DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileEntry, DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
+		}
 	}
 
 	private AccessToken _getAccessToken(long companyId, long userId)

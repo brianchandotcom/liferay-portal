@@ -14,8 +14,8 @@ import {Structure} from '../../../../src/main/resources/META-INF/resources/js/st
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 
 const DEFAULT_STRUCTURE: Structure = {
+	children: new Map(),
 	erc: 'default-erc',
-	fields: new Map(),
 	id: null,
 	label: 'untitled-structure' as any,
 	name: 'UntitledStructure',
@@ -26,9 +26,9 @@ const DEFAULT_STRUCTURE: Structure = {
 
 const DEFAULT_STATE: State = {
 	error: null,
-	history: {deletedFields: false},
+	history: {deletedChildren: false},
 	invalids: new Map(),
-	publishedFields: new Set(),
+	publishedChildren: new Set(),
 	selection: [],
 	structure: DEFAULT_STRUCTURE,
 	unsavedChanges: false,

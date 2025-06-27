@@ -44,13 +44,13 @@ const FIELD: Field = {
 
 const DEFAULT_STATE: State = {
 	error: null,
-	history: {deletedFields: false},
+	history: {deletedChildren: false},
 	invalids: new Map(),
-	publishedFields: new Set(),
+	publishedChildren: new Set(),
 	selection: [],
 	structure: {
+		children: new Map([[TEXT_FIELD_UUID, FIELD]]),
 		erc: 'structure-erc',
-		fields: new Map([[TEXT_FIELD_UUID, FIELD]]),
 		id: null,
 		label: 'untitled-structure' as any,
 		name: 'UntitledStructure',
@@ -82,7 +82,7 @@ const renderComponent = ({
 	state?: MockState;
 	uuid?: Uuid;
 } = {}) => {
-	const field = state.structure?.fields?.get(uuid) as Field;
+	const field = state.structure?.children?.get(uuid) as Field;
 
 	return render(
 		<MockStateProvider dispatch={MOCK_DISPATCH} state={state}>
@@ -171,7 +171,7 @@ describe('StructureFieldSettings', () => {
 				...DEFAULT_STATE,
 				structure: {
 					...DEFAULT_STATE.structure,
-					fields: new Map([
+					children: new Map([
 						[
 							TEXT_FIELD_UUID,
 							{
@@ -209,7 +209,7 @@ describe('StructureFieldSettings', () => {
 				...DEFAULT_STATE,
 				structure: {
 					...DEFAULT_STATE.structure,
-					fields: new Map([
+					children: new Map([
 						[
 							uuid,
 							{
@@ -247,7 +247,7 @@ describe('StructureFieldSettings', () => {
 				...DEFAULT_STATE,
 				structure: {
 					...DEFAULT_STATE.structure,
-					fields: new Map([
+					children: new Map([
 						[
 							uuid,
 							{
@@ -295,7 +295,7 @@ describe('StructureFieldSettings', () => {
 				...DEFAULT_STATE,
 				structure: {
 					...DEFAULT_STATE.structure,
-					fields: new Map([
+					children: new Map([
 						[
 							uuid,
 							{
@@ -371,7 +371,7 @@ describe('StructureFieldSettings', () => {
 				...DEFAULT_STATE,
 				structure: {
 					...DEFAULT_STATE.structure,
-					fields: new Map([
+					children: new Map([
 						[
 							uuid,
 							{
@@ -453,7 +453,7 @@ describe('StructureFieldSettings', () => {
 				...DEFAULT_STATE,
 				structure: {
 					...DEFAULT_STATE.structure,
-					fields: new Map([
+					children: new Map([
 						[
 							uuid,
 							{
@@ -488,7 +488,7 @@ describe('StructureFieldSettings', () => {
 				...DEFAULT_STATE,
 				structure: {
 					...DEFAULT_STATE.structure,
-					fields: new Map([
+					children: new Map([
 						[
 							uuid,
 							{
@@ -524,7 +524,7 @@ describe('StructureFieldSettings', () => {
 				...DEFAULT_STATE,
 				structure: {
 					...DEFAULT_STATE.structure,
-					fields: new Map([
+					children: new Map([
 						[
 							uuid,
 							{
@@ -550,7 +550,7 @@ describe('StructureFieldSettings', () => {
 		renderComponent({
 			state: {
 				...DEFAULT_STATE,
-				publishedFields: new Set([TEXT_FIELD_UUID]),
+				publishedChildren: new Set([TEXT_FIELD_UUID]),
 				structure: {
 					...DEFAULT_STATE.structure,
 					status: 'published',

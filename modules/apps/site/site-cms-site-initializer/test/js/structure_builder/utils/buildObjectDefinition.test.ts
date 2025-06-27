@@ -45,21 +45,21 @@ const TEXT_FIELD: Field = {
 	uuid: getUuid(),
 };
 
-function getFields(fields: Field[]) {
-	const nextFields = new Map();
+function getChildren(fields: Field[]) {
+	const children = new Map();
 
 	for (const field of fields) {
-		nextFields.set(field.uuid, field);
+		children.set(field.uuid, field);
 	}
 
-	return nextFields;
+	return children;
 }
 
 describe('buildObjectDefinition', () => {
 	it('Builds objectDefinition with a field without settings', () => {
 		const result = buildObjectDefinition({
+			children: getChildren([TEXT_FIELD]),
 			erc: 'structureERC',
-			fields: new Map([[TEXT_FIELD.uuid, TEXT_FIELD]]),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -103,8 +103,8 @@ describe('buildObjectDefinition', () => {
 
 	it('Builds objectDefinition with a field with settings', () => {
 		const result = buildObjectDefinition({
+			children: getChildren([DATE_TIME_FIELD]),
 			erc: 'structureERC',
-			fields: getFields([DATE_TIME_FIELD]),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -148,8 +148,8 @@ describe('buildObjectDefinition', () => {
 
 	it('Builds objectDefinition with spaces selected', () => {
 		const result = buildObjectDefinition({
+			children: getChildren([TEXT_FIELD]),
 			erc: 'structureERC',
-			fields: getFields([TEXT_FIELD]),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',

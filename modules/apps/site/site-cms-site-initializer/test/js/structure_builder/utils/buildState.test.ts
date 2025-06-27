@@ -55,21 +55,21 @@ const TEXT_FIELD: Field = {
 	uuid: TEXT_FIELD_UUID,
 };
 
-function getFields(fields: Field[]) {
-	const nextFields = new Map();
+function getChildren(fields: Field[]) {
+	const children = new Map();
 
 	for (const field of fields) {
-		nextFields.set(field.uuid, field);
+		children.set(field.uuid, field);
 	}
 
-	return nextFields;
+	return children;
 }
 
 describe('buildState', () => {
 	it('Builds state with two fields ', () => {
 		const structure: State['structure'] = {
+			children: new Map(),
 			erc: 'structureERC',
-			fields: new Map(),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -81,17 +81,17 @@ describe('buildState', () => {
 
 		const initialState: State = {
 			error: null,
-			history: {deletedFields: false},
+			history: {deletedChildren: false},
 			invalids: new Map(),
-			publishedFields: new Set(),
+			publishedChildren: new Set(),
 			selection: [],
 			structure,
 			unsavedChanges: false,
 		};
 
 		const objectDefinition = buildObjectDefinition({
+			children: getChildren([TEXT_FIELD, DATE_TIME_FIELD]),
 			erc: structure.erc,
-			fields: getFields([TEXT_FIELD, DATE_TIME_FIELD]),
 			id: structure.id,
 			label: structure.label,
 			name: structure.name,
@@ -100,13 +100,13 @@ describe('buildState', () => {
 
 		const result = buildState(objectDefinition);
 
-		const {fields, uuid} = result!.structure;
+		const {children, uuid} = result!.structure;
 
 		const nextState = {
 			...initialState,
 			structure: {
 				...structure,
-				fields,
+				children,
 				uuid,
 			},
 		};
@@ -116,8 +116,8 @@ describe('buildState', () => {
 
 	it('Takes into account the status of the object definition', () => {
 		const structure: State['structure'] = {
+			children: new Map(),
 			erc: 'structureERC',
-			fields: new Map(),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -129,17 +129,17 @@ describe('buildState', () => {
 
 		const initialState: State = {
 			error: null,
-			history: {deletedFields: false},
+			history: {deletedChildren: false},
 			invalids: new Map(),
-			publishedFields: new Set(),
+			publishedChildren: new Set(),
 			selection: [],
 			structure,
 			unsavedChanges: false,
 		};
 
 		const objectDefinition = buildObjectDefinition({
+			children: getChildren([TEXT_FIELD, DATE_TIME_FIELD]),
 			erc: structure.erc,
-			fields: getFields([TEXT_FIELD, DATE_TIME_FIELD]),
 			id: structure.id,
 			label: structure.label,
 			name: structure.name,
@@ -153,16 +153,16 @@ describe('buildState', () => {
 			},
 		});
 
-		const {fields, uuid} = result!.structure;
+		const {children, uuid} = result!.structure;
 
-		const publishedFields = new Set(fields.keys());
+		const publishedChildren = new Set(children.keys());
 
 		const nextState = {
 			...initialState,
-			publishedFields,
+			publishedChildren,
 			structure: {
 				...structure,
-				fields,
+				children,
 				uuid,
 			},
 		};
@@ -172,8 +172,8 @@ describe('buildState', () => {
 
 	it('Takes into account spaces', () => {
 		const structure: State['structure'] = {
+			children: new Map(),
 			erc: 'structureERC',
-			fields: new Map(),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -185,17 +185,17 @@ describe('buildState', () => {
 
 		const initialState: State = {
 			error: null,
-			history: {deletedFields: false},
+			history: {deletedChildren: false},
 			invalids: new Map(),
-			publishedFields: new Set(),
+			publishedChildren: new Set(),
 			selection: [],
 			structure,
 			unsavedChanges: false,
 		};
 
 		const objectDefinition = buildObjectDefinition({
+			children: getChildren([TEXT_FIELD, DATE_TIME_FIELD]),
 			erc: structure.erc,
-			fields: getFields([TEXT_FIELD, DATE_TIME_FIELD]),
 			id: structure.id,
 			label: structure.label,
 			name: structure.name,
@@ -209,16 +209,16 @@ describe('buildState', () => {
 			},
 		});
 
-		const {fields, uuid} = result!.structure;
+		const {children, uuid} = result!.structure;
 
-		const publishedFields = new Set(fields.keys());
+		const publishedChildren = new Set(children.keys());
 
 		const nextState = {
 			...initialState,
-			publishedFields,
+			publishedChildren,
 			structure: {
 				...structure,
-				fields,
+				children,
 				uuid,
 			},
 		};
@@ -262,7 +262,7 @@ describe('buildState', () => {
 			...objectDefinition,
 		});
 
-		const [, field] = [...state!.structure.fields][0];
+		const [, field] = [...state!.structure.children][0];
 
 		expect(field).toEqual(expect.objectContaining({type: 'decimal'}));
 	});

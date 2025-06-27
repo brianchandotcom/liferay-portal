@@ -46,11 +46,11 @@ jest.mock(
 	}
 );
 
-const DEFAULT_FIELDS = new Map([[getUuid(), {} as Field]]);
+const DEFAULT_CHILDREN = new Map([[getUuid(), {} as Field]]);
 
 const renderComponent = (state: MockState) => {
 	const structure: Partial<Structure> = {
-		fields: DEFAULT_FIELDS,
+		children: DEFAULT_CHILDREN,
 		spaces: 'all',
 		...state.structure,
 	};
@@ -157,7 +157,7 @@ describe('StructureBuilderManagementBar', () => {
 
 	it('Shows warning modal when a published field has been deleted', async () => {
 		renderComponent({
-			history: {deletedFields: true},
+			history: {deletedChildren: true},
 			structure: {status: 'published'},
 		});
 
@@ -232,7 +232,7 @@ describe('StructureBuilderManagementBar', () => {
 
 	it('Shows modal to publish when trying to customize experience and the structure is published and some fields have been deleted', async () => {
 		renderComponent({
-			history: {deletedFields: true},
+			history: {deletedChildren: true},
 			structure: {status: 'published'},
 		});
 

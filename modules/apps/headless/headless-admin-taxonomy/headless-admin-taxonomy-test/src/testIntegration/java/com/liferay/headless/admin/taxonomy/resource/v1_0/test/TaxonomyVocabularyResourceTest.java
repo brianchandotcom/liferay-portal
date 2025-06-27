@@ -8,6 +8,7 @@ package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetLibrary;
@@ -25,13 +26,17 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -57,7 +62,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Javier Gamarra
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
-@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class TaxonomyVocabularyResourceTest
 	extends BaseTaxonomyVocabularyResourceTestCase {
@@ -287,9 +291,12 @@ public class TaxonomyVocabularyResourceTest
 			).build());
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testGetTaxonomyVocabulariesPage() throws Exception {
+		_addCMSGroup();
+
 		super.testGetTaxonomyVocabulariesPage();
 
 		Page<TaxonomyVocabulary> page =
@@ -354,6 +361,61 @@ public class TaxonomyVocabularyResourceTest
 			).build());
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetTaxonomyVocabulariesPageWithFilterStringContains()
+		throws Exception {
+
+		_addCMSGroup();
+
+		super.testGetTaxonomyVocabulariesPageWithFilterStringContains();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetTaxonomyVocabulariesPageWithFilterStringEquals()
+		throws Exception {
+
+		_addCMSGroup();
+
+		super.testGetTaxonomyVocabulariesPageWithFilterStringEquals();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetTaxonomyVocabulariesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		_addCMSGroup();
+
+		super.testGetTaxonomyVocabulariesPageWithFilterStringStartsWith();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetTaxonomyVocabulariesPageWithPagination()
+		throws Exception {
+
+		_addCMSGroup();
+
+		super.testGetTaxonomyVocabulariesPageWithPagination();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetTaxonomyVocabulariesPageWithSortString()
+		throws Exception {
+
+		_addCMSGroup();
+
+		super.testGetTaxonomyVocabulariesPageWithSortString();
+	}
+
 	@Override
 	@Test
 	public void testGetTaxonomyVocabulary() throws Exception {
@@ -363,9 +425,12 @@ public class TaxonomyVocabularyResourceTest
 		_testGetTaxonomyVocabularyWithoutPermissionsAction();
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testGraphQLGetTaxonomyVocabulariesPage() throws Exception {
+		_addCMSGroup();
+
 		super.testGraphQLGetTaxonomyVocabulariesPage();
 
 		Page<TaxonomyVocabulary> page =
@@ -442,9 +507,12 @@ public class TaxonomyVocabularyResourceTest
 					taxonomyVocabulariesJSONObject.getString("items"))));
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testPostTaxonomyVocabulary() throws Exception {
+		_addCMSGroup();
+
 		AssetLibrary[] assetLibraries = {
 			_randomAssetLibrary(), _randomAssetLibrary()
 		};
@@ -575,6 +643,30 @@ public class TaxonomyVocabularyResourceTest
 		return testDepotEntry.getDepotEntryId();
 	}
 
+	private void _addCMSGroup() throws Exception {
+
+		// These tests require the instance to be created with the feature
+		// flag LPD-17564 enabled. On CI, feature flags are enabled on
+		// demand for each test, but not during instance initialization.
+		// Until the feature flag LPD-17564 is removed, we need an explicit CMS
+		// group creation.
+
+		Role role = _roleLocalService.fetchRole(
+			testDepotEntryGroup.getCompanyId(),
+			DepotRolesConstants.CMS_CONSUMER);
+
+		if (role == null) {
+			_roleLocalService.addRole(
+				null, TestPropsValues.getUserId(), null, 0,
+				DepotRolesConstants.CMS_CONSUMER, null, null,
+				RoleConstants.TYPE_DEPOT, null, null);
+		}
+
+		GroupTestUtil.addGroup(
+			testDepotEntryGroup.getCompanyId(), TestPropsValues.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, GroupConstants.CMS);
+	}
+
 	private AssetLibrary _randomAssetLibrary() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(), null,
@@ -702,6 +794,9 @@ public class TaxonomyVocabularyResourceTest
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

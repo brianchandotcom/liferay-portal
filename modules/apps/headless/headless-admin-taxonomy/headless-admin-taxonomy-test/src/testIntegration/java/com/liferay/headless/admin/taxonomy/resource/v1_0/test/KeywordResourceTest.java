@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.model.AssetTagGroupRel;
 import com.liferay.asset.kernel.service.AssetTagGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetLibrary;
@@ -22,9 +23,15 @@ import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,7 +51,6 @@ import org.junit.runner.RunWith;
  * @author Javier Gamarra
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
-@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
@@ -273,9 +279,12 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		keywordResource.deleteKeyword(keyword.getId());
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testGetKeywordsPage() throws Exception {
+		_addCMSGroup();
+
 		super.testGetKeywordsPage();
 
 		AssetLibrary assetLibrary1 = _randomAssetLibrary();
@@ -301,6 +310,71 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		assertEquals(
 			Arrays.asList(keyword1, keyword2), (List<Keyword>)page.getItems());
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetKeywordsPageWithFilterDateTimeEquals() throws Exception {
+		_addCMSGroup();
+
+		super.testGetKeywordsPageWithFilterDateTimeEquals();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetKeywordsPageWithFilterStringContains() throws Exception {
+		_addCMSGroup();
+
+		super.testGetKeywordsPageWithFilterStringContains();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetKeywordsPageWithFilterStringEquals() throws Exception {
+		_addCMSGroup();
+
+		super.testGetKeywordsPageWithFilterStringEquals();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetKeywordsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		_addCMSGroup();
+
+		super.testGetKeywordsPageWithFilterStringStartsWith();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetKeywordsPageWithPagination() throws Exception {
+		_addCMSGroup();
+
+		super.testGetKeywordsPageWithPagination();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetKeywordsPageWithSortDateTime() throws Exception {
+		_addCMSGroup();
+
+		super.testGetKeywordsPageWithSortDateTime();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetKeywordsPageWithSortString() throws Exception {
+		_addCMSGroup();
+
+		super.testGetKeywordsPageWithSortString();
 	}
 
 	@Override
@@ -386,9 +460,21 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		}
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGraphQLGetKeywordsPage() throws Exception {
+		_addCMSGroup();
+
+		super.testGraphQLGetKeywordsPage();
+	}
+
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testPostKeyword() throws Exception {
+		_addCMSGroup();
+
 		AssetLibrary assetLibrary = _randomAssetLibrary();
 
 		Keyword keyword = _addKeywordWithAssetLibraries(assetLibrary);
@@ -428,9 +514,12 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		assertValid(putKeyword);
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testPutKeyword() throws Exception {
+		_addCMSGroup();
+
 		super.testPutKeyword();
 
 		Keyword keyword = _addKeywordWithAssetLibraries(_randomAssetLibrary());
@@ -446,9 +535,12 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		assertEquals(randomKeyword, putKeyword);
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testPutKeywordMerge() throws Exception {
+		_addCMSGroup();
+
 		Keyword keyword1 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
 		Keyword keyword2 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
 		Keyword keyword3 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
@@ -588,6 +680,30 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		return testDepotEntry.getDepotEntryId();
 	}
 
+	private void _addCMSGroup() throws Exception {
+
+		// These tests require the instance to be created with the feature
+		// flag LPD-17564 enabled. On CI, feature flags are enabled on
+		// demand for each test, but not during instance initialization.
+		// Until the feature flag LPD-17564 is removed, we need an explicit CMS
+		// group creation.
+
+		Role role = _roleLocalService.fetchRole(
+			testDepotEntryGroup.getCompanyId(),
+			DepotRolesConstants.CMS_CONSUMER);
+
+		if (role == null) {
+			_roleLocalService.addRole(
+				null, TestPropsValues.getUserId(), null, 0,
+				DepotRolesConstants.CMS_CONSUMER, null, null,
+				RoleConstants.TYPE_DEPOT, null, null);
+		}
+
+		GroupTestUtil.addGroup(
+			testDepotEntryGroup.getCompanyId(), TestPropsValues.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, GroupConstants.CMS);
+	}
+
 	private Keyword _addKeywordWithAssetLibraries(
 			AssetLibrary... assetLibraries)
 		throws Exception {
@@ -618,5 +734,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

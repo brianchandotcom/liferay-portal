@@ -4337,7 +4337,7 @@ public class DataFactory {
 			List<LayoutModel> layoutModels, long segmentsExperienceId)
 		throws Exception {
 
-		List<FragmentEntryLinkModel> nonhiddenFragmentEntryLinkModels =
+		List<FragmentEntryLinkModel> hiddenFragmentEntryLinkModels =
 			new ArrayList<>();
 
 		LayoutModel nonhiddenLayoutModel = null;
@@ -4352,7 +4352,7 @@ public class DataFactory {
 				continue;
 			}
 
-			nonhiddenFragmentEntryLinkModels.add(
+			hiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, 0, segmentsExperienceId,
 					_readFile(
@@ -4366,7 +4366,7 @@ public class DataFactory {
 								"json"),
 					paragraphRenderNamespace, 0,
 					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
-			nonhiddenFragmentEntryLinkModels.add(
+			hiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, 0, segmentsExperienceId,
 					_readFile(
@@ -4380,7 +4380,7 @@ public class DataFactory {
 								"json"),
 					paragraphRenderNamespace, 1,
 					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
-			nonhiddenFragmentEntryLinkModels.add(
+			hiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, 0, segmentsExperienceId, "",
 					_readFile(
@@ -4396,23 +4396,23 @@ public class DataFactory {
 		}
 
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels = new ArrayList<>(
-			nonhiddenFragmentEntryLinkModels);
+			hiddenFragmentEntryLinkModels);
 
-		for (FragmentEntryLinkModel originalFragmentEntryLinkModel :
-				nonhiddenFragmentEntryLinkModels) {
+		for (FragmentEntryLinkModel hiddenFragmentEntryLinkModel :
+				hiddenFragmentEntryLinkModels) {
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					nonhiddenLayoutModel,
-					originalFragmentEntryLinkModel.getFragmentEntryLinkId(),
-					originalFragmentEntryLinkModel.getSegmentsExperienceId(),
-					originalFragmentEntryLinkModel.getCss(),
-					originalFragmentEntryLinkModel.getHtml(),
-					originalFragmentEntryLinkModel.getConfiguration(),
-					originalFragmentEntryLinkModel.getEditableValues(),
-					originalFragmentEntryLinkModel.getNamespace(),
-					originalFragmentEntryLinkModel.getPosition(),
-					originalFragmentEntryLinkModel.getRendererKey()));
+					hiddenFragmentEntryLinkModel.getFragmentEntryLinkId(),
+					hiddenFragmentEntryLinkModel.getSegmentsExperienceId(),
+					hiddenFragmentEntryLinkModel.getCss(),
+					hiddenFragmentEntryLinkModel.getHtml(),
+					hiddenFragmentEntryLinkModel.getConfiguration(),
+					hiddenFragmentEntryLinkModel.getEditableValues(),
+					hiddenFragmentEntryLinkModel.getNamespace(),
+					hiddenFragmentEntryLinkModel.getPosition(),
+					hiddenFragmentEntryLinkModel.getRendererKey()));
 		}
 
 		return fragmentEntryLinkModels;

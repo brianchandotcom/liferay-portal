@@ -1330,7 +1330,7 @@ public class BatchEngineExportTaskModelImpl
 	private boolean _setModifiedDate;
 	private String _callbackURL;
 	private String _className;
-	private BatchEngineExportTaskContentBlobModel _contentBlobModel;
+	private transient BatchEngineExportTaskContentBlobModel _contentBlobModel;
 	private String _contentType;
 	private Date _endTime;
 	private String _errorMessage;

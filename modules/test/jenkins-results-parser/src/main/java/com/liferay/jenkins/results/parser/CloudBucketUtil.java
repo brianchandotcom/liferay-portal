@@ -52,8 +52,7 @@ public class CloudBucketUtil {
 			_getFileTransferCommand("gcloud storage cp", destination, source));
 	}
 
-	public static void copyS3FileToS3(
-			String s3DestinationPath, String s3SourcePath)
+	public static void copyS3ToS3(String s3DestinationPath, String s3SourcePath)
 		throws IOException {
 
 		_executeCommands(
@@ -342,8 +341,7 @@ public class CloudBucketUtil {
 
 				while (listS3FilesMatcher.find()) {
 					String s3FileDestination = JenkinsResultsParserUtil.combine(
-						destination, "/", listS3FilesMatcher.group("fileName"),
-						".sha512");
+						destination, "/", listS3FilesMatcher.group("fileName"));
 
 					_createChecksumFile(
 						s3FileDestination,
@@ -425,6 +423,10 @@ public class CloudBucketUtil {
 	private static void _createChecksumFile(
 			String s3DestinationPath, File sourceFile)
 		throws IOException {
+
+		if (!sourceFile.exists()) {
+			return;
+		}
 
 		File sourceChecksumFile = new File(
 			sourceFile.getParentFile(), sourceFile.getName() + ".sha512");
@@ -641,8 +643,18 @@ public class CloudBucketUtil {
 			destinationFile.getParentFile(),
 			destinationFile.getName() + _CHECKSUM_FILE_EXTENSION);
 
-		downloadS3File(
-			destinationChecksumFile, s3SourcePath + _CHECKSUM_FILE_EXTENSION);
+		try {
+			downloadS3File(
+				destinationChecksumFile,
+				s3SourcePath + _CHECKSUM_FILE_EXTENSION);
+		}
+		catch (RuntimeException runtimeException) {
+			System.out.println(
+				"Unable to download " + s3SourcePath +
+					_CHECKSUM_FILE_EXTENSION);
+
+			return;
+		}
 
 		if (destinationChecksumFile.exists()) {
 			try {

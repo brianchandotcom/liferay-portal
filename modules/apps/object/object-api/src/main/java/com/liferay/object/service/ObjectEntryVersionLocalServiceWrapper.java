@@ -459,6 +459,14 @@ public class ObjectEntryVersionLocalServiceWrapper
 	}
 
 	@Override
+	public boolean isLatestObjectEntryVersion(long objectEntryId, int version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryVersionLocalService.isLatestObjectEntryVersion(
+			objectEntryId, version);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntryVersion
 			updateLatestObjectEntryVersion(
 				com.liferay.object.model.ObjectEntry objectEntry)

@@ -8,12 +8,17 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import ViewsContext from '../../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
 import FilterResume from './FilterResume';
+import SearchResume from './SearchResume';
 
 function ActiveFiltersBar({disabled, total}) {
+	const {searchParam} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
+
+	const isSearchActive = () => searchParam?.trim();
 
 	const resetFiltersValue = () => {
 		viewsDispatch({
@@ -29,7 +34,7 @@ function ActiveFiltersBar({disabled, total}) {
 
 	const activeFilters = filters.filter((filter) => filter.active);
 
-	return activeFilters.length ? (
+	return activeFilters.length || isSearchActive() ? (
 		<div className="management-bar management-bar-light navbar navbar-expand-md">
 			<div className="container-fluid">
 				<nav className="mb-0 py-3 subnav-tbar subnav-tbar-light subnav-tbar-primary w-100">
@@ -48,6 +53,8 @@ function ActiveFiltersBar({disabled, total}) {
 										total
 									)}
 								</span>
+
+								{isSearchActive() && <SearchResume />}
 
 								{activeFilters.map((filter) => {
 									return (

@@ -24,6 +24,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.SiteTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
 import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.SiteTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.SiteTestEntitySerDes;
 import com.liferay.portal.util.PropsValues;
 
 import org.junit.Assert;
@@ -113,6 +114,87 @@ public class SiteTestEntityResourceTest
 
 		Assert.assertEquals(
 			totalCount + 2, siteTestEntitiesJSONObject.getLong("totalCount"));
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetSiteTestEntity() throws Exception {
+		SiteTestEntity siteTestEntity =
+			testGraphQLGetSiteTestEntity_addSiteTestEntity();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				siteTestEntity,
+				SiteTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteTestEntity",
+								HashMapBuilder.<String, Object>put(
+									"siteTestEntityId", siteTestEntity.getId()
+								).build(),
+								getGraphQLFields())),
+						"JSONObject/data", "Object/siteTestEntity"))));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertTrue(
+			equals(
+				siteTestEntity,
+				SiteTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"test_v1_0",
+								new GraphQLField(
+									"siteTestEntity",
+									HashMapBuilder.<String, Object>put(
+										"siteTestEntityId",
+										siteTestEntity.getId()
+									).build(),
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/test_v1_0",
+						"Object/siteTestEntity"))));
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetSiteTestEntityNotFound() throws Exception {
+		Long irrelevantSiteTestEntityId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteTestEntity",
+						HashMapBuilder.<String, Object>put(
+							"siteTestEntityId", irrelevantSiteTestEntityId
+						).build(),
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"siteTestEntity",
+							HashMapBuilder.<String, Object>put(
+								"siteTestEntityId", irrelevantSiteTestEntityId
+							).build(),
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	@Override

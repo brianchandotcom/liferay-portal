@@ -11,8 +11,8 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
 import java.io.File;
-
 import java.io.IOException;
+
 import java.net.URL;
 
 import java.util.Date;
@@ -105,10 +105,12 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			String s3ObjectPath = null;
 
 			try {
-				s3ObjectPath = testrayS3AttachmentURLString.replace(
+				String buildBaseArtifactURL =
 					JenkinsResultsParserUtil.getBuildProperty(
-						"build.base.artifact.url") + "/",
-					"");
+						"build.base.artifact.url");
+
+				s3ObjectPath = testrayS3AttachmentURLString.replace(
+					buildBaseArtifactURL + "/", "");
 			}
 			catch (IOException ioException) {
 				continue;
@@ -187,7 +189,9 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 	}
 
 	protected String getTopLevelJenkinsConsoleKey() {
-		return getTopLevelBuildURLPath() + "/jenkins-console.txt.gz";
+		String topLevelBuildURLPath = getTopLevelBuildURLPath();
+
+		return topLevelBuildURLPath + "/jenkins-console.txt.gz";
 	}
 
 	protected String getTopLevelJenkinsConsoleName() {

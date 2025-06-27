@@ -106,7 +106,9 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		}
 
 		if (result.equals("ABORTED")) {
-			return buildReport.getJobName() + " timed out after 2 hours";
+			String buildReportJobName = buildReport.getJobName();
+
+			return buildReportJobName + " timed out after 2 hours";
 		}
 
 		String errorMessage = buildReport.getFailureMessage();

@@ -18,6 +18,7 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -220,13 +221,10 @@ public class PlaywrightBatchBuildTestrayCaseResult
 	}
 
 	protected TestrayAttachment getPlaywrightTraceViewerTestrayAttachment() {
-		StringBuilder sb = new StringBuilder();
-
 		TestReport testReport = getTestReport();
 
-		String errorStackTrace = testReport.getErrorStackTrace();
-
-		Matcher matcher = _traceZipPattern.matcher(errorStackTrace);
+		Matcher matcher = _traceZipPattern.matcher(
+			testReport.getErrorStackTrace());
 
 		if (!matcher.find()) {
 			return null;
@@ -271,8 +269,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			URL url = new URL(
 				"https://playwright.liferay.com/?trace=" + traceZipURLPath);
 
-			return new DefaultTestrayAttachment(
-				this, "Trace Viewer", sb.toString(), url);
+			return new DefaultTestrayAttachment(this, "Trace Viewer", "", url);
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

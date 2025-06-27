@@ -988,7 +988,17 @@ public class ObjectEntryDTOConverter
 		if (objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-			long fileEntryId = GetterUtil.getLong(serializable);
+			long fileEntryId = 0;
+
+			if (serializable instanceof Long) {
+				fileEntryId = GetterUtil.getLong(serializable);
+			}
+			else if (serializable instanceof Map) {
+				Map<String, Serializable> map =
+					(Map<String, Serializable>)serializable;
+
+				fileEntryId = GetterUtil.getLong(map.get("id"));
+			}
 
 			if (fileEntryId == 0) {
 				return null;

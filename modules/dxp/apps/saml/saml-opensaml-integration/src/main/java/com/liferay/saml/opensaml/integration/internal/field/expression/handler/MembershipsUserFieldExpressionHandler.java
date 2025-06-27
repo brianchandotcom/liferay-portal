@@ -61,51 +61,51 @@ public class MembershipsUserFieldExpressionHandler
 			userProcessorContext.bind(
 				_processingIndex,
 				(currentUser, newUser, serviceContext) -> {
-					if (userProcessorContext.isDefined(
+					if (!userProcessorContext.isDefined(
 							String.class, "userGroups")) {
 
-						String samlIdpEntityId = GetterUtil.getString(
-							serviceContext.getAttribute("SamlIdpEntityId"));
-
-						if (Validator.isNotNull(samlIdpEntityId)) {
-							ExpandoColumn expandoColumn =
-								SamlProvisioningUtil.getOrAddExpandoColumn(
-									newUser.getCompanyId(),
-									UserGroup.class.getName(),
-									"samlIdpEntityId");
-
-							for (UserGroup userGroup :
-									_userGroupLocalService.getUserUserGroups(
-										newUser.getUserId())) {
-
-								if (userGroupIds.contains(
-										userGroup.getUserGroupId())) {
-
-									continue;
-								}
-
-								ExpandoValue expandoValue =
-									_expandoValueLocalService.getValue(
-										expandoColumn.getTableId(),
-										expandoColumn.getColumnId(),
-										userGroup.getUserGroupId());
-
-								if ((expandoValue != null) &&
-									samlIdpEntityId.equals(
-										expandoValue.getString())) {
-
-									continue;
-								}
-
-								userGroupIds.add(userGroup.getUserGroupId());
-							}
-						}
-
-						_userGroupLocalService.setUserUserGroups(
-							newUser.getUserId(),
-							ArrayUtil.toArray(
-								userGroupIds.toArray(new Long[0])));
+						return newUser;
 					}
+
+					String samlIdpEntityId = GetterUtil.getString(
+						serviceContext.getAttribute("SamlIdpEntityId"));
+
+					if (Validator.isNotNull(samlIdpEntityId)) {
+						ExpandoColumn expandoColumn =
+							SamlProvisioningUtil.getOrAddExpandoColumn(
+								newUser.getCompanyId(),
+								UserGroup.class.getName(), "samlIdpEntityId");
+
+						for (UserGroup userGroup :
+								_userGroupLocalService.getUserUserGroups(
+									newUser.getUserId())) {
+
+							if (userGroupIds.contains(
+									userGroup.getUserGroupId())) {
+
+								continue;
+							}
+
+							ExpandoValue expandoValue =
+								_expandoValueLocalService.getValue(
+									expandoColumn.getTableId(),
+									expandoColumn.getColumnId(),
+									userGroup.getUserGroupId());
+
+							if ((expandoValue != null) &&
+								samlIdpEntityId.equals(
+									expandoValue.getString())) {
+
+								continue;
+							}
+
+							userGroupIds.add(userGroup.getUserGroupId());
+						}
+					}
+
+					_userGroupLocalService.setUserUserGroups(
+						newUser.getUserId(),
+						ArrayUtil.toArray(userGroupIds.toArray(new Long[0])));
 
 					return newUser;
 				});

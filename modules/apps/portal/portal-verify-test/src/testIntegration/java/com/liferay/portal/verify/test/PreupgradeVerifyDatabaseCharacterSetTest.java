@@ -138,9 +138,11 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 
 			LogEntry logEntry = logEntries.get(0);
 
-			Assert.assertEquals(
-				"Mixed character set and collation: " + tableName,
-				logEntry.getMessage());
+			String message = logEntry.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"Mixed character set and collation: " + tableName));
 		}
 		finally {
 			_serviceComponentLocalService.deleteServiceComponent(

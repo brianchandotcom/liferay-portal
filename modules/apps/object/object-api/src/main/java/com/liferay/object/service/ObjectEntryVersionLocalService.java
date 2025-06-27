@@ -323,6 +323,10 @@ public interface ObjectEntryVersionLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isLatestObjectEntryVersion(long objectEntryId, int version)
+		throws PortalException;
+
 	public ObjectEntryVersion updateLatestObjectEntryVersion(
 			ObjectEntry objectEntry)
 		throws PortalException;

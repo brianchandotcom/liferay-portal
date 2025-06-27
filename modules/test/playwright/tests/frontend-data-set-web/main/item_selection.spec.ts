@@ -415,6 +415,20 @@ test('InfoPanel behavior', async ({fdsSamplePage, page}) => {
 
 		expect(fdsSamplePage.infoPanel).not.toBeInViewport();
 	});
+
+	await test.step('Can open Info Panel when using an infoPanel type item action', async () => {
+		await page.getByText('Clear').click();
+
+		await fdsSamplePage.clickItemAction('View Details');
+
+		expect(fdsSamplePage.infoPanel).toBeInViewport();
+
+		expect(
+			fdsSamplePage.infoPanel.getByText(
+				'This is a description for sample 1.'
+			)
+		).toBeVisible();
+	});
 });
 
 test(
@@ -481,6 +495,77 @@ test(
 			await fdsSamplePage.clickItemAction('View Details');
 
 			await expect(tableItem).toHaveClass(/active/);
+		});
+	}
+);
+
+test(
+	'Check multiple and single selection behavior',
+	{tag: '@LPD-49159'},
+	async ({fdsSamplePage, page}) => {
+		await test.step('Can select multiple items using the checkboxes', async () => {
+			fdsSamplePage.selectByRowAndRole();
+
+			await expect(
+				page.getByText('1 of 75 Items Selected')
+			).toBeVisible();
+
+			fdsSamplePage.selectByRowAndRole({row: 1});
+
+			await expect(
+				page.getByText('2 of 75 Items Selected')
+			).toBeVisible();
+		});
+
+		await test.step('Can select only one items when clicking in a simple table cell', async () => {
+			await page.getByText('Clear').click();
+
+			fdsSamplePage.selectByRowAndCell({
+				filter: 'This is a description',
+			});
+
+			await expect(
+				page.getByText('1 of 75 Items Selected')
+			).toBeVisible();
+
+			fdsSamplePage.selectByRowAndCell({
+				filter: 'This is a description',
+				row: 3,
+			});
+
+			await expect(
+				page.getByText('1 of 75 Items Selected')
+			).toBeVisible();
+		});
+
+		await test.step('Can deselect an item when clicking in a simple table cell', async () => {
+			await page.getByText('Clear').click();
+
+			fdsSamplePage.selectByRowAndCell({
+				filter: 'This is a description',
+				row: 0,
+			});
+
+			await expect(
+				page.getByText('1 of 75 Items Selected')
+			).toBeVisible();
+
+			fdsSamplePage.selectByRowAndCell({
+				filter: 'This is a description',
+				row: 0,
+			});
+
+			await expect(
+				page.getByText('1 of 75 Items Selected')
+			).not.toBeVisible();
+		});
+
+		await test.step('Can not select when clicking in a table cell with custom cell renderer', async () => {
+			fdsSamplePage.selectByRowAndRole({role: 'link'});
+
+			await expect(
+				page.getByText('1 of 75 Items Selected')
+			).not.toBeVisible();
 		});
 	}
 );

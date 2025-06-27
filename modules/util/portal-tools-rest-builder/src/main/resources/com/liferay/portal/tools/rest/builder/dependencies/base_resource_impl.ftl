@@ -613,7 +613,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 								${postParentBatchJavaMethodSignature.methodName}(
 
-								<@getCREATEBatchJavaMethodParameters
+								<@getCreateBatchJavaMethodParameters
 									javaMethodSignature = postParentBatchJavaMethodSignature
 									schemaVarName = schemaVarName
 								/>
@@ -649,7 +649,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 								${postParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
-								<@getCREATEBatchJavaMethodParameters
+								<@getCreateBatchJavaMethodParameters
 									javaMethodSignature = postParentByExternalReferenceCodeBatchJavaMethodSignature
 									schemaVarName = schemaVarName
 								/>
@@ -681,7 +681,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 						${postBatchJavaMethodSignature.methodName}(
 
-						<@getCREATEBatchJavaMethodParameters
+						<@getCreateBatchJavaMethodParameters
 							javaMethodSignature = postBatchJavaMethodSignature
 							schemaVarName = schemaVarName
 						/>
@@ -725,7 +725,7 @@ public abstract class Base${schemaName}ResourceImpl
 										if (parameters.containsKey("${getParentByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
 											get${schemaName} = ${getParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
-											<@getCREATEBatchJavaMethodParameters
+											<@getCreateBatchJavaMethodParameters
 												javaMethodSignature = getParentByExternalReferenceCodeBatchJavaMethodSignature
 												schemaVarName = schemaVarName
 											/>
@@ -745,7 +745,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 										get${schemaName} = ${getByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
-										<@getCREATEBatchJavaMethodParameters
+										<@getCreateBatchJavaMethodParameters
 											javaMethodSignature = getByExternalReferenceCodeBatchJavaMethodSignature
 											schemaVarName = schemaVarName
 										/>
@@ -794,7 +794,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 												${postParentBatchJavaMethodSignature.methodName}(
 
-												<@getCREATEBatchJavaMethodParameters
+												<@getCreateBatchJavaMethodParameters
 													javaMethodSignature = postParentBatchJavaMethodSignature
 													schemaVarName = schemaVarName
 												/>
@@ -823,7 +823,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 												${postParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
-												<@getCREATEBatchJavaMethodParameters
+												<@getCreateBatchJavaMethodParameters
 													javaMethodSignature = postParentByExternalReferenceCodeBatchJavaMethodSignature
 													schemaVarName = schemaVarName
 												/>
@@ -848,7 +848,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 										${postBatchJavaMethodSignature.methodName}(
 
-										<@getCREATEBatchJavaMethodParameters
+										<@getCreateBatchJavaMethodParameters
 											javaMethodSignature = postBatchJavaMethodSignature
 											schemaVarName = schemaVarName
 										/>
@@ -890,7 +890,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 											${putParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
-											<@getCREATEBatchJavaMethodParameters
+											<@getCreateBatchJavaMethodParameters
 												javaMethodSignature = putParentByExternalReferenceCodeBatchJavaMethodSignature
 												schemaVarName = schemaVarName
 											/>
@@ -915,7 +915,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 									${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
-									<@getCREATEBatchJavaMethodParameters
+									<@getCreateBatchJavaMethodParameters
 										javaMethodSignature = putByExternalReferenceCodeBatchJavaMethodSignature
 										schemaVarName = schemaVarName
 									/>
@@ -1007,7 +1007,7 @@ public abstract class Base${schemaName}ResourceImpl
 										<#if useDeleteAssetLibrary>
 											if (parameters.containsKey("assetLibraryExternalReferenceCode")) {
 												${deleteAssetLibraryBatchJavaMethodSignature.methodName}(
-													<@getDELETEBatchJavaMethodParameters javaMethodParameters = deleteAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
+													<@getDeleteBatchJavaMethodParameters javaMethodParameters = deleteAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
 												);
 
 												return ${schemaVarName};
@@ -1017,7 +1017,7 @@ public abstract class Base${schemaName}ResourceImpl
 										<#if useDeleteSite>
 											if (parameters.containsKey("siteExternalReferenceCode")) {
 												${deleteSiteBatchJavaMethodSignature.methodName}(
-													<@getDELETEBatchJavaMethodParameters javaMethodParameters = deleteSiteBatchJavaMethodSignature.javaMethodParameters />
+													<@getDeleteBatchJavaMethodParameters javaMethodParameters = deleteSiteBatchJavaMethodSignature.javaMethodParameters />
 												);
 
 												return ${schemaVarName};
@@ -1035,7 +1035,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 						if (parameters.containsKey("assetLibraryExternalReferenceCode")) {
 							${deleteAssetLibraryBatchJavaMethodSignature.methodName}(
-								<@getDELETEBatchJavaMethodParameters javaMethodParameters = deleteAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
+								<@getDeleteBatchJavaMethodParameters javaMethodParameters = deleteAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
 							);
 
 							return ${schemaVarName};
@@ -1057,7 +1057,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 						if (parameters.containsKey("siteExternalReferenceCode")) {
 							${deleteSiteBatchJavaMethodSignature.methodName}(
-								<@getDELETEBatchJavaMethodParameters javaMethodParameters = deleteSiteBatchJavaMethodSignature.javaMethodParameters />
+								<@getDeleteBatchJavaMethodParameters javaMethodParameters = deleteSiteBatchJavaMethodSignature.javaMethodParameters />
 							);
 
 							return ${schemaVarName};
@@ -1129,7 +1129,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					if (parameters.containsKey("assetLibraryId")) {
 						return ${getAssetLibraryBatchJavaMethodSignature.methodName}(
-							<@getGETBatchJavaMethodParameters javaMethodParameters = getAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
+							<@getReadBatchJavaMethodParameters javaMethodParameters = getAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
 						);
 					}
 					else
@@ -1140,7 +1140,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					if (parameters.containsKey("siteId")) {
 						return ${getSiteBatchJavaMethodSignature.methodName}(
-							<@getGETBatchJavaMethodParameters javaMethodParameters = getSiteBatchJavaMethodSignature.javaMethodParameters />
+							<@getReadBatchJavaMethodParameters javaMethodParameters = getSiteBatchJavaMethodSignature.javaMethodParameters />
 						);
 					}
 					else
@@ -1154,7 +1154,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 						if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"}")) {
 							return ${parentBatchJavaMethodSignature.methodName}(
-								<@getGETBatchJavaMethodParameters javaMethodParameters = parentBatchJavaMethodSignature.javaMethodParameters />
+								<@getReadBatchJavaMethodParameters javaMethodParameters = parentBatchJavaMethodSignature.javaMethodParameters />
 							);
 						}
 						else
@@ -1167,7 +1167,7 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 
 					return ${getBatchJavaMethodSignature.methodName}(
-						<@getGETBatchJavaMethodParameters javaMethodParameters = getBatchJavaMethodSignature.javaMethodParameters />
+						<@getReadBatchJavaMethodParameters javaMethodParameters = getBatchJavaMethodSignature.javaMethodParameters />
 					);
 
 					<#if getAssetLibraryBatchJavaMethodSignature?? || getSiteBatchJavaMethodSignature?? || getParentBatchJavaMethodSignatures?has_content>
@@ -1797,7 +1797,7 @@ public abstract class Base${schemaName}ResourceImpl
 	).build()
 </#macro>
 
-<#macro getCREATEBatchJavaMethodParameters
+<#macro getCreateBatchJavaMethodParameters
 	javaMethodSignature
 	schemaVarName
 >
@@ -1819,7 +1819,7 @@ public abstract class Base${schemaName}ResourceImpl
 	</#list>
 </#macro>
 
-<#macro getDELETEBatchJavaMethodParameters
+<#macro getDeleteBatchJavaMethodParameters
 	javaMethodParameters
 >
 	<#list javaMethodParameters as javaMethodParameter>
@@ -1836,7 +1836,7 @@ public abstract class Base${schemaName}ResourceImpl
 	</#list>
 </#macro>
 
-<#macro getGETBatchJavaMethodParameters
+<#macro getReadBatchJavaMethodParameters
 	javaMethodParameters
 >
 	<#list javaMethodParameters as javaMethodParameter>

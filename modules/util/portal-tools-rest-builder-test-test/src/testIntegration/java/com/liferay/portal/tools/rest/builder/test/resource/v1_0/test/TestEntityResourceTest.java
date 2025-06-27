@@ -225,6 +225,18 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	}
 
 	@Override
+	protected TestEntity testGetTestEntity_addTestEntity() throws Exception {
+		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
+	}
+
+	@Override
+	protected TestEntity testGraphQLTestEntity_addTestEntity()
+		throws Exception {
+
+		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
+	}
+
+	@Override
 	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
 		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
 	}

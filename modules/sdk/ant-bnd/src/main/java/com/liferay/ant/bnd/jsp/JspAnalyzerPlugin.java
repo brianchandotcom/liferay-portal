@@ -96,7 +96,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		}
 
 		if (matches) {
-			addRequiredPackageImports(analyzer, _REQUIRED_PACKAGE_NAMES);
+			addRequiredPackageImports(analyzer, _REQUIRED_PACKAGE_NAMES_JAKARTA);
 		}
 
 		return false;
@@ -328,7 +328,11 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 				continue;
 			}
 
-			if (Arrays.binarySearch(_JSTL_CORE_URIS, uri) < 0) {
+			if (Arrays.binarySearch(_JSTL_CORE_URIS_JAKARTA, uri) < 0) {
+				addTaglibRequirement(taglibRequirements, uri);
+			}
+
+			if (Arrays.binarySearch(_JSTL_CORE_URIS_JAVAX, uri) < 0) {
 				addTaglibRequirement(taglibRequirements, uri);
 			}
 		}
@@ -560,16 +564,26 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		return matcher.replaceAll("");
 	}
 
-	private static final String[] _JSTL_CORE_URIS = {
+	private static final String[] _JSTL_CORE_URIS_JAKARTA = {
 		"jakarta.tags.core", "jakarta.tags.fmt", "jakarta.tags.functions",
 		"jakarta.tags.sql", "jakarta.tags.xml"
+	};
+
+	private static final String[] _JSTL_CORE_URIS_JAVAX = {
+		"http://java.sun.com/jsp/jstl/core", "http://java.sun.com/jsp/jstl/fmt",
+		"http://java.sun.com/jsp/jstl/functions",
+		"http://java.sun.com/jsp/jstl/sql", "http://java.sun.com/jsp/jstl/xml"
 	};
 
 	private static final String _LOAD_EXTERNAL_DTD =
 		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
 
-	private static final String[] _REQUIRED_PACKAGE_NAMES = {
+	private static final String[] _REQUIRED_PACKAGE_NAMES_JAKARTA = {
 		"jakarta.servlet", "jakarta.servlet.http"
+	};
+
+	private static final String[] _REQUIRED_PACKAGE_NAMES_JAVAX = {
+		"javax.servlet", "javax.servlet.http"
 	};
 
 	private static final Pattern _commentPattern = Pattern.compile(

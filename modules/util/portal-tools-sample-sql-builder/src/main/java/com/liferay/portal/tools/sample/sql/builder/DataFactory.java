@@ -4386,7 +4386,7 @@ public class DataFactory {
 						"fragment_component" +
 							"/fragment_component_paragraph_content_editValue." +
 								"json"),
-					paragraphRenderNamespace, 1,
+					paragraphRenderNamespace, 0,
 					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
 			hiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
@@ -8917,9 +8917,10 @@ public class DataFactory {
 			String rendererKey = fragmentEntryLinkModel.getRendererKey();
 
 			if (rendererKey.equals(_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH)) {
-				int position = fragmentEntryLinkModel.getPosition();
+				String editableValues =
+					fragmentEntryLinkModel.getEditableValues();
 
-				if (position == 0) {
+				if (editableValues.contains("Welcome to Liferay")) {
 					data = StringUtil.replace(
 						data, "${paragraphTitleFragmentEntryLinkId}",
 						String.valueOf(

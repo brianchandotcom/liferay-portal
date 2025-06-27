@@ -17,10 +17,6 @@ buildscript {
 apply plugin: "com.liferay.source.formatter"
 apply plugin: "java-library"
 
-dependencies {
-	implementation group: "org.apache.commons", name: "commons-csv", version: "1.9.0"
-}
-
 repositories {
 	maven {
 		url new File(rootProject.projectDir, "../../.m2-tmp")

@@ -2020,7 +2020,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#list entity.databaseRegularEntityColumns as entityColumn>
 		<#if stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy>
-			private ${entity.name}${entityColumn.methodName}BlobModel _${entityColumn.name}BlobModel;
+			private transient ${entity.name}${entityColumn.methodName}BlobModel _${entityColumn.name}BlobModel;
 		<#else>
 			private ${entityColumn.genericizedType} _${entityColumn.name};
 

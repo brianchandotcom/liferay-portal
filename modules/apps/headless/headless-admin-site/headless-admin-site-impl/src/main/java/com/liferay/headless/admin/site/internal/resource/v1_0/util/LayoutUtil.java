@@ -53,13 +53,13 @@ import java.util.Objects;
 public class LayoutUtil {
 
 	public static Layout addContentLayout(
-			long groupId, PageSpecification[] pageSpecifications,
-			boolean privateLayout, Map<Locale, String> nameMap,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, String type,
-			UnicodeProperties typeSettingsUnicodeProperties, boolean hidden,
-			boolean system, Map<Locale, String> friendlyURLMap, int status,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long groupId,
+			PageSpecification[] pageSpecifications, boolean privateLayout,
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> robotsMap,
+			String type, UnicodeProperties typeSettingsUnicodeProperties,
+			boolean hidden, boolean system, Map<Locale, String> friendlyURLMap,
+			int status, ServiceContext serviceContext)
 		throws Exception {
 
 		if (typeSettingsUnicodeProperties == null) {
@@ -68,10 +68,10 @@ public class LayoutUtil {
 
 		if (pageSpecifications == null) {
 			Layout layout = LayoutLocalServiceUtil.addLayout(
-				null, serviceContext.getUserId(), groupId, privateLayout, 0, 0,
-				0, nameMap, titleMap, descriptionMap, null, robotsMap, type,
-				typeSettingsUnicodeProperties.toString(), hidden, system,
-				friendlyURLMap, 0L, serviceContext);
+				externalReferenceCode, serviceContext.getUserId(), groupId,
+				privateLayout, 0, 0, 0, nameMap, titleMap, descriptionMap, null,
+				robotsMap, type, typeSettingsUnicodeProperties.toString(),
+				hidden, system, friendlyURLMap, 0L, serviceContext);
 
 			return LayoutLocalServiceUtil.updateStatus(
 				serviceContext.getUserId(), layout.getPlid(), status,

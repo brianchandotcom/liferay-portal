@@ -80,7 +80,7 @@ public class CPDefinitionInventoryEngineTest {
 				_commerceCatalog.getGroupId(),
 				masterCPConfigurationList.getCPConfigurationListId(), false,
 				RandomTestUtil.randomString(), 2, 1, 1, 2024, 0, 0, 0, 0, 0, 0,
-				0, true);
+				0, true, new ServiceContext());
 
 		_cpInstance = CPTestUtil.addCPInstanceFromCatalog(
 			_commerceCatalog.getGroupId());

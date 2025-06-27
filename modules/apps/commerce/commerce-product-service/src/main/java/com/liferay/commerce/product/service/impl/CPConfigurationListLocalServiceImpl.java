@@ -26,6 +26,7 @@ import com.liferay.commerce.product.model.CommerceChannelRelTable;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPConfigurationEntrySettingLocalService;
 import com.liferay.commerce.product.service.base.CPConfigurationListLocalServiceBaseImpl;
+import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Portal;
@@ -80,7 +82,8 @@ public class CPConfigurationListLocalServiceImpl
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire)
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -104,6 +107,8 @@ public class CPConfigurationListLocalServiceImpl
 		CPConfigurationList cpConfigurationList =
 			cpConfigurationListPersistence.create(
 				counterLocalService.increment());
+
+		cpConfigurationList.setExpandoBridgeAttributes(serviceContext);
 
 		cpConfigurationList.setExternalReferenceCode(externalReferenceCode);
 		cpConfigurationList.setGroupId(groupId);
@@ -219,7 +224,7 @@ public class CPConfigurationListLocalServiceImpl
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire)
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNotNull(externalReferenceCode)) {
@@ -237,7 +242,7 @@ public class CPConfigurationListLocalServiceImpl
 						displayDateYear, displayDateHour, displayDateMinute,
 						expirationDateMonth, expirationDateDay,
 						expirationDateYear, expirationDateHour,
-						expirationDateMinute, neverExpire);
+						expirationDateMinute, neverExpire, serviceContext);
 			}
 		}
 
@@ -246,7 +251,8 @@ public class CPConfigurationListLocalServiceImpl
 			master, name, priority, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire);
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override
@@ -269,6 +275,9 @@ public class CPConfigurationListLocalServiceImpl
 		}
 
 		_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
+			cpConfigurationList.getCPConfigurationListId());
+
+		_expandoRowLocalService.deleteRows(
 			cpConfigurationList.getCPConfigurationListId());
 
 		return super.deleteCPConfigurationList(cpConfigurationList);
@@ -347,7 +356,7 @@ public class CPConfigurationListLocalServiceImpl
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire)
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -373,6 +382,8 @@ public class CPConfigurationListLocalServiceImpl
 		CPConfigurationList cpConfigurationList =
 			cpConfigurationListPersistence.findByPrimaryKey(
 				cpConfigurationListId);
+
+		cpConfigurationList.setExpandoBridgeAttributes(serviceContext);
 
 		cpConfigurationList.setExternalReferenceCode(externalReferenceCode);
 		cpConfigurationList.setGroupId(groupId);
@@ -569,6 +580,9 @@ public class CPConfigurationListLocalServiceImpl
 	@Reference
 	private CPConfigurationEntrySettingLocalService
 		_cpConfigurationEntrySettingLocalService;
+
+	@Reference
+	private ExpandoRowLocalService _expandoRowLocalService;
 
 	@Reference
 	private Portal _portal;

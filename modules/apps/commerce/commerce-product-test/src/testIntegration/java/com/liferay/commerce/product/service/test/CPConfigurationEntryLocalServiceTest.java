@@ -92,7 +92,7 @@ public class CPConfigurationEntryLocalServiceTest {
 				_commerceCatalog.getGroupId(),
 				masterCPConfigurationList.getCPConfigurationListId(), false,
 				RandomTestUtil.randomString(), 2, 1, 1, 2024, 0, 0, 0, 0, 0, 0,
-				0, true);
+				0, true, new ServiceContext());
 
 		_cpDefinition = CPTestUtil.addCPDefinition(
 			_commerceCatalog.getGroupId());
@@ -225,7 +225,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 
 		_cpConfigurationLists.add(cpConfigurationList1);
 
@@ -254,7 +255,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 
 		_cpConfigurationLists.add(cpConfigurationList2);
 
@@ -314,7 +316,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 
 		_cpConfigurationLists.add(cpConfigurationList3);
 
@@ -456,7 +459,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+				new ServiceContext());
 
 		_cpConfigurationLists.add(cpConfigurationList);
 

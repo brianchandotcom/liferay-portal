@@ -142,7 +142,6 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 
 			portletURLString = HttpComponentsUtil.setParameter(
 				portletURLString, "ticketId", ticketId);
-
 			portletURLString = HttpComponentsUtil.setParameter(
 				portletURLString, "ticketKey", ticketKey);
 

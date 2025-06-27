@@ -6,11 +6,7 @@
 import {IFileDropSettings} from '../index';
 
 const isFileDropEnabled = (fileDropSettings: IFileDropSettings): boolean => {
-	return (
-		Liferay.FeatureFlags['LPD-44645'] &&
-		fileDropSettings &&
-		fileDropSettings.enabled
-	);
+	return fileDropSettings && fileDropSettings.enabled;
 };
 
 export default isFileDropEnabled;

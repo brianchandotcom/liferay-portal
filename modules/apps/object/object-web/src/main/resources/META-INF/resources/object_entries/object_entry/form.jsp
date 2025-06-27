@@ -207,14 +207,18 @@ portletDisplay.setURLBack(backURL);
 
 			const current = DDMFormInstance.reactComponentRef.current;
 
-			const loadingElement = document.createElement('span');
+			let loadingElement = form.querySelector('.loading-animation');
 
-			loadingElement.className =
-				'loading-animation loading-animation-secondary loading-animation-sm';
+			if (!loadingElement) {
+				loadingElement = document.createElement('span');
 
-			loadingElement.ariaHidden = 'true';
+				loadingElement.className =
+					'loading-animation loading-animation-secondary loading-animation-sm';
 
-			form.insertAdjacentElement('afterbegin', loadingElement);
+				loadingElement.ariaHidden = 'true';
+
+				form.insertAdjacentElement('afterbegin', loadingElement);
+			}
 
 			current.validate().then((result) => {
 				if (result) {

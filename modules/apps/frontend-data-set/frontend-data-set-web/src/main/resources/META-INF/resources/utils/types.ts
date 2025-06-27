@@ -218,7 +218,7 @@ export interface IHeader {
 }
 
 export interface IListTitleRenderer {
-	component: ({itemData}: {itemData: any}) => React.ReactNode;
+	component: ({itemData}: {itemData: any}) => JSX.Element;
 }
 
 export interface IListSchema {

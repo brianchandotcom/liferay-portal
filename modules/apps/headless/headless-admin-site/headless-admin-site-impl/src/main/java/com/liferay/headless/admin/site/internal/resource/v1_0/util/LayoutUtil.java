@@ -18,7 +18,9 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -36,6 +38,8 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryServiceUtil;
+
+import jakarta.validation.ValidationException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -104,6 +108,23 @@ public class LayoutUtil {
 					getDraftContentPageSpecificationExternalReferenceCode())) {
 
 			throw new UnsupportedOperationException();
+		}
+
+		if ((publishedContentPageSpecification.getExternalReferenceCode() !=
+				null) &&
+			(externalReferenceCode != null) &&
+			!Objects.equals(
+				externalReferenceCode,
+				publishedContentPageSpecification.getExternalReferenceCode()) &&
+			type.equals(LayoutConstants.TYPE_CONTENT)) {
+
+			throw new ValidationException(
+				StringBundler.concat(
+					"Site page external reference code ", externalReferenceCode,
+					" does not match published page specification external ",
+					"reference code ",
+					publishedContentPageSpecification.
+						getExternalReferenceCode()));
 		}
 
 		Settings settings = publishedContentPageSpecification.getSettings();

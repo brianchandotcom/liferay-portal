@@ -450,8 +450,6 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 3
 	test CannotFilterByStringFunctionsWithNonExistentFieldValue {
-		property portal.acceptance = "true";
-
 		task ("And Given a oneToMany relationship universityStudents") {
 			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
 				childObjectName = "Student",
@@ -512,8 +510,6 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 3
 	test CannotFilterStudentsByStringFunctions {
-		property portal.acceptance = "true";
-
 		task ("And Given a oneToMany relationship universityStudents") {
 			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
 				childObjectName = "Student",
@@ -580,8 +576,6 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 3
 	test CannotGetSubjectsDetasilsWhenFilterOverFieldsWithNoRelatedEntriesByContainsFunctions {
-		property portal.acceptance = "true";
-
 		task ("And Given a oneToMany relationship universityStudents") {
 			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
 				childObjectName = "Student",
@@ -624,8 +618,6 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 3
 	test CannotGetSubjectsDetasilsWhenFilterOverFieldsWithNoRelatedEntriesByStartswithFunctions {
-		property portal.acceptance = "true";
-
 		task ("And Given a oneToMany relationship universityStudents") {
 			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
 				childObjectName = "Student",

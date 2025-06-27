@@ -848,7 +848,6 @@ definition {
 	@description = "This is a use case for LPS-82839 and LPS-190360 TC-4. Web contents can be published on remote staging."
 	@priority = 3
 	test StagingRemoteLiveWebContentViaPortletCP {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

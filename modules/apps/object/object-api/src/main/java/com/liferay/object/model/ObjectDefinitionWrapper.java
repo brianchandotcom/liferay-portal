@@ -1146,11 +1146,6 @@ public class ObjectDefinitionWrapper
 		return model.isModifiableAndSystem();
 	}
 
-	@Override
-	public boolean isNodeCandidate() {
-		return model.isNodeCandidate();
-	}
-
 	/**
 	 * Returns <code>true</code> if this object definition is portlet.
 	 *

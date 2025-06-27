@@ -7,8 +7,6 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
 
-import java.io.File;
-
 import java.net.URL;
 
 import java.util.HashMap;
@@ -52,23 +50,13 @@ public class BuildReportFactory {
 	}
 
 	public static TopLevelBuildReport newTopLevelBuildReport(
-		File jenkinsConsoleFile) {
-
-		if ((jenkinsConsoleFile == null) || !jenkinsConsoleFile.exists()) {
-			return null;
-		}
-
-		return new FileTopLevelBuildReport(jenkinsConsoleFile);
-	}
-
-	public static TopLevelBuildReport newTopLevelBuildReport(
 		JSONObject buildReportJSONObject) {
 
 		if (buildReportJSONObject == null) {
 			return null;
 		}
 
-		return new FileTopLevelBuildReport(buildReportJSONObject);
+		return new JSONObjectTopLevelBuildReport(buildReportJSONObject);
 	}
 
 	public static TopLevelBuildReport newTopLevelBuildReport(

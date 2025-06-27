@@ -132,7 +132,7 @@ export default function FieldsTree({search}: {search: string}) {
 			selection.includes(item.uuid) &&
 			selection.length > 1
 		) {
-			nextSelection = selection.filter((id) => id !== item.id);
+			nextSelection = selection.filter((uuid) => uuid !== item.uuid);
 		}
 
 		dispatch({

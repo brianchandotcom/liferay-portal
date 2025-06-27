@@ -19,8 +19,8 @@ export type ReferencedStructure = {
 };
 
 export type RepeatableGroup = {
+	children: Map<Uuid, Field | ReferencedStructure | RepeatableGroup>;
 	erc: string;
-	fields: Map<Uuid, Field | ReferencedStructure | RepeatableGroup>;
 	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
 	parent: Uuid;
@@ -29,8 +29,8 @@ export type RepeatableGroup = {
 };
 
 export type Structure = {
+	children: Map<Uuid, Field | ReferencedStructure | RepeatableGroup>;
 	erc: string;
-	fields: Map<Uuid, Field | ReferencedStructure | RepeatableGroup>;
 	id: number | null;
 	label: Liferay.Language.LocalizedValue<string>;
 	name: string;

@@ -7,21 +7,18 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React, {useState} from 'react';
 
-import {
-	useSelector,
-	useStateDispatch,
-} from '../../structure_builder/contexts/StateContext';
+import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import selectStructureUuid from '../selectors/selectStructureUuid';
+import {Structure} from '../types/Structure';
 import {
 	FIELD_TYPES,
 	FIELD_TYPE_LABEL,
 	Field,
 	getDefaultField,
-} from '../../structure_builder/utils/field';
-import selectStructureUuid from '../selectors/selectStructureUuid';
-import {Structure} from '../types/Structure';
+} from '../utils/field';
 import ReferencedStructureModal from './ReferencedStructureModal';
 
-export default function AddFieldDropdown({
+export default function AddChildDropdown({
 	triggerType = 'text',
 }: {
 	triggerType?: 'text' | 'icon';

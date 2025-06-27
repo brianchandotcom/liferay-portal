@@ -5,6 +5,6 @@
 
 import {State} from '../contexts/StateContext';
 
-export default function selectPublishedFields(state: State) {
-	return state.publishedFields;
+export default function selectPublishedChildren(state: State) {
+	return state.publishedChildren;
 }

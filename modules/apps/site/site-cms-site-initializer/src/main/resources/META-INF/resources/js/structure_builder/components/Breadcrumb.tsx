@@ -8,7 +8,7 @@ import React, {useMemo} from 'react';
 
 import {useCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
-import selectStructureFields from '../selectors/selectStructureFields';
+import selectStructureChildren from '../selectors/selectStructureChildren';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import {RepeatableGroup, Structure, Structures} from '../types/Structure';
@@ -20,14 +20,15 @@ type Path = {label: string; uuid: Uuid}[];
 export default function Breadcrumb({uuid}: {uuid: Uuid}) {
 	const dispatch = useStateDispatch();
 
+	const children = useSelector(selectStructureChildren);
+
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
 	const structureUuid = useSelector(selectStructureUuid);
-	const fields = useSelector(selectStructureFields);
 
 	const {data: structures} = useCache('structures');
 
 	const items = useMemo(() => {
-		const path = getPath(uuid, fields, structures, [
+		const path = getPath(uuid, children, structures, [
 			{label: structureLabel, uuid: structureUuid},
 		]);
 
@@ -53,7 +54,7 @@ export default function Breadcrumb({uuid}: {uuid: Uuid}) {
 				},
 			};
 		});
-	}, [dispatch, fields, structureLabel, structureUuid, structures, uuid]);
+	}, [children, dispatch, structureLabel, structureUuid, structures, uuid]);
 
 	return (
 		<div className="mb-3">
@@ -64,42 +65,42 @@ export default function Breadcrumb({uuid}: {uuid: Uuid}) {
 
 function getPath(
 	uuid: Uuid,
-	fields: (Structure | RepeatableGroup)['fields'],
+	children: (Structure | RepeatableGroup)['children'],
 	structures: Structures,
 	path: Path = []
 ): Path | null {
-	for (const field of fields.values()) {
-		if (field.uuid === uuid) {
-			if (field.type === 'referenced-structure') {
+	for (const child of children.values()) {
+		if (child.uuid === uuid) {
+			if (child.type === 'referenced-structure') {
 				path.push({
-					label: getReferencedStructureLabel(field.erc, structures),
-					uuid: field.uuid,
+					label: getReferencedStructureLabel(child.erc, structures),
+					uuid: child.uuid,
 				});
 			}
 			else {
 				path.push({
-					label: field!.label[
+					label: child!.label[
 						Liferay.ThemeDisplay.getDefaultLanguageId()
 					]!,
-					uuid: field.uuid,
+					uuid: child.uuid,
 				});
 			}
 
 			return path;
 		}
 
-		if (field.type === 'referenced-structure') {
-			const structure = structures.get(field.erc);
+		if (child.type === 'referenced-structure') {
+			const structure = structures.get(child.erc);
 
 			path.push({
-				label: getReferencedStructureLabel(field.erc, structures),
-				uuid: field.uuid,
+				label: getReferencedStructureLabel(child.erc, structures),
+				uuid: child.uuid,
 			});
 
 			if (structure) {
 				const nextPath = getPath(
 					uuid,
-					structure.fields,
+					structure.children,
 					structures,
 					path
 				);
@@ -109,15 +110,15 @@ function getPath(
 				}
 			}
 		}
-		else if (field.type === 'repeatable-group') {
+		else if (child.type === 'repeatable-group') {
 			path.push({
-				label: field!.label[
+				label: child!.label[
 					Liferay.ThemeDisplay.getDefaultLanguageId()
 				]!,
-				uuid: field.uuid,
+				uuid: child.uuid,
 			});
 
-			const nextPath = getPath(uuid, field.fields, structures, path);
+			const nextPath = getPath(uuid, child.children, structures, path);
 
 			if (nextPath) {
 				return nextPath;

@@ -17,42 +17,42 @@ import getUuid from './getUuid';
 const DEFAULT_GROUP_LABEL = Liferay.Language.get('repeatable-group');
 
 export default function insertGroup({
-	groupFields,
+	groupChildren,
 	groupParent,
 	root,
 }: {
-	groupFields: (Field | ReferencedStructure | RepeatableGroup)[];
+	groupChildren: (Field | ReferencedStructure | RepeatableGroup)[];
 	groupParent: Uuid;
 	root: Structure | RepeatableGroup;
-}): Structure['fields'] | RepeatableGroup['fields'] {
-	const fields = new Map();
+}): Structure['children'] | RepeatableGroup['children'] {
+	const children = new Map();
 
-	// Iterate over fields
+	// Iterate over children
 
-	for (const field of root.fields.values()) {
+	for (const child of root.children.values()) {
 
-		// Don't insert the field if it belongs to the new group
+		// Don't insert the child if it belongs to the new group
 
-		if (groupFields.some(({uuid}) => uuid === field.uuid)) {
+		if (groupChildren.some(({uuid}) => uuid === child.uuid)) {
 			continue;
 		}
 
-		// Insert the field. If it's a repeatable group, build it with recursive call
+		// Insert the child. If it's a repeatable group, build it with recursive call
 
-		if (field.type === 'repeatable-group') {
+		if (child.type === 'repeatable-group') {
 			const group: RepeatableGroup = {
-				...field,
-				fields: insertGroup({
-					groupFields,
+				...child,
+				children: insertGroup({
+					groupChildren,
 					groupParent,
-					root: field,
+					root: child,
 				}),
 			};
 
-			fields.set(group.uuid, group);
+			children.set(group.uuid, group);
 		}
 		else {
-			fields.set(field.uuid, field);
+			children.set(child.uuid, child);
 		}
 	}
 
@@ -62,13 +62,13 @@ export default function insertGroup({
 		const uuid = getUuid();
 
 		const group: RepeatableGroup = {
-			erc: getRandomId(),
-			fields: new Map(
-				groupFields.map((field) => [
-					field.uuid,
-					{...field, parent: uuid},
+			children: new Map(
+				groupChildren.map((child) => [
+					child.uuid,
+					{...child, parent: uuid},
 				])
 			),
+			erc: getRandomId(),
 			label: {
 				[Liferay.ThemeDisplay.getDefaultLanguageId()]:
 					DEFAULT_GROUP_LABEL,
@@ -79,8 +79,8 @@ export default function insertGroup({
 			uuid,
 		};
 
-		fields.set(group.uuid, group);
+		children.set(group.uuid, group);
 	}
 
-	return fields;
+	return children;
 }

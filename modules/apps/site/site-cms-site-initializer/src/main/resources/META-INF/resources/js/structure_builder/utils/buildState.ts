@@ -6,7 +6,7 @@
 import {State} from '../contexts/StateContext';
 import {ObjectDefinition} from '../types/ObjectDefinition';
 import buildStructure from './buildStructure';
-import {getFieldUuids} from './getFieldUuids';
+import {getChildrenUuids} from './getChildrenUuids';
 
 export default function buildState(
 	objectDefinition: ObjectDefinition
@@ -20,12 +20,12 @@ export default function buildState(
 	return {
 		error: null,
 		history: {
-			deletedFields: false,
+			deletedChildren: false,
 		},
 		invalids: new Map(),
-		publishedFields:
+		publishedChildren:
 			structure.status === 'published'
-				? getFieldUuids(structure)
+				? getChildrenUuids(structure)
 				: new Set(),
 		selection: [],
 		structure,

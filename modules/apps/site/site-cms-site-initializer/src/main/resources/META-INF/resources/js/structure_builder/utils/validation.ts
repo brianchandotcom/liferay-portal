@@ -8,7 +8,7 @@ import {useCallback} from 'react';
 
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
-import selectStructureFields from '../selectors/selectStructureFields';
+import selectStructureChildren from '../selectors/selectStructureChildren';
 import {
 	ReferencedStructure,
 	RepeatableGroup,
@@ -117,38 +117,38 @@ export function validateStructure({
 
 export function useValidate() {
 	const dispatch = useStateDispatch();
-	const fields = useSelector(selectStructureFields);
+	const children = useSelector(selectStructureChildren);
 	const state = useSelector(selectState);
 
 	const {structure} = state;
 
-	const validateItem = useCallback(
+	const validateChild = useCallback(
 		(
-			item: Field | RepeatableGroup | ReferencedStructure,
+			child: Field | RepeatableGroup | ReferencedStructure,
 			invalids: State['invalids']
 		) => {
 			let errors: Set<ValidationError> = new Set();
 
-			if (item.type === 'repeatable-group') {
-				errors = validateRepeatableGroup({data: item});
+			if (child.type === 'repeatable-group') {
+				errors = validateRepeatableGroup({data: child});
 
 				if (errors.size) {
-					invalids.set(item.uuid, errors);
+					invalids.set(child.uuid, errors);
 				}
 
-				for (const child of item.fields.values()) {
-					if (child.type === 'referenced-structure') {
+				for (const grandChild of child.children.values()) {
+					if (grandChild.type === 'referenced-structure') {
 						continue;
 					}
 
-					validateItem(child, invalids);
+					validateChild(grandChild, invalids);
 				}
 			}
 			else {
-				errors = validateField({data: item as Field});
+				errors = validateField({data: child as Field});
 
 				if (errors.size) {
-					invalids.set(item.uuid, errors);
+					invalids.set(child.uuid, errors);
 				}
 			}
 		},
@@ -157,9 +157,9 @@ export function useValidate() {
 
 	return useCallback(() => {
 
-		// Check at least one field is added
+		// Check at least one child is added
 
-		if (!fields.size) {
+		if (!children.size) {
 			dispatch({
 				error: Liferay.Language.get(
 					'at-least-one-field-must-be-added-to-save-or-publish-the-structure'
@@ -182,10 +182,10 @@ export function useValidate() {
 			invalids.set(structure.uuid, errors);
 		}
 
-		// Validate fields
+		// Validate children
 
-		for (const field of fields.values()) {
-			validateItem(field, invalids);
+		for (const child of children.values()) {
+			validateChild(child, invalids);
 		}
 
 		// If there's some invalid, dispatch validate action
@@ -204,5 +204,5 @@ export function useValidate() {
 		// It's valid
 
 		return true;
-	}, [dispatch, fields, state.invalids, structure, validateItem]);
+	}, [children, dispatch, state.invalids, structure, validateChild]);
 }

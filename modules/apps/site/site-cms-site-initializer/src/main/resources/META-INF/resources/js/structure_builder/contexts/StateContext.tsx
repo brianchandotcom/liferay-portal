@@ -27,7 +27,7 @@ import {
 } from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import findChild from '../utils/findChild';
-import {getFieldUuids} from '../utils/getFieldUuids';
+import {getChildrenUuids} from '../utils/getChildrenUuids';
 import getRandomId from '../utils/getRandomId';
 import getRandomName from '../utils/getRandomName';
 import getUuid from '../utils/getUuid';
@@ -44,14 +44,14 @@ import {
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
 type History = {
-	deletedFields: boolean;
+	deletedChildren: boolean;
 };
 
 export type State = {
 	error: string | null;
 	history: History;
 	invalids: Map<Uuid, Set<ValidationError>>;
-	publishedFields: Set<Uuid>;
+	publishedChildren: Set<Uuid>;
 	selection: Uuid[];
 	structure: Structure;
 	unsavedChanges: boolean;
@@ -60,14 +60,14 @@ export type State = {
 const INITIAL_STATE: State = {
 	error: null,
 	history: {
-		deletedFields: false,
+		deletedChildren: false,
 	},
 	invalids: new Map(),
-	publishedFields: new Set(),
+	publishedChildren: new Set(),
 	selection: [],
 	structure: {
+		children: new Map(),
 		erc: '',
-		fields: new Map(),
 		id: null,
 		label: {
 			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
@@ -107,7 +107,7 @@ type CreateStructureAction = {
 	type: 'create-structure';
 };
 
-type DeleteFieldAction = {type: 'delete-field'; uuid: Uuid};
+type DeleteChildAction = {type: 'delete-child'; uuid: Uuid};
 
 type DeleteSelectionAction = {type: 'delete-selection'};
 
@@ -160,7 +160,7 @@ export type Action =
 	| AddValidationError
 	| ClearErrorAction
 	| CreateStructureAction
-	| DeleteFieldAction
+	| DeleteChildAction
 	| DeleteSelectionAction
 	| PublishStructureAction
 	| SetErrorAction
@@ -181,16 +181,16 @@ function reducer(state: State, action: Action): State {
 
 			const {structure} = state;
 
-			const name = findAvailableFieldName(structure.fields, field.name);
+			const name = findAvailableFieldName(structure.children, field.name);
 
-			const nextFields = new Map(structure.fields);
+			const nextChildren = new Map(structure.children);
 
-			nextFields.set(field.uuid, {...field, name});
+			nextChildren.set(field.uuid, {...field, name});
 
 			return {
 				...state,
 				selection: [field.uuid],
-				structure: {...structure, fields: nextFields},
+				structure: {...structure, children: nextChildren},
 			};
 		}
 		case 'add-referenced-structures': {
@@ -198,7 +198,7 @@ function reducer(state: State, action: Action): State {
 
 			const {structure} = state;
 
-			const nextFields = new Map(structure.fields);
+			const nextChildren = new Map(structure.children);
 
 			let selection: State['selection'] = [];
 
@@ -214,7 +214,7 @@ function reducer(state: State, action: Action): State {
 					uuid,
 				};
 
-				nextFields.set(referencedStructure.uuid, referencedStructure);
+				nextChildren.set(referencedStructure.uuid, referencedStructure);
 
 				if (i === 0) {
 					selection = [uuid];
@@ -224,13 +224,13 @@ function reducer(state: State, action: Action): State {
 			return {
 				...state,
 				selection,
-				structure: {...structure, fields: nextFields},
+				structure: {...structure, children: nextChildren},
 			};
 		}
 		case 'add-repeatable-group': {
-			const {publishedFields, selection, structure} = state;
+			const {publishedChildren, selection, structure} = state;
 
-			if (selection.some((uuid) => publishedFields.has(uuid))) {
+			if (selection.some((uuid) => publishedChildren.has(uuid))) {
 				openConfirmModal({
 					buttonLabel: Liferay.Language.get('done'),
 					center: true,
@@ -247,17 +247,19 @@ function reducer(state: State, action: Action): State {
 				return state;
 			}
 
-			const fields = selection.map((uuid) => findChild(structure, uuid)!);
+			const children = selection.map(
+				(uuid) => findChild(structure, uuid)!
+			);
 
-			const nextFields = insertGroup({
-				groupFields: fields,
-				groupParent: fields[0].parent,
+			const nextChildren = insertGroup({
+				groupChildren: children,
+				groupParent: children[0].parent,
 				root: structure,
 			});
 
 			return {
 				...state,
-				structure: {...structure, fields: nextFields},
+				structure: {...structure, children: nextChildren},
 			};
 		}
 		case 'add-validation-error': {
@@ -295,10 +297,10 @@ function reducer(state: State, action: Action): State {
 				},
 			};
 		}
-		case 'delete-field': {
+		case 'delete-child': {
 			const {structure} = state;
 
-			if (structure.fields.size === 1) {
+			if (structure.children.size === 1) {
 				openDeletionModal();
 
 				return state;
@@ -306,9 +308,9 @@ function reducer(state: State, action: Action): State {
 
 			const {uuid} = action;
 
-			const nextFields = new Map(structure.fields);
+			const nextChildren = new Map(structure.children);
 
-			nextFields.delete(uuid);
+			nextChildren.delete(uuid);
 
 			const invalids = new Map(state.invalids);
 
@@ -317,7 +319,7 @@ function reducer(state: State, action: Action): State {
 			let nextState: State = {
 				...state,
 				invalids,
-				structure: {...state.structure, fields: nextFields},
+				structure: {...state.structure, children: nextChildren},
 			};
 
 			if (state.selection.includes(uuid)) {
@@ -327,10 +329,10 @@ function reducer(state: State, action: Action): State {
 				};
 			}
 
-			if (state.publishedFields.has(uuid)) {
+			if (state.publishedChildren.has(uuid)) {
 				nextState = {
 					...nextState,
-					history: {...nextState.history, deletedFields: true},
+					history: {...nextState.history, deletedChildren: true},
 				};
 			}
 
@@ -339,13 +341,13 @@ function reducer(state: State, action: Action): State {
 		case 'delete-selection': {
 			const {structure} = state;
 
-			const nextFields = new Map(structure.fields);
+			const nextChildren = new Map(structure.children);
 
-			for (const fieldName of state.selection) {
-				nextFields.delete(fieldName);
+			for (const uuid of state.selection) {
+				nextChildren.delete(uuid);
 			}
 
-			if (nextFields.size === 0) {
+			if (nextChildren.size === 0) {
 				openDeletionModal();
 
 				return state;
@@ -356,7 +358,7 @@ function reducer(state: State, action: Action): State {
 				selection: INITIAL_STATE.selection,
 				structure: {
 					...structure,
-					fields: nextFields,
+					children: nextChildren,
 				},
 			};
 		}
@@ -376,7 +378,7 @@ function reducer(state: State, action: Action): State {
 				...state,
 				error: INITIAL_STATE.error,
 				history: INITIAL_STATE.history,
-				publishedFields: getFieldUuids(structure),
+				publishedChildren: getChildrenUuids(structure),
 				structure: nextStructure,
 				unsavedChanges: false,
 			};
@@ -407,9 +409,11 @@ function reducer(state: State, action: Action): State {
 
 			const {structure} = state;
 
-			const nextFields: Structure['fields'] = new Map(structure.fields);
+			const nextChildren: Structure['children'] = new Map(
+				structure.children
+			);
 
-			const field = nextFields.get(uuid) as Field;
+			const field = nextChildren.get(uuid) as Field;
 
 			if (!field) {
 				return state;
@@ -433,7 +437,7 @@ function reducer(state: State, action: Action): State {
 					picklistId;
 			}
 
-			nextFields.set(nextField.uuid, nextField);
+			nextChildren.set(nextField.uuid, nextField);
 
 			// Validate the data sent in the action
 
@@ -461,7 +465,7 @@ function reducer(state: State, action: Action): State {
 				selection: [nextField.uuid],
 				structure: {
 					...structure,
-					fields: nextFields,
+					children: nextChildren,
 				},
 			};
 		}
@@ -470,26 +474,26 @@ function reducer(state: State, action: Action): State {
 
 			const {structure} = state;
 
-			const field = findChild(structure, uuid);
+			const child = findChild(structure, uuid);
 
-			if (!field || field.type !== 'repeatable-group') {
+			if (!child || child.type !== 'repeatable-group') {
 				return state;
 			}
 
 			const group: RepeatableGroup = {
-				...field,
+				...child,
 				label,
 			};
 
-			const nextFields = new Map(structure.fields);
+			const nextChildren = new Map(structure.children);
 
-			nextFields.set(uuid, group);
+			nextChildren.set(uuid, group);
 
 			const nextState: State = {
 				...state,
 				structure: {
 					...structure,
-					fields: nextFields,
+					children: nextChildren,
 				},
 			};
 
@@ -586,8 +590,8 @@ function initState(state: State): State {
 		...state,
 		structure: {
 			...structure,
+			children: getDefaultChildren(structure.uuid),
 			erc: getRandomId(),
-			fields: getDefaultFields(structure.uuid),
 		},
 	};
 }
@@ -630,12 +634,12 @@ function useStateDispatch() {
 	return useContext(StateContext).dispatch;
 }
 
-function getDefaultFields(structureUuid: Uuid) {
+function getDefaultChildren(structureUuid: Uuid) {
 	const url = new URL(window.location.href);
 
 	const type = url.searchParams.get('objectFolderExternalReferenceCode');
 
-	const fields = new Map();
+	const children = new Map();
 
 	const title = getDefaultField({
 		label: Liferay.Language.get('title'),
@@ -644,7 +648,7 @@ function getDefaultFields(structureUuid: Uuid) {
 		type: 'text',
 	});
 
-	fields.set(title.uuid, title);
+	children.set(title.uuid, title);
 
 	if (type === 'L_CMS_FILE_TYPES') {
 		const file = getDefaultField({
@@ -654,10 +658,10 @@ function getDefaultFields(structureUuid: Uuid) {
 			type: 'upload',
 		});
 
-		fields.set(file.uuid, file);
+		children.set(file.uuid, file);
 	}
 
-	return fields;
+	return children;
 }
 
 export {StateContext, StateContextProvider, useSelector, useStateDispatch};

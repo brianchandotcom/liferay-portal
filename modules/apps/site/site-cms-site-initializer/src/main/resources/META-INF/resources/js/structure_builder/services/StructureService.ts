@@ -11,23 +11,23 @@ import buildStructures from '../utils/buildStructures';
 import getRandomId from '../utils/getRandomId';
 
 async function createStructure({
+	children,
 	erc = getRandomId(),
-	fields,
 	label,
 	name,
 	spaces,
 	status,
 }: {
+	children: Structure['children'];
 	erc?: Structure['erc'];
-	fields: Structure['fields'];
 	label: Structure['label'];
 	name: Structure['name'];
 	spaces: Structure['spaces'];
 	status: Structure['status'];
 }) {
 	const objectDefinition = buildObjectDefinition({
+		children,
 		erc,
-		fields,
 		label,
 		name,
 		spaces,
@@ -56,16 +56,16 @@ async function getStructures(): Promise<Structures> {
 }
 
 async function updateStructure({
+	children,
 	erc,
-	fields,
 	id,
 	label,
 	name,
 	spaces,
 	status,
 }: {
+	children: Structure['children'];
 	erc: Structure['erc'];
-	fields: Structure['fields'];
 	id: Structure['id'];
 	label: Structure['label'];
 	name: Structure['name'];
@@ -73,8 +73,8 @@ async function updateStructure({
 	status: Structure['status'];
 }) {
 	const objectDefinition = buildObjectDefinition({
+		children,
 		erc,
-		fields,
 		id,
 		label,
 		name,

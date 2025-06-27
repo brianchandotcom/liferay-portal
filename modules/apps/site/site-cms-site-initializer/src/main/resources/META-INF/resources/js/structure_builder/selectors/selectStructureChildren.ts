@@ -5,6 +5,6 @@
 
 import {State} from '../contexts/StateContext';
 
-export default function selectStructureFields(state: State) {
-	return state.structure.fields;
+export default function selectStructureChildren(state: State) {
+	return state.structure.children;
 }

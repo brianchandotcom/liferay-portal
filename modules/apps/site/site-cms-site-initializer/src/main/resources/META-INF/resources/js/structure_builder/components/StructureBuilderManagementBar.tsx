@@ -21,8 +21,8 @@ import {
 } from '../contexts/StateContext';
 import selectHistory from '../selectors/selectHistory';
 import selectState from '../selectors/selectState';
+import selectStructureChildren from '../selectors/selectStructureChildren';
 import selectStructureERC from '../selectors/selectStructureERC';
-import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureId from '../selectors/selectStructureId';
 import selectStructureLabel from '../selectors/selectStructureLabel';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
@@ -98,7 +98,7 @@ function CustomizeExperienceButton() {
 			className="font-weight-semi-bold"
 			displayType="primary"
 			onClick={() => {
-				if (status === 'published' && history.deletedFields) {
+				if (status === 'published' && history.deletedChildren) {
 					openConfirmModal({
 						buttonLabel: Liferay.Language.get('publish'),
 						center: true,
@@ -173,8 +173,8 @@ function SaveButton() {
 	const dispatch = useStateDispatch();
 	const validate = useValidate();
 
+	const children = useSelector(selectStructureChildren);
 	const erc = useSelector(selectStructureERC);
-	const fields = useSelector(selectStructureFields);
 	const label = useSelector(selectStructureLabel);
 	const localizedLabel = useSelector(selectStructureLocalizedLabel);
 	const name = useSelector(selectStructureName);
@@ -201,8 +201,8 @@ function SaveButton() {
 
 		if (status === 'new') {
 			const {data, error} = await StructureService.createStructure({
+				children,
 				erc,
-				fields,
 				label,
 				name,
 				spaces,
@@ -220,8 +220,8 @@ function SaveButton() {
 		}
 		else {
 			const {error} = await StructureService.updateStructure({
+				children,
 				erc,
-				fields,
 				id: structureId,
 				label,
 				name,
@@ -309,7 +309,7 @@ async function publishStructure({
 	if (showWarnings) {
 		if (
 			config.isReferenced &&
-			!history.deletedFields &&
+			!history.deletedChildren &&
 			!(await openConfirmModal({
 				buttonLabel: Liferay.Language.get('publish-and-propagate'),
 				center: true,
@@ -325,7 +325,7 @@ async function publishStructure({
 
 		if (
 			!config.isReferenced &&
-			history.deletedFields &&
+			history.deletedChildren &&
 			!(await openConfirmModal({
 				buttonLabel: Liferay.Language.get('publish'),
 				center: true,
@@ -341,7 +341,7 @@ async function publishStructure({
 
 		if (
 			config.isReferenced &&
-			history.deletedFields &&
+			history.deletedChildren &&
 			!(await openConfirmModal({
 				buttonLabel: Liferay.Language.get('publish-and-propagate'),
 				center: true,
@@ -356,8 +356,8 @@ async function publishStructure({
 		}
 	}
 
+	const children = selectStructureChildren(state);
 	const erc = selectStructureERC(state);
-	const fields = selectStructureFields(state);
 	const label = selectStructureLabel(state);
 
 	const localizedLabel = selectStructureLocalizedLabel(state);
@@ -433,8 +433,8 @@ async function publishStructure({
 
 	if (status === 'new') {
 		const {data, error} = await StructureService.createStructure({
+			children,
 			erc,
-			fields,
 			label,
 			name,
 			spaces,
@@ -454,8 +454,8 @@ async function publishStructure({
 	}
 	else if (status === 'draft') {
 		const {error} = await StructureService.updateStructure({
+			children,
 			erc,
-			fields,
 			id: structureId,
 			label,
 			name,
@@ -474,8 +474,8 @@ async function publishStructure({
 	}
 	else if (status === 'published') {
 		const {error} = await StructureService.updateStructure({
+			children,
 			erc,
-			fields,
 			id: structureId,
 			label,
 			name,

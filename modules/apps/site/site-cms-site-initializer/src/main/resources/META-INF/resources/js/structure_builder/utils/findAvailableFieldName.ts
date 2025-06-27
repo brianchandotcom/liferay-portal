@@ -6,13 +6,13 @@
 import {Structure} from '../types/Structure';
 
 export default function findAvailableFieldName(
-	fields: Structure['fields'],
+	children: Structure['children'],
 	name: string
 ) {
 	const exists = (name: string) =>
-		[...fields.values()].some(
-			(field) =>
-				field.type !== 'referenced-structure' && field.name === name
+		[...children.values()].some(
+			(child) =>
+				child.type !== 'referenced-structure' && child.name === name
 		);
 
 	if (!exists(name)) {

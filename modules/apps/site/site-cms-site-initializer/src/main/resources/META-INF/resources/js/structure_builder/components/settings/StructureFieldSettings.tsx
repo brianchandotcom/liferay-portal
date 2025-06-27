@@ -12,7 +12,7 @@ import {useId} from 'frontend-js-components-web';
 import React, {useEffect, useMemo} from 'react';
 
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
-import selectPublishedFields from '../../selectors/selectPublishedFields';
+import selectPublishedChildren from '../../selectors/selectPublishedChildren';
 import {FIELD_TYPE_LABEL, Field} from '../../utils/field';
 import focusInvalidElement from '../../utils/focusInvalidElement';
 import getFieldComponents from '../../utils/getFieldComponents';
@@ -65,9 +65,9 @@ export default function StructureFieldSettings({
 function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 	const dispatch = useStateDispatch();
 
-	const publishedFields = useSelector(selectPublishedFields);
+	const publishedChildren = useSelector(selectPublishedChildren);
 
-	const isPublished = publishedFields.has(field.uuid);
+	const isPublished = publishedChildren.has(field.uuid);
 
 	const {FirstSectionComponent, SecondSectionComponent} = getFieldComponents(
 		field.type

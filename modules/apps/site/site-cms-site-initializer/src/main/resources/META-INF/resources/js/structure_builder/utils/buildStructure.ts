@@ -13,7 +13,7 @@ import getUuid from './getUuid';
 export default function buildStructure(
 	objectDefinition: ObjectDefinition
 ): Structure {
-	const fields: Structure['fields'] = new Map();
+	const children: Structure['children'] = new Map();
 	const structureUuid = getUuid();
 
 	objectDefinition.objectFields?.forEach((objectField) => {
@@ -57,7 +57,7 @@ export default function buildStructure(
 				objectField.listTypeDefinitionId;
 		}
 
-		fields.set(uuid, field);
+		children.set(uuid, field);
 	});
 
 	objectDefinition.objectRelationships?.forEach((objectRelationship) => {
@@ -71,14 +71,14 @@ export default function buildStructure(
 			uuid,
 		};
 
-		fields.set(uuid, referencedStructure);
+		children.set(uuid, referencedStructure);
 	});
 
 	const isPublished = objectDefinition.status?.code === 0;
 
 	return {
+		children,
 		erc: objectDefinition.externalReferenceCode,
-		fields,
 		id: objectDefinition.id ?? null,
 		label: objectDefinition.label,
 		name: objectDefinition.name ?? '',

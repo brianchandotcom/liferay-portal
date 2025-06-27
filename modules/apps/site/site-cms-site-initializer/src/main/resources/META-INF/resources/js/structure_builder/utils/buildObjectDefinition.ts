@@ -20,16 +20,16 @@ import {
 import {isFieldTextSearchable} from './isFieldTextSearchable';
 
 export default function buildObjectDefinition({
+	children = new Map(),
 	erc,
-	fields = new Map(),
 	id,
 	label,
 	name,
 	spaces,
 	status = 'draft',
 }: {
+	children?: Structure['children'];
 	erc: Structure['erc'];
-	fields?: Structure['fields'];
 	id?: Structure['id'];
 	label: Structure['label'];
 	name: Structure['name'];
@@ -44,10 +44,10 @@ export default function buildObjectDefinition({
 		enableObjectEntryVersioning: true,
 		externalReferenceCode: erc,
 		label,
-		objectFields: buildFields(getFields(fields)),
+		objectFields: buildFields(getFields(children)),
 		objectRelationships: buildRelationships(
 			erc,
-			getReferencedStructures(fields)
+			getReferencedStructures(children)
 		),
 		pluralLabel: label,
 		scope: 'depot',
@@ -86,18 +86,18 @@ export default function buildObjectDefinition({
 	return objectDefinition;
 }
 
-function getFields(fields: Structure['fields']): Field[] {
-	return Array.from(fields.values()).filter(
-		(field) =>
-			!['referenced-structure', 'repeatable-group'].includes(field.type)
+function getFields(children: Structure['children']): Field[] {
+	return Array.from(children.values()).filter(
+		(child) =>
+			!['referenced-structure', 'repeatable-group'].includes(child.type)
 	) as Field[];
 }
 
 function getReferencedStructures(
-	fields: Structure['fields']
+	children: Structure['children']
 ): ReferencedStructure[] {
-	return Array.from(fields.values()).filter(
-		(field) => field.type === 'referenced-structure'
+	return Array.from(children.values()).filter(
+		(child) => child.type === 'referenced-structure'
 	) as ReferencedStructure[];
 }
 

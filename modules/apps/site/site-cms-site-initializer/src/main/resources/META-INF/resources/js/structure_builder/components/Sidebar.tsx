@@ -14,9 +14,9 @@ import React, {useState} from 'react';
 import {getImage} from '../../main/util/getImage';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelection from '../selectors/selectSelection';
-import selectStructureFields from '../selectors/selectStructureFields';
-import AddFieldDropdown from './AddFieldDropdown';
-import FieldsTree from './FieldsTree';
+import selectStructureChildren from '../selectors/selectStructureChildren';
+import AddChildDropdown from './AddChildDropdown';
+import StructureTree from './StructureTree';
 
 export default function () {
 	return (
@@ -25,17 +25,17 @@ export default function () {
 				{Liferay.Language.get('structure-fields')}
 			</h3>
 
-			<StructureFields />
+			<Content />
 		</div>
 	);
 }
 
-function StructureFields() {
-	const fields = useSelector(selectStructureFields);
+function Content() {
+	const children = useSelector(selectStructureChildren);
 
 	const [search, setSearch] = useState('');
 
-	if (!fields.size) {
+	if (!children.size) {
 		return <EmptyState />;
 	}
 
@@ -43,7 +43,7 @@ function StructureFields() {
 		<>
 			<Toolbar setSearch={setSearch} />
 
-			<FieldsTree search={search} />
+			<StructureTree search={search} />
 		</>
 	);
 }
@@ -60,7 +60,7 @@ function EmptyState() {
 			small
 			title={Liferay.Language.get('no-fields-yet')}
 		>
-			<AddFieldDropdown />
+			<AddChildDropdown />
 		</ClayEmptyState>
 	);
 }
@@ -83,7 +83,7 @@ function Toolbar({
 					variant="white"
 				/>
 
-				<AddFieldDropdown triggerType="icon" />
+				<AddChildDropdown triggerType="icon" />
 			</div>
 		);
 	}

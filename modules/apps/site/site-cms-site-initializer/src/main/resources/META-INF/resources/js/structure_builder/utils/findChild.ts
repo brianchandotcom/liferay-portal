@@ -15,13 +15,13 @@ export default function findChild(
 	parent: Structure | RepeatableGroup,
 	uuid: Uuid
 ): Field | ReferencedStructure | RepeatableGroup | null {
-	for (const field of parent.fields.values()) {
-		if (field.uuid === uuid) {
-			return field;
+	for (const child of parent.children.values()) {
+		if (child.uuid === uuid) {
+			return child;
 		}
 
-		if (field.type === 'repeatable-group') {
-			return findChild(field, uuid);
+		if (child.type === 'repeatable-group') {
+			return findChild(child, uuid);
 		}
 	}
 

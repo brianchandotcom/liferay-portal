@@ -6,15 +6,15 @@
 import {RepeatableGroup, Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 
-export function getFieldUuids(
+export function getChildrenUuids(
 	item: Structure | RepeatableGroup,
 	uuids: Set<Uuid> = new Set()
 ) {
-	for (const field of item.fields.values()) {
-		uuids.add(field.uuid);
+	for (const child of item.children.values()) {
+		uuids.add(child.uuid);
 
-		if (field.type === 'repeatable-group') {
-			getFieldUuids(field, uuids);
+		if (child.type === 'repeatable-group') {
+			getChildrenUuids(child, uuids);
 		}
 	}
 

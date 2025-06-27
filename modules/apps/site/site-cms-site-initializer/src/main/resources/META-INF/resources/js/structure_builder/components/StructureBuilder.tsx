@@ -14,8 +14,8 @@ import selectStructureId from '../selectors/selectStructureId';
 import {ObjectDefinition} from '../types/ObjectDefinition';
 import buildState from '../utils/buildState';
 import buildStructures from '../utils/buildStructures';
+import Sidebar from './Sidebar';
 import StructureBuilderManagementBar from './StructureBuilderManagementBar';
-import StructureFields from './StructureFields';
 import Settings from './settings/Settings';
 
 export default function StructureBuilder({
@@ -45,7 +45,7 @@ export default function StructureBuilder({
 					<StructureBuilderManagementBar />
 
 					<div className="d-flex flex-grow-1 p-4">
-						<StructureFields />
+						<Sidebar />
 
 						<Settings />
 					</div>

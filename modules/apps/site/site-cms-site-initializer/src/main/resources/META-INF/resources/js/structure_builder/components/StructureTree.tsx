@@ -12,11 +12,6 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React, {Key, useEffect, useMemo, useState} from 'react';
 
-import {
-	FIELD_TYPE_ICON,
-	Field,
-	FieldType,
-} from '../../structure_builder/utils/field';
 import {useCache} from '../contexts/CacheContext';
 import {
 	Action,
@@ -26,9 +21,9 @@ import {
 } from '../contexts/StateContext';
 import selectInvalids from '../selectors/selectInvalids';
 import selectSelection from '../selectors/selectSelection';
+import selectStructureChildren from '../selectors/selectStructureChildren';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureError from '../selectors/selectStructureError';
-import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import {
@@ -38,6 +33,7 @@ import {
 	Structures,
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
+import {FIELD_TYPE_ICON, Field, FieldType} from '../utils/field';
 import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
 import getStructureEditURL from '../utils/getStructureEditURL';
 
@@ -52,10 +48,10 @@ type TreeItem = {
 	uuid: Uuid;
 };
 
-export default function FieldsTree({search}: {search: string}) {
+export default function StructureTree({search}: {search: string}) {
 	const dispatch = useStateDispatch();
 
-	const fields = useSelector(selectStructureFields);
+	const children = useSelector(selectStructureChildren);
 	const invalids = useSelector(selectInvalids);
 	const selection = useSelector(selectSelection);
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
@@ -76,7 +72,7 @@ export default function FieldsTree({search}: {search: string}) {
 	);
 	const [selectedKeys, setSelectedKeys] = useState<Set<Key>>(new Set());
 
-	const hasReferencedStructure = Array.from(fields.values()).some(
+	const hasReferencedStructure = Array.from(children.values()).some(
 		({type}) => type === 'referenced-structure'
 	);
 
@@ -88,7 +84,7 @@ export default function FieldsTree({search}: {search: string}) {
 		return [
 			{
 				children: buildItems({
-					fields,
+					children,
 					search,
 					structureERC,
 					structures,
@@ -100,7 +96,7 @@ export default function FieldsTree({search}: {search: string}) {
 			},
 		];
 	}, [
-		fields,
+		children,
 		hasReferencedStructure,
 		search,
 		structureERC,
@@ -109,10 +105,6 @@ export default function FieldsTree({search}: {search: string}) {
 		structures,
 		structuresStatus,
 	]);
-
-	useEffect(() => {
-		console.log('🔄 fields changed');
-	}, [fields]);
 
 	const onSelect = (item: TreeItem) => {
 		let nextSelection: State['selection'] = selection;
@@ -313,71 +305,71 @@ function useSelectionMode() {
 }
 
 function buildItems({
-	fields,
+	children,
 	path = [],
 	search,
 	structureERC,
 	structures,
 }: {
-	fields: (Structure | RepeatableGroup)['fields'];
+	children: (Structure | RepeatableGroup)['children'];
 	path?: string[];
 	search: string;
 	structureERC: Structure['erc'];
 	structures: Structures;
 }): TreeItem[] {
-	return Array.from(fields.values()).reduce(
+	return Array.from(children.values()).reduce(
 		(
 			items: TreeItem[],
-			field: Field | ReferencedStructure | RepeatableGroup
+			child: Field | ReferencedStructure | RepeatableGroup
 		) => {
-			if (field.type === 'referenced-structure') {
-				const structure = structures.get(field.erc)!;
+			if (child.type === 'referenced-structure') {
+				const structure = structures.get(child.erc)!;
 				const label = getReferencedStructureLabel(
-					field.erc,
+					child.erc,
 					structures
 				);
 
 				const item: TreeItem = {
 					children:
-						field.erc === structureERC
+						child.erc === structureERC
 							? []
 							: buildItems({
-									fields: structure.fields,
-									path: [...path, field.name],
+									children: structure.children,
+									path: [...path, child.name],
 									search,
 									structureERC,
 									structures,
 								}),
-					erc: field.erc,
+					erc: child.erc,
 					icon: 'edit-layout',
-					id: buildId(path, field),
-					label: getReferencedStructureLabel(field.erc, structures),
-					type: field.type,
-					uuid: field.uuid,
+					id: buildId(path, child),
+					label: getReferencedStructureLabel(child.erc, structures),
+					type: child.type,
+					uuid: child.uuid,
 				};
 
 				if (match(label, search) || item.children?.length) {
 					items.push(item);
 				}
 			}
-			else if (field.type === 'repeatable-group') {
+			else if (child.type === 'repeatable-group') {
 				const label =
-					field.label[Liferay.ThemeDisplay.getDefaultLanguageId()]!;
+					child.label[Liferay.ThemeDisplay.getDefaultLanguageId()]!;
 
 				const item: TreeItem = {
 					children: buildItems({
-						fields: field.fields,
-						path: [...path, field.name],
+						children: child.children,
+						path: [...path, child.name],
 						search,
 						structureERC,
 						structures,
 					}),
-					erc: field.erc,
+					erc: child.erc,
 					icon: 'fieldset',
-					id: buildId(path, field),
+					id: buildId(path, child),
 					label,
-					type: field.type,
-					uuid: field.uuid,
+					type: child.type,
+					uuid: child.uuid,
 				};
 
 				if (match(label, search) || item.children?.length) {
@@ -386,17 +378,17 @@ function buildItems({
 			}
 			else {
 				const label =
-					field.label[Liferay.ThemeDisplay.getDefaultLanguageId()]!;
+					child.label[Liferay.ThemeDisplay.getDefaultLanguageId()]!;
 
 				if (match(label, search)) {
 					items.push({
-						icon: FIELD_TYPE_ICON[field.type],
-						id: buildId(path, field),
-						label: field.label[
+						icon: FIELD_TYPE_ICON[child.type],
+						id: buildId(path, child),
+						label: child.label[
 							Liferay.ThemeDisplay.getDefaultLanguageId()
 						]!,
-						type: field.type,
-						uuid: field.uuid,
+						type: child.type,
+						uuid: child.uuid,
 					});
 				}
 			}
@@ -409,9 +401,9 @@ function buildItems({
 
 function buildId(
 	path: string[],
-	field: Field | ReferencedStructure | RepeatableGroup
+	child: Field | ReferencedStructure | RepeatableGroup
 ) {
-	return [...path, field.name].join('_');
+	return [...path, child.name].join('_');
 }
 
 function match(value: string, keyword: string) {
@@ -468,7 +460,7 @@ function getItemActions({
 			label: Liferay.Language.get('delete-field'),
 			onClick: () =>
 				dispatch({
-					type: 'delete-field',
+					type: 'delete-child',
 					uuid: item.uuid,
 				}),
 			symbolLeft: 'trash',

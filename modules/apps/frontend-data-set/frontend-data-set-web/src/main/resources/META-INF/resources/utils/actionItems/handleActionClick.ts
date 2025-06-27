@@ -46,7 +46,6 @@ const handleActionClick = ({
 	onItemSelectionChange?: Function;
 	openModal: Function;
 	openSidePanel: Function;
-	selectItems?: Function;
 	setLoading?: Function;
 	toggleItemInlineEdit: Function;
 }) => {

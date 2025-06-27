@@ -46,7 +46,6 @@ const Card = forwardRef<HTMLDivElement, any>(
 			onInfoPanelToggleButtonClick,
 			openModal,
 			openSidePanel,
-			selectItems,
 			selectable,
 			selectedItemsKey,
 			selectedItemsValue,
@@ -185,7 +184,6 @@ const Card = forwardRef<HTMLDivElement, any>(
 									onItemSelectionChange,
 									openModal,
 									openSidePanel,
-									selectItems,
 									toggleItemInlineEdit,
 								});
 							},
@@ -201,9 +199,9 @@ const Card = forwardRef<HTMLDivElement, any>(
 									const target = getSelectionTrigger(event);
 
 									!!target &&
-										selectItems({
+										onItemSelectionChange?.({
+											item,
 											trigger: target,
-											value: selectedItemKey,
 										});
 
 									event.preventDefault();

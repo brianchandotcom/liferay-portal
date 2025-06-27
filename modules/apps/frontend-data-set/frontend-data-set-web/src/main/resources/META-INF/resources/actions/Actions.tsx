@@ -39,7 +39,6 @@ function Actions({
 		onInfoPanelToggleButtonClick,
 		openModal,
 		openSidePanel,
-		selectItems,
 		selectedItemsKey,
 		selectedItemsValue,
 		toggleItemInlineEdit,
@@ -107,7 +106,6 @@ function Actions({
 			onItemSelectionChange,
 			openModal,
 			openSidePanel,
-			selectItems,
 			setLoading,
 			toggleItemInlineEdit,
 		});

@@ -624,13 +624,6 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().updatePortlet(objectDefinitionId);
 	}
 
-	public static ObjectDefinition updateRootDescendantNodeObjectDefinition(
-		ObjectDefinition objectDefinition, long rootObjectDefinitionId) {
-
-		return getService().updateRootDescendantNodeObjectDefinition(
-			objectDefinition, rootObjectDefinitionId);
-	}
-
 	public static ObjectDefinition updateSystemObjectDefinition(
 			String externalReferenceCode, long objectDefinitionId,
 			long objectFolderId, long titleObjectFieldId,

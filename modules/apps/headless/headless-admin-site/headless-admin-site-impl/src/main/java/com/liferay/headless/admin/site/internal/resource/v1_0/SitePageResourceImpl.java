@@ -30,8 +30,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -260,6 +262,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			String externalReferenceCode, long groupId, SitePage sitePage)
 		throws Exception {
 
+		Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
+			sitePage.getName_i18n());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_getTypeSettingsUnicodeProperties(sitePage);
+
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			groupId, contextHttpServletRequest, sitePage.getViewableByAsString()
 		).build();
@@ -267,19 +275,40 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		serviceContext.setUserId(contextUser.getUserId());
 		serviceContext.setUuid(sitePage.getUuid());
 
-		Layout layout = _layoutService.addLayout(
-			externalReferenceCode, groupId, false,
-			_getParentLayoutId(
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
-				sitePage.getParentSitePageExternalReferenceCode()),
-			LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()), null,
-			null, null, null,
-			SitePageTypeUtil.toInternalType(sitePage.getType()),
-			_getTypeSettings(sitePage),
-			_isHiddenFromNavigation(false, sitePage.getPageSettings()),
-			LocalizedMapUtil.getLocalizedMap(
-				sitePage.getFriendlyUrlPath_i18n()),
-			0, serviceContext);
+		Layout layout = null;
+
+		if (sitePage.getType() == SitePage.Type.WIDGET_PAGE) {
+			String typeSettings = null;
+
+			if (typeSettingsUnicodeProperties != null) {
+				typeSettings = typeSettingsUnicodeProperties.toString();
+			}
+
+			layout = _layoutService.addLayout(
+				externalReferenceCode, groupId, false,
+				_getParentLayoutId(
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
+					sitePage.getParentSitePageExternalReferenceCode()),
+				nameMap, null, null, null, null,
+				SitePageTypeUtil.toInternalType(sitePage.getType()),
+				typeSettings,
+				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
+				LocalizedMapUtil.getLocalizedMap(
+					sitePage.getFriendlyUrlPath_i18n()),
+				0, serviceContext);
+		}
+		else {
+			layout = LayoutUtil.addContentLayout(
+				sitePage.getExternalReferenceCode(), groupId,
+				sitePage.getPageSpecifications(), false, nameMap, null, null,
+				null, SitePageTypeUtil.toInternalType(sitePage.getType()),
+				typeSettingsUnicodeProperties,
+				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
+				false,
+				LocalizedMapUtil.getLocalizedMap(
+					sitePage.getFriendlyUrlPath_i18n()),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+		}
 
 		PageSettings pageSettings = sitePage.getPageSettings();
 
@@ -314,7 +343,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return layout.getLayoutId();
 	}
 
-	private String _getTypeSettings(SitePage sitePage) {
+	private UnicodeProperties _getTypeSettingsUnicodeProperties(
+		SitePage sitePage) {
+
 		PageSettings pageSettings = sitePage.getPageSettings();
 
 		if (pageSettings == null) {
@@ -343,7 +374,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		).setProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
 			widgetPageSettings.getLayoutTemplateId()
-		).buildString();
+		).build();
 	}
 
 	private boolean _isHiddenFromNavigation(
@@ -411,15 +442,16 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			layout = _layoutService.updatePriority(layout.getPlid(), priority);
 		}
 
-		String typeSettings = _getTypeSettings(sitePage);
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_getTypeSettingsUnicodeProperties(sitePage);
 
-		if (typeSettings == null) {
+		if (typeSettingsUnicodeProperties == null) {
 			return layout;
 		}
 
 		return _layoutService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			typeSettings);
+			typeSettingsUnicodeProperties.toString());
 	}
 
 	private void _validateSitePageLayout(Layout layout) {

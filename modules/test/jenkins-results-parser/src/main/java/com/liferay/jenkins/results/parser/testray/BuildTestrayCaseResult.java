@@ -189,9 +189,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 	}
 
 	protected String getTopLevelJenkinsConsoleKey() {
-		String topLevelBuildURLPath = getTopLevelBuildURLPath();
-
-		return topLevelBuildURLPath + "/jenkins-console.txt.gz";
+		return getTopLevelBuildURLPath() + "/jenkins-console.txt.gz";
 	}
 
 	protected String getTopLevelJenkinsConsoleName() {

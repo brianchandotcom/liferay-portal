@@ -85,7 +85,6 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 
 	return (
 		<VerticalNav
-			aria-label="vertical navbar"
 			defaultExpandedKeys={new Set([Liferay.Language.get('spaces')])}
 			displayType="primary"
 			items={
@@ -121,6 +120,7 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 						<div className="autofit-row">
 							{item.sticker && (
 								<ClaySticker
+									aria-hidden="true"
 									displayType={
 										item.sticker.displayType as DisplayType
 									}

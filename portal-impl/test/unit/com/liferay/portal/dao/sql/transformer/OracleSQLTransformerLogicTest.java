@@ -31,10 +31,8 @@ public class OracleSQLTransformerLogicTest
 
 	@Override
 	public String getDropTableIfExistsTextTransformedSQL() {
-		return StringBundler.concat(
-			"BEGIN\n", "EXECUTE IMMEDIATE 'DROP TABLE Foo';\n", "EXCEPTION\n",
-			"WHEN OTHERS THEN\n", "IF SQLCODE != -942 THEN\n", "RAISE;\nEND ",
-			"IF;\n", "END;\n", "/");
+		return "BEGIN\nEXECUTE IMMEDIATE 'DROP TABLE Foo';\nEXCEPTION\nWHEN " +
+			"OTHERS THEN\nIF SQLCODE != -942 THEN\nRAISE;\nEND IF;\nEND;\n/";
 	}
 
 	@Override

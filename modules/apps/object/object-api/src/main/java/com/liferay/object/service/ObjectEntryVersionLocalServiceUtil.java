@@ -399,6 +399,13 @@ public class ObjectEntryVersionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static boolean isLatestObjectEntryVersion(
+			long objectEntryId, int version)
+		throws PortalException {
+
+		return getService().isLatestObjectEntryVersion(objectEntryId, version);
+	}
+
 	public static ObjectEntryVersion updateLatestObjectEntryVersion(
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws PortalException {

@@ -113,6 +113,29 @@ public class ControlPanelLayoutTypeAccessPolicyTest {
 
 		controlPanelLayoutTypeAccessPolicy.checkAccessAllowedToPortlet(
 			httpServletRequest, null, portlet);
+
+		Mockito.when(
+			group.isControlPanel()
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			group.isDepot()
+		).thenReturn(
+			true
+		);
+
+		portletPermissionUtilMockedStatic.when(
+			() -> PortletPermissionUtil.hasControlPanelAccessPermission(
+				PermissionThreadLocal.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), portlet)
+		).thenReturn(
+			true
+		);
+
+		controlPanelLayoutTypeAccessPolicy.checkAccessAllowedToPortlet(
+			httpServletRequest, null, portlet);
 	}
 
 }

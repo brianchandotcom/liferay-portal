@@ -1263,8 +1263,6 @@ definition {
 
 	@priority = 3
 	test ImportLarFrom70ToCurrent {
-		property portal.acceptance = "true";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		LAR.importPortlet(
@@ -1377,8 +1375,6 @@ definition {
 
 	@priority = 3
 	test NotStagedAssets {
-		property portal.acceptance = "true";
-
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(
@@ -2693,7 +2689,6 @@ definition {
 
 	@priority = 3
 	test StagingMultipleDM {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

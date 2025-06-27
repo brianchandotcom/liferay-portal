@@ -100,7 +100,6 @@ definition {
 	@description = "This is a use case for LPS-51432 and LPS-95113. Pages associated with a site template cannot be deleted and removing a parent page on a site template will delete the same page and the child page also on the connected sites, if propagation is enabled."
 	@priority = 3
 	test AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -443,7 +442,6 @@ definition {
 	@priority = 3
 	test SitesDynamicTemplateInheritance {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "true";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

@@ -915,8 +915,6 @@ definition {
 	@description = "Verify is possible export/import a Private Page."
 	@priority = 3
 	test ExportImportPrivatePage {
-		property portal.acceptance = "true";
-
 		task ("Enable private pages") {
 			PagesAdmin.enablePrivatePages();
 		}
@@ -1396,7 +1394,6 @@ definition {
 	@description = "Verify is possible export/import validation."
 	@priority = 3
 	test ExportImportValidation {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -1614,7 +1611,6 @@ definition {
 	@description = "This is a use case for LPS-88498. Verify if a Guest is able to export files."
 	@priority = 3
 	test ExportViaGuest {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

@@ -127,8 +127,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				_cpConfigurationList.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class),
 				_cpDefinition.getCPDefinitionId(),
-				_cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
-				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				_cpConfigurationList.getCPConfigurationListId(), 0, "123.00",
+				true, 0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
 				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
 				true, true, 1.0, true, true, 1.0, 1.0);
 
@@ -199,8 +199,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				_cpConfigurationList.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class),
 				_cpDefinition.getCPDefinitionId(),
-				_cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
-				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				_cpConfigurationList.getCPConfigurationListId(), 0, "123.00",
+				true, 0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
 				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
 				true, true, 1.0, true, true, 1.0, 1.0);
 
@@ -287,8 +287,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				cpConfigurationList2.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class),
 				_cpDefinition.getCPDefinitionId(),
-				cpConfigurationList2.getCPConfigurationListId(), 0, "123", true,
-				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				cpConfigurationList2.getCPConfigurationListId(), 0, "123.00",
+				true, 0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
 				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
 				true, true, 1.0, true, true, 1.0, 1.0);
 
@@ -468,8 +468,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				_cpConfigurationList.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class),
 				_cpDefinition.getCPDefinitionId(),
-				_cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
-				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				_cpConfigurationList.getCPConfigurationListId(), 0, "123.00",
+				true, 0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
 				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
 				true, true, 1.0, true, true, 1.0, 1.0);
 
@@ -526,8 +526,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				_cpConfigurationList.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class),
 				_cpDefinition.getCPDefinitionId(),
-				_cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
-				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				_cpConfigurationList.getCPConfigurationListId(), 0, "123.00",
+				true, 0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
 				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
 				true, true, 1.0, true, true, 1.0, 1.0);
 

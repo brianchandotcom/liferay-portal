@@ -2009,7 +2009,9 @@ public class ObjectRelationshipLocalServiceImpl
 		long[] addRootObjectDefinitionIds = new long[0];
 
 		if (newRootObjectDefinitionId != 0) {
-			addRootObjectDefinitionIds = new long[] {newRootObjectDefinitionId};
+			addRootObjectDefinitionIds = new long[] {
+				newRootObjectDefinitionId
+			};
 		}
 
 		long[] removeRootObjectDefinitionIds = new long[0];

@@ -1794,6 +1794,14 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (productConfigurationList.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("displayDate", additionalAssertFieldName)) {
 				if (productConfigurationList.getDisplayDate() == null) {
 					valid = false;
@@ -2042,6 +2050,17 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 				if (!Objects.deepEquals(
 						productConfigurationList1.getCreateDate(),
 						productConfigurationList2.getCreateDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productConfigurationList1.getCustomFields(),
+						productConfigurationList2.getCustomFields())) {
 
 					return false;
 				}
@@ -2363,6 +2382,11 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("customFields")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("displayDate")) {

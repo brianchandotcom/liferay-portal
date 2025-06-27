@@ -1432,7 +1432,7 @@ public class ObjectRelationshipLocalServiceImpl
 					objectRelationshipLocalService);
 
 			Tree tree = objectDefinitionTreeFactory.create(
-				false, true, objectDefinition2.getObjectDefinitionId());
+				true, false, objectDefinition2.getObjectDefinitionId());
 
 			Iterator<Node> iterator = tree.iterator();
 

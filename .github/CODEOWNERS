@@ -483,8 +483,8 @@ modules/test/playwright/tests/staging-configuration-web    @liferay-headless
 modules/third-party/
 modules/util/pmd/    @liferay-core-infra
 modules/util/portal-tools-benchmarks/    @liferay-core-infra
-modules/util/portal-tools-db-migration-schema-importer    @liferay-database-infra
-modules/util/portal-tools-db-migration-schema-importer-test    @liferay-database-infra
+modules/util/portal-tools-db-migration-importer    @liferay-database-infra
+modules/util/portal-tools-db-migration-importer-test    @liferay-database-infra
 modules/util/portal-tools-db-partition-migration-validator    @liferay-database-infra
 modules/util/portal-tools-db-partition-migration-validator-test    @liferay-database-infra
 modules/util/portal-tools-db-partition-schema-validator    @liferay-database-infra

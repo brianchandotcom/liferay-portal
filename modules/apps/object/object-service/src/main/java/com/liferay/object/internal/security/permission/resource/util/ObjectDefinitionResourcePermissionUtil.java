@@ -288,11 +288,11 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 		if (objectRelationshipsMap == null) {
 			tree = objectDefinitionTreeFactory.create(
-				rootNodeObjectDefinition.getObjectDefinitionId());
+				true, rootNodeObjectDefinition.getObjectDefinitionId());
 		}
 		else {
 			tree = objectDefinitionTreeFactory.create(
-				true, true, rootNodeObjectDefinition.getObjectDefinitionId(),
+				true, rootNodeObjectDefinition.getObjectDefinitionId(),
 				pk -> ListUtil.filter(
 					objectRelationshipsMap.getOrDefault(
 						pk, Collections.emptyList()),

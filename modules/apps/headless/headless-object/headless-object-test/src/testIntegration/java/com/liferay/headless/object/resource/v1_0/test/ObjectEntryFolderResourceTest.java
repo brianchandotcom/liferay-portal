@@ -308,6 +308,16 @@ public class ObjectEntryFolderResourceTest
 
 	@Override
 	protected ObjectEntryFolder
+			testGetObjectEntryFolderPermissionsPage_addObjectEntryFolder()
+		throws Exception {
+
+		return objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+			String.valueOf(_testDepotEntry.getGroupId()),
+			randomObjectEntryFolder());
+	}
+
+	@Override
+	protected ObjectEntryFolder
 			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
 		throws Exception {
 
@@ -387,6 +397,16 @@ public class ObjectEntryFolderResourceTest
 
 		return objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
 			String.valueOf(_testDepotEntry.getGroupId()), objectEntryFolder);
+	}
+
+	@Override
+	protected ObjectEntryFolder
+			testPutObjectEntryFolderPermissionsPage_addObjectEntryFolder()
+		throws Exception {
+
+		return objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+			String.valueOf(_testDepotEntry.getGroupId()),
+			randomObjectEntryFolder());
 	}
 
 	@Override

@@ -9,7 +9,9 @@ import com.liferay.jenkins.results.parser.BatchHistory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.TestHistory;
+import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 
 import java.io.File;
 
@@ -95,6 +97,16 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
+	public AxisTestClassGroup getAxisTestClassGroup() {
+		return _axisTestClassGroup;
+	}
+
+	@Override
+	public BatchTestClassGroup getBatchTestClassGroup() {
+		return _batchTestClassGroup;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
@@ -131,6 +143,11 @@ public abstract class BaseTestClass implements TestClass {
 		return JenkinsResultsParserUtil.getPathRelativeTo(
 			getTestClassFile(),
 			portalGitWorkingDirectory.getWorkingDirectory());
+	}
+
+	@Override
+	public SegmentTestClassGroup getSegmentTestClassGroup() {
+		return _segmentTestClassGroup;
 	}
 
 	@Override
@@ -192,6 +209,18 @@ public abstract class BaseTestClass implements TestClass {
 		return false;
 	}
 
+	@Override
+	public void setAxisTestClassGroup(AxisTestClassGroup axisTestClassGroup) {
+		_axisTestClassGroup = axisTestClassGroup;
+	}
+
+	@Override
+	public void setSegmentTestClassGroup(
+		SegmentTestClassGroup segmentTestClassGroup) {
+
+		_segmentTestClassGroup = segmentTestClassGroup;
+	}
+
 	protected BaseTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile) {
 
@@ -233,10 +262,6 @@ public abstract class BaseTestClass implements TestClass {
 
 	protected void addTestClassMethod(String methodName) {
 		addTestClassMethod(false, methodName);
-	}
-
-	protected BatchTestClassGroup getBatchTestClassGroup() {
-		return _batchTestClassGroup;
 	}
 
 	protected PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
@@ -283,7 +308,9 @@ public abstract class BaseTestClass implements TestClass {
 	private Long _averageDuration;
 	private Long _averageOverheadDuration;
 	private Long _averageTestTaskDuration;
+	private AxisTestClassGroup _axisTestClassGroup;
 	private final BatchTestClassGroup _batchTestClassGroup;
+	private SegmentTestClassGroup _segmentTestClassGroup;
 	private final File _testClassFile;
 	private final List<TestClassMethod> _testClassMethods = new ArrayList<>();
 	private TestHistory _testHistory;

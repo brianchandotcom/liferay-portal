@@ -576,8 +576,9 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntry objectEntry = null;
 
 		if (Validator.isNotNull(externalReferenceCode)) {
-			objectEntry = objectEntryPersistence.fetchByERC_C_ODI(
-				externalReferenceCode, user.getCompanyId(), objectDefinitionId);
+			objectEntry = objectEntryPersistence.fetchByERC_G_C_ODI(
+				externalReferenceCode, groupId, user.getCompanyId(),
+				objectDefinitionId);
 
 			if (objectEntry != null) {
 				return objectEntryLocalService.updateObjectEntry(
@@ -765,17 +766,6 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public ObjectEntry deleteObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
-		throws PortalException {
-
-		ObjectEntry objectEntry = objectEntryPersistence.findByERC_G_C(
-			externalReferenceCode, groupId, companyId);
-
-		return objectEntryLocalService.deleteObjectEntry(objectEntry);
-	}
-
-	@Override
 	public void deleteRelatedObjectEntries(
 			long groupId, long objectDefinitionId, long primaryKey)
 		throws PortalException {
@@ -936,7 +926,7 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public ObjectEntry fetchObjectEntry(
-		String externalReferenceCode, long objectDefinitionId) {
+		String externalReferenceCode, long groupId, long objectDefinitionId) {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
@@ -945,8 +935,8 @@ public class ObjectEntryLocalServiceImpl
 			return null;
 		}
 
-		return objectEntryPersistence.fetchByERC_C_ODI(
-			externalReferenceCode, objectDefinition.getCompanyId(),
+		return objectEntryPersistence.fetchByERC_G_C_ODI(
+			externalReferenceCode, groupId, objectDefinition.getCompanyId(),
 			objectDefinitionId);
 	}
 
@@ -1190,24 +1180,15 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public ObjectEntry getObjectEntry(
-			String externalReferenceCode, long objectDefinitionId)
+			String externalReferenceCode, long groupId, long objectDefinitionId)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		return objectEntryPersistence.findByERC_C_ODI(
-			externalReferenceCode, objectDefinition.getCompanyId(),
+		return objectEntryPersistence.findByERC_G_C_ODI(
+			externalReferenceCode, groupId, objectDefinition.getCompanyId(),
 			objectDefinitionId);
-	}
-
-	@Override
-	public ObjectEntry getObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
-		throws PortalException {
-
-		return objectEntryPersistence.findByERC_G_C(
-			externalReferenceCode, groupId, companyId);
 	}
 
 	@Override
@@ -1275,7 +1256,7 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		ObjectEntry objectEntry = fetchObjectEntry(
-			externalReferenceCode, objectDefinitionId);
+			externalReferenceCode, groupId, objectDefinitionId);
 
 		if (objectEntry != null) {
 			return objectEntry;
@@ -1288,9 +1269,10 @@ public class ObjectEntryLocalServiceImpl
 			throw new NoSuchObjectEntryException(
 				String.format(
 					"No ObjectEntry exists with the key {externalReference" +
-						"Code=%s, companyId=%s, objectDefinitionId=%s}",
-					externalReferenceCode, objectDefinition.getCompanyId(),
-					objectDefinitionId));
+						"Code=%s, groupId=%s, companyId=%s, " +
+							"objectDefinitionId=%s}",
+					externalReferenceCode, groupId,
+					objectDefinition.getCompanyId(), objectDefinitionId));
 		}
 
 		objectEntry = _addObjectEntry(
@@ -5504,7 +5486,8 @@ public class ObjectEntryLocalServiceImpl
 				}
 
 				_validateExternalReferenceCode(
-					externalReferenceCode, objectEntry.getCompanyId(),
+					externalReferenceCode, objectEntry.getGroupId(),
+					objectEntry.getCompanyId(),
 					objectEntry.getObjectDefinitionId(),
 					objectEntry.getObjectEntryId());
 
@@ -6253,11 +6236,11 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _validateExternalReferenceCode(
-		String externalReferenceCode, long companyId, long objectDefinitionId,
-		long objectEntryId) {
+		String externalReferenceCode, long groupId, long companyId,
+		long objectDefinitionId, long objectEntryId) {
 
-		ObjectEntry objectEntry = objectEntryPersistence.fetchByERC_C_ODI(
-			externalReferenceCode, companyId, objectDefinitionId);
+		ObjectEntry objectEntry = objectEntryPersistence.fetchByERC_G_C_ODI(
+			externalReferenceCode, groupId, companyId, objectDefinitionId);
 
 		if ((objectEntry != null) &&
 			(objectEntry.getObjectEntryId() != objectEntryId)) {
@@ -6265,8 +6248,8 @@ public class ObjectEntryLocalServiceImpl
 			throw new DuplicateObjectEntryExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate object entry with external reference code ",
-					externalReferenceCode, " and object definition ID ",
-					objectDefinitionId));
+					externalReferenceCode, ", group ID ", groupId,
+					" and object definition ID ", objectDefinitionId));
 		}
 	}
 

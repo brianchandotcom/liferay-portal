@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -57,7 +56,6 @@ import java.net.URL;
 
 import java.util.Date;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -85,12 +83,10 @@ public class UpdatePasswordActionTest {
 
 		_company = CompanyLocalServiceUtil.getCompany(group.getCompanyId());
 
+		_user = UserTestUtil.addGroupUser(group, RoleConstants.POWER_USER);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		_user = UserTestUtil.addGroupUser(group, RoleConstants.POWER_USER);
 
 		_layoutUtilityPageEntry1 = _addLayoutUtilityPageEntry(
 			_FRAGMENT_ENTRY_HTML_1, group, serviceContext);
@@ -101,18 +97,8 @@ public class UpdatePasswordActionTest {
 		Group guestGroup = _groupLocalService.getGroup(
 			_company.getCompanyId(), GroupConstants.GUEST);
 
-		_FRAGMENT_ENTRY_HTML_2 = RandomTestUtil.randomString();
-
 		_layoutUtilityPageEntry2 = _addLayoutUtilityPageEntry(
 			_FRAGMENT_ENTRY_HTML_2, guestGroup, serviceContext);
-
-		UserTestUtil.setUser(
-			_userLocalService.getGuestUser(_company.getCompanyId()));
-	}
-
-	@After
-	public void tearDown() {
-		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -211,8 +197,8 @@ public class UpdatePasswordActionTest {
 				StringBundler.concat(
 					"http://", _company.getVirtualHostname(),
 					":8080/c/portal/update_password?p_l_id=",
-					_layout1.getPlid(), "&ticketId=", ticketId,
-					"&ticketId=", ticketKey));
+					_layout1.getPlid(), "&ticketId=", ticketId, "&ticketId=",
+					ticketKey));
 		}
 		else {
 			url = new URL(
@@ -259,6 +245,12 @@ public class UpdatePasswordActionTest {
 			_isFragmentRendered(_FRAGMENT_ENTRY_HTML_2, usePlid));
 	}
 
+	private static final String _FRAGMENT_ENTRY_HTML_1 =
+		RandomTestUtil.randomString();
+
+	private static final String _FRAGMENT_ENTRY_HTML_2 =
+		RandomTestUtil.randomString();
+
 	private Company _company;
 
 	@Inject
@@ -273,8 +265,7 @@ public class UpdatePasswordActionTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
-	private static final String _FRAGMENT_ENTRY_HTML_2 = RandomTestUtil.randomString();
-	private LayoutUtilityPageEntry _layoutUtilityPageEntry2;
+	private Layout _layout1;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
@@ -283,13 +274,12 @@ public class UpdatePasswordActionTest {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
+	private LayoutUtilityPageEntry _layoutUtilityPageEntry1;
+	private LayoutUtilityPageEntry _layoutUtilityPageEntry2;
+
 	@Inject
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
-
-	private String _FRAGMENT_ENTRY_HTML_1 = RandomTestUtil.randomString();
-	private Layout _layout1;
-	private LayoutUtilityPageEntry _layoutUtilityPageEntry1;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

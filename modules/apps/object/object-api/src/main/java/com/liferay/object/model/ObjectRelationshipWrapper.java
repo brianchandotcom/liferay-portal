@@ -522,6 +522,13 @@ public class ObjectRelationshipWrapper
 		return model.isEdge();
 	}
 
+	@Override
+	public boolean isEdgeCandidate()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.isEdgeCandidate();
+	}
+
 	/**
 	 * Returns <code>true</code> if this object relationship is reverse.
 	 *

@@ -77,8 +77,6 @@ public interface ObjectDefinition
 
 	public long getRootObjectDefinitionId();
 
-	public long[] getRootObjectDefinitionIds();
-
 	public String getShortName();
 
 	public boolean isApproved();
@@ -89,15 +87,11 @@ public interface ObjectDefinition
 
 	public boolean isModifiableAndSystem();
 
-	public boolean isNode(long rootObjectDefinitionId);
+	public boolean isNodeCandidate();
 
 	public boolean isRootDescendantNode();
 
-	public boolean isRootDescendantNode(long rootObjectDefinitionId);
-
 	public boolean isRootNode();
-
-	public boolean isRootNode(long rootObjectDefinitionId);
 
 	public boolean isUnmodifiableSystemObject();
 
@@ -106,8 +100,6 @@ public interface ObjectDefinition
 
 	public void setPreviousRESTContextPath(String previousRESTContextPath);
 
-	public void setRootObjectDefinitionIds(
-		long[] rootObjectDefinitionIdsToAdd,
-		long[] rootObjectDefinitionIdsToRemove);
+	public void setRootObjectDefinitionId(long rootObjectDefinitionId);
 
 }

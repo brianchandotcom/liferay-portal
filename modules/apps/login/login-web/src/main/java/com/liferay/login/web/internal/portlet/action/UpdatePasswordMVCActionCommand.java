@@ -60,14 +60,17 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
-		Ticket ticket = UpdatePasswordActionUtil.getTicket(httpServletRequest);
+		Ticket ticket = UpdatePasswordActionUtil.getTicket(
+			ParamUtil.getString(actionRequest, "ticketId"),
+			ParamUtil.getString(actionRequest, "ticketKey"));
 
 		actionRequest.setAttribute(WebKeys.TICKET, ticket);
 
-		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(actionRequest));
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
 			UpdatePasswordActionUtil.verifyUser(httpServletRequest, ticket);
@@ -81,6 +84,8 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 				UpdatePasswordMVCActionCommand.class.getName(),
 				httpServletRequest,
 				_portal.getHttpServletResponse(actionResponse),
+				actionRequest.getParameter("password1"),
+				actionRequest.getParameter("password2"),
 				ParamUtil.getString(actionRequest, "redirect"),
 				actionResponse::sendRedirect, themeDisplay, ticket);
 		}

@@ -218,6 +218,10 @@ public interface ObjectEntryVersionLocalService
 			long userId, ObjectEntryVersion objectEntryVersion)
 		throws PortalException;
 
+	public void expireObjectEntryVersions(
+			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
+		throws Exception;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntryVersion fetchObjectEntryVersion(
 		long objectEntryVersionId);

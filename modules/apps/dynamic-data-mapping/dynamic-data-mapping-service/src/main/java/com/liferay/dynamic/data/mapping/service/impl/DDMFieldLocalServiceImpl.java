@@ -833,8 +833,8 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			rootDDMField.getFieldId());
 
 		for (DDMFieldAttributeInfo ddmFieldAttributeInfo :
-				rootDDMFieldInfo._ddmFieldAttributeInfos.get(
-					StringPool.BLANK)) {
+				rootDDMFieldInfo._ddmFieldAttributeInfos.getOrDefault(
+					StringPool.BLANK, Collections.emptyList())) {
 
 			String attributeName = ddmFieldAttributeInfo._attributeName;
 

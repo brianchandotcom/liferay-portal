@@ -26,7 +26,7 @@ export const test = mergeTests(
 
 test(
 	'User can add to cart and checkout a product with upload option',
-	{tag: ['@LPD-50964']},
+	{tag: ['@LPD-58776']},
 	async ({
 		apiHelpers,
 		checkoutPage,
@@ -35,9 +35,7 @@ test(
 		page,
 		productDetailsPage,
 	}) => {
-		test.setTimeout(90000);
-
-		const {catalog, channel, site} = await classicCommerceSetUp(
+		const {catalog, site} = await classicCommerceSetUp(
 			apiHelpers,
 			`UploadOption${getRandomString()}`
 		);
@@ -82,16 +80,6 @@ test(
 				],
 			});
 
-		const productSku = (
-			await apiHelpers.headlessCommerceDeliveryCatalog.getChannelProductSkusPage(
-				channel.id,
-				productWithUploadOption.productId,
-				new URLSearchParams({
-					nestedFields: `price`,
-				})
-			)
-		).items[0];
-
 		await page.goto(
 			`/web/${site.name}/p/${productWithUploadOption.name['en_US']}`
 		);
@@ -128,8 +116,9 @@ test(
 					productWithUploadOption.name['en_US']
 				)
 			).toBeVisible();
+
 			await expect(commerceMiniCartPage.miniCartTotalPrice).toHaveText(
-				productSku.price.priceFormatted
+				'$ 10.00'
 			);
 
 			await commerceMiniCartPage.submitButton.click();
@@ -169,10 +158,10 @@ test(
 				(
 					await commerceThemeClassicOrdersPage.orderItemsTableRow(
 						9,
-						productSku.price.priceFormatted,
+						'$ 10.00',
 						true
 					)
-				).column.getByText(productSku.price.priceFormatted)
+				).column.getByText('$ 10.00')
 			).toBeVisible();
 		}
 		finally {

@@ -600,6 +600,11 @@ public abstract class BaseTopLevelBuild
 		return new TimelineData(500, this);
 	}
 
+	@Override
+	public TopLevelBuildReport getTopLevelBuildReport() {
+		return BuildReportFactory.newTopLevelBuildReport(this);
+	}
+
 	public URL getUserContentURL() {
 		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 

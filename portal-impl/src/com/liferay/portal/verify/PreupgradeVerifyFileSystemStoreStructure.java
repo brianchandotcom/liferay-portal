@@ -228,7 +228,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to verify file system structure in: " +
+					"Unable to verify advanced file system structure in: " +
 						folderIdPath,
 					exception);
 			}

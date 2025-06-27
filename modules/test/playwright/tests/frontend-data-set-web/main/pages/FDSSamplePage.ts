@@ -89,6 +89,10 @@ export class FDSSamplePage {
 		});
 		this.infoPanel = page.locator('.fds-info-panel');
 
+		this.itemActionsButtons = page.locator(
+			'button.dropdown-toggle.component-action.btn-unstyled'
+		);
+
 		const listContainer = page.locator('.fds .list-sheet');
 
 		this.list = {
@@ -107,12 +111,6 @@ export class FDSSamplePage {
 			container: selectionToolbarContainer,
 		};
 
-		this.itemActionsButtons = page.locator(
-			'button.dropdown-toggle.component-action.btn-unstyled'
-		);
-
-		this.managementToolbar = page.getByTestId('management-toolbar');
-		this.page = page;
 		this.showViewOptionsButton = page.getByLabel('Show View Options', {
 			exact: true,
 		});
@@ -184,6 +182,54 @@ export class FDSSamplePage {
 				exact: true,
 				name: 'Actions',
 			});
+	}
+
+	async selectByRowAndCell({
+		cell = 0,
+		filter,
+		row = 0,
+	}: {
+		cell?: number;
+		filter?: string;
+		row?: number;
+	}) {
+		if (filter) {
+			await this.table.bodyRows
+				.nth(row)
+				.locator('td')
+				.filter({hasText: filter})
+				.click();
+		}
+		else {
+			await this.table.bodyRows.nth(row).locator('td').nth(cell).click();
+		}
+	}
+
+	async selectByRowAndRole({
+		filter,
+		role = 'checkbox',
+		row = 0,
+	}: {
+		filter?: string;
+		role?: any;
+		row?: number;
+	} = {}) {
+		if (filter) {
+			await this.table.bodyRows
+				.nth(row)
+				.locator('td')
+				.getByRole(role)
+				.filter({hasText: filter})
+				.click();
+		}
+		else {
+			await this.table.bodyRows
+				.nth(row)
+				.locator('td')
+				.getByRole(role)
+				.first()
+				.click();
+		}
 	}
 
 	async selectTab(label: string) {

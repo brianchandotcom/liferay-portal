@@ -269,7 +269,8 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			URL url = new URL(
 				"https://playwright.liferay.com/?trace=" + traceZipURLPath);
 
-			return new DefaultTestrayAttachment(this, "Trace Viewer", "", url);
+			return new DefaultTestrayAttachment(
+				this, "Trace Viewer", traceZipURLPath, url);
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

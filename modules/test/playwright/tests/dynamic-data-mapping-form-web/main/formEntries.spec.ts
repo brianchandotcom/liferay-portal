@@ -8,7 +8,9 @@ import {Page, expect, mergeTests} from '@playwright/test';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {FormFieldsPage} from '../../../pages/dynamic-data-mapping-form-web/FormFieldsPage';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {deleteItems} from './utils/deleteItems';
 
 export const test = mergeTests(loginTest(), formsPagesTest);
@@ -241,3 +243,87 @@ test('can add image to repeated Rich Text field', async ({
 			.locator('img[src="/documents/d/guest/planet-png"]')
 	).toBeVisible();
 });
+
+test(
+	'should delete only the entries returned by the search when "Select All Items on the Page" is checked',
+	{tag: ['@LPD-58613']},
+	async ({formBuilderPage, formBuilderSidePanelPage, formsPage, page}) => {
+		const formTitle = 'Form' + getRandomInt();
+
+		await test.step('publish form with a single text field', async () => {
+			await formsPage.goTo();
+
+			await formsPage.clickManagementToolbarNewButton();
+
+			await formBuilderSidePanelPage.addTextButton.dblclick();
+
+			await formBuilderPage.formTitle.fill(formTitle);
+
+			await formBuilderPage.clickPublishFormButton();
+		});
+
+		await test.step('create two entries: one bad, one good', async () => {
+			const formSubmissionURL =
+				await formBuilderPage.getFormSubmissionURL();
+
+			await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+
+			await page.getByLabel('Text').fill('Bad entry');
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await waitForAlert(page);
+
+			await page.getByRole('button', {name: 'Submit Again'}).click();
+
+			await page.getByLabel('Text').fill('Good entry');
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await waitForAlert(page);
+		});
+
+		await test.step('assert that only the entries returned by the search are deleted', async () => {
+			await formsPage.goTo();
+
+			await page
+				.getByRole('row', {name: `Select ${formTitle}`})
+				.getByLabel('Show Actions')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'View Entries'}).click();
+
+			await page.waitForTimeout(1000);
+
+			await page.getByPlaceholder('Search for').fill('Bad');
+
+			await page.getByLabel('Search for', {exact: true}).click();
+
+			const badEntryLocator = page.getByRole('cell', {
+				exact: true,
+				name: 'Bad entry',
+			});
+
+			const goodEntryLocator = page.getByRole('cell', {
+				exact: true,
+				name: 'Good entry',
+			});
+
+			await expect(badEntryLocator).toBeVisible();
+
+			await expect(goodEntryLocator).not.toBeVisible();
+
+			await page.getByLabel('Select All Items on the Page').click();
+
+			page.once('dialog', (dialog) => dialog.accept());
+
+			await page.getByRole('button', {name: 'Delete'}).click();
+
+			await page.getByLabel('Clear 0 Results for Bad').click();
+
+			await expect(badEntryLocator).not.toBeVisible();
+
+			await expect(goodEntryLocator).toBeVisible();
+		});
+	}
+);

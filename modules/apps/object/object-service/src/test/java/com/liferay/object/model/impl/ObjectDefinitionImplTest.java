@@ -129,8 +129,7 @@ public class ObjectDefinitionImplTest {
 
 			long rootObjectDefinitionId = RandomTestUtil.randomLong();
 
-			objectDefinition.setRootObjectDefinitionIds(
-				new long[] {rootObjectDefinitionId}, new long[0]);
+			objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
 
 			ObjectDefinitionLocalService objectDefinitionLocalService =
 				Mockito.mock(ObjectDefinitionLocalService.class);

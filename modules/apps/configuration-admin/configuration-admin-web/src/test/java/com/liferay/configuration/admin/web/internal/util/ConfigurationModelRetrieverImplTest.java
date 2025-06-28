@@ -37,7 +37,7 @@ public class ConfigurationModelRetrieverImplTest {
 	public void testPidFilterCompany() throws Exception {
 		String pid = "foo";
 
-		String pidProperty = ConfigurationAdmin.SERVICE_FACTORYPID;
+		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
 
 		String pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(
@@ -46,14 +46,14 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).build()
 		).doesNotMatch();
 
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"companyId", "any"
 			).build()
@@ -62,7 +62,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid + ".scoped"
+				key, pid + ".scoped"
 			).put(
 				"companyId", "any"
 			).build()
@@ -71,7 +71,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"groupId", "any"
 			).build()
@@ -82,7 +82,7 @@ public class ConfigurationModelRetrieverImplTest {
 	public void testPidFilterGroup() throws Exception {
 		String pid = "foo";
 
-		String pidProperty = ConfigurationAdmin.SERVICE_FACTORYPID;
+		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
 
 		String pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(
@@ -91,14 +91,14 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).build()
 		).doesNotMatch();
 
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"companyId", "any"
 			).build()
@@ -107,7 +107,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"groupId", "any"
 			).build()
@@ -116,7 +116,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid + ".scoped"
+				key, pid + ".scoped"
 			).put(
 				"groupId", "any"
 			).build()
@@ -125,7 +125,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"portletInstanceId", "any"
 			).build()
@@ -136,7 +136,7 @@ public class ConfigurationModelRetrieverImplTest {
 	public void testPidFilterPortletInstance() throws Exception {
 		String pid = "foo";
 
-		String pidProperty = ConfigurationAdmin.SERVICE_FACTORYPID;
+		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
 
 		String pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(
@@ -145,14 +145,14 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).build()
 		).doesNotMatch();
 
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"companyId", "any"
 			).build()
@@ -161,7 +161,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"groupId", "any"
 			).build()
@@ -170,7 +170,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"portletInstanceId", "any"
 			).build()
@@ -179,7 +179,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"groupId", "any"
 			).put(
@@ -190,7 +190,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid + ".scoped"
+				key, pid + ".scoped"
 			).put(
 				"groupId", "any"
 			).put(
@@ -203,7 +203,7 @@ public class ConfigurationModelRetrieverImplTest {
 	public void testPidFilterSystem() throws Exception {
 		String pid = "foo";
 
-		String pidProperty = Constants.SERVICE_PID;
+		String key = Constants.SERVICE_PID;
 
 		String pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(
@@ -212,21 +212,21 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).build()
 		).doesMatch();
 
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid + ".scoped"
+				key, pid + ".scoped"
 			).build()
 		).doesNotMatch();
 
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"companyId", "any"
 			).build()
@@ -235,7 +235,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"groupId", "any"
 			).build()
@@ -246,7 +246,7 @@ public class ConfigurationModelRetrieverImplTest {
 	public void testPidFilterSystemFactory() throws Exception {
 		String pid = "foo~1234";
 
-		String pidProperty = ConfigurationAdmin.SERVICE_FACTORYPID;
+		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
 
 		String pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(
@@ -255,21 +255,21 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).build()
 		).doesMatch();
 
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid + ".scoped"
+				key, pid + ".scoped"
 			).build()
 		).doesNotMatch();
 
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"companyId", "any"
 			).build()
@@ -278,7 +278,7 @@ public class ConfigurationModelRetrieverImplTest {
 		_filterAsserter(
 			pidFilterString,
 			HashMapBuilder.put(
-				pidProperty, pid
+				key, pid
 			).put(
 				"groupId", "any"
 			).build()

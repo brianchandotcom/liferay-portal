@@ -291,26 +291,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 					return false;
 				}
 
-				if (StringUtil.contains(
-						String.valueOf(fileNamePath.getFileName()),
-						StringPool.PERIOD, StringPool.BLANK)) {
-
-					_log.error(
-						StringBundler.concat(
-							"Found file name directory with extension in file ",
-							"system structure when no extensions are ",
-							"expected: ", fileNamePath.toString()));
-
-					return false;
-				}
-
 				if (!_hasFileSystemStructureFileNamePath(fileNamePath)) {
-					_log.error(
-						StringBundler.concat(
-							"File name directory does not contain valid ",
-							"version label files as expected in file system ",
-							"structure: ", fileNamePath.toString()));
-
 					return false;
 				}
 			}
@@ -330,6 +311,19 @@ public class PreupgradeVerifyStoreFileSystemStructure
 	}
 
 	private boolean _hasFileSystemStructureFileNamePath(Path fileNamePath) {
+		if (StringUtil.contains(
+				String.valueOf(fileNamePath.getFileName()),
+				StringPool.PERIOD, StringPool.BLANK)) {
+
+			_log.error(
+				StringBundler.concat(
+					"Found file name directory with extension in file ",
+					"system structure when no extensions are ",
+					"expected: ", fileNamePath.toString()));
+
+			return false;
+		}
+
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				fileNamePath)) {
 

@@ -348,10 +348,10 @@ public class ConfigurationModelRetrieverImpl
 					getPidFilterString(pid, scope));
 
 			if (configurations != null) {
+				Filter filter = null;
+
 				String propertyFilterString = _getPropertyFilterString(
 					scope.getPropertyKey(), value);
-
-				Filter filter = null;
 
 				if (Validator.isNotNull(propertyFilterString)) {
 					filter = FrameworkUtil.createFilter(propertyFilterString);

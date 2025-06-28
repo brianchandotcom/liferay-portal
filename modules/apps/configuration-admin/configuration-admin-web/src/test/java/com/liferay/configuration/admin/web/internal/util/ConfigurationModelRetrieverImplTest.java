@@ -33,7 +33,7 @@ public class ConfigurationModelRetrieverImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testPidFilterCompany() throws Exception {
+	public void testGetPidFilterStringScopeCompany() throws Exception {
 		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
 
 		String pid = "foo";
@@ -71,7 +71,7 @@ public class ConfigurationModelRetrieverImplTest {
 	}
 
 	@Test
-	public void testPidFilterGroup() throws Exception {
+	public void testGetPidFilterStringScopeGroup() throws Exception {
 		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
 
 		String pid = "foo";
@@ -116,7 +116,7 @@ public class ConfigurationModelRetrieverImplTest {
 	}
 
 	@Test
-	public void testPidFilterPortletInstance() throws Exception {
+	public void testGetPidFilterStringScopePortletInstance() throws Exception {
 		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
 
 		String pid = "foo";
@@ -173,7 +173,7 @@ public class ConfigurationModelRetrieverImplTest {
 	}
 
 	@Test
-	public void testPidFilterSystem() throws Exception {
+	public void testGetPidFilterStringScopeSystem() throws Exception {
 		String key = Constants.SERVICE_PID;
 
 		String pid = "foo";
@@ -207,15 +207,12 @@ public class ConfigurationModelRetrieverImplTest {
 			HashMapBuilder.put(
 				key, pid + ".scoped"
 			).build());
-	}
 
-	@Test
-	public void testPidFilterSystemFactory() throws Exception {
-		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
+		key = ConfigurationAdmin.SERVICE_FACTORYPID;
 
-		String pid = "foo~1234";
+		pid = "foo~1234";
 
-		String pidFilterString =
+		pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(
 				pid, ExtendedObjectClassDefinition.Scope.SYSTEM);
 

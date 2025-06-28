@@ -66,25 +66,17 @@ public class CompanyIdSetCallCheck extends BaseCheck {
 				continue;
 			}
 
-			if (typeName.equals("com.liferay.portal.kernel.model.Group") &&
-				methodName.equals("setClassPK")) {
-
-				return;
-			}
-
-			if (typeName.equals(
+			if ((typeName.equals("com.liferay.portal.kernel.model.Group") &&
+				 methodName.equals("setClassPK")) ||
+				(typeName.equals(
 					"com.liferay.portal.kernel.model.ResourcePermission") &&
-				methodName.equals("setPrimKey")) {
+				 methodName.equals("setPrimKey"))) {
 
-				return;
+				continue;
 			}
 
 			List<DetailAST> parameterExprDetailASTList =
 				getParameterExprDetailASTList(parentDetailAST);
-
-			if (parameterExprDetailASTList.isEmpty()) {
-				return;
-			}
 
 			for (DetailAST parameterExprDetailAST :
 					parameterExprDetailASTList) {

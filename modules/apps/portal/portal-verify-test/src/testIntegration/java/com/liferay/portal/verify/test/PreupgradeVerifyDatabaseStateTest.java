@@ -16,13 +16,10 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.version.Version;
@@ -71,8 +68,6 @@ public class PreupgradeVerifyDatabaseStateTest
 		}
 
 		if (DBPartition.isPartitionEnabled()) {
-			_company = CompanyTestUtil.addCompany();
-
 			_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				PortalInstancePool.getDefaultCompanyId());
 		}
@@ -85,10 +80,6 @@ public class PreupgradeVerifyDatabaseStateTest
 				connection, _currentSchemaVersion);
 		}
 		finally {
-			if (_company != null) {
-				_companyLocalService.deleteCompany(_company);
-			}
-
 			if (_safeCloseable != null) {
 				_safeCloseable.close();
 			}
@@ -238,11 +229,6 @@ public class PreupgradeVerifyDatabaseStateTest
 	}
 
 	private static final Version _TEST_SCHEMA_VERSION = new Version(0, 0, 0);
-
-	private static Company _company;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
 
 	private static Version _currentSchemaVersion;
 	private static SafeCloseable _safeCloseable;

@@ -47,7 +47,6 @@ public class ConfigurationModelRetrieverImplTest {
 			HashMapBuilder.put(
 				key, pid
 			).build());
-
 		_test(
 			true, pidFilterString,
 			HashMapBuilder.put(
@@ -55,21 +54,19 @@ public class ConfigurationModelRetrieverImplTest {
 			).put(
 				"companyId", "any"
 			).build());
-
-		_test(
-			true, pidFilterString,
-			HashMapBuilder.put(
-				key, pid + ".scoped"
-			).put(
-				"companyId", "any"
-			).build());
-
 		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"groupId", "any"
+			).build());
+		_test(
+			true, pidFilterString,
+			HashMapBuilder.put(
+				key, pid + ".scoped"
+			).put(
+				"companyId", "any"
 			).build());
 	}
 
@@ -88,7 +85,6 @@ public class ConfigurationModelRetrieverImplTest {
 			HashMapBuilder.put(
 				key, pid
 			).build());
-
 		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
@@ -96,7 +92,6 @@ public class ConfigurationModelRetrieverImplTest {
 			).put(
 				"companyId", "any"
 			).build());
-
 		_test(
 			true, pidFilterString,
 			HashMapBuilder.put(
@@ -104,21 +99,19 @@ public class ConfigurationModelRetrieverImplTest {
 			).put(
 				"groupId", "any"
 			).build());
-
-		_test(
-			true, pidFilterString,
-			HashMapBuilder.put(
-				key, pid + ".scoped"
-			).put(
-				"groupId", "any"
-			).build());
-
 		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"portletInstanceId", "any"
+			).build());
+		_test(
+			true, pidFilterString,
+			HashMapBuilder.put(
+				key, pid + ".scoped"
+			).put(
+				"groupId", "any"
 			).build());
 	}
 
@@ -137,7 +130,6 @@ public class ConfigurationModelRetrieverImplTest {
 			HashMapBuilder.put(
 				key, pid
 			).build());
-
 		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
@@ -145,7 +137,6 @@ public class ConfigurationModelRetrieverImplTest {
 			).put(
 				"companyId", "any"
 			).build());
-
 		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
@@ -161,7 +152,6 @@ public class ConfigurationModelRetrieverImplTest {
 			).put(
 				"portletInstanceId", "any"
 			).build());
-
 		_test(
 			true, pidFilterString,
 			HashMapBuilder.put(
@@ -171,7 +161,6 @@ public class ConfigurationModelRetrieverImplTest {
 			).put(
 				"portletInstanceId", "any"
 			).build());
-
 		_test(
 			true, pidFilterString,
 			HashMapBuilder.put(
@@ -198,13 +187,6 @@ public class ConfigurationModelRetrieverImplTest {
 			HashMapBuilder.put(
 				key, pid
 			).build());
-
-		_test(
-			false, pidFilterString,
-			HashMapBuilder.put(
-				key, pid + ".scoped"
-			).build());
-
 		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
@@ -219,6 +201,11 @@ public class ConfigurationModelRetrieverImplTest {
 				key, pid
 			).put(
 				"groupId", "any"
+			).build());
+		_test(
+			false, pidFilterString,
+			HashMapBuilder.put(
+				key, pid + ".scoped"
 			).build());
 	}
 
@@ -237,13 +224,6 @@ public class ConfigurationModelRetrieverImplTest {
 			HashMapBuilder.put(
 				key, pid
 			).build());
-
-		_test(
-			false, pidFilterString,
-			HashMapBuilder.put(
-				key, pid + ".scoped"
-			).build());
-
 		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
@@ -251,13 +231,17 @@ public class ConfigurationModelRetrieverImplTest {
 			).put(
 				"companyId", "any"
 			).build());
-
 		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"groupId", "any"
+			).build());
+		_test(
+			false, pidFilterString,
+			HashMapBuilder.put(
+				key, pid + ".scoped"
 			).build());
 	}
 

@@ -149,22 +149,22 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				companyIdPath)) {
 
-			for (Path folderIdPath : directoryStream) {
-				if (_isSystemCompanyPath(folderIdPath)) {
+			for (Path repositoryIdPath : directoryStream) {
+				if (_isSystemCompanyPath(repositoryIdPath)) {
 					continue;
 				}
 
-				if (!Files.isDirectory(folderIdPath)) {
+				if (!Files.isDirectory(repositoryIdPath)) {
 					_log.error(
 						"Found file in advanced file system structure " +
 							"directory when only directories are expected: " +
-								folderIdPath);
+								repositoryIdPath);
 
 					return false;
 				}
 
-				if (!_hasAdvancedFileSystemStructureFolderIdPath(
-						folderIdPath)) {
+				if (!_hasAdvancedFileSystemStructureRepositoryIdPath(
+						repositoryIdPath)) {
 
 					return false;
 				}
@@ -184,11 +184,11 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		}
 	}
 
-	private boolean _hasAdvancedFileSystemStructureFolderIdPath(
-		Path folderIdPath) {
+	private boolean _hasAdvancedFileSystemStructureRepositoryIdPath(
+		Path repositoryIdPath) {
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				folderIdPath)) {
+				repositoryIdPath)) {
 
 			for (Path fileNamePath : directoryStream) {
 				if (!Files.isDirectory(fileNamePath)) {
@@ -203,7 +203,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				String fileName = String.valueOf(fileNamePath.getFileName());
 
 				if (fileName.equals("DLFE")) {
-					if (!_hasAdvancedFileSystemStructureFolderIdPath(
+					if (!_hasAdvancedFileSystemStructureRepositoryIdPath(
 							fileNamePath)) {
 
 						return false;
@@ -229,7 +229,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to verify advanced file system structure in: " +
-						folderIdPath,
+						repositoryIdPath,
 					exception);
 			}
 
@@ -241,20 +241,23 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				companyIdPath)) {
 
-			for (Path folderIdPath : directoryStream) {
-				if (_isSystemCompanyPath(folderIdPath)) {
+			for (Path repositoryIdPath : directoryStream) {
+				if (_isSystemCompanyPath(repositoryIdPath)) {
 					continue;
 				}
 
-				if (!Files.isDirectory(folderIdPath)) {
+				if (!Files.isDirectory(repositoryIdPath)) {
 					_log.error(
 						"Found file in file system structure directory when " +
-							"only directories are expected: " + folderIdPath);
+							"only directories are expected: " +
+								repositoryIdPath);
 
 					return false;
 				}
 
-				if (!_hasFileSystemStructureFolderIdPath(folderIdPath)) {
+				if (!_hasFileSystemStructureRepositoryIdPath(
+						repositoryIdPath)) {
+
 					return false;
 				}
 			}
@@ -273,9 +276,11 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		}
 	}
 
-	private boolean _hasFileSystemStructureFolderIdPath(Path folderIdPath) {
+	private boolean _hasFileSystemStructureRepositoryIdPath(
+		Path repositoryIdPath) {
+
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				folderIdPath)) {
+				repositoryIdPath)) {
 
 			for (Path fileNamePath : directoryStream) {
 				if (!Files.isDirectory(fileNamePath)) {
@@ -316,7 +321,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to verify file system structure in: " +
-						folderIdPath,
+						repositoryIdPath,
 					exception);
 			}
 
@@ -367,9 +372,9 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		}
 	}
 
-	private boolean _isSystemCompanyPath(Path folderIdPath) {
+	private boolean _isSystemCompanyPath(Path repositoryIdPath) {
 		return StringUtil.equals(
-			String.valueOf(folderIdPath.getFileName()),
+			String.valueOf(repositoryIdPath.getFileName()),
 			String.valueOf(CompanyConstants.SYSTEM));
 	}
 

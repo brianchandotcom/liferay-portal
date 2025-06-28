@@ -5,7 +5,6 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -43,39 +42,35 @@ public class ConfigurationModelRetrieverImplTest {
 			_configurationModelRetrieverImpl.getPidFilterString(
 				pid, ExtendedObjectClassDefinition.Scope.COMPANY);
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			true, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"companyId", "any"
-			).build()
-		).doesMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			true, pidFilterString,
 			HashMapBuilder.put(
 				key, pid + ".scoped"
 			).put(
 				"companyId", "any"
-			).build()
-		).doesMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"groupId", "any"
-			).build()
-		).doesNotMatch();
+			).build());
 	}
 
 	@Test
@@ -88,48 +83,43 @@ public class ConfigurationModelRetrieverImplTest {
 			_configurationModelRetrieverImpl.getPidFilterString(
 				pid, ExtendedObjectClassDefinition.Scope.GROUP);
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"companyId", "any"
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			true, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"groupId", "any"
-			).build()
-		).doesMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			true, pidFilterString,
 			HashMapBuilder.put(
 				key, pid + ".scoped"
 			).put(
 				"groupId", "any"
-			).build()
-		).doesMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"portletInstanceId", "any"
-			).build()
-		).doesNotMatch();
+			).build());
 	}
 
 	@Test
@@ -142,61 +132,55 @@ public class ConfigurationModelRetrieverImplTest {
 			_configurationModelRetrieverImpl.getPidFilterString(
 				pid, ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE);
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"companyId", "any"
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"groupId", "any"
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"portletInstanceId", "any"
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			true, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"groupId", "any"
 			).put(
 				"portletInstanceId", "any"
-			).build()
-		).doesMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			true, pidFilterString,
 			HashMapBuilder.put(
 				key, pid + ".scoped"
 			).put(
 				"groupId", "any"
 			).put(
 				"portletInstanceId", "any"
-			).build()
-		).doesMatch();
+			).build());
 	}
 
 	@Test
@@ -209,37 +193,33 @@ public class ConfigurationModelRetrieverImplTest {
 			_configurationModelRetrieverImpl.getPidFilterString(
 				pid, ExtendedObjectClassDefinition.Scope.SYSTEM);
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			true, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
-			).build()
-		).doesMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid + ".scoped"
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"companyId", "any"
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"groupId", "any"
-			).build()
-		).doesNotMatch();
+			).build());
 	}
 
 	@Test
@@ -252,77 +232,53 @@ public class ConfigurationModelRetrieverImplTest {
 			_configurationModelRetrieverImpl.getPidFilterString(
 				pid, ExtendedObjectClassDefinition.Scope.SYSTEM);
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			true, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
-			).build()
-		).doesMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid + ".scoped"
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"companyId", "any"
-			).build()
-		).doesNotMatch();
+			).build());
 
-		_filterAsserter(
-			pidFilterString,
+		_test(
+			false, pidFilterString,
 			HashMapBuilder.put(
 				key, pid
 			).put(
 				"groupId", "any"
-			).build()
-		).doesNotMatch();
+			).build());
 	}
 
-	private FilterAsserter _filterAsserter(
-			String pidFilterString, Map<String, String> payload)
+	private void _test(
+			boolean matches, String pidFilterString,
+			Map<String, String> payload)
 		throws Exception {
 
 		Filter filter = FrameworkUtil.createFilter(pidFilterString);
 
-		return new FilterAsserter(filter, payload);
+		if (matches && !filter.matches(payload)) {
+			throw new AssertionFailedError(
+				filter + " does not match " + payload);
+		}
+		else if (!matches && filter.matches(payload)) {
+			throw new AssertionFailedError(filter + " matches " + payload);
+		}
 	}
 
 	private final ConfigurationModelRetrieverImpl
 		_configurationModelRetrieverImpl =
 			new ConfigurationModelRetrieverImpl();
-
-	private static class FilterAsserter {
-
-		public FilterAsserter(Filter filter, Map<String, String> payload) {
-			_filter = filter;
-			_payload = payload;
-		}
-
-		public void doesMatch() {
-			if (!_filter.matches(_payload)) {
-				throw new AssertionFailedError(
-					StringBundler.concat(
-						_filter, " does not match ", _payload));
-			}
-		}
-
-		public void doesNotMatch() {
-			if (_filter.matches(_payload)) {
-				throw new AssertionFailedError(
-					StringBundler.concat(_filter, " matches ", _payload));
-			}
-		}
-
-		private final Filter _filter;
-		private final Map<String, String> _payload;
-
-	}
 
 }

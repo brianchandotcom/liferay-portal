@@ -340,7 +340,7 @@ public class ConfigurationModelRetrieverImpl
 			String pid, ExtendedObjectClassDefinition.Scope scope, String value)
 		throws IOException {
 
-		List<Configuration> configurationList = new ArrayList<>();
+		List<Configuration> configurationsList = new ArrayList<>();
 
 		try {
 			String pidFilter = getPidFilterString(pid, scope);
@@ -367,7 +367,7 @@ public class ConfigurationModelRetrieverImpl
 						configuration.getProcessedProperties(null);
 
 					if (filter.match(properties)) {
-						configurationList.add(configuration);
+						configurationsList.add(configuration);
 					}
 				}
 			}
@@ -376,7 +376,7 @@ public class ConfigurationModelRetrieverImpl
 			ReflectionUtil.throwException(invalidSyntaxException);
 		}
 
-		return configurationList.toArray(new Configuration[0]);
+		return configurationsList.toArray(new Configuration[0]);
 	}
 
 	private String _getPropertyFilterString(String key, String value) {

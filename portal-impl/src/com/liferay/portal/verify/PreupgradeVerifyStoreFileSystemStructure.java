@@ -318,8 +318,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 			_log.error(
 				StringBundler.concat(
 					"Found file name directory with extension in file ",
-					"system structure when no extensions are ",
-					"expected: ", fileNamePath.toString()));
+					"system structure when no extensions are expected: ",
+					fileNamePath.toString()));
 
 			return false;
 		}
@@ -343,9 +343,6 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				}
 
 				if (!versionLabelName.matches("\\d+\\.\\d+.*")) {
-					_log.error(
-						"Found file that does not match version label " +
-							"structure: " + versionLabelPath);
 
 					return false;
 				}

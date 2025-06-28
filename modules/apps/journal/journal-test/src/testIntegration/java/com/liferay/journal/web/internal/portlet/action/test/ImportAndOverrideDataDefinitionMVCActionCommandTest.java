@@ -111,7 +111,6 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 		String journalArticle2Content = journalArticle2.getContent();
 
 		Assert.assertNotEquals(journalArticle1Content, journalArticle2Content);
-
 		Assert.assertTrue(journalArticle2Content.contains("CCC1"));
 		Assert.assertTrue(journalArticle2Content.contains("CCC2"));
 	}

@@ -161,17 +161,17 @@ public class ConfigurationModelRetrieverImpl
 			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK)
 		throws IOException {
 
-		Configuration[] configurations = _getConfigurations(
-			factoryConfigurationModel.getFactoryPid(), scope,
-			String.valueOf(scopePK));
-
 		List<ConfigurationModel> factoryInstancesConfigurationModels =
 			new ArrayList<>();
 
 		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
 			new ConfigurationScopeDisplayContext(scope, scopePK);
 
-		for (Configuration configuration : configurations) {
+		for (Configuration configuration :
+				_getConfigurations(
+					factoryConfigurationModel.getFactoryPid(), scope,
+					String.valueOf(scopePK))) {
+
 			ConfigurationModel curConfigurationModel = new ConfigurationModel(
 				configuration.getBundleLocation(),
 				factoryConfigurationModel.getBundleSymbolicName(),

@@ -202,55 +202,53 @@ public class ConfigurationModelRetrieverImpl
 			pid = _getUnscopedPid(pid);
 		}
 
-		if (!scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
-			String scopedFilter = StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
-				_getPropertyFilterString(pidProperty, pid),
-				_getPropertyFilterString(pidProperty, pid + ".scoped"),
-				StringPool.CLOSE_PARENTHESIS);
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
+			return StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
+				_getPropertyFilterString(pidProperty, pid), "(!(",
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				"=*))(!(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				"=*))(!(groupExternalReferenceCode=*)))");
+		}
 
-			if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
-				return StringBundler.concat(
-					StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
-					scopedFilter, "(|(",
-					ExtendedObjectClassDefinition.Scope.COMPANY.
-						getPropertyKey(),
-					"=*)(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
-					ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-					"=*))(!(groupExternalReferenceCode=*))(!(",
-					ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
-						getPropertyKey(),
-					"=*)))");
-			}
+		String scopedFilter = StringBundler.concat(
+			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
+			_getPropertyFilterString(pidProperty, pid),
+			_getPropertyFilterString(pidProperty, pid + ".scoped"),
+			StringPool.CLOSE_PARENTHESIS);
 
-			if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
-				return StringBundler.concat(
-					StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
-					scopedFilter, "(|(",
-					ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-					"=*)(groupExternalReferenceCode=*))(!(",
-					ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
-						getPropertyKey(),
-					"=*)))");
-			}
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
+			return StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, scopedFilter,
+				"(|(",
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				"=*)(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				"=*))(!(groupExternalReferenceCode=*))(!(",
+				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
+					getPropertyKey(),
+				"=*)))");
+		}
 
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
 			return StringBundler.concat(
 				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, scopedFilter,
 				"(|(",
 				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				"=*)(groupExternalReferenceCode=*))(",
+				"=*)(groupExternalReferenceCode=*))(!(",
 				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
 					getPropertyKey(),
-				"=*))");
+				"=*)))");
 		}
 
 		return StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
-			_getPropertyFilterString(pidProperty, pid), "(!(",
-			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-			"=*))(!(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
-			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-			"=*))(!(groupExternalReferenceCode=*)))");
+			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, scopedFilter,
+			"(|(", ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+			"=*)(groupExternalReferenceCode=*))(",
+			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
+				getPropertyKey(),
+			"=*))");
 	}
 
 	private void _collectConfigurationModels(

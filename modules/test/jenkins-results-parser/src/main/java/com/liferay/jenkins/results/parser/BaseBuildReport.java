@@ -49,13 +49,15 @@ public abstract class BaseBuildReport implements BuildReport {
 
 		buildReportJSONObject = new JSONObject();
 
-		buildReportJSONObject.put(
-			"duration", buildJSONObject.get("duration")
-		).put(
-			"result", buildJSONObject.get("result")
-		).put(
-			"startTime", buildJSONObject.get("timestamp")
-		);
+		if (!buildJSONObject.isEmpty()) {
+			buildReportJSONObject.put(
+				"duration", buildJSONObject.get("duration")
+			).put(
+				"result", buildJSONObject.get("result")
+			).put(
+				"startTime", buildJSONObject.get("timestamp")
+			);
+		}
 
 		return buildReportJSONObject;
 	}
@@ -293,7 +295,7 @@ public abstract class BaseBuildReport implements BuildReport {
 				getBuildURL() + "/api/json");
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+			_buildJSONObject = new JSONObject();
 		}
 
 		return _buildJSONObject;

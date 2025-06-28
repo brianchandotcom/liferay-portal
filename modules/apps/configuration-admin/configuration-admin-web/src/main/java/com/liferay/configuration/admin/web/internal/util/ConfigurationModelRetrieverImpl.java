@@ -227,7 +227,7 @@ public class ConfigurationModelRetrieverImpl
 						getPropertyKey(),
 					"=*)(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
 					ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-					"=*))(!(siteExternalReferenceCode=*))(!(",
+					"=*))(!(groupExternalReferenceCode=*))(!(",
 					ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
 						getPropertyKey(),
 					"=*)))");
@@ -238,7 +238,7 @@ public class ConfigurationModelRetrieverImpl
 					StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
 					scopedFilter, "(|(",
 					ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-					"=*)(siteExternalReferenceCode=*))(!(",
+					"=*)(groupExternalReferenceCode=*))(!(",
 					ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
 						getPropertyKey(),
 					"=*)))");
@@ -248,7 +248,7 @@ public class ConfigurationModelRetrieverImpl
 				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, scopedFilter,
 				"(|(",
 				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				"=*)(siteExternalReferenceCode=*))(",
+				"=*)(groupExternalReferenceCode=*))(",
 				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
 					getPropertyKey(),
 				"=*))");
@@ -260,7 +260,7 @@ public class ConfigurationModelRetrieverImpl
 			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
 			"=*))(!(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
 			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-			"=*))(!(siteExternalReferenceCode=*)))");
+			"=*))(!(groupExternalReferenceCode=*)))");
 	}
 
 	private void _collectConfigurationModels(

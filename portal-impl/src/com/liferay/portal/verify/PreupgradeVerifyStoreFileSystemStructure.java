@@ -304,7 +304,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 					return false;
 				}
 
-				if (!_hasVersionLabelFile(fileNamePath)) {
+				if (!_hasFileSystemStructureFileNamePath(fileNamePath)) {
 					_log.error(
 						StringBundler.concat(
 							"File name directory does not contain valid ",
@@ -329,7 +329,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		}
 	}
 
-	private boolean _hasVersionLabelFile(Path fileNamePath) {
+	private boolean _hasFileSystemStructureFileNamePath(Path fileNamePath) {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				fileNamePath)) {
 

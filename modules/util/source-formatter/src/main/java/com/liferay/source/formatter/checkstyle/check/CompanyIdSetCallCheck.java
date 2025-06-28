@@ -24,6 +24,14 @@ public class CompanyIdSetCallCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		String absolutePath = getAbsolutePath();
+
+		if (absolutePath.contains("/test/") ||
+			absolutePath.contains("/testIntegration/")) {
+
+			return;
+		}
+
 		String typeName = getTypeName(detailAST, false, false, true);
 
 		if (!typeName.startsWith("com.liferay.") ||

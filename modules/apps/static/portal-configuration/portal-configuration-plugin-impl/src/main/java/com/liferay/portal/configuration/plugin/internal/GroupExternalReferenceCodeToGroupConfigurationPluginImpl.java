@@ -27,10 +27,10 @@ import org.osgi.service.cm.ConfigurationPlugin;
 /**
  * @author Raymond Augé
  */
-public class SiteExternalReferenceCodeToGroupConfigurationPluginImpl
+public class GroupExternalReferenceCodeToGroupConfigurationPluginImpl
 	implements ConfigurationPlugin {
 
-	public SiteExternalReferenceCodeToGroupConfigurationPluginImpl(
+	public GroupExternalReferenceCodeToGroupConfigurationPluginImpl(
 		BundleContext bundleContext) {
 
 		_bundleContext = bundleContext;
@@ -41,10 +41,10 @@ public class SiteExternalReferenceCodeToGroupConfigurationPluginImpl
 		ServiceReference<?> serviceReference,
 		Dictionary<String, Object> properties) {
 
-		String siteExternalReferenceCode = (String)properties.get(
-			"siteExternalReferenceCode");
+		String groupExternalReferenceCode = (String)properties.get(
+			"groupExternalReferenceCode");
 
-		if (Validator.isNull(siteExternalReferenceCode)) {
+		if (Validator.isNull(groupExternalReferenceCode)) {
 			return;
 		}
 
@@ -70,7 +70,7 @@ public class SiteExternalReferenceCodeToGroupConfigurationPluginImpl
 							"select groupId from Group_ where " +
 								"externalReferenceCode = ?"))) {
 
-				preparedStatement.setString(1, siteExternalReferenceCode);
+				preparedStatement.setString(1, groupExternalReferenceCode);
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					if (resultSet.next()) {
@@ -82,8 +82,8 @@ public class SiteExternalReferenceCodeToGroupConfigurationPluginImpl
 							_log.info(
 								StringBundler.concat(
 									"Injected group ID ", groupId,
-									" for site external reference code ",
-									siteExternalReferenceCode));
+									" for group external reference code ",
+									groupExternalReferenceCode));
 						}
 					}
 				}
@@ -96,14 +96,14 @@ public class SiteExternalReferenceCodeToGroupConfigurationPluginImpl
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Skip site external reference code " +
-						siteExternalReferenceCode);
+					"Skip group external reference code " +
+						groupExternalReferenceCode);
 			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SiteExternalReferenceCodeToGroupConfigurationPluginImpl.class);
+		GroupExternalReferenceCodeToGroupConfigurationPluginImpl.class);
 
 	private final BundleContext _bundleContext;
 	private final DB _db = DBManagerUtil.getDB();

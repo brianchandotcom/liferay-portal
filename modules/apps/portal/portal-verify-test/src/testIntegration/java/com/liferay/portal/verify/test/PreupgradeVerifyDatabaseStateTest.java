@@ -6,13 +6,20 @@
 package com.liferay.portal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ServiceComponent;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
@@ -57,6 +64,13 @@ public class PreupgradeVerifyDatabaseStateTest
 			PortalUpgradeProcess.updateSchemaVersion(
 				connection, _TEST_SCHEMA_VERSION);
 		}
+
+		if (DBPartition.isPartitionEnabled()) {
+			_company = CompanyTestUtil.addCompany();
+
+			_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+				PortalInstancePool.getDefaultCompanyId());
+		}
 	}
 
 	@AfterClass
@@ -64,6 +78,15 @@ public class PreupgradeVerifyDatabaseStateTest
 		try (Connection connection = DataAccess.getConnection()) {
 			PortalUpgradeProcess.updateSchemaVersion(
 				connection, _currentSchemaVersion);
+		}
+		finally {
+			if (_company != null) {
+				_companyLocalService.deleteCompany(_company);
+			}
+
+			if (_safeCloseable != null) {
+				_safeCloseable.close();
+			}
 		}
 	}
 
@@ -160,7 +183,13 @@ public class PreupgradeVerifyDatabaseStateTest
 
 	private static final Version _TEST_SCHEMA_VERSION = new Version(0, 0, 0);
 
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
 	private static Version _currentSchemaVersion;
+	private static SafeCloseable _safeCloseable;
 
 	@Inject
 	private ServiceComponentLocalService _serviceComponentLocalService;

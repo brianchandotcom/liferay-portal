@@ -59,12 +59,10 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	@Override
 	protected String replaceDropTableIfExistsText(Matcher matcher) {
-		String dropTableIfExists =
+		return matcher.replaceAll(
 			"BEGIN\nEXECUTE IMMEDIATE 'DROP TABLE $1';\nEXCEPTION\nWHEN " +
 				"OTHERS THEN\nIF SQLCODE != -942 THEN\nRAISE;\nEND IF;\nEND;" +
-					"\n/";
-
-		return matcher.replaceAll(dropTableIfExists);
+					"\n/");
 	}
 
 	@Override

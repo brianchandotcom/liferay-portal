@@ -56,11 +56,9 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	@Override
 	protected String replaceDropTableIfExistsText(Matcher matcher) {
-		String dropTableIfExists =
+		return matcher.replaceAll(
 			"BEGIN\nDECLARE CONTINUE HANDLER FOR SQLSTATE '42704'\nBEGIN " +
-				"END;\nEXECUTE IMMEDIATE 'DROP TABLE $1';\nEND";
-
-		return matcher.replaceAll(dropTableIfExists);
+				"END;\nEXECUTE IMMEDIATE 'DROP TABLE $1';\nEND");
 	}
 
 	private Function<String, String> _getCaseWhenThenFunction() {

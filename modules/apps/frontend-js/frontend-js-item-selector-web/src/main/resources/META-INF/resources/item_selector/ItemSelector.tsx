@@ -5,9 +5,11 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import {FetchPolicy, useResource} from '@clayui/data-provider';
+import {ClayInput} from '@clayui/form';
+import ClayMultiSelect from '@clayui/multi-select';
 import {InternalDispatch, useControlledState} from '@clayui/shared';
 import {fetch} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 const NETWORK_STATUS_UNUSED = 4;
 
@@ -37,14 +39,39 @@ export interface IProps<T>
 	apiURL: string;
 
 	/**
+	 * Custom input component.
+	 */
+	as?:
+		| 'input'
+		| React.ForwardRefExoticComponent<any>
+		| ((props: React.ComponentProps<typeof ClayInput>) => JSX.Element);
+
+	/**
 	 * Children function to render a dynamic or static content.
 	 */
 	children: ChildrenFunction<T, unknown>;
 
 	/**
+	 * Set the default selected items (uncontrolled).
+	 */
+	defaultItems?: Array<T>;
+
+	/**
 	 * Property to set the default value (uncontrolled).
 	 */
 	defaultValue?: string;
+
+	/**
+	 * Controls whether selected items are displayed by the component.
+	 * Set to `false` if you plan to render the selected items using a custom
+	 * implementation.
+	 */
+	displaySelectedItems?: boolean;
+
+	/**
+	 * Items that are currently selected (controlled).
+	 */
+	items?: Array<T>;
 
 	/**
 	 * A string key used to locate the id, label, or value within each item.
@@ -56,9 +83,20 @@ export interface IProps<T>
 	};
 
 	/**
+	 * A flag for rendering the Clay MultiSelect component and allowing multiple
+	 * selection.
+	 */
+	multiSelect?: boolean;
+
+	/**
 	 * Callback called when input value changes (controlled).
 	 */
 	onChange?: InternalDispatch<string>;
+
+	/**
+	 * Callback for when items are added or removed (controlled).
+	 */
+	onItemsChange?: InternalDispatch<Array<T>>;
 
 	/**
 	 * The current value of the input (controlled).
@@ -76,9 +114,24 @@ function ItemSelector<T extends Record<string, any>>({
 	},
 	value: externalValue,
 	onChange,
+	onItemsChange,
+	multiSelect = false,
+	items: externalItems,
 	defaultValue,
+	defaultItems,
+	displaySelectedItems = true,
 	...otherProps
 }: IProps<T>) {
+	useEffect(() => {
+		if (!displaySelectedItems && !multiSelect) {
+			console.warn(
+				'<ItemSelector>: "displaySelectedItems" should only be disabled when "multiSelect" is enabled. For single selection `as` can be used to render a custom input and selected item.'
+			);
+		}
+	}, [displaySelectedItems, multiSelect]);
+
+	const [active, setActive] = useState(false);
+
 	const [value = '', setValue] = useControlledState({
 		defaultName: 'defaultValue',
 		defaultValue,
@@ -88,9 +141,18 @@ function ItemSelector<T extends Record<string, any>>({
 		value: externalValue,
 	});
 
+	const [items = [], setItems] = useControlledState({
+		defaultName: 'defaultItems',
+		defaultValue: defaultItems,
+		handleName: 'onItemsChange',
+		name: 'items',
+		onChange: onItemsChange,
+		value: externalItems,
+	});
+
 	const [networkStatus, setNetworkStatus] = useState(NETWORK_STATUS_UNUSED);
 
-	const {loadMore, resource: items = []} = useResource({
+	const {loadMore, resource: sourceItems = []} = useResource({
 		fetch: async (link) => {
 			const result = await fetch(link);
 
@@ -134,18 +196,81 @@ function ItemSelector<T extends Record<string, any>>({
 		variables: {search: value},
 	});
 
+	const memoizedChildren = useCallback(
+		(item: T) => {
+			const child = children(item) as React.ReactElement<
+				any,
+				string | React.JSXElementConstructor<any>
+			>;
+
+			return React.cloneElement(child, {
+				onClick: (
+					event: React.MouseEvent<
+						HTMLSpanElement | HTMLButtonElement | HTMLAnchorElement,
+						MouseEvent
+					>
+				) => {
+					if (child.props.onClick) {
+						child.props.onClick(event);
+					}
+
+					if (event.defaultPrevented) {
+						return;
+					}
+
+					if (multiSelect) {
+						event.preventDefault();
+
+						setActive(false);
+						setItems([...items, item]);
+						setValue('');
+					}
+					else {
+						setItems([item]);
+					}
+				},
+			});
+		},
+		[children, items, multiSelect, setItems, setValue]
+	);
+
+	if (multiSelect && displaySelectedItems) {
+		return (
+			<ClayMultiSelect
+				{...otherProps}
+				items={items}
+				locator={locator ? {...locator} : undefined}
+				onChange={setValue}
+				onItemsChange={setItems}
+				onLoadMore={async () => loadMore()}
+				sourceItems={sourceItems}
+				value={value}
+			>
+				{children}
+			</ClayMultiSelect>
+		);
+	}
+
 	return (
 		<ClayAutocomplete<T>
 			{...otherProps}
+			active={active}
 			filterKey={locator.label}
-			items={items}
+			items={sourceItems}
 			loadingState={networkStatus}
 			menuTrigger="focus"
-			onChange={setValue}
+			onActiveChange={setActive}
+			onChange={(value: string) => {
+				if (!value.length) {
+					setItems([]);
+				}
+
+				setValue(value);
+			}}
 			onLoadMore={async () => loadMore()}
 			value={value}
 		>
-			{children}
+			{memoizedChildren}
 		</ClayAutocomplete>
 	);
 }

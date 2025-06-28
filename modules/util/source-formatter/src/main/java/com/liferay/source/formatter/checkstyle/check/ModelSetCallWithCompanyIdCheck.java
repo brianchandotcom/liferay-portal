@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Alan Huang
  */
-public class CompanyIdSetCallCheck extends BaseCheck {
+public class ModelSetCallWithCompanyIdCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

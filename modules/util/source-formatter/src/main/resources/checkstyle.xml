@@ -295,11 +295,6 @@
 			<property name="enabled" value="false" />
 			<message key="variable.name.avoid" value="Avoid using variable name &quot;{0}&quot;, see LPD-29718" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.check.CompanyIdSetCallCheck">
-			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Checks companyId as part of a varchar field in the database." />
-			<message key="parameter.incorrect" value="Do not use &quot;companyId&quot; as the parameter when calling set method" />
-		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.CompanyIterationCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies." />
@@ -650,6 +645,11 @@
 			<property name="description" value="Finds missing parentheses in conditional statement." />
 			<message key="parentheses.missing.1" value="Missing parentheses between the &quot;{0}&quot; operator and the &quot;{1}&quot; operator" />
 			<message key="parentheses.missing.2" value="Missing parentheses around the {0} hand side argument of the &quot;{1}&quot; operator" />
+		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ModelSetCallWithCompanyIdCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks companyId as part of a varchar field in the database." />
+			<message key="parameter.incorrect" value="Do not use &quot;companyId&quot; as the parameter when calling model set method, see LPD-43079" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ModifiedMethodCheck">
 			<property name="category" value="Bug Prevention" />

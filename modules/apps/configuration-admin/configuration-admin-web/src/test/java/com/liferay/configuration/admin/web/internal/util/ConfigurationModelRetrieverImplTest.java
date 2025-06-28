@@ -35,9 +35,9 @@ public class ConfigurationModelRetrieverImplTest {
 
 	@Test
 	public void testPidFilterCompany() throws Exception {
-		String pid = "foo";
-
 		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
+
+		String pid = "foo";
 
 		String pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(
@@ -80,9 +80,9 @@ public class ConfigurationModelRetrieverImplTest {
 
 	@Test
 	public void testPidFilterGroup() throws Exception {
-		String pid = "foo";
-
 		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
+
+		String pid = "foo";
 
 		String pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(
@@ -134,9 +134,9 @@ public class ConfigurationModelRetrieverImplTest {
 
 	@Test
 	public void testPidFilterPortletInstance() throws Exception {
-		String pid = "foo";
-
 		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
+
+		String pid = "foo";
 
 		String pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(
@@ -201,9 +201,9 @@ public class ConfigurationModelRetrieverImplTest {
 
 	@Test
 	public void testPidFilterSystem() throws Exception {
-		String pid = "foo";
-
 		String key = Constants.SERVICE_PID;
+
+		String pid = "foo";
 
 		String pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(
@@ -244,9 +244,9 @@ public class ConfigurationModelRetrieverImplTest {
 
 	@Test
 	public void testPidFilterSystemFactory() throws Exception {
-		String pid = "foo~1234";
-
 		String key = ConfigurationAdmin.SERVICE_FACTORYPID;
+
+		String pid = "foo~1234";
 
 		String pidFilterString =
 			_configurationModelRetrieverImpl.getPidFilterString(

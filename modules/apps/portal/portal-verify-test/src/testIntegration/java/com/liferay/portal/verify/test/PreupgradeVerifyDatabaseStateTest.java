@@ -119,8 +119,8 @@ public class PreupgradeVerifyDatabaseStateTest
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(
-				exception.getMessage(),
-				"Missing tables detected: [" + tableName + "]");
+				"Missing tables detected: [" + tableName + "]",
+				exception.getMessage());
 		}
 		finally {
 			_serviceComponentLocalService.deleteServiceComponent(
@@ -183,9 +183,9 @@ public class PreupgradeVerifyDatabaseStateTest
 				dbInspector, originalData);
 
 			Assert.assertEquals(
-				exception.getMessage(),
 				"Stale tables from a previous upgrade detected: " +
-					new TreeSet<>(tableNames));
+					new TreeSet<>(tableNames),
+				exception.getMessage());
 		}
 		finally {
 			serviceComponent.setData(originalData);

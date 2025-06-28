@@ -351,8 +351,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				if (!versionLabelName.matches("\\d+\\.\\d+.*")) {
 					_log.error(
 						"Found file that does not match version label " +
-							"structure (expected \\d+\\.\\d+.*): " +
-								versionLabelPath);
+							"structure: " + versionLabelPath);
 
 					return false;
 				}

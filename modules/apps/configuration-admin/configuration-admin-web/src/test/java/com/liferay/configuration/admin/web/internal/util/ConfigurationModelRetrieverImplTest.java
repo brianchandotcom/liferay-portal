@@ -212,9 +212,8 @@ public class ConfigurationModelRetrieverImplTest {
 
 		pid = "foo~1234";
 
-		pidFilterString =
-			_configurationModelRetrieverImpl.getPidFilterString(
-				pid, ExtendedObjectClassDefinition.Scope.SYSTEM);
+		pidFilterString = _configurationModelRetrieverImpl.getPidFilterString(
+			pid, ExtendedObjectClassDefinition.Scope.SYSTEM);
 
 		_test(
 			true, pidFilterString,

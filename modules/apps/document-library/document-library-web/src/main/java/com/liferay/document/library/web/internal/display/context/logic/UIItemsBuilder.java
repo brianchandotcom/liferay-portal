@@ -1323,51 +1323,41 @@ public class UIItemsBuilder {
 		return _trashEnabled;
 	}
 
-	private boolean _isValidDDMFormValues(FileVersion fileVersion) {
-		try {
-			if (!(fileVersion.getModel() instanceof DLFileVersion)) {
-				return true;
-			}
+	private boolean _isValidDDMFormValues(FileVersion fileVersion)
+		throws PortalException {
 
-			DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+		if (!(fileVersion.getModel() instanceof DLFileVersion)) {
+			return true;
+		}
 
-			if (dlFileVersion.getFileEntryTypeId() ==
-					DLFileEntryTypeConstants.
-						FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
 
-				return true;
-			}
+		if (dlFileVersion.getFileEntryTypeId() ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
 
-			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-					dlFileVersion.getFileEntryTypeId());
+			return true;
+		}
 
-			for (DDMStructure ddmStructure :
-					dlFileEntryType.getDDMStructures()) {
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				dlFileVersion.getFileEntryTypeId());
 
-				DLFileEntryMetadata dlFileEntryMetadata =
-					DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
-						ddmStructure.getStructureId(),
-						fileVersion.getFileVersionId());
+		for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
+			DLFileEntryMetadata dlFileEntryMetadata =
+				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
+					ddmStructure.getStructureId(),
+					fileVersion.getFileVersionId());
 
-				if (dlFileEntryMetadata != null) {
-					DDMFormValues translatedDDMFormValues =
-						DDMBeanTranslatorUtil.translate(
-							StorageEngineManagerUtil.getDDMFormValues(
-								dlFileEntryMetadata.getDDMStorageId()));
+			if (dlFileEntryMetadata != null) {
+				DDMFormValues translatedDDMFormValues =
+					DDMBeanTranslatorUtil.translate(
+						StorageEngineManagerUtil.getDDMFormValues(
+							dlFileEntryMetadata.getDDMStorageId()));
 
-					if (translatedDDMFormValues != null) {
-						_validate(translatedDDMFormValues);
-					}
+				if (translatedDDMFormValues != null) {
+					_validate(translatedDDMFormValues);
 				}
 			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return false;
 		}
 
 		return true;

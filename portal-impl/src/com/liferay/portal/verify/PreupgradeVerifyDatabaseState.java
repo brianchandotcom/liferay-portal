@@ -8,12 +8,17 @@ package com.liferay.portal.verify;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ReleaseConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Jorge Avalos
@@ -48,13 +53,45 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 			dbInspector.getTableNames(null));
 
 		if (!databaseTables.containsAll(serviceComponentTableNames)) {
-			Set<String> missingTables = new HashSet<>(
-				serviceComponentTableNames);
+			Set<String> missingTables = ConcurrentHashMap.newKeySet();
+
+			missingTables.addAll(serviceComponentTableNames);
 
 			missingTables.removeAll(databaseTables);
 
-			throw new VerifyException(
-				"Missing tables detected: " + new TreeSet<>(missingTables));
+			Set<String> views = _removeViews(dbInspector, missingTables);
+
+			if (!missingTables.isEmpty()) {
+				throw new VerifyException(
+					"Missing tables detected: " + new TreeSet<>(missingTables));
+			}
+
+			views.removeIf(
+				viewName -> {
+					try {
+						return dbInspector.hasView(viewName);
+					}
+					catch (Exception exception) {
+						throw new SystemException(exception);
+					}
+				});
+
+			if (!views.isEmpty()) {
+				throw new VerifyException(
+					StringBundler.concat(
+						"Missing views detected: ",
+						new TreeSet<>(
+							views
+						).toString(),
+						" in company ",
+						String.valueOf(
+							CompanyThreadLocal.getNonsystemCompanyId())));
+			}
+
+			if (!missingTables.isEmpty()) {
+				throw new VerifyException(
+					"Missing tables detected: " + new TreeSet<>(missingTables));
+			}
 		}
 
 		if (serviceComponentPortalTableNames.isEmpty()) {
@@ -78,6 +115,28 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 				"Stale tables from a previous upgrade detected: " +
 					new TreeSet<>(previousUpgradeStaleTables));
 		}
+	}
+
+	private Set<String> _removeViews(
+			DBInspector dbInspector, Set<String> missingTables)
+		throws Exception {
+
+		Set<String> views = new HashSet<>();
+
+		if (CompanyThreadLocal.getNonsystemCompanyId() ==
+				PortalInstancePool.getDefaultCompanyId()) {
+
+			return views;
+		}
+
+		for (String missingTable : missingTables) {
+			if (dbInspector.isControlTable(missingTable)) {
+				missingTables.remove(missingTable);
+				views.add(missingTable);
+			}
+		}
+
+		return views;
 	}
 
 }

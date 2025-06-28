@@ -193,19 +193,19 @@ public class ConfigurationModelRetrieverImpl
 	protected String getPidFilterString(
 		String pid, ExtendedObjectClassDefinition.Scope scope) {
 
-		String pidProperty = Constants.SERVICE_PID;
+		String key = Constants.SERVICE_PID;
 
 		if (!scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM) ||
 			pid.contains("~")) {
 
-			pidProperty = ConfigurationAdmin.SERVICE_FACTORYPID;
+			key = ConfigurationAdmin.SERVICE_FACTORYPID;
 			pid = _getUnscopedPid(pid);
 		}
 
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
 			return StringBundler.concat(
 				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
-				_getPropertyFilterString(pidProperty, pid), "(!(",
+				_getPropertyFilterString(key, pid), "(!(",
 				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
 				"=*))(!(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
 				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
@@ -214,8 +214,8 @@ public class ConfigurationModelRetrieverImpl
 
 		String scopedFilterString = StringBundler.concat(
 			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
-			_getPropertyFilterString(pidProperty, pid),
-			_getPropertyFilterString(pidProperty, pid + ".scoped"),
+			_getPropertyFilterString(key, pid),
+			_getPropertyFilterString(key, pid + ".scoped"),
 			StringPool.CLOSE_PARENTHESIS);
 
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {

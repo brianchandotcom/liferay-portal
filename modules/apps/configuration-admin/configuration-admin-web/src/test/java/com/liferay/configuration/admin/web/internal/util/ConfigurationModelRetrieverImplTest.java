@@ -294,8 +294,9 @@ public class ConfigurationModelRetrieverImplTest {
 		return new FilterAsserter(filter, payload);
 	}
 
-	private ConfigurationModelRetrieverImpl _configurationModelRetrieverImpl =
-		new ConfigurationModelRetrieverImpl();
+	private final ConfigurationModelRetrieverImpl
+		_configurationModelRetrieverImpl =
+			new ConfigurationModelRetrieverImpl();
 
 	private static class FilterAsserter {
 

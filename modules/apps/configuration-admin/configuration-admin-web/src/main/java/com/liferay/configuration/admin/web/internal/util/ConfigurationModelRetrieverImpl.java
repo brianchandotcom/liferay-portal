@@ -7,7 +7,6 @@ package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -84,16 +83,11 @@ public class ConfigurationModelRetrieverImpl
 		String pid, ExtendedObjectClassDefinition.Scope scope,
 		Serializable scopePK) {
 
-		try {
-			Configuration[] configurations = _getConfigurations(
-				pid, scope, String.valueOf(scopePK));
+		Configuration[] configurations = _getConfigurations(
+			pid, scope, String.valueOf(scopePK));
 
-			if ((configurations != null) && (configurations.length > 0)) {
-				return configurations[0];
-			}
-		}
-		catch (IOException ioException) {
-			ReflectionUtil.throwException(ioException);
+		if ((configurations != null) && (configurations.length > 0)) {
+			return configurations[0];
 		}
 
 		return null;
@@ -337,45 +331,46 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	private Configuration[] _getConfigurations(
-			String pid, ExtendedObjectClassDefinition.Scope scope, String value)
-		throws IOException {
-
-		List<Configuration> configurationsList = new ArrayList<>();
+		String pid, ExtendedObjectClassDefinition.Scope scope, String value) {
 
 		try {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
 					getPidFilterString(pid, scope));
 
-			if (configurations != null) {
-				Filter filter = null;
+			if (configurations == null) {
+				return new Configuration[0];
+			}
 
-				String propertyFilterString = _getPropertyFilterString(
-					scope.getPropertyKey(), value);
+			Filter filter = null;
 
-				if (Validator.isNotNull(propertyFilterString)) {
-					filter = FrameworkUtil.createFilter(propertyFilterString);
-				}
+			String propertyFilterString = _getPropertyFilterString(
+				scope.getPropertyKey(), value);
 
-				if (filter == null) {
-					return configurations;
-				}
+			if (Validator.isNotNull(propertyFilterString)) {
+				filter = FrameworkUtil.createFilter(propertyFilterString);
+			}
 
-				for (Configuration configuration : configurations) {
-					Dictionary<String, Object> properties =
-						configuration.getProcessedProperties(null);
+			if (filter == null) {
+				return configurations;
+			}
 
-					if (filter.match(properties)) {
-						configurationsList.add(configuration);
-					}
+			List<Configuration> configurationsList = new ArrayList<>();
+
+			for (Configuration configuration : configurations) {
+				Dictionary<String, Object> properties =
+					configuration.getProcessedProperties(null);
+
+				if (filter.match(properties)) {
+					configurationsList.add(configuration);
 				}
 			}
-		}
-		catch (InvalidSyntaxException invalidSyntaxException) {
-			ReflectionUtil.throwException(invalidSyntaxException);
-		}
 
-		return configurationsList.toArray(new Configuration[0]);
+			return configurationsList.toArray(new Configuration[0]);
+		}
+		catch (InvalidSyntaxException | IOException exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private String _getPropertyFilterString(String key, String value) {

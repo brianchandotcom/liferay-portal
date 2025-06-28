@@ -14,7 +14,6 @@ import java.util.Map;
 
 import junit.framework.AssertionFailedError;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,12 +32,6 @@ public class ConfigurationModelRetrieverImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		_configurationModelRetrieverImpl =
-			new ConfigurationModelRetrieverImpl();
-	}
 
 	@Test
 	public void testPidFilterCompany() throws Exception {
@@ -301,7 +294,8 @@ public class ConfigurationModelRetrieverImplTest {
 		return new FilterAsserter(filter, payload);
 	}
 
-	private ConfigurationModelRetrieverImpl _configurationModelRetrieverImpl;
+	private ConfigurationModelRetrieverImpl _configurationModelRetrieverImpl =
+		new ConfigurationModelRetrieverImpl();
 
 	private static class FilterAsserter {
 

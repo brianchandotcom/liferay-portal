@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayInput} from '@clayui/form';
+import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import {ItemSelector} from 'frontend-js-item-selector-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 import type {DisplayType} from '@clayui/sticker';
 
@@ -26,58 +28,93 @@ function SampleContainer({
 }
 
 type Document = {
+	contentUrl: string;
+	creator: {
+		name: string;
+	};
+	encodingFormat: string;
 	id: string;
 	title: string;
 };
 
+type Space = {
+	id: number;
+	name: string;
+};
+
 export default function ItemSelectorSamples() {
+	const [documents, setDocuments] = useState<Document[]>([]);
+	const [space, setSpace] = useState<Space>();
+
 	return (
 		<>
-			<SampleContainer label="Single Select Documents - Paginated Items">
+			<SampleContainer label="Single Select (Documents) - Paginated Items">
 				<ItemSelector<Document>
 					apiURL={`${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`}
 				>
-					{(item) => {
-						return (
-							<ItemSelector.Item
-								key={item.id}
-								textValue={item.title}
-							>
-								{item.title}
-							</ItemSelector.Item>
-						);
-					}}
+					{(item) => (
+						<ItemSelector.Item key={item.id} textValue={item.title}>
+							{item.title}
+						</ItemSelector.Item>
+					)}
 				</ItemSelector>
 			</SampleContainer>
 
-			<SampleContainer label="Single Select (Spaces)">
-				<ItemSelector
-					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
-				>
-					{(item) => {
-						return (
-							<ItemSelector.Item
-								key={item.id}
-								textValue={item.name}
-							>
-								<span className="inline-item inline-item-before">
-									<ClaySticker
-										displayType={
-											`outline-${item.id % 10}` as DisplayType
-										}
-										size="sm"
-									>
-										{item.name.substr(0, 1)}
-									</ClaySticker>
-								</span>
+			<SampleContainer label="Single Select (Spaces) - Controlled Component">
+				<ClayInput.Group>
+					<ClayInput.GroupItem prepend shrink>
+						<ClayInput.GroupText>
+							{space && (
+								<ClaySticker
+									displayType={
+										`outline-${space.id % 10}` as DisplayType
+									}
+									size="sm"
+								>
+									{space.name.slice(0, 1)}
+								</ClaySticker>
+							)}
+						</ClayInput.GroupText>
+					</ClayInput.GroupItem>
 
-								<span className="inline-item inline-item-after">
-									{item.name}
-								</span>
-							</ItemSelector.Item>
-						);
-					}}
-				</ItemSelector>
+					<ClayInput.GroupItem append>
+						<ItemSelector<Space>
+							apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
+							as={ClayInput}
+							items={space ? [space] : []}
+							onItemsChange={(items: Array<Space>) => {
+								if (items.length) {
+									setSpace(items[0]);
+								}
+								else {
+									setSpace(undefined);
+								}
+							}}
+						>
+							{(item: Space) => (
+								<ItemSelector.Item
+									key={item.id}
+									textValue={item.name}
+								>
+									<span className="inline-item inline-item-before">
+										<ClaySticker
+											displayType={
+												`outline-${item.id % 10}` as DisplayType
+											}
+											size="sm"
+										>
+											{item.name.slice(0, 1)}
+										</ClaySticker>
+									</span>
+
+									<span className="inline-item inline-item-after">
+										{item.name}
+									</span>
+								</ItemSelector.Item>
+							)}
+						</ItemSelector>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
 			</SampleContainer>
 
 			<SampleContainer label="Single Select (Users)">
@@ -89,17 +126,92 @@ export default function ItemSelectorSamples() {
 						value: 'id',
 					}}
 				>
-					{(item) => {
-						return (
-							<ItemSelector.Item
-								key={item.id}
-								textValue={item.name}
-							>
-								{item.name}
-							</ItemSelector.Item>
-						);
-					}}
+					{(item) => (
+						<ItemSelector.Item key={item.id} textValue={item.name}>
+							{item.name}
+						</ItemSelector.Item>
+					)}
 				</ItemSelector>
+			</SampleContainer>
+
+			<SampleContainer label="Multiple Select (Documents) - Paginated Items">
+				<ItemSelector<Document>
+					apiURL={`${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`}
+					multiSelect
+				>
+					{(item) => (
+						<ItemSelector.Item key={item.id} textValue={item.title}>
+							{item.title}
+						</ItemSelector.Item>
+					)}
+				</ItemSelector>
+			</SampleContainer>
+
+			<SampleContainer label="Multiple Select (Documents) - Custom Selected Items List">
+				<ItemSelector<Document>
+					apiURL={`${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`}
+					displaySelectedItems={false}
+					items={documents}
+					multiSelect
+					onItemsChange={(items: Array<Document>) => {
+						setDocuments(items);
+					}}
+					placeholder="Select a Document"
+				>
+					{(item) => (
+						<ItemSelector.Item key={item.id} textValue={item.title}>
+							{item.title}
+						</ItemSelector.Item>
+					)}
+				</ItemSelector>
+
+				{!!documents.length && (
+					<ClayList className="mt-3">
+						{documents.map((document) => (
+							<ClayList.Item flex key={document.id}>
+								{document.encodingFormat.includes('image') && (
+									<ClayList.ItemField>
+										<ClaySticker className="mr-1" size="xl">
+											<ClaySticker.Image
+												alt={document.title}
+												src={document.contentUrl}
+											/>
+										</ClaySticker>
+									</ClayList.ItemField>
+								)}
+
+								<ClayList.ItemField expand>
+									<ClayList.ItemTitle>
+										{document.title}
+									</ClayList.ItemTitle>
+
+									<ClayList.ItemText>
+										Creator: {document.creator.name}
+									</ClayList.ItemText>
+								</ClayList.ItemField>
+
+								<ClayList.ItemField>
+									<ClayList.QuickActionMenu>
+										<ClayList.QuickActionMenu.Item
+											aria-label="Delete"
+											onClick={() =>
+												setDocuments((documents) =>
+													documents.filter(
+														(item) =>
+															item.id !==
+															document.id
+													)
+												)
+											}
+											symbol="trash"
+											title="Delete"
+										/>
+									</ClayList.QuickActionMenu>
+								</ClayList.ItemField>
+							</ClayList.Item>
+						))}
+					</ClayList>
+				)}
 			</SampleContainer>
 		</>
 	);

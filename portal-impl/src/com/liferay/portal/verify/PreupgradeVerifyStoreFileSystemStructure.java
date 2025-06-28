@@ -379,6 +379,6 @@ public class PreupgradeVerifyStoreFileSystemStructure
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PreupgradeVerifyFileSystemStoreStructure.class);
+		PreupgradeVerifyStoreFileSystemStructure.class);
 
 }

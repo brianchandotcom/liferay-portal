@@ -1348,16 +1348,20 @@ public class UIItemsBuilder {
 					ddmStructure.getStructureId(),
 					fileVersion.getFileVersionId());
 
-			if (dlFileEntryMetadata != null) {
-				DDMFormValues translatedDDMFormValues =
-					DDMBeanTranslatorUtil.translate(
-						StorageEngineManagerUtil.getDDMFormValues(
-							dlFileEntryMetadata.getDDMStorageId()));
-
-				if (translatedDDMFormValues != null) {
-					_validate(translatedDDMFormValues);
-				}
+			if (dlFileEntryMetadata == null) {
+				continue;
 			}
+
+			DDMFormValues translatedDDMFormValues =
+				DDMBeanTranslatorUtil.translate(
+					StorageEngineManagerUtil.getDDMFormValues(
+						dlFileEntryMetadata.getDDMStorageId()));
+
+			if (translatedDDMFormValues == null) {
+				continue;
+			}
+
+			_validate(translatedDDMFormValues);
 		}
 
 		return true;

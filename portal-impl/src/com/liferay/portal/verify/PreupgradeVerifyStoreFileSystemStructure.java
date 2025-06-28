@@ -150,7 +150,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				companyIdPath)) {
 
 			for (Path repositoryIdPath : directoryStream) {
-				if (_isSystemCompanyPath(repositoryIdPath)) {
+				if (_isSystemCompanyRepositoryIdPath(repositoryIdPath)) {
 					continue;
 				}
 
@@ -242,7 +242,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				companyIdPath)) {
 
 			for (Path repositoryIdPath : directoryStream) {
-				if (_isSystemCompanyPath(repositoryIdPath)) {
+				if (_isSystemCompanyRepositoryIdPath(repositoryIdPath)) {
 					continue;
 				}
 
@@ -372,7 +372,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		}
 	}
 
-	private boolean _isSystemCompanyPath(Path repositoryIdPath) {
+	private boolean _isSystemCompanyRepositoryIdPath(Path repositoryIdPath) {
 		return StringUtil.equals(
 			String.valueOf(repositoryIdPath.getFileName()),
 			CompanyConstants.SYSTEM_STRING);

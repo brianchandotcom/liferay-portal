@@ -1357,10 +1357,6 @@ public class UIItemsBuilder {
 					StorageEngineManagerUtil.getDDMFormValues(
 						dlFileEntryMetadata.getDDMStorageId()));
 
-			if (translatedDDMFormValues == null) {
-				continue;
-			}
-
 			_validate(translatedDDMFormValues);
 		}
 

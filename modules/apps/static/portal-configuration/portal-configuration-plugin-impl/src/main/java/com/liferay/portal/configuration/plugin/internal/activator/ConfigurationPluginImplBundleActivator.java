@@ -36,7 +36,6 @@ public class ConfigurationPluginImplBundleActivator implements BundleActivator {
 					SiteExternalReferenceCodeToGroupConfigurationPluginImpl.
 						class.getName()
 				).build()));
-
 		_serviceRegistrations.add(
 			bundleContext.registerService(
 				ConfigurationPlugin.class,

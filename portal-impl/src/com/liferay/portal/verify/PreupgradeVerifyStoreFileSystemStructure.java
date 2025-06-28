@@ -375,7 +375,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 	private boolean _isSystemCompanyPath(Path repositoryIdPath) {
 		return StringUtil.equals(
 			String.valueOf(repositoryIdPath.getFileName()),
-			String.valueOf(CompanyConstants.SYSTEM));
+			CompanyConstants.SYSTEM_STRING);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

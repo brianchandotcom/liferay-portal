@@ -343,10 +343,9 @@ public class ConfigurationModelRetrieverImpl
 		List<Configuration> configurationsList = new ArrayList<>();
 
 		try {
-			String pidFilter = getPidFilterString(pid, scope);
-
 			Configuration[] configurations =
-				_configurationAdmin.listConfigurations(pidFilter);
+				_configurationAdmin.listConfigurations(
+					getPidFilterString(pid, scope));
 
 			if (configurations != null) {
 				String propertyFilterString = _getPropertyFilterString(

@@ -165,10 +165,6 @@ public class ConfigurationModelRetrieverImpl
 			factoryConfigurationModel.getFactoryPid(), scope,
 			String.valueOf(scopePK));
 
-		if (configurations == null) {
-			return Collections.emptyList();
-		}
-
 		List<ConfigurationModel> factoryInstancesConfigurationModels =
 			new ArrayList<>();
 

@@ -1417,6 +1417,18 @@ public class LocalizationImpl implements Localization {
 			return defaultValue;
 		}
 
+		int startIndex = xml.indexOf(name + "=\"");
+
+		if (startIndex != -1) {
+			startIndex += name.length() + 2;
+
+			int endIndex = xml.indexOf('"', startIndex);
+
+			if (endIndex != -1) {
+				return xml.substring(startIndex, endIndex);
+			}
+		}
+
 		String value = null;
 
 		XMLStreamReader xmlStreamReader = null;

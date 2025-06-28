@@ -212,7 +212,7 @@ public class ConfigurationModelRetrieverImpl
 				"=*))(!(groupExternalReferenceCode=*)))");
 		}
 
-		String scopedFilter = StringBundler.concat(
+		String scopedFilterString = StringBundler.concat(
 			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
 			_getPropertyFilterString(pidProperty, pid),
 			_getPropertyFilterString(pidProperty, pid + ".scoped"),
@@ -220,8 +220,8 @@ public class ConfigurationModelRetrieverImpl
 
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
 			return StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, scopedFilter,
-				"(|(",
+				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
+				scopedFilterString, "(|(",
 				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
 				"=*)(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
 				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
@@ -233,8 +233,8 @@ public class ConfigurationModelRetrieverImpl
 
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
 			return StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, scopedFilter,
-				"(|(",
+				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
+				scopedFilterString, "(|(",
 				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
 				"=*)(groupExternalReferenceCode=*))(!(",
 				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
@@ -243,8 +243,9 @@ public class ConfigurationModelRetrieverImpl
 		}
 
 		return StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, scopedFilter,
-			"(|(", ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
+			scopedFilterString, "(|(",
+			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
 			"=*)(groupExternalReferenceCode=*))(",
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
 				getPropertyKey(),

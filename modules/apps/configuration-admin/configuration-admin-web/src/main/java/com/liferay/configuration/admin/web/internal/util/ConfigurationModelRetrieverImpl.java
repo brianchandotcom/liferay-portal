@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -86,7 +87,7 @@ public class ConfigurationModelRetrieverImpl
 		Configuration[] configurations = _getConfigurations(
 			pid, scope, String.valueOf(scopePK));
 
-		if ((configurations != null) && (configurations.length > 0)) {
+		if (ArrayUtil.isNotEmpty(configurations)) {
 			return configurations[0];
 		}
 

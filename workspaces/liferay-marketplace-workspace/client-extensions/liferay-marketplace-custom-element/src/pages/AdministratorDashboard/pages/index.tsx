@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import {useMemo} from 'react';
+import {Link} from 'react-router-dom';
 
 import ErrorBoundary from '../../../components/ErrorBoundary';
 import Page from '../../../components/Page';
@@ -94,6 +96,12 @@ export default function AdministratorSummary() {
 					pageRendererProps={{
 						className: 'border py-2 rounded-lg mb-8',
 					}}
+					rightButton={
+						<Link className="font-weight-bold" to="/orders">
+							{i18n.translate('view-all')}
+							<ClayIcon symbol="order-arrow-right" />
+						</Link>
+					}
 					title={i18n.translate('recent-orders')}
 				>
 					<AdministratorOrdersListView
@@ -110,6 +118,12 @@ export default function AdministratorSummary() {
 
 				<Page
 					pageRendererProps={{className: 'border py-2 rounded-lg'}}
+					rightButton={
+						<Link className="font-weight-bold" to="/apps">
+							{i18n.translate('view-all')}
+							<ClayIcon symbol="order-arrow-right" />
+						</Link>
+					}
 					title={i18n.translate('published-apps')}
 				>
 					<AdministratorAppsListView

@@ -64,8 +64,11 @@ public class LayoutUtil {
 
 		if (pageSpecifications == null) {
 			Layout layout = LayoutLocalServiceUtil.addLayout(
-				null, serviceContext.getUserId(), groupId, privateLayout, 0, 0,
-				0, nameMap, titleMap, descriptionMap, null, robotsMap, type,
+				GetterUtil.getString(
+					serviceContext.getAttribute("layoutExternalReferenceCode"),
+					null),
+				serviceContext.getUserId(), groupId, privateLayout, 0, 0, 0,
+				nameMap, titleMap, descriptionMap, null, robotsMap, type,
 				typeSettingsUnicodeProperties.toString(), hidden, system,
 				friendlyURLMap, 0L, serviceContext);
 

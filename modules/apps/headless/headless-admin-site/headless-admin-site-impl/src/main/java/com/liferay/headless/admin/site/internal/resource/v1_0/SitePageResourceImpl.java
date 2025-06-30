@@ -266,20 +266,21 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			String externalReferenceCode, long groupId, SitePage sitePage)
 		throws Exception {
 
-		_validatePageSpecificationExternalReferenceCode(sitePage);
-
-		Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
-			sitePage.getName_i18n());
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			_getTypeSettingsUnicodeProperties(sitePage);
-
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			groupId, contextHttpServletRequest, sitePage.getViewableByAsString()
 		).build();
 
 		serviceContext.setUserId(contextUser.getUserId());
 		serviceContext.setUuid(sitePage.getUuid());
+
+		_validatePageSpecificationExternalReferenceCode(
+			serviceContext, sitePage);
+
+		Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
+			sitePage.getName_i18n());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_getTypeSettingsUnicodeProperties(sitePage);
 
 		Layout layout = null;
 
@@ -460,12 +461,16 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	private void _validatePageSpecificationExternalReferenceCode(
-		SitePage sitePage) {
+		ServiceContext serviceContext, SitePage sitePage) {
 
 		PageSpecification[] pageSpecifications =
 			sitePage.getPageSpecifications();
 
 		if (ArrayUtil.isEmpty(pageSpecifications)) {
+			serviceContext.setAttribute(
+				"layoutExternalReferenceCode",
+				sitePage.getExternalReferenceCode());
+
 			return;
 		}
 

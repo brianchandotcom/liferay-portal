@@ -337,6 +337,7 @@ export default {
 		'Module-based apps delivered as .lpkg files that the user can install to modify native Liferay behavior.',
 	'monetize-your-apps-and-solutions': 'Monetize your apps and solutions',
 	'monthly-increase': 'Monthly Increase',
+	'more-actions': 'More Actions',
 	'more-info': 'More Info',
 	'move-down': 'Move Down',
 	'move-to-bottom': 'Move to Bottom',

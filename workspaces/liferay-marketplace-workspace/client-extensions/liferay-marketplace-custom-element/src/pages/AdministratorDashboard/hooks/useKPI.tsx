@@ -9,6 +9,7 @@ import useSWR from 'swr';
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
+import {AccountType} from '../../../enums/Account';
 import {orderTypeLabel} from '../../../enums/Order';
 import {
 	PartnershipType,
@@ -223,7 +224,7 @@ const useKPI = () => {
 				{
 					onClick: () =>
 						navigate(
-							`/publishers?filter=customFields/AccountType:${PartnershipType.TECHNOLOGY_PARTNERSHIP}`
+							`/publishers?filter={"customFields/AccountType":["${AccountType.TECHNOLOGY_PARTNER}"]}&filterSchema=administratorPublishers`
 						),
 					...getAnnualTargetValues(
 						kpiPartnershipIntegration,

@@ -28,17 +28,29 @@ const usePublishAppSubmission = (
 	const navigate = useNavigate();
 
 	const _onSave = async (config: ProductConfig) => {
-		dispatch({payload: true, type: NewAppTypes.SET_LOADING});
+		try {
+			dispatch({payload: true, type: NewAppTypes.SET_LOADING});
 
-		const appPublish = new AppPublish(context);
+			const appPublish = new AppPublish(context);
 
-		const product = await appPublish.sync(config);
+			const product = await appPublish.sync(config);
 
-		dispatch({payload: product, type: NewAppTypes.SET_PRODUCT});
+			dispatch({payload: product, type: NewAppTypes.SET_PRODUCT});
 
-		dispatch({payload: false, type: NewAppTypes.SET_LOADING});
+			dispatch({payload: false, type: NewAppTypes.SET_LOADING});
 
-		return product;
+			return product;
+		}
+		catch (error) {
+			dispatch({payload: false, type: NewAppTypes.SET_LOADING});
+
+			Liferay.Util.openToast({
+				message: i18n.translate('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
+
+			throw error;
+		}
 	};
 
 	const onSaveAsDraft = async () => {
@@ -48,7 +60,6 @@ const usePublishAppSubmission = (
 			message: i18n.sub('x-saved-as-a-draft-successfully', [
 				context.profile.name,
 			]),
-			title: '',
 			type: 'info',
 		});
 

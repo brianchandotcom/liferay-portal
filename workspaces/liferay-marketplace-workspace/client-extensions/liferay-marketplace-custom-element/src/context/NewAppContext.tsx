@@ -657,7 +657,7 @@ export const NewAppContext = createContext<
 >([newAppInitialState, () => null]);
 
 type NewAppContextProviderProps = {
-	catalog: Catalog;
+	catalog?: Catalog;
 	children: ReactNode;
 };
 
@@ -758,7 +758,7 @@ export default function NewAppContextProvider({
 			value={[
 				{
 					...state,
-					catalog,
+					catalog: catalog as Catalog,
 					loading: isLoadingVocabularies || isLoading,
 					references: {
 						...state.references,

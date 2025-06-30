@@ -472,6 +472,8 @@ export default class AppPublish extends BaseAppPublish {
 		}
 		catch (error) {
 			console.error(error);
+
+			throw error;
 		}
 
 		return product;

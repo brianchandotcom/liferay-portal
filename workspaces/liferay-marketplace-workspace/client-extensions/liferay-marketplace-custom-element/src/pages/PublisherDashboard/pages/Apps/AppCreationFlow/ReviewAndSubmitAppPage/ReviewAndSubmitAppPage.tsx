@@ -29,16 +29,16 @@ import HeadlessCommerceAdminCatalog from '../../../../../../services/rest/Headle
 import {getProductCategoriesByVocabularyName} from '../../../../../../utils/productUtils';
 
 type ReviewAndSubmitAppPageProps = {
-	onClickBack: () => void;
-	onClickContinue: () => void;
+	onClickBack?: () => void;
+	onClickContinue?: () => void;
 	productERC?: string;
 	productId?: number;
 	readonly?: boolean;
 };
 
 export function ReviewAndSubmitAppPage({
-	onClickBack,
-	onClickContinue,
+	onClickBack = () => {},
+	onClickContinue = () => {},
 	productERC,
 	productId,
 	readonly = false,

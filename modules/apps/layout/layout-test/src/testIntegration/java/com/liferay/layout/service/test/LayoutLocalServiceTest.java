@@ -888,15 +888,6 @@ public class LayoutLocalServiceTest {
 			typeSettingsUnicodeProperties.containsKey(Sites.LAYOUT_UPDATEABLE));
 	}
 
-	private void _testUpdatePriority(
-		long expectedParentLayoutId, int expectedPriority, Layout layout) {
-
-		layout = _layoutLocalService.fetchLayout(layout.getPlid());
-
-		Assert.assertEquals(expectedParentLayoutId, layout.getParentLayoutId());
-		Assert.assertEquals(expectedPriority, layout.getPriority());
-	}
-
 	private void _assertSearch(
 			String keyword, String name, boolean searchOnlyByName, int count)
 		throws Exception {
@@ -936,6 +927,15 @@ public class LayoutLocalServiceTest {
 
 		Assert.assertEquals(
 			0, _layoutLocalService.getLayoutsCount(_group.getGroupId()));
+	}
+
+	private void _testUpdatePriority(
+		long expectedParentLayoutId, int expectedPriority, Layout layout) {
+
+		layout = _layoutLocalService.fetchLayout(layout.getPlid());
+
+		Assert.assertEquals(expectedParentLayoutId, layout.getParentLayoutId());
+		Assert.assertEquals(expectedPriority, layout.getPriority());
 	}
 
 	@Inject

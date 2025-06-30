@@ -267,7 +267,7 @@ public class DLOpenerOneDriveManager {
 		throws PortalException {
 
 		return _backgroundTaskManager.addBackgroundTask(
-			userId, BackgroundTaskConstants.DEFAULT_GROUP_ID,
+			userId, BackgroundTaskConstants.GROUP_ID_DEFAULT,
 			StringBundler.concat(
 				DLOpenerOneDriveManager.class.getSimpleName(), StringPool.POUND,
 				fileEntry.getFileEntryId()),

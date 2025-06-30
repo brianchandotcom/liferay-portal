@@ -79,7 +79,7 @@ public class OptimizeImagesMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			return _backgroundTaskManager.addBackgroundTask(
-				userId, BackgroundTaskConstants.DEFAULT_GROUP_ID, jobName,
+				userId, BackgroundTaskConstants.GROUP_ID_DEFAULT, jobName,
 				OptimizeImagesAllConfigurationsBackgroundTaskExecutor.class.
 					getName(),
 				taskContextMap, new ServiceContext());
@@ -106,7 +106,7 @@ public class OptimizeImagesMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			return _backgroundTaskManager.addBackgroundTask(
-				userId, BackgroundTaskConstants.DEFAULT_GROUP_ID, jobName,
+				userId, BackgroundTaskConstants.GROUP_ID_DEFAULT, jobName,
 				OptimizeImagesSingleConfigurationBackgroundTaskExecutor.class.
 					getName(),
 				taskContextMap, new ServiceContext());

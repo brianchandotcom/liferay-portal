@@ -79,7 +79,7 @@ public class VideoPreviewableDLProcessor
 
 					_backgroundTaskManager.addBackgroundTask(
 						UserConstants.USER_ID_DEFAULT,
-						BackgroundTaskConstants.DEFAULT_GROUP_ID, jobName,
+						BackgroundTaskConstants.GROUP_ID_DEFAULT, jobName,
 						DLBackgroundTaskExecutorNames.
 							VIDEO_PREVIEW_BACKGROUND_TASK_EXECUTOR,
 						HashMapBuilder.<String, Serializable>put(

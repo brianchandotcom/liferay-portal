@@ -115,7 +115,7 @@ public class PDFPreviewableDLProcessor
 
 					_backgroundTaskManager.addBackgroundTask(
 						UserConstants.USER_ID_DEFAULT,
-						BackgroundTaskConstants.DEFAULT_GROUP_ID, jobName,
+						BackgroundTaskConstants.GROUP_ID_DEFAULT, jobName,
 						PDFPreviewBackgroundTaskExecutor.class.getName(),
 						HashMapBuilder.<String, Serializable>put(
 							BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,

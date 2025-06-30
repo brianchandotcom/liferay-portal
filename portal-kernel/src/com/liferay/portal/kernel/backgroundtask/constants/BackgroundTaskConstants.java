@@ -13,9 +13,9 @@ import com.liferay.petra.string.StringPool;
  */
 public class BackgroundTaskConstants {
 
-	public static final String BACKGROUND_TASK_ID = "backgroundTaskId";
+	public static final String FIELD_BACKGROUND_TASK_ID = "backgroundTaskId";
 
-	public static final int DEFAULT_GROUP_ID = 0;
+	public static final int GROUP_ID_DEFAULT = 0;
 
 	public static final int ISOLATION_LEVEL_CLASS = 1;
 

@@ -61,7 +61,7 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 			bulkSelectionAction.getClass();
 
 		_backgroundTaskLocalService.addBackgroundTask(
-			user.getUserId(), BackgroundTaskConstants.DEFAULT_GROUP_ID,
+			user.getUserId(), BackgroundTaskConstants.GROUP_ID_DEFAULT,
 			bulkSelectionActionClass.getName(),
 			BulkSelectionBackgroundTaskExecutor.class.getName(),
 			HashMapBuilder.<String, Serializable>put(

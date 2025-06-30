@@ -233,7 +233,7 @@ public class EditExportConfigurationMVCActionCommand
 		throws Exception {
 
 		long backgroundTaskId = ParamUtil.getLong(
-			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
+			actionRequest, BackgroundTaskConstants.FIELD_BACKGROUND_TASK_ID);
 
 		BackgroundTask backgroundTask = backgroundTaskManager.getBackgroundTask(
 			backgroundTaskId);

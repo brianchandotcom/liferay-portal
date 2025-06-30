@@ -218,7 +218,7 @@ public class BackgroundTaskLocalServiceImpl
 				Message message = new Message();
 
 				message.put(
-					BackgroundTaskConstants.BACKGROUND_TASK_ID,
+					BackgroundTaskConstants.FIELD_BACKGROUND_TASK_ID,
 					backgroundTask.getBackgroundTaskId());
 				message.put("companyId", backgroundTask.getCompanyId());
 				message.put("name", backgroundTask.getName());
@@ -650,7 +650,7 @@ public class BackgroundTaskLocalServiceImpl
 		Message message = new Message();
 
 		message.put(
-			BackgroundTaskConstants.BACKGROUND_TASK_ID, backgroundTaskId);
+			BackgroundTaskConstants.FIELD_BACKGROUND_TASK_ID, backgroundTaskId);
 		message.put("companyId", backgroundTask.getCompanyId());
 
 		_messageBus.sendMessage(DestinationNames.BACKGROUND_TASK, message);
@@ -680,7 +680,7 @@ public class BackgroundTaskLocalServiceImpl
 		Message message = new Message();
 
 		message.put(
-			BackgroundTaskConstants.BACKGROUND_TASK_ID, backgroundTaskId);
+			BackgroundTaskConstants.FIELD_BACKGROUND_TASK_ID, backgroundTaskId);
 		message.put("companyId", backgroundTask.getCompanyId());
 
 		_messageBus.sendMessage(DestinationNames.BACKGROUND_TASK, message);

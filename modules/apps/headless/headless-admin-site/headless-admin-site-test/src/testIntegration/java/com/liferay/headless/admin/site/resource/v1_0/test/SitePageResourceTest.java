@@ -225,7 +225,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		// be executed first since it needs a clean site
 
 		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
-			Http.Method.PATCH, SitePage.Type.CONTENT_PAGE);
+			Http.Method.PATCH);
 
 		_testPatchSiteSiteByExternalReferenceCodeSitePage(
 			SitePage.Type.CONTENT_PAGE);
@@ -324,7 +324,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		// be executed first since it needs a clean site
 
 		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
-			Http.Method.PUT, SitePage.Type.CONTENT_PAGE);
+			Http.Method.PUT);
 
 		_testPutSiteSiteByExternalReferenceCodeSitePage(
 			SitePage.Type.CONTENT_PAGE);
@@ -982,34 +982,34 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
-			Http.Method httpMethod, SitePage.Type type)
+			Http.Method httpMethod)
 		throws Exception {
 
 		SitePage sitePage1 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
 				_getRandomSitePage(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-					type, null));
+					SitePage.Type.CONTENT_PAGE, null));
 		SitePage sitePage2 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
 				_getRandomSitePage(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-					type, null));
+					SitePage.Type.CONTENT_PAGE, null));
 		SitePage sitePage3 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
 				_getRandomSitePage(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-					type, null));
+					SitePage.Type.CONTENT_PAGE, null));
 		SitePage sitePage4 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
 				_getRandomSitePage(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-					type, null));
+					SitePage.Type.CONTENT_PAGE, null));
 		SitePage sitePage5 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
 				_getRandomSitePage(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-					type, null));
+					SitePage.Type.CONTENT_PAGE, null));
 
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 1, sitePage2);

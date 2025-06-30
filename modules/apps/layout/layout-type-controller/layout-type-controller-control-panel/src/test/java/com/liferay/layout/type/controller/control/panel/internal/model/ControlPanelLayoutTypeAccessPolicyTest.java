@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -51,15 +50,9 @@ public class ControlPanelLayoutTypeAccessPolicyTest {
 		);
 
 		Mockito.when(
-			group.isControlPanel()
+			group.isOrganization()
 		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			group.isDepot()
-		).thenReturn(
-			false
+			true
 		);
 
 		Mockito.when(
@@ -76,8 +69,6 @@ public class ControlPanelLayoutTypeAccessPolicyTest {
 
 		Portlet portlet = Mockito.mock(Portlet.class);
 
-		portlet.setPortletId(RandomTestUtil.randomString());
-
 		ControlPanelLayoutTypeAccessPolicy controlPanelLayoutTypeAccessPolicy =
 			new ControlPanelLayoutTypeAccessPolicy();
 
@@ -89,13 +80,12 @@ public class ControlPanelLayoutTypeAccessPolicyTest {
 		}
 		catch (PortalException portalException) {
 			Assert.assertEquals(
-				"User does not have permission to access Control Panel " +
-					"portlet " + portlet.getPortletId(),
+				"Unable to access an organization's site that is not enabled",
 				portalException.getMessage());
 		}
 
 		Mockito.when(
-			group.isControlPanel()
+			group.isSite()
 		).thenReturn(
 			true
 		);
@@ -115,13 +105,7 @@ public class ControlPanelLayoutTypeAccessPolicyTest {
 			httpServletRequest, null, portlet);
 
 		Mockito.when(
-			group.isControlPanel()
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			group.isDepot()
+			group.isSite()
 		).thenReturn(
 			true
 		);

@@ -40,7 +40,6 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -330,43 +329,42 @@ public class BatchEngineImportTaskItemReaderUtil {
 	private static <T> Class<? extends T> _resolveSubtypeClass(
 		Class<T> itemClass, Map<String, Object> fieldNameValueMap) {
 
-		JsonTypeInfo jsonTypeInfoAnnotation = itemClass.getAnnotation(
-			JsonTypeInfo.class);
+		JsonTypeInfo jsonTypeInfo = itemClass.getAnnotation(JsonTypeInfo.class);
 
-		if (jsonTypeInfoAnnotation == null) {
+		if (jsonTypeInfo == null) {
 			return null;
 		}
 
-		String jsonTypeInfoName = jsonTypeInfoAnnotation.property();
+		String jsonTypeInfoProperty = jsonTypeInfo.property();
 
-		String jsonTypeInfoValue = GetterUtil.getString(
-			fieldNameValueMap.get(jsonTypeInfoName));
+		String jsonTypeInfoPropertyValue = GetterUtil.getString(
+			fieldNameValueMap.get(jsonTypeInfoProperty));
 
-		if (jsonTypeInfoValue == null) {
+		if (jsonTypeInfoPropertyValue == null) {
 			return null;
 		}
 
 		ObjectMapper objectMapper =
 			ObjectMapperProviderUtil.getBatchEngineObjectMapper();
 
-		MapperConfig<?> config = objectMapper.getSerializationConfig();
+		MapperConfig<?> mapperConfig = objectMapper.getSerializationConfig();
 
 		TypeFactory typeFactory = objectMapper.getTypeFactory();
 
 		JavaType javaType = typeFactory.constructType(itemClass);
 
 		AnnotatedClass annotatedClass = AnnotatedClassResolver.resolve(
-			config, javaType, config);
+			mapperConfig, javaType, mapperConfig);
 
-		SubtypeResolver jacksonSubtypeResolver =
-			objectMapper.getSubtypeResolver();
+		SubtypeResolver subtypeResolver = objectMapper.getSubtypeResolver();
 
-		Collection<NamedType> subtypes =
-			jacksonSubtypeResolver.collectAndResolveSubtypesByClass(
-				config, annotatedClass);
+		for (NamedType namedType :
+				subtypeResolver.collectAndResolveSubtypesByClass(
+					mapperConfig, annotatedClass)) {
 
-		for (NamedType namedType : subtypes) {
-			if (Objects.equals(jsonTypeInfoValue, namedType.getName())) {
+			if (Objects.equals(
+					jsonTypeInfoPropertyValue, namedType.getName())) {
+
 				return (Class<? extends T>)namedType.getType();
 			}
 		}

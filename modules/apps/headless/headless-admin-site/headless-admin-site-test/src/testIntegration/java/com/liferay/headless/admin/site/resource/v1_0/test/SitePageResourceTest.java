@@ -509,8 +509,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _assertParentAndPriority(
-			SitePage expectedParentSitePage, int expectedPriority,
-			SitePage sitePage)
+			String expectedParentSitePageExternalReferenceCode,
+			int expectedPriority, SitePage sitePage)
 		throws Exception {
 
 		SitePage getSitePage =
@@ -518,15 +518,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode());
 
-		if (expectedParentSitePage == null) {
-			Assert.assertNull(
-				getSitePage.getParentSitePageExternalReferenceCode());
-		}
-		else {
-			Assert.assertEquals(
-				expectedParentSitePage.getExternalReferenceCode(),
-				getSitePage.getParentSitePageExternalReferenceCode());
-		}
+		Assert.assertEquals(
+			expectedParentSitePageExternalReferenceCode,
+			getSitePage.getParentSitePageExternalReferenceCode());
 
 		PageSettings pageSettings = getSitePage.getPageSettings();
 
@@ -1049,21 +1043,37 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertParentAndPriority(null, 1, sitePage4);
 		_assertParentAndPriority(null, 3, sitePage5);
 		_assertParentAndPriority(null, 4, sitePage3);
-		_assertParentAndPriority(sitePage1, 0, sitePage2);
+		_assertParentAndPriority(
+			sitePage1.getExternalReferenceCode(), 0, sitePage2);
 
 		_updateParentAndPriority(httpMethod, sitePage1, 1, sitePage4);
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 3, sitePage5);
 		_assertParentAndPriority(null, 4, sitePage3);
-		_assertParentAndPriority(sitePage1, 0, sitePage2);
-		_assertParentAndPriority(sitePage1, 1, sitePage4);
+		_assertParentAndPriority(
+			sitePage1.getExternalReferenceCode(), 0, sitePage2);
+		_assertParentAndPriority(
+			sitePage1.getExternalReferenceCode(), 1, sitePage4);
 
 		_updateParentAndPriority(httpMethod, sitePage1, 3, sitePage3);
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 3, sitePage5);
-		_assertParentAndPriority(sitePage1, 0, sitePage2);
-		_assertParentAndPriority(sitePage1, 1, sitePage4);
-		_assertParentAndPriority(sitePage1, 2, sitePage3);
+		_assertParentAndPriority(
+			sitePage1.getExternalReferenceCode(), 0, sitePage2);
+		_assertParentAndPriority(
+			sitePage1.getExternalReferenceCode(), 1, sitePage4);
+		_assertParentAndPriority(
+			sitePage1.getExternalReferenceCode(), 2, sitePage3);
+
+		_updateParentAndPriority(httpMethod, sitePage1, 0, sitePage3);
+		_assertParentAndPriority(null, 0, sitePage1);
+		_assertParentAndPriority(null, 3, sitePage5);
+		_assertParentAndPriority(
+			sitePage1.getExternalReferenceCode(), 0, sitePage3);
+		_assertParentAndPriority(
+			sitePage1.getExternalReferenceCode(), 1, sitePage2);
+		_assertParentAndPriority(
+			sitePage1.getExternalReferenceCode(), 2, sitePage4);
 	}
 
 	private void _updateParentAndPriority(

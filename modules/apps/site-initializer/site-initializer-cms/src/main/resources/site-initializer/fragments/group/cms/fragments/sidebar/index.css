@@ -10,7 +10,6 @@
 	}
 
 	.sidebar {
-		max-height: var(--sidebar-layout-height);
 		max-width: var(--sidebar-layout-width);
 		min-height: var(--sidebar-layout-height);
 		min-width: var(--sidebar-layout-width);

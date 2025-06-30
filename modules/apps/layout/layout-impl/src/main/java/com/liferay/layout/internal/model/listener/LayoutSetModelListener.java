@@ -62,16 +62,17 @@ public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 			layoutSet.getLayoutSetId());
 	}
 
-	private void _grantGuestDownloadPermission(long companyId, long fileEntryId) {
+	private void _grantGuestDownloadPermission(
+		long companyId, long fileEntryId) {
+
 		try {
 			Role guestRole = _roleLocalService.getRole(
 				companyId, RoleConstants.GUEST);
 
 			_resourcePermissionLocalService.setResourcePermissions(
 				companyId, DLFileEntry.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(fileEntryId), guestRole.getRoleId(),
-				new String[] {ActionKeys.DOWNLOAD});
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(fileEntryId),
+				guestRole.getRoleId(), new String[] {ActionKeys.DOWNLOAD});
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(

@@ -63,7 +63,7 @@ public class ViewVersionHistoryDisplayContext {
 				_language.get(_httpServletRequest, "delete"), "delete",
 				"delete", "headless"),
 			new FDSActionDropdownItem(
-				"{actions.expire.href}", "expire", "expire",
+				"{actions.expire.href}", "time", "expire",
 				_language.get(_httpServletRequest, "expire"), "post", "expire",
 				"headless"),
 			new FDSActionDropdownItem(

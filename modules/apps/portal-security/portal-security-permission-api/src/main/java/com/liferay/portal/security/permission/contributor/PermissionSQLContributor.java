@@ -19,7 +19,7 @@ public interface PermissionSQLContributor {
 		Column<?, Long> classPKColumn, long[] groupIds);
 
 	public String getPermissionSQL(
-		String className, String classPKField, String userIdField,
-		String groupIdField, long[] groupIds);
+		String className, String classPKField, String groupIdField,
+		long[] groupIds);
 
 }

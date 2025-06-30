@@ -112,8 +112,8 @@ public class SharingPermissionSQLContributor
 
 	@Override
 	public String getPermissionSQL(
-		String className, String classPKField, String userIdField,
-		String groupIdField, long[] groupIds) {
+		String className, String classPKField, String groupIdField,
+		long[] groupIds) {
 
 		SharingConfiguration sharingConfiguration =
 			_sharingConfigurationFactory.getSystemSharingConfiguration();

@@ -189,7 +189,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		String sql, String className, String classPKField) {
 
 		return replacePermissionCheck(
-			sql, className, classPKField, null, new long[] {0}, null);
+			sql, className, classPKField, new long[] {0});
 	}
 
 	@Override
@@ -197,99 +197,17 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		String sql, String className, String classPKField, long groupId) {
 
 		return replacePermissionCheck(
-			sql, className, classPKField, null, new long[] {groupId}, null);
-	}
-
-	@Override
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, long groupId,
-		String bridgeJoin) {
-
-		return replacePermissionCheck(
-			sql, className, classPKField, null, new long[] {groupId},
-			bridgeJoin);
+			sql, className, classPKField, new long[] {groupId});
 	}
 
 	@Override
 	public String replacePermissionCheck(
 		String sql, String className, String classPKField, long[] groupIds) {
 
-		return replacePermissionCheck(
-			sql, className, classPKField, null, groupIds, null);
-	}
-
-	@Override
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, long[] groupIds,
-		String bridgeJoin) {
-
-		return replacePermissionCheck(
-			sql, className, classPKField, null, groupIds, bridgeJoin);
-	}
-
-	@Override
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, String userIdField) {
-
-		return replacePermissionCheck(
-			sql, className, classPKField, userIdField, new long[] {0}, null);
-	}
-
-	@Override
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, String userIdField,
-		long groupId) {
-
-		return replacePermissionCheck(
-			sql, className, classPKField, userIdField, new long[] {groupId},
-			null);
-	}
-
-	@Override
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, String userIdField,
-		long groupId, String bridgeJoin) {
-
-		return replacePermissionCheck(
-			sql, className, classPKField, userIdField, new long[] {groupId},
-			bridgeJoin);
-	}
-
-	@Override
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, String userIdField,
-		long[] groupIds) {
-
-		return replacePermissionCheck(
-			sql, className, classPKField, userIdField, groupIds, null);
-	}
-
-	@Override
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, String userIdField,
-		long[] groupIds, String bridgeJoin) {
-
 		String groupIdField = classPKField.substring(
 			0, classPKField.lastIndexOf(CharPool.PERIOD));
 
-		return replacePermissionCheck(
-			sql, className, classPKField, userIdField,
-			groupIdField.concat(".groupId"), groupIds, bridgeJoin);
-	}
-
-	@Override
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, String userIdField,
-		String bridgeJoin) {
-
-		return replacePermissionCheck(
-			sql, className, classPKField, userIdField, 0, bridgeJoin);
-	}
-
-	@Override
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, String userIdField,
-		String groupIdField, long[] groupIds, String bridgeJoin) {
+		groupIdField = groupIdField.concat(".groupId");
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -302,10 +220,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		String resourcePermissionSQL = _getResourcePermissionSQL(
-			permissionChecker, className, userIdField, groupIds, bridgeJoin);
+			permissionChecker, className, groupIds);
 
 		return _insertResourcePermissionSQL(
-			sql, className, classPKField, userIdField, groupIdField, groupIds,
+			sql, className, classPKField, groupIdField, groupIds,
 			resourcePermissionSQL);
 	}
 
@@ -332,8 +250,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	private void _appendPermissionSQL(
 		StringBundler sb, String className, String classPKField,
-		String userIdField, String groupIdField, long[] groupIds,
-		String permissionSQL) {
+		String groupIdField, long[] groupIds, String permissionSQL) {
 
 		List<PermissionSQLContributor> permissionSQLContributors =
 			_serviceTrackerMap.getService(className);
@@ -351,8 +268,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 				String contributorPermissionSQL =
 					permissionSQLContributor.getPermissionSQL(
-						className, classPKField, userIdField, groupIdField,
-						groupIds);
+						className, classPKField, groupIdField, groupIds);
 
 				if (Validator.isNull(contributorPermissionSQL)) {
 					continue;
@@ -538,16 +454,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	private String _getResourcePermissionSQL(
 		PermissionChecker permissionChecker, String className,
-		String userIdField, long[] groupIds, String bridgeJoin) {
+		long[] groupIds) {
 
 		String resourcePermissionSQL = _customSQL.get(
 			getClass(), FIND_BY_RESOURCE_PERMISSION);
 
-		if (Validator.isNotNull(bridgeJoin)) {
-			resourcePermissionSQL = bridgeJoin.concat(resourcePermissionSQL);
-		}
-
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(7);
 
 		long[] roleIds = _getRoleIds(groupIds);
 
@@ -565,17 +477,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				sb.append(StringPool.OPEN_PARENTHESIS);
 			}
 
-			long userId = permissionChecker.getUserId();
-
-			if (Validator.isNull(userIdField)) {
-				sb.append("ResourcePermission.ownerId = ");
-				sb.append(userId);
-			}
-			else {
-				sb.append(userIdField);
-				sb.append(" = ");
-				sb.append(userId);
-			}
+			sb.append("ResourcePermission.ownerId = ");
+			sb.append(permissionChecker.getUserId());
 
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
@@ -693,8 +596,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private String _insertResourcePermissionSQL(
-		String sql, String className, String classPKField, String userIdField,
-		String groupIdField, long[] groupIds, String permissionSQL) {
+		String sql, String className, String classPKField, String groupIdField,
+		long[] groupIds, String permissionSQL) {
 
 		StringBundler sb = new StringBundler(11);
 
@@ -717,8 +620,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			sb.append(_WHERE_CLAUSE);
 
 			_appendPermissionSQL(
-				sb, className, classPKField, userIdField, groupIdField,
-				groupIds, permissionSQL);
+				sb, className, classPKField, groupIdField, groupIds,
+				permissionSQL);
 
 			if (pos != -1) {
 				sb.append(sql.substring(pos));
@@ -730,8 +633,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			sb.append(sql.substring(0, pos));
 
 			_appendPermissionSQL(
-				sb, className, classPKField, userIdField, groupIdField,
-				groupIds, permissionSQL);
+				sb, className, classPKField, groupIdField, groupIds,
+				permissionSQL);
 
 			sb.append("AND ");
 

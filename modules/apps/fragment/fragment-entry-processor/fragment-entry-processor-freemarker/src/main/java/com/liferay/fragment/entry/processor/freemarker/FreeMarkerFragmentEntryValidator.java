@@ -112,6 +112,8 @@ public class FreeMarkerFragmentEntryValidator
 				).put(
 					"fragmentEntryLinkNamespace", StringPool.BLANK
 				).put(
+					"fragmentName", StringPool.BLANK
+				).put(
 					"input",
 					new InputTemplateNode(
 						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,

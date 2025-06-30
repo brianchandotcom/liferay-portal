@@ -1036,7 +1036,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertParentAndPriority(
 			sitePage1.getExternalReferenceCode(), 0, sitePage2);
 
-		_updateParentAndPriority(httpMethod, sitePage1, 1, sitePage4);
+		_updateParentAndPriority(
+			httpMethod, sitePage1.getExternalReferenceCode(), 1, sitePage4);
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 3, sitePage5);
 		_assertParentAndPriority(null, 4, sitePage3);
@@ -1045,7 +1046,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertParentAndPriority(
 			sitePage1.getExternalReferenceCode(), 1, sitePage4);
 
-		_updateParentAndPriority(httpMethod, sitePage1, 3, sitePage3);
+		_updateParentAndPriority(
+			httpMethod, sitePage1.getExternalReferenceCode(), 3, sitePage3);
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 3, sitePage5);
 		_assertParentAndPriority(
@@ -1055,7 +1057,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertParentAndPriority(
 			sitePage1.getExternalReferenceCode(), 2, sitePage3);
 
-		_updateParentAndPriority(httpMethod, sitePage1, 0, sitePage3);
+		_updateParentAndPriority(
+			httpMethod, sitePage1.getExternalReferenceCode(), 0, sitePage3);
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 3, sitePage5);
 		_assertParentAndPriority(
@@ -1067,21 +1070,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _updateParentAndPriority(
-			Http.Method httpMethod, SitePage parentSitePage, Integer priority,
-			SitePage sitePage)
+			Http.Method httpMethod, String parentSitePageExternalReferenceCode,
+			Integer priority, SitePage sitePage)
 		throws Exception {
 
 		Assert.assertTrue(
 			httpMethod.toString(),
 			(httpMethod == Http.Method.PATCH) ||
 			(httpMethod == Http.Method.PUT));
-
-		String parentSitePageExternalReferenceCode = null;
-
-		if (parentSitePage != null) {
-			parentSitePageExternalReferenceCode =
-				parentSitePage.getExternalReferenceCode();
-		}
 
 		sitePage.setParentSitePageExternalReferenceCode(
 			parentSitePageExternalReferenceCode);

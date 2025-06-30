@@ -4,6 +4,7 @@
  */
 
 import ClaySticker from '@clayui/sticker';
+import cx from 'classnames';
 import React from 'react';
 
 import {LogoColor} from '../../common/types/Space';
@@ -40,8 +41,11 @@ export default function SpaceSticker({
 	React.ComponentProps<typeof ClaySticker>,
 	'className' | 'displayType' | 'id' | 'size'
 >) {
+	const gap = size === 'lg' ? 'c-gap-3' : 'c-gap-2';
+	const wrapperClasses = cx('align-items-center d-flex', gap);
+
 	return (
-		<div className="align-items-center d-flex">
+		<div className={wrapperClasses}>
 			<ClaySticker
 				displayType={displayType || getDisplayType(name)}
 				size={size}
@@ -50,7 +54,7 @@ export default function SpaceSticker({
 				{name.charAt(0).toUpperCase()}
 			</ClaySticker>
 
-			{!hideName && <span className="ml-2">{name}</span>}
+			{!hideName && <span>{name}</span>}
 		</div>
 	);
 }

@@ -24,6 +24,7 @@ ViewSpaceSitesAbstractSectionDisplayContext viewSpaceSitesAbstractSectionDisplay
 			apiURL="<%= viewSpaceSitesAbstractSectionDisplayContext.getAPIURL() %>"
 			creationMenu="<%= viewSpaceSitesAbstractSectionDisplayContext.getCreationMenu() %>"
 			emptyState="<%= viewSpaceSitesAbstractSectionDisplayContext.getEmptyState() %>"
+			fdsActionDropdownItems="<%= viewSpaceSitesAbstractSectionDisplayContext.getFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CMSSiteInitializerFDSNames.SPACE_SITES_ABSTRACT_SECTION %>"
 			propsTransformer="{SitesFDSPropsTransformer} from site-cms-site-initializer"

@@ -15,9 +15,11 @@ const ACTIONS = {
 
 export default function SitesFDSPropsTransformer({
 	creationMenu,
+	itemsActions = [],
 	...otherProps
 }: {
 	creationMenu: any;
+	itemsActions?: any[];
 	otherProps: any;
 }) {
 	return {
@@ -37,6 +39,31 @@ export default function SitesFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 			],
+		},
+		itemsActions: itemsActions.map((action) => {
+			if (action?.data?.id === 'make-searchable') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(!item?.searchable),
+				};
+			}
+			else if (action?.data?.id === 'make-unsearchable') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(item?.searchable),
+				};
+			}
+
+			return action;
+		}),
+		onActionDropdownItemClick: ({
+			action,
+		}: {
+			action: {data: {id: string}};
+		}) => {
+			if (action.data.id === 'delete') {
+				window.location.reload();
+			}
 		},
 	};
 }

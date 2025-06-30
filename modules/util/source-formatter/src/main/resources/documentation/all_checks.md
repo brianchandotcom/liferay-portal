@@ -521,6 +521,7 @@ UnusedMethodCheck | [Performance](performance_checks.md#performance-checks) | .j
 UnusedParameterCheck | [Performance](performance_checks.md#performance-checks) | .java | Finds parameters in private methods that are not used. |
 UnusedVariableCheck | [Performance](performance_checks.md#performance-checks) | .java | Finds variables that are declared, but not used. |
 UnwrappedVariableInfoCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases where the variable should be wrapped into an inner class in order to defer array elements initialization. |
+UpgradeAutoBatchMethodCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | change parameters from autoBatch method from the AutoBatchPreparedStatementUtil class |
 UpgradeBNDDeclarativeServicesCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist. |
 UpgradeBNDIncludeResourceCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it. |
 UpgradeCatchAllCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Performs replacements on Liferay's outdated code. |

@@ -1815,6 +1815,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="UpgradeSourceProcessor">
+		<check name="UpgradeAutoBatchMethodCheck">
+			<category name="Upgrade" />
+			<description name="change parameters from autoBatch method from the AutoBatchPreparedStatementUtil class" />
+		</check>
 		<check name="UpgradeBNDDeclarativeServicesCheck">
 			<category name="Upgrade" />
 			<description name="Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist." />

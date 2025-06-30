@@ -41,6 +41,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeAutoBatchMethodCheck() throws Exception {
+		test("upgrade/UpgradeJavaAutoBatchMethodCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeBNDDeclarativeServicesCheck() throws Exception {
 		test("upgrade/upgrade-declarative-services-check/bnd.testbnd");
 		test("upgrade/upgrade-declarative-services-replace-check/bnd.testbnd");

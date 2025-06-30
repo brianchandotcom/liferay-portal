@@ -2,6 +2,7 @@
 
 Check | Category | Description
 ----- | -------- | -----------
+UpgradeAutoBatchMethodCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | change parameters from autoBatch method from the AutoBatchPreparedStatementUtil class |
 UpgradeBNDDeclarativeServicesCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist. |
 UpgradeBNDIncludeResourceCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it. |
 UpgradeCatchAllCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Performs replacements on Liferay's outdated code. |

@@ -31,7 +31,7 @@
 						"name": "Trial Guide",
 						"name_i18n": {
 							"en_US": "Trial Guide"
-						},						
+						},
 						"type": "layout",
 						"useCustomName": true
 					},

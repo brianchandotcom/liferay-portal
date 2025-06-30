@@ -3772,6 +3772,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		randomIrrelevantKeyword.setAssetLibraryKey(
 			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
+
 		randomIrrelevantKeyword.setSiteExternalReferenceCode(
 			irrelevantGroup.getExternalReferenceCode());
 

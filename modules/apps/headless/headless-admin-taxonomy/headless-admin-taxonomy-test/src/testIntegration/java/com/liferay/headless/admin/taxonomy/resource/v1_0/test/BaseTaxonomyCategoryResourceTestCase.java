@@ -5385,6 +5385,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		randomIrrelevantTaxonomyCategory.setAssetLibraryKey(
 			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
+
 		randomIrrelevantTaxonomyCategory.setSiteExternalReferenceCode(
 			irrelevantGroup.getExternalReferenceCode());
 

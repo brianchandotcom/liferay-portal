@@ -149,7 +149,7 @@ public class UpgradeRecorderTest {
 	}
 
 	@Test
-	public void testFailureResultByPreupgradeVerifyException() {
+	public void testFailureResultByPreupgradeVerifyExceptionWithoutReleaseManager() {
 		StartupHelperUtil.setUpgrading(true);
 
 		ServiceTracker<ReleaseManager, ReleaseManager> originalServiceTracker =
@@ -202,6 +202,42 @@ public class UpgradeRecorderTest {
 		}
 
 		Assert.assertEquals("preupgrade verification failure", _getResult());
+	}
+
+	@Test
+	public void testFailureResultByPreupgradeVerifyExceptionWithReleaseManager() {
+		StartupHelperUtil.setUpgrading(true);
+
+		VerifyExceptionProcess verifyExceptionProcess =
+			new VerifyExceptionProcess();
+
+		try {
+			_appender.start();
+
+			verifyExceptionProcess.verify();
+
+			Assert.fail();
+		}
+		catch (VerifyException verifyException) {
+			_appender.append(
+				Log4jLogEvent.newBuilder(
+				).setLoggerName(
+					PreupgradeVerifyProcessSuite.class.getName()
+				).setLevel(
+					Level.ERROR
+				).setMessage(
+					new SimpleMessage(RandomTestUtil.randomString())
+				).setThrown(
+					verifyException
+				).build());
+		}
+		finally {
+			_appender.stop();
+
+			StartupHelperUtil.setUpgrading(false);
+		}
+
+		Assert.assertEquals("failure", _getResult());
 	}
 
 	@Test

@@ -23,16 +23,16 @@ import java.util.List;
  */
 public class PlaywrightTestSelector {
 
-	public List<PlaywrightTest> getPlaywrightTests() {
+	public List<PlaywrightTest> getPlaywrightTests() throws IOException {
 		List<PlaywrightTest> playwrightTests = new ArrayList<>();
 
+		String projectRoot = System.getProperty("user.dir");
+
+		Path playwrightTestsDirPath = Paths.get(
+			projectRoot, "/../../modules/test/playwright/tests"
+		).toRealPath();
+
 		try {
-			String projectRoot = System.getProperty("user.dir");
-
-			Path playwrightTestsDirPath = Paths.get(
-				projectRoot, "/../../modules/test/playwright/tests"
-			).toRealPath();
-
 			Files.walkFileTree(
 				playwrightTestsDirPath,
 				new SimpleFileVisitor<>() {
@@ -66,7 +66,10 @@ public class PlaywrightTestSelector {
 				});
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+			throw new RuntimeException(
+				"Unable to get Playwright tests from directory " +
+					playwrightTestsDirPath,
+				ioException.getCause());
 		}
 
 		playwrightTests.sort(

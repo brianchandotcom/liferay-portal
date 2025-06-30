@@ -28,7 +28,9 @@ public class PlaywrightTestParser {
 				playwrightTestFilePath);
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+			throw new RuntimeException(
+				"Unable to read file " + playwrightTestFilePath.getFileName(),
+				ioException.getCause());
 		}
 
 		List<PlaywrightTest> playwrightTests = new ArrayList<>();

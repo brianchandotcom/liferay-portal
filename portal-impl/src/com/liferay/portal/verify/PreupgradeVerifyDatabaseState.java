@@ -49,24 +49,26 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		DBInspector dbInspector = new DBInspector(connection);
 
-		Set<String> databaseTables = new HashSet<>(
+		Set<String> databaseTableNames = new HashSet<>(
 			dbInspector.getTableNames(null));
 
-		if (!databaseTables.containsAll(serviceComponentTableNames)) {
-			Set<String> missingTables = ConcurrentHashMap.newKeySet();
+		if (!databaseTableNames.containsAll(serviceComponentTableNames)) {
+			Set<String> missingTableNames = ConcurrentHashMap.newKeySet();
 
-			missingTables.addAll(serviceComponentTableNames);
+			missingTableNames.addAll(serviceComponentTableNames);
 
-			missingTables.removeAll(databaseTables);
+			missingTableNames.removeAll(databaseTableNames);
 
-			Set<String> views = _removeViews(dbInspector, missingTables);
+			Set<String> viewNames = _removeViewNames(
+				dbInspector, missingTableNames);
 
-			if (!missingTables.isEmpty()) {
+			if (!missingTableNames.isEmpty()) {
 				throw new VerifyException(
-					"Missing tables detected: " + new TreeSet<>(missingTables));
+					"Missing tables detected: " +
+						new TreeSet<>(missingTableNames));
 			}
 
-			views.removeIf(
+			viewNames.removeIf(
 				viewName -> {
 					try {
 						return dbInspector.hasView(viewName);
@@ -76,21 +78,22 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 					}
 				});
 
-			if (!views.isEmpty()) {
+			if (!viewNames.isEmpty()) {
 				throw new VerifyException(
 					StringBundler.concat(
 						"Missing views detected: ",
 						new TreeSet<>(
-							views
+							viewNames
 						).toString(),
 						" in company ",
 						String.valueOf(
 							CompanyThreadLocal.getNonsystemCompanyId())));
 			}
 
-			if (!missingTables.isEmpty()) {
+			if (!missingTableNames.isEmpty()) {
 				throw new VerifyException(
-					"Missing tables detected: " + new TreeSet<>(missingTables));
+					"Missing tables detected: " +
+						new TreeSet<>(missingTableNames));
 			}
 		}
 
@@ -98,45 +101,46 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 			return;
 		}
 
-		Set<String> targetVersionNewTables = DBResourceUtil.getModuleTableNames(
-			connection);
+		Set<String> targetVersionNewTableNames =
+			DBResourceUtil.getModuleTableNames(connection);
 
-		targetVersionNewTables.addAll(
+		targetVersionNewTableNames.addAll(
 			DBResourceUtil.getPortalTableNames(connection));
 
-		targetVersionNewTables.removeAll(serviceComponentTableNames);
+		targetVersionNewTableNames.removeAll(serviceComponentTableNames);
 
-		Set<String> previousUpgradeStaleTables = new HashSet<>(databaseTables);
+		Set<String> previousUpgradeStaleTableNames = new HashSet<>(
+			databaseTableNames);
 
-		previousUpgradeStaleTables.retainAll(targetVersionNewTables);
+		previousUpgradeStaleTableNames.retainAll(targetVersionNewTableNames);
 
-		if (!previousUpgradeStaleTables.isEmpty()) {
+		if (!previousUpgradeStaleTableNames.isEmpty()) {
 			throw new VerifyException(
 				"Stale tables from a previous upgrade detected: " +
-					new TreeSet<>(previousUpgradeStaleTables));
+					new TreeSet<>(previousUpgradeStaleTableNames));
 		}
 	}
 
-	private Set<String> _removeViews(
-			DBInspector dbInspector, Set<String> missingTables)
+	private Set<String> _removeViewNames(
+			DBInspector dbInspector, Set<String> missingTableNames)
 		throws Exception {
 
-		Set<String> views = new HashSet<>();
+		Set<String> viewNames = new HashSet<>();
 
 		if (CompanyThreadLocal.getNonsystemCompanyId() ==
 				PortalInstancePool.getDefaultCompanyId()) {
 
-			return views;
+			return viewNames;
 		}
 
-		for (String missingTable : missingTables) {
-			if (dbInspector.isControlTable(missingTable)) {
-				missingTables.remove(missingTable);
-				views.add(missingTable);
+		for (String missingTableName : missingTableNames) {
+			if (dbInspector.isControlTable(missingTableName)) {
+				missingTableNames.remove(missingTableName);
+				viewNames.add(missingTableName);
 			}
 		}
 
-		return views;
+		return viewNames;
 	}
 
 }

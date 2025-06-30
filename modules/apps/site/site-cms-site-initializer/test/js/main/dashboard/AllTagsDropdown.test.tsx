@@ -11,20 +11,12 @@ import {
 	waitFor,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/ViewDashboardContext';
 import {AllTagsDropdown} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/AllTagsDropdown';
 import {Item} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/FilterDropdown';
 import {initialFilters} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/InventoryAnalysisCard';
-
-const mockTags = (items: {id: string; name: string}[] = []) => {
-	global.fetch = jest.fn().mockReturnValue({
-		json: jest.fn().mockReturnValue({items}),
-		ok: true,
-	});
-};
 
 const WrappedComponent = ({
 	onSelectItem,
@@ -49,12 +41,17 @@ const WrappedComponent = ({
 };
 
 describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
-	afterEach(() => {
+	beforeEach(() => {
+		global.fetch = jest.fn().mockResolvedValue({});
+
 		jest.clearAllMocks();
 	});
 
 	it('renders correctly', async () => {
-		mockTags();
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({items: []}),
+			ok: true,
+		});
 
 		const onSelectItem = jest.fn();
 
@@ -93,16 +90,21 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 	});
 
 	it('renders a tag list', async () => {
-		mockTags([
-			{
-				id: '01',
-				name: 'tag 01',
-			},
-			{
-				id: '02',
-				name: 'tag 02',
-			},
-		]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{
+						id: '01',
+						name: 'tag 01',
+					},
+					{
+						id: '02',
+						name: 'tag 02',
+					},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -129,11 +131,26 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 		).toBeInTheDocument();
 	});
 
-	xit('search by a tag and returns a filtered result', async () => {
-		mockTags([
-			{id: '01', name: 'tag 01'},
-			{id: '02', name: 'tag 02'},
-		]);
+	it('search by a tag and returns a filtered result', async () => {
+		jest.useFakeTimers();
+
+		global.fetch = jest
+			.fn()
+			.mockResolvedValueOnce({
+				json: jest.fn().mockResolvedValue({
+					items: [
+						{id: '01', name: 'tag 01'},
+						{id: '02', name: 'tag 02'},
+					],
+				}),
+				ok: true,
+			})
+			.mockResolvedValueOnce({
+				json: jest
+					.fn()
+					.mockResolvedValue({items: [{id: '02', name: 'tag 02'}]}),
+				ok: true,
+			});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -147,35 +164,51 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		mockTags([{id: '02', name: 'tag 02'}]);
-
-		await userEvent.type(screen.getByPlaceholderText('search'), 'tag 02');
-
-		await waitFor(
-			() => {
-				expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-				expect(
-					screen.queryByRole('menuitem', {name: 'all-tags'})
-				).not.toBeInTheDocument();
-
-				expect(
-					screen.queryByRole('menuitem', {name: 'tag 01'})
-				).not.toBeInTheDocument();
-
-				expect(
-					screen.queryByRole('menuitem', {name: 'tag 02'})
-				).toBeInTheDocument();
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {
+				value: 'tag 02',
 			},
-			{timeout: 100}
-		);
+		});
+
+		jest.advanceTimersByTime(300);
+
+		await waitFor(() => {
+			expect(screen.getAllByRole('menuitem').length).toBe(1);
+
+			expect(
+				screen.queryByRole('menuitem', {name: 'tag 02'})
+			).toBeInTheDocument();
+		});
+
+		expect(
+			screen.queryByRole('menuitem', {name: 'all-tags'})
+		).not.toBeInTheDocument();
+
+		expect(
+			screen.queryByRole('menuitem', {name: 'tag 01'})
+		).not.toBeInTheDocument();
+
+		jest.useRealTimers();
 	});
 
-	xit('search by a tag and returns a empty result', async () => {
-		mockTags([
-			{id: '01', name: 'tag 01'},
-			{id: '02', name: 'tag 02'},
-		]);
+	it('search by a tag and returns a empty result', async () => {
+		jest.useFakeTimers();
+
+		global.fetch = jest
+			.fn()
+			.mockResolvedValueOnce({
+				json: jest.fn().mockResolvedValue({
+					items: [
+						{id: '01', name: 'tag 01'},
+						{id: '02', name: 'tag 02'},
+					],
+				}),
+				ok: true,
+			})
+			.mockResolvedValueOnce({
+				json: jest.fn().mockResolvedValue({items: []}),
+				ok: true,
+			});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -189,33 +222,41 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		mockTags();
-
-		await userEvent.type(screen.getByPlaceholderText('search'), 'empty?');
-
-		await waitFor(
-			() => {
-				expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-				expect(
-					screen.queryByRole('menuitem', {name: 'all-tags'})
-				).not.toBeInTheDocument();
-
-				expect(
-					screen.queryByRole('menuitem', {
-						name: 'no-filters-were-found',
-					})
-				).toBeInTheDocument();
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {
+				value: 'empty?',
 			},
-			{timeout: 100}
-		);
+		});
+
+		jest.advanceTimersByTime(300);
+
+		await waitFor(() => {
+			expect(screen.getAllByRole('menuitem').length).toBe(1);
+
+			expect(
+				screen.queryByRole('menuitem', {
+					name: 'no-filters-were-found',
+				})
+			).toBeInTheDocument();
+		});
+
+		expect(
+			screen.queryByRole('menuitem', {name: 'all-tags'})
+		).not.toBeInTheDocument();
+
+		jest.useRealTimers();
 	});
 
 	it('selects a new tag', async () => {
-		mockTags([
-			{id: '01', name: 'tag 01'},
-			{id: '02', name: 'tag 02'},
-		]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{id: '01', name: 'tag 01'},
+					{id: '02', name: 'tag 02'},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={() => {}} />);
 

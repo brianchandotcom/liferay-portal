@@ -11,20 +11,12 @@ import {
 	waitFor,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/ViewDashboardContext';
 import {AllVocabulariesDropdown} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/AllVocabulariesDropdown';
 import {Item} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/FilterDropdown';
 import {initialFilters} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/InventoryAnalysisCard';
-
-const mockVocabularies = (items: {id: string; name: string}[] = []) => {
-	global.fetch = jest.fn().mockReturnValue({
-		json: jest.fn().mockReturnValue({items}),
-		ok: true,
-	});
-};
 
 const WrappedComponent = ({
 	onSelectItem,
@@ -49,12 +41,17 @@ const WrappedComponent = ({
 };
 
 describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
-	afterEach(() => {
+	beforeEach(() => {
+		global.fetch = jest.fn().mockResolvedValue({});
+
 		jest.clearAllMocks();
 	});
 
 	it('renders correctly', async () => {
-		mockVocabularies();
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({items: []}),
+			ok: true,
+		});
 
 		const onSelectItem = jest.fn();
 
@@ -93,16 +90,21 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 	});
 
 	it('renders a vocabulary list', async () => {
-		mockVocabularies([
-			{
-				id: '01',
-				name: 'vocabulary 01',
-			},
-			{
-				id: '02',
-				name: 'vocabulary 02',
-			},
-		]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{
+						id: '01',
+						name: 'vocabulary 01',
+					},
+					{
+						id: '02',
+						name: 'vocabulary 02',
+					},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -129,11 +131,18 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 		).toBeInTheDocument();
 	});
 
-	xit('search by a vocabulary and returns a filtered result', async () => {
-		mockVocabularies([
-			{id: '01', name: 'vocabulary 01'},
-			{id: '02', name: 'vocabulary 02'},
-		]);
+	it('search by a vocabulary and returns a filtered result', async () => {
+		jest.useFakeTimers();
+
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{id: '01', name: 'vocabulary 01'},
+					{id: '02', name: 'vocabulary 02'},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -147,38 +156,52 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		mockVocabularies([{id: '02', name: 'vocabulary 02'}]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [{id: '02', name: 'vocabulary 02'}],
+			}),
+			ok: true,
+		});
 
-		await userEvent.type(
-			screen.getByPlaceholderText('search'),
-			'vocabulary 02'
-		);
-
-		await waitFor(
-			() => {
-				expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-				expect(
-					screen.queryByRole('menuitem', {name: 'all-vocabularies'})
-				).not.toBeInTheDocument();
-
-				expect(
-					screen.queryByRole('menuitem', {name: 'vocabulary 01'})
-				).not.toBeInTheDocument();
-
-				expect(
-					screen.queryByRole('menuitem', {name: 'vocabulary 02'})
-				).toBeInTheDocument();
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {
+				value: 'vocabulary 02',
 			},
-			{timeout: 100}
-		);
+		});
+
+		jest.advanceTimersByTime(300);
+
+		await waitFor(() => {
+			expect(screen.getAllByRole('menuitem').length).toBe(1);
+
+			expect(
+				screen.queryByRole('menuitem', {name: 'vocabulary 02'})
+			).toBeInTheDocument();
+		});
+
+		expect(
+			screen.queryByRole('menuitem', {name: 'all-vocabularies'})
+		).not.toBeInTheDocument();
+
+		expect(
+			screen.queryByRole('menuitem', {name: 'vocabulary 01'})
+		).not.toBeInTheDocument();
+
+		jest.useRealTimers();
 	});
 
-	xit('search by a vocabulary and returns a empty result', async () => {
-		mockVocabularies([
-			{id: '01', name: 'vocabulary 01'},
-			{id: '02', name: 'vocabulary 02'},
-		]);
+	it('search by a vocabulary and returns a empty result', async () => {
+		jest.useFakeTimers();
+
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{id: '01', name: 'vocabulary 01'},
+					{id: '02', name: 'vocabulary 02'},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -192,33 +215,46 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		mockVocabularies();
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [],
+			}),
+			ok: true,
+		});
 
-		await userEvent.type(screen.getByPlaceholderText('search'), 'empty?');
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {value: 'empty?'},
+		});
 
-		await waitFor(
-			() => {
-				expect(screen.getAllByRole('menuitem').length).toBe(1);
+		jest.advanceTimersByTime(300);
 
-				expect(
-					screen.queryByRole('menuitem', {name: 'all-vocabularies'})
-				).not.toBeInTheDocument();
+		await waitFor(() => {
+			expect(screen.getAllByRole('menuitem').length).toBe(1);
 
-				expect(
-					screen.queryByRole('menuitem', {
-						name: 'no-filters-were-found',
-					})
-				).toBeInTheDocument();
-			},
-			{timeout: 100}
-		);
+			expect(
+				screen.queryByRole('menuitem', {name: 'all-vocabularies'})
+			).not.toBeInTheDocument();
+
+			expect(
+				screen.queryByRole('menuitem', {
+					name: 'no-filters-were-found',
+				})
+			).toBeInTheDocument();
+		});
+
+		jest.useRealTimers();
 	});
 
 	it('selects a new vocabulary', async () => {
-		mockVocabularies([
-			{id: '01', name: 'vocabulary 01'},
-			{id: '02', name: 'vocabulary 02'},
-		]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{id: '01', name: 'vocabulary 01'},
+					{id: '02', name: 'vocabulary 02'},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={() => {}} />);
 

@@ -14,18 +14,8 @@ import {
 import React from 'react';
 
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/ViewDashboardContext';
-import {
-	AllCategoriesDropdown,
-	CategoryData,
-} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/AllCategoriesDropdown';
+import {AllCategoriesDropdown} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/AllCategoriesDropdown';
 import {Item} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/FilterDropdown';
-
-const mockCategories = (items: CategoryData[] = []) => {
-	global.fetch = jest.fn().mockReturnValue({
-		json: jest.fn().mockReturnValue({items}),
-		ok: true,
-	});
-};
 
 const WrappedComponent = ({
 	onSelectItem,
@@ -44,12 +34,17 @@ const WrappedComponent = ({
 );
 
 describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
-	afterEach(() => {
+	beforeEach(() => {
+		global.fetch = jest.fn().mockResolvedValue({});
+
 		jest.clearAllMocks();
 	});
 
 	it('renders correctly', async () => {
-		mockCategories();
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({items: []}),
+			ok: true,
+		});
 
 		const onSelectItem = jest.fn();
 
@@ -87,20 +82,25 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 	});
 
 	it('renders a vocabulary list in the dropdown if there is a numberOfTaxonomyCategories > 0', async () => {
-		mockCategories([
-			{
-				assetLibraries: [{id: -1}],
-				id: 1,
-				name: 'vocabulary 01',
-				numberOfTaxonomyCategories: 1,
-			},
-			{
-				assetLibraries: [{id: -1}],
-				id: 2,
-				name: 'vocabulary 02',
-				numberOfTaxonomyCategories: 1,
-			},
-		]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{
+						assetLibraries: [{id: -1}],
+						id: 1,
+						name: 'vocabulary 01',
+						numberOfTaxonomyCategories: 1,
+					},
+					{
+						assetLibraries: [{id: -1}],
+						id: 2,
+						name: 'vocabulary 02',
+						numberOfTaxonomyCategories: 1,
+					},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -128,20 +128,25 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 	});
 
 	it('does not render a vocabulary list in the dropdown if there is a numberOfTaxonomyCategories === 0', async () => {
-		mockCategories([
-			{
-				assetLibraries: [{id: -1}],
-				id: 1,
-				name: 'vocabulary 01',
-				numberOfTaxonomyCategories: 0,
-			},
-			{
-				assetLibraries: [{id: -1}],
-				id: 2,
-				name: 'vocabulary 02',
-				numberOfTaxonomyCategories: 0,
-			},
-		]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{
+						assetLibraries: [{id: -1}],
+						id: 1,
+						name: 'vocabulary 01',
+						numberOfTaxonomyCategories: 0,
+					},
+					{
+						assetLibraries: [{id: -1}],
+						id: 2,
+						name: 'vocabulary 02',
+						numberOfTaxonomyCategories: 0,
+					},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -160,17 +165,22 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 		).toBeInTheDocument();
 	});
 
-	xit('navigates to drill down and selects a category', async () => {
+	it('navigates to drill down and selects a category', async () => {
 		const onSelectItem = jest.fn();
 
-		mockCategories([
-			{
-				assetLibraries: [{id: -1}],
-				id: 1,
-				name: 'vocabulary 01',
-				numberOfTaxonomyCategories: 1,
-			},
-		]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{
+						assetLibraries: [{id: -1}],
+						id: 1,
+						name: 'vocabulary 01',
+						numberOfTaxonomyCategories: 1,
+					},
+				],
+			}),
+			ok: true,
+		});
 
 		render(<WrappedComponent onSelectItem={onSelectItem} />);
 
@@ -184,75 +194,109 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(2);
 
-		mockCategories([
-			{
-				assetLibraries: [{id: -1}],
-				id: 101,
-				name: 'category 01',
-				numberOfTaxonomyCategories: 0,
-				parentTaxonomyVocabulary: {
-					id: 1,
-					name: 'parent vocabulary 01',
-				},
-			},
-			{
-				assetLibraries: [{id: -1}],
-				id: 202,
-				name: 'category 02',
-				numberOfTaxonomyCategories: 0,
-				parentTaxonomyVocabulary: {
-					id: 2,
-					name: 'parent vocabulary 02',
-				},
-			},
-		]);
+		global.fetch = jest.fn().mockResolvedValue({
+			json: jest.fn().mockResolvedValue({
+				items: [
+					{
+						assetLibraries: [{id: -1}],
+						id: 101,
+						name: 'category 01',
+						numberOfTaxonomyCategories: 0,
+						parentTaxonomyVocabulary: {
+							id: 1,
+							name: 'parent vocabulary 01',
+						},
+					},
+					{
+						assetLibraries: [{id: -1}],
+						id: 202,
+						name: 'category 02',
+						numberOfTaxonomyCategories: 0,
+						parentTaxonomyVocabulary: {
+							id: 2,
+							name: 'parent vocabulary 02',
+						},
+					},
+				],
+			}),
+			ok: true,
+		});
 
 		fireEvent.click(screen.getByRole('menuitem', {name: 'vocabulary 01'}));
 
 		expect(onSelectItem).toHaveBeenCalledTimes(0);
 
-		await waitFor(
-			() => {
-				expect(screen.getAllByRole('menuitem').length).toBe(2);
+		await waitFor(() => {
+			expect(screen.getAllByRole('menuitem').length).toBe(2);
 
-				expect(
-					screen.getByText('parent vocabulary 01')
-				).toBeInTheDocument();
+			expect(
+				screen.getByText('parent vocabulary 01')
+			).toBeInTheDocument();
 
-				expect(
-					screen.getByRole('menuitem', {name: 'category 01'})
-				).toBeInTheDocument();
+			expect(
+				screen.getByRole('menuitem', {name: 'category 01'})
+			).toBeInTheDocument();
 
-				expect(
-					screen.getByRole('menuitem', {name: 'category 02'})
-				).toBeInTheDocument();
+			expect(
+				screen.getByRole('menuitem', {name: 'category 02'})
+			).toBeInTheDocument();
+		});
 
-				fireEvent.click(
-					screen.getByRole('menuitem', {name: 'category 01'})
-				);
+		fireEvent.click(screen.getByRole('menuitem', {name: 'category 01'}));
 
-				expect(onSelectItem).toHaveBeenCalledTimes(1);
+		expect(onSelectItem).toHaveBeenCalledTimes(1);
 
-				expect(onSelectItem).toHaveBeenCalledWith({
-					label: 'category 01',
-					value: '101',
-				});
-			},
-			{timeout: 100}
-		);
+		expect(onSelectItem).toHaveBeenCalledWith({
+			label: 'category 01',
+			value: '101',
+		});
 	});
 
-	xit('navigates to drill down, renders a category list and go back to the vocabulary list', async () => {
+	it('navigates to drill down, renders a category list and go back to the vocabulary list', async () => {
 		const onSelectItem = jest.fn();
 
-		mockCategories([
-			{
-				assetLibraries: [{id: -1}],
-				id: 1,
-				name: 'vocabulary 01',
-				numberOfTaxonomyCategories: 1,
-			},
-		]);
+		global.fetch = jest
+			.fn()
+			.mockResolvedValueOnce({
+				json: jest.fn().mockResolvedValue({
+					items: [
+						{
+							assetLibraries: [{id: -1}],
+							id: 1,
+							name: 'vocabulary 01',
+							numberOfTaxonomyCategories: 1,
+						},
+					],
+				}),
+				ok: true,
+			})
+			.mockResolvedValue({
+				json: jest.fn().mockResolvedValue({
+					items: [
+						{
+							assetLibraries: [{id: -1}],
+							id: 101,
+							name: 'category 01',
+							numberOfTaxonomyCategories: 0,
+							parentTaxonomyVocabulary: {
+								id: 1,
+								name: 'parent vocabulary 01',
+							},
+						},
+						{
+							assetLibraries: [{id: -1}],
+							id: 202,
+							name: 'category 02',
+							numberOfTaxonomyCategories: 0,
+							parentTaxonomyVocabulary: {
+								id: 2,
+								name: 'parent vocabulary 02',
+							},
+						},
+					],
+				}),
+				ok: true,
+			});
 
 		render(<WrappedComponent onSelectItem={onSelectItem} />);
 
@@ -266,68 +310,40 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(2);
 
-		mockCategories([
-			{
-				assetLibraries: [{id: -1}],
-				id: 101,
-				name: 'category 01',
-				numberOfTaxonomyCategories: 0,
-				parentTaxonomyVocabulary: {
-					id: 1,
-					name: 'parent vocabulary 01',
-				},
-			},
-			{
-				assetLibraries: [{id: -1}],
-				id: 202,
-				name: 'category 02',
-				numberOfTaxonomyCategories: 0,
-				parentTaxonomyVocabulary: {
-					id: 2,
-					name: 'parent vocabulary 02',
-				},
-			},
-		]);
-
 		fireEvent.click(screen.getByRole('menuitem', {name: 'vocabulary 01'}));
 
 		expect(onSelectItem).toHaveBeenCalledTimes(0);
 
-		await waitFor(
-			() => {
-				expect(
-					screen.queryByText('filter-by-category')
-				).not.toBeInTheDocument();
+		await waitFor(() => {
+			expect(
+				screen.queryByText('filter-by-category')
+			).not.toBeInTheDocument();
 
-				expect(screen.getAllByRole('menuitem').length).toBe(2);
+			expect(screen.getAllByRole('menuitem').length).toBe(2);
 
-				expect(
-					screen.getByText('parent vocabulary 01')
-				).toBeInTheDocument();
+			expect(
+				screen.getByText('parent vocabulary 01')
+			).toBeInTheDocument();
 
-				expect(
-					screen.getByRole('menuitem', {name: 'category 01'})
-				).toBeInTheDocument();
+			expect(
+				screen.getByRole('menuitem', {name: 'category 01'})
+			).toBeInTheDocument();
 
-				expect(
-					screen.getByRole('menuitem', {name: 'category 02'})
-				).toBeInTheDocument();
+			expect(
+				screen.getByRole('menuitem', {name: 'category 02'})
+			).toBeInTheDocument();
+		});
 
-				fireEvent.click(screen.getByTestId('cancel-button'));
+		fireEvent.click(screen.getByTestId('cancel-button'));
 
-				expect(onSelectItem).toHaveBeenCalledTimes(0);
+		expect(onSelectItem).toHaveBeenCalledTimes(0);
 
-				expect(screen.getAllByRole('menuitem').length).toBe(2);
+		expect(screen.getAllByRole('menuitem').length).toBe(2);
 
-				expect(
-					screen.queryByText('filter-by-category')
-				).toBeInTheDocument();
+		expect(screen.queryByText('filter-by-category')).toBeInTheDocument();
 
-				expect(
-					screen.getByRole('menuitem', {name: 'vocabulary 01'})
-				).toBeInTheDocument();
-			},
-			{timeout: 100}
-		);
+		expect(
+			screen.getByRole('menuitem', {name: 'vocabulary 01'})
+		).toBeInTheDocument();
 	});
 });

@@ -276,6 +276,57 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		}
 	}
 
+	private boolean _hasFileSystemStructureFileNamePath(Path fileNamePath) {
+		if (StringUtil.contains(
+				String.valueOf(fileNamePath.getFileName()), StringPool.PERIOD,
+				StringPool.BLANK)) {
+
+			_log.error(
+				StringBundler.concat(
+					"Found file name directory with extension in file system ",
+					"structure when no extensions are expected: ",
+					fileNamePath.toString()));
+
+			return false;
+		}
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				fileNamePath)) {
+
+			for (Path versionLabelPath : directoryStream) {
+				if (Files.isDirectory(versionLabelPath)) {
+					continue;
+				}
+
+				String versionLabelName = String.valueOf(
+					versionLabelPath.getFileName());
+
+				if (StringUtil.equals(
+						versionLabelName,
+						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+
+					continue;
+				}
+
+				if (!versionLabelName.matches("\\d+\\.\\d+.*")) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to verify file entry version label in: " +
+						fileNamePath,
+					exception);
+			}
+
+			return false;
+		}
+	}
+
 	private boolean _hasFileSystemStructureRepositoryIdPath(
 		Path repositoryIdPath) {
 
@@ -303,58 +354,6 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				_log.warn(
 					"Unable to verify file system structure in: " +
 						repositoryIdPath,
-					exception);
-			}
-
-			return false;
-		}
-	}
-
-	private boolean _hasFileSystemStructureFileNamePath(Path fileNamePath) {
-		if (StringUtil.contains(
-				String.valueOf(fileNamePath.getFileName()),
-				StringPool.PERIOD, StringPool.BLANK)) {
-
-			_log.error(
-				StringBundler.concat(
-					"Found file name directory with extension in file ",
-					"system structure when no extensions are expected: ",
-					fileNamePath.toString()));
-
-			return false;
-		}
-
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				fileNamePath)) {
-
-			for (Path versionLabelPath : directoryStream) {
-				if (Files.isDirectory(versionLabelPath)) {
-					continue;
-				}
-
-				String versionLabelName = String.valueOf(
-					versionLabelPath.getFileName());
-
-				if (StringUtil.equals(
-						versionLabelName,
-						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
-					continue;
-				}
-
-				if (!versionLabelName.matches("\\d+\\.\\d+.*")) {
-
-					return false;
-				}
-			}
-
-			return true;
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to verify file entry version label in: " +
-						fileNamePath,
 					exception);
 			}
 

@@ -51,12 +51,11 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
 				"journal", dataDefinitionResourceFactory, group.getGroupId(),
-				_read("previous_version_valid_data_definition.json"),
+				_read("data_definition_with_text_field.json"),
 				TestPropsValues.getUser());
 
 		_processAction(
-			dataDefinition.getId(),
-			"previous_version_valid_data_definition.json",
+			dataDefinition.getId(), "data_definition_with_text_field.json",
 			"Imported Structure");
 
 		dataDefinition = getImportedDataDefinition();
@@ -77,7 +76,8 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 
 		dataDefinition = DataDefinitionTestUtil.addDataDefinition(
 			"journal", dataDefinitionResourceFactory, group.getGroupId(),
-			_read("legacy_data_definition.json"), TestPropsValues.getUser());
+			_read("data_definition_with_repeatable_text_field.json"),
+			TestPropsValues.getUser());
 
 		JournalArticle journalArticle1 =
 			JournalTestUtil.addArticleWithXMLContent(
@@ -98,7 +98,8 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 		String journalArticle1Content = journalArticle1.getContent();
 
 		_processAction(
-			dataDefinition.getId(), "legacy_data_definition.json", "Simple");
+			dataDefinition.getId(),
+			"data_definition_with_repeatable_text_field.json", "Simple");
 
 		JournalArticle journalArticle2 = _journalArticleLocalService.getArticle(
 			journalArticle1.getId());

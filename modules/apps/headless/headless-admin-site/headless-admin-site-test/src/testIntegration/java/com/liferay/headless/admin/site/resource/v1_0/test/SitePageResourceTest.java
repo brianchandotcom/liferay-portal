@@ -987,29 +987,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage sitePage1 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
-				_getRandomSitePage(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-					SitePage.Type.CONTENT_PAGE, null));
+				randomSitePage());
 		SitePage sitePage2 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
-				_getRandomSitePage(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-					SitePage.Type.CONTENT_PAGE, null));
+				randomSitePage());
 		SitePage sitePage3 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
-				_getRandomSitePage(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-					SitePage.Type.CONTENT_PAGE, null));
+				randomSitePage());
 		SitePage sitePage4 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
-				_getRandomSitePage(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-					SitePage.Type.CONTENT_PAGE, null));
+				randomSitePage());
 		SitePage sitePage5 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
-				_getRandomSitePage(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-					SitePage.Type.CONTENT_PAGE, null));
+				randomSitePage());
 
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 1, sitePage2);

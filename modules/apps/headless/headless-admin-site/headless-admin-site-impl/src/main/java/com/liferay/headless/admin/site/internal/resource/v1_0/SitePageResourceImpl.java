@@ -277,7 +277,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		Layout layout = null;
 
-		if (sitePage.getType() == SitePage.Type.WIDGET_PAGE) {
+		if (Objects.equals(sitePage.getType(), SitePage.Type.WIDGET_PAGE)) {
 			String typeSettings = null;
 
 			if (typeSettingsUnicodeProperties != null) {

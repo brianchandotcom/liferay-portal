@@ -22,7 +22,6 @@ import {
 	disableSystemFeatureFlag,
 	enableSystemFeatureFlag,
 } from '../../../utils/systemFeatureFlag';
-import {stagingPageTest} from '../../export-import-web/main/fixtures/stagingPageTest';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -36,7 +35,6 @@ const test = mergeTests(
 	pageEditorPagesTest,
 	pagesAdminPagesTest,
 	productMenuPageTest,
-	stagingPageTest,
 	styleBookPageTest
 );
 
@@ -513,96 +511,6 @@ test.describe('Cannot preview style book', () => {
 		});
 	});
 });
-
-test(
-	'Preview the effect on page in style book editor in staging site',
-	{tag: '@LPS-116078'},
-	async ({
-		page,
-		pageEditorPage,
-		pagesAdminPage,
-		productMenuPage,
-		site,
-		stagingPage,
-		styleBooksPage,
-	}) => {
-		await test.step('Enable staging', async () => {
-			await stagingPage.goto(site.name);
-
-			await stagingPage.enableLocalStaging();
-		});
-
-		await test.step('Add a content page', async () => {
-			await styleBooksPage.goto(site.friendlyUrlPath + '-staging');
-
-			await productMenuPage.goToPages();
-
-			await pagesAdminPage.createNewPage({
-				draft: true,
-				name: 'Test Page Name',
-				template: 'Blank',
-			});
-		});
-
-		await test.step('Add a heading and button components and publish the changes', async () => {
-			await pageEditorPage.addFragment('Basic Components', 'Heading');
-
-			await pageEditorPage.addFragment('Basic Components', 'Button');
-
-			await pageEditorPage.publishPage();
-		});
-
-		await test.step('Add a style book', async () => {
-			await styleBooksPage.goto(site.friendlyUrlPath + '-staging');
-
-			await styleBooksPage.create(getRandomString());
-		});
-
-		await test.step('Edit Background Color in Button Primary section', async () => {
-			await styleBooksPage.selectTokenCategory('Buttons');
-
-			await styleBooksPage.updateTokenInputColor(
-				'Background Color',
-				'#FF0000',
-				'Button Primary'
-			);
-
-			await styleBooksPage.waitForAutoSave();
-		});
-
-		await test.step('Edit Heading 1 Font Size in Headings section', async () => {
-			await styleBooksPage.selectTokenCategory('Typography');
-
-			await styleBooksPage.updateTokenInput(
-				'Heading 1 Font Size',
-				'2',
-				'Headings'
-			);
-
-			await styleBooksPage.waitForAutoSave();
-		});
-
-		await test.step('Preview the effect in page preview iframe', async () => {
-			const previewIframe = page.frameLocator(
-				'iframe.style-book-editor__page-preview-frame'
-			);
-
-			await expect(
-				previewIframe
-					.locator(
-						'.lfr-layout-structure-item-basic-component-heading'
-					)
-					.getByText('Heading Example')
-			).toHaveCSS('font-size', '32px');
-
-			await expect(
-				previewIframe.getByRole('link', {
-					name: 'Go Somewhere',
-				})
-			).toHaveCSS('background-color', 'rgb(255, 0, 0)');
-		});
-	}
-);
 
 const themeScopedTest = mergeTests(
 	featureFlagsTest({

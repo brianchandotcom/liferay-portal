@@ -253,7 +253,7 @@ test(
 );
 
 test(
-	'Publishing to fail if linked file not exists',
+	'Cannot publish if linked file does not exist',
 	{tag: '@LPS-84223'},
 	async ({apiHelpers}) => {
 		const site = await apiHelpers.headlessSite.createSite({

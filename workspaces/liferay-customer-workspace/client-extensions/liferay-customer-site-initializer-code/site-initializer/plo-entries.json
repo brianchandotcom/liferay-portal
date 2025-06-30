@@ -9,12 +9,12 @@
 		}
 	},
 	{
-		"key": "activations-keys",
+		"key": "activation-keys",
 		"value": {
-			"en-US": "Activations Keys",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"en-US": "Activation Keys",
+			"es-ES": "Códigos de activación",
+			"ja-JP": "アクティベーションキー",
+			"pt-BR": "Chaves de ativação"
 		}
 	},
 	{
@@ -305,7 +305,7 @@
 			"en-US": "Welcome, {0}",
 			"es-ES": "Te damos la bienvenida, {0}",
 			"ja-JP": "ようこそ、○○さん {0}",
-			"pt-BR": "Bem vindo, {0}"
+			"pt-BR": "Boas-vindas, {0}"
 		}
 	},
 	{

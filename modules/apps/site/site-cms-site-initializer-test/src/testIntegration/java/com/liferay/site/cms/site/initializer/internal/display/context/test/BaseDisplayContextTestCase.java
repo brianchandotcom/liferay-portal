@@ -5,6 +5,8 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
+import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
+import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -35,12 +37,20 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.File;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -69,6 +79,27 @@ public abstract class BaseDisplayContextTestCase {
 					"com.liferay.site.initializer.cms");
 
 			siteInitializer.initialize(group.getGroupId());
+
+			Bundle testBundle = FrameworkUtil.getBundle(
+				BaseDisplayContextTestCase.class);
+
+			BundleContext bundleContext = testBundle.getBundleContext();
+
+			for (Bundle bundle : bundleContext.getBundles()) {
+				if (Objects.equals(
+						bundle.getSymbolicName(),
+						"com.liferay.site.initializer.cms")) {
+
+					_setUpProcessedFile(bundle, "01.object.folder");
+					_setUpProcessedFile(bundle, "02.object.definition");
+
+					CompletableFuture<Void> completableFuture =
+						_batchEngineUnitProcessor.processBatchEngineUnits(
+							_batchEngineUnitReader.getBatchEngineUnits(bundle));
+
+					completableFuture.join();
+				}
+			}
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -215,6 +246,22 @@ public abstract class BaseDisplayContextTestCase {
 
 	@Inject
 	protected ObjectFolderLocalService objectFolderLocalService;
+
+	private void _setUpProcessedFile(Bundle bundle, String fileName) {
+		File file = bundle.getDataFile(
+			".com.liferay.site.initializer.cms.internal.batch." + fileName +
+				".batch.engine.data.json.0.processed");
+
+		if ((file != null) && file.exists()) {
+			file.delete();
+		}
+	}
+
+	@Inject
+	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
+
+	@Inject
+	private BatchEngineUnitReader _batchEngineUnitReader;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

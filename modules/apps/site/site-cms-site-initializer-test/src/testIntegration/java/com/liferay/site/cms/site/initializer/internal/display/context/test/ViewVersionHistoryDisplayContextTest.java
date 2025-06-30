@@ -75,7 +75,7 @@ public class ViewVersionHistoryDisplayContextTest
 			WorkflowConstants.STATUS_APPROVED);
 
 		_objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			group.getGroupId(), TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,

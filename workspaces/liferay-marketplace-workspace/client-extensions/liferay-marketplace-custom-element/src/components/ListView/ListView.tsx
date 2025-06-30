@@ -97,7 +97,7 @@ export type ListViewProps<T extends Record<string, any>> = {
 	 *
 	 * @default undefined
 	 */
-	transformData?: (data: T[]) => T[];
+	transformData?: (response: APIResponse<T>) => APIResponse<T>;
 };
 
 const ListView = <T extends Record<string, any>>({
@@ -111,7 +111,7 @@ const ListView = <T extends Record<string, any>>({
 	paginationOptions = {displayType: true},
 	resource,
 	tableProps,
-	transformData,
+	transformData = (item) => item,
 }: ListViewProps<T>) => {
 	const [listViewContext, dispatch] = useContext(ListViewContext);
 
@@ -191,15 +191,13 @@ const ListView = <T extends Record<string, any>>({
 		actions = {},
 		items = [],
 		page = 1,
-		pageSize = listViewContext.pageSize,
+		pageSize,
 		totalCount = 0,
-	} = response || {};
+	} = transformData(response || {});
 
 	if (loading || (isValidating && searchParams.get('filter'))) {
 		return <Loading />;
 	}
-
-	const transformedItems = transformData ? transformData(items) : items;
 
 	const Pagination = (
 		<ClayPaginationBarWithBasicItems
@@ -224,7 +222,7 @@ const ListView = <T extends Record<string, any>>({
 
 				dispatch({payload: page, type: ListViewTypes.SET_PAGE});
 			}}
-			totalItems={transformData ? transformedItems.length : totalCount}
+			totalItems={totalCount}
 		/>
 	);
 
@@ -249,7 +247,7 @@ const ListView = <T extends Record<string, any>>({
 				<>
 					<Table
 						{...tableProps}
-						items={transformedItems}
+						items={items}
 						mutate={mutate}
 						onSort={onSort}
 						sort={sort}

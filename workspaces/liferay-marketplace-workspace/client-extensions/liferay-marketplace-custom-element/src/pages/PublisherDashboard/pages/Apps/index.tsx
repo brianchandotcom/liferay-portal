@@ -19,13 +19,22 @@ import {
 	ProductWorkflowStatusLabel,
 } from '../../../../enums/Product';
 import i18n from '../../../../i18n';
-import {
-	PAGINATION_DELTA,
-	PAGINATION_DELTA_SIMPLE,
-} from '../../../../utils/constants';
 import {formatDate} from '../../../../utils/date';
-import {filterLatestProductVersions} from '../../../../utils/productUtils';
 import {usePublisherDashboardOutletContext} from '../../PublisherDashboardOutlet';
+
+function filterLatestProductVersions(products: Product[]): Product[] {
+	const latestVersions = new Map<number, Product>();
+
+	for (const product of products) {
+		const current = latestVersions.get(product.productId);
+
+		if (!current || product.version > current.version) {
+			latestVersions.set(product.productId, product);
+		}
+	}
+
+	return [...latestVersions.values()];
+}
 
 const Apps = () => {
 	const {catalogId} = usePublisherDashboardOutletContext();
@@ -75,8 +84,8 @@ const Apps = () => {
 				}}
 				id={`publisher-apps/${catalogId}`}
 				initialContext={{
-					pageSize: PAGINATION_DELTA[1],
-					paginationDeltaOptions: PAGINATION_DELTA_SIMPLE,
+					pageSize: 20,
+					paginationDeltaOptions: [20, 40, 80, 120],
 				}}
 				resource={`/o/headless-commerce-admin-catalog/v1.0/products?${new URLSearchParams(
 					{
@@ -206,7 +215,17 @@ const Apps = () => {
 					],
 					navigateTo: (item) => `/app/${item.productId}`,
 				}}
-				transformData={filterLatestProductVersions}
+				transformData={(response) => {
+					const items = filterLatestProductVersions(response.items);
+
+					return {
+						...response,
+						items,
+						totalCount:
+							response.totalCount -
+							(items.length - response.items.length),
+					};
+				}}
 			/>
 		</Page>
 	);

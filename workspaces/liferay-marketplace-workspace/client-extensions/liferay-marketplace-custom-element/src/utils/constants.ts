@@ -16,7 +16,6 @@ export type Action<T = any> = {
 export type SortDirection = keyof typeof SortOption;
 
 export const PAGINATION_DELTA = [10, 20, 40, 80, 120];
-export const PAGINATION_DELTA_SIMPLE = [20, 40, 80, 120];
 
 export const PAGINATION = {
 	delta: PAGINATION_DELTA,

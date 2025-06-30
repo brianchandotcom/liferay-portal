@@ -74,20 +74,6 @@ export function isCloudProduct(product?: DeliveryProduct) {
 	);
 }
 
-export function filterLatestProductVersions(products: Product[]): Product[] {
-	const latestVersions = new Map<number, Product>();
-
-	for (const product of products) {
-		const current = latestVersions.get(product.productId);
-
-		if (!current || product.version > current.version) {
-			latestVersions.set(product.productId, product);
-		}
-	}
-
-	return [...latestVersions.values()];
-}
-
 export function isTrialSKU(sku: SKU) {
 	const skuName = sku.sku.toLowerCase();
 	const skuOptions = getNormalizedSKUOptions(sku) || [];

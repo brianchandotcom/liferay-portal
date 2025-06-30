@@ -173,6 +173,7 @@
 													"expandedLevels": "auto",
 													"rootMenuItemLevel": "0",
 													"rootMenuItemType": "absolute",
+													"siteNavigationMenuExternalReferenceCode": "M2H8_Main_Menu",
 													"siteNavigationMenuName": "Main Menu",
 													"siteNavigationMenuType": "-1"
 												},
@@ -542,6 +543,7 @@
 															"expandedLevels": "auto",
 															"rootMenuItemLevel": "0",
 															"rootMenuItemType": "absolute",
+															"siteNavigationMenuExternalReferenceCode": "M2H8_Footer_Clarity_Menu",															
 															"siteNavigationMenuName": "Footer Clarity Menu",
 															"siteNavigationMenuType": "-1"
 														},
@@ -643,6 +645,7 @@
 																	"expandedLevels": "auto",
 																	"rootMenuItemLevel": "0",
 																	"rootMenuItemType": "absolute",
+																	"siteNavigationMenuExternalReferenceCode": "M2H8_Footer_Trial_Menu",																		
 																	"siteNavigationMenuName": "Footer Trial Menu",
 																	"siteNavigationMenuType": "-1"
 																},
@@ -747,6 +750,7 @@
 																	"expandedLevels": "auto",
 																	"rootMenuItemLevel": "0",
 																	"rootMenuItemType": "absolute",
+																	"siteNavigationMenuExternalReferenceCode": "M2H8_Footer_Liferay_Menu",																		
 																	"siteNavigationMenuName": "Footer Liferay Menu",
 																	"siteNavigationMenuType": "-1"
 																},

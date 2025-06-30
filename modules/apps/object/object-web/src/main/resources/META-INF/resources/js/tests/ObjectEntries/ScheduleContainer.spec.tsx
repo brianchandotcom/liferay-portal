@@ -50,6 +50,11 @@ describe('ScheduleContainer component', () => {
 				...global.Liferay?.FeatureFlags,
 				'LPD-17564': true,
 			},
+			ThemeDisplay: {
+				...global.Liferay?.ThemeDisplay,
+				getBCP47LanguageId: jest.fn(),
+				getTimeZone: jest.fn(),
+			},
 		};
 	});
 

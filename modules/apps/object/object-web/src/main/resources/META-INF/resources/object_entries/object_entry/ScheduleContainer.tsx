@@ -94,10 +94,19 @@ export default function ScheduleContainer({
 		{
 			checkboxLabel: Liferay.Language.get('never-expire'),
 			customValidation: (date: string) => {
-				const currentDateTime = new Date();
-				const dateTime = new Date(date);
+				const inputDateTime = new Date(date);
 
-				if (currentDateTime >= dateTime) {
+				const languageId = Liferay.ThemeDisplay.getBCP47LanguageId();
+
+				const timeZone = Liferay.ThemeDisplay.getTimeZone();
+
+				const timeZoneDateTime = new Date(
+					new Date().toLocaleString(languageId, {
+						timeZone,
+					})
+				);
+
+				if (timeZoneDateTime >= inputDateTime) {
 					return Liferay.Language.get(
 						'the-date-entered-is-in-the-past'
 					);

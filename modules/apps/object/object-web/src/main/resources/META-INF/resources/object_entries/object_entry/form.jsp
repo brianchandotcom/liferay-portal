@@ -191,13 +191,17 @@ portletDisplay.setURLBack(backURL);
 				return false;
 			}
 
-			const localDate = date.replace(/Z$/, '');
+			const inputDateTime = new Date(date.replace(/Z$/, ''));
 
-			const currentDateTime = new Date();
+			const languageId = Liferay.ThemeDisplay.getBCP47LanguageId();
 
-			const dateTime = new Date(localDate);
+			const timeZone = Liferay.ThemeDisplay.getTimeZone();
 
-			return currentDateTime >= dateTime;
+			const timeZoneDateTime = new Date(
+				new Date().toLocaleString(languageId, {timeZone})
+			);
+
+			return timeZoneDateTime >= inputDateTime;
 		}
 
 		Liferay.provide(window, '<portlet:namespace />submitObjectEntry', () => {

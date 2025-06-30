@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 
+import java.sql.Connection;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -25,16 +27,27 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
-	@Override
-	protected void doVerify() throws Exception {
-		if (StartupHelperUtil.isDBNew() ||
-			PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
-			(PortalUpgradeProcess.getCurrentState(connection) !=
-				ReleaseConstants.STATE_GOOD)) {
+	public void verify() throws VerifyException {
+		try {
+			try (Connection connection = getConnection()) {
+				if (StartupHelperUtil.isDBNew() ||
+					PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
+					(PortalUpgradeProcess.getCurrentState(connection) !=
+						ReleaseConstants.STATE_GOOD)) {
 
-			return;
+					return;
+				}
+			}
+		}
+		catch (Exception exception) {
+			throw new VerifyException(exception);
 		}
 
+		super.verify();
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
 		Set<String> serviceComponentPortalTableNames =
 			DBResourceUtil.getServiceComponentPortalTableNames(connection);
 

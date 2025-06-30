@@ -81,7 +81,6 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 
 		_jobExecutorUnsafeRunnable =
 			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
-
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			List.of(
 				new TextObjectFieldBuilder(
@@ -118,8 +117,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
 			).put(
-				"displayDate",
-				new Date(date.getTime() + TimeUnit.MILLISECOND.toMillis(10))
+				"displayDate", date
 			).build());
 
 		Assert.assertTrue(objectEntry1.isScheduled());
@@ -130,7 +128,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
 			).put(
 				"displayDate",
-				new Date(date.getTime() + TimeUnit.MINUTE.toMillis(15))
+				new Date(date.getTime() + TimeUnit.MINUTE.toMillis(5))
 			).build());
 
 		Assert.assertTrue(objectEntry2.isScheduled());
@@ -143,7 +141,6 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			objectEntry2.getObjectEntryId());
 
 		Assert.assertTrue(objectEntry1.isApproved());
-
 		Assert.assertTrue(objectEntry2.isScheduled());
 	}
 

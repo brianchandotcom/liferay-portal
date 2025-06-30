@@ -226,20 +226,35 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
 			(curParentSitePageExternalReferenceCode, curPriority, sitePage) -> {
+				sitePage.setParentSitePageExternalReferenceCode(
+					() -> curParentSitePageExternalReferenceCode);
+
 				PageSettings curPageSettings = sitePage.getPageSettings();
 
 				curPageSettings.setPriority(() -> curPriority);
 
-				sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
-					testGroup.getExternalReferenceCode(),
-					sitePage.getExternalReferenceCode(),
-					new SitePage() {
-						{
-							setPageSettings(() -> curPageSettings);
-							setParentSitePageExternalReferenceCode(
-								() -> curParentSitePageExternalReferenceCode);
-						}
-					});
+				SitePage patchSitePage =
+					sitePageResource.
+						patchSiteSiteByExternalReferenceCodeSitePage(
+							testGroup.getExternalReferenceCode(),
+							sitePage.getExternalReferenceCode(),
+							new SitePage() {
+								{
+									setPageSettings(() -> curPageSettings);
+									setParentSitePageExternalReferenceCode(
+										() ->
+											curParentSitePageExternalReferenceCode);
+								}
+							});
+
+				equals(sitePage, patchSitePage);
+				assertValid(patchSitePage);
+
+				_assertSitePage(
+					_layoutLocalService.getLayoutByExternalReferenceCode(
+						sitePage.getExternalReferenceCode(),
+						testGroup.getGroupId()),
+					patchSitePage);
 			});
 
 		_testPatchSiteSiteByExternalReferenceCodeSitePage(
@@ -347,9 +362,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 				pageSettings.setPriority(priority);
 
-				sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
-					testGroup.getExternalReferenceCode(),
-					sitePage.getExternalReferenceCode(), sitePage);
+				SitePage putSitePage =
+					sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
+						testGroup.getExternalReferenceCode(),
+						sitePage.getExternalReferenceCode(), sitePage);
+
+				equals(sitePage, putSitePage);
+				assertValid(putSitePage);
+
+				_assertSitePage(
+					_layoutLocalService.getLayoutByExternalReferenceCode(
+						sitePage.getExternalReferenceCode(),
+						testGroup.getGroupId()),
+					putSitePage);
 			});
 
 		_testPutSiteSiteByExternalReferenceCodeSitePage(

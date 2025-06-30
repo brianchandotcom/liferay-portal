@@ -388,7 +388,7 @@ public class ObjectEntryLocalServiceImpl
 
 		_setExternalReferenceCode(objectEntry, values);
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
-		_setDisplayDate(objectDefinition, objectEntry, values);
+		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
 		_setExpirationDate(
 			objectDefinition.getCompanyId(), objectEntry, values);
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
@@ -1924,8 +1924,8 @@ public class ObjectEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if ((objectEntry.getStatus() == status) &&
-			(objectEntry.getDisplayDate() == null)) {
+		if ((objectEntry.getDisplayDate() == null) &&
+			(objectEntry.getStatus() == status)) {
 
 			return objectEntry;
 		}
@@ -1941,11 +1941,7 @@ public class ObjectEntryLocalServiceImpl
 
 			status = WorkflowConstants.STATUS_SCHEDULED;
 
-			ObjectDefinition objectDefinition =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectEntry.getObjectDefinitionId());
-
-			_performSetDisplayDate(objectDefinition, originalObjectEntry);
+			_inactiveLatestObjectEntryVersion(originalObjectEntry);
 		}
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
@@ -4543,6 +4539,29 @@ public class ObjectEntryLocalServiceImpl
 			new ValidationError(objectEntryValuesException.getMessage()));
 	}
 
+	private void _inactiveLatestObjectEntryVersion(ObjectEntry objectEntry)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getObjectEntryId(), objectEntry.getVersion());
+
+		if (!objectDefinition.isEnableObjectEntryVersioning() ||
+			(objectEntryVersion.getDisplayDate() == null)) {
+
+			return;
+		}
+
+		objectEntryVersion.setStatus(WorkflowConstants.STATUS_INACTIVE);
+
+		_objectEntryVersionLocalService.updateObjectEntryVersion(
+			objectEntryVersion);
+	}
+
 	private void _insertIntoLocalizationTable(
 			Map<String, Serializable> insertedValues,
 			ObjectDefinition objectDefinition, long objectEntryId,
@@ -4916,26 +4935,6 @@ public class ObjectEntryLocalServiceImpl
 		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
 
 		actionableDynamicQuery.performActions();
-	}
-
-	private void _performSetDisplayDate(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
-		throws PortalException {
-
-		ObjectEntryVersion objectEntryVersion =
-			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getObjectEntryId(), objectEntry.getVersion());
-
-		if (!objectDefinition.isEnableObjectEntryVersioning() ||
-			(objectEntryVersion.getDisplayDate() == null)) {
-
-			return;
-		}
-
-		objectEntryVersion.setStatus(WorkflowConstants.STATUS_INACTIVE);
-
-		_objectEntryVersionLocalService.updateObjectEntryVersion(
-			objectEntryVersion);
 	}
 
 	private boolean _processMissingObjectField(

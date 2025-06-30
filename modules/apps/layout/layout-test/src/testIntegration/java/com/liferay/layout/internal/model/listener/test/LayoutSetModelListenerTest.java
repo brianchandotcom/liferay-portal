@@ -118,8 +118,7 @@ public class LayoutSetModelListenerTest {
 		Set<String> actionIds = roleIdsToActionIds.get(guestRole.getRoleId());
 
 		Assert.assertNotNull(actionIds);
-		Assert.assertTrue(
-			actionIds.contains(ActionKeys.DOWNLOAD));
+		Assert.assertTrue(actionIds.contains(ActionKeys.DOWNLOAD));
 	}
 
 	private FileEntry _createFaviconFileEntry() throws Exception {

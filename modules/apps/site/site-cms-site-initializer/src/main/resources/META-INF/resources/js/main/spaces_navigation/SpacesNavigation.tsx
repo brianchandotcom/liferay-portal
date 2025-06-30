@@ -6,10 +6,10 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {VerticalNav} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import ClaySticker, {DisplayType} from '@clayui/sticker';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
+import SpaceSticker, {LogoColor} from '../components/SpaceSticker';
 export interface AssetLibrary {
 	id: number;
 	name: string;
@@ -40,10 +40,7 @@ interface VerticalNavItem {
 		'role'?: string;
 		'title'?: string;
 	};
-	sticker?: {
-		displayType: string;
-		label: string;
-	};
+	stickerDisplayType?: LogoColor;
 }
 
 const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
@@ -66,10 +63,7 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 			...assetLibraries.map(({name, settings, url}) => ({
 				href: url,
 				label: name,
-				sticker: {
-					displayType: settings?.logoColor as string,
-					label: name.charAt(0).toUpperCase(),
-				},
+				stickerDisplayType: settings?.logoColor as LogoColor,
 			})),
 			{
 				href: allSpacesURL,
@@ -115,27 +109,26 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 						textValue={item.label}
 					>
 						<div className="autofit-row">
-							{item.sticker && (
-								<ClaySticker
+							{item.stickerDisplayType ? (
+								<SpaceSticker
 									aria-hidden="true"
-									displayType={
-										item.sticker.displayType as DisplayType
-									}
+									displayType={item.stickerDisplayType}
+									name={item.label}
 									size="sm"
-								>
-									{item.sticker.label}
-								</ClaySticker>
-							)}
+								/>
+							) : (
+								<>
+									{item.icon && (
+										<div className="autofit-col">
+											<ClayIcon symbol={item.icon} />
+										</div>
+									)}
 
-							{item.icon && (
-								<div className="autofit-col">
-									<ClayIcon symbol={item.icon} />
-								</div>
+									<div className="autofit-col autofit-col-expand">
+										{item.label}
+									</div>
+								</>
 							)}
-
-							<div className="autofit-col autofit-col-expand">
-								{item.label}
-							</div>
 						</div>
 					</VerticalNav.Item>
 				);

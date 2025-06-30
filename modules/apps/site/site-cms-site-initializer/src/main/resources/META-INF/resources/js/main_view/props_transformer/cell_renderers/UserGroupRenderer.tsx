@@ -7,7 +7,13 @@ import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import React from 'react';
 
-const UserGroupRenderer = ({value}: {value: string}) => {
+const UserGroupRenderer = ({
+	itemData,
+	value,
+}: {
+	itemData: any;
+	value: string;
+}) => {
 	return (
 		<span className="align-items-center d-flex">
 			<ClaySticker
@@ -20,6 +26,11 @@ const UserGroupRenderer = ({value}: {value: string}) => {
 			</ClaySticker>
 
 			{value}
+
+			{Liferay.Util.sub(
+				'(' + Liferay.Language.get('x-members'),
+				itemData.numberOfUserAccounts || 0 + ')'
+			)}
 		</span>
 	);
 };

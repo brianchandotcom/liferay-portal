@@ -22,6 +22,10 @@ const UserRenderer = ({itemData, value}: {itemData: any; value: string}) => {
 			</ClaySticker>
 
 			{value}
+
+			{itemData.assetLibraryCreator
+				? '(' + Liferay.Language.get('owner') + ')'
+				: ''}
 		</span>
 	);
 };

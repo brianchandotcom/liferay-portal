@@ -55,8 +55,6 @@ const dashboardNavigationItems = [
 const AdministratorDashboardOutlet = () => {
 	const {marketplaceUserAccount} = useMarketplaceContext();
 
-	const {isAdmin} = marketplaceUserAccount;
-
 	return (
 		<div className="d-flex">
 			<div className="d-flex dashboard-navigation-container">
@@ -64,7 +62,9 @@ const AdministratorDashboardOutlet = () => {
 					<DashboardNavigation
 						dashboardNavigationItems={dashboardNavigationItems.filter(
 							({adminOnly}) =>
-								typeof adminOnly === 'boolean' ? isAdmin : true
+								typeof adminOnly === 'boolean'
+									? marketplaceUserAccount.isAdmin
+									: true
 						)}
 					/>
 				</div>

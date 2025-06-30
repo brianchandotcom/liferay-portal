@@ -31,20 +31,19 @@ type AppProps = {
 
 const App: React.FC<AppProps> = ({header}) => {
 	const {productId} = useParams();
-	const {myUserAccount, properties} = useMarketplaceContext();
+	const {properties} = useMarketplaceContext();
 	const navigate = useNavigate();
+	const {pathname} = useLocation();
 
-	const {
-		data: product,
-		isLoading,
-		mutate,
-	} = useSWR(`/published-app/${productId}`, () =>
-		HeadlessCommerceAdminCatalog.getProduct(
-			productId as unknown as number,
-			new URLSearchParams({
-				nestedFields: 'attachments,images,productSpecifications',
-			})
-		)
+	const {data: product, isLoading} = useSWR(
+		`/published-app/${productId}`,
+		() =>
+			HeadlessCommerceAdminCatalog.getProduct(
+				productId as unknown as number,
+				new URLSearchParams({
+					nestedFields: 'attachments,images,productSpecifications',
+				})
+			)
 	);
 
 	const appVersion = useMemo(
@@ -60,7 +59,6 @@ const App: React.FC<AppProps> = ({header}) => {
 	}
 
 	const isNewAppEnabled = properties.featureFlags.includes('LPD-24546');
-	const isSolutionsPage = useLocation().pathname.includes('/solutions');
 
 	const thumbnail = getThumbnailByProductAttachment(product?.images);
 
@@ -73,9 +71,11 @@ const App: React.FC<AppProps> = ({header}) => {
 			>
 				<ClayIcon className="mr-2" symbol="order-arrow-left" />
 				<span className="h5 mt-1">
-					{isSolutionsPage
-						? i18n.translate('back-to-solutions')
-						: i18n.translate('back-to-apps')}
+					{i18n.translate(
+						pathname.includes('/solutions')
+							? 'back-to-solutions'
+							: 'back-to-apps'
+					)}
 				</span>
 			</ClayButton>
 

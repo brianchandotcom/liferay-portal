@@ -9,6 +9,7 @@ import {Link} from 'react-router-dom';
 
 import ErrorBoundary from '../../../components/ErrorBoundary';
 import Page from '../../../components/Page';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
 import {formatCurrency} from '../../../utils/currencies';
 import InfoCard from '../components/InfoCard';
@@ -21,10 +22,11 @@ import AdministratorAppsListView from './Apps/AdministratorAppsListView';
 import {AdministratorOrdersListView} from './Orders';
 
 export default function AdministratorSummary() {
-	const {data: accounts} = useAccountsMetrics('week');
-	const {visitorsMetric} = useAnalyticsViewsMetrics();
-	const {data: orderMetrics} = useOrderMetrics('week');
 	const {data: {kpis = [], projectsKPI} = {}} = useKPI();
+	const {data: accounts} = useAccountsMetrics('week');
+	const {data: orderMetrics} = useOrderMetrics('week');
+	const {marketplaceUserAccount} = useMarketplaceContext();
+	const {visitorsMetric} = useAnalyticsViewsMetrics();
 
 	const infoCards = useMemo(
 		() => [
@@ -97,10 +99,12 @@ export default function AdministratorSummary() {
 						className: 'border py-2 rounded-lg mb-8',
 					}}
 					rightButton={
-						<Link className="font-weight-bold" to="/orders">
-							{i18n.translate('view-all')}
-							<ClayIcon symbol="order-arrow-right" />
-						</Link>
+						marketplaceUserAccount.isAdmin && (
+							<Link className="font-weight-bold" to="/orders">
+								{i18n.translate('view-all')}
+								<ClayIcon symbol="order-arrow-right" />
+							</Link>
+						)
 					}
 					title={i18n.translate('recent-orders')}
 				>

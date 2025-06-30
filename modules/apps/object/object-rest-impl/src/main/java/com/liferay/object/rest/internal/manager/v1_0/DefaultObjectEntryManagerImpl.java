@@ -2135,6 +2135,7 @@ public class DefaultObjectEntryManagerImpl
 					if (!FeatureFlagManagerUtil.isEnabled(
 							objectDefinition.getCompanyId(), "LPD-17564") ||
 						serviceBuilderObjectEntry.isDraft() ||
+						serviceBuilderObjectEntry.isExpired() ||
 						serviceBuilderObjectEntry.isPending()) {
 
 						return null;

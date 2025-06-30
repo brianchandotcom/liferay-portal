@@ -115,15 +115,9 @@ public class ViewVersionHistoryDisplayContextTest
 	private String _getAPIURL(
 		ObjectEntry objectEntry, ObjectDefinition objectDefinition) {
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("/o");
-		sb.append(objectDefinition.getRESTContextPath());
-		sb.append(StringPool.SLASH);
-		sb.append(objectEntry.getObjectEntryId());
-		sb.append("/versions");
-
-		return sb.toString();
+		return StringBundler.concat(
+			"/o", objectDefinition.getRESTContextPath(), StringPool.SLASH,
+			objectEntry.getObjectEntryId(), "/versions");
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(

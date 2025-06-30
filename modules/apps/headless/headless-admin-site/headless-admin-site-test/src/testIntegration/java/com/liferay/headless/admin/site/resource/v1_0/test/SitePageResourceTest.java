@@ -20,6 +20,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecification
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -225,7 +225,22 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		// be executed first since it needs a clean site
 
 		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
-			Http.Method.PATCH);
+			(curParentSitePageExternalReferenceCode, curPriority, sitePage) -> {
+				PageSettings curPageSettings = sitePage.getPageSettings();
+
+				curPageSettings.setPriority(() -> curPriority);
+
+				sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
+					testGroup.getExternalReferenceCode(),
+					sitePage.getExternalReferenceCode(),
+					new SitePage() {
+						{
+							setPageSettings(() -> curPageSettings);
+							setParentSitePageExternalReferenceCode(
+								() -> curParentSitePageExternalReferenceCode);
+						}
+					});
+			});
 
 		_testPatchSiteSiteByExternalReferenceCodeSitePage(
 			SitePage.Type.CONTENT_PAGE);
@@ -324,7 +339,18 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		// be executed first since it needs a clean site
 
 		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
-			Http.Method.PUT);
+			(parentSitePageExternalReferenceCode, priority, sitePage) -> {
+				sitePage.setParentSitePageExternalReferenceCode(
+					parentSitePageExternalReferenceCode);
+
+				PageSettings pageSettings = sitePage.getPageSettings();
+
+				pageSettings.setPriority(priority);
+
+				sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
+					testGroup.getExternalReferenceCode(),
+					sitePage.getExternalReferenceCode(), sitePage);
+			});
 
 		_testPutSiteSiteByExternalReferenceCodeSitePage(
 			SitePage.Type.CONTENT_PAGE);
@@ -982,7 +1008,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
-			Http.Method httpMethod)
+			UnsafeTriConsumer<String, Integer, SitePage, Exception>
+				unsafeTriConsumer)
 		throws Exception {
 
 		SitePage sitePage1 =
@@ -1007,28 +1034,33 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertParentAndPriority(null, 3, sitePage4);
 		_assertParentAndPriority(null, 4, sitePage5);
 
-		_updateParentAndPriority(httpMethod, null, 1, sitePage4);
+		unsafeTriConsumer.accept(null, 1, sitePage4);
+
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 1, sitePage4);
 		_assertParentAndPriority(null, 2, sitePage2);
 		_assertParentAndPriority(null, 3, sitePage3);
 		_assertParentAndPriority(null, 4, sitePage5);
 
-		_updateParentAndPriority(httpMethod, null, 5, sitePage5);
+		unsafeTriConsumer.accept(null, 5, sitePage5);
+
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 1, sitePage4);
 		_assertParentAndPriority(null, 2, sitePage2);
 		_assertParentAndPriority(null, 3, sitePage3);
 		_assertParentAndPriority(null, 4, sitePage5);
 
-		_updateParentAndPriority(httpMethod, null, null, sitePage3);
+		unsafeTriConsumer.accept(null, null, sitePage3);
+
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 1, sitePage4);
 		_assertParentAndPriority(null, 2, sitePage2);
 		_assertParentAndPriority(null, 3, sitePage5);
 		_assertParentAndPriority(null, 4, sitePage3);
 
-		_updateParentAndPriority(httpMethod, sitePage1, 2, sitePage2);
+		unsafeTriConsumer.accept(
+			sitePage1.getExternalReferenceCode(), 2, sitePage2);
+
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 1, sitePage4);
 		_assertParentAndPriority(null, 3, sitePage5);
@@ -1036,8 +1068,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertParentAndPriority(
 			sitePage1.getExternalReferenceCode(), 0, sitePage2);
 
-		_updateParentAndPriority(
-			httpMethod, sitePage1.getExternalReferenceCode(), 1, sitePage4);
+		unsafeTriConsumer.accept(
+			sitePage1.getExternalReferenceCode(), 1, sitePage4);
+
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 3, sitePage5);
 		_assertParentAndPriority(null, 4, sitePage3);
@@ -1046,8 +1079,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertParentAndPriority(
 			sitePage1.getExternalReferenceCode(), 1, sitePage4);
 
-		_updateParentAndPriority(
-			httpMethod, sitePage1.getExternalReferenceCode(), 3, sitePage3);
+		unsafeTriConsumer.accept(
+			sitePage1.getExternalReferenceCode(), 3, sitePage3);
+
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 3, sitePage5);
 		_assertParentAndPriority(
@@ -1057,8 +1091,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertParentAndPriority(
 			sitePage1.getExternalReferenceCode(), 2, sitePage3);
 
-		_updateParentAndPriority(
-			httpMethod, sitePage1.getExternalReferenceCode(), 0, sitePage3);
+		unsafeTriConsumer.accept(
+			sitePage1.getExternalReferenceCode(), 0, sitePage3);
+
 		_assertParentAndPriority(null, 0, sitePage1);
 		_assertParentAndPriority(null, 3, sitePage5);
 		_assertParentAndPriority(
@@ -1067,35 +1102,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePage1.getExternalReferenceCode(), 1, sitePage2);
 		_assertParentAndPriority(
 			sitePage1.getExternalReferenceCode(), 2, sitePage4);
-	}
-
-	private void _updateParentAndPriority(
-			Http.Method httpMethod, String parentSitePageExternalReferenceCode,
-			Integer priority, SitePage sitePage)
-		throws Exception {
-
-		Assert.assertTrue(
-			httpMethod.toString(),
-			(httpMethod == Http.Method.PATCH) ||
-			(httpMethod == Http.Method.PUT));
-
-		sitePage.setParentSitePageExternalReferenceCode(
-			parentSitePageExternalReferenceCode);
-
-		PageSettings pageSettings = sitePage.getPageSettings();
-
-		pageSettings.setPriority(priority);
-
-		if (httpMethod == Http.Method.PATCH) {
-			sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
-				testGroup.getExternalReferenceCode(),
-				sitePage.getExternalReferenceCode(), sitePage);
-		}
-		else {
-			sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
-				testGroup.getExternalReferenceCode(),
-				sitePage.getExternalReferenceCode(), sitePage);
-		}
 	}
 
 	private static final List<SitePage.Type> _types = Arrays.asList(

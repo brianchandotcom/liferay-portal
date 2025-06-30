@@ -7,17 +7,21 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryService;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
 import com.liferay.site.cms.site.initializer.internal.util.SpaceAbstractHeaderUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,11 +44,14 @@ public class ViewSpaceSitesAbstractSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("/o/headless-asset-library/v1.0/asset-libraries/");
 		sb.append(_groupId);
-		sb.append("/sites?page=1&pageSize=8");
+		sb.append("/sites?page=");
+		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE);
+		sb.append("&pageSize=");
+		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE_SIZE);
 
 		return sb.toString();
 	}
@@ -72,10 +79,42 @@ public class ViewSpaceSitesAbstractSectionDisplayContext {
 		).build();
 	}
 
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		return ListUtil.fromArray(
+			_getSearchableFDSActionDropdownItem(true),
+			_getSearchableFDSActionDropdownItem(false),
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					"/o/headless-asset-library/v1.0/asset-libraries/", _groupId,
+					"/sites/{id}"),
+				null, "delete",
+				_language.get(_httpServletRequest, "disconnect"), "delete",
+				null, "headless"));
+	}
+
 	public Map<String, Object> getHeaderProps() throws Exception {
 		return SpaceAbstractHeaderUtil.getSpaceAbstractHeaderProps(
 			_httpServletRequest, "view-all-sites", _getSpaceSitesHeaderTitle(),
 			StringPool.BLANK);
+	}
+
+	private FDSActionDropdownItem _getSearchableFDSActionDropdownItem(
+		boolean searchable) {
+
+		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
+			StringBundler.concat(
+				"/o/headless-asset-library/v1.0/asset-libraries/", _groupId,
+				"/sites/{id}"),
+			null, searchable ? "make-searchable" : "make-unsearchable",
+			_language.get(
+				_httpServletRequest,
+				searchable ? "make-searchable" : "make-unsearchable"),
+			"put", null, "headless");
+
+		fdsActionDropdownItem.setRequestBody(
+			"{\"searchable\": " + searchable + "}");
+
+		return fdsActionDropdownItem;
 	}
 
 	private String _getSpaceSitesHeaderTitle() throws Exception {

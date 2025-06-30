@@ -42,8 +42,8 @@ test('Add, edit and delete a vocabulary', async ({
 		await assetCategoriesAdminPage.newVocabularyButton.click();
 
 		await vocabulariesEditPage.add({
-			name: vocabularyName,
 			description: vocabularyDescription,
+			name: vocabularyName,
 		});
 
 		await expect(
@@ -94,8 +94,8 @@ assetTypes.forEach(async (assetType, index) => {
 		await assetCategoriesAdminPage.newVocabularyButton.click();
 
 		await vocabulariesEditPage.add({
-			name: vocabularyName,
 			assetTypes: [assetType],
+			name: vocabularyName,
 		});
 
 		await expect(
@@ -121,8 +121,8 @@ test('Delete an associated asset type of vocabulary', async ({
 		await assetCategoriesAdminPage.newVocabularyButton.click();
 
 		await vocabulariesEditPage.add({
-			name: vocabularyName,
 			assetTypes,
+			name: vocabularyName,
 		});
 
 		await expect(

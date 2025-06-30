@@ -22,7 +22,6 @@ export class VocabulariesEditPage {
 		this.addRowButton = page.getByRole('button', {
 			name: 'Add',
 		});
-		this.assetTypeSelect = page.locator('.vocabulary-asset-type-select');
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.descriptionInput = page.getByPlaceholder('Description');
 		this.nameInput = page.getByPlaceholder('Name');
@@ -40,9 +39,9 @@ export class VocabulariesEditPage {
 		description,
 		name,
 	}: {
-		name: string;
-		description?: string;
 		assetTypes?: string[];
+		description?: string;
+		name: string;
 	}) {
 		await this.fillName(name);
 
@@ -51,7 +50,7 @@ export class VocabulariesEditPage {
 		}
 
 		if (assetTypes) {
-			if (await this.assetTypeSelect.first().isHidden()) {
+			if (await this.page.getByLabel('Asset Types').isHidden()) {
 				await this.expandPanel('Associated Asset Types');
 			}
 
@@ -70,11 +69,14 @@ export class VocabulariesEditPage {
 	}
 
 	async addAssociatedAssetType(assetType: string, index: number) {
-		await this.assetTypeSelect.nth(index).selectOption(assetType);
+		await this.page
+			.getByLabel('Asset Types')
+			.nth(index)
+			.selectOption(assetType);
 	}
 
 	async expandPanel(name: string) {
-		await this.page.getByRole('button', {name: name}).click();
+		await this.page.getByRole('button', {name}).click();
 	}
 
 	async removeLastAssociatedAssetType() {

@@ -42,8 +42,12 @@ public class ViewVersionHistoryDisplayContext {
 	}
 
 	public String getAPIURL() throws PortalException {
-		StringBundler sb = new StringBundler(_getObjectDefinitionBaseURL());
+		StringBundler sb = new StringBundler(5);
 
+		sb.append("/o");
+		sb.append(_objectDefinition.getRESTContextPath());
+		sb.append(StringPool.SLASH);
+		sb.append(_objectEntry.getObjectEntryId());
 		sb.append("/versions");
 
 		return sb.toString();
@@ -55,15 +59,15 @@ public class ViewVersionHistoryDisplayContext {
 				_language.get(
 					_httpServletRequest,
 					"are-you-sure-you-want-to-delete-this-entry"),
-				null, "trash", "delete",
+				"{actions.delete.href}", "trash", "delete",
 				_language.get(_httpServletRequest, "delete"), "delete",
 				"delete", "headless"),
 			new FDSActionDropdownItem(
-				_getFDSActionDropdownItemHref("expire"), "expire", "expire",
+				"{actions.expire.href}", "expire", "expire",
 				_language.get(_httpServletRequest, "expire"), "post", "expire",
 				"headless"),
 			new FDSActionDropdownItem(
-				_getFDSActionDropdownItemHref("restore"), "restore", "restore",
+				"{actions.restore.href}", "restore", "restore",
 				_language.get(_httpServletRequest, "restore"), "put", "restore",
 				"headless"),
 			new FDSActionDropdownItem(
@@ -78,22 +82,6 @@ public class ViewVersionHistoryDisplayContext {
 		).put(
 			"title", _objectEntry.getTitleValue(_themeDisplay.getLanguageId())
 		).build();
-	}
-
-	private String _getFDSActionDropdownItemHref(String action) {
-		return _getObjectDefinitionBaseURL() +
-			"/by-version/{systemProperties.version.number}" + action;
-	}
-
-	private String _getObjectDefinitionBaseURL() {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("/o");
-		sb.append(_objectDefinition.getRESTContextPath());
-		sb.append(StringPool.SLASH);
-		sb.append(_objectEntry.getObjectEntryId());
-
-		return sb.toString();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

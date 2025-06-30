@@ -1646,6 +1646,45 @@ test.describe('Manage object entries through View Object Entries', () => {
 		});
 	});
 
+	test('loading element count is one even when pressing save button multiple times', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const {objectFields} = await mockObjectFields({
+			apiHelpers,
+			objectFieldBusinessTypes: ['text'],
+		});
+
+		const requiredObjectFields = objectFields.map((objectField) => {
+			return {
+				...objectField,
+				required: true,
+			};
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields: requiredObjectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.addObjectEntryButton.click();
+
+		for (let i = 0; i <= 10; i++) {
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+		}
+
+		await expect(page.locator('.loading-animation')).toHaveCount(1);
+	});
+
 	test(
 		'multiselect picklist field does not flicker',
 		{tag: ['@LPD-26139', '@LPD-56673']},

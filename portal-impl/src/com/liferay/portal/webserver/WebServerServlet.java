@@ -1619,10 +1619,6 @@ public class WebServerServlet extends HttpServlet {
 				_getActionId(httpServletRequest));
 		}
 		catch (PortalException portalException) {
-			if (_isFaviconFile(fileEntry)) {
-				return;
-			}
-
 			User user = permissionChecker.getUser();
 
 			if (user.isGuestUser() &&
@@ -1958,23 +1954,6 @@ public class WebServerServlet extends HttpServlet {
 
 		return PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.VIEW);
-	}
-
-	private boolean _isFaviconFile(FileEntry fileEntry) {
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			fileEntry.getGroupId(), false);
-
-		if (layoutSet != null) {
-			if (layoutSet.getFaviconFileEntryId() ==
-					fileEntry.getFileEntryId()) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		return false;
 	}
 
 	private boolean _processCompanyInactiveRequest(

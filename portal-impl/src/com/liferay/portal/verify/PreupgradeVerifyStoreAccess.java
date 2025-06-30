@@ -23,7 +23,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author István András Dézsi
  */
-public class PreupgradeVerifyDLStore extends PreupgradeVerifyProcess {
+public class PreupgradeVerifyStoreAccess extends PreupgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {

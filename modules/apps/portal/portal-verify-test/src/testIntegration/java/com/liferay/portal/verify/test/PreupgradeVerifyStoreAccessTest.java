@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.verify.PreupgradeVerifyDLStore;
+import com.liferay.portal.verify.PreupgradeVerifyStoreAccess;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
@@ -46,7 +46,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author István András Dézsi
  */
 @RunWith(Arquillian.class)
-public class PreupgradeVerifyDLStoreTest extends BaseVerifyProcessTestCase {
+public class PreupgradeVerifyStoreAccessTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -130,7 +130,7 @@ public class PreupgradeVerifyDLStoreTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new PreupgradeVerifyDLStore();
+		return new PreupgradeVerifyStoreAccess();
 	}
 
 	private static Configuration _configuration;

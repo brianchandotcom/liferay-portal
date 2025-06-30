@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Objects;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.ClassRule;
@@ -42,28 +44,26 @@ public class ImageLocalServiceTest {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		String storeClassName =
+		String className =
 			"com.liferay.portal.store.file.system.AdvancedFileSystemStore";
-		String dlStoreImpl = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 
 		Assume.assumeTrue(
 			StringBundler.concat(
 				"Property \"", PropsKeys.DL_STORE_IMPL, "\" is not set to \"",
-				storeClassName, "\""),
-			dlStoreImpl.equals(storeClassName));
+				className, "\""),
+			Objects.equals(PropsUtil.get(PropsKeys.DL_STORE_IMPL), className));
 	}
 
 	@Test
 	public void testDeleteImage() throws Exception {
 		long imageId = _counterLocalService.increment();
 
-		String fileName = imageId + ".jpg";
-
 		Image image = _imageLocalService.updateImage(
 			TestPropsValues.getCompanyId(), imageId,
 			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"));
 
 		Store store = _storeSnapshot.get();
+		String fileName = imageId + ".jpg";
 
 		Assert.assertTrue(
 			store.hasFile(

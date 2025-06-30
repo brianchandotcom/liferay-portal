@@ -182,7 +182,7 @@
 															"expandedLevels": "auto",
 															"rootMenuItemLevel": "0",
 															"rootMenuItemType": "absolute",
-															"siteNavigationMenuExternalReferenceCode": "M2H8_Main_Menu",
+															"siteNavigationMenuExternalReferenceCode": "M2H8-MAIN",
 															"siteNavigationMenuName": "Main Menu",
 															"siteNavigationMenuType": "-1"
 														},
@@ -599,7 +599,7 @@
 																	"expandedLevels": "auto",
 																	"rootMenuItemLevel": "0",
 																	"rootMenuItemType": "absolute",
-																	"siteNavigationMenuExternalReferenceCode": "M2H8_Footer_Clarity_Menu",
+																	"siteNavigationMenuExternalReferenceCode": "M2H8-FOOTER-CLARITY",
 																	"siteNavigationMenuName": "Footer Clarity Menu",
 																	"siteNavigationMenuType": "-1"
 																},
@@ -705,7 +705,7 @@
 																	"expandedLevels": "auto",
 																	"rootMenuItemLevel": "0",
 																	"rootMenuItemType": "absolute",
-																	"siteNavigationMenuExternalReferenceCode": "M2H8_Footer_Trial_Menu",
+																	"siteNavigationMenuExternalReferenceCode": "M2H8-FOOTER-TRIAL",
 																	"siteNavigationMenuName": "Footer Trial Menu",
 																	"siteNavigationMenuType": "-1"
 																},
@@ -811,7 +811,7 @@
 																	"expandedLevels": "auto",
 																	"rootMenuItemLevel": "0",
 																	"rootMenuItemType": "absolute",
-																	"siteNavigationMenuExternalReferenceCode": "M2H8_Footer_Liferay_Menu",
+																	"siteNavigationMenuExternalReferenceCode": "M2H8-FOOTER-LIFERAY",
 																	"siteNavigationMenuName": "Footer Liferay Menu",
 																	"siteNavigationMenuType": "-1"
 																},

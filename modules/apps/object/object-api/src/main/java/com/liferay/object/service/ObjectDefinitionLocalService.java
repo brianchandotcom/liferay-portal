@@ -361,6 +361,11 @@ public interface ObjectDefinitionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectDefinition> getObjectDefinitions(
+		long companyId, boolean active, boolean system, int status, int start,
+		int end, OrderByComparator<ObjectDefinition> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectDefinition> getObjectDefinitions(
 		long companyId, boolean active, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -377,6 +382,11 @@ public interface ObjectDefinitionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectDefinitionsCount(long companyId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getObjectDefinitionsCount(
+			long companyId, boolean active, boolean system, int status)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectDefinition> getObjectFolderObjectDefinitions(

@@ -529,6 +529,18 @@ public class ObjectDefinitionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectDefinition>
+		getObjectDefinitions(
+			long companyId, boolean active, boolean system, int status,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.object.model.ObjectDefinition> orderByComparator) {
+
+		return _objectDefinitionLocalService.getObjectDefinitions(
+			companyId, active, system, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectDefinition>
 		getObjectDefinitions(long companyId, boolean active, int status) {
 
 		return _objectDefinitionLocalService.getObjectDefinitions(
@@ -559,6 +571,15 @@ public class ObjectDefinitionLocalServiceWrapper
 
 		return _objectDefinitionLocalService.getObjectDefinitionsCount(
 			companyId);
+	}
+
+	@Override
+	public int getObjectDefinitionsCount(
+			long companyId, boolean active, boolean system, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.getObjectDefinitionsCount(
+			companyId, active, system, status);
 	}
 
 	@Override

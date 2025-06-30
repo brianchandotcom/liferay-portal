@@ -1732,7 +1732,7 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
-	public void testGetArticleDisplayWithDMSmallImage() throws Exception {
+	public void testGetArticleDisplayWithSmallImage() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);

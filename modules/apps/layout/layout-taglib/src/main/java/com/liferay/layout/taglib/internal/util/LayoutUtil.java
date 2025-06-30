@@ -124,6 +124,8 @@ public class LayoutUtil {
 						return null;
 					}
 				).put(
+					"externalReferenceCode", layout.getExternalReferenceCode()
+				).put(
 					"groupId", layout.getGroupId()
 				).put(
 					"hasChildren", ListUtil.isNotEmpty(childLayouts)

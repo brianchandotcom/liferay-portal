@@ -87,22 +87,19 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 		<VerticalNav
 			defaultExpandedKeys={new Set([Liferay.Language.get('spaces')])}
 			displayType="primary"
-			items={
-				showAddButton
-					? [
-							{
-								...spacesNavigationItem,
-								menubarAction: {
-									'aria-label':
-										Liferay.Language.get('add-space'),
-									'onClick': onAddButtonClick,
-									'role': 'menuitem',
-									'title': Liferay.Language.get('add-space'),
-								},
-							},
-						]
-					: [spacesNavigationItem]
-			}
+			items={[
+				{
+					...spacesNavigationItem,
+					...(showAddButton && {
+						menubarAction: {
+							'aria-label': Liferay.Language.get('add-space'),
+							'onClick': onAddButtonClick,
+							'role': 'menuitem',
+							'title': Liferay.Language.get('add-space-ambrin'),
+						},
+					}),
+				},
+			]}
 		>
 			{(item: VerticalNavItem) => {
 				return (

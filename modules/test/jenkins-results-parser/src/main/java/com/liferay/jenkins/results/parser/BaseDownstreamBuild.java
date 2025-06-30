@@ -101,7 +101,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 				buildReportFile, String.valueOf(buildReportJSONObject));
 
 			JenkinsResultsParserUtil.gzip(buildReportFile, buildReportGzipFile);
-			
+
 			CloudBucketUtil.uploadS3File(s3ObjectPath, buildReportGzipFile);
 		}
 		catch (Exception exception) {

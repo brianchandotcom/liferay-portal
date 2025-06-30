@@ -4939,11 +4939,11 @@ public class JenkinsResultsParserUtil {
 					System.out.println("Loading " + url);
 				}
 
-				File cachedFile = getCacheFile(
+				File cacheFile = getCacheFile(
 					_generateToStringCacheKey(url, postContent));
 
-				if ((cachedFile != null) && cachedFile.exists()) {
-					return new FileInputStream(cachedFile);
+				if ((cacheFile != null) && cacheFile.exists()) {
+					return new FileInputStream(cacheFile);
 				}
 			}
 		}

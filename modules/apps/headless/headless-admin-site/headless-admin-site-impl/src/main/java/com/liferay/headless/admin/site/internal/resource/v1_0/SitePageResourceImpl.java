@@ -266,6 +266,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			String externalReferenceCode, long groupId, SitePage sitePage)
 		throws Exception {
 
+		_validatePageSpecificationExternalReferenceCode(sitePage);
+
 		Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
 			sitePage.getName_i18n());
 
@@ -302,8 +304,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				0, serviceContext);
 		}
 		else {
-			_validatePageSpecificationExternalReferenceCode(sitePage);
-
 			layout = LayoutUtil.addContentLayout(
 				groupId, sitePage.getPageSpecifications(), false, nameMap, null,
 				null, null, SitePageTypeUtil.toInternalType(sitePage.getType()),
@@ -469,25 +469,37 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			return;
 		}
 
-		if (!Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE) ||
-			(pageSpecifications.length != 2)) {
+		String publishedPageSpecificationExternalReferenceCode = null;
 
+		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE) &&
+			(pageSpecifications.length == 2)) {
+
+			ContentPageSpecification publishedContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[0];
+
+			if (Validator.isNull(
+					publishedContentPageSpecification.
+						getDraftContentPageSpecificationExternalReferenceCode())) {
+
+				publishedContentPageSpecification =
+					(ContentPageSpecification)pageSpecifications[1];
+			}
+
+			publishedPageSpecificationExternalReferenceCode =
+				publishedContentPageSpecification.getExternalReferenceCode();
+		}
+		else if (Objects.equals(
+					sitePage.getType(), SitePage.Type.WIDGET_PAGE) &&
+				 (pageSpecifications.length == 1)) {
+
+			PageSpecification pageSpecification = pageSpecifications[0];
+
+			publishedPageSpecificationExternalReferenceCode =
+				pageSpecification.getExternalReferenceCode();
+		}
+		else {
 			throw new UnsupportedOperationException();
 		}
-
-		ContentPageSpecification publishedContentPageSpecification =
-			(ContentPageSpecification)pageSpecifications[0];
-
-		if (Validator.isNull(
-				publishedContentPageSpecification.
-					getDraftContentPageSpecificationExternalReferenceCode())) {
-
-			publishedContentPageSpecification =
-				(ContentPageSpecification)pageSpecifications[1];
-		}
-
-		String publishedPageSpecificationExternalReferenceCode =
-			publishedContentPageSpecification.getExternalReferenceCode();
 
 		if ((publishedPageSpecificationExternalReferenceCode != null) &&
 			!Objects.equals(

@@ -62,6 +62,10 @@ public class FragmentCollectionStagedModelDataHandler
 			FragmentCollection fragmentCollection)
 		throws Exception {
 
+		if (fragmentCollection.isMarketplace()) {
+			return;
+		}
+
 		Element fragmentCollectionElement =
 			portletDataContext.getExportDataElement(fragmentCollection);
 

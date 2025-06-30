@@ -7,22 +7,32 @@ package com.liferay.batch.engine.internal.reader;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.introspect.AnnotatedClass;
+import com.fasterxml.jackson.databind.introspect.AnnotatedClassResolver;
+import com.fasterxml.jackson.databind.jsontype.NamedType;
+import com.fasterxml.jackson.databind.jsontype.SubtypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -30,6 +40,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -51,8 +62,24 @@ public class BatchEngineImportTaskItemReaderUtil {
 			List<ItemReaderPostAction> itemReaderPostActions)
 		throws ReflectiveOperationException {
 
+		T item = null;
+
+		try {
+			item = itemClass.newInstance();
+		}
+		catch (InstantiationException instantiationException) {
+			Class<? extends T> subtypeClass = _resolveSubtypeClass(
+				itemClass, fieldNameValueMap);
+
+			if (subtypeClass != null) {
+				item = subtypeClass.newInstance();
+			}
+			else {
+				throw instantiationException;
+			}
+		}
+
 		Map<String, Serializable> extendedProperties = new HashMap<>();
-		T item = itemClass.newInstance();
 
 		Set<String> batchRestrictFields = _getBatchRestrictFields(
 			batchEngineImportTask);
@@ -298,6 +325,53 @@ public class BatchEngineImportTaskItemReaderUtil {
 		}
 
 		return true;
+	}
+
+	private static <T> Class<? extends T> _resolveSubtypeClass(
+		Class<T> itemClass, Map<String, Object> fieldNameValueMap) {
+
+		JsonTypeInfo jsonTypeInfoAnnotation = itemClass.getAnnotation(
+			JsonTypeInfo.class);
+
+		if (jsonTypeInfoAnnotation == null) {
+			return null;
+		}
+
+		String jsonTypeInfoName = jsonTypeInfoAnnotation.property();
+
+		String jsonTypeInfoValue = GetterUtil.getString(
+			fieldNameValueMap.get(jsonTypeInfoName));
+
+		if (jsonTypeInfoValue == null) {
+			return null;
+		}
+
+		ObjectMapper objectMapper =
+			ObjectMapperProviderUtil.getBatchEngineObjectMapper();
+
+		MapperConfig<?> config = objectMapper.getSerializationConfig();
+
+		TypeFactory typeFactory = objectMapper.getTypeFactory();
+
+		JavaType javaType = typeFactory.constructType(itemClass);
+
+		AnnotatedClass annotatedClass = AnnotatedClassResolver.resolve(
+			config, javaType, config);
+
+		SubtypeResolver jacksonSubtypeResolver =
+			objectMapper.getSubtypeResolver();
+
+		Collection<NamedType> subtypes =
+			jacksonSubtypeResolver.collectAndResolveSubtypesByClass(
+				config, annotatedClass);
+
+		for (NamedType namedType : subtypes) {
+			if (Objects.equals(jsonTypeInfoValue, namedType.getName())) {
+				return (Class<? extends T>)namedType.getType();
+			}
+		}
+
+		return null;
 	}
 
 	private static final ObjectMapper _csvMapObjectMapper = new ObjectMapper() {

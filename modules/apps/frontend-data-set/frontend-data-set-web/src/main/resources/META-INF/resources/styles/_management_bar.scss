@@ -140,4 +140,18 @@
 			display: flex;
 		}
 	}
+
+	.search-resume {
+		.search-resume-label {
+			align-items: center;
+			cursor: default;
+			display: inline-flex;
+
+			&:hover {
+				background-color: var(--btn-secondary-background-color, $white);
+				border-color: var(--btn-secondary-border-color, $secondary-l2);
+				color: var(--btn-secondary-color, $secondary);
+			}
+		}
+	}
 }

@@ -17,18 +17,14 @@ function SearchResume() {
 	};
 
 	return (
-		<ClayButton.Group>
-			<ClayButton
-				className="component-label tbar-label"
-				displayType="secondary"
-				size="sm"
-			>
+		<ClayButton.Group className="search-resume">
+			<span className="btn btn-secondary btn-sm component-label search-resume-label tbar-label">
 				<span className="mr-1">
 					{Liferay.Language.get('search-colon')}
 				</span>
 
 				<strong>{searchParam}</strong>
-			</ClayButton>
+			</span>
 
 			<ClayButton
 				aria-label={Liferay.Language.get('clear-search')}

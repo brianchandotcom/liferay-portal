@@ -97,7 +97,7 @@ public class BackgroundTaskStatusMessageListenerTest {
 
 		try {
 			_backgroundTaskManager.addBackgroundTask(
-				_user.getUserId(), BackgroundTaskConstants.DEFAULT_GROUP_ID,
+				_user.getUserId(), BackgroundTaskConstants.GROUP_ID_DEFAULT,
 				BackgroundTaskStatusMessageListenerTest.class.getName(),
 				backgroundTaskExecutorClass.getName(), new HashMap<>(),
 				new ServiceContext());

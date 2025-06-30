@@ -417,7 +417,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 		try {
 			return _backgroundTaskManager.addBackgroundTask(
-				userId, BackgroundTaskConstants.DEFAULT_GROUP_ID, jobName,
+				userId, BackgroundTaskConstants.GROUP_ID_DEFAULT, jobName,
 				ReindexPortalBackgroundTaskExecutor.class.getName(),
 				taskContextMap, new ServiceContext());
 		}
@@ -450,7 +450,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 		try {
 			return _backgroundTaskManager.addBackgroundTask(
-				userId, BackgroundTaskConstants.DEFAULT_GROUP_ID, jobName,
+				userId, BackgroundTaskConstants.GROUP_ID_DEFAULT, jobName,
 				ReindexSingleIndexerBackgroundTaskExecutor.class.getName(),
 				taskContextMap, new ServiceContext());
 		}

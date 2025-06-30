@@ -214,7 +214,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		_backgroundTaskManager.addBackgroundTask(
-			themeDisplay.getUserId(), BackgroundTaskConstants.DEFAULT_GROUP_ID,
+			themeDisplay.getUserId(), BackgroundTaskConstants.GROUP_ID_DEFAULT,
 			"reindexIndexReindexer",
 			_CLASS_NAME_REINDEX_INDEX_REINDEXER_BACKGROUND_TASK_EXECUTOR,
 			HashMapBuilder.<String, Serializable>put(

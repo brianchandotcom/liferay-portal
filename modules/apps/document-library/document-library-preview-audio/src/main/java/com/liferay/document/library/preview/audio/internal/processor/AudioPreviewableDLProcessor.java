@@ -81,7 +81,7 @@ public class AudioPreviewableDLProcessor
 
 					_backgroundTaskManager.addBackgroundTask(
 						UserConstants.USER_ID_DEFAULT,
-						BackgroundTaskConstants.DEFAULT_GROUP_ID, jobName,
+						BackgroundTaskConstants.GROUP_ID_DEFAULT, jobName,
 						DLBackgroundTaskExecutorNames.
 							AUDIO_PREVIEW_BACKGROUND_TASK_EXECUTOR,
 						HashMapBuilder.<String, Serializable>put(

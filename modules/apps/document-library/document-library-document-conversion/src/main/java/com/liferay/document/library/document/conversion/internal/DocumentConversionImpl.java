@@ -161,7 +161,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 
 					_backgroundTaskManager.addBackgroundTask(
 						UserConstants.USER_ID_DEFAULT,
-						BackgroundTaskConstants.DEFAULT_GROUP_ID, jobName,
+						BackgroundTaskConstants.GROUP_ID_DEFAULT, jobName,
 						OpenOfficeConversionPreviewBackgroundTaskExecutor.class.
 							getName(),
 						HashMapBuilder.<String, Serializable>put(

@@ -40,13 +40,20 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 	}
 
 	public String getAPIURL(String type) {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("/o/headless-asset-library/v1.0/asset-libraries/");
 		sb.append(_groupId);
 		sb.append("/");
 		sb.append(type);
 		sb.append("?page=1&pageSize=8");
+
+		if (type.equals("user-accounts")) {
+			sb.append("&nestedFields=assetLibraryCreator");
+		}
+		else {
+			sb.append("&nestedFields=numberOfUserAccounts");
+		}
 
 		return sb.toString();
 	}

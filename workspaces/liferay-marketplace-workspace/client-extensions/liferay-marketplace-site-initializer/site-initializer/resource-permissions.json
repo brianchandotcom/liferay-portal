@@ -167,10 +167,29 @@
 	},
 	{
 		"actionIds": [
-			"ADD_DOCUMENT"
+			"ADD_DOCUMENT",
+			"ADD_FOLDER"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.document.library",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_DOCUMENT",
+			"ADD_SUBFOLDER",
+			"DELETE"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
 		"roleName": "Supplier",
 		"scope": "1"
 	},
@@ -217,6 +236,15 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:PublisherAssets$]",
 		"roleName": "Account Administrator (Regular)",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:PublisherAssets$]",
+		"roleName": "Supplier",
 		"scope": "1"
 	},
 	{

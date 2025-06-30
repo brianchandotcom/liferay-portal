@@ -48,7 +48,9 @@ public class TestReportCSVWriter {
 			bufferedWriter.flush();
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+			throw new RuntimeException(
+				"Unable to write Playwright test report to CSV",
+				ioException.getCause());
 		}
 	}
 

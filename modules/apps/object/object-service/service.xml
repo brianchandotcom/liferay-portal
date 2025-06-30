@@ -505,6 +505,11 @@
 			<finder-column name="dbType" />
 			<finder-column name="indexed" />
 		</finder>
+		<finder name="ODI_L_S" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="localized" />
+			<finder-column name="system" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectFieldSetting" remote-service="false" uuid="true">
 

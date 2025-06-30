@@ -456,6 +456,14 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectField> getLocalizedObjectFields(
+		long objectDefinitionId, boolean system) {
+
+		return objectFieldPersistence.findByODI_L_S(
+			objectDefinitionId, true, system);
+	}
+
+	@Override
 	public ObjectField getObjectField(long objectDefinitionId, String name)
 		throws PortalException {
 

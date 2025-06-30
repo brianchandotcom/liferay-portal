@@ -216,6 +216,9 @@ components:
             description:
                 Represents a user.
             properties:
+                assetLibraryCreator:
+                    readOnly: true
+                    type: boolean
                 externalReferenceCode:
                     description:
                         The user's external reference code
@@ -270,6 +273,11 @@ components:
                         type: string
                     readOnly: true
                     type: object
+                numberOfUserAccounts:
+                    description:
+                        The number of this user group's associated users.
+                    readOnly: true
+                    type: integer
                 roles:
                     description:
                         The list of roles associated with this user group.

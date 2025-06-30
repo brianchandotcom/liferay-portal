@@ -5,6 +5,8 @@
 
 package com.liferay.headless.asset.library.internal.dto.v1_0.converter;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.asset.library.dto.v1_0.Role;
 import com.liferay.headless.asset.library.dto.v1_0.UserAccount;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -13,6 +15,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -45,6 +48,10 @@ public class UserAccountDTOConverter
 
 		return new UserAccount() {
 			{
+				setAssetLibraryCreator(
+					() -> NestedFieldsSupplier.supply(
+						"assetLibraryCreator",
+						nestedFieldNames -> _isCreator(dtoConverterContext)));
 				setExternalReferenceCode(user::getExternalReferenceCode);
 				setId(user::getUserId);
 				setImage(
@@ -72,6 +79,22 @@ public class UserAccountDTOConverter
 		};
 	}
 
+	private Boolean _isCreator(DTOConverterContext dtoConverterContext)
+		throws Exception {
+
+		long assetLibraryId = GetterUtil.getLong(
+			dtoConverterContext.getAttribute("assetLibraryId"));
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			assetLibraryId);
+
+		if (depotEntry == null) {
+			depotEntry = _depotEntryLocalService.getDepotEntry(assetLibraryId);
+		}
+
+		return depotEntry.getUserId() == dtoConverterContext.getUserId();
+	}
+
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)
 		throws PortalException {
 
@@ -84,6 +107,9 @@ public class UserAccountDTOConverter
 			}
 		};
 	}
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private Portal _portal;

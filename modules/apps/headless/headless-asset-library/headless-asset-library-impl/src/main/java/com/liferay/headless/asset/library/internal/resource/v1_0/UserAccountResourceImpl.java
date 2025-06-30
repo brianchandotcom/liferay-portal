@@ -133,7 +133,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				"No user exists with user group ID " + userId);
 		}
 
-		return _toUserAccount(_userService.getUserById(userId));
+		return _toUserAccount(assetLibraryId, _userService.getUserById(userId));
 	}
 
 	@NestedField(parentClass = AssetLibrary.class, value = "userAccounts")
@@ -178,7 +178,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _toUserAccount(_updateUser(assetLibraryId, userId, true));
+		return _toUserAccount(
+			assetLibraryId, _updateUser(assetLibraryId, userId, true));
 	}
 
 	private Group _getGroup(String externalReferenceCode) throws Exception {
@@ -226,6 +227,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				contextCompany.getCompanyId()),
 			sorts,
 			document -> _toUserAccount(
+				groupId,
 				_userService.getUserById(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
@@ -249,8 +251,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		return ArrayUtil.toLongArray(groupIds);
 	}
 
-	private UserAccount _toUserAccount(User user) throws Exception {
-		return _userAccountDTOConverter.toDTO(
+	private UserAccount _toUserAccount(long assetLibraryId, User user)
+		throws Exception {
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
@@ -268,7 +272,12 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				).build(),
 				_dtoConverterRegistry, contextHttpServletRequest,
 				user.getUserId(), contextAcceptLanguage.getPreferredLocale(),
-				contextUriInfo, contextUser));
+				contextUriInfo, contextUser);
+
+		defaultDTOConverterContext.setAttribute(
+			"assetLibraryId", assetLibraryId);
+
+		return _userAccountDTOConverter.toDTO(defaultDTOConverterContext);
 	}
 
 	private User _updateUser(Long assetLibraryId, Long userId, boolean add)

@@ -69,6 +69,10 @@ public class FragmentEntryStagedModelDataHandler
 			PortletDataContext portletDataContext, FragmentEntry fragmentEntry)
 		throws Exception {
 
+		if (fragmentEntry.isMarketplace()) {
+			return;
+		}
+
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.fetchFragmentCollection(
 				fragmentEntry.getFragmentCollectionId());

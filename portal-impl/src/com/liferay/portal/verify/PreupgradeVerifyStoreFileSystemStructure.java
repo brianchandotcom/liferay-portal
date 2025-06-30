@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -100,6 +101,15 @@ public class PreupgradeVerifyStoreFileSystemStructure
 						rootDirPath.toString(), " is invalid"));
 			}
 		}
+		catch (IOException ioException) {
+			throw new VerifyException(
+				StringBundler.concat(
+					"Unable to verify ",
+					advancedFileSystemStore ? "advanced" : "",
+					" system store directory structure ",
+					rootDirPath.toString()),
+				ioException);
+		}
 
 		if (!companyIds.isEmpty()) {
 			throw new VerifyException(
@@ -144,7 +154,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 	}
 
 	private boolean _hasAdvancedFileSystemStructureCompanyIdPath(
-		Path companyIdPath) {
+			Path companyIdPath)
+		throws IOException {
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				companyIdPath)) {
@@ -172,20 +183,11 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 			return true;
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to verify advanced file system structure in: " +
-						companyIdPath,
-					exception);
-			}
-
-			return false;
-		}
 	}
 
 	private boolean _hasAdvancedFileSystemStructureRepositoryIdPath(
-		Path repositoryIdPath) {
+			Path repositoryIdPath)
+		throws IOException {
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				repositoryIdPath)) {
@@ -225,19 +227,11 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 			return true;
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to verify advanced file system structure in: " +
-						repositoryIdPath,
-					exception);
-			}
-
-			return false;
-		}
 	}
 
-	private boolean _hasFileSystemStructureCompanyIdPath(Path companyIdPath) {
+	private boolean _hasFileSystemStructureCompanyIdPath(Path companyIdPath)
+		throws IOException {
+
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				companyIdPath)) {
 
@@ -264,19 +258,11 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 			return true;
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to verify file system structure in: " +
-						companyIdPath,
-					exception);
-			}
-
-			return false;
-		}
 	}
 
-	private boolean _hasFileSystemStructureFileNamePath(Path fileNamePath) {
+	private boolean _hasFileSystemStructureFileNamePath(Path fileNamePath)
+		throws IOException {
+
 		if (StringUtil.contains(
 				String.valueOf(fileNamePath.getFileName()), StringPool.PERIOD,
 				StringPool.BLANK)) {
@@ -314,16 +300,6 @@ public class PreupgradeVerifyStoreFileSystemStructure
 			}
 
 			return true;
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to verify file entry version label in: " +
-						fileNamePath,
-					exception);
-			}
-
-			return false;
 		}
 	}
 

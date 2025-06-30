@@ -469,7 +469,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			return;
 		}
 
-		String publishedPageSpecificationExternalReferenceCode = null;
+		PageSpecification publishedPageSpecification = null;
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE) &&
 			(pageSpecifications.length == 2)) {
@@ -485,26 +485,22 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					(ContentPageSpecification)pageSpecifications[1];
 			}
 
-			publishedPageSpecificationExternalReferenceCode =
-				publishedContentPageSpecification.getExternalReferenceCode();
+			publishedPageSpecification = publishedContentPageSpecification;
 		}
 		else if (Objects.equals(
 					sitePage.getType(), SitePage.Type.WIDGET_PAGE) &&
 				 (pageSpecifications.length == 1)) {
 
-			PageSpecification pageSpecification = pageSpecifications[0];
-
-			publishedPageSpecificationExternalReferenceCode =
-				pageSpecification.getExternalReferenceCode();
+			publishedPageSpecification = pageSpecifications[0];
 		}
 		else {
 			throw new UnsupportedOperationException();
 		}
 
-		if ((publishedPageSpecificationExternalReferenceCode != null) &&
+		if ((publishedPageSpecification.getExternalReferenceCode() != null) &&
 			!Objects.equals(
 				sitePage.getExternalReferenceCode(),
-				publishedPageSpecificationExternalReferenceCode)) {
+				publishedPageSpecification.getExternalReferenceCode())) {
 
 			throw new ValidationException(
 				StringBundler.concat(
@@ -512,8 +508,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					sitePage.getExternalReferenceCode(),
 					" does not match published page specification external ",
 					"reference code ",
-					publishedPageSpecificationExternalReferenceCode));
+					publishedPageSpecification.getExternalReferenceCode()));
 		}
+
+		publishedPageSpecification.setExternalReferenceCode(
+			sitePage::getExternalReferenceCode);
 	}
 
 	private void _validateSitePageLayout(Layout layout) {

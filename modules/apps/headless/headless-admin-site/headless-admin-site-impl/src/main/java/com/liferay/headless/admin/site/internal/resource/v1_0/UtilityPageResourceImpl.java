@@ -312,7 +312,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			null, groupId, utilityPage.getPageSpecifications(), false, nameMap,
+			groupId, utilityPage.getPageSpecifications(), false, nameMap,
 			titleMap, descriptionMap, null, LayoutConstants.TYPE_UTILITY, null,
 			true, true,
 			LocalizedMapUtil.getLocalizedMap(

@@ -19,6 +19,7 @@ import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -41,6 +43,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import jakarta.validation.ValidationException;
 
 import jakarta.ws.rs.NotSupportedException;
 
@@ -298,10 +302,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				0, serviceContext);
 		}
 		else {
+			_validatePageSpecificationExternalReferenceCode(sitePage);
+
 			layout = LayoutUtil.addContentLayout(
-				sitePage.getExternalReferenceCode(), groupId,
-				sitePage.getPageSpecifications(), false, nameMap, null, null,
-				null, SitePageTypeUtil.toInternalType(sitePage.getType()),
+				groupId, sitePage.getPageSpecifications(), false, nameMap, null,
+				null, null, SitePageTypeUtil.toInternalType(sitePage.getType()),
 				typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				false,
@@ -452,6 +457,51 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return _layoutService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			typeSettingsUnicodeProperties.toString());
+	}
+
+	private void _validatePageSpecificationExternalReferenceCode(
+		SitePage sitePage) {
+
+		PageSpecification[] pageSpecifications =
+			sitePage.getPageSpecifications();
+
+		if (ArrayUtil.isEmpty(pageSpecifications)) {
+			return;
+		}
+
+		if (!Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE) ||
+			(pageSpecifications.length != 2)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ContentPageSpecification publishedContentPageSpecification =
+			(ContentPageSpecification)pageSpecifications[0];
+
+		if (Validator.isNull(
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode())) {
+
+			publishedContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[1];
+		}
+
+		String publishedPageSpecificationExternalReferenceCode =
+			publishedContentPageSpecification.getExternalReferenceCode();
+
+		if ((publishedPageSpecificationExternalReferenceCode != null) &&
+			!Objects.equals(
+				sitePage.getExternalReferenceCode(),
+				publishedPageSpecificationExternalReferenceCode)) {
+
+			throw new ValidationException(
+				StringBundler.concat(
+					"Site page external reference code ",
+					sitePage.getExternalReferenceCode(),
+					" does not match published page specification external ",
+					"reference code ",
+					publishedPageSpecificationExternalReferenceCode));
+		}
 	}
 
 	private void _validateSitePageLayout(Layout layout) {

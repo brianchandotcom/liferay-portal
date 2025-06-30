@@ -467,7 +467,7 @@ public class DisplayPageTemplateResourceImpl
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			null, groupId, displayPageTemplate.getPageSpecifications(), false,
+			groupId, displayPageTemplate.getPageSpecifications(), false,
 			nameMap, nameMap, null, _getRobotsMap(displayPageTemplateSettings),
 			LayoutConstants.TYPE_ASSET_DISPLAY,
 			_getUnicodeProperties(displayPageTemplateSettings), true, true,

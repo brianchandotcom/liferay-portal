@@ -402,9 +402,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		PageSettings pageSettings = sitePage.getPageSettings();
 
-		if ((pageSettings != null) && (pageSettings.getPriority() != null) &&
-			(pageSettings.getPriority() >= 0)) {
-
+		if ((pageSettings != null) && (pageSettings.getPriority() != null)) {
 			priority = pageSettings.getPriority();
 		}
 

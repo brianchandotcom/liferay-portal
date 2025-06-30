@@ -27,6 +27,7 @@ import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import {
+	ReferencedStructure,
 	RepeatableGroup,
 	Structure,
 	StructureChild,
@@ -44,7 +45,7 @@ type TreeItem = {
 	id: string;
 	label: string;
 	name?: string;
-	type?: FieldType | 'referenced-structure' | 'repeatable-group';
+	type?: FieldType | ReferencedStructure['type'] | RepeatableGroup['type'];
 	uuid: Uuid;
 };
 

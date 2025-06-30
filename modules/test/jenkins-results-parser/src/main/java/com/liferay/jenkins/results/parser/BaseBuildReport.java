@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +24,21 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseBuildReport implements BuildReport {
+
+	@Override
+	public boolean equals(Object object) {
+		if (object == this) {
+			return true;
+		}
+
+		if (!(object instanceof BuildReport)) {
+			return false;
+		}
+
+		BuildReport buildReport = (BuildReport)object;
+
+		return Objects.equals(buildReport.getBuildURL(), getBuildURL());
+	}
 
 	@Override
 	public int getBuildNumber() {
@@ -200,6 +216,13 @@ public abstract class BaseBuildReport implements BuildReport {
 		}
 
 		return testrayAttachmentURLs;
+	}
+
+	@Override
+	public int hashCode() {
+		String buildURL = String.valueOf(getBuildURL());
+
+		return buildURL.hashCode();
 	}
 
 	@Override

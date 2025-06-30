@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceAbstractConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -53,8 +52,7 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 	@Override
 	public String getAPIURL() {
 		return HttpComponentsUtil.addParameters(
-			super.getAPIURL(), "page", CMSSpaceAbstractConstants.PAGE,
-			"pageSize", CMSSpaceAbstractConstants.PAGE_SIZE, "sort",
+			super.getAPIURL(), "page", 1, "pageSize", 8, "sort",
 			"dateModified:desc");
 	}
 

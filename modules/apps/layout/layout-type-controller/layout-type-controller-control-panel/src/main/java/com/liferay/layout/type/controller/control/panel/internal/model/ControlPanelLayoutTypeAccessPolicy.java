@@ -45,15 +45,17 @@ public class ControlPanelLayoutTypeAccessPolicy
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if ((scopeGroup != null) &&
-			(scopeGroup.isControlPanel() || scopeGroup.isDepot() ||
-			 scopeGroup.isSite()) &&
-			(PortletPermissionUtil.hasControlPanelAccessPermission(
+		if (scopeGroup.isOrganization() && !scopeGroup.isSite()) {
+			throw new PrincipalException(
+				"Unable to access an organization's site that is not enabled");
+		}
+
+		if (PortletPermissionUtil.hasControlPanelAccessPermission(
 				PermissionThreadLocal.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), portlet) ||
-			 isAccessGrantedByRuntimePortlet(httpServletRequest) ||
-			 isAccessGrantedByPortletAuthenticationToken(
-				 httpServletRequest, layout, portlet))) {
+			isAccessGrantedByRuntimePortlet(httpServletRequest) ||
+			isAccessGrantedByPortletAuthenticationToken(
+				httpServletRequest, layout, portlet)) {
 
 			return;
 		}

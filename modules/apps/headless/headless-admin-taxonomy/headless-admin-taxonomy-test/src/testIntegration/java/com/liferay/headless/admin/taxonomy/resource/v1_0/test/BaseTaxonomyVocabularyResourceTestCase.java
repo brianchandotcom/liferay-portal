@@ -4649,6 +4649,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		randomIrrelevantTaxonomyVocabulary.setAssetLibraryKey(
 			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
+
 		randomIrrelevantTaxonomyVocabulary.setSiteExternalReferenceCode(
 			irrelevantGroup.getExternalReferenceCode());
 

@@ -15,6 +15,7 @@ import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -168,6 +169,13 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 						"entryClassName", ObjectEntryFolder.class.getName()
 					).build()));
 		}
+
+		fdsActionDropdownItems.add(
+			3,
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "info-circle-open", "show-details",
+				LanguageUtil.get(httpServletRequest, "show-details"), null,
+				null, "infoPanel"));
 
 		return fdsActionDropdownItems;
 	}

@@ -160,10 +160,6 @@ JSONObject patcherProjectVersionsJSONObject = JSONFactoryUtil.createJSONObject(J
 		'<portlet:namespace />useExistingHotfix'
 	);
 
-	<portlet:renderURL var="buildsControllerURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/get_ticket_suggestion_fields_builds" />
-	</portlet:renderURL>
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />checkForExistingHotfix',

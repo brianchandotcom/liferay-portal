@@ -820,29 +820,24 @@ public class PatcherFixUtil {
 	public static void updateObsolete(PatcherFix patcherFix, boolean obsolete)
 		throws Exception {
 
-		patcherFix.setObsolete(obsolete);
-
-		patcherFix = PatcherFixLocalServiceUtil.updatePatcherFix(patcherFix);
+		PatcherFixLocalServiceUtil.updateObsolete(
+			patcherFix.getPatcherFixId(), obsolete);
 
 		List<PatcherFix> patcherFixDescendants =
 			PatcherFixRelUtil.getPatcherFixDescendants(patcherFix);
 
 		for (PatcherFix patcherFixDescendant : patcherFixDescendants) {
 			if (obsolete) {
-				patcherFixDescendant.setObsolete(true);
-
-				patcherFixDescendant =
-					PatcherFixLocalServiceUtil.updatePatcherFix(
-						patcherFixDescendant);
+				PatcherFixLocalServiceUtil.updateObsolete(
+					patcherFixDescendant.getPatcherFixId(), true);
 
 				continue;
 			}
 
-			patcherFixDescendant.setObsolete(
+			PatcherFixLocalServiceUtil.updateObsolete(
+				patcherFixDescendant.getPatcherFixId(),
 				PatcherFixRelUtil.hasObsoletePatcherFixAncestor(
 					patcherFixDescendant));
-
-			PatcherFixLocalServiceUtil.updatePatcherFix(patcherFixDescendant);
 		}
 	}
 

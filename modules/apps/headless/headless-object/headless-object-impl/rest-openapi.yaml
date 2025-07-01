@@ -285,6 +285,33 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntryFolder"
             tags: ["ObjectEntryFolder"]
+        put:
+            operationId: putObjectEntryFolder
+            parameters:
+                -   in: path
+                    name: objectEntryFolderId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntryFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntryFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryFolder"
+            tags: ["ObjectEntryFolder"]
     "/object-entry-folders/{objectEntryFolderId}/collaborators":
         get:
             description:

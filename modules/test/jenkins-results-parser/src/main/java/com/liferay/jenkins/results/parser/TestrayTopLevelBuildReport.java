@@ -13,7 +13,7 @@ import com.liferay.jenkins.results.parser.testray.TestrayBuild;
 public class TestrayTopLevelBuildReport extends URLTopLevelBuildReport {
 
 	protected TestrayTopLevelBuildReport(TestrayBuild testrayBuild) {
-		super(testrayBuild.getTopLevelBuildURL());
+		super(String.valueOf(testrayBuild.getTopLevelBuildURL()));
 
 		_startYearMonth = testrayBuild.getStartYearMonth();
 	}

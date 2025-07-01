@@ -346,28 +346,16 @@ public abstract class BaseTopLevelBuildReport
 		return buildReportJSONObject.optLong("totalDuration");
 	}
 
-	protected BaseTopLevelBuildReport(JSONObject buildReportJSONObject) {
-		super(buildReportJSONObject);
-
-		setStartDate(new Date(buildReportJSONObject.getLong("startTime")));
+	protected BaseTopLevelBuildReport(String buildURLString) {
+		super(buildURLString);
 	}
 
 	protected BaseTopLevelBuildReport(
-		JSONObject buildJSONObject, JobReport jobReport) {
+		String buildURLString, JobReport jobReport) {
 
-		super(buildJSONObject, jobReport);
+		super(buildURLString);
 
-		setStartDate(new Date(buildJSONObject.getLong("timestamp")));
-	}
-
-	protected BaseTopLevelBuildReport(TopLevelBuild topLevelBuild) {
-		super(topLevelBuild.getBuildURL());
-
-		setStartDate(new Date(topLevelBuild.getStartTime()));
-	}
-
-	protected BaseTopLevelBuildReport(URL buildURL) {
-		super(buildURL);
+		_jobReport = jobReport;
 	}
 
 	protected Set<String> getBatchNames() {

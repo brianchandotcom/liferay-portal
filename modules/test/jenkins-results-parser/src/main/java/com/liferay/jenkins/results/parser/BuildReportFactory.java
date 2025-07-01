@@ -90,7 +90,8 @@ public class BuildReportFactory {
 			return null;
 		}
 
-		String buildURLString = String.valueOf(topLevelBuildURL);
+		String buildURLString = JenkinsResultsParserUtil.getRemoteURL(
+			String.valueOf(topLevelBuildURL));
 
 		if (!_topLevelBuildReports.containsKey(buildURLString)) {
 			_topLevelBuildReports.put(
@@ -115,11 +116,11 @@ public class BuildReportFactory {
 
 	public static TopLevelBuildReport newTopLevelBuildReport(URL buildURL) {
 		String buildURLString = JenkinsResultsParserUtil.getRemoteURL(
-			buildURL.toString());
+			String.valueOf(buildURL));
 
 		if (!_topLevelBuildReports.containsKey(buildURLString)) {
 			_topLevelBuildReports.put(
-				buildURLString, new URLTopLevelBuildReport(buildURL));
+				buildURLString, new URLTopLevelBuildReport(buildURLString));
 		}
 
 		return _topLevelBuildReports.get(buildURLString);

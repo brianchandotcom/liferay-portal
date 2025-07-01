@@ -5,15 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeoutException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,91 +17,27 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 	@Override
 	public JSONObject getBuildReportJSONObject() {
-		if (buildReportJSONObject != null) {
-			return buildReportJSONObject;
-		}
-
-		buildReportJSONObject = _topLevelBuild.getBuildReportJSONObject();
-
-		List<Callable<JSONObject>> callables = new ArrayList<>();
-
-		ParallelExecutor<JSONObject> parallelExecutor = new ParallelExecutor<>(
-			callables, _executorService, "getBuildReportJSONObject");
-
-		for (final Build build : _topLevelBuild.getDownstreamBuilds(null)) {
-			if (build instanceof BatchBuild) {
-				BatchBuild batchBuild = (BatchBuild)build;
-
-				for (final AxisBuild axisBuild :
-						batchBuild.getDownstreamAxisBuilds()) {
-
-					JenkinsMaster jenkinsMaster = axisBuild.getJenkinsMaster();
-
-					callables.add(
-						new ParallelExecutor.SequentialCallable<JSONObject>(
-							jenkinsMaster.getName()) {
-
-							@Override
-							public JSONObject call() throws Exception {
-								return axisBuild.getBuildReportJSONObject();
-							}
-
-						});
-				}
-			}
-			else {
-				JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
-
-				callables.add(
-					new ParallelExecutor.SequentialCallable<JSONObject>(
-						jenkinsMaster.getName()) {
-
-						@Override
-						public JSONObject call() throws Exception {
-							return build.getBuildReportJSONObject();
-						}
-
-					});
-			}
-		}
-
-		Map<String, List<JSONObject>> downstreamBuildMap = new HashMap<>();
-
-		try {
-			for (JSONObject jsonObject : parallelExecutor.execute(_TIMEOUT)) {
-				String batchName = "default";
-
-				Matcher matcher = _axisNamePattern.matcher(
-					jsonObject.optString("axisName", ""));
-
-				if (matcher.find()) {
-					batchName = matcher.group("batchName");
-				}
-
-				List<JSONObject> downstreamBuildJSONObjects =
-					downstreamBuildMap.getOrDefault(
-						batchName, new ArrayList<JSONObject>());
-
-				downstreamBuildJSONObjects.add(jsonObject);
-
-				downstreamBuildMap.put(batchName, downstreamBuildJSONObjects);
-			}
-		}
-		catch (TimeoutException timeoutException) {
-			throw new RuntimeException(timeoutException);
-		}
+		JSONObject buildReportJSONObject =
+			_topLevelBuild.getBuildReportJSONObject();
 
 		JSONArray batchesJSONArray = new JSONArray();
 
-		for (Map.Entry<String, List<JSONObject>> downstreamBuildEntry :
-				downstreamBuildMap.entrySet()) {
+		for (String batchName : getBatchNames()) {
+			JSONArray buildsJSONArray = new JSONArray();
+
+			for (DownstreamBuildReport downstreamBuildReport :
+					getDownstreamBuildReports(batchName)) {
+
+				buildsJSONArray.put(
+					downstreamBuildReport.getBuildReportJSONObject());
+			}
 
 			JSONObject batchJSONObject = new JSONObject();
 
 			batchJSONObject.put(
-				"batchName", downstreamBuildEntry.getKey()
+				"batchName", batchName
 			).put(
-				"builds", downstreamBuildEntry.getValue()
+				"builds", buildsJSONArray
 			);
 
 			batchesJSONArray.put(batchJSONObject);
@@ -117,11 +45,12 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 		buildReportJSONObject.put("batches", batchesJSONArray);
 
-		Build controllerBuild = _topLevelBuild.getControllerBuild();
+		ControllerBuildReport controllerBuildReport =
+			getControllerBuildReport();
 
-		if (controllerBuild != null) {
+		if (controllerBuildReport != null) {
 			buildReportJSONObject.put(
-				"controller", controllerBuild.getBuildReportJSONObject());
+				"controller", controllerBuildReport.getBuildReportJSONObject());
 		}
 
 		return buildReportJSONObject;
@@ -133,22 +62,30 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 	}
 
 	protected DefaultTopLevelBuildReport(TopLevelBuild topLevelBuild) {
-		super(topLevelBuild);
+		super(topLevelBuild.getBuildURL());
 
 		_topLevelBuild = topLevelBuild;
+
+		Build controllerBuild = topLevelBuild.getControllerBuild();
+
+		if ((controllerBuild != null) && controllerBuild.isCompleted()) {
+			setControllerBuildReport(
+				BuildReportFactory.newControllerBuildReport(
+					controllerBuild, this));
+		}
+
+		for (Build build : topLevelBuild.getDownstreamBuilds()) {
+			if (!build.isCompleted()) {
+				continue;
+			}
+
+			if (build instanceof DownstreamBuild) {
+				addDownstreamBuildReport(
+					BuildReportFactory.newDownstreamBuildReport(
+						(DownstreamBuild)build));
+			}
+		}
 	}
-
-	@Override
-	protected JSONObject getBuildJSONObject() {
-		return _topLevelBuild.getBuildJSONObject();
-	}
-
-	private static final long _TIMEOUT = 60L * 60L * 6L;
-
-	private static final Pattern _axisNamePattern = Pattern.compile(
-		"(?<batchName>[^/]+)/[^/]+/[^/]+");
-	private static final ExecutorService _executorService =
-		JenkinsResultsParserUtil.getNewThreadPoolExecutor(30, true);
 
 	private final TopLevelBuild _topLevelBuild;
 

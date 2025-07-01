@@ -12,6 +12,8 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Date;
+
 import org.json.JSONObject;
 
 /**
@@ -21,29 +23,30 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 	@Override
 	public JSONObject getBuildReportJSONObject() {
-		if (buildReportJSONObject != null) {
-			return buildReportJSONObject;
+		if (_buildReportJSONObject != null) {
+			return _buildReportJSONObject;
 		}
 
 		TestrayS3Object buildReportTestrayS3Object =
 			getBuildReportTestrayS3Object();
 
 		if (buildReportTestrayS3Object != null) {
-			buildReportJSONObject = new JSONObject(
+			_buildReportJSONObject = new JSONObject(
 				buildReportTestrayS3Object.getValue());
 		}
 
-		if (buildReportJSONObject == null) {
-			buildReportJSONObject = getJSONObjectFromURL(
+		if (_buildReportJSONObject == null) {
+			_buildReportJSONObject = getJSONObjectFromURL(
 				getBuildReportJSONUserContentURL());
 		}
 
-		if (buildReportJSONObject == null) {
-			buildReportJSONObject = getJSONObjectFromURL(
+		if (_buildReportJSONObject == null) {
+			_buildReportJSONObject = getJSONObjectFromURL(
 				getBuildReportJSONTestrayURL());
 		}
 
-		return buildReportJSONObject;
+		return _buildReportJSONObject;
+	}
 
 	@Override
 	public Date getStartDate() {
@@ -53,11 +56,16 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 	protected URLTopLevelBuildReport(
 		JSONObject buildJSONObject, JobReport jobReport) {
 
-		super(buildJSONObject, jobReport);
+		super(buildJSONObject.getString("url"), jobReport);
+
+		_buildJSONObject = buildJSONObject;
 	}
 
-	protected URLTopLevelBuildReport(URL buildURL) {
-		super(buildURL);
+	protected URLTopLevelBuildReport(String buildURLString) {
+		super(buildURLString);
+
+		_buildJSONObject = JenkinsAPIUtil.getAPIJSONObject(
+			String.valueOf(getBuildURL()));
 	}
 
 	protected JSONObject getJSONObjectFromURL(URL url) {
@@ -100,5 +108,8 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 			}
 		}
 	}
+
+	private final JSONObject _buildJSONObject;
+	private JSONObject _buildReportJSONObject;
 
 }

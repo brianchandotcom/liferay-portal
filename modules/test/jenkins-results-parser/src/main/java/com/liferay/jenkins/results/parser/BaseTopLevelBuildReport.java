@@ -14,12 +14,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -157,18 +158,22 @@ public abstract class BaseTopLevelBuildReport
 
 	@Override
 	public ControllerBuildReport getControllerBuildReport() {
+		if (_controllerBuildReport != null) {
+			return _controllerBuildReport;
+		}
+
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
 
-		if ((buildReportJSONObject == null) ||
-			!buildReportJSONObject.has("controller")) {
-
+		if (buildReportJSONObject == null) {
 			return null;
 		}
 
-		JSONObject controllerJSONObject = buildReportJSONObject.getJSONObject(
+		JSONObject controllerJSONObject = buildReportJSONObject.optJSONObject(
 			"controller");
 
-		if (!controllerJSONObject.has("buildURL")) {
+		if ((controllerJSONObject == null) ||
+			!controllerJSONObject.has("buildURL")) {
+
 			return null;
 		}
 

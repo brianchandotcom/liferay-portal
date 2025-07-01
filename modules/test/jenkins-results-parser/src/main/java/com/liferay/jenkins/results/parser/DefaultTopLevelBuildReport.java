@@ -5,7 +5,13 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.net.URL;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +20,15 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
+
+	@Override
+	public void addTestrayAttachmentURL(URL testrayAttachmentURL) {
+		if (_testrayAttachmentURLs.contains(testrayAttachmentURL)) {
+			return;
+		}
+
+		_testrayAttachmentURLs.add(testrayAttachmentURL);
+	}
 
 	@Override
 	public JSONObject getBuildReportJSONObject() {
@@ -53,6 +68,9 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 				"controller", controllerBuildReport.getBuildReportJSONObject());
 		}
 
+		buildReportJSONObject.put(
+			"testrayAttachmentURLs", _getTestrayAttachmentURLStrings());
+
 		return buildReportJSONObject;
 	}
 
@@ -87,6 +105,29 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 		}
 	}
 
+	private List<String> _getTestrayAttachmentURLStrings() {
+		Set<String> testrayAttachmentURLs = new HashSet<>();
+
+		for (URL testrayAttachmentURL : getTestrayAttachmentURLs()) {
+			testrayAttachmentURLs.add(String.valueOf(testrayAttachmentURL));
+		}
+
+		JSONObject buildReportJSONObject =
+			_topLevelBuild.getBuildReportJSONObject();
+
+		JSONArray testrayAttachmentURLsJSONArray =
+			buildReportJSONObject.optJSONArray(
+				"testrayAttachmentURLs", new JSONArray());
+
+		for (int i = 0; i < testrayAttachmentURLsJSONArray.length(); i++) {
+			testrayAttachmentURLs.add(
+				testrayAttachmentURLsJSONArray.getString(i));
+		}
+
+		return new ArrayList<>(testrayAttachmentURLs);
+	}
+
+	private final List<URL> _testrayAttachmentURLs = new ArrayList<>();
 	private final TopLevelBuild _topLevelBuild;
 
 }

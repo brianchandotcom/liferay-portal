@@ -28,7 +28,7 @@
 
 		${dataFactory.toInsertSQL(dataFactory.newObjectDefinitionLayoutPageTemplateStructureRelModel(fragmentEntryLinkModels, layoutPageTemplateStructureModel, objectDefinitionModel))}
 
-		 <#if contentLayoutModel.friendlyURL?contains(name)>
+		 <#if contentLayoutModel.friendlyURL?contains(name?c_lower_case)>
 			${csvFileWriter.write("objectDefinition", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + contentLayoutModel.getFriendlyURL() + "\n")}
 		</#if>
 	</#list>

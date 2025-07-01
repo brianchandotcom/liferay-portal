@@ -2735,6 +2735,10 @@ public interface PropsKeys {
 	public static final String UPGRADE_DATABASE_DL_STORAGE_CHECK_DISABLED =
 		"upgrade.database.dl.storage.check.disabled";
 
+	public static final String
+		UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_ENABLED =
+			"upgrade.database.preupgrade.data.cleanup.enabled";
+
 	public static final String UPGRADE_DATABASE_PREUPGRADE_VERIFY_ENABLED =
 		"upgrade.database.preupgrade.verify.enabled";
 

@@ -345,23 +345,25 @@ public class DBUpgrader {
 				}
 			}
 
-			DataCleanupUpgradeProcessSuite dataCleanupUpgradeProcessSuite =
-				new DataCleanupUpgradeProcessSuite();
+			if (PropsValues.UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_ENABLED) {
+				DataCleanupUpgradeProcessSuite dataCleanupUpgradeProcessSuite =
+					new DataCleanupUpgradeProcessSuite();
 
-			try {
-				dataCleanupUpgradeProcessSuite.cleanUp();
-			}
-			catch (Exception exception) {
-				_log.error(
-					StringBundler.concat(
-						"Stopping the server because a preupgrade data ",
-						"cleanup process has failed. Please fix the reported ",
-						"issues and rerun the upgrade: ",
-						exception.getMessage()));
+				try {
+					dataCleanupUpgradeProcessSuite.cleanUp();
+				}
+				catch (Exception exception) {
+					_log.error(
+						StringBundler.concat(
+							"Stopping the server because a preupgrade data ",
+							"cleanup process has failed. Please fix the ",
+							"reported issues and rerun the upgrade: ",
+							exception.getMessage()));
 
-				StartupHelperUtil.setUpgrading(false);
+					StartupHelperUtil.setUpgrading(false);
 
-				System.exit(1);
+					System.exit(1);
+				}
 			}
 
 			if (FeatureFlagManagerUtil.isEnabled("LPS-157670")) {

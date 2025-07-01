@@ -340,7 +340,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 				<c:if test="<%= Validator.isNotNull(fileVersion.getExtension()) %>">
 					<dt class="sidebar-dt">
-						<liferay-ui:message key="extension" />
+						<liferay-ui:message key="extension[file]" />
 					</dt>
 					<dd class="sidebar-dd">
 						<%= HtmlUtil.escape(fileVersion.getExtension()) %>

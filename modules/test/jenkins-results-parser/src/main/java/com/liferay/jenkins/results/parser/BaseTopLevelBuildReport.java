@@ -31,6 +31,26 @@ public abstract class BaseTopLevelBuildReport
 	extends BaseBuildReport implements TopLevelBuildReport {
 
 	@Override
+	public void addDownstreamBuildReport(
+		DownstreamBuildReport downstreamBuildReport) {
+
+		if (downstreamBuildReport == null) {
+			return;
+		}
+
+		String batchName = downstreamBuildReport.getBatchName();
+
+		List<DownstreamBuildReport> downstreamBuildReports =
+			_downstreamBuildReports.getOrDefault(batchName, new ArrayList<>());
+
+		if (!downstreamBuildReports.contains(downstreamBuildReport)) {
+			downstreamBuildReports.add(downstreamBuildReport);
+		}
+
+		_downstreamBuildReports.put(batchName, downstreamBuildReports);
+	}
+
+	@Override
 	public void addTestrayAttachmentURL(URL testrayAttachmentURL) {
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
 
@@ -173,51 +193,15 @@ public abstract class BaseTopLevelBuildReport
 
 	@Override
 	public List<DownstreamBuildReport> getDownstreamBuildReports() {
-		if (_downstreamBuildReports != null) {
-			return _downstreamBuildReports;
+		List<DownstreamBuildReport> downstreamBuildReports = new ArrayList<>();
+
+		for (List<DownstreamBuildReport> downstreamBuildReportsList :
+				_downstreamBuildReports.values()) {
+
+			downstreamBuildReports.addAll(downstreamBuildReportsList);
 		}
 
-		_downstreamBuildReports = new ArrayList<>();
-
-		JSONObject buildReportJSONObject = getBuildReportJSONObject();
-
-		if (buildReportJSONObject == null) {
-			return _downstreamBuildReports;
-		}
-
-		JSONArray batchesJSONArray = buildReportJSONObject.optJSONArray(
-			"batches");
-
-		if (batchesJSONArray == null) {
-			return _downstreamBuildReports;
-		}
-
-		for (int i = 0; i < batchesJSONArray.length(); i++) {
-			JSONObject batchJSONObject = batchesJSONArray.optJSONObject(i);
-
-			if (batchJSONObject == null) {
-				continue;
-			}
-
-			String batchName = batchJSONObject.optString("batchName");
-			JSONArray buildsJSONArray = batchJSONObject.optJSONArray("builds");
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(batchName) ||
-				(buildsJSONArray == null)) {
-
-				continue;
-			}
-
-			for (int j = 0; j < buildsJSONArray.length(); j++) {
-				_downstreamBuildReports.add(
-					BuildReportFactory.newDownstreamBuildReport(
-						batchName, buildsJSONArray.getJSONObject(j), this));
-			}
-		}
-
-		_downstreamBuildReports.removeAll(Collections.singleton(null));
-
-		return _downstreamBuildReports;
+		return downstreamBuildReports;
 	}
 
 	@Override
@@ -386,6 +370,17 @@ public abstract class BaseTopLevelBuildReport
 		super(buildURL);
 	}
 
+	protected Set<String> getBatchNames() {
+		return _downstreamBuildReports.keySet();
+	}
+
+	protected List<DownstreamBuildReport> getDownstreamBuildReports(
+		String batchName) {
+
+		return _downstreamBuildReports.getOrDefault(
+			batchName, new ArrayList<>());
+	}
+
 	protected String getStartYearMonth() {
 		return JenkinsResultsParserUtil.toDateString(
 			getStartDate(), "yyyy-MM", "America/Los_Angeles");
@@ -397,7 +392,8 @@ public abstract class BaseTopLevelBuildReport
 				"(/AXIS_VARIABLE=(?<axisVariable>\\d+))?/(?<buildNumber>\\d+)");
 
 	private ControllerBuildReport _controllerBuildReport;
-	private List<DownstreamBuildReport> _downstreamBuildReports;
+	private final Map<String, List<DownstreamBuildReport>>
+		_downstreamBuildReports = new HashMap<>();
 	private JobReport _jobReport;
 
 }

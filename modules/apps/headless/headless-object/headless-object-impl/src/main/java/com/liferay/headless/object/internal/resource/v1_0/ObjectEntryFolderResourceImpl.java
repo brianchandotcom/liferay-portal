@@ -205,7 +205,7 @@ public class ObjectEntryFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _patchObjectEntryFolder(
+		return _updateObjectEntryFolder(
 			objectEntryFolder,
 			_objectEntryFolderService.
 				getObjectEntryFolderByExternalReferenceCode(
@@ -421,7 +421,7 @@ public class ObjectEntryFolderResourceImpl
 		return persistedObjectEntryFolder.getObjectEntryFolderId();
 	}
 
-	private ObjectEntryFolder _patchObjectEntryFolder(
+	private ObjectEntryFolder _updateObjectEntryFolder(
 			ObjectEntryFolder objectEntryFolder,
 			com.liferay.object.model.ObjectEntryFolder
 				persistedObjectEntryFolder)

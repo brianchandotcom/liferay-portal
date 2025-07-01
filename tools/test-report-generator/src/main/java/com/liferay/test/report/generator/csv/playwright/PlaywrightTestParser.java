@@ -35,8 +35,6 @@ public class PlaywrightTestParser {
 
 		List<PlaywrightTest> playwrightTests = new ArrayList<>();
 
-		Matcher matcher = _testPattern.matcher(playwrightTestFileContent);
-
 		String className = playwrightTestFilePath.getFileName(
 		).toString(
 		).replaceFirst(
@@ -47,6 +45,8 @@ public class PlaywrightTestParser {
 		).replaceAll(
 			"^.*?(modules/)", "$1"
 		);
+
+		Matcher matcher = _testPattern.matcher(playwrightTestFileContent);
 
 		while (matcher.find()) {
 			String testName = matcher.group(3);

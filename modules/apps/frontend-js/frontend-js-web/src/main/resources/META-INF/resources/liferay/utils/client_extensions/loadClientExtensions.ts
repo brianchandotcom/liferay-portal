@@ -22,12 +22,12 @@ export interface ClientExtensionHandler<T> {
 }
 
 export function loadClientExtensions(
-	clientExtensionDefinitionsHandlers: Array<ClientExtensionHandler<unknown>>
+	clientExtensionsHandlers: Array<ClientExtensionHandler<unknown>>
 ) {
 	for (const {
 		clientExtensionDefinitions,
 		onLoad,
-	} of clientExtensionDefinitionsHandlers) {
+	} of clientExtensionsHandlers) {
 		if (!clientExtensionDefinitions.length) {
 			continue;
 		}

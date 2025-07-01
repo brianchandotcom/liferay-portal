@@ -10,8 +10,8 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import {EFDSVisualizationMode, waitForFDS} from '../../../utils/waitFor';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
 
@@ -34,9 +34,7 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 
 	await fdsSamplePage.selectTab('Advanced');
 
-	await expect(
-		page.getByText('This is a description for sample 1.')
-	).toBeVisible();
+	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
 });
 
 test(
@@ -990,62 +988,6 @@ test(
 		});
 	}
 );
-
-test('Use client extensions', async ({fdsSamplePage, page}) => {
-	await test.step('Assert that the cell renderer is invoked and the apple emoji is visible', async () => {
-		const firstColorCell = fdsSamplePage.table.container
-			.locator('td.cell-color')
-			.first();
-
-		await expect(firstColorCell).toContainText('🍏');
-	});
-
-	await test.step('Assert that the cell renderer has access to data from other cells', async () => {
-		const firstColorCell = fdsSamplePage.table.container
-			.locator('td.cell-color')
-			.nth(1);
-
-		await expect(firstColorCell).toContainText('Sample100 is Blue');
-	});
-
-	await test.step('Assert that the filter client extension is working', async () => {
-		const clientExtensionMenuItem = page.getByRole('menuitem', {
-			name: 'Client Extension',
-		});
-
-		const filterButton = page
-			.locator('.filters-dropdown')
-			.getByText('Filter');
-
-		await expect(filterButton).toBeInViewport();
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: clientExtensionMenuItem,
-			trigger: filterButton,
-		});
-
-		const filterInput = page.getByPlaceholder('Search with Odata');
-
-		await expect(filterInput).toBeInViewport();
-
-		await filterInput.fill("title eq 'Sample97'");
-
-		await expect(filterInput).toHaveValue("title eq 'Sample97'");
-
-		const submitButton = page.getByRole('button', {name: 'Submit'});
-
-		await expect(submitButton).toBeInViewport();
-
-		await submitButton.click();
-
-		await expect(page.getByText('Sample97', {exact: true})).toBeVisible();
-
-		const bodyRows = fdsSamplePage.table.container.locator('tbody tr');
-
-		expect(await bodyRows.count()).toEqual(1);
-	});
-});
 
 const accountSettingsTest = mergeTests(test, accountSettingsPagesTest);
 

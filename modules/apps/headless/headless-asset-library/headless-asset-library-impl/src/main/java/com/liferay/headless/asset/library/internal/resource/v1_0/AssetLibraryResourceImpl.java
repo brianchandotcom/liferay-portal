@@ -267,6 +267,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 		return _toAssetLibrary(
 			_addOrUpdateDepotEntry(
+				assetLibrary,
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					assetLibrary.getDescription(),
@@ -290,6 +291,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 		return _toAssetLibrary(
 			_addOrUpdateDepotEntry(
+				assetLibrary,
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					assetLibrary.getDescription(),
@@ -333,9 +335,9 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	}
 
 	private DepotEntry _addOrUpdateDepotEntry(
-			Map<Locale, String> descriptionMap, String externalReferenceCode,
-			Map<Locale, String> nameMap, ServiceContext serviceContext,
-			UnicodeProperties unicodeProperties)
+			AssetLibrary assetLibrary, Map<Locale, String> descriptionMap,
+			String externalReferenceCode, Map<Locale, String> nameMap,
+			ServiceContext serviceContext, UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		Group group = null;
@@ -345,9 +347,22 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				externalReferenceCode, serviceContext.getCompanyId());
 		}
 
+		DepotEntry depotEntry = null;
+
 		if (group != null) {
-			DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
+			depotEntry = _depotEntryService.getGroupDepotEntry(
 				group.getGroupId());
+
+			if (!externalReferenceCode.equals(
+					assetLibrary.getExternalReferenceCode())) {
+
+				group = depotEntry.getGroup();
+
+				group.setExternalReferenceCode(
+					assetLibrary.getExternalReferenceCode());
+
+				group = _groupLocalService.updateGroup(group);
+			}
 
 			return _depotEntryService.updateDepotEntry(
 				depotEntry.getDepotEntryId(), nameMap, descriptionMap,
@@ -356,13 +371,11 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				unicodeProperties, serviceContext);
 		}
 
-		DepotEntry depotEntry = _depotEntryService.addDepotEntry(
+		depotEntry = _depotEntryService.addDepotEntry(
 			nameMap, descriptionMap, serviceContext);
 
 		if (Validator.isNotNull(externalReferenceCode) ||
 			((unicodeProperties != null) && !unicodeProperties.isEmpty())) {
-
-			group = depotEntry.getGroup();
 
 			if (Validator.isNotNull(externalReferenceCode)) {
 				group.setExternalReferenceCode(externalReferenceCode);

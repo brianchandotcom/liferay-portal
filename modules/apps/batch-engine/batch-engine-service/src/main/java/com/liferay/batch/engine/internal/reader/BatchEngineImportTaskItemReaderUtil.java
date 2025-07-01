@@ -24,8 +24,8 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
+import com.liferay.batch.engine.exception.InvalidTypeIdException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -366,10 +366,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 			}
 		}
 
-		throw new ClassNotFoundException(
-			StringBundler.concat(
-				"'", jsonTypeInfoPropertyValue,
-				"' cannot be mapped to a valid entity type"));
+		throw new InvalidTypeIdException(jsonTypeInfoPropertyValue);
 	}
 
 	private static final ObjectMapper _csvMapObjectMapper = new ObjectMapper() {

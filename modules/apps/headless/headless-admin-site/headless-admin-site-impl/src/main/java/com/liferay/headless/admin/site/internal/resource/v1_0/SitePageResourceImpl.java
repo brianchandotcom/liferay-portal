@@ -420,21 +420,46 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				sitePage.getFriendlyUrlPath_i18n());
 		}
 
-		layout = _layoutService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			_getParentLayoutId(
-				layout.getParentLayoutId(), layout.getGroupId(),
-				sitePage.getParentSitePageExternalReferenceCode()),
-			nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
-			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
-			_isHiddenFromNavigation(
-				layout.isHidden(), sitePage.getPageSettings()),
-			friendlyURLMap, layout.isIconImage(), null,
-			layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
-			layout.getMasterLayoutPlid(),
-			ServiceContextUtil.createServiceContext(
-				layout.getGroupId(), contextHttpServletRequest,
-				contextUser.getUserId()));
+		boolean hiddenFromNavigation = _isHiddenFromNavigation(
+			layout.isHidden(), sitePage.getPageSettings());
+		long parentLayoutId = _getParentLayoutId(
+			layout.getParentLayoutId(), layout.getGroupId(),
+			sitePage.getParentSitePageExternalReferenceCode());
+
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			layout.getGroupId(), contextHttpServletRequest,
+			contextUser.getUserId());
+
+		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
+			serviceContext.setAttribute("hidden", hiddenFromNavigation);
+			serviceContext.setAttribute("parentLayoutId", parentLayoutId);
+
+			layout = LayoutUtil.updateContentLayout(
+				layout, nameMap, layout.getTitleMap(),
+				layout.getDescriptionMap(), layout.getRobotsMap(),
+				friendlyURLMap, null, serviceContext);
+		}
+		else {
+			layout = _layoutService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), parentLayoutId, nameMap,
+				layout.getTitleMap(), layout.getDescriptionMap(),
+				layout.getKeywordsMap(), layout.getRobotsMap(),
+				layout.getType(), hiddenFromNavigation, friendlyURLMap,
+				layout.isIconImage(), null, layout.getStyleBookEntryId(),
+				layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
+				serviceContext);
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				_getTypeSettingsUnicodeProperties(sitePage);
+
+			if (typeSettingsUnicodeProperties != null) {
+				layout = _layoutService.updateLayout(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					layout.getLayoutId(),
+					typeSettingsUnicodeProperties.toString());
+			}
+		}
 
 		int priority = Integer.MAX_VALUE;
 
@@ -444,20 +469,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			priority = pageSettings.getPriority();
 		}
 
-		if (layout.getPriority() != priority) {
-			layout = _layoutService.updatePriority(layout.getPlid(), priority);
-		}
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			_getTypeSettingsUnicodeProperties(sitePage);
-
-		if (typeSettingsUnicodeProperties == null) {
+		if (layout.getPriority() == priority) {
 			return layout;
 		}
 
-		return _layoutService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			typeSettingsUnicodeProperties.toString());
+		return _layoutService.updatePriority(layout.getPlid(), priority);
 	}
 
 	private void _validatePageSpecificationExternalReferenceCode(

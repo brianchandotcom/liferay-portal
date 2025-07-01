@@ -91,35 +91,14 @@ public abstract class BaseTopLevelBuildReport
 
 	@Override
 	public URL getBuildReportJSONTestrayURL() {
-		JobReport jobReport = getJobReport();
-
-		JenkinsMaster jenkinsMaster = jobReport.getJenkinsMaster();
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
 		try {
 			return new URL(
 				JenkinsResultsParserUtil.combine(
 					"https://storage.cloud.google.com/testray-results/",
 					getStartYearMonth(), "/", jenkinsMaster.getName(), "/",
-					jobReport.getJobName(), "/",
-					String.valueOf(getBuildNumber()), "/build-report.json.gz"));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	@Override
-	public URL getBuildReportJSONUserContentURL() {
-		JobReport jobReport = getJobReport();
-
-		JenkinsMaster jenkinsMaster = jobReport.getJenkinsMaster();
-
-		try {
-			return new URL(
-				JenkinsResultsParserUtil.combine(
-					"https://", jenkinsMaster.getName(),
-					".liferay.com/userContent/jobs/", jobReport.getJobName(),
-					"/builds/", String.valueOf(getBuildNumber()),
+					getJobName(), "/", String.valueOf(getBuildNumber()),
 					"/build-report.json.gz"));
 		}
 		catch (IOException ioException) {
@@ -128,17 +107,31 @@ public abstract class BaseTopLevelBuildReport
 	}
 
 	@Override
-	public TestrayS3Object getBuildReportTestrayS3Object() {
-		JobReport jobReport = getJobReport();
+	public URL getBuildReportJSONUserContentURL() {
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
-		JenkinsMaster jenkinsMaster = jobReport.getJenkinsMaster();
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					"https://", jenkinsMaster.getName(),
+					".liferay.com/userContent/jobs/", getJobName(), "/builds/",
+					String.valueOf(getBuildNumber()), "/build-report.json.gz"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	@Override
+	public TestrayS3Object getBuildReportTestrayS3Object() {
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
 		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
 		return testrayS3Bucket.getTestrayS3Object(
 			JenkinsResultsParserUtil.combine(
 				getStartYearMonth(), "/", jenkinsMaster.getName(), "/",
-				jobReport.getJobName(), "/", String.valueOf(getBuildNumber()),
+				getJobName(), "/", String.valueOf(getBuildNumber()),
 				"/build-report.json.gz"));
 	}
 
@@ -252,14 +245,12 @@ public abstract class BaseTopLevelBuildReport
 
 	@Override
 	public URL getTestResultsJSONUserContentURL() {
-		JobReport jobReport = getJobReport();
-
 		try {
 			return new URL(
 				JenkinsResultsParserUtil.combine(
 					"https://test-1-0.liferay.com/userContent/testResults/",
-					jobReport.getJobName(), "/builds/",
-					String.valueOf(getBuildNumber()), "/test.results.json"));
+					getJobName(), "/builds/", String.valueOf(getBuildNumber()),
+					"/test.results.json"));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

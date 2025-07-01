@@ -1045,6 +1045,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				Pagination.of(0, 0), null);
 
 		for (SitePage sitePage : page.getItems()) {
+			if (Validator.isNotNull(
+					sitePage.getParentSitePageExternalReferenceCode())) {
+
+				continue;
+			}
+
 			sitePageResource.deleteSiteSiteByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode());

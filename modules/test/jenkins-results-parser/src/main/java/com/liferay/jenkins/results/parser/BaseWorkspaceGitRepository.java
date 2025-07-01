@@ -889,6 +889,30 @@ public abstract class BaseWorkspaceGitRepository
 
 			JenkinsResultsParserUtil.unzip(gitArchiveFile, directory);
 
+			String jobVariant = System.getenv("JOB_VARIANT");
+
+			String directoryPath = directory.getPath();
+
+			if ((jobVariant.contains("service-builder") ||
+				 jobVariant.contains("rest-builder")) &&
+				directoryPath.contains("liferay-portal")) {
+
+				String commitCommand = JenkinsResultsParserUtil.combine(
+					"git init; git add .; git commit -m \"LRCI-XXXX Temp\"");
+
+				GitUtil.ExecutionResult executionResult =
+					GitUtil.executeBashCommands(
+						GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+						GitUtil.MILLIS_TIMEOUT, directory, commitCommand);
+
+				if (executionResult.getExitValue() != 0) {
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Unable to commit temp file",
+							executionResult.getStandardError()));
+				}
+			}
+
 			return;
 		}
 

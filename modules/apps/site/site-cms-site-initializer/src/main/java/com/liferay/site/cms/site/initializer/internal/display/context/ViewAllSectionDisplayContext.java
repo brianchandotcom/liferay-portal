@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -69,6 +70,13 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 				"{embedded.file.link.href}", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), "get", null,
 				"link"));
+
+		fdsActionDropdownItems.add(
+			2,
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "info-circle-open", "show-details",
+				LanguageUtil.get(httpServletRequest, "show-details"), null,
+				null, "infoPanel"));
 
 		return fdsActionDropdownItems;
 	}

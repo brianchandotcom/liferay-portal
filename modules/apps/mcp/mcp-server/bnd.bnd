@@ -1,0 +1,13 @@
+Bundle-Name: Liferay MCP Server
+Bundle-SymbolicName: com.liferay.mcp.server
+Bundle-Version: 0.0.1
+Require-Capability: osgi.extender;\
+		filter:="(&(osgi.extender=osgi.configurator)(version>=1.0)(!(version>=2.0)))"
+Import-Package: \
+    !com.fasterxml.jackson.*,\
+    !com.sun.jna,\
+    !jakarta.*,\
+    !javax.annotation.meta,\
+    *
+-fixupmessages: \
+    Classes found in the wrong directory:

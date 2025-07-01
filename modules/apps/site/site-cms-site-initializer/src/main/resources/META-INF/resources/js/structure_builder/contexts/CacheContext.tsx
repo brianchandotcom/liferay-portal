@@ -18,26 +18,26 @@ import PicklistService from '../../common/services/PicklistService';
 import SpaceService from '../../common/services/SpaceService';
 import {Picklist} from '../../common/types/Picklist';
 import {Space} from '../../common/types/Space';
-import StructureService from '../services/StructureService';
-import {Structures} from '../types/Structure';
+import ObjectDefinitionService from '../services/ObjectDefinitionService';
+import {ObjectDefinitions} from '../types/ObjectDefinition';
 
-export type CacheKey = 'picklists' | 'spaces' | 'structures';
+export type CacheKey = 'object-definitions' | 'picklists' | 'spaces';
 export type CacheStatus = 'idle' | 'saving' | 'saved' | 'stale';
 
 export type Cache = {
-	picklists: {
+	'object-definitions': {
+		data: ObjectDefinitions;
+		fetcher: () => Promise<ObjectDefinitions>;
+		status: CacheStatus;
+	};
+	'picklists': {
 		data: Picklist[];
 		fetcher: () => Promise<Picklist[]>;
 		status: CacheStatus;
 	};
-	spaces: {
+	'spaces': {
 		data: Space[];
 		fetcher: () => Promise<Space[]>;
-		status: CacheStatus;
-	};
-	structures: {
-		data: Structures;
-		fetcher: () => Promise<Structures>;
 		status: CacheStatus;
 	};
 };
@@ -48,20 +48,20 @@ type InitialData = Partial<{
 
 function getInitialCache(initialData: InitialData = {}): Cache {
 	return {
-		picklists: {
-			data: initialData.picklists ?? [],
+		'object-definitions': {
+			data: initialData['object-definitions'] ?? new Map(),
+			fetcher: ObjectDefinitionService.getObjectDefinitions,
+			status: initialData['object-definitions'] ? 'saved' : 'idle',
+		},
+		'picklists': {
+			data: initialData['picklists'] ?? [],
 			fetcher: PicklistService.getPicklists,
-			status: initialData.picklists ? 'saved' : 'idle',
+			status: initialData['picklists'] ? 'saved' : 'idle',
 		},
-		spaces: {
-			data: initialData.spaces ?? [],
+		'spaces': {
+			data: initialData['spaces'] ?? [],
 			fetcher: SpaceService.getSpaces,
-			status: initialData.spaces ? 'saved' : 'idle',
-		},
-		structures: {
-			data: initialData.structures ?? new Map(),
-			fetcher: StructureService.getStructures,
-			status: initialData.structures ? 'saved' : 'idle',
+			status: initialData['spaces'] ? 'saved' : 'idle',
 		},
 	};
 }

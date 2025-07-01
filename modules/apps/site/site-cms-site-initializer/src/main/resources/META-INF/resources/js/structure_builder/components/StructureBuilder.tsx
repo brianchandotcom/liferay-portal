@@ -30,13 +30,20 @@ export default function StructureBuilder({
 }) {
 	initializeConfig(config);
 
+	const objectDefinitions = new Map(
+		state.objectDefinitions.map((objectDefinition) => [
+			objectDefinition.externalReferenceCode,
+			objectDefinition,
+		])
+	);
+
 	return (
 		<StateContextProvider
 			initialState={buildState(state.mainObjectDefinition)}
 		>
 			<CacheContextProvider
 				initialData={{
-					structures: buildStructures(state.objectDefinitions),
+					'object-definitions': objectDefinitions,
 				}}
 			>
 				<div className="d-flex flex-column structure-builder__wrapper">

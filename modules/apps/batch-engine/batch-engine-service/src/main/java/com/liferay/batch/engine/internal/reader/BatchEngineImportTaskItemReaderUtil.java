@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -59,23 +60,18 @@ public class BatchEngineImportTaskItemReaderUtil {
 			BatchEngineImportTask batchEngineImportTask, Class<T> itemClass,
 			Map<String, Object> fieldNameValueMap,
 			List<ItemReaderPostAction> itemReaderPostActions)
-		throws ReflectiveOperationException {
+		throws Exception {
 
-		T item = null;
+		T item;
 
-		try {
-			item = itemClass.newInstance();
-		}
-		catch (InstantiationException instantiationException) {
+		if (itemClass.getAnnotation(JsonTypeInfo.class) != null) {
 			Class<? extends T> subtypeClass = _resolveSubtypeClass(
 				itemClass, fieldNameValueMap);
 
-			if (subtypeClass != null) {
-				item = subtypeClass.newInstance();
-			}
-			else {
-				throw instantiationException;
-			}
+			item = subtypeClass.newInstance();
+		}
+		else {
+			item = itemClass.newInstance();
 		}
 
 		Map<String, Serializable> extendedProperties = new HashMap<>();
@@ -260,7 +256,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 	private static ObjectMapper _getObjectMapper(
 			BatchEngineImportTask batchEngineImportTask, Field field,
 			Object value)
-		throws IllegalAccessException, InstantiationException {
+		throws Exception {
 
 		if (StringUtil.equals(
 				batchEngineImportTask.getParameterValue(
@@ -327,7 +323,8 @@ public class BatchEngineImportTaskItemReaderUtil {
 	}
 
 	private static <T> Class<? extends T> _resolveSubtypeClass(
-		Class<T> itemClass, Map<String, Object> fieldNameValueMap) {
+			Class<T> itemClass, Map<String, Object> fieldNameValueMap)
+		throws Exception {
 
 		JsonTypeInfo jsonTypeInfo = itemClass.getAnnotation(JsonTypeInfo.class);
 
@@ -369,7 +366,10 @@ public class BatchEngineImportTaskItemReaderUtil {
 			}
 		}
 
-		return null;
+		throw new ClassNotFoundException(
+			StringBundler.concat(
+				"'", jsonTypeInfoPropertyValue,
+				"' cannot be mapped to a valid entity type"));
 	}
 
 	private static final ObjectMapper _csvMapObjectMapper = new ObjectMapper() {

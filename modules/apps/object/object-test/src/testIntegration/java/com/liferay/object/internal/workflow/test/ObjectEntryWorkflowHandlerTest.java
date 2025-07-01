@@ -149,7 +149,8 @@ public class ObjectEntryWorkflowHandlerTest {
 				objectDefinitionA.getClassName());
 
 		ObjectEntry objectEntryA1 = _objectEntryLocalService.getObjectEntry(
-			"A1", objectDefinitionA.getObjectDefinitionId());
+			"A1", ObjectDefinitionConstants.DEFAULT_GROUP_ID,
+			objectDefinitionA.getObjectDefinitionId());
 
 		Assert.assertNotNull(
 			workflowHandler.getAssetRenderer(objectEntryA1.getObjectEntryId()));
@@ -175,7 +176,8 @@ public class ObjectEntryWorkflowHandlerTest {
 				TestPropsValues.getCompanyId(), "C_AA");
 
 		ObjectEntry objectEntryAA1 = _objectEntryLocalService.getObjectEntry(
-			"AA1", objectDefinitionAA.getObjectDefinitionId());
+			"AA1", ObjectDefinitionConstants.DEFAULT_GROUP_ID,
+			objectDefinitionAA.getObjectDefinitionId());
 
 		Assert.assertNotNull(
 			workflowHandler.getAssetRenderer(

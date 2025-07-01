@@ -55,7 +55,7 @@ export class DataMigrationCenterPage {
 			'#_com_liferay_batch_planner_web_internal_portlet_BatchPlannerPortlet_importFile'
 		);
 		this.nextButton = page.getByRole('button', {name: 'Next'});
-		this.scopeSelector = page.getByLabel('Scope');
+		this.scopeSelector = page.getByLabel('Scope', {exact: true});
 		this.updateStrategySelector = page.getByLabel('Update Strategy');
 		this.startImportButton = async (): Promise<Locator> => {
 			await this.page.waitForSelector(

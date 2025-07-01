@@ -2165,7 +2165,7 @@ public class DefaultObjectEntryManagerImplTest
 			StringBundler.concat(
 				"No ObjectEntry exists with the key ",
 				"{externalReferenceCode=", newExternalReferenceCode,
-				", companyId=", companyId, ", objectDefinitionId=",
+				", groupId=0, companyId=", companyId, ", objectDefinitionId=",
 				_objectDefinition1.getObjectDefinitionId(), "}"),
 			() -> _defaultObjectEntryManager.addObjectEntry(
 				dtoConverterContext, _objectDefinition2,
@@ -7841,6 +7841,8 @@ public class DefaultObjectEntryManagerImplTest
 				StringPool.BLANK);
 
 			url = HttpComponentsUtil.addParameter(
+				url, "groupExternalReferenceCode", StringPool.BLANK);
+			url = HttpComponentsUtil.addParameter(
 				url, "objectDefinitionExternalReferenceCode",
 				_objectDefinition2.getExternalReferenceCode());
 			url = HttpComponentsUtil.addParameter(
@@ -9181,9 +9183,10 @@ public class DefaultObjectEntryManagerImplTest
 			NoSuchObjectEntryException.class,
 			String.format(
 				"No ObjectEntry exists with the key {externalReference" +
-					"Code=%s, groupId=%s, companyId=%s}",
+					"Code=%s, groupId=%s, companyId=%s, objectDefinitionId=%s}",
 				parentExternalReferenceCode, groupId,
-				parentObjectDefinition.getCompanyId()),
+				parentObjectDefinition.getCompanyId(),
+				parentObjectDefinition.getObjectDefinitionId()),
 			() -> _defaultObjectEntryManager.getObjectEntry(
 				parentObjectDefinition.getCompanyId(),
 				_simpleDTOConverterContext, parentExternalReferenceCode,
@@ -9409,7 +9412,7 @@ public class DefaultObjectEntryManagerImplTest
 					};
 				}
 			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+			objectEntry.getScopeKey());
 	}
 
 	private static DefaultObjectEntryManager _defaultObjectEntryManager;

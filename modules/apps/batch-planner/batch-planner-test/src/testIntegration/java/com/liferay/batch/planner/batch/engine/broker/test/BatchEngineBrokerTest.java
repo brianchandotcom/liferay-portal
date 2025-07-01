@@ -117,6 +117,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -348,7 +349,8 @@ public class BatchEngineBrokerTest {
 		}
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			_OBJECT_ENTRY_ERC_1, _objectDefinition1.getObjectDefinitionId());
+			_OBJECT_ENTRY_ERC_1, ObjectDefinitionConstants.DEFAULT_GROUP_ID,
+			_objectDefinition1.getObjectDefinitionId());
 
 		Assert.assertNotNull(objectEntry);
 
@@ -375,6 +377,7 @@ public class BatchEngineBrokerTest {
 		File file = _createJSONImportFile(
 			_addDLFileEntry(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
+			ObjectDefinitionConstants.DEFAULT_GROUP_ID,
 			_objectDefinition1.getExternalReferenceCode(), _OBJECT_ENTRY_ERC_1,
 			"object_entry_import_template.txt");
 
@@ -386,7 +389,7 @@ public class BatchEngineBrokerTest {
 				_getURIString("json", fileInputStream));
 
 			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				_OBJECT_ENTRY_ERC_1,
+				_OBJECT_ENTRY_ERC_1, ObjectDefinitionConstants.DEFAULT_GROUP_ID,
 				_objectDefinition1.getObjectDefinitionId());
 
 			_addObjectEntryInDifferentCompany("TestObject");
@@ -783,7 +786,7 @@ public class BatchEngineBrokerTest {
 	}
 
 	private File _createJSONImportFile(
-			DLFileEntry dlFileEntry, String objectDefinitionERC,
+			DLFileEntry dlFileEntry, long groupId, String objectDefinitionERC,
 			String objectEntryERC, String templateName)
 		throws Exception {
 
@@ -792,8 +795,8 @@ public class BatchEngineBrokerTest {
 		String template = StreamUtil.toString(_getInputStream(templateName));
 
 		Link link = LinkUtil.toLink(
-			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
-			objectEntryERC, _portal);
+			_dlAppService, dlFileEntry, _dlURLHelper, groupId,
+			objectDefinitionERC, objectEntryERC, _portal);
 
 		template = StringUtil.replace(
 			template,
@@ -921,8 +924,9 @@ public class BatchEngineBrokerTest {
 		throws Exception {
 
 		Link link = LinkUtil.toLink(
-			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
-			objectEntryERC, _portal);
+			_dlAppService, dlFileEntry, _dlURLHelper,
+			GetterUtil.getLong(groupId), objectDefinitionERC, objectEntryERC,
+			_portal);
 
 		String scopeKey = null;
 
@@ -1488,7 +1492,8 @@ public class BatchEngineBrokerTest {
 		}
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			objectEntryERC, _objectDefinition1.getObjectDefinitionId());
+			objectEntryERC, groupId,
+			_objectDefinition1.getObjectDefinitionId());
 
 		Assert.assertEquals(objectEntry.getGroupId(), groupId);
 
@@ -1512,8 +1517,8 @@ public class BatchEngineBrokerTest {
 		File file = _createJSONImportFile(
 			_addDLFileEntry(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
-			_objectDefinition1.getExternalReferenceCode(), objectEntryERC,
-			"object_entry_import_template.txt");
+			groupId, _objectDefinition1.getExternalReferenceCode(),
+			objectEntryERC, "object_entry_import_template.txt");
 
 		try (FileInputStream fileInputStream = new FileInputStream(file)) {
 			_executeImportTask(
@@ -1523,7 +1528,8 @@ public class BatchEngineBrokerTest {
 				_getURIString("json", fileInputStream));
 
 			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				objectEntryERC, _objectDefinition1.getObjectDefinitionId());
+				objectEntryERC, groupId,
+				_objectDefinition1.getObjectDefinitionId());
 
 			Assert.assertEquals(objectEntry.getGroupId(), groupId);
 

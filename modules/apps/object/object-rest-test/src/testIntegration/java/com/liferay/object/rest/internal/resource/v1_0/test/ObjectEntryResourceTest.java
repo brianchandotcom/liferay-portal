@@ -14587,13 +14587,28 @@ public class ObjectEntryResourceTest {
 
 				Date modifiedDate = fileVersion.getModifiedDate();
 
+				String groupExternalReferenceCode = StringPool.BLANK;
+
+				if (!StringUtil.equals(
+						objectDefinition.getScope(),
+						ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+					Group group = _groupLocalService.fetchGroup(
+						objectEntry.getGroupId());
+
+					groupExternalReferenceCode =
+						group.getExternalReferenceCode();
+				}
+
 				link.setHref(
 					StringBundler.concat(
 						"/documents/", repositoryId, "/", folderId, "/",
 						URLCodec.encodeURL(fileEntry.getName()), "/",
 						serviceBuilderFileEntry.getUuid(), "?version=",
 						fileVersion.getVersion(), "&t=", modifiedDate.getTime(),
-						"&download=true&objectDefinitionExternalReferenceCode=",
+						"&download=true&groupExternalReferenceCode=",
+						groupExternalReferenceCode,
+						"&objectDefinitionExternalReferenceCode=",
 						objectDefinition.getExternalReferenceCode(),
 						"&objectEntryExternalReferenceCode=",
 						objectEntry.getExternalReferenceCode()));

@@ -6,6 +6,7 @@
 package com.liferay.object.web.internal.object.entries.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.display.context.ObjectEntryDisplayContext;
 import com.liferay.object.display.context.ObjectEntryDisplayContextFactory;
@@ -88,14 +89,16 @@ public class ObjectEntryDisplayContextTest {
 				TestPropsValues.getCompanyId(), "C_AA");
 
 		ObjectEntry objectEntryAA1 = _objectEntryLocalService.getObjectEntry(
-			"AA1", objectDefinitionAA.getObjectDefinitionId());
+			"AA1", ObjectDefinitionConstants.DEFAULT_GROUP_ID,
+			objectDefinitionAA.getObjectDefinitionId());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(
 				objectEntryAA1.getExternalReferenceCode(), objectDefinitionAA);
 
 		ObjectEntry objectEntryA1 = _objectEntryLocalService.getObjectEntry(
-			"A1", nodeA.getPrimaryKey());
+			"A1", ObjectDefinitionConstants.DEFAULT_GROUP_ID,
+			nodeA.getPrimaryKey());
 
 		ObjectDefinition objectDefinitionA =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -129,7 +132,8 @@ public class ObjectEntryDisplayContextTest {
 				TestPropsValues.getCompanyId(), "C_AAA");
 
 		ObjectEntry objectEntryAAA1 = _objectEntryLocalService.getObjectEntry(
-			"AAA1", objectDefinitionAAA.getObjectDefinitionId());
+			"AAA1", ObjectDefinitionConstants.DEFAULT_GROUP_ID,
+			objectDefinitionAAA.getObjectDefinitionId());
 
 		mockHttpServletRequest = _getMockHttpServletRequest(
 			objectEntryAAA1.getExternalReferenceCode(), objectDefinitionAAA);

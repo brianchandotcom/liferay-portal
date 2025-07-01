@@ -405,7 +405,7 @@ PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount
 			}
 			%>
 
-			<portlet:actionURL name="/patcher/realease_manually_builds" var="releasePatcherBuildURL">
+			<portlet:actionURL name="/patcher/release_manually_builds" var="releasePatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
 				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
 			</portlet:actionURL>

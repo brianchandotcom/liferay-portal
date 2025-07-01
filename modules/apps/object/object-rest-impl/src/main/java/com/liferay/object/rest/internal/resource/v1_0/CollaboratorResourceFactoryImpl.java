@@ -5,6 +5,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.internal.security.permission.LiberalPermissionChecker;
 import com.liferay.object.rest.resource.v1_0.CollaboratorResource;
 import com.liferay.portal.kernel.model.User;
@@ -55,7 +56,7 @@ public class CollaboratorResourceFactoryImpl
 		PermissionCheckerFactory defaultPermissionCheckerFactory,
 		ExpressionConvert<Filter> expressionConvert,
 		FilterParserProvider filterParserProvider,
-		GroupLocalService groupLocalService,
+		GroupLocalService groupLocalService, ObjectDefinition objectDefinition,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
@@ -68,6 +69,7 @@ public class CollaboratorResourceFactoryImpl
 		_expressionConvert = expressionConvert;
 		_filterParserProvider = filterParserProvider;
 		_groupLocalService = groupLocalService;
+		_objectDefinition = objectDefinition;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
@@ -226,6 +228,7 @@ public class CollaboratorResourceFactoryImpl
 		collaboratorResourceImpl.setExpressionConvert(_expressionConvert);
 		collaboratorResourceImpl.setFilterParserProvider(_filterParserProvider);
 		collaboratorResourceImpl.setGroupLocalService(_groupLocalService);
+		collaboratorResourceImpl.setObjectDefinition(_objectDefinition);
 		collaboratorResourceImpl.setResourceActionLocalService(
 			_resourceActionLocalService);
 		collaboratorResourceImpl.setResourcePermissionLocalService(
@@ -253,6 +256,7 @@ public class CollaboratorResourceFactoryImpl
 	private final ExpressionConvert<Filter> _expressionConvert;
 	private final FilterParserProvider _filterParserProvider;
 	private final GroupLocalService _groupLocalService;
+	private final ObjectDefinition _objectDefinition;
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;

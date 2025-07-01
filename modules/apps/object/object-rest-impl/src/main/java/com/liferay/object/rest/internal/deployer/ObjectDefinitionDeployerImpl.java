@@ -205,9 +205,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private CollaboratorResourceImpl _createCollaboratorResourceImpl() {
 		return new CollaboratorResourceImpl(
 			_classNameLocalService, _collaboratorDTOConverter,
-			_dtoConverterRegistry, _groupLocalService, _objectEntryLocalService,
-			_sharingEntryService, _sharingEntryLocalService,
-			_userGroupLocalService, _userLocalService);
+			_dtoConverterRegistry, _groupLocalService, null,
+			_objectEntryLocalService, _sharingEntryService,
+			_sharingEntryLocalService, _userGroupLocalService,
+			_userLocalService);
 	}
 
 	private ObjectEntryResourceImpl _createObjectEntryResourceImpl(
@@ -656,7 +657,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							() -> _createCollaboratorResourceImpl(),
 							_defaultPermissionCheckerFactory,
 							_expressionConvert, _filterParserProvider,
-							_groupLocalService, _resourceActionLocalService,
+							_groupLocalService, objectDefinition,
+							_resourceActionLocalService,
 							_resourcePermissionLocalService, _roleLocalService,
 							_sortParserProvider, _userLocalService),
 						HashMapDictionaryBuilder.<String, Object>put(

@@ -226,8 +226,8 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 			name="content"
 		>
 			<portlet:renderURL var="viewPatcherBuildContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcRenderCommandName" value="/patcher/view_content_builds" />
-				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+				<portlet:param name="mvcRenderCommandName" value="/patcher/view_project_versions_fixed_issues" />
+				<portlet:param name="patcherProjectVersionId" value="<%= String.valueOf(patcherBuild.getPatcherProjectVersionId()) %>" />
 			</portlet:renderURL>
 
 			<clay:button

@@ -146,7 +146,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			return fileEntry;
 		}
 
-		_validateFile(
+		_validateObjectDefinitionSettings(
 			fileContent, fileName, objectFieldId, serviceContext.getUserId());
 
 		DLFolder dlFolder = getDLFolder(
@@ -163,7 +163,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 			String mimeType = _mimeTypes.getContentType(inputStream, fileName);
 
-			_validateDLFile(
+			_validateDLSettings(
 				companyId, groupId,
 				DLAppUtil.getExtension(title, sourceFileName), mimeType,
 				fileContent.length, sourceFileName);
@@ -191,7 +191,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			return fileEntry;
 		}
 
-		_validateFile(
+		_validateObjectDefinitionSettings(
 			fileContent, fileName, objectFieldId, serviceContext.getUserId());
 
 		long repositoryId = groupId;
@@ -224,7 +224,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 			String mimeType = _mimeTypes.getContentType(inputStream, fileName);
 
-			_validateDLFile(
+			_validateDLSettings(
 				companyId, groupId,
 				DLAppUtil.getExtension(title, sourceFileName), mimeType,
 				fileContent.length, sourceFileName);
@@ -372,7 +372,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 		return storageDLFolderId;
 	}
 
-	private void _validateDLFile(
+	private void _validateDLSettings(
 			long companyId, long groupId, String fileExtension, String mimeType,
 			long size, String sourceFileName)
 		throws PortalException {
@@ -393,7 +393,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 		_dlValidator.validateFileSize(groupId, sourceFileName, mimeType, size);
 	}
 
-	private void _validateFile(
+	private void _validateObjectDefinitionSettings(
 			byte[] fileContent, String fileName, long objectFieldId,
 			long userId)
 		throws Exception {

@@ -10,6 +10,9 @@ import com.liferay.osb.patcher.service.base.PatcherFixLocalServiceBaseImpl;
 import com.liferay.osb.patcher.util.comparator.PatcherFixKeyVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -25,6 +28,14 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public PatcherFix deletePatcherFix(long patcherFixId)
+		throws PortalException {
+
+		return patcherFixPersistence.remove(patcherFixId);
+	}
 
 	@Override
 	public List<PatcherFix> getPatcherFixes(
@@ -92,6 +103,66 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 		return patcherFixPersistence.countByPatcherProjectVersionId(
 			patcherProjectVersionId);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updateComments(long patcherFixId, String comments)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setComments(comments);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updateObsolete(long patcherFixId, boolean obsolete)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setObsolete(obsolete);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updatePatcherFix(
+			long patcherFixId, String dependencies, int fixPackStatus,
+			String requirements)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setDependencies(dependencies);
+		patcherFix.setFixPackStatus(fixPackStatus);
+		patcherFix.setRequirements(requirements);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updateType(long patcherFixId, int type)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setType(type);
+
+		return patcherFixPersistence.update(patcherFix);
 	}
 
 }

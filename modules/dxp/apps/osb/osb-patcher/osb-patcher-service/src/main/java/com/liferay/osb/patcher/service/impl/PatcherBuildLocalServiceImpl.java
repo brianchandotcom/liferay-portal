@@ -160,6 +160,20 @@ public class PatcherBuildLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public PatcherBuild updateComments(long patcherBuildId, String comments)
+		throws PortalException {
+
+		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
+			patcherBuildId);
+
+		patcherBuild.setModifiedDate(new Date());
+		patcherBuild.setComments(comments);
+
+		return patcherBuildPersistence.update(patcherBuild);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public PatcherBuild updateNotified(long patcherBuildId, boolean notified)
 		throws PortalException {
 
@@ -185,6 +199,50 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setLatestKeyBuild(latestKeyBuild);
 		patcherBuild.setLatestSupportTicketBuild(latestSupportTicketBuild);
+
+		return patcherBuildPersistence.update(patcherBuild);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherBuild updateQaFields(
+			long patcherBuildId, String qaComments, int qaStatus)
+		throws PortalException {
+
+		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
+			patcherBuildId);
+
+		patcherBuild.setModifiedDate(new Date());
+		patcherBuild.setQaComments(qaComments);
+		patcherBuild.setQaStatus(qaStatus);
+
+		return patcherBuildPersistence.update(patcherBuild);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherBuild updateQaStatus(long patcherBuildId, int qaStatus)
+		throws PortalException {
+
+		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
+			patcherBuildId);
+
+		patcherBuild.setModifiedDate(new Date());
+		patcherBuild.setQaStatus(qaStatus);
+
+		return patcherBuildPersistence.update(patcherBuild);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherBuild updateStatus(long patcherBuildId, int status)
+		throws PortalException {
+
+		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
+			patcherBuildId);
+
+		patcherBuild.setModifiedDate(new Date());
+		patcherBuild.setStatus(status);
 
 		return patcherBuildPersistence.update(patcherBuild);
 	}

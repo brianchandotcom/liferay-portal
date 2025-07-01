@@ -48,7 +48,7 @@
 			message='<%= LanguageUtil.format(request, "when-a-user-creates-a-publication,-liferay-automatically-gives-them-the-owner-role", new String[] {"<strong>", "</strong>", "<strong>", "</strong>"}, false) %>'
 		/>
 
-		<div class="sheet-text" id="<portlet:namespace />editPublicationsPermissionsHelp"><liferay-ui:message key="edit-publications-permissions-help" /></div>
+		<div class="sheet-text" id="<portlet:namespace />editPublicationsPermissionsHelp"><liferay-ui:message key="edit-permissions-on-which-roles-can-view,-delete,-update,-publish,-invite-users,-and-edit-permissions-for-all-publications" /></div>
 
 		<div id="<portlet:namespace />editPublicationsPermissionsModal">
 			<react:component

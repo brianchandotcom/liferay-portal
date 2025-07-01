@@ -148,15 +148,11 @@ function buildRelationships(
 			label: {
 				en_US: referencedStructure.name,
 			},
-			name: referencedStructure.name,
+			name: referencedStructure.relationshipName,
 			objectDefinitionExternalReferenceCode1: erc,
 			objectDefinitionExternalReferenceCode2: referencedStructure.erc,
 			type: 'oneToMany',
 		};
-
-		if (referencedStructure.name) {
-			relationship.name = referencedStructure.name;
-		}
 
 		return relationship;
 	});

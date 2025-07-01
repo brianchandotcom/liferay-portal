@@ -11,9 +11,14 @@ type Status = 'new' | 'draft' | 'published';
 type Spaces = 'all' | string[];
 
 export type ReferencedStructure = {
+	children: Map<Uuid, StructureChild>;
+	editURL: string;
 	erc: string;
+	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
 	parent: Uuid;
+	relationshipName: string;
+	spaces: Spaces;
 	type: 'referenced-structure';
 	uuid: Uuid;
 };

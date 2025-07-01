@@ -124,6 +124,7 @@ if (patcherBuild != null) {
 	<c:if test="<%= (patcherBuild != null) && (patcherBuild.getStatus() == WorkflowConstants.STATUS_BUILD_COMPLETE) %>">
 		<portlet:actionURL name="/patcher/test_builds" var="testPatcherFixPackURL">
 			<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherFixPack.getPatcherBuildId()) %>" />
+			<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_QA_AUTOMATION_STARTED) %>" />
 			<portlet:param name="redirect" value="<%= viewPatcherFixPackURL %>" />
 		</portlet:actionURL>
 

@@ -203,6 +203,7 @@ List<PatcherBuild> patcherBuilds = PatcherBuildLocalServiceUtil.getPatcherFixPat
 				<c:if test="<%= patcherBuild.getStatus() == WorkflowConstants.STATUS_BUILD_COMPLETE %>">
 					<portlet:actionURL name="/patcher/test_builds" var="testPatcherBuildURL">
 						<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+						<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_QA_AUTOMATION_STARTED) %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon
@@ -212,8 +213,9 @@ List<PatcherBuild> patcherBuilds = PatcherBuildLocalServiceUtil.getPatcherFixPat
 						url="<%= testPatcherBuildURL %>"
 					/>
 
-					<portlet:actionURL name="/patcher/smoke_test_builds" var="smokeTestPatcherBuildURL">
+					<portlet:actionURL name="/patcher/test_builds" var="smokeTestPatcherBuildURL">
 						<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+						<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_QA_AUTOMATION_STARTED_SMOKE_ONLY) %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon

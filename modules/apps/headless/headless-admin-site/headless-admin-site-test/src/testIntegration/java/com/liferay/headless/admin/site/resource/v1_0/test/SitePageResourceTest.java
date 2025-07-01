@@ -184,23 +184,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				serviceContext));
 	}
 
-	@Override
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeSitePagesPage()
-		throws Exception {
-
-		super.testGetSiteSiteByExternalReferenceCodeSitePagesPage();
-	}
-
-	@Override
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeSitePagesPageWithPagination()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeSitePagesPageWithPagination();
-	}
-
 	@Ignore
 	@Override
 	@Test

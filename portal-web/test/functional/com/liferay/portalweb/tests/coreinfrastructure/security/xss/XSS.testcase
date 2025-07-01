@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-45254. View URL validate."
-	@priority = 3
+	@priority = 4
 	test MaliciousURLScriptsAreNotValidated {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-7595. Validate XSS vulnerabilities."
-	@priority = 3
+	@priority = 4
 	test MaliciousURLScriptsDoNotExecute {
 		task ("Visit malicious urls and request error message") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-92264. Assert no XSS pop up in asset publisher content."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInAssetPublisherContent {
 		task ("Add web content") {
 			JSONWebcontent.addWebContent(
@@ -152,10 +152,8 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInControlPanel {
-		property portal.acceptance = "false";
-
 		task ("Go to Account Settings and save p_p_auth param from the URL") {
 			var portalURL = PropsUtil.get("portal.url");
 
@@ -176,7 +174,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-83273. View forms entry with XSS."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInForms {
 		var formDescription = '''<script>alert(222)</script>''';
 		var formName = '''<script>alert(111)</script>''';
@@ -240,7 +238,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-72807. View google analytics ID."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInGoogleAnalyticsID {
 		task ("Edit google analytics Id successfully") {
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
@@ -254,7 +252,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-113685"
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInGroovyScript {
 		property test.liferay.virtual.instance = "false";
 
@@ -276,7 +274,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-10563. View JSONWS."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInJSONWS {
 		task ("Access JSONWS successfully") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -288,7 +286,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-59198. View LDAP."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInLDAP {
 		task ("Add LDAP server successfully") {
 			PortalSettings.gotoConfiguration(
@@ -312,7 +310,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-10563. View liferay portlet list."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInLiferayPortletList {
 		task ("Add public page") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -347,7 +345,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-10472. View, look and feel."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInLookAndFeel {
 		task ("Add public page") {
 			JSONLayout.addPublicLayout(
@@ -383,7 +381,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123822, LPS-127611 and LPS-133261. View Matomo."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInMatomo {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -406,7 +404,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-10472. View Recycle bin."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInRecycleBin {
 		var entryTitle = '''<script>alert(123);</script>''';
 
@@ -448,7 +446,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-48990. View roles."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInRoles {
 		task ("Add role") {
 			Role.openRolesAdmin();
@@ -490,10 +488,8 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-30154. View search results."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInSearchResults {
-		property portal.acceptance = "false";
-
 		var siteName = '''<script>alert(123);</script>''';
 
 		task ("Add blank CP") {
@@ -523,7 +519,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-71236 and LPS-71307. View web content."
-	@priority = 3
+	@priority = 4
 	test NoXSSVulnerabilityInWebContent {
 		task ("Given: A Web Content is created with a script in the title") {
 			JSONWebcontent.addWebContent(

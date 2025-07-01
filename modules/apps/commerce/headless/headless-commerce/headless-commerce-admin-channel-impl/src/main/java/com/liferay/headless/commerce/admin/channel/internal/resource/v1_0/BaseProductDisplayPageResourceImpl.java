@@ -497,13 +497,6 @@ public abstract class BaseProductDisplayPageResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "ProductDisplayPage";
 	}
@@ -583,6 +576,13 @@ public abstract class BaseProductDisplayPageResourceImpl
 				productDisplayPageUnsafeFunction.apply(productDisplayPage);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

@@ -524,13 +524,6 @@ public abstract class BaseUserGroupResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "UserGroup";
 	}
@@ -594,6 +587,13 @@ public abstract class BaseUserGroupResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

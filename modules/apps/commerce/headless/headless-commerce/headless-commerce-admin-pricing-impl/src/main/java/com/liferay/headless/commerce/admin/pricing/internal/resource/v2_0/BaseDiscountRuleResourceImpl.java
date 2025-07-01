@@ -506,13 +506,6 @@ public abstract class BaseDiscountRuleResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "DiscountRule";
 	}
@@ -591,6 +584,13 @@ public abstract class BaseDiscountRuleResourceImpl
 				discountRuleUnsafeFunction.apply(discountRule);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

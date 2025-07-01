@@ -378,13 +378,6 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "SkuVirtualSettingsFileEntry";
 	}
@@ -471,6 +464,13 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceImpl
 					skuVirtualSettingsFileEntry);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

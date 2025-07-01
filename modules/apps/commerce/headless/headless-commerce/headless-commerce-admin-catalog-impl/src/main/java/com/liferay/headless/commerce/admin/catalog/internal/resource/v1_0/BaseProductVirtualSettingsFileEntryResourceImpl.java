@@ -380,13 +380,6 @@ public abstract class BaseProductVirtualSettingsFileEntryResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "ProductVirtualSettingsFileEntry";
 	}
@@ -475,6 +468,13 @@ public abstract class BaseProductVirtualSettingsFileEntryResourceImpl
 					productVirtualSettingsFileEntry);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

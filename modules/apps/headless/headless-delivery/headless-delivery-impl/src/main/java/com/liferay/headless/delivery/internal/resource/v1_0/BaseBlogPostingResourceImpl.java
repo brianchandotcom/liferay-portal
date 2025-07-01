@@ -1479,13 +1479,6 @@ public abstract class BaseBlogPostingResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "BlogPosting";
 	}
@@ -1576,6 +1569,13 @@ public abstract class BaseBlogPostingResourceImpl
 				blogPostingUnsafeFunction.apply(blogPosting);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

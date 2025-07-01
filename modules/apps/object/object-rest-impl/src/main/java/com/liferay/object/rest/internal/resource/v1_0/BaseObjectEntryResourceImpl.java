@@ -2185,13 +2185,6 @@ public abstract class BaseObjectEntryResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "ObjectEntry";
 	}
@@ -2282,6 +2275,13 @@ public abstract class BaseObjectEntryResourceImpl
 		if (value != null) {
 			return Boolean.parseBoolean(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

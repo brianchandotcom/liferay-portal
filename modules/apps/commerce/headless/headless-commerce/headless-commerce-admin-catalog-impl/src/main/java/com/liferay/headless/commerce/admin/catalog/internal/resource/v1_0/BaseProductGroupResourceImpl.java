@@ -675,13 +675,6 @@ public abstract class BaseProductGroupResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "ProductGroup";
 	}
@@ -762,6 +755,13 @@ public abstract class BaseProductGroupResourceImpl
 				productGroupUnsafeFunction.apply(productGroup);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

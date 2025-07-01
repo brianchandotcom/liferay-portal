@@ -716,13 +716,6 @@ public abstract class BaseOptionCategoryResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "OptionCategory";
 	}
@@ -803,6 +796,13 @@ public abstract class BaseOptionCategoryResourceImpl
 				optionCategoryUnsafeFunction.apply(optionCategory);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

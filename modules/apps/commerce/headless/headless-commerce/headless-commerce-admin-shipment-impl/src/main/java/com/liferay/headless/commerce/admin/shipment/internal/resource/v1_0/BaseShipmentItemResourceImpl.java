@@ -556,13 +556,6 @@ public abstract class BaseShipmentItemResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "ShipmentItem";
 	}
@@ -641,6 +634,13 @@ public abstract class BaseShipmentItemResourceImpl
 				shipmentItemUnsafeFunction.apply(shipmentItem);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

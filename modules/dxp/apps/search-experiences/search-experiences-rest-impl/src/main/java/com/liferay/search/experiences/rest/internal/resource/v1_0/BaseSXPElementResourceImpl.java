@@ -822,13 +822,6 @@ public abstract class BaseSXPElementResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "SXPElement";
 	}
@@ -911,6 +904,13 @@ public abstract class BaseSXPElementResourceImpl
 				sxpElementUnsafeFunction.apply(sxpElement);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

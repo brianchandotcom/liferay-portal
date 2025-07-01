@@ -517,13 +517,6 @@ public abstract class BaseCategoryDisplayPageResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "CategoryDisplayPage";
 	}
@@ -605,6 +598,13 @@ public abstract class BaseCategoryDisplayPageResourceImpl
 				categoryDisplayPageUnsafeFunction.apply(categoryDisplayPage);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

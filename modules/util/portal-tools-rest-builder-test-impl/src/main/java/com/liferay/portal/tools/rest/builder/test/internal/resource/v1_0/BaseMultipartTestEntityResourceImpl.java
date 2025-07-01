@@ -265,13 +265,6 @@ public abstract class BaseMultipartTestEntityResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "MultipartTestEntity";
 	}
@@ -360,6 +353,13 @@ public abstract class BaseMultipartTestEntityResourceImpl
 				multipartTestEntityUnsafeFunction.apply(multipartTestEntity);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

@@ -584,13 +584,6 @@ public abstract class BasePlacedOrderResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "PlacedOrder";
 	}
@@ -669,6 +662,13 @@ public abstract class BasePlacedOrderResourceImpl
 				placedOrderUnsafeFunction.apply(placedOrder);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

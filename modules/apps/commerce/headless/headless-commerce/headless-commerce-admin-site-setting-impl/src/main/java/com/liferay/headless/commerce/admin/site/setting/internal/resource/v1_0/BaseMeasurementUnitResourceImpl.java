@@ -833,13 +833,6 @@ public abstract class BaseMeasurementUnitResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "MeasurementUnit";
 	}
@@ -920,6 +913,13 @@ public abstract class BaseMeasurementUnitResourceImpl
 				measurementUnitUnsafeFunction.apply(measurementUnit);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

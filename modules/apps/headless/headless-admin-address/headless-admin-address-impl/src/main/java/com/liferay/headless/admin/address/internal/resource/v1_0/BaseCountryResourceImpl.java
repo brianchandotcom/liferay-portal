@@ -729,13 +729,6 @@ public abstract class BaseCountryResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Country";
 	}
@@ -825,6 +818,13 @@ public abstract class BaseCountryResourceImpl
 		if (value != null) {
 			return Boolean.parseBoolean(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

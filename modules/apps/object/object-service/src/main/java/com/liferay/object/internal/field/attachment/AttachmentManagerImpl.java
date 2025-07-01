@@ -390,7 +390,17 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			}
 		}
 
-		_dlValidator.validateFileSize(groupId, sourceFileName, mimeType, size);
+		try {
+			_dlValidator.validateFileSize(
+				groupId, sourceFileName, mimeType, size);
+		}
+		catch (FileSizeException fileSizeException) {
+			throw new FileSizeException(
+				StringBundler.concat(
+					"File ", sourceFileName,
+					" exceeds the maximum permitted size of ",
+					fileSizeException.getMaxSize() / _FILE_LENGTH_MB, " MB"));
+		}
 	}
 
 	private void _validateObjectDefinitionSettings(

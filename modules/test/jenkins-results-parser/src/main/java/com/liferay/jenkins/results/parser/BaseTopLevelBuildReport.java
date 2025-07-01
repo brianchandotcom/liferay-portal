@@ -238,6 +238,30 @@ public abstract class BaseTopLevelBuildReport
 	}
 
 	@Override
+	public JobReport getJobReport() {
+		if (_jobReport != null) {
+			return _jobReport;
+		}
+
+		Matcher matcher = _buildURLPattern.matcher(
+			String.valueOf(getBuildURL()));
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid Build URL: " + getBuildURL());
+		}
+
+		try {
+			_jobReport = JobReport.getInstance(
+				new URL(matcher.group("jobURL")));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+
+		return _jobReport;
+	}
+
+	@Override
 	public String getTestrayBuildDateString() {
 		return JenkinsResultsParserUtil.toDateString(
 			getStartDate(), "yyyy-MM-dd HH:mm:ss", "America/Los_Angeles");
@@ -367,7 +391,13 @@ public abstract class BaseTopLevelBuildReport
 			getStartDate(), "yyyy-MM", "America/Los_Angeles");
 	}
 
+	private static final Pattern _buildURLPattern = Pattern.compile(
+		"(?<jobURL>https?://(?<masterHostname>test-\\d+-\\d+)" +
+			"(\\.liferay\\.com)?/job/(?<jobName>[^/]+))" +
+				"(/AXIS_VARIABLE=(?<axisVariable>\\d+))?/(?<buildNumber>\\d+)");
+
 	private ControllerBuildReport _controllerBuildReport;
 	private List<DownstreamBuildReport> _downstreamBuildReports;
+	private JobReport _jobReport;
 
 }

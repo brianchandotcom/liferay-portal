@@ -37,6 +37,8 @@ public interface TopLevelBuildReport extends BuildReport {
 
 	public URL getJenkinsReportURL();
 
+	public JobReport getJobReport();
+
 	public String getTestrayBuildDateString();
 
 	public URL getTestResultsJSONUserContentURL();

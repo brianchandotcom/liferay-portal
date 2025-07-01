@@ -130,11 +130,6 @@ public abstract class BaseBuildReport implements BuildReport {
 	}
 
 	@Override
-	public JobReport getJobReport() {
-		if (_jobReport != null) {
-			return _jobReport;
-		}
-
 		Matcher matcher = _buildURLPattern.matcher(
 			String.valueOf(getBuildURL()));
 
@@ -142,15 +137,6 @@ public abstract class BaseBuildReport implements BuildReport {
 			throw new RuntimeException("Invalid Build URL: " + getBuildURL());
 		}
 
-		try {
-			_jobReport = JobReport.getInstance(
-				new URL(matcher.group("jobURL")));
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
-
-		return _jobReport;
 	}
 
 	@Override
@@ -338,7 +324,6 @@ public abstract class BaseBuildReport implements BuildReport {
 	private JSONObject _buildJSONObject;
 	private final URL _buildURL;
 	private JenkinsMaster _jenkinsMaster;
-	private JobReport _jobReport;
 	private Date _startDate;
 
 }

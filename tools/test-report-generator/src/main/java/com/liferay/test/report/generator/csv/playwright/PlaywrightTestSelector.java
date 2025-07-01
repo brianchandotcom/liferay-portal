@@ -26,15 +26,15 @@ public class PlaywrightTestSelector {
 	public List<PlaywrightTest> getPlaywrightTests() throws IOException {
 		List<PlaywrightTest> playwrightTests = new ArrayList<>();
 
-		String projectRoot = System.getProperty("user.dir");
+		String userDir = System.getProperty("user.dir");
 
-		Path playwrightTestsDirPath = Paths.get(
-			projectRoot, "/../../modules/test/playwright/tests"
+		Path playwrightTestsDir = Paths.get(
+			userDir, "/../../modules/test/playwright/tests"
 		).toRealPath();
 
 		try {
 			Files.walkFileTree(
-				playwrightTestsDirPath,
+				playwrightTestsDir,
 				new SimpleFileVisitor<>() {
 
 					@Override
@@ -45,7 +45,7 @@ public class PlaywrightTestSelector {
 						Path playwrighTestFilePath = file.toRealPath();
 
 						if (!playwrighTestFilePath.startsWith(
-								playwrightTestsDirPath)) {
+								playwrightTestsDir)) {
 
 							return FileVisitResult.CONTINUE;
 						}
@@ -68,7 +68,7 @@ public class PlaywrightTestSelector {
 		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to get Playwright tests from directory " +
-					playwrightTestsDirPath,
+					playwrightTestsDir,
 				ioException.getCause());
 		}
 

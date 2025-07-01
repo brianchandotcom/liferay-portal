@@ -117,7 +117,8 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
 			).put(
-				"displayDate", date
+				"displayDate",
+				new Date(date.getTime() + TimeUnit.MILLISECOND.toMillis(1000))
 			).build());
 
 		Assert.assertTrue(objectEntry1.isScheduled());
@@ -128,10 +129,12 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
 			).put(
 				"displayDate",
-				new Date(date.getTime() + TimeUnit.MINUTE.toMillis(5))
+				new Date(date.getTime() + TimeUnit.DAY.toMillis(1))
 			).build());
 
 		Assert.assertTrue(objectEntry2.isScheduled());
+
+		Thread.sleep(1000);
 
 		_jobExecutorUnsafeRunnable.run();
 

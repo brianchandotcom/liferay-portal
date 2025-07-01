@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import java.nio.charset.StandardCharsets;
-
 import java.util.List;
 
 /**
@@ -26,7 +24,7 @@ public class TestReportCSVWriter {
 
 		try {
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-				outputStream, StandardCharsets.UTF_8);
+				outputStream);
 
 			BufferedWriter bufferedWriter = new BufferedWriter(
 				outputStreamWriter);

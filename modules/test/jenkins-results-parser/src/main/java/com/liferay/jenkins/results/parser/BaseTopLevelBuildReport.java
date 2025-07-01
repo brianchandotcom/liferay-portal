@@ -334,12 +334,6 @@ public abstract class BaseTopLevelBuildReport
 		return 0L;
 	}
 
-	public void setControllerBuildReport(
-		ControllerBuildReport controllerBuildReport) {
-
-		_controllerBuildReport = controllerBuildReport;
-	}
-
 	@Override
 	public long getTotalDuration() {
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
@@ -349,6 +343,12 @@ public abstract class BaseTopLevelBuildReport
 		}
 
 		return buildReportJSONObject.optLong("totalDuration");
+	}
+
+	public void setControllerBuildReport(
+		ControllerBuildReport controllerBuildReport) {
+
+		_controllerBuildReport = controllerBuildReport;
 	}
 
 	protected BaseTopLevelBuildReport(String buildURLString) {

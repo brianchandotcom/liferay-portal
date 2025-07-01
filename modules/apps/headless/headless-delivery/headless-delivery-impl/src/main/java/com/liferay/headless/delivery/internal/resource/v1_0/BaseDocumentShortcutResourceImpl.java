@@ -1061,13 +1061,6 @@ public abstract class BaseDocumentShortcutResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "DocumentShortcut";
 	}
@@ -1163,6 +1156,13 @@ public abstract class BaseDocumentShortcutResourceImpl
 				documentShortcutUnsafeFunction.apply(documentShortcut);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

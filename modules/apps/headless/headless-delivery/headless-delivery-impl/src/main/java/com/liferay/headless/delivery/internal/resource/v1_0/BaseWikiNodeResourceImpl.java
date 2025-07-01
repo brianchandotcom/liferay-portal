@@ -1151,13 +1151,6 @@ public abstract class BaseWikiNodeResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "WikiNode";
 	}
@@ -1243,6 +1236,13 @@ public abstract class BaseWikiNodeResourceImpl
 				wikiNodeUnsafeFunction.apply(wikiNode);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

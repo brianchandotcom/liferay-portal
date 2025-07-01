@@ -504,13 +504,6 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "SkuUnitOfMeasure";
 	}
@@ -590,6 +583,13 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 				skuUnitOfMeasureUnsafeFunction.apply(skuUnitOfMeasure);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

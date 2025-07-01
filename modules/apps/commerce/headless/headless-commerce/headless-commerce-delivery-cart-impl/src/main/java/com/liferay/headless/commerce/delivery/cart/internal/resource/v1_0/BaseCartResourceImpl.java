@@ -1216,13 +1216,6 @@ public abstract class BaseCartResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Cart";
 	}
@@ -1300,6 +1293,13 @@ public abstract class BaseCartResourceImpl
 				cartUnsafeFunction.apply(cart);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

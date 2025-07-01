@@ -470,13 +470,6 @@ public abstract class BaseGroupedProductResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "GroupedProduct";
 	}
@@ -556,6 +549,13 @@ public abstract class BaseGroupedProductResourceImpl
 				groupedProductUnsafeFunction.apply(groupedProduct);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -801,13 +801,6 @@ public abstract class BaseWarehouseItemResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "WarehouseItem";
 	}
@@ -889,6 +882,13 @@ public abstract class BaseWarehouseItemResourceImpl
 				warehouseItemUnsafeFunction.apply(warehouseItem);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

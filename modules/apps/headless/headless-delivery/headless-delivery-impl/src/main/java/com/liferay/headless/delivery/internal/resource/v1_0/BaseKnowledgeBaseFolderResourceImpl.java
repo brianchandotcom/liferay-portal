@@ -1357,13 +1357,6 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "KnowledgeBaseFolder";
 	}
@@ -1457,6 +1450,13 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				knowledgeBaseFolderUnsafeFunction.apply(knowledgeBaseFolder);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

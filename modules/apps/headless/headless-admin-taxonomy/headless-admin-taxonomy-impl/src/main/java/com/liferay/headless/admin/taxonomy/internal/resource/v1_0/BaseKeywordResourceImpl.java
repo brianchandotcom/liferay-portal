@@ -1818,13 +1818,6 @@ public abstract class BaseKeywordResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Keyword";
 	}
@@ -1913,6 +1906,13 @@ public abstract class BaseKeywordResourceImpl
 				keywordUnsafeFunction.apply(keyword);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

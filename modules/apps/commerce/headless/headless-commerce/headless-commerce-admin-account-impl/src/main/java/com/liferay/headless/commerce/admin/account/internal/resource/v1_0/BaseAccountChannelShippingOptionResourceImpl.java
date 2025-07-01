@@ -545,13 +545,6 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "AccountChannelShippingOption";
 	}
@@ -640,6 +633,13 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 					accountChannelShippingOption);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

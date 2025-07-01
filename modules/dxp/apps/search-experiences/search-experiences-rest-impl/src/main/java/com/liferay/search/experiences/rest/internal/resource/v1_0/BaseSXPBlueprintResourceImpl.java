@@ -802,13 +802,6 @@ public abstract class BaseSXPBlueprintResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "SXPBlueprint";
 	}
@@ -891,6 +884,13 @@ public abstract class BaseSXPBlueprintResourceImpl
 				sxpBlueprintUnsafeFunction.apply(sxpBlueprint);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

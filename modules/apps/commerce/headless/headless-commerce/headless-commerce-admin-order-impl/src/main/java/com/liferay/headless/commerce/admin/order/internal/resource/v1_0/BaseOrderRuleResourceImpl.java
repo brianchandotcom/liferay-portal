@@ -719,13 +719,6 @@ public abstract class BaseOrderRuleResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "OrderRule";
 	}
@@ -803,6 +796,13 @@ public abstract class BaseOrderRuleResourceImpl
 				orderRuleUnsafeFunction.apply(orderRule);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

@@ -941,13 +941,6 @@ public abstract class BaseUserGroupResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "UserGroup";
 	}
@@ -1030,6 +1023,13 @@ public abstract class BaseUserGroupResourceImpl
 				userGroupUnsafeFunction.apply(userGroup);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

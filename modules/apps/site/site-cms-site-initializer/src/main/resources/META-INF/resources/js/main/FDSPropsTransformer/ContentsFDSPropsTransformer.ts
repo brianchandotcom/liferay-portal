@@ -5,6 +5,8 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
+import AssetTypeInfoPanel from '../components/info_panel/AssetTypeInfoPanelContent';
+import {EVENTS} from '../components/info_panel/util/constants';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
@@ -69,6 +71,7 @@ export default function ContentFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		infoPanelComponent: AssetTypeInfoPanel,
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'actionLink') {
 				return {
@@ -83,5 +86,19 @@ export default function ContentFDSPropsTransformer({
 
 			return action;
 		}),
+		onActionDropdownItemClick: ({
+			action,
+			itemData,
+		}: {
+			action: any;
+			itemData: [];
+		}) => {
+			if (action?.data?.id === 'show-details') {
+				Liferay.fire(EVENTS.ASSET_DATA, {items: [{...itemData}]});
+			}
+		},
+		onSelectedItemsChange: (selectedItems: any[]) => {
+			Liferay.fire(EVENTS.ASSET_DATA, {items: selectedItems});
+		},
 	};
 }

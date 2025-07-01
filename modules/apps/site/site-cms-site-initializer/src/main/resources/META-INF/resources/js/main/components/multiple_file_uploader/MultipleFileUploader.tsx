@@ -175,7 +175,7 @@ export default function MultipleFileUploader({
 								}),
 							})}
 						>
-							<input {...getInputProps()} />
+							<input aria-hidden="true" {...getInputProps()} />
 
 							<DragZoneBackground />
 						</div>
@@ -205,6 +205,9 @@ export default function MultipleFileUploader({
 									placeholder={`--${Liferay.Language.get('not-selected')}--`}
 									required
 									selectedKey={values.groupId}
+									title={Liferay.Language.get(
+										'select-the-space-to-upload-the-file'
+									)}
 								/>
 							</div>
 						)}

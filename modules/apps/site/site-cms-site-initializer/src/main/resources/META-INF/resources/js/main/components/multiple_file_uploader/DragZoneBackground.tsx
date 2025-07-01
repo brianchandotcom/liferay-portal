@@ -11,7 +11,10 @@ import {getImage} from '../../util/getImage';
 export default function DragZoneBackground() {
 	return (
 		<div className="text-center text-secondary">
-			<img src={getImage('drag_drop_image.svg')} />
+			<img
+				alt={Liferay.Language.get('drag-and-drop-your-files-or')}
+				src={getImage('drag_drop_image.svg')}
+			/>
 
 			<p className="my-2 text-weight-semi-bold">
 				{Liferay.Language.get('drag-and-drop-your-files-or')}

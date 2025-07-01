@@ -8,6 +8,9 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
+// eslint-disable-next-line
+import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
+
 import MultipleFileUploader from '../../../../src/main/resources/META-INF/resources/js/main/components/multiple_file_uploader/MultipleFileUploader';
 
 jest.mock('frontend-js-web', () => ({
@@ -174,5 +177,11 @@ describe('MultipleFileUploader', () => {
 
 		expect(getByRole('button', {name: 'upload-(2)'})).toBeInTheDocument();
 		expect(getByRole('button', {name: 'cancel'})).toBeInTheDocument();
+	});
+
+	it('checks the accessibility of the multiple file uploader', async () => {
+		const {container} = render(<MultipleFileUploader {...DEFAULT_PROPS} />);
+
+		await checkAccessibility({bestPractices: true, context: container});
 	});
 });

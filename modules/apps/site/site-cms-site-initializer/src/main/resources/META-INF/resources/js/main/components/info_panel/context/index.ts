@@ -1,0 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import React from 'react';
+
+import {
+	IAssetInformation,
+	IAssetObjectEntry,
+} from '../../../../structure_builder/types/AssetType';
+
+export interface IAssetTypeInfoPanelContext extends IAssetInformation {
+	objectEntries?: IAssetObjectEntry[];
+}
+
+const BASE_CONTEXT: IAssetTypeInfoPanelContext = {
+	externalReferenceCode: null,
+	icon: null,
+	id: null,
+	objectEntries: [],
+	title: null,
+	title_i18n: null,
+	type: null,
+};
+
+export const AssetTypeInfoPanelContext = React.createContext(BASE_CONTEXT);

@@ -5,6 +5,8 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
+import AssetTypeInfoPanel from '../components/info_panel/AssetTypeInfoPanelContent';
+import {EVENTS} from '../components/info_panel/util/constants';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
@@ -65,6 +67,7 @@ export default function FolderFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		infoPanelComponent: AssetTypeInfoPanel,
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'download') {
 				return {
@@ -86,5 +89,19 @@ export default function FolderFDSPropsTransformer({
 
 			return action;
 		}),
+		onActionDropdownItemClick: ({
+			action,
+			itemData,
+		}: {
+			action: any;
+			itemData: [];
+		}) => {
+			if (action?.data?.id === 'show-details') {
+				Liferay.fire(EVENTS.ASSET_DATA, {items: [{...itemData}]});
+			}
+		},
+		onSelectedItemsChange: (selectedItems: any[]) => {
+			Liferay.fire(EVENTS.ASSET_DATA, {items: selectedItems});
+		},
 	};
 }

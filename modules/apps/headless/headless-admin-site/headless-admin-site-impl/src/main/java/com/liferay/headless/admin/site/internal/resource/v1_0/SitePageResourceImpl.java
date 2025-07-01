@@ -284,7 +284,18 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		Layout layout = null;
 
-		if (Objects.equals(sitePage.getType(), SitePage.Type.WIDGET_PAGE)) {
+		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
+			layout = LayoutUtil.addContentLayout(
+				groupId, sitePage.getPageSpecifications(), false, nameMap, null,
+				null, null, SitePageTypeUtil.toInternalType(sitePage.getType()),
+				typeSettingsUnicodeProperties,
+				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
+				false,
+				LocalizedMapUtil.getLocalizedMap(
+					sitePage.getFriendlyUrlPath_i18n()),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+		}
+		else {
 			String typeSettings = null;
 
 			if (typeSettingsUnicodeProperties != null) {
@@ -303,17 +314,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				LocalizedMapUtil.getLocalizedMap(
 					sitePage.getFriendlyUrlPath_i18n()),
 				0, serviceContext);
-		}
-		else {
-			layout = LayoutUtil.addContentLayout(
-				groupId, sitePage.getPageSpecifications(), false, nameMap, null,
-				null, null, SitePageTypeUtil.toInternalType(sitePage.getType()),
-				typeSettingsUnicodeProperties,
-				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
-				false,
-				LocalizedMapUtil.getLocalizedMap(
-					sitePage.getFriendlyUrlPath_i18n()),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
 
 		PageSettings pageSettings = sitePage.getPageSettings();

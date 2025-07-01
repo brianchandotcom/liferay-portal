@@ -54,6 +54,7 @@ CapsNameCheck | [Naming Conventions](naming_conventions_checks.md#naming-convent
 ChainingCheck | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that method chaining can be used when possible. |
 ClassNameIdCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Avoid caching noncompany scoped class name IDs. |
 [CodeownersFileLocationCheck](check/codeowners_file_location_check.md#codeownersfilelocationcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | CODEOWNERS | Checks that `CODEOWNERS` files are located in `.github` directory. |
+CodeownersOrderCheck | [Styling](styling_checks.md#styling-checks) | CODEOWNERS | Sorts code owners in `CODEOWNERS` files. |
 CodeownersWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | CODEOWNERS | Finds missing and unnecessary whitespace in `CODEOWNERS` files. |
 [CompanyIterationCheck](check/company_iteration_check.md#companyiterationcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies. |
 [CompanyThreadLocalCheck](check/company_thread_local_check.md#companythreadlocalcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks usage of `CompanyThreadLocal`. |

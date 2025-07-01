@@ -29,21 +29,18 @@ function FilterResume(props) {
 			displayType="secondary"
 			size="sm"
 		>
-			<div className="filter-resume-content">
-				<ClayIcon
-					className="mr-2"
-					symbol={open ? 'caret-top' : 'caret-bottom'}
-				/>
+			<span className="inline-item inline-item-before">
+				<ClayIcon symbol={open ? 'caret-top' : 'caret-bottom'} />
+			</span>
 
-				<div className="label-section">
-					{props.label}: {props.selectedItemsLabel}
-				</div>
-			</div>
+			<span className="label-section">
+				{props.label}: <strong>{props.selectedItemsLabel}</strong>
+			</span>
 		</ClayButton>
 	);
 
 	const dropDownButtonGroup = (
-		<ClayButton.Group>
+		<ClayButton.Group className="ml-2">
 			<ClayDropDown
 				active={open}
 				className="d-inline-flex"

@@ -17,7 +17,7 @@ function SearchResume() {
 	};
 
 	return (
-		<ClayButton.Group className="search-resume">
+		<ClayButton.Group className="ml-2 search-resume">
 			<span className="btn btn-secondary btn-sm component-label search-resume-label tbar-label">
 				<span className="mr-1">
 					{Liferay.Language.get('search-colon')}

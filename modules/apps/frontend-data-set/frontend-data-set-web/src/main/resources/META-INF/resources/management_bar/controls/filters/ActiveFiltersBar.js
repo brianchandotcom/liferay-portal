@@ -41,7 +41,7 @@ function ActiveFiltersBar({disabled, total}) {
 					<ul className="tbar-nav">
 						<li className="p-0 tbar-item tbar-item-expand">
 							<div className="tbar-section">
-								<span className="mr-2">
+								<span>
 									{sub(
 										total === 1
 											? Liferay.Language.get(

@@ -33,7 +33,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -1357,19 +1356,13 @@ public class UIItemsBuilder {
 					StorageEngineManagerUtil.getDDMFormValues(
 						dlFileEntryMetadata.getDDMStorageId()));
 
-			_validate(translatedDDMFormValues);
+			DDMFormValuesValidator ddmFormValuesValidator =
+				_ddmFormValuesValidatorSnapshot.get();
+
+			ddmFormValuesValidator.validate(translatedDDMFormValues);
 		}
 
 		return true;
-	}
-
-	private void _validate(DDMFormValues ddmFormValues)
-		throws DDMFormValuesValidationException {
-
-		DDMFormValuesValidator ddmFormValuesValidator =
-			_ddmFormValuesValidatorSnapshot.get();
-
-		ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UIItemsBuilder.class);

@@ -260,6 +260,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		if (sitePage.getPageSettings() != null) {
 			existingSitePage.setPageSettings(sitePage::getPageSettings);
 		}
+
+		if (sitePage.getPageSpecifications() != null) {
+			existingSitePage.setPageSpecifications(
+				sitePage::getPageSpecifications);
+		}
 	}
 
 	private Layout _addLayout(

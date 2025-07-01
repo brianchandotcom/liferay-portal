@@ -109,9 +109,9 @@ public class SXPBlueprintSuggestionsContributorTest {
 			Assert.assertEquals(
 				"Asset Renderer Summary",
 				suggestion.getAttribute("assetSearchSummary"));
+			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
 			Assert.assertEquals(i, suggestion.getScore(), i);
 			Assert.assertEquals("Document Text " + i, suggestion.getText());
-			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
 
 			SearchHit searchHit = searchHitsTestHelper.getSearchHits(
 			).get(
@@ -127,7 +127,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 				_assetURLViewProvider
 			).getAssetURLView(
 				Mockito.any(), Mockito.any(),
-				Mockito.eq(String.format("SubClass Name %s", i)),
+				Mockito.eq(_MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY + i),
 				Mockito.eq(classPK), Mockito.any(), Mockito.any()
 			);
 		}
@@ -197,22 +197,23 @@ public class SXPBlueprintSuggestionsContributorTest {
 			Assert.assertEquals(
 				"Asset Renderer Summary",
 				suggestion.getAttribute("assetSearchSummary"));
+			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
 			Assert.assertEquals(i, suggestion.getScore(), i);
 			Assert.assertEquals("Document Text " + i, suggestion.getText());
-			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
 		}
 
 		Mockito.verify(
 			_assetURLViewProvider, Mockito.times(1)
 		).getAssetURLView(
-			Mockito.any(), Mockito.any(), Mockito.eq("Class Name 0"),
+			Mockito.any(), Mockito.any(), Mockito.eq(_MODEL_LAYOUT + "0"),
 			Mockito.eq(Long.valueOf(0)), Mockito.any(), Mockito.any()
 		);
 
 		Mockito.verify(
 			_assetURLViewProvider, Mockito.times(1)
 		).getAssetURLView(
-			Mockito.any(), Mockito.any(), Mockito.eq("SubClass Name 1"),
+			Mockito.any(), Mockito.any(),
+			Mockito.eq(_MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY + 1),
 			Mockito.anyLong(), Mockito.any(), Mockito.any()
 		);
 	}
@@ -469,7 +470,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 			long classPK = RandomTestUtil.randomLong();
 
 			Mockito.doReturn(
-				"SubClass Name " + i
+				_MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY + i
 			).when(
 				className
 			).getClassName();
@@ -483,7 +484,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 			);
 
 			Mockito.doReturn(
-				"Class Name " + i
+				_MODEL_LAYOUT + i
 			).when(
 				document
 			).getString(
@@ -656,6 +657,12 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_sxpBlueprintSuggestionsContributor, "_suggestionBuilderFactory",
 			new SuggestionBuilderFactoryImpl());
 	}
+
+	private static final String _MODEL_LAYOUT =
+		"com.liferay.portal.kernel.model.Layout_";
+
+	private static final String _MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY =
+		"com.liferay.layout.page.template.model.LayoutPageTemplateEntry_";
 
 	@Mock
 	private AssetRendererFactory<?> _assetRendererFactory;

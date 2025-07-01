@@ -302,7 +302,8 @@ public abstract class BaseObjectEntryManager {
 	}
 
 	protected void validateReadOnlyObjectFields(
-			String externalReferenceCode, ObjectDefinition objectDefinition,
+			String externalReferenceCode, long groupId,
+			ObjectDefinition objectDefinition,
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry)
 		throws Exception {
 
@@ -311,7 +312,7 @@ public abstract class BaseObjectEntryManager {
 		if (externalReferenceCode != null) {
 			ObjectEntry serviceBuilderObjectEntry =
 				objectEntryLocalService.fetchObjectEntry(
-					externalReferenceCode,
+					externalReferenceCode, groupId,
 					objectDefinition.getObjectDefinitionId());
 
 			if (serviceBuilderObjectEntry == null) {

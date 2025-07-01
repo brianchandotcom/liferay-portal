@@ -381,8 +381,9 @@ PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount
 			}
 			%>
 
-			<portlet:actionURL name="/patcher/ready_for_release_builds" var="releasePatcherBuildURL">
+			<portlet:actionURL name="/patcher/release_builds" var="releasePatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+				<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_READY_TO_RELEASE) %>" />
 				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
 			</portlet:actionURL>
 
@@ -407,6 +408,7 @@ PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount
 
 			<portlet:actionURL name="/patcher/release_builds" var="releasePatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+				<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_RELEASED) %>" />
 				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
 			</portlet:actionURL>
 
@@ -420,6 +422,7 @@ PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount
 
 			<portlet:actionURL name="/patcher/release_builds" var="releasePatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+				<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_RELEASED) %>" />
 				<portlet:param name="releaseToHelpCenter" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
 			</portlet:actionURL>

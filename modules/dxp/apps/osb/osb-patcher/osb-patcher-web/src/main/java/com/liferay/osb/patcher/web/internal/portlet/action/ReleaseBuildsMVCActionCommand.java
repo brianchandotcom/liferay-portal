@@ -6,7 +6,6 @@
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
-import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.util.PatcherBuildUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -40,14 +39,14 @@ public class ReleaseBuildsMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "patcherBuildId");
 		boolean releaseToHelpCenter = ParamUtil.getBoolean(
 			actionRequest, "releaseToHelpCenter");
+		int status = ParamUtil.getInteger(actionRequest, "status");
 
 		if (releaseToHelpCenter) {
 			PatcherBuildUtil.releasePatcherBuild(
 				_patcherBuildLocalService.getPatcherBuild(patcherBuildId));
 		}
 
-		_patcherBuildLocalService.updateStatus(
-			patcherBuildId, WorkflowConstants.STATUS_BUILD_RELEASED);
+		_patcherBuildLocalService.updateStatus(patcherBuildId, status);
 	}
 
 	@Reference

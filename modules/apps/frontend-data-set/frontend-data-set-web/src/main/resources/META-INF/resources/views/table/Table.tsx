@@ -596,8 +596,13 @@ function CellRenderer({
 	const [{modifiedFields}] = useContext(ViewsContext) as any;
 
 	const cellRenderer = useMemo(() => {
-		if (field.contentRendererClientExtension) {
-			const mergedField = {...field, ...modifiedFields[field.fieldName]};
+		const modifiedField = modifiedFields[field.fieldName];
+
+		if (
+			field.contentRendererClientExtension &&
+			!modifiedField.clientExtensionResolutionError
+		) {
+			const mergedField = {...field, ...modifiedField};
 
 			return {
 				htmlElementBuilder: mergedField.htmlElementBuilder,

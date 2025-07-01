@@ -53,15 +53,36 @@ public class CloudBucketUtil {
 	}
 
 	public static void copyS3ToS3(String s3DestinationPath, String s3SourcePath)
-		throws IOException {
+		throws IOException, TimeoutException {
+
+		String replacedS3DestinationPath = _replaceS3ObjectPath(
+			s3DestinationPath);
 
 		_executeCommands(
 			_getFileTransferCommand(
-				"aws s3 cp --no-progress", s3DestinationPath, s3SourcePath));
+				"aws s3 cp --no-progress", replacedS3DestinationPath,
+				s3SourcePath));
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Copied ", s3SourcePath, " to ", s3DestinationPath));
+				"Copied ", s3SourcePath, " to ", replacedS3DestinationPath));
+
+		if (!s3DestinationPath.equals(replacedS3DestinationPath)) {
+			createS3ObjectRef(replacedS3DestinationPath);
+		}
+
+		if (s3FileExists(s3SourcePath + _CHECKSUM_FILE_EXTENSION)) {
+			_executeCommands(
+				_getFileTransferCommand(
+					"aws s3 cp --no-progress",
+					replacedS3DestinationPath + _CHECKSUM_FILE_EXTENSION,
+					s3SourcePath + _CHECKSUM_FILE_EXTENSION));
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Copied ", s3SourcePath + _CHECKSUM_FILE_EXTENSION, " to ",
+					replacedS3DestinationPath + _CHECKSUM_FILE_EXTENSION));
+		}
 	}
 
 	public static void createS3ObjectRef(String s3ObjectPath) {
@@ -315,6 +336,13 @@ public class CloudBucketUtil {
 
 		return JenkinsResultsParserUtil.readInputStream(
 			process.getInputStream());
+	}
+
+	public static boolean s3FileExists(String s3FilePath)
+		throws IOException, TimeoutException {
+
+		return !JenkinsResultsParserUtil.isNullOrEmpty(
+			listS3Files(s3FilePath, true));
 	}
 
 	public static void syncGCPFiles(String destination, String source)

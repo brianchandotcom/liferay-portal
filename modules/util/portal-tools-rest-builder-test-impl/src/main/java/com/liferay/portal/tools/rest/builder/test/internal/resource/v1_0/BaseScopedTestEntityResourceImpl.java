@@ -1290,13 +1290,6 @@ public abstract class BaseScopedTestEntityResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "ScopedTestEntity";
 	}
@@ -1385,6 +1378,13 @@ public abstract class BaseScopedTestEntityResourceImpl
 				scopedTestEntityUnsafeFunction.apply(scopedTestEntity);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

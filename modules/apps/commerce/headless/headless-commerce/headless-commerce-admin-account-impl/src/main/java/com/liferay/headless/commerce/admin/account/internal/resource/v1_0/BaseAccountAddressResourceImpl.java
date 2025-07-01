@@ -821,13 +821,6 @@ public abstract class BaseAccountAddressResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "AccountAddress";
 	}
@@ -912,6 +905,13 @@ public abstract class BaseAccountAddressResourceImpl
 				accountAddressUnsafeFunction.apply(accountAddress);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

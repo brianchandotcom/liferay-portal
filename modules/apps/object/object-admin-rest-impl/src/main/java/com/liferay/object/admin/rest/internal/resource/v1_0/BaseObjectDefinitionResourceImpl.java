@@ -868,13 +868,6 @@ public abstract class BaseObjectDefinitionResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "ObjectDefinition";
 	}
@@ -960,6 +953,13 @@ public abstract class BaseObjectDefinitionResourceImpl
 				objectDefinitionUnsafeFunction.apply(objectDefinition);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

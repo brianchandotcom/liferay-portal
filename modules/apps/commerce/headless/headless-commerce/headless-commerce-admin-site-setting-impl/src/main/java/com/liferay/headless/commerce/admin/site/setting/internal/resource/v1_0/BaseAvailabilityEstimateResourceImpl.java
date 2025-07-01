@@ -417,13 +417,6 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "AvailabilityEstimate";
 	}
@@ -509,6 +502,13 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 				availabilityEstimateUnsafeFunction.apply(availabilityEstimate);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

@@ -742,13 +742,6 @@ public abstract class BaseSpecificationResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Specification";
 	}
@@ -826,6 +819,13 @@ public abstract class BaseSpecificationResourceImpl
 				specificationUnsafeFunction.apply(specification);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

@@ -853,13 +853,6 @@ public abstract class BaseAssetLibraryResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "AssetLibrary";
 	}
@@ -939,6 +932,13 @@ public abstract class BaseAssetLibraryResourceImpl
 				assetLibraryUnsafeFunction.apply(assetLibrary);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

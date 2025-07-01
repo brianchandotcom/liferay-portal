@@ -615,13 +615,6 @@ public abstract class BasePriceEntryResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "PriceEntry";
 	}
@@ -703,6 +696,13 @@ public abstract class BasePriceEntryResourceImpl
 				priceEntryUnsafeFunction.apply(priceEntry);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

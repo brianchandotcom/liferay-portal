@@ -564,13 +564,6 @@ public abstract class BaseCTRemoteResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "CTRemote";
 	}
@@ -653,6 +646,13 @@ public abstract class BaseCTRemoteResourceImpl
 				ctRemoteUnsafeFunction.apply(ctRemote);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

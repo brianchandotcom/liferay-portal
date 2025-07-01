@@ -903,13 +903,6 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "CompanyTestEntity";
 	}
@@ -994,6 +987,13 @@ public abstract class BaseCompanyTestEntityResourceImpl
 				companyTestEntityUnsafeFunction.apply(companyTestEntity);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

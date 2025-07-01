@@ -455,13 +455,6 @@ public abstract class BaseProductOptionResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "ProductOption";
 	}
@@ -543,6 +536,13 @@ public abstract class BaseProductOptionResourceImpl
 				productOptionUnsafeFunction.apply(productOption);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

@@ -914,13 +914,6 @@ public abstract class BaseCTCollectionResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "CTCollection";
 	}
@@ -1004,6 +997,13 @@ public abstract class BaseCTCollectionResourceImpl
 				ctCollectionUnsafeFunction.apply(ctCollection);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

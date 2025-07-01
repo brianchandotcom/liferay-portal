@@ -709,13 +709,6 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "WorkflowDefinition";
 	}
@@ -801,6 +794,13 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 		if (value != null) {
 			return Boolean.parseBoolean(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

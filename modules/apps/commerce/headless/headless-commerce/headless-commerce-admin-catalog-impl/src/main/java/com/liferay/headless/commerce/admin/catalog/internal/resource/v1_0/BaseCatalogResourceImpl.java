@@ -753,13 +753,6 @@ public abstract class BaseCatalogResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Catalog";
 	}
@@ -839,6 +832,13 @@ public abstract class BaseCatalogResourceImpl
 				catalogUnsafeFunction.apply(catalog);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

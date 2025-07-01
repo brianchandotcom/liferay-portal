@@ -1274,13 +1274,6 @@ public abstract class BaseOrderItemResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "OrderItem";
 	}
@@ -1363,6 +1356,13 @@ public abstract class BaseOrderItemResourceImpl
 				orderItemUnsafeFunction.apply(orderItem);
 			}
 		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

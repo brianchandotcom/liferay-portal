@@ -67,21 +67,19 @@ public class CloudBucketUtil {
 			JenkinsResultsParserUtil.combine(
 				"Copied ", s3SourcePath, " to ", replacedS3DestinationPath));
 
-		if (!s3DestinationPath.equals(replacedS3DestinationPath)) {
-			createS3ObjectRef(replacedS3DestinationPath);
-		}
+		if (!s3SourcePath.endsWith(_CHECKSUM_FILE_EXTENSION)) {
+			if (!s3DestinationPath.equals(replacedS3DestinationPath)) {
+				createS3ObjectRef(replacedS3DestinationPath);
+			}
 
-		if (s3FileExists(s3SourcePath + _CHECKSUM_FILE_EXTENSION)) {
-			_executeCommands(
-				_getFileTransferCommand(
-					"aws s3 cp --no-progress",
-					replacedS3DestinationPath + _CHECKSUM_FILE_EXTENSION,
-					s3SourcePath + _CHECKSUM_FILE_EXTENSION));
+			String s3ChecksumSourcePath =
+				s3SourcePath + _CHECKSUM_FILE_EXTENSION;
 
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Copied ", s3SourcePath + _CHECKSUM_FILE_EXTENSION, " to ",
-					replacedS3DestinationPath + _CHECKSUM_FILE_EXTENSION));
+			if (s3FileExists(s3ChecksumSourcePath)) {
+				copyS3ToS3(
+					s3DestinationPath + _CHECKSUM_FILE_EXTENSION,
+					s3ChecksumSourcePath);
+			}
 		}
 	}
 

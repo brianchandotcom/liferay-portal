@@ -456,7 +456,7 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 					}
 					%>
 
-					<portlet:actionURL name="/patcher/release_manually_builds" var="releasePatcherBuildURL">
+					<portlet:actionURL name="/patcher/release_builds" var="releasePatcherBuildURL">
 						<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
@@ -469,8 +469,9 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 						url="javascript:void(0);"
 					/>
 
-					<portlet:actionURL name="/patcher/release_to_help_center_builds" var="releasePatcherBuildURL">
+					<portlet:actionURL name="/patcher/release_builds" var="releasePatcherBuildURL">
 						<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+						<portlet:param name="releaseToHelpCenter" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 

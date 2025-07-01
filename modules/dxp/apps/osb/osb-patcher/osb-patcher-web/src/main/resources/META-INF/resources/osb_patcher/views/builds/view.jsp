@@ -405,7 +405,7 @@ PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount
 			}
 			%>
 
-			<portlet:actionURL name="/patcher/release_manually_builds" var="releasePatcherBuildURL">
+			<portlet:actionURL name="/patcher/release_builds" var="releasePatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
 				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
 			</portlet:actionURL>
@@ -418,8 +418,9 @@ PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount
 				url="javascript:void(0);"
 			/>
 
-			<portlet:actionURL name="/patcher/release_to_help_center_builds" var="releasePatcherBuildURL">
+			<portlet:actionURL name="/patcher/release_builds" var="releasePatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+				<portlet:param name="releaseToHelpCenter" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
 			</portlet:actionURL>
 

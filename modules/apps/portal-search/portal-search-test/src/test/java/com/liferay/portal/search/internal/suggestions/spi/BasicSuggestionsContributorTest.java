@@ -101,14 +101,14 @@ public class BasicSuggestionsContributorTest {
 			Assert.assertEquals(
 				"Asset Renderer Summary",
 				suggestion.getAttribute("assetSearchSummary"));
+			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
 			Assert.assertEquals(
 				HashMapBuilder.<String, Object>put(
-					Field.ENTRY_CLASS_NAME, "Class Name " + i
+					Field.ENTRY_CLASS_NAME, _MODEL_LAYOUT + i
 				).build(),
 				suggestion.getAttribute("fields"));
 			Assert.assertEquals(i, suggestion.getScore(), i);
 			Assert.assertEquals("Asset Renderer Title", suggestion.getText());
-			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
 
 			SearchHit searchHit = searchHitsTestHelper.getSearchHits(
 			).get(
@@ -124,7 +124,7 @@ public class BasicSuggestionsContributorTest {
 				_assetURLViewProvider
 			).getAssetURLView(
 				Mockito.any(), Mockito.any(),
-				Mockito.eq(String.format("SubClass Name %s", i)),
+				Mockito.eq(_MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY + i),
 				Mockito.eq(classPK), Mockito.any(), Mockito.any()
 			);
 		}
@@ -180,7 +180,7 @@ public class BasicSuggestionsContributorTest {
 				null, suggestion.getAttribute("assetSearchSummary"));
 			Assert.assertEquals(
 				HashMapBuilder.<String, Object>put(
-					Field.ENTRY_CLASS_NAME, "Class Name " + i
+					Field.ENTRY_CLASS_NAME, _MODEL_LAYOUT + i
 				).build(),
 				suggestion.getAttribute("fields"));
 			Assert.assertEquals(i, suggestion.getScore(), i);
@@ -220,28 +220,29 @@ public class BasicSuggestionsContributorTest {
 			Assert.assertEquals(
 				"Asset Renderer Summary",
 				suggestion.getAttribute("assetSearchSummary"));
+			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
 
 			Assert.assertEquals(
 				HashMapBuilder.<String, Object>put(
-					Field.ENTRY_CLASS_NAME, "Class Name " + i
+					Field.ENTRY_CLASS_NAME, _MODEL_LAYOUT + i
 				).build(),
 				suggestion.getAttribute("fields"));
 			Assert.assertEquals(i, suggestion.getScore(), i);
 			Assert.assertEquals("Asset Renderer Title", suggestion.getText());
-			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
 		}
 
 		Mockito.verify(
 			_assetURLViewProvider, Mockito.times(1)
 		).getAssetURLView(
-			Mockito.any(), Mockito.any(), Mockito.eq("Class Name 0"),
+			Mockito.any(), Mockito.any(), Mockito.eq(_MODEL_LAYOUT + "0"),
 			Mockito.eq(Long.valueOf(0)), Mockito.any(), Mockito.any()
 		);
 
 		Mockito.verify(
 			_assetURLViewProvider, Mockito.times(1)
 		).getAssetURLView(
-			Mockito.any(), Mockito.any(), Mockito.eq("SubClass Name 1"),
+			Mockito.any(), Mockito.any(),
+			Mockito.eq(_MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY + "1"),
 			Mockito.anyLong(), Mockito.any(), Mockito.any()
 		);
 	}
@@ -453,7 +454,7 @@ public class BasicSuggestionsContributorTest {
 			long classPK = RandomTestUtil.randomLong();
 
 			Mockito.doReturn(
-				"SubClass Name " + i
+				_MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY + i
 			).when(
 				className
 			).getClassName();
@@ -467,7 +468,7 @@ public class BasicSuggestionsContributorTest {
 			);
 
 			Mockito.doReturn(
-				"Class Name " + i
+				_MODEL_LAYOUT + i
 			).when(
 				document
 			).getString(
@@ -587,6 +588,12 @@ public class BasicSuggestionsContributorTest {
 		_suggestionsContributorConfiguration.setDisplayGroupName(
 			testName.getMethodName());
 	}
+
+	private static final String _MODEL_LAYOUT =
+		"com.liferay.portal.kernel.model.Layout_";
+
+	private static final String _MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY =
+		"com.liferay.layout.page.template.model.LayoutPageTemplateEntry_";
 
 	@Mock
 	private AssetRendererFactory<?> _assetRendererFactory;

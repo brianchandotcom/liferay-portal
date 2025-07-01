@@ -71,4 +71,59 @@ describe('viewReducer ADD_OBJECT_VIEW_COLUMN', () => {
 			'creator'
 		);
 	});
+
+	it('can remove object field', () => {
+		const state = {
+			objectView: {
+				objectViewColumns: [
+					{
+						objectFieldName: 'status',
+					},
+					{
+						objectFieldName: 'externalReferenceCode',
+					},
+					{
+						objectFieldName: 'creator',
+					},
+				],
+				objectViewFilterColumns: [],
+				objectViewSortColumns: [],
+			},
+		} as any;
+
+		const action = {
+			payload: {
+				creationLanguageId: 'en_US',
+				selectedObjectFields: [
+					{
+						businessType: 'Text',
+						label: {
+							en_US: 'Status',
+						},
+						name: 'status',
+					},
+					{
+						businessType: 'Text',
+						label: {
+							en_US: 'Author',
+						},
+						name: 'creator',
+					},
+				],
+			},
+			type: 'ADD_OBJECT_VIEW_COLUMN',
+		} as TAction;
+
+		const result = viewReducer(state, action);
+
+		expect(result.objectView.objectViewColumns.length).toBe(2);
+
+		expect(result.objectView.objectViewColumns[0].objectFieldName).toBe(
+			'status'
+		);
+
+		expect(result.objectView.objectViewColumns[1].objectFieldName).toBe(
+			'creator'
+		);
+	});
 });

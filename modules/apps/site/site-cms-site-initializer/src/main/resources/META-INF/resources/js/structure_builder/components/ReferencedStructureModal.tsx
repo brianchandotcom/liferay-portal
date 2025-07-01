@@ -13,7 +13,14 @@ import {FieldFeedback, useId} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 import {useCache} from '../contexts/CacheContext';
-import {Structure, Structures} from '../types/Structure';
+import {useSelector} from '../contexts/StateContext';
+import selectStructureERC from '../selectors/selectStructureERC';
+import selectStructureUuid from '../selectors/selectStructureUuid';
+import {ObjectDefinitions} from '../types/ObjectDefinition';
+import {ReferencedStructure, Structure} from '../types/Structure';
+import {Uuid} from '../types/Uuid';
+import {buildReferencedStructure} from '../utils/buildStructure';
+import getRandomName from '../utils/getRandomName';
 
 type Item = {
 	label: string;
@@ -24,14 +31,17 @@ export default function ReferencedStructureModal({
 	onAdd,
 	onCloseModal,
 }: {
-	onAdd: (ercs: Array<Structure['erc']>) => void;
+	onAdd: (referencedStructures: ReferencedStructure[]) => void;
 	onCloseModal: () => void;
 }) {
 	const {observer, onClose} = useModal({
 		onClose: () => onCloseModal(),
 	});
 
-	const {data: structures, status} = useCache('structures');
+	const structureUuid = useSelector(selectStructureUuid);
+	const structureERC = useSelector(selectStructureERC);
+
+	const {data: objectDefinitions, status} = useCache('object-definitions');
 
 	const [selection, setSelection] = useState<Item[]>([]);
 	const [hasError, setHasError] = useState(false);
@@ -72,7 +82,7 @@ export default function ReferencedStructureModal({
 
 							setHasError(!selection.length);
 						}}
-						sourceItems={getItems(structures)}
+						sourceItems={getItems(objectDefinitions)}
 					/>
 
 					{hasError ? (
@@ -105,7 +115,14 @@ export default function ReferencedStructureModal({
 									return;
 								}
 
-								onAdd(selection.map(({value}) => value));
+								const structures = buildStructures(
+									selection,
+									objectDefinitions,
+									structureUuid,
+									structureERC
+								);
+
+								onAdd(structures);
 
 								onCloseModal();
 							}}
@@ -119,13 +136,33 @@ export default function ReferencedStructureModal({
 	);
 }
 
-function getItems(structures: Structures): Item[] {
-	return Array.from(structures.values())
+function getItems(objectDefinitions: ObjectDefinitions): Item[] {
+	return Array.from(objectDefinitions.values()).map((objectDefinition) => ({
+		label:
+			objectDefinition.label[
+				Liferay.ThemeDisplay.getDefaultLanguageId()
+			] || '',
+		value: objectDefinition.externalReferenceCode,
+	}));
+}
 
-		.map((structure) => ({
-			label:
-				structure.label[Liferay.ThemeDisplay.getDefaultLanguageId()] ||
-				'',
-			value: structure.erc,
-		}));
+function buildStructures(
+	selection: Item[],
+	objectDefinitions: ObjectDefinitions,
+	mainStructureUuid: Uuid,
+	mainStructureERC: Structure['erc']
+) {
+	const ercs = selection.map(({value}) => value);
+
+	return ercs.map((erc) => {
+		const structure = buildReferencedStructure({
+			ancestors: [mainStructureERC],
+			erc,
+			objectDefinitions,
+			parent: mainStructureUuid,
+			relationshipName: getRandomName(),
+		});
+
+		return structure;
+	});
 }

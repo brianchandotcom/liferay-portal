@@ -29,7 +29,6 @@ import findAvailableFieldName from '../utils/findAvailableFieldName';
 import findChild from '../utils/findChild';
 import {getChildrenUuids} from '../utils/getChildrenUuids';
 import getRandomId from '../utils/getRandomId';
-import getRandomName from '../utils/getRandomName';
 import getUuid from '../utils/getUuid';
 import insertGroup from '../utils/insertGroup';
 import normalizeName from '../utils/normalizeName';
@@ -84,7 +83,7 @@ const INITIAL_STATE: State = {
 type AddFieldAction = {field: Field; type: 'add-field'};
 
 type AddReferencedStructuresAction = {
-	ercs: string[];
+	referencedStructures: ReferencedStructure[];
 	type: 'add-referenced-structures';
 };
 
@@ -194,7 +193,7 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'add-referenced-structures': {
-			const {ercs} = action;
+			const {referencedStructures} = action;
 
 			const {structure} = state;
 
@@ -202,22 +201,14 @@ function reducer(state: State, action: Action): State {
 
 			let selection: State['selection'] = [];
 
-			for (const [i, erc] of ercs.entries()) {
-				const uuid = getUuid();
-				const name = getRandomName();
-
-				const referencedStructure: ReferencedStructure = {
-					erc,
-					name,
-					parent: structure.uuid,
-					type: 'referenced-structure',
-					uuid,
-				};
-
+			for (const [
+				i,
+				referencedStructure,
+			] of referencedStructures.entries()) {
 				nextChildren.set(referencedStructure.uuid, referencedStructure);
 
 				if (i === 0) {
-					selection = [uuid];
+					selection = [referencedStructure.uuid];
 				}
 			}
 

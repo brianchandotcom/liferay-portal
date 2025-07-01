@@ -783,7 +783,7 @@ public class PageSpecificationResourceTest
 					layout.getExternalReferenceCode(),
 					contentPageSpecification);
 
-		equals(contentPageSpecification, putPageSpecification);
+		assertEquals(contentPageSpecification, putPageSpecification);
 	}
 
 	private void _assertSettings(
@@ -1658,7 +1658,7 @@ public class PageSpecificationResourceTest
 					testGroup.getExternalReferenceCode(),
 					pageSpecificationExternalReferenceCode, pageSpecification);
 
-		equals(pageSpecification, putPageSpecification);
+		assertEquals(pageSpecification, putPageSpecification);
 	}
 
 	private void

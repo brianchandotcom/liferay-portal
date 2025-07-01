@@ -150,6 +150,7 @@ const Row = ({
 	itemsActions,
 	onItemSelectionChange,
 	selectionType,
+	...otherProps
 }: {
 	active: boolean;
 	columns: Array<Field>;
@@ -170,6 +171,7 @@ const Row = ({
 
 	return (
 		<ClayTableRowOptionalDropTarget
+			{...otherProps}
 			className={classNames({'table-active': active})}
 			item={item}
 			items={columns}
@@ -386,6 +388,7 @@ function ClayTableRowOptionalDropTarget({
 	item,
 	items,
 	onItemSelectionChange,
+	...otherProps
 }: React.ComponentProps<typeof ClayTableRow<Column>> & {
 	item: any;
 	onItemSelectionChange: Function;
@@ -394,6 +397,7 @@ function ClayTableRowOptionalDropTarget({
 
 	return (
 		<ClayTableRow
+			{...otherProps}
 			className={classNames(className, dropClassName)}
 			items={items}
 			onClick={() => {

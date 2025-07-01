@@ -1845,6 +1845,31 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		restoreArticleFromTrash(article.getResourcePrimKey());
 	}
 
+	/**
+	 * Reverts the web content article to a specified previous version by creating
+	 * a new version that replicates the content and metadata of the specified older version.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  articleId the primary key of the web content article to revert
+	 * @param  version the specific version of the article to revert to
+	 * @return the newly created web content article based on the specified version
+	 * @throws PortalException if the specified version does not exist or other portal errors occur
+	 */
+	@Override
+	public JournalArticle revertArticle(
+			long groupId, String articleId, double version)
+		throws PortalException {
+
+		JournalArticle article = journalArticlePersistence.findByG_A_V(
+			groupId, articleId, version);
+
+		_journalArticleModelResourcePermission.check(
+			getPermissionChecker(), article, ActionKeys.UPDATE);
+
+		return journalArticleLocalService.revertArticle(
+			getUserId(), groupId, articleId, version);
+	}
+
 	@Override
 	public void subscribe(long groupId, long articleId) throws PortalException {
 		JournalArticle article = getLatestArticle(articleId);

@@ -16,6 +16,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	fdsSamplePageTest,
 	featureFlagsTest({
+		'LPD-52212': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -582,7 +583,7 @@ test(
 	}
 );
 
-test('Pagination and items per page', async ({page}) => {
+test('Pagination and items per page', async ({fdsSamplePage, page}) => {
 	const itemsSelectorCheckbox = page.locator('input[name="items-selector"]');
 
 	await test.step('Change delta to 60 items', async () => {
@@ -649,7 +650,7 @@ test('Pagination and items per page', async ({page}) => {
 	});
 
 	await test.step('Unselect all items using clear button', async () => {
-		await page.getByText('Clear').click();
+		await fdsSamplePage.selectionToolbar.clearButton.click();
 
 		await expect(itemsSelectorCheckbox).not.toBeChecked();
 

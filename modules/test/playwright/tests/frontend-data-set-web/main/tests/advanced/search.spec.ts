@@ -16,6 +16,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	fdsSamplePageTest,
 	featureFlagsTest({
+		'LPD-52212': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -57,3 +58,75 @@ test('Check Search clear button', async ({fdsSamplePage}) => {
 		await expect(searchInput).toHaveValue('');
 	});
 });
+
+test(
+	'Check behavior of search',
+	{
+		tag: ['@LPD-56876'],
+	},
+	async ({fdsSamplePage, page}) => {
+		await test.step('The total results label and search resume are displayed when a search is made', async () => {
+			await test.step('Search for "Sample55"', async () => {
+				await fdsSamplePage.managementToolbar.searchInput.fill(
+					'Sample55'
+				);
+
+				await fdsSamplePage.managementToolbar.container
+					.getByRole('button', {name: 'Search'})
+					.click();
+			});
+
+			await test.step('Check that "1 Result Found for:" is displayed', async () => {
+				await expect(
+					page.getByText('1 Result Found for:')
+				).toBeVisible();
+			});
+
+			await test.step('Check that the search resume displays "Search:Sample55"', async () => {
+				const searchResume =
+					fdsSamplePage.activeFiltersToolbar.locator(
+						'.search-resume'
+					);
+
+				await expect(searchResume).toBeVisible();
+				await expect(searchResume).toContainText('Search:Sample55');
+			});
+		});
+
+		await test.step('Search appropriately filters the data', async () => {
+			await test.step('Check that only 1 result is found and has the title "Sample55" in the table row', async () => {
+				await expect(fdsSamplePage.table.bodyRows).toHaveCount(1);
+				await expect(
+					fdsSamplePage.table.bodyRows
+						.first()
+						.getByRole('cell', {exact: true, name: 'Sample55'})
+				).toBeVisible();
+			});
+		});
+
+		await test.step('Clicking the "Clear Search" icon on the search resume clears the search', async () => {
+			await test.step('Click on the "Clear Search" icon in the search resume', async () => {
+				await fdsSamplePage.activeFiltersToolbar
+					.locator('.search-resume')
+					.getByRole('button', {name: 'Clear Search'})
+					.click();
+
+				await expect(
+					page.getByText('75 Results Found for:')
+				).toBeVisible();
+			});
+
+			await test.step('Check the search bar input is blank', async () => {
+				await expect(
+					fdsSamplePage.managementToolbar.searchInput
+				).toBeEmpty();
+			});
+
+			await test.step('Check the search resume label is not displayed', async () => {
+				await expect(
+					fdsSamplePage.activeFiltersToolbar.locator('.search-resume')
+				).not.toBeVisible();
+			});
+		});
+	}
+);

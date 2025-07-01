@@ -16,6 +16,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	fdsSamplePageTest,
 	featureFlagsTest({
+		'LPD-52212': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -62,15 +63,17 @@ test(
 			});
 		});
 
-		await test.step('Check reset filters button', async () => {
+		await test.step('Check clear filters button', async () => {
 			await test.step('Check the total amount of items is 75', async () => {
 				expect
 					.soft(page.getByText('Showing 1 to 20 of 75 entries.'))
 					.toBeVisible();
 			});
 
-			await test.step('Click on reset filters button', async () => {
-				await page.getByRole('button', {name: 'Reset Filters'}).click();
+			await test.step('Click on clear filters button', async () => {
+				await fdsSamplePage.activeFiltersToolbar
+					.getByRole('button', {name: 'Clear'})
+					.click();
 
 				await page
 					.getByText('This is a description for sample 1.')

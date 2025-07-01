@@ -499,10 +499,12 @@ public class ObjectEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		if (count > 0) {
-			_validateValues(
-				defaultLanguageId, dlFileEntriesMap,
+			Map<String, Serializable> existingValues =
 				getExtensionDynamicObjectDefinitionTableValues(
-					objectDefinition, primaryKey),
+					objectDefinition, primaryKey);
+
+			_validateValues(
+				defaultLanguageId, dlFileEntriesMap, existingValues,
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, user.isGuestUser(),
 				objectDefinition, null,
 				dynamicObjectDefinitionTable.getObjectFields(), true,
@@ -511,6 +513,12 @@ public class ObjectEntryLocalServiceImpl
 			_addDLFileEntries(
 				dlFileEntriesMap, 0, objectDefinition, primaryKey,
 				serviceContext, userId, values);
+
+			_deleteFromLocalizationTable(objectDefinition, primaryKey);
+
+			_insertIntoLocalizationTable(
+				new HashMap<>(), objectDefinition, primaryKey, existingValues,
+				true, values);
 
 			_updateTable(
 				dynamicObjectDefinitionTable, primaryKey, true, values);
@@ -526,6 +534,10 @@ public class ObjectEntryLocalServiceImpl
 			_addDLFileEntries(
 				dlFileEntriesMap, 0, objectDefinition, primaryKey,
 				serviceContext, userId, values);
+
+			_insertIntoLocalizationTable(
+				new HashMap<>(), objectDefinition, primaryKey, null, false,
+				values);
 
 			_insertIntoTable(
 				dynamicObjectDefinitionTable, new HashMap<>(), primaryKey,

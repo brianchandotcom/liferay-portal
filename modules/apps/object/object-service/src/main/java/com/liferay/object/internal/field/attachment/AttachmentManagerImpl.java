@@ -32,6 +32,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -50,6 +51,7 @@ import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -165,8 +167,9 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 			_validateDLSettings(
 				companyId, groupId,
-				DLAppUtil.getExtension(title, sourceFileName), mimeType,
-				fileContent.length, sourceFileName);
+				DLAppUtil.getExtension(title, sourceFileName),
+				serviceContext.getLocale(), mimeType, fileContent.length,
+				sourceFileName);
 
 			return _dlAppLocalService.addFileEntry(
 				externalReferenceCode, serviceContext.getUserId(),
@@ -226,8 +229,9 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 			_validateDLSettings(
 				companyId, groupId,
-				DLAppUtil.getExtension(title, sourceFileName), mimeType,
-				fileContent.length, sourceFileName);
+				DLAppUtil.getExtension(title, sourceFileName),
+				serviceContext.getLocale(), mimeType, fileContent.length,
+				sourceFileName);
 
 			return _dlAppService.addFileEntry(
 				externalReferenceCode, repositoryId, folderId, sourceFileName,
@@ -269,7 +273,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 				StringBundler.concat(
 					"File ", fileName,
 					" exceeds the maximum permitted size of ",
-					maximumFileSize / _FILE_LENGTH_MB, " MB"));
+					maximumFileSize / _FILE_LENGTH_MB, " MB."));
 		}
 	}
 
@@ -373,8 +377,8 @@ public class AttachmentManagerImpl implements AttachmentManager {
 	}
 
 	private void _validateDLSettings(
-			long companyId, long groupId, String fileExtension, String mimeType,
-			long size, String sourceFileName)
+			long companyId, long groupId, String fileExtension, Locale locale,
+			String mimeType, long size, String sourceFileName)
 		throws PortalException {
 
 		if (Validator.isNotNull(sourceFileName)) {
@@ -390,7 +394,20 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			}
 		}
 
-		_dlValidator.validateFileSize(groupId, sourceFileName, mimeType, size);
+		try {
+			_dlValidator.validateFileSize(
+				groupId, sourceFileName, mimeType, size);
+		}
+		catch (FileSizeException fileSizeException) {
+			throw new FileSizeException(
+				_language.format(
+					locale, "file-x-exceeds-the-maximum-size-of-x-mb",
+					new String[] {
+						sourceFileName,
+						String.valueOf(
+							fileSizeException.getMaxSize() / _FILE_LENGTH_MB)
+					}));
+		}
 	}
 
 	private void _validateObjectDefinitionSettings(
@@ -423,6 +440,9 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 	@Reference
 	private DLValidator _dlValidator;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private MimeTypes _mimeTypes;

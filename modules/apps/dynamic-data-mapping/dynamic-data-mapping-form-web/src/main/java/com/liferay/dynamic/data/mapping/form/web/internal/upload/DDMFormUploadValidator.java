@@ -84,7 +84,7 @@ public class DDMFormUploadValidator {
 					"File ", fileName,
 					" exceeds the maximum permitted size of ",
 					(double)guestUploadMaximumFileSize / _FILE_LENGTH_MB,
-					" MB"),
+					" MB."),
 				guestUploadMaximumFileSize);
 		}
 	}

@@ -16025,7 +16025,7 @@ public class ObjectEntryResourceTest {
 				StringBundler.concat(
 					"File ", fileEntry.getName(),
 					" exceeds the maximum permitted size of ",
-					_MAX_FILE_SIZE_VALUE, " MB")
+					_MAX_FILE_SIZE_VALUE, " MB.")
 			),
 			_toFileEntry(
 				Base64::encode,
@@ -16655,7 +16655,7 @@ public class ObjectEntryResourceTest {
 				StringBundler.concat(
 					"File ", fileEntry.getName(),
 					" exceeds the maximum permitted size of ",
-					_MAX_FILE_SIZE_VALUE, " MB")
+					_MAX_FILE_SIZE_VALUE, " MB.")
 			),
 			_toFileEntry(
 				Base64::encode,

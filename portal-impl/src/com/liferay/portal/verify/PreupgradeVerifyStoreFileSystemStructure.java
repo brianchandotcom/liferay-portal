@@ -167,9 +167,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 				if (!Files.isDirectory(repositoryIdPath)) {
 					_log.error(
-						"Found file in advanced file system structure " +
-							"directory when only directories are expected: " +
-								repositoryIdPath);
+						"Unexpected file " + repositoryIdPath +
+							" in advanced file system structure");
 
 					return false;
 				}
@@ -195,9 +194,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 			for (Path fileNamePath : directoryStream) {
 				if (!Files.isDirectory(fileNamePath)) {
 					_log.error(
-						"Found file in advanced file system structure " +
-							"directory when only directories are expected: " +
-								fileNamePath);
+						"Unexpected file " + fileNamePath +
+							" in advanced file system structure");
 
 					return false;
 				}
@@ -216,10 +214,9 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 					_log.error(
 						StringBundler.concat(
-							"Found file name directory with name longer than ",
-							"2 characters without an extension in advanced ",
-							"file system structure directory: ",
-							fileNamePath.toString()));
+							"File ", fileNamePath.toString(),
+							" name has more than 2 characters and no ",
+							"extension in advanced file system structure"));
 
 					return false;
 				}
@@ -242,9 +239,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 				if (!Files.isDirectory(repositoryIdPath)) {
 					_log.error(
-						"Found file in file system structure directory when " +
-							"only directories are expected: " +
-								repositoryIdPath);
+						"Unexpected file " + repositoryIdPath +
+							" in file system structure");
 
 					return false;
 				}
@@ -269,9 +265,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 			_log.error(
 				StringBundler.concat(
-					"Found file name directory with extension in file system ",
-					"structure when no extensions are expected: ",
-					fileNamePath.toString()));
+					"Unexpected file name directory ", fileNamePath.toString(),
+					" with extension in file system structure"));
 
 			return false;
 		}
@@ -295,6 +290,10 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				}
 
 				if (!versionLabelName.matches("\\d+\\.\\d+.*")) {
+					_log.error(
+						"Unexpected file " + versionLabelPath +
+							" not matching version label pattern");
+
 					return false;
 				}
 			}
@@ -312,8 +311,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 			for (Path fileNamePath : directoryStream) {
 				if (!Files.isDirectory(fileNamePath)) {
 					_log.error(
-						"Found file in file system structure directory when " +
-							"only directories are expected: " + fileNamePath);
+						"Unexpected file " + fileNamePath +
+							" in file system structure");
 
 					return false;
 				}

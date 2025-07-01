@@ -6,7 +6,7 @@
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
-import com.liferay.osb.patcher.exception.NoSuchPatcherFixComponentException;
+import com.liferay.osb.patcher.exception.NoSuchPatcherBuildException;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -43,7 +43,7 @@ public class ViewBuildsMVCRenderCommand implements MVCRenderCommand {
 			_patcherBuildLocalService.getPatcherBuild(patcherBuildId);
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchPatcherFixComponentException) {
+			if (exception instanceof NoSuchPatcherBuildException) {
 				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/osb_patcher/views/error.jsp";

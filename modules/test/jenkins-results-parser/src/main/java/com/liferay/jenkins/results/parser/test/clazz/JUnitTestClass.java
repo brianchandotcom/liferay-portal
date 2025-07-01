@@ -5,14 +5,19 @@
 
 package com.liferay.jenkins.results.parser.test.clazz;
 
+import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.TestClassReport;
+import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitBatchTestClassGroup;
 
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +27,69 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class JUnitTestClass extends BaseTestClass {
+
+	public DownstreamBuildReport getCachedDownstreamBuildReport() {
+		if (!_cachedTestReportSearched) {
+			getCachedTestClassReports();
+		}
+
+		return _cachedDownstreamBuildReport;
+	}
+
+	public List<TestClassReport> getCachedTestClassReports() {
+		if (_cachedTestReportSearched) {
+			return _cachedTestClassReports;
+		}
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		for (DownstreamBuildReport cachedDownstreamBuildReport :
+				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+
+			List<TestClassReport> cachedTestClassReports = new ArrayList<>();
+
+			for (TestClassReport testClassReport :
+					cachedDownstreamBuildReport.getTestClassReports()) {
+
+				String testClassName = testClassReport.getTestClassName();
+
+				if (testClassName.equals(getTestClassName()) ||
+					testClassName.startsWith(getTestClassName() + "$")) {
+
+					cachedTestClassReports.add(testClassReport);
+
+					continue;
+				}
+
+				if (testClassName.equals("junit.framework.TestSuite")) {
+					for (TestReport testReport :
+							testClassReport.getTestReports()) {
+
+						String testName = testReport.getTestName();
+
+						if (testName.equals(getTestClassName())) {
+							cachedTestClassReports.add(testClassReport);
+
+							break;
+						}
+					}
+				}
+			}
+
+			if ((cachedTestClassReports != null) &&
+				!cachedTestClassReports.isEmpty()) {
+
+				_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
+				_cachedTestClassReports = cachedTestClassReports;
+
+				_cachedTestReportSearched = true;
+
+				break;
+			}
+		}
+
+		return _cachedTestClassReports;
+	}
 
 	@Override
 	public JSONObject getJSONObject() {
@@ -361,6 +429,9 @@ public class JUnitTestClass extends BaseTestClass {
 			"\\t(?<annotations>(@[\\s\\S]+?))public\\s+void\\s+",
 			"(?<methodName>[^\\(\\s]+)"));
 
+	private DownstreamBuildReport _cachedDownstreamBuildReport;
+	private List<TestClassReport> _cachedTestClassReports;
+	private boolean _cachedTestReportSearched;
 	private boolean _classIgnored;
 	private final File _modulesBaseDir;
 	private final File _testPropertiesFile;

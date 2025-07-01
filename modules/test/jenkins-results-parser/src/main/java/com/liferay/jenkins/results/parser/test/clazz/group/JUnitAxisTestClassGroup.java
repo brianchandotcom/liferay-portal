@@ -5,9 +5,13 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.TestClassReport;
+import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -41,6 +45,36 @@ public class JUnitAxisTestClassGroup extends AxisTestClassGroup {
 		}
 
 		return _averageTotalTestTaskDuration;
+	}
+
+	public List<JUnitTestClass> getJUnitTestClasses() {
+		List<JUnitTestClass> jUnitTestClasses = new ArrayList<>();
+
+		for (TestClass testClass : getTestClasses()) {
+			if (!(testClass instanceof JUnitTestClass)) {
+				continue;
+			}
+
+			jUnitTestClasses.add((JUnitTestClass)testClass);
+		}
+
+		return jUnitTestClasses;
+	}
+
+	@Override
+	public boolean isResultsCached() {
+		for (JUnitTestClass jUnitTestClass : getJUnitTestClasses()) {
+			List<TestClassReport> cachedTestClassReports =
+				jUnitTestClass.getCachedTestClassReports();
+
+			if ((cachedTestClassReports == null) ||
+				cachedTestClassReports.isEmpty()) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected JUnitAxisTestClassGroup(

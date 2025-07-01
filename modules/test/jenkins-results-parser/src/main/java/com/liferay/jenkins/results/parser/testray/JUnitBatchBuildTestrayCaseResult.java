@@ -37,6 +37,18 @@ public class JUnitBatchBuildTestrayCaseResult
 	}
 
 	@Override
+	public BuildReport getBuildReport() {
+		DownstreamBuildReport cachedDownstreamBuildReport =
+			_jUnitTestClass.getCachedDownstreamBuildReport();
+
+		if (cachedDownstreamBuildReport != null) {
+			return cachedDownstreamBuildReport;
+		}
+
+		return super.getBuildReport();
+	}
+
+	@Override
 	public String getComponentName() {
 		String componentName = _jUnitTestClass.getTestrayMainComponentName();
 
@@ -283,6 +295,17 @@ public class JUnitBatchBuildTestrayCaseResult
 
 	protected List<TestClassReport> getTestClassReports() {
 		if (_testClassReports != null) {
+			return _testClassReports;
+		}
+
+		List<TestClassReport> cachedTestClassReports =
+			_jUnitTestClass.getCachedTestClassReports();
+
+		if ((cachedTestClassReports != null) &&
+			!cachedTestClassReports.isEmpty()) {
+
+			_testClassReports = cachedTestClassReports;
+
 			return _testClassReports;
 		}
 

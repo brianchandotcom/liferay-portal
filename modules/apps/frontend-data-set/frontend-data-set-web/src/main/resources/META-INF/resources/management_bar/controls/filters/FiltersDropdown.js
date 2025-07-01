@@ -103,7 +103,7 @@ const FiltersDropdown = () => {
 							{filters
 								.filter(
 									(filter) =>
-										!filter.clientExtensionFilterResolutionError
+										!filter.clientExtensionResolutionError
 								)
 								.map((filter) => (
 									<ClayDropDown.Item

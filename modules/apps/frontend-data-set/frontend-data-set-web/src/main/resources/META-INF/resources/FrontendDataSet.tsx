@@ -7,7 +7,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted, useThunk} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {IHTMLElementBuilder, openToast} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-components-web';
 import {
 	ClientExtensionDefinition,
 	ClientExtensionResolution,
@@ -376,7 +376,7 @@ const FrontendDataSetContent = ({
 							if (resolution.error) {
 								return {
 									...filter,
-									clientExtensionFilterResolutionError:
+									clientExtensionResolutionError:
 										resolution.error,
 								};
 							}
@@ -435,23 +435,29 @@ const FrontendDataSetContent = ({
 				onLoad: (
 					resolutions: Array<ClientExtensionResolution<any>>
 				) => {
-					resolutions.forEach(
-						({
-							binding: htmlElementBuilder,
-							context: field,
-						}: {
-							binding: IHTMLElementBuilder<unknown>;
-							context: IField;
-						}) => {
+					resolutions.forEach((resolution) => {
+						const {binding, context: field, error} = resolution;
+
+						if (error) {
 							viewsDispatch({
 								type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
 								value: {
-									htmlElementBuilder,
+									clientExtensionResolutionError: error,
 									name: field.fieldName,
 								},
 							});
+
+							return;
 						}
-					);
+
+						viewsDispatch({
+							type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+							value: {
+								htmlElementBuilder: binding,
+								name: field.fieldName,
+							},
+						});
+					});
 				},
 			},
 		]);
@@ -688,7 +694,7 @@ const FrontendDataSetContent = ({
 			(filter: any) =>
 				filter.clientExtensionFilterURL &&
 				!filter.clientExtensionFilterImplementation &&
-				!filter.clientExtensionFilterResolutionError
+				!filter.clientExtensionResolutionError
 		);
 
 		if (clientExtensionFiltersLoading) {

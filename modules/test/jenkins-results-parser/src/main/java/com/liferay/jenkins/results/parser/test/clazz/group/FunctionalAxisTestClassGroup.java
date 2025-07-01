@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.test.clazz.FunctionalTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
@@ -98,6 +99,22 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 		}
 
 		return testClassMethodNames;
+	}
+
+	@Override
+	public boolean isResultsCached() {
+		for (FunctionalTestClass functionalTestClass :
+				getFunctionalTestClasses()) {
+
+			TestReport cachedTestReport =
+				functionalTestClass.getCachedTestReport();
+
+			if (cachedTestReport == null) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected FunctionalAxisTestClassGroup(

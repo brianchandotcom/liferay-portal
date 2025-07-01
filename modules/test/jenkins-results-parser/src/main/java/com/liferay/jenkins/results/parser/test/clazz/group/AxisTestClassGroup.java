@@ -201,6 +201,10 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return null;
 	}
 
+	public boolean isResultsCached() {
+		return false;
+	}
+
 	protected AxisTestClassGroup(BatchTestClassGroup batchTestClassGroup) {
 		setBatchTestClassGroup(batchTestClassGroup);
 	}

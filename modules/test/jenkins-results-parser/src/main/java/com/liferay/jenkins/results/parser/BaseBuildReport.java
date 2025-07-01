@@ -152,15 +152,13 @@ public abstract class BaseBuildReport implements BuildReport {
 
 	@Override
 	public Date getStartDate() {
-		if (_startDate != null) {
-			return _startDate;
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if (buildReportJSONObject == null) {
+			return null;
 		}
 
-		JSONObject buildJSONObject = getBuildJSONObject();
-
-		_startDate = new Date(buildJSONObject.getLong("timestamp"));
-
-		return _startDate;
+		return new Date(buildReportJSONObject.getLong("startTime"));
 	}
 
 	@Override
@@ -324,6 +322,5 @@ public abstract class BaseBuildReport implements BuildReport {
 	private JSONObject _buildJSONObject;
 	private final URL _buildURL;
 	private JenkinsMaster _jenkinsMaster;
-	private Date _startDate;
 
 }

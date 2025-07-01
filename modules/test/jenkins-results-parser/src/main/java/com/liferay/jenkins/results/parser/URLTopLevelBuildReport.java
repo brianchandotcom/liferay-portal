@@ -44,6 +44,10 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 		}
 
 		return buildReportJSONObject;
+
+	@Override
+	public Date getStartDate() {
+		return new Date(_buildJSONObject.getLong("timestamp"));
 	}
 
 	protected URLTopLevelBuildReport(

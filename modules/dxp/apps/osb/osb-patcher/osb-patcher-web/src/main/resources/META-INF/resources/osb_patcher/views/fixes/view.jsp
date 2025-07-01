@@ -160,7 +160,7 @@ if (!patcherFix.isLatestFix()) {
 <aui:button-row>
 	<c:if test="<%= patcherFix.isLatestFix() %>">
 		<portlet:renderURL var="editPatcherFixURL">
-			<portlet:param name="mvcRenderCommandName" value="/edit_fixes" />
+			<portlet:param name="mvcRenderCommandName" value="/patcher/edit_fixes" />
 			<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
 			<portlet:param name="redirect" value="<%= viewPatcherFixURL %>" />
 		</portlet:renderURL>

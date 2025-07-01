@@ -137,6 +137,7 @@ const Row = ({
 	itemsActions,
 	onItemSelectionChange,
 	selectionType,
+	...otherProps
 }: {
 	active: boolean;
 	columns: Array<Field>;
@@ -157,6 +158,7 @@ const Row = ({
 
 	return (
 		<ClayTableRow
+			{...otherProps}
 			className={classNames({'table-active': active})}
 			items={columns}
 		>

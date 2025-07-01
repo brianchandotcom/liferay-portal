@@ -83,7 +83,7 @@ describe('SpaceMembersWithList', () => {
 	beforeEach(() => {
 		getSpaceSpy = jest
 			.spyOn(SpaceService, 'getSpace')
-			.mockResolvedValue(testSpace as Space);
+			.mockResolvedValue(testSpace as unknown as Space);
 		getSpaceUsersSpy = jest
 			.spyOn(SpaceService, 'getSpaceUsers')
 			.mockResolvedValue(testUsersResponse);

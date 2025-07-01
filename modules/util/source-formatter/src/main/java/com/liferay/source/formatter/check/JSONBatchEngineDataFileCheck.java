@@ -49,21 +49,23 @@ public class JSONBatchEngineDataFileCheck extends BaseFileCheck {
 		JSONObject configurationJSONObject = jsonObject.getJSONObject(
 			"configuration");
 
-		if (configurationJSONObject != null) {
-			configurationJSONObject.remove("companyId");
-
-			boolean multiCompany = configurationJSONObject.getBoolean(
-				"multiCompany");
-
-			if (!multiCompany) {
-				configurationJSONObject.remove("multiCompany");
-			}
-
-			configurationJSONObject.remove("userId");
-			configurationJSONObject.remove("version");
-
-			jsonObject.put("configuration", configurationJSONObject);
+		if (configurationJSONObject == null) {
+			return jsonObject;
 		}
+
+		configurationJSONObject.remove("companyId");
+
+		boolean multiCompany = configurationJSONObject.getBoolean(
+			"multiCompany");
+
+		if (!multiCompany) {
+			configurationJSONObject.remove("multiCompany");
+		}
+
+		configurationJSONObject.remove("userId");
+		configurationJSONObject.remove("version");
+
+		jsonObject.put("configuration", configurationJSONObject);
 
 		return jsonObject;
 	}
@@ -71,26 +73,28 @@ public class JSONBatchEngineDataFileCheck extends BaseFileCheck {
 	private JSONObject _checkItems(JSONObject jsonObject) {
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
-		if (jsonArray != null) {
-			List<Object> objects = JSONUtil.toObjectList(jsonArray);
+		if (jsonArray == null) {
+			return jsonObject;
+		}
 
-			jsonArray = new JSONArrayImpl();
+		List<Object> objects = JSONUtil.toObjectList(jsonArray);
 
-			for (Object object : objects) {
-				JSONObject itemJSONObject = (JSONObject)object;
+		jsonArray = new JSONArrayImpl();
 
-				String defaultLanguageId = itemJSONObject.getString(
-					"defaultLanguageId");
+		for (Object object : objects) {
+			JSONObject itemJSONObject = (JSONObject)object;
 
-				if (!defaultLanguageId.equals(StringPool.BLANK)) {
-					itemJSONObject.remove("defaultLanguageId");
-				}
+			String defaultLanguageId = itemJSONObject.getString(
+				"defaultLanguageId");
 
-				jsonArray.put(itemJSONObject);
+			if (!defaultLanguageId.equals(StringPool.BLANK)) {
+				itemJSONObject.remove("defaultLanguageId");
 			}
 
-			jsonObject.put("items", jsonArray);
+			jsonArray.put(itemJSONObject);
 		}
+
+		jsonObject.put("items", jsonArray);
 
 		return jsonObject;
 	}

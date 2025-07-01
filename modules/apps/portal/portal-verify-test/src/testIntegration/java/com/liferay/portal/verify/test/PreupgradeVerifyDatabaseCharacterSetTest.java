@@ -6,6 +6,7 @@
 package com.liferay.portal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -14,7 +15,9 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ServiceComponent;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -81,6 +84,9 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 			return;
 		}
 
+		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+			PortalInstancePool.getDefaultCompanyId());
+
 		_unsupportedCharacterSetDataSource =
 			DataSourceFactoryUtil.initDataSource(
 				PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME, _getSchemaURL(),
@@ -91,6 +97,10 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		DataAccess.cleanUp(_connection);
+
+		if (_safeCloseable != null) {
+			_safeCloseable.close();
+		}
 
 		if (_unsupportedCharacterSetDataSource != null) {
 			DataSourceFactoryUtil.destroyDataSource(
@@ -195,6 +205,7 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 	private static Connection _connection;
 	private static DataSource _dataSource;
 	private static DB _db;
+	private static SafeCloseable _safeCloseable;
 
 	@Inject
 	private static ServiceComponentLocalService _serviceComponentLocalService;

@@ -4,10 +4,8 @@
  */
 
 import ApiHelper from '../../common/services/ApiHelper';
-import {ObjectDefinition} from '../types/ObjectDefinition';
-import {Structure, Structures} from '../types/Structure';
+import {Structure} from '../types/Structure';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
-import buildStructures from '../utils/buildStructures';
 import getRandomId from '../utils/getRandomId';
 
 async function createStructure({
@@ -38,21 +36,6 @@ async function createStructure({
 		'/o/object-admin/v1.0/object-definitions',
 		objectDefinition
 	);
-}
-
-async function getStructures(): Promise<Structures> {
-	const filter =
-		"(objectFolderExternalReferenceCode eq 'L_CMS_CONTENT_STRUCTURES') or (objectFolderExternalReferenceCode eq 'L_CMS_FILE_TYPES')";
-
-	const {data, error} = await ApiHelper.get<{items: ObjectDefinition[]}>(
-		`/o/object-admin/v1.0/object-definitions?filter=${filter}`
-	);
-
-	if (data) {
-		return buildStructures(data.items);
-	}
-
-	throw new Error(error);
 }
 
 async function updateStructure({
@@ -90,6 +73,5 @@ async function updateStructure({
 
 export default {
 	createStructure,
-	getStructures,
 	updateStructure,
 };

@@ -369,7 +369,7 @@ async function publishStructure({
 	let id = structureId;
 
 	const onSuccess = async ({id}: {id: Structure['id']}) => {
-		staleCache('structures');
+		staleCache('object-definitions');
 
 		if (!showExperienceLink) {
 			openToast({

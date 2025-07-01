@@ -215,7 +215,7 @@ public abstract class BaseSectionDisplayContext {
 					GroupConstants.CMS_FRIENDLY_URL,
 					"/version-history?objectEntryId={embedded.id}&backURL=",
 					themeDisplay.getURLCurrent()),
-				null, "version-history",
+				"date-time", "version-history",
 				LanguageUtil.get(httpServletRequest, "view-history"), "get",
 				"versions", null),
 			new FDSActionDropdownItem(

@@ -71,6 +71,16 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		_downstreamBuildReport = BuildReportFactory.newDownstreamBuildReport(
 			this);
 
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (topLevelBuild != null) {
+			TopLevelBuildReport topLevelBuildReport =
+				topLevelBuild.getTopLevelBuildReport();
+
+			topLevelBuildReport.addDownstreamBuildReport(
+				_downstreamBuildReport);
+		}
+
 		if (!JenkinsResultsParserUtil.isCloudCINode() ||
 			_downstreamBuildReport.isFailing()) {
 

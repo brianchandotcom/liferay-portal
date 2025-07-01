@@ -9379,6 +9379,10 @@ ${output.content}</echo>
 		</exec>
 	</target>
 
+	<target name="prepare-test-environment">
+		<prepare-test-environment />
+	</target>
+
 	<target name="release-functional-smoke-tomcat-mysql57">
 		<antcall target="functional-tomcat-mysql57" />
 	</target>

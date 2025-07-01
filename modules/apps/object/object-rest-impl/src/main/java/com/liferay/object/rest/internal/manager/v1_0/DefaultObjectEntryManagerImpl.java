@@ -2681,10 +2681,10 @@ public class DefaultObjectEntryManagerImpl
 			}
 
 			Object value = ObjectEntryValuesUtil.getValue(
-				objectEntry.getScopeId(), _objectDefinitionLocalService,
-				objectEntryLocalService, objectField,
-				_objectFieldBusinessTypeRegistry, serviceContext.getUserId(),
-				properties);
+				getGroupId(objectDefinition, scopeKey),
+				_objectDefinitionLocalService, objectEntryLocalService,
+				objectField, _objectFieldBusinessTypeRegistry,
+				serviceContext.getUserId(), properties);
 
 			if (Objects.equals(
 					objectField.getName(), "externalReferenceCode") &&

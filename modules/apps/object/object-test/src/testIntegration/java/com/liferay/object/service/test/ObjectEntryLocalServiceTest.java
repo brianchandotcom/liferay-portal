@@ -23,6 +23,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.expando.kernel.model.ExpandoColumn;
@@ -133,6 +134,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -154,6 +157,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -210,6 +214,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.Serializable;
 
@@ -249,8 +254,10 @@ import javax.crypto.spec.SecretKeySpec;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -281,6 +288,22 @@ public class ObjectEntryLocalServiceTest {
 			PermissionCheckerMethodTestRule.INSTANCE,
 			ScriptManagementConfigurationTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectEntryLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			ModelListener.class, _testDLFileEntryModelListener, null);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceRegistration.unregister();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -319,6 +342,31 @@ public class ObjectEntryLocalServiceTest {
 					ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
 					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
 					"Age of Death", "ageOfDeath", false),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+					"Attachment", "attachment",
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							"txt"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
+							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							String.valueOf(100)
+						).build()),
+					false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 					ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
@@ -5813,6 +5861,98 @@ public class ObjectEntryLocalServiceTest {
 		_testUpdateObjectEntryWithObjectRelationship();
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testUpdateObjectEntryWithAttachmentAndVersioning()
+		throws Exception {
+
+		Map<String, Serializable> values =
+			HashMapBuilder.<String, Serializable>put(
+				"attachment",
+				() -> {
+					DLFileEntry dlFileEntry = _addDLFileEntry();
+
+					return String.valueOf(dlFileEntry.getFileEntryId());
+				}
+			).put(
+				"emailAddressDomain", "@liferay.com"
+			).put(
+				"emailAddressRequired", "test@liferay.com"
+			).put(
+				"firstName", "Juan"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build();
+
+		ObjectEntry objectEntry = _addOrUpdateObjectEntry("juan", 0, values);
+
+		long fileEntryId1 = _testDLFileEntryModelListener.getLastFileEntryId();
+
+		_assertObjectEntryValues(
+			24, values,
+			_objectEntryLocalService.getValues(objectEntry.getObjectEntryId()));
+
+		values = HashMapBuilder.<String, Serializable>put(
+			"attachment",
+			() -> {
+				DLFileEntry dlFileEntry = _addDLFileEntry();
+
+				return String.valueOf(dlFileEntry.getFileEntryId());
+			}
+		).put(
+			"emailAddressDomain", "@liferay.com"
+		).put(
+			"emailAddressRequired", "test@liferay.com"
+		).put(
+			"firstName", "Juan"
+		).put(
+			"listTypeEntryKeyRequired", "listTypeEntryKey1"
+		).build();
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(), values,
+			ServiceContextTestUtil.getServiceContext());
+
+		long fileEntryId2 = _testDLFileEntryModelListener.getLastFileEntryId();
+
+		_assertObjectEntryValues(
+			24, values,
+			_objectEntryLocalService.getValues(objectEntry.getObjectEntryId()));
+
+		Assert.assertNull(
+			_dlFileEntryLocalService.fetchDLFileEntry(fileEntryId1));
+
+		_objectDefinition.setEnableObjectEntryVersioning(true);
+
+		_objectDefinition.isEnableObjectEntryVersioning()
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		values = HashMapBuilder.<String, Serializable>put(
+			"attachment",
+			() -> {
+				DLFileEntry dlFileEntry = _addDLFileEntry();
+
+				return String.valueOf(dlFileEntry.getFileEntryId());
+			}
+		).put(
+			"emailAddressDomain", "@liferay.com"
+		).put(
+			"emailAddressRequired", "test@liferay.com"
+		).put(
+			"firstName", "Juan"
+		).put(
+			"listTypeEntryKeyRequired", "listTypeEntryKey1"
+		).build();
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(), values,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertNotNull(
+			_dlFileEntryLocalService.fetchDLFileEntry(fileEntryId2));
+	}
+
 	@Test
 	public void testUpdateObjectEntryWithJavaDelegateObjectValidationRule()
 		throws Exception {
@@ -6402,6 +6542,26 @@ public class ObjectEntryLocalServiceTest {
 			objectField.getObjectFieldSettings());
 	}
 
+	private DLFileEntry _addDLFileEntry() throws Exception {
+		Company company = _companyLocalService.getCompanyById(
+			TestPropsValues.getCompanyId());
+
+		String content = RandomTestUtil.randomString();
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), company.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			TempFileEntryUtil.getTempFileName(
+				RandomTestUtil.randomString() + ".txt"),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			new ByteArrayInputStream(content.getBytes()), 0, null, null, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		return _dlFileEntryLocalService.getFileEntry(
+			fileEntry.getFileEntryId());
+	}
+
 	private ObjectAction _addObjectAction(
 			ObjectDefinition objectDefinition, String objectActionTriggerKey)
 		throws Exception {
@@ -6502,15 +6662,25 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private ObjectEntry _addOrUpdateObjectEntry(
-			String externalReferenceCode, long groupId,
+			String externalReferenceCode, long groupId, long objectDefinitionId,
 			Map<String, Serializable> values)
 		throws Exception {
 
 		return _objectEntryLocalService.addOrUpdateObjectEntry(
 			externalReferenceCode, groupId, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
+			objectDefinitionId,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			values, ServiceContextTestUtil.getServiceContext());
+	}
+
+	private ObjectEntry _addOrUpdateObjectEntry(
+			String externalReferenceCode, long groupId,
+			Map<String, Serializable> values)
+		throws Exception {
+
+		return _addOrUpdateObjectEntry(
+			externalReferenceCode, groupId,
+			_objectDefinition.getObjectDefinitionId(), values);
 	}
 
 	private void _addSystemObjectField(ObjectField objectField)
@@ -8098,6 +8268,10 @@ public class ObjectEntryLocalServiceTest {
 		ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
 			RandomTestUtil.randomString();
 
+	private static ServiceRegistration<?> _serviceRegistration;
+	private static final TestDLFileEntryModelListener
+		_testDLFileEntryModelListener = new TestDLFileEntryModelListener();
+
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -8109,6 +8283,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private CounterLocalService _counterLocalService;
@@ -8220,6 +8397,24 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private WorkflowTaskManager _workflowTaskManager;
+
+	private static class TestDLFileEntryModelListener
+		extends BaseModelListener<DLFileEntry> {
+
+		public Long getLastFileEntryId() {
+			return _fileEntryIds.get(_fileEntryIds.size() - 1);
+		}
+
+		@Override
+		public void onAfterCreate(DLFileEntry dlFileEntry)
+			throws ModelListenerException {
+
+			_fileEntryIds.add(dlFileEntry.getFileEntryId());
+		}
+
+		private List<Long> _fileEntryIds = new ArrayList<>();
+
+	}
 
 	private static class TestObjectValidationRuleEngine
 		implements CompanyScoped, ObjectDefinitionScoped,

@@ -4,18 +4,22 @@
  */
 
 import {State} from '../contexts/StateContext';
-import {ObjectDefinition} from '../types/ObjectDefinition';
+import {ObjectDefinition, ObjectDefinitions} from '../types/ObjectDefinition';
 import buildStructure from './buildStructure';
 import {getChildrenUuids} from './getChildrenUuids';
 
-export default function buildState(
-	objectDefinition: ObjectDefinition
-): State | null {
-	if (!objectDefinition) {
+export default function buildState({
+	mainObjectDefinition,
+	objectDefinitions,
+}: {
+	mainObjectDefinition: ObjectDefinition;
+	objectDefinitions: ObjectDefinitions;
+}): State | null {
+	if (!mainObjectDefinition) {
 		return null;
 	}
 
-	const structure = buildStructure(objectDefinition);
+	const structure = buildStructure({mainObjectDefinition, objectDefinitions});
 
 	return {
 		error: null,

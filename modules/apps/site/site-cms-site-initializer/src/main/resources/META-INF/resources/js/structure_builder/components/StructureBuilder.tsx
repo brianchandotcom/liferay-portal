@@ -13,7 +13,6 @@ import StateContextProvider, {useSelector} from '../contexts/StateContext';
 import selectStructureId from '../selectors/selectStructureId';
 import {ObjectDefinition} from '../types/ObjectDefinition';
 import buildState from '../utils/buildState';
-import buildStructures from '../utils/buildStructures';
 import Sidebar from './Sidebar';
 import StructureBuilderToolbar from './StructureBuilderToolbar';
 import Settings from './settings/Settings';
@@ -39,7 +38,10 @@ export default function StructureBuilder({
 
 	return (
 		<StateContextProvider
-			initialState={buildState(state.mainObjectDefinition)}
+			initialState={buildState({
+				mainObjectDefinition: state.mainObjectDefinition,
+				objectDefinitions,
+			})}
 		>
 			<CacheContextProvider
 				initialData={{

@@ -262,11 +262,9 @@ public class MarketplaceCommandLineRunner
 
 	private void _postTrialExpire(long orderId) throws Exception {
 		post(
-			null,
-			Collections.singletonMap(
-				HttpHeaders.AUTHORIZATION,
 				_liferayOAuth2AccessTokenManager.getAuthorization(
-					_liferayOAuthApplicationExternalReferenceCodes)),
+				_liferayOAuthApplicationExternalReferenceCodes),
+			"",
 			UriComponentsBuilder.fromUriString(
 				_liferayMarketplaceEtcSpringBootURL + "/trial/expire/" + orderId
 			).build(
@@ -275,11 +273,9 @@ public class MarketplaceCommandLineRunner
 
 	private void _postTrialNotifyEnd(long orderId) throws Exception {
 		post(
-			null,
-			Collections.singletonMap(
-				HttpHeaders.AUTHORIZATION,
 				_liferayOAuth2AccessTokenManager.getAuthorization(
-					_liferayOAuthApplicationExternalReferenceCodes)),
+				_liferayOAuthApplicationExternalReferenceCodes),
+			"",
 			UriComponentsBuilder.fromUriString(
 				_liferayMarketplaceEtcSpringBootURL + "/trial/notify-end/" +
 					orderId
@@ -289,6 +285,8 @@ public class MarketplaceCommandLineRunner
 
 	private void _postTrialProvisioning(Order order) throws Exception {
 		post(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes),
 			new JSONObject(
 			).put(
 				"classPK", order.getId()
@@ -299,10 +297,6 @@ public class MarketplaceCommandLineRunner
 					"accountId", String.valueOf(order.getAccountId())
 				)
 			).toString(),
-			Collections.singletonMap(
-				HttpHeaders.AUTHORIZATION,
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					_liferayOAuthApplicationExternalReferenceCodes)),
 			UriComponentsBuilder.fromUriString(
 				_liferayMarketplaceEtcSpringBootURL + "/trial/provisioning"
 			).build(

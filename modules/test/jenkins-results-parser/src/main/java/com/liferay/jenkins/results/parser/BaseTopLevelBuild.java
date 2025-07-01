@@ -602,7 +602,13 @@ public abstract class BaseTopLevelBuild
 
 	@Override
 	public TopLevelBuildReport getTopLevelBuildReport() {
-		return BuildReportFactory.newTopLevelBuildReport(this);
+		if (_topLevelBuildReport != null) {
+			return _topLevelBuildReport;
+		}
+
+		_topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(this);
+
+		return _topLevelBuildReport;
 	}
 
 	public URL getUserContentURL() {
@@ -2479,5 +2485,6 @@ public abstract class BaseTopLevelBuild
 	private String _metricsHostName;
 	private int _metricsHostPort;
 	private final boolean _sendBuildMetrics;
+	private TopLevelBuildReport _topLevelBuildReport;
 
 }

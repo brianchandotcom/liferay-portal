@@ -9,9 +9,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -60,12 +58,11 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 		buildReportJSONObject.put("batches", batchesJSONArray);
 
-		ControllerBuildReport controllerBuildReport =
-			getControllerBuildReport();
+		Build controllerBuild = _topLevelBuild.getControllerBuild();
 
-		if (controllerBuildReport != null) {
+		if (controllerBuild != null) {
 			buildReportJSONObject.put(
-				"controller", controllerBuildReport.getBuildReportJSONObject());
+				"controller", controllerBuild.getBuildReportJSONObject());
 		}
 
 		buildReportJSONObject.put(
@@ -106,25 +103,27 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 	}
 
 	private List<String> _getTestrayAttachmentURLStrings() {
-		Set<String> testrayAttachmentURLs = new HashSet<>();
+		List<String> testrayAttachmentURLStrings = new ArrayList<>();
 
-		for (URL testrayAttachmentURL : getTestrayAttachmentURLs()) {
-			testrayAttachmentURLs.add(String.valueOf(testrayAttachmentURL));
+		List<URL> testrayAttachmentURLs = new ArrayList<>();
+
+		testrayAttachmentURLs.addAll(_testrayAttachmentURLs);
+		testrayAttachmentURLs.addAll(_topLevelBuild.getTestrayAttachmentURLs());
+
+		for (URL testrayAttachmentURL : testrayAttachmentURLs) {
+			String testrayAttachmentURLString = String.valueOf(
+				testrayAttachmentURL);
+
+			if (testrayAttachmentURLStrings.contains(
+					testrayAttachmentURLString)) {
+
+				continue;
+			}
+
+			testrayAttachmentURLStrings.add(testrayAttachmentURLString);
 		}
 
-		JSONObject buildReportJSONObject =
-			_topLevelBuild.getBuildReportJSONObject();
-
-		JSONArray testrayAttachmentURLsJSONArray =
-			buildReportJSONObject.optJSONArray(
-				"testrayAttachmentURLs", new JSONArray());
-
-		for (int i = 0; i < testrayAttachmentURLsJSONArray.length(); i++) {
-			testrayAttachmentURLs.add(
-				testrayAttachmentURLsJSONArray.getString(i));
-		}
-
-		return new ArrayList<>(testrayAttachmentURLs);
+		return testrayAttachmentURLStrings;
 	}
 
 	private final List<URL> _testrayAttachmentURLs = new ArrayList<>();

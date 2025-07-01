@@ -41,22 +41,24 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 					<ul className="tbar-nav">
 						<li className="p-0 tbar-item tbar-item-expand">
 							<div className="tbar-section">
-								{!dataLoading && (
-									<span>
-										{sub(
-											total === 1
-												? Liferay.Language.get(
-														'x-result-found-for-colon'
-													)
-												: Liferay.Language.get(
-														'x-results-found-for-colon'
-													),
-											total
-										)}
-									</span>
-								)}
+								{Liferay.FeatureFlags['LPD-52212'] &&
+									!dataLoading && (
+										<span>
+											{sub(
+												total === 1
+													? Liferay.Language.get(
+															'x-result-found-for-colon'
+														)
+													: Liferay.Language.get(
+															'x-results-found-for-colon'
+														),
+												total
+											)}
+										</span>
+									)}
 
-								{isSearchActive() && <SearchResume />}
+								{Liferay.FeatureFlags['LPD-52212'] &&
+									isSearchActive() && <SearchResume />}
 
 								{activeFilters.map((filter) => {
 									return (

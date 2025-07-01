@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.transaction.TransactionsUtil;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.upgrade.datacleanup.DataCleanupUpgradeProcessSuite;
 import com.liferay.portal.upgrade.log.UpgradeLogContext;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
@@ -342,6 +343,25 @@ public class DBUpgrader {
 
 					System.exit(1);
 				}
+			}
+
+			DataCleanupUpgradeProcessSuite dataCleanupUpgradeProcessSuite =
+				new DataCleanupUpgradeProcessSuite();
+
+			try {
+				dataCleanupUpgradeProcessSuite.cleanUp();
+			}
+			catch (Exception exception) {
+				_log.error(
+					StringBundler.concat(
+						"Stopping the server because a preupgrade data ",
+						"cleanup process has failed. Please fix the reported ",
+						"issues and rerun the upgrade: ",
+						exception.getMessage()));
+
+				StartupHelperUtil.setUpgrading(false);
+
+				System.exit(1);
 			}
 
 			if (FeatureFlagManagerUtil.isEnabled("LPS-157670")) {

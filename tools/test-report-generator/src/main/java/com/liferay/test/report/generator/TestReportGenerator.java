@@ -17,11 +17,11 @@ import java.io.OutputStream;
 public class TestReportGenerator {
 
 	public static void main(String[] args) throws Exception {
-		PlaywrightTestSelector playwrightTestSelector =
-			new PlaywrightTestSelector();
-
 		OutputStream outputStream = new FileOutputStream(
 			"record-test-playwright-report.csv");
+
+		PlaywrightTestSelector playwrightTestSelector =
+			new PlaywrightTestSelector();
 
 		TestReportCSVWriter.write(
 			outputStream, playwrightTestSelector.getPlaywrightTests());

@@ -437,7 +437,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			layout = LayoutUtil.updateContentLayout(
 				layout, nameMap, layout.getTitleMap(),
 				layout.getDescriptionMap(), layout.getRobotsMap(),
-				friendlyURLMap, null, serviceContext);
+				friendlyURLMap, sitePage.getPageSpecifications(),
+				serviceContext);
 		}
 		else {
 			layout = _layoutService.updateLayout(

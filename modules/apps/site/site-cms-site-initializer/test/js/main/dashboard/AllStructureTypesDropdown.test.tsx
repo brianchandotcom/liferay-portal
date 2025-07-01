@@ -98,13 +98,13 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 					{
 						id: '01',
 						label: {
-							en_US: 'structure 01'
+							en_US: 'structure 01',
 						},
 					},
 					{
 						id: '02',
 						label: {
-							en_US: 'structure 02'
+							en_US: 'structure 02',
 						},
 					},
 				],
@@ -145,21 +145,32 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 			.mockResolvedValueOnce({
 				json: jest.fn().mockResolvedValue({
 					items: [
-						{id: '01', label: {
-							en_US: 'structure 01'
-						}},
-						{id: '02', label: {
-							en_US: 'structure 02'
-						}},
+						{
+							id: '01',
+							label: {
+								en_US: 'structure 01',
+							},
+						},
+						{
+							id: '02',
+							label: {
+								en_US: 'structure 02',
+							},
+						},
 					],
 				}),
 				ok: true,
 			})
 			.mockResolvedValueOnce({
 				json: jest.fn().mockResolvedValue({
-					items: [{id: '02', label: {
-						en_US: 'structure 02'
-					}}],
+					items: [
+						{
+							id: '02',
+							label: {
+								en_US: 'structure 02',
+							},
+						},
+					],
 				}),
 				ok: true,
 			});
@@ -207,12 +218,18 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		global.fetch = jest.fn().mockResolvedValue({
 			json: jest.fn().mockResolvedValue({
 				items: [
-					{id: '01', label: {
-						en_US: 'structure 01'
-					}},
-					{id: '02', label: {
-						en_US: 'structure 02'
-					}},
+					{
+						id: '01',
+						label: {
+							en_US: 'structure 01',
+						},
+					},
+					{
+						id: '02',
+						label: {
+							en_US: 'structure 02',
+						},
+					},
 				],
 			}),
 			ok: true,
@@ -264,12 +281,18 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		global.fetch = jest.fn().mockResolvedValue({
 			json: jest.fn().mockResolvedValue({
 				items: [
-					{id: '01', label: {
-						en_US: 'structure 01'
-					}},
-					{id: '02', label: {
-						en_US: 'structure 02'
-					}},
+					{
+						id: '01',
+						label: {
+							en_US: 'structure 01',
+						},
+					},
+					{
+						id: '02',
+						label: {
+							en_US: 'structure 02',
+						},
+					},
 				],
 			}),
 			ok: true,

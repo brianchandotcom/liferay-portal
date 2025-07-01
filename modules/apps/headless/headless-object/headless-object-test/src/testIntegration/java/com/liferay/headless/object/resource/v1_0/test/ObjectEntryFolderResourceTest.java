@@ -400,6 +400,15 @@ public class ObjectEntryFolderResourceTest
 	}
 
 	@Override
+	protected ObjectEntryFolder testPutObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		return objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+			String.valueOf(_testDepotEntry.getGroupId()),
+			randomObjectEntryFolder());
+	}
+
+	@Override
 	protected ObjectEntryFolder
 			testPutObjectEntryFolderPermissionsPage_addObjectEntryFolder()
 		throws Exception {

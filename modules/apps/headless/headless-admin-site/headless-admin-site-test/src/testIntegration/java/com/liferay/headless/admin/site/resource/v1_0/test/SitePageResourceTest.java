@@ -222,9 +222,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodeSitePage()
 		throws Exception {
 
-		// Order matters,
-		// _testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority must
-		// be executed first since it needs a clean site
+		_testPatchSiteSiteByExternalReferenceCodeSitePage(
+			SitePage.Type.CONTENT_PAGE);
+		_testPatchSiteSiteByExternalReferenceCodeSitePage(
+			SitePage.Type.WIDGET_PAGE);
 
 		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
 			(curParentSitePageExternalReferenceCode, curPriority, sitePage) -> {
@@ -258,11 +259,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						testGroup.getGroupId()),
 					patchSitePage);
 			});
-
-		_testPatchSiteSiteByExternalReferenceCodeSitePage(
-			SitePage.Type.CONTENT_PAGE);
-		_testPatchSiteSiteByExternalReferenceCodeSitePage(
-			SitePage.Type.WIDGET_PAGE);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -351,9 +347,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodeSitePage()
 		throws Exception {
 
-		// Order matters,
-		// _testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority must
-		// be executed first since it needs a clean site
+		_testPutSiteSiteByExternalReferenceCodeSitePage(
+			SitePage.Type.CONTENT_PAGE);
+		_testPutSiteSiteByExternalReferenceCodeSitePage(
+			SitePage.Type.WIDGET_PAGE);
 
 		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
 			(parentSitePageExternalReferenceCode, priority, sitePage) -> {
@@ -378,11 +375,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						testGroup.getGroupId()),
 					putSitePage);
 			});
-
-		_testPutSiteSiteByExternalReferenceCodeSitePage(
-			SitePage.Type.CONTENT_PAGE);
-		_testPutSiteSiteByExternalReferenceCodeSitePage(
-			SitePage.Type.WIDGET_PAGE);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

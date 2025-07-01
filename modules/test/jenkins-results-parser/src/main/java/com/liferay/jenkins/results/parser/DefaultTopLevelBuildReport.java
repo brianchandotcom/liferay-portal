@@ -127,6 +127,11 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 		return buildReportJSONObject;
 	}
 
+	@Override
+	public Date getStartDate() {
+		return new Date(_topLevelBuild.getStartTime());
+	}
+
 	protected DefaultTopLevelBuildReport(TopLevelBuild topLevelBuild) {
 		super(topLevelBuild);
 

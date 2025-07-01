@@ -75,7 +75,7 @@ public class CloudBucketUtil {
 			String s3ChecksumSourcePath =
 				s3SourcePath + _CHECKSUM_FILE_EXTENSION;
 
-			if (s3FileExists(s3ChecksumSourcePath)) {
+			if (_exists(s3ChecksumSourcePath)) {
 				copyS3ToS3(
 					s3DestinationPath + _CHECKSUM_FILE_EXTENSION,
 					s3ChecksumSourcePath);
@@ -328,13 +328,6 @@ public class CloudBucketUtil {
 			process.getInputStream());
 	}
 
-	public static boolean s3FileExists(String s3FilePath)
-		throws IOException, TimeoutException {
-
-		return !JenkinsResultsParserUtil.isNullOrEmpty(
-			listS3Files(s3FilePath, true));
-	}
-
 	public static void syncGCPFiles(String destination, String source)
 		throws IOException {
 
@@ -486,6 +479,13 @@ public class CloudBucketUtil {
 
 			throw new RuntimeException(exception);
 		}
+	}
+
+	private static boolean _exists(String s3FilePath)
+		throws IOException, TimeoutException {
+
+		return !JenkinsResultsParserUtil.isNullOrEmpty(
+			listS3Files(s3FilePath, true));
 	}
 
 	private static String _getFileTransferCommand(

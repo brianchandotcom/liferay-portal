@@ -3364,14 +3364,6 @@
 					"title": "Connection Properties",
 					"type": "array"
 				},
-				"errorPasswordAgeKeywords": {
-					"default": "age",
-					"items": {
-						"type": "string"
-					},
-					"title": "Error Password Age Keywords",
-					"type": "array"
-				},
 				"errorPasswordExpiredKeywords": {
 					"default": "expired",
 					"items": {
@@ -3386,30 +3378,6 @@
 						"type": "string"
 					},
 					"title": "Error Password History Keywords",
-					"type": "array"
-				},
-				"errorPasswordNotChangeableKeywords": {
-					"default": "not allowed to change",
-					"items": {
-						"type": "string"
-					},
-					"title": "Error Password Not Changeable Keywords",
-					"type": "array"
-				},
-				"errorPasswordSyntaxKeywords": {
-					"default": "syntax",
-					"items": {
-						"type": "string"
-					},
-					"title": "Error Password Syntax Keywords",
-					"type": "array"
-				},
-				"errorPasswordTrivialTextKeywords": {
-					"default": "trivial",
-					"items": {
-						"type": "string"
-					},
-					"title": "Error Password Trivial Text Keywords",
 					"type": "array"
 				},
 				"errorUserLockoutKeywords": {

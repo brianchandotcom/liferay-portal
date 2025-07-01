@@ -180,21 +180,6 @@ public class ObjectEntryFolderResourceImpl
 	}
 
 	@Override
-	public ObjectEntryFolder patchObjectEntryFolder(
-			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return _patchObjectEntryFolder(
-			objectEntryFolder,
-			_objectEntryFolderService.getObjectEntryFolder(
-				objectEntryFolderId));
-	}
-
-	@Override
 	public ObjectEntryFolder
 			patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
 				String scopeKey, String externalReferenceCode,
@@ -294,7 +279,29 @@ public class ObjectEntryFolderResourceImpl
 			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		return patchObjectEntryFolder(objectEntryFolderId, objectEntryFolder);
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		com.liferay.object.model.ObjectEntryFolder persistedObjectEntryFolder =
+			_objectEntryFolderService.fetchObjectEntryFolder(
+				objectEntryFolderId);
+
+		if (persistedObjectEntryFolder == null) {
+			long groupId = _getGroupId(objectEntryFolder.getScopeKey());
+
+			return _addObjectEntryFolder(
+				groupId,
+				GetterUtil.getLong(
+					_getParentObjectEntryFolderId(
+						true, groupId, objectEntryFolder)),
+				objectEntryFolder);
+		}
+
+		return _updateObjectEntryFolder(
+			objectEntryFolder,
+			_objectEntryFolderService.getObjectEntryFolder(
+				objectEntryFolderId));
 	}
 
 	@Override
@@ -421,6 +428,36 @@ public class ObjectEntryFolderResourceImpl
 		return persistedObjectEntryFolder.getObjectEntryFolderId();
 	}
 
+	private ObjectEntryFolder _toObjectEntryFolder(
+			com.liferay.object.model.ObjectEntryFolder
+				persistedObjectEntryFolder)
+		throws Exception {
+
+		return _objectEntryFolderDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.put(
+					"delete",
+					addAction(
+						ActionKeys.DELETE, persistedObjectEntryFolder,
+						"deleteObjectEntryFolder")
+				).put(
+					"get",
+					addAction(
+						ActionKeys.VIEW, persistedObjectEntryFolder,
+						"getObjectEntryFolder")
+				).put(
+					"update",
+					addAction(
+						ActionKeys.UPDATE, persistedObjectEntryFolder,
+						"patchObjectEntryFolder")
+				).build(),
+				_dtoConverterRegistry,
+				persistedObjectEntryFolder.getObjectEntryFolderId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
+	}
+
 	private ObjectEntryFolder _updateObjectEntryFolder(
 			ObjectEntryFolder objectEntryFolder,
 			com.liferay.object.model.ObjectEntryFolder
@@ -465,36 +502,6 @@ public class ObjectEntryFolderResourceImpl
 					persistedObjectEntryFolder.getGroupId(),
 					contextHttpServletRequest, null
 				).build()));
-	}
-
-	private ObjectEntryFolder _toObjectEntryFolder(
-			com.liferay.object.model.ObjectEntryFolder
-				persistedObjectEntryFolder)
-		throws Exception {
-
-		return _objectEntryFolderDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				HashMapBuilder.put(
-					"delete",
-					addAction(
-						ActionKeys.DELETE, persistedObjectEntryFolder,
-						"deleteObjectEntryFolder")
-				).put(
-					"get",
-					addAction(
-						ActionKeys.VIEW, persistedObjectEntryFolder,
-						"getObjectEntryFolder")
-				).put(
-					"update",
-					addAction(
-						ActionKeys.UPDATE, persistedObjectEntryFolder,
-						"patchObjectEntryFolder")
-				).build(),
-				_dtoConverterRegistry,
-				persistedObjectEntryFolder.getObjectEntryFolderId(),
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser));
 	}
 
 	@Reference

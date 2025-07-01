@@ -49,7 +49,7 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 
 <aui:button-row>
 	<portlet:renderURL var="createPatcherBuildURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/create_builds" />
+		<portlet:param name="mvcRenderCommandName" value="/patcher/add_builds" />
 		<portlet:param name="patcherProductVersionId" value="<%= String.valueOf(patcherProductVersionId) %>" />
 		<portlet:param name="redirect" value="<%= viewPatcherAccountURL %>" />
 	</portlet:renderURL>
@@ -351,7 +351,7 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 
 				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherBuild, PatcherActionKeys.EDIT, patcherBuild.getUserId()) && PatcherBuildUtil.isLatestPatcherBuild(patcherBuild) && (patcherBuild.getType() != PatcherBuildConstants.TYPE_FIX_PACK) %>">
 					<portlet:renderURL var="createPatcherBuildTemplateURL">
-						<portlet:param name="mvcRenderCommandName" value="/patcher/create_builds" />
+						<portlet:param name="mvcRenderCommandName" value="/patcher/add_builds" />
 						<portlet:param name="templatePatcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
 						<portlet:param name="redirect" value="<%= viewPatcherAccountURL %>" />
 					</portlet:renderURL>

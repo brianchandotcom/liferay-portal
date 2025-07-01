@@ -134,7 +134,15 @@ public class AdvancedTableFDSView extends BaseTableFDSView {
 				fdsTableSchemaField.setContentRendererModuleURL(moduleName);
 			}
 		).add(
-			"size", "size"
+			"size", "size",
+			fdsTableSchemaField -> {
+
+				// Set invalid client extension
+
+				fdsTableSchemaField.setContentRendererClientExtension(true);
+				fdsTableSchemaField.setContentRendererModuleURL(
+					"default from /");
+			}
 		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

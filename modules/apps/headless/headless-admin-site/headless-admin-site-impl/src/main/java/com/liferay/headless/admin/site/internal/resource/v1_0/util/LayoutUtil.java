@@ -619,11 +619,15 @@ public class LayoutUtil {
 
 		return LayoutServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getParentLayoutId(), nameMap, titleMap, descriptionMap,
-			layout.getKeywordsMap(), robotsMap, layout.getType(),
-			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null,
-			styleBookEntryId, faviconFileEntryId, masterLayoutPlid,
-			serviceContext);
+			GetterUtil.getLong(
+				serviceContext.getAttribute("parentLayoutId"),
+				layout.getParentLayoutId()),
+			nameMap, titleMap, descriptionMap, layout.getKeywordsMap(),
+			robotsMap, layout.getType(),
+			GetterUtil.getBoolean(
+				serviceContext.getAttribute("hidden"), layout.isHidden()),
+			friendlyURLMap, layout.getIconImage(), null, styleBookEntryId,
+			faviconFileEntryId, masterLayoutPlid, serviceContext);
 	}
 
 	private static Layout _updateLookAndFeel(Layout layout, Settings settings)

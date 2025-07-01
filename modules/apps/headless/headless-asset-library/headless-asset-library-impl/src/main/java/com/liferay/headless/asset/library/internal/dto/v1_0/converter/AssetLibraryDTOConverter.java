@@ -8,6 +8,7 @@ package com.liferay.headless.asset.library.internal.dto.v1_0.converter;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.MimeTypeLimit;
 import com.liferay.headless.asset.library.dto.v1_0.Settings;
@@ -157,7 +158,7 @@ public class AssetLibraryDTOConverter
 				setLogoColor(
 					() -> GetterUtil.get(
 						unicodeProperties.get("logoColor"), "outline-0"));
-				setMimeTypeLimits(() -> _toMimeTypeLimits(unicodeProperties));
+				setMimeTypeLimits(() -> _toMimeTypeLimits(group.getGroupId()));
 				setSharingEnabled(
 					() -> GetterUtil.getBoolean(
 						unicodeProperties.get("sharingEnabled")));
@@ -173,6 +174,9 @@ public class AssetLibraryDTOConverter
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private DLSizeLimitConfigurationProvider _dlSizeLimitConfigurationProvider;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

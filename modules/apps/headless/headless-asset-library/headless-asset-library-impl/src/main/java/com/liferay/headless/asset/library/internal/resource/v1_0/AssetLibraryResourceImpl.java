@@ -13,7 +13,9 @@ import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.depot.service.DepotEntryPinService;
 import com.liferay.depot.service.DepotEntryService;
+import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
+import com.liferay.headless.asset.library.dto.v1_0.MimeTypeLimit;
 import com.liferay.headless.asset.library.dto.v1_0.Settings;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -44,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -230,17 +233,17 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			() -> _toUnicodeProperties(assetLibrary.getSettings()));
 
 		return _toAssetLibrary(
-			_depotEntryService.updateDepotEntry(
-				depotEntry.getDepotEntryId(),
-				LocalizedMapUtil.getLocalizedMap(
-					contextAcceptLanguage.getPreferredLocale(), name, nameMap),
+			_addOrUpdateDepotEntry(
+				assetLibrary,
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(), description,
 					descriptionMap),
-				_getDepotAppCustomizationMap(
-					contextCompany.getCompanyId(),
-					group.getExternalReferenceCode()),
-				unicodeProperties, _getServiceContext()));
+				group.getExternalReferenceCode(),
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(), name, nameMap),
+				_getServiceContext(), unicodeProperties,
+				_dlSizeLimitConfigurationProvider.getGroupMimeTypeSizeLimit(
+					group.getGroupId())));
 	}
 
 	@Override
@@ -277,7 +280,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					contextAcceptLanguage.getPreferredLocale(),
 					assetLibrary.getName(), assetLibrary.getName_i18n()),
 				_getServiceContext(),
-				_toUnicodeProperties(assetLibrary.getSettings())));
+				_toUnicodeProperties(assetLibrary.getSettings()),
+				new LinkedHashMap<>()));
 	}
 
 	@Override
@@ -301,7 +305,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					contextAcceptLanguage.getPreferredLocale(),
 					assetLibrary.getName(), assetLibrary.getName_i18n()),
 				_getServiceContext(),
-				_toUnicodeProperties(assetLibrary.getSettings())));
+				_toUnicodeProperties(assetLibrary.getSettings()),
+				new LinkedHashMap<>()));
 	}
 
 	@Override
@@ -337,7 +342,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	private DepotEntry _addOrUpdateDepotEntry(
 			AssetLibrary assetLibrary, Map<Locale, String> descriptionMap,
 			String externalReferenceCode, Map<Locale, String> nameMap,
-			ServiceContext serviceContext, UnicodeProperties unicodeProperties)
+			ServiceContext serviceContext, UnicodeProperties unicodeProperties,
+			Map<String, Long> mimeTypeSizeLimits)
 		throws Exception {
 
 		Group group = null;
@@ -347,10 +353,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				externalReferenceCode, serviceContext.getCompanyId());
 		}
 
-		DepotEntry depotEntry = null;
-
 		if (group != null) {
-			depotEntry = _depotEntryService.getGroupDepotEntry(
+			DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
 				group.getGroupId());
 
 			if (!externalReferenceCode.equals(
@@ -364,6 +368,9 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				group = _groupLocalService.updateGroup(group);
 			}
 
+			_updateDLSizeLimitConfiguration(
+				assetLibrary, group.getGroupId(), mimeTypeSizeLimits);
+
 			return _depotEntryService.updateDepotEntry(
 				depotEntry.getDepotEntryId(), nameMap, descriptionMap,
 				_getDepotAppCustomizationMap(
@@ -371,8 +378,10 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				unicodeProperties, serviceContext);
 		}
 
-		depotEntry = _depotEntryService.addDepotEntry(
+		DepotEntry depotEntry = _depotEntryService.addDepotEntry(
 			nameMap, descriptionMap, serviceContext);
+
+		group = depotEntry.getGroup();
 
 		if (Validator.isNotNull(externalReferenceCode) ||
 			((unicodeProperties != null) && !unicodeProperties.isEmpty())) {
@@ -385,8 +394,11 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				group.setTypeSettingsProperties(unicodeProperties);
 			}
 
-			_groupLocalService.updateGroup(group);
+			group = _groupLocalService.updateGroup(group);
 		}
+
+		_updateDLSizeLimitConfiguration(
+			assetLibrary, group.getGroupId(), mimeTypeSizeLimits);
 
 		return depotEntry;
 	}
@@ -527,6 +539,23 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		).build();
 	}
 
+	private void _updateDLSizeLimitConfiguration(
+			AssetLibrary assetLibrary, long groupId,
+			Map<String, Long> mimeTypeSizeLimits)
+		throws Exception {
+
+		Settings settings = assetLibrary.getSettings();
+
+		for (MimeTypeLimit mimeTypeLimit : settings.getMimeTypeLimits()) {
+			mimeTypeSizeLimits.put(
+				mimeTypeLimit.getMimeType(),
+				GetterUtil.getLong(mimeTypeLimit.getMaximumSize()));
+		}
+
+		_dlSizeLimitConfigurationProvider.updateGroupSizeLimit(
+			groupId, 0L, 0L, mimeTypeSizeLimits);
+	}
+
 	@Reference(
 		target = "(component.name=com.liferay.headless.asset.library.internal.dto.v1_0.converter.AssetLibraryDTOConverter)"
 	)
@@ -544,6 +573,9 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Reference
 	private DepotEntryService _depotEntryService;
+
+	@Reference
+	private DLSizeLimitConfigurationProvider _dlSizeLimitConfigurationProvider;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

@@ -4546,13 +4546,15 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
+		if (!objectDefinition.isEnableObjectEntryVersioning()) {
+			return;
+		}
+
 		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(
 				objectEntry.getObjectEntryId(), objectEntry.getVersion());
 
-		if (!objectDefinition.isEnableObjectEntryVersioning() ||
-			(objectEntryVersion.getDisplayDate() == null)) {
-
+		if (objectEntryVersion.getDisplayDate() == null) {
 			return;
 		}
 
@@ -5743,9 +5745,9 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getCompanyId(), objectEntry, values);
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 
-		if (((workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) &&
-			 !objectEntry.isPending()) ||
-			(objectEntry.getDisplayDate() == null)) {
+		if ((workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) &&
+			(!objectEntry.isPending() ||
+			 (objectEntry.getDisplayDate() == null))) {
 
 			objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 			objectEntry.setStatusByUserId(user.getUserId());

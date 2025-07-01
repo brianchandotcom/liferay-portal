@@ -293,6 +293,16 @@ public class JournalArticleActionDropdownItemsProvider {
 								 WorkflowConstants.STATUS_SCHEDULED)),
 						_getExpireArticleActionConsumer(
 							articleId, _themeDisplay.getURLCurrent())
+					).add(
+						() ->
+							JournalArticlePermission.contains(
+								_themeDisplay.getPermissionChecker(), _article,
+								ActionKeys.UPDATE) &&
+							!JournalArticleLocalServiceUtil.isLatestVersion(
+								_article.getGroupId(), _article.getArticleId(),
+								_article.getVersion()),
+						_getRevertArticleActionConsumer(
+							_themeDisplay.getURLCurrent())
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -885,6 +895,32 @@ public class JournalArticleActionDropdownItemsProvider {
 			_liferayPortletRequest, "referringPortletResource");
 
 		return _referringPortletResource;
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getRevertArticleActionConsumer(String redirect) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "revertArticle");
+			dropdownItem.putData(
+				"revertURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/journal/revert_article"
+				).setRedirect(
+					redirect
+				).setParameter(
+					"articleId", _article.getArticleId()
+				).setParameter(
+					"groupId", _article.getGroupId()
+				).setParameter(
+					"version", _article.getVersion()
+				).buildString());
+			dropdownItem.setIcon("undo");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "revert"));
+		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

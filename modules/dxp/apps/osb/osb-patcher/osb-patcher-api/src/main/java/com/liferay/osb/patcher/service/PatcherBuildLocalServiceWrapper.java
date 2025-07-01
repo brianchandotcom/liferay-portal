@@ -719,6 +719,15 @@ public class PatcherBuildLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.patcher.model.PatcherBuild updateComments(
+			long patcherBuildId, String comments)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherBuildLocalService.updateComments(
+			patcherBuildId, comments);
+	}
+
+	@Override
 	public com.liferay.osb.patcher.model.PatcherBuild updateNotified(
 			long patcherBuildId, boolean notified)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -752,6 +761,32 @@ public class PatcherBuildLocalServiceWrapper
 		com.liferay.osb.patcher.model.PatcherBuild patcherBuild) {
 
 		return _patcherBuildLocalService.updatePatcherBuild(patcherBuild);
+	}
+
+	@Override
+	public com.liferay.osb.patcher.model.PatcherBuild updateQaFields(
+			long patcherBuildId, String qaComments, int qaStatus)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherBuildLocalService.updateQaFields(
+			patcherBuildId, qaComments, qaStatus);
+	}
+
+	@Override
+	public com.liferay.osb.patcher.model.PatcherBuild updateQaStatus(
+			long patcherBuildId, int qaStatus)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherBuildLocalService.updateQaStatus(
+			patcherBuildId, qaStatus);
+	}
+
+	@Override
+	public com.liferay.osb.patcher.model.PatcherBuild updateStatus(
+			long patcherBuildId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherBuildLocalService.updateStatus(patcherBuildId, status);
 	}
 
 	@Override

@@ -590,6 +590,13 @@ public class PatcherBuildLocalServiceUtil {
 		getService().setPatcherFixPatcherBuilds(patcherFixId, patcherBuildIds);
 	}
 
+	public static PatcherBuild updateComments(
+			long patcherBuildId, String comments)
+		throws PortalException {
+
+		return getService().updateComments(patcherBuildId, comments);
+	}
+
 	public static PatcherBuild updateNotified(
 			long patcherBuildId, boolean notified)
 		throws PortalException {
@@ -618,6 +625,26 @@ public class PatcherBuildLocalServiceUtil {
 	 */
 	public static PatcherBuild updatePatcherBuild(PatcherBuild patcherBuild) {
 		return getService().updatePatcherBuild(patcherBuild);
+	}
+
+	public static PatcherBuild updateQaFields(
+			long patcherBuildId, String qaComments, int qaStatus)
+		throws PortalException {
+
+		return getService().updateQaFields(
+			patcherBuildId, qaComments, qaStatus);
+	}
+
+	public static PatcherBuild updateQaStatus(long patcherBuildId, int qaStatus)
+		throws PortalException {
+
+		return getService().updateQaStatus(patcherBuildId, qaStatus);
+	}
+
+	public static PatcherBuild updateStatus(long patcherBuildId, int status)
+		throws PortalException {
+
+		return getService().updateStatus(patcherBuildId, status);
 	}
 
 	public static PatcherBuildLocalService getService() {

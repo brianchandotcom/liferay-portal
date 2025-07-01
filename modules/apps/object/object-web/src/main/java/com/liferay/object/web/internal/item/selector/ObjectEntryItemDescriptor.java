@@ -77,14 +77,7 @@ public class ObjectEntryItemDescriptor
 				return String.valueOf(_objectEntry.getObjectEntryId());
 			}
 		).put(
-			"externalReferenceCode",
-			() -> {
-				if (!_objectDefinition.isDefaultStorageType()) {
-					return _objectEntry.getExternalReferenceCode();
-				}
-
-				return null;
-			}
+			"externalReferenceCode", _objectEntry.getExternalReferenceCode()
 		).put(
 			"title", getTitle(themeDisplay.getLocale())
 		).toString();

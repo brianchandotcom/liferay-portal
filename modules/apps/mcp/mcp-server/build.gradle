@@ -1,5 +1,9 @@
 dependencies {
-	compileOnly group: "com.liferay.portal", name: "release.dxp.api", version: "2024.q2.7"
-
-	compileInclude 'io.modelcontextprotocol.sdk:mcp:0.10.0'
+	compileInclude group: "io.modelcontextprotocol.sdk", name: "mcp", version: "0.10.0"
+	compileInclude group: "io.projectreactor", name: "reactor-core", version: "3.6.5"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":core:petra:petra-function")
 }

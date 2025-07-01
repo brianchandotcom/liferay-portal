@@ -290,6 +290,14 @@ public class ObjectEntryFolderResourceImpl
 	}
 
 	@Override
+	protected ObjectEntryFolder doPutObjectEntryFolder(
+			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return patchObjectEntryFolder(objectEntryFolderId, objectEntryFolder);
+	}
+
+	@Override
 	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
 		com.liferay.object.model.ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderService.getObjectEntryFolder(

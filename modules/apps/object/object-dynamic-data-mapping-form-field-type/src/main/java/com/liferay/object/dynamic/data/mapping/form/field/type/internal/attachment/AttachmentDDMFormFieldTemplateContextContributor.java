@@ -20,6 +20,7 @@ import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.attachment.AttachmentManager;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -215,22 +215,16 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 						return url;
 					}
 
-					url = _dlURLHelper.getDownloadURL(
-						fileEntry, fileEntry.getFileVersion(), themeDisplay,
-						StringPool.BLANK);
-
-					url = HttpComponentsUtil.addParameter(
-						url, "objectDefinitionExternalReferenceCode",
+					return ObjectFieldUtil.getAttachmentDownloadURL(
+						_dlURLHelper, fileEntry,
+						GetterUtil.getLong(ddmFormField.getProperty("groupId")),
 						GetterUtil.getString(
 							ddmFormField.getProperty(
-								"objectDefinitionExternalReferenceCode")));
-					url = HttpComponentsUtil.addParameter(
-						url, "objectEntryExternalReferenceCode",
+								"objectDefinitionExternalReferenceCode")),
 						GetterUtil.getString(
 							ddmFormField.getProperty(
-								"objectEntryExternalReferenceCode")));
-
-					return url;
+								"objectEntryExternalReferenceCode")),
+						themeDisplay);
 				}
 			).put(
 				"title", fileEntry.getFileName()

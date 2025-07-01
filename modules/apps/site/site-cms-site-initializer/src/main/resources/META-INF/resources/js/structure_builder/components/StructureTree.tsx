@@ -31,15 +31,13 @@ import {
 	RepeatableGroup,
 	Structure,
 	StructureChild,
-	Structures,
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
-import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
-import getStructureEditURL from '../utils/getStructureEditURL';
 
 type TreeItem = {
 	children?: TreeItem[];
+	editURL?: string;
 	erc?: string;
 	icon: string;
 	id: string;
@@ -60,11 +58,8 @@ export default function StructureTree({search}: {search: string}) {
 	const structureError = useSelector(selectStructureError);
 	const structureERC = useSelector(selectStructureERC);
 
-	const {
-		data: structures,
-		load: loadStructures,
-		status: structuresStatus,
-	} = useCache('structures');
+	const {load: loadObjectDefinitions, status: objectDefinitionsStatus} =
+		useCache('object-definitions');
 
 	const mode = useSelectionMode();
 
@@ -78,7 +73,7 @@ export default function StructureTree({search}: {search: string}) {
 	);
 
 	const items: TreeItem[] = useMemo(() => {
-		if (hasReferencedStructure && structuresStatus !== 'saved') {
+		if (hasReferencedStructure && objectDefinitionsStatus !== 'saved') {
 			return [];
 		}
 
@@ -88,7 +83,6 @@ export default function StructureTree({search}: {search: string}) {
 					children,
 					search,
 					structureERC,
-					structures,
 				}),
 				icon: 'edit-layout',
 				id: structureUuid,
@@ -99,12 +93,11 @@ export default function StructureTree({search}: {search: string}) {
 	}, [
 		children,
 		hasReferencedStructure,
+		objectDefinitionsStatus,
 		search,
 		structureERC,
 		structureLabel,
 		structureUuid,
-		structures,
-		structuresStatus,
 	]);
 
 	const onSelect = (item: TreeItem) => {
@@ -148,12 +141,16 @@ export default function StructureTree({search}: {search: string}) {
 	};
 
 	useEffect(() => {
-		if (structuresStatus === 'stale' && hasReferencedStructure) {
-			loadStructures();
+		if (objectDefinitionsStatus === 'stale' && hasReferencedStructure) {
+			loadObjectDefinitions();
 		}
-	}, [hasReferencedStructure, loadStructures, structuresStatus]);
+	}, [
+		hasReferencedStructure,
+		loadObjectDefinitions,
+		objectDefinitionsStatus,
+	]);
 
-	if (structuresStatus === 'saving' && hasReferencedStructure) {
+	if (objectDefinitionsStatus === 'saving' && hasReferencedStructure) {
 		return <ClayLoadingIndicator className="my-6" />;
 	}
 
@@ -210,7 +207,6 @@ export default function StructureTree({search}: {search: string}) {
 								dispatch,
 								item: childItem,
 								parent: item,
-								structures,
 							});
 
 							return (
@@ -310,47 +306,18 @@ function buildItems({
 	path = [],
 	search,
 	structureERC,
-	structures,
 }: {
 	children: (Structure | RepeatableGroup)['children'];
 	path?: string[];
 	search: string;
 	structureERC: Structure['erc'];
-	structures: Structures;
 }): TreeItem[] {
 	return Array.from(children.values()).reduce(
 		(items: TreeItem[], child: StructureChild) => {
-			if (child.type === 'referenced-structure') {
-				const structure = structures.get(child.erc)!;
-				const label = getReferencedStructureLabel(
-					child.erc,
-					structures
-				);
-
-				const item: TreeItem = {
-					children:
-						child.erc === structureERC
-							? []
-							: buildItems({
-									children: structure.children,
-									path: [...path, child.name],
-									search,
-									structureERC,
-									structures,
-								}),
-					erc: child.erc,
-					icon: 'edit-layout',
-					id: buildId(path, child),
-					label: getReferencedStructureLabel(child.erc, structures),
-					type: child.type,
-					uuid: child.uuid,
-				};
-
-				if (match(label, search) || item.children?.length) {
-					items.push(item);
-				}
-			}
-			else if (child.type === 'repeatable-group') {
+			if (
+				child.type === 'referenced-structure' ||
+				child.type === 'repeatable-group'
+			) {
 				const label =
 					child.label[Liferay.ThemeDisplay.getDefaultLanguageId()]!;
 
@@ -360,15 +327,18 @@ function buildItems({
 						path: [...path, child.name],
 						search,
 						structureERC,
-						structures,
 					}),
 					erc: child.erc,
 					icon: 'fieldset',
 					id: buildId(path, child),
 					label,
 					type: child.type,
-					uuid: child.uuid,
 				};
+
+				if (child.type === 'referenced-structure') {
+					item.icon = 'edit-layout';
+					item.editURL = child.editURL;
+				}
 
 				if (match(label, search) || item.children?.length) {
 					items.push(item);
@@ -413,27 +383,21 @@ function getItemActions({
 	dispatch,
 	item,
 	parent,
-	structures,
 }: {
 	dispatch: React.Dispatch<Action>;
 	item: TreeItem;
 	parent: TreeItem;
-	structures: Structures;
 }) {
 	const actions = [];
 
 	if (item.type === 'referenced-structure' && item.erc) {
-		const structure = structures.get(item.erc);
-
-		if (structure) {
-			actions.push({
-				href: getStructureEditURL(structure),
-				label: Liferay.Language.get('edit'),
-				symbolLeft: 'pencil',
-				symbolRight: 'shortcut',
-				target: '_blank',
-			});
-		}
+		actions.push({
+			href: item.editURL,
+			label: Liferay.Language.get('edit'),
+			symbolLeft: 'pencil',
+			symbolRight: 'shortcut',
+			target: '_blank',
+		});
 	}
 
 	if (parent.type !== 'referenced-structure') {

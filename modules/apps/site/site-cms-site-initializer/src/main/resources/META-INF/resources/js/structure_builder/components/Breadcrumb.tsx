@@ -6,14 +6,12 @@
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import React, {useMemo} from 'react';
 
-import {useCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureChildren from '../selectors/selectStructureChildren';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
-import {RepeatableGroup, Structure, Structures} from '../types/Structure';
+import {RepeatableGroup, Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
 
 type Path = {label: string; uuid: Uuid}[];
 
@@ -25,10 +23,8 @@ export default function Breadcrumb({uuid}: {uuid: Uuid}) {
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
 	const structureUuid = useSelector(selectStructureUuid);
 
-	const {data: structures} = useCache('structures');
-
 	const items = useMemo(() => {
-		const path = getPath(uuid, children, structures, [
+		const path = getPath(uuid, children, [
 			{label: structureLabel, uuid: structureUuid},
 		]);
 
@@ -54,7 +50,7 @@ export default function Breadcrumb({uuid}: {uuid: Uuid}) {
 				},
 			};
 		});
-	}, [children, dispatch, structureLabel, structureUuid, structures, uuid]);
+	}, [children, dispatch, structureLabel, structureUuid, uuid]);
 
 	return (
 		<div className="mb-3">
@@ -66,59 +62,33 @@ export default function Breadcrumb({uuid}: {uuid: Uuid}) {
 function getPath(
 	uuid: Uuid,
 	children: (Structure | RepeatableGroup)['children'],
-	structures: Structures,
 	path: Path = []
 ): Path | null {
 	for (const child of children.values()) {
 		if (child.uuid === uuid) {
-			if (child.type === 'referenced-structure') {
-				path.push({
-					label: getReferencedStructureLabel(child.erc, structures),
-					uuid: child.uuid,
-				});
-			}
-			else {
-				path.push({
+			return [
+				...path,
+				{
 					label: child!.label[
 						Liferay.ThemeDisplay.getDefaultLanguageId()
 					]!,
 					uuid: child.uuid,
-				});
-			}
-
-			return path;
+				},
+			];
 		}
-
-		if (child.type === 'referenced-structure') {
-			const structure = structures.get(child.erc);
-
-			path.push({
-				label: getReferencedStructureLabel(child.erc, structures),
-				uuid: child.uuid,
-			});
-
-			if (structure) {
-				const nextPath = getPath(
-					uuid,
-					structure.children,
-					structures,
-					path
-				);
-
-				if (nextPath) {
-					return nextPath;
-				}
-			}
-		}
-		else if (child.type === 'repeatable-group') {
-			path.push({
-				label: child!.label[
-					Liferay.ThemeDisplay.getDefaultLanguageId()
-				]!,
-				uuid: child.uuid,
-			});
-
-			const nextPath = getPath(uuid, child.children, structures, path);
+		else if (
+			child.type === 'referenced-structure' ||
+			child.type === 'repeatable-group'
+		) {
+			const nextPath = getPath(uuid, child.children, [
+				...path,
+				{
+					label: child!.label[
+						Liferay.ThemeDisplay.getDefaultLanguageId()
+					]!,
+					uuid: child.uuid,
+				},
+			]);
 
 			if (nextPath) {
 				return nextPath;

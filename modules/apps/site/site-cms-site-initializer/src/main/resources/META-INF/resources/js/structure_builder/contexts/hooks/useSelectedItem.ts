@@ -9,11 +9,9 @@ import {
 	ReferencedStructure,
 	RepeatableGroup,
 	Structure,
-	Structures,
 } from '../../types/Structure';
 import {Uuid} from '../../types/Uuid';
 import {Field} from '../../utils/field';
-import {useCache} from '../CacheContext';
 import {useSelector} from '../StateContext';
 
 type SelectedChild =
@@ -31,8 +29,6 @@ export default function useSelectedItem(): SelectedItem {
 	const selection = useSelector(selectSelection);
 	const children = useSelector(selectStructureChildren);
 
-	const {data: structures} = useCache('structures');
-
 	const [uuid] = selection;
 
 	if (!uuid) {
@@ -43,7 +39,7 @@ export default function useSelectedItem(): SelectedItem {
 		return {type: 'multiselection'};
 	}
 
-	const child = findSelectedChild(uuid, children, structures);
+	const child = findSelectedChild(uuid, children);
 
 	if (child) {
 		return child;
@@ -55,7 +51,6 @@ export default function useSelectedItem(): SelectedItem {
 function findSelectedChild(
 	uuid: Uuid,
 	children: (Structure | RepeatableGroup)['children'],
-	structures: Structures,
 	isReferenced: boolean = false
 ): SelectedChild | null {
 	for (const child of children.values()) {
@@ -79,25 +74,11 @@ function findSelectedChild(
 				};
 			}
 		}
-
-		if (child.type === 'referenced-structure') {
-			const structure = structures.get(child.erc);
-
-			if (structure) {
-				const child = findSelectedChild(
-					uuid,
-					structure.children,
-					structures,
-					true
-				);
-
-				if (child) {
-					return child;
-				}
-			}
-		}
-		else if (child.type === 'repeatable-group') {
-			const group = findSelectedChild(uuid, child.children, structures);
+		else if (
+			child.type === 'referenced-structure' ||
+			child.type === 'repeatable-group'
+		) {
+			const group = findSelectedChild(uuid, child.children);
 
 			if (group) {
 				return group;

@@ -14,7 +14,7 @@ import {Space} from '../../common/types/Space';
 import {useCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectValidationErrors from '../selectors/selectValidationErrors';
-import {Structure} from '../types/Structure';
+import {ReferencedStructure, Structure} from '../types/Structure';
 
 type Item = {
 	label: string;
@@ -26,7 +26,7 @@ export default function Spaces({
 	structure,
 }: {
 	disabled?: boolean;
-	structure: Structure;
+	structure: Structure | ReferencedStructure;
 }) {
 	const {spaces: structureSpaces, uuid: structureUuid} = structure;
 

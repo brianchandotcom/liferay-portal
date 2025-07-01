@@ -514,16 +514,16 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			true
 		).put(
 			"autoTaggingEnabled",
-			GetterUtil.getString(settings.getAutoTaggingEnabled(), "false")
+			GetterUtil.getBoolean(settings.getAutoTaggingEnabled())
 		).put(
 			"logoColor",
 			GetterUtil.getString(settings.getLogoColor(), "outline-0")
 		).put(
 			"sharingEnabled",
-			GetterUtil.getString(settings.getSharingEnabled(), "false")
+			GetterUtil.getBoolean(settings.getSharingEnabled())
 		).put(
 			"useCustomLanguages",
-			GetterUtil.getString(settings.getUseCustomLanguages(), "false")
+			GetterUtil.getBoolean(settings.getUseCustomLanguages())
 		).build();
 	}
 

@@ -50,6 +50,34 @@ import org.json.JSONObject;
  */
 public abstract class BaseJob implements Job {
 
+	public Set<String> getAnalyticsCloudBatchNames() {
+		Set<String> batchNames = new TreeSet<>();
+
+		for (BatchTestClassGroup batchTestClassGroup :
+				getBatchTestClassGroups()) {
+
+			if (batchTestClassGroup.testAnalyticsCloud()) {
+				batchNames.add(batchTestClassGroup.getBatchName());
+			}
+		}
+
+		return batchNames;
+	}
+
+	public Set<String> getAnalyticsCloudSegmentNames() {
+		Set<String> segmentNames = new TreeSet<>();
+
+		for (SegmentTestClassGroup segmentTestClassGroup :
+				getSegmentTestClassGroups()) {
+
+			if (segmentTestClassGroup.testAnalyticsCloud()) {
+				segmentNames.add(segmentTestClassGroup.getSegmentName());
+			}
+		}
+
+		return segmentNames;
+	}
+
 	@Override
 	public int getAxisCount() {
 		List<AxisTestClassGroup> axisTestClassGroups = getAxisTestClassGroups();
@@ -397,11 +425,15 @@ public abstract class BaseJob implements Job {
 		for (SegmentTestClassGroup segmentTestClassGroup :
 				getSegmentTestClassGroups()) {
 
-			if (!standaloneTestBatchNames.contains(
-					segmentTestClassGroup.getBatchName())) {
+			if (standaloneTestBatchNames.contains(
+					segmentTestClassGroup.getBatchName()) ||
+				(segmentTestClassGroup.testAnalyticsCloud() &&
+				 JenkinsResultsParserUtil.isCloudCINode())) {
 
-				segmentNames.add(segmentTestClassGroup.getSegmentName());
+				continue;
 			}
+
+			segmentNames.add(segmentTestClassGroup.getSegmentName());
 		}
 
 		return segmentNames;

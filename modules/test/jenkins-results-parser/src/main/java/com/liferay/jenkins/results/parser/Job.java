@@ -23,6 +23,10 @@ import org.json.JSONObject;
  */
 public interface Job {
 
+	public Set<String> getAnalyticsCloudBatchNames();
+
+	public Set<String> getAnalyticsCloudSegmentNames();
+
 	public int getAxisCount();
 
 	public AxisTestClassGroup getAxisTestClassGroup(String axisName);

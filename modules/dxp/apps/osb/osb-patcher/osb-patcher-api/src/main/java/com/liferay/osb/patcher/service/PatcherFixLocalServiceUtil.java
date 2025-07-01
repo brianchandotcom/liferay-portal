@@ -542,6 +542,27 @@ public class PatcherFixLocalServiceUtil {
 			patcherFixPackId, patcherFixIds);
 	}
 
+	public static PatcherFix updateComments(long patcherFixId, String comments)
+		throws PortalException {
+
+		return getService().updateComments(patcherFixId, comments);
+	}
+
+	public static PatcherFix updateObsolete(long patcherFixId, boolean obsolete)
+		throws PortalException {
+
+		return getService().updateObsolete(patcherFixId, obsolete);
+	}
+
+	public static PatcherFix updatePatcherFix(
+			long patcherFixId, String dependencies, int fixPackStatus,
+			String requirements)
+		throws PortalException {
+
+		return getService().updatePatcherFix(
+			patcherFixId, dependencies, fixPackStatus, requirements);
+	}
+
 	/**
 	 * Updates the patcher fix in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -554,6 +575,12 @@ public class PatcherFixLocalServiceUtil {
 	 */
 	public static PatcherFix updatePatcherFix(PatcherFix patcherFix) {
 		return getService().updatePatcherFix(patcherFix);
+	}
+
+	public static PatcherFix updateType(long patcherFixId, int type)
+		throws PortalException {
+
+		return getService().updateType(patcherFixId, type);
 	}
 
 	public static PatcherFixLocalService getService() {

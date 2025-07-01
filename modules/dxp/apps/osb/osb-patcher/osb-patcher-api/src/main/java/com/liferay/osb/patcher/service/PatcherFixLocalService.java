@@ -393,6 +393,20 @@ public interface PatcherFixLocalService
 	public void setPatcherFixPackPatcherFixes(
 		long patcherFixPackId, long[] patcherFixIds);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public PatcherFix updateComments(long patcherFixId, String comments)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public PatcherFix updateObsolete(long patcherFixId, boolean obsolete)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public PatcherFix updatePatcherFix(
+			long patcherFixId, String dependencies, int fixPackStatus,
+			String requirements)
+		throws PortalException;
+
 	/**
 	 * Updates the patcher fix in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -405,5 +419,9 @@ public interface PatcherFixLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public PatcherFix updatePatcherFix(PatcherFix patcherFix);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public PatcherFix updateType(long patcherFixId, int type)
+		throws PortalException;
 
 }

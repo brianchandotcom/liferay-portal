@@ -648,6 +648,32 @@ public class PatcherFixLocalServiceWrapper
 			patcherFixPackId, patcherFixIds);
 	}
 
+	@Override
+	public com.liferay.osb.patcher.model.PatcherFix updateComments(
+			long patcherFixId, String comments)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherFixLocalService.updateComments(patcherFixId, comments);
+	}
+
+	@Override
+	public com.liferay.osb.patcher.model.PatcherFix updateObsolete(
+			long patcherFixId, boolean obsolete)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherFixLocalService.updateObsolete(patcherFixId, obsolete);
+	}
+
+	@Override
+	public com.liferay.osb.patcher.model.PatcherFix updatePatcherFix(
+			long patcherFixId, String dependencies, int fixPackStatus,
+			String requirements)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherFixLocalService.updatePatcherFix(
+			patcherFixId, dependencies, fixPackStatus, requirements);
+	}
+
 	/**
 	 * Updates the patcher fix in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -663,6 +689,14 @@ public class PatcherFixLocalServiceWrapper
 		com.liferay.osb.patcher.model.PatcherFix patcherFix) {
 
 		return _patcherFixLocalService.updatePatcherFix(patcherFix);
+	}
+
+	@Override
+	public com.liferay.osb.patcher.model.PatcherFix updateType(
+			long patcherFixId, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherFixLocalService.updateType(patcherFixId, type);
 	}
 
 	@Override

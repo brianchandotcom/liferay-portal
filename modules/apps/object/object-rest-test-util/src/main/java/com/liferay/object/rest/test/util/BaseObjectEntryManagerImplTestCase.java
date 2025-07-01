@@ -8,6 +8,7 @@ package com.liferay.object.rest.test.util;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -69,6 +70,22 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 			ObjectEntry actualObjectEntry, ObjectEntry expectedObjectEntry)
 		throws Exception {
 
+		Map<String, Map<String, String>> actualOjectEntryActions =
+			actualObjectEntry.getActions();
+
+		Map<String, Map<String, String>> expectedObjectEntryActions =
+			expectedObjectEntry.getActions();
+
+		if (expectedObjectEntryActions != null) {
+			for (Map.Entry<String, Map<String, String>> actualActions :
+					actualOjectEntryActions.entrySet()) {
+
+				Assert.assertEquals(
+					actualActions.getKey(), actualActions.getValue(),
+					expectedObjectEntryActions.get(actualActions.getKey()));
+			}
+		}
+
 		Map<String, Object> actualObjectEntryProperties =
 			actualObjectEntry.getProperties();
 
@@ -80,6 +97,12 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 
 			assertObjectEntryProperties(
 				actualObjectEntry, actualObjectEntryProperties, expectedEntry);
+		}
+
+		if (expectedObjectEntry.getStatus() != null) {
+			Assert.assertEquals(
+				_getObjectEntryStatusCode(expectedObjectEntry),
+				_getObjectEntryStatusCode(actualObjectEntry));
 		}
 	}
 
@@ -185,5 +208,11 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 
 	@Inject
 	protected ObjectFieldLocalService objectFieldLocalService;
+
+	private Integer _getObjectEntryStatusCode(ObjectEntry objectEntry) {
+		Status objectEntryStatus = objectEntry.getStatus();
+
+		return objectEntryStatus.getCode();
+	}
 
 }

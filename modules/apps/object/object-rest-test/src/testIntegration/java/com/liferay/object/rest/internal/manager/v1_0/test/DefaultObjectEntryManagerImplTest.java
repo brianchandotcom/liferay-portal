@@ -141,6 +141,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -173,6 +174,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -5920,6 +5922,173 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testToObjectEntry() throws Exception {
+
+		// Approved
+
+		String objectFieldName = "c" + RandomTestUtil.randomString();
+
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					objectFieldName
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		objectDefinition.setEnableObjectEntryDraft(true);
+
+		objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		Map<String, Map<String, String>> objectEntryActions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete", Collections.emptyMap()
+			).put(
+				"expire", Collections.emptyMap()
+			).put(
+				"get", Collections.emptyMap()
+			).put(
+				"permissions", Collections.emptyMap()
+			).put(
+				"replace", Collections.emptyMap()
+			).put(
+				"update", Collections.emptyMap()
+			).put(
+				"versions", Collections.emptyMap()
+			).build();
+
+		String objectFieldValue = RandomTestUtil.randomString();
+
+		assertEquals(
+			_defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							objectFieldName, objectFieldValue
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY),
+			new ObjectEntry() {
+				{
+					actions = objectEntryActions;
+					properties = HashMapBuilder.<String, Object>put(
+						objectFieldName, objectFieldValue
+					).build();
+					status = new Status() {
+						{
+							code = WorkflowConstants.STATUS_APPROVED;
+						}
+					};
+				}
+			});
+
+		// Draft
+
+		Map<String, Map<String, String>> objectEntryActionsWithoutExpire =
+			HashMapBuilder.<String, Map<String, String>>putAll(
+				objectEntryActions
+			).build();
+
+		objectEntryActionsWithoutExpire.remove("expire");
+
+		assertEquals(
+			_defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							objectFieldName, objectFieldValue
+						).build();
+						status = new Status() {
+							{
+								code = WorkflowConstants.STATUS_DRAFT;
+							}
+						};
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY),
+			new ObjectEntry() {
+				{
+					actions = objectEntryActionsWithoutExpire;
+					properties = HashMapBuilder.<String, Object>put(
+						objectFieldName, objectFieldValue
+					).build();
+					status = new Status() {
+						{
+							code = WorkflowConstants.STATUS_DRAFT;
+						}
+					};
+				}
+			});
+
+		// Expired
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectFieldName, objectFieldValue
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		assertEquals(
+			_defaultObjectEntryManager.expireObjectEntry(
+				_simpleDTOConverterContext, objectEntry.getId()),
+			new ObjectEntry() {
+				{
+					actions = objectEntryActionsWithoutExpire;
+					properties = HashMapBuilder.<String, Object>put(
+						objectFieldName, objectFieldValue
+					).build();
+					status = new Status() {
+						{
+							code = WorkflowConstants.STATUS_EXPIRED;
+						}
+					};
+				}
+			});
+
+		// Pending
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+			objectDefinition.getClassName(), 0, 0, "Single Approver", 1);
+
+		assertEquals(
+			_defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							objectFieldName, objectFieldValue
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY),
+			new ObjectEntry() {
+				{
+					actions = objectEntryActionsWithoutExpire;
+					properties = HashMapBuilder.<String, Object>put(
+						objectFieldName, objectFieldValue
+					).build();
+					status = new Status() {
+						{
+							code = WorkflowConstants.STATUS_PENDING;
+						}
+					};
+				}
+			});
+	}
+
+	@Test
 	public void testUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition2,
@@ -6690,14 +6859,14 @@ public class DefaultObjectEntryManagerImplTest
 				actualObjectEntryProperties.get(expectedEntry.getKey()));
 
 			assertEquals(
-				(ObjectEntry)actualObjectEntryProperties.get(
-					StringUtil.replaceLast(
-						_objectRelationshipFieldName, "Id", StringPool.BLANK)),
 				_objectEntryManager.getObjectEntry(
 					_objectDefinition1.getCompanyId(),
 					_simpleDTOConverterContext,
 					GetterUtil.getString(expectedEntry.getValue()),
-					_objectDefinition1, null));
+					_objectDefinition1, null),
+				(ObjectEntry)actualObjectEntryProperties.get(
+					StringUtil.replaceLast(
+						_objectRelationshipFieldName, "Id", StringPool.BLANK)));
 		}
 		else if (Objects.equals(
 					expectedEntry.getKey(), "attachmentObjectFieldName")) {
@@ -8314,5 +8483,12 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
+	@Inject
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

@@ -13,6 +13,7 @@ import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.MimeTypeLimit;
 import com.liferay.headless.asset.library.dto.v1_0.Settings;
 import com.liferay.headless.asset.library.internal.resource.v1_0.BaseAssetLibraryResourceImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -26,8 +27,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import jakarta.ws.rs.core.UriInfo;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -119,30 +118,23 @@ public class AssetLibraryDTOConverter
 		};
 	}
 
-	private MimeTypeLimit[] _toMimeTypeLimits(
-		UnicodeProperties unicodeProperties) {
+	private MimeTypeLimit[] _toMimeTypeLimits(long groupId) {
+		Map<String, Long> groupMimeTypeSizeLimit =
+			_dlSizeLimitConfigurationProvider.getGroupMimeTypeSizeLimit(
+				groupId);
 
-		List<MimeTypeLimit> mimeTypeLimits = new ArrayList<>();
+		return TransformUtil.transformToArray(
+			groupMimeTypeSizeLimit.entrySet(),
+			entry -> {
+				MimeTypeLimit mimeTypeLimit = new MimeTypeLimit();
 
-		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
-			String key = entry.getKey();
+				mimeTypeLimit.setMimeType(entry::getKey);
+				mimeTypeLimit.setMaximumSize(
+					() -> GetterUtil.getInteger(entry.getValue()));
 
-			if (!key.startsWith("mimeTypeLimit-")) {
-				continue;
-			}
-
-			mimeTypeLimits.add(
-				new MimeTypeLimit() {
-					{
-						setMaximumSize(
-							() -> GetterUtil.getInteger(entry.getValue()));
-						setMimeType(
-							() -> key.substring("mimeTypeLimit-".length()));
-					}
-				});
-		}
-
-		return mimeTypeLimits.toArray(new MimeTypeLimit[0]);
+				return mimeTypeLimit;
+			},
+			MimeTypeLimit.class);
 	}
 
 	private Settings _toSettings(Group group) {

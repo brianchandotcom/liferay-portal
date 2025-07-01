@@ -540,10 +540,7 @@ public class ObjectFieldInfoFieldConverter {
 
 		try {
 			if (ObjectFieldUtil.isReadOnly(
-					_ddmExpressionFactory,
-					(objectEntry != null) ?
-						objectEntry.getExternalReferenceCode() : null,
-					objectField,
+					_ddmExpressionFactory, objectEntry, objectField,
 					(user != null) ? user.getUserId() :
 						PrincipalThreadLocal.getUserId())) {
 

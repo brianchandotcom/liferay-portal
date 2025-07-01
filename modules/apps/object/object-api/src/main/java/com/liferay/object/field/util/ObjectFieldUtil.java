@@ -264,6 +264,36 @@ public class ObjectFieldUtil {
 	}
 
 	public static boolean isReadOnly(
+			DDMExpressionFactory ddmExpressionFactory, ObjectEntry objectEntry,
+			ObjectField objectField, long userId)
+		throws PortalException {
+
+		if (!Objects.equals(
+				objectField.getReadOnly(),
+				ObjectFieldConstants.READ_ONLY_CONDITIONAL)) {
+
+			return isReadOnly(null, objectField, null);
+		}
+
+		if (objectEntry == null) {
+			return isReadOnly(
+				ddmExpressionFactory, objectField,
+				ObjectFieldSettingUtil.getDefaultValues(
+					objectField.getObjectDefinitionId()));
+		}
+
+		return isReadOnly(
+			ddmExpressionFactory, objectField,
+			HashMapBuilder.<String, Object>putAll(
+				ObjectEntryLocalServiceUtil.getSystemValues(objectEntry)
+			).putAll(
+				ObjectEntryLocalServiceUtil.getValues(objectEntry)
+			).put(
+				"currentUserId", userId
+			).build());
+	}
+
+	public static boolean isReadOnly(
 		DDMExpressionFactory ddmExpressionFactory, ObjectField objectField,
 		Map<String, Object> values) {
 
@@ -296,41 +326,6 @@ public class ObjectFieldUtil {
 		}
 
 		return false;
-	}
-
-	public static boolean isReadOnly(
-			DDMExpressionFactory ddmExpressionFactory,
-			String objectEntryExternalReferenceCode, ObjectField objectField,
-			long userId)
-		throws PortalException {
-
-		if (!Objects.equals(
-				objectField.getReadOnly(),
-				ObjectFieldConstants.READ_ONLY_CONDITIONAL)) {
-
-			return isReadOnly(null, objectField, null);
-		}
-
-		if (objectEntryExternalReferenceCode == null) {
-			return isReadOnly(
-				ddmExpressionFactory, objectField,
-				ObjectFieldSettingUtil.getDefaultValues(
-					objectField.getObjectDefinitionId()));
-		}
-
-		ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(
-			objectEntryExternalReferenceCode,
-			objectField.getObjectDefinitionId());
-
-		return isReadOnly(
-			ddmExpressionFactory, objectField,
-			HashMapBuilder.<String, Object>putAll(
-				ObjectEntryLocalServiceUtil.getSystemValues(objectEntry)
-			).putAll(
-				ObjectEntryLocalServiceUtil.getValues(objectEntry)
-			).put(
-				"currentUserId", userId
-			).build());
 	}
 
 	public static Map<String, ObjectField> toObjectFieldsMap(

@@ -304,6 +304,35 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public ObjectEntryFolder updateObjectEntryFolder(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+			@GraphQLName("objectEntryFolder") ObjectEntryFolder
+				objectEntryFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.putObjectEntryFolder(
+					objectEntryFolderId, objectEntryFolder));
+	}
+
+	@GraphQLField
+	public Response updateObjectEntryFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.putObjectEntryFolderBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateObjectEntryFolderPermissionsPage(
 				@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,

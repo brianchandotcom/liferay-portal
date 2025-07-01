@@ -523,7 +523,60 @@ public abstract class BaseObjectEntryFolderResourceImpl
 			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		return new ObjectEntryFolder();
+		ObjectEntryFolder existingObjectEntryFolder = getObjectEntryFolder(
+			objectEntryFolderId);
+
+		if (objectEntryFolder.getDescription() != null) {
+			existingObjectEntryFolder.setDescription(
+				objectEntryFolder.getDescription());
+		}
+
+		if (objectEntryFolder.getExternalReferenceCode() != null) {
+			existingObjectEntryFolder.setExternalReferenceCode(
+				objectEntryFolder.getExternalReferenceCode());
+		}
+
+		if (objectEntryFolder.getLabel() != null) {
+			existingObjectEntryFolder.setLabel(objectEntryFolder.getLabel());
+		}
+
+		if (objectEntryFolder.getLabel_i18n() != null) {
+			existingObjectEntryFolder.setLabel_i18n(
+				objectEntryFolder.getLabel_i18n());
+		}
+
+		if (objectEntryFolder.
+				getParentObjectEntryFolderExternalReferenceCode() != null) {
+
+			existingObjectEntryFolder.
+				setParentObjectEntryFolderExternalReferenceCode(
+					objectEntryFolder.
+						getParentObjectEntryFolderExternalReferenceCode());
+		}
+
+		if (objectEntryFolder.getParentObjectEntryFolderId() != null) {
+			existingObjectEntryFolder.setParentObjectEntryFolderId(
+				objectEntryFolder.getParentObjectEntryFolderId());
+		}
+
+		if (objectEntryFolder.getPermissions() != null) {
+			existingObjectEntryFolder.setPermissions(
+				objectEntryFolder.getPermissions());
+		}
+
+		if (objectEntryFolder.getTitle() != null) {
+			existingObjectEntryFolder.setTitle(objectEntryFolder.getTitle());
+		}
+
+		if (objectEntryFolder.getViewableBy() != null) {
+			existingObjectEntryFolder.setViewableBy(
+				objectEntryFolder.getViewableBy());
+		}
+
+		preparePatch(objectEntryFolder, existingObjectEntryFolder);
+
+		return putObjectEntryFolder(
+			objectEntryFolderId, existingObjectEntryFolder);
 	}
 
 	/**
@@ -657,6 +710,112 @@ public abstract class BaseObjectEntryFolderResourceImpl
 		throws Exception {
 
 		return new ObjectEntryFolder();
+	}
+
+	protected abstract ObjectEntryFolder doPutObjectEntryFolder(
+			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}' -d $'{"description": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "permissions": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryFolderId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntryFolder")
+		}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path("/object-entry-folders/{objectEntryFolderId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
+	@Override
+	public final ObjectEntryFolder putObjectEntryFolder(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("objectEntryFolderId")
+			Long objectEntryFolderId,
+			ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		Permission[] permissions = objectEntryFolder.getPermissions();
+
+		ObjectEntryFolder putObjectEntryFolder = doPutObjectEntryFolder(
+			objectEntryFolderId, objectEntryFolder);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage =
+				putObjectEntryFolderPermissionsPage(
+					putObjectEntryFolder.getId(), permissions);
+
+			putObjectEntryFolder.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putObjectEntryFolder;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/object-entry-folders/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntryFolder")
+		}
+	)
+	@jakarta.ws.rs.Consumes("application/json")
+	@jakarta.ws.rs.Path("/object-entry-folders/batch")
+	@jakarta.ws.rs.Produces("application/json")
+	@jakarta.ws.rs.PUT
+	@Override
+	public Response putObjectEntryFolderBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				ObjectEntryFolder.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**
@@ -844,7 +1003,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("PARTIAL_UPDATE");
+		return SetUtil.fromArray("PARTIAL_UPDATE", "UPDATE");
 	}
 
 	@Override
@@ -919,6 +1078,12 @@ public abstract class BaseObjectEntryFolderResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			objectEntryFolderUnsafeFunction =
 				objectEntryFolder -> patchObjectEntryFolder(
+					objectEntryFolder.getId(), objectEntryFolder);
+		}
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			objectEntryFolderUnsafeFunction =
+				objectEntryFolder -> putObjectEntryFolder(
 					objectEntryFolder.getId(), objectEntryFolder);
 		}
 

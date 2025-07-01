@@ -1544,6 +1544,55 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPutObjectEntryFolder() throws Exception {
+		ObjectEntryFolder postObjectEntryFolder =
+			testPutObjectEntryFolder_addObjectEntryFolder();
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		ObjectEntryFolder putObjectEntryFolder =
+			objectEntryFolderResource.putObjectEntryFolder(
+				postObjectEntryFolder.getId(), randomObjectEntryFolder);
+
+		assertEquals(randomObjectEntryFolder, putObjectEntryFolder);
+		assertValid(putObjectEntryFolder);
+
+		Assert.assertNull(putObjectEntryFolder.getPermissions());
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				putObjectEntryFolder.getId());
+
+		assertEquals(randomObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+
+		ObjectEntryFolder randomPermissionsObjectEntryFolder =
+			randomPermissionsObjectEntryFolder();
+
+		putObjectEntryFolder = objectEntryFolderResource.putObjectEntryFolder(
+			postObjectEntryFolder.getId(), randomPermissionsObjectEntryFolder);
+
+		assertEquals(randomPermissionsObjectEntryFolder, putObjectEntryFolder);
+		assertValid(putObjectEntryFolder);
+
+		Assert.assertNull(putObjectEntryFolder.getPermissions());
+
+		putObjectEntryFolder =
+			permissionsObjectEntryFolderResource.putObjectEntryFolder(
+				postObjectEntryFolder.getId(),
+				randomPermissionsObjectEntryFolder);
+
+		Assert.assertNotNull(putObjectEntryFolder.getPermissions());
+	}
+
+	protected ObjectEntryFolder testPutObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutObjectEntryFolderPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectEntryFolder objectEntryFolder =

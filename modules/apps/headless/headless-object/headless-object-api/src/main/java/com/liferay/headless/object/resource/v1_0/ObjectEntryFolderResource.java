@@ -94,6 +94,13 @@ public interface ObjectEntryFolderResource {
 			String scopeKey, ObjectEntryFolder objectEntryFolder)
 		throws Exception;
 
+	public ObjectEntryFolder putObjectEntryFolder(
+			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
+	public Response putObjectEntryFolderBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			putObjectEntryFolderPermissionsPage(
 				Long objectEntryFolderId,

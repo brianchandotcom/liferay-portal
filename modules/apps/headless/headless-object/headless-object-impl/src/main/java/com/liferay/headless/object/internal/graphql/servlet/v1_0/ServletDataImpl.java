@@ -147,6 +147,16 @@ public class ServletDataImpl implements ServletData {
 							ObjectEntryFolderResourceImpl.class,
 							"postScopeScopeKeyObjectEntryFolder"));
 					put(
+						"mutation#updateObjectEntryFolder",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"putObjectEntryFolder"));
+					put(
+						"mutation#updateObjectEntryFolderBatch",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"putObjectEntryFolderBatch"));
+					put(
 						"mutation#updateObjectEntryFolderPermissionsPage",
 						new ObjectValuePair<>(
 							ObjectEntryFolderResourceImpl.class,

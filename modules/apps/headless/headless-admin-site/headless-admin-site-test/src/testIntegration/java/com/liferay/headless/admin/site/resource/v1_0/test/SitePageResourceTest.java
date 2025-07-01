@@ -233,7 +233,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 								}
 							});
 
-				equals(sitePage, patchSitePage);
+				assertEquals(sitePage, patchSitePage);
 				assertValid(patchSitePage);
 
 				_assertSitePage(
@@ -349,7 +349,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						testGroup.getExternalReferenceCode(),
 						sitePage.getExternalReferenceCode(), sitePage);
 
-				equals(sitePage, putSitePage);
+				assertEquals(sitePage, putSitePage);
 				assertValid(putSitePage);
 
 				_assertSitePage(
@@ -564,7 +564,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode(), sitePage);
 
-		equals(expectedSitePage, patchSitePage);
+		assertEquals(expectedSitePage, patchSitePage);
 		assertValid(patchSitePage);
 
 		_assertSitePage(
@@ -992,7 +992,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode(), sitePage);
 
-		equals(sitePage, putSitePage);
+		assertEquals(sitePage, putSitePage);
 		assertValid(putSitePage);
 
 		_assertSitePage(

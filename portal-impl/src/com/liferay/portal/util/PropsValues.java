@@ -2395,6 +2395,13 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.UPGRADE_DATABASE_DL_STORAGE_CHECK_DISABLED));
 
+	public static final boolean
+		UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_ENABLED =
+			GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.
+						UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_ENABLED));
+
 	public static final boolean UPGRADE_DATABASE_PREUPGRADE_VERIFY_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(

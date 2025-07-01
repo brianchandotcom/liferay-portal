@@ -9,7 +9,7 @@ import React, {useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureUuid from '../selectors/selectStructureUuid';
-import {Structure} from '../types/Structure';
+import {ReferencedStructure} from '../types/Structure';
 import {
 	FIELD_TYPES,
 	FIELD_TYPE_LABEL,
@@ -34,9 +34,11 @@ export default function AddChildDropdown({
 			type: 'add-field',
 		});
 
-	const addReferencedStructures = (ercs: Array<Structure['erc']>) =>
+	const addReferencedStructures = (
+		referencedStructures: ReferencedStructure[]
+	) =>
 		dispatch({
-			ercs,
+			referencedStructures,
 			type: 'add-referenced-structures',
 		});
 

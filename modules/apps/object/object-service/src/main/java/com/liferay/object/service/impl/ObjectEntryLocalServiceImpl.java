@@ -3672,7 +3672,11 @@ public class ObjectEntryLocalServiceImpl
 				objectRelationship.getCompanyId()
 			).and(
 				() -> {
-					if (groupId == 0) {
+					if (Objects.equals(
+							objectDefinition2.getScope(),
+							ObjectDefinitionConstants.SCOPE_COMPANY) ||
+						(groupId == 0)) {
+
 						return null;
 					}
 

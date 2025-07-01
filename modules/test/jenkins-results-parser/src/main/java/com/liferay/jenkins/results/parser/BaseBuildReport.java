@@ -5,8 +5,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -85,8 +83,15 @@ public abstract class BaseBuildReport implements BuildReport {
 			return _jenkinsMaster;
 		}
 
-		_jenkinsMaster = JenkinsResultsParserUtil.getJenkinsMaster(
-			getBuildURL());
+		Matcher matcher = _buildURLPattern.matcher(
+			String.valueOf(getBuildURL()));
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid Build URL: " + getBuildURL());
+		}
+
+		_jenkinsMaster = JenkinsMaster.getInstance(
+			matcher.group("masterHostname"));
 
 		return _jenkinsMaster;
 	}
@@ -101,16 +106,6 @@ public abstract class BaseBuildReport implements BuildReport {
 		}
 
 		return matcher.group("jobName");
-	}
-
-	@Override
-		Matcher matcher = _buildURLPattern.matcher(
-			String.valueOf(getBuildURL()));
-
-		if (!matcher.find()) {
-			throw new RuntimeException("Invalid Build URL: " + getBuildURL());
-		}
-
 	}
 
 	@Override

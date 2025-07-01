@@ -115,10 +115,10 @@ public class CategoryFacetPortletUpgradeProcessTest {
 			Assert.assertTrue(
 				logEntryMessage.contains(
 					StringBundler.concat(
-						"Vocabulary ", deletedVocabularyId, " not found, ",
-						"removing from portlet com_liferay_portal_search_web_",
-						"category_facet_portlet_CategoryFacetPortlet portlet ",
-						"preferences")));
+						"Removing portlet preferences for portlet ",
+						"com_liferay_portal_search_web_category_facet_",
+						"portlet_CategoryFacetPortlet because vocabulary ",
+						deletedVocabularyId, " does not exist")));
 		}
 
 		_multiVMPool.clear();

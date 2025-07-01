@@ -98,9 +98,9 @@ public class CategoryFacetPortletUpgradeProcess
 				if (assetVocabulary == null) {
 					_log.error(
 						StringBundler.concat(
-							"Vocabulary ", vocabularyId, " not found, ",
-							"removing from portlet ", portletId,
-							" portlet preferences"));
+							"Removing portlet preferences for portlet ",
+							portletId, " because vocabulary ", vocabularyId,
+							" does not exist"));
 
 					continue;
 				}

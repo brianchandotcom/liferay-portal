@@ -11,7 +11,7 @@
 ObjectEntryDisplayContext objectEntryDisplayContext = (ObjectEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 String backURL = objectEntryDisplayContext.getBackURL();
-boolean isDefaultObjectLayout = objectEntryDisplayContext.getObjectLayoutTab() == null;
+boolean defaultObjectLayout = objectEntryDisplayContext.getObjectLayoutTab() == null;
 ObjectDefinition objectDefinition = objectEntryDisplayContext.getObjectDefinition1();
 ObjectEntry objectEntry = objectEntryDisplayContext.getObjectEntry();
 String portletNamespace = portletDisplay.getNamespace();
@@ -41,7 +41,7 @@ portletDisplay.setURLBack(backURL);
 				</clay:col>
 			</clay:row>
 
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-21926") && objectDefinition.isEnableFriendlyURLCustomization() && isDefaultObjectLayout %>'>
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-21926") && objectDefinition.isEnableFriendlyURLCustomization() && defaultObjectLayout %>'>
 				<clay:panel-group>
 					<clay:panel
 						collapsable="<%= true %>"
@@ -66,7 +66,7 @@ portletDisplay.setURLBack(backURL);
 				</clay:panel-group>
 			</c:if>
 
-			<c:if test="<%= objectDefinition.isEnableObjectEntrySchedule() && isDefaultObjectLayout %>">
+			<c:if test="<%= objectDefinition.isEnableObjectEntrySchedule() && defaultObjectLayout %>">
 				<div>
 					<react:component
 						module="{ScheduleContainer} from object-web"
@@ -89,7 +89,7 @@ portletDisplay.setURLBack(backURL);
 
 	<c:if test="<%= !objectEntryDisplayContext.isReadOnly() %>">
 		<c:choose>
-			<c:when test="<%= objectDefinition.isEnableObjectEntrySchedule() && isDefaultObjectLayout %>">
+			<c:when test="<%= objectDefinition.isEnableObjectEntrySchedule() && defaultObjectLayout %>">
 				<div>
 					<react:component
 						module="{ObjectEntryFooter} from object-web"

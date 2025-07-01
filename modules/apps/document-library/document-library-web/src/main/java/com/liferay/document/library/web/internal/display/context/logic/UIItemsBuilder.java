@@ -15,13 +15,11 @@ import com.liferay.document.library.kernel.document.conversion.DocumentConversio
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
-import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.display.context.helper.FileEntryDisplayContextHelper;
@@ -29,7 +27,6 @@ import com.liferay.document.library.web.internal.display.context.helper.FileShor
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.document.library.web.internal.util.DLSubscriptionUtil;
 import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvider;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
@@ -1337,19 +1334,10 @@ public class UIItemsBuilder {
 			return true;
 		}
 
-		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-				dlFileVersion.getFileEntryTypeId());
-
-		for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
-			DLFileEntryMetadata dlFileEntryMetadata =
-				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
-					ddmStructure.getStructureId(),
-					fileVersion.getFileVersionId());
-
-			if (dlFileEntryMetadata == null) {
-				continue;
-			}
+		for (DLFileEntryMetadata dlFileEntryMetadata :
+				DLFileEntryMetadataLocalServiceUtil.
+					getFileVersionFileEntryMetadatas(
+						dlFileVersion.getFileVersionId())) {
 
 			DDMFormValues translatedDDMFormValues =
 				DDMBeanTranslatorUtil.translate(

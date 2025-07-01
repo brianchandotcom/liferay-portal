@@ -771,6 +771,7 @@ const FrontendDataSetContent = ({
 			<ManagementBar
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}
+				dataLoading={dataLoading}
 				deselectItems={(items: Array<any>) => {
 					deselectItems(items);
 

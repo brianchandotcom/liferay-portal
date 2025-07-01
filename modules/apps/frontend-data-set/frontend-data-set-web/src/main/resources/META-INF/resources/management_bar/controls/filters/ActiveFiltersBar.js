@@ -14,7 +14,7 @@ import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
 import FilterResume from './FilterResume';
 import SearchResume from './SearchResume';
 
-function ActiveFiltersBar({disabled, total}) {
+function ActiveFiltersBar({dataLoading, disabled, total}) {
 	const {searchParam} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
@@ -41,18 +41,20 @@ function ActiveFiltersBar({disabled, total}) {
 					<ul className="tbar-nav">
 						<li className="p-0 tbar-item tbar-item-expand">
 							<div className="tbar-section">
-								<span>
-									{sub(
-										total === 1
-											? Liferay.Language.get(
-													'x-result-found-for-colon'
-												)
-											: Liferay.Language.get(
-													'x-results-found-for-colon'
-												),
-										total
-									)}
-								</span>
+								{!dataLoading && (
+									<span>
+										{sub(
+											total === 1
+												? Liferay.Language.get(
+														'x-result-found-for-colon'
+													)
+												: Liferay.Language.get(
+														'x-results-found-for-colon'
+													),
+											total
+										)}
+									</span>
+								)}
 
 								{isSearchActive() && <SearchResume />}
 

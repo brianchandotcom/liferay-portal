@@ -15,7 +15,7 @@ import FilterResume from './FilterResume';
 import SearchResume from './SearchResume';
 
 function ActiveFiltersBar({dataLoading, disabled, total}) {
-	const {searchParam} = useContext(FrontendDataSetContext);
+	const {onSearch, searchParam} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const isSearchActive = () => searchParam?.trim();
@@ -30,6 +30,10 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 				selectedData: undefined,
 			})),
 		});
+
+		if (Liferay.FeatureFlags['LPD-52212']) {
+			onSearch({query: ''});
+		}
 	};
 
 	const activeFilters = filters.filter((filter) => filter.active);

@@ -716,6 +716,35 @@ public class ObjectEntryVersionLocalServiceTest {
 				objectEntry.getObjectEntryId()));
 	}
 
+	@Test
+	public void testIsLatestObjectEntryVersion() throws Exception {
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", "textObjectFieldValue1"
+			).build());
+
+		Assert.assertEquals(1, objectEntry.getVersion());
+		Assert.assertTrue(
+			_objectEntryVersionLocalService.isLatestObjectEntryVersion(
+				objectEntry.getObjectEntryId(), 1));
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", "textObjectFieldValue2"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(2, objectEntry.getVersion());
+		Assert.assertFalse(
+			_objectEntryVersionLocalService.isLatestObjectEntryVersion(
+				objectEntry.getObjectEntryId(), 1));
+		Assert.assertTrue(
+			_objectEntryVersionLocalService.isLatestObjectEntryVersion(
+				objectEntry.getObjectEntryId(), 2));
+	}
+
 	private void _assertEquals(
 			List<ObjectEntryVersion> expectedObjectEntryVersions,
 			List<ObjectEntryVersion> actualObjectEntryVersions)

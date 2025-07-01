@@ -749,6 +749,7 @@ public class ObjectEntryDTOConverter
 		fileEntry.setLink(
 			() -> LinkUtil.toLink(
 				_dlAppService, dlFileEntry, _dlURLHelper,
+				objectEntry.getGroupId(),
 				objectDefinition.getExternalReferenceCode(),
 				objectEntry.getExternalReferenceCode(), _portal));
 		fileEntry.setMimeType(dlFileEntry::getMimeType);

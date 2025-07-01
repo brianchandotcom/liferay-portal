@@ -1168,6 +1168,8 @@ public class ObjectEntryDisplayContextImpl
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
 				 (objectEntry != null)) {
 
+			ddmFormField.setProperty("groupId", _getGroupId());
+
 			ObjectDefinition objectDefinition = getObjectDefinition1();
 
 			ddmFormField.setProperty(

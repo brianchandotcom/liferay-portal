@@ -232,6 +232,8 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		).put(
 			"classTypeId", _getClassTypeId(ddmStructure)
 		).put(
+			"externalReferenceCode", journalArticle.getExternalReferenceCode()
+		).put(
 			"groupDescriptiveName",
 			() -> {
 				Group group = GroupLocalServiceUtil.fetchGroup(

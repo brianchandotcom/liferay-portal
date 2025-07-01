@@ -12,6 +12,8 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
+import com.liferay.headless.admin.site.client.pagination.Page;
+import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.SitePageResource;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
@@ -1036,6 +1038,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			UnsafeTriConsumer<String, Integer, SitePage, Exception>
 				unsafeTriConsumer)
 		throws Exception {
+
+		Page<SitePage> page =
+			sitePageResource.getSiteSiteByExternalReferenceCodeSitePagesPage(
+				testGroup.getExternalReferenceCode(), null, null, null,
+				Pagination.of(0, 0), null);
+
+		for (SitePage sitePage : page.getItems()) {
+			sitePageResource.deleteSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode());
+		}
+
+		_externalReferenceCodePriorityMap.clear();
 
 		SitePage sitePage1 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(

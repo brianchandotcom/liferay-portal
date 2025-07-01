@@ -20,6 +20,13 @@ import org.json.JSONObject;
 public class BuildReportFactory {
 
 	public static ControllerBuildReport newControllerBuildReport(
+		Build controllerBuild, TopLevelBuildReport topLevelBuildReport) {
+
+		return new DefaultControllerBuildReport(
+			controllerBuild, topLevelBuildReport);
+	}
+
+	public static ControllerBuildReport newControllerBuildReport(
 		JSONObject buildReportJSONObject,
 		TopLevelBuildReport topLevelBuildReport) {
 

@@ -12,6 +12,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.util.CommerceReturnThreadLocal;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.entry.ObjectEntryContext;
 import com.liferay.object.entry.contributor.ObjectEntryValuesContributor;
 import com.liferay.object.model.ObjectDefinition;
@@ -103,6 +104,7 @@ public class CommerceReturnObjectEntryValuesContributor
 		if (originalObjectEntry == null) {
 			originalObjectEntry = _objectEntryLocalService.fetchObjectEntry(
 				GetterUtil.getString(values.get("externalReferenceCode")),
+				ObjectDefinitionConstants.DEFAULT_GROUP_ID,
 				objectDefinition.getObjectDefinitionId());
 		}
 

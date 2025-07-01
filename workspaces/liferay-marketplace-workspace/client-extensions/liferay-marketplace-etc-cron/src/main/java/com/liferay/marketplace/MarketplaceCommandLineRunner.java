@@ -115,7 +115,7 @@ public class MarketplaceCommandLineRunner
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to find contact teams from " + emailAddress, exception);
+				"Unable to find contact teams for " + emailAddress, exception);
 
 			return new JSONArray();
 		}
@@ -151,28 +151,29 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private String _getKoroneikiProject(Order order) {
-		String accountExternalReferenceCode =
-			order.getAccountExternalReferenceCode();
-
 		JSONArray jsonArray = new JSONArray();
 
-		JSONArray teamsJSONArray = _getContactTeamsJSONArray(
+		JSONArray contactTeamsJSONArray = _getContactTeamsJSONArray(
 			order.getCreatorEmailAddress());
 
-		for (int i = 0; i < teamsJSONArray.length(); i++) {
-			JSONObject teamJSONObject = teamsJSONArray.getJSONObject(i);
+		for (int i = 0; i < contactTeamsJSONArray.length(); i++) {
+			String accountExternalReferenceCode =
+				order.getAccountExternalReferenceCode();
+
+			JSONObject contactTeamJSONObject =
+				contactTeamsJSONArray.getJSONObject(i);
 
 			JSONObject jsonObject = new JSONObject(
 			).put(
-				"key", teamJSONObject.getString("key")
+				"key", contactTeamJSONObject.getString("key")
 			).put(
-				"name", teamJSONObject.getString("name")
+				"name", contactTeamJSONObject.getString("name")
 			);
 
 			if (accountExternalReferenceCode.startsWith("KOR-")) {
 				if (Objects.equals(
 						accountExternalReferenceCode,
-						teamJSONObject.getString("key"))) {
+						contactTeamJSONObject.getString("key"))) {
 
 					jsonArray.put(jsonObject);
 
@@ -424,14 +425,14 @@ public class MarketplaceCommandLineRunner
 				")) and orderTypeExternalReferenceCode eq 'DXPAPP'"),
 			order -> {
 				String currencyCode = order.getCurrencyCode();
-				double totalAmount = order.getTotalAmount();
 
 				if (!_totalAmount.containsKey(currencyCode)) {
 					_totalAmount.put(currencyCode, 0D);
 				}
 
 				_totalAmount.put(
-					currencyCode, _totalAmount.get(currencyCode) + totalAmount);
+					currencyCode,
+					_totalAmount.get(currencyCode) + order.getTotalAmount());
 			});
 
 		if (_log.isInfoEnabled()) {

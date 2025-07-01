@@ -84,6 +84,22 @@ public class ObjectEntryFolderServiceImpl
 	}
 
 	@Override
+	public ObjectEntryFolder fetchObjectEntryFolder(long objectEntryFolderId)
+		throws PortalException {
+
+		ObjectEntryFolder objectEntryFolder =
+			objectEntryFolderLocalService.fetchObjectEntryFolder(
+				objectEntryFolderId);
+
+		if (objectEntryFolder != null) {
+			_modelResourcePermission.check(
+				getPermissionChecker(), objectEntryFolder, ActionKeys.VIEW);
+		}
+
+		return objectEntryFolder;
+	}
+
+	@Override
 	public ObjectEntryFolder fetchObjectEntryFolderByExternalReferenceCode(
 			String externalReferenceCode, long groupId, long companyId)
 		throws PortalException {

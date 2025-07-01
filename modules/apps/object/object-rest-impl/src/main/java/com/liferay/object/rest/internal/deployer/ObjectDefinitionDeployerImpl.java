@@ -695,11 +695,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 											serviceRegistration) {
 
 								return new ObjectEntryRelatedObjectsResourceImpl(
+									_groupLocalService,
 									_objectDefinitionLocalService,
 									_objectEntryLocalService,
 									_objectEntryManagerRegistry,
 									_objectRelatedModelsProviderRegistry,
-									_objectRelationshipLocalService);
+									_objectRelationshipLocalService,
+									_objectScopeProviderRegistry);
 							}
 
 							@Override

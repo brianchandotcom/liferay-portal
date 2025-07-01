@@ -13,6 +13,7 @@ import getPageDefinition from '../../../layout-content-page-editor-web/main/util
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 export class FDSSamplePage {
+	readonly activeFiltersToolbar: Locator;
 	private readonly apiHelpers: ApiHelpers;
 	readonly bulkActions: {
 		actionsDropdownButton: Locator;
@@ -61,6 +62,7 @@ export class FDSSamplePage {
 	readonly visualizationModeSelector: Locator;
 
 	constructor(page: Page) {
+		this.activeFiltersToolbar = page.getByTestId('activeFiltersToolbar');
 		this.apiHelpers = new ApiHelpers(page);
 		this.bulkActions = {
 			actionsDropdownButton: page

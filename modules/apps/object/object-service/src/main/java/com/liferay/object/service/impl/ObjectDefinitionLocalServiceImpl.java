@@ -2397,14 +2397,10 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinitionLocalService.getObjectDefinition(
 						node.getPrimaryKey());
 
-				String previousRESTContextPath =
-					nodeObjectDefinition.getRESTContextPath();
-
 				nodeObjectDefinition.setRootObjectDefinitionId(
 					objectDefinition1.getRootObjectDefinitionId());
-
 				nodeObjectDefinition.setPreviousRESTContextPath(
-					previousRESTContextPath);
+					nodeObjectDefinition.getRESTContextPath());
 
 				deployObjectDefinition(nodeObjectDefinition);
 			}
@@ -2452,8 +2448,6 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 
-		String previousRESTContextPath = objectDefinition2.getRESTContextPath();
-
 		if (objectDefinition1.isApproved()) {
 			objectDefinition2.setRootObjectDefinitionId(
 				objectDefinition1.getRootObjectDefinitionId());
@@ -2463,7 +2457,8 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition2.getObjectDefinitionId());
 		}
 
-		objectDefinition2.setPreviousRESTContextPath(previousRESTContextPath);
+		objectDefinition2.setPreviousRESTContextPath(
+			objectDefinition2.getRESTContextPath());
 
 		return objectDefinition2;
 	}

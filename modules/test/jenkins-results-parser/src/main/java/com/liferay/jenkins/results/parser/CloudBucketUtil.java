@@ -313,15 +313,7 @@ public class CloudBucketUtil {
 	public static String listS3Files(String path)
 		throws IOException, TimeoutException {
 
-		if (!path.endsWith("/")) {
-			path += "/";
-		}
-
-		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			true, "aws s3 ls " + _escapeParentheses(path));
-
-		return JenkinsResultsParserUtil.readInputStream(
-			process.getInputStream());
+		return listS3Files(path, false);
 	}
 
 	public static String listS3Files(String path, boolean file)

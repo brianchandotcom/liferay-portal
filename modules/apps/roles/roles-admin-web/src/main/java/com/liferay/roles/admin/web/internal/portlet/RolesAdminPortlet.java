@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -196,6 +198,47 @@ public class RolesAdminPortlet extends MVCPortlet {
 		catch (ModelListenerException modelListenerException) {
 			throw (Exception)modelListenerException.getCause();
 		}
+	}
+
+	public void duplicateRole(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long roleId = ParamUtil.getLong(actionRequest, "roleId");
+
+		if (roleId <= 0) {
+			return;
+		}
+
+		Role targetRole = null;
+
+		try {
+			targetRole = _roleLocalService.copyRole(
+				_portal.getUserId(actionRequest),
+				ParamUtil.getString(actionRequest, "roleName"), roleId,
+				ServiceContextFactory.getInstance(
+					Role.class.getName(), actionRequest));
+		}
+		catch (DuplicateRoleException | RoleNameException exception) {
+			actionResponse.setRenderParameter("mvcPath", "/duplicate_role.jsp");
+
+			throw exception;
+		}
+
+		actionResponse.setRenderParameter("mvcPath", "/duplicate_role.jsp");
+		actionResponse.setRenderParameter(
+			"redirectURL",
+			PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					actionRequest, RolesAdminPortletKeys.ROLES_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/edit_role.jsp"
+			).setBackURL(
+				ParamUtil.getString(actionRequest, "backURL")
+			).setParameter(
+				"roleId", targetRole.getRoleId()
+			).buildString());
 	}
 
 	public Role editRole(
@@ -555,7 +598,12 @@ public class RolesAdminPortlet extends MVCPortlet {
 				 SessionErrors.contains(
 					 renderRequest, RoleNameException.class.getName())) {
 
-			include("/edit_role.jsp", renderRequest, renderResponse);
+			if (mvcPath.equals("/duplicate_role.jsp")) {
+				include(mvcPath, renderRequest, renderResponse);
+			}
+			else {
+				include("/edit_role.jsp", renderRequest, renderResponse);
+			}
 		}
 		else if (SessionErrors.contains(
 					renderRequest,

@@ -535,6 +535,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 						<BusinessEventsConfirmationPage
 							handleSubmit={handleSubmit}
 							headerTitle={businessEvent.name!}
+							isLoadingSubmitButton={isLoadingSubmitButton}
 							message={i18n.translate(
 								'we-understand-that-plans-change-please-let-us-know-why-the-target-go-live-date-for-this-event-is-being-updated'
 							)}

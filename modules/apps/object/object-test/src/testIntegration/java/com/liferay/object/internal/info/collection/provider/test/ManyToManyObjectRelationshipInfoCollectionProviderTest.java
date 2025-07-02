@@ -122,8 +122,6 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 
 		List<ObjectEntry> objectEntries = collectionInfoPage.getPageItems();
 
-		Assert.assertNotNull(objectEntries);
-
 		Assert.assertEquals(
 			objectEntries.toString(), relatedObjectEntries.length,
 			objectEntries.size());

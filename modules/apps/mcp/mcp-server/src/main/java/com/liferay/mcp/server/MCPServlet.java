@@ -5,6 +5,7 @@
 
 package com.liferay.mcp.server;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -17,7 +18,6 @@ import com.liferay.portal.util.PropsValues;
 
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpServerFeatures;
-import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.HttpServletSseServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema;
 
@@ -112,7 +112,7 @@ public class MCPServlet extends GenericServlet {
 					"/message"
 				).build();
 
-		McpSyncServer mcpSyncServer = McpServer.sync(
+		McpServer.sync(
 			httpServletSseServerTransportProvider
 		).capabilities(
 			McpSchema.ServerCapabilities.builder(
@@ -121,11 +121,10 @@ public class MCPServlet extends GenericServlet {
 			).tools(
 				true
 			).build()
-		).build();
-
-		for (String key : openAPIJSONObject.keySet()) {
-			mcpSyncServer.addResource(
-				new McpServerFeatures.SyncResourceSpecification(
+		).resources(
+			TransformUtil.transform(
+				openAPIJSONObject.keySet(),
+				key -> new McpServerFeatures.SyncResourceSpecification(
 					new McpSchema.Resource(
 						openAPIJSONObject.getJSONArray(
 							key
@@ -138,57 +137,53 @@ public class MCPServlet extends GenericServlet {
 						List.of(
 							new McpSchema.TextResourceContents(
 								arguments.uri(), "application/yaml",
-								_callEndpoint(
-									"GET", arguments.uri(), null))))));
-		}
-
-		mcpSyncServer.addTool(
-			new McpServerFeatures.SyncToolSpecification(
-				new McpSchema.Tool(
-					"call-http-endpoint",
-					"Calls an HTTP endpoint with method, path, and payload",
+								_callEndpoint("GET", arguments.uri(), null))))))
+		).tool(
+			new McpSchema.Tool(
+				"call-http-endpoint",
+				"Calls an HTTP endpoint with method, path, and payload",
+				JSONUtil.put(
+					"additionalProperties", false
+				).put(
+					"properties",
 					JSONUtil.put(
-						"additionalProperties", false
-					).put(
-						"properties",
+						"method",
 						JSONUtil.put(
-							"method",
-							JSONUtil.put(
-								"description", "The HTTP method"
-							).put(
-								"type", "string"
-							)
+							"description", "The HTTP method"
 						).put(
-							"path",
-							JSONUtil.put(
-								"description",
-								"The full endpoint path relative to " +
-									baseURL +
-										". It cannot contain query parameters."
-							).put(
-								"type", "string"
-							)
-						).put(
-							"payload",
-							JSONUtil.put(
-								"description",
-								"The endpoint payload. Can be an empty " +
-									"string if there is no payload."
-							).put(
-								"type", "string"
-							)
+							"type", "string"
 						)
 					).put(
-						"required", JSONUtil.putAll("method", "path", "payload")
+						"path",
+						JSONUtil.put(
+							"description",
+							"The full endpoint path relative to " + baseURL +
+								". It cannot contain query parameters."
+						).put(
+							"type", "string"
+						)
 					).put(
-						"type", "object"
-					).toString()),
-				(exchange, arguments) -> new McpSchema.CallToolResult(
-					_callEndpoint(
-						String.valueOf(arguments.get("method")),
-						baseURL + arguments.get("path"),
-						String.valueOf(arguments.get("payload"))),
-					false)));
+						"payload",
+						JSONUtil.put(
+							"description",
+							"The endpoint payload. Can be an empty string if " +
+								"there is no payload."
+						).put(
+							"type", "string"
+						)
+					)
+				).put(
+					"required", JSONUtil.putAll("method", "path", "payload")
+				).put(
+					"type", "object"
+				).toString()),
+			(exchange, arguments) -> new McpSchema.CallToolResult(
+				_callEndpoint(
+					String.valueOf(arguments.get("method")),
+					baseURL + arguments.get("path"),
+					String.valueOf(arguments.get("payload"))),
+				false)
+		).build();
 
 		return httpServletSseServerTransportProvider;
 	}

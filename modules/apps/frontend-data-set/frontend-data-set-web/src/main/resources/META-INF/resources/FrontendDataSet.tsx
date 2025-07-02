@@ -1175,10 +1175,7 @@ const FrontendDataSetContent = ({
 				selectionType,
 				showBulkActionsManagementBar,
 				showBulkActionsManagementBarActions,
-				showInfoPanel:
-					infoPanelComponent && Liferay.FeatureFlags['LPD-41774']
-						? true
-						: false,
+				showInfoPanel: infoPanelComponent ? true : false,
 				sidePanelId: dataSetSupportSidePanelIdRef.current,
 				sorts,
 				style,

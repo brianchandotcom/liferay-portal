@@ -42,8 +42,12 @@ export type Cache = {
 	};
 };
 
+type Promises = {
+	[K in CacheKey]: Promise<Cache[K]['data']>;
+};
+
 type InitialData = Partial<{
-	[K in keyof Cache]: Cache[K]['data'];
+	[K in CacheKey]: Cache[K]['data'];
 }>;
 
 function getInitialCache(initialData: InitialData = {}): Cache {
@@ -68,7 +72,7 @@ function getInitialCache(initialData: InitialData = {}): Cache {
 
 const CacheContext = createContext<{
 	cache: Cache;
-	promisesRef: MutableRefObject<Partial<Record<CacheKey, Promise<void>>>>;
+	promisesRef: MutableRefObject<Partial<Promises>>;
 	update: <T extends CacheKey>(key: T, partial: Partial<Cache[T]>) => void;
 }>({
 	cache: getInitialCache(),
@@ -83,7 +87,7 @@ function CacheContextProvider({
 	children: ReactNode;
 	initialData: InitialData;
 }) {
-	const promisesRef = useRef({});
+	const promisesRef = useRef<Partial<Promises>>({});
 
 	const [cache, setCache] = useState(getInitialCache(initialData));
 
@@ -114,7 +118,7 @@ function CacheContextProvider({
 
 function useCache<T extends CacheKey>(
 	key: T
-): Cache[T] & {load: () => Promise<void>} {
+): Cache[T] & {load: () => Promise<Cache[T]['data']>} {
 	const {cache, promisesRef, update} = useContext(CacheContext);
 
 	const item = cache[key];
@@ -122,15 +126,15 @@ function useCache<T extends CacheKey>(
 	const promises = promisesRef.current;
 
 	const load = useCallback(async () => {
-		const existingPromise = promises[key];
+		const existingPromise = promises[key] as Promise<Cache[T]['data']>;
 
 		if (existingPromise) {
 			await existingPromise;
 
-			return;
+			return cache[key].data;
 		}
 
-		const fetchData = async () => {
+		const fetchData = async (): Promise<Cache[T]['data']> => {
 			update(key, {status: 'saving'} as Partial<Cache[T]>);
 
 			try {
@@ -139,9 +143,13 @@ function useCache<T extends CacheKey>(
 				update(key, {data: response, status: 'saved'} as Partial<
 					Cache[T]
 				>);
+
+				return response;
 			}
-			catch {
+			catch (error) {
 				update(key, {status: 'stale'} as Partial<Cache[T]>);
+
+				return Promise.reject(error);
 			}
 			finally {
 				delete promises[key];
@@ -150,10 +158,10 @@ function useCache<T extends CacheKey>(
 
 		const promise = fetchData();
 
-		promises[key] = promise;
+		promises[key] = promise as Promises[T];
 
-		await promise;
-	}, [item, key, promises, update]);
+		return promise;
+	}, [item, key, promises, update, cache]);
 
 	useEffect(() => {
 		if (item.status !== 'idle') {
@@ -191,6 +199,7 @@ function useStaleCache() {
 		broadcast.postMessage({key, type: 'staleCache'});
 	};
 }
+
 export default CacheContextProvider;
 
 export {CacheContext, useCache, useStaleCache};

@@ -361,10 +361,10 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 	private void _uploadConsoleTextTestrayAttachment(Build build) {
 		try {
-			String testrayServerString =
+			String testrayServerURLString =
 				JenkinsResultsParserUtil.getBuildProperty("testray.server.url");
 
-			URL testrayServerURL = new URL(testrayServerString);
+			URL testrayServerURL = new URL(testrayServerURLString);
 
 			TestrayAttachmentUploader testrayAttachmentUploader =
 				TestrayFactory.newTestrayAttachmentUploader(

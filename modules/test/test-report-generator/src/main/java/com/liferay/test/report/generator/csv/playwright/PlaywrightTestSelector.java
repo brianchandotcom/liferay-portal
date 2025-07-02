@@ -29,13 +29,13 @@ public class PlaywrightTestSelector {
 		String userDir = System.getProperty("user.dir");
 
 		Path playwrightTestsDir = Paths.get(
-			userDir, "/../../modules/test/playwright/tests"
+			userDir, "/../../test/playwright/tests"
 		).toRealPath();
 
 		try {
 			Files.walkFileTree(
 				playwrightTestsDir,
-				new SimpleFileVisitor<>() {
+				new SimpleFileVisitor<Path>() {
 
 					@Override
 					public FileVisitResult visitFile(

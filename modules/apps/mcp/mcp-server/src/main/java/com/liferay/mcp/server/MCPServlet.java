@@ -5,10 +5,14 @@
 
 package com.liferay.mcp.server;
 
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
 
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpServerFeatures;
@@ -25,6 +29,11 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -74,6 +83,9 @@ public class MCPServlet extends GenericServlet {
 
 		String baseURL = company.getPortalURL(0) + _portal.getPathModule();
 
+		JSONObject openAPIJSONObject = _jsonFactory.createJSONObject(
+			_get(baseURL + "/openapi"));
+
 		HttpServletSseServerTransportProvider
 			httpServletSseServerTransportProvider =
 				new HttpServletSseServerTransportProvider.Builder(
@@ -87,10 +99,30 @@ public class MCPServlet extends GenericServlet {
 			httpServletSseServerTransportProvider
 		).capabilities(
 			McpSchema.ServerCapabilities.builder(
+			).resources(
+				false, true
 			).tools(
 				true
 			).build()
 		).build();
+
+		for (String key : openAPIJSONObject.keySet()) {
+			mcpSyncServer.addResource(
+				new McpServerFeatures.SyncResourceSpecification(
+					new McpSchema.Resource(
+						openAPIJSONObject.getJSONArray(
+							key
+						).getString(
+							0
+						),
+						key, "OpenAPI YAML file for " + key, "application/yaml",
+						null),
+					(exchange, arguments) -> new McpSchema.ReadResourceResult(
+						List.of(
+							new McpSchema.TextResourceContents(
+								arguments.uri(), "application/yaml",
+								_get(arguments.uri()))))));
+		}
 
 		mcpSyncServer.addTool(
 			new McpServerFeatures.SyncToolSpecification(
@@ -105,8 +137,42 @@ public class MCPServlet extends GenericServlet {
 		return httpServletSseServerTransportProvider;
 	}
 
+	private String _get(String path) {
+		try {
+			URL url = new URL(path);
+
+			HttpURLConnection connection =
+				(HttpURLConnection)url.openConnection();
+
+			String credentials =
+				"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
+
+			Base64.Encoder encoder = Base64.getEncoder();
+
+			connection.setRequestProperty(
+				"Authorization",
+				"Basic " + encoder.encodeToString(credentials.getBytes()));
+
+			connection.setDoOutput(true);
+			connection.setRequestMethod(StringUtil.toUpperCase("GET"));
+
+			if (connection.getResponseCode() >= 300) {
+				throw new Exception(
+					StringUtil.read(connection.getErrorStream()));
+			}
+
+			return StringUtil.read(connection.getInputStream());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

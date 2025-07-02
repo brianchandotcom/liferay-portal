@@ -398,7 +398,7 @@
 		<finder name="ObjectEntryId" return-type="Collection">
 			<finder-column name="objectEntryId" />
 		</finder>
-		<finder name="C_LtCD" return-type="Collection">
+		<finder db-index="only" name="C_LtCD" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column comparator="&lt;" name="createDate" />
 		</finder>

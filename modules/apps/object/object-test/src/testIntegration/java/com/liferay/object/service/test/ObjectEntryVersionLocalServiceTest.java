@@ -24,6 +24,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -716,6 +718,96 @@ public class ObjectEntryVersionLocalServiceTest {
 				objectEntry.getObjectEntryId()));
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testUpdateObjectEntryVersionWithDisplayDate() throws Exception {
+		_objectDefinition.setEnableObjectEntryDraft(true);
+		_objectDefinition.setEnableObjectEntrySchedule(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		try {
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
+
+			// Update as draft with null display date
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				Collections.emptyMap(), serviceContext);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_DRAFT, objectEntry.getStatus());
+
+			_assertObjectEntryVersionStatus(
+				objectEntry, WorkflowConstants.STATUS_APPROVED, 1);
+			_assertObjectEntryVersionStatus(
+				objectEntry, WorkflowConstants.STATUS_DRAFT, 2);
+
+			// Update as draft with display date in the past
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"displayDate",
+					new Date(
+						System.currentTimeMillis() - TimeUnit.DAY.toMillis(1))
+				).build(),
+				serviceContext);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_DRAFT, objectEntry.getStatus());
+
+			_assertObjectEntryVersionStatus(
+				objectEntry, WorkflowConstants.STATUS_APPROVED, 1);
+			_assertObjectEntryVersionStatus(
+				objectEntry, WorkflowConstants.STATUS_DRAFT, 2);
+
+			// Update as scheduled with display date in the future
+
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"displayDate",
+					new Date(
+						System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
+				).build(),
+				serviceContext);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_SCHEDULED, objectEntry.getStatus());
+
+			_assertObjectEntryVersionStatus(
+				objectEntry, WorkflowConstants.STATUS_APPROVED, 1);
+			_assertObjectEntryVersionStatus(
+				objectEntry, WorkflowConstants.STATUS_INACTIVE, 2);
+		}
+		finally {
+			_objectDefinition.setEnableObjectEntryDraft(false);
+			_objectDefinition.setEnableObjectEntrySchedule(false);
+
+			_objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition);
+
+			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+		}
+	}
+
 	private void _assertEquals(
 			List<ObjectEntryVersion> expectedObjectEntryVersions,
 			List<ObjectEntryVersion> actualObjectEntryVersions)
@@ -764,6 +856,17 @@ public class ObjectEntryVersionLocalServiceTest {
 				expectedObjectEntryVersion.getStatus(),
 				actualObjectEntryVersion.getStatus());
 		}
+	}
+
+	private void _assertObjectEntryVersionStatus(
+			ObjectEntry objectEntry, int status, int version)
+		throws PortalException {
+
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getObjectEntryId(), version);
+
+		Assert.assertEquals(status, objectEntryVersion.getStatus());
 	}
 
 	private ObjectEntryVersion _createObjectEntryVersion(

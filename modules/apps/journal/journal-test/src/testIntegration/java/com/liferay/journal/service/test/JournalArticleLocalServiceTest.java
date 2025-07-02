@@ -2081,6 +2081,34 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testRevertArticle() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		JournalArticle updatedJournalArticle = JournalTestUtil.updateArticle(
+			journalArticle, RandomTestUtil.randomString());
+
+		_journalArticleLocalService.revertArticle(
+			journalArticle.getUserId(), _group.getGroupId(),
+			journalArticle.getArticleId(), journalArticle.getVersion());
+
+		JournalArticle latestArticle =
+			_journalArticleLocalService.getLatestArticle(
+				journalArticle.getGroupId(), journalArticle.getArticleId());
+
+		Assert.assertEquals(
+			journalArticle.getTitle(), latestArticle.getTitle());
+		Assert.assertEquals(
+			journalArticle.getContent(), latestArticle.getContent());
+		Assert.assertTrue(
+			updatedJournalArticle.getVersion() < latestArticle.getVersion());
+		Assert.assertEquals(
+			journalArticle.getResourcePrimKey(),
+			latestArticle.getResourcePrimKey());
+	}
+
+	@Test
 	public void testTrashArticleExternalReferenceCode() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());

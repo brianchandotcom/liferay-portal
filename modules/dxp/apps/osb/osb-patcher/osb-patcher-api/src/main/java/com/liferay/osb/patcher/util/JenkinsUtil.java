@@ -648,23 +648,11 @@ public class JenkinsUtil {
 		patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
 			patcherBuild);
 
-		Http.Options options = new Http.Options();
-
-		Map<String, String> distJenkinsRequestParameters =
-			getDistJenkinsRequestParameters(patcherBuild);
-
-		for (Map.Entry<String, String> distJenkinsRequestParameter :
-				distJenkinsRequestParameters.entrySet()) {
-
-			options.addPart(
-				distJenkinsRequestParameter.getKey(),
-				distJenkinsRequestParameter.getValue());
-		}
-
-		sendJenkinsRequest(user, options);
+		sendJenkinsRequest(user, getDistJenkinsRequestParameters(patcherBuild));
 	}
 
-	public static void sendJenkinsRequest(User user, Http.Options options)
+	public static void sendJenkinsRequest(
+			User user, Map<String, String> parameters)
 		throws Exception {
 
 		PatcherConfiguration patcherConfiguration =
@@ -675,12 +663,22 @@ public class JenkinsUtil {
 			return;
 		}
 
+		Http.Options options = new Http.Options();
+
 		String credentials =
 			patcherConfiguration.jenkinsAdminUserName() + StringPool.COLON +
 				patcherConfiguration.jenkinsAdminUserToken();
 
 		options.addHeader(
 			"Authorization", "Basic " + Base64.encode(credentials.getBytes()));
+
+		for (Map.Entry<String, String> agentJenkinsRequestParameter :
+				parameters.entrySet()) {
+
+			options.addPart(
+				agentJenkinsRequestParameter.getKey(),
+				agentJenkinsRequestParameter.getValue());
+		}
 
 		options.addPart("patcher.user.id", String.valueOf(user.getUserId()));
 		options.addPart("token", patcherConfiguration.jenkinsToken());
@@ -720,20 +718,7 @@ public class JenkinsUtil {
 		patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
 			patcherBuild);
 
-		Http.Options options = new Http.Options();
-
-		Map<String, String> testJenkinsRequestParameters =
-			getTestJenkinsRequestParameters(patcherBuild);
-
-		for (Map.Entry<String, String> testJenkinsRequestParameter :
-				testJenkinsRequestParameters.entrySet()) {
-
-			options.addPart(
-				testJenkinsRequestParameter.getKey(),
-				testJenkinsRequestParameter.getValue());
-		}
-
-		sendJenkinsRequest(user, options);
+		sendJenkinsRequest(user, getTestJenkinsRequestParameters(patcherBuild));
 	}
 
 	public static JSONObject toJenkinsResult(String status, String statusURL) {
@@ -889,44 +874,22 @@ public class JenkinsUtil {
 			return;
 		}
 
-		Http.Options options = new Http.Options();
-
-		Map<String, String> agentJenkinsRequestParameters =
+		sendJenkinsRequest(
+			user,
 			getAgentJenkinsPatcherBuildRequestParameters(
-				patcherProjectVersion, patcherFix, patcherFixIds);
-
-		for (Map.Entry<String, String> agentJenkinsRequestParameter :
-				agentJenkinsRequestParameters.entrySet()) {
-
-			options.addPart(
-				agentJenkinsRequestParameter.getKey(),
-				agentJenkinsRequestParameter.getValue());
-		}
-
-		sendJenkinsRequest(user, options);
+				patcherProjectVersion, patcherFix, patcherFixIds));
 	}
 
 	protected static void sendAgentJenkinsPatcherFixRequest(
 			User user, PatcherFix patcherFix)
 		throws Exception {
 
-		Http.Options options = new Http.Options();
-
-		Map<String, String> agentJenkinsRequestParameters =
+		sendJenkinsRequest(
+			user,
 			getAgentJenkinsPatcherFixRequestParameters(
 				PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersion(
 					patcherFix.getPatcherProjectVersionId()),
-				patcherFix);
-
-		for (Map.Entry<String, String> agentJenkinsRequestParameter :
-				agentJenkinsRequestParameters.entrySet()) {
-
-			options.addPart(
-				agentJenkinsRequestParameter.getKey(),
-				agentJenkinsRequestParameter.getValue());
-		}
-
-		sendJenkinsRequest(user, options);
+				patcherFix));
 	}
 
 	protected static void validateJenkinsRequestKey(

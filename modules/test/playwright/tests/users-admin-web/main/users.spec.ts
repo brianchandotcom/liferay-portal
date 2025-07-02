@@ -31,6 +31,7 @@ export const test = mergeTests(
 	accountSettingsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-47858': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -698,5 +699,48 @@ test(
 		await productMenuPage.configurationButton.click();
 
 		await expect(productMenuPage.siteSettingsButton).not.toBeVisible();
+	}
+);
+
+test(
+	'Can assign an organization to a user',
+	{tag: '@LPD-59030'},
+	async ({apiHelpers, editUserPage, usersAndOrganizationsPage}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await usersAndOrganizationsPage.goto();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+
+		await expect(editUserPage.membershipsLink).toBeVisible();
+		await expect(editUserPage.organizationsLink).toBeVisible();
+
+		await editUserPage.organizationsLink.click();
+
+		await editUserPage.selectOrganizationsButton.click();
+
+		await expect(
+			editUserPage.selectOrganizationsTable.cell('Approved')
+		).toBeVisible();
+
+		await (
+			await editUserPage.selectOrganizationsTable.rowCheckbox(
+				organization.name
+			)
+		).check();
+		await editUserPage.selectOrganizationsAddButton.click();
+
+		await expect(
+			editUserPage.organizationsTable.getByText(organization.name)
+		).toBeVisible();
+		await expect(
+			editUserPage.organizationsTable.getByText('Approved')
+		).toBeVisible();
 	}
 );

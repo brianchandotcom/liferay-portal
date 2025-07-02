@@ -42,6 +42,13 @@ export class EditUserPage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly membershipsUserGroupsTable: Locator;
+	readonly myOrganizationsSelectOrganizationButton: Locator;
+	readonly myOrganizationsSelectOrganizationsTable: Locator;
+	readonly myOrganizationsSelectOrganizationsTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
 	readonly organizationsLink: Locator;
 	readonly organizationsTable: Locator;
 	readonly page: Page;
@@ -57,7 +64,7 @@ export class EditUserPage {
 	readonly screenNameError: Locator;
 	readonly screenNameInput: Locator;
 	readonly selectAccountsButton: Locator;
-	readonly selectOrganizationButton: Locator;
+
 	readonly selectOrganizationRolesButton: Locator;
 	readonly selectOrganizationRolesFrame: FrameLocator;
 	readonly selectOrganizationRolesFrameCell: (name: string) => Locator;
@@ -69,12 +76,11 @@ export class EditUserPage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly selectOrganizationRolesSearchBar: Locator;
 	readonly selectOrganizationRolesSearchBarButton: Locator;
-	readonly selectOrganizationsTable: Locator;
-	readonly selectOrganizationsTableRow: (
-		colPosition: number,
-		value: string,
-		strictEqual?: boolean
-	) => Promise<{column: Locator; row: Locator}>;
+	readonly selectOrganizationsAddButton: Locator;
+	readonly selectOrganizationsButton: Locator;
+	readonly selectOrganizationsFrame: FrameLocator;
+	readonly selectOrganizationsTable: DataTablePage;
+
 	readonly selectRegularRolesButton: Locator;
 	readonly selectRegularRolesChooseButton: (name: string) => Locator;
 	readonly selectRegularRolesFrame: FrameLocator;
@@ -212,6 +218,28 @@ export class EditUserPage {
 			exact: true,
 			name: 'Memberships',
 		});
+		this.myOrganizationsSelectOrganizationButton = page.locator(
+			'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_selectOrganizationLink'
+		);
+		this.myOrganizationsSelectOrganizationsTable = page
+			.frameLocator(
+				'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_selectOrganization_iframe_'
+			)
+			.locator(
+				'#_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_entriesSearchContainer'
+			);
+		this.myOrganizationsSelectOrganizationsTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean
+		) => {
+			return await searchTableRowByValue(
+				this.myOrganizationsSelectOrganizationsTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
 		this.organizationsLink = page.getByRole('link', {
 			exact: true,
 			name: 'Organizations',
@@ -248,9 +276,6 @@ export class EditUserPage {
 		);
 		this.screenNameInput = page.getByLabel('Screen Name');
 		this.selectAccountsButton = page.getByLabel('Select Accounts');
-		this.selectOrganizationButton = page.locator(
-			'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_selectOrganizationLink'
-		);
 		this.selectOrganizationRolesButton = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectOrganizationRoleLink'
 		);
@@ -281,25 +306,22 @@ export class EditUserPage {
 			this.selectOrganizationRolesFrame.getByRole('button', {
 				name: 'Search for',
 			});
-		this.selectOrganizationsTable = page
-			.frameLocator(
-				'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_selectOrganization_iframe_'
-			)
-			.locator(
+		this.selectOrganizationsAddButton = page.getByRole('button', {
+			name: 'Add',
+		});
+		this.selectOrganizationsButton = page.getByLabel(
+			'Select Organizations'
+		);
+		this.selectOrganizationsFrame = page.frameLocator(
+			'iframe[title="Select Organization"]'
+		);
+
+		this.selectOrganizationsTable = new DataTablePage(
+			this.selectOrganizationsFrame,
+			this.selectOrganizationsFrame.locator(
 				'#_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_entriesSearchContainer'
-			);
-		this.selectOrganizationsTableRow = async (
-			colPosition: number,
-			value: string,
-			strictEqual: boolean
-		) => {
-			return await searchTableRowByValue(
-				this.selectOrganizationsTable,
-				colPosition,
-				value,
-				strictEqual
-			);
-		};
+			)
+		);
 		this.selectRegularRolesButton = page.getByLabel('Select Regular Roles');
 		this.selectRegularRolesChooseButton = (name) =>
 			this.selectRegularRolesFrame.getByLabel(`Choose ${name}`);

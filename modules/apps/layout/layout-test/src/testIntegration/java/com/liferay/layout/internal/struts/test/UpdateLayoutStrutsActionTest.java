@@ -6,6 +6,7 @@
 package com.liferay.layout.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -196,7 +197,7 @@ public class UpdateLayoutStrutsActionTest {
 			"testRole", RoleConstants.TYPE_SITE);
 
 		RoleTestUtil.addResourcePermission(
-			testRole.getName(), _ALLOWED_PORTLET_IDS[0],
+			testRole.getName(), AssetPublisherPortletKeys.ASSET_PUBLISHER,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.ADD_TO_PAGE);
 
@@ -215,7 +216,7 @@ public class UpdateLayoutStrutsActionTest {
 
 		try {
 			mockHttpServletRequest.setParameter(
-				"p_p_id", _ALLOWED_PORTLET_IDS[0]);
+				"p_p_id", AssetPublisherPortletKeys.ASSET_PUBLISHER);
 
 			_updateLayoutStrutsAction.execute(
 				mockHttpServletRequest, mockHttpServletResponse);
@@ -258,7 +259,8 @@ public class UpdateLayoutStrutsActionTest {
 
 		_resourcePermissionService.addResourcePermission(
 			TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
-			_ALLOWED_PORTLET_IDS[0], ResourceConstants.SCOPE_COMPANY,
+			AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(role.getCompanyId()), role.getRoleId(),
 			ActionKeys.ADD_TO_PAGE);
 	}
@@ -268,18 +270,21 @@ public class UpdateLayoutStrutsActionTest {
 
 		_resourcePermissionService.removeResourcePermissions(
 			TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
-			_ALLOWED_PORTLET_IDS[0], ResourceConstants.SCOPE_COMPANY,
-			role.getRoleId(), ActionKeys.ADD_TO_PAGE);
+			AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			ResourceConstants.SCOPE_COMPANY, role.getRoleId(),
+			ActionKeys.ADD_TO_PAGE);
 
 		_resourcePermissionService.removeResourcePermissions(
 			TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
-			_ALLOWED_PORTLET_IDS[0], ResourceConstants.SCOPE_GROUP_TEMPLATE,
-			role.getRoleId(), ActionKeys.ADD_TO_PAGE);
+			AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, role.getRoleId(),
+			ActionKeys.ADD_TO_PAGE);
 
 		_resourcePermissionService.removeResourcePermissions(
 			TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
-			_ALLOWED_PORTLET_IDS[0], ResourceConstants.SCOPE_GROUP,
-			role.getRoleId(), ActionKeys.ADD_TO_PAGE);
+			AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			ResourceConstants.SCOPE_GROUP, role.getRoleId(),
+			ActionKeys.ADD_TO_PAGE);
 	}
 
 	private static final String[] _ALLOWED_PORTLET_IDS = {

@@ -11,6 +11,7 @@ import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import Toolbar from '../../../common/components/Toolbar';
+import {IPermissionItem} from '../../../common/components/forms/PermissionsTable';
 import CategorizationPermissionService from '../../../common/services/CategorizationPermissionService';
 import VocabularyService from '../../../common/services/VocabularyService';
 import {IVocabulary} from '../../../common/types/IVocabulary';
@@ -18,7 +19,6 @@ import {
 	displayNameInUseErrorToast,
 	displaySystemErrorToast,
 } from '../../../common/utils/ToastUtil';
-import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import ConfirmChangesModal from './ConfirmChangesModal';
 import EditAssociatedAssetTypes from './EditAssociatedAssetTypes';

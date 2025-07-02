@@ -11,7 +11,7 @@ import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {IPermissionItem} from '../../../components/forms/PermissionsTable';
+import {IPermissionItem} from '../../../../common/components/forms/PermissionsTable';
 import PermissionsFormGroup from '../../components/PermissionsFormGroup';
 
 interface Props {

@@ -7,7 +7,7 @@ import React from 'react';
 
 import PermissionsTable, {
 	IPermissionItem,
-} from '../../components/forms/PermissionsTable';
+} from '../../../common/components/forms/PermissionsTable';
 import {
 	DEFAULT_PERMISSIONS,
 	DEFAULT_ROLES,

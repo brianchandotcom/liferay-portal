@@ -12,9 +12,9 @@ import {openToast} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {FieldPicker, FieldText} from '../../../common/components/forms';
+import {required, validate} from '../../../common/components/forms/validations';
 import FolderService, {TFolder} from '../../../common/services/FolderService';
-import {FieldPicker, FieldText} from '../forms';
-import {required, validate} from '../forms/validations';
 
 interface EditFolderProps {
 	backURL: string;

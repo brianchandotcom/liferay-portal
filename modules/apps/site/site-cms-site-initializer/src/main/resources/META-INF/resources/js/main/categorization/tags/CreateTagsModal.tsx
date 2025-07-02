@@ -10,13 +10,13 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {FieldText} from '../../../common/components/forms';
+import {required, validate} from '../../../common/components/forms/validations';
 import ApiHelper from '../../../common/services/ApiHelper';
 import {
 	displayErrorToast,
 	displayNameInUseErrorToast,
 } from '../../../common/utils/ToastUtil';
-import {FieldText} from '../../components/forms';
-import {required, validate} from '../../components/forms/validations';
 import CategorizationSpaces from '../components/CategorizationSpaces';
 
 const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';

@@ -8,7 +8,7 @@ import ClayModal from '@clayui/modal';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {FieldText} from '../forms';
+import {FieldText} from '../../../common/components/forms';
 
 export default function DeleteStructureModalContent({
 	closeModal,

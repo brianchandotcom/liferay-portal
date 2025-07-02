@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -87,7 +86,7 @@ public class JSONBatchEngineDataFileCheck extends BaseFileCheck {
 			String defaultLanguageId = itemJSONObject.getString(
 				"defaultLanguageId");
 
-			if (!defaultLanguageId.equals(StringPool.BLANK)) {
+			if (defaultLanguageId.equals("en_US")) {
 				itemJSONObject.remove("defaultLanguageId");
 			}
 

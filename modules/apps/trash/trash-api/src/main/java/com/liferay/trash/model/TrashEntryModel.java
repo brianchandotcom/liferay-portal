@@ -8,7 +8,6 @@ package com.liferay.trash.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
@@ -31,7 +30,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TrashEntryModel
 	extends AttachedModel, BaseModel<TrashEntry>, CTModel<TrashEntry>,
-			ExternalReferenceCodeModel, MVCCModel, ShardedModel {
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -86,38 +85,6 @@ public interface TrashEntryModel
 	 */
 	@Override
 	public void setCtCollectionId(long ctCollectionId);
-
-	/**
-	 * Returns the uuid of this trash entry.
-	 *
-	 * @return the uuid of this trash entry
-	 */
-	@AutoEscape
-	public String getUuid();
-
-	/**
-	 * Sets the uuid of this trash entry.
-	 *
-	 * @param uuid the uuid of this trash entry
-	 */
-	public void setUuid(String uuid);
-
-	/**
-	 * Returns the external reference code of this trash entry.
-	 *
-	 * @return the external reference code of this trash entry
-	 */
-	@AutoEscape
-	@Override
-	public String getExternalReferenceCode();
-
-	/**
-	 * Sets the external reference code of this trash entry.
-	 *
-	 * @param externalReferenceCode the external reference code of this trash entry
-	 */
-	@Override
-	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the entry ID of this trash entry.

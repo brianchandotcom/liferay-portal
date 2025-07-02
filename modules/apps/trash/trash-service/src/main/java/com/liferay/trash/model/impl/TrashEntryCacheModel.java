@@ -68,16 +68,12 @@ public class TrashEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", ctCollectionId=");
 		sb.append(ctCollectionId);
-		sb.append(", uuid=");
-		sb.append(uuid);
-		sb.append(", externalReferenceCode=");
-		sb.append(externalReferenceCode);
 		sb.append(", entryId=");
 		sb.append(entryId);
 		sb.append(", groupId=");
@@ -111,21 +107,6 @@ public class TrashEntryCacheModel
 
 		trashEntryImpl.setMvccVersion(mvccVersion);
 		trashEntryImpl.setCtCollectionId(ctCollectionId);
-
-		if (uuid == null) {
-			trashEntryImpl.setUuid("");
-		}
-		else {
-			trashEntryImpl.setUuid(uuid);
-		}
-
-		if (externalReferenceCode == null) {
-			trashEntryImpl.setExternalReferenceCode("");
-		}
-		else {
-			trashEntryImpl.setExternalReferenceCode(externalReferenceCode);
-		}
-
 		trashEntryImpl.setEntryId(entryId);
 		trashEntryImpl.setGroupId(groupId);
 		trashEntryImpl.setCompanyId(companyId);
@@ -170,8 +151,6 @@ public class TrashEntryCacheModel
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
-		uuid = objectInput.readUTF();
-		externalReferenceCode = objectInput.readUTF();
 
 		entryId = objectInput.readLong();
 
@@ -198,20 +177,6 @@ public class TrashEntryCacheModel
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(ctCollectionId);
-
-		if (uuid == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(uuid);
-		}
-
-		if (externalReferenceCode == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(externalReferenceCode);
-		}
 
 		objectOutput.writeLong(entryId);
 
@@ -248,8 +213,6 @@ public class TrashEntryCacheModel
 
 	public long mvccVersion;
 	public long ctCollectionId;
-	public String uuid;
-	public String externalReferenceCode;
 	public long entryId;
 	public long groupId;
 	public long companyId;

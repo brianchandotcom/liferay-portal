@@ -206,23 +206,29 @@ public class UpdateLayoutStrutsActionTest {
 		Role userRole = _roleLocalService.getRole(
 			_group.getCompanyId(), RoleConstants.USER);
 
-		_revokeAssetPublisherResourcePermissions(userRole);
+		_resourcePermissionService.removeResourcePermissions(
+			_group.getGroupId(), TestPropsValues.getCompanyId(),
+			AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			ResourceConstants.SCOPE_COMPANY, userRole.getRoleId(),
+			ActionKeys.ADD_TO_PAGE);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(user);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
 
 		try {
 			mockHttpServletRequest.setParameter(
 				"p_p_id", AssetPublisherPortletKeys.ASSET_PUBLISHER);
 
 			_updateLayoutStrutsAction.execute(
-				mockHttpServletRequest, mockHttpServletResponse);
+				mockHttpServletRequest, new MockHttpServletResponse());
 		}
 		finally {
-			_restoreAssetPublisherResourcePermissions(userRole);
+			_resourcePermissionService.addResourcePermission(
+				_group.getGroupId(), TestPropsValues.getCompanyId(),
+				AssetPublisherPortletKeys.ASSET_PUBLISHER,
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(userRole.getCompanyId()), userRole.getRoleId(),
+				ActionKeys.ADD_TO_PAGE);
 		}
 	}
 
@@ -249,27 +255,6 @@ public class UpdateLayoutStrutsActionTest {
 		mockHttpServletRequest.setParameter(Constants.CMD, Constants.ADD);
 
 		return mockHttpServletRequest;
-	}
-
-	private void _restoreAssetPublisherResourcePermissions(Role role)
-		throws Exception {
-
-		_resourcePermissionService.addResourcePermission(
-			TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
-			AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(role.getCompanyId()), role.getRoleId(),
-			ActionKeys.ADD_TO_PAGE);
-	}
-
-	private void _revokeAssetPublisherResourcePermissions(Role role)
-		throws Exception {
-
-		_resourcePermissionService.removeResourcePermissions(
-			TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
-			AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			ResourceConstants.SCOPE_COMPANY, role.getRoleId(),
-			ActionKeys.ADD_TO_PAGE);
 	}
 
 	private static final String[] _ALLOWED_PORTLET_IDS = {

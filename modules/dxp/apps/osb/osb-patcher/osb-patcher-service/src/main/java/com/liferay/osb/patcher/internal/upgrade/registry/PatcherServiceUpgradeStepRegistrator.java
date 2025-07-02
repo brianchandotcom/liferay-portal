@@ -5,7 +5,7 @@
 
 package com.liferay.osb.patcher.internal.upgrade.registry;
 
-import com.liferay.osb.patcher.internal.upgrade.v2_0_0.TableNamesUpgradeProcess;
+import com.liferay.osb.patcher.internal.upgrade.v2_0_0.SchemaUpgradeProcess;
 import com.liferay.osb.patcher.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.osb.patcher.internal.upgrade.v2_0_0.UpgradePortletId;
 import com.liferay.osb.patcher.internal.upgrade.v2_0_0.UpgradeThemeId;
@@ -41,7 +41,7 @@ public class PatcherServiceUpgradeStepRegistrator
 				"delete from OSB_PatcherFixPack where patcherBuildId = 0"));
 
 		registry.register(
-			"7.4.0", "8.0.0", new TableNamesUpgradeProcess(),
+			"7.4.0", "8.0.0", new SchemaUpgradeProcess(),
 			new MVCCVersionUpgradeProcess() {
 
 				@Override

@@ -7,6 +7,7 @@ package com.liferay.search.experiences.internal.feature.flag;
 
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
@@ -59,13 +60,14 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 				infoCollectionProviderSXPBlueprintModelListener =
 					new SXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
 						_assetHelper, _assetSubtypeIdentifierBuilder,
-						_blogsEntryLocalService, _bundleContext,
-						_classNameLocalService, _companyLocalService,
-						_ddmStructureService, _dlFileEntryTypeLocalService,
-						_dlAppLocalService, _groupService,
-						_journalArticleService, _kbArticleLocalService,
-						_objectDefinitionLocalService, _objectEntryLocalService,
-						_searcher, _searchRequestBuilderFactory,
+						_blogsEntryLocalService, _calendarBookingLocalService,
+						_bundleContext, _classNameLocalService,
+						_companyLocalService, _ddmStructureService,
+						_dlFileEntryTypeLocalService, _dlAppLocalService,
+						_groupService, _journalArticleService,
+						_kbArticleLocalService, _objectDefinitionLocalService,
+						_objectEntryLocalService, _searcher,
+						_searchRequestBuilderFactory,
 						_sxpBlueprintLocalService);
 
 			infoCollectionProviderSXPBlueprintModelListener.start();
@@ -111,6 +113,9 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

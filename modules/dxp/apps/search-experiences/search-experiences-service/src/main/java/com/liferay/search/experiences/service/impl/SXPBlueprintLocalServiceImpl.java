@@ -7,6 +7,7 @@ package com.liferay.search.experiences.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -362,8 +363,9 @@ public class SXPBlueprintLocalServiceImpl
 
 	private final List<String> _collectionProviderTypes = new ArrayList<>(
 		Arrays.asList(
-			BlogsEntry.class.getName(), DLFileEntry.class.getName(),
-			JournalArticle.class.getName(), KBArticle.class.getName()));
+			BlogsEntry.class.getName(), CalendarBooking.class.getName(),
+			DLFileEntry.class.getName(), JournalArticle.class.getName(),
+			KBArticle.class.getName()));
 
 	@Reference
 	private JSONFactory _jsonFactory;

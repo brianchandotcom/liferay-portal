@@ -1267,7 +1267,7 @@ public class ObjectDefinitionResourceTest
 						deletionType = ObjectRelationship.DeletionType.CASCADE;
 						externalReferenceCode = "TESTOBJECTRELATIONSHIP";
 						label = objectRelationshipLabelMap;
-						name = RandomTestUtil.randomString();
+						name = "a" + RandomTestUtil.randomString();
 						objectDefinitionExternalReferenceCode1 =
 							"TESTOBJECTDEFINITION1";
 						objectDefinitionExternalReferenceCode2 =

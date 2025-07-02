@@ -1048,8 +1048,7 @@ public class PatcherFixUtil {
 			}
 
 			PatcherBuildUtil.updatePatcherBuildFixes(
-				themeDisplay.getUser(), patcherBuild, patcherFixIds,
-				themeDisplay);
+				themeDisplay.getUser(), patcherBuild, patcherFixIds);
 
 			JenkinsUtil.sendAgentJenkinsRequest(
 				themeDisplay.getUser(), patcherBuild);

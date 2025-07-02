@@ -509,7 +509,7 @@ public class PatcherUtil {
 						PatcherBuildUtil.
 							processOSBPatcherBuildMergeJenkinsStatus(
 								user, GetterUtil.getLong(patcherId),
-								jenkinsStatusJSONString, themeDisplay);
+								jenkinsStatusJSONString);
 					}
 					else {
 						PatcherFixUtil.processOSBPatcherFixAddJenkinsStatus(

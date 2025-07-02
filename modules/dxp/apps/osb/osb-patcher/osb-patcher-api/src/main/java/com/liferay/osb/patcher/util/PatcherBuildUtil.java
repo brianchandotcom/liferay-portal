@@ -115,8 +115,7 @@ public class PatcherBuildUtil {
 					PatcherFixLocalServiceUtil.updatePatcherFix(mainPatcherFix);
 
 					workflowPatcherBuildMerging(
-						user, patcherBuild, isMergeOnly(patcherBuild),
-						themeDisplay);
+						user, patcherBuild, isMergeOnly(patcherBuild));
 
 					patcherBuild =
 						PatcherBuildLocalServiceUtil.updatePatcherBuild(
@@ -173,8 +172,7 @@ public class PatcherBuildUtil {
 		patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
 			patcherBuild);
 
-		updatePatcherBuildFixes(
-			user, patcherBuild, relatedPatcherFixIds, themeDisplay);
+		updatePatcherBuildFixes(user, patcherBuild, relatedPatcherFixIds);
 
 		JenkinsUtil.sendAgentJenkinsRequest(user, patcherBuild);
 
@@ -1044,8 +1042,7 @@ public class PatcherBuildUtil {
 		rollbackFor = Exception.class
 	)
 	public static void processOSBPatcherBuildMergeJenkinsStatus(
-			User user, long patcherFixId, String jenkinsStatusJSONString,
-			ThemeDisplay themeDisplay)
+			User user, long patcherFixId, String jenkinsStatusJSONString)
 		throws Exception {
 
 		validateOSBPatcherBuildMergeJenkinsStatus(
@@ -1090,7 +1087,7 @@ public class PatcherBuildUtil {
 
 			updatePatcherBuildStatus(
 				user, patcherBuild, osbPatcherServletOutcome.getStatus(),
-				osbPatcherServletOutcome.getResult(), messages, themeDisplay);
+				osbPatcherServletOutcome.getResult(), messages);
 		}
 	}
 
@@ -1471,8 +1468,7 @@ public class PatcherBuildUtil {
 	}
 
 	public static void workflowPatcherBuildMerging(
-			User user, PatcherBuild patcherBuild, boolean mergeOnly,
-			ThemeDisplay themeDisplay)
+			User user, PatcherBuild patcherBuild, boolean mergeOnly)
 		throws Exception {
 
 		if (mergeOnly) {
@@ -1781,8 +1777,7 @@ public class PatcherBuildUtil {
 	}
 
 	protected static void updatePatcherBuildFixes(
-			User user, PatcherBuild patcherBuild, List<Long> patcherFixIds,
-			ThemeDisplay themeDisplay)
+			User user, PatcherBuild patcherBuild, List<Long> patcherFixIds)
 		throws Exception {
 
 		PatcherFixLocalServiceUtil.clearPatcherBuildPatcherFixes(
@@ -1929,8 +1924,7 @@ public class PatcherBuildUtil {
 	protected static void updatePatcherBuildStatus(
 			User user, PatcherBuild patcherBuild,
 			int osbPatcherServletOutcomeStatus,
-			String osbPatcherServletOutcomeResult, List<String> messages,
-			ThemeDisplay themeDisplay)
+			String osbPatcherServletOutcomeResult, List<String> messages)
 		throws Exception {
 
 		if (osbPatcherServletOutcomeStatus ==

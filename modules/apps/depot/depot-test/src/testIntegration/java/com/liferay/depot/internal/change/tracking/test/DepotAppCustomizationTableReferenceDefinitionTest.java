@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.depot.change.tracking.test;
+package com.liferay.depot.internal.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,7 @@ import org.junit.runner.RunWith;
  * @author Brooke Dalton
  */
 @RunWith(Arquillian.class)
-public class DepotEntryGroupRelTableReferenceDefinitionTest
+public class DepotAppCustomizationTableReferenceDefinitionTest
 	extends BaseTableReferenceDefinitionTestCase {
 
 	@ClassRule
@@ -55,14 +56,15 @@ public class DepotEntryGroupRelTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return _depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			_depotEntry.getDepotEntryId(), group.getGroupId());
+		return _depotAppCustomizationLocalService.updateDepotAppCustomization(
+			_depotEntry.getDepotEntryId(), false, JournalPortletKeys.JOURNAL);
 	}
 
-	private DepotEntry _depotEntry;
-
 	@Inject
-	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+	private DepotAppCustomizationLocalService
+		_depotAppCustomizationLocalService;
+
+	private DepotEntry _depotEntry;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

@@ -403,7 +403,6 @@ public class JournalTransformerTest {
 					TransformerListener::isEnabled),
 				null, false, "${FieldsGroup19507604.birthday.getData()}", null,
 				Constants.VIEW));
-
 		Assert.assertEquals(
 			"",
 			_transformMethod.invoke(

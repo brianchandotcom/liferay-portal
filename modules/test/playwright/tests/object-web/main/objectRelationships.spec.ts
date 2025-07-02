@@ -884,63 +884,73 @@ test.describe('Manage object relationships through Model Builder', () => {
 		).toContainText('Cascade');
 	});
 
-	test('cannot create relationship between the postal address object and objects without an one-to-many relationship with the account object', async ({
-		apiHelpers,
-		modelBuilderDiagramPage,
-		page,
-		viewObjectDefinitionsPage,
-	}) => {
-		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
+	test(
+		'does not allow to create relationship between Postal Address system object and objects without an one-to-many relationship with Account object',
+		{tag: '@LPD-26481'},
+		async ({
+			apiHelpers,
+			modelBuilderDiagramPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: postalAddress} =
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+					'L_POSTAL_ADDRESS'
+				);
+
+			apiHelpers.data.push({
+				id: objectDefinition1.id,
+				type: 'objectDefinition',
 			});
 
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+			await test.step('navigate to model builder and display all nodes', async () => {
+				await viewObjectDefinitionsPage.goto();
 
-		const {body: postalAddress} =
-			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
-				'L_POSTAL_ADDRESS'
-			);
+				await viewObjectDefinitionsPage.openObjectFolder('Default');
 
-		apiHelpers.data.push({
-			id: objectDefinition1.id,
-			type: 'objectDefinition',
-		});
+				await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
 
-		await viewObjectDefinitionsPage.goto();
+				await modelBuilderDiagramPage.toggleSidebarsButton.click();
 
-		await viewObjectDefinitionsPage.openObjectFolder('Default');
+				await modelBuilderDiagramPage.fitViewButton.click();
+			});
 
-		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+			await test.step('assert that a warning is displayed when the user drags a connection between the nodes', async () => {
+				await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
+					postalAddress.id,
+					objectDefinition1.id
+				);
 
-		await modelBuilderDiagramPage.toggleSidebarsButton.click();
+				await expect(
+					modelBuilderDiagramPage.postalAddressObjectRelationshipWarning
+				).toBeVisible();
+			});
 
-		await modelBuilderDiagramPage.fitViewButton.click();
+			await test.step('assert that a "Learn more" link is displayed in the warning toast and leads to a learn recource', async () => {
+				const pagePromise = page.waitForEvent('popup');
 
-		await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
-			postalAddress.id,
-			objectDefinition1.id
-		);
+				await page.getByRole('link', {name: 'Learn more.'}).click();
 
-		await expect(
-			modelBuilderDiagramPage.postalAddressObjectRelationshipWarning
-		).toBeVisible();
+				const liferayLearnPage = await pagePromise;
 
-		const pagePromise = page.waitForEvent('popup');
+				await liferayLearnPage.waitForLoadState();
 
-		await page.getByRole('link', {name: 'Learn more.'}).click();
-
-		const liferayLearnPage = await pagePromise;
-
-		await liferayLearnPage.waitForLoadState();
-
-		await expect(
-			liferayLearnPage.getByRole('heading', {
-				name: 'Accessing Accounts Data from Custom Object',
-			})
-		).toBeVisible();
-	});
+				await expect(
+					liferayLearnPage.getByRole('heading', {
+						name: 'Accessing Accounts Data from Custom Object',
+					})
+				).toBeVisible();
+			});
+		}
+	);
 
 	test(
 		'allows to create relationship with a custom object named Address',

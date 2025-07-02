@@ -23,8 +23,8 @@ import java.util.List;
  */
 public class PlaywrightTestSelector {
 
-	public List<PlaywrightTest> getPlaywrightTests() throws IOException {
-		List<PlaywrightTest> playwrightTests = new ArrayList<>();
+	public List<PlaywrightTestReport> getPlaywrightTests() throws IOException {
+		List<PlaywrightTestReport> playwrightTestReports = new ArrayList<>();
 
 		String userDir = System.getProperty("user.dir");
 
@@ -55,7 +55,7 @@ public class PlaywrightTestSelector {
 								".spec.ts"
 							)) {
 
-							playwrightTests.addAll(
+							playwrightTestReports.addAll(
 								PlaywrightTestParser.parse(
 									playwrighTestFilePath));
 						}
@@ -72,10 +72,10 @@ public class PlaywrightTestSelector {
 				ioException.getCause());
 		}
 
-		playwrightTests.sort(
-			Comparator.comparing(PlaywrightTest::getClassName));
+		playwrightTestReports.sort(
+			Comparator.comparing(PlaywrightTestReport::getClassName));
 
-		return playwrightTests;
+		return playwrightTestReports;
 	}
 
 }

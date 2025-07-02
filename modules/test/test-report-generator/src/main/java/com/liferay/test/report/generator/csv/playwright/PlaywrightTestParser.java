@@ -20,7 +20,9 @@ import java.util.regex.Pattern;
  */
 public class PlaywrightTestParser {
 
-	public static List<PlaywrightTest> parse(Path playwrightTestFilePath) {
+	public static List<PlaywrightTestReport> parse(
+		Path playwrightTestFilePath) {
+
 		String playwrightTestFileContent = "";
 
 		try {
@@ -33,7 +35,7 @@ public class PlaywrightTestParser {
 				ioException.getCause());
 		}
 
-		List<PlaywrightTest> playwrightTests = new ArrayList<>();
+		List<PlaywrightTestReport> playwrightTestReports = new ArrayList<>();
 
 		String className = playwrightTestFilePath.getFileName(
 		).toString(
@@ -57,11 +59,12 @@ public class PlaywrightTestParser {
 				ignored = true;
 			}
 
-			playwrightTests.add(
-				new PlaywrightTest(className, testFilePath, testName, ignored));
+			playwrightTestReports.add(
+				new PlaywrightTestReport(
+					className, testFilePath, testName, ignored));
 		}
 
-		return playwrightTests;
+		return playwrightTestReports;
 	}
 
 	private static final Pattern _testPattern = Pattern.compile(

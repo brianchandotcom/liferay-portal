@@ -5,7 +5,7 @@
 
 package com.liferay.test.report.generator.csv;
 
-import com.liferay.test.report.generator.csv.playwright.PlaywrightTest;
+import com.liferay.test.report.generator.csv.playwright.PlaywrightTestReport;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -20,7 +20,8 @@ import java.util.List;
 public class TestReportCSVWriter {
 
 	public static void write(
-		OutputStream outputStream, List<PlaywrightTest> playwrightTests) {
+		OutputStream outputStream,
+		List<PlaywrightTestReport> playwrightTestReports) {
 
 		try {
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
@@ -32,13 +33,15 @@ public class TestReportCSVWriter {
 			bufferedWriter.write(_CSV_HEADER);
 			bufferedWriter.newLine();
 
-			for (PlaywrightTest playwrightTest : playwrightTests) {
+			for (PlaywrightTestReport playwrightTestReport :
+					playwrightTestReports) {
+
 				bufferedWriter.write(
 					String.format(
-						_CSV_FORMAT, playwrightTest.getClassName(),
-						playwrightTest.getTestName(),
-						playwrightTest.isIgnored(),
-						playwrightTest.getTestFilePath()));
+						_CSV_FORMAT, playwrightTestReport.getClassName(),
+						playwrightTestReport.getTestName(),
+						playwrightTestReport.isIgnored(),
+						playwrightTestReport.getTestFilePath()));
 
 				bufferedWriter.newLine();
 			}

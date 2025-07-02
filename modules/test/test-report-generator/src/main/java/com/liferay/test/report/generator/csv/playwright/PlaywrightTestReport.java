@@ -8,9 +8,9 @@ package com.liferay.test.report.generator.csv.playwright;
 /**
  * @author Davi Santos
  */
-public class PlaywrightTest {
+public class PlaywrightTestReport {
 
-	public PlaywrightTest(
+	public PlaywrightTestReport(
 		String className, String testFilePath, String testName,
 		boolean ignored) {
 

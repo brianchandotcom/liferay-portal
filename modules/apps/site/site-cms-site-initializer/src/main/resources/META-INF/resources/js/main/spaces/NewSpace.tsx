@@ -13,6 +13,7 @@ import React from 'react';
 import SpaceService from '../../common/services/SpaceService';
 import {LogoColor} from '../../common/types/Space';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
+import {getImage} from '../../common/utils/getImage';
 import {
 	invalidCharacters,
 	maxLength,
@@ -21,7 +22,6 @@ import {
 	required,
 	validate,
 } from '../components/forms/validations';
-import {getImage} from '../util/getImage';
 import {NewSpaceFormSection} from './NewSpaceFormSection';
 import BaseFields from './SpaceBaseFields';
 

@@ -6,7 +6,7 @@
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
 import {IVocabulary} from '../../common/types/IVocabulary';
-import {openGenericFDSDeleteConfirmationModal} from '../util/GenericOpenModalUtil';
+import {openGenericFDSDeleteConfirmationModal} from '../../common/utils/GenericOpenModalUtil';
 import MultipleSpacesRenderer from './cell_renderers/MultipleSpacesRenderer';
 import VocabularyRenderer from './cell_renderers/VocabularyRenderer';
 

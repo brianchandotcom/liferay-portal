@@ -8,7 +8,7 @@ import ClayLayout from '@clayui/layout';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {getImage} from '../util/getImage';
+import {getImage} from '../../common/utils/getImage';
 import {NewSpaceFormSection} from './NewSpaceFormSection';
 import {SpaceMembersWithList} from './SpaceMembersWithList';
 

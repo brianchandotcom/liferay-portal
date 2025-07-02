@@ -11,12 +11,12 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
-import {FieldText} from '../../components/forms';
-import {required, validate} from '../../components/forms/validations';
 import {
 	displayErrorToast,
 	displayNameInUseErrorToast,
-} from '../../util/ToastUtil';
+} from '../../../common/utils/ToastUtil';
+import {FieldText} from '../../components/forms';
+import {required, validate} from '../../components/forms/validations';
 import CategorizationSpaces from '../components/CategorizationSpaces';
 
 export default function EditTagsModalContent({

@@ -6,7 +6,7 @@
 import ClayLink from '@clayui/link';
 import React from 'react';
 
-import formatActionURL from '../../util/formatActionURL';
+import formatActionURL from '../../../common/utils/formatActionURL';
 
 const OBJECT_ENTRY_FOLDER_CLASSNAME =
 	'com.liferay.object.model.ObjectEntryFolder';

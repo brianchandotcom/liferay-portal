@@ -14,11 +14,11 @@ import Toolbar from '../../../common/components/Toolbar';
 import CategorizationPermissionService from '../../../common/services/CategorizationPermissionService';
 import VocabularyService from '../../../common/services/VocabularyService';
 import {IVocabulary} from '../../../common/types/IVocabulary';
-import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import {
 	displayNameInUseErrorToast,
 	displaySystemErrorToast,
-} from '../../util/ToastUtil';
+} from '../../../common/utils/ToastUtil';
+import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import ConfirmChangesModal from './ConfirmChangesModal';
 import EditAssociatedAssetTypes from './EditAssociatedAssetTypes';

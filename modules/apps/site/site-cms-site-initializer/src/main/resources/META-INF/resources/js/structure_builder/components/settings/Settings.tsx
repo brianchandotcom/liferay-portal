@@ -6,7 +6,7 @@
 import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 
-import {getImage} from '../../../main/util/getImage';
+import {getImage} from '../../../common/utils/getImage';
 import useSelectedItem from '../../contexts/hooks/useSelectedItem';
 import ReferencedStructureSettings from './ReferencedStructureSettings';
 import RepeatableGroupSettings from './RepeatableGroupSettings';

@@ -11,7 +11,7 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {getImage} from '../../main/util/getImage';
+import {getImage} from '../../common/utils/getImage';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelection from '../selectors/selectSelection';
 import selectStructureChildren from '../selectors/selectStructureChildren';

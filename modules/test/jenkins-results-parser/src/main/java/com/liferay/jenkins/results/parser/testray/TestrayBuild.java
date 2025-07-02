@@ -394,6 +394,37 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		_jsonObject = jsonObject;
 	}
 
+	protected TestrayBuild(URL url) {
+		Matcher matcher = _testrayBuildURLPattern.matcher(url.toString());
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid build URL " + url);
+		}
+
+		_testrayServer = TestrayFactory.newTestrayServer(
+			matcher.group("serverURL"));
+
+		_testrayRoutine = _testrayServer.getTestrayRoutineByID(
+			Long.parseLong(matcher.group("routineID")));
+
+		String filter = JenkinsResultsParserUtil.combine(
+			"id eq '", matcher.group("buildID"), "'");
+
+		try {
+			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+				"builds", FIELD_NAMES, filter, null, 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				throw new RuntimeException("Unable to find entity JSONObject");
+			}
+
+			_jsonObject = entityJSONObjects.get(0);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	protected List<TestrayCaseResult> getTestrayCaseResults(int maxCount) {
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
@@ -455,6 +486,9 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			"https://.+/(?<startYearMonth>\\d{4}-\\d{2})/",
 			"(?<topLevelMasterHostname>test-\\d+-\\d+)/",
 			"(?<topLevelJobName>[^/]+)/(?<topLevelBuildNumber>\\d+)/.*"));
+	private static final Pattern _testrayBuildURLPattern = Pattern.compile(
+		"(?<serverURL>https://[^/]+)/#/project/(?<projectID>\\d+)/routines/" +
+			"(?<routineID>\\d+)/build/(?<buildID>\\d+)");
 
 	private final JSONObject _jsonObject;
 	private String _pullRequestSenderUsername;

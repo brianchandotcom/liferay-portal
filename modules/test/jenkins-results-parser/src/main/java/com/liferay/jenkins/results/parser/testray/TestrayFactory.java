@@ -195,6 +195,10 @@ public class TestrayFactory {
 		return new TestrayBuild(testrayServer, jsonObject);
 	}
 
+	public static TestrayBuild newTestrayBuild(URL url) {
+		return new TestrayBuild(url);
+	}
+
 	public static TestrayCase newTestrayCase(
 		TestrayProject testrayProject, JSONObject jsonObject) {
 

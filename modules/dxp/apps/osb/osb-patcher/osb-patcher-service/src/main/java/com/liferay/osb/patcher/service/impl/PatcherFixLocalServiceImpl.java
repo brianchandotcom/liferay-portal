@@ -121,6 +121,49 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public PatcherFix updateJenkinsResult(
+			long patcherFixId, String jenkinsResults)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setJenkinsResults(jenkinsResults);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updateLatestFix(long patcherFixId, boolean latestFix)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setLatestFix(latestFix);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updateNotified(long patcherFixId, boolean notified)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setNotified(notified);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public PatcherFix updateObsolete(long patcherFixId, boolean obsolete)
 		throws PortalException {
 
@@ -129,6 +172,38 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 		patcherFix.setModifiedDate(new Date());
 		patcherFix.setObsolete(obsolete);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updatePatcherFix(
+			long patcherFixId, boolean latestFix, int type)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setLatestFix(latestFix);
+		patcherFix.setType(type);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updatePatcherFix(
+			long patcherFixId, String gitHash, int status)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setGitHash(gitHash);
+		patcherFix.setStatus(status);
 
 		return patcherFixPersistence.update(patcherFix);
 	}
@@ -147,6 +222,52 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		patcherFix.setDependencies(dependencies);
 		patcherFix.setFixPackStatus(fixPackStatus);
 		patcherFix.setRequirements(requirements);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updatePatcherFix(
+			long patcherFixId, String gitHash, String jenkinsResults,
+			int status)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setGitHash(gitHash);
+		patcherFix.setJenkinsResults(jenkinsResults);
+		patcherFix.setStatus(status);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updateRequestKey(long patcherFixId, String requestKey)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setRequestKey(requestKey);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updateStatus(long patcherFixId, int status)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setStatus(status);
 
 		return patcherFixPersistence.update(patcherFix);
 	}

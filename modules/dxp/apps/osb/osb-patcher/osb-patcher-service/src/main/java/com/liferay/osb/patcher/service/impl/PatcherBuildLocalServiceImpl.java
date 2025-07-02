@@ -205,6 +205,57 @@ public class PatcherBuildLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public PatcherBuild updatePatcherBuild(
+			long patcherBuildId, int qaStatus, String supportTicket, int type)
+		throws PortalException {
+
+		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
+			patcherBuildId);
+
+		patcherBuild.setModifiedDate(new Date());
+		patcherBuild.setQaStatus(qaStatus);
+		patcherBuild.setSupportTicket(supportTicket);
+		patcherBuild.setType(type);
+
+		return patcherBuildPersistence.update(patcherBuild);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherBuild updatePatcherBuild(
+			long patcherBuildId, String fileName, int qaStatus,
+			String sourceName, int status)
+		throws PortalException {
+
+		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
+			patcherBuildId);
+
+		patcherBuild.setModifiedDate(new Date());
+		patcherBuild.setFileName(fileName);
+		patcherBuild.setQaStatus(qaStatus);
+		patcherBuild.setSourceName(sourceName);
+		patcherBuild.setStatus(status);
+
+		return patcherBuildPersistence.update(patcherBuild);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherBuild updatePatcherFixId(
+			long patcherBuildId, long patcherFixId)
+		throws PortalException {
+
+		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
+			patcherBuildId);
+
+		patcherBuild.setModifiedDate(new Date());
+		patcherBuild.setPatcherFixId(patcherFixId);
+
+		return patcherBuildPersistence.update(patcherBuild);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public PatcherBuild updateQaFields(
 			long patcherBuildId, String qaComments, int qaStatus)
 		throws PortalException {
@@ -229,6 +280,20 @@ public class PatcherBuildLocalServiceImpl
 
 		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setQaStatus(qaStatus);
+
+		return patcherBuildPersistence.update(patcherBuild);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherBuild updateRequestKey(long patcherBuildId, String requestKey)
+		throws PortalException {
+
+		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
+			patcherBuildId);
+
+		patcherBuild.setModifiedDate(new Date());
+		patcherBuild.setRequestKey(requestKey);
 
 		return patcherBuildPersistence.update(patcherBuild);
 	}

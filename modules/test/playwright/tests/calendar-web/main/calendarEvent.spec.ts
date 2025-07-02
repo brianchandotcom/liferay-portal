@@ -22,7 +22,6 @@ import performLogin, {
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
-import {getNextOrPreviousSaturday} from './utils/getNextOrPreviousSaturday';
 import {toLocalDateTimeFormatted} from './utils/toLocalDateTimeFormatted';
 
 export const test = mergeTests(
@@ -479,14 +478,13 @@ test('event ending at midnight does not render on the next day', async ({
 	calendarWidgetPage,
 	page,
 }) => {
-	const today = new Date();
+	const eventStartDay = new Date();
+	eventStartDay.setDate(15);
 
-	const saturday = getNextOrPreviousSaturday(today);
+	const eventEndDay = new Date();
+	eventEndDay.setDate(eventStartDay.getDate() + 1);
 
-	const sunday = new Date(saturday);
-	sunday.setDate(saturday.getDate() + 1);
-
-	const [startDate, endDate] = [saturday, sunday].map((date) =>
+	const [startDate, endDate] = [eventStartDay, eventEndDay].map((date) =>
 		toLocalDateTimeFormatted(date.toUTCString(), {
 			day: '2-digit',
 			month: '2-digit',

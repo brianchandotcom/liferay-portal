@@ -98,6 +98,4 @@ public interface ObjectDefinition
 
 	public void setPreviousRESTContextPath(String previousRESTContextPath);
 
-	public void setRootObjectDefinitionId(long rootObjectDefinitionId);
-
 }

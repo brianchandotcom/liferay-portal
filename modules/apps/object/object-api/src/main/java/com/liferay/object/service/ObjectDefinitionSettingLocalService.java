@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -256,6 +257,10 @@ public interface ObjectDefinitionSettingLocalService
 	public ObjectDefinitionSetting getObjectDefinitionSettingByUuidAndCompanyId(
 			String uuid, long companyId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, ObjectDefinitionSetting> getObjectDefinitionSettingMap(
+		long companyId, String name);
 
 	/**
 	 * Returns a range of all the object definition settings.

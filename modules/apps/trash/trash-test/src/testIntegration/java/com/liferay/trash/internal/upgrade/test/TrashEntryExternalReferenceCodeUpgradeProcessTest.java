@@ -11,11 +11,13 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.BaseExternalReferenceCodeUpgradeProcessTestCase;
+import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
 
@@ -86,13 +88,21 @@ public class TrashEntryExternalReferenceCodeUpgradeProcessTest
 	}
 
 	@Override
+	protected UpgradeProcess getUpgradeProcess() {
+		UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
+			getUpgradeStepRegistrator(), getVersion());
+
+		return upgradeProcesses[1];
+	}
+
+	@Override
 	protected UpgradeStepRegistrator getUpgradeStepRegistrator() {
 		return _upgradeStepRegistrator;
 	}
 
 	@Override
 	protected Version getVersion() {
-		return new Version(2, 2, 2);
+		return new Version(2, 2, 1);
 	}
 
 	@Inject(

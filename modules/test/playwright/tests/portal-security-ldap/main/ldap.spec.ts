@@ -1012,6 +1012,20 @@ async function invokeLdapImport(page: Page, ldapServer?: TLdapServer) {
 	});
 }
 
+test('LPD-57008 Verify if the unused error keywords fields are no longer present', async ({
+	ldapConfigurationPage,
+}) => {
+	await test.step('Go to LDAP Connection tab', async () => {
+		await ldapConfigurationPage.goToConnectionTab();
+	});
+
+	await test.step('Check if unused password error keywords fields are visible', async () => {
+		for (const errorKeywordField of ldapConfigurationPage.getUnusedPasswordErrorKeywordsFields()) {
+			await expect(errorKeywordField).not.toBeVisible();
+		}
+	});
+});
+
 async function resetLdapImportSystemSettings(
 	systemSettingsPage: SystemSettingsPage
 ) {

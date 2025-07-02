@@ -137,8 +137,8 @@ public class PatcherBuildUtil {
 
 		if (patcherAccount == null) {
 			addPatcherAccountPatcherBuild(
-				patcherBuild.getPatcherBuildId(), accountEntryCode,
-				themeDisplay);
+				themeDisplay.getUserId(), patcherBuild.getPatcherBuildId(),
+				accountEntryCode);
 
 			patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount(
 				accountEntryCode);
@@ -1292,8 +1292,8 @@ public class PatcherBuildUtil {
 	}
 
 	public static void saveParentPatcherBuild(
-			PatcherBuild parentPatcherBuild, String accountEntryCode,
-			ThemeDisplay themeDisplay)
+			long userId, PatcherBuild parentPatcherBuild,
+			String accountEntryCode)
 		throws Exception {
 
 		parentPatcherBuild = setLatestPatcherBuild(
@@ -1302,8 +1302,8 @@ public class PatcherBuildUtil {
 
 		if (parentPatcherBuild.isNew()) {
 			addPatcherAccountPatcherBuild(
-				parentPatcherBuild.getPatcherBuildId(), accountEntryCode,
-				themeDisplay);
+				userId, parentPatcherBuild.getPatcherBuildId(),
+				accountEntryCode);
 
 			PatcherAccount patcherAccount =
 				PatcherAccountLocalServiceUtil.getPatcherAccount(
@@ -1744,8 +1744,7 @@ public class PatcherBuildUtil {
 	}
 
 	protected static void addPatcherAccountPatcherBuild(
-			long patcherBuildId, String accountEntryCode,
-			ThemeDisplay themeDisplay)
+			long userId, long patcherBuildId, String accountEntryCode)
 		throws Exception {
 
 		PatcherAccount patcherAccount =
@@ -1760,8 +1759,7 @@ public class PatcherBuildUtil {
 		}
 
 		patcherAccount = PatcherAccountLocalServiceUtil.addPatcherAccount(
-			themeDisplay.getUserId(),
-			HelpCenterUtil.fetchAccountEntryId(accountEntryCode),
+			userId, HelpCenterUtil.fetchAccountEntryId(accountEntryCode),
 			accountEntryCode);
 
 		PatcherBuildLocalServiceUtil.addPatcherAccountPatcherBuild(

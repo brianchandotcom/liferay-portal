@@ -123,22 +123,28 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return _collectionItemType;
 		}
 
+		String collectionItemType = StringPool.BLANK;
+
 		JSONObject collectionJSONObject =
 			_collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
-		String collectionItemType = StringPool.BLANK;
-
-		if ((collectionJSONObject != null) &&
-			collectionJSONObject.has("itemType")) {
-
+		if (collectionJSONObject != null) {
 			collectionItemType = collectionJSONObject.getString("itemType");
 		}
 
-		if (Objects.equals(
+		if ((collectionJSONObject != null) &&
+			Objects.equals(
 				collectionJSONObject.getString("key"),
 				RepeatableFieldInfoItemCollectionProvider.class.getName())) {
 
 			collectionItemType = RepeatableInfoFieldValue.class.getName();
+		}
+		else {
+			ListObjectReference listObjectReference = getListObjectReference();
+
+			if (listObjectReference != null) {
+				collectionItemType = listObjectReference.getItemType();
+			}
 		}
 
 		_collectionItemType = collectionItemType;

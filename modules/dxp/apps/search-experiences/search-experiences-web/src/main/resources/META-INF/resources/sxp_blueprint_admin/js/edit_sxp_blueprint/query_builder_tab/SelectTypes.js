@@ -219,7 +219,7 @@ function SelectTypes({
 						.filter(({className}) =>
 							selected.some(({type}) => type === className)
 						)
-						.map(({className, displayName, hasSubtype = true}) => (
+						.map(({className, displayName, hasSubtype = false}) => (
 							<ClayList.Item flex key={className}>
 								<ClayList.ItemField expand>
 									<ClayList.ItemTitle>

@@ -15,6 +15,7 @@ import {ReferencedStructure, Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import {Field, FieldType, MultiselectField, SingleSelectField} from './field';
 import getUuid from './getUuid';
+import isCustomObjectField from './isCustomObjectField';
 
 export default function buildStructure({
 	mainObjectDefinition,
@@ -65,7 +66,7 @@ export function buildChildren({
 	}
 
 	for (const objectField of objectFields) {
-		if (objectField.system || objectField.businessType === 'Relationship') {
+		if (!isCustomObjectField(objectField)) {
 			continue;
 		}
 

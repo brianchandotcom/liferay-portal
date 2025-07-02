@@ -5,6 +5,8 @@
 
 package com.liferay.test.report.generator.csv.playwright;
 
+import com.liferay.petra.string.StringPool;
+
 import java.io.IOException;
 
 import java.nio.file.Files;
@@ -40,7 +42,7 @@ public class PlaywrightTestParser {
 		String className = playwrightTestFilePath.getFileName(
 		).toString(
 		).replaceFirst(
-			"\\.spec\\.ts$", ""
+			"\\.spec\\.ts$", StringPool.BLANK
 		);
 
 		String testFilePath = playwrightTestFilePath.toString(

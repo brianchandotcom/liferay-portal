@@ -5,6 +5,7 @@
 
 package com.liferay.test.report.generator.csv;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.test.report.generator.csv.playwright.PlaywrightTestReport;
 
 import java.io.BufferedWriter;
@@ -58,6 +59,6 @@ public class TestReportCSVWriter {
 	private static final String _CSV_FORMAT = "%s,%s,%s,%s";
 
 	private static final String _CSV_HEADER = String.join(
-		",", "Class Name", "Test Name", "Ignored", "File Path");
+		StringPool.COMMA, "Class Name", "Test Name", "Ignored", "File Path");
 
 }

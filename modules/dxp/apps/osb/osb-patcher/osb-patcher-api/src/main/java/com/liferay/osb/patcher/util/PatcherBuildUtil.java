@@ -1690,11 +1690,10 @@ public class PatcherBuildUtil {
 		return false;
 	}
 
-	protected static Map<Long, List<Long>>
-			rebaseOtherProjectVersionPatcherFixes(
-				User user,
-				Map<Long, List<Long>> patcherProjectVersionIdPatcherFixIdsMap,
-				long patcherBuildProjectVersionId)
+	public static Map<Long, List<Long>> rebaseOtherProjectVersionPatcherFixes(
+			User user,
+			Map<Long, List<Long>> patcherProjectVersionIdPatcherFixIdsMap,
+			long patcherBuildProjectVersionId)
 		throws Exception {
 
 		List<PatcherFix> rebasePatcherFixes = new ArrayList<>();
@@ -1772,7 +1771,7 @@ public class PatcherBuildUtil {
 		return patcherProjectVersionIdPatcherFixIdsMap;
 	}
 
-	protected static void updatePatcherBuildFixes(
+	public static void updatePatcherBuildFixes(
 			User user, PatcherBuild patcherBuild, List<Long> patcherFixIds)
 		throws Exception {
 

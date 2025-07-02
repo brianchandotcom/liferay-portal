@@ -53,7 +53,7 @@ $structureFieldsWidth: 448px;
 	}
 
 	&__wrapper {
-		height: calc(100vh - (var(--control-menu-container-height)));
+		min-height: calc(100vh - (var(--control-menu-container-height)));
 
 		.management-bar .vertical-divider {
 			border-left: 1px solid $cadmin-secondary-l1;

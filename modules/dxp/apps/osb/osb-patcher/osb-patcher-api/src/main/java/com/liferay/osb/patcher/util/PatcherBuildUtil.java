@@ -160,8 +160,9 @@ public class PatcherBuildUtil {
 			generateKey(patcherProjectVersionId, name, accountEntryCode));
 		patcherBuild.setType(PatcherBuildConstants.TYPE_FIX_PACK);
 		patcherBuild.setQaStatus(WorkflowConstants.STATUS_PENDING);
+		patcherBuild.setStatus(status);
 
-		setStatus(user, patcherBuild, status);
+		workflowParentPatcherBuild(user, patcherBuild);
 
 		patcherBuild = setLatestPatcherBuild(
 			patcherBuild, patcherBuild.getKey(),
@@ -1012,8 +1013,9 @@ public class PatcherBuildUtil {
 		int exitValue = jenkinsStatusJSONObject.getInt("exitValue");
 
 		if (exitValue == 0) {
-			setStatus(
-				user, patcherBuild, WorkflowConstants.STATUS_BUILD_COMPLETE);
+			patcherBuild.setStatus(WorkflowConstants.STATUS_BUILD_COMPLETE);
+
+			workflowParentPatcherBuild(user, patcherBuild);
 
 			workflowCompletedPatcherBuildQAStatus(patcherBuild);
 
@@ -1021,8 +1023,9 @@ public class PatcherBuildUtil {
 			sourceName = jenkinsStatusJSONObject.getString("sourceName");
 		}
 		else {
-			setStatus(
-				user, patcherBuild, WorkflowConstants.STATUS_BUILD_FAILED);
+			patcherBuild.setStatus(WorkflowConstants.STATUS_BUILD_FAILED);
+
+			workflowParentPatcherBuild(user, patcherBuild);
 		}
 
 		patcherBuild.setFileName(fileName);
@@ -1416,15 +1419,6 @@ public class PatcherBuildUtil {
 		return patcherBuild;
 	}
 
-	public static void setStatus(
-			User user, PatcherBuild patcherBuild, int status)
-		throws Exception {
-
-		patcherBuild.setStatus(status);
-
-		workflowParentPatcherBuild(user, patcherBuild);
-	}
-
 	public static void updatePatcherBuildFixes(
 			User user, PatcherBuild patcherBuild, List<Long> patcherFixIds)
 		throws Exception {
@@ -1647,13 +1641,14 @@ public class PatcherBuildUtil {
 		throws Exception {
 
 		if (mergeOnly) {
-			setStatus(
-				user, patcherBuild,
-				WorkflowConstants.STATUS_BUILD_MERGING_ONLY);
+			patcherBuild.setStatus(WorkflowConstants.STATUS_BUILD_MERGING_ONLY);
+
+			workflowParentPatcherBuild(user, patcherBuild);
 		}
 		else {
-			setStatus(
-				user, patcherBuild, WorkflowConstants.STATUS_BUILD_MERGING);
+			patcherBuild.setStatus(WorkflowConstants.STATUS_BUILD_MERGING);
+
+			workflowParentPatcherBuild(user, patcherBuild);
 		}
 	}
 
@@ -2018,14 +2013,15 @@ public class PatcherBuildUtil {
 				(patcherBuild.getStatus() ==
 					WorkflowConstants.STATUS_BUILD_CONFLICT_MERGING_ONLY)) {
 
-				setStatus(
-					user, patcherBuild,
+				patcherBuild.setStatus(
 					WorkflowConstants.STATUS_BUILD_CONFLICT_MERGING_ONLY);
+
+				workflowParentPatcherBuild(user, patcherBuild);
 			}
 			else {
-				setStatus(
-					user, patcherBuild,
-					WorkflowConstants.STATUS_BUILD_CONFLICT);
+				patcherBuild.setStatus(WorkflowConstants.STATUS_BUILD_CONFLICT);
+
+				workflowParentPatcherBuild(user, patcherBuild);
 			}
 
 			patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
@@ -2039,8 +2035,9 @@ public class PatcherBuildUtil {
 
 			PatcherFixLocalServiceUtil.updatePatcherFix(patcherFix);
 
-			setStatus(
-				user, patcherBuild, WorkflowConstants.STATUS_BUILD_FAILED);
+			patcherBuild.setStatus(WorkflowConstants.STATUS_BUILD_FAILED);
+
+			workflowParentPatcherBuild(user, patcherBuild);
 
 			patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
 				patcherBuild);
@@ -2058,16 +2055,18 @@ public class PatcherBuildUtil {
 		throws Exception {
 
 		if (isMergeOnly(patcherBuild)) {
-			setStatus(
-				user, patcherBuild,
-				WorkflowConstants.STATUS_BUILD_COMPLETE_MERGING_ONLY);
+			patcherBuild.setStatus(
+				WorkflowConstants.STATUS_BUILD_CONFLICT_MERGING_ONLY);
+
+			workflowParentPatcherBuild(user, patcherBuild);
 
 			patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
 				patcherBuild);
 		}
 		else {
-			setStatus(
-				user, patcherBuild, WorkflowConstants.STATUS_BUILD_COMPILING);
+			patcherBuild.setStatus(WorkflowConstants.STATUS_BUILD_COMPILING);
+
+			workflowParentPatcherBuild(user, patcherBuild);
 
 			patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
 				patcherBuild);

@@ -938,8 +938,10 @@ public class PatcherFixUtil {
 					continue;
 				}
 
-				PatcherBuildUtil.setStatus(
-					themeDisplay.getUser(), patcherBuild, status);
+				patcherBuild.setStatus(status);
+
+				PatcherBuildUtil.workflowParentPatcherBuild(
+					themeDisplay.getUser(), patcherBuild);
 
 				patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
 					patcherBuild);
@@ -967,12 +969,16 @@ public class PatcherFixUtil {
 					continue;
 				}
 
-				PatcherBuildUtil.setStatus(
-					themeDisplay.getUser(), patcherBuild, status);
+				patcherBuild.setStatus(status);
+
+				PatcherBuildUtil.workflowParentPatcherBuild(
+					themeDisplay.getUser(), patcherBuild);
 			}
 			else {
-				PatcherBuildUtil.setStatus(
-					themeDisplay.getUser(), patcherBuild, status);
+				patcherBuild.setStatus(status);
+
+				PatcherBuildUtil.workflowParentPatcherBuild(
+					themeDisplay.getUser(), patcherBuild);
 			}
 
 			PatcherBuildLocalServiceUtil.updatePatcherBuild(patcherBuild);

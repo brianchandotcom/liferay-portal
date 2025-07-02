@@ -7,19 +7,16 @@ package com.liferay.change.tracking.internal.db.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.sample.model.Child;
+import com.liferay.change.tracking.sample.service.ChildLocalService;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -27,6 +24,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -61,8 +60,6 @@ public class OracleDBCTTest {
 		_ctCollection3 = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, RandomTestUtil.randomString(), null);
-
-		_group = GroupTestUtil.addGroup();
 	}
 
 	@After
@@ -71,24 +68,24 @@ public class OracleDBCTTest {
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection2);
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection3);
 
-		GroupTestUtil.deleteGroup(_group);
+		_childLocalService.deleteChildren(TestPropsValues.getCompanyId());
 	}
 
 	@Test
 	public void testDeleteCTCollectionWithOver1000CTEntries() throws Exception {
-		JournalFolder journalFolder = null;
+		Child parentChild = null;
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
-			journalFolder = _journalFolderFixture.addFolder(
-				_group.getGroupId(), RandomTestUtil.randomString());
+			parentChild = _childLocalService.addChild(
+				TestPropsValues.getCompanyId());
 
 			for (int i = 0; i < _BATCH_SIZE; i++) {
-				_journalFolderFixture.addFolder(
-					_group.getGroupId(), journalFolder.getFolderId(),
-					RandomTestUtil.randomString());
+				_childLocalService.addChild(
+					TestPropsValues.getCompanyId(), parentChild.getChildId(), 0,
+					"");
 			}
 		}
 
@@ -96,36 +93,35 @@ public class OracleDBCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			_journalFolderLocalService.deleteFolder(
-				journalFolder.getFolderId());
+			_childLocalService.deleteChild(parentChild.getChildId());
 		}
 
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection1);
 
-		Assert.assertEquals(
-			_BATCH_SIZE,
-			_journalFolderLocalService.getFoldersCount(
-				_group.getGroupId(), journalFolder.getFolderId()));
+		List<Child> children = _childLocalService.getChildrenByParentChildId(
+			parentChild.getChildId());
+
+		Assert.assertEquals(children.toString(), _BATCH_SIZE, children.size());
 	}
 
 	@Test
 	public void testMoveAndDiscardCTEntryWithOver1000CTEntries()
 		throws Exception {
 
-		JournalFolder journalFolder = null;
+		Child parentChild = null;
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			journalFolder = _journalFolderFixture.addFolder(
-				_group.getGroupId(), RandomTestUtil.randomString());
+			parentChild = _childLocalService.addChild(
+				TestPropsValues.getCompanyId());
 
 			for (int i = 0; i < _BATCH_SIZE; i++) {
-				_journalFolderFixture.addFolder(
-					_group.getGroupId(), journalFolder.getFolderId(),
-					RandomTestUtil.randomString());
+				_childLocalService.addChild(
+					TestPropsValues.getCompanyId(), parentChild.getChildId(), 0,
+					"");
 			}
 		}
 
@@ -133,8 +129,8 @@ public class OracleDBCTTest {
 			_ctCollectionService.moveCTEntry(
 				_ctCollection1.getCtCollectionId(),
 				_ctCollection2.getCtCollectionId(),
-				_classNameLocalService.getClassNameId(JournalFolder.class),
-				journalFolder.getFolderId());
+				_classNameLocalService.getClassNameId(Child.class),
+				parentChild.getChildId());
 		}
 
 		Assert.assertEquals(
@@ -151,15 +147,14 @@ public class OracleDBCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection2.getCtCollectionId())) {
 
-			journalFolder = _journalFolderLocalService.getJournalFolder(
-				journalFolder.getFolderId());
+			parentChild = _childLocalService.getChild(parentChild.getChildId());
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_ctCollectionService.discardCTEntry(
 				_ctCollection2.getCtCollectionId(),
-				_classNameLocalService.getClassNameId(JournalFolder.class),
-				journalFolder.getFolderId());
+				_classNameLocalService.getClassNameId(Child.class),
+				parentChild.getChildId());
 		}
 
 		Assert.assertEquals(
@@ -178,8 +173,7 @@ public class OracleDBCTTest {
 					_ctCollection1.getCtCollectionId())) {
 
 			for (int i = 0; i < _BATCH_SIZE; i++) {
-				_journalFolderFixture.addFolder(
-					_group.getGroupId(), RandomTestUtil.randomString());
+				_childLocalService.addChild(TestPropsValues.getCompanyId());
 			}
 
 			_ctCollectionService.publishCTCollection(
@@ -214,8 +208,7 @@ public class OracleDBCTTest {
 					_ctCollection1.getCtCollectionId())) {
 
 			for (int i = 0; i < _BATCH_SIZE; i++) {
-				_journalFolderFixture.addFolder(
-					_group.getGroupId(), RandomTestUtil.randomString());
+				_childLocalService.addChild(TestPropsValues.getCompanyId());
 			}
 
 			_ctCollectionService.publishCTCollection(
@@ -234,13 +227,11 @@ public class OracleDBCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection2.getCtCollectionId())) {
 
-			for (JournalFolder journalFolder :
-					_journalFolderLocalService.getFolders(
-						_group.getGroupId())) {
+			for (Child child :
+					_childLocalService.getChildren(
+						TestPropsValues.getCompanyId())) {
 
-				journalFolder.setName(RandomTestUtil.randomString());
-
-				_journalFolderLocalService.updateJournalFolder(journalFolder);
+				_childLocalService.updateChild(child);
 			}
 
 			_ctCollectionService.publishCTCollection(
@@ -259,12 +250,7 @@ public class OracleDBCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection3.getCtCollectionId())) {
 
-			for (JournalFolder journalFolder :
-					_journalFolderLocalService.getFolders(
-						_group.getGroupId())) {
-
-				_journalFolderLocalService.deleteFolder(journalFolder);
-			}
+			_childLocalService.deleteChildren(TestPropsValues.getCompanyId());
 
 			_ctCollectionService.publishCTCollection(
 				TestPropsValues.getUserId(),
@@ -281,6 +267,9 @@ public class OracleDBCTTest {
 	private static final int _BATCH_SIZE = 1001;
 
 	@Inject
+	private static ChildLocalService _childLocalService;
+
+	@Inject
 	private static ClassNameLocalService _classNameLocalService;
 
 	@Inject
@@ -289,18 +278,11 @@ public class OracleDBCTTest {
 	@Inject
 	private static CTCollectionService _ctCollectionService;
 
-	@Inject
-	private static JournalFolderLocalService _journalFolderLocalService;
-
 	private CTCollection _ctCollection1;
 	private CTCollection _ctCollection2;
 	private CTCollection _ctCollection3;
 
 	@Inject
 	private CTEntryLocalService _ctEntryLocalService;
-
-	private Group _group;
-	private final JournalFolderFixture _journalFolderFixture =
-		new JournalFolderFixture(_journalFolderLocalService);
 
 }

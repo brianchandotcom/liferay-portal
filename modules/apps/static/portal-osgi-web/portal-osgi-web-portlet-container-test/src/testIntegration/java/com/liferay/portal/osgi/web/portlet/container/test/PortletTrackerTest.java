@@ -11,6 +11,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -58,6 +58,7 @@ import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -80,7 +81,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new AssumeTestRule("assume"), new LiferayIntegrationTestRule(),
+			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
@@ -323,6 +324,8 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 	@Test
 	public void testPortletTrackerBundleStopCleanup() throws Exception {
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
+
 		Bundle bundle = FrameworkUtil.getBundle(PortletTrackerTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
@@ -403,6 +406,8 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 	public void testPortletTrackerRegistrationUsingPortletClassName()
 		throws Exception {
 
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
+
 		_testPortletTrackerRegistration(
 			"com_liferay_portal_osgi_web_portlet_container_test_" +
 				"PortletTrackerTest_InternalClassTestPortlet");
@@ -412,12 +417,16 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 	public void testPortletTrackerRegistrationUsingPortletNameWithDollar()
 		throws Exception {
 
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
+
 		_testPortletTrackerRegistration("dollar$portlet", "dollar_portlet");
 	}
 
 	@Test
 	public void testPortletTrackerRegistrationUsingPortletNameWithDot()
 		throws Exception {
+
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		_testPortletTrackerRegistration("dot.portlet", "dot_portlet");
 	}
@@ -426,6 +435,8 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 	public void testPortletTrackerRegistrationUsingPortletNameWithHyphen()
 		throws Exception {
 
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
+
 		_testPortletTrackerRegistration("hyphen-portlet", "hyphenportlet");
 	}
 
@@ -433,12 +444,16 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 	public void testPortletTrackerRegistrationUsingPortletNameWithSpace()
 		throws Exception {
 
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
+
 		_testPortletTrackerRegistration("space portlet", "spaceportlet");
 	}
 
 	@Test
 	public void testPortletTrackerRegistrationUsingSimpleName()
 		throws Exception {
+
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		_testPortletTrackerRegistration("simplename", "simplename");
 	}

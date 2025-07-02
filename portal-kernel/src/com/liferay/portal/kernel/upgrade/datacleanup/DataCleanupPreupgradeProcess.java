@@ -11,27 +11,27 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Luis Ortiz
  */
-public abstract class DataCleanupUpgradeProcess extends UpgradeProcess {
+public abstract class DataCleanupPreupgradeProcess extends UpgradeProcess {
 
 	@Override
-	public void upgrade() throws DataCleanupUpgradeException {
+	public void upgrade() throws DataCleanupPreupgradeException {
 		try {
 			super.upgrade();
 		}
 		catch (UpgradeException upgradeException) {
-			throw new DataCleanupUpgradeException(upgradeException);
+			throw new DataCleanupPreupgradeException(upgradeException);
 		}
 	}
 
 	@Override
 	public void upgrade(UpgradeProcess upgradeProcess)
-		throws DataCleanupUpgradeException {
+		throws DataCleanupPreupgradeException {
 
 		try {
 			upgradeProcess.upgrade();
 		}
 		catch (UpgradeException upgradeException) {
-			throw new DataCleanupUpgradeException(upgradeException);
+			throw new DataCleanupPreupgradeException(upgradeException);
 		}
 	}
 

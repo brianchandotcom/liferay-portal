@@ -425,7 +425,7 @@ test(
 				'date': buildTableRowSpec('false', 'Date and Time'),
 				'description': buildTableRowSpec('false', 'Default'),
 				'id': buildTableRowSpec('true', 'Action Link'),
-				'size': buildTableRowSpec('false', 'Default'),
+				'size': buildTableRowSpec('false', ''),
 				'status': buildTableRowSpec('false', 'Status'),
 				'title': buildTableRowSpec('true', 'Default'),
 			});

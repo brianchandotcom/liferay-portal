@@ -1085,10 +1085,6 @@ public class PatcherFixUtil {
 
 		patcherFix = PatcherFixLocalServiceUtil.updatePatcherFix(patcherFix);
 
-		PatcherUtil.pollIndexState(
-			PatcherFix.class.getName(), patcherFix.getPatcherFixId(),
-			themeDisplay, "status", WorkflowConstants.STATUS_FIX_COMPLETE);
-
 		PatcherUtil.addMessage(
 			StringBundler.concat(
 				"The fix ", patcherFix.getPatcherFixId(), " with name ",
@@ -1114,10 +1110,6 @@ public class PatcherFixUtil {
 
 			patcherFix = PatcherFixLocalServiceUtil.updatePatcherFix(
 				patcherFix);
-
-			PatcherUtil.pollIndexState(
-				PatcherFix.class.getName(), patcherFix.getPatcherFixId(),
-				themeDisplay, "status", WorkflowConstants.STATUS_FIX_COMPLETE);
 
 			PatcherUtil.addMessage(
 				StringBundler.concat(

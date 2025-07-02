@@ -1589,10 +1589,6 @@ public class PatcherBuildUtil {
 			HelpCenterUtil.fetchAccountEntryId(accountEntryCode),
 			accountEntryCode);
 
-		PatcherUtil.pollIndexState(
-			PatcherAccount.class.getName(),
-			patcherAccount.getPatcherAccountId(), themeDisplay);
-
 		PatcherBuildLocalServiceUtil.addPatcherAccountPatcherBuild(
 			patcherAccount.getPatcherAccountId(), patcherBuildId);
 	}

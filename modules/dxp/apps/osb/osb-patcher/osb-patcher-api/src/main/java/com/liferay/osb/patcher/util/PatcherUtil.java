@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -284,29 +283,6 @@ public class PatcherUtil {
 		PatcherBuildUtil.notifyUsersInactivePatcherBuilds(themeDisplay);
 
 		PatcherFixUtil.notifyUsersInactivePatcherFixes(themeDisplay);
-	}
-
-	public static void pollIndexState(
-			String className, long classPK, ThemeDisplay themeDisplay,
-			Object... attributes)
-		throws Exception {
-
-		Map<String, Serializable> attributesMap = getSearchAttributes(
-			attributes);
-
-		attributesMap.put(Field.ENTRY_CLASS_PK, classPK);
-
-		for (int i = 0; i < _POLL_INDEX_MAX_COUNT; i++) {
-			Hits hits = search(className, attributesMap, null, themeDisplay);
-
-			Document[] documents = hits.getDocs();
-
-			if (documents.length > 0) {
-				return;
-			}
-
-			Thread.sleep(_POLL_INDEX_WAIT_INTERVAL);
-		}
 	}
 
 	public static String prepareKeywords(String keywords) {
@@ -613,31 +589,6 @@ public class PatcherUtil {
 
 		return StringUtil.merge(keywordsArray, StringPool.COMMA_AND_SPACE);
 	}
-
-	protected static Map<String, Serializable> getSearchAttributes(
-			Object... attributes)
-		throws Exception {
-
-		if ((attributes.length != 0) && ((attributes.length % 2) != 0)) {
-			throw new Exception("Arguments length is not an even number");
-		}
-
-		Map<String, Serializable> attributesMap = new HashMap<>();
-
-		for (int i = 0; i < attributes.length; i += 2) {
-			String name = String.valueOf(attributes[i]);
-
-			Serializable value = (Serializable)attributes[i + 1];
-
-			attributesMap.put(name, value);
-		}
-
-		return attributesMap;
-	}
-
-	private static final long _POLL_INDEX_MAX_COUNT = 4;
-
-	private static final long _POLL_INDEX_WAIT_INTERVAL = 250;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		"jsp.osb.patcher.util.PatcherUtil");

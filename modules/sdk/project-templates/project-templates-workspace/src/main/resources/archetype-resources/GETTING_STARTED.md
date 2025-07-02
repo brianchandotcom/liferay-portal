@@ -199,6 +199,18 @@ $h4 liferay.workspace.home.dir
 Set the folder that contains the Liferay bundle downloaded from the
 `liferay.workspace.bundle.url` property. The default value is `bundles`.
 
+$h4 liferay.workspace.java.ee.use.jakarta
+Set this to true to opt into Jakarta-compatible tooling and dependencies. Workspace will
+try to determine whether to use Jakarta dependencies based on the product version, but
+setting this property will force the use of certain Jakarta dependencies irrespective of the
+product version.
+
+Currently this will affect:
+
+- JSP pre-compilation
+
+The default value is `false`.
+
 $h4 liferay.workspace.modules.default.repository.enabled
 Set this to true to configure Liferay CDN as the default repository for
 module/OSGi projects. The default value is `true`.

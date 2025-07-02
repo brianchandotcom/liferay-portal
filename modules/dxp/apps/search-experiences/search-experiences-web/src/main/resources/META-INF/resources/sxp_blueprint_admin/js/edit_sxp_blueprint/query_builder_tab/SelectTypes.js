@@ -249,13 +249,12 @@ function SelectTypes({
 										aria-label={Liferay.Language.get(
 											'delete'
 										)}
-										className="secondary"
+										className="c-m-auto secondary"
 										displayType="unstyled"
 										onClick={() =>
 											_handleRemoveType(className)
 										}
 										size="sm"
-										style={{margin: 'auto'}}
 									>
 										<ClayIcon symbol="times-circle" />
 									</ClayButton>
@@ -289,11 +288,10 @@ function SelectTypes({
 							<ClayList.ItemField>
 								<ClayButton
 									aria-label={Liferay.Language.get('delete')}
-									className="secondary"
+									className="c-m-auto secondary"
 									displayType="unstyled"
 									onClick={() => _handleRemoveType(type)}
 									size="sm"
-									style={{margin: 'auto'}}
 								>
 									<ClayIcon symbol="times-circle" />
 								</ClayButton>

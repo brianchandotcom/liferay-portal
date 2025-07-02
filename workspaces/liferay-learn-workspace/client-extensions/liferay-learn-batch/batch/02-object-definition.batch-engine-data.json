@@ -12,7 +12,6 @@
 	"items": [
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"enableObjectEntryHistory": false,
 			"externalReferenceCode": "P2S3_ASSESSMENT",
@@ -153,7 +152,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"enableObjectEntryHistory": false,
 			"externalReferenceCode": "P2S3_AUDIO_LESSON",
@@ -247,7 +245,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableLocalization": true,
 			"enableObjectEntryHistory": false,
@@ -364,7 +361,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"enableObjectEntryHistory": false,
 			"externalReferenceCode": "P2S3_CERTIFICATION",
@@ -489,7 +485,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableComments": true,
 			"enableLocalization": true,
@@ -718,7 +713,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableObjectEntryDraft": false,
 			"externalReferenceCode": "P2S3_ENROLLMENT",
@@ -809,7 +803,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": false,
 			"enableLocalization": false,
 			"enableObjectEntryDraft": false,
@@ -986,7 +979,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": false,
 			"enableLocalization": false,
 			"enableObjectEntryDraft": false,
@@ -1080,7 +1072,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableLocalization": true,
 			"enableObjectEntryDraft": false,
@@ -1216,7 +1207,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableLocalization": true,
 			"enableObjectEntryHistory": false,
@@ -1356,7 +1346,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableComments": false,
 			"enableLocalization": true,
 			"enableObjectEntryDraft": false,
@@ -1497,7 +1486,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableComments": true,
 			"enableLocalization": true,
@@ -1843,7 +1831,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableComments": true,
 			"enableLocalization": true,
@@ -1922,7 +1909,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableComments": true,
 			"enableLocalization": true,
@@ -2123,7 +2109,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
@@ -2247,7 +2232,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableComments": true,
 			"enableLocalization": true,
@@ -2433,7 +2417,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableComments": false,
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
@@ -2580,7 +2563,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"externalReferenceCode": "P2S3_QUIZ",
 			"label": {
@@ -2764,7 +2746,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"externalReferenceCode": "P2S3_QUIZ_ANSWER",
 			"label": {
@@ -2865,7 +2846,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"externalReferenceCode": "P2S3_QUIZ_QUESTION",
 			"label": {
@@ -2998,7 +2978,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": false,
 			"externalReferenceCode": "P2S3_QUIZ_RESULT",
 			"label": {
@@ -3073,7 +3052,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableComments": false,
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
@@ -3611,7 +3589,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableLocalization": true,
 			"enableObjectEntryHistory": false,
@@ -3751,7 +3728,6 @@
 		},
 		{
 			"active": true,
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"externalReferenceCode": "P2S3_USER_BADGE",
 			"label": {

@@ -25,6 +25,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -536,6 +537,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	@Override
+	@ThreadLocalCachable
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long classNameId, long classTypeId, int type,
 		int status) {

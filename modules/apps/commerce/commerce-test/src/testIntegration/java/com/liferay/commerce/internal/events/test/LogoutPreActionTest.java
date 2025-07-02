@@ -39,20 +39,6 @@ public class LogoutPreActionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpMockHttpServletRequest();
-	}
-
-	@Test
-	public void testLogoutWithEmptyCookies() throws Exception {
-		Assert.assertNull(_mockHttpServletRequest.getCookies());
-
-		AuthenticatedSessionManagerUtil.logout(
-			_mockHttpServletRequest, new MockHttpServletResponse());
-
-		Assert.assertNull(_mockHttpServletRequest.getCookies());
-	}
-
-	private void _setUpMockHttpServletRequest() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
@@ -63,6 +49,16 @@ public class LogoutPreActionTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		_mockHttpServletRequest.setPathInfo(StringPool.BLANK);
+	}
+
+	@Test
+	public void testLogout() throws Exception {
+		Assert.assertNull(_mockHttpServletRequest.getCookies());
+
+		AuthenticatedSessionManagerUtil.logout(
+			_mockHttpServletRequest, new MockHttpServletResponse());
+
+		Assert.assertNull(_mockHttpServletRequest.getCookies());
 	}
 
 	@Inject

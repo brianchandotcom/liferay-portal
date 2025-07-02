@@ -212,6 +212,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
 			(curParentSitePageExternalReferenceCode, curPriority, sitePage) -> {
+				int expectedPriority = _getExpectedPriority(
+					sitePage.getParentSitePageExternalReferenceCode(),
+					curParentSitePageExternalReferenceCode, curPriority);
+
 				sitePage.setParentSitePageExternalReferenceCode(
 					() -> curParentSitePageExternalReferenceCode);
 
@@ -232,6 +236,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 											curParentSitePageExternalReferenceCode);
 								}
 							});
+
+				curPageSettings.setPriority(expectedPriority);
 
 				assertEquals(sitePage, patchSitePage);
 				assertValid(patchSitePage);
@@ -337,6 +343,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
 			(parentSitePageExternalReferenceCode, priority, sitePage) -> {
+				int expectedPriority = _getExpectedPriority(
+					sitePage.getParentSitePageExternalReferenceCode(),
+					parentSitePageExternalReferenceCode, priority);
+
 				sitePage.setParentSitePageExternalReferenceCode(
 					parentSitePageExternalReferenceCode);
 
@@ -348,6 +358,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
 						testGroup.getExternalReferenceCode(),
 						sitePage.getExternalReferenceCode(), sitePage);
+
+				pageSettings.setPriority(expectedPriority);
 
 				assertEquals(sitePage, putSitePage);
 				assertValid(putSitePage);
@@ -715,6 +727,53 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			layout.getTypeSettingsProperty(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID),
 			widgetPageSettings.getLayoutTemplateId());
+	}
+
+	private int _getExpectedPriority(
+			String defaultParentSitePageExternalReferenceCode,
+			String parentSitePageExternalReferenceCode, Integer priority)
+		throws Exception {
+
+		long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
+
+		Layout parentLayout = null;
+
+		if ((parentSitePageExternalReferenceCode == null) &&
+			Validator.isNotNull(defaultParentSitePageExternalReferenceCode)) {
+
+			parentLayout = _layoutLocalService.getLayoutByExternalReferenceCode(
+				defaultParentSitePageExternalReferenceCode,
+				testGroup.getGroupId());
+		}
+		else if (Validator.isNotNull(parentSitePageExternalReferenceCode)) {
+			parentLayout = _layoutLocalService.getLayoutByExternalReferenceCode(
+				parentSitePageExternalReferenceCode, testGroup.getGroupId());
+		}
+
+		if (parentLayout != null) {
+			parentLayoutId = parentLayout.getLayoutId();
+		}
+
+		int maxPriority = _layoutLocalService.getLayoutsCount(
+			testGroup.getGroupId(), false, parentLayoutId);
+
+		if (maxPriority == 0) {
+			return 0;
+		}
+
+		if ((parentSitePageExternalReferenceCode == null) ||
+			Objects.equals(
+				defaultParentSitePageExternalReferenceCode,
+				parentSitePageExternalReferenceCode)) {
+
+			maxPriority = maxPriority - 1;
+		}
+
+		if (priority == null) {
+			return maxPriority;
+		}
+
+		return Math.min(priority, maxPriority);
 	}
 
 	private PageSettings _getPageSettings(SitePage.Type type) throws Exception {

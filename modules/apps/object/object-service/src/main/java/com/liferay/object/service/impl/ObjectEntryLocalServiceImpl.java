@@ -2025,7 +2025,9 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if ((status == WorkflowConstants.STATUS_EXPIRED) ||
-			originalObjectEntry.isDraft() || originalObjectEntry.isPending()) {
+			(originalObjectEntry.isDraft() &&
+			 ((displayDate == null) || displayDate.before(date))) ||
+			originalObjectEntry.isPending()) {
 
 			List<ObjectEntryVersion> objectEntryVersions =
 				_objectEntryVersionLocalService.getObjectEntryVersions(
@@ -5753,9 +5755,11 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getCompanyId(), objectEntry, values);
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 
+		Date displayDate = objectEntry.getDisplayDate();
+
 		if ((workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) &&
-			(!objectEntry.isPending() ||
-			 (objectEntry.getDisplayDate() == null))) {
+			(!objectEntry.isPending() || (displayDate == null) ||
+			 displayDate.before(new Date()))) {
 
 			objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 			objectEntry.setStatusByUserId(user.getUserId());

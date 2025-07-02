@@ -193,23 +193,19 @@ public class UpdateLayoutStrutsActionTest {
 	public void testExecuteWithScopedSitePermissions() throws Exception {
 		User user = UserTestUtil.addUser();
 
-		Role testRole = RoleTestUtil.addRole(
-			"testRole", RoleConstants.TYPE_SITE);
+		Role siteRole = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
 		RoleTestUtil.addResourcePermission(
-			testRole.getName(), AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			siteRole, AssetPublisherPortletKeys.ASSET_PUBLISHER,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.ADD_TO_PAGE);
 
-		_roleLocalService.addUserRole(user.getUserId(), testRole);
+		_roleLocalService.addUserRole(user.getUserId(), siteRole);
 
-		Role userRole = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.USER);
-
-		_resourcePermissionService.removeResourcePermissions(
-			_group.getGroupId(), TestPropsValues.getCompanyId(),
-			AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			ResourceConstants.SCOPE_COMPANY, userRole.getRoleId(),
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.USER, AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
 			ActionKeys.ADD_TO_PAGE);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -223,11 +219,10 @@ public class UpdateLayoutStrutsActionTest {
 				mockHttpServletRequest, new MockHttpServletResponse());
 		}
 		finally {
-			_resourcePermissionService.addResourcePermission(
-				_group.getGroupId(), TestPropsValues.getCompanyId(),
-				AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			RoleTestUtil.addResourcePermission(
+				RoleConstants.USER, AssetPublisherPortletKeys.ASSET_PUBLISHER,
 				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(userRole.getCompanyId()), userRole.getRoleId(),
+				String.valueOf(TestPropsValues.getCompanyId()),
 				ActionKeys.ADD_TO_PAGE);
 		}
 	}

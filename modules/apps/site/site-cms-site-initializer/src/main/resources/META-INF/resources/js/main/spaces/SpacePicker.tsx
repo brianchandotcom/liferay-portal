@@ -8,8 +8,8 @@ import ClaySticker from '@clayui/sticker';
 import {useId} from 'frontend-js-components-web';
 import React from 'react';
 
+import {logoColors} from '../../common/components/SpaceSticker';
 import {LogoColor} from '../../common/types/Space';
-import {logoColors} from '../components/SpaceSticker';
 
 const Trigger = React.forwardRef(
 	(

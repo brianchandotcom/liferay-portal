@@ -9,7 +9,7 @@ import React from 'react';
 
 import Breadcrumb, {
 	BreadcrumbItem,
-} from '../../../../src/main/resources/META-INF/resources/js/main/components/Breadcrumb';
+} from '../../../../src/main/resources/META-INF/resources/js/common/components/Breadcrumb';
 
 const testBreadcrumbItemsShort = [
 	{

@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import SpaceSticker from '../../components/SpaceSticker';
+import SpaceSticker from '../../../common/components/SpaceSticker';
 
 const SpaceRenderer = ({itemData, value}: {itemData: any; value: string}) => {
 	return (

@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export {default as BackButtonManagementBar} from './common/components/BackButtonManagementBar';
+export {default as Breadcrumb} from './common/components/Breadcrumb';
+export {default as SpaceSticker} from './common/components/SpaceSticker';
+
 // Content Editor
 
 export {default as ContentEditorManagementBar} from './content_editor/components/ContentEditorManagementBar';
 export {default as ContentEditorSidePanel} from './content_editor/components/ContentEditorSidePanel';
 export {default as SpaceList} from './content_editor/components/SpaceList';
-
 export {default as AllFDSPropsTransformer} from './main/FDSPropsTransformer/AllFDSPropsTransformer';
 export {default as AllSpacesFDSPropsTransformer} from './main/FDSPropsTransformer/AllSpacesFDSPropsTransformer';
 export {default as CategoryFDSPropsTransformer} from './main/FDSPropsTransformer/CategoryFDSPropsTransformer';
@@ -25,10 +28,7 @@ export {default as EditCategoryPage} from './main/categorization/categories/Edit
 export {default as CategorizationBreadcrumb} from './main/categorization/components/CategorizationBreadcrumb';
 export {default as ViewTags} from './main/categorization/tags/ViewTags';
 export {default as EditVocabulary} from './main/categorization/vocabularies/EditVocabulary';
-export {default as BackButtonManagementBar} from './main/components/BackButtonManagementBar';
-export {default as Breadcrumb} from './main/components/Breadcrumb';
 export {default as SpaceAbstractHeader} from './main/components/SpaceAbstractHeader';
-export {default as SpaceSticker} from './main/components/SpaceSticker';
 export {default as EditFolder} from './main/components/folders/EditFolder';
 export {default as AssetTypeInfoPanelContent} from './main/components/info_panel/AssetTypeInfoPanelContent';
 

@@ -9,8 +9,8 @@ import ClayIcon from '@clayui/icon';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
+import SpaceSticker from '../../common/components/SpaceSticker';
 import {LogoColor} from '../../common/types/Space';
-import SpaceSticker from '../components/SpaceSticker';
 
 export interface AssetLibrary {
 	id: number;

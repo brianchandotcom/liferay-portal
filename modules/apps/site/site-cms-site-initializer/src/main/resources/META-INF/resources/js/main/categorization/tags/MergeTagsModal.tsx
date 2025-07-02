@@ -14,10 +14,10 @@ import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import SpaceSticker from '../../../common/components/SpaceSticker';
 import ApiHelper from '../../../common/services/ApiHelper';
 import {LogoColor} from '../../../common/types/Space';
 import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
-import SpaceSticker from '../../components/SpaceSticker';
 
 type Tag = {
 	label: string;

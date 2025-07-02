@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
-import SpaceSticker from '../../../../src/main/resources/META-INF/resources/js/main/components/SpaceSticker';
+import SpaceSticker from '../../../../src/main/resources/META-INF/resources/js/common/components/SpaceSticker';
 
 const spaceTitle = 'First space';
 

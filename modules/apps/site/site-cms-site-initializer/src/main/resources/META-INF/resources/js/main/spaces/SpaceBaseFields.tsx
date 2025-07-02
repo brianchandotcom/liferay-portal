@@ -8,8 +8,8 @@ import {FormikErrors, FormikTouched} from 'formik';
 import {useId} from 'frontend-js-components-web';
 import React from 'react';
 
+import SpaceSticker from '../../common/components/SpaceSticker';
 import {LogoColor} from '../../common/types/Space';
-import SpaceSticker from '../components/SpaceSticker';
 import {FieldText} from '../components/forms';
 import SpacePicker from './SpacePicker';
 

@@ -45,10 +45,12 @@ export default function buildStructure({
 }
 
 export function buildChildren({
+	ancestors = [],
 	objectDefinition,
 	objectDefinitions,
 	parent,
 }: {
+	ancestors?: Array<ObjectDefinition['externalReferenceCode']>;
 	objectDefinition: ObjectDefinition;
 	objectDefinitions: ObjectDefinitions;
 	parent: Uuid;
@@ -57,6 +59,10 @@ export function buildChildren({
 	const objectRelationships = objectDefinition.objectRelationships || [];
 
 	const children: Structure['children'] = new Map();
+
+	if (ancestors.includes(objectDefinition.externalReferenceCode)) {
+		return children;
+	}
 
 	for (const objectField of objectFields) {
 		if (objectField.system || objectField.businessType === 'Relationship') {
@@ -70,6 +76,7 @@ export function buildChildren({
 
 	for (const objectRelationship of objectRelationships) {
 		const referencedStructure = buildReferencedStructure({
+			ancestors: [...ancestors, objectDefinition.externalReferenceCode],
 			erc: objectRelationship.objectDefinitionExternalReferenceCode2,
 			objectDefinitions,
 			parent,
@@ -129,11 +136,13 @@ export function buildField({
 }
 
 export function buildReferencedStructure({
+	ancestors,
 	erc,
 	objectDefinitions,
 	parent,
 	relationshipName,
 }: {
+	ancestors: Array<ObjectDefinition['externalReferenceCode']>;
 	erc: ReferencedStructure['erc'];
 	objectDefinitions: ObjectDefinitions;
 	parent: Uuid;
@@ -153,6 +162,7 @@ export function buildReferencedStructure({
 
 	return {
 		children: buildChildren({
+			ancestors,
 			objectDefinition,
 			objectDefinitions,
 			parent: uuid,

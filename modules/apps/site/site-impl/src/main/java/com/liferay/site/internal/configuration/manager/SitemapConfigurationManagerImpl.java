@@ -36,6 +36,19 @@ public class SitemapConfigurationManagerImpl
 	}
 
 	@Override
+	public Long[] getCompanySitemapObjectDefinitionIds(long companyId)
+		throws Exception {
+
+		SitemapCompanyConfiguration sitemapCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				SitemapCompanyConfiguration.class, companyId);
+
+		return TransformUtil.transform(
+			sitemapCompanyConfiguration.companySitemapObjectDefinitionIds(),
+			GetterUtil::getLong, Long.class);
+	}
+
+	@Override
 	public boolean includeCategoriesCompanyEnabled(long companyId)
 		throws ConfigurationException {
 
@@ -116,14 +129,18 @@ public class SitemapConfigurationManagerImpl
 	@Override
 	public void saveSitemapCompanyConfiguration(
 			long companyId, long[] companySitemapGroupIds,
-			boolean includeCategories, boolean includePages,
-			boolean includeWebContent, boolean xmlSitemapIndexEnabled)
+			long[] companySitemapObjectDefinitionIds, boolean includeCategories,
+			boolean includePages, boolean includeWebContent,
+			boolean xmlSitemapIndexEnabled)
 		throws ConfigurationException {
 
 		_configurationProvider.saveCompanyConfiguration(
 			SitemapCompanyConfiguration.class, companyId,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companySitemapGroupIds", companySitemapGroupIds
+			).put(
+				"companySitemapObjectDefinitionIds",
+				companySitemapObjectDefinitionIds
 			).put(
 				"includeCategories", includeCategories
 			).put(

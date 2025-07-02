@@ -51,4 +51,7 @@ public interface SitemapCompanyConfiguration {
 	)
 	public String[] companySitemapGroupIds();
 
+	@Meta.AD(deflt = "", name = "objects-and-cms-structures", required = false)
+	public String[] companySitemapObjectDefinitionIds();
+
 }

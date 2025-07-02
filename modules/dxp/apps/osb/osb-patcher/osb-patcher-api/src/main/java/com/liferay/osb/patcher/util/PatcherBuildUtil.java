@@ -1146,6 +1146,87 @@ public class PatcherBuildUtil {
 		PatcherBuildLocalServiceUtil.updatePatcherBuild(patcherBuild);
 	}
 
+	public static Map<Long, List<Long>> rebaseOtherProjectVersionPatcherFixes(
+			User user,
+			Map<Long, List<Long>> patcherProjectVersionIdPatcherFixIdsMap,
+			long patcherBuildProjectVersionId)
+		throws Exception {
+
+		List<PatcherFix> rebasePatcherFixes = new ArrayList<>();
+		List<Long> rebasedPatcherProjectVersionIds = new ArrayList<>();
+
+		for (Map.Entry<Long, List<Long>> entry :
+				patcherProjectVersionIdPatcherFixIdsMap.entrySet()) {
+
+			long patcherProjectVersionId = entry.getKey();
+
+			if ((patcherProjectVersionId == patcherBuildProjectVersionId) ||
+				PatcherProjectVersionUtil.isSiblingPatcherProjectVersionIds(
+					patcherProjectVersionId, patcherBuildProjectVersionId)) {
+
+				continue;
+			}
+
+			long rebaseToPatcherProjectVersionId = patcherBuildProjectVersionId;
+
+			if (PatcherProjectVersionUtil.isPrivatePatcherProjectVersion(
+					patcherProjectVersionId) &&
+				!PatcherProjectVersionUtil.isPrivatePatcherProjectVersion(
+					patcherBuildProjectVersionId)) {
+
+				PatcherProjectVersion privatePatcherProjectVersion =
+					PatcherProjectVersionUtil.getSiblingPatcherProjectVersion(
+						patcherBuildProjectVersionId);
+
+				rebaseToPatcherProjectVersionId =
+					privatePatcherProjectVersion.getPatcherProjectVersionId();
+			}
+
+			List<Long> patcherFixIds = entry.getValue();
+
+			for (long patcherFixId : patcherFixIds) {
+				PatcherFix patcherFix =
+					PatcherFixLocalServiceUtil.getPatcherFix(patcherFixId);
+
+				rebasedPatcherProjectVersionIds.add(
+					patcherFix.getPatcherProjectVersionId());
+
+				PatcherFix rebasePatcherFix = PatcherFixUtil.addPatcherFix(
+					user, ListUtil.fromArray(patcherFixId),
+					rebaseToPatcherProjectVersionId, patcherFix.getName(),
+					PatcherFixConstants.TYPE_REBASE,
+					WorkflowConstants.STATUS_FIX_REBASING);
+
+				rebasePatcherFixes.add(rebasePatcherFix);
+			}
+		}
+
+		for (long rebasedPatcherProjectVersionId :
+				rebasedPatcherProjectVersionIds) {
+
+			patcherProjectVersionIdPatcherFixIdsMap.remove(
+				rebasedPatcherProjectVersionId);
+		}
+
+		for (PatcherFix rebasePatcherFix : rebasePatcherFixes) {
+			List<Long> patcherFixIds = new ArrayList<>();
+
+			if (patcherProjectVersionIdPatcherFixIdsMap.containsKey(
+					rebasePatcherFix.getPatcherProjectVersionId())) {
+
+				patcherFixIds = patcherProjectVersionIdPatcherFixIdsMap.get(
+					rebasePatcherFix.getPatcherProjectVersionId());
+			}
+
+			patcherFixIds.add(rebasePatcherFix.getPatcherFixId());
+
+			patcherProjectVersionIdPatcherFixIdsMap.put(
+				rebasePatcherFix.getPatcherProjectVersionId(), patcherFixIds);
+		}
+
+		return patcherProjectVersionIdPatcherFixIdsMap;
+	}
+
 	public static void reindexRelatedModels(PatcherBuild patcherBuild)
 		throws Exception {
 
@@ -1342,6 +1423,100 @@ public class PatcherBuildUtil {
 		patcherBuild.setStatus(status);
 
 		workflowParentPatcherBuild(user, patcherBuild);
+	}
+
+	public static void updatePatcherBuildFixes(
+			User user, PatcherBuild patcherBuild, List<Long> patcherFixIds)
+		throws Exception {
+
+		PatcherFixLocalServiceUtil.clearPatcherBuildPatcherFixes(
+			patcherBuild.getPatcherBuildId());
+
+		for (long patcherFixId : patcherFixIds) {
+			PatcherFixLocalServiceUtil.addPatcherBuildPatcherFix(
+				patcherBuild.getPatcherBuildId(), patcherFixId);
+		}
+
+		if (!patcherBuild.isChildBuild() && (patcherFixIds.size() == 1) &&
+			(patcherBuild.getType() != PatcherBuildConstants.TYPE_FIX_PACK)) {
+
+			patcherBuild.setPatcherFixId(patcherFixIds.get(0));
+
+			updatePatcherBuildStatusMergeComplete(user, patcherBuild);
+
+			return;
+		}
+
+		int type = PatcherFixConstants.TYPE_GENERATED;
+
+		if (patcherBuild.getType() == PatcherBuildConstants.TYPE_FIX_PACK) {
+			type = PatcherFixConstants.TYPE_FIX_PACK;
+		}
+		else if (patcherBuild.isChildBuild()) {
+			type = PatcherFixConstants.TYPE_GENERATED_PRIVATE_PUBLIC;
+		}
+
+		PatcherFix mainPatcherFix = null;
+
+		if (patcherBuild.isChildBuild()) {
+			if (patcherBuild.getPatcherFixId() != 0) {
+				mainPatcherFix = PatcherFixLocalServiceUtil.getPatcherFix(
+					patcherBuild.getPatcherFixId());
+
+				List<Long> mainFixParentPatcherFixIds =
+					PatcherFixRelUtil.getParentPatcherFixIds(
+						mainPatcherFix.getPatcherFixId());
+
+				if (!mainFixParentPatcherFixIds.containsAll(patcherFixIds)) {
+					PatcherFixRelLocalServiceUtil.
+						deletePatcherFixRelsByChildPatcherFixId(
+							mainPatcherFix.getPatcherFixId());
+
+					PatcherFixRelUtil.addPatcherFixRel(
+						mainPatcherFix.getPatcherFixId(), patcherFixIds);
+				}
+
+				mainPatcherFix.setGitHash(StringPool.BLANK);
+				mainPatcherFix.setJenkinsResults(StringPool.BLANK);
+				mainPatcherFix.setStatus(WorkflowConstants.STATUS_FIX_ADDING);
+
+				mainPatcherFix = PatcherFixLocalServiceUtil.updatePatcherFix(
+					mainPatcherFix);
+			}
+			else {
+				mainPatcherFix = PatcherFixUtil.addNewPatcherFix(
+					user, PatcherFixConstants.KEY_VERSION_DEFAULT,
+					patcherFixIds, patcherBuild.getPatcherProjectVersionId(),
+					patcherBuild.getName(), type,
+					WorkflowConstants.STATUS_FIX_ADDING);
+			}
+		}
+		else {
+			mainPatcherFix = PatcherFixUtil.addPatcherFix(
+				user, patcherFixIds, patcherBuild.getPatcherProjectVersionId(),
+				patcherBuild.getName(), type,
+				WorkflowConstants.STATUS_FIX_ADDING);
+		}
+
+		patcherBuild.setPatcherFixId(mainPatcherFix.getPatcherFixId());
+
+		patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
+			patcherBuild);
+
+		PatcherFixLocalServiceUtil.addPatcherBuildPatcherFix(
+			patcherBuild.getPatcherBuildId(), mainPatcherFix.getPatcherFixId());
+
+		if (!patcherBuild.isChildBuild()) {
+			removePreviousMainFixVersionsFromBuildsFixes(
+				patcherBuild.getPatcherBuildId(), mainPatcherFix,
+				patcherFixIds);
+
+			if (isPreviousPatcherBuildMainFixEqualsCurrentBuildMainFix(
+					patcherBuild)) {
+
+				updatePatcherBuildStatusMergeComplete(user, patcherBuild);
+			}
+		}
 	}
 
 	public static void workflowCompletedPatcherBuildQAStatus(
@@ -1688,181 +1863,6 @@ public class PatcherBuildUtil {
 		}
 
 		return false;
-	}
-
-	public static Map<Long, List<Long>> rebaseOtherProjectVersionPatcherFixes(
-			User user,
-			Map<Long, List<Long>> patcherProjectVersionIdPatcherFixIdsMap,
-			long patcherBuildProjectVersionId)
-		throws Exception {
-
-		List<PatcherFix> rebasePatcherFixes = new ArrayList<>();
-		List<Long> rebasedPatcherProjectVersionIds = new ArrayList<>();
-
-		for (Map.Entry<Long, List<Long>> entry :
-				patcherProjectVersionIdPatcherFixIdsMap.entrySet()) {
-
-			long patcherProjectVersionId = entry.getKey();
-
-			if ((patcherProjectVersionId == patcherBuildProjectVersionId) ||
-				PatcherProjectVersionUtil.isSiblingPatcherProjectVersionIds(
-					patcherProjectVersionId, patcherBuildProjectVersionId)) {
-
-				continue;
-			}
-
-			long rebaseToPatcherProjectVersionId = patcherBuildProjectVersionId;
-
-			if (PatcherProjectVersionUtil.isPrivatePatcherProjectVersion(
-					patcherProjectVersionId) &&
-				!PatcherProjectVersionUtil.isPrivatePatcherProjectVersion(
-					patcherBuildProjectVersionId)) {
-
-				PatcherProjectVersion privatePatcherProjectVersion =
-					PatcherProjectVersionUtil.getSiblingPatcherProjectVersion(
-						patcherBuildProjectVersionId);
-
-				rebaseToPatcherProjectVersionId =
-					privatePatcherProjectVersion.getPatcherProjectVersionId();
-			}
-
-			List<Long> patcherFixIds = entry.getValue();
-
-			for (long patcherFixId : patcherFixIds) {
-				PatcherFix patcherFix =
-					PatcherFixLocalServiceUtil.getPatcherFix(patcherFixId);
-
-				rebasedPatcherProjectVersionIds.add(
-					patcherFix.getPatcherProjectVersionId());
-
-				PatcherFix rebasePatcherFix = PatcherFixUtil.addPatcherFix(
-					user, ListUtil.fromArray(patcherFixId),
-					rebaseToPatcherProjectVersionId, patcherFix.getName(),
-					PatcherFixConstants.TYPE_REBASE,
-					WorkflowConstants.STATUS_FIX_REBASING);
-
-				rebasePatcherFixes.add(rebasePatcherFix);
-			}
-		}
-
-		for (long rebasedPatcherProjectVersionId :
-				rebasedPatcherProjectVersionIds) {
-
-			patcherProjectVersionIdPatcherFixIdsMap.remove(
-				rebasedPatcherProjectVersionId);
-		}
-
-		for (PatcherFix rebasePatcherFix : rebasePatcherFixes) {
-			List<Long> patcherFixIds = new ArrayList<>();
-
-			if (patcherProjectVersionIdPatcherFixIdsMap.containsKey(
-					rebasePatcherFix.getPatcherProjectVersionId())) {
-
-				patcherFixIds = patcherProjectVersionIdPatcherFixIdsMap.get(
-					rebasePatcherFix.getPatcherProjectVersionId());
-			}
-
-			patcherFixIds.add(rebasePatcherFix.getPatcherFixId());
-
-			patcherProjectVersionIdPatcherFixIdsMap.put(
-				rebasePatcherFix.getPatcherProjectVersionId(), patcherFixIds);
-		}
-
-		return patcherProjectVersionIdPatcherFixIdsMap;
-	}
-
-	public static void updatePatcherBuildFixes(
-			User user, PatcherBuild patcherBuild, List<Long> patcherFixIds)
-		throws Exception {
-
-		PatcherFixLocalServiceUtil.clearPatcherBuildPatcherFixes(
-			patcherBuild.getPatcherBuildId());
-
-		for (long patcherFixId : patcherFixIds) {
-			PatcherFixLocalServiceUtil.addPatcherBuildPatcherFix(
-				patcherBuild.getPatcherBuildId(), patcherFixId);
-		}
-
-		if (!patcherBuild.isChildBuild() && (patcherFixIds.size() == 1) &&
-			(patcherBuild.getType() != PatcherBuildConstants.TYPE_FIX_PACK)) {
-
-			patcherBuild.setPatcherFixId(patcherFixIds.get(0));
-
-			updatePatcherBuildStatusMergeComplete(user, patcherBuild);
-
-			return;
-		}
-
-		int type = PatcherFixConstants.TYPE_GENERATED;
-
-		if (patcherBuild.getType() == PatcherBuildConstants.TYPE_FIX_PACK) {
-			type = PatcherFixConstants.TYPE_FIX_PACK;
-		}
-		else if (patcherBuild.isChildBuild()) {
-			type = PatcherFixConstants.TYPE_GENERATED_PRIVATE_PUBLIC;
-		}
-
-		PatcherFix mainPatcherFix = null;
-
-		if (patcherBuild.isChildBuild()) {
-			if (patcherBuild.getPatcherFixId() != 0) {
-				mainPatcherFix = PatcherFixLocalServiceUtil.getPatcherFix(
-					patcherBuild.getPatcherFixId());
-
-				List<Long> mainFixParentPatcherFixIds =
-					PatcherFixRelUtil.getParentPatcherFixIds(
-						mainPatcherFix.getPatcherFixId());
-
-				if (!mainFixParentPatcherFixIds.containsAll(patcherFixIds)) {
-					PatcherFixRelLocalServiceUtil.
-						deletePatcherFixRelsByChildPatcherFixId(
-							mainPatcherFix.getPatcherFixId());
-
-					PatcherFixRelUtil.addPatcherFixRel(
-						mainPatcherFix.getPatcherFixId(), patcherFixIds);
-				}
-
-				mainPatcherFix.setGitHash(StringPool.BLANK);
-				mainPatcherFix.setJenkinsResults(StringPool.BLANK);
-				mainPatcherFix.setStatus(WorkflowConstants.STATUS_FIX_ADDING);
-
-				mainPatcherFix = PatcherFixLocalServiceUtil.updatePatcherFix(
-					mainPatcherFix);
-			}
-			else {
-				mainPatcherFix = PatcherFixUtil.addNewPatcherFix(
-					user, PatcherFixConstants.KEY_VERSION_DEFAULT,
-					patcherFixIds, patcherBuild.getPatcherProjectVersionId(),
-					patcherBuild.getName(), type,
-					WorkflowConstants.STATUS_FIX_ADDING);
-			}
-		}
-		else {
-			mainPatcherFix = PatcherFixUtil.addPatcherFix(
-				user, patcherFixIds, patcherBuild.getPatcherProjectVersionId(),
-				patcherBuild.getName(), type,
-				WorkflowConstants.STATUS_FIX_ADDING);
-		}
-
-		patcherBuild.setPatcherFixId(mainPatcherFix.getPatcherFixId());
-
-		patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
-			patcherBuild);
-
-		PatcherFixLocalServiceUtil.addPatcherBuildPatcherFix(
-			patcherBuild.getPatcherBuildId(), mainPatcherFix.getPatcherFixId());
-
-		if (!patcherBuild.isChildBuild()) {
-			removePreviousMainFixVersionsFromBuildsFixes(
-				patcherBuild.getPatcherBuildId(), mainPatcherFix,
-				patcherFixIds);
-
-			if (isPreviousPatcherBuildMainFixEqualsCurrentBuildMainFix(
-					patcherBuild)) {
-
-				updatePatcherBuildStatusMergeComplete(user, patcherBuild);
-			}
-		}
 	}
 
 	protected static void updatePatcherBuildsPatcherFixes(

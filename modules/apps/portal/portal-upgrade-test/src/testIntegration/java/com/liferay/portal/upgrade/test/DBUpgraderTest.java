@@ -26,6 +26,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.upgrade.datacleanup.DataCleanupPreupgradeProcessSuite;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.Connection;
@@ -90,6 +91,44 @@ public class DBUpgraderTest {
 	@After
 	public void tearDown() throws Exception {
 		_updatePortalRelease(_currentBuildNumber, _currentState);
+	}
+
+	@Test
+	public void testDisablePreupgradeDataCleanup() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				DataCleanupPreupgradeProcessSuite.class.getName(),
+				LoggerTestUtil.INFO);
+			SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_DATABASE_PREUPGRADE_VERIFY_ENABLED", false)) {
+
+			DBUpgrader.upgradePortal();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Starting " + DataCleanupPreupgradeProcessSuite.class.getName(),
+				logEntry.getMessage());
+		}
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				DataCleanupPreupgradeProcessSuite.class.getName(),
+				LoggerTestUtil.INFO);
+			SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_ENABLED", false);
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_DATABASE_PREUPGRADE_VERIFY_ENABLED", false)) {
+
+			DBUpgrader.upgradePortal();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+		}
 	}
 
 	@Test

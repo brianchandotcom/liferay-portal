@@ -118,7 +118,13 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 		try {
 			TopLevelBuildReport topLevelBuildReport =
-				BuildReportFactory.newTopLevelBuildReport(topLevelBuildURL);
+				BuildReportFactory.newTopLevelBuildReport(this);
+
+			if (topLevelBuildReport == null) {
+				_pullRequestSenderUsername = "Unknown";
+
+				return _pullRequestSenderUsername;
+			}
 
 			Map<String, String> buildParameters =
 				topLevelBuildReport.getBuildParameters();

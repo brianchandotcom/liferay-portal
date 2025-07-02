@@ -221,9 +221,6 @@ public class UpdateLayoutStrutsActionTest {
 			_updateLayoutStrutsAction.execute(
 				mockHttpServletRequest, mockHttpServletResponse);
 		}
-		catch (Exception exception) {
-			throw new Exception(exception);
-		}
 		finally {
 			_restoreAssetPublisherResourcePermissions(userRole);
 		}
@@ -272,18 +269,6 @@ public class UpdateLayoutStrutsActionTest {
 			TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
 			AssetPublisherPortletKeys.ASSET_PUBLISHER,
 			ResourceConstants.SCOPE_COMPANY, role.getRoleId(),
-			ActionKeys.ADD_TO_PAGE);
-
-		_resourcePermissionService.removeResourcePermissions(
-			TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
-			AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			ResourceConstants.SCOPE_GROUP_TEMPLATE, role.getRoleId(),
-			ActionKeys.ADD_TO_PAGE);
-
-		_resourcePermissionService.removeResourcePermissions(
-			TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
-			AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			ResourceConstants.SCOPE_GROUP, role.getRoleId(),
 			ActionKeys.ADD_TO_PAGE);
 	}
 

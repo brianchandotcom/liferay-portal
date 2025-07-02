@@ -636,6 +636,8 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getExtensionDBTableName(),
 			objectDefinition.getPKObjectFieldDBColumnName(), primaryKey);
 
+		_deleteFromLocalizationTable(objectDefinition, primaryKey);
+
 		deleteRelatedObjectEntries(
 			0, objectDefinition.getObjectDefinitionId(), primaryKey);
 
@@ -718,20 +720,8 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinition.getPKObjectFieldDBColumnName(),
 				objectEntry.getObjectEntryId());
 
-			List<ObjectField> localizedObjectFields =
-				_objectFieldLocalService.getLocalizedObjectFields(
-					objectDefinition.getObjectDefinitionId());
-
-			if ((!FeatureFlagManagerUtil.isEnabled(
-					objectDefinition.getCompanyId(), "LPD-32050") &&
-				 objectDefinition.isEnableLocalization()) ||
-				!localizedObjectFields.isEmpty()) {
-
-				_deleteFromTable(
-					objectDefinition.getLocalizationDBTableName(),
-					objectDefinition.getPKObjectFieldDBColumnName(),
-					objectEntry.getObjectEntryId());
-			}
+			_deleteFromLocalizationTable(
+				objectDefinition, objectEntry.getObjectEntryId());
 		}
 
 		deleteRelatedObjectEntries(

@@ -39,7 +39,10 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 	const activeFilters = filters.filter((filter) => filter.active);
 
 	return activeFilters.length || isSearchActive() ? (
-		<div className="management-bar management-bar-light navbar navbar-expand-md">
+		<div
+			className="management-bar management-bar-light navbar navbar-expand-md"
+			data-qa-id="activeFiltersToolbar"
+		>
 			<div className="container-fluid">
 				<nav className="mb-0 py-3 subnav-tbar subnav-tbar-light subnav-tbar-primary w-100">
 					<ul className="tbar-nav">

@@ -991,6 +991,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		sitePage.setParentSitePageExternalReferenceCode(
 			layout.getExternalReferenceCode());
 
+		pageSettings.setPriority(0);
+
 		_assertPatchSiteSiteByExternalReferenceCodeSitePage(
 			sitePage,
 			new SitePage() {

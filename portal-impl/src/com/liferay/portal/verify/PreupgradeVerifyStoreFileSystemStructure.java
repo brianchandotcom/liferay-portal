@@ -279,17 +279,17 @@ public class PreupgradeVerifyStoreFileSystemStructure
 					continue;
 				}
 
-				String versionLabelName = String.valueOf(
+				String versionLabel = String.valueOf(
 					versionLabelPath.getFileName());
 
 				if (StringUtil.equals(
-						versionLabelName,
+						versionLabel,
 						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 
 					continue;
 				}
 
-				if (!versionLabelName.matches("\\d+\\.\\d+.*")) {
+				if (!versionLabel.matches("\\d+\\.\\d+.*")) {
 					_log.error(
 						"Unexpected file " + versionLabelPath +
 							" not matching version label pattern");

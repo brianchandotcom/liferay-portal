@@ -68,10 +68,6 @@ public interface ObjectEntryService extends BaseService {
 	public ObjectEntry deleteObjectEntry(long objectEntryId)
 		throws PortalException;
 
-	public ObjectEntry deleteObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
-		throws PortalException;
-
 	public ObjectEntry expireObjectEntry(
 			long userId, long objectEntryId, ServiceContext serviceContext)
 		throws PortalException;
@@ -108,12 +104,7 @@ public interface ObjectEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntry getObjectEntry(
-			String externalReferenceCode, long objectDefinitionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ObjectEntry getObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
+			String externalReferenceCode, long groupId, long objectDefinitionId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

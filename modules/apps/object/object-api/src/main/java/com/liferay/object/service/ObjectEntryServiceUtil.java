@@ -69,14 +69,6 @@ public class ObjectEntryServiceUtil {
 		return getService().deleteObjectEntry(objectEntryId);
 	}
 
-	public static ObjectEntry deleteObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
-		throws PortalException {
-
-		return getService().deleteObjectEntry(
-			externalReferenceCode, companyId, groupId);
-	}
-
 	public static ObjectEntry expireObjectEntry(
 			long userId, long objectEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -135,19 +127,11 @@ public class ObjectEntryServiceUtil {
 	}
 
 	public static ObjectEntry getObjectEntry(
-			String externalReferenceCode, long objectDefinitionId)
+			String externalReferenceCode, long groupId, long objectDefinitionId)
 		throws PortalException {
 
 		return getService().getObjectEntry(
-			externalReferenceCode, objectDefinitionId);
-	}
-
-	public static ObjectEntry getObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
-		throws PortalException {
-
-		return getService().getObjectEntry(
-			externalReferenceCode, companyId, groupId);
+			externalReferenceCode, groupId, objectDefinitionId);
 	}
 
 	public static List<ObjectEntry> getOneToManyObjectEntries(

@@ -1301,128 +1301,6 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	public int countByROEI_NotS(long rootObjectEntryId, int status);
 
 	/**
-	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @return the matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	public ObjectEntry findByERC_G_C(
-			String externalReferenceCode, long groupId, long companyId)
-		throws NoSuchObjectEntryException;
-
-	/**
-	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	public ObjectEntry fetchByERC_G_C(
-		String externalReferenceCode, long groupId, long companyId);
-
-	/**
-	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	public ObjectEntry fetchByERC_G_C(
-		String externalReferenceCode, long groupId, long companyId,
-		boolean useFinderCache);
-
-	/**
-	 * Removes the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; from the database.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @return the object entry that was removed
-	 */
-	public ObjectEntry removeByERC_G_C(
-			String externalReferenceCode, long groupId, long companyId)
-		throws NoSuchObjectEntryException;
-
-	/**
-	 * Returns the number of object entries where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @return the number of matching object entries
-	 */
-	public int countByERC_G_C(
-		String externalReferenceCode, long groupId, long companyId);
-
-	/**
-	 * Returns the object entry where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	public ObjectEntry findByERC_C_ODI(
-			String externalReferenceCode, long companyId,
-			long objectDefinitionId)
-		throws NoSuchObjectEntryException;
-
-	/**
-	 * Returns the object entry where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	public ObjectEntry fetchByERC_C_ODI(
-		String externalReferenceCode, long companyId, long objectDefinitionId);
-
-	/**
-	 * Returns the object entry where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	public ObjectEntry fetchByERC_C_ODI(
-		String externalReferenceCode, long companyId, long objectDefinitionId,
-		boolean useFinderCache);
-
-	/**
-	 * Removes the object entry where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; from the database.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @param objectDefinitionId the object definition ID
-	 * @return the object entry that was removed
-	 */
-	public ObjectEntry removeByERC_C_ODI(
-			String externalReferenceCode, long companyId,
-			long objectDefinitionId)
-		throws NoSuchObjectEntryException;
-
-	/**
-	 * Returns the number of object entries where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @param objectDefinitionId the object definition ID
-	 * @return the number of matching object entries
-	 */
-	public int countByERC_C_ODI(
-		String externalReferenceCode, long companyId, long objectDefinitionId);
-
-	/**
 	 * Returns all the object entries where groupId = &#63; and objectDefinitionId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1762,6 +1640,75 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 */
 	public int countByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId);
+
+	/**
+	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object entry
+	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
+	 */
+	public ObjectEntry findByERC_G_C_ODI(
+			String externalReferenceCode, long groupId, long companyId,
+			long objectDefinitionId)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	public ObjectEntry fetchByERC_G_C_ODI(
+		String externalReferenceCode, long groupId, long companyId,
+		long objectDefinitionId);
+
+	/**
+	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	public ObjectEntry fetchByERC_G_C_ODI(
+		String externalReferenceCode, long groupId, long companyId,
+		long objectDefinitionId, boolean useFinderCache);
+
+	/**
+	 * Removes the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; and objectDefinitionId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the object entry that was removed
+	 */
+	public ObjectEntry removeByERC_G_C_ODI(
+			String externalReferenceCode, long groupId, long companyId,
+			long objectDefinitionId)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Returns the number of object entries where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object entries
+	 */
+	public int countByERC_G_C_ODI(
+		String externalReferenceCode, long groupId, long companyId,
+		long objectDefinitionId);
 
 	/**
 	 * Caches the object entry in the entity cache if it is enabled.

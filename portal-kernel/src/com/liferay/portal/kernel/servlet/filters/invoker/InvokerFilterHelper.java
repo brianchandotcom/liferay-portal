@@ -171,9 +171,9 @@ public class InvokerFilterHelper {
 		Set<String> dynamicFilterNames = new TreeSet<>(
 			_dynamicPositionFilters.keySet());
 
-		boolean updated;
+		boolean updated = true;
 
-		do {
+		while (updated) {
 			updated = false;
 
 			List<String> snapshot = new ArrayList<>(filterNames);
@@ -207,7 +207,6 @@ public class InvokerFilterHelper {
 				}
 			}
 		}
-		while (updated);
 
 		for (String filterName : dynamicFilterNames) {
 			if (!filterNames.contains(filterName)) {

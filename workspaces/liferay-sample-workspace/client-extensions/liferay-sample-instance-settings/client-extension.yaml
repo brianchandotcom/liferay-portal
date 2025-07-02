@@ -27,7 +27,7 @@ liferay-sample-instance-settings-e9b8w3:
     type: instanceSettings
 liferay-sample-instance-settings-gp50a2:
     enableAccessibilityMenu: true
-    groupExternalReferenceCode: L_GUEST
     name: Liferay Sample Instance Settings GP50A2
     pid: com.liferay.accessibility.menu.web.internal.configuration.AccessibilityMenuConfiguration
+    siteExternalReferenceCode: L_GUEST
     type: instanceSettings

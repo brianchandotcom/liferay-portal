@@ -1039,6 +1039,7 @@ public class JournalArticleStagedModelDataHandler
 				}
 			}
 
+			importedArticle.setModifiedDate(article.getModifiedDate());
 			importedArticle.setStatusByUserId(article.getStatusByUserId());
 			importedArticle.setStatusByUserName(article.getStatusByUserName());
 

@@ -91,7 +91,7 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 							'aria-label': Liferay.Language.get('add-space'),
 							'onClick': onAddButtonClick,
 							'role': 'menuitem',
-							'title': Liferay.Language.get('add-space-ambrin'),
+							'title': Liferay.Language.get('add-space'),
 						},
 					}),
 				},

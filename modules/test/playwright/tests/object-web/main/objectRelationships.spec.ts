@@ -942,6 +942,88 @@ test.describe('Manage object relationships through Model Builder', () => {
 		).toBeVisible();
 	});
 
+	test(
+		'allows to create relationship with a custom object named Address',
+		{tag: '@LPD-51156'},
+		async ({
+			addNewObjectRelationshipModalPage,
+			apiHelpers,
+			modelBuilderDiagramPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: customPostalAddressDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					externalReferenceCode:
+						'CustomPostalAddress' + getRandomInt(),
+					label: {
+						en_US: 'Custom Postal Address',
+					},
+					name: 'Address',
+					objectFields: [],
+					objectFolderExternalReferenceCode: 'default',
+					pluralLabel: {
+						en_US: 'Custom Postal Addresses',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 1,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: customPostalAddressDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const {body: commerceOrderDefinition} =
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+					'L_COMMERCE_ORDER'
+				);
+
+			await test.step('navigate to model builder and display all nodes', async () => {
+				await viewObjectDefinitionsPage.goto();
+
+				await viewObjectDefinitionsPage.openObjectFolder('Default');
+
+				await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+
+				await modelBuilderDiagramPage.toggleSidebarsButton.click();
+
+				await modelBuilderDiagramPage.fitViewButton.click();
+			});
+
+			await test.step('assert that creating a relationship with a custom object named Address as the source node is allowed', async () => {
+				await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
+					customPostalAddressDefinition.id,
+					commerceOrderDefinition.id
+				);
+
+				expect(
+					addNewObjectRelationshipModalPage.modalHeader
+				).toBeVisible();
+			});
+
+			await test.step('assert that creating a relationship with a custom object named Address as the target node is allowed', async () => {
+				await page.getByRole('button', {name: 'Cancel'}).click();
+
+				await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
+					commerceOrderDefinition.id,
+					customPostalAddressDefinition.id
+				);
+
+				expect(
+					addNewObjectRelationshipModalPage.modalHeader
+				).toBeVisible();
+			});
+		}
+	);
+
 	test('cannot delete the object relationship that is the only custom object field from the published object definition', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,

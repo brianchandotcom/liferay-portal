@@ -19,7 +19,7 @@ ViewSpaceContentsAbstractSectionDisplayContext viewSpaceContentsAbstractSectionD
 		/>
 	</div>
 
-	<div class="cms-section custom-empty-state">
+	<div class="cms-fds-card cms-section custom-empty-state">
 		<frontend-data-set:headless-display
 			apiURL="<%= viewSpaceContentsAbstractSectionDisplayContext.getAPIURL() %>"
 			creationMenu="<%= viewSpaceContentsAbstractSectionDisplayContext.getCreationMenu() %>"

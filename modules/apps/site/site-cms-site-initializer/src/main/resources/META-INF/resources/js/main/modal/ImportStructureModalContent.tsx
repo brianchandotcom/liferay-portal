@@ -9,8 +9,8 @@ import ClayModal from '@clayui/modal';
 import {openToast} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-import {FieldFile} from '../../../common/components/forms';
-import ApiHelper from '../../../common/services/ApiHelper';
+import {FieldFile} from '../../common/components/forms';
+import ApiHelper from '../../common/services/ApiHelper';
 
 const JSON_EXTENSION = '.json';
 

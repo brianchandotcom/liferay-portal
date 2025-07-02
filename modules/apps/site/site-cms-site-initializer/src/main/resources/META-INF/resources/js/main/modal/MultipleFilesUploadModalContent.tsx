@@ -8,11 +8,11 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import ApiHelper from '../../../common/services/ApiHelper';
-import {AssetLibrary} from '../../../common/types/AssetLibrary';
+import ApiHelper from '../../common/services/ApiHelper';
+import {AssetLibrary} from '../../common/types/AssetLibrary';
 import MultipleFileUploader, {
 	FileData,
-} from '../multiple_file_uploader/MultipleFileUploader';
+} from '../../main/components/multiple_file_uploader/MultipleFileUploader';
 
 const getBase64 = (file: File): Promise<string> => {
 	return new Promise((resolve, reject) => {

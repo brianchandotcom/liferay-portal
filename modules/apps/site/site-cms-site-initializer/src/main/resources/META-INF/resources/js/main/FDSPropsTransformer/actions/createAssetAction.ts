@@ -7,7 +7,7 @@ import {openModal} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 
 import {AssetLibrary} from '../../../common/types/AssetLibrary';
-import CreationModalContent from '../../components/modal/CreationModalContent';
+import CreationModalContent from '../../modal/CreationModalContent';
 
 export type AssetData = {
 	action: 'createAsset';

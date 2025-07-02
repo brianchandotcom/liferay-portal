@@ -7,7 +7,7 @@ import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import ApiHelper from '../../../common/services/ApiHelper';
-import DeleteStructureModalContent from '../../components/modal/DeleteStructureModalContent';
+import DeleteStructureModalContent from '../../modal/DeleteStructureModalContent';
 import {executeAsyncItemAction} from '../utils/executeAsyncItemAction';
 
 export default async function deleteStructureAction({

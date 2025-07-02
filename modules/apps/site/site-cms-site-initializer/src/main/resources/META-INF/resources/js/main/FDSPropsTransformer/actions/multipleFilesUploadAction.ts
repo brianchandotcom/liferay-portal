@@ -6,7 +6,7 @@
 import {openModal} from 'frontend-js-components-web';
 
 import {AssetLibrary} from '../../../common/types/AssetLibrary';
-import MultipleFilesUploadModalContent from '../../components/modal/MultipleFilesUploadModalContent';
+import MultipleFilesUploadModalContent from '../../modal/MultipleFilesUploadModalContent';
 
 export type MultipleFileUploaderData = {
 	assetLibraries: AssetLibrary[];

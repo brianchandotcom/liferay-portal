@@ -10,7 +10,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import CreationModalContent from '../../../../../src/main/resources/META-INF/resources/js/main/components/modal/CreationModalContent';
+import CreationModalContent from '../../../../src/main/resources/META-INF/resources/js/main/modal/CreationModalContent';
 
 const mockOnSubmit = jest.fn();
 const mockNavigate = jest.fn();

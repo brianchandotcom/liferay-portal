@@ -9,11 +9,11 @@ import {FormikHelpers, useFormik} from 'formik';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
-import {FieldPicker, FieldText} from '../../../common/components/forms';
-import {required, validate} from '../../../common/components/forms/validations';
-import {AssetLibrary} from '../../../common/types/AssetLibrary';
-import {AssetData} from '../../FDSPropsTransformer/actions/createAssetAction';
-import {FolderData} from '../../FDSPropsTransformer/actions/createFolderAction';
+import {FieldPicker, FieldText} from '../../common/components/forms';
+import {required, validate} from '../../common/components/forms/validations';
+import {AssetLibrary} from '../../common/types/AssetLibrary';
+import {AssetData} from '../FDSPropsTransformer/actions/createAssetAction';
+import {FolderData} from '../FDSPropsTransformer/actions/createFolderAction';
 
 type Props = {
 	action: AssetData['action'] | FolderData['action'];

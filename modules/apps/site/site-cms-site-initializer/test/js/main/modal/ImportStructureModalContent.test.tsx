@@ -7,11 +7,11 @@ import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import ApiHelper from '../../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
-import ImportStructureModalContent from '../../../../../src/main/resources/META-INF/resources/js/main/components/modal/ImportStructureModalContent';
+import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
+import ImportStructureModalContent from '../../../../src/main/resources/META-INF/resources/js/main/modal/ImportStructureModalContent';
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper'
+	'../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper'
 );
 
 const mockPostFormData = ApiHelper.postFormData as jest.MockedFunction<

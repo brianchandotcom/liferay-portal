@@ -8,7 +8,7 @@ import {sub} from 'frontend-js-web';
 
 import FolderService from '../../../common/services/FolderService';
 import {AssetLibrary} from '../../../common/types/AssetLibrary';
-import CreationModalContent from '../../components/modal/CreationModalContent';
+import CreationModalContent from '../../modal/CreationModalContent';
 
 export type FolderData = {
 	action: 'createFolder';

@@ -5,7 +5,7 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-import ImportStructureModalContent from '../../components/modal/ImportStructureModalContent';
+import ImportStructureModalContent from '../../modal/ImportStructureModalContent';
 
 export default function importStructureAction(
 	importURL: string,

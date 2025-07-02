@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TableNamesUpgradeProcess extends UpgradeProcess {
+public class SchemaUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

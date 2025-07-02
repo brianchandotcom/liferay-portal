@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
+import ClaySticker from '@clayui/sticker';
 import React, {useContext, useState} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
@@ -115,6 +117,16 @@ function SelectTypes({
 		a.displayName.localeCompare(b.displayName, locale.replaceAll('_', '-'))
 	);
 
+	const _anyMissingSubtypes = () =>
+		selected.some(({subtypes}) =>
+			subtypes.some(({label, value}) => label === value)
+		);
+
+	const _getMissingTypes = () =>
+		selected.filter(({type}) =>
+			searchableTypes.every(({className}) => type !== className)
+		);
+
 	const _handleRemoveType = (className) => {
 		const newSelected = selected.filter(({type}) => type !== className);
 
@@ -192,6 +204,15 @@ function SelectTypes({
 				</ClayButton>
 			</SearchableTypesModal>
 
+			{(_anyMissingSubtypes() || !!_getMissingTypes().length) && (
+				<ClayAlert
+					displayType="warning"
+					title={Liferay.Language.get('warning') + ':'}
+				>
+					{Liferay.Language.get('missing-type-references-warning')}
+				</ClayAlert>
+			)}
+
 			{!!selected.length && (
 				<ClayList>
 					{mainSearchableTypesSorted
@@ -241,6 +262,44 @@ function SelectTypes({
 								</ClayList.ItemField>
 							</ClayList.Item>
 						))}
+
+					{_getMissingTypes().map(({type}) => (
+						<ClayList.Item flex key={type}>
+							<ClayList.ItemField expand>
+								<div>
+									<span className="list-group-title">
+										{type}
+									</span>
+
+									<span className="c-ml-1 inline-item">
+										<ClaySticker
+											displayType="warning"
+											size="sm"
+										>
+											<ClayIcon symbol="warning-full" />
+										</ClaySticker>
+
+										<strong className="text-2 text-warning">
+											{Liferay.Language.get('missing')}
+										</strong>
+									</span>
+								</div>
+							</ClayList.ItemField>
+
+							<ClayList.ItemField>
+								<ClayButton
+									aria-label={Liferay.Language.get('delete')}
+									className="secondary"
+									displayType="unstyled"
+									onClick={() => _handleRemoveType(type)}
+									size="sm"
+									style={{margin: 'auto'}}
+								>
+									<ClayIcon symbol="times-circle" />
+								</ClayButton>
+							</ClayList.ItemField>
+						</ClayList.Item>
+					))}
 				</ClayList>
 			)}
 		</>

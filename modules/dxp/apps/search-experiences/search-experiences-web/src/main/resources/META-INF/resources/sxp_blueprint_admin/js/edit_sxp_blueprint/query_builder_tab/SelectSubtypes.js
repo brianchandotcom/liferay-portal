@@ -14,6 +14,7 @@ import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
@@ -481,7 +482,26 @@ function SelectSubtypes({
 							key={value}
 							large
 						>
-							{label}
+							{label === value ? (
+								<span>
+									{label}
+
+									<span className="c-ml-2 inline-item">
+										<ClaySticker
+											displayType="warning"
+											size="sm"
+										>
+											<ClayIcon symbol="warning-full" />
+										</ClaySticker>
+
+										<strong className="c-ml-1 text-2 text-warning">
+											{Liferay.Language.get('missing')}
+										</strong>
+									</span>
+								</span>
+							) : (
+								label
+							)}
 						</ClayLabel>
 					))}
 				</ClayList.ItemText>

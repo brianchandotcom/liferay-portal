@@ -746,6 +746,25 @@ public class PatcherBuildLocalServiceWrapper
 			patcherBuildId, latestKeyBuild, latestSupportTicketBuild);
 	}
 
+	@Override
+	public com.liferay.osb.patcher.model.PatcherBuild updatePatcherBuild(
+			long patcherBuildId, int qaStatus, String supportTicket, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherBuildLocalService.updatePatcherBuild(
+			patcherBuildId, qaStatus, supportTicket, type);
+	}
+
+	@Override
+	public com.liferay.osb.patcher.model.PatcherBuild updatePatcherBuild(
+			long patcherBuildId, String fileName, int qaStatus,
+			String sourceName, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherBuildLocalService.updatePatcherBuild(
+			patcherBuildId, fileName, qaStatus, sourceName, status);
+	}
+
 	/**
 	 * Updates the patcher build in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -764,6 +783,15 @@ public class PatcherBuildLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.patcher.model.PatcherBuild updatePatcherFixId(
+			long patcherBuildId, long patcherFixId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherBuildLocalService.updatePatcherFixId(
+			patcherBuildId, patcherFixId);
+	}
+
+	@Override
 	public com.liferay.osb.patcher.model.PatcherBuild updateQaFields(
 			long patcherBuildId, String qaComments, int qaStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -779,6 +807,15 @@ public class PatcherBuildLocalServiceWrapper
 
 		return _patcherBuildLocalService.updateQaStatus(
 			patcherBuildId, qaStatus);
+	}
+
+	@Override
+	public com.liferay.osb.patcher.model.PatcherBuild updateRequestKey(
+			long patcherBuildId, String requestKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherBuildLocalService.updateRequestKey(
+			patcherBuildId, requestKey);
 	}
 
 	@Override

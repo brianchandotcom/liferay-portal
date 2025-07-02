@@ -613,6 +613,23 @@ public class PatcherBuildLocalServiceUtil {
 			patcherBuildId, latestKeyBuild, latestSupportTicketBuild);
 	}
 
+	public static PatcherBuild updatePatcherBuild(
+			long patcherBuildId, int qaStatus, String supportTicket, int type)
+		throws PortalException {
+
+		return getService().updatePatcherBuild(
+			patcherBuildId, qaStatus, supportTicket, type);
+	}
+
+	public static PatcherBuild updatePatcherBuild(
+			long patcherBuildId, String fileName, int qaStatus,
+			String sourceName, int status)
+		throws PortalException {
+
+		return getService().updatePatcherBuild(
+			patcherBuildId, fileName, qaStatus, sourceName, status);
+	}
+
 	/**
 	 * Updates the patcher build in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -627,6 +644,13 @@ public class PatcherBuildLocalServiceUtil {
 		return getService().updatePatcherBuild(patcherBuild);
 	}
 
+	public static PatcherBuild updatePatcherFixId(
+			long patcherBuildId, long patcherFixId)
+		throws PortalException {
+
+		return getService().updatePatcherFixId(patcherBuildId, patcherFixId);
+	}
+
 	public static PatcherBuild updateQaFields(
 			long patcherBuildId, String qaComments, int qaStatus)
 		throws PortalException {
@@ -639,6 +663,13 @@ public class PatcherBuildLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateQaStatus(patcherBuildId, qaStatus);
+	}
+
+	public static PatcherBuild updateRequestKey(
+			long patcherBuildId, String requestKey)
+		throws PortalException {
+
+		return getService().updateRequestKey(patcherBuildId, requestKey);
 	}
 
 	public static PatcherBuild updateStatus(long patcherBuildId, int status)

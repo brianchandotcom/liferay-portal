@@ -7,6 +7,7 @@ import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {ReactElement, useEffect, useState} from 'react';
 
+import {IPermissionItem} from '../../../common/components/forms/PermissionsTable';
 import CategorizationPermissionService from '../../../common/services/CategorizationPermissionService';
 import CategoryService from '../../../common/services/CategoryService';
 import {
@@ -15,7 +16,6 @@ import {
 	displayNameInUseErrorToast,
 	displaySystemErrorToast,
 } from '../../../common/utils/ToastUtil';
-import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import CategorizationContentContainer from '../components/CategorizationContentContainer';
 import CategorizationManagementToolbar from '../components/CategorizationManagementToolbar';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';

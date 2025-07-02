@@ -12,11 +12,7 @@ import {openToast, useId} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
-import SpaceService from '../../common/services/SpaceService';
-import {LogoColor, MimeTypeLimit, Space} from '../../common/types/Space';
-import focusInvalidElement from '../../common/utils/focusInvalidElement';
-import getRandomId from '../../structure_builder/utils/getRandomId';
-import {FieldText} from '../components/forms';
+import {FieldText} from '../../common/components/forms';
 import {
 	Errors,
 	invalidCharacters,
@@ -26,7 +22,11 @@ import {
 	required,
 	validNumber,
 	validate,
-} from '../components/forms/validations';
+} from '../../common/components/forms/validations';
+import SpaceService from '../../common/services/SpaceService';
+import {LogoColor, MimeTypeLimit, Space} from '../../common/types/Space';
+import focusInvalidElement from '../../common/utils/focusInvalidElement';
+import getRandomId from '../../structure_builder/utils/getRandomId';
 import SpaceBaseFields from './SpaceBaseFields';
 
 type Touched = FormikTouched<Record<string, any>>;

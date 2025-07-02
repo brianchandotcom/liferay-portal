@@ -10,10 +10,6 @@ import {openToast} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
-import SpaceService from '../../common/services/SpaceService';
-import {LogoColor} from '../../common/types/Space';
-import focusInvalidElement from '../../common/utils/focusInvalidElement';
-import {getImage} from '../../common/utils/getImage';
 import {
 	invalidCharacters,
 	maxLength,
@@ -21,7 +17,11 @@ import {
 	notNull,
 	required,
 	validate,
-} from '../components/forms/validations';
+} from '../../common/components/forms/validations';
+import SpaceService from '../../common/services/SpaceService';
+import {LogoColor} from '../../common/types/Space';
+import focusInvalidElement from '../../common/utils/focusInvalidElement';
+import {getImage} from '../../common/utils/getImage';
 import {NewSpaceFormSection} from './NewSpaceFormSection';
 import BaseFields from './SpaceBaseFields';
 

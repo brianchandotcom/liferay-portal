@@ -9,7 +9,7 @@ import React from 'react';
 
 import FieldFile, {
 	TFieldFile,
-} from '../../../../../src/main/resources/META-INF/resources/js/main/components/forms/FieldFile';
+} from '../../../../../src/main/resources/META-INF/resources/js/common/components/forms/FieldFile';
 
 const DEFAULT_PROPS: TFieldFile = {
 	fieldId: 'file-input',

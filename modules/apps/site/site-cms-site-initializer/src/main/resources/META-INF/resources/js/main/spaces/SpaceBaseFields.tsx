@@ -9,8 +9,8 @@ import {useId} from 'frontend-js-components-web';
 import React from 'react';
 
 import SpaceSticker from '../../common/components/SpaceSticker';
+import {FieldText} from '../../common/components/forms';
 import {LogoColor} from '../../common/types/Space';
-import {FieldText} from '../components/forms';
 import SpacePicker from './SpacePicker';
 
 type Fields = {

@@ -10,20 +10,20 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 /**
  * @author Luis Ortiz
  */
-public class DataCleanupUpgradeException extends UpgradeException {
+public class DataCleanupPreupgradeException extends UpgradeException {
 
-	public DataCleanupUpgradeException() {
+	public DataCleanupPreupgradeException() {
 	}
 
-	public DataCleanupUpgradeException(String msg) {
+	public DataCleanupPreupgradeException(String msg) {
 		super(msg);
 	}
 
-	public DataCleanupUpgradeException(String msg, Throwable throwable) {
+	public DataCleanupPreupgradeException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public DataCleanupUpgradeException(Throwable throwable) {
+	public DataCleanupPreupgradeException(Throwable throwable) {
 		super(throwable);
 	}
 

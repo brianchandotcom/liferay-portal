@@ -303,7 +303,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 	}
 
 	private boolean _hasFileSystemStructureRepositoryIdPath(
-		Path repositoryIdPath) {
+			Path repositoryIdPath)
+		throws IOException {
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				repositoryIdPath)) {
@@ -323,16 +324,6 @@ public class PreupgradeVerifyStoreFileSystemStructure
 			}
 
 			return true;
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to verify file system structure in: " +
-						repositoryIdPath,
-					exception);
-			}
-
-			return false;
 		}
 	}
 

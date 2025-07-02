@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import io.modelcontextprotocol.server.McpServer;
@@ -28,6 +29,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -99,7 +101,7 @@ public class MCPServlet extends GenericServlet {
 		String baseURL = company.getPortalURL(0) + _portal.getPathModule();
 
 		JSONObject openAPIJSONObject = _jsonFactory.createJSONObject(
-			_get(baseURL + "/openapi"));
+			_callEndpoint("GET", baseURL + "/openapi", null));
 
 		HttpServletSseServerTransportProvider
 			httpServletSseServerTransportProvider =
@@ -136,23 +138,62 @@ public class MCPServlet extends GenericServlet {
 						List.of(
 							new McpSchema.TextResourceContents(
 								arguments.uri(), "application/yaml",
-								_get(arguments.uri()))))));
+								_callEndpoint(
+									"GET", arguments.uri(), null))))));
 		}
 
 		mcpSyncServer.addTool(
 			new McpServerFeatures.SyncToolSpecification(
 				new McpSchema.Tool(
-					"hello-world", "returns the \"hello world\" message",
+					"call-http-endpoint",
+					"Calls an HTTP endpoint with method, path, and payload",
 					JSONUtil.put(
+						"additionalProperties", false
+					).put(
+						"properties",
+						JSONUtil.put(
+							"method",
+							JSONUtil.put(
+								"description", "The HTTP method"
+							).put(
+								"type", "string"
+							)
+						).put(
+							"path",
+							JSONUtil.put(
+								"description",
+								"The full endpoint path relative to " +
+									baseURL +
+										". It cannot contain query parameters."
+							).put(
+								"type", "string"
+							)
+						).put(
+							"payload",
+							JSONUtil.put(
+								"description",
+								"The endpoint payload. Can be an empty " +
+									"string if there is no payload."
+							).put(
+								"type", "string"
+							)
+						)
+					).put(
+						"required", JSONUtil.putAll("method", "path", "payload")
+					).put(
 						"type", "object"
 					).toString()),
 				(exchange, arguments) -> new McpSchema.CallToolResult(
-					"Hello World", false)));
+					_callEndpoint(
+						String.valueOf(arguments.get("method")),
+						baseURL + arguments.get("path"),
+						String.valueOf(arguments.get("payload"))),
+					false)));
 
 		return httpServletSseServerTransportProvider;
 	}
 
-	private String _get(String path) {
+	private String _callEndpoint(String method, String path, String payload) {
 		try {
 			URL url = new URL(path);
 
@@ -169,7 +210,16 @@ public class MCPServlet extends GenericServlet {
 				"Basic " + encoder.encodeToString(credentials.getBytes()));
 
 			connection.setDoOutput(true);
-			connection.setRequestMethod(StringUtil.toUpperCase("GET"));
+			connection.setRequestMethod(StringUtil.toUpperCase(method));
+
+			if (Validator.isNotNull(payload)) {
+				connection.setRequestProperty(
+					"Content-Type", "application/json");
+
+				try (OutputStream outputStream = connection.getOutputStream()) {
+					outputStream.write(payload.getBytes("UTF-8"));
+				}
+			}
 
 			if (connection.getResponseCode() >= 300) {
 				throw new Exception(

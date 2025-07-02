@@ -6,6 +6,14 @@
 					"label": "source",
 					"name": "source",
 					"type": "navigationMenuSelector"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "CMS Vertical Navigation",
+					"label": "vertical-navigation-aria-label",
+					"localizable": true,
+					"name": "verticalNavigationAriaLabel",
+					"type": "text"
 				}
 			]
 		}

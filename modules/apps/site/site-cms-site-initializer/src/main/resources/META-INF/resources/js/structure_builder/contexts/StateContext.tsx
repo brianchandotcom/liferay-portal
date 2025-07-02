@@ -12,6 +12,7 @@ import React, {
 	useReducer,
 } from 'react';
 
+import {ObjectDefinitions} from '../types/ObjectDefinition';
 import {
 	ReferencedStructure,
 	RepeatableGroup,
@@ -33,6 +34,7 @@ import getUuid from '../utils/getUuid';
 import insertGroup from '../utils/insertGroup';
 import normalizeName from '../utils/normalizeName';
 import openDeletionModal from '../utils/openDeletionModal';
+import refreshReferencedStructures from '../utils/refreshReferencedStructures';
 import {
 	ValidationError,
 	validateField,
@@ -112,6 +114,11 @@ type DeleteSelectionAction = {type: 'delete-selection'};
 
 type PublishStructureAction = {id?: number; type: 'publish-structure'};
 
+type RefreshReferencedStructuresAction = {
+	objectDefinitions: ObjectDefinitions;
+	type: 'refresh-referenced-structures';
+};
+
 type SetErrorAction = {error: string | null; type: 'set-error'};
 
 type SetSelection = {
@@ -162,6 +169,7 @@ export type Action =
 	| DeleteChildAction
 	| DeleteSelectionAction
 	| PublishStructureAction
+	| RefreshReferencedStructuresAction
 	| SetErrorAction
 	| SetSelection
 	| UpdateFieldAction
@@ -373,6 +381,23 @@ function reducer(state: State, action: Action): State {
 				structure: nextStructure,
 				unsavedChanges: false,
 			};
+		}
+		case 'refresh-referenced-structures': {
+			const {structure} = state;
+
+			const {objectDefinitions} = action;
+
+			const nextChildren = refreshReferencedStructures({
+				objectDefinitions,
+				root: structure,
+			});
+
+			const nextStructure = {
+				...structure,
+				children: nextChildren,
+			};
+
+			return {...state, structure: nextStructure};
 		}
 		case 'set-error':
 			return {

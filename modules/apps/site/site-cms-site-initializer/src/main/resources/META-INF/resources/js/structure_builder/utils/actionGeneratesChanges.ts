@@ -20,6 +20,7 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'create-structure':
 		case 'delete-selection':
 		case 'publish-structure':
+		case 'refresh-referenced-structures':
 		case 'set-error':
 		case 'set-selection':
 		case 'validate':

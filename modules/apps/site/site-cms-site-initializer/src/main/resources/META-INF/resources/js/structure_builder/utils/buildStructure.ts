@@ -251,7 +251,7 @@ function getFieldType(objectField: ObjectField): FieldType {
 	return DB_TYPE_TO_FIELD_TYPE[objectField.DBType];
 }
 
-function getSpaces(objectDefinition: ObjectDefinition) {
+export function getSpaces(objectDefinition: ObjectDefinition) {
 	const settings = objectDefinition.objectDefinitionSettings || [];
 
 	const acceptedGroupExternalReferenceCodes = settings.find(

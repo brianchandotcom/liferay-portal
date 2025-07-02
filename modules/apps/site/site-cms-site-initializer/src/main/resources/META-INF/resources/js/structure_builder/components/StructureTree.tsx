@@ -141,9 +141,15 @@ export default function StructureTree({search}: {search: string}) {
 
 	useEffect(() => {
 		if (objectDefinitionsStatus === 'stale' && hasReferencedStructure) {
-			loadObjectDefinitions();
+			loadObjectDefinitions().then((objectDefinitions) =>
+				dispatch({
+					objectDefinitions,
+					type: 'refresh-referenced-structures',
+				})
+			);
 		}
 	}, [
+		dispatch,
 		hasReferencedStructure,
 		loadObjectDefinitions,
 		objectDefinitionsStatus,

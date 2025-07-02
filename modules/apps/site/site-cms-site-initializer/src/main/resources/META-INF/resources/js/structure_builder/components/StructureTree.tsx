@@ -40,11 +40,10 @@ type TreeItem = {
 	editURL?: string;
 	erc?: string;
 	icon: string;
-	id: string;
+	id: Uuid;
 	label: string;
 	name?: string;
 	type?: FieldType | ReferencedStructure['type'] | RepeatableGroup['type'];
-	uuid: Uuid;
 };
 
 export default function StructureTree({search}: {search: string}) {
@@ -112,15 +111,15 @@ export default function StructureTree({search}: {search: string}) {
 		// Selecting with selection
 
 		else if (mode === 'single') {
-			nextSelection = [item.uuid];
+			nextSelection = [item.id];
 		}
 
 		// Selecting with multiple selection
 
-		else if (mode === 'multiple' && !selection.includes(item.uuid)) {
+		else if (mode === 'multiple' && !selection.includes(item.id)) {
 			nextSelection = [
 				...selection.filter((uuid) => uuid !== structureUuid),
-				item.uuid,
+				item.id,
 			];
 		}
 
@@ -128,10 +127,10 @@ export default function StructureTree({search}: {search: string}) {
 
 		else if (
 			mode === 'multiple' &&
-			selection.includes(item.uuid) &&
+			selection.includes(item.id) &&
 			selection.length > 1
 		) {
-			nextSelection = selection.filter((uuid) => uuid !== item.uuid);
+			nextSelection = selection.filter((uuid) => uuid !== item.id);
 		}
 
 		dispatch({
@@ -190,7 +189,7 @@ export default function StructureTree({search}: {search: string}) {
 
 						<span className="ml-1">{item.label}</span>
 
-						{invalids.has(item.uuid) ||
+						{invalids.has(item.id) ||
 						(item.id === structureUuid && structureError) ? (
 							<ClayIcon
 								className="ml-2 text-danger"
@@ -245,7 +244,7 @@ export default function StructureTree({search}: {search: string}) {
 										{childItem.label}
 									</span>
 
-									{invalids.has(childItem.uuid) ? (
+									{invalids.has(childItem.id) ? (
 										<ClayIcon
 											className="ml-2 text-danger"
 											symbol="exclamation-full"
@@ -330,7 +329,7 @@ function buildItems({
 					}),
 					erc: child.erc,
 					icon: 'fieldset',
-					id: buildId(path, child),
+					id: child.uuid,
 					label,
 					type: child.type,
 				};
@@ -351,12 +350,11 @@ function buildItems({
 				if (match(label, search)) {
 					items.push({
 						icon: FIELD_TYPE_ICON[child.type],
-						id: buildId(path, child),
+						id: child.uuid,
 						label: child.label[
 							Liferay.ThemeDisplay.getDefaultLanguageId()
 						]!,
 						type: child.type,
-						uuid: child.uuid,
 					});
 				}
 			}
@@ -365,10 +363,6 @@ function buildItems({
 		},
 		[]
 	);
-}
-
-function buildId(path: string[], child: StructureChild) {
-	return [...path, child.name].join('_');
 }
 
 function match(value: string, keyword: string) {
@@ -420,7 +414,7 @@ function getItemActions({
 			onClick: () =>
 				dispatch({
 					type: 'delete-child',
-					uuid: item.uuid,
+					uuid: item.id,
 				}),
 			symbolLeft: 'trash',
 		});

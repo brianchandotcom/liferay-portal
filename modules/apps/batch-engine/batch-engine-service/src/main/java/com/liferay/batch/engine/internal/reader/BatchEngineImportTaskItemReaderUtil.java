@@ -328,10 +328,6 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 		JsonTypeInfo jsonTypeInfo = itemClass.getAnnotation(JsonTypeInfo.class);
 
-		if (jsonTypeInfo == null) {
-			return null;
-		}
-
 		String jsonTypeInfoProperty = jsonTypeInfo.property();
 
 		String jsonTypeInfoPropertyValue = GetterUtil.getString(

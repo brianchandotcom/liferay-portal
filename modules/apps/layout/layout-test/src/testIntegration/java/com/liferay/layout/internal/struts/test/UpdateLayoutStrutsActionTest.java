@@ -208,10 +208,10 @@ public class UpdateLayoutStrutsActionTest {
 			String.valueOf(TestPropsValues.getCompanyId()),
 			ActionKeys.ADD_TO_PAGE);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest(user);
-
 		try {
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(user);
+
 			mockHttpServletRequest.setParameter(
 				"p_p_id", AssetPublisherPortletKeys.ASSET_PUBLISHER);
 

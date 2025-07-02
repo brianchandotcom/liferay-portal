@@ -1663,11 +1663,6 @@ public class ObjectDefinitionWrapper
 		model.setPrimaryKey(primaryKey);
 	}
 
-	@Override
-	public void setRootObjectDefinitionId(long rootObjectDefinitionId) {
-		model.setRootObjectDefinitionId(rootObjectDefinitionId);
-	}
-
 	/**
 	 * Sets the scope of this object definition.
 	 *

@@ -18,6 +18,7 @@ create index IX_1FBC0C2 on ObjectDefinition (status, system_);
 create index IX_CE84C4E8 on ObjectDefinition (system_);
 create index IX_7B61F95C on ObjectDefinition (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_F384A765 on ObjectDefinitionSetting (name[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BB97A04 on ObjectDefinitionSetting (objectDefinitionId, name[$COLUMN_LENGTH:75$]);
 create index IX_89F99D10 on ObjectDefinitionSetting (uuid_[$COLUMN_LENGTH:75$]);
 

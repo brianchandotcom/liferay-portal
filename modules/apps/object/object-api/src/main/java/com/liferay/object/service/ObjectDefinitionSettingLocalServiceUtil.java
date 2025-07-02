@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectDefinitionSetting. This utility wraps
@@ -302,6 +303,12 @@ public class ObjectDefinitionSettingLocalServiceUtil {
 
 		return getService().getObjectDefinitionSettingByUuidAndCompanyId(
 			uuid, companyId);
+	}
+
+	public static Map<Long, ObjectDefinitionSetting>
+		getObjectDefinitionSettingMap(long companyId, String name) {
+
+		return getService().getObjectDefinitionSettingMap(companyId, name);
 	}
 
 	/**

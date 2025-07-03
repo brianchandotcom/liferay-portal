@@ -81,6 +81,7 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 
 	return (
 		<VerticalNav
+			aria-label={Liferay.Language.get('spaces')}
 			defaultExpandedKeys={new Set([Liferay.Language.get('spaces')])}
 			displayType="primary"
 			items={[

@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -207,9 +208,9 @@ public class SharingPermissionSQLContributor
 			permissionChecker.getUserId()
 		).or(
 			() -> {
-				List<UserGroup> userGroups =
-					_userGroupLocalService.getUserUserGroups(
-						permissionChecker.getUserId());
+				User user = permissionChecker.getUser();
+
+				List<UserGroup> userGroups = user.getUserGroups();
 
 				if (userGroups.isEmpty()) {
 					return null;

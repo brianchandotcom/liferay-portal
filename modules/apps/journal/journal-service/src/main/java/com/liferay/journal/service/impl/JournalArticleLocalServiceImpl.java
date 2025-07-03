@@ -7501,7 +7501,17 @@ public class JournalArticleLocalServiceImpl
 		targetArticle.setReviewDate(sourceArticle.getReviewDate());
 		targetArticle.setIndexable(sourceArticle.isIndexable());
 		targetArticle.setSmallImage(sourceArticle.isSmallImage());
-		targetArticle.setSmallImageId(counterLocalService.increment());
+
+		if (newArticle) {
+			targetArticle.setSmallImageId(counterLocalService.increment());
+		}
+		else {
+			JournalArticle latestArticle = getLatestArticle(
+				groupId, targetArticleId, WorkflowConstants.STATUS_ANY);
+
+			targetArticle.setSmallImageId(latestArticle.getSmallImageId());
+		}
+
 		targetArticle.setSmallImageSource(sourceArticle.getSmallImageSource());
 		targetArticle.setSmallImageURL(sourceArticle.getSmallImageURL());
 

@@ -54,36 +54,6 @@ import java.util.Set;
  */
 public class PatcherFixUtil {
 
-	public static PatcherFix addNewPatcherFix(
-			User user, double keyVersion, List<Long> parentPatcherFixIds,
-			long patcherProjectVersionId, String name, int type, int status)
-		throws Exception {
-
-		PatcherFix newPatcherFix = PatcherFixLocalServiceUtil.createPatcherFix(
-			0);
-
-		newPatcherFix.setUserId(user.getUserId());
-		newPatcherFix.setUserName(user.getFullName());
-		newPatcherFix.setPatcherProductVersionId(
-			PatcherProjectVersionUtil.getPatcherProductVersionId(
-				patcherProjectVersionId));
-		newPatcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
-		newPatcherFix.setName(name);
-		newPatcherFix.setKey(generateKey(patcherProjectVersionId, name));
-		newPatcherFix.setKeyVersion(keyVersion);
-		newPatcherFix.setType(type);
-		newPatcherFix.setLatestFix(true);
-		newPatcherFix.setStatus(status);
-
-		newPatcherFix = PatcherFixLocalServiceUtil.updatePatcherFix(
-			newPatcherFix);
-
-		PatcherFixRelUtil.addPatcherFixRel(
-			newPatcherFix.getPatcherFixId(), parentPatcherFixIds);
-
-		return newPatcherFix;
-	}
-
 	public static PatcherFix addPatcherFix(
 			User user, List<Long> parentPatcherFixIds,
 			long patcherProjectVersionId, String name, int type, int status)
@@ -138,9 +108,9 @@ public class PatcherFixUtil {
 				existingPatcherFix.getKeyVersion(), 0.1);
 		}
 
-		return addNewPatcherFix(
-			user, keyVersion, parentPatcherFixIds, patcherProjectVersionId,
-			name, type, status);
+		return PatcherFixLocalServiceUtil.addPatcherFix(
+			user.getUserId(), patcherProjectVersionId, keyVersion, name, type,
+			status, parentPatcherFixIds);
 	}
 
 	public static boolean containsIncompleteRebasePatcherFix(

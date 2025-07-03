@@ -7,18 +7,24 @@ package com.liferay.osb.patcher.service.impl;
 
 import com.liferay.osb.patcher.model.PatcherFix;
 import com.liferay.osb.patcher.service.base.PatcherFixLocalServiceBaseImpl;
+import com.liferay.osb.patcher.util.PatcherFixRelUtil;
+import com.liferay.osb.patcher.util.PatcherFixUtil;
+import com.liferay.osb.patcher.util.PatcherProjectVersionUtil;
 import com.liferay.osb.patcher.util.comparator.PatcherFixKeyVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,6 +34,42 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix addPatcherFix(
+			long userId, long patcherProjectVersionId, double keyVersion,
+			String name, int type, int status, List<Long> parentPatcherFixIds)
+		throws Exception {
+
+		PatcherFix patcherFix = patcherFixPersistence.create(
+			counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		patcherFix.setCompanyId(user.getCompanyId());
+		patcherFix.setUserId(user.getUserId());
+		patcherFix.setUserName(user.getFullName());
+
+		patcherFix.setCreateDate(new Date());
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setPatcherProductVersionId(
+			PatcherProjectVersionUtil.getPatcherProductVersionId(
+				patcherProjectVersionId));
+		patcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
+		patcherFix.setKey(
+			PatcherFixUtil.generateKey(patcherProjectVersionId, name));
+		patcherFix.setKeyVersion(keyVersion);
+		patcherFix.setLatestFix(true);
+		patcherFix.setName(name);
+		patcherFix.setType(type);
+		patcherFix.setStatus(status);
+
+		PatcherFixRelUtil.addPatcherFixRel(
+			patcherFix.getPatcherFixId(), parentPatcherFixIds);
+
+		return patcherFixPersistence.update(patcherFix);
+	}
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -285,5 +327,8 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 		return patcherFixPersistence.update(patcherFix);
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

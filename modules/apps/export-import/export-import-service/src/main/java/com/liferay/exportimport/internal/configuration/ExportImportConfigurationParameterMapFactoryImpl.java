@@ -102,6 +102,12 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 				new String[] {Boolean.FALSE.toString()});
 		}
 
+		if (!parameterMap.containsKey(PortletDataHandlerKeys.FAVICON)) {
+			parameterMap.put(
+				PortletDataHandlerKeys.FAVICON,
+				new String[] {Boolean.TRUE.toString()});
+		}
+
 		if (!parameterMap.containsKey(
 				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED)) {
 
@@ -249,6 +255,10 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 			ignoreLastPublishDateParameter =
 				ignoreLastPublishDate.booleanValue();
 		}
+
+		parameterMap.put(
+			PortletDataHandlerKeys.FAVICON,
+			new String[] {Boolean.TRUE.toString()});
 
 		parameterMap.put(
 			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,

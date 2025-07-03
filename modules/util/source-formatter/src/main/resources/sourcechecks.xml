@@ -1099,14 +1099,14 @@
 			<category name="Styling" />
 			<description name="Remove elements in `*.batch-engine-data.json` files." />
 		</check>
+		<check name="JSONCatalogFileCheck">
+			<category name="Styling" />
+			<description name="Sorts `*.options.json`, `*.products.json`, and `*.products.specifications.json` files." />
+		</check>
 		<check name="JSONDeprecatedPackagesCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds incorrect use of deprecated packages in `package.json` files." />
 			<property name="deprecatedPackageNames" value="@clayui/checkbox,liferay-module-config-generator,metal-cli" />
-		</check>
-		<check name="JSONOptionsAndProductsFileCheck">
-			<category name="Styling" />
-			<description name="Sorts by `externalReferenceCode` in `*.options.json` and `*.products.json` files." />
 		</check>
 		<check name="JSONPackageJSONBNDVersionCheck">
 			<category name="Bug Prevention" />
@@ -1123,10 +1123,6 @@
 		<check name="JSONPageFileCheck">
 			<category name="Styling" />
 			<description name="Sorts by `roleName` in `page.json` files." />
-		</check>
-		<check name="JSONProductsSpecificationsFileCheck">
-			<category name="Styling" />
-			<description name="Sorts by `cpDefinitionExternalReferenceCode` and `key` in `*.products.specifications.json` files." />
 		</check>
 		<check name="JSONReplacementsFileCheck">
 			<category name="Styling" />

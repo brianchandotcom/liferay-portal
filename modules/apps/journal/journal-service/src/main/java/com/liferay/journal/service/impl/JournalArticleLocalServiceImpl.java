@@ -4395,6 +4395,25 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	/**
+	 * Reverts the web content article to a specified previous version by creating
+	 * a new version that replicates the content and metadata of the specified older version.
+	 *
+	 * @param  userId the primary key of the user performing the revert
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  articleId the primary key of the web content article to revert
+	 * @param  version the specific version of the article to revert to
+	 * @return the newly created web content article based on the specified version
+	 * @throws PortalException if the specified version does not exist or other portal errors occur
+	 */
+	@Override
+	public JournalArticle revertArticle(
+			long userId, long groupId, String articleId, double version)
+		throws PortalException {
+
+		return _copyArticle(userId, groupId, articleId, articleId, version);
+	}
+
 	@Override
 	public void setTreePaths(long folderId, String treePath, boolean reindex)
 		throws PortalException {

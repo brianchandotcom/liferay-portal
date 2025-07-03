@@ -45,6 +45,18 @@ public class UserSegmentsEntryMembershipChecker {
 		return (boolean)script.invokeMethod("evaluate", null);
 	}
 
+	private static String _getBooleanValueString(String input)
+		throws Exception {
+
+		Matcher matcher = _booleanPattern.matcher(input);
+
+		if (matcher.find()) {
+			return matcher.group();
+		}
+
+		return null;
+	}
+
 	private static String _getDateValueString(String input) throws Exception {
 		Matcher matcher = _dateTimePattern.matcher(input);
 
@@ -95,6 +107,12 @@ public class UserSegmentsEntryMembershipChecker {
 
 		if (dateValueString != null) {
 			return StringUtil.quote(dateValueString, StringPool.QUOTE);
+		}
+
+		String booleanValueString = _getBooleanValueString(value);
+
+		if (booleanValueString != null) {
+			return StringUtil.quote(booleanValueString, StringPool.QUOTE);
 		}
 
 		return value;
@@ -281,6 +299,8 @@ public class UserSegmentsEntryMembershipChecker {
 		"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 	};
 
+	private static final Pattern _booleanPattern = Pattern.compile(
+		"true|false");
 	private static final Pattern _containsOperationPattern = Pattern.compile(
 		"contains\\((customField/){0,1}\\w*, '([^')]*)'\\)");
 	private static final DateFormat _dateTimeFormat = new SimpleDateFormat(
@@ -302,7 +322,7 @@ public class UserSegmentsEntryMembershipChecker {
 	private static final Pattern _operationPattern = Pattern.compile(
 		StringBundler.concat(
 			"(customField\\/){0,1}\\w*\\s+(eq|ge|gt|in|le|lt)\\s+",
-			"('([^')]*)'|\\('([^')]*)'\\)|",
+			"('([^')]*)'|\\('([^')]*)'\\)|false|true|",
 			"\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}.\\d{3}){0,1}((Z)|",
 			"((\\+|\\-)(\\d*))){0,1})"));
 	private static final Pattern _operatorPattern = Pattern.compile(
@@ -325,7 +345,8 @@ public class UserSegmentsEntryMembershipChecker {
 		"or", "||"
 	).build();
 	private static final Pattern _valuePattern = Pattern.compile(
-		"'([^')]*)'|'{0,1}\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}.\\d{3})" +
-			"{0,1}((Z)|((\\+|-)(\\d*))){0,1}'{0,1}");
+		"'([^')]*)'|false|true|" +
+			"'{0,1}\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}.\\d{3})" +
+				"{0,1}((Z)|((\\+|-)(\\d*))){0,1}'{0,1}");
 
 }

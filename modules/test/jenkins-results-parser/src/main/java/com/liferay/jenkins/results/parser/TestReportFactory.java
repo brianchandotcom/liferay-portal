@@ -25,6 +25,7 @@ public class TestReportFactory {
 
 		if (batchName.startsWith("integration") ||
 			batchName.startsWith("modules-integration") ||
+			batchName.startsWith("modules-semantic-versioning") ||
 			batchName.startsWith("modules-unit") ||
 			batchName.startsWith("unit")) {
 

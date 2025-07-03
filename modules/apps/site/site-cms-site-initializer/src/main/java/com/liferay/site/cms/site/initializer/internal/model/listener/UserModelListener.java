@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -40,11 +41,19 @@ public class UserModelListener extends BaseModelListener<User> {
 		throws ModelListenerException {
 
 		try {
-			if (associationClassName.equals(Group.class.getName())) {
-				Long userId = (Long)classPK;
-				Long groupId = (Long)associationClassPK;
+			User user = _userLocalService.getUser((Long)classPK);
 
-				_onAfterAddAssociation(userId, groupId);
+			if (!FeatureFlagManagerUtil.isEnabled(
+					user.getCompanyId(), "LPD-17564")) {
+
+				return;
+			}
+
+			if (associationClassName.equals(Group.class.getName())) {
+				_onAfterAddAssociationGroup(user, (Long)associationClassPK);
+			}
+			else if (associationClassName.equals(UserGroup.class.getName())) {
+				_onAfterAddAssociationUserGroup(user, (Long)associationClassPK);
 			}
 		}
 		catch (PortalException portalException) {
@@ -52,21 +61,23 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
-	private void _onAfterAddAssociation(long userId, long groupId)
+	private void _onAfterAddAssociationGroup(User user, long groupId)
 		throws PortalException {
-
-		User user = _userLocalService.getUser(userId);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				user.getCompanyId(), "LPD-17564")) {
-
-			return;
-		}
 
 		Group group = _groupLocalService.getGroup(groupId);
 
 		if (group.isDepot() && (group.getCreatorUserId() != user.getUserId())) {
 			_sendNotificationEvent(groupId, user);
+		}
+	}
+
+	private void _onAfterAddAssociationUserGroup(User user, long userGroupId)
+		throws PortalException {
+
+		for (Group group : _groupLocalService.getUserGroupGroups(userGroupId)) {
+			if (group.isDepot()) {
+				_sendNotificationEvent(group.getGroupId(), user);
+			}
 		}
 	}
 

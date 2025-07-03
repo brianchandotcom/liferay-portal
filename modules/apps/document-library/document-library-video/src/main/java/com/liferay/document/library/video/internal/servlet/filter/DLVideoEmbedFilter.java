@@ -5,6 +5,9 @@
 
 package com.liferay.document.library.video.internal.servlet.filter;
 
+import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -40,6 +43,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsValues;
 
@@ -103,6 +107,17 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 
 			long previewCTCollectionId = ParamUtil.getLong(
 				httpServletRequest, "previewCTCollectionId");
+
+			CTCollection ctCollection =
+				_ctCollectionLocalService.fetchCTCollection(
+					previewCTCollectionId);
+
+			if ((ctCollection != null) &&
+				(ctCollection.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED)) {
+
+				previewCTCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+			}
 
 			try (SafeCloseable safeCloseable =
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -285,6 +300,9 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

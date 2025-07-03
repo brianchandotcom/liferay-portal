@@ -1120,6 +1120,10 @@
 			<category name="Styling" />
 			<description name="Sorts by `roleName` in `page.json` files." />
 		</check>
+		<check name="JSONProductsSpecificationsFileCheck">
+			<category name="Styling" />
+			<description name="Sorts by `cpDefinitionExternalReferenceCode` and `key` in `*.products.specifications.json` files." />
+		</check>
 		<check name="JSONReplacementsFileCheck">
 			<category name="Styling" />
 			<description name="Sorts by `issueKey`, `from` and `to` in `replacements.json` file." />

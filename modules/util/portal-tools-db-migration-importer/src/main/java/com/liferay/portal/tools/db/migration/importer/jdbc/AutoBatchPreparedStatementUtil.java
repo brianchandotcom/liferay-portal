@@ -5,9 +5,6 @@
 
 package com.liferay.portal.tools.db.migration.importer.jdbc;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -50,9 +47,6 @@ public class AutoBatchPreparedStatementUtil {
 
 		_executorService.awaitTermination(10, TimeUnit.SECONDS);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AutoBatchPreparedStatementUtil.class);
 
 	private static ExecutorService _executorService;
 
@@ -120,7 +114,7 @@ public class AutoBatchPreparedStatementUtil {
 				}
 			}
 			catch (SQLException sqlException) {
-				_log.error(sqlException);
+				sqlException.printStackTrace(System.err);
 			}
 		}
 
@@ -130,7 +124,7 @@ public class AutoBatchPreparedStatementUtil {
 					future.get();
 				}
 				catch (Exception exception) {
-					_log.error(exception);
+					exception.printStackTrace(System.err);
 				}
 			}
 
@@ -162,7 +156,7 @@ public class AutoBatchPreparedStatementUtil {
 				preparedStatement.executeBatch();
 			}
 			catch (Exception exception) {
-				_log.error(exception);
+				exception.printStackTrace(System.err);
 
 				throw new RuntimeException(exception);
 			}

@@ -100,7 +100,6 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
-import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -113,7 +112,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -125,7 +123,6 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -149,7 +146,6 @@ import java.io.Serializable;
 
 import java.sql.Connection;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -158,9 +154,6 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
-
-import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -2367,256 +2360,6 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testPublishNode() throws Exception {
-		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinitionA.getObjectDefinitionId());
-
-		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
-
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService,
-			Arrays.asList(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService, objectDefinitionA,
-					objectDefinitionAA)));
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"A", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinitionAA.getObjectDefinitionId());
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
-			_objectEntryLocalService, _objectRelationshipLocalService);
-	}
-
-	@Test
-	public void testPublishNodeWithDraftDescendantNodes() throws Exception {
-		_testCreateObjectDefinitionTree(
-			true,
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[0]
-			).build());
-		_testCreateObjectDefinitionTree(
-			false,
-			LinkedHashMapBuilder.put(
-				"AAA", new String[] {"AAAA", "AAAB"}
-			).put(
-				"AAAA", new String[] {"AAAAA"}
-			).put(
-				"AAAB", new String[] {"AAABA"}
-			).put(
-				"AAAAA", new String[0]
-			).put(
-				"AAABA", new String[0]
-			).build());
-
-		ObjectDefinition objectDefinitionAAA =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_AAA");
-
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService,
-			Collections.singletonList(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService,
-					_objectDefinitionLocalService.getObjectDefinition(
-						TestPropsValues.getCompanyId(), "C_AA"),
-					objectDefinitionAAA)));
-
-		ObjectDefinition objectDefinitionA =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"AAA", new String[] {"AAAA", "AAAB"}
-			).put(
-				"AAAA", new String[] {"AAAAA"}
-			).put(
-				"AAAB", new String[] {"AAABA"}
-			).put(
-				"AAAAA", new String[0]
-			).put(
-				"AAABA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionAAA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinitionAAA.getObjectDefinitionId());
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[] {"AAA"}
-			).put(
-				"AAA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		ObjectDefinition objectDefinitionAAAA =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_AAAA");
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"AAAA", new String[] {"AAAAA"}
-			).put(
-				"AAAAA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionAAAA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		ObjectDefinition objectDefinitionAAAB =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_AAAB");
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"AAAB", new String[] {"AAABA"}
-			).put(
-				"AAABA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionAAAB.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
-			new String[] {
-				"C_A", "C_AA", "C_AAA", "C_AAAA", "C_AAAB", "C_AAAAA", "C_AAABA"
-			},
-			_objectEntryLocalService, _objectRelationshipLocalService);
-	}
-
-	@Test
-	public void testPublishNodeWithPublishedDescendantNodes() throws Exception {
-		_testCreateObjectDefinitionTree(
-			true,
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[0]
-			).build());
-
-		_addObjectAction("C_AA");
-
-		_assertModelResourceNames(ListUtil.fromArray("C_A", "C_AA"));
-
-		_testCreateObjectDefinitionTree(
-			true,
-			LinkedHashMapBuilder.put(
-				"AAAA", new String[] {"AAAAA"}
-			).put(
-				"AAAAA", new String[0]
-			).build());
-
-		_updateWorkflowDefinitionLink("C_AAAA", "Single Approver");
-
-		_addObjectAction("C_AAAAA");
-
-		_assertModelResourceNames(ListUtil.fromArray("C_AAAA", "C_AAAAA"));
-
-		ObjectDefinition objectDefinitionAAA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("AAA");
-
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService,
-			Arrays.asList(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService,
-					_objectDefinitionLocalService.getObjectDefinition(
-						TestPropsValues.getCompanyId(), "C_AA"),
-					objectDefinitionAAA),
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService, objectDefinitionAAA,
-					_objectDefinitionLocalService.getObjectDefinition(
-						TestPropsValues.getCompanyId(), "C_AAAA"))));
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinitionAAA.getObjectDefinitionId());
-
-		_assertModelResourceNames(ListUtil.fromArray("C_A", "C_AA", "C_AAAAA"));
-
-		ObjectDefinition objectDefinitionA =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[] {"AAA"}
-			).put(
-				"AAA", new String[] {"AAAA"}
-			).put(
-				"AAAA", new String[] {"AAAAA"}
-			).put(
-				"AAAAA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		_updateWorkflowDefinitionLink("C_A", "Single Approver");
-
-		TreeTestUtil.unbind(
-			objectDefinitionA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		_assertModelResourceNames(ListUtil.fromArray("C_A"));
-		_assertModelResourceNames(ListUtil.fromArray("C_AA", "C_AAAAA"));
-		_assertWorkflowDefinitionLink("C_AA", "Single Approver");
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
-			new String[] {"C_A", "C_AA", "C_AAA", "C_AAAA", "C_AAAAA"},
-			_objectEntryLocalService, _objectRelationshipLocalService);
-	}
-
-	@Test
 	public void testPublishObjectDefinitionWithFriendlyURLSeparator()
 		throws Exception {
 
@@ -2673,138 +2416,6 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				TestPropsValues.getCompanyId(), "C_Test"));
-	}
-
-	@Test
-	public void testPublishRootNode() throws Exception {
-
-		// publish a draft object definition
-
-		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
-
-		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinitionAA.getObjectDefinitionId());
-
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService,
-			Collections.singletonList(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService, objectDefinitionA,
-					objectDefinitionAA)));
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"A", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinitionA.getObjectDefinitionId());
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
-			_objectEntryLocalService, _objectRelationshipLocalService);
-
-		// publish a draft object definition from a draft object definition tree
-
-		_testCreateObjectDefinitionTree(
-			false,
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[] {"AAA"}
-			).put(
-				"AAA", new String[0]
-			).build());
-		_testCreateObjectDefinitionTree(
-			true,
-			LinkedHashMapBuilder.put(
-				"AAAA", new String[] {"AAAAA"}
-			).put(
-				"AAAAA", new String[0]
-			).build());
-
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService,
-			Collections.singletonList(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService,
-					_objectDefinitionLocalService.getObjectDefinition(
-						TestPropsValues.getCompanyId(), "C_AAA"),
-					_objectDefinitionLocalService.getObjectDefinition(
-						TestPropsValues.getCompanyId(), "C_AAAA"))));
-
-		objectDefinitionA = _objectDefinitionLocalService.getObjectDefinition(
-			TestPropsValues.getCompanyId(), "C_A");
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[] {"AAA"}
-			).put(
-				"AAA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		ObjectDefinition objectDefinitionAAAA =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_AAAA");
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"AAAA", new String[] {"AAAAA"}
-			).put(
-				"AAAAA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionAAAA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		ObjectDefinition objectDefinitionAAA =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_AAA");
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinitionAAA.getObjectDefinitionId());
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			LinkedHashMapBuilder.put(
-				"AAA", new String[] {"AAAA"}
-			).put(
-				"AAAA", new String[] {"AAAAA"}
-			).put(
-				"AAAAA", new String[0]
-			).build(),
-			_objectDefinitionTreeFactory.create(
-				objectDefinitionAAA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
-			new String[] {"C_A", "C_AA", "C_AAA", "C_AAAA", "C_AAAAA"},
-			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -3489,30 +3100,6 @@ public class ObjectDefinitionLocalServiceTest {
 					RandomTestUtil.randomString(), StringUtil.randomId())));
 	}
 
-	private void _addObjectAction(String objectDefinitionName)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), objectDefinitionName);
-
-		_objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), true, null,
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_WEBHOOK,
-			ObjectActionTriggerConstants.KEY_STANDALONE,
-			UnicodePropertiesBuilder.put(
-				"secret", "standalone"
-			).put(
-				"url", "https://standalone.com"
-			).build(),
-			false);
-	}
-
 	private ObjectFolder _addObjectFolder() throws Exception {
 		return _objectFolderLocalService.addObjectFolder(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -3584,40 +3171,6 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(pluralLabelPLOEntryKey.getValue(), pluralLabel);
 	}
 
-	private void _assertModelResourceNames(List<String> objectDefinitionNames)
-		throws Exception {
-
-		Map<String, Set<String>> resourceReferences =
-			ReflectionTestUtil.getFieldValue(
-				_resourceActions, "_resourceReferences");
-
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), objectDefinitionNames.get(0));
-
-		List<String> modelResourceNames = ListUtil.filter(
-			new ArrayList<>(
-				resourceReferences.get(rootObjectDefinition.getPortletId())),
-			resourceName -> StringUtil.startsWith(
-				resourceName,
-				ObjectDefinitionConstants.
-					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
-
-		Assert.assertEquals(
-			modelResourceNames.toString(), objectDefinitionNames.size(),
-			modelResourceNames.size());
-
-		for (String objectDefinitionName : objectDefinitionNames) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					TestPropsValues.getCompanyId(), objectDefinitionName);
-
-			Assert.assertThat(
-				modelResourceNames,
-				CoreMatchers.hasItem(objectDefinition.getClassName()));
-		}
-	}
-
 	private void _assertObjectDefinitionSettingsValues(
 		List<ObjectDefinitionSetting> objectDefinitionSettings,
 		Map<String, String> objectDefinitionSettingsExpectedValues) {
@@ -3674,31 +3227,6 @@ public class ObjectDefinitionLocalServiceTest {
 			expectedObjectField.isRequired(), objectField.isRequired());
 		Assert.assertEquals(
 			expectedObjectField.isState(), objectField.isState());
-	}
-
-	private void _assertWorkflowDefinitionLink(
-			String objectDefinitionName, String workflowDefinitionName)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), objectDefinitionName);
-
-		List<WorkflowDefinitionLink> workflowDefinitionLinks =
-			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
-				objectDefinition.getCompanyId(),
-				objectDefinition.getClassName());
-
-		Assert.assertEquals(
-			workflowDefinitionLinks.toString(), 1,
-			workflowDefinitionLinks.size());
-
-		WorkflowDefinitionLink workflowDefinitionLink =
-			workflowDefinitionLinks.get(0);
-
-		Assert.assertEquals(
-			workflowDefinitionName,
-			workflowDefinitionLink.getWorkflowDefinitionName());
 	}
 
 	private ObjectAction _createObjectAction(String objectActionName) {
@@ -3899,18 +3427,6 @@ public class ObjectDefinitionLocalServiceTest {
 		TreeTestUtil.assertObjectDefinitionTree(
 			expectedMap,
 			_objectDefinitionTreeFactory.create(rootObjectDefinitionId),
-			_objectDefinitionLocalService);
-	}
-
-	private void _testCreateObjectDefinitionTree(
-			boolean published, Map<String, String[]> treeMap)
-		throws Exception {
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			treeMap,
-			TreeTestUtil.createObjectDefinitionTree(
-				_objectDefinitionLocalService, _objectRelationshipLocalService,
-				published, treeMap),
 			_objectDefinitionLocalService);
 	}
 
@@ -4282,22 +3798,6 @@ public class ObjectDefinitionLocalServiceTest {
 			Collections.emptyList());
 	}
 
-	private void _updateWorkflowDefinitionLink(
-			String objectDefinitionName, String workflowDefinitionName)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), objectDefinitionName);
-
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
-			objectDefinition.getClassName(), 0, 0, workflowDefinitionName, 1);
-
-		_assertWorkflowDefinitionLink(
-			objectDefinitionName, workflowDefinitionName);
-	}
-
 	private static ObjectFolder _defaultObjectFolder;
 
 	@Inject
@@ -4354,9 +3854,5 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;
-
-	@Inject
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
 
 }

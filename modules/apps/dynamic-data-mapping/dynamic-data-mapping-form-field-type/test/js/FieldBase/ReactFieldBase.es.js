@@ -181,6 +181,7 @@ describe('ReactFieldBase', () => {
 	it('does not render the add button when repeatable is true and the maximum limit of repetions is reached', () => {
 		const {container} = render(
 			<FieldBaseWithProvider
+				id="id"
 				label="Text"
 				overMaximumRepetitionsLimit={true}
 				repeatable={true}

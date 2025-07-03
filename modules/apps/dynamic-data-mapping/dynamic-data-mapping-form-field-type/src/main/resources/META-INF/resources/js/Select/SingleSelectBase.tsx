@@ -73,7 +73,7 @@ export default function SingleSelectBase({
 
 	const accessibleProps = {
 		...(label && {
-			'aria-labelledby': `${id ?? name}`,
+			'aria-labelledby': `${id ?? name}_fieldLabel`,
 		}),
 		...((errorMessage || tip) && {
 			'aria-describedby': `${id ?? name}_fieldFeedback`,

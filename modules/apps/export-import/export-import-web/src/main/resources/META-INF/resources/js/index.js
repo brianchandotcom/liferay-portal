@@ -46,3 +46,5 @@ export function ExportImportManagementToolbarPropsTransformer({
 
 export {default as ImportButton} from './components/button/ImportButton';
 export {setupExportImportMocks} from './setupExportImportMocks';
+export {ViewImportErrorDetail} from './components/screens/ViewImportErrorDetail';
+export {default as formatDate} from './utils/formatDate';

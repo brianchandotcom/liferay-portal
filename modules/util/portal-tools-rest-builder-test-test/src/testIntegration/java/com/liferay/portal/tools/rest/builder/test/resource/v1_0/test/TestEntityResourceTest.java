@@ -6,16 +6,34 @@
 package com.liferay.portal.tools.rest.builder.test.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity1;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity2;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity3;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.TestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ChildTestEntity1SerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ChildTestEntity2SerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ChildTestEntity3SerDes;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Alejandro Tardín
@@ -186,6 +204,122 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 
 		assertEquals(expectedPatchChildTestEntity2, getChildTestEntity2);
 		assertValid(getChildTestEntity2);
+	}
+
+	@Test
+	public void testPostImportTask() throws Exception {
+		ChildTestEntity1 childTestEntity1 = new ChildTestEntity1();
+
+		childTestEntity1.setProperty1(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		childTestEntity1.setType(TestEntity.Type.create("ChildTestEntity1"));
+		childTestEntity1.setName(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		ChildTestEntity2 childTestEntity2 = new ChildTestEntity2();
+
+		childTestEntity2.setProperty2(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		childTestEntity2.setType(TestEntity.Type.create("ChildTestEntity2"));
+		childTestEntity2.setName(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		ChildTestEntity3 childTestEntity3 = new ChildTestEntity3();
+
+		childTestEntity3.setType(TestEntity.Type.create("ChildTestEntity3"));
+		childTestEntity3.setName(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		Page<TestEntity> page = testEntityResource.getTestEntitiesPage(null);
+
+		long totalCount = page.getTotalCount();
+
+		String invalidTypeId1 = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		String invalidTypeId2 = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
+
+			JSONObject jsonObject = waitForFinish(
+				"COMPLETED",
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.putAll(
+						JSONFactoryUtil.createJSONObject(
+							ChildTestEntity1SerDes.toJSON(childTestEntity1)),
+						JSONUtil.put(
+							"name",
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString())
+						).put(
+							"type", invalidTypeId1
+						),
+						JSONFactoryUtil.createJSONObject(
+							ChildTestEntity2SerDes.toJSON(childTestEntity2)),
+						JSONUtil.put(
+							"name",
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString())
+						).put(
+							"type", invalidTypeId2
+						),
+						JSONFactoryUtil.createJSONObject(
+							ChildTestEntity3SerDes.toJSON(childTestEntity3))
+					).toString(),
+					StringBundler.concat(
+						"headless-batch-engine/v1.0/import-task",
+						"/com.liferay.portal.tools.rest.builder.test.dto.v1_0.",
+						"TestEntity?importStrategy=ON_ERROR_CONTINUE"),
+					Http.Method.POST));
+
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null,
+				"headless-batch-engine/v1.0/import-task/" +
+					jsonObject.getLong("id"),
+				Http.Method.GET);
+
+			JSONAssert.assertEquals(
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"item", "Unable to read item at index 2"
+					).put(
+						"itemIndex", 2
+					).put(
+						"message",
+						StringBundler.concat(
+							"com.liferay.batch.engine.exception.InvalidTy",
+							"peIdException: '", invalidTypeId1,
+							"' cannot be mapped to a valid entity subtype")
+					),
+					JSONUtil.put(
+						"item", "Unable to read item at index 4"
+					).put(
+						"itemIndex", 4
+					).put(
+						"message",
+						StringBundler.concat(
+							"com.liferay.batch.engine.exception.InvalidTy",
+							"peIdException: '", invalidTypeId2,
+							"' cannot be mapped to a valid entity subtype")
+					)
+				).toString(),
+				jsonObject.getJSONArray(
+					"failedItems"
+				).toString(),
+				JSONCompareMode.LENIENT);
+
+			page = testEntityResource.getTestEntitiesPage(null);
+
+			Assert.assertEquals(page.getTotalCount(), totalCount + 3);
+
+			assertContains(childTestEntity1, (List<TestEntity>)page.getItems());
+			assertContains(childTestEntity2, (List<TestEntity>)page.getItems());
+			assertContains(childTestEntity3, (List<TestEntity>)page.getItems());
+		}
 	}
 
 	@Override

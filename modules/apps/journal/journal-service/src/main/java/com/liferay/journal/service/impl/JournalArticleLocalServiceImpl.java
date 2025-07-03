@@ -968,9 +968,24 @@ public class JournalArticleLocalServiceImpl
 			String targetArticleId, boolean autoArticleId, double version)
 		throws PortalException {
 
+		if (autoArticleId) {
+			targetArticleId = String.valueOf(counterLocalService.increment());
+		}
+		else {
+			validate(targetArticleId);
+
+			if (journalArticlePersistence.countByG_A(groupId, targetArticleId) >
+					0) {
+
+				throw new DuplicateArticleIdException(
+					StringBundler.concat(
+						"{groupId=", groupId, ", articleId=", targetArticleId,
+						"}"));
+			}
+		}
+
 		return _copyArticle(
-			userId, groupId, sourceArticleId, targetArticleId, autoArticleId,
-			version);
+			userId, groupId, sourceArticleId, targetArticleId, version);
 	}
 
 	/**
@@ -7400,7 +7415,7 @@ public class JournalArticleLocalServiceImpl
 
 	private JournalArticle _copyArticle(
 			long userId, long groupId, String sourceArticleId,
-			String targetArticleId, boolean autoArticleId, double version)
+			String targetArticleId, double version)
 		throws PortalException {
 
 		// Article
@@ -7412,22 +7427,6 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle sourceArticle = journalArticlePersistence.findByG_A_V(
 			groupId, sourceArticleId, version);
-
-		if (autoArticleId) {
-			targetArticleId = String.valueOf(counterLocalService.increment());
-		}
-		else {
-			validate(targetArticleId);
-
-			if (journalArticlePersistence.countByG_A(groupId, targetArticleId) >
-					0) {
-
-				throw new DuplicateArticleIdException(
-					StringBundler.concat(
-						"{groupId=", groupId, ", articleId=", targetArticleId,
-						"}"));
-			}
-		}
 
 		User user = _userLocalService.getUser(userId);
 

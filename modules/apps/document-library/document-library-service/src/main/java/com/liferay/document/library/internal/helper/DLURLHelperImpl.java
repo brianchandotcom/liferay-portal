@@ -214,6 +214,10 @@ public class DLURLHelperImpl implements DLURLHelper {
 		String previewURLPrefix = _getPreviewURLPrefix(
 			themeDisplay, absoluteURL);
 
+		queryString = StringBundler.concat(
+			"&previewCTCollectionId=", fileVersion.getCtCollectionId(),
+			queryString);
+
 		String previewURL = _getFriendlyURL(
 			fileEntry, previewURLPrefix, queryString, appendVersion);
 

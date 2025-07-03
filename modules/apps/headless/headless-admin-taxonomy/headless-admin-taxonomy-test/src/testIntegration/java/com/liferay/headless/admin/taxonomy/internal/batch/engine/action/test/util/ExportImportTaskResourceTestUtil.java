@@ -140,8 +140,7 @@ public class ExportImportTaskResourceTestUtil {
 		String path = StringBundler.concat(
 			"http://localhost:8080/o/headless-batch-engine/v1.0/import-task/",
 			className, "?createStrategy=", createStrategy,
-			"&importCreatorStrategy=", importCreatorStrategy, "&siteId=",
-			groupId);
+			"&importCreatorStrategy=", importCreatorStrategy);
 
 		if (MapUtil.isNotEmpty(parameters)) {
 			for (Map.Entry<String, String> entry : parameters.entrySet()) {
@@ -149,6 +148,9 @@ public class ExportImportTaskResourceTestUtil {
 					path, StringPool.AMPERSAND, entry.getKey(),
 					StringPool.EQUAL, entry.getValue());
 			}
+		}
+		else {
+			path = StringBundler.concat(path, "&siteId=", groupId);
 		}
 
 		httpInvoker.path(path);

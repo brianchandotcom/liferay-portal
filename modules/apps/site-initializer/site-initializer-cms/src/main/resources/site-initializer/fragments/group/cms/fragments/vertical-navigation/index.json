@@ -10,9 +10,9 @@
 				{
 					"dataType": "string",
 					"defaultValue": "CMS Vertical Navigation",
-					"label": "vertical-navigation-aria-label",
+					"label": "aria-label",
 					"localizable": true,
-					"name": "verticalNavigationAriaLabel",
+					"name": "ariaLabel",
 					"type": "text"
 				}
 			]

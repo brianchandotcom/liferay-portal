@@ -30,6 +30,7 @@ import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvi
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -1334,23 +1335,34 @@ public class UIItemsBuilder {
 			return true;
 		}
 
-		for (DLFileEntryMetadata dlFileEntryMetadata :
-				DLFileEntryMetadataLocalServiceUtil.
-					getFileVersionFileEntryMetadatas(
-						dlFileVersion.getFileVersionId())) {
+		try {
+			for (DLFileEntryMetadata dlFileEntryMetadata :
+					DLFileEntryMetadataLocalServiceUtil.
+						getFileVersionFileEntryMetadatas(
+							dlFileVersion.getFileVersionId())) {
 
-			DDMFormValues translatedDDMFormValues =
-				DDMBeanTranslatorUtil.translate(
-					StorageEngineManagerUtil.getDDMFormValues(
-						dlFileEntryMetadata.getDDMStorageId()));
+				DDMFormValues translatedDDMFormValues =
+					DDMBeanTranslatorUtil.translate(
+						StorageEngineManagerUtil.getDDMFormValues(
+							dlFileEntryMetadata.getDDMStorageId()));
 
-			DDMFormValuesValidator ddmFormValuesValidator =
-				_ddmFormValuesValidatorSnapshot.get();
+				DDMFormValuesValidator ddmFormValuesValidator =
+					_ddmFormValuesValidatorSnapshot.get();
 
-			ddmFormValuesValidator.validate(translatedDDMFormValues);
+				ddmFormValuesValidator.validate(translatedDDMFormValues);
+			}
+
+			return true;
 		}
+		catch (DDMFormValuesValidationException
+					ddmFormValuesValidationException) {
 
-		return true;
+			if (_log.isDebugEnabled()) {
+				_log.debug(ddmFormValuesValidationException);
+			}
+
+			return false;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UIItemsBuilder.class);

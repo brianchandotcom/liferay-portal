@@ -842,6 +842,35 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(8);
 
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		_addObjectEntry(
+			group1.getGroupId(), _siteObjectDefinition.getObjectDefinitionId(),
+			Collections.singletonMap(
+				"externalReferenceCode", externalReferenceCode));
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		_addObjectEntry(
+			group2.getGroupId(), _siteObjectDefinition.getObjectDefinitionId(),
+			Collections.singletonMap(
+				"externalReferenceCode", externalReferenceCode));
+
+		AssertUtils.assertFailure(
+			DuplicateObjectEntryExternalReferenceCodeException.class,
+			StringBundler.concat(
+				"Duplicate object entry with external reference code ",
+				externalReferenceCode, ", group ID ", group1.getGroupId(),
+				" and object definition ID ",
+				_siteObjectDefinition.getObjectDefinitionId()),
+			() -> _addObjectEntry(
+				group1.getGroupId(),
+				_siteObjectDefinition.getObjectDefinitionId(),
+				Collections.singletonMap(
+					"externalReferenceCode", externalReferenceCode)));
+
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.ExceedsIntegerSize.class,
 			"Object entry value exceeds integer field allowed size",
@@ -1084,10 +1113,10 @@ public class ObjectEntryLocalServiceTest {
 					"name", "Peter"
 				).build()));
 
-		Group group = GroupTestUtil.addGroup();
+		Group group3 = GroupTestUtil.addGroup();
 
 		_addObjectEntry(
-			group.getGroupId(), objectDefinition.getObjectDefinitionId(),
+			group3.getGroupId(), objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"name", "Peter"
 			).build());
@@ -1097,12 +1126,12 @@ public class ObjectEntryLocalServiceTest {
 			"Unique value constraint violation for " +
 				objectDefinition.getDBTableName() + ".name_ with value Peter",
 			() -> _addObjectEntry(
-				group.getGroupId(), finalObjectDefinitionId,
+				group3.getGroupId(), finalObjectDefinitionId,
 				HashMapBuilder.<String, Serializable>put(
 					"name", "Peter"
 				).build()));
 
-		_testAddObjectEntryWithLocalizedValues(objectDefinition, group);
+		_testAddObjectEntryWithLocalizedValues(objectDefinition, group3);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
@@ -1124,7 +1153,7 @@ public class ObjectEntryLocalServiceTest {
 			modifiableSystemObjectDefinition.getObjectDefinitionId());
 
 		_testAddObjectEntryWithLocalizedValues(
-			modifiableSystemObjectDefinition, group);
+			modifiableSystemObjectDefinition, group3);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			modifiableSystemObjectDefinition.getObjectDefinitionId());

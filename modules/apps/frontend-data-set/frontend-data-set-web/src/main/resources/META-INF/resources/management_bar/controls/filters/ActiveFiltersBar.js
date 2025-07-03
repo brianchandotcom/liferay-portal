@@ -44,7 +44,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 			data-qa-id="activeFiltersToolbar"
 		>
 			<div className="container-fluid">
-				<nav className="mb-0 py-3 subnav-tbar subnav-tbar-light subnav-tbar-primary w-100">
+				<nav className="subnav-tbar subnav-tbar-light w-100">
 					<ul className="tbar-nav">
 						<li className="p-0 tbar-item tbar-item-expand">
 							<div className="tbar-section">
@@ -88,6 +88,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 						<li className="tbar-item">
 							<div className="tbar-section">
 								<ClayButton
+									className="component-link tbar-link"
 									disabled={disabled}
 									displayType="unstyled"
 									onClick={resetFiltersValue}

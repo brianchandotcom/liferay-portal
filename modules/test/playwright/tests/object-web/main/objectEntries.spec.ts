@@ -11,7 +11,7 @@ import {
 	ObjectRelationshipAPI,
 	ObjectValidationRuleAPI,
 } from '@liferay/object-admin-rest-client-js';
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
@@ -316,6 +316,65 @@ test.describe('Manage object entries through Friendly URL', () => {
 		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
 		await expect(friendlyUrl).toHaveValue('first-url');
+	});
+
+	test('friendly URL input is disabled when viewed inside workflow task detail', async ({
+		applicationsMenuPage,
+		configurationTabPage,
+		page,
+		site,
+		viewObjectEntriesPage,
+		workflowTaskDetailsPage,
+		workflowTasksPage,
+	}) => {
+		let friendlyUrlInput: Locator;
+
+		await test.step('Assign the single approver workflow to the object created', async () => {
+			await applicationsMenuPage.goToProcessBuilder();
+
+			await configurationTabPage.configurationTabLink.click();
+
+			await configurationTabPage.assignWorkflowToAssetType(
+				'Single Approver',
+				_objectDefinition.label['en_US']
+			);
+		});
+
+		await test.step('Assert that the friendly URL is enabled', async () => {
+			await viewObjectEntriesPage.goto(
+				_objectDefinition.className,
+				'en',
+				site.friendlyUrlPath
+			);
+
+			await viewObjectEntriesPage.clickAddObjectEntry();
+
+			friendlyUrlInput = page.getByRole('textbox', {
+				name: 'Friendly URL There is a limit',
+			});
+
+			await expect(friendlyUrlInput).not.toBeDisabled();
+		});
+
+		await test.step('Add an object entry', async () => {
+			await friendlyUrlInput.fill('test-url');
+
+			await page.getByTestId('visibleChangeInput').fill('test entry');
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+		});
+
+		await test.step('Go to the workflow task detail and verify that the friendly URL input is disabled', async () => {
+			await workflowTasksPage.goToAssignedToMyRoles();
+
+			await workflowTaskDetailsPage.selectAsset(
+				_objectDefinition.label['en_US']
+			);
+
+			await expect(friendlyUrlInput).toBeDisabled();
+		});
 	});
 
 	test('verify that friendly URL field is not visible when customization is disabled', async ({

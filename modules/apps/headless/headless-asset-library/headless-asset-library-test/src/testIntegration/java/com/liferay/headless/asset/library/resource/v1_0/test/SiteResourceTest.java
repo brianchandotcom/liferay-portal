@@ -50,7 +50,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		throws Exception {
 
 		return siteResource.putAssetLibrarySite(
-			testDepotEntry.getGroupId(), _testSite.getId());
+			testDepotEntry.getGroupId(), _testSite.getId(), new Site());
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	@Override
 	protected Site testDeleteAssetLibrarySite_addSite() throws Exception {
 		return siteResource.putAssetLibrarySite(
-			testDepotEntry.getGroupId(), _testSite.getId());
+			testDepotEntry.getGroupId(), _testSite.getId(), new Site());
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		throws Exception {
 
 		return siteResource.putAssetLibrarySite(
-			testDepotEntry.getGroupId(), _testSite.getId());
+			testDepotEntry.getGroupId(), _testSite.getId(), new Site());
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		throws Exception {
 
 		return siteResource.putAssetLibrarySite(
-			testDepotEntry.getGroupId(), site.getId());
+			testDepotEntry.getGroupId(), site.getId(), new Site());
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	@Override
 	protected Site testGetAssetLibrarySite_addSite() throws Exception {
 		return siteResource.putAssetLibrarySite(
-			testDepotEntry.getGroupId(), _testSite.getId());
+			testDepotEntry.getGroupId(), _testSite.getId(), new Site());
 	}
 
 	@Override
@@ -130,7 +130,8 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Long assetLibraryId, Site site)
 		throws Exception {
 
-		return siteResource.putAssetLibrarySite(assetLibraryId, site.getId());
+		return siteResource.putAssetLibrarySite(
+			assetLibraryId, site.getId(), new Site());
 	}
 
 	@Override

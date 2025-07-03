@@ -164,7 +164,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	public Site
 			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+				String siteExternalReferenceCode, Site site)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -179,11 +179,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
 		return putAssetLibrarySite(
-			assetLibraryGroup.getGroupId(), siteGroup.getGroupId());
+			assetLibraryGroup.getGroupId(), siteGroup.getGroupId(), site);
 	}
 
 	@Override
-	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId, Site site)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -196,6 +196,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		DepotEntryGroupRel depotEntryGroupRel =
 			_depotEntryGroupRelService.addDepotEntryGroupRel(
 				depotEntry.getDepotEntryId(), siteId);
+
+		if (site.getSearchable() != null) {
+			_depotEntryGroupRelService.updateSearchable(
+				depotEntryGroupRel.getDepotEntryGroupRelId(),
+				site.getSearchable());
+		}
 
 		return _toSite(depotEntry, depotEntryGroupRel);
 	}

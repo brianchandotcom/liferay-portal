@@ -1,0 +1,203 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
+import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
+import {waitForAlert} from '../../../../../utils/waitForAlert';
+import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
+
+const test = mergeTests(
+	apiHelpersTest,
+	fdsSamplePageTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	}),
+	isolatedSiteTest,
+	loginTest()
+);
+
+test.beforeEach(async ({fdsSamplePage, page, site}) => {
+	await fdsSamplePage.setupFDSSampleWidget({site});
+
+	await fdsSamplePage.selectTab('Advanced');
+
+	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
+});
+
+test('Behavior of item actions', async ({fdsSamplePage, page}) => {
+	const asyncConnectionRefused = 'Async Connection Refused';
+	const asyncResourceNotFound = 'Async Resource Not Found';
+	const asyncSuccess = 'Async Success';
+	const sampleView = 'Sample View';
+	const sidePanelActionLabelWithActionTitle = 'Side Panel With Action Title';
+	const sidePanelActionLabelWithContentTitle =
+		'Side Panel With Content Title';
+	const sidePanelActionLabelWithActionTitleContentTitle =
+		'Side Panel With Action and Content Title';
+	const sidePanelActionLabelWithoutTitle = 'Side Panel With No Title';
+	const sidePanelActionTitle = 'Side Panel Title Provided by Action';
+	const sidePanelContentTitle = 'Side Panel Title Provided by Page';
+
+	const itemActionsCell = fdsSamplePage.table.itemActionsCells.first();
+
+	const itemActionButton = itemActionsCell.getByRole('button', {
+		exact: true,
+		name: 'Actions',
+	});
+
+	await test.step('Check that the Item Actions dropdown is present in table row', async () => {
+		await expect(itemActionButton).toBeVisible();
+
+		const dropdownId = await itemActionButton.getAttribute('aria-controls');
+
+		await itemActionButton.click();
+
+		await page
+			.locator(`#${dropdownId}`)
+			.filter({has: page.getByRole('menu')})
+			.waitFor();
+
+		await expect(
+			page.locator(`#${dropdownId}`).getByRole('menuitem')
+		).toHaveCount(14);
+
+		await page.keyboard.press('Escape');
+	});
+
+	await test.step('Side Panel action opens a side panel with content title', async () => {
+		await fdsSamplePage.clickItemAction(
+			sidePanelActionLabelWithContentTitle
+		);
+
+		await expect(fdsSamplePage.sidePanel).toBeInViewport();
+
+		const frame = fdsSamplePage.sidePanelFrame;
+
+		await frame.getByText(sidePanelContentTitle).waitFor();
+
+		await expect(frame.getByText(sidePanelContentTitle)).toHaveCount(1);
+
+		await expect(
+			frame.getByText('This is a side panel with a title.')
+		).toBeVisible();
+
+		await page.keyboard.press('Escape');
+
+		await expect(fdsSamplePage.sidePanel).toHaveClass(/is-hidden/);
+	});
+
+	await test.step('Side Panel action opens a side panel with action title', async () => {
+		await fdsSamplePage.clickItemAction(
+			sidePanelActionLabelWithActionTitle
+		);
+
+		await expect(fdsSamplePage.sidePanel).toBeInViewport();
+
+		await page.getByText(sidePanelActionTitle).waitFor();
+
+		await expect(page.getByText(sidePanelActionTitle)).toHaveCount(1);
+
+		const frame = fdsSamplePage.sidePanelFrame;
+
+		await expect(
+			frame.locator('.side-panel-iframe-header')
+		).not.toBeInViewport();
+
+		await expect(
+			frame.getByText('This is a side panel without a title.')
+		).toBeVisible();
+
+		await page.keyboard.press('Escape');
+
+		await expect(fdsSamplePage.sidePanel).toHaveClass(/is-hidden/);
+	});
+
+	await test.step('Side Panel action opens a side panel with duplicated title', async () => {
+		await fdsSamplePage.clickItemAction(
+			sidePanelActionLabelWithActionTitleContentTitle
+		);
+
+		await expect(fdsSamplePage.sidePanel).toBeInViewport();
+
+		await page.getByText(sidePanelActionTitle).waitFor();
+
+		await expect(page.getByText(sidePanelActionTitle)).toHaveCount(1);
+
+		const frame = fdsSamplePage.sidePanelFrame;
+
+		await expect(
+			frame.locator('.side-panel-iframe-header')
+		).toBeInViewport();
+		await frame.getByText(sidePanelContentTitle).waitFor();
+
+		await expect(frame.getByText(sidePanelContentTitle)).toHaveCount(1);
+
+		await page.keyboard.press('Escape');
+
+		await expect(fdsSamplePage.sidePanel).toHaveClass(/is-hidden/);
+	});
+
+	await test.step('Side Panel action opens a side panel without title', async () => {
+		await fdsSamplePage.clickItemAction(sidePanelActionLabelWithoutTitle);
+
+		await expect(fdsSamplePage.sidePanel).toBeInViewport();
+
+		await expect(page.locator('.fds-side-panel-title')).toBeInViewport();
+		const panelTitle = await page
+			.locator('.fds-side-panel-title')
+			.allInnerTexts();
+
+		expect(panelTitle).toEqual(['']);
+
+		const frame = fdsSamplePage.sidePanelFrame;
+
+		await expect(
+			frame.locator('.side-panel-iframe-header')
+		).not.toBeInViewport();
+
+		await expect(
+			frame.getByText('This is a side panel without a title.')
+		).toBeVisible();
+
+		await page.keyboard.press('Escape');
+
+		await expect(fdsSamplePage.sidePanel).toHaveClass(/is-hidden/);
+	});
+
+	await test.step('Sample view action opens an alert message', async () => {
+		await fdsSamplePage.clickItemAction(sampleView);
+
+		page.on('dialog', async (dialog) => {
+			await expect(dialog.message).toBe('Hello Sample1!');
+		});
+	});
+
+	await test.step('Async connection refused action opens an unexpected error alert toast', async () => {
+		await fdsSamplePage.clickItemAction(asyncConnectionRefused);
+
+		await waitForAlert(page, 'Error:An unexpected error occurred.', {
+			type: 'danger',
+		});
+	});
+
+	await test.step('Async resource not found action opens an unexpected error alert toast', async () => {
+		await fdsSamplePage.clickItemAction(asyncResourceNotFound);
+
+		await waitForAlert(page, 'Error:An unexpected error occurred.', {
+			type: 'danger',
+		});
+	});
+
+	await test.step('Async success action opens a success alert toast', async () => {
+		await fdsSamplePage.clickItemAction(asyncSuccess);
+
+		await waitForAlert(page);
+	});
+});

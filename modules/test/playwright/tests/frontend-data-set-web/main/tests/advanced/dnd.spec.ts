@@ -7,12 +7,12 @@ import {Locator, expect, mergeTests} from '@playwright/test';
 import {readFileSync} from 'fs';
 import path from 'path';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {VisualizationMode} from '../../frontend-data-set-admin-web/main/utils/types';
-import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
+import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
+import {VisualizationMode} from '../../../../frontend-data-set-admin-web/main/utils/types';
+import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
 	apiHelpersTest,

@@ -5,14 +5,13 @@
 
 import {Locator, expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
-import {liferayConfig} from '../../../liferay.config';
-import {EFDSVisualizationMode, waitForFDS} from '../../../utils/waitFor';
-import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
+import {dataApiHelpersTest} from '../../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
+import {usersAndOrganizationsPagesTest} from '../../../../../fixtures/usersAndOrganizationsPagesTest';
+import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
+import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -26,12 +25,9 @@ const test = mergeTests(
 );
 
 let fdsSamplePageURL: string;
-let fdsSamplePageLayout: Layout;
 
 test.beforeEach(async ({fdsSamplePage, page, site}) => {
-	const {layout, url} = await fdsSamplePage.setupFDSSampleWidget({site});
-
-	fdsSamplePageLayout = layout;
+	const {url} = await fdsSamplePage.setupFDSSampleWidget({site});
 
 	fdsSamplePageURL = url;
 
@@ -39,35 +35,6 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 
 	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
 });
-
-test(
-	'Assert the details shown in the FDS table',
-	{tag: '@LPS-162792'},
-	async ({fdsSamplePage, page, site}) => {
-		await test.step('Check headers are localized in English', async () => {
-			await expect(fdsSamplePage.table.headerCells).toHaveCount(4);
-			await expect(fdsSamplePage.table.headerCells).toContainText([
-				'First Name',
-				'Last Name',
-				'Email Address',
-			]);
-		});
-
-		await test.step('Check headers are localized in Spanish', async () => {
-			const url = `${liferayConfig.environment.baseUrl}/es/web${site.friendlyUrlPath}${fdsSamplePageLayout.friendlyUrlPath}`;
-
-			await page.goto(url);
-
-			await fdsSamplePage.selectTab('Classic');
-
-			await expect(page.getByText('test@liferay.com')).toBeVisible();
-
-			expect(
-				await fdsSamplePage.table.headerCells.allInnerTexts()
-			).toEqual(['Nombre', 'Apellido', 'Dirección de correo', '']);
-		});
-	}
-);
 
 test('Check behavior of conditional item actions', async ({
 	apiHelpers,

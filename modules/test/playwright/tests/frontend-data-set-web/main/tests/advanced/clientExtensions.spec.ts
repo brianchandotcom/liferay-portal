@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {EFDSVisualizationMode, waitForFDS} from '../../../utils/waitFor';
-import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
+import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
+import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
+import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
 	apiHelpersTest,

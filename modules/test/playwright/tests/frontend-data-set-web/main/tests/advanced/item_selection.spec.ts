@@ -5,11 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
+import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
+import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -568,3 +568,80 @@ test(
 		});
 	}
 );
+
+test('Pagination and items per page', async ({page}) => {
+	const itemsSelectorCheckbox = page.locator('input[name="items-selector"]');
+
+	await test.step('Change delta to 60 items', async () => {
+		await page.getByLabel('Items Per Page').click();
+
+		await page.getByRole('option', {name: '60 Items'}).click();
+
+		await page
+			.getByText('This is a description for sample')
+			.first()
+			.waitFor();
+
+		await expect(
+			page.getByText('Showing 1 to 60 of 75 entries.')
+		).toBeVisible();
+	});
+
+	await test.step('Select all items in current page using the bulk actions checkbox', async () => {
+		await itemsSelectorCheckbox.setChecked(true);
+
+		await expect(page.getByText('60 of 75 Items Selected')).toBeVisible();
+	});
+
+	await test.step('Select all items', async () => {
+		await page.getByLabel('Go to page, 2').click();
+
+		await page
+			.getByText('This is a description for sample')
+			.first()
+			.waitFor();
+
+		for (let i = 1; i <= 15; i++) {
+			await page
+				.locator(
+					`tbody tr:nth-child(${i}) > .cell-select-item input[type="checkbox"]`
+				)
+				.setChecked(true);
+		}
+
+		await expect(
+			page.getByText('All Selected (75 of 75 Items)')
+		).toBeVisible();
+	});
+
+	await test.step('Check that selection are preserved through page navigation', async () => {
+		await page.getByLabel('Go to page, 1').click();
+
+		await page
+			.getByText('This is a description for sample')
+			.first()
+			.waitFor();
+
+		await expect(
+			page.getByText('All Selected (75 of 75 Items)')
+		).toBeVisible();
+	});
+
+	await test.step('Unselect all items in current page using the bulk actions checkbox', async () => {
+		await itemsSelectorCheckbox.setChecked(false);
+
+		await expect(itemsSelectorCheckbox).not.toBeChecked();
+
+		await expect(page.getByText('15 of 75 Items Selected')).toBeVisible();
+	});
+
+	await test.step('Unselect all items using clear button', async () => {
+		await page.getByText('Clear').click();
+
+		await expect(itemsSelectorCheckbox).not.toBeChecked();
+
+		await expect(
+			page.getByText('15 of 75 Items Selected')
+		).not.toBeVisible();
+	});
+});

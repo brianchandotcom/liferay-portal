@@ -70,6 +70,8 @@ public class CPConfigurationEntryLocalServiceImpl
 			double weight, double width)
 		throws PortalException {
 
+		_validateAllowedOrderQuantities(allowedOrderQuantities);
+
 		User user = _userLocalService.getUser(userId);
 
 		CPConfigurationEntry cpConfigurationEntry =
@@ -85,9 +87,6 @@ public class CPConfigurationEntryLocalServiceImpl
 		cpConfigurationEntry.setClassPK(classPK);
 		cpConfigurationEntry.setCPConfigurationListId(cpConfigurationListId);
 		cpConfigurationEntry.setCPTaxCategoryId(cpTaxCategoryId);
-
-		_validateAllowedOrderQuantities(allowedOrderQuantities);
-
 		cpConfigurationEntry.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpConfigurationEntry.setBackOrders(backOrders);
 		cpConfigurationEntry.setCommerceAvailabilityEstimateId(
@@ -354,15 +353,14 @@ public class CPConfigurationEntryLocalServiceImpl
 			double weight, double width)
 		throws PortalException {
 
+		_validateAllowedOrderQuantities(allowedOrderQuantities);
+
 		CPConfigurationEntry cpConfigurationEntry =
 			cpConfigurationEntryPersistence.findByPrimaryKey(
 				cpConfigurationEntryId);
 
 		cpConfigurationEntry.setExternalReferenceCode(externalReferenceCode);
 		cpConfigurationEntry.setCPTaxCategoryId(cpTaxCategoryId);
-
-		_validateAllowedOrderQuantities(allowedOrderQuantities);
-
 		cpConfigurationEntry.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpConfigurationEntry.setBackOrders(backOrders);
 		cpConfigurationEntry.setCommerceAvailabilityEstimateId(

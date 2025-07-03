@@ -74,8 +74,8 @@ import {
 	IModalConfig,
 	IRequestOptions,
 	ISuccessNotification,
+	IView,
 	TSort,
-	TViews,
 } from './utils/types';
 import ViewsContext from './views/ViewsContext';
 
@@ -403,7 +403,7 @@ const FrontendDataSetContent = ({
 						clientExtensionDefinitions: Array<
 							ClientExtensionDefinition<any>
 						>,
-						view: TViews
+						view: IView
 					) => {
 						if (view.schema && 'fields' in view.schema) {
 							if (!view.schema.fields.length) {
@@ -638,7 +638,7 @@ const FrontendDataSetContent = ({
 		setComponentLoading(true);
 
 		loadModule(contentRendererModuleURL)
-			.then((view: TViews) => {
+			.then((view: IView) => {
 				if (isMounted()) {
 					viewsDispatch({
 						type: VIEWS_ACTION_TYPES.UPDATE_VIEW_COMPONENT,

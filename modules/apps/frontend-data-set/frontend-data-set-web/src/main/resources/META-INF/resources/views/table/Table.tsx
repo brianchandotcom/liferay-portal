@@ -40,6 +40,7 @@ import {
 	ESelectionTrigger,
 	IItemsActions,
 	ITableSchema,
+	IView,
 	TSort,
 } from '../../utils/types';
 import ViewsContext, {
@@ -393,18 +394,29 @@ function ClayTableRowOptionalDropTarget({
 	item: any;
 	onItemSelectionChange: Function;
 }) {
+	const [viewsContext] = useContext(ViewsContext);
+
 	const {className: dropClassName, dropRef} = useFDSDrop({item});
+
+	const activeView: IView = viewsContext.activeView;
+
+	const props = {
+		...otherProps,
+		className: classNames(className, dropClassName),
+		items,
+		onClick: () => {
+			onItemSelectionChange({
+				item,
+				trigger: ESelectionTrigger.CONTAINER,
+			});
+		},
+	};
 
 	return (
 		<ClayTableRow
-			{...otherProps}
-			className={classNames(className, dropClassName)}
-			items={items}
-			onClick={() => {
-				onItemSelectionChange({
-					item,
-					trigger: ESelectionTrigger.CONTAINER,
-				});
+			{...{
+				...props,
+				...(activeView.setItemComponentProps?.({item, props}) ?? {}),
 			}}
 			ref={dropRef}
 		>

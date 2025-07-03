@@ -35,6 +35,7 @@ export {
 	IInternalRenderer,
 	IItemsActions,
 	IItemActionsData,
+	IView,
 } from './utils/types';
 
 export {Card} from './views/cards/Cards';

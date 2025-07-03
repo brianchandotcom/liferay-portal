@@ -4,6 +4,7 @@
  */
 
 import {DEFAULT_FETCH_HEADERS} from '@liferay/frontend-data-set-web';
+import classNames from 'classnames';
 import {openModal} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 
@@ -13,6 +14,7 @@ import SampleInfoPanel from './SampleInfoPanel';
 import type {
 	IFileDropSettings,
 	IInternalRenderer,
+	IView,
 } from '@liferay/frontend-data-set-web';
 
 export default function propsTransformer({
@@ -29,6 +31,72 @@ export default function propsTransformer({
 	const fileDropSettings: IFileDropSettings = {
 		enabled: true,
 		isDropTarget: ({item}: {item: any}) => item.color !== 'Green',
+	};
+
+	const views: Array<IView> = otherProps.views;
+
+	const cardView = views.find((view) => view.name === 'cards')!;
+
+	cardView.setItemComponentProps = ({
+		item,
+		props,
+	}: {
+		item: any;
+		props: any;
+	}) => {
+		if (item.title === 'Sample1') {
+			return {
+				...props,
+				imgProps: {
+					src: '/documents/d/guest/planet-png',
+				},
+				stickerProps: {
+					displayType: 'outline-7',
+					position: 'bottom-left',
+					shape: 'circle',
+				},
+			};
+		}
+
+		return props;
+	};
+
+	const listView = views.find((view) => view.name === 'list')!;
+
+	listView.setItemComponentProps = ({
+		item,
+		props,
+	}: {
+		item: any;
+		props: any;
+	}) => {
+		if (item.title === 'Sample1') {
+			return {
+				...props,
+				className: classNames('sample-css-class', props.className),
+			};
+		}
+
+		return props;
+	};
+
+	const tableView = views.find((view) => view.name === 'customizedTable')!;
+
+	tableView.setItemComponentProps = ({
+		item,
+		props,
+	}: {
+		item: any;
+		props: any;
+	}) => {
+		if (item.title === 'Sample1') {
+			return {
+				...props,
+				className: classNames('sample-css-class', props.className),
+			};
+		}
+
+		return props;
 	};
 
 	return {
@@ -97,5 +165,6 @@ export default function propsTransformer({
 				});
 			}
 		},
+		views,
 	};
 }

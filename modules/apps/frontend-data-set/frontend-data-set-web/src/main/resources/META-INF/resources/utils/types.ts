@@ -232,7 +232,7 @@ export interface IListSchema {
 
 export type ISchema = ITableSchema | ICardSchema | IListSchema;
 
-export type TViews = {
+export interface IView {
 	component?: any;
 	contentRenderer?: string;
 	contentRendererClientExtension?: boolean;
@@ -241,9 +241,10 @@ export type TViews = {
 	label?: string;
 	name?: string;
 	schema?: ISchema;
+	setItemComponentProps?: ({item, props}: {item: any; props: any}) => any;
 	thumbnail?: string;
 	views?: Array<any>;
-};
+}
 
 export interface IFileDropSettings {
 	enabled: boolean;
@@ -320,7 +321,7 @@ export interface IFrontendDataSetProps {
 	sorts?: TSort[];
 	style?: 'default' | 'fluid' | 'stacked';
 	uniformActionsDisplay?: boolean;
-	views: TViews[];
+	views: IView[];
 	viewsTitle?: string;
 }
 

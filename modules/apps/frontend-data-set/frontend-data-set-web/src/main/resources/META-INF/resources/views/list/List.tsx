@@ -22,7 +22,9 @@ import {
 	IHeader,
 	IListSchema,
 	IListTitleRenderer,
+	IView,
 } from '../../utils/types';
+import ViewsContext from '../ViewsContext';
 
 const Title = ({
 	item,
@@ -74,6 +76,10 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 			selectionType,
 		} = useContext(FrontendDataSetContext);
 
+		const [viewsContext] = useContext(ViewsContext);
+
+		const activeView: IView = viewsContext.activeView;
+
 		const {description, image, sticker, symbol, title, titleRenderer} =
 			schema;
 
@@ -82,12 +88,20 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 
 		const itemId = item[selectedItemsKey || 'id'];
 
+		const props = {
+			className: classNames(className, {
+				active: selectedItemsValue?.includes(itemId),
+			}),
+			flex: true,
+		};
+
 		return (
 			<ClayList.Item
-				className={classNames(className, {
-					active: selectedItemsValue?.includes(itemId),
-				})}
-				flex
+				{...{
+					...props,
+					...(activeView.setItemComponentProps?.({item, props}) ??
+						{}),
+				}}
 				ref={ref}
 			>
 				{selectable && (

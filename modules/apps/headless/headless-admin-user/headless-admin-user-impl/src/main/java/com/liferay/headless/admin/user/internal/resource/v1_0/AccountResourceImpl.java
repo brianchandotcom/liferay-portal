@@ -8,6 +8,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountListTypeConstants;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.DuplicateAccountGroupRelException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
@@ -23,6 +24,7 @@ import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroupBrief;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
@@ -121,7 +124,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
 	service = AccountResource.class
 )
-public class AccountResourceImpl extends BaseAccountResourceImpl {
+public class AccountResourceImpl
+	extends BaseAccountResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<Account> {
 
 	@Override
 	public void deleteAccount(Long accountId) throws Exception {
@@ -367,6 +372,22 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		return getOrganizationAccountsPage(
 			String.valueOf(organization.getOrganizationId()), search, filter,
 			pagination, sorts);
+	}
+
+	@Override
+	public String getPortletId() {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyConstants.SYSTEM, "LPD-35914")) {
+
+			return AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN;
+		}
+
+		return null;
+	}
+
+	@Override
+	public Scope getScope() {
+		return Scope.COMPANY;
 	}
 
 	@Override

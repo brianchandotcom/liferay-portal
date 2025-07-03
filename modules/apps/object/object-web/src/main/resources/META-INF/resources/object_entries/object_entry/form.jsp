@@ -55,6 +55,7 @@ portletDisplay.setURLBack(backURL);
 									<liferay-friendly-url:input
 										className="<%= objectDefinition.getClassName() %>"
 										classPK="<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>"
+										disabled="<%= objectEntryDisplayContext.isReadOnly() %>"
 										helpMessage='<%= LanguageUtil.get(request, "the-friendly-url-is-automatically-generated-based-on-the-entry-title-field") %>'
 										inputAddon="<%= objectEntryDisplayContext.getURLSeparator() %>"
 										name="friendlyURL"

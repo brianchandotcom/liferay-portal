@@ -19,6 +19,8 @@ import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
+import com.liferay.object.definition.tree.manager.ObjectDefinitionTreeManager;
 import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
@@ -62,7 +64,6 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.deployer.InactiveObjectDefinitionDeployerUtil;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
-import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionSetting;
@@ -101,9 +102,7 @@ import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFolderPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
-import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
-import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
@@ -189,7 +188,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -2312,9 +2310,13 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
-		objectDefinition = _updateNodeObjectDefinition(objectDefinition);
+		ObjectDefinitionTreeManager objectDefinitionTreeManager =
+			ObjectDefinitionTreeManager.getInstance();
 
-		_updateDescendantNodeObjectDefinitions(objectDefinition);
+		objectDefinitionTreeManager.updateNodeObjectDefinition(
+			objectDefinition, objectDefinitionLocalService,
+			objectDefinitionPersistence, _objectDefinitionSettingLocalService,
+			_objectRelationshipLocalService, _objectRelationshipPersistence);
 
 		_createLocalizationTable(
 			DynamicObjectDefinitionLocalizationTableFactory.create(
@@ -2368,121 +2370,6 @@ public class ObjectDefinitionLocalServiceImpl
 					return null;
 				});
 		}
-	}
-
-	private void _updateDescendantNodeObjectDefinitions(
-			ObjectDefinition objectDefinition1)
-		throws PortalException {
-
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipPersistence.findByODI1_E(
-				objectDefinition1.getObjectDefinitionId(), true);
-
-		if (objectRelationships.isEmpty()) {
-			return;
-		}
-
-		deployObjectDefinition(objectDefinition1);
-
-		objectDefinition1.setPreviousRESTContextPath(null);
-
-		boolean containsDraftDescendantNodeObjectDefinitions = false;
-		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
-			new ObjectDefinitionTreeFactory(
-				objectDefinitionLocalService, _objectRelationshipLocalService);
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			ObjectDefinition objectDefinition2 =
-				objectDefinitionPersistence.findByPrimaryKey(
-					objectRelationship.getObjectDefinitionId2());
-
-			if (!objectDefinition2.isApproved()) {
-				containsDraftDescendantNodeObjectDefinitions = true;
-
-				continue;
-			}
-
-			Tree tree = objectDefinitionTreeFactory.create(
-				objectRelationship.getObjectDefinitionId2());
-
-			Iterator<Node> iterator = tree.iterator();
-
-			while (iterator.hasNext()) {
-				Node node = iterator.next();
-
-				ObjectDefinition nodeObjectDefinition =
-					objectDefinitionLocalService.getObjectDefinition(
-						node.getPrimaryKey());
-
-				String previousRESTContextPath =
-					nodeObjectDefinition.getRESTContextPath();
-
-				nodeObjectDefinition.setRootObjectDefinitionId(
-					objectDefinition1.getRootObjectDefinitionId());
-
-				nodeObjectDefinition.setPreviousRESTContextPath(
-					previousRESTContextPath);
-
-				deployObjectDefinition(nodeObjectDefinition);
-			}
-		}
-
-		if (containsDraftDescendantNodeObjectDefinitions) {
-			Tree tree = objectDefinitionTreeFactory.create(
-				false, objectDefinition1.getObjectDefinitionId());
-
-			Node rootNode = tree.getRootNode();
-
-			for (Node childNode : rootNode.getChildNodes()) {
-				Iterator<Node> iterator = tree.iterator(
-					childNode.getPrimaryKey());
-
-				while (iterator.hasNext()) {
-					Node node = iterator.next();
-
-					ObjectDefinition nodeObjectDefinition =
-						objectDefinitionLocalService.getObjectDefinition(
-							node.getPrimaryKey());
-
-					nodeObjectDefinition.setRootObjectDefinitionId(
-						childNode.getPrimaryKey());
-
-					objectDefinitionPersistence.update(nodeObjectDefinition);
-				}
-			}
-		}
-	}
-
-	private ObjectDefinition _updateNodeObjectDefinition(
-			ObjectDefinition objectDefinition2)
-		throws PortalException {
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipPersistence.fetchByODI2_E(
-				objectDefinition2.getObjectDefinitionId(), true);
-
-		if (objectRelationship == null) {
-			return objectDefinition2;
-		}
-
-		ObjectDefinition objectDefinition1 =
-			objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
-		String previousRESTContextPath = objectDefinition2.getRESTContextPath();
-
-		if (objectDefinition1.isApproved()) {
-			objectDefinition2.setRootObjectDefinitionId(
-				objectDefinition1.getRootObjectDefinitionId());
-		}
-		else {
-			objectDefinition2.setRootObjectDefinitionId(
-				objectDefinition2.getObjectDefinitionId());
-		}
-
-		objectDefinition2.setPreviousRESTContextPath(previousRESTContextPath);
-
-		return objectDefinition2;
 	}
 
 	private ObjectDefinition _updateObjectDefinition(

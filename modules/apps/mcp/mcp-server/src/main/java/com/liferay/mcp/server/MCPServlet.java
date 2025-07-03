@@ -5,9 +5,7 @@
 
 package com.liferay.mcp.server;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -17,7 +15,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import io.modelcontextprotocol.server.McpServer;
-import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.transport.HttpServletSseServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema;
 
@@ -35,7 +32,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import java.util.Base64;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -100,9 +96,6 @@ public class MCPServlet extends GenericServlet {
 
 		String baseURL = company.getPortalURL(0) + _portal.getPathModule();
 
-		JSONObject openAPIJSONObject = _jsonFactory.createJSONObject(
-			_callEndpoint("GET", baseURL + "/openapi", null));
-
 		HttpServletSseServerTransportProvider
 			httpServletSseServerTransportProvider =
 				new HttpServletSseServerTransportProvider.Builder(
@@ -121,27 +114,44 @@ public class MCPServlet extends GenericServlet {
 			).tools(
 				true
 			).build()
-		).resources(
-			TransformUtil.transform(
-				openAPIJSONObject.keySet(),
-				key -> new McpServerFeatures.SyncResourceSpecification(
-					new McpSchema.Resource(
-						openAPIJSONObject.getJSONArray(
-							key
-						).getString(
-							0
-						),
-						key, "OpenAPI YAML file for " + key, "application/yaml",
-						null),
-					(exchange, arguments) -> new McpSchema.ReadResourceResult(
-						List.of(
-							new McpSchema.TextResourceContents(
-								arguments.uri(), "application/yaml",
-								_callEndpoint("GET", arguments.uri(), null))))))
+		).tool(
+			new McpSchema.Tool(
+				"get-openapis",
+				"Retrieves the current available Liferay OpenAPIs. Use it " +
+					"before interacting with Liferay upon user request to " +
+						"decide which API would be the best fit.",
+				JSONUtil.put(
+					"properties", _jsonFactory.createJSONObject()
+				).put(
+					"type", "object"
+				).toString()),
+			(exchange, arguments) -> new McpSchema.CallToolResult(
+				_callEndpoint("GET", baseURL + "/openapi", null), false)
+		).tool(
+			new McpSchema.Tool(
+				"get-openapi", "Retrieves the OpenAPI YAML file.",
+				JSONUtil.put(
+					"properties",
+					JSONUtil.put(
+						"url",
+						JSONUtil.put(
+							"description", "The OpenAPI YAML URL"
+						).put(
+							"type", "string"
+						))
+				).put(
+					"type", "object"
+				).toString()),
+			(exchange, arguments) -> new McpSchema.CallToolResult(
+				_callEndpoint(
+					"GET", String.valueOf(arguments.get("url")), null),
+				false)
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
-				"Calls an HTTP endpoint with method, path, and payload",
+				"Calls an HTTP endpoint with method, path, and payload. It " +
+					"must always be performed after a having retrieved a " +
+						"valid Liferay OpenAPI through the get-openapi tool.",
 				JSONUtil.put(
 					"additionalProperties", false
 				).put(

@@ -7452,9 +7452,8 @@ public class JournalArticleLocalServiceImpl
 
 		long id = counterLocalService.increment();
 
-		long resourcePrimKey =
-			_journalArticleResourceLocalService.getArticleResourcePrimKey(
-				groupId, targetArticleId);
+		long resourcePrimKey = _getResourcePrimKey(
+			groupId, targetArticleId, newArticle);
 
 		JournalArticle targetArticle = journalArticlePersistence.create(id);
 
@@ -8146,6 +8145,21 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return null;
+	}
+
+	private long _getResourcePrimKey(
+			long groupId, String targetArticleId, boolean newArticle)
+		throws PortalException {
+
+		if (newArticle) {
+			return _journalArticleResourceLocalService.
+				getArticleResourcePrimKey(groupId, targetArticleId);
+		}
+
+		JournalArticle latestArticle = getLatestArticle(
+			groupId, targetArticleId, WorkflowConstants.STATUS_ANY);
+
+		return latestArticle.getResourcePrimKey();
 	}
 
 	private int _getSmallImageSource(boolean smallImage, String smallImageURL) {

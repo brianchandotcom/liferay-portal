@@ -756,6 +756,16 @@ public class UserImpl extends UserBaseImpl {
 		if (_userGroupIds == null) {
 			_userGroupIds = UserLocalServiceUtil.getUserGroupPrimaryKeys(
 				getUserId());
+
+			try {
+				_userGroups = UserGroupLocalServiceUtil.getUserGroups(
+					_userGroupIds);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+
+			userGroupIdsUpdateEntityCacheConsumer.accept(_userGroupIds);
 		}
 
 		return _userGroupIds;
@@ -768,7 +778,17 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public List<UserGroup> getUserGroups() {
-		return UserGroupLocalServiceUtil.getUserUserGroups(getUserId());
+		if (_userGroups == null) {
+			try {
+				_userGroups = UserGroupLocalServiceUtil.getUserGroups(
+					getUserGroupIds());
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
+
+		return _userGroups;
 	}
 
 	@Override
@@ -1083,6 +1103,8 @@ public class UserImpl extends UserBaseImpl {
 	@Override
 	public void setUserGroupIds(long[] userGroupIds) {
 		_userGroupIds = userGroupIds;
+
+		_userGroups = null;
 	}
 
 	protected String getProfileFriendlyURL() {
@@ -1169,5 +1191,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@CacheField(propagateToInterface = true)
 	private long[] _userGroupIds;
+
+	private List<UserGroup> _userGroups;
 
 }

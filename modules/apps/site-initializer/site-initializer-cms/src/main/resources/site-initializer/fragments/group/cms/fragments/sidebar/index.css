@@ -29,6 +29,9 @@
 				left: 0;
 				position: absolute;
 				top: 0;
+			}
+
+			&:hover:not(.active):before {
 				width: 2px;
 			}
 		}

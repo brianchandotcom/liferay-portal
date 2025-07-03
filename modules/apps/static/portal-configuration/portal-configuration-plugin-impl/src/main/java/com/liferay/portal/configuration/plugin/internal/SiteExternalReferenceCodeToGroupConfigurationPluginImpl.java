@@ -97,7 +97,7 @@ public class SiteExternalReferenceCodeToGroupConfigurationPluginImpl
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Skip site external reference code " +
-					siteExternalReferenceCode);
+						siteExternalReferenceCode);
 			}
 		}
 	}

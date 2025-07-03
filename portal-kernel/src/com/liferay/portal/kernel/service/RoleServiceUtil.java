@@ -56,6 +56,15 @@ public class RoleServiceUtil {
 		getService().addUserRoles(userId, roleIds);
 	}
 
+	public static Role copyRole(
+			long userId, String name, long sourceRoleId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyRole(
+			userId, name, sourceRoleId, serviceContext);
+	}
+
 	/**
 	 * Deletes the role with the primary key and its associated permissions.
 	 *

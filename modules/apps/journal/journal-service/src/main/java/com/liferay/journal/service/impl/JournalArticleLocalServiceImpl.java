@@ -7480,7 +7480,17 @@ public class JournalArticleLocalServiceImpl
 		targetArticle.setFolderId(sourceArticle.getFolderId());
 		targetArticle.setTreePath(sourceArticle.getTreePath());
 		targetArticle.setArticleId(targetArticleId);
-		targetArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
+
+		if (newArticle) {
+			version = JournalArticleConstants.VERSION_DEFAULT;
+		}
+		else {
+			version = getNextVersion(
+				getLatestArticle(
+					groupId, sourceArticleId, WorkflowConstants.STATUS_ANY));
+		}
+
+		targetArticle.setVersion(version);
 		targetArticle.setDDMStructureId(sourceArticle.getDDMStructureId());
 		targetArticle.setDDMTemplateKey(sourceArticle.getDDMTemplateKey());
 		targetArticle.setDefaultLanguageId(

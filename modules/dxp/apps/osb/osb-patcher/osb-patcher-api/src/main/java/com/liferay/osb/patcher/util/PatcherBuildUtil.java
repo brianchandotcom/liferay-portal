@@ -1484,11 +1484,11 @@ public class PatcherBuildUtil {
 					mainPatcherFix);
 			}
 			else {
-				mainPatcherFix = PatcherFixUtil.addNewPatcherFix(
-					user, PatcherFixConstants.KEY_VERSION_DEFAULT,
-					patcherFixIds, patcherBuild.getPatcherProjectVersionId(),
+				mainPatcherFix = PatcherFixLocalServiceUtil.addPatcherFix(
+					user.getUserId(), patcherBuild.getPatcherProjectVersionId(),
+					PatcherFixConstants.KEY_VERSION_DEFAULT,
 					patcherBuild.getName(), type,
-					WorkflowConstants.STATUS_FIX_ADDING);
+					WorkflowConstants.STATUS_FIX_ADDING, patcherFixIds);
 			}
 		}
 		else {

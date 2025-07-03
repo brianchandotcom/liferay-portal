@@ -20,9 +20,14 @@
 }
 
 .cms-fds-card .table-list {
-	border-bottom: 0;
-	border-left: 0;
-	border-radius: 0 0 10px 10px;
-	border-right: 0;
+	border: 0;
 	margin-bottom: 0;
+}
+
+.cms-fds-card .table-list thead {
+	display: none;
+}
+
+.cms-fds-card .table-list .cell-item-actions {
+	width: 10% !important;
 }

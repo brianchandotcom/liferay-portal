@@ -277,9 +277,8 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		}
 	}
 
-	private static final Map<String, TestrayAttachment> _testrayAttachments =
+	private final Map<String, TestrayAttachment> _testrayAttachments =
 		new HashMap<>();
-
 	private final File _testrayUploadBaseDir;
 	private final TopLevelBuildReport _topLevelBuildReport;
 

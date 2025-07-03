@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -136,12 +137,11 @@ public class AdvancedTableFDSView extends BaseTableFDSView {
 		).add(
 			"size", "size",
 			fdsTableSchemaField -> {
-
-				// Set invalid client extension
+				String purposefullyInvalidURL = StringUtil.randomString();
 
 				fdsTableSchemaField.setContentRendererClientExtension(true);
 				fdsTableSchemaField.setContentRendererModuleURL(
-					"default from /");
+					"default from " + purposefullyInvalidURL);
 			}
 		).add(
 			"status", "status",

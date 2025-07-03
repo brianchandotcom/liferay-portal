@@ -9,6 +9,7 @@ import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseClientExtensionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,7 +45,7 @@ public class InvalidClientExtensionFDSFilter
 
 	@Override
 	public String getModuleURL() {
-		return "/";
+		return StringUtil.randomString();
 	}
 
 	@Override

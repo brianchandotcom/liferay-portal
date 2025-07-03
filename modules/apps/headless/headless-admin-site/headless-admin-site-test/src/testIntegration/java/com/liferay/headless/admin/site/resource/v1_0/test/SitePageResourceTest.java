@@ -764,7 +764,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				pageSettings.setHiddenFromNavigation(
 					RandomTestUtil::randomBoolean);
 				pageSettings.setPriority(
-					_externalReferenceCodePriorityMap.merge(
+					_priorities.merge(
 						curParentSitePageExternalReferenceCode, 0,
 						(oldPriority, defaultPriority) -> oldPriority + 1));
 
@@ -1093,7 +1093,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getExternalReferenceCode());
 		}
 
-		_externalReferenceCodePriorityMap.clear();
+		_priorities.clear();
 
 		SitePage sitePage1 =
 			testPostByExternalReferenceCodeSitePage_addSitePage(
@@ -1190,13 +1190,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private static final List<SitePage.Type> _types = Arrays.asList(
 		SitePage.Type.CONTENT_PAGE, SitePage.Type.WIDGET_PAGE);
 
-	private final Map<String, Integer> _externalReferenceCodePriorityMap =
-		new HashMap<>();
-
 	@Inject
 	private JSONFactory _jsonFactory;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	private final Map<String, Integer> _priorities = new HashMap<>();
 
 }

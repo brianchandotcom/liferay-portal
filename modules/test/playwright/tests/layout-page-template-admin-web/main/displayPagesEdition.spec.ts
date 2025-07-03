@@ -17,6 +17,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {getWebContentStructureId} from '../../../utils/structured-content/getBasicWebContentStructureId';
@@ -663,6 +664,8 @@ test.describe('Preview Item', () => {
 
 			await pageEditorPage.waitForChangesSaved();
 
+			// Check that only one request is made
+
 			// Change preview with item
 
 			await displayPageTemplatesPage.changePreviewItem('Animal 01');
@@ -701,6 +704,14 @@ test.describe('Preview Item', () => {
 				await page.locator('.component-image img').getAttribute('src')
 			).toContain('poodle.jpg');
 
+			// Change the item and check that the page has been updated
+
+			await displayPageTemplatesPage.changePreviewItem('Animal 02');
+
+			await expect(
+				page.locator('.component-heading').getByText('Animal 02')
+			).toBeVisible();
+
 			// Preview in a new tab
 
 			const pagePromise = context.waitForEvent('page');
@@ -721,11 +732,138 @@ test.describe('Preview Item', () => {
 				const newPage = await pagePromise;
 
 				await expect(
-					newPage.locator('.component-heading').getByText('Animal 01')
+					newPage.locator('.component-heading').getByText('Animal 02')
 				).toBeVisible({
 					timeout: 100,
 				});
 			}).toPass();
+		}
+	);
+
+	test(
+		'Update the page when Products are selected from the Preview With selector',
+		{tag: '@LPD-59397'},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			site,
+		}) => {
+			const changePreviewProduct = async (itemName: string) => {
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('menuitem', {
+						name: 'Select Other Item',
+					}),
+					trigger: page.getByLabel('Preview With'),
+				});
+
+				const modal = page.frameLocator('iframe[title="Select"]');
+
+				await clickAndExpectToBeHidden({
+					target: page.locator('.modal-dialog'),
+					trigger: modal.getByText(itemName),
+				});
+			};
+
+			// Create two products with a specification that uses the same key
+
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Channel',
+				siteGroupId: site.id,
+			});
+
+			const catalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+			const specification =
+				await apiHelpers.headlessCommerceAdminCatalog.postSpecification();
+
+			const product1 =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					catalogId: catalog.id,
+					name: {en_US: 'Product 1'},
+					productSpecifications: [
+						{
+							specificationKey: specification.key,
+							value: {
+								en_US: 'Product Spectification 1',
+							},
+						},
+					],
+				});
+
+			const key = product1.productSpecifications[0].key;
+
+			const product2 =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					catalogId: catalog.id,
+					name: {en_US: 'Product 2'},
+					productSpecifications: [
+						{
+							specificationKey: specification.key,
+							value: {
+								en_US: 'Product Spectification 2',
+							},
+						},
+					],
+				});
+
+			await apiHelpers.headlessCommerceAdminCatalog.patchProductSpecification(
+				product2.productSpecifications[0].id,
+				{key}
+			);
+
+			// Create a Display Page Template with a Product Specification fragment
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Product',
+				name: displayPageTemplateName,
+			});
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			await pageEditorPage.addFragment(
+				'Product',
+				'Product Specification'
+			);
+
+			// Change the Key field to use the shared key
+
+			await page.getByLabel('Key', {exact: true}).fill(key);
+
+			// Check that the page is updated when the selection in Preview With selector is changed
+
+			await changePreviewProduct('Product 1');
+
+			await expect(
+				page.locator('[data-name="Product Specification"]')
+			).toContainText('Product Spectification 1');
+
+			await changePreviewProduct('Product 2');
+
+			await expect(
+				page.locator('[data-name="Product Specification"]')
+			).toContainText('Product Spectification 2');
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'Product 1',
+				}),
+				trigger: page.getByLabel('Preview With'),
+			});
+
+			await expect(
+				page.locator('[data-name="Product Specification"]')
+			).toContainText('Product Spectification 1');
 		}
 	);
 });

@@ -609,8 +609,20 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			return null;
 		}
 
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+		String testrayS3ObjectPath = getTopLevelBuildURLPath() + "/" + key;
+
+		TestrayS3Object testrayS3Object = testrayS3Bucket.getTestrayS3Object(
+			testrayS3ObjectPath);
+
+		if (testrayS3Object != null) {
+			return new DefaultTestrayAttachment(
+				this, name, testrayS3ObjectPath, testrayS3Object.getURL());
+		}
+
 		return uploadTestrayAttachment(
-			name, getTopLevelBuildURLPath() + "/" + key,
+			name, testrayS3ObjectPath,
 			new Callable<File>() {
 
 				@Override

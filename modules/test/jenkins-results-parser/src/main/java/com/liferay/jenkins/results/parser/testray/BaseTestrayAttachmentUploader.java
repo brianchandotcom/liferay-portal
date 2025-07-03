@@ -168,8 +168,27 @@ public abstract class BaseTestrayAttachmentUploader
 			return;
 		}
 
+		URL buildReportTestrayAttachmentURL =
+			getBuildReportTestrayAttachmentURL();
+
 		topLevelBuildReport.addTestrayAttachmentURL(
-			getBuildReportTestrayAttachmentURL());
+			buildReportTestrayAttachmentURL);
+
+		String buildReportTestrayAttachmentURLString = String.valueOf(
+			buildReportTestrayAttachmentURL);
+
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+		String testrayS3ObjectPath =
+			buildReportTestrayAttachmentURLString.replace(
+				testrayS3Bucket.getTestrayS3BaseURL() + "/", "");
+
+		TestrayS3Object testrayS3Object = testrayS3Bucket.getTestrayS3Object(
+			testrayS3ObjectPath);
+
+		if (testrayS3Object != null) {
+			return;
+		}
 
 		JSONObject buildReportJSONObject =
 			topLevelBuildReport.getBuildReportJSONObject();
@@ -193,8 +212,6 @@ public abstract class BaseTestrayAttachmentUploader
 		}
 
 		File buildReportGzipFile = _convertToGzipFile(buildReportFile);
-
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
 		testrayS3Bucket.createTestrayS3Object(
 			relativeBuildDirPath + "/" + buildReportGzipFile.getName(),

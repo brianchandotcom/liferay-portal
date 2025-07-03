@@ -60,11 +60,8 @@ public class CPDefinitionInventoryUpgradeProcess extends UpgradeProcess {
 							allowedOrderQuantitiesItems) {
 
 						sb.append(
-							String.format(
-								"%,.2f",
-								GetterUtil.getDouble(
-									allowedOrderQuantitiesItem)));
-						sb.append(StringPool.SPACE);
+							GetterUtil.getDouble(allowedOrderQuantitiesItem));
+						sb.append(",.2f ");
 					}
 
 					allowedOrderQuantities = sb.toString();

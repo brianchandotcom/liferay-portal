@@ -1351,6 +1351,9 @@ public class CustomFieldsUtilTest {
 		// Boolean
 
 		_testToMapExpectedClassAndValue(
+			_createCustomField("true", null, _expandoColumn1, null),
+			Boolean.class, true);
+		_testToMapExpectedClassAndValue(
 			_createCustomField(Boolean.TRUE, null, _expandoColumn1, null),
 			Boolean.class, true);
 		_testToMapExpectedClassAndValue(
@@ -1359,6 +1362,10 @@ public class CustomFieldsUtilTest {
 
 		// Boolean array
 
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				Arrays.asList("false", "true"), null, _expandoColumn2, null),
+			boolean[].class, new boolean[] {false, true});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
 				Arrays.asList(Boolean.FALSE, Boolean.TRUE), null,
@@ -1372,6 +1379,10 @@ public class CustomFieldsUtilTest {
 			_createCustomField(
 				new Boolean[] {Boolean.FALSE, Boolean.TRUE}, null,
 				_expandoColumn2, null),
+			boolean[].class, new boolean[] {false, true});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				new String[] {"false", "true"}, null, _expandoColumn2, null),
 			boolean[].class, new boolean[] {false, true});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
@@ -1432,6 +1443,10 @@ public class CustomFieldsUtilTest {
 				Integer.valueOf(_DATA_INT), null, _expandoColumn5, null),
 			Double.class, (double)_DATA_INT);
 		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				String.valueOf(_DATA_INT), null, _expandoColumn5, null),
+			Double.class, (double)_DATA_INT);
+		_testToMapExpectedClassAndValue(
 			_createCustomField(_DATA_DOUBLE, null, _expandoColumn5, null),
 			Double.class, _DATA_DOUBLE);
 		_testToMapExpectedClassAndValue(
@@ -1469,6 +1484,11 @@ public class CustomFieldsUtilTest {
 			_createCustomField(
 				new Integer[] {Integer.valueOf(_DATA_INT)}, null,
 				_expandoColumn6, null),
+			double[].class, new double[] {(double)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				new String[] {String.valueOf(_DATA_INT)}, null, _expandoColumn6,
+				null),
 			double[].class, new double[] {(double)_DATA_INT});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
@@ -1511,6 +1531,11 @@ public class CustomFieldsUtilTest {
 			double[].class, new double[] {(double)_DATA_INT});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
+				new String[] {String.valueOf(_DATA_INT)}, null, _expandoColumn7,
+				null),
+			double[].class, new double[] {(double)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
 				new double[] {_DATA_DOUBLE}, null, _expandoColumn7, null),
 			double[].class, new double[] {_DATA_DOUBLE});
 		_testToMapExpectedClassAndValue(
@@ -1550,6 +1575,11 @@ public class CustomFieldsUtilTest {
 			double[].class, new double[] {(double)_DATA_INT});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
+				new String[] {String.valueOf(_DATA_INT)}, null, _expandoColumn8,
+				null),
+			double[].class, new double[] {(double)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
 				new double[] {_DATA_DOUBLE}, null, _expandoColumn8, null),
 			double[].class, new double[] {_DATA_DOUBLE});
 		_testToMapExpectedClassAndValue(
@@ -1564,6 +1594,14 @@ public class CustomFieldsUtilTest {
 		// Float
 
 		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				String.valueOf(_DATA_DOUBLE), null, _expandoColumn9, null),
+			Float.class, (float)_DATA_DOUBLE);
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				String.valueOf(_DATA_FLOAT), null, _expandoColumn9, null),
+			Float.class, _DATA_FLOAT);
+		_testToMapExpectedClassAndValue(
 			_createCustomField(_DATA_DOUBLE, null, _expandoColumn9, null),
 			Float.class, (float)_DATA_DOUBLE);
 		_testToMapExpectedClassAndValue(
@@ -1572,6 +1610,16 @@ public class CustomFieldsUtilTest {
 
 		// Float array
 
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				Arrays.asList(String.valueOf(_DATA_DOUBLE)), null,
+				_expandoColumn10, null),
+			float[].class, new float[] {(float)_DATA_DOUBLE});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				Arrays.asList(String.valueOf(_DATA_FLOAT)), null,
+				_expandoColumn10, null),
+			float[].class, new float[] {_DATA_FLOAT});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
 				Arrays.asList(_DATA_DOUBLE), null, _expandoColumn10, null),
@@ -1588,6 +1636,11 @@ public class CustomFieldsUtilTest {
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
 				new Float[] {Float.valueOf(_DATA_FLOAT)}, null,
+				_expandoColumn10, null),
+			float[].class, new float[] {_DATA_FLOAT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				new String[] {String.valueOf(_DATA_FLOAT)}, null,
 				_expandoColumn10, null),
 			float[].class, new float[] {_DATA_FLOAT});
 		_testToMapExpectedClassAndValue(
@@ -1627,6 +1680,10 @@ public class CustomFieldsUtilTest {
 				new BigDecimal(_DATA_INT), null, _expandoColumn12, null),
 			Integer.class, _DATA_INT);
 		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				String.valueOf(_DATA_INT), null, _expandoColumn12, null),
+			Integer.class, _DATA_INT);
+		_testToMapExpectedClassAndValue(
 			_createCustomField(_DATA_INT, null, _expandoColumn12, null),
 			Integer.class, _DATA_INT);
 		_testToMapExpectedClassAndValue(
@@ -1638,6 +1695,11 @@ public class CustomFieldsUtilTest {
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
 				Arrays.asList(new BigDecimal(_DATA_INT)), null,
+				_expandoColumn13, null),
+			int[].class, new int[] {_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				Arrays.asList(String.valueOf(_DATA_INT)), null,
 				_expandoColumn13, null),
 			int[].class, new int[] {_DATA_INT});
 		_testToMapExpectedClassAndValue(
@@ -1665,6 +1727,11 @@ public class CustomFieldsUtilTest {
 			int[].class, new int[] {(int)_DATA_LONG});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
+				new String[] {String.valueOf(_DATA_INT)}, null,
+				_expandoColumn13, null),
+			int[].class, new int[] {_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
 				new int[] {_DATA_INT}, null, _expandoColumn13, null),
 			int[].class, new int[] {_DATA_INT});
 		_testToMapExpectedClassAndValue(
@@ -1679,10 +1746,26 @@ public class CustomFieldsUtilTest {
 				new BigDecimal(_DATA_LONG), null, _expandoColumn14, null),
 			Long.class, _DATA_LONG);
 		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				String.valueOf(_DATA_INT), null, _expandoColumn14, null),
+			Long.class, (long)_DATA_INT);
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				String.valueOf(_DATA_LONG), null, _expandoColumn14, null),
+			Long.class, (long)_DATA_LONG);
+		_testToMapExpectedClassAndValue(
 			_createCustomField(_DATA_INT, null, _expandoColumn14, null),
 			Long.class, (long)_DATA_INT);
 		_testToMapExpectedClassAndValue(
 			_createCustomField(_DATA_LONG, null, _expandoColumn14, null),
+			Long.class, _DATA_LONG);
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				String.valueOf(_DATA_INT), null, _expandoColumn14, null),
+			Long.class, (long)_DATA_INT);
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				String.valueOf(_DATA_LONG), null, _expandoColumn14, null),
 			Long.class, _DATA_LONG);
 
 		// Long array
@@ -1692,6 +1775,16 @@ public class CustomFieldsUtilTest {
 				Arrays.asList(new BigDecimal(_DATA_LONG)), null,
 				_expandoColumn15, null),
 			long[].class, new long[] {_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				Arrays.asList(String.valueOf(_DATA_INT)), null,
+				_expandoColumn15, null),
+			long[].class, new long[] {(long)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				Arrays.asList(String.valueOf(_DATA_LONG)), null,
+				_expandoColumn15, null),
+			long[].class, new long[] {(long)_DATA_LONG});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
 				Arrays.asList(_DATA_INT), null, _expandoColumn15, null),
@@ -1717,6 +1810,16 @@ public class CustomFieldsUtilTest {
 			long[].class, new long[] {_DATA_LONG});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
+				new String[] {String.valueOf(_DATA_INT)}, null,
+				_expandoColumn15, null),
+			long[].class, new long[] {_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				new String[] {String.valueOf(_DATA_LONG)}, null,
+				_expandoColumn15, null),
+			long[].class, new long[] {_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
 				new int[] {_DATA_INT}, null, _expandoColumn15, null),
 			long[].class, new long[] {(long)_DATA_INT});
 		_testToMapExpectedClassAndValue(
@@ -1728,6 +1831,16 @@ public class CustomFieldsUtilTest {
 				Arrays.asList(new BigDecimal(_DATA_LONG)), null,
 				_expandoColumn16, null),
 			long[].class, new long[] {_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				Arrays.asList(String.valueOf(_DATA_INT)), null,
+				_expandoColumn16, null),
+			long[].class, new long[] {(long)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				Arrays.asList(String.valueOf(_DATA_LONG)), null,
+				_expandoColumn16, null),
+			long[].class, new long[] {(long)_DATA_LONG});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
 				Arrays.asList(_DATA_INT), null, _expandoColumn16, null),
@@ -1750,6 +1863,16 @@ public class CustomFieldsUtilTest {
 			_createCustomField(
 				new Long[] {Long.valueOf(_DATA_LONG)}, null, _expandoColumn16,
 				null),
+			long[].class, new long[] {_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				new String[] {String.valueOf(_DATA_INT)}, null,
+				_expandoColumn16, null),
+			long[].class, new long[] {(long)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				new String[] {String.valueOf(_DATA_LONG)}, null,
+				_expandoColumn16, null),
 			long[].class, new long[] {_DATA_LONG});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
@@ -1786,6 +1909,16 @@ public class CustomFieldsUtilTest {
 			_createCustomField(
 				new Long[] {Long.valueOf(_DATA_LONG)}, null, _expandoColumn17,
 				null),
+			long[].class, new long[] {_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				new String[] {String.valueOf(_DATA_INT)}, null,
+				_expandoColumn17, null),
+			long[].class, new long[] {(long)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_createCustomField(
+				new String[] {String.valueOf(_DATA_LONG)}, null,
+				_expandoColumn17, null),
 			long[].class, new long[] {_DATA_LONG});
 		_testToMapExpectedClassAndValue(
 			_createCustomField(
@@ -1977,13 +2110,6 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn1.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField("true", null, _expandoColumn1, null), null,
-				null));
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn1.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
 				_createCustomField(_DATA_INT, null, _expandoColumn1, null),
 				null, null));
 		AssertUtils.assertFailure(
@@ -1997,14 +2123,6 @@ public class CustomFieldsUtilTest {
 
 		// Boolean array
 
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn2.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList("true"), null, _expandoColumn2, null),
-				null, null));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
 			"Unable to parse custom field \"" + _expandoColumn2.getName() +
@@ -2049,58 +2167,14 @@ public class CustomFieldsUtilTest {
 				_createCustomField(_DATA_INT, null, _expandoColumn4, null),
 				null, null));
 
-		// Double
-
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn5.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_STRING, null, _expandoColumn5, null),
-				null, null));
-
 		// Double array
 
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn6.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList(_DATA_STRING), null, _expandoColumn6, null),
-				null, null));
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn7.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList(_DATA_STRING), null, _expandoColumn7, null),
-				null, null));
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn8.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList(_DATA_STRING), null, _expandoColumn8, null),
-				null, null));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
 			"Unable to parse custom field \"" + _expandoColumn8.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
 				_createCustomField(_DATA_INT, null, _expandoColumn8, null),
-				null, null));
-
-		// Float
-
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn9.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_STRING, null, _expandoColumn9, null),
 				null, null));
 
 		// Float array
@@ -2110,25 +2184,7 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn10.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList(_DATA_STRING), null, _expandoColumn10, null),
-				null, null));
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn10.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
 				_createCustomField(_DATA_INT, null, _expandoColumn10, null),
-				null, null));
-
-		// Integer
-
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn12.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_STRING, null, _expandoColumn12, null),
 				null, null));
 
 		// Integer array
@@ -2138,25 +2194,7 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn13.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList(_DATA_STRING), null, _expandoColumn13, null),
-				null, null));
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn13.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
 				_createCustomField(_DATA_INT, null, _expandoColumn13, null),
-				null, null));
-
-		// Long
-
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn14.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_STRING, null, _expandoColumn14, null),
 				null, null));
 
 		// Long array
@@ -2166,23 +2204,7 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn15.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList(_DATA_STRING), null, _expandoColumn15, null),
-				null, null));
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn15.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
 				_createCustomField(_DATA_INT, null, _expandoColumn15, null),
-				null, null));
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn16.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList(_DATA_STRING), null, _expandoColumn16, null),
 				null, null));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
@@ -2196,25 +2218,7 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn17.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList(_DATA_STRING), null, _expandoColumn17, null),
-				null, null));
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn17.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
 				_createCustomField(_DATA_INT, null, _expandoColumn17, null),
-				null, null));
-
-		// Number
-
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn18.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_STRING, null, _expandoColumn18, null),
 				null, null));
 
 		// Number array
@@ -2224,37 +2228,11 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn19.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList(_DATA_STRING), null, _expandoColumn19, null),
-				null, null));
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn19.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
 				_createCustomField(_DATA_INT, null, _expandoColumn19, null),
-				null, null));
-
-		// Short
-
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn20.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_STRING, null, _expandoColumn20, null),
 				null, null));
 
 		// Short array
 
-		AssertUtils.assertFailure(
-			IllegalArgumentException.class,
-			"Unable to parse custom field \"" + _expandoColumn21.getName() +
-				"\"",
-			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(
-					Arrays.asList(_DATA_STRING), null, _expandoColumn21, null),
-				null, null));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
 			"Unable to parse custom field \"" + _expandoColumn21.getName() +

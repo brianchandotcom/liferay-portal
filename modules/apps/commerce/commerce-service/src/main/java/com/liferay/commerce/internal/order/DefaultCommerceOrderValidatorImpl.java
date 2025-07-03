@@ -57,17 +57,15 @@ public class DefaultCommerceOrderValidatorImpl
 	public static final String KEY = "default";
 
 	public DefaultCommerceOrderValidatorImpl() {
-		DecimalFormat decimalFormat = new DecimalFormat("#####0.00");
+		_decimalFormat = new DecimalFormat("#####0.00");
 
-		DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+		DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
 
-		symbols.setDecimalSeparator(CharPool.PERIOD);
+		decimalFormatSymbols.setDecimalSeparator(CharPool.PERIOD);
 
-		decimalFormat.setDecimalFormatSymbols(symbols);
+		_decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
 
-		decimalFormat.setGroupingUsed(false);
-
-		_quantityDecimalFormat = decimalFormat;
+		_decimalFormat.setGroupingUsed(false);
 	}
 
 	@Override
@@ -314,7 +312,7 @@ public class DefaultCommerceOrderValidatorImpl
 	}
 
 	private String _formatQuantity(BigDecimal quantity) {
-		return _quantityDecimalFormat.format(quantity);
+		return _decimalFormat.format(quantity);
 	}
 
 	private String _getLocalizedMessage(
@@ -357,6 +355,6 @@ public class DefaultCommerceOrderValidatorImpl
 	@Reference
 	private Language _language;
 
-	private final DecimalFormat _quantityDecimalFormat;
+	private final DecimalFormat _decimalFormat;
 
 }

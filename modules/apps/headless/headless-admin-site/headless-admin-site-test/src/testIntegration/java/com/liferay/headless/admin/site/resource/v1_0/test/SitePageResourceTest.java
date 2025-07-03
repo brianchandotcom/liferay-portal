@@ -200,45 +200,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			SitePage.Type.CONTENT_PAGE);
 		_testPatchSiteSiteByExternalReferenceCodeSitePage(
 			SitePage.Type.WIDGET_PAGE);
-
-		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
-			(curParentSitePageExternalReferenceCode, curPriority, sitePage) -> {
-				int expectedPriority = _getExpectedPriority(
-					sitePage.getParentSitePageExternalReferenceCode(),
-					curParentSitePageExternalReferenceCode, curPriority);
-
-				sitePage.setParentSitePageExternalReferenceCode(
-					() -> curParentSitePageExternalReferenceCode);
-
-				PageSettings curPageSettings = sitePage.getPageSettings();
-
-				curPageSettings.setPriority(() -> curPriority);
-
-				SitePage patchSitePage =
-					sitePageResource.
-						patchSiteSiteByExternalReferenceCodeSitePage(
-							testGroup.getExternalReferenceCode(),
-							sitePage.getExternalReferenceCode(),
-							new SitePage() {
-								{
-									setPageSettings(() -> curPageSettings);
-									setParentSitePageExternalReferenceCode(
-										() ->
-											curParentSitePageExternalReferenceCode);
-								}
-							});
-
-				curPageSettings.setPriority(expectedPriority);
-
-				assertEquals(sitePage, patchSitePage);
-				assertValid(patchSitePage);
-
-				_assertSitePage(
-					_layoutLocalService.getLayoutByExternalReferenceCode(
-						sitePage.getExternalReferenceCode(),
-						testGroup.getGroupId()),
-					patchSitePage);
-			});
+		_testPatchSiteSiteByExternalReferenceCodeSitePageWithPriority();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -331,36 +293,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			SitePage.Type.CONTENT_PAGE);
 		_testPutSiteSiteByExternalReferenceCodeSitePage(
 			SitePage.Type.WIDGET_PAGE);
-
-		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
-			(parentSitePageExternalReferenceCode, priority, sitePage) -> {
-				int expectedPriority = _getExpectedPriority(
-					sitePage.getParentSitePageExternalReferenceCode(),
-					parentSitePageExternalReferenceCode, priority);
-
-				sitePage.setParentSitePageExternalReferenceCode(
-					parentSitePageExternalReferenceCode);
-
-				PageSettings pageSettings = sitePage.getPageSettings();
-
-				pageSettings.setPriority(priority);
-
-				SitePage putSitePage =
-					sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
-						testGroup.getExternalReferenceCode(),
-						sitePage.getExternalReferenceCode(), sitePage);
-
-				pageSettings.setPriority(expectedPriority);
-
-				assertEquals(sitePage, putSitePage);
-				assertValid(putSitePage);
-
-				_assertSitePage(
-					_layoutLocalService.getLayoutByExternalReferenceCode(
-						sitePage.getExternalReferenceCode(),
-						testGroup.getGroupId()),
-					putSitePage);
-			});
+		_testPutSiteSiteByExternalReferenceCodeSitePageWithPriority();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -1006,6 +939,49 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getUuid()));
 	}
 
+	private void _testPatchSiteSiteByExternalReferenceCodeSitePageWithPriority()
+		throws Exception {
+
+		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
+			(curParentSitePageExternalReferenceCode, curPriority, sitePage) -> {
+				int expectedPriority = _getExpectedPriority(
+					sitePage.getParentSitePageExternalReferenceCode(),
+					curParentSitePageExternalReferenceCode, curPriority);
+
+				sitePage.setParentSitePageExternalReferenceCode(
+					() -> curParentSitePageExternalReferenceCode);
+
+				PageSettings curPageSettings = sitePage.getPageSettings();
+
+				curPageSettings.setPriority(() -> curPriority);
+
+				SitePage patchSitePage =
+					sitePageResource.
+						patchSiteSiteByExternalReferenceCodeSitePage(
+							testGroup.getExternalReferenceCode(),
+							sitePage.getExternalReferenceCode(),
+							new SitePage() {
+								{
+									setPageSettings(() -> curPageSettings);
+									setParentSitePageExternalReferenceCode(
+										() ->
+											curParentSitePageExternalReferenceCode);
+								}
+							});
+
+				curPageSettings.setPriority(expectedPriority);
+
+				assertEquals(sitePage, patchSitePage);
+				assertValid(patchSitePage);
+
+				_assertSitePage(
+					_layoutLocalService.getLayoutByExternalReferenceCode(
+						sitePage.getExternalReferenceCode(),
+						testGroup.getGroupId()),
+					patchSitePage);
+			});
+	}
+
 	private void _testPostByExternalReferenceCodeSitePage(SitePage sitePage)
 		throws Exception {
 
@@ -1059,6 +1035,40 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					ListUtil.filter(
 						_types, curType -> !Objects.equals(curType, type))),
 				sitePage.getUuid()));
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodeSitePageWithPriority()
+		throws Exception {
+
+		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
+			(parentSitePageExternalReferenceCode, priority, sitePage) -> {
+				int expectedPriority = _getExpectedPriority(
+					sitePage.getParentSitePageExternalReferenceCode(),
+					parentSitePageExternalReferenceCode, priority);
+
+				sitePage.setParentSitePageExternalReferenceCode(
+					parentSitePageExternalReferenceCode);
+
+				PageSettings pageSettings = sitePage.getPageSettings();
+
+				pageSettings.setPriority(priority);
+
+				SitePage putSitePage =
+					sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
+						testGroup.getExternalReferenceCode(),
+						sitePage.getExternalReferenceCode(), sitePage);
+
+				pageSettings.setPriority(expectedPriority);
+
+				assertEquals(sitePage, putSitePage);
+				assertValid(putSitePage);
+
+				_assertSitePage(
+					_layoutLocalService.getLayoutByExternalReferenceCode(
+						sitePage.getExternalReferenceCode(),
+						testGroup.getGroupId()),
+					putSitePage);
+			});
 	}
 
 	private void _testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(

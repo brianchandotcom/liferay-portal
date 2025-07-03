@@ -119,12 +119,14 @@ public class CustomFieldsUtil {
 			}
 
 			if (ExpandoColumnConstants.BOOLEAN == attributeType) {
-				_validateCustomField(customField, data, Boolean.class);
+				_validateCustomField(
+					customField, data, Boolean.class, String.class);
 
 				map.put(name, GetterUtil.getBoolean(data));
 			}
 			else if (ExpandoColumnConstants.BOOLEAN_ARRAY == attributeType) {
-				_validateArrayCustomField(customField, data, Boolean.class);
+				_validateArrayCustomField(
+					customField, data, Boolean.class, String.class);
 
 				map.put(
 					name,
@@ -145,23 +147,27 @@ public class CustomFieldsUtil {
 					_toArray(Date.class, data, CustomFieldsUtil::_toDate));
 			}
 			else if (ExpandoColumnConstants.DOUBLE == attributeType) {
-				_validateCustomField(customField, data, Number.class);
+				_validateCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(name, GetterUtil.getDouble(data));
 			}
 			else if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
-				_validateArrayCustomField(customField, data, Number.class);
+				_validateArrayCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(
 					name, _toArray(double.class, data, GetterUtil::getDouble));
 			}
 			else if (ExpandoColumnConstants.FLOAT == attributeType) {
-				_validateCustomField(customField, data, Number.class);
+				_validateCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(name, GetterUtil.getFloat(data));
 			}
 			else if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
-				_validateArrayCustomField(customField, data, Number.class);
+				_validateArrayCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(
 					name, _toArray(float.class, data, GetterUtil::getFloat));
@@ -180,44 +186,52 @@ public class CustomFieldsUtil {
 					).toString());
 			}
 			else if (ExpandoColumnConstants.INTEGER == attributeType) {
-				_validateCustomField(customField, data, Number.class);
+				_validateCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(name, GetterUtil.getInteger(data));
 			}
 			else if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
-				_validateArrayCustomField(customField, data, Number.class);
+				_validateArrayCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(
 					name, _toArray(int.class, data, GetterUtil::getInteger));
 			}
 			else if (ExpandoColumnConstants.LONG == attributeType) {
-				_validateCustomField(customField, data, Number.class);
+				_validateCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(name, GetterUtil.getLong(data));
 			}
 			else if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
-				_validateArrayCustomField(customField, data, Number.class);
+				_validateArrayCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(name, _toArray(long.class, data, GetterUtil::getLong));
 			}
 			else if (ExpandoColumnConstants.NUMBER == attributeType) {
-				_validateCustomField(customField, data, Number.class);
+				_validateCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(name, GetterUtil.getNumber(data));
 			}
 			else if (ExpandoColumnConstants.NUMBER_ARRAY == attributeType) {
-				_validateArrayCustomField(customField, data, Number.class);
+				_validateArrayCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(
 					name, _toArray(Number.class, data, GetterUtil::getNumber));
 			}
 			else if (ExpandoColumnConstants.SHORT == attributeType) {
-				_validateCustomField(customField, data, Number.class);
+				_validateCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(name, GetterUtil.getShort(data));
 			}
 			else if (ExpandoColumnConstants.SHORT_ARRAY == attributeType) {
-				_validateArrayCustomField(customField, data, Number.class);
+				_validateArrayCustomField(
+					customField, data, Number.class, String.class);
 
 				map.put(
 					name, _toArray(short.class, data, GetterUtil::getShort));

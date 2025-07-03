@@ -75,6 +75,9 @@ public class UserSegmentsEntryMembershipCheckerTest {
 				"(customField/_00001_test eq 'test1-ÖÀñ')", _userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
+				"(customField/_00002_test eq false)", _userAttributes));
+		Assert.assertFalse(
+			UserSegmentsEntryMembershipChecker.isMember(
 				"(emailAddress eq 'user@liferay.com')", _userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
@@ -93,7 +96,10 @@ public class UserSegmentsEntryMembershipCheckerTest {
 				"(userId eq '2')", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"(customField/_00001_test eq 'test')", _userAttributes));
+				"(customField/_00001_test eq 'custom test')", _userAttributes));
+		Assert.assertTrue(
+			UserSegmentsEntryMembershipChecker.isMember(
+				"(customField/_00002_test eq true)", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(emailAddress eq 'test@liferay.com')", _userAttributes));
@@ -302,7 +308,8 @@ public class UserSegmentsEntryMembershipCheckerTest {
 	public void testIsMemberNotEquals() throws Exception {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"not (customField/_00001_test eq 'test')", _userAttributes));
+				"not (customField/_00001_test eq 'custom test')",
+				_userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"not (emailAddress eq 'test@liferay.com')", _userAttributes));
@@ -349,7 +356,9 @@ public class UserSegmentsEntryMembershipCheckerTest {
 		).put(
 			"classPK", 1
 		).put(
-			"customField/_00001_test", "test"
+			"customField/_00001_test", "custom test"
+		).put(
+			"customField/_00002_test", true
 		).put(
 			"emailAddress", "test@liferay.com"
 		).put(

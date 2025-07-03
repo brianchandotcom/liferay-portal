@@ -18,6 +18,7 @@ import com.liferay.osb.patcher.model.PatcherFix;
 import com.liferay.osb.patcher.model.PatcherProjectVersion;
 import com.liferay.osb.patcher.service.PatcherAccountLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherBuildLocalServiceUtil;
+import com.liferay.osb.patcher.service.PatcherBuildRelLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherFixLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherFixRelLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherProjectVersionLocalServiceUtil;
@@ -60,6 +61,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1244,6 +1246,78 @@ public class PatcherBuildUtil {
 		}
 	}
 
+	public static PatcherBuild saveChildPatcherBuild(
+			PatcherBuild parentPatcherBuild, List<Long> patcherFixIds,
+			long patcherProjectVersionId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(patcherFixIds.size() * 2);
+
+		for (long patcherFixId : patcherFixIds) {
+			PatcherFix patcherFix = PatcherFixLocalServiceUtil.getPatcherFix(
+				patcherFixId);
+
+			sb.append(patcherFix.getName());
+
+			sb.append(StringPool.COMMA);
+		}
+
+		String patcherBuildName = StringUtil.merge(
+			PatcherUtil.sortTokens(sb.toString()));
+
+		PatcherAccount patcherAccount =
+			PatcherAccountLocalServiceUtil.getPatcherAccount(
+				parentPatcherBuild.getPatcherAccountId());
+
+		String key = generateKey(
+			patcherProjectVersionId, patcherBuildName,
+			patcherAccount.getAccountEntryCode(), parentPatcherBuild.getKey());
+
+		if (PatcherBuildRelUtil.hasChildPatcherBuilds(parentPatcherBuild)) {
+			List<PatcherBuild> childPatcherBuilds =
+				PatcherBuildRelUtil.getChildPatcherBuilds(parentPatcherBuild);
+
+			for (PatcherBuild childPatcherBuild : childPatcherBuilds) {
+				if (StringUtil.equalsIgnoreCase(
+						childPatcherBuild.getKey(), key)) {
+
+					childPatcherBuild.setQaStatus(
+						parentPatcherBuild.getQaStatus());
+
+					return childPatcherBuild;
+				}
+			}
+		}
+
+		PatcherBuild childPatcherBuild =
+			PatcherBuildLocalServiceUtil.createPatcherBuild(0);
+
+		childPatcherBuild.setChildBuild(true);
+		childPatcherBuild.setName(patcherBuildName);
+		childPatcherBuild.setKey(key);
+		childPatcherBuild.setPatcherAccountId(
+			patcherAccount.getPatcherAccountId());
+		childPatcherBuild.setPatcherProductVersionId(
+			parentPatcherBuild.getPatcherProductVersionId());
+		childPatcherBuild.setPatcherProjectVersionId(patcherProjectVersionId);
+		childPatcherBuild.setQaStatus(parentPatcherBuild.getQaStatus());
+		childPatcherBuild.setSupportTicket(
+			parentPatcherBuild.getSupportTicket());
+		childPatcherBuild.setType(parentPatcherBuild.getType());
+
+		childPatcherBuild = setLatestPatcherBuild(
+			childPatcherBuild, key, parentPatcherBuild.getSupportTicket());
+
+		childPatcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
+			childPatcherBuild);
+
+		PatcherBuildRelLocalServiceUtil.addPatcherBuildRel(
+			childPatcherBuild.getPatcherBuildId(),
+			parentPatcherBuild.getPatcherBuildId());
+
+		return childPatcherBuild;
+	}
+
 	public static void saveParentPatcherBuild(
 			long userId, PatcherBuild parentPatcherBuild,
 			String accountEntryCode)
@@ -1276,6 +1350,110 @@ public class PatcherBuildUtil {
 			parentPatcherBuild.getPatcherBuildId());
 
 		PatcherBuildLocalServiceUtil.updatePatcherBuild(parentPatcherBuild);
+	}
+
+	public static void savePatcherBuild(
+			User user, PatcherBuild parentPatcherBuild,
+			Map<Long, List<Long>> patcherProjectVersionIdPatcherFixIdsMap,
+			boolean mergeOnly, String accountEntryCode)
+		throws Exception {
+
+		saveParentPatcherBuild(
+			user.getUserId(), parentPatcherBuild, accountEntryCode);
+
+		patcherProjectVersionIdPatcherFixIdsMap =
+			rebaseOtherProjectVersionPatcherFixes(
+				user, patcherProjectVersionIdPatcherFixIdsMap,
+				parentPatcherBuild.getPatcherProjectVersionId());
+
+		for (Map.Entry<Long, List<Long>> entry :
+				patcherProjectVersionIdPatcherFixIdsMap.entrySet()) {
+
+			PatcherBuild patcherBuild = parentPatcherBuild;
+
+			if (!PatcherProjectVersionUtil.
+					isCombinedBranchPatcherProjectVersion(
+						parentPatcherBuild.getPatcherProjectVersionId()) &&
+				(parentPatcherBuild.getType() !=
+					PatcherBuildConstants.TYPE_FIX_PACK) &&
+				!PatcherBuildRelUtil.hasParentPatcherBuilds(
+					parentPatcherBuild)) {
+
+				patcherBuild = saveChildPatcherBuild(
+					parentPatcherBuild, entry.getValue(), entry.getKey());
+			}
+
+			updatePatcherBuildFixes(user, patcherBuild, entry.getValue());
+		}
+
+		List<BaseModel<?>> sendToJenkinsBaseModels =
+			workflowRelatedPatcherBuildsToPendingStatus(
+				parentPatcherBuild, mergeOnly);
+
+		for (BaseModel<?> sendToJenkinsBaseModel : sendToJenkinsBaseModels) {
+			long status = WorkflowConstants.STATUS_ANY;
+
+			if (sendToJenkinsBaseModel instanceof PatcherBuild patcherBuild) {
+				status = patcherBuild.getStatus();
+			}
+
+			if (status == WorkflowConstants.STATUS_BUILD_COMPILING) {
+				JenkinsUtil.sendDistJenkinsRequest(
+					user, (PatcherBuild)sendToJenkinsBaseModel);
+			}
+			else {
+				JenkinsUtil.sendAgentJenkinsRequest(
+					user, sendToJenkinsBaseModel);
+			}
+		}
+	}
+
+	public static void savePatcherBuild(
+			User user, PatcherBuild patcherBuild, String accountEntryCode,
+			String supportTicket, boolean smokeTestOnly, boolean mergeOnly)
+		throws Exception {
+
+		patcherBuild.setSupportTicket(supportTicket);
+		patcherBuild.setHotfixId(
+			generateHotfixId(
+				accountEntryCode, supportTicket,
+				patcherBuild.getPatcherProjectVersionId()));
+		patcherBuild.setQaStatus(WorkflowConstants.STATUS_PENDING);
+
+		if (smokeTestOnly) {
+			patcherBuild.setQaStatus(
+				WorkflowConstants.STATUS_BUILD_QA_PENDING_SMOKE_ONLY);
+		}
+
+		Map<Long, List<Long>> patcherProjectVersionIdPatcherFixIdsMap =
+			new HashMap<>();
+
+		if (patcherBuild.getPatcherProductVersionId() ==
+				PatcherProductVersionUtil.getPatcherProductVersionId(
+					PatcherProductVersionConstants.
+						LABEL_PRODUCT_VERSION_PORTAL_6X)) {
+
+			List<Long> patcherFixIds =
+				PatcherScanUtil.scanPatcherFixIdsByProjectVersionId(
+					patcherBuild.getName(),
+					patcherBuild.getPatcherProjectVersionId(),
+					PatcherFixUtil.getPatcherFixesSelection(
+						patcherBuild.getPatcherProjectVersionId(), false));
+
+			patcherProjectVersionIdPatcherFixIdsMap.put(
+				patcherBuild.getPatcherProjectVersionId(), patcherFixIds);
+		}
+		else {
+			patcherProjectVersionIdPatcherFixIdsMap =
+				PatcherScanUtil.scanPatcherFixIdsBy7xProjectVersions(
+					patcherBuild);
+		}
+
+		savePatcherBuild(
+			user, patcherBuild, patcherProjectVersionIdPatcherFixIdsMap,
+			mergeOnly, accountEntryCode);
+
+		reindexRelatedModels(patcherBuild);
 	}
 
 	public static void sendTestJenkinsRequest(
@@ -1451,6 +1629,44 @@ public class PatcherBuildUtil {
 				updatePatcherBuildStatusMergeComplete(user, patcherBuild);
 			}
 		}
+	}
+
+	public static PatcherBuild versionPatcherBuild(PatcherBuild patcherBuild)
+		throws Exception {
+
+		if (!isCompleteReadyOrReleased(patcherBuild)) {
+			return patcherBuild;
+		}
+
+		PatcherBuild newPatcherBuild = (PatcherBuild)patcherBuild.clone();
+
+		newPatcherBuild.setFileName(StringPool.BLANK);
+		newPatcherBuild.setHotfixId(0L);
+		newPatcherBuild.setQaComments(StringPool.BLANK);
+
+		if (newPatcherBuild.getPatcherProductVersionId() !=
+				PatcherProductVersionUtil.getPatcherProductVersionId(
+					PatcherProductVersionConstants.
+						LABEL_PRODUCT_VERSION_PORTAL_6X)) {
+
+			newPatcherBuild.setInitialName(newPatcherBuild.getName());
+
+			List<String> patcherBuildTokens = PatcherUtil.getTokens(
+				newPatcherBuild.getName());
+
+			patcherBuildTokens.removeAll(
+				PatcherProjectVersionUtil.
+					getCumulativePatcherProjectVersionFixedIssues(
+						newPatcherBuild.getPatcherProjectVersionId()));
+
+			newPatcherBuild.setName(StringUtil.merge(patcherBuildTokens));
+		}
+
+		newPatcherBuild.setNew(true);
+
+		newPatcherBuild.setPatcherBuildId(CounterLocalServiceUtil.increment());
+
+		return newPatcherBuild;
 	}
 
 	public static int workflowCompletedPatcherBuildQAStatus(

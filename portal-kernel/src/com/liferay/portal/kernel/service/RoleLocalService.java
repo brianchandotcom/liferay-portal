@@ -142,6 +142,11 @@ public interface RoleLocalService
 	 */
 	public void clearUserRoles(long userId) throws PortalException;
 
+	public Role copyRole(
+			long userId, String name, long sourceRoleId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

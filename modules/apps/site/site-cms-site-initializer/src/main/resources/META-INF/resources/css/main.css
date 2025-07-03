@@ -6,28 +6,28 @@
 	cursor: pointer;
 }
 
-.cms-fds-card .container-fluid {
+.cms-fds-fluid .container-fluid {
 	padding: 0;
 }
 
-.cms-fds-card .table-responsive {
+.cms-fds-fluid .table-responsive {
 	margin-bottom: 0;
 }
 
-.cms-fds-card .visualization-mode-table {
+.cms-fds-fluid .visualization-mode-table {
 	border: 0 !important;
 	margin-inline: -1rem;
 }
 
-.cms-fds-card .table-list {
+.cms-fds-fluid .table-list {
 	border: 0;
 	margin-bottom: 0;
 }
 
-.cms-fds-card .table-list thead {
+.cms-fds-fluid .table-list thead {
 	display: none;
 }
 
-.cms-fds-card .table-list .cell-item-actions {
+.cms-fds-fluid .table-list .cell-item-actions {
 	width: 10% !important;
 }

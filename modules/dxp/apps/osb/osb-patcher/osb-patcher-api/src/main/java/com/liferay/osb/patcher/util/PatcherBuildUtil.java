@@ -212,53 +212,6 @@ public class PatcherBuildUtil {
 		return false;
 	}
 
-	public static void deletePatcherBuildAndChildBuilds(
-			PatcherBuild patcherBuild)
-		throws Exception {
-
-		if (patcherBuild.getKeyVersion() !=
-				PatcherBuildConstants.KEY_VERSION_DEFAULT) {
-
-			PatcherBuild oldPatcherBuild = fetchPatcherBuildByNextKeyVersion(
-				patcherBuild, true);
-
-			if (oldPatcherBuild != null) {
-				oldPatcherBuild.setLatestKeyBuild(true);
-				oldPatcherBuild.setLatestSupportTicketBuild(true);
-
-				PatcherBuildLocalServiceUtil.updatePatcherBuild(
-					oldPatcherBuild);
-			}
-		}
-
-		List<PatcherBuild> childPatcherBuilds =
-			PatcherBuildRelUtil.getChildPatcherBuilds(patcherBuild);
-
-		if (!childPatcherBuilds.isEmpty()) {
-			for (PatcherBuild childPatcherBuild : childPatcherBuilds) {
-				PatcherBuildRelUtil.deletePatcherBuildRelsByChildPatcherBuildId(
-					childPatcherBuild.getPatcherBuildId());
-
-				deletePatcherBuildAndChildBuilds(childPatcherBuild);
-			}
-		}
-
-		PatcherAccountLocalServiceUtil.clearPatcherBuildPatcherAccounts(
-			patcherBuild.getPatcherBuildId());
-
-		PatcherFixLocalServiceUtil.clearPatcherBuildPatcherFixes(
-			patcherBuild.getPatcherBuildId());
-
-		PatcherBuildLocalServiceUtil.deletePatcherBuild(patcherBuild);
-
-		PatcherFix mainPatcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(
-			patcherBuild.getPatcherFixId());
-
-		if (PatcherFixUtil.isDeletable(mainPatcherFix)) {
-			PatcherFixUtil.deletePatcherFix(mainPatcherFix);
-		}
-	}
-
 	public static PatcherBuild fetchLastModifiedPatcherBuild(
 		long patcherAccountId, long patcherProductVersionId) {
 

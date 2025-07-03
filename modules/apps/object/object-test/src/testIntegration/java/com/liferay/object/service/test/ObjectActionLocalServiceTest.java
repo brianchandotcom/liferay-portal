@@ -68,6 +68,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -105,6 +106,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -142,6 +144,9 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
 import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -179,6 +184,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
@@ -2192,6 +2198,65 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
+	public void testExecuteObjectActionWithGroovy() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			_objectActionExecutorRegistry.getObjectActionExecutor(
+				0, ObjectActionExecutorConstants.KEY_GROOVY),
+			"_objectScriptingExecutor", _originalObjectScriptingExecutor);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"GROOVY_OBJECT_ACTION", LoggerTestUtil.INFO)) {
+
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionTestUtil.publishObjectDefinition(
+					Collections.singletonList(
+						new TextObjectFieldBuilder(
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).name(
+							"restContextPath"
+						).build()));
+
+			Class<?> clazz = getClass();
+
+			_addObjectAction(
+				objectDefinition.getObjectDefinitionId(),
+				ObjectActionExecutorConstants.KEY_GROOVY,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"script",
+					StringUtil.read(
+						clazz,
+						StringBundler.concat(
+							"dependencies/", clazz.getSimpleName(),
+							StringPool.PERIOD, testName.getMethodName(),
+							".groovy"))
+				).build());
+
+			ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+				0, objectDefinition.getObjectDefinitionId(),
+				Collections.singletonMap(
+					"restContextPath", objectDefinition.getRESTContextPath()));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Object entry ID " + objectEntry.getObjectEntryId(),
+				logEntry.getMessage());
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
+	@Test
 	public void testExecuteObjectActionWithUnmodifiableSystemObjectDefinition()
 		throws Exception {
 
@@ -2946,6 +3011,9 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(objectAction);
 		_objectActionLocalService.deleteObjectAction(systemObjectAction);
 	}
+
+	@Rule
+	public TestName testName = new TestName();
 
 	private void _addModelResourcePermissions(
 			String objectActionName, long objectEntryId, long userId)
@@ -3815,6 +3883,9 @@ public class ObjectActionLocalServiceTest {
 
 	private Http _originalHttp;
 	private ObjectScriptingExecutor _originalObjectScriptingExecutor;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -38,8 +38,7 @@ public class ExcludeFixesMVCActionCommand extends BaseMVCActionCommand {
 
 		long patcherFixId = ParamUtil.getLong(actionRequest, "patcherFixId");
 
-		PatcherFixUtil.updateObsolete(
-			_patcherFixLocalService.getPatcherFix(patcherFixId), true);
+		PatcherFixUtil.updateObsolete(patcherFixId, true);
 
 		_patcherFixLocalService.updateType(
 			patcherFixId, PatcherFixConstants.TYPE_EXCLUDED);

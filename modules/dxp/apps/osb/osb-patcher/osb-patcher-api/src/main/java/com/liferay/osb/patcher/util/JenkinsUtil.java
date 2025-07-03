@@ -590,20 +590,14 @@ public class JenkinsUtil {
 				return;
 			}
 
-			PatcherFix mainPatcherFix =
-				PatcherFixLocalServiceUtil.getPatcherFix(
-					patcherBuild.getPatcherFixId());
-
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"yyyyMMddHHmmss");
 
-			mainPatcherFix.setRequestKey(
+			PatcherFixLocalServiceUtil.updateRequestKey(
+				patcherBuild.getPatcherFixId(),
 				PatcherUtil.generatePatcherKey(
-					PatcherFix.class.getName(),
-					mainPatcherFix.getPatcherFixId(),
+					PatcherFix.class.getName(), patcherBuild.getPatcherFixId(),
 					dateFormat.format(new Date())));
-
-			PatcherFixLocalServiceUtil.updatePatcherFix(mainPatcherFix);
 
 			sendAgentJenkinsPatcherBuildRequest(user, patcherBuild);
 		}
@@ -617,13 +611,11 @@ public class JenkinsUtil {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"yyyyMMddHHmmss");
 
-			patcherFix.setRequestKey(
+			PatcherFixLocalServiceUtil.updateRequestKey(
+				patcherFix.getPatcherFixId(),
 				PatcherUtil.generatePatcherKey(
 					PatcherFix.class.getName(), patcherFix.getPatcherFixId(),
 					dateFormat.format(new Date())));
-
-			patcherFix = PatcherFixLocalServiceUtil.updatePatcherFix(
-				patcherFix);
 
 			sendAgentJenkinsPatcherFixRequest(user, patcherFix);
 		}
@@ -640,13 +632,11 @@ public class JenkinsUtil {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyyMMddHHmmss");
 
-		patcherBuild.setRequestKey(
+		patcherBuild = PatcherBuildLocalServiceUtil.updateRequestKey(
+			patcherBuild.getPatcherBuildId(),
 			PatcherUtil.generatePatcherKey(
 				PatcherBuild.class.getName(), patcherBuild.getPatcherBuildId(),
 				dateFormat.format(new Date())));
-
-		patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
-			patcherBuild);
 
 		sendJenkinsRequest(user, getDistJenkinsRequestParameters(patcherBuild));
 	}
@@ -710,13 +700,11 @@ public class JenkinsUtil {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyyMMddHHmmss");
 
-		patcherBuild.setRequestKey(
+		patcherBuild = PatcherBuildLocalServiceUtil.updateRequestKey(
+			patcherBuild.getPatcherBuildId(),
 			PatcherUtil.generatePatcherKey(
 				PatcherBuild.class.getName(), patcherBuild.getPatcherBuildId(),
 				dateFormat.format(new Date())));
-
-		patcherBuild = PatcherBuildLocalServiceUtil.updatePatcherBuild(
-			patcherBuild);
 
 		sendJenkinsRequest(user, getTestJenkinsRequestParameters(patcherBuild));
 	}

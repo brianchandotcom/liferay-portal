@@ -7655,8 +7655,13 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		updateDDMFields(
-			targetArticle, copyArticleImages(sourceArticle, targetArticle));
+		if (newArticle) {
+			updateDDMFields(
+				targetArticle, copyArticleImages(sourceArticle, targetArticle));
+		}
+		else {
+			updateDDMFields(targetArticle, sourceArticle.getDDMFormValues());
+		}
 
 		updateDDMLinks(
 			id, groupId, sourceArticle.getDDMStructureId(),

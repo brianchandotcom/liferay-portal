@@ -35,6 +35,49 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
 });
 
+test(
+	'Customize properties of item components',
+	{
+		tag: ['@LPD-51359'],
+	},
+	async ({fdsSamplePage, page}) => {
+		await test.step('Assert first table item has a custom CSS class', async () => {
+			await expect(fdsSamplePage.table.bodyRows.first()).toHaveClass(
+				/sample-css-class/
+			);
+		});
+
+		await test.step('Assert first list item has a custom CSS class', async () => {
+			await fdsSamplePage.changeVisualizationMode({
+				page,
+				visualizationMode: EFDSVisualizationMode.LIST,
+			});
+
+			await expect(fdsSamplePage.list.items.first()).toHaveClass(
+				/sample-css-class/
+			);
+		});
+
+		await test.step('Assert first cards item has an image and a sticker', async () => {
+			await fdsSamplePage.changeVisualizationMode({
+				page,
+				visualizationMode: EFDSVisualizationMode.CARDS,
+			});
+
+			const firstCard = fdsSamplePage.cards.items.first();
+
+			await expect(firstCard.locator('img')).toHaveAttribute(
+				'src',
+				'/documents/d/guest/planet-png'
+			);
+
+			await expect(
+				firstCard.locator('.sticker .lexicon-icon-document-image')
+			).toBeVisible();
+		});
+	}
+);
+
 const accountSettingsTest = mergeTests(test, accountSettingsPagesTest);
 
 accountSettingsTest(

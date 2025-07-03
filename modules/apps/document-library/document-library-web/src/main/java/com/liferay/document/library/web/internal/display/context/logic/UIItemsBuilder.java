@@ -28,7 +28,6 @@ import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.document.library.web.internal.util.DLSubscriptionUtil;
 import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvider;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
@@ -1336,21 +1335,7 @@ public class UIItemsBuilder {
 		}
 
 		try {
-			for (DLFileEntryMetadata dlFileEntryMetadata :
-					DLFileEntryMetadataLocalServiceUtil.
-						getFileVersionFileEntryMetadatas(
-							dlFileVersion.getFileVersionId())) {
-
-				DDMFormValues translatedDDMFormValues =
-					DDMBeanTranslatorUtil.translate(
-						StorageEngineManagerUtil.getDDMFormValues(
-							dlFileEntryMetadata.getDDMStorageId()));
-
-				DDMFormValuesValidator ddmFormValuesValidator =
-					_ddmFormValuesValidatorSnapshot.get();
-
-				ddmFormValuesValidator.validate(translatedDDMFormValues);
-			}
+			_validateDLFileVersionDDMFormValues(dlFileVersion);
 
 			return true;
 		}
@@ -1362,6 +1347,25 @@ public class UIItemsBuilder {
 			}
 
 			return false;
+		}
+	}
+
+	private void _validateDLFileVersionDDMFormValues(
+			DLFileVersion dlFileVersion)
+		throws PortalException {
+
+		DDMFormValuesValidator ddmFormValuesValidator =
+			_ddmFormValuesValidatorSnapshot.get();
+
+		for (DLFileEntryMetadata dlFileEntryMetadata :
+				DLFileEntryMetadataLocalServiceUtil.
+					getFileVersionFileEntryMetadatas(
+						dlFileVersion.getFileVersionId())) {
+
+			ddmFormValuesValidator.validate(
+				DDMBeanTranslatorUtil.translate(
+					StorageEngineManagerUtil.getDDMFormValues(
+						dlFileEntryMetadata.getDDMStorageId())));
 		}
 	}
 

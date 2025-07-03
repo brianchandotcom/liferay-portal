@@ -155,6 +155,18 @@ export default function StructureTree({search}: {search: string}) {
 		objectDefinitionsStatus,
 	]);
 
+	useEffect(() => {
+		for (const uuid of selection) {
+			if (!selectedKeys.has(uuid)) {
+				setSelectedKeys(new Set(selection));
+
+				setExpandedKeys((current) => new Set([...current, uuid]));
+			}
+		}
+
+		// eslint-disable-next-line
+	}, [selection]);
+
 	if (objectDefinitionsStatus === 'saving' && hasReferencedStructure) {
 		return <ClayLoadingIndicator className="my-6" />;
 	}

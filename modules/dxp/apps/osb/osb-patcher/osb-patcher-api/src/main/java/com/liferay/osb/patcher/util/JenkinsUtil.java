@@ -521,19 +521,16 @@ public class JenkinsUtil {
 		return jobName;
 	}
 
-	public static void putJenkinsResult(
-			PatcherFix patcherFix, JSONObject newJenkinsResultJSONObject)
+	public static String getJenkinsResult(
+			JSONObject newJenkinsResultJSONObject,
+			String patcherFixJenkinsResults)
 		throws Exception {
-
-		String patcherFixJenkinsResults = patcherFix.getJenkinsResults();
 
 		if (Validator.isNull(patcherFixJenkinsResults)) {
 			JSONArray newJenkinsResultJSONArray = JSONUtil.put(
 				newJenkinsResultJSONObject);
 
-			patcherFix.setJenkinsResults(newJenkinsResultJSONArray.toString());
-
-			return;
+			return newJenkinsResultJSONArray.toString();
 		}
 
 		boolean newJenkinsResultJobNameExists = false;
@@ -565,15 +562,12 @@ public class JenkinsUtil {
 		}
 
 		if (newJenkinsResultJobNameExists) {
-			patcherFix.setJenkinsResults(newJenkinsResultsJSONArray.toString());
-
-			return;
+			return newJenkinsResultsJSONArray.toString();
 		}
 
 		existingJenkinsResultsJSONArray.put(newJenkinsResultJSONObject);
 
-		patcherFix.setJenkinsResults(
-			existingJenkinsResultsJSONArray.toString());
+		return existingJenkinsResultsJSONArray.toString();
 	}
 
 	public static void sendAgentJenkinsRequest(

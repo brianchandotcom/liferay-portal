@@ -985,7 +985,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return _copyArticle(
-			userId, groupId, sourceArticleId, targetArticleId, version);
+			userId, groupId, sourceArticleId, targetArticleId, version, true);
 	}
 
 	/**
@@ -4411,7 +4411,8 @@ public class JournalArticleLocalServiceImpl
 			long userId, long groupId, String articleId, double version)
 		throws PortalException {
 
-		return _copyArticle(userId, groupId, articleId, articleId, version);
+		return _copyArticle(
+			userId, groupId, articleId, articleId, version, false);
 	}
 
 	@Override
@@ -7434,7 +7435,7 @@ public class JournalArticleLocalServiceImpl
 
 	private JournalArticle _copyArticle(
 			long userId, long groupId, String sourceArticleId,
-			String targetArticleId, double version)
+			String targetArticleId, double version, boolean newArticle)
 		throws PortalException {
 
 		// Article

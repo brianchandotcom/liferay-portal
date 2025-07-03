@@ -933,11 +933,11 @@ public class JournalArticleStagedModelDataHandlerTest
 				journalArticle.getUuid(), liveGroup.getGroupId());
 
 		Assert.assertEquals(
-			journalArticle.getStatusByUserName(),
-			importJournalArticle.getStatusByUserName());
-		Assert.assertEquals(
 			journalArticle.getStatusByUserId(),
 			importJournalArticle.getStatusByUserId());
+		Assert.assertEquals(
+			journalArticle.getStatusByUserName(),
+			importJournalArticle.getStatusByUserName());
 	}
 
 	public class TestLayoutStagedModelDataHandler

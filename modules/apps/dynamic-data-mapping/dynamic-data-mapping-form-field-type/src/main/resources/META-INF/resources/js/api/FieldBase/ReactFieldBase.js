@@ -268,6 +268,10 @@ export default function FieldBase({
 
 	const renderLabel =
 		(label && showLabel) || hideField || repeatable || required || tooltip;
+
+	const shouldRenderAsGroup =
+		!!label && !overMaximumRepetitionsLimit && repeatable;
+
 	const showDisabledFieldIcon =
 		editOnlyInDefaultLanguage && showLabel && readOnly;
 	const showGroup =
@@ -500,6 +504,10 @@ export default function FieldBase({
 			data-field-reference={fieldReference}
 			onClick={onClick}
 			style={style}
+			{...(shouldRenderAsGroup && {
+				'aria-labelledby': fieldLabelId,
+				'role': 'group',
+			})}
 		>
 			{repeatable && (
 				<div className="lfr-ddm-form-field-repeatable-toolbar">
@@ -616,7 +624,10 @@ export default function FieldBase({
 									'ddm-repeatable': repeatable,
 									'text-muted': showDisabledFieldIcon,
 								})}
-								{...(type === 'select' && {id: id ?? name})}
+								{...((shouldRenderAsGroup ||
+									type === 'select') && {
+									id: fieldLabelId,
+								})}
 							>
 								{showLabel && label && (
 									<LabelProperty

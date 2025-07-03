@@ -79,7 +79,10 @@ test.describe('Manage fields through Form Preview page', () => {
 
 		const newTabPage = await formBuilderPage.openPreviewForm();
 
-		await newTabPage.getByLabel('Text Field', {exact: true}).click();
+		await newTabPage
+			.getByRole('textbox')
+			.and(newTabPage.getByLabel('Text Field', {exact: true}))
+			.click();
 
 		await newTabPage
 			.getByRole('button', {

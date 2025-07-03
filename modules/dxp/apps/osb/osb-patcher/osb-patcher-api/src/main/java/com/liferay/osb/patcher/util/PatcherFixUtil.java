@@ -757,7 +757,8 @@ public class PatcherFixUtil {
 			servletStatus);
 
 		if (servletStatusJSONObject.has("statusURL")) {
-			updatePatcherFixJenkinsResult(servletStatusJSONObject, patcherFix);
+			updatePatcherFixJenkinsResult(
+				servletStatusJSONObject, patcherFixId);
 
 			return;
 		}
@@ -817,33 +818,20 @@ public class PatcherFixUtil {
 			JSONObject jenkinsStatusJSONObject, long patcherFixId)
 		throws Exception {
 
-		if (patcherFixId == 0) {
-			return;
-		}
-
 		PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(
 			patcherFixId);
-
-		updatePatcherFixJenkinsResult(jenkinsStatusJSONObject, patcherFix);
-	}
-
-	public static void updatePatcherFixJenkinsResult(
-			JSONObject jenkinsStatusJSONObject, PatcherFix patcherFix)
-		throws Exception {
 
 		if (patcherFix == null) {
 			return;
 		}
 
-		String status = jenkinsStatusJSONObject.getString("status");
-		String statusURL = jenkinsStatusJSONObject.getString("statusURL");
-
-		JSONObject jenkinsResultJSONObject = JenkinsUtil.toJenkinsResult(
-			status, statusURL);
-
-		JenkinsUtil.putJenkinsResult(patcherFix, jenkinsResultJSONObject);
-
-		PatcherFixLocalServiceUtil.updatePatcherFix(patcherFix);
+		PatcherFixLocalServiceUtil.updateJenkinsResult(
+			patcherFixId,
+			JenkinsUtil.getJenkinsResult(
+				JenkinsUtil.toJenkinsResult(
+					jenkinsStatusJSONObject.getString("status"),
+					jenkinsStatusJSONObject.getString("statusURL")),
+				patcherFix.getJenkinsResults()));
 	}
 
 	public static void validateDelete(PatcherFix patcherFix) throws Exception {

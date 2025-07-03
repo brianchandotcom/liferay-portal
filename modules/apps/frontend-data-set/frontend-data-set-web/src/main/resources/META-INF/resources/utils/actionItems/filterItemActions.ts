@@ -56,10 +56,15 @@ const isDisabled = (
 	return false;
 };
 
-const isVisible = (action: IItemsActions, itemData: any): boolean => {
+const isVisible = (
+	action: IItemsActions,
+	itemData: any,
+	selectable: boolean = false
+): boolean => {
 	if (
 		!hasPermission(action, itemData) ||
-		!matchesVisibilityFilters(action, itemData)
+		!matchesVisibilityFilters(action, itemData) ||
+		(action.target === 'infoPanel' && !selectable)
 	) {
 		return false;
 	}
@@ -108,12 +113,14 @@ const filterItemActions = ({
 	actions,
 	infoPanelOpen = false,
 	itemData,
+	selectable,
 	selectedItemsKey,
 	selectedItemsValue,
 }: {
 	actions: Array<IItemsActions>;
 	infoPanelOpen?: boolean;
 	itemData: any;
+	selectable?: boolean;
 	selectedItemsKey: string;
 	selectedItemsValue?: Array<any>;
 }): Array<IItemsActions> => {
@@ -123,7 +130,9 @@ const filterItemActions = ({
 
 	return actions
 		? actions
-				.filter((action: IItemsActions) => isVisible(action, itemData))
+				.filter((action: IItemsActions) =>
+					isVisible(action, itemData, selectable)
+				)
 				.map((action: IItemsActions) =>
 					transformAction({
 						action,

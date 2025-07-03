@@ -99,14 +99,14 @@ const getVisibleFields = ({
 const Head = ({
 	fields,
 	items,
-	selectable,
 	selectionType,
 }: {
 	fields: Array<Field>;
 	items: Array<any>;
-	selectable?: boolean;
 	selectionType?: string;
 }) => {
+	const {selectable} = useContext(FrontendDataSetContext);
+
 	return (
 		<ClayTableHead
 			items={selectable ? [{fieldName: 'select'}, ...fields] : fields}
@@ -327,7 +327,6 @@ const Body = ({
 	items,
 	itemsActions,
 	onItemSelectionChange,
-	selectable,
 	selectionType,
 }: {
 	fields: Array<Field>;
@@ -339,11 +338,14 @@ const Body = ({
 	items: Array<any>;
 	itemsActions: Array<IItemsActions>;
 	onItemSelectionChange: Function;
-	selectable?: boolean;
 	selectionType?: string;
 }) => {
-	const {allItemsSelectedActive, selectedItemsKey, selectedItemsValue} =
-		useContext(FrontendDataSetContext);
+	const {
+		allItemsSelectedActive,
+		selectable,
+		selectedItemsKey,
+		selectedItemsValue,
+	} = useContext(FrontendDataSetContext);
 
 	const columns: Array<Field> = [
 		...(selectable ? [{fieldName: 'select'}] : []),
@@ -395,6 +397,7 @@ function ClayTableRowOptionalDropTarget({
 	onItemSelectionChange: Function;
 }) {
 	const [viewsContext] = useContext(ViewsContext);
+	const {selectable} = useContext(FrontendDataSetContext);
 
 	const {className: dropClassName, dropRef} = useFDSDrop({item});
 
@@ -404,12 +407,15 @@ function ClayTableRowOptionalDropTarget({
 		...otherProps,
 		className: classNames(className, dropClassName),
 		items,
-		onClick: () => {
-			onItemSelectionChange({
-				item,
-				trigger: ESelectionTrigger.CONTAINER,
-			});
-		},
+		onClick: selectable
+			? () => {
+					onItemSelectionChange({
+						item,
+						trigger: ESelectionTrigger.CONTAINER,
+					});
+				}
+			: undefined,
+		ref: dropRef,
 	};
 
 	return (
@@ -418,7 +424,6 @@ function ClayTableRowOptionalDropTarget({
 				...props,
 				...(activeView.setItemComponentProps?.({item, props}) ?? {}),
 			}}
-			ref={dropRef}
 		>
 			{children}
 		</ClayTableRow>
@@ -859,7 +864,6 @@ const Table = ({
 				<Head
 					fields={schema.fields as Array<Field>}
 					items={items}
-					selectable={selectable}
 					selectionType={selectionType}
 				/>
 
@@ -870,7 +874,6 @@ const Table = ({
 					items={items}
 					itemsActions={itemsActions}
 					onItemSelectionChange={onItemSelectionChange}
-					selectable={selectable}
 					selectionType={selectionType}
 				/>
 			</ClayTable>

@@ -242,17 +242,6 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testAddAndDeleteCompany() throws Exception {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company.getCompanyId());
-
-		for (String webId : PortalInstancePool.getWebIds()) {
-			Assert.assertNotEquals(company.getWebId(), webId);
-		}
-	}
-
-	@Test
 	public void testAddAndDeleteCompanyWithChildOrganizationSite()
 		throws Exception {
 

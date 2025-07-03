@@ -56,9 +56,14 @@ public class CPDefinitionInventoryUpgradeProcess extends UpgradeProcess {
 					StringBundler sb = new StringBundler(
 						allowedOrderQuantitiesItems.length * 2);
 
-					for (String item : allowedOrderQuantitiesItems) {
+					for (String allowedOrderQuantitiesItem :
+							allowedOrderQuantitiesItems) {
+
 						sb.append(
-							String.format("%,.2f", GetterUtil.getDouble(item)));
+							String.format(
+								"%,.2f",
+								GetterUtil.getDouble(
+									allowedOrderQuantitiesItem)));
 						sb.append(StringPool.SPACE);
 					}
 

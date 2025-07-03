@@ -897,8 +897,8 @@ public abstract class BaseWorkspaceGitRepository
 				 jobVariant.contains("rest-builder")) &&
 				directoryPath.contains("liferay-portal")) {
 
-				String commitCommand = JenkinsResultsParserUtil.combine(
-					"git init; git add .; git commit -m \"LRCI-XXXX Temp\"");
+				String commitCommand =
+					"git init; git add .; git commit -m \"LRCI-XXXX Temp\"";
 
 				GitUtil.ExecutionResult executionResult =
 					GitUtil.executeBashCommands(

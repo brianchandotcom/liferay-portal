@@ -157,8 +157,8 @@ public class MCPServlet extends GenericServlet {
 						"path",
 						JSONUtil.put(
 							"description",
-							"The full endpoint path relative to " + baseURL +
-								". It cannot contain query parameters."
+							"The full endpoint path starting with / relative " +
+								"to " + baseURL
 						).put(
 							"type", "string"
 						)

@@ -311,6 +311,55 @@ public class JenkinsUtil {
 		return jenkinsRequestParameters;
 	}
 
+	public static String getJenkinsResult(
+			JSONObject newJenkinsResultJSONObject,
+			String patcherFixJenkinsResults)
+		throws Exception {
+
+		if (Validator.isNull(patcherFixJenkinsResults)) {
+			JSONArray newJenkinsResultJSONArray = JSONUtil.put(
+				newJenkinsResultJSONObject);
+
+			return newJenkinsResultJSONArray.toString();
+		}
+
+		boolean newJenkinsResultJobNameExists = false;
+
+		JSONArray newJenkinsResultsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		JSONArray existingJenkinsResultsJSONArray =
+			JSONFactoryUtil.createJSONArray(patcherFixJenkinsResults);
+
+		for (int i = 0; i < existingJenkinsResultsJSONArray.length(); i++) {
+			JSONObject existingJenkinsResultJSONObject =
+				existingJenkinsResultsJSONArray.getJSONObject(i);
+
+			String newJobName = getJobName(newJenkinsResultJSONObject);
+
+			String existingJobName = getJobName(
+				existingJenkinsResultJSONObject);
+
+			if (StringUtil.equalsIgnoreCase(newJobName, existingJobName)) {
+				newJenkinsResultJobNameExists = true;
+
+				newJenkinsResultsJSONArray.put(newJenkinsResultJSONObject);
+
+				continue;
+			}
+
+			newJenkinsResultsJSONArray.put(existingJenkinsResultJSONObject);
+		}
+
+		if (newJenkinsResultJobNameExists) {
+			return newJenkinsResultsJSONArray.toString();
+		}
+
+		existingJenkinsResultsJSONArray.put(newJenkinsResultJSONObject);
+
+		return existingJenkinsResultsJSONArray.toString();
+	}
+
 	public static List<Map<String, String>> getJenkinsResults(
 			PatcherBuild patcherBuild)
 		throws Exception {
@@ -519,55 +568,6 @@ public class JenkinsUtil {
 		}
 
 		return jobName;
-	}
-
-	public static String getJenkinsResult(
-			JSONObject newJenkinsResultJSONObject,
-			String patcherFixJenkinsResults)
-		throws Exception {
-
-		if (Validator.isNull(patcherFixJenkinsResults)) {
-			JSONArray newJenkinsResultJSONArray = JSONUtil.put(
-				newJenkinsResultJSONObject);
-
-			return newJenkinsResultJSONArray.toString();
-		}
-
-		boolean newJenkinsResultJobNameExists = false;
-
-		JSONArray newJenkinsResultsJSONArray =
-			JSONFactoryUtil.createJSONArray();
-
-		JSONArray existingJenkinsResultsJSONArray =
-			JSONFactoryUtil.createJSONArray(patcherFixJenkinsResults);
-
-		for (int i = 0; i < existingJenkinsResultsJSONArray.length(); i++) {
-			JSONObject existingJenkinsResultJSONObject =
-				existingJenkinsResultsJSONArray.getJSONObject(i);
-
-			String newJobName = getJobName(newJenkinsResultJSONObject);
-
-			String existingJobName = getJobName(
-				existingJenkinsResultJSONObject);
-
-			if (StringUtil.equalsIgnoreCase(newJobName, existingJobName)) {
-				newJenkinsResultJobNameExists = true;
-
-				newJenkinsResultsJSONArray.put(newJenkinsResultJSONObject);
-
-				continue;
-			}
-
-			newJenkinsResultsJSONArray.put(existingJenkinsResultJSONObject);
-		}
-
-		if (newJenkinsResultJobNameExists) {
-			return newJenkinsResultsJSONArray.toString();
-		}
-
-		existingJenkinsResultsJSONArray.put(newJenkinsResultJSONObject);
-
-		return existingJenkinsResultsJSONArray.toString();
 	}
 
 	public static void sendAgentJenkinsRequest(

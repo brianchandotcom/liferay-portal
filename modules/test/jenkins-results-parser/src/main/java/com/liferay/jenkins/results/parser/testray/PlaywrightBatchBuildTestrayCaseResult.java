@@ -223,6 +223,10 @@ public class PlaywrightBatchBuildTestrayCaseResult
 	protected TestrayAttachment getPlaywrightTraceViewerTestrayAttachment() {
 		TestReport testReport = getTestReport();
 
+		if (testReport == null) {
+			return null;
+		}
+
 		Matcher matcher = _traceZipPattern.matcher(
 			testReport.getErrorStackTrace());
 

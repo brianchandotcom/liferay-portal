@@ -180,7 +180,9 @@ public class FunctionalBatchBuildTestrayCaseResult
 
 		return getTestrayAttachment(
 			getBuildReport(), "Poshi Console",
-			"/" + JenkinsResultsParserUtil.fixURL(name) + "/console.txt.gz");
+			JenkinsResultsParserUtil.combine(
+				"/", getAxisName(), "/", JenkinsResultsParserUtil.fixURL(name),
+				"/console.txt.gz"));
 	}
 
 	private TestrayAttachment _getPoshiReportTestrayAttachment() {
@@ -194,7 +196,9 @@ public class FunctionalBatchBuildTestrayCaseResult
 
 		return getTestrayAttachment(
 			getBuildReport(), "Poshi Report",
-			"/" + JenkinsResultsParserUtil.fixURL(name) + "/index.html.gz");
+			JenkinsResultsParserUtil.combine(
+				"/", getAxisName(), "/", JenkinsResultsParserUtil.fixURL(name),
+				"/index.html.gz"));
 	}
 
 	private TestrayAttachment _getPoshiSummaryTestrayAttachment() {
@@ -208,7 +212,9 @@ public class FunctionalBatchBuildTestrayCaseResult
 
 		return getTestrayAttachment(
 			getBuildReport(), "Poshi Summary",
-			"/" + JenkinsResultsParserUtil.fixURL(name) + "/summary.html.gz");
+			JenkinsResultsParserUtil.combine(
+				"/", getAxisName(), "/", JenkinsResultsParserUtil.fixURL(name),
+				"/summary.html.gz"));
 	}
 
 	private final FunctionalTestClass _functionalTestClass;

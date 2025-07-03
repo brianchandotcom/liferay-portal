@@ -55,6 +55,7 @@ public class CPDefinitionInventoryLocalServiceImpl
 
 		_validateOrderQuantity(
 			minOrderQuantity, maxOrderQuantity, multipleOrderQuantity);
+		_validateAllowedOrderQuantities(allowedOrderQuantities);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -86,9 +87,6 @@ public class CPDefinitionInventoryLocalServiceImpl
 		cpDefinitionInventory.setBackOrders(backOrders);
 		cpDefinitionInventory.setMinOrderQuantity(minOrderQuantity);
 		cpDefinitionInventory.setMaxOrderQuantity(maxOrderQuantity);
-
-		_validateAllowedOrderQuantities(allowedOrderQuantities);
-
 		cpDefinitionInventory.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpDefinitionInventory.setMultipleOrderQuantity(multipleOrderQuantity);
 
@@ -189,6 +187,7 @@ public class CPDefinitionInventoryLocalServiceImpl
 
 		_validateOrderQuantity(
 			minOrderQuantity, maxOrderQuantity, multipleOrderQuantity);
+		_validateAllowedOrderQuantities(allowedOrderQuantities);
 
 		CPDefinitionInventory cpDefinitionInventory =
 			cpDefinitionInventoryPersistence.findByPrimaryKey(
@@ -215,9 +214,6 @@ public class CPDefinitionInventoryLocalServiceImpl
 		cpDefinitionInventory.setBackOrders(backOrders);
 		cpDefinitionInventory.setMinOrderQuantity(minOrderQuantity);
 		cpDefinitionInventory.setMaxOrderQuantity(maxOrderQuantity);
-
-		_validateAllowedOrderQuantities(allowedOrderQuantities);
-
 		cpDefinitionInventory.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpDefinitionInventory.setMultipleOrderQuantity(multipleOrderQuantity);
 

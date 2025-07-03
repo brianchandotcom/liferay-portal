@@ -143,6 +143,15 @@ public class RoleLocalServiceUtil {
 		getService().clearUserRoles(userId);
 	}
 
+	public static Role copyRole(
+			long userId, String name, long sourceRoleId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyRole(
+			userId, name, sourceRoleId, serviceContext);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

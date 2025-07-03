@@ -65,6 +65,11 @@ public interface RoleService extends BaseService {
 	public void addUserRoles(long userId, long[] roleIds)
 		throws PortalException;
 
+	public Role copyRole(
+			long userId, String name, long sourceRoleId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Deletes the role with the primary key and its associated permissions.
 	 *

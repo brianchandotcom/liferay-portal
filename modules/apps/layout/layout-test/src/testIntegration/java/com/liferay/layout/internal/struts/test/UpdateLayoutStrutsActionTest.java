@@ -239,10 +239,9 @@ public class UpdateLayoutStrutsActionTest {
 			_companyLocalService.getCompany(_group.getCompanyId()), _group,
 			_layout);
 
-		themeDisplay.setUser(user);
-
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
+		themeDisplay.setUser(user);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

@@ -25,11 +25,9 @@ String messageAsLocalizedXML = moneyOrderGroupServiceConfiguration.messageAsLoca
 
 		<div id="<portlet:namespace />message">
 			<aui:field-wrapper label="message">
-				<liferay-ui:input-localized
-					fieldPrefix="settings"
-					fieldPrefixSeparator="--"
+				<liferay-editor:input-localized
+					defaultLanguageId="<%= themeDisplay.getLanguageId() %>"
 					name="messageAsLocalizedXML"
-					type="editor"
 					xml="<%= messageAsLocalizedXML %>"
 				/>
 			</aui:field-wrapper>
@@ -46,4 +44,5 @@ String messageAsLocalizedXML = moneyOrderGroupServiceConfiguration.messageAsLoca
 		'<portlet:namespace />showMessagePage',
 		'<portlet:namespace />message'
 	);
+	console.log('<%= messageAsLocalizedXML %>');
 </aui:script>

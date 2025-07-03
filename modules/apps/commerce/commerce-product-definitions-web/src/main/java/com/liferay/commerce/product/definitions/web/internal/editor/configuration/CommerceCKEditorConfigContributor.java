@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "jakarta.portlet.name=" + CPPortletKeys.CP_DEFINITIONS,
+	property = {"jakarta.portlet.name=" + CPPortletKeys.CP_DEFINITIONS, "editor.name=ckeditor"},
 	service = EditorConfigContributor.class
 )
 public class CommerceCKEditorConfigContributor

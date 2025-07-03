@@ -98,10 +98,9 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 					<label class="control-label" for="<portlet:namespace />descriptionMapAsXML"><liferay-ui:message key="full-description" /></label>
 
 					<div class="entry-content form-group">
-						<liferay-ui:input-localized
+						<liferay-editor:input-localized
 							defaultLanguageId="<%= defaultLanguageId %>"
 							name="descriptionMapAsXML"
-							type="editor"
 							xml="<%= descriptionMapAsXML %>"
 						/>
 					</div>
@@ -112,14 +111,8 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 				title='<%= LanguageUtil.get(request, "seo") %>'
 			>
 				<div class="form-group">
-					<label for="<portlet:namespace />urlTitleMapAsXML"><liferay-ui:message key="friendly-url" /><liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>news</em>", false) %>' /></label>
-
-					<liferay-ui:input-localized
-						defaultLanguageId="<%= defaultLanguageId %>"
-						inputAddon="<%= StringUtil.shorten(friendlyURLBase, 40) %>"
-						name="urlTitleMapAsXML"
-						xml="<%= HttpComponentsUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>"
-					/>
+					<label><liferay-ui:message key="friendly-url" /><liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>news</em>", false) %>' /></label>
+					<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="" localized="<%= true %>" name="urlTitleMapAsXML" type="text" value="<%= HttpComponentsUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>" />
 				</div>
 
 				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="meta-title" localized="<%= true %>" name="metaTitleMapAsXML" type="text" />
@@ -300,6 +293,8 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 				metaTitleInputLocalized.selectFlag(languageId, false);
 				metaDescriptionInputLocalized.selectFlag(languageId, false);
 				metaKeywordsInputLocalized.selectFlag(languageId, false);
+
+				console.log('<%= descriptionMapAsXML %>');
 			});
 	</aui:script>
 </c:if>

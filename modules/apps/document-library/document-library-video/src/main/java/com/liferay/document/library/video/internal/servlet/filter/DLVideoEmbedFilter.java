@@ -10,9 +10,11 @@ import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.video.internal.constants.DLVideoPortletKeys;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -34,6 +37,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -73,7 +77,13 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 	protected void processFilter(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
-		throws IOException, ServletException {
+		throws IOException, PortalException, ServletException {
+
+		User user = PortalUtil.getUser(httpServletRequest);
+
+		if (user != null) {
+			PrincipalThreadLocal.setName(user.getUserId());
+		}
 
 		boolean videoEmbed = ParamUtil.getBoolean(
 			httpServletRequest, "videoEmbed");
@@ -91,8 +101,12 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 				}
 			}
 
-			httpServletResponse.sendRedirect(
-				_getEmbedVideoURL(httpServletRequest));
+			String embedVideoURL = StringBundler.concat(
+				_getEmbedVideoURL(httpServletRequest),
+				"&previewCTCollectionId=",
+				CTCollectionThreadLocal.getCTCollectionId());
+
+			httpServletResponse.sendRedirect(embedVideoURL);
 		}
 		else {
 			filterChain.doFilter(httpServletRequest, httpServletResponse);

@@ -69,12 +69,6 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 	</aui:button-row>
 </aui:form>
 
-<%
-Map<Long, List<PatcherProjectVersion>> patcherProjectVersions = PatcherProjectVersionUtil.getPatcherProductVersionIdPatcherProjectVersions();
-
-JSONObject patcherProjectVersionsJSONObject = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerializeDeep(patcherProjectVersions));
-%>
-
 <aui:script>
 	var select = document.getElementById(
 		'<portlet:namespace />patcherProjectVersionId'
@@ -87,7 +81,7 @@ JSONObject patcherProjectVersionsJSONObject = JSONFactoryUtil.createJSONObject(J
 			Liferay.Patcher.populateProjectVersionField(
 				productVersionId,
 				select,
-				<%= patcherProjectVersionsJSONObject %>
+				<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject() %>
 			);
 		},
 		['aui-base']
@@ -103,7 +97,7 @@ JSONObject patcherProjectVersionsJSONObject = JSONFactoryUtil.createJSONObject(J
 		Liferay.Patcher.populateProjectVersionField(
 			productVersionId,
 			select,
-			<%= patcherProjectVersionsJSONObject %>
+			<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject() %>
 		);
 	});
 

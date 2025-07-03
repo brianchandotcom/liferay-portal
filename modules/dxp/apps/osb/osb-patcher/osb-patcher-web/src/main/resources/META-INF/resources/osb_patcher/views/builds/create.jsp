@@ -127,12 +127,6 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 	</div>
 </aui:form>
 
-<%
-Map<Long, List<PatcherProjectVersion>> patcherProjectVersions = PatcherProjectVersionUtil.getPatcherProductVersionIdPatcherProjectVersions();
-
-JSONObject patcherProjectVersionsJSONObject = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerializeDeep(patcherProjectVersions));
-%>
-
 <aui:script>
 	var mergeOnly = document.getElementById('<portlet:namespace />mergeOnly');
 	var patcherBuildName = document.getElementById(
@@ -184,7 +178,7 @@ JSONObject patcherProjectVersionsJSONObject = JSONFactoryUtil.createJSONObject(J
 			Liferay.Patcher.populateProjectVersionField(
 				productVersionId,
 				select,
-				<%= patcherProjectVersionsJSONObject %>
+				<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject() %>
 			);
 
 			getTicketSuggestionFields();
@@ -308,7 +302,7 @@ JSONObject patcherProjectVersionsJSONObject = JSONFactoryUtil.createJSONObject(J
 		Liferay.Patcher.populateProjectVersionField(
 			productVersionId,
 			select,
-			<%= patcherProjectVersionsJSONObject %>
+			<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject() %>
 		);
 
 		var projectVersionId =

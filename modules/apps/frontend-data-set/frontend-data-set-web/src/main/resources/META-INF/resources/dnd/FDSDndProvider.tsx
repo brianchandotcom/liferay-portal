@@ -12,7 +12,9 @@ const FDSDndProvider = ({children}: {children: ReactNode}) => {
 
 		// @ts-ignore
 
-		<DndProvider backend={HTML5Backend}>{children}</DndProvider>
+		<DndProvider backend={HTML5Backend} context={window}>
+			{children}
+		</DndProvider>
 	);
 };
 

@@ -1551,6 +1551,13 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public void setGroupId(long groupId) {
 	}
 
+	public long[] getUserGroupIds() {
+		return null;
+	}
+
+	public void setUserGroupIds(long[] userGroupIds) {
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1804,6 +1811,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
+
+		setUserGroupIds(null);
 
 		_columnBitmask = 0;
 	}
@@ -2079,6 +2088,11 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		try {
 			userCacheModel.groupId = (long)_groupIdMethodHandle.invokeExact(
 				(UserImpl)this);
+
+			setUserGroupIds(null);
+
+			userCacheModel.userGroupIds =
+				(long[])_userGroupIdsMethodHandle.invokeExact((UserImpl)this);
 		}
 		catch (Throwable throwable) {
 			ReflectionUtil.throwException(throwable);
@@ -2401,12 +2415,29 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	private static final MethodHandle _groupIdMethodHandle;
 
+	protected final transient Consumer<long[]>
+		userGroupIdsUpdateEntityCacheConsumer = userGroupIds -> {
+			UserCacheModel userCacheModel = EntityCacheUtil.fetchCacheModel(
+				UserImpl.class, _userId, UserCacheModel.class);
+
+			if ((userCacheModel != null) &&
+				(userCacheModel.getMvccVersion() == getMvccVersion())) {
+
+				userCacheModel.userGroupIds = userGroupIds;
+			}
+		};
+
+	private static final MethodHandle _userGroupIdsMethodHandle;
+
 	static {
 		MethodHandles.Lookup lookup = ReflectionUtil.getImplLookup();
 
 		try {
 			_groupIdMethodHandle = lookup.findGetter(
 				UserImpl.class, "_groupId", long.class);
+
+			_userGroupIdsMethodHandle = lookup.findGetter(
+				UserImpl.class, "_userGroupIds", long[].class);
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			throw new ExceptionInInitializerError(reflectiveOperationException);

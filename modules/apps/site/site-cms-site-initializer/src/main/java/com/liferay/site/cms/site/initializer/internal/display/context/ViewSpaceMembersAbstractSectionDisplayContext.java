@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
 import com.liferay.site.cms.site.initializer.internal.util.SpaceAbstractHeaderUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,13 +41,16 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 	}
 
 	public String getAPIURL(String type) {
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("/o/headless-asset-library/v1.0/asset-libraries/");
 		sb.append(_groupId);
 		sb.append("/");
 		sb.append(type);
-		sb.append("?page=1&pageSize=8");
+		sb.append("?page=");
+		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE);
+		sb.append("&pageSize=");
+		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE_SIZE);
 
 		if (type.equals("user-accounts")) {
 			sb.append("&nestedFields=assetLibraryCreator");

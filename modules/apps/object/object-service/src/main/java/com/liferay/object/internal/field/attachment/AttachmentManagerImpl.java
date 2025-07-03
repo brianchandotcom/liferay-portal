@@ -381,17 +381,12 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			String mimeType, long size, String sourceFileName)
 		throws PortalException {
 
-		if (Validator.isNotNull(sourceFileName)) {
-			_dlValidator.validateFileName(sourceFileName);
+		_dlValidator.validateFileName(sourceFileName);
 
-			_dlValidator.validateFileExtension(sourceFileName);
+		_dlValidator.validateFileExtension(sourceFileName);
 
-			_dlValidator.validateSourceFileExtension(
-				fileExtension, sourceFileName);
-
-			if (size != 0) {
-				_dlValidator.validateFileMimeType(companyId, mimeType);
-			}
+		if (size != 0) {
+			_dlValidator.validateFileMimeType(companyId, mimeType);
 		}
 
 		try {
@@ -408,6 +403,8 @@ public class AttachmentManagerImpl implements AttachmentManager {
 							fileSizeException.getMaxSize() / _FILE_LENGTH_MB)
 					}));
 		}
+
+		_dlValidator.validateSourceFileExtension(fileExtension, sourceFileName);
 	}
 
 	private void _validateObjectDefinitionSettings(

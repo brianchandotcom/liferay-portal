@@ -46,7 +46,14 @@ export const test = mergeTests(
 test(
 	'Orders that have a subtotal less than the minimum order limit rule will trigger a warning',
 	{tag: '@LPD-56179'},
-	async ({apiHelpers, page, pendingOrdersPage, site, widgetPagePage}) => {
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		page,
+		pendingOrdersPage,
+		site,
+		widgetPagePage,
+	}) => {
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			title: getRandomString(),
@@ -57,6 +64,11 @@ test(
 				name: 'Edit pending order Channel',
 				siteGroupId: site.id,
 			});
+
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2C'
+		);
 
 		const catalog =
 			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
@@ -182,6 +194,7 @@ test(
 
 test('LPD-13627 Edit pending order item with UOM', async ({
 	apiHelpers,
+	commerceAdminChannelsPage,
 	page,
 	pendingOrdersPage,
 	site,
@@ -196,6 +209,11 @@ test('LPD-13627 Edit pending order item with UOM', async ({
 		name: 'Edit pending order Channel',
 		siteGroupId: site.id,
 	});
+
+	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+		channel.name,
+		'B2C'
+	);
 
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
 		name: 'Edit pending order Catalog',
@@ -261,6 +279,7 @@ test('LPD-13627 Edit pending order item with UOM', async ({
 
 test('LPD-13627 Edit pending order item without UOM', async ({
 	apiHelpers,
+	commerceAdminChannelsPage,
 	page,
 	pendingOrdersPage,
 	site,
@@ -279,6 +298,11 @@ test('LPD-13627 Edit pending order item without UOM', async ({
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
 		name: 'Edit pending order Catalog',
 	});
+
+	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+		channel.name,
+		'B2C'
+	);
 
 	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
@@ -1036,6 +1060,7 @@ test('LPD-3259 As a buyer with approval workflow, when I click review order in m
 
 test('LPD-33783 Pending orders table displays correct fields', async ({
 	apiHelpers,
+	commerceAdminChannelsPage,
 	page,
 	pendingOrdersPage,
 	site,
@@ -1050,6 +1075,11 @@ test('LPD-33783 Pending orders table displays correct fields', async ({
 		name: 'Pending order Channel',
 		siteGroupId: site.id,
 	});
+
+	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+		channel.name,
+		'B2C'
+	);
 
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: getRandomString(),
@@ -1218,7 +1248,13 @@ test('LPD-3440 As a order manager with buyer approval workflow, I can approve or
 test(
 	'Can sort orders by create date',
 	{tag: ['@COMMERCE-10147', '@LPD-48664']},
-	async ({apiHelpers, page, pendingOrdersPage, site}) => {
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		page,
+		pendingOrdersPage,
+		site,
+	}) => {
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			type: 'person',
 		});
@@ -1286,6 +1322,11 @@ test(
 				name: getRandomString(),
 				siteGroupId: site.id,
 			});
+
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2C'
+		);
 
 		const order1 = await apiHelpers.headlessCommerceAdminOrder.postOrder({
 			accountId: account.id,

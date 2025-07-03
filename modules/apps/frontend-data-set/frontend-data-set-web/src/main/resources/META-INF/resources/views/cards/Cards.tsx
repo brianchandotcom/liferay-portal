@@ -68,6 +68,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 				actions,
 				infoPanelOpen,
 				itemData: item,
+				selectable,
 				selectedItemsKey,
 				selectedItemsValue,
 			}) as any);

@@ -25,7 +25,7 @@ public class PlaywrightTestParser {
 	public static List<PlaywrightTestReport> parse(
 		Path playwrightTestFilePath) {
 
-		String playwrightTestFileContent = "";
+		String playwrightTestFileContent = StringPool.BLANK;
 
 		try {
 			playwrightTestFileContent = Files.readString(

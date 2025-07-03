@@ -7535,29 +7535,38 @@ public class JournalArticleLocalServiceImpl
 		targetArticle.setStatusByUserName(user.getFullName());
 		targetArticle.setStatusDate(modifiedDate);
 
-		Map<Locale, String> newTitleMap = sourceArticle.getTitleMap();
-		Map<Locale, String> newUniqueURLTitleMap = new HashMap<>();
+		Map<Locale, String> titleMap = sourceArticle.getTitleMap();
+		Map<Locale, String> uniqueURLTitleMap = new HashMap<>();
 
-		for (Map.Entry<Locale, String> entry : newTitleMap.entrySet()) {
-			Locale locale = entry.getKey();
+		if (newArticle) {
+			titleMap = new HashMap<>(sourceArticle.getTitleMap());
 
-			String uniqueUrlTitle = _getUniqueUrlTitle(
-				groupId, targetArticleId, entry.getValue());
+			for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+				Locale locale = entry.getKey();
 
-			newTitleMap.put(locale, uniqueUrlTitle);
-			newUniqueURLTitleMap.put(
-				locale, JournalUtil.getUrlTitle(id, uniqueUrlTitle));
+				String uniqueUrlTitle = _getUniqueUrlTitle(
+					groupId, targetArticleId, entry.getValue());
+
+				titleMap.put(locale, uniqueUrlTitle);
+
+				uniqueURLTitleMap.put(
+					locale, JournalUtil.getUrlTitle(id, uniqueUrlTitle));
+			}
 		}
 
 		DDMFormValues ddmFormValues = sourceArticle.getDDMFormValues();
 
 		Locale locale = ddmFormValues.getDefaultLocale();
 
-		String newURLTitle = newUniqueURLTitleMap.get(locale);
+		String newURLTitle = sourceArticle.getUrlTitle();
 
-		while (fetchArticleByUrlTitle(groupId, newURLTitle) != null) {
-			newURLTitle = getUniqueUrlTitle(
-				id, groupId, targetArticleId, newURLTitle);
+		if (newArticle) {
+			newURLTitle = uniqueURLTitleMap.get(locale);
+
+			while (fetchArticleByUrlTitle(groupId, newURLTitle) != null) {
+				newURLTitle = getUniqueUrlTitle(
+					id, groupId, targetArticleId, newURLTitle);
+			}
 		}
 
 		targetArticle.setUrlTitle(newURLTitle);
@@ -7570,15 +7579,15 @@ public class JournalArticleLocalServiceImpl
 		// Article localization
 
 		Map<Locale, String> friendlyURLMap = _checkFriendlyURLMap(
-			locale, new HashMap(), newUniqueURLTitleMap);
+			locale, new HashMap<>(), uniqueURLTitleMap);
 
 		Map<String, String> newUrlTitleMap = _getURLTitleMap(
-			groupId, resourcePrimKey, friendlyURLMap, newUniqueURLTitleMap);
+			groupId, resourcePrimKey, friendlyURLMap, uniqueURLTitleMap);
 
 		updateFriendlyURLs(targetArticle, newUrlTitleMap, serviceContext);
 
 		_addArticleLocalizedFields(
-			targetArticle.getCompanyId(), targetArticle.getId(), newTitleMap,
+			targetArticle.getCompanyId(), targetArticle.getId(), titleMap,
 			sourceArticle.getDescriptionMap());
 
 		// Resources

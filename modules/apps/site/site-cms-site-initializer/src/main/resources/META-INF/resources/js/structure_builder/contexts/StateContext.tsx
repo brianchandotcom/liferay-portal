@@ -250,14 +250,18 @@ function reducer(state: State, action: Action): State {
 				(uuid) => findChild(structure, uuid)!
 			);
 
+			const uuid = getUuid();
+
 			const nextChildren = insertGroup({
 				groupChildren: children,
 				groupParent: children[0].parent,
+				groupUuid: uuid,
 				root: structure,
 			});
 
 			return {
 				...state,
+				selection: [uuid],
 				structure: {...structure, children: nextChildren},
 			};
 		}

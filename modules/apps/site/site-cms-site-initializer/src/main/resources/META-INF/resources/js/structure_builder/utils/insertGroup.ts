@@ -7,17 +7,18 @@ import {RepeatableGroup, Structure, StructureChild} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import getRandomId from './getRandomId';
 import getRandomName from './getRandomName';
-import getUuid from './getUuid';
 
 const DEFAULT_GROUP_LABEL = Liferay.Language.get('repeatable-group');
 
 export default function insertGroup({
 	groupChildren,
 	groupParent,
+	groupUuid,
 	root,
 }: {
 	groupChildren: StructureChild[];
 	groupParent: Uuid;
+	groupUuid: Uuid;
 	root: Structure | RepeatableGroup;
 }): Structure['children'] | RepeatableGroup['children'] {
 	const children = new Map();
@@ -40,6 +41,7 @@ export default function insertGroup({
 				children: insertGroup({
 					groupChildren,
 					groupParent,
+					groupUuid,
 					root: child,
 				}),
 			};
@@ -54,13 +56,11 @@ export default function insertGroup({
 	// Insert new group if this is the correct parent
 
 	if (root.uuid === groupParent) {
-		const uuid = getUuid();
-
 		const group: RepeatableGroup = {
 			children: new Map(
 				groupChildren.map((child) => [
 					child.uuid,
-					{...child, parent: uuid},
+					{...child, parent: groupUuid},
 				])
 			),
 			erc: getRandomId(),
@@ -71,7 +71,7 @@ export default function insertGroup({
 			name: getRandomName(),
 			parent: groupParent,
 			type: 'repeatable-group',
-			uuid,
+			uuid: groupUuid,
 		};
 
 		children.set(group.uuid, group);

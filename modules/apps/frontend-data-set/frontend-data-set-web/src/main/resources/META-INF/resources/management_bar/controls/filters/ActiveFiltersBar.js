@@ -86,7 +86,9 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 									displayType="unstyled"
 									onClick={resetFiltersValue}
 								>
-									{Liferay.Language.get('reset-filters')}
+									{Liferay.FeatureFlags['LPD-52212']
+										? Liferay.Language.get('clear')
+										: Liferay.Language.get('reset-filters')}
 								</ClayButton>
 							</div>
 						</li>

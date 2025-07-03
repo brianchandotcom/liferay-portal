@@ -31,6 +31,7 @@ export enum OrderTypes {
 	OTHER = 'OTHER',
 	SOLUTIONS7 = 'SOLUTIONS7',
 	SOLUTIONS30 = 'SOLUTIONS30',
+	SSA_SAAS = 'SSA_SAAS',
 }
 
 export enum OrderWorkflowStatusCode {
@@ -56,6 +57,7 @@ export const orderTypeLabel = {
 	[OrderTypes.DXPAPP]: 'DXP',
 	[OrderTypes.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
 	[OrderTypes.OTHER]: 'Other',
+	[OrderTypes.SSA_SAAS]: 'SSA SaaS',
 	[OrderTypes.SOLUTIONS7]: 'Solutions 7',
 	[OrderTypes.SOLUTIONS30]: 'Solutions 30',
 } as const;

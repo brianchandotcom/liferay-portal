@@ -119,6 +119,7 @@ export enum ProductType {
 	DXP = 'dxp',
 	LOW_CODE_CONFIGURATION = 'low-code-configuration',
 	OTHER = 'other',
+	SSA_SAAS = 'ssa-saas',
 }
 
 export enum ProductTypeVocabulary {

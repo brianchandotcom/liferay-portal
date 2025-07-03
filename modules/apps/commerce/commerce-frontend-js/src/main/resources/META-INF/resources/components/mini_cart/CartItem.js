@@ -378,7 +378,7 @@ function CartItem({
 			>
 				<div className="mini-cart-item-is-removing">
 					<span>
-						{Liferay.Language.get('the-item-has-been-removed')}
+						{Liferay.Language.get('the-item-will-be-removed')}
 					</span>
 
 					<span>

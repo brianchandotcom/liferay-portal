@@ -209,7 +209,6 @@ components:
                     type: object
                 searchable:
                     default: true
-                    readOnly: true
                     type: boolean
             type: object
         UserAccount:
@@ -436,6 +435,14 @@ paths:
                     required: true
                     schema:
                         type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Site"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Site"
             responses:
                 200:
                     content:
@@ -1176,6 +1183,14 @@ paths:
                     schema:
                         format: int64
                         type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Site"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Site"
             responses:
                 200:
                     content:

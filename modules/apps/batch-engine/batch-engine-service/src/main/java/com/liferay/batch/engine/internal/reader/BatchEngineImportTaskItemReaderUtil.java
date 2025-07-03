@@ -63,10 +63,10 @@ public class BatchEngineImportTaskItemReaderUtil {
 		throws Exception {
 
 		T item;
+		Class<? extends T> subtypeClass = null;
 
 		if (itemClass.getAnnotation(JsonTypeInfo.class) != null) {
-			Class<? extends T> subtypeClass = _resolveSubtypeClass(
-				itemClass, fieldNameValueMap);
+			subtypeClass = _resolveSubtypeClass(itemClass, fieldNameValueMap);
 
 			item = subtypeClass.newInstance();
 		}
@@ -88,7 +88,14 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 			Field field = null;
 
-			for (Field declaredField : itemClass.getDeclaredFields()) {
+			Field[] declaredFields = itemClass.getDeclaredFields();
+
+			if (subtypeClass != null) {
+				declaredFields = ArrayUtil.append(
+					declaredFields, subtypeClass.getDeclaredFields());
+			}
+
+			for (Field declaredField : declaredFields) {
 				if (name.equals(declaredField.getName()) ||
 					Objects.equals(
 						StringPool.UNDERLINE + name, declaredField.getName())) {
@@ -113,7 +120,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 				continue;
 			}
 
-			for (Field declaredField : itemClass.getDeclaredFields()) {
+			for (Field declaredField : declaredFields) {
 				JsonAnySetter[] jsonAnySetters =
 					declaredField.getAnnotationsByType(JsonAnySetter.class);
 

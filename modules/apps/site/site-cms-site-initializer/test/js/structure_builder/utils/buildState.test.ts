@@ -98,7 +98,10 @@ describe('buildState', () => {
 			spaces: structure.spaces,
 		});
 
-		const result = buildState(objectDefinition);
+		const result = buildState({
+			mainObjectDefinition: objectDefinition,
+			objectDefinitions: new Map(),
+		});
 
 		const {children, uuid} = result!.structure;
 
@@ -147,10 +150,13 @@ describe('buildState', () => {
 		});
 
 		const result = buildState({
-			...objectDefinition,
-			status: {
-				code: 0,
+			mainObjectDefinition: {
+				...objectDefinition,
+				status: {
+					code: 0,
+				},
 			},
+			objectDefinitions: new Map(),
 		});
 
 		const {children, uuid} = result!.structure;
@@ -203,10 +209,13 @@ describe('buildState', () => {
 		});
 
 		const result = buildState({
-			...objectDefinition,
-			status: {
-				code: 0,
+			mainObjectDefinition: {
+				...objectDefinition,
+				status: {
+					code: 0,
+				},
 			},
+			objectDefinitions: new Map(),
 		});
 
 		const {children, uuid} = result!.structure;
@@ -259,7 +268,8 @@ describe('buildState', () => {
 		};
 
 		const state = buildState({
-			...objectDefinition,
+			mainObjectDefinition: objectDefinition,
+			objectDefinitions: new Map(),
 		});
 
 		const [, field] = [...state!.structure.children][0];

@@ -3437,6 +3437,36 @@ public class DefaultObjectEntryManagerImplTest
 
 	@FeatureFlag("LPD-17564")
 	@Test
+	public void testExpireObjectEntry() throws Exception {
+		_enableObjectEntryVersioning();
+
+		ObjectEntry objectEntry = _updateObjectEntryVersion(
+			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
+			2);
+
+		objectEntry = _defaultObjectEntryManager.expireObjectEntry(
+			dtoConverterContext, objectEntry.getId());
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			objectEntry.getStatus(
+			).getCode());
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getId(), 1
+			).getStatus());
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getId(), 2
+			).getStatus());
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
 	public void testExpireObjectEntryByVersion() throws Exception {
 
 		// Company scope
@@ -3476,24 +3506,6 @@ public class DefaultObjectEntryManagerImplTest
 				objectEntry.getId(), 1
 			).getStatus());
 
-		objectEntry = _updateObjectEntryVersion(
-			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
-			2);
-
-		objectEntry = _defaultObjectEntryManager.expireObjectEntry(
-			dtoConverterContext, objectEntry.getId());
-
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED,
-			objectEntry.getStatus(
-			).getCode());
-
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED,
-			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), 1
-			).getStatus());
-
 		// Site scope
 
 		objectEntry = _updateObjectEntryVersion(
@@ -3526,24 +3538,6 @@ public class DefaultObjectEntryManagerImplTest
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
-			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), 1
-			).getStatus());
-
-		objectEntry = _updateObjectEntryVersion(
-			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
-			2);
-
-		objectEntry = _defaultObjectEntryManager.expireObjectEntry(
-			dtoConverterContext, objectEntry.getId());
-
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED,
-			objectEntry.getStatus(
-			).getCode());
-
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED,
 			_objectEntryVersionLocalService.getObjectEntryVersion(
 				objectEntry.getId(), 1
 			).getStatus());

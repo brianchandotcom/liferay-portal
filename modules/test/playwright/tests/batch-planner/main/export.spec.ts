@@ -13,6 +13,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
+import {parseJSONLToJSON} from './utils/JSONParser';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -426,6 +427,59 @@ test('can see actions node in the downloaded file', async ({
 				'Stock (v1.0 - Liferay Object REST)'
 			)
 		).find((item: any) => item.name === 'Stock Entry').actions
+	).toEqual({
+		delete: {
+			href: expect.stringContaining('/o/c/stocks/'),
+			method: 'DELETE',
+		},
+		get: {
+			href: expect.stringContaining('/o/c/stocks/'),
+			method: 'GET',
+		},
+		permissions: {
+			href: expect.stringContaining('/o/c/stocks/'),
+			method: 'GET',
+		},
+		replace: {
+			href: expect.stringContaining('/o/c/stocks/'),
+			method: 'PUT',
+		},
+		update: {
+			href: expect.stringContaining('/o/c/stocks/'),
+			method: 'PATCH',
+		},
+		versions: {
+			href: expect.stringContaining('/o/c/stocks/'),
+			method: 'GET',
+		},
+	});
+});
+
+test('can see actions node in downloaded JSONL file', async ({
+	apiHelpers,
+	dataMigrationCenterPage,
+}) => {
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			stockObjectDefinition
+		);
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
+	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
+
+	const exportedContentJSONL = await dataMigrationCenterPage.exportFile(
+		'JSONL',
+		'Stock (v1.0 - Liferay Object REST)'
+	);
+
+	const exportedContentJSON = parseJSONLToJSON(exportedContentJSONL);
+
+	expect(
+		exportedContentJSON.find((item) => item.name === 'Stock Entry').actions
 	).toEqual({
 		delete: {
 			href: expect.stringContaining('/o/c/stocks/'),

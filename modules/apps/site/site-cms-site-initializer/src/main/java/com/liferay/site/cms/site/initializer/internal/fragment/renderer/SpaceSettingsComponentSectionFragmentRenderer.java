@@ -5,12 +5,11 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -45,25 +44,12 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
-		Long depotEntryId = null;
-		Long groupId = null;
-
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-
-		if (object instanceof DepotEntry) {
-			DepotEntry depotEntry = (DepotEntry)object;
-
-			depotEntryId = depotEntry.getDepotEntryId();
-			groupId = depotEntry.getGroupId();
-		}
-
 		return HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(httpServletRequest, "redirect")
 		).put(
-			"depotEntryId", depotEntryId
+			"depotEntryId", InfoItemUtil.getDepotEntryId(httpServletRequest)
 		).put(
-			"groupId", groupId
+			"groupId", InfoItemUtil.getGroupId(httpServletRequest)
 		).build();
 	}
 

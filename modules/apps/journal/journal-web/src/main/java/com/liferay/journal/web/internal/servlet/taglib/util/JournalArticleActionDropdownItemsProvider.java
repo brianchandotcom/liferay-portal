@@ -12,6 +12,8 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -1107,6 +1110,24 @@ public class JournalArticleActionDropdownItemsProvider {
 			return false;
 		}
 
+		// Dynamic data mapping
+
+		try {
+			DDMFormValuesValidator ddmFormValuesValidator =
+				_ddmFormValuesValidatorSnapshot.get();
+
+			ddmFormValuesValidator.validate(_article.getDDMFormValues());
+		}
+		catch (DDMFormValuesValidationException
+					ddmFormValuesValidationException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(ddmFormValuesValidationException);
+			}
+
+			return false;
+		}
+
 		return !JournalArticleLocalServiceUtil.isLatestVersion(
 			_article.getGroupId(), _article.getArticleId(),
 			_article.getVersion());
@@ -1207,6 +1228,11 @@ public class JournalArticleActionDropdownItemsProvider {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleActionDropdownItemsProvider.class);
+
+	private static final Snapshot<DDMFormValuesValidator>
+		_ddmFormValuesValidatorSnapshot = new Snapshot<>(
+			JournalArticleActionDropdownItemsProvider.class,
+			DDMFormValuesValidator.class);
 
 	private final JournalArticle _article;
 	private final AssetDisplayPageFriendlyURLProvider

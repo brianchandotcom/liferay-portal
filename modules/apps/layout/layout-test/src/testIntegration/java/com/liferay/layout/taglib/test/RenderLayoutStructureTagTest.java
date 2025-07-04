@@ -37,6 +37,8 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.InfoFormValidationException;
@@ -53,6 +55,7 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
 import com.liferay.info.test.util.model.MockObject;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -205,6 +208,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -1180,6 +1188,159 @@ public class RenderLayoutStructureTagTest {
 		Assert.assertEquals(
 			expectedJournalArticle2.getArticleId(),
 			actualJournalArticle.getArticleId());
+	}
+
+	@Test
+	@TestInfo("LPD-58700")
+	public void testRenderCollectionStyledLayoutStructureItemWithItemTypeChangedWithCollectionProvider()
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			RenderLayoutStructureTagTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<InfoCollectionProvider<?>> serviceRegistration =
+			null;
+
+		String key = RandomTestUtil.randomString();
+
+		JournalArticleInfoCollectionProvider
+			journalArticleInfoCollectionProvider =
+				new JournalArticleInfoCollectionProvider(key);
+
+		try {
+			serviceRegistration = bundleContext.registerService(
+				(Class<InfoCollectionProvider<?>>)
+					(Class<?>)InfoCollectionProvider.class,
+				journalArticleInfoCollectionProvider, null);
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			long segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid());
+
+			FragmentEntry fragmentEntry = _addFragmentEntry();
+
+			_addCollectionStyledLayoutStructureItem(
+				JSONUtil.put(
+					"itemType", JournalArticle.class.getName()
+				).put(
+					"key", key
+				).put(
+					"type",
+					InfoListProviderItemSelectorReturnType.class.getName()
+				),
+				JSONUtil.put(
+					"displayAllPages", true
+				).put(
+					"paginationType", "none"
+				).put(
+					"showAllItems", true
+				),
+				layout, null, segmentsExperienceId,
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+					0, segmentsExperienceId, draftLayout.getPlid(),
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put(
+							"element-text",
+							JSONUtil.put(
+								"collectionFieldId", "JournalArticle_title"
+							).put(
+								"defaultValue", "Heading Example"
+							))
+					).toString(),
+					StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+					fragmentEntry.getType(), _serviceContext));
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout);
+
+			String content = _getContent(
+				layout, mockHttpServletRequest, segmentsExperienceId);
+
+			Assert.assertFalse(
+				content,
+				StringUtil.contains(
+					content, ">Heading Example</h1>", StringPool.BLANK));
+
+			String title = RandomTestUtil.randomString();
+
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, title,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_portal.getSiteDefaultLocale(_group), true, true,
+				_serviceContext);
+
+			journalArticleInfoCollectionProvider.addJournalArticle(
+				journalArticle);
+
+			content = _getContent(
+				layout, mockHttpServletRequest, segmentsExperienceId);
+
+			Assert.assertFalse(
+				content,
+				StringUtil.contains(
+					content, ">Heading Example</h1>", StringPool.BLANK));
+			Assert.assertTrue(
+				content,
+				StringUtil.contains(
+					content, ">" + title + "</h1>", StringPool.BLANK));
+
+			serviceRegistration.unregister();
+
+			AssetEntryInfoCollectionProvider assetEntryInfoCollectionProvider =
+				new AssetEntryInfoCollectionProvider(key);
+
+			serviceRegistration = bundleContext.registerService(
+				(Class<InfoCollectionProvider<?>>)
+					(Class<?>)InfoCollectionProvider.class,
+				assetEntryInfoCollectionProvider, null);
+
+			content = _getContent(
+				layout, mockHttpServletRequest, segmentsExperienceId);
+
+			Assert.assertFalse(
+				content,
+				StringUtil.contains(
+					content, ">Heading Example</h1>", StringPool.BLANK));
+			Assert.assertFalse(
+				content,
+				StringUtil.contains(
+					content, ">" + title + "</h1>", StringPool.BLANK));
+
+			assetEntryInfoCollectionProvider.addAssetEntry(
+				_assetEntryLocalService.getEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()));
+
+			content = _getContent(
+				layout, mockHttpServletRequest, segmentsExperienceId);
+
+			Assert.assertFalse(
+				content,
+				StringUtil.contains(
+					content, ">" + title + "</h1>", StringPool.BLANK));
+			Assert.assertTrue(
+				content,
+				StringUtil.contains(
+					content, ">Heading Example</h1>", StringPool.BLANK));
+		}
+		finally {
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
+		}
 	}
 
 	@FeatureFlag("LPD-32050")
@@ -2902,6 +3063,27 @@ public class RenderLayoutStructureTagTest {
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
+	private String _getContent(
+			Layout layout, MockHttpServletRequest mockHttpServletRequest,
+			long segmentsExperienceId)
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		RenderLayoutStructureTag renderLayoutStructureTag =
+			_getRenderLayoutStructureTag(
+				layout, mockHttpServletRequest, mockHttpServletResponse,
+				segmentsExperienceId);
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			renderLayoutStructureTag.doTag(
+				mockHttpServletRequest, mockHttpServletResponse);
+		}
+
+		return mockHttpServletResponse.getContentAsString();
+	}
+
 	private LayoutStructure _getDefaultMasterLayoutStructure() {
 		LayoutStructure layoutStructure = new LayoutStructure();
 
@@ -3337,5 +3519,71 @@ public class RenderLayoutStructureTagTest {
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
+
+	private static class AssetEntryInfoCollectionProvider
+		implements InfoCollectionProvider<AssetEntry> {
+
+		public void addAssetEntry(AssetEntry assetEntry) {
+			_assetEntries.add(assetEntry);
+		}
+
+		@Override
+		public InfoPage<AssetEntry> getCollectionInfoPage(
+			CollectionQuery collectionQuery) {
+
+			return InfoPage.of(_assetEntries);
+		}
+
+		@Override
+		public String getKey() {
+			return _key;
+		}
+
+		@Override
+		public String getLabel(Locale locale) {
+			return RandomTestUtil.randomString();
+		}
+
+		private AssetEntryInfoCollectionProvider(String key) {
+			_key = key;
+		}
+
+		private List<AssetEntry> _assetEntries = new ArrayList<>();
+		private final String _key;
+
+	}
+
+	private static class JournalArticleInfoCollectionProvider
+		implements InfoCollectionProvider<JournalArticle> {
+
+		public void addJournalArticle(JournalArticle journalArticle) {
+			_journalArticles.add(journalArticle);
+		}
+
+		@Override
+		public InfoPage<JournalArticle> getCollectionInfoPage(
+			CollectionQuery collectionQuery) {
+
+			return InfoPage.of(_journalArticles);
+		}
+
+		@Override
+		public String getKey() {
+			return _key;
+		}
+
+		@Override
+		public String getLabel(Locale locale) {
+			return RandomTestUtil.randomString();
+		}
+
+		private JournalArticleInfoCollectionProvider(String key) {
+			_key = key;
+		}
+
+		private List<JournalArticle> _journalArticles = new ArrayList<>();
+		private final String _key;
+
+	}
 
 }

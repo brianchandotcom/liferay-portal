@@ -295,7 +295,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 		TestrayAttachment testrayAttachment = getTestrayAttachment(
 			getBuildReport(), "Liferay Log",
-			"/" + getAxisName() + "/liferay-log.txt.gz");
+			getAxisName() + "/liferay-log.txt.gz");
 
 		if (testrayAttachment == null) {
 			return testrayAttachments;
@@ -307,7 +307,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			TestrayAttachment liferayLogTestrayAttachment =
 				getTestrayAttachment(
 					getBuildReport(), "Liferay Log (" + i + ")",
-					"/" + getAxisName() + "/liferay-log-" + i + ".txt.gz");
+					getAxisName() + "/liferay-log-" + i + ".txt.gz");
 
 			if (liferayLogTestrayAttachment == null) {
 				break;
@@ -324,7 +324,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 		TestrayAttachment testrayAttachment = getTestrayAttachment(
 			getBuildReport(), "Liferay OSGi Log",
-			"/" + getAxisName() + "/liferay-osgi-log.txt.gz");
+			getAxisName() + "/liferay-osgi-log.txt.gz");
 
 		if (testrayAttachment == null) {
 			return testrayAttachments;
@@ -336,7 +336,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			TestrayAttachment liferayOSGiLogTestrayAttachment =
 				getTestrayAttachment(
 					getBuildReport(), "Liferay OSGi Log (" + i + ")",
-					"/" + getAxisName() + "/liferay-osgi-log-" + i + ".txt.gz");
+					getAxisName() + "/liferay-osgi-log-" + i + ".txt.gz");
 
 			if (liferayOSGiLogTestrayAttachment == null) {
 				break;
@@ -552,7 +552,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 				getTestrayAttachment(
 					buildReport,
 					"Docker Log (" + matcher.group("fileName") + ")",
-					"/" + getAxisName() + "/" + matcher.group("key")));
+					getAxisName() + "/" + matcher.group("key")));
 		}
 
 		return testrayAttachments;
@@ -580,7 +580,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			testrayAttachments.add(
 				getTestrayAttachment(
 					buildReport, "GC Log (" + matcher.group("fileName") + ")",
-					"/" + getAxisName() + "/" + matcher.group("key")));
+					getAxisName() + "/" + matcher.group("key")));
 		}
 
 		return testrayAttachments;
@@ -589,12 +589,12 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 	private TestrayAttachment _getGradlePluginsAttachment() {
 		return getTestrayAttachment(
 			getBuildReport(), "Gradle Plugins Test Report",
-			"/" + getAxisName() + "/gradle_plugins.tar.gz");
+			getAxisName() + "/gradle_plugins.tar.gz");
 	}
 
 	private TestrayAttachment _getJenkinsConsoleTestrayAttachment() {
 		String name = "Jenkins Console";
-		String key = "/" + getAxisName() + "/jenkins-console.txt.gz";
+		String key = getAxisName() + "/jenkins-console.txt.gz";
 
 		TestrayAttachment testrayAttachment = getTestrayAttachment(
 			getBuildReport(), name, key);
@@ -700,7 +700,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 				getTestrayAttachment(
 					buildReport,
 					"Docker Log (" + matcher.group("fileName") + ")",
-					"/" + getAxisName() + "/" + matcher.group("key")));
+					getAxisName() + "/" + matcher.group("key")));
 		}
 
 		return testrayAttachments;
@@ -708,8 +708,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 	private TestrayAttachment _getWarningsTestrayAttachment() {
 		return getTestrayAttachment(
-			getBuildReport(), "Warnings",
-			"/" + getAxisName() + "/warnings.html.gz");
+			getBuildReport(), "Warnings", getAxisName() + "/warnings.html.gz");
 	}
 
 	private static final Pattern _dockerLogsURLPattern = Pattern.compile(

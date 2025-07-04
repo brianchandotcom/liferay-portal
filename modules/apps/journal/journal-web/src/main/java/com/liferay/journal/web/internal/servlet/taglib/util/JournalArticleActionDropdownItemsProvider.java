@@ -1110,6 +1110,29 @@ public class JournalArticleActionDropdownItemsProvider {
 			return false;
 		}
 
+		// Asset
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			JournalArticle.class.getName(), _article.getResourcePrimKey());
+
+		if (assetEntry == null) {
+			return false;
+		}
+
+		try {
+			AssetEntryLocalServiceUtil.validate(
+				_article.getGroupId(), JournalArticle.class.getName(),
+				assetEntry.getClassTypeId(), assetEntry.getCategoryIds(),
+				assetEntry.getTagNames());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return false;
+		}
+
 		// Dynamic data mapping
 
 		try {

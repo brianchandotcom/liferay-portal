@@ -404,107 +404,67 @@ test('can export as JSONL with excluded fields', async ({
 	).toBe('{"name":"Stock Entry"}\n');
 });
 
-test('can see actions node in the downloaded file', async ({
-	apiHelpers,
-	dataMigrationCenterPage,
-}) => {
-	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+[
+	{format: 'JSON', parse: JSON.parse},
+	{format: 'JSONL', parse: parseJSONLToJSON},
+].forEach(({format, parse}) => {
+	test(`can see actions node in the downloaded ${format} file`, async ({
+		apiHelpers,
+		dataMigrationCenterPage,
+	}) => {
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-	const {body: objectDefinition} =
-		await objectDefinitionAPIClient.postObjectDefinition(
-			stockObjectDefinition
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				stockObjectDefinition
+			);
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			stockObjectEntry,
+			'c/stocks'
 		);
 
-	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
-
-	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
-
-	expect(
-		JSON.parse(
-			await dataMigrationCenterPage.exportFile(
-				'JSON',
-				'Stock (v1.0 - Liferay Object REST)'
-			)
-		).find((item: any) => item.name === 'Stock Entry').actions
-	).toEqual({
-		delete: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'DELETE',
-		},
-		get: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'GET',
-		},
-		permissions: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'GET',
-		},
-		replace: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'PUT',
-		},
-		update: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'PATCH',
-		},
-		versions: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'GET',
-		},
-	});
-});
-
-test('can see actions node in downloaded JSONL file', async ({
-	apiHelpers,
-	dataMigrationCenterPage,
-}) => {
-	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-	const {body: objectDefinition} =
-		await objectDefinitionAPIClient.postObjectDefinition(
-			stockObjectDefinition
+		const exportedContent = await dataMigrationCenterPage.exportFile(
+			format,
+			'Stock (v1.0 - Liferay Object REST)'
 		);
 
-	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+		const parsed = parse(exportedContent);
 
-	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
-
-	const exportedContentJSONL = await dataMigrationCenterPage.exportFile(
-		'JSONL',
-		'Stock (v1.0 - Liferay Object REST)'
-	);
-
-	const exportedContentJSON = parseJSONLToJSON(exportedContentJSONL);
-
-	expect(
-		exportedContentJSON.find((item) => item.name === 'Stock Entry').actions
-	).toEqual({
-		delete: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'DELETE',
-		},
-		get: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'GET',
-		},
-		permissions: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'GET',
-		},
-		replace: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'PUT',
-		},
-		update: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'PATCH',
-		},
-		versions: {
-			href: expect.stringContaining('/o/c/stocks/'),
-			method: 'GET',
-		},
+		expect(
+			parsed.find((item: any) => item.name === 'Stock Entry').actions
+		).toEqual({
+			delete: {
+				href: expect.stringContaining('/o/c/stocks/'),
+				method: 'DELETE',
+			},
+			get: {
+				href: expect.stringContaining('/o/c/stocks/'),
+				method: 'GET',
+			},
+			permissions: {
+				href: expect.stringContaining('/o/c/stocks/'),
+				method: 'GET',
+			},
+			replace: {
+				href: expect.stringContaining('/o/c/stocks/'),
+				method: 'PUT',
+			},
+			update: {
+				href: expect.stringContaining('/o/c/stocks/'),
+				method: 'PATCH',
+			},
+			versions: {
+				href: expect.stringContaining('/o/c/stocks/'),
+				method: 'GET',
+			},
+		});
 	});
 });
 

@@ -134,13 +134,10 @@ List<PatcherFixPack> patcherFixPacks = patcherEditFixPackFieldsDisplayContext.ge
 				value="<%= LanguageUtil.get(request, WorkflowConstants.getStatusLabel(patcherFixPack.getStatus())) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-date
 				name="released-date"
-			>
-				<fmt:formatDate
-					value="<%= patcherFixPack.getReleasedDate() %>"
-				/>
-			</liferay-ui:search-container-column-text>
+				value="<%= patcherFixPack.getReleasedDate() %>"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

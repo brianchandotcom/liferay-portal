@@ -33,10 +33,7 @@ PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId)
 	<aui:input name="patcherFixId" type="hidden" value="<%= patcherFix.getPatcherFixId() %>" />
 
 	<aui:field-wrapper label="modified-date">
-		<fmt:formatDate
-			type="both"
-			value="<%= patcherFix.getModifiedDate() %>"
-		/>
+		<%= dateTimeFormat.format(patcherFix.getModifiedDate()) %>
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="created-by">

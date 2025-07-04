@@ -72,13 +72,10 @@ PatcherFixPacksDisplayContext patcherFixPacksDisplayContext = new PatcherFixPack
 			value="<%= LanguageUtil.get(request, PatcherBuildUtil.getQAStatusLabel(patcherFixPack.getPatcherBuildId())) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
+		<liferay-ui:search-container-column-date
 			name="released-date"
-		>
-			<fmt:formatDate
-				value="<%= patcherFixPack.getReleasedDate() %>"
-			/>
-		</liferay-ui:search-container-column-text>
+			value="<%= patcherFixPack.getReleasedDate() %>"
+		/>
 
 		<%
 		List<String> newTickets = PatcherUtil.getNewTickets(patcherFixPack);

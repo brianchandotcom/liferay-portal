@@ -229,13 +229,10 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 			/>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
+		<liferay-ui:search-container-column-date
 			name="status-date"
-		>
-			<fmt:formatDate
-				value="<%= patcherBuild.getStatusDate() %>"
-			/>
-		</liferay-ui:search-container-column-text>
+			value="<%= patcherBuild.getStatusDate() %>"
+		/>
 
 		<liferay-ui:search-container-column-text
 			name="patcher-status"

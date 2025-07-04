@@ -65,9 +65,7 @@ if (patcherBuild != null) {
 </c:if>
 
 <aui:field-wrapper label="released-date">
-	<fmt:formatDate
-		value="<%= patcherFixPack.getReleasedDate() %>"
-	/>
+	<%= dateTimeFormat.format(patcherFixPack.getReleasedDate()) %>
 </aui:field-wrapper>
 
 <aui:field-wrapper label="requirements">
@@ -83,9 +81,7 @@ if (patcherBuild != null) {
 </aui:field-wrapper>
 
 <aui:field-wrapper label="oldest-fix-date">
-	<fmt:formatDate
-		value="<%= PatcherFixUtil.getOldestPatcherFixCreateDate(patcherFixPack.getPatcherFixPackId()) %>"
-	/>
+	<%= dateTimeFormat.format(PatcherFixUtil.getOldestPatcherFixCreateDate(patcherFixPack.getPatcherFixPackId())) %>
 </aui:field-wrapper>
 
 <aui:button-row>
@@ -337,13 +333,10 @@ Set<PatcherFixPack> prerequisitePatcherFixPacks = PatcherFixPackUtil.getPrerequi
 				value="<%= LanguageUtil.get(request, WorkflowConstants.getStatusLabel(curPatcherFixPack.getStatus())) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-date
 				name="released-date"
-			>
-				<fmt:formatDate
-					value="<%= curPatcherFixPack.getReleasedDate() %>"
-				/>
-			</liferay-ui:search-container-column-text>
+				value="<%= curPatcherFixPack.getReleasedDate() %>"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

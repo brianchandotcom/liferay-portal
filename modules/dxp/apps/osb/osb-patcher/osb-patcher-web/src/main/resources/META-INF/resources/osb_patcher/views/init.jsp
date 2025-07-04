@@ -5,8 +5,7 @@
  */
 --%>
 
-<%@ taglib uri="jakarta.tags.core" prefix="c" %><%@
-taglib uri="jakarta.tags.fmt" prefix="fmt" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
@@ -82,11 +81,14 @@ page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %>
 page import="com.liferay.portal.kernel.search.Field" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
+page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.servlet.BrowserSnifferUtil" %>
+
+<%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
@@ -100,4 +102,6 @@ page import="java.util.Set" %>
 
 <%
 PatcherConfiguration patcherConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(PatcherConfiguration.class, themeDisplay.getCompanyId());
+
+Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

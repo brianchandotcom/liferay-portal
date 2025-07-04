@@ -54,17 +54,11 @@ if (!patcherFix.isLatestFix()) {
 </c:if>
 
 <aui:field-wrapper label="modified-date">
-	<fmt:formatDate
-		type="both"
-		value="<%= patcherFix.getModifiedDate() %>"
-	/>
+	<%= dateTimeFormat.format(patcherFix.getModifiedDate()) %>
 </aui:field-wrapper>
 
 <aui:field-wrapper label="status-date">
-	<fmt:formatDate
-		type="both"
-		value="<%= patcherFix.getStatusDate() %>"
-	/>
+	<%= dateTimeFormat.format(patcherFix.getStatusDate()) %>
 </aui:field-wrapper>
 
 <aui:field-wrapper label="created-by">
@@ -253,14 +247,10 @@ SearchContainer<PatcherFix> patcherFixSearchContainer = patcherViewFixesDisplayC
 				/>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-date
 				name="modified-date"
-			>
-				<fmt:formatDate
-					type="both"
-					value="<%= patcherFixKeyVersion.getModifiedDate() %>"
-				/>
-			</liferay-ui:search-container-column-text>
+				value="<%= patcherFixKeyVersion.getModifiedDate() %>"
+			/>
 
 			<liferay-ui:search-container-column-text
 				href="<%= PatcherFixUtil.getPatcherFixGitHubURL(patcherFixKeyVersion.getPatcherFixId()) %>"

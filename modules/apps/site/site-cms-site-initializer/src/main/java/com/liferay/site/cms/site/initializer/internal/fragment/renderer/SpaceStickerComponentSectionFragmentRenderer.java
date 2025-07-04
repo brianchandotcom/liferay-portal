@@ -8,7 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceStickerConstants;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
 import com.liferay.site.cms.site.initializer.internal.display.context.SpaceStickerDisplayContext;
 import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
 
@@ -50,7 +50,7 @@ public class SpaceStickerComponentSectionFragmentRenderer
 		SpaceStickerDisplayContext spaceStickerDisplayContext =
 			new SpaceStickerDisplayContext(
 				InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
-				httpServletRequest, CMSSpaceStickerConstants.LG);
+				httpServletRequest, CMSSpaceConstants.SPACE_STICKER_LG);
 
 		return spaceStickerDisplayContext.getProps();
 	}

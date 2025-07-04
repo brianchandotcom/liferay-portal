@@ -46,10 +46,7 @@ patcherBuildTickets.retainAll(cumulativeFixedIssues);
 	<aui:input name="patcherBuildId" type="hidden" value="<%= patcherBuild.getPatcherBuildId() %>" />
 
 	<aui:field-wrapper label="modified-date">
-		<fmt:formatDate
-			type="both"
-			value="<%= patcherBuild.getModifiedDate() %>"
-		/>
+		<%= dateTimeFormat.format(patcherBuild.getModifiedDate()) %>
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="created-by">

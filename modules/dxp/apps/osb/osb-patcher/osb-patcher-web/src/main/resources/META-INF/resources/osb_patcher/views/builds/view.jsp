@@ -55,24 +55,15 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 </c:if>
 
 <aui:field-wrapper label="create-date">
-	<fmt:formatDate
-		type="both"
-		value="<%= patcherBuild.getCreateDate() %>"
-	/>
+	<%= dateTimeFormat.format(patcherBuild.getCreateDate()) %>
 </aui:field-wrapper>
 
 <aui:field-wrapper label="modified-date">
-	<fmt:formatDate
-		type="both"
-		value="<%= patcherBuild.getModifiedDate() %>"
-	/>
+	<%= dateTimeFormat.format(patcherBuild.getModifiedDate()) %>
 </aui:field-wrapper>
 
 <aui:field-wrapper label="status-date">
-	<fmt:formatDate
-		type="both"
-		value="<%= patcherBuild.getStatusDate() %>"
-	/>
+	<%= dateTimeFormat.format(patcherBuild.getStatusDate()) %>
 </aui:field-wrapper>
 
 <aui:field-wrapper label="created-by">
@@ -487,14 +478,10 @@ SearchContainer<PatcherBuild> patcherBuildSearchContainer = patcherViewBuildsDis
 				/>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-date
 				name="modified-date"
-			>
-				<fmt:formatDate
-					type="both"
-					value="<%= patcherBuildKeyVersion.getModifiedDate() %>"
-				/>
-			</liferay-ui:search-container-column-text>
+				value="<%= patcherBuildKeyVersion.getModifiedDate() %>"
+			/>
 
 			<liferay-ui:search-container-column-text
 				name="status"

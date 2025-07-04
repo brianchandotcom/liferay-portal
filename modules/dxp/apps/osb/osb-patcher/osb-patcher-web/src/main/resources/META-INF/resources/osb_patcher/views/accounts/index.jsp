@@ -125,11 +125,7 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 						</td>
 						<td class="slim">
 							<span class="relative-date">
-								<fmt:formatDate
-									pattern="yyyy-MM-dd HH:mm:ss z"
-									timeZone="<%= timeZone %>"
-									value="<%= patcherBuild.getStatusDate() %>"
-								/>
+								<%= dateTimeFormat.format(patcherBuild.getStatusDate()) %>
 							</span>
 						</td>
 						<td>

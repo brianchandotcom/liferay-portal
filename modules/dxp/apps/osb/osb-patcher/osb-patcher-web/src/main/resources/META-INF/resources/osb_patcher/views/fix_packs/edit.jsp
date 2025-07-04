@@ -106,9 +106,7 @@ if (patcherBuild != null) {
 
 	<c:if test="<%= patcherFixPack.getReleasedDate() != null %>">
 		<aui:field-wrapper label="released-date">
-			<fmt:formatDate
-				value="<%= patcherFixPack.getReleasedDate() %>"
-			/>
+			<%= dateTimeFormat.format(patcherFixPack.getReleasedDate()) %>
 		</aui:field-wrapper>
 	</c:if>
 

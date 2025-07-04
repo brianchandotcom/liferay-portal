@@ -734,14 +734,11 @@ public class StagedLayoutSetStagedModelDataHandler
 			StagedLayoutSet stagedLayoutSet, Element stagedLayoutSetElement)
 		throws Exception {
 
-		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
-			boolean favicon = MapUtil.getBoolean(
+		if (!MapUtil.getBoolean(
 				portletDataContext.getParameterMap(),
-				PortletDataHandlerKeys.FAVICON);
+				PortletDataHandlerKeys.FAVICON)) {
 
-			if (!favicon) {
-				return;
-			}
+			return;
 		}
 
 		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();

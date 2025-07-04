@@ -35,9 +35,7 @@ export class WorkflowTasksPage {
 	}
 
 	async approve(articleTitle: string) {
-		const row = await this.page
-			.getByRole('row')
-			.filter({hasText: articleTitle});
+		const row = this.page.getByRole('row').filter({hasText: articleTitle});
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -76,6 +74,30 @@ export class WorkflowTasksPage {
 			.click();
 
 		await waitForAlert(this.page);
+	}
+
+	async assignToUser(articleTitle: string, user: TUserAccount) {
+		const row = this.page.getByRole('row').filter({hasText: articleTitle});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.locator('.dropdown-menu:visible')
+				.getByText('Assign to...', {exact: true}),
+			trigger: row.locator('.dropdown-toggle'),
+		});
+
+		await this.page
+			.frameLocator(`iframe[title="Assign to..."]`)
+			.getByRole('combobox')
+			.selectOption({
+				label: `${user.alternateName} (${user.givenName} ${user.givenName})`,
+			});
+
+		await this.page
+			.frameLocator(`iframe[title="Assign to..."]`)
+			.getByRole('button', {name: 'Done'})
+			.click();
 	}
 
 	async reject(articleTitle: string) {

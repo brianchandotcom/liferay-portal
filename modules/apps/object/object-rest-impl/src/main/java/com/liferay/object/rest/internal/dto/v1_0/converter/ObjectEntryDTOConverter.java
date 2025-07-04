@@ -1044,8 +1044,6 @@ public class ObjectEntryDTOConverter
 				return null;
 			}
 
-			// TODO Fill also the {picklist}Key field
-
 			return _getListEntry(
 				dtoConverterContext, (String)serializable,
 				objectField.getListTypeDefinitionId());

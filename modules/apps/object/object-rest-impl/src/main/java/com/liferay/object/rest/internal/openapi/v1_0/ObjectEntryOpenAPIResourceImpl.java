@@ -286,20 +286,7 @@ public class ObjectEntryOpenAPIResourceImpl
 						"name", String.class.getSimpleName())));
 			dtoProperty.setRequired(objectField.isRequired());
 
-			return ListUtil.fromArray(
-				dtoProperty,
-				new DTOProperty(
-					HashMapBuilder.<String, Object>put(
-						"x-parent-map", "properties"
-					).build(),
-					objectField.getName() + "Key",
-					String.class.getSimpleName()) {
-
-					{
-						setReadOnly(true);
-						setRequired(objectField.isRequired());
-					}
-				});
+			return ListUtil.fromArray(dtoProperty);
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),

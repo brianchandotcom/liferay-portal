@@ -1357,7 +1357,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = checkLogo(companyId);
 
-		_imageLocalService.updateImage(company.getLogoId(), bytes);
+		_imageLocalService.updateImage(
+			company.getCompanyId(), company.getLogoId(), bytes);
 
 		return company;
 	}

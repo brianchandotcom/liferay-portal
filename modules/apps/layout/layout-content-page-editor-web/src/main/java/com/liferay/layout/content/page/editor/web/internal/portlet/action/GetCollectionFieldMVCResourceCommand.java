@@ -327,7 +327,11 @@ public class GetCollectionFieldMVCResourceCommand
 						_infoListRendererRegistry.getInfoListRenderer(
 							listStyle);
 
-				if (infoListRenderer == null) {
+				if ((infoListRenderer == null) ||
+					!Objects.equals(
+						infoListRenderer.getCollectionItemClassName(),
+						listObjectReference.getItemType())) {
+
 					return null;
 				}
 

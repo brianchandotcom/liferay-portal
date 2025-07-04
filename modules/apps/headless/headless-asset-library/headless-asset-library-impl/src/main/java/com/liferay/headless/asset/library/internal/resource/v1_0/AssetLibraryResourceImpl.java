@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -496,6 +497,29 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				unicodeProperties.getProperty("autoTaggingEnabled"),
 				settings.getAutoTaggingEnabled())
 		).put(
+			"inheritLocales",
+			() -> {
+				Boolean inheritLocales = _getBooleanValue(
+					unicodeProperties.getProperty("inheritLocales"),
+					settings.getUseCustomLanguages());
+
+				if (settings.getUseCustomLanguages() == null) {
+					return inheritLocales.toString();
+				}
+
+				return String.valueOf(!inheritLocales.booleanValue());
+			}
+		).put(
+			"languageId",
+			GetterUtil.getString(
+				settings.getDefaultLanguageId(),
+				unicodeProperties.getProperty("languageId"))
+		).put(
+			"locales",
+			GetterUtil.getString(
+				StringUtil.merge(settings.getAvailableLanguageIds()),
+				unicodeProperties.getProperty("locales"))
+		).put(
 			"logoColor",
 			GetterUtil.getString(
 				settings.getLogoColor(),
@@ -505,11 +529,6 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			_getBooleanValue(
 				unicodeProperties.getProperty("sharingEnabled"),
 				settings.getSharingEnabled())
-		).put(
-			"useCustomLanguages",
-			_getBooleanValue(
-				unicodeProperties.getProperty("useCustomLanguages"),
-				settings.getUseCustomLanguages())
 		).build();
 	}
 
@@ -524,14 +543,18 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			"autoTaggingEnabled",
 			GetterUtil.getBoolean(settings.getAutoTaggingEnabled())
 		).put(
+			"inheritLocales",
+			!GetterUtil.getBoolean(settings.getUseCustomLanguages(), true)
+		).put(
+			"languageId", settings.getDefaultLanguageId()
+		).put(
+			"locales", StringUtil.merge(settings.getAvailableLanguageIds())
+		).put(
 			"logoColor",
 			GetterUtil.getString(settings.getLogoColor(), "outline-0")
 		).put(
 			"sharingEnabled",
 			GetterUtil.getBoolean(settings.getSharingEnabled())
-		).put(
-			"useCustomLanguages",
-			GetterUtil.getBoolean(settings.getUseCustomLanguages())
 		).build();
 	}
 

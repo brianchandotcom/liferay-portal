@@ -11,13 +11,17 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.definition.setting.builder.ObjectDefinitionSettingBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -31,6 +35,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
@@ -39,6 +44,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -49,6 +55,64 @@ import org.junit.Test;
  */
 public abstract class BaseSectionDisplayContextTestCase
 	extends BaseDisplayContextTestCase {
+
+	@Test
+	@TestInfo("LPD-50664")
+	public void testGetCreationMenu() throws Exception {
+		Map<String, String> expectedResultMap = getExpectedCreationMenuItems();
+
+		_testGetCreationMenu(getCreationMenu(), expectedResultMap);
+
+		ObjectFolder objectFolder = null;
+
+		for (String objectFolderExternalReferenceCode :
+				getObjectFolderExternalReferenceCodes()) {
+
+			objectFolder =
+				objectFolderLocalService.getObjectFolderByExternalReferenceCode(
+					objectFolderExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+			ObjectDefinition objectDefinition = addCustomObjectDefinition(
+				objectFolder.getObjectFolderId(), true, true,
+				ObjectDefinitionConstants.SCOPE_DEPOT,
+				WorkflowConstants.STATUS_APPROVED);
+
+			expectedResultMap.put(
+				objectDefinition.getLabel(LocaleUtil.US),
+				getRedirect(
+					objectDefinition,
+					_getRootObjectEntryFolderExternalReferenceCode(
+						objectFolderExternalReferenceCode)));
+		}
+
+		addCustomObjectDefinition(
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			false, true, ObjectDefinitionConstants.SCOPE_DEPOT,
+			WorkflowConstants.STATUS_APPROVED);
+		addCustomObjectDefinition(
+			objectFolder.getObjectFolderId(), false, true,
+			ObjectDefinitionConstants.SCOPE_DEPOT,
+			WorkflowConstants.STATUS_APPROVED);
+		addCustomObjectDefinition(
+			objectFolder.getObjectFolderId(), true, false,
+			ObjectDefinitionConstants.SCOPE_DEPOT,
+			WorkflowConstants.STATUS_APPROVED);
+		addCustomObjectDefinition(
+			objectFolder.getObjectFolderId(), true, true,
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			WorkflowConstants.STATUS_APPROVED);
+		addCustomObjectDefinition(
+			objectFolder.getObjectFolderId(), true, true,
+			ObjectDefinitionConstants.SCOPE_SITE,
+			WorkflowConstants.STATUS_APPROVED);
+		addCustomObjectDefinition(
+			objectFolder.getObjectFolderId(), true, true,
+			ObjectDefinitionConstants.SCOPE_DEPOT,
+			WorkflowConstants.STATUS_DRAFT);
+
+		_testGetCreationMenu(getCreationMenu(), expectedResultMap);
+	}
 
 	@Test
 	@TestInfo("LPD-57827")
@@ -175,9 +239,56 @@ public abstract class BaseSectionDisplayContextTestCase
 			"getCreationMenu", new Class<?>[0]);
 	}
 
+	protected abstract Map<String, String> getExpectedCreationMenuItems()
+		throws PortalException;
+
 	protected abstract String getObjectFolderExternalReferenceCode();
 
-	protected abstract String getRootObjectEntryFolderExternalReferenceCode();
+	protected List<String> getObjectFolderExternalReferenceCodes() {
+		return List.of(getObjectFolderExternalReferenceCode());
+	}
+
+	protected String getRedirect(
+		ObjectDefinition objectDefinition,
+		String objectEntryFolderExternalReferenceCode) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("/cms/add_structured_content_item?objectDefinitionId=");
+		sb.append(objectDefinition.getObjectDefinitionId());
+		sb.append("&objectEntryFolderExternalReferenceCode=");
+		sb.append(objectEntryFolderExternalReferenceCode);
+		sb.append("&plid=0&redirect=http://localhost:8080/currentURL");
+
+		return sb.toString();
+	}
+
+	protected String getRedirect(String objectDefinitionExternalReferenceCode)
+		throws PortalException {
+
+		return getRedirect(
+			objectDefinitionExternalReferenceCode,
+			getRootObjectEntryFolderExternalReferenceCode());
+	}
+
+	protected String getRedirect(
+			String objectDefinitionExternalReferenceCode,
+			String rootObjectEntryFolderExternalReferenceCode)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+		return getRedirect(
+			objectDefinition, rootObjectEntryFolderExternalReferenceCode);
+	}
+
+	protected String getRootObjectEntryFolderExternalReferenceCode() {
+		return null;
+	}
 
 	protected abstract Object getSectionDisplayContext(
 			HttpServletRequest httpServletRequest)
@@ -279,6 +390,16 @@ public abstract class BaseSectionDisplayContextTestCase
 			dropdownItemData);
 	}
 
+	private DropdownItem _get(List<DropdownItem> dropdownItems, String label) {
+		for (DropdownItem dropdownItem : dropdownItems) {
+			if (label.equals(dropdownItem.get("label"))) {
+				return dropdownItem;
+			}
+		}
+
+		return null;
+	}
+
 	private JSONArray _getJSONArray(List<DepotEntry> depotEntries) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -297,6 +418,58 @@ public abstract class BaseSectionDisplayContextTestCase
 		}
 
 		return jsonArray;
+	}
+
+	private String _getRedirect(DropdownItem dropdownItem) {
+		Map<String, Object> map = (HashMap<String, Object>)dropdownItem.get(
+			"data");
+
+		if (map == null) {
+			return null;
+		}
+
+		return (String)map.get("redirect");
+	}
+
+	private String _getRootObjectEntryFolderExternalReferenceCode(
+		String objectFolderExternalReferenceCode) {
+
+		if (Objects.equals(
+				objectFolderExternalReferenceCode,
+				ObjectFolderConstants.
+					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES)) {
+
+			return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
+		}
+
+		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
+	}
+
+	private void _testGetCreationMenu(
+		CreationMenu creationMenu, Map<String, String> expectedResultMap) {
+
+		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(
+			"primaryItems");
+
+		Assert.assertEquals(
+			dropdownItems.toString(), expectedResultMap.size(),
+			dropdownItems.size());
+
+		for (Map.Entry<String, String> entry : expectedResultMap.entrySet()) {
+			DropdownItem dropdownItem = _get(dropdownItems, entry.getKey());
+
+			Assert.assertNotNull(
+				"Not found DropdownItem with label " + entry.getKey(),
+				dropdownItem);
+
+			if (Validator.isNull(entry.getValue())) {
+				Assert.assertNull(_getRedirect(dropdownItem));
+			}
+			else {
+				Assert.assertEquals(
+					entry.getValue(), _getRedirect(dropdownItem));
+			}
+		}
 	}
 
 	private void _testGetDepotEntriesJSONArray(

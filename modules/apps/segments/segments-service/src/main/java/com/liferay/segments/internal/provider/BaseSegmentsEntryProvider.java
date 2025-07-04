@@ -389,12 +389,16 @@ public abstract class BaseSegmentsEntryProvider
 					expandoTable.getTableId(), expandoColumn.getColumnId(),
 					user.getUserId());
 
+				String expandoColumnName = expandoColumn.getName();
+
 				String key = StringBundler.concat(
 					"customField/_", expandoColumn.getColumnId(),
 					StringPool.UNDERLINE,
 					StringUtil.replace(
-						expandoColumn.getName(), CharPool.SPACE,
-						CharPool.UNDERLINE));
+						expandoColumnName.replaceAll(
+							_INVALID_EXPANDO_COLUMN_NAME_CHARS_REGEX,
+							StringPool.BLANK),
+						CharPool.SPACE, CharPool.UNDERLINE));
 
 				if (expandoValue != null) {
 					expandoValues.put(key, expandoValue.getData());
@@ -464,6 +468,9 @@ public abstract class BaseSegmentsEntryProvider
 			)
 		).build();
 	}
+
+	private static final String _INVALID_EXPANDO_COLUMN_NAME_CHARS_REGEX =
+		":|;|'|\"";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSegmentsEntryProvider.class);

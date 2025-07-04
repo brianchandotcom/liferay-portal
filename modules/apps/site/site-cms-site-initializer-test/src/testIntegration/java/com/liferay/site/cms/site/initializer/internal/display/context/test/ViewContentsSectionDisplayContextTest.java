@@ -8,20 +8,14 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectFolder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -34,7 +28,6 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,61 +49,6 @@ public class ViewContentsSectionDisplayContextTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Ignore
-	@Test
-	@TestInfo("LPD-50664")
-	public void testGetCreationMenu() throws Exception {
-		Map<String, String> expectedResultMap = LinkedHashMapBuilder.put(
-			"folder", StringPool.BLANK
-		).put(
-			"Basic Web Content",
-			getHref(
-				objectDefinitionLocalService.
-					fetchObjectDefinitionByExternalReferenceCode(
-						"L_BASIC_WEB_CONTENT", TestPropsValues.getCompanyId()))
-		).build();
-
-		testGetCreationMenu(getCreationMenu(), expectedResultMap);
-
-		ObjectFolder objectFolder =
-			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.
-					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-				TestPropsValues.getCompanyId());
-
-		ObjectDefinition objectDefinition = addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_APPROVED);
-
-		expectedResultMap.put(
-			objectDefinition.getLabel(LocaleUtil.US),
-			getHref(objectDefinition));
-
-		addCustomObjectDefinition(
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			false, true, ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_APPROVED);
-		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), false, true,
-			ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_APPROVED);
-		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, false,
-			ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_APPROVED);
-		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			WorkflowConstants.STATUS_APPROVED);
-		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_DRAFT);
-
-		testGetCreationMenu(getCreationMenu(), expectedResultMap);
-	}
 
 	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
@@ -136,6 +74,21 @@ public class ViewContentsSectionDisplayContextTest
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(4), "trash", "delete", "delete",
 			"delete", "item");
+	}
+
+	@Override
+	protected Map<String, String> getExpectedCreationMenuItems()
+		throws PortalException {
+
+		return HashMapBuilder.put(
+			"Basic Web Content", getRedirect("L_BASIC_WEB_CONTENT")
+		).put(
+			"Blog", getRedirect("L_BLOG")
+		).put(
+			"folder", StringPool.BLANK
+		).put(
+			"Knowledge Base", getRedirect("L_KNOWLEDGE_BASE")
+		).build();
 	}
 
 	@Override

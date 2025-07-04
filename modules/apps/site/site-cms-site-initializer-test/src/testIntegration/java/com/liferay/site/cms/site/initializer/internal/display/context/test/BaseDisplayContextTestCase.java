@@ -7,8 +7,6 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -20,7 +18,6 @@ import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -32,7 +29,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -45,11 +41,9 @@ import java.io.File;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
-import org.junit.Assert;
 import org.junit.Before;
 
 import org.osgi.framework.Bundle;
@@ -182,17 +176,6 @@ public abstract class BaseDisplayContextTestCase {
 			Collections.emptyList(), scope, status);
 	}
 
-	protected String getHref(ObjectDefinition objectDefinition) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("/cms/add_structured_content_item?groupId=");
-		sb.append(group.getGroupId());
-		sb.append("&objectDefinitionId=");
-		sb.append(objectDefinition.getObjectDefinitionId());
-
-		return sb.toString();
-	}
-
 	protected MockHttpServletRequest getMockHttpServletRequest()
 		throws Exception {
 
@@ -236,34 +219,6 @@ public abstract class BaseDisplayContextTestCase {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
-	}
-
-	protected void testGetCreationMenu(
-		CreationMenu creationMenu, Map<String, String> expectedResultMap) {
-
-		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(
-			"primaryItems");
-
-		Assert.assertEquals(
-			dropdownItems.toString(), expectedResultMap.size(),
-			dropdownItems.size());
-
-		int index = 0;
-
-		for (Map.Entry<String, String> entry : expectedResultMap.entrySet()) {
-			DropdownItem dropdownItem = dropdownItems.get(index);
-
-			Assert.assertEquals(entry.getKey(), dropdownItem.get("label"));
-
-			if (Validator.isNull(entry.getValue())) {
-				Assert.assertNull(dropdownItem.get("href"));
-			}
-			else {
-				Assert.assertEquals(entry.getValue(), dropdownItem.get("href"));
-			}
-
-			index++;
-		}
 	}
 
 	@Inject

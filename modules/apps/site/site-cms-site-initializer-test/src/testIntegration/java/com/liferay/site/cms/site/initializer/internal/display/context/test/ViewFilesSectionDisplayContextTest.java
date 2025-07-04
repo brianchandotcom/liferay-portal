@@ -9,14 +9,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
-import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,10 +34,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -53,7 +48,6 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,60 +69,6 @@ public class ViewFilesSectionDisplayContextTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Ignore
-	@Test
-	@TestInfo("LPD-50664")
-	public void testGetCreationMenu() throws Exception {
-		Map<String, String> expectedResultMap = LinkedHashMapBuilder.put(
-			"folder", StringPool.BLANK
-		).put(
-			"Basic Document",
-			getHref(
-				objectDefinitionLocalService.
-					fetchObjectDefinitionByExternalReferenceCode(
-						"L_BASIC_DOCUMENT", TestPropsValues.getCompanyId()))
-		).build();
-
-		testGetCreationMenu(getCreationMenu(), expectedResultMap);
-
-		ObjectFolder objectFolder =
-			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
-				TestPropsValues.getCompanyId());
-
-		ObjectDefinition objectDefinition = addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_APPROVED);
-
-		expectedResultMap.put(
-			objectDefinition.getLabel(LocaleUtil.US),
-			getHref(objectDefinition));
-
-		addCustomObjectDefinition(
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			false, true, ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_APPROVED);
-		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), false, true,
-			ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_APPROVED);
-		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, false,
-			ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_APPROVED);
-		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			WorkflowConstants.STATUS_APPROVED);
-		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_DRAFT);
-
-		testGetCreationMenu(getCreationMenu(), expectedResultMap);
-	}
 
 	@Test
 	public void testGetCreationMenuWithAddEntryPermission() throws Exception {
@@ -178,6 +118,21 @@ public class ViewFilesSectionDisplayContextTest
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 		}
+	}
+
+	@Override
+	protected Map<String, String> getExpectedCreationMenuItems()
+		throws PortalException {
+
+		return HashMapBuilder.put(
+			"Basic Document", getRedirect("L_BASIC_DOCUMENT")
+		).put(
+			"External Video", getRedirect("L_EXTERNAL_VIDEO")
+		).put(
+			"folder", StringPool.BLANK
+		).put(
+			"multiple-files", StringPool.BLANK
+		).build();
 	}
 
 	@Override

@@ -11,8 +11,10 @@ import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.headless.asset.library.client.dto.v1_0.AssetLibrary;
+import com.liferay.headless.asset.library.client.dto.v1_0.MimeTypeLimit;
 import com.liferay.headless.asset.library.client.dto.v1_0.Settings;
 import com.liferay.headless.asset.library.client.problem.Problem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -20,12 +22,16 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -37,6 +43,63 @@ import org.junit.runner.RunWith;
 @FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
+
+	@Test
+	public void testAssetLibrarySettings() throws Exception {
+		boolean initialAutoTaggingEnabled = true;
+		String initialLogoColor = RandomTestUtil.randomString();
+		boolean initialSharingEnabled = true;
+		boolean initialUseCustomLanguages = true;
+		MimeTypeLimit[] initialMimeTypeLimits = _getMimeTypeLimits();
+
+		AssetLibrary assetLibrary = randomAssetLibrary();
+
+		assetLibrary.setSettings(
+			new Settings() {
+				{
+					setAutoTaggingEnabled(() -> initialAutoTaggingEnabled);
+					setLogoColor(() -> initialLogoColor);
+					setMimeTypeLimits(() -> initialMimeTypeLimits);
+					setSharingEnabled(() -> initialSharingEnabled);
+					setUseCustomLanguages(() -> initialUseCustomLanguages);
+				}
+			});
+
+		assetLibrary = testPostAssetLibrary_addAssetLibrary(assetLibrary);
+
+		_assertSettings(
+			assetLibrary, initialAutoTaggingEnabled, initialLogoColor,
+			initialMimeTypeLimits, initialSharingEnabled,
+			initialUseCustomLanguages);
+
+		assetLibrary.setSettings(
+			new Settings() {
+				{
+					setAutoTaggingEnabled(() -> false);
+				}
+			});
+
+		AssetLibrary patchAssetLibrary =
+			assetLibraryResource.patchAssetLibraryByExternalReferenceCode(
+				assetLibrary.getExternalReferenceCode(), assetLibrary);
+
+		_assertSettings(
+			patchAssetLibrary, false, initialLogoColor, initialMimeTypeLimits,
+			initialSharingEnabled, initialUseCustomLanguages);
+
+		patchAssetLibrary.setSettings(
+			new Settings() {
+				{
+					setAutoTaggingEnabled(() -> true);
+				}
+			});
+
+		AssetLibrary putAssetLibrary =
+			assetLibraryResource.putAssetLibraryByExternalReferenceCode(
+				assetLibrary.getExternalReferenceCode(), patchAssetLibrary);
+
+		_assertSettings(putAssetLibrary, true, "outline-0", null, false, false);
+	}
 
 	@Override
 	@Test
@@ -257,6 +320,54 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 	private AssetLibrary _addAssetLibrary() throws Exception {
 		return assetLibraryResource.postAssetLibrary(randomAssetLibrary());
+	}
+
+	private void _assertSettings(
+		AssetLibrary assetLibrary, boolean expectedAutoTaggingEnabled,
+		String expectedLogoColor, MimeTypeLimit[] expectedMimeTypeLimits,
+		boolean expectedSharingEnabled, boolean expectedUseCustomLanguages) {
+
+		Settings settings = assetLibrary.getSettings();
+
+		Assert.assertEquals(
+			expectedAutoTaggingEnabled, settings.getAutoTaggingEnabled());
+		Assert.assertEquals(expectedLogoColor, settings.getLogoColor());
+		Assert.assertEquals(
+			expectedSharingEnabled, settings.getSharingEnabled());
+		Assert.assertEquals(
+			expectedUseCustomLanguages, settings.getUseCustomLanguages());
+
+		MimeTypeLimit[] mimeTypeLimits = settings.getMimeTypeLimits();
+
+		if (expectedMimeTypeLimits == null) {
+			Assert.assertEquals(
+				Arrays.toString(mimeTypeLimits), 0, mimeTypeLimits.length);
+		}
+		else {
+			Assert.assertEquals(
+				Arrays.toString(mimeTypeLimits), mimeTypeLimits.length,
+				mimeTypeLimits.length);
+			Assert.assertEquals(expectedMimeTypeLimits[0], mimeTypeLimits[0]);
+		}
+	}
+
+	private MimeTypeLimit[] _getMimeTypeLimits() {
+		Map<String, Integer> mimeTypeLimitMap = HashMapBuilder.put(
+			"application/pdf", 1234
+		).build();
+
+		return TransformUtil.transformToArray(
+			mimeTypeLimitMap.entrySet(),
+			entry -> {
+				MimeTypeLimit mimeTypeLimit = new MimeTypeLimit();
+
+				mimeTypeLimit.setMimeType(entry::getKey);
+				mimeTypeLimit.setMaximumSize(
+					() -> GetterUtil.getInteger(entry.getValue()));
+
+				return mimeTypeLimit;
+			},
+			MimeTypeLimit.class);
 	}
 
 	@Inject

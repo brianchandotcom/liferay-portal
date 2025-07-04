@@ -227,11 +227,14 @@ public abstract class BaseSegmentsEntryProvider
 
 		String contextFilterString = getFilterString(
 			segmentsEntry, Criteria.Type.CONTEXT);
+		String modelFilterString = getFilterString(
+			segmentsEntry, Criteria.Type.MODEL);
 
 		if (ArrayUtil.contains(
 				(long[])userAttributes.get("segmentsEntryIds"),
 				segmentsEntry.getSegmentsEntryId()) &&
-			Validator.isNull(contextFilterString)) {
+			Validator.isNull(contextFilterString) &&
+			Validator.isNull(modelFilterString)) {
 
 			return true;
 		}
@@ -244,8 +247,6 @@ public abstract class BaseSegmentsEntryProvider
 
 		Criteria.Conjunction contextConjunction = getConjunction(
 			segmentsEntry, Criteria.Type.CONTEXT);
-		String modelFilterString = getFilterString(
-			segmentsEntry, Criteria.Type.MODEL);
 
 		if (context != null) {
 			boolean guestUser = !GetterUtil.getBoolean(

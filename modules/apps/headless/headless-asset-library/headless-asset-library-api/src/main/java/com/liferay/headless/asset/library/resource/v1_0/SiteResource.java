@@ -73,10 +73,10 @@ public interface SiteResource {
 	public Site
 			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+				String siteExternalReferenceCode, Site site)
 		throws Exception;
 
-	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId, Site site)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

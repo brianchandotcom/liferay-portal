@@ -11,10 +11,14 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
@@ -51,11 +55,17 @@ public class DefaultDBMigrationSchemaExportTest
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		setUpClassBaseDBMigrationSchemaExportTestCase();
+
+		_company = CompanyTestUtil.addCompany();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		tearDownClassBaseDBMigrationSchemaExportTestCase();
+
+		if (_company != null) {
+			_companyLocalService.deleteCompany(_company);
+		}
 	}
 
 	@Test
@@ -117,5 +127,10 @@ public class DefaultDBMigrationSchemaExportTest
 			db.runSQL("DROP_TABLE_IF_EXISTS(TestTable)");
 		}
 	}
+
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 }

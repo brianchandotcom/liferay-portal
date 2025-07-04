@@ -38,7 +38,8 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 
 	const activeFilters = filters.filter((filter) => filter.active);
 
-	return activeFilters.length || isSearchActive() ? (
+	return activeFilters.length ||
+		(Liferay.FeatureFlags['LPD-52212'] && isSearchActive()) ? (
 		<div
 			className="management-bar management-bar-light navbar navbar-expand-md"
 			data-qa-id="activeFiltersToolbar"
@@ -49,26 +50,26 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 						<li className="p-0 tbar-item tbar-item-expand">
 							<div className="tbar-section">
 								{Liferay.FeatureFlags['LPD-52212'] &&
-								dataLoading ? (
-									<span>
-										{Liferay.Language.get(
-											'requesting-results-for-colon'
-										)}
-									</span>
-								) : (
-									<span>
-										{sub(
-											total === 1
-												? Liferay.Language.get(
-														'x-result-found-for-colon'
-													)
-												: Liferay.Language.get(
-														'x-results-found-for-colon'
-													),
-											total
-										)}
-									</span>
-								)}
+									(dataLoading ? (
+										<span>
+											{Liferay.Language.get(
+												'requesting-results-for-colon'
+											)}
+										</span>
+									) : (
+										<span>
+											{sub(
+												total === 1
+													? Liferay.Language.get(
+															'x-result-found-for-colon'
+														)
+													: Liferay.Language.get(
+															'x-results-found-for-colon'
+														),
+												total
+											)}
+										</span>
+									))}
 
 								{Liferay.FeatureFlags['LPD-52212'] &&
 									isSearchActive() && <SearchResume />}

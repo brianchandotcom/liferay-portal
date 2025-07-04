@@ -462,18 +462,14 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			widgetPageTemplate.getPageTemplateSettings();
 
 		if (pageTemplateSettings != null) {
-			if (!(pageTemplateSettings instanceof WidgetPageTemplateSettings)) {
-				throw new UnsupportedOperationException();
-			}
-
 			Layout layout = _layoutLocalService.getLayout(
 				layoutPageTemplateEntry.getPlid());
 
 			_layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(),
-				_getTypeSettings(
-					layout, (WidgetPageTemplateSettings)pageTemplateSettings));
+				_getWidgetPageTemplateTypeSettings(
+					layout, pageTemplateSettings));
 		}
 
 		return _pageTemplateDTOConverter.toDTO(layoutPageTemplateEntry);
@@ -539,11 +535,27 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			contextUser.getUserId(), uuid);
 	}
 
-	private String _getTypeSettings(
-		Layout layout, WidgetPageTemplateSettings widgetPageTemplateSettings) {
+	private String _getWidgetPageTemplateTypeSettings(
+		Layout layout, PageTemplateSettings pageTemplateSettings) {
 
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
+
+		if (pageTemplateSettings == null) {
+			unicodeProperties.setProperty(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
+				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+			unicodeProperties.remove("target");
+			unicodeProperties.remove("targetType");
+
+			return unicodeProperties.toString();
+		}
+
+		if (!(pageTemplateSettings instanceof
+				WidgetPageTemplateSettings widgetPageTemplateSettings)) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		unicodeProperties.setProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
@@ -664,20 +676,12 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		PageTemplateSettings pageTemplateSettings =
 			widgetPageTemplate.getPageTemplateSettings();
 
-		if (pageTemplateSettings != null) {
-			if (!(pageTemplateSettings instanceof WidgetPageTemplateSettings)) {
-				throw new UnsupportedOperationException();
-			}
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
 
-			Layout layout = _layoutLocalService.getLayout(
-				layoutPageTemplateEntry.getPlid());
-
-			_layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(),
-				_getTypeSettings(
-					layout, (WidgetPageTemplateSettings)pageTemplateSettings));
-		}
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			_getWidgetPageTemplateTypeSettings(layout, pageTemplateSettings));
 
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(

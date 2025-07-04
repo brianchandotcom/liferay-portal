@@ -294,13 +294,7 @@ public class JournalArticleActionDropdownItemsProvider {
 						_getExpireArticleActionConsumer(
 							articleId, _themeDisplay.getURLCurrent())
 					).add(
-						() ->
-							JournalArticlePermission.contains(
-								_themeDisplay.getPermissionChecker(), _article,
-								ActionKeys.UPDATE) &&
-							!JournalArticleLocalServiceUtil.isLatestVersion(
-								_article.getGroupId(), _article.getArticleId(),
-								_article.getVersion()),
+						this::_isRevertToVersionActionAvailable,
 						_getRevertArticleActionConsumer(
 							_themeDisplay.getURLCurrent())
 					).build());
@@ -1101,6 +1095,21 @@ public class JournalArticleActionDropdownItemsProvider {
 		}
 
 		return false;
+	}
+
+	private boolean _isRevertToVersionActionAvailable() throws PortalException {
+		if (((_article.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
+			 (_article.getStatus() != WorkflowConstants.STATUS_SCHEDULED)) ||
+			!JournalArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), _article,
+				ActionKeys.UPDATE)) {
+
+			return false;
+		}
+
+		return !JournalArticleLocalServiceUtil.isLatestVersion(
+			_article.getGroupId(), _article.getArticleId(),
+			_article.getVersion());
 	}
 
 	private boolean _isShowPublishAction() {

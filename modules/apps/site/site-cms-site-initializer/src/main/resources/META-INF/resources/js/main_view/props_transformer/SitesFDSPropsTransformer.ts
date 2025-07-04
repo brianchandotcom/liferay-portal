@@ -58,11 +58,13 @@ export default function SitesFDSPropsTransformer({
 		}),
 		onActionDropdownItemClick: ({
 			action,
+			loadData,
 		}: {
 			action: {data: {id: string}};
+			loadData: () => {};
 		}) => {
 			if (action.data.id === 'delete') {
-				window.location.reload();
+				loadData();
 			}
 		},
 	};

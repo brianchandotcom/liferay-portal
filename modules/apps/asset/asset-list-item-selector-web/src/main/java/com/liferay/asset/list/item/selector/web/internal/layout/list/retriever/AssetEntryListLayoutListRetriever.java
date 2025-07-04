@@ -25,8 +25,6 @@ import com.liferay.layout.list.retriever.SegmentsEntryLayoutListRetriever;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
@@ -182,9 +180,6 @@ public class AssetEntryListLayoutListRetriever
 				return assetRenderer.getAssetObject();
 			});
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetEntryListLayoutListRetriever.class.getName());
 
 	private static final List<InfoFilter> _supportedInfoFilters = Arrays.asList(
 		new CategoriesInfoFilter(), new KeywordsInfoFilter(),

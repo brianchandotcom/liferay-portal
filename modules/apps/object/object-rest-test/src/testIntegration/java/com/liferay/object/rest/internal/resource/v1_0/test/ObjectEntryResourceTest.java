@@ -5137,6 +5137,21 @@ public class ObjectEntryResourceTest {
 					"%s/%s eq '%s'", _objectRelationship1.getName(),
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2)),
 			_objectDefinition1);
+
+		String objectRelationshipERCObjectFieldName =
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				_objectFieldLocalService.getObjectField(
+					_objectRelationship1.getObjectFieldId2()));
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s eq '%s'", objectRelationshipERCObjectFieldName,
+					_userAccountJSONObject.getString("externalReferenceCode"))),
+			_objectDefinition1);
 	}
 
 	@Test

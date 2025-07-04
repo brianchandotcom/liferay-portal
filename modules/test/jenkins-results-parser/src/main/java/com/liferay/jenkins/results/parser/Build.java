@@ -26,6 +26,8 @@ public interface Build {
 
 	public void addInvocation(Invocation invocation);
 
+	public void addTestrayAttachmentURL(URL testrayAttachmentURL);
+
 	public void addTimelineData(TimelineData timelineData);
 
 	public void archive();

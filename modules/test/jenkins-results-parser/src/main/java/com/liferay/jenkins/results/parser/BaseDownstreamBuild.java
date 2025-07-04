@@ -27,6 +27,8 @@ import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.testray.TestrayS3Bucket;
+import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +39,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,22 +71,9 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 			return;
 		}
 
-		_downstreamBuildReport = BuildReportFactory.newDownstreamBuildReport(
-			this);
+		_uploadJenkinsConsoleTestrayAttachment();
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (topLevelBuild != null) {
-			TopLevelBuildReport topLevelBuildReport =
-				topLevelBuild.getTopLevelBuildReport();
-
-			topLevelBuildReport.addDownstreamBuildReport(
-				_downstreamBuildReport);
-		}
-
-		if (!JenkinsResultsParserUtil.isCloudCINode() ||
-			_downstreamBuildReport.isFailing()) {
-
+		if (!JenkinsResultsParserUtil.isCloudCINode() || isFailing()) {
 			return;
 		}
 
@@ -101,8 +91,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		String s3ObjectPath = _getS3ObjectPath(buildReportGzipFile);
 
 		try {
-			JSONObject buildReportJSONObject =
-				_downstreamBuildReport.getBuildReportJSONObject();
+			JSONObject buildReportJSONObject = getBuildReportJSONObject();
 
 			if (buildReportJSONObject == null) {
 				return;
@@ -1149,6 +1138,84 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		sb.append(file.getName());
 
 		return sb.toString();
+	}
+
+	private String _getTestrayAttachmentBaseKey() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (topLevelBuild == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+			JenkinsResultsParserUtil.toDateString(
+				new Date(topLevelBuild.getStartTime()), "yyyy-MM",
+				"America/Los_Angeles"));
+
+		sb.append("/");
+
+		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
+
+		sb.append(jenkinsMaster.getName());
+
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+		sb.append("/");
+		sb.append(getAxisName());
+
+		return sb.toString();
+	}
+
+	private void _uploadJenkinsConsoleTestrayAttachment() {
+		if (!Objects.equals(getStatus(), "completed")) {
+			return;
+		}
+
+		String workspace = System.getenv("WORKSPACE");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
+			throw new RuntimeException("Please set WORKSPACE");
+		}
+
+		File testrayUploadBaseDir = new File(
+			workspace, JenkinsResultsParserUtil.getDistinctTimeStamp());
+
+		File jenkinsConsoleFile = new File(
+			testrayUploadBaseDir, "jenkins-console.txt");
+		File jenkinsConsoleGzFile = new File(
+			testrayUploadBaseDir, "jenkins-console.txt.gz");
+
+		try {
+			JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
+				JenkinsConsoleTextLoader.getInstance(getBuildURL());
+
+			JenkinsResultsParserUtil.write(
+				jenkinsConsoleFile, jenkinsConsoleTextLoader.getConsoleText());
+
+			JenkinsResultsParserUtil.gzip(
+				jenkinsConsoleFile, jenkinsConsoleGzFile);
+
+			TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+			TestrayS3Object testrayS3Object =
+				testrayS3Bucket.createTestrayS3Object(
+					JenkinsResultsParserUtil.combine(
+						_getTestrayAttachmentBaseKey(), "/",
+						jenkinsConsoleGzFile.getName()),
+					jenkinsConsoleGzFile);
+
+			addTestrayAttachmentURL(testrayS3Object.getURL());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+		finally {
+			JenkinsResultsParserUtil.delete(testrayUploadBaseDir);
+		}
 	}
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =

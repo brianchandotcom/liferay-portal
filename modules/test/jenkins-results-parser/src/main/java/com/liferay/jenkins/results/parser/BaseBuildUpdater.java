@@ -5,12 +5,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.testray.TestrayAttachmentRecorder;
-import com.liferay.jenkins.results.parser.testray.TestrayAttachmentUploader;
-import com.liferay.jenkins.results.parser.testray.TestrayFactory;
-
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -135,8 +129,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 		if (_build instanceof DownstreamBuild) {
 			DownstreamBuild downstreamBuild = (DownstreamBuild)_build;
-
-			_uploadConsoleTextTestrayAttachment(_build);
 
 			downstreamBuild.generateBuildReport();
 		}
@@ -357,28 +349,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		}
 
 		slaveOfflineRule.takeSlaveOffline(build);
-	}
-
-	private void _uploadConsoleTextTestrayAttachment(Build build) {
-		try {
-			URL testrayServerURL = new URL(
-				JenkinsResultsParserUtil.getBuildProperty(
-					"testray.server.url"));
-
-			TestrayAttachmentUploader testrayAttachmentUploader =
-				TestrayFactory.newTestrayAttachmentUploader(
-					build, testrayServerURL);
-
-			TestrayAttachmentRecorder testrayAttachmentRecorder =
-				testrayAttachmentUploader.getTestrayAttachmentRecorder();
-
-			testrayAttachmentRecorder.recordJenkinsConsole();
-
-			testrayAttachmentUploader.upload();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
 	}
 
 	private final Build _build;

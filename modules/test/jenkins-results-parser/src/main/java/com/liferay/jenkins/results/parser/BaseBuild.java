@@ -57,6 +57,15 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public void addTestrayAttachmentURL(URL testrayAttachmentURL) {
+		if (_testrayAttachmentURLs.contains(testrayAttachmentURL)) {
+			return;
+		}
+
+		_testrayAttachmentURLs.add(testrayAttachmentURL);
+	}
+
+	@Override
 	public void archive() {
 		archive(getArchiveName());
 	}
@@ -1264,11 +1273,11 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public synchronized List<URL> getTestrayAttachmentURLs() {
-		if (_testrayAttachmentURLs != null) {
+		if (!Objects.equals(getStatus(), "completed") ||
+			_testrayAttachmentURLsFound) {
+
 			return _testrayAttachmentURLs;
 		}
-
-		_testrayAttachmentURLs = new ArrayList<>();
 
 		String consoleText = getConsoleText();
 
@@ -1280,12 +1289,14 @@ public abstract class BaseBuild implements Build {
 			}
 
 			try {
-				_testrayAttachmentURLs.add(new URL(matcher.group("url")));
+				addTestrayAttachmentURL(new URL(matcher.group("url")));
 			}
 			catch (MalformedURLException malformedURLException) {
 				throw new RuntimeException(malformedURLException);
 			}
 		}
+
+		_testrayAttachmentURLsFound = true;
 
 		return _testrayAttachmentURLs;
 	}
@@ -3578,6 +3589,7 @@ public abstract class BaseBuild implements Build {
 	private long _statusModifiedTime;
 	private StopWatchRecordsGroup _stopWatchRecordsGroup;
 	private Map<String, TestClassResult> _testClassResults;
-	private List<URL> _testrayAttachmentURLs;
+	private final List<URL> _testrayAttachmentURLs = new ArrayList<>();
+	private boolean _testrayAttachmentURLsFound;
 
 }

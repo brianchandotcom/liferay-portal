@@ -5,11 +5,14 @@
 
 package com.liferay.object.relationship.util;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -18,10 +21,13 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -125,6 +131,33 @@ public class ObjectRelationshipUtil {
 			"pkObjectFieldDBColumnName2",
 			pkObjectFieldDBColumnName2.concat(reverse ? "1" : "2")
 		).build();
+	}
+
+	public static long getRelatedGroupId(
+		GroupLocalService groupLocalService, ObjectDefinition objectDefinition,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry,
+		ObjectDefinition relatedObjectDefinition, String relatedScopeKey,
+		String scopeKey) {
+
+		ObjectScopeProvider objectScopeProvider =
+			objectScopeProviderRegistry.getObjectScopeProvider(
+				relatedObjectDefinition.getScope());
+
+		if (!objectScopeProvider.isGroupAware()) {
+			return ObjectDefinitionConstants.DEFAULT_GROUP_ID;
+		}
+
+		if (!StringUtil.equals(
+				objectDefinition.getScope(),
+				relatedObjectDefinition.getScope())) {
+
+			scopeKey = relatedScopeKey;
+		}
+
+		return GetterUtil.getLong(
+			GroupUtil.getGroupId(
+				relatedObjectDefinition.getCompanyId(), scopeKey,
+				groupLocalService));
 	}
 
 	public static ObjectDefinition getRelatedObjectDefinition(

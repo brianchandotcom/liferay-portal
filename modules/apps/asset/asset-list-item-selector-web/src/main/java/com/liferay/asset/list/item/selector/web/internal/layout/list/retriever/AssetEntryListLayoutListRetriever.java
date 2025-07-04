@@ -27,7 +27,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
@@ -66,19 +65,6 @@ public class AssetEntryListLayoutListRetriever
 				classedModelListObjectReference.getClassPK());
 
 		if (assetListEntry == null) {
-			return InfoPage.of(
-				Collections.emptyList(),
-				layoutListRetrieverContext.getPagination(), 0);
-		}
-
-		if (!StringUtil.equals(
-				assetListEntry.getAssetEntryType(),
-				classedModelListObjectReference.getItemType())) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn("Asset entry type does not equal item type");
-			}
-
 			return InfoPage.of(
 				Collections.emptyList(),
 				layoutListRetrieverContext.getPagination(), 0);

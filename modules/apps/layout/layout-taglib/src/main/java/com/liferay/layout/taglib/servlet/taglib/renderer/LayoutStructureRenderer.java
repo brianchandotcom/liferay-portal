@@ -323,7 +323,11 @@ public class LayoutStructureRenderer {
 				renderCollectionLayoutStructureItemDisplayContext.
 					getInfoListRenderer();
 
-		if (infoListRenderer != null) {
+		if ((infoListRenderer != null) &&
+			Objects.equals(
+				infoListRenderer.getCollectionItemClassName(),
+				listObjectReference.getItemType())) {
+
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 			PipingServletResponse pipingServletResponse =

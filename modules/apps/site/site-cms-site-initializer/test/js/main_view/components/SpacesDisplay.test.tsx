@@ -7,8 +7,8 @@ import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
+import SpacesDisplay from '../../../../src/main/resources/META-INF/resources/js/common/components/SpacesDisplay';
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
-import SpacesDisplay from '../../../../src/main/resources/META-INF/resources/js/main_view/components/SpacesDisplay';
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	if (key === 'available-in-spaces-x') {

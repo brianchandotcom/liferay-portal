@@ -5,9 +5,9 @@
 
 import React, {useEffect, useState} from 'react';
 
+import SpacesDisplay from '../../../common/components/SpacesDisplay';
 import SpaceService from '../../../common/services/SpaceService';
 import {Space} from '../../../common/types/Space';
-import SpacesDisplay from '../../components/SpacesDisplay';
 
 interface ObjectDefinitionSetting {
 	name: string;

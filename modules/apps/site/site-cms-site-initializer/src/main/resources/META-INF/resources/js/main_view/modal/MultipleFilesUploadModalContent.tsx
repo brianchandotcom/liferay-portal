@@ -12,7 +12,7 @@ import ApiHelper from '../../common/services/ApiHelper';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
 import MultipleFileUploader, {
 	FileData,
-} from '../components/multiple_file_uploader/MultipleFileUploader';
+} from '../multiple_file_uploader/MultipleFileUploader';
 
 const getBase64 = (file: File): Promise<string> => {
 	return new Promise((resolve, reject) => {

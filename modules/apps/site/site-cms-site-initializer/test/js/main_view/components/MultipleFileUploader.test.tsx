@@ -11,7 +11,7 @@ import '@testing-library/jest-dom/extend-expect';
 // eslint-disable-next-line
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 
-import MultipleFileUploader from '../../../../src/main/resources/META-INF/resources/js/main_view/components/multiple_file_uploader/MultipleFileUploader';
+import MultipleFileUploader from '../../../../src/main/resources/META-INF/resources/js/main_view/multiple_file_uploader/MultipleFileUploader';
 
 jest.mock('frontend-js-web', () => ({
 	sub: (str: string, arg: string) => str.replace('x', arg),

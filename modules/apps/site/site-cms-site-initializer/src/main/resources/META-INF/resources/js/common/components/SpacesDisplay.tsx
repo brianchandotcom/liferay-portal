@@ -7,8 +7,8 @@ import Badge from '@clayui/badge';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-import SpaceSticker from '../../common/components/SpaceSticker';
-import {Space} from '../../common/types/Space';
+import {Space} from '../types/Space';
+import SpaceSticker from './SpaceSticker';
 
 export interface SpaceDisplayProps {
 	spaces: Space[];

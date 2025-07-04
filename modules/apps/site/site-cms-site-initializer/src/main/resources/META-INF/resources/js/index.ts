@@ -21,9 +21,8 @@ export {default as EditCategoryPage} from './main_view/categorization/categories
 export {default as CategorizationBreadcrumb} from './main_view/categorization/components/CategorizationBreadcrumb';
 export {default as ViewTags} from './main_view/categorization/tags/ViewTags';
 export {default as EditVocabulary} from './main_view/categorization/vocabularies/EditVocabulary';
-export {default as SpaceAbstractHeader} from './main_view/components/SpaceAbstractHeader';
-export {default as EditFolder} from './main_view/components/folders/EditFolder';
 export {default as ViewDashboard} from './main_view/dashboard/ViewDashboard';
+export {default as EditFolder} from './main_view/folders/EditFolder';
 export {default as AllFDSPropsTransformer} from './main_view/props_transformer/AllFDSPropsTransformer';
 export {default as AllSpacesFDSPropsTransformer} from './main_view/props_transformer/AllSpacesFDSPropsTransformer';
 export {default as CategoryFDSPropsTransformer} from './main_view/props_transformer/CategoryFDSPropsTransformer';
@@ -37,6 +36,7 @@ export {default as TagUsagesFDSPropsTransformer} from './main_view/props_transfo
 export {default as VocabularyFDSPropsTransformer} from './main_view/props_transformer/VocabularyFDSPropsTransformer';
 export {default as AddSpaceMembers} from './main_view/spaces/AddSpaceMembers';
 export {default as NewSpace} from './main_view/spaces/NewSpace';
+export {default as SpaceAbstractHeader} from './main_view/spaces/SpaceAbstractHeader';
 export {default as SpaceSettings} from './main_view/spaces/SpaceSettings';
 export {default as SpacesNavigation} from './main_view/spaces_navigation/SpacesNavigation';
 

@@ -14,13 +14,13 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
-import {FieldPicker} from '../../../common/components/forms';
+import {FieldPicker} from '../../common/components/forms';
 import DragZoneBackground from './DragZoneBackground';
 import {LoadingMessage} from './LoadingMessage';
 
-import '../../../../css/components/MultipleFileUploader.scss';
-import {required, validate} from '../../../common/components/forms/validations';
-import {AssetLibrary} from '../../../common/types/AssetLibrary';
+import '../../../css/components/MultipleFileUploader.scss';
+import {required, validate} from '../../common/components/forms/validations';
+import {AssetLibrary} from '../../common/types/AssetLibrary';
 import FailedFiles from './FailedFiles';
 export interface FileData {
 	errorMessage?: string;

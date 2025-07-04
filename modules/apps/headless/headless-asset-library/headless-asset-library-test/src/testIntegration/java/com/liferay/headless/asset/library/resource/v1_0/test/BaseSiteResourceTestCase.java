@@ -683,7 +683,7 @@ public abstract class BaseSiteResourceTestCase {
 			siteResource.
 				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
 					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
-					postSite.getExternalReferenceCode());
+					postSite.getExternalReferenceCode(), randomSite);
 
 		assertEquals(randomSite, putSite);
 		assertValid(putSite);
@@ -721,7 +721,8 @@ public abstract class BaseSiteResourceTestCase {
 		Site randomSite = randomSite();
 
 		Site putSite = siteResource.putAssetLibrarySite(
-			testPutAssetLibrarySite_getAssetLibraryId(), postSite.getId());
+			testPutAssetLibrarySite_getAssetLibraryId(), postSite.getId(),
+			randomSite);
 
 		assertEquals(randomSite, putSite);
 		assertValid(putSite);

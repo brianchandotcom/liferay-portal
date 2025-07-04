@@ -1196,6 +1196,16 @@ public abstract class BaseUserGroupResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"numberOfUserAccounts", additionalAssertFieldName)) {
+
+				if (userGroup.getNumberOfUserAccounts() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("roles", additionalAssertFieldName)) {
 				if (userGroup.getRoles() == null) {
 					valid = false;
@@ -1358,6 +1368,19 @@ public abstract class BaseUserGroupResourceTestCase {
 				if (!equals(
 						(Map)userGroup1.getName_i18n(),
 						(Map)userGroup2.getName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"numberOfUserAccounts", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						userGroup1.getNumberOfUserAccounts(),
+						userGroup2.getNumberOfUserAccounts())) {
 
 					return false;
 				}
@@ -1584,6 +1607,12 @@ public abstract class BaseUserGroupResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("numberOfUserAccounts")) {
+			sb.append(String.valueOf(userGroup.getNumberOfUserAccounts()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("roles")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1638,6 +1667,7 @@ public abstract class BaseUserGroupResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				numberOfUserAccounts = RandomTestUtil.randomInt();
 			}
 		};
 	}

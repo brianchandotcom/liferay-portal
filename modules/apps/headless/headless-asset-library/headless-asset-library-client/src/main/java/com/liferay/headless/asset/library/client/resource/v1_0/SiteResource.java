@@ -92,20 +92,20 @@ public interface SiteResource {
 	public Site
 			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+				String siteExternalReferenceCode, Site site)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+				String siteExternalReferenceCode, Site site)
 		throws Exception;
 
-	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId, Site site)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putAssetLibrarySiteHttpResponse(
-			Long assetLibraryId, Long siteId)
+			Long assetLibraryId, Long siteId, Site site)
 		throws Exception;
 
 	public static class Builder {
@@ -892,13 +892,13 @@ public interface SiteResource {
 		public Site
 				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
 					String assetLibraryExternalReferenceCode,
-					String siteExternalReferenceCode)
+					String siteExternalReferenceCode, Site site)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
 					assetLibraryExternalReferenceCode,
-					siteExternalReferenceCode);
+					siteExternalReferenceCode, site);
 
 			String content = httpResponse.getContent();
 
@@ -962,12 +962,12 @@ public interface SiteResource {
 		public HttpInvoker.HttpResponse
 				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					String siteExternalReferenceCode)
+					String siteExternalReferenceCode, Site site)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body("[]", "application/json");
+			httpInvoker.body(site.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1007,11 +1007,12 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public Site putAssetLibrarySite(Long assetLibraryId, Long siteId)
+		public Site putAssetLibrarySite(
+				Long assetLibraryId, Long siteId, Site site)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibrarySiteHttpResponse(assetLibraryId, siteId);
+				putAssetLibrarySiteHttpResponse(assetLibraryId, siteId, site);
 
 			String content = httpResponse.getContent();
 
@@ -1073,12 +1074,12 @@ public interface SiteResource {
 		}
 
 		public HttpInvoker.HttpResponse putAssetLibrarySiteHttpResponse(
-				Long assetLibraryId, Long siteId)
+				Long assetLibraryId, Long siteId, Site site)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body("[]", "application/json");
+			httpInvoker.body(site.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

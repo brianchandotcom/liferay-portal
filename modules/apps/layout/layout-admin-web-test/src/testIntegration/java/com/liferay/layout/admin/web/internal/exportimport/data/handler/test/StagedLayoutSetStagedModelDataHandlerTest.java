@@ -17,7 +17,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -186,22 +185,17 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testFaviconImportDuringRegularLARImport() throws Exception {
-		_testFaviconImportScenario(false, null, true);
-	}
-
-	@Test
 	public void testFaviconImportDuringSiteTemplatePropagationDisabled()
 		throws Exception {
 
-		_testFaviconImportScenario(true, false, false);
+		_testFaviconImportScenario(false, false);
 	}
 
 	@Test
 	public void testFaviconImportDuringSiteTemplatePropagationEnabled()
 		throws Exception {
 
-		_testFaviconImportScenario(true, true, true);
+		_testFaviconImportScenario(true, true);
 	}
 
 	@Override
@@ -396,8 +390,7 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	}
 
 	private void _testFaviconImportScenario(
-			boolean siteTemplatePropagation, Boolean faviconEnabled,
-			boolean shouldImportFavicon)
+			boolean faviconEnabled, boolean shouldImportFavicon)
 		throws Exception {
 
 		initExport();
@@ -427,13 +420,11 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 
 		initImport();
 
-		if (faviconEnabled != null) {
-			portletDataContext.getParameterMap(
-			).put(
-				PortletDataHandlerKeys.FAVICON,
-				new String[] {faviconEnabled.toString()}
-			);
-		}
+		portletDataContext.getParameterMap(
+		).put(
+			PortletDataHandlerKeys.FAVICON,
+			new String[] {String.valueOf(faviconEnabled)}
+		);
 
 		FileEntry exportedFaviconFileEntry = (FileEntry)readExportedStagedModel(
 			faviconFileEntry);
@@ -446,19 +437,8 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		StagedLayoutSet exportedStagedLayoutSet =
 			(StagedLayoutSet)readExportedStagedModel(stagedLayoutSet);
 
-		boolean previousInProgress =
-			MergeLayoutPrototypesThreadLocal.isInProgress();
-
-		try {
-			MergeLayoutPrototypesThreadLocal.setInProgress(
-				siteTemplatePropagation);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedStagedLayoutSet);
-		}
-		finally {
-			MergeLayoutPrototypesThreadLocal.setInProgress(previousInProgress);
-		}
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedLayoutSet);
 
 		LayoutSet importedLayoutSet = _layoutSetLocalService.getLayoutSet(
 			liveGroup.getGroupId(), false);

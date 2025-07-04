@@ -41,7 +41,13 @@ public class PreupgradeVerifyProcessSuiteTest {
 				mockedConstruction4 = _mockConstruction(
 					PreupgradeVerifyDatabaseState.class);
 			MockedConstruction<PreupgradeVerifyProperties> mockedConstruction5 =
-				_mockConstruction(PreupgradeVerifyProperties.class)) {
+				_mockConstruction(PreupgradeVerifyProperties.class);
+			MockedConstruction<PreupgradeVerifyStoreAccess>
+				mockedConstruction6 = _mockConstruction(
+					PreupgradeVerifyStoreAccess.class);
+			MockedConstruction<PreupgradeVerifyStoreFileSystemStructure>
+				mockedConstruction7 = _mockConstruction(
+					PreupgradeVerifyStoreFileSystemStructure.class)) {
 
 			VerifyProcess verifyProcess = new PreupgradeVerifyProcessSuite();
 
@@ -56,7 +62,9 @@ public class PreupgradeVerifyProcessSuiteTest {
 					"PreupgradeVerifyDatabaseCharacterSet, Exception in ",
 					"PreupgradeVerifyDatabasePrivileges, Exception in ",
 					"PreupgradeVerifyDatabaseState, Exception in ",
-					"PreupgradeVerifyProperties"),
+					"PreupgradeVerifyProperties, Exception in ",
+					"PreupgradeVerifyStoreAccess, Exception in ",
+					"PreupgradeVerifyStoreFileSystemStructure"),
 				verifyException.getMessage());
 		}
 	}

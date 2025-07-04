@@ -5,6 +5,8 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
@@ -12,11 +14,13 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
-import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUtil;
+import com.liferay.site.cms.site.initializer.internal.util.SpaceAbstractHeaderUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -26,16 +30,20 @@ import java.util.Map;
 /**
  * @author Roberto Díaz
  */
-public class ViewSpaceMembersSummarySectionDisplayContext {
+public class ViewSpaceMembersAbstractSectionDisplayContext {
 
-	public ViewSpaceMembersSummarySectionDisplayContext(
+	public ViewSpaceMembersAbstractSectionDisplayContext(
 		long groupId, HttpServletRequest httpServletRequest, Language language,
+		DepotEntryLocalService depotEntryLocalService,
+		GroupLocalService groupLocalService,
 		UserGroupLocalService userGroupLocalService,
 		UserLocalService userLocalService) {
 
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_depotEntryLocalService = depotEntryLocalService;
+		_groupLocalService = groupLocalService;
 		_userGroupLocalService = userGroupLocalService;
 		_userLocalService = userLocalService;
 	}
@@ -48,9 +56,9 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 		sb.append("/");
 		sb.append(type);
 		sb.append("?page=");
-		sb.append(CMSSpaceConstants.SPACE_SUMMARY_PAGE);
+		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE);
 		sb.append("&pageSize=");
-		sb.append(CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
+		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE_SIZE);
 
 		if (type.equals("user-accounts")) {
 			sb.append("&nestedFields=roles");
@@ -85,9 +93,32 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {
-		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
+		long assetLibraryCreatorUserId = 0;
+		long assetLibraryId = 0;
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			_groupId);
+
+		if (depotEntry != null) {
+			assetLibraryId = depotEntry.getDepotEntryId();
+
+			Group group = _groupLocalService.fetchGroup(depotEntry.getGroupId());
+
+			if (group != null) {
+				assetLibraryCreatorUserId = group.getCreatorUserId();
+			}
+		}
+
+		return SpaceAbstractHeaderUtil.getSpaceAbstractHeaderProps(
 			_httpServletRequest, "view-all-members",
-			_getSpaceMembersHeaderTitle(), StringPool.BLANK);
+			_getSpaceMembersHeaderTitle(), StringPool.BLANK,HashMapBuilder.<String, Object>put(
+			"action", "open-members-modal"
+			).put(
+			"assetLibraryId", String.valueOf(assetLibraryId)
+			).put(
+				"assetLibraryCreatorUserId", String.valueOf(assetLibraryCreatorUserId)
+			).build()
+			);
 	}
 
 	public List<TabsItem> getTabsItems() {
@@ -114,7 +145,9 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 			StringPool.CLOSE_PARENTHESIS);
 	}
 
+	private final DepotEntryLocalService _depotEntryLocalService;
 	private final long _groupId;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final UserGroupLocalService _userGroupLocalService;

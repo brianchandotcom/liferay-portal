@@ -117,17 +117,6 @@ public class ObjectEntryEntityModel implements EntityModel {
 					objectField.getName() + "Key",
 					locale -> objectField.getName()));
 		}
-		else if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-			return ListUtil.fromArray(
-				new StringEntityField(
-					objectField.getName(), locale -> objectField.getName()),
-				new StringEntityField(
-					objectField.getName() + "Key",
-					locale -> objectField.getName()));
-		}
 
 		if (Objects.equals(
 				objectField.getDBType(),
@@ -160,6 +149,17 @@ public class ObjectEntryEntityModel implements EntityModel {
 			return ListUtil.fromArray(
 				new StringEntityField(
 					objectField.getName(), locale -> objectField.getName()));
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			return ListUtil.fromArray(
+				new StringEntityField(
+					objectField.getName(), locale -> objectField.getName()),
+				new StringEntityField(
+					objectField.getName() + "Key",
+					locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),

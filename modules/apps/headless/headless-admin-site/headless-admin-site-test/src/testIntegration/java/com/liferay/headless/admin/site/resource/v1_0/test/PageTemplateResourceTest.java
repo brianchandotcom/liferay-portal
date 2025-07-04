@@ -453,6 +453,38 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				testGroup, widgetPageTemplate.getExternalReferenceCode()),
 			testGroup.getExternalReferenceCode());
 
+		WidgetPageTemplate expectedWidgetPageTemplate =
+			_getUpdatedWidgetPageTemplate(
+				testGroup, widgetPageTemplate.getExternalReferenceCode());
+
+		WidgetPageTemplate putWidgetPageTemplate = new WidgetPageTemplate();
+
+		BeanTestUtil.copyProperties(
+			expectedWidgetPageTemplate, putWidgetPageTemplate);
+
+		expectedWidgetPageTemplate.setPageTemplateSettings(
+			() -> new WidgetPageTemplateSettings() {
+				{
+					setLayoutTemplateId(PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+					setNavigationSettings(
+						new NavigationSettings() {
+							{
+								setTargetType(TargetType.SPECIFIC_FRAME);
+							}
+						});
+					setType(Type.WIDGET_PAGE_TEMPLATE_SETTINGS);
+				}
+			});
+
+		putWidgetPageTemplate.setPageTemplateSettings(() -> null);
+
+		assertEquals(
+			expectedWidgetPageTemplate,
+			pageTemplateResource.putSiteSiteByExternalReferenceCodePageTemplate(
+				testGroup.getExternalReferenceCode(),
+				putWidgetPageTemplate.getExternalReferenceCode(),
+				putWidgetPageTemplate));
+
 		_enableLocalStaging();
 
 		_assertProblemException(

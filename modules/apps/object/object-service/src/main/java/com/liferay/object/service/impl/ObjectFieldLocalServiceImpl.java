@@ -586,7 +586,9 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		if (objectField.isLocalized()) {
-			if (objectDefinition.isUnmodifiableSystemObject()) {
+			if (objectDefinition.isUnmodifiableSystemObject() &&
+				objectField.isSystem()) {
+
 				return systemObjectDefinitionManager.getLocalizationTable();
 			}
 

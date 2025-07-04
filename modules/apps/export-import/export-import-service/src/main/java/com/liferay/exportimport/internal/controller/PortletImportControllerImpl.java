@@ -139,6 +139,17 @@ public class PortletImportControllerImpl implements PortletImportController {
 	public void deletePortletData(PortletDataContext portletDataContext)
 		throws Exception {
 
+		Portlet portlet = _portletLocalService.getPortletById(
+			portletDataContext.getCompanyId(),
+			portletDataContext.getPortletId());
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if (portletDataHandler.isBatch()) {
+			return;
+		}
+
 		PortletPreferencesIds portletPreferencesIds =
 			_portletPreferencesFactory.getPortletPreferencesIds(
 				portletDataContext.getCompanyId(),

@@ -263,7 +263,7 @@ public class JUnitBatchBuildTestrayCaseResult
 
 		TestrayAttachment testrayAttachment = getTestrayAttachment(
 			getBuildReport(), "Failure Messages",
-			"/" + getAxisName() + "/" + getName() + ".txt.gz");
+			getAxisName() + "/" + getName() + ".txt.gz");
 
 		if (testrayAttachment == null) {
 			return null;

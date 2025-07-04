@@ -217,7 +217,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 	protected TestrayAttachment getPlaywrightReportTestrayAttachment() {
 		return getTestrayAttachment(
 			getBuildReport(), "Playwright Report",
-			"/" + getAxisName() + "/playwright-report/index.html");
+			getAxisName() + "/playwright-report/index.html");
 	}
 
 	protected TestrayAttachment getPlaywrightTraceViewerTestrayAttachment() {

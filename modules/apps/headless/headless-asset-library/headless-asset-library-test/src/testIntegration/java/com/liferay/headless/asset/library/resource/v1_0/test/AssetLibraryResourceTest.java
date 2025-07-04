@@ -15,6 +15,7 @@ import com.liferay.headless.asset.library.client.dto.v1_0.MimeTypeLimit;
 import com.liferay.headless.asset.library.client.dto.v1_0.Settings;
 import com.liferay.headless.asset.library.client.problem.Problem;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -24,6 +25,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -31,6 +34,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -47,6 +51,10 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	@Test
 	public void testAssetLibrarySettings() throws Exception {
 		boolean initialAutoTaggingEnabled = true;
+		String[] initialAvailableLanguageIds = _getAvailableLanguageIds(
+			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
+		String initialDefaultLanguageId = _language.getLanguageId(
+			LocaleUtil.US);
 		String initialLogoColor = RandomTestUtil.randomString();
 		boolean initialSharingEnabled = true;
 		boolean initialUseCustomLanguages = true;
@@ -58,6 +66,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			new Settings() {
 				{
 					setAutoTaggingEnabled(() -> initialAutoTaggingEnabled);
+					setAvailableLanguageIds(() -> initialAvailableLanguageIds);
+					setDefaultLanguageId(() -> initialDefaultLanguageId);
 					setLogoColor(() -> initialLogoColor);
 					setMimeTypeLimits(() -> initialMimeTypeLimits);
 					setSharingEnabled(() -> initialSharingEnabled);
@@ -68,37 +78,51 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		assetLibrary = testPostAssetLibrary_addAssetLibrary(assetLibrary);
 
 		_assertSettings(
-			assetLibrary, initialAutoTaggingEnabled, initialLogoColor,
-			initialMimeTypeLimits, initialSharingEnabled,
+			assetLibrary, initialAutoTaggingEnabled,
+			initialAvailableLanguageIds, initialDefaultLanguageId,
+			initialLogoColor, initialMimeTypeLimits, initialSharingEnabled,
 			initialUseCustomLanguages);
+
+		boolean patchAutoTaggingEnabled = true;
 
 		assetLibrary.setSettings(
 			new Settings() {
 				{
-					setAutoTaggingEnabled(() -> false);
+					setAutoTaggingEnabled(() -> patchAutoTaggingEnabled);
 				}
 			});
 
-		AssetLibrary patchAssetLibrary =
-			assetLibraryResource.patchAssetLibraryByExternalReferenceCode(
+		assetLibrary = assetLibraryResource.patchAssetLibrary(
+			assetLibrary.getId(), assetLibrary);
+
+		_assertSettings(
+			assetLibrary, patchAutoTaggingEnabled, initialAvailableLanguageIds,
+			initialDefaultLanguageId, initialLogoColor, initialMimeTypeLimits,
+			initialSharingEnabled, initialUseCustomLanguages);
+
+		boolean putAutoTaggingEnabled = true;
+		String[] putAvailableLanguageIds = _getAvailableLanguageIds(
+			LocaleUtil.SPAIN);
+		String putDefaultLanguageId = _language.getLanguageId(LocaleUtil.SPAIN);
+		boolean putUseCustomLanguages = true;
+
+		assetLibrary.setSettings(
+			new Settings() {
+				{
+					setAutoTaggingEnabled(() -> putAutoTaggingEnabled);
+					setAvailableLanguageIds(() -> putAvailableLanguageIds);
+					setDefaultLanguageId(() -> putDefaultLanguageId);
+					setUseCustomLanguages(() -> putUseCustomLanguages);
+				}
+			});
+
+		assetLibrary =
+			assetLibraryResource.putAssetLibraryByExternalReferenceCode(
 				assetLibrary.getExternalReferenceCode(), assetLibrary);
 
 		_assertSettings(
-			patchAssetLibrary, false, initialLogoColor, initialMimeTypeLimits,
-			initialSharingEnabled, initialUseCustomLanguages);
-
-		patchAssetLibrary.setSettings(
-			new Settings() {
-				{
-					setAutoTaggingEnabled(() -> true);
-				}
-			});
-
-		AssetLibrary putAssetLibrary =
-			assetLibraryResource.putAssetLibraryByExternalReferenceCode(
-				assetLibrary.getExternalReferenceCode(), patchAssetLibrary);
-
-		_assertSettings(putAssetLibrary, true, "outline-0", null, false, false);
+			assetLibrary, putAutoTaggingEnabled, putAvailableLanguageIds,
+			putDefaultLanguageId, "outline-0", null, false, true);
 	}
 
 	@Override
@@ -324,6 +348,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 	private void _assertSettings(
 		AssetLibrary assetLibrary, boolean expectedAutoTaggingEnabled,
+		String[] expectedAvailableLanguageIds, String expectedDefaultLanguageId,
 		String expectedLogoColor, MimeTypeLimit[] expectedMimeTypeLimits,
 		boolean expectedSharingEnabled, boolean expectedUseCustomLanguages) {
 
@@ -331,6 +356,10 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 		Assert.assertEquals(
 			expectedAutoTaggingEnabled, settings.getAutoTaggingEnabled());
+		Assert.assertEquals(
+			expectedDefaultLanguageId, settings.getDefaultLanguageId());
+		Assert.assertEquals(
+			expectedAvailableLanguageIds, settings.getAvailableLanguageIds());
 		Assert.assertEquals(expectedLogoColor, settings.getLogoColor());
 		Assert.assertEquals(
 			expectedSharingEnabled, settings.getSharingEnabled());
@@ -349,6 +378,12 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 				mimeTypeLimits.length);
 			Assert.assertEquals(expectedMimeTypeLimits[0], mimeTypeLimits[0]);
 		}
+	}
+
+	private String[] _getAvailableLanguageIds(Locale... locales) {
+		return TransformUtil.transformToArray(
+			ListUtil.fromArray(locales),
+			(Locale locale) -> _language.getLanguageId(locale), String.class);
 	}
 
 	private MimeTypeLimit[] _getMimeTypeLimits() {
@@ -381,6 +416,9 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

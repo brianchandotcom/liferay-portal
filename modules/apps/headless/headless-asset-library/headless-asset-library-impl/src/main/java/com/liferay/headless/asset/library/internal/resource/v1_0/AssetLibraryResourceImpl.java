@@ -226,11 +226,11 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		Map<String, String> descriptionMap = _getValue(
 			() -> LocalizedMapUtil.getI18nMap(group.getDescriptionMap()),
 			assetLibrary::getDescription_i18n);
-		UnicodeProperties unicodeProperties = _getValue(
-			() -> _getUnicodeProperties(
+		UnicodeProperties unicodeProperties = _patchUnicodeProperties(
+			assetLibrary.getSettings(),
+			_getUnicodeProperties(
 				contextCompany.getCompanyId(),
-				group.getExternalReferenceCode()),
-			() -> _toUnicodeProperties(assetLibrary.getSettings()));
+				group.getExternalReferenceCode()));
 
 		return _toAssetLibrary(
 			_addOrUpdateDepotEntry(
@@ -280,7 +280,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					contextAcceptLanguage.getPreferredLocale(),
 					assetLibrary.getName(), assetLibrary.getName_i18n()),
 				_getServiceContext(),
-				_toUnicodeProperties(assetLibrary.getSettings()),
+				_putUnicodeProperties(assetLibrary.getSettings()),
 				new LinkedHashMap<>()));
 	}
 
@@ -305,7 +305,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					contextAcceptLanguage.getPreferredLocale(),
 					assetLibrary.getName(), assetLibrary.getName_i18n()),
 				_getServiceContext(),
-				_toUnicodeProperties(assetLibrary.getSettings()),
+				_putUnicodeProperties(assetLibrary.getSettings()),
 				new LinkedHashMap<>()));
 	}
 
@@ -403,6 +403,14 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		return depotEntry;
 	}
 
+	private Boolean _getBooleanValue(Object defaultValue, Boolean value) {
+		if (value == null) {
+			return GetterUtil.getBoolean(defaultValue);
+		}
+
+		return value;
+	}
+
 	private Map<String, Boolean> _getDepotAppCustomizationMap(
 			long companyId, String externalReferenceCode)
 		throws Exception {
@@ -477,6 +485,56 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		return value;
 	}
 
+	private UnicodeProperties _patchUnicodeProperties(
+		Settings settings, UnicodeProperties unicodeProperties) {
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"autoTaggingEnabled",
+			_getBooleanValue(
+				unicodeProperties.getProperty("autoTaggingEnabled"),
+				settings.getAutoTaggingEnabled())
+		).put(
+			"logoColor",
+			GetterUtil.getString(
+				settings.getLogoColor(),
+				unicodeProperties.getProperty("logoColor"))
+		).put(
+			"sharingEnabled",
+			_getBooleanValue(
+				unicodeProperties.getProperty("sharingEnabled"),
+				settings.getSharingEnabled())
+		).put(
+			"useCustomLanguages",
+			_getBooleanValue(
+				unicodeProperties.getProperty("useCustomLanguages"),
+				settings.getUseCustomLanguages())
+		).build();
+	}
+
+	private UnicodeProperties _putUnicodeProperties(Settings settings) {
+		if (settings == null) {
+			return null;
+		}
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"autoTaggingEnabled",
+			GetterUtil.getBoolean(settings.getAutoTaggingEnabled())
+		).put(
+			"logoColor",
+			GetterUtil.getString(settings.getLogoColor(), "outline-0")
+		).put(
+			"sharingEnabled",
+			GetterUtil.getBoolean(settings.getSharingEnabled())
+		).put(
+			"useCustomLanguages",
+			GetterUtil.getBoolean(settings.getUseCustomLanguages())
+		).build();
+	}
+
 	private AssetLibrary _toAssetLibrary(DepotEntry depotEntry)
 		throws Exception {
 
@@ -517,28 +575,6 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				contextUser));
 	}
 
-	private UnicodeProperties _toUnicodeProperties(Settings settings) {
-		if (settings == null) {
-			return null;
-		}
-
-		return UnicodePropertiesBuilder.create(
-			true
-		).put(
-			"autoTaggingEnabled",
-			GetterUtil.getBoolean(settings.getAutoTaggingEnabled())
-		).put(
-			"logoColor",
-			GetterUtil.getString(settings.getLogoColor(), "outline-0")
-		).put(
-			"sharingEnabled",
-			GetterUtil.getBoolean(settings.getSharingEnabled())
-		).put(
-			"useCustomLanguages",
-			GetterUtil.getBoolean(settings.getUseCustomLanguages())
-		).build();
-	}
-
 	private void _updateDLSizeLimitConfiguration(
 			AssetLibrary assetLibrary, long groupId,
 			Map<String, Long> mimeTypeSizeLimits)
@@ -546,10 +582,14 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 		Settings settings = assetLibrary.getSettings();
 
-		for (MimeTypeLimit mimeTypeLimit : settings.getMimeTypeLimits()) {
-			mimeTypeSizeLimits.put(
-				mimeTypeLimit.getMimeType(),
-				GetterUtil.getLong(mimeTypeLimit.getMaximumSize()));
+		MimeTypeLimit[] mimeTypeLimits = settings.getMimeTypeLimits();
+
+		if (mimeTypeLimits != null) {
+			for (MimeTypeLimit mimeTypeLimit : settings.getMimeTypeLimits()) {
+				mimeTypeSizeLimits.put(
+					mimeTypeLimit.getMimeType(),
+					GetterUtil.getLong(mimeTypeLimit.getMaximumSize()));
+			}
 		}
 
 		_dlSizeLimitConfigurationProvider.updateGroupSizeLimit(

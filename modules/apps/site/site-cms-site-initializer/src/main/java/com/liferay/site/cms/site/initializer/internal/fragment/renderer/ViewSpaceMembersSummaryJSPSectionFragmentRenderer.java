@@ -5,8 +5,10 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceMembersSummarySectionDisplayContext;
@@ -33,7 +35,8 @@ public class ViewSpaceMembersSummaryJSPSectionFragmentRenderer
 	protected Object getDisplayContext(HttpServletRequest httpServletRequest) {
 		return new ViewSpaceMembersSummarySectionDisplayContext(
 			InfoItemUtil.getGroupId(httpServletRequest), httpServletRequest,
-			_language, _userGroupLocalService, _userLocalService);
+			_language, _depotEntryLocalService, _groupLocalService,
+			_userGroupLocalService, _userLocalService);
 	}
 
 	@Override
@@ -45,6 +48,12 @@ public class ViewSpaceMembersSummaryJSPSectionFragmentRenderer
 	protected String getLabelKey() {
 		return "space-members-summary";
 	}
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

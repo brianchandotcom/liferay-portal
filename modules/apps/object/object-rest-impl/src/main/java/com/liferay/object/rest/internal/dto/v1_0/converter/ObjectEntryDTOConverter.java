@@ -1310,20 +1310,11 @@ public class ObjectEntryDTOConverter
 						objectField, finalSerializable));
 
 				if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-					String keyFieldName = objectFieldName + "Key";
-
-					unsafeSuppliers.put(keyFieldName, () -> finalSerializable);
-				}
-				else if (objectField.compareBusinessType(
-							ObjectFieldConstants.
-								BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-					String keyFieldName = objectFieldName + "Key";
+						ObjectFieldConstants.
+							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 					unsafeSuppliers.put(
-						keyFieldName,
+						objectFieldName + "Key",
 						() -> {
 							if (Validator.isNull(finalSerializable)) {
 								return null;
@@ -1333,6 +1324,12 @@ public class ObjectEntryDTOConverter
 								(String)finalSerializable,
 								StringPool.COMMA_AND_SPACE);
 						});
+				}
+				else if (objectField.compareBusinessType(
+							ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+					unsafeSuppliers.put(
+						objectFieldName + "Key", () -> finalSerializable);
 				}
 			}
 		}

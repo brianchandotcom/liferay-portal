@@ -1191,6 +1191,115 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	public void testRenderCollectionStyledLayoutStructureItemWithItemTypeChangedWithAssetListEntry()
+		throws Exception {
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"anyAssetType",
+					String.valueOf(_portal.getClassNameId(JournalArticle.class))
+				).put(
+					"orderByColumn1", "priority"
+				).put(
+					"orderByType1", "ASC"
+				).buildString(),
+				_serviceContext);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		FragmentEntry fragmentEntry = _addFragmentEntry();
+
+		_addCollectionStyledLayoutStructureItem(
+			assetListEntry, layout, 10, "none", segmentsExperienceId,
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				segmentsExperienceId, draftLayout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							"collectionFieldId", "JournalArticle_title"
+						).put(
+							"defaultValue", "Heading Example"
+						))
+				).toString(),
+				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(), _serviceContext));
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layout);
+
+		String content = _getContent(
+			layout, mockHttpServletRequest, segmentsExperienceId);
+
+		Assert.assertFalse(
+			content,
+			StringUtil.contains(
+				content, ">Heading Example</h1>", StringPool.BLANK));
+
+		String title = RandomTestUtil.randomString();
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, title,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_portal.getSiteDefaultLocale(_group), true, true, _serviceContext);
+
+		content = _getContent(
+			layout, mockHttpServletRequest, segmentsExperienceId);
+
+		Assert.assertFalse(
+			content,
+			StringUtil.contains(
+				content, ">Heading Example</h1>", StringPool.BLANK));
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content, ">" + title + "</h1>", StringPool.BLANK));
+
+		_assetListEntryLocalService.updateAssetListEntryTypeSettings(
+			assetListEntry.getAssetListEntryId(), 0,
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"anyAssetType", true
+			).put(
+				"orderByColumn1", "priority"
+			).put(
+				"orderByType1", "ASC"
+			).buildString());
+
+		content = _getContent(
+			layout, mockHttpServletRequest, segmentsExperienceId);
+
+		Assert.assertFalse(
+			content,
+			StringUtil.contains(
+				content, ">" + title + "</h1>", StringPool.BLANK));
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content, ">Heading Example</h1>", StringPool.BLANK));
+	}
+
+	@Test
 	@TestInfo("LPD-58700")
 	public void testRenderCollectionStyledLayoutStructureItemWithItemTypeChangedWithCollectionProvider()
 		throws Exception {

@@ -9,7 +9,7 @@ import React from 'react';
 
 import MultipleSpacesRenderer, {
 	MultipleSpacesRendererProps,
-} from '../../../../../src/main/resources/META-INF/resources/js/main_view/FDSPropsTransformer/cell_renderers/MultipleSpacesRenderer';
+} from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/cell_renderers/MultipleSpacesRenderer';
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	if (key === 'available-in-spaces-x') {

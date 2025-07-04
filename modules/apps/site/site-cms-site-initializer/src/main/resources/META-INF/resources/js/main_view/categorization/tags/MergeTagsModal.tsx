@@ -17,7 +17,7 @@ import React, {useEffect, useState} from 'react';
 import SpaceSticker from '../../../common/components/SpaceSticker';
 import ApiHelper from '../../../common/services/ApiHelper';
 import {LogoColor} from '../../../common/types/Space';
-import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
+import {executeAsyncItemAction} from '../../props_transformer/utils/executeAsyncItemAction';
 
 type Tag = {
 	label: string;

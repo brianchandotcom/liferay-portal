@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
-import SimpleActionLinkRenderer from '../../../../../src/main/resources/META-INF/resources/js/main_view/FDSPropsTransformer/cell_renderers/SimpleActionLinkRenderer';
+import SimpleActionLinkRenderer from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/cell_renderers/SimpleActionLinkRenderer';
 
 const testAction = {
 	data: {id: 'view'},

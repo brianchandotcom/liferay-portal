@@ -8,8 +8,8 @@ import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
-import MultipleSpacesRenderer from '../../FDSPropsTransformer/cell_renderers/MultipleSpacesRenderer';
-import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
+import MultipleSpacesRenderer from '../../props_transformer/cell_renderers/MultipleSpacesRenderer';
+import {executeAsyncItemAction} from '../../props_transformer/utils/executeAsyncItemAction';
 import CategorizationToolbar from '../CategorizationToolbar';
 import CreateTagsModal from './CreateTagsModal';
 import EditTagsModal from './EditTagsModal';

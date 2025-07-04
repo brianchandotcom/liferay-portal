@@ -16,17 +16,6 @@ export {default as SpaceList} from './content_editor/components/SpaceList';
 // Main
 
 export {default as AssetTypeInfoPanelContent} from './main/components/info_panel/AssetTypeInfoPanelContent';
-export {default as AllFDSPropsTransformer} from './main_view/FDSPropsTransformer/AllFDSPropsTransformer';
-export {default as AllSpacesFDSPropsTransformer} from './main_view/FDSPropsTransformer/AllSpacesFDSPropsTransformer';
-export {default as CategoryFDSPropsTransformer} from './main_view/FDSPropsTransformer/CategoryFDSPropsTransformer';
-export {default as CategoryUsagesFDSPropsTransformer} from './main_view/FDSPropsTransformer/CategoryUsagesFDSPropsTransformer';
-export {default as ContentsFDSPropsTransformer} from './main_view/FDSPropsTransformer/ContentsFDSPropsTransformer';
-export {default as FilesFDSPropsTransformer} from './main_view/FDSPropsTransformer/FilesFDSPropsTransformer';
-export {default as FolderFDSPropsTransformer} from './main_view/FDSPropsTransformer/FolderFDSPropsTransformer';
-export {default as StructureUsagesFDSPropsTransformer} from './main_view/FDSPropsTransformer/StructureUsagesFDSPropsTransformer';
-export {default as StructuresFDSPropsTransformer} from './main_view/FDSPropsTransformer/StructuresFDSPropsTransformer';
-export {default as TagUsagesFDSPropsTransformer} from './main_view/FDSPropsTransformer/TagUsagesFDSPropsTransformer';
-export {default as VocabularyFDSPropsTransformer} from './main_view/FDSPropsTransformer/VocabularyFDSPropsTransformer';
 export {default as CategorizationToolbar} from './main_view/categorization/CategorizationToolbar';
 export {default as EditCategoryPage} from './main_view/categorization/categories/EditCategoryPage';
 export {default as CategorizationBreadcrumb} from './main_view/categorization/components/CategorizationBreadcrumb';
@@ -35,6 +24,17 @@ export {default as EditVocabulary} from './main_view/categorization/vocabularies
 export {default as SpaceAbstractHeader} from './main_view/components/SpaceAbstractHeader';
 export {default as EditFolder} from './main_view/components/folders/EditFolder';
 export {default as ViewDashboard} from './main_view/dashboard/ViewDashboard';
+export {default as AllFDSPropsTransformer} from './main_view/props_transformer/AllFDSPropsTransformer';
+export {default as AllSpacesFDSPropsTransformer} from './main_view/props_transformer/AllSpacesFDSPropsTransformer';
+export {default as CategoryFDSPropsTransformer} from './main_view/props_transformer/CategoryFDSPropsTransformer';
+export {default as CategoryUsagesFDSPropsTransformer} from './main_view/props_transformer/CategoryUsagesFDSPropsTransformer';
+export {default as ContentsFDSPropsTransformer} from './main_view/props_transformer/ContentsFDSPropsTransformer';
+export {default as FilesFDSPropsTransformer} from './main_view/props_transformer/FilesFDSPropsTransformer';
+export {default as FolderFDSPropsTransformer} from './main_view/props_transformer/FolderFDSPropsTransformer';
+export {default as StructureUsagesFDSPropsTransformer} from './main_view/props_transformer/StructureUsagesFDSPropsTransformer';
+export {default as StructuresFDSPropsTransformer} from './main_view/props_transformer/StructuresFDSPropsTransformer';
+export {default as TagUsagesFDSPropsTransformer} from './main_view/props_transformer/TagUsagesFDSPropsTransformer';
+export {default as VocabularyFDSPropsTransformer} from './main_view/props_transformer/VocabularyFDSPropsTransformer';
 export {default as AddSpaceMembers} from './main_view/spaces/AddSpaceMembers';
 export {default as NewSpace} from './main_view/spaces/NewSpace';
 export {default as SpaceSettings} from './main_view/spaces/SpaceSettings';

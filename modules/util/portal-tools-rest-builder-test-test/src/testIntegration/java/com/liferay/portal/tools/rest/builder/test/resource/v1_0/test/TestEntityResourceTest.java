@@ -343,6 +343,48 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		testEntityResource.postReservedWord(true);
 	}
 
+	@Override
+	@Test
+	public void testPostTestEntity() throws Exception {
+		super.testPostTestEntity();
+
+		String invalidTypeId = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"name", StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				"type", invalidTypeId
+			).toString(),
+			"test/v1.0/test-entities", Http.Method.POST);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				StringBundler.concat(
+					"'", invalidTypeId,
+					"' cannot be mapped to a valid entity subtype")
+			).toString(),
+			jsonObject.toString(), JSONCompareMode.LENIENT);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"name", StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).toString(),
+			"test/v1.0/test-entities", Http.Method.POST);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "'null' cannot be mapped to a valid entity subtype"
+			).toString(),
+			jsonObject.toString(), JSONCompareMode.LENIENT);
+	}
+
 	@Ignore
 	@Test
 	public void testPostTestEntityMultipartBulk() throws Exception {

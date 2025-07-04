@@ -506,7 +506,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								_objectEntryOpenAPIResourceProvider,
 								_objectFieldLocalService,
 								_objectRelationshipLocalService,
-								_openAPIResource,
+								_objectScopeProviderRegistry, _openAPIResource,
 								_systemObjectDefinitionManagerRegistry),
 							HashMapDictionaryBuilder.<String, Object>put(
 								"companyId",

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -145,8 +146,12 @@ public class AssetLibraryDTOConverter
 				setAutoTaggingEnabled(
 					() -> GetterUtil.getBoolean(
 						unicodeProperties.get("autoTaggingEnabled")));
-				setAvailableLanguageIds(group::getAvailableLanguageIds);
-				setDefaultLanguageId(group::getDefaultLanguageId);
+				setAvailableLanguageIds(
+					() -> GetterUtil.getStringValues(
+						StringUtil.split(unicodeProperties.get("locales"))));
+				setDefaultLanguageId(
+					() -> GetterUtil.getString(
+						unicodeProperties.get("languageId")));
 				setLogoColor(
 					() -> GetterUtil.get(
 						unicodeProperties.get("logoColor"), "outline-0"));
@@ -155,8 +160,8 @@ public class AssetLibraryDTOConverter
 					() -> GetterUtil.getBoolean(
 						unicodeProperties.get("sharingEnabled")));
 				setUseCustomLanguages(
-					() -> GetterUtil.getBoolean(
-						unicodeProperties.get("useCustomLanguages")));
+					() -> !GetterUtil.getBoolean(
+						unicodeProperties.get("inheritLocales")));
 			}
 		};
 	}

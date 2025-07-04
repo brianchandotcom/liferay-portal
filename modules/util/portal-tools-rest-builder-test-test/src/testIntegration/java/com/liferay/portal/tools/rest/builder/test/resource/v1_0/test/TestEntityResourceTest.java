@@ -268,13 +268,21 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 							"type", invalidTypeId2
 						),
 						JSONFactoryUtil.createJSONObject(
-							ChildTestEntity3SerDes.toJSON(childTestEntity3))
+							ChildTestEntity3SerDes.toJSON(childTestEntity3)),
+						JSONUtil.put(
+							"name",
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()))
 					).toString(),
 					StringBundler.concat(
 						"headless-batch-engine/v1.0/import-task",
 						"/com.liferay.portal.tools.rest.builder.test.dto.v1_0.",
 						"TestEntity?importStrategy=ON_ERROR_CONTINUE"),
 					Http.Method.POST));
+
+			page = testEntityResource.getTestEntitiesPage(null);
+
+			Assert.assertEquals(page.getTotalCount(), totalCount + 3);
 
 			jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -305,16 +313,23 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 							"com.liferay.batch.engine.exception.InvalidTy",
 							"peIdException: '", invalidTypeId2,
 							"' cannot be mapped to a valid entity subtype")
+					),
+					JSONUtil.put(
+						"item", "Unable to read item at index 6"
+					).put(
+						"itemIndex", 6
+					).put(
+						"message",
+						StringBundler.concat(
+							"com.liferay.batch.engine.exception.InvalidTy",
+							"peIdException: '' cannot be mapped to a valid ",
+							"entity subtype")
 					)
 				).toString(),
 				jsonObject.getJSONArray(
 					"failedItems"
 				).toString(),
 				JSONCompareMode.LENIENT);
-
-			page = testEntityResource.getTestEntitiesPage(null);
-
-			Assert.assertEquals(page.getTotalCount(), totalCount + 3);
 
 			assertContains(childTestEntity1, (List<TestEntity>)page.getItems());
 			assertContains(childTestEntity2, (List<TestEntity>)page.getItems());

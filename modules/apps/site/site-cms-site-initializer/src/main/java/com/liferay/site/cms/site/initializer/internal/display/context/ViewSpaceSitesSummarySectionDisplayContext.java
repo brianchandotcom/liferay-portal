@@ -89,7 +89,7 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 	public Map<String, Object> getHeaderProps() throws Exception {
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			_httpServletRequest, "view-all-sites", _getSpaceSitesHeaderTitle(),
-			StringPool.BLANK);
+			StringPool.BLANK, StringPool.BLANK);
 	}
 
 	private FDSActionDropdownItem _getSearchableFDSActionDropdownItem(

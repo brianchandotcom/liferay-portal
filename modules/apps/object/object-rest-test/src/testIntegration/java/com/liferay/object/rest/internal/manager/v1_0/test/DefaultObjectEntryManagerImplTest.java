@@ -76,6 +76,7 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
@@ -3452,17 +3453,19 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntry.getStatus(
 			).getCode());
 
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED,
+		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), 1
-			).getStatus());
+				objectEntry.getId(), 1);
 
 		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED,
+			WorkflowConstants.STATUS_EXPIRED, objectEntryVersion.getStatus());
+
+		objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), 2
-			).getStatus());
+				objectEntry.getId(), 2);
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, objectEntryVersion.getStatus());
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -3483,19 +3486,21 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, _objectDefinition1, objectEntry.getId(),
 				1));
 
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
+		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), 2
-			).getStatus());
+				objectEntry.getId(), 2);
 
 		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			_defaultObjectEntryManager.getObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				objectEntry.getId()
-			).getStatus(
-			).getCode());
+			WorkflowConstants.STATUS_APPROVED, objectEntryVersion.getStatus());
+
+		objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			objectEntry.getId());
+
+		Status status = objectEntry.getStatus();
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, status.getCode());
 
 		objectEntry = _updateObjectEntryVersion(
 			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
@@ -3507,19 +3512,21 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, _objectDefinition1, objectEntry.getId(),
 				2));
 
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
+		objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), 1
-			).getStatus());
+				objectEntry.getId(), 1);
 
 		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED,
-			_defaultObjectEntryManager.getObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				objectEntry.getId()
-			).getStatus(
-			).getCode());
+			WorkflowConstants.STATUS_APPROVED, objectEntryVersion.getStatus());
+
+		objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			objectEntry.getId());
+
+		status = objectEntry.getStatus();
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, status.getCode());
 
 		// Site scope
 
@@ -3533,20 +3540,22 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition4, _group.getGroupKey(), 1));
 
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
+		objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), 2
-			).getStatus());
+				objectEntry.getId(), 2);
 
 		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			_defaultObjectEntryManager.getObjectEntry(
-				_objectDefinition4.getCompanyId(), _simpleDTOConverterContext,
-				objectEntry.getExternalReferenceCode(), _objectDefinition4,
-				_group.getGroupKey()
-			).getStatus(
-			).getCode());
+			WorkflowConstants.STATUS_APPROVED, objectEntryVersion.getStatus());
+
+		objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			_objectDefinition4.getCompanyId(), _simpleDTOConverterContext,
+			objectEntry.getExternalReferenceCode(), _objectDefinition4,
+			_group.getGroupKey());
+
+		status = objectEntry.getStatus();
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, status.getCode());
 
 		objectEntry = _updateObjectEntryVersion(
 			_objectDefinition4,
@@ -3558,20 +3567,22 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition4, _group.getGroupKey(), 2));
 
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
+		objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), 1
-			).getStatus());
+				objectEntry.getId(), 1);
 
 		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED,
-			_defaultObjectEntryManager.getObjectEntry(
-				_objectDefinition4.getCompanyId(), _simpleDTOConverterContext,
-				objectEntry.getExternalReferenceCode(), _objectDefinition4,
-				_group.getGroupKey()
-			).getStatus(
-			).getCode());
+			WorkflowConstants.STATUS_APPROVED, objectEntryVersion.getStatus());
+
+		objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			_objectDefinition4.getCompanyId(), _simpleDTOConverterContext,
+			objectEntry.getExternalReferenceCode(), _objectDefinition4,
+			_group.getGroupKey());
+
+		status = objectEntry.getStatus();
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, status.getCode());
 	}
 
 	@Test

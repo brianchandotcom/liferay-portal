@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import ServiceProvider from '../../ServiceProvider/index';
+import cartAtom from '../../utilities/atoms/cartAtom';
 import {
 	CART_RESET,
 	CART_UPDATED,
@@ -41,6 +43,10 @@ import {resolveCartViews} from './util/views';
 
 import './mini_cart.scss';
 
+import LoadingIndicator from '@clayui/loading-indicator';
+
+import {isLowEndDevice} from '../../utilities/device';
+
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
 function MiniCart({
@@ -57,22 +63,35 @@ function MiniCart({
 	orderId,
 	productURLSeparator,
 	requestQuoteEnabled,
+	slowConnectionOrderFlowEnabled,
 	summaryDataMapper,
 	toggleable,
+	undoCartItemDeletionDisabled,
 }) {
-	const [isOpen, setIsOpen] = useState(!toggleable);
-	const [isUpdating, setIsUpdating] = useState(false);
-	const [editedItem, setEditedItem] = useState(null);
-	const [actionURLs, setActionURLs] = useState(cartActionURLs);
 	const [CartViews, setCartViews] = useState({});
+	const [actionURLs, setActionURLs] = useState(cartActionURLs);
+	const [cartAtomState] = useLiferayState(cartAtom);
 	const [cartState, setCartState] = useState({
 		accountId,
 		channel: {channel},
 		id: orderId,
 		summary: {itemsQuantity},
 	});
+	const [editedItem, setEditedItem] = useState(null);
+	const [isOpen, setIsOpen] = useState(!toggleable);
+	const [isUpdating, setIsUpdating] = useState(false);
+	const [replacementSKUList, setReplacementSKUList] = useState([]);
+
+	const manageSlowConnections =
+		cartAtomState.updating &&
+		isLowEndDevice() &&
+		slowConnectionOrderFlowEnabled;
 
 	const closeCart = () => {
+		if (isUpdating) {
+			return;
+		}
+
 		setIsOpen(false);
 
 		if (toggleable) {
@@ -83,6 +102,7 @@ function MiniCart({
 			setEditedItem(null);
 		}
 	};
+
 	const openCart = () => {
 		if (toggleable) {
 			document.body.classList.add('overflow-hidden');
@@ -90,8 +110,6 @@ function MiniCart({
 
 		setIsOpen(true);
 	};
-
-	const [replacementSKUList, setReplacementSKUList] = useState([]);
 
 	const resetCartState = useCallback(
 		({accountId = 0, id = 0}) => {
@@ -231,31 +249,46 @@ function MiniCart({
 				setEditedItem,
 				setIsUpdating,
 				setReplacementSKUList,
+				slowConnectionOrderFlowEnabled,
 				summaryDataMapper,
 				toggleable,
+				undoCartItemDeletionDisabled,
 				updateCartModel,
 			}}
 		>
 			{!!CartViews[CART] && (
-				<div
-					className={classnames({
-						'is-open': isOpen || !toggleable,
-						'mini-cart': true,
-					})}
-				>
-					{toggleable && (
-						<>
-							<div
-								className="mini-cart-overlay"
-								onClick={() => closeCart()}
+				<>
+					<div
+						className={classnames({
+							'is-open': isOpen || !toggleable,
+							'mini-cart': true,
+						})}
+					>
+						{toggleable && (
+							<>
+								<div
+									className="mini-cart-overlay"
+									onClick={() => closeCart()}
+								/>
+
+								<CartViews.Opener
+									disabled={manageSlowConnections}
+								/>
+							</>
+						)}
+
+						<CartViews.Cart />
+					</div>
+
+					{manageSlowConnections && (
+						<div className="mini-cart-slow-connection-overlay">
+							<LoadingIndicator
+								displayType="secondary"
+								size="sm"
 							/>
-
-							<CartViews.Opener />
-						</>
+						</div>
 					)}
-
-					<CartViews.Cart />
-				</div>
+				</>
 			)}
 		</MiniCartContext.Provider>
 	);
@@ -271,8 +304,10 @@ MiniCart.defaultProps = {
 	onAddToCart: () => {},
 	orderId: 0,
 	requestQuoteEnabled: false,
+	slowConnectionOrderFlowEnabled: false,
 	summaryDataMapper,
 	toggleable: true,
+	undoCartItemDeletionDisabled: false,
 };
 
 MiniCart.propTypes = {

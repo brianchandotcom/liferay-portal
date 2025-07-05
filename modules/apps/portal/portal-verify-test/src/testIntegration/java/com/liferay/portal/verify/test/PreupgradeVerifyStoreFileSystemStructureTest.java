@@ -97,9 +97,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 		_originalCacheEnabled = ReflectionTestUtil.getAndSetFieldValue(
 			PortalInstancePool.class, "_cacheEnabled", false);
-
 		_repositoryId = RandomTestUtil.nextLong();
-
 		_upgradeDatabaseDLStorageCheckDisabledSafeCloseable =
 			PropsValuesTestUtil.swapWithSafeCloseable(
 				"UPGRADE_DATABASE_DL_STORAGE_CHECK_DISABLED", false);
@@ -109,10 +107,12 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	public static void tearDownClass() throws Exception {
 		ConfigurationTestUtil.deleteConfiguration(
 			_advancedFileSystemStoreConfiguration);
+
+		FileUtil.deltree(_advancedFileSystemStoreRootDir);
+
 		ConfigurationTestUtil.deleteConfiguration(
 			_fileSystemStoreConfiguration);
 
-		FileUtil.deltree(_advancedFileSystemStoreRootDir);
 		FileUtil.deltree(_fileSystemStoreRootDir);
 
 		ReflectionTestUtil.setFieldValue(

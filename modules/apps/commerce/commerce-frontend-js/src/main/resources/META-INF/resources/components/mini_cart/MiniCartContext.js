@@ -34,6 +34,7 @@ export const DEFAULT_MINI_CART_CONTEXT_VALUE = {
 	setReplacementSKUList: () => {},
 	summaryDataMapper: () => {},
 	toggleable: true,
+	undoCartItemDeletionDisabled: true,
 	updateCartModel: () => {},
 };
 

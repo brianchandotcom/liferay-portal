@@ -15,7 +15,7 @@ import {
 import MiniCartContext from './MiniCartContext';
 import {hasOptions} from './util/index';
 
-function Opener() {
+function Opener({disabled = false}) {
 	const {cartState, displayTotalItemsQuantity, openCart, setEditedItem} =
 		useContext(MiniCartContext);
 
@@ -77,6 +77,7 @@ function Opener() {
 			})}
 			data-badge-count={numberOfItems}
 			data-qa-id="miniCartButton"
+			disabled={disabled}
 			onClick={openCart}
 		>
 			<ClayIcon symbol="shopping-cart" />

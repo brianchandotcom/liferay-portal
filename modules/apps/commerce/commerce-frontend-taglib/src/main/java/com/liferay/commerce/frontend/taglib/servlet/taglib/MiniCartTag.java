@@ -8,6 +8,7 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
+import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
 import com.liferay.commerce.configuration.CommercePriceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
@@ -133,6 +134,8 @@ public class MiniCartTag extends IncludeTag {
 
 			_requestQuoteEnabled = _isRequestQuoteEnabled();
 			_siteDefaultURL = _getSiteDefaultURL(themeDisplay);
+			_slowConnectionOrderFlowEnabled = _slowConnectionOrderFlowEnabled();
+			_undoCartItemDeletionDisabled = _undoCartItemDeletionDisabled();
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -235,7 +238,9 @@ public class MiniCartTag extends IncludeTag {
 		_requestQuoteEnabled = false;
 		_signInURL = StringPool.BLANK;
 		_siteDefaultURL = StringPool.BLANK;
+		_slowConnectionOrderFlowEnabled = false;
 		_toggleable = true;
+		_undoCartItemDeletionDisabled = false;
 		_views = new HashMap<>();
 	}
 
@@ -289,7 +294,13 @@ public class MiniCartTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:siteDefaultURL", _siteDefaultURL);
 		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:slowConnectionOrderFlowEnabled",
+			_slowConnectionOrderFlowEnabled);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:toggleable", _toggleable);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:undoCartItemDeletionDisabled",
+			_undoCartItemDeletionDisabled);
 	}
 
 	private int _getItemsQuantity(
@@ -365,6 +376,28 @@ public class MiniCartTag extends IncludeTag {
 		return commerceOrderFieldsConfiguration.requestQuoteEnabled();
 	}
 
+	private boolean _slowConnectionOrderFlowEnabled() throws PortalException {
+		CommerceOrderConfiguration commerceOrderConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderConfiguration.class,
+				new GroupServiceSettingsLocator(
+					_commerceChannelGroupId,
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderConfiguration.slowConnectionOrderFlowEnabled();
+	}
+
+	private boolean _undoCartItemDeletionDisabled() throws PortalException {
+		CommerceOrderConfiguration commerceOrderConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderConfiguration.class,
+				new GroupServiceSettingsLocator(
+					_commerceChannelGroupId,
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderConfiguration.undoCartItemDeletionDisabled();
+	}
+
 	private static final String _PAGE = "/mini_cart/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(MiniCartTag.class);
@@ -388,7 +421,9 @@ public class MiniCartTag extends IncludeTag {
 	private boolean _requestQuoteEnabled;
 	private String _signInURL = StringPool.BLANK;
 	private String _siteDefaultURL = StringPool.BLANK;
+	private boolean _slowConnectionOrderFlowEnabled;
 	private boolean _toggleable = true;
+	private boolean _undoCartItemDeletionDisabled;
 	private Map<String, String> _views = new HashMap<>();
 
 }

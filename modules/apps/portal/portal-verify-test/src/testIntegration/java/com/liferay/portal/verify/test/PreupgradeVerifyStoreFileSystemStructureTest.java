@@ -313,12 +313,12 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	}
 
 	private void _assertVerify(
-			String storeImpl, String expectedExceptionMessage,
+			String dlStoreImpl, String expectedExceptionMessage,
 			String expectedLogEntry)
 		throws Exception {
 
 		String originalDLStoreImpl = ReflectionTestUtil.getAndSetFieldValue(
-			PropsValues.class, "DL_STORE_IMPL", storeImpl);
+			PropsValues.class, "DL_STORE_IMPL", dlStoreImpl);
 
 		LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 			PreupgradeVerifyStoreFileSystemStructure.class.getName(),
@@ -338,7 +338,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		catch (Exception exception) {
 			if (expectedExceptionMessage == null) {
 				boolean advancedFileSystemStore = StringUtil.equals(
-					storeImpl, _ADVANCED_FILE_SYSTEM_STORE);
+					dlStoreImpl, _ADVANCED_FILE_SYSTEM_STORE);
 
 				Path rootDirPath;
 
@@ -369,23 +369,23 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	}
 
 	private void _assertVerifyExceptionMessage(
-			String storeImpl, String expectedExceptionMessage)
+			String dlStoreImpl, String expectedExceptionMessage)
 		throws Exception {
 
-		_assertVerify(storeImpl, expectedExceptionMessage, null);
+		_assertVerify(dlStoreImpl, expectedExceptionMessage, null);
 	}
 
 	private void _assertVerifyLogEntry(
-			String storeImpl, String expectedLogEntry)
+			String dlStoreImpl, String expectedLogEntry)
 		throws Exception {
 
-		_assertVerify(storeImpl, null, expectedLogEntry);
+		_assertVerify(dlStoreImpl, null, expectedLogEntry);
 	}
 
-	private void _assertVerifyValidDirectory(String storeImpl)
+	private void _assertVerifyValidDirectory(String dlStoreImpl)
 		throws Exception {
 
-		_assertVerify(storeImpl, null, null);
+		_assertVerify(dlStoreImpl, null, null);
 	}
 
 	private void _validateLogEntry(

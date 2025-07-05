@@ -147,29 +147,27 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	public void testVerifyAdvancedFileSystemStoreLongFileNameDirectoryWithoutExtension()
 		throws Exception {
 
-		Path fileNameDirectoryWithoutExtensionPath = Paths.get(
+		Path path = Paths.get(
 			_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
 			String.valueOf(_repositoryId), "100");
 
-		String expectedLogEntry = StringBundler.concat(
-			"File ", fileNameDirectoryWithoutExtensionPath,
-			" name has more than 2 characters and no extension in advanced ",
-			"file system structure");
+		Files.createDirectories(path);
 
-		Files.createDirectories(fileNameDirectoryWithoutExtensionPath);
-
-		_assertVerifyLogEntry(_DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE, expectedLogEntry);
+		_assertVerifyLogEntry(
+			_DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE,
+			StringBundler.concat(
+				"File ", path, " name has more than 2 characters and no ",
+				"extension in advanced file system structure"));
 	}
 
 	@Test
 	public void testVerifyAdvancedFileSystemStoreValidDirectory()
 		throws Exception {
 
-		Path validDirectoryPath = Paths.get(
-			_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_repositoryId), "10", "100.afsh");
-
-		Files.createDirectories(validDirectoryPath);
+		Files.createDirectories(
+			Paths.get(
+				_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
+				String.valueOf(_repositoryId), "10", "100.afsh"));
 
 		_assertVerifyValidDirectory(_DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE);
 	}

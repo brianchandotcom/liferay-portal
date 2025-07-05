@@ -40,6 +40,7 @@ export const INITIAL_ITEM_STATE = {
 	isRemoved: false,
 	removalTimeoutRef: null,
 };
+export const INSTANT_REMOVAL_TIMEOUT = 700;
 export const REMOVAL_TIMEOUT = 2000;
 export const REMOVAL_CANCELING_TIMEOUT = 700;
 

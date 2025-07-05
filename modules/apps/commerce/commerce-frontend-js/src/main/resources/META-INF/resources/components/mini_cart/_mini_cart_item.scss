@@ -1,5 +1,6 @@
 .mini-cart-item {
 	$price-size: 70px;
+	$removal-animation-ms: 200ms;
 
 	align-items: center;
 	border-bottom: 1px solid rgba(180, 187, 201, 0.2);
@@ -152,7 +153,7 @@
 		max-height: 0;
 		overflow-y: hidden;
 		padding: 0;
-		transition: all 400ms $ease-out-quart;
+		transition: all $removal-animation-ms $ease-out-quart;
 	}
 
 	.mini-cart-item-is-removing-wrapper {
@@ -181,21 +182,25 @@
 			pointer-events: auto;
 
 			.mini-cart-item-is-removing {
-				animation: isRemoving 400ms $ease-out-quart 1 forwards;
+				animation: isRemoving $removal-animation-ms $ease-out-quart 1
+					forwards;
 			}
 		}
 
 		&.canceled .mini-cart-item-is-removing {
-			animation: isCanceled 400ms $ease-out-quart 1 forwards;
+			animation: isCanceled $removal-animation-ms $ease-out-quart 1
+				forwards;
 		}
 
 		.rtl & {
 			&.active .mini-cart-item-is-removing {
-				animation: isRemovingRTL 400ms $ease-out-quart 1 forwards;
+				animation: isRemovingRTL $removal-animation-ms $ease-out-quart 1
+					forwards;
 			}
 
 			&.canceled .mini-cart-item-is-removing {
-				animation: isCanceledRTL 400ms $ease-out-quart 1 forwards;
+				animation: isCanceledRTL $removal-animation-ms $ease-out-quart 1
+					forwards;
 			}
 		}
 

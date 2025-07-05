@@ -42,7 +42,11 @@ import javax.sql.DataSource;
 public class ObjectSQLProvider implements SQLProvider {
 
 	public ObjectSQLProvider(long companyId, DB db) throws Exception {
-		_companyId = companyId;
+		this(new long[] {companyId}, db);
+	}
+
+	public ObjectSQLProvider(long[] companyIds, DB db) throws Exception {
+		_companyIds = companyIds;
 		_db = db;
 
 		_appendSQL();
@@ -127,14 +131,16 @@ public class ObjectSQLProvider implements SQLProvider {
 		try (Connection connection = dataSource.getConnection()) {
 			DBInspector dbInspector = new DBInspector(connection);
 
-			List<ObjectDefinition> objectDefinitions =
-				ObjectDefinitionLocalServiceUtil.getObjectDefinitions(
-					_companyId, WorkflowConstants.STATUS_APPROVED);
+			for (long companyId : _companyIds) {
+				List<ObjectDefinition> objectDefinitions =
+					ObjectDefinitionLocalServiceUtil.getObjectDefinitions(
+						companyId, WorkflowConstants.STATUS_APPROVED);
 
-			for (ObjectDefinition objectDefinition : objectDefinitions) {
-				_appendTablesSQL(dbInspector, objectDefinition);
+				for (ObjectDefinition objectDefinition : objectDefinitions) {
+					_appendTablesSQL(dbInspector, objectDefinition);
 
-				_appendRelationshipTablesSQL(dbInspector, objectDefinition);
+					_appendRelationshipTablesSQL(dbInspector, objectDefinition);
+				}
 			}
 		}
 
@@ -194,7 +200,7 @@ public class ObjectSQLProvider implements SQLProvider {
 			dynamicObjectDefinitionTable.getTableName());
 	}
 
-	private final long _companyId;
+	private final long[] _companyIds;
 	private final DB _db;
 	private final StringBundler _indexesSQLSB = new StringBundler();
 	private final Set<String> _tableNames = new HashSet<>();

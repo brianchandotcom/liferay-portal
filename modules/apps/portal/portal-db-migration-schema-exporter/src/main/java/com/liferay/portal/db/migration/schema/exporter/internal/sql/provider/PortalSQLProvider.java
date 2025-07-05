@@ -15,7 +15,7 @@ public class PortalSQLProvider extends BaseSQLProvider {
 
 	public PortalSQLProvider() throws Exception {
 		_objectSQLProvider = new ObjectSQLProvider(
-			PortalInstancePool.getDefaultCompanyId(), db);
+			PortalInstancePool.getCompanyIds(), db);
 	}
 
 	@Override

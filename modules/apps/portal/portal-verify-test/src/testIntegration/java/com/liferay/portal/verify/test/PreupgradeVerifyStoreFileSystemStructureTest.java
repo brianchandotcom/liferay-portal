@@ -160,7 +160,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 		Files.createDirectories(fileNameDirectoryWithoutExtensionPath);
 
-		_assertVerifyLogEntry(_ADVANCED_FILE_SYSTEM_STORE, expectedLogEntry);
+		_assertVerifyLogEntry(_DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE, expectedLogEntry);
 	}
 
 	@Test
@@ -173,7 +173,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 		Files.createDirectories(validDirectoryPath);
 
-		_assertVerifyValidDirectory(_ADVANCED_FILE_SYSTEM_STORE);
+		_assertVerifyValidDirectory(_DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE);
 	}
 
 	@Test
@@ -197,7 +197,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 				companyIdPath + " is not a directory";
 
 			_assertVerifyExceptionMessage(
-				_FILE_SYSTEM_STORE, expectedExceptionMessage);
+				_DL_STORE_IMPL_FILE_SYSTEM_STORE, expectedExceptionMessage);
 		}
 		finally {
 			Files.delete(companyIdPath);
@@ -221,7 +221,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		Files.createDirectories(invalidFilePath.getParent());
 		Files.createFile(invalidFilePath);
 
-		_assertVerifyLogEntry(_FILE_SYSTEM_STORE, expectedLogEntry);
+		_assertVerifyLogEntry(_DL_STORE_IMPL_FILE_SYSTEM_STORE, expectedLogEntry);
 	}
 
 	@Test
@@ -239,7 +239,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		Files.createDirectories(invalidFilePath.getParent());
 		Files.createFile(invalidFilePath);
 
-		_assertVerifyLogEntry(_FILE_SYSTEM_STORE, expectedLogEntry);
+		_assertVerifyLogEntry(_DL_STORE_IMPL_FILE_SYSTEM_STORE, expectedLogEntry);
 	}
 
 	@Test
@@ -257,7 +257,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 		Files.createDirectories(fileNameDirectoryWithExtensionPath);
 
-		_assertVerifyLogEntry(_FILE_SYSTEM_STORE, expectedLogEntry);
+		_assertVerifyLogEntry(_DL_STORE_IMPL_FILE_SYSTEM_STORE, expectedLogEntry);
 	}
 
 	@Test
@@ -278,7 +278,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		Files.createDirectories(invalidVersionLabelPath.getParent());
 		Files.createFile(invalidVersionLabelPath);
 
-		_assertVerifyLogEntry(_FILE_SYSTEM_STORE, expectedLogEntry);
+		_assertVerifyLogEntry(_DL_STORE_IMPL_FILE_SYSTEM_STORE, expectedLogEntry);
 	}
 
 	@Test
@@ -293,7 +293,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			" for companies: [", _companyId, "]");
 
 		_assertVerifyExceptionMessage(
-			_FILE_SYSTEM_STORE, expectedExceptionMessage);
+			_DL_STORE_IMPL_FILE_SYSTEM_STORE, expectedExceptionMessage);
 	}
 
 	@Test
@@ -304,7 +304,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 		Files.createDirectories(validDirectoryPath);
 
-		_assertVerifyValidDirectory(_FILE_SYSTEM_STORE);
+		_assertVerifyValidDirectory(_DL_STORE_IMPL_FILE_SYSTEM_STORE);
 	}
 
 	@Override
@@ -338,7 +338,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		catch (Exception exception) {
 			if (expectedExceptionMessage == null) {
 				boolean advancedFileSystemStore = StringUtil.equals(
-					dlStoreImpl, _ADVANCED_FILE_SYSTEM_STORE);
+					dlStoreImpl, _DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE);
 
 				Path rootDirPath;
 
@@ -407,10 +407,10 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			).getMessage());
 	}
 
-	private static final String _ADVANCED_FILE_SYSTEM_STORE =
+	private static final String _DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.AdvancedFileSystemStore";
 
-	private static final String _FILE_SYSTEM_STORE =
+	private static final String _DL_STORE_IMPL_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.FileSystemStore";
 
 	private static Configuration _advancedFileSystemStoreConfiguration;

@@ -67,15 +67,14 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	public static void setUpClass() throws Exception {
 		_companyId = TestPropsValues.getCompanyId();
 
-		_advancedFileSystemStoreRootDir =
-			PropsUtil.get(PropsKeys.LIFERAY_HOME) +
-				"/test/store/advanced_file_system";
-
 		_advancedFileSystemStoreConfiguration =
 			_configurationAdmin.getConfiguration(
 				"com.liferay.portal.store.file.system.configuration." +
 					"AdvancedFileSystemStoreConfiguration",
 				StringPool.QUESTION);
+		_advancedFileSystemStoreRootDir =
+			PropsUtil.get(PropsKeys.LIFERAY_HOME) +
+				"/test/store/advanced_file_system";
 
 		ConfigurationTestUtil.saveConfiguration(
 			_advancedFileSystemStoreConfiguration,
@@ -83,13 +82,12 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 				"rootDir", _advancedFileSystemStoreRootDir
 			).build());
 
-		_fileSystemStoreRootDir =
-			PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/test/store/file_system";
-
 		_fileSystemStoreConfiguration = _configurationAdmin.getConfiguration(
 			"com.liferay.portal.store.file.system.configuration." +
 				"FileSystemStoreConfiguration",
 			StringPool.QUESTION);
+		_fileSystemStoreRootDir =
+			PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/test/store/file_system";
 
 		ConfigurationTestUtil.saveConfiguration(
 			_fileSystemStoreConfiguration,

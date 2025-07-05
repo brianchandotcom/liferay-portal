@@ -608,6 +608,32 @@ public class CommerceChannelDisplayContext
 		return commerceOrderCheckoutConfiguration.showSeparateOrderItems();
 	}
 
+	public boolean isSlowConnectionOrderFlowEnabled() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceOrderConfiguration commerceOrderConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderConfiguration.slowConnectionOrderFlowEnabled();
+	}
+
+	public boolean undoCartItemDeletionDisabled() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceOrderConfiguration commerceOrderConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderConfiguration.undoCartItemDeletionDisabled();
+	}
+
 	private CommerceAccountGroupServiceConfiguration
 			_getCommerceAccountGroupServiceConfiguration()
 		throws PortalException {

@@ -684,15 +684,13 @@ public class LayoutUtil {
 			Layout layout, Settings settings, ServiceContext serviceContext)
 		throws Exception {
 
-		if (settings.getFavIcon() instanceof ClientExtension) {
-			ClientExtension favIconClientExtension =
-				(ClientExtension)settings.getFavIcon();
+		ClientExtension favIconClientExtension =
+			settings.getFavIcon() instanceof ClientExtension ?
+				(ClientExtension)settings.getFavIcon() : null;
 
-			_addClientExtensionEntryRel(
-				favIconClientExtension.getExternalReferenceCode(), layout,
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-				serviceContext);
-		}
+		_addClientExtensionEntryRel(
+			favIconClientExtension.getExternalReferenceCode(), layout,
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, serviceContext);
 
 		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
 			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),

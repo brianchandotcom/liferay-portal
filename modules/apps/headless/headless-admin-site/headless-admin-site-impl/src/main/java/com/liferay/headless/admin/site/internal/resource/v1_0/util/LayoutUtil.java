@@ -562,11 +562,11 @@ public class LayoutUtil {
 	}
 
 	private static void _addClientExtensionEntryRel(
-			String cetExternalReferenceCode, Layout layout, String type,
+			ClientExtension clientExtension, Layout layout, String type,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (Validator.isNull(cetExternalReferenceCode)) {
+		if (Validator.isNull(clientExtension.getExternalReferenceCode())) {
 			ClientExtensionEntryRelLocalServiceUtil.
 				deleteClientExtensionEntryRels(
 					PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
@@ -581,7 +581,8 @@ public class LayoutUtil {
 		ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
 			serviceContext.getUserId(), layout.getGroupId(),
 			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-			cetExternalReferenceCode, type, StringPool.BLANK, serviceContext);
+			clientExtension.getExternalReferenceCode(), type, StringPool.BLANK,
+			serviceContext);
 	}
 
 	private static void _addClientExtensionEntryRels(
@@ -751,13 +752,19 @@ public class LayoutUtil {
 			Layout layout, Settings settings, ServiceContext serviceContext)
 		throws Exception {
 
-		ClientExtension favIconClientExtension =
+		_addClientExtensionEntryRel(
 			settings.getFavIcon() instanceof ClientExtension ?
-				(ClientExtension)settings.getFavIcon() : null;
+				(ClientExtension)settings.getFavIcon() : null,
+			layout, ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
+			serviceContext);
 
 		_addClientExtensionEntryRel(
-			favIconClientExtension.getExternalReferenceCode(), layout,
-			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, serviceContext);
+			settings.getThemeCSSClientExtension(), layout,
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, serviceContext);
+
+		_addClientExtensionEntryRel(
+			settings.getThemeSpritemapClientExtension(), layout,
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, serviceContext);
 
 		_addClientExtensionEntryRels(
 			settings.getGlobalCSSClientExtensions(), layout,
@@ -766,20 +773,6 @@ public class LayoutUtil {
 		_addClientExtensionEntryRels(
 			settings.getGlobalJSClientExtensions(), layout,
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, serviceContext);
-
-		ClientExtension themeCSSClientExtension =
-			settings.getThemeCSSClientExtension();
-
-		_addClientExtensionEntryRel(
-			themeCSSClientExtension.getExternalReferenceCode(), layout,
-			ClientExtensionEntryConstants.TYPE_THEME_CSS, serviceContext);
-
-		ClientExtension themeSpritemapClientExtension =
-			settings.getThemeSpritemapClientExtension();
-
-		_addClientExtensionEntryRel(
-			themeSpritemapClientExtension.getExternalReferenceCode(), layout,
-			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, serviceContext);
 	}
 
 	private static Layout _updateLayout(

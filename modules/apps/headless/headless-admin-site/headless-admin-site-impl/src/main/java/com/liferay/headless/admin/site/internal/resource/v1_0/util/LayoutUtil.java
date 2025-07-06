@@ -548,15 +548,6 @@ public class LayoutUtil {
 			return;
 		}
 
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			ClientExtensionEntryRelLocalServiceUtil.
-				fetchClientExtensionEntryRelByExternalReferenceCode(
-					cetExternalReferenceCode, layout.getCompanyId());
-
-		if (clientExtensionEntryRel != null) {
-			return;
-		}
-
 		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
 			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
 

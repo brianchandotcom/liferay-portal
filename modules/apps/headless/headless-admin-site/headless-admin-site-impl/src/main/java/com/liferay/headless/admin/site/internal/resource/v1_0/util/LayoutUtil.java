@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -709,6 +710,20 @@ public class LayoutUtil {
 	private static void _updateClientExtensions(
 			Layout layout, Settings settings, ServiceContext serviceContext)
 		throws Exception {
+
+		if (layout.isTypeUtility()) {
+			if ((settings.getFavIcon() instanceof ClientExtension) ||
+				ArrayUtil.isNotEmpty(settings.getGlobalCSSClientExtensions()) ||
+				ArrayUtil.isNotEmpty(settings.getGlobalJSClientExtensions()) ||
+				Validator.isNotNull(settings.getThemeCSSClientExtension()) ||
+				Validator.isNotNull(
+					settings.getThemeSpritemapClientExtension())) {
+
+				throw new UnsupportedOperationException();
+			}
+
+			return;
+		}
 
 		_updateClientExtensionEntryRel(
 			settings.getFavIcon() instanceof ClientExtension ?

@@ -493,9 +493,6 @@ public class LayoutUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		_updateClientExtensions(
-			layout, contentPageSpecification.getSettings(), serviceContext);
-
 		updateLayout(
 			layout, nameMap, titleMap, descriptionMap, robotsMap,
 			friendlyURLMap, contentPageSpecification, serviceContext);
@@ -521,6 +518,8 @@ public class LayoutUtil {
 		if (pageSpecification != null) {
 			settings = pageSpecification.getSettings();
 		}
+
+		_updateClientExtensions(layout, settings, serviceContext);
 
 		layout = _updateLookAndFeel(layout, settings);
 

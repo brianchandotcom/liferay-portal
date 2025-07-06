@@ -492,7 +492,7 @@ public class LayoutUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		_updateClientExtensionEntryRels(
+		_updateClientExtensions(
 			layout, contentPageSpecification.getSettings(), serviceContext);
 
 		updateLayout(
@@ -559,65 +559,6 @@ public class LayoutUtil {
 		return LayoutServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			typeSettingsUnicodeProperties.toString());
-	}
-
-	private static void _addClientExtensionEntryRel(
-			ClientExtension clientExtension, Layout layout, String type,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		if (Validator.isNull(clientExtension.getExternalReferenceCode())) {
-			ClientExtensionEntryRelLocalServiceUtil.
-				deleteClientExtensionEntryRels(
-					PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-					type);
-
-			return;
-		}
-
-		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
-
-		ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
-			serviceContext.getUserId(), layout.getGroupId(),
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-			clientExtension.getExternalReferenceCode(), type, StringPool.BLANK,
-			serviceContext);
-	}
-
-	private static void _addClientExtensionEntryRels(
-			ClientExtension[] clientExtensions, Layout layout, String type,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
-
-		for (ClientExtension clientExtension : clientExtensions) {
-			String externalReferenceCode =
-				clientExtension.getExternalReferenceCode();
-			String typeSettings = StringPool.BLANK;
-
-			if (type.equals(ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
-				String[] parts = StringUtil.split(
-					externalReferenceCode, StringPool.UNDERLINE);
-
-				externalReferenceCode = parts[0];
-				typeSettings = UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"loadType", parts[1]
-				).put(
-					"scriptLocation", parts[2]
-				).build(
-				).toString();
-			}
-
-			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
-				serviceContext.getUserId(), layout.getGroupId(),
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-				externalReferenceCode, type, typeSettings, serviceContext);
-		}
 	}
 
 	private static long _getFaviconFileEntryId(
@@ -748,29 +689,88 @@ public class LayoutUtil {
 		}
 	}
 
+	private static void _updateClientExtensionEntryRel(
+			ClientExtension clientExtension, Layout layout, String type,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (Validator.isNull(clientExtension.getExternalReferenceCode())) {
+			ClientExtensionEntryRelLocalServiceUtil.
+				deleteClientExtensionEntryRels(
+					PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+					type);
+
+			return;
+		}
+
+		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
+
+		ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
+			serviceContext.getUserId(), layout.getGroupId(),
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+			clientExtension.getExternalReferenceCode(), type, StringPool.BLANK,
+			serviceContext);
+	}
+
 	private static void _updateClientExtensionEntryRels(
+			ClientExtension[] clientExtensions, Layout layout, String type,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
+
+		for (ClientExtension clientExtension : clientExtensions) {
+			String externalReferenceCode =
+				clientExtension.getExternalReferenceCode();
+			String typeSettings = StringPool.BLANK;
+
+			if (type.equals(ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+				String[] parts = StringUtil.split(
+					externalReferenceCode, StringPool.UNDERLINE);
+
+				externalReferenceCode = parts[0];
+				typeSettings = UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"loadType", parts[1]
+				).put(
+					"scriptLocation", parts[2]
+				).build(
+				).toString();
+			}
+
+			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
+				serviceContext.getUserId(), layout.getGroupId(),
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+				externalReferenceCode, type, typeSettings, serviceContext);
+		}
+	}
+
+	private static void _updateClientExtensions(
 			Layout layout, Settings settings, ServiceContext serviceContext)
 		throws Exception {
 
-		_addClientExtensionEntryRel(
+		_updateClientExtensionEntryRel(
 			settings.getFavIcon() instanceof ClientExtension ?
 				(ClientExtension)settings.getFavIcon() : null,
 			layout, ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
 			serviceContext);
 
-		_addClientExtensionEntryRel(
+		_updateClientExtensionEntryRel(
 			settings.getThemeCSSClientExtension(), layout,
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, serviceContext);
 
-		_addClientExtensionEntryRel(
+		_updateClientExtensionEntryRel(
 			settings.getThemeSpritemapClientExtension(), layout,
 			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, serviceContext);
 
-		_addClientExtensionEntryRels(
+		_updateClientExtensionEntryRels(
 			settings.getGlobalCSSClientExtensions(), layout,
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, serviceContext);
 
-		_addClientExtensionEntryRels(
+		_updateClientExtensionEntryRels(
 			settings.getGlobalJSClientExtensions(), layout,
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, serviceContext);
 	}

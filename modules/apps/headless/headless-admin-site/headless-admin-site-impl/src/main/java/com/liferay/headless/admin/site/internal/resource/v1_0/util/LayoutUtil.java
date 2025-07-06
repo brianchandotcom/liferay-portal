@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
@@ -557,6 +556,41 @@ public class LayoutUtil {
 			cetExternalReferenceCode, type, StringPool.BLANK, serviceContext);
 	}
 
+	private static void _addClientExtensionEntryRels(
+			ClientExtension[] clientExtensions, Layout layout, String type,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
+
+		for (ClientExtension clientExtension : clientExtensions) {
+			String externalReferenceCode =
+				clientExtension.getExternalReferenceCode();
+			String typeSettings = StringPool.BLANK;
+
+			if (type.equals(ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+				String[] parts = StringUtil.split(
+					externalReferenceCode, StringPool.UNDERLINE);
+
+				externalReferenceCode = parts[0];
+				typeSettings = UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"loadType", parts[1]
+				).put(
+					"scriptLocation", parts[2]
+				).build(
+				).toString();
+			}
+
+			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
+				serviceContext.getUserId(), layout.getGroupId(),
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+				externalReferenceCode, type, typeSettings, serviceContext);
+		}
+	}
+
 	private static long _getFaviconFileEntryId(
 			Settings settings, ServiceContext serviceContext)
 		throws Exception {
@@ -683,47 +717,13 @@ public class LayoutUtil {
 			favIconClientExtension.getExternalReferenceCode(), layout,
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, serviceContext);
 
-		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+		_addClientExtensionEntryRels(
+			settings.getGlobalCSSClientExtensions(), layout,
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, serviceContext);
 
-		for (ClientExtension globalCSSClientExtension :
-				settings.getGlobalCSSClientExtensions()) {
-
-			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
-				serviceContext.getUserId(), layout.getGroupId(),
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-				globalCSSClientExtension.getExternalReferenceCode(),
-				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK,
-				serviceContext);
-		}
-
-		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
-
-		for (ClientExtension globalJSClientExtension :
-				settings.getGlobalJSClientExtensions()) {
-
-			String[] typeSettings = StringUtil.split(
-				globalJSClientExtension.getExternalReferenceCode(),
-				StringPool.UNDERLINE);
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"loadType", typeSettings[1]
-				).put(
-					"scriptLocation", typeSettings[2]
-				).build();
-
-			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
-				serviceContext.getUserId(), layout.getGroupId(),
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-				typeSettings[0], ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-				typeSettingsUnicodeProperties.toString(), serviceContext);
-		}
+		_addClientExtensionEntryRels(
+			settings.getGlobalJSClientExtensions(), layout,
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, serviceContext);
 
 		ClientExtension themeCSSClientExtension =
 			settings.getThemeCSSClientExtension();

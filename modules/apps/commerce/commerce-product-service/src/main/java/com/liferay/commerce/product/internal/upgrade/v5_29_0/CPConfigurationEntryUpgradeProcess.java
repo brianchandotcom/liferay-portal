@@ -29,7 +29,8 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update CPConfigurationEntry set allowedOrderQuantities " +
-						"= ? where CPConfigurationEntryId = ?");
+						"= ? where ctCollectionId = ? and " +
+							"CPConfigurationEntryId = ?");
 			Statement statement = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			ResultSet resultSet = statement.executeQuery(
@@ -67,10 +68,10 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 					preparedStatement.setString(
 						1, allowedOrderQuantities.trim());
 
-					long cpConfigurationEntryId = resultSet.getLong(
-						"CPConfigurationEntryId");
-
-					preparedStatement.setLong(2, cpConfigurationEntryId);
+					preparedStatement.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					preparedStatement.setLong(
+						2, resultSet.getLong("CPConfigurationEntryId"));
 
 					preparedStatement.execute();
 				}

@@ -24,6 +24,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Raymond Augé
+ * @author Thiago Buarque
  */
 public class ConfigurationModelRetrieverImplTest {
 
@@ -202,35 +203,43 @@ public class ConfigurationModelRetrieverImplTest {
 			).put(
 				"groupId", "any"
 			).build());
-		_test(
-			false, pidFilterString,
-			HashMapBuilder.put(
-				key, pid + ".scoped"
-			).build());
 
-		key = ConfigurationAdmin.SERVICE_FACTORYPID;
-
-		pid = "foo~1234";
+		String factoryInstancePID = "foo~1234";
 
 		pidFilterString = _configurationModelRetrieverImpl.getPidFilterString(
-			pid, ExtendedObjectClassDefinition.Scope.SYSTEM);
+			factoryInstancePID, ExtendedObjectClassDefinition.Scope.SYSTEM);
 
 		_test(
 			true, pidFilterString,
 			HashMapBuilder.put(
-				key, pid
+				ConfigurationAdmin.SERVICE_FACTORYPID, pid
+			).put(
+				key, factoryInstancePID
+			).build());
+		_test(
+			true, pidFilterString,
+			HashMapBuilder.put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, pid
+			).put(
+				key, factoryInstancePID
+			).put(
+				"companyId", "0"
 			).build());
 		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
-				key, pid
+				ConfigurationAdmin.SERVICE_FACTORYPID, pid
+			).put(
+				key, factoryInstancePID
 			).put(
 				"companyId", "any"
 			).build());
 		_test(
 			false, pidFilterString,
 			HashMapBuilder.put(
-				key, pid
+				ConfigurationAdmin.SERVICE_FACTORYPID, pid
+			).put(
+				key, factoryInstancePID
 			).put(
 				"groupId", "any"
 			).build());

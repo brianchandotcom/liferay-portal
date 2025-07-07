@@ -5,11 +5,17 @@
 
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import {
+	ILearnResourceContext,
+	LearnMessage,
+	LearnResourcesContext,
+} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {PropsWithChildren} from 'react';
 
 export interface NewSpaceFormSectionProps {
 	description: string;
+	learnResources: ILearnResourceContext;
 	onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
 	step: 1 | 2;
 	title: string;
@@ -19,6 +25,7 @@ export interface NewSpaceFormSectionProps {
 export function NewSpaceFormSection({
 	children,
 	description,
+	learnResources,
 	onSubmit,
 	step,
 	title,
@@ -34,6 +41,13 @@ export function NewSpaceFormSection({
 				<h1 className="font-semibold mb-4 text-7">{title}</h1>
 
 				<p className="text-5 text-secondary">{description}</p>
+
+				<LearnResourcesContext.Provider value={learnResources}>
+					<LearnMessage
+						resource="site-cms-site-initializer"
+						resourceKey="new-space"
+					/>
+				</LearnResourcesContext.Provider>
 			</ClayLayout.Container>
 
 			{children}

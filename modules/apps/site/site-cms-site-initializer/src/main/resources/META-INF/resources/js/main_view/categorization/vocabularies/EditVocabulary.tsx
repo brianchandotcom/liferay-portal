@@ -18,7 +18,7 @@ import {IVocabulary} from '../../../common/types/IVocabulary';
 import {
 	displayNameInUseErrorToast,
 	displaySystemErrorToast,
-} from '../../../common/utils/ToastUtil';
+} from '../../../common/utils/toastUtil';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import ConfirmChangesModal from './ConfirmChangesModal';
 import EditAssociatedAssetTypes from './EditAssociatedAssetTypes';

@@ -15,7 +15,7 @@ import {
 	displayEditSuccessToast,
 	displayNameInUseErrorToast,
 	displaySystemErrorToast,
-} from '../../../common/utils/ToastUtil';
+} from '../../../common/utils/toastUtil';
 import CategorizationContentContainer from '../components/CategorizationContentContainer';
 import CategorizationManagementToolbar from '../components/CategorizationManagementToolbar';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';

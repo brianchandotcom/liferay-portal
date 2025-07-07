@@ -6,7 +6,7 @@
 import {openModal} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 
-import {displayErrorToast, displayRequestSuccessToast} from './ToastUtil';
+import {displayErrorToast, displayRequestSuccessToast} from './toastUtil';
 
 const openGenericFDSDeleteConfirmationModal = (
 	bodyHTML: string,

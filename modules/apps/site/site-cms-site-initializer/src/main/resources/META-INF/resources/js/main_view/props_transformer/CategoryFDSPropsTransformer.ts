@@ -5,7 +5,7 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-import {openGenericFDSDeleteConfirmationModal} from '../../common/utils/GenericOpenModalUtil';
+import {openGenericFDSDeleteConfirmationModal} from '../../common/utils/genericOpenModalUtil';
 import MoveCategoryModalContent from '../categorization/categories/components/MoveCategoryModalContent';
 
 export default function CategoryFDSPropsTransformer({

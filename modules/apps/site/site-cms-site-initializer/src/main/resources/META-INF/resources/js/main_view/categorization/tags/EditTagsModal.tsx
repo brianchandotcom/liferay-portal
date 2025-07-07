@@ -16,7 +16,7 @@ import ApiHelper from '../../../common/services/ApiHelper';
 import {
 	displayErrorToast,
 	displayNameInUseErrorToast,
-} from '../../../common/utils/ToastUtil';
+} from '../../../common/utils/toastUtil';
 import CategorizationSpaces from '../components/CategorizationSpaces';
 
 export default function EditTagsModalContent({

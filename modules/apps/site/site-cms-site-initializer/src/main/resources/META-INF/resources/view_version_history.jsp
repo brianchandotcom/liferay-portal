@@ -14,8 +14,8 @@ ViewVersionHistoryDisplayContext viewVersionHistoryDisplayContext = (ViewVersion
 <div>
 	<div>
 		<react:component
-			module="{BackButtonManagementBar} from site-cms-site-initializer"
-			props="<%= viewVersionHistoryDisplayContext.getBackButtonReactData() %>"
+			module="{Toolbar} from site-cms-site-initializer"
+			props="<%= viewVersionHistoryDisplayContext.getToolbarReactData() %>"
 		/>
 	</div>
 

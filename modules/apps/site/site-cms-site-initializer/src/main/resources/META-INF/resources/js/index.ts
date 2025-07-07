@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export {default as BackButtonManagementBar} from './common/components/BackButtonManagementBar';
 export {default as Breadcrumb} from './common/components/Breadcrumb';
 export {default as SpaceSticker} from './common/components/SpaceSticker';
+export {default as Toolbar} from './common/components/Toolbar';
 
 // Content Editor
 

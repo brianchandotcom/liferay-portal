@@ -2026,9 +2026,8 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if ((status == WorkflowConstants.STATUS_EXPIRED) ||
-			(originalObjectEntry.isDraft() &&
-			 ((displayDate == null) || displayDate.before(date))) ||
-			originalObjectEntry.isPending()) {
+			originalObjectEntry.isDraft() || originalObjectEntry.isPending() ||
+			originalObjectEntry.isScheduled()) {
 
 			List<ObjectEntryVersion> objectEntryVersions =
 				_objectEntryVersionLocalService.getObjectEntryVersions(

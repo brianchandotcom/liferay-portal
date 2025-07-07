@@ -21,7 +21,7 @@ export default function SpaceMembersModalContent({
 				{Liferay.Language.get('all-members')}
 			</ClayModal.Header>
 
-			<ClayModal.Body className="c-p-0">
+			<ClayModal.Body>
 				<SpaceMembersWithList
 					assetLibraryCreatorUserId={assetLibraryCreatorUserId}
 					assetLibraryId={assetLibraryId}

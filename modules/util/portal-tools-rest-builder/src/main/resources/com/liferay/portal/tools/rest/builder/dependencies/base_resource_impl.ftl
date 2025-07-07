@@ -112,15 +112,15 @@ public abstract class Base${schemaName}ResourceImpl
 		javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 		generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures, schemaName)
 		generateCRUD = freeMarkerTool.generateCRUD(configYAML, javaMethodSignatures, schemaName)
+		isEntityModelResourceCompatible = (freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.kernel.search.filter.Filter") || freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.kernel.search.Sort[]")) && freeMarkerTool.isVersionCompatible(configYAML, 10)
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
-		hasFilterOrSortEndpoints = freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.kernel.search.filter.Filter") || freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.kernel.search.Sort[]")
 	/>
 
 	<#if generateBatch>
 		, VulcanBatchEngineTaskItemDelegate<${javaDataType}>
 	</#if>
 
-	<#if hasFilterOrSortEndpoints || generateBatch>
+	<#if generateBatch || isEntityModelResourceCompatible>
 		, EntityModelResource
 	</#if>
 
@@ -1326,7 +1326,7 @@ public abstract class Base${schemaName}ResourceImpl
 		</#list>
 	</#if>
 
-	<#if hasFilterOrSortEndpoints || generateBatch>
+	<#if generateBatch || isEntityModelResourceCompatible>
 		@Override
 		public EntityModel getEntityModel(MultivaluedMap multivaluedMap) throws Exception {
 			return null;

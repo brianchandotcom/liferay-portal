@@ -1615,15 +1615,11 @@ public class DefaultObjectEntryManagerImpl
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
-			dtoConverterContext.getActions();
+		Map<String, Map<String, String>> actions = GetterUtil.getObject(
+			dtoConverterContext.getActions(), Collections::emptyMap);
 
 		if (GetterUtil.getBoolean(
 				dtoConverterContext.getAttribute("addActions"), true)) {
-
-			if (actions == null) {
-				actions = Collections.emptyMap();
-			}
 
 			HashMap<String, String> templateParameterMap = HashMapBuilder.put(
 				"version", String.valueOf(objectEntryVersion.getVersion())
@@ -2209,15 +2205,11 @@ public class DefaultObjectEntryManagerImpl
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
-			dtoConverterContext.getActions();
+		Map<String, Map<String, String>> actions = GetterUtil.getObject(
+			dtoConverterContext.getActions(), Collections::emptyMap);
 
 		if (GetterUtil.getBoolean(
 				dtoConverterContext.getAttribute("addActions"), true)) {
-
-			if (actions == null) {
-				actions = Collections.emptyMap();
-			}
 
 			actions = HashMapBuilder.create(
 				actions

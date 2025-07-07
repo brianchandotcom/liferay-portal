@@ -147,7 +147,7 @@ JSCompatibilityCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-
 JSJakartaTransformCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .js or .jsx | Performs replacements for use of Jakarta. |
 [JSLodashDependencyCheck](check/js_lodash_dependency_check.md#jslodashdependencycheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .js or .jsx | Finds incorrect use of `AUI._`. |
 JSONBatchEngineDataFileCheck | [Styling](styling_checks.md#styling-checks) | .ipynb, .json, or .npmbridgerc | Remove elements in `*.batch-engine-data.json` files. |
-JSONCatalogFileCheck | [Styling](styling_checks.md#styling-checks) | .ipynb, .json, or .npmbridgerc | Sorts `*.options.json`, `*.products.json`, and `*.products.specifications.json` files. |
+JSONCommerceCatalogFileCheck | [Styling](styling_checks.md#styling-checks) | .ipynb, .json, or .npmbridgerc | Sorts `*.options.json`, `*.products.json`, and `*.products.specifications.json` files. |
 [JSONDeprecatedPackagesCheck](check/json_deprecated_packages_check.md#jsondeprecatedpackagescheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .ipynb, .json, or .npmbridgerc | Finds incorrect use of deprecated packages in `package.json` files. |
 JSONNamingCheck | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks if variable names follow naming conventions. |
 JSONPackageJSONBNDVersionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .ipynb, .json, or .npmbridgerc | Checks the version for dependencies in `package.json` files. |

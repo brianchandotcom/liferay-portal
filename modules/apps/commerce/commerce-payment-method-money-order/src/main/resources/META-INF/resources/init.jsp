@@ -13,8 +13,7 @@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/editor" prefix="liferay-editor" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.commerce.constants.CommerceCheckoutWebKeys" %><%@
 page import="com.liferay.commerce.payment.method.money.order.internal.configuration.MoneyOrderGroupServiceConfiguration" %><%@

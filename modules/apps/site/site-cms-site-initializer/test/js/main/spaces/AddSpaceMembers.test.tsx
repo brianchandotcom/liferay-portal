@@ -14,6 +14,17 @@ import {
 	AddSpaceMembersProps,
 } from '../../../../src/main/resources/META-INF/resources/js/main/spaces/AddSpaceMembers';
 
+const mockLearnResources = {
+	'site-cms-site-initializer': {
+		'new-space': {
+			en_US: {
+				message: 'Test Message',
+				url: 'https://learn.liferay.com/test-url',
+			},
+		},
+	},
+};
+
 describe('AddSpaceMembers', () => {
 	const testSpace = {
 		id: '123',
@@ -39,6 +50,7 @@ describe('AddSpaceMembers', () => {
 		assetLibraryId: testSpace.id,
 		assetLibraryName: testSpace.name,
 		baseAssetLibraryURL: '/web/cms/e/space/28632',
+		learnResources: mockLearnResources,
 	};
 
 	const LiferayOriginal = global.Liferay;
@@ -89,7 +101,7 @@ describe('AddSpaceMembers', () => {
 		delete (global as any).IntersectionObserver;
 	});
 
-	it('renders with correct title, description, buttons', async () => {
+	it('renders with correct title, description, link, buttons', async () => {
 		await act(async () => render(<AddSpaceMembers {...props} />));
 
 		expect(
@@ -100,6 +112,9 @@ describe('AddSpaceMembers', () => {
 				'add-team-members-to-this-space-to-start-collaborating'
 			)
 		).toBeInTheDocument();
+		expect(
+			screen.getByRole('link', {name: /Test Message/})
+		).toHaveAttribute('href', 'https://learn.liferay.com/test-url');
 
 		expect(
 			screen.getByRole('button', {

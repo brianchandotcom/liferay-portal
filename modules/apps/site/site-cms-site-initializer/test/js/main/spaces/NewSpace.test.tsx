@@ -13,9 +13,21 @@ import NewSpace, {
 	NewSpaceProps,
 } from '../../../../src/main/resources/META-INF/resources/js/main/spaces/NewSpace';
 
+const mockLearnResources = {
+	'site-cms-site-initializer': {
+		'new-space': {
+			en_US: {
+				message: 'Test Message',
+				url: 'https://learn.liferay.com/test-url',
+			},
+		},
+	},
+};
+
 describe('NewSpace', () => {
 	const props: NewSpaceProps = {
 		baseAddSpaceMembersURL: 'fake-add-member-url/',
+		learnResources: mockLearnResources,
 	};
 
 	let apiPostSpy: jest.SpyInstance;
@@ -30,7 +42,7 @@ describe('NewSpace', () => {
 		apiPostSpy.mockRestore();
 	});
 
-	it('renders with correct title, description, buttons', () => {
+	it('renders with correct title, description, link, buttons', () => {
 		render(<NewSpace {...props} />);
 
 		expect(
@@ -41,6 +53,9 @@ describe('NewSpace', () => {
 				'spaces-are-essential-for-organizing-defining-and-managing-your-content-and-files'
 			)
 		).toBeInTheDocument();
+		expect(
+			screen.getByRole('link', {name: /Test Message/})
+		).toHaveAttribute('href', 'https://learn.liferay.com/test-url');
 
 		expect(
 			screen.getByRole('button', {name: 'continue'})

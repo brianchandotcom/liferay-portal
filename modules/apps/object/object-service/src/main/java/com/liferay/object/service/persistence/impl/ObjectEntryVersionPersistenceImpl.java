@@ -2236,26 +2236,27 @@ public class ObjectEntryVersionPersistenceImpl
 	private static final String _FINDER_COLUMN_OBJECTENTRYID_OBJECTENTRYID_2 =
 		"objectEntryVersion.objectEntryId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_LtCD;
-	private FinderPath _finderPathWithPaginationCountByC_LtCD;
+	private FinderPath _finderPathWithPaginationFindByC_CD;
+	private FinderPath _finderPathWithoutPaginationFindByC_CD;
+	private FinderPath _finderPathCountByC_CD;
 
 	/**
-	 * Returns all the object entry versions where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns all the object entry versions where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 * @return the matching object entry versions
 	 */
 	@Override
-	public List<ObjectEntryVersion> findByC_LtCD(
+	public List<ObjectEntryVersion> findByC_CD(
 		long companyId, Date createDate) {
 
-		return findByC_LtCD(
+		return findByC_CD(
 			companyId, createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the object entry versions where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns a range of all the object entry versions where companyId = &#63; and createDate = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
@@ -2268,14 +2269,14 @@ public class ObjectEntryVersionPersistenceImpl
 	 * @return the range of matching object entry versions
 	 */
 	@Override
-	public List<ObjectEntryVersion> findByC_LtCD(
+	public List<ObjectEntryVersion> findByC_CD(
 		long companyId, Date createDate, int start, int end) {
 
-		return findByC_LtCD(companyId, createDate, start, end, null);
+		return findByC_CD(companyId, createDate, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
@@ -2289,16 +2290,16 @@ public class ObjectEntryVersionPersistenceImpl
 	 * @return the ordered range of matching object entry versions
 	 */
 	@Override
-	public List<ObjectEntryVersion> findByC_LtCD(
+	public List<ObjectEntryVersion> findByC_CD(
 		long companyId, Date createDate, int start, int end,
 		OrderByComparator<ObjectEntryVersion> orderByComparator) {
 
-		return findByC_LtCD(
+		return findByC_CD(
 			companyId, createDate, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
@@ -2313,7 +2314,7 @@ public class ObjectEntryVersionPersistenceImpl
 	 * @return the ordered range of matching object entry versions
 	 */
 	@Override
-	public List<ObjectEntryVersion> findByC_LtCD(
+	public List<ObjectEntryVersion> findByC_CD(
 		long companyId, Date createDate, int start, int end,
 		OrderByComparator<ObjectEntryVersion> orderByComparator,
 		boolean useFinderCache) {
@@ -2321,10 +2322,20 @@ public class ObjectEntryVersionPersistenceImpl
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = _finderPathWithPaginationFindByC_LtCD;
-		finderArgs = new Object[] {
-			companyId, _getTime(createDate), start, end, orderByComparator
-		};
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_CD;
+				finderArgs = new Object[] {companyId, _getTime(createDate)};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_CD;
+			finderArgs = new Object[] {
+				companyId, _getTime(createDate), start, end, orderByComparator
+			};
+		}
 
 		List<ObjectEntryVersion> list = null;
 
@@ -2335,9 +2346,8 @@ public class ObjectEntryVersionPersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectEntryVersion objectEntryVersion : list) {
 					if ((companyId != objectEntryVersion.getCompanyId()) ||
-						(createDate.getTime() <=
-							objectEntryVersion.getCreateDate(
-							).getTime())) {
+						!Objects.equals(
+							createDate, objectEntryVersion.getCreateDate())) {
 
 						list = null;
 
@@ -2360,17 +2370,17 @@ public class ObjectEntryVersionPersistenceImpl
 
 			sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_LTCD_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_CD_COMPANYID_2);
 
 			boolean bindCreateDate = false;
 
 			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_C_LTCD_CREATEDATE_1);
+				sb.append(_FINDER_COLUMN_C_CD_CREATEDATE_1);
 			}
 			else {
 				bindCreateDate = true;
 
-				sb.append(_FINDER_COLUMN_C_LTCD_CREATEDATE_2);
+				sb.append(_FINDER_COLUMN_C_CD_CREATEDATE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -2419,7 +2429,7 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the first object entry version in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the first object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
@@ -2428,12 +2438,12 @@ public class ObjectEntryVersionPersistenceImpl
 	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
 	 */
 	@Override
-	public ObjectEntryVersion findByC_LtCD_First(
+	public ObjectEntryVersion findByC_CD_First(
 			long companyId, Date createDate,
 			OrderByComparator<ObjectEntryVersion> orderByComparator)
 		throws NoSuchObjectEntryVersionException {
 
-		ObjectEntryVersion objectEntryVersion = fetchByC_LtCD_First(
+		ObjectEntryVersion objectEntryVersion = fetchByC_CD_First(
 			companyId, createDate, orderByComparator);
 
 		if (objectEntryVersion != null) {
@@ -2447,7 +2457,7 @@ public class ObjectEntryVersionPersistenceImpl
 		sb.append("companyId=");
 		sb.append(companyId);
 
-		sb.append(", createDate<");
+		sb.append(", createDate=");
 		sb.append(createDate);
 
 		sb.append("}");
@@ -2456,7 +2466,7 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the first object entry version in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the first object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
@@ -2464,11 +2474,11 @@ public class ObjectEntryVersionPersistenceImpl
 	 * @return the first matching object entry version, or <code>null</code> if a matching object entry version could not be found
 	 */
 	@Override
-	public ObjectEntryVersion fetchByC_LtCD_First(
+	public ObjectEntryVersion fetchByC_CD_First(
 		long companyId, Date createDate,
 		OrderByComparator<ObjectEntryVersion> orderByComparator) {
 
-		List<ObjectEntryVersion> list = findByC_LtCD(
+		List<ObjectEntryVersion> list = findByC_CD(
 			companyId, createDate, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2479,7 +2489,7 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
@@ -2488,12 +2498,12 @@ public class ObjectEntryVersionPersistenceImpl
 	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
 	 */
 	@Override
-	public ObjectEntryVersion findByC_LtCD_Last(
+	public ObjectEntryVersion findByC_CD_Last(
 			long companyId, Date createDate,
 			OrderByComparator<ObjectEntryVersion> orderByComparator)
 		throws NoSuchObjectEntryVersionException {
 
-		ObjectEntryVersion objectEntryVersion = fetchByC_LtCD_Last(
+		ObjectEntryVersion objectEntryVersion = fetchByC_CD_Last(
 			companyId, createDate, orderByComparator);
 
 		if (objectEntryVersion != null) {
@@ -2507,7 +2517,7 @@ public class ObjectEntryVersionPersistenceImpl
 		sb.append("companyId=");
 		sb.append(companyId);
 
-		sb.append(", createDate<");
+		sb.append(", createDate=");
 		sb.append(createDate);
 
 		sb.append("}");
@@ -2516,7 +2526,7 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
@@ -2524,17 +2534,17 @@ public class ObjectEntryVersionPersistenceImpl
 	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
 	 */
 	@Override
-	public ObjectEntryVersion fetchByC_LtCD_Last(
+	public ObjectEntryVersion fetchByC_CD_Last(
 		long companyId, Date createDate,
 		OrderByComparator<ObjectEntryVersion> orderByComparator) {
 
-		int count = countByC_LtCD(companyId, createDate);
+		int count = countByC_CD(companyId, createDate);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ObjectEntryVersion> list = findByC_LtCD(
+		List<ObjectEntryVersion> list = findByC_CD(
 			companyId, createDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2545,7 +2555,7 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the object entry versions before and after the current object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param objectEntryVersionId the primary key of the current object entry version
 	 * @param companyId the company ID
@@ -2555,7 +2565,7 @@ public class ObjectEntryVersionPersistenceImpl
 	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
 	 */
 	@Override
-	public ObjectEntryVersion[] findByC_LtCD_PrevAndNext(
+	public ObjectEntryVersion[] findByC_CD_PrevAndNext(
 			long objectEntryVersionId, long companyId, Date createDate,
 			OrderByComparator<ObjectEntryVersion> orderByComparator)
 		throws NoSuchObjectEntryVersionException {
@@ -2570,13 +2580,13 @@ public class ObjectEntryVersionPersistenceImpl
 
 			ObjectEntryVersion[] array = new ObjectEntryVersionImpl[3];
 
-			array[0] = getByC_LtCD_PrevAndNext(
+			array[0] = getByC_CD_PrevAndNext(
 				session, objectEntryVersion, companyId, createDate,
 				orderByComparator, true);
 
 			array[1] = objectEntryVersion;
 
-			array[2] = getByC_LtCD_PrevAndNext(
+			array[2] = getByC_CD_PrevAndNext(
 				session, objectEntryVersion, companyId, createDate,
 				orderByComparator, false);
 
@@ -2590,7 +2600,7 @@ public class ObjectEntryVersionPersistenceImpl
 		}
 	}
 
-	protected ObjectEntryVersion getByC_LtCD_PrevAndNext(
+	protected ObjectEntryVersion getByC_CD_PrevAndNext(
 		Session session, ObjectEntryVersion objectEntryVersion, long companyId,
 		Date createDate,
 		OrderByComparator<ObjectEntryVersion> orderByComparator,
@@ -2609,17 +2619,17 @@ public class ObjectEntryVersionPersistenceImpl
 
 		sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_LTCD_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_CD_COMPANYID_2);
 
 		boolean bindCreateDate = false;
 
 		if (createDate == null) {
-			sb.append(_FINDER_COLUMN_C_LTCD_CREATEDATE_1);
+			sb.append(_FINDER_COLUMN_C_CD_CREATEDATE_1);
 		}
 		else {
 			bindCreateDate = true;
 
-			sb.append(_FINDER_COLUMN_C_LTCD_CREATEDATE_2);
+			sb.append(_FINDER_COLUMN_C_CD_CREATEDATE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -2717,15 +2727,15 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Removes all the object entry versions where companyId = &#63; and createDate &lt; &#63; from the database.
+	 * Removes all the object entry versions where companyId = &#63; and createDate = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 */
 	@Override
-	public void removeByC_LtCD(long companyId, Date createDate) {
+	public void removeByC_CD(long companyId, Date createDate) {
 		for (ObjectEntryVersion objectEntryVersion :
-				findByC_LtCD(
+				findByC_CD(
 					companyId, createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -2734,15 +2744,15 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of object entry versions where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the number of object entry versions where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 * @return the number of matching object entry versions
 	 */
 	@Override
-	public int countByC_LtCD(long companyId, Date createDate) {
-		FinderPath finderPath = _finderPathWithPaginationCountByC_LtCD;
+	public int countByC_CD(long companyId, Date createDate) {
+		FinderPath finderPath = _finderPathCountByC_CD;
 
 		Object[] finderArgs = new Object[] {companyId, _getTime(createDate)};
 
@@ -2753,17 +2763,17 @@ public class ObjectEntryVersionPersistenceImpl
 
 			sb.append(_SQL_COUNT_OBJECTENTRYVERSION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_LTCD_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_CD_COMPANYID_2);
 
 			boolean bindCreateDate = false;
 
 			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_C_LTCD_CREATEDATE_1);
+				sb.append(_FINDER_COLUMN_C_CD_CREATEDATE_1);
 			}
 			else {
 				bindCreateDate = true;
 
-				sb.append(_FINDER_COLUMN_C_LTCD_CREATEDATE_2);
+				sb.append(_FINDER_COLUMN_C_CD_CREATEDATE_2);
 			}
 
 			String sql = sb.toString();
@@ -2798,14 +2808,14 @@ public class ObjectEntryVersionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_LTCD_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_CD_COMPANYID_2 =
 		"objectEntryVersion.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_LTCD_CREATEDATE_1 =
+	private static final String _FINDER_COLUMN_C_CD_CREATEDATE_1 =
 		"objectEntryVersion.createDate IS NULL";
 
-	private static final String _FINDER_COLUMN_C_LTCD_CREATEDATE_2 =
-		"objectEntryVersion.createDate < ?";
+	private static final String _FINDER_COLUMN_C_CD_CREATEDATE_2 =
+		"objectEntryVersion.createDate = ?";
 
 	private FinderPath _finderPathFetchByOEI_V;
 
@@ -3663,8 +3673,8 @@ public class ObjectEntryVersionPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"objectEntryId"},
 			false);
 
-		_finderPathWithPaginationFindByC_LtCD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LtCD",
+		_finderPathWithPaginationFindByC_CD = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CD",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3672,8 +3682,13 @@ public class ObjectEntryVersionPersistenceImpl
 			},
 			new String[] {"companyId", "createDate"}, true);
 
-		_finderPathWithPaginationCountByC_LtCD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtCD",
+		_finderPathWithoutPaginationFindByC_CD = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CD",
+			new String[] {Long.class.getName(), Date.class.getName()},
+			new String[] {"companyId", "createDate"}, true);
+
+		_finderPathCountByC_CD = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CD",
 			new String[] {Long.class.getName(), Date.class.getName()},
 			new String[] {"companyId", "createDate"}, false);
 

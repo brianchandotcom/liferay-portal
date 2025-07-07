@@ -621,17 +621,17 @@ public interface ObjectEntryVersionPersistence
 	public int countByObjectEntryId(long objectEntryId);
 
 	/**
-	 * Returns all the object entry versions where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns all the object entry versions where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 * @return the matching object entry versions
 	 */
-	public java.util.List<ObjectEntryVersion> findByC_LtCD(
+	public java.util.List<ObjectEntryVersion> findByC_CD(
 		long companyId, Date createDate);
 
 	/**
-	 * Returns a range of all the object entry versions where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns a range of all the object entry versions where companyId = &#63; and createDate = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
@@ -643,11 +643,11 @@ public interface ObjectEntryVersionPersistence
 	 * @param end the upper bound of the range of object entry versions (not inclusive)
 	 * @return the range of matching object entry versions
 	 */
-	public java.util.List<ObjectEntryVersion> findByC_LtCD(
+	public java.util.List<ObjectEntryVersion> findByC_CD(
 		long companyId, Date createDate, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
@@ -660,13 +660,13 @@ public interface ObjectEntryVersionPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object entry versions
 	 */
-	public java.util.List<ObjectEntryVersion> findByC_LtCD(
+	public java.util.List<ObjectEntryVersion> findByC_CD(
 		long companyId, Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 			orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
@@ -680,14 +680,14 @@ public interface ObjectEntryVersionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching object entry versions
 	 */
-	public java.util.List<ObjectEntryVersion> findByC_LtCD(
+	public java.util.List<ObjectEntryVersion> findByC_CD(
 		long companyId, Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 			orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first object entry version in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the first object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
@@ -695,27 +695,27 @@ public interface ObjectEntryVersionPersistence
 	 * @return the first matching object entry version
 	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
 	 */
-	public ObjectEntryVersion findByC_LtCD_First(
+	public ObjectEntryVersion findByC_CD_First(
 			long companyId, Date createDate,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 				orderByComparator)
 		throws NoSuchObjectEntryVersionException;
 
 	/**
-	 * Returns the first object entry version in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the first object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object entry version, or <code>null</code> if a matching object entry version could not be found
 	 */
-	public ObjectEntryVersion fetchByC_LtCD_First(
+	public ObjectEntryVersion fetchByC_CD_First(
 		long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 			orderByComparator);
 
 	/**
-	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
@@ -723,27 +723,27 @@ public interface ObjectEntryVersionPersistence
 	 * @return the last matching object entry version
 	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
 	 */
-	public ObjectEntryVersion findByC_LtCD_Last(
+	public ObjectEntryVersion findByC_CD_Last(
 			long companyId, Date createDate,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 				orderByComparator)
 		throws NoSuchObjectEntryVersionException;
 
 	/**
-	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the last object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
 	 */
-	public ObjectEntryVersion fetchByC_LtCD_Last(
+	public ObjectEntryVersion fetchByC_CD_Last(
 		long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 			orderByComparator);
 
 	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the object entry versions before and after the current object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param objectEntryVersionId the primary key of the current object entry version
 	 * @param companyId the company ID
@@ -752,28 +752,28 @@ public interface ObjectEntryVersionPersistence
 	 * @return the previous, current, and next object entry version
 	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
 	 */
-	public ObjectEntryVersion[] findByC_LtCD_PrevAndNext(
+	public ObjectEntryVersion[] findByC_CD_PrevAndNext(
 			long objectEntryVersionId, long companyId, Date createDate,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 				orderByComparator)
 		throws NoSuchObjectEntryVersionException;
 
 	/**
-	 * Removes all the object entry versions where companyId = &#63; and createDate &lt; &#63; from the database.
+	 * Removes all the object entry versions where companyId = &#63; and createDate = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 */
-	public void removeByC_LtCD(long companyId, Date createDate);
+	public void removeByC_CD(long companyId, Date createDate);
 
 	/**
-	 * Returns the number of object entry versions where companyId = &#63; and createDate &lt; &#63;.
+	 * Returns the number of object entry versions where companyId = &#63; and createDate = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 * @return the number of matching object entry versions
 	 */
-	public int countByC_LtCD(long companyId, Date createDate);
+	public int countByC_CD(long companyId, Date createDate);
 
 	/**
 	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or throws a <code>NoSuchObjectEntryVersionException</code> if it could not be found.

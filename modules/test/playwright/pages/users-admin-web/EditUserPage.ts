@@ -10,6 +10,13 @@ import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 
 export class EditUserPage {
 	readonly accountsLink: Locator;
+	readonly additionalEmailAddressesTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly additionalEmailAddressesTable: Locator;
+	readonly addressesLink: Locator;
 	readonly appsLink: Locator;
 	readonly backLink: Locator;
 	readonly birthdayInput: Locator;
@@ -17,13 +24,17 @@ export class EditUserPage {
 	readonly changeImageButton: Locator;
 	readonly clearImageButton: Locator;
 	readonly confirmButton: Locator;
+	readonly contactInformationLink: Locator;
+	readonly contactLink: Locator;
 	readonly customField: (fieldName: string) => Promise<Locator>;
+	readonly displaySettingsLink: Locator;
 	readonly doneButton: Locator;
 	readonly emailAddressError: Locator;
 	readonly emailAddressInput: Locator;
 	readonly emailAddressInvalidError: Locator;
 	readonly firstNameInput: Locator;
 	readonly generateWebDAVPasswordButton: Locator;
+	readonly jabberInput: Locator;
 	readonly informationLink: Locator;
 	readonly lastNameInput: Locator;
 	readonly maxFileSizeText: Locator;
@@ -43,6 +54,7 @@ export class EditUserPage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly membershipsUserGroupsTable: Locator;
+	readonly middleNameInput: Locator;
 	readonly myOrganizationsSelectOrganizationButton: Locator;
 	readonly myOrganizationsSelectOrganizationsTable: Locator;
 	readonly myOrganizationsSelectOrganizationsTableRow: (
@@ -61,6 +73,14 @@ export class EditUserPage {
 	readonly passwordInput: Locator;
 	readonly passwordReenterInput: Locator;
 	readonly passwordLink: Locator;
+	readonly phoneNumbersTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly phoneNumbersTable: Locator;
+	readonly preferencesLink: Locator;
+	readonly prefixInput: Locator;
 	readonly profileAndDashboardLink: Locator;
 	readonly regularRoleCell: (name: string) => Locator;
 	readonly regularRoleCellButton: (name: string) => Locator;
@@ -120,19 +140,47 @@ export class EditUserPage {
 	readonly selectUserGroupsButton: Locator;
 	readonly selectUserLanguage: Locator;
 	readonly siteRolesTable: DataTablePage;
+	readonly skypeInput: Locator;
+	readonly suffixInput: Locator;
 	readonly tagCheckbox: (tagName: string) => Locator;
 	readonly tagInput: (name: string) => Locator;
 	readonly tagsFrame: FrameLocator;
+	readonly timeZoneInput: Locator;
 	readonly uploadImageSelectImageButton: Locator;
 	readonly uploadImageDoneButton: Locator;
 	readonly userIDInput: Locator;
 	readonly webDAVPasswordLabel: Locator;
+	readonly websitesTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly websitesTable: Locator;
 	readonly yourPasswordInput: Locator;
 
 	constructor(page: Page) {
 		this.accountsLink = page.getByRole('link', {
 			exact: true,
 			name: 'Accounts',
+		});
+		this.additionalEmailAddressesTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean
+		) => {
+			return await searchTableRowByValue(
+				this.additionalEmailAddressesTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
+		this.additionalEmailAddressesTable = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_emailAddressesSearchContainer'
+		);
+		this.addressesLink = page.getByRole('link', {
+			exact: true,
+			name: 'Addresses',
 		});
 		this.appsLink = page.getByRole('link', {
 			exact: true,
@@ -150,6 +198,14 @@ export class EditUserPage {
 		});
 		this.changeImageButton = page.getByLabel('Change Image');
 		this.clearImageButton = page.getByLabel('Clear Image');
+		this.contactLink = page.getByRole('link', {
+			exact: true,
+			name: 'Contact',
+		});
+		this.contactInformationLink = page.getByRole('link', {
+			exact: true,
+			name: 'Contact Information',
+		});
 		this.customField = async (fieldName: string) => {
 			await page.getByText('Custom Fields').waitFor({timeout: 15 * 1000});
 
@@ -161,6 +217,10 @@ export class EditUserPage {
 
 			throw new Error(`Cannot locate Custom Field ${fieldName}`);
 		};
+		this.displaySettingsLink = page.getByRole('link', {
+			exact: true,
+			name: 'Display Settings',
+		});
 		this.doneButton = page.getByRole('button', {name: 'Done'});
 		this.emailAddressError = page
 			.locator(
@@ -188,6 +248,7 @@ export class EditUserPage {
 			exact: true,
 			name: 'Information',
 		});
+		this.jabberInput = page.getByLabel('Jabber');
 		this.lastNameInput = page.getByLabel('Last Name');
 		this.maxFileSizeText = page
 			.frameLocator('iframe[title="Upload Image"]')
@@ -234,6 +295,7 @@ export class EditUserPage {
 			exact: true,
 			name: 'Memberships',
 		});
+		this.middleNameInput = page.getByLabel('Middle Name');
 		this.myOrganizationsSelectOrganizationButton = page.locator(
 			'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_selectOrganizationLink'
 		);
@@ -283,6 +345,26 @@ export class EditUserPage {
 			exact: true,
 			name: 'Password',
 		});
+		this.phoneNumbersTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean
+		) => {
+			return await searchTableRowByValue(
+				this.phoneNumbersTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
+		this.phoneNumbersTable = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_phonesSearchContainer'
+		);
+		this.preferencesLink = page.getByRole('link', {
+			exact: true,
+			name: 'Preferences',
+		});
+		this.prefixInput = page.getByLabel('Prefix');
 		this.profileAndDashboardLink = page.getByRole('link', {
 			exact: true,
 			name: 'Profile and Dashboard',
@@ -480,9 +562,12 @@ export class EditUserPage {
 				'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_siteRolesSearchContainer'
 			)
 		);
+		this.skypeInput = page.getByLabel('Skype');
+		this.suffixInput = page.getByLabel('Suffix');
 		this.tagCheckbox = (tagName) => this.tagsFrame.getByLabel(tagName);
 		this.tagInput = (name) => page.getByRole('row', {name});
 		this.tagsFrame = page.frameLocator(`iframe[title="Tags"]`);
+		this.timeZoneInput = page.getByLabel('Time Zone');
 		this.uploadImageSelectImageButton = page
 			.frameLocator('iframe[title="Upload Image"]')
 			.getByLabel('Select Image');
@@ -492,6 +577,21 @@ export class EditUserPage {
 		this.userIDInput = page.getByLabel('User ID');
 		this.webDAVPasswordLabel = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_webDAVPassword'
+		);
+		this.websitesTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean
+		) => {
+			return await searchTableRowByValue(
+				this.websitesTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
+		this.websitesTable = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_websitesSearchContainer'
 		);
 
 		this.confirmButton = this.passwordConfirmationFrame.getByRole(

@@ -23,6 +23,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-96845': {enabled: true},
 	}),
+
 	loginTest(),
 	applicationsMenuPageTest,
 	serverAdministrationPageTest,
@@ -493,5 +494,390 @@ test('LPD-37452 verify expando field is not visible for group added to SCIM', as
 	await expect(await page.getByLabel('Scimclientid')).not.toBeVisible();
 
 	await scimConfigurationPage.goTo();
+	await scimConfigurationPage.resetClientData();
+});
+
+test('LPD-56434 Verify SCIM user attributes are properly imported during provisioning', async ({
+	editUserPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	await scimConfigurationPage.goTo();
+
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
+
+	await scimConfigurationPage.generateToken();
+
+	const accessToken =
+		await scimConfigurationPage.accessTokenField.inputValue();
+
+	const randomNumber = getRandomInt();
+
+	const newUser = {
+		active: true,
+		addresses: [
+			{
+				country: 'GB',
+				formatted:
+					'Muffin Man\n' +
+					'1234 Drury Lane\n' +
+					'Great Britain, England 54321\n' +
+					'United Kingdom',
+				locality: 'Great Britain',
+				postalCode: '54321',
+				primary: false,
+				region: 'England',
+				streetAddress: 'Muffin Man\n' + '1234 Drury Lane',
+				type: 'personal',
+			},
+			{
+				country: 'US',
+				formatted:
+					'The President of the United States\n' +
+					'1600 Pennsylvania Ave NW\n' +
+					'Washington, District of Columbia 20500\n' +
+					'United States',
+				locality: 'Washington',
+				postalCode: '20500',
+				primary: true,
+				region: 'District of Columbia',
+				streetAddress:
+					'The President of the United States\n' +
+					'1600 Pennsylvania Ave NW',
+				type: 'business',
+			},
+		],
+		displayName: 'testDisplayName',
+		emails: [
+			{
+				primary: false,
+				type: 'default',
+				value: 'emailAddress1@liferay.com',
+			},
+			{
+				primary: true,
+				type: 'default',
+				value: `able${randomNumber}@liferay.com`,
+			},
+			{
+				primary: false,
+				type: 'default',
+				value: 'emailAddress3@liferay.com',
+			},
+		],
+		entitlements: [
+			{
+				value: 'testEntitlement1',
+			},
+			{
+				value: 'testEntitlement2',
+			},
+		],
+		ims: [
+			{
+				type: 'Jabber',
+				value: 'testJabberIms',
+			},
+			{
+				type: 'Skype',
+				value: 'testSkypeIms',
+			},
+		],
+		name: {
+			familyName: `Baker ${randomNumber}`,
+			givenName: `Able ${randomNumber}`,
+			honorificPrefix: 'Dr',
+			honorificSuffix: 'Phd',
+			middleName: 'testMiddleName',
+		},
+		nickName: 'testNickName',
+		phoneNumbers: [
+			{
+				primary: true,
+				type: 'Business',
+				value: '555-555-5555',
+			},
+			{
+				primary: false,
+				type: 'Personal',
+				value: '555-555-4444',
+			},
+		],
+		photos: [
+			{
+				value: 'testPhoto1',
+			},
+			{
+				value: 'testPhoto2',
+			},
+		],
+		preferredLanguage: 'testPreferredLanguage',
+		profileUrl: 'http://testProfileUrl.com',
+		roles: [
+			{
+				value: 'Invalid Role',
+			},
+			{
+				value: 'Power User',
+			},
+			{
+				value: 'Supplier',
+			},
+		],
+		timezone: 'America/Los_Angeles',
+		userName: `able${randomNumber}.baker`,
+		userType: 'testUserType',
+		x509Certificates: [
+			{
+				value: 'testx509Certificate1',
+			},
+			{
+				value: 'testx509Certificate2',
+			},
+		],
+	};
+
+	const apiHelper = new ApiHelpers(page);
+
+	await apiHelper.scim.postUserWithOAuth(newUser, accessToken);
+
+	const response = await (
+		await apiHelper.scim.getUsersWithOAuth(accessToken)
+	).text();
+
+	expect(response).toContain('"totalResults":1');
+
+	await test.step('Verify custom field related attributes are provisioned correctly', async () => {
+		await usersAndOrganizationsPage.goto(false);
+
+		await usersAndOrganizationsPage.goToUser(newUser.userName);
+
+		await expect(
+			await editUserPage.customField('scimDisplayName')
+		).toHaveValue(newUser.displayName, {timeout: 30 * 1000});
+
+		await expect(
+			await editUserPage.customField('scimEntitlements')
+		).toHaveValue(
+			newUser.entitlements[0].value +
+				'\n' +
+				newUser.entitlements[1].value,
+			{timeout: 30 * 1000}
+		);
+
+		await expect(
+			await editUserPage.customField('scimNickName')
+		).toHaveValue(newUser.nickName, {timeout: 30 * 1000});
+
+		await expect(await editUserPage.customField('scimPhotos')).toHaveValue(
+			newUser.photos[0].value + '\n' + newUser.photos[1].value,
+			{timeout: 30 * 1000}
+		);
+
+		await expect(
+			await editUserPage.customField('scimPreferredLanguage')
+		).toHaveValue(newUser.preferredLanguage, {timeout: 30 * 1000});
+
+		await expect(
+			await editUserPage.customField('scimUserType')
+		).toHaveValue(newUser.userType, {timeout: 30 * 1000});
+
+		await expect(
+			await editUserPage.customField('scimX509Certificates')
+		).toHaveValue(
+			newUser.x509Certificates[0].value +
+				'\n' +
+				newUser.x509Certificates[1].value,
+			{timeout: 30 * 1000}
+		);
+	});
+
+	await test.step('Verify addresses attribute is provisioned correctly', async () => {
+		await editUserPage.contactLink.click();
+
+		await editUserPage.addressesLink.waitFor();
+
+		for (const address of newUser.addresses) {
+			const addressLines = address.formatted.split('\n');
+
+			const li = await editUserPage.page
+				.locator('li')
+				.filter({hasText: addressLines[0]});
+
+			await expect(li).toBeVisible();
+
+			addressLines.forEach((value) => {
+				expect(li.getByText(value)).toBeVisible();
+			});
+
+			if (address.type === 'business') {
+				await expect(await li.getByText('Business')).toBeVisible();
+			}
+			else if (address.type === 'personal') {
+				await expect(await li.getByText('Personal')).toBeVisible();
+			}
+
+			if (address.primary) {
+				await expect(await li.getByText('Primary')).toBeVisible();
+			}
+			else {
+				await expect(await li.getByText('Primary')).not.toBeVisible();
+			}
+		}
+	});
+
+	await test.step('Verify emails attribute works with provisioned SCIM user', async () => {
+		await usersAndOrganizationsPage.goto(false);
+
+		await usersAndOrganizationsPage.goToUser(newUser.userName);
+
+		// Verify primary email is used as user's email, not necessarily the first
+
+		await expect(editUserPage.emailAddressInput).toHaveValue(
+			`able${randomNumber}@liferay.com`
+		);
+
+		await editUserPage.contactLink.click();
+
+		await editUserPage.contactInformationLink.waitFor();
+
+		await editUserPage.contactInformationLink.click();
+
+		for (const email of newUser.emails) {
+			const row = (
+				await editUserPage.additionalEmailAddressesTableRow(
+					0,
+					email.value,
+					true
+				)
+			).row;
+
+			await expect(row).toBeVisible();
+
+			if (email.primary) {
+				await expect(await row.getByText('Primary')).toBeVisible();
+			}
+			else {
+				await expect(await row.getByText('Primary')).not.toBeVisible();
+			}
+		}
+	});
+
+	await test.step('Verify ims works with provisioned SCIM user', async () => {
+		await expect(await editUserPage.jabberInput).toHaveValue(
+			newUser.ims[0].value
+		);
+
+		await expect(await editUserPage.skypeInput).toHaveValue(
+			newUser.ims[1].value
+		);
+	});
+
+	await test.step('Verify name attribute and subattributes work with provisioned SCIM user', async () => {
+		await usersAndOrganizationsPage.goto(false);
+
+		await usersAndOrganizationsPage.goToUser(newUser.userName);
+
+		await editUserPage.emailAddressInput.waitFor();
+
+		await expect(editUserPage.firstNameInput).toHaveValue(
+			newUser.name.givenName
+		);
+
+		await expect(editUserPage.lastNameInput).toHaveValue(
+			newUser.name.familyName
+		);
+
+		await expect(editUserPage.middleNameInput).toHaveValue(
+			newUser.name.middleName
+		);
+
+		await expect(editUserPage.prefixInput).toHaveValue(
+			newUser.name.honorificPrefix
+		);
+
+		await expect(editUserPage.suffixInput).toHaveValue(
+			newUser.name.honorificSuffix
+		);
+	});
+
+	await test.step('Verify phoneNumbers attribute works properly with SCIM user provisioning', async () => {
+		await editUserPage.contactLink.click();
+
+		await editUserPage.contactInformationLink.waitFor();
+
+		await editUserPage.contactInformationLink.click();
+
+		for (const phoneNumber of newUser.phoneNumbers) {
+			const row = (
+				await editUserPage.phoneNumbersTableRow(
+					0,
+					phoneNumber.value,
+					true
+				)
+			).row;
+
+			await expect(row).toBeVisible();
+
+			if (phoneNumber.primary) {
+				await expect(await row.getByText('Primary')).toBeVisible();
+			}
+			else {
+				await expect(await row.getByText('Primary')).not.toBeVisible();
+			}
+
+			await expect(await row.getByText(phoneNumber.type)).toBeVisible();
+		}
+	});
+
+	await test.step('Verify profileUrl works with provisioned SCIM user', async () => {
+		const row = (
+			await editUserPage.websitesTableRow(0, newUser.profileUrl, true)
+		).row;
+
+		await expect(row).toBeVisible();
+
+		await expect(await row.getByText('Personal')).toBeVisible();
+
+		await expect(await row.getByText('Primary')).toBeVisible();
+	});
+
+	await test.step('Verify roles attribute works with provisioned SCIM user', async () => {
+		await usersAndOrganizationsPage.goto(false);
+
+		await usersAndOrganizationsPage.goToUser(newUser.userName);
+
+		await editUserPage.rolesLink.click();
+
+		for (const role of newUser.roles) {
+			if (role.value === 'Invalid Role') {
+				await expect(
+					await editUserPage.regularRoleCell(role.value)
+				).not.toBeVisible();
+			}
+			else {
+				await expect(
+					await editUserPage.regularRoleCell(role.value)
+				).toBeVisible();
+			}
+		}
+	});
+
+	await test.step('Verify timezone works with provisioned SCIM user', async () => {
+		await editUserPage.preferencesLink.click();
+
+		await editUserPage.displaySettingsLink.click();
+
+		await editUserPage.timeZoneInput.waitFor();
+
+		await expect(await editUserPage.timeZoneInput).toHaveValue(
+			newUser.timezone
+		);
+	});
+
+	await scimConfigurationPage.goTo();
+
 	await scimConfigurationPage.resetClientData();
 });

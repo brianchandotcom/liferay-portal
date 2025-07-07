@@ -33,17 +33,19 @@ public class ImportErrorsTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
+			"entityType", "entity-type"
+		).add(
 			"errorId", "error-id"
+		).add(
+			"externalReferenceCode", "external-reference-code"
+		).add(
+			"errorType", "error"
 		).add(
 			"errorMessage", "error-message"
 		).add(
-			"errorType", "error-type"
-		).add(
-			"dateCreated", "date-created"
-		).add(
-			"externalReferenceCode", "ERC"
-		).add(
-			"dateCreated", "date-created"
+			"status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
 		).build();
 	}
 

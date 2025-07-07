@@ -86,7 +86,7 @@ public abstract class BaseBatchEngineImportTaskItemReaderImplTestCase {
 	protected static Item getItem(
 			Map<String, String> fieldNameMappingMap,
 			Map<String, Object> fieldNameValueMap)
-		throws Exception {
+		throws ReflectiveOperationException {
 
 		return BatchEngineImportTaskItemReaderUtil.convertValue(
 			new BatchEngineImportTaskImpl(), Item.class,
@@ -105,7 +105,7 @@ public abstract class BaseBatchEngineImportTaskItemReaderImplTestCase {
 			String createDateString, String description, Long id,
 			Map<String, String> fieldNameMappingMap,
 			Map<String, Object> fieldNameValueMap, Map<String, String> nameMap)
-		throws Exception {
+		throws ReflectiveOperationException {
 
 		Item item = getItem(fieldNameMappingMap, fieldNameValueMap);
 

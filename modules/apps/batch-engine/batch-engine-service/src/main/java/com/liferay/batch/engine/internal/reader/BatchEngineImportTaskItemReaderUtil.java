@@ -51,7 +51,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 			BatchEngineImportTask batchEngineImportTask, Class<T> itemClass,
 			Map<String, Object> fieldNameValueMap,
 			List<ItemReaderPostAction> itemReaderPostActions)
-		throws Exception {
+		throws ReflectiveOperationException {
 
 		Map<String, Serializable> extendedProperties = new HashMap<>();
 
@@ -255,7 +255,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 	private static ObjectMapper _getObjectMapper(
 			BatchEngineImportTask batchEngineImportTask, Field field,
 			Object value)
-		throws Exception {
+		throws IllegalAccessException, InstantiationException {
 
 		if (StringUtil.equals(
 				batchEngineImportTask.getParameterValue(

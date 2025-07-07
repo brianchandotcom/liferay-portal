@@ -11,13 +11,21 @@ import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializ
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * @author Jürgen Kappler
+ * @author Marco Galluzzi
+ * @author Roberto Díaz
  * @author Sam Ziemer
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_CONTENTS_SECTION,
+	property = {
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SECTION,
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.CONTENTS_SECTION,
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.FILES_SECTION,
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_FOLDER
+	},
 	service = FDSView.class
 )
-public class SpaceContentsSectionTableFDSView
+public class ContentAndFileSectionsTableFDSView
 	extends BaseContentsSectionTableFDSView {
 
 	@Override

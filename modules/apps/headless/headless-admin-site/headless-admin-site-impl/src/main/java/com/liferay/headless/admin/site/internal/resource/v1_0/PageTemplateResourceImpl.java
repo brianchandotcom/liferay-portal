@@ -669,11 +669,17 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		ServiceContext serviceContext = _getServiceContext(
 			layoutPageTemplateEntry.getGroupId(), contentPageTemplate);
 
-		LayoutUtil.updateContentLayout(
+		layout = LayoutUtil.updateContentLayout(
 			layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(), layout.getRobotsMap(),
 			layout.getFriendlyURLMap(),
 			contentPageTemplate.getPageSpecifications(), serviceContext);
+
+		if (layout.isPublished() && !layoutPageTemplateEntry.isApproved()) {
+			_layoutPageTemplateEntryService.updateStatus(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				WorkflowConstants.STATUS_APPROVED);
+		}
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

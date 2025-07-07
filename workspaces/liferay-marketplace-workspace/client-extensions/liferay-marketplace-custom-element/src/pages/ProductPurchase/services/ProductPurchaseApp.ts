@@ -4,8 +4,10 @@
  */
 
 import {Analytics} from '../../../core/Analytics';
-import {OrderTypes} from '../../../enums/Order';
-import {ProductType, SkuOptions} from '../../../enums/Product';
+import {
+	ProductSpecificationKey,
+	SkuOptions,
+} from '../../../enums/Product';
 import HeadlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
 import {postEmailAppInformation} from '../../../utils/api';
 import {
@@ -14,6 +16,8 @@ import {
 	isCloudProduct,
 } from '../../../utils/productUtils';
 import {getSiteURL} from '../../../utils/site';
+import {getProductOrderTypes} from '../../GetApp/utils/getProductOrderTypes';
+import {getProductSpecificationValues} from '../../GetApp/utils/getProductSpecificationValues';
 import ProductPurchase from './ProductPurchase';
 
 type ProductPurchaseCartOptions = {
@@ -38,14 +42,16 @@ export default class ProductPurchaseApp extends ProductPurchase {
 			this.getAppPurchaseCart(cart, cartOptions) as Cart
 		);
 
+		const productType = this.product?.productSpecifications.find(
+			(spec) => spec.specificationKey === ProductSpecificationKey.APP_TYPE
+		)?.value;
+
 		await postEmailAppInformation({
 			dashboardLink: getSiteURL() + '/customer-dashboard',
 			orderID: order.id,
 			priceModel: 'paid',
 			productName: this.product?.name as string,
-			productType: isCloudProduct(this.product)
-				? ProductType.CLOUD
-				: ProductType.DXP,
+			productType: productType || '',
 		});
 
 		return order;
@@ -94,10 +100,10 @@ export default class ProductPurchaseApp extends ProductPurchase {
 	}
 
 	static getOrderTypeExternalReferenceCode(product: DeliveryProduct) {
-		if (isCloudProduct(product)) {
-			return OrderTypes.CLOUDAPP;
-		}
+		const productSpecificationValues = getProductSpecificationValues(
+			product?.productSpecifications || []
+		);
 
-		return OrderTypes.DXPAPP;
+		return getProductOrderTypes(productSpecificationValues).externalReferenceCode;
 	}
 }

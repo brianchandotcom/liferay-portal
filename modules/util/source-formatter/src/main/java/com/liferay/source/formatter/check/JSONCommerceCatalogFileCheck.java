@@ -16,7 +16,7 @@ import java.util.Comparator;
 /**
  * @author Alan Huang
  */
-public class JSONCatalogFileCheck extends BaseFileCheck {
+public class JSONCommerceCatalogFileCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

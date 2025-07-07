@@ -1099,7 +1099,7 @@
 			<category name="Styling" />
 			<description name="Remove elements in `*.batch-engine-data.json` files." />
 		</check>
-		<check name="JSONCatalogFileCheck">
+		<check name="JSONCommerceCatalogFileCheck">
 			<category name="Styling" />
 			<description name="Sorts `*.options.json`, `*.products.json`, and `*.products.specifications.json` files." />
 		</check>

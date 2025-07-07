@@ -19,8 +19,10 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
@@ -78,6 +80,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -461,6 +464,7 @@ public class StructuredContentResourceTest
 		_testGetStructuredContentWithDifferentFolder();
 		_testGetStructuredContentWithDifferentLocale();
 		_testGetStructuredContentWithDifferentTimeZone();
+		_testGetStructuredContentWithImageContentURL();
 		_testGetStructuredContentWithInvalidImage();
 		_testGetStructuredContentWithRadioField();
 		_testGetStructuredContentWithRoleAdministrator();
@@ -2287,6 +2291,41 @@ public class StructuredContentResourceTest
 		}
 	}
 
+	private void _testGetStructuredContentWithImageContentURL()
+		throws Exception {
+
+		DLFolder dlFolder = DLTestUtil.addDLFolder(testGroup.getGroupId());
+
+		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+			dlFolder.getFolderId());
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+			dlFileEntry.getFileEntryId());
+
+		String previewURL = _dlURLHelper.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, "", true, false);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.
+				postStructuredContentFolderStructuredContent(
+					_journalFolder.getFolderId(),
+					_randomCompleteStructuredContent(
+						dlFileEntry.getFileEntryId(), true));
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		ContentField[] contentFields = getStructuredContent.getContentFields();
+
+		ContentFieldValue contentFieldValue =
+			contentFields[8].getContentFieldValue();
+
+		ContentDocument contentDocument = contentFieldValue.getImage();
+
+		Assert.assertEquals(contentDocument.getContentUrl(), previewURL);
+	}
+
 	private void _testGetStructuredContentWithInvalidImage() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(testGroup.getGroupId());
 
@@ -2839,7 +2878,14 @@ public class StructuredContentResourceTest
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;
 	private DDMStructure _depotDDMStructure;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
 	private DLFileEntry _dlFileEntry;
+
+	@Inject
+	private DLURLHelper _dlURLHelper;
 
 	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;

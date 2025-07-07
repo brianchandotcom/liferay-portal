@@ -7,15 +7,22 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.problem.Problem;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -32,6 +39,14 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class BlogPostingImageResourceTest
 	extends BaseBlogPostingImageResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetBlogPostingImage() throws Exception {
+		super.testGetBlogPostingImage();
+
+		_testGetBlogPostingImageContentURL();
+	}
 
 	@Override
 	@Test
@@ -113,6 +128,27 @@ public class BlogPostingImageResourceTest
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
 		return httpResponse.getContent();
+	}
+
+	private void _testGetBlogPostingImageContentURL() throws Exception {
+		DLFolder dlFolder = DLTestUtil.addDLFolder(testGroup.getGroupId());
+
+		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+			dlFolder.getFolderId());
+
+		FileEntry fileEntry = BlogsEntryLocalServiceUtil.addAttachmentFileEntry(
+			null, dlFileEntry.getUserId(), dlFileEntry.getGroupId(),
+			dlFileEntry.getFileName(), dlFileEntry.getMimeType(),
+			dlFileEntry.getContentStream());
+
+		String previewURL = _dlURLHelper.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, "", true, false);
+
+		BlogPostingImage getBlogPostingImage =
+			blogPostingImageResource.getBlogPostingImage(
+				fileEntry.getFileEntryId());
+
+		Assert.assertEquals(getBlogPostingImage.getContentUrl(), previewURL);
 	}
 
 	private void _testPostSiteBlogPostingImageRollback() throws Exception {
@@ -198,5 +234,11 @@ public class BlogPostingImageResourceTest
 				randomBlogPostingImage2.getTitle(), 1),
 			blogPostingImage.getTitle());
 	}
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLURLHelper _dlURLHelper;
 
 }

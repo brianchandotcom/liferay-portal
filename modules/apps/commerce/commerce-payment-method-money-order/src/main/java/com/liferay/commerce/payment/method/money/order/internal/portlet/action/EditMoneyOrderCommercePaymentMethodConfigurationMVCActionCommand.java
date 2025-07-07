@@ -9,6 +9,8 @@ import com.liferay.commerce.payment.method.money.order.internal.constants.MoneyO
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
@@ -19,10 +21,13 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -76,16 +81,38 @@ public class EditMoneyOrderCommercePaymentMethodConfigurationMVCActionCommand
 
 		modifiableSettings.setValue("showMessagePage", showMessagePage);
 
-		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11235")) {
+			UnicodeProperties unicodeProperties =
+				PropertiesParamUtil.getProperties(
+					actionRequest, "settings--messageAsLocalizedXML_");
 
-		Map<Locale, String> messageMap = _localization.getLocalizationMap(
-			actionRequest, "messageAsLocalizedXML");
+			Map<String, String> messageMap = new HashMap<>();
 
-		messageMap.forEach(localizedValuesMap::put);
+			for (Map.Entry<String, String> entry :
+					unicodeProperties.entrySet()) {
 
-		modifiableSettings.setValue(
-			"messageAsLocalizedXML",
-			_localization.getXml(localizedValuesMap, "messageAsLocalizedXML"));
+				messageMap.put(entry.getKey(), entry.getValue());
+			}
+
+			String messageAsLocalizedXML = _localization.getXml(
+				messageMap, StringPool.BLANK, "messageAsLocalizedXML");
+
+			modifiableSettings.setValue(
+				"messageAsLocalizedXML", messageAsLocalizedXML);
+		}
+		else {
+			LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
+
+			Map<Locale, String> messageMap = _localization.getLocalizationMap(
+				actionRequest, "messageAsLocalizedXML");
+
+			messageMap.forEach(localizedValuesMap::put);
+
+			modifiableSettings.setValue(
+				"messageAsLocalizedXML",
+				_localization.getXml(
+					localizedValuesMap, "messageAsLocalizedXML"));
+		}
 
 		modifiableSettings.store();
 	}

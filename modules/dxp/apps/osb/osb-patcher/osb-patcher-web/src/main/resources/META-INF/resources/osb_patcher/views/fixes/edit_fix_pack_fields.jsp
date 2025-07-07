@@ -45,11 +45,17 @@ PatcherFix patcherFix = patcherEditFixPackFieldsDisplayContext.getPatcherFix();
 
 		<c:if test="<%= !patcherEditFixPackFieldsDisplayContext.isDisabled() %>">
 			<aui:button-row>
-				<portlet:actionURL name="/patcher/edit_fix_pack_fields_fixes" var="editPatcherFixFixPackFieldsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:renderURL var="editPatcherFixFixPackFieldsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcRenderCommandName" value="/patcher/edit_fix_pack_fields_fixes" />
 					<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
-				</portlet:actionURL>
+				</portlet:renderURL>
 
-				<aui:button onClick='<%= "form.action = '" + editPatcherFixFixPackFieldsURL + "';" %>' type="submit" value="reload-available-fix-packs" />
+				<clay:link
+					displayType="secondary"
+					href="<%= editPatcherFixFixPackFieldsURL %>"
+					label='<%= LanguageUtil.get(request, "reload-available-fix-packs") %>'
+					type="button"
+				/>
 			</aui:button-row>
 
 			<aui:input name="patcherFixPackIds" type="hidden" />

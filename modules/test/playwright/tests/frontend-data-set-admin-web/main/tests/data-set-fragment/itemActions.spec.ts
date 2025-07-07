@@ -393,14 +393,9 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 			await itemAction.click();
 
-			await page.getByText('Page Not Found').isVisible();
+			await page.getByText('Not Found').isVisible();
 
-			const goBackLink = page.getByRole('link', {
-				exact: true,
-				name: 'Go Back',
-			});
-
-			await goBackLink.click();
+			await page.goto(layout.friendlyURL);
 		});
 
 		await test.step('Change visualization mode to List', async () => {

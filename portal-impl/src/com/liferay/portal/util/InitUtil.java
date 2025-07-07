@@ -40,9 +40,13 @@ import com.liferay.portal.spring.hibernate.PortalHibernateConfiguration;
 import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 import com.liferay.portal.xml.SAXReaderImpl;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.lang.reflect.Field;
 
 import java.util.List;
+import java.util.logging.LogManager;
 import java.util.zip.ZipFile;
 
 import javax.sql.DataSource;
@@ -114,6 +118,23 @@ public class InitUtil {
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
+			}
+		}
+
+		// JDK logger
+
+		try (InputStream inputStream = InitUtil.class.getResourceAsStream(
+				"/logging.properties")) {
+
+			if (inputStream != null) {
+				LogManager logManager = LogManager.getLogManager();
+
+				logManager.readConfiguration(inputStream);
+			}
+		}
+		catch (IOException ioException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioException);
 			}
 		}
 

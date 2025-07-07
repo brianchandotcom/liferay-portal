@@ -356,9 +356,9 @@ public class DefaultCommerceOrderValidatorImpl
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
 
+	private final DecimalFormat _decimalFormat;
+
 	@Reference
 	private Language _language;
-
-	private final DecimalFormat _decimalFormat;
 
 }

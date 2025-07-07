@@ -7,6 +7,7 @@ package com.liferay.portal.tools.rest.builder.test.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -31,9 +32,6 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Alejandro Tardín
@@ -210,40 +208,37 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	public void testPostImportTask() throws Exception {
 		ChildTestEntity1 childTestEntity1 = new ChildTestEntity1();
 
+		childTestEntity1.setName(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 		childTestEntity1.setProperty1(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 		childTestEntity1.setType(TestEntity.Type.create("ChildTestEntity1"));
-		childTestEntity1.setName(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 		ChildTestEntity2 childTestEntity2 = new ChildTestEntity2();
 
+		childTestEntity2.setName(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 		childTestEntity2.setProperty2(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 		childTestEntity2.setType(TestEntity.Type.create("ChildTestEntity2"));
-		childTestEntity2.setName(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 		ChildTestEntity3 childTestEntity3 = new ChildTestEntity3();
 
-		childTestEntity3.setType(TestEntity.Type.create("ChildTestEntity3"));
 		childTestEntity3.setName(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		childTestEntity3.setType(TestEntity.Type.create("ChildTestEntity3"));
 
 		Page<TestEntity> page = testEntityResource.getTestEntitiesPage(null);
 
 		long totalCount = page.getTotalCount();
 
-		String invalidTypeId1 = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
-
-		String invalidTypeId2 = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
 					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
+
+			String invalidTypeId = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
 
 			JSONObject jsonObject = waitForFinish(
 				"COMPLETED",
@@ -256,23 +251,16 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString())
 						).put(
-							"type", invalidTypeId1
+							"type", invalidTypeId
 						),
 						JSONFactoryUtil.createJSONObject(
 							ChildTestEntity2SerDes.toJSON(childTestEntity2)),
 						JSONUtil.put(
 							"name",
 							StringUtil.toLowerCase(
-								RandomTestUtil.randomString())
-						).put(
-							"type", invalidTypeId2
-						),
+								RandomTestUtil.randomString())),
 						JSONFactoryUtil.createJSONObject(
-							ChildTestEntity3SerDes.toJSON(childTestEntity3)),
-						JSONUtil.put(
-							"name",
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()))
+							ChildTestEntity3SerDes.toJSON(childTestEntity3))
 					).toString(),
 					StringBundler.concat(
 						"headless-batch-engine/v1.0/import-task",
@@ -282,7 +270,11 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 
 			page = testEntityResource.getTestEntitiesPage(null);
 
-			Assert.assertEquals(page.getTotalCount(), totalCount + 3);
+			Assert.assertEquals(totalCount + 3, page.getTotalCount());
+
+			assertContains(childTestEntity1, (List<TestEntity>)page.getItems());
+			assertContains(childTestEntity2, (List<TestEntity>)page.getItems());
+			assertContains(childTestEntity3, (List<TestEntity>)page.getItems());
 
 			jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -290,50 +282,27 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 					jsonObject.getLong("id"),
 				Http.Method.GET);
 
-			JSONAssert.assertEquals(
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"item", "Unable to read item at index 2"
-					).put(
-						"itemIndex", 2
-					).put(
-						"message",
-						StringBundler.concat(
-							"com.liferay.batch.engine.exception.InvalidTy",
-							"peIdException: '", invalidTypeId1,
-							"' cannot be mapped to a valid entity subtype")
-					),
-					JSONUtil.put(
-						"item", "Unable to read item at index 4"
-					).put(
-						"itemIndex", 4
-					).put(
-						"message",
-						StringBundler.concat(
-							"com.liferay.batch.engine.exception.InvalidTy",
-							"peIdException: '", invalidTypeId2,
-							"' cannot be mapped to a valid entity subtype")
-					),
-					JSONUtil.put(
-						"item", "Unable to read item at index 6"
-					).put(
-						"itemIndex", 6
-					).put(
-						"message",
-						StringBundler.concat(
-							"com.liferay.batch.engine.exception.InvalidTy",
-							"peIdException: '' cannot be mapped to a valid ",
-							"entity subtype")
-					)
-				).toString(),
-				jsonObject.getJSONArray(
-					"failedItems"
-				).toString(),
-				JSONCompareMode.LENIENT);
+			JSONArray failedItemsJSONArray = jsonObject.getJSONArray(
+				"failedItems");
 
-			assertContains(childTestEntity1, (List<TestEntity>)page.getItems());
-			assertContains(childTestEntity2, (List<TestEntity>)page.getItems());
-			assertContains(childTestEntity3, (List<TestEntity>)page.getItems());
+			Assert.assertEquals(2, failedItemsJSONArray.length());
+			Assert.assertTrue(
+				failedItemsJSONArray.getJSONObject(
+					0
+				).getString(
+					"message"
+				).contains(
+					"Could not resolve type id '" + invalidTypeId +
+						"' as a subtype"
+				));
+			Assert.assertTrue(
+				failedItemsJSONArray.getJSONObject(
+					1
+				).getString(
+					"message"
+				).contains(
+					"missing type id property 'type'"
+				));
 		}
 	}
 
@@ -359,16 +328,13 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 			).toString(),
 			"test/v1.0/test-entities", Http.Method.POST);
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title",
-				StringBundler.concat(
-					"'", invalidTypeId,
-					"' cannot be mapped to a valid entity subtype")
-			).toString(),
-			jsonObject.toString(), JSONCompareMode.LENIENT);
+		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
+		Assert.assertTrue(
+			jsonObject.getString(
+				"title"
+			).contains(
+				"Could not resolve type id '" + invalidTypeId + "' as a subtype"
+			));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -376,13 +342,13 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 			).toString(),
 			"test/v1.0/test-entities", Http.Method.POST);
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "'null' cannot be mapped to a valid entity subtype"
-			).toString(),
-			jsonObject.toString(), JSONCompareMode.LENIENT);
+		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
+		Assert.assertTrue(
+			jsonObject.getString(
+				"title"
+			).contains(
+				"missing type id property 'type'"
+			));
 	}
 
 	@Ignore

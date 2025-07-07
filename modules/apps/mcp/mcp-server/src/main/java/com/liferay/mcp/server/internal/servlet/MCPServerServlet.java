@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.mcp.server;
+package com.liferay.mcp.server.internal.servlet;
 
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -24,6 +24,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -45,13 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * This servlet operates with the following considerations:
  *
- * 1. No Authorization Support:
- *    All actions are performed using the admin user. Authorization must be
- *    implemented using OAuth, as described in the spec:
- *    https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization
- *    For now let's leave this out of the scope of the exchange program.
- *
- * 2. No Reactivity:
+ * 1. No Reactivity:
  *    The server is initialized on the first request with the resources and
  *    tools available at that time. Any changes in Liferay after initialization
  *    will not be reflected unless the server is restarted. The simplest way to
@@ -61,17 +56,29 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"osgi.http.whiteboard.context.path=/mcp",
-		"osgi.http.whiteboard.servlet.name=com.liferay.mcp.server.MCPServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.mcp.server.internal.servlet.MCPServerServlet",
 		"osgi.http.whiteboard.servlet.pattern=/mcp/*"
 	},
 	service = Servlet.class
 )
-public class MCPServlet extends GenericServlet {
+public class MCPServerServlet extends GenericServlet {
 
 	@Override
 	public void service(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
+
+		if ((servletRequest instanceof HttpServletRequest httpServletRequest) &&
+			Validator.isNull(httpServletRequest.getHeader("Authorization")) &&
+			(servletResponse instanceof
+				HttpServletResponse httpServletResponse)) {
+
+			httpServletResponse.setHeader(
+				"WWW-Authenticate", "Bearer error=\"invalid_request\"");
+			httpServletResponse.setStatus(401);
+
+			return;
+		}
 
 		_servlets.computeIfAbsent(
 			_portal.getCompanyId((HttpServletRequest)servletRequest),

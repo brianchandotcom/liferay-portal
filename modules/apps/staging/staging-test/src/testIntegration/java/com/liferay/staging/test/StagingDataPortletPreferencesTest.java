@@ -28,7 +28,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -99,9 +98,8 @@ public class StagingDataPortletPreferencesTest
 		ServiceTracker<Portlet, Portlet> serviceTracker =
 			ServiceTrackerFactory.open(
 				bundle.getBundleContext(),
-				StringBundler.concat(
-					"(jakarta.portlet.name=",
-					DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY, ")"),
+				"(jakarta.portlet.name=" +
+					DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY + ")",
 				null);
 
 		try {

@@ -147,6 +147,7 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -2467,6 +2468,20 @@ public class ObjectEntryLocalServiceTest {
 					_getMultiselectPicklistObjectFieldValue(prefixKey, 100)
 				).build(),
 				new ServiceContext()));
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testAddObjectEntryWithObjectEntryScheduleEnabled()
+		throws Exception {
+
+		_testAddObjectEntryWithObjectEntryScheduleEnabled(
+			false, WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.ACTION_PUBLISH);
+
+		_testAddObjectEntryWithObjectEntryScheduleEnabled(
+			true, WorkflowConstants.STATUS_DRAFT,
+			WorkflowConstants.ACTION_SAVE_DRAFT);
 	}
 
 	@Test
@@ -7401,6 +7416,94 @@ public class ObjectEntryLocalServiceTest {
 						"pt_BR", value2
 					).build()
 				).build()));
+	}
+
+	private void _testAddObjectEntryWithObjectEntryScheduleEnabled(
+			boolean enableObjectEntryDraft, int status, int workflowAction)
+		throws Exception {
+
+		// Add object entry with null display date
+
+		_objectDefinition.setEnableObjectEntryDraft(enableObjectEntryDraft);
+		_objectDefinition.setEnableObjectEntrySchedule(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(workflowAction);
+
+		Map<String, Serializable> requiredValues =
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired",
+				RandomTestUtil.randomString() + "@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build();
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", "textObjectFieldValue1"
+			).putAll(
+				requiredValues
+			).build(),
+			serviceContext);
+
+		Assert.assertEquals(status, objectEntry.getStatus());
+
+		// Update object entry with display date in the future
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new java.sql.Date(
+					System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
+			).put(
+				"textObjectFieldName", "textObjectFieldValue2"
+			).putAll(
+				requiredValues
+			).build(),
+			serviceContext);
+
+		if (workflowAction == WorkflowConstants.ACTION_PUBLISH) {
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_SCHEDULED, objectEntry.getStatus());
+		}
+		else {
+			Assert.assertEquals(status, objectEntry.getStatus());
+		}
+
+		// Update object entry with display date in the past
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new java.sql.Date(
+					System.currentTimeMillis() - TimeUnit.DAY.toMillis(1))
+			).put(
+				"textObjectFieldName", "textObjectFieldValue3"
+			).putAll(
+				requiredValues
+			).build(),
+			serviceContext);
+
+		Assert.assertEquals(status, objectEntry.getStatus());
+
+		_objectDefinition.setEnableObjectEntryDraft(false);
+		_objectDefinition.setEnableObjectEntrySchedule(false);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
 	}
 
 	private void _testPartialUpdateObjectEntryExternalReferenceCode()

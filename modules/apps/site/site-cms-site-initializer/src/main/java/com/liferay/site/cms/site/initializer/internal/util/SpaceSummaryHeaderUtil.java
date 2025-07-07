@@ -19,13 +19,14 @@ public class SpaceSummaryHeaderUtil {
 
 	public static Map<String, Object> getSpaceSummaryHeaderProps(
 			HttpServletRequest httpServletRequest, String labelKey,
-			String titleKey, String url, Object modalProps)
+			String titleKey, String url,
+			Map<String, Object> spaceMembersModalProps)
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(
 			"label", LanguageUtil.get(httpServletRequest, labelKey)
 		).put(
-			"modalProps", modalProps
+			"spaceMembersModalProps", spaceMembersModalProps
 		).put(
 			"title", LanguageUtil.get(httpServletRequest, titleKey)
 		).put(

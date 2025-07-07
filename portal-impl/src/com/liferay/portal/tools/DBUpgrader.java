@@ -355,15 +355,12 @@ public class DBUpgrader {
 				}
 				catch (Exception exception) {
 					_log.error(
-						StringBundler.concat(
-							"Stopping the server because a preupgrade data ",
-							"cleanup process has failed. Please fix the ",
-							"reported issues and rerun the upgrade: ",
-							exception.getMessage()));
+						"Error executing preupgrade data cleanup process",
+						exception);
 
 					StartupHelperUtil.setUpgrading(false);
 
-					System.exit(1);
+					throw exception;
 				}
 			}
 

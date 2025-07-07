@@ -1269,6 +1269,44 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		return messageContext;
 	}
 
+	private String _fetchSamlIdpSPNameIdFormat(
+		long companyId, String entityId) {
+
+		try {
+			SamlIdpSpConnection samlIdpSpConnection =
+				samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+					companyId, entityId);
+
+			return samlIdpSpConnection.getNameIdFormat();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
+	}
+
+	private String _fetchSamlSpIdpNameIdFormat(
+		long companyId, String entityId) {
+
+		try {
+			SamlSpIdpConnection samlSpIdpConnection =
+				samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+					companyId, entityId);
+
+			return samlSpIdpConnection.getNameIdFormat();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
+	}
+
 	private int _getAssertionLifetime(String entityId) {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -1390,6 +1428,16 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 					_log.debug(exception);
 				}
 			}
+		}
+		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+			String nameIdFormat = _fetchSamlIdpSPNameIdFormat(
+				companyId, entityId);
+
+			if (Validator.isNull(nameIdFormat)) {
+				nameIdFormat = _fetchSamlSpIdpNameIdFormat(companyId, entityId);
+			}
+
+			return nameIdFormat;
 		}
 
 		return null;

@@ -212,7 +212,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		List<DownstreamBuildReport> cachedDownstreamBuildReports =
 			new ArrayList<>();
 
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+			!JenkinsResultsParserUtil.isCloudCINode()) {
+
 			return cachedDownstreamBuildReports;
 		}
 

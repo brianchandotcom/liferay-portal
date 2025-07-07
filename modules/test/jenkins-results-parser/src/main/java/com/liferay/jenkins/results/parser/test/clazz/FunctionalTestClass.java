@@ -44,6 +44,10 @@ public class FunctionalTestClass extends BaseTestClass {
 	}
 
 	public DownstreamBuildReport getCachedDownstreamBuildReport() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			return null;
+		}
+
 		TestReport cachedTestReport = getCachedTestReport();
 
 		if (cachedTestReport == null) {
@@ -54,7 +58,9 @@ public class FunctionalTestClass extends BaseTestClass {
 	}
 
 	public TestReport getCachedTestReport() {
-		if (_cachedTestReportSearched) {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+			_cachedTestReportSearched) {
+
 			return _cachedTestReport;
 		}
 

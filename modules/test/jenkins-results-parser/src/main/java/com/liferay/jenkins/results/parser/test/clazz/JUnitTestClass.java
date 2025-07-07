@@ -29,7 +29,9 @@ import org.json.JSONObject;
 public class JUnitTestClass extends BaseTestClass {
 
 	public DownstreamBuildReport getCachedDownstreamBuildReport() {
-		if (!_cachedTestReportSearched) {
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled() &&
+			!_cachedTestReportSearched) {
+
 			getCachedTestClassReports();
 		}
 
@@ -37,7 +39,9 @@ public class JUnitTestClass extends BaseTestClass {
 	}
 
 	public List<TestClassReport> getCachedTestClassReports() {
-		if (_cachedTestReportSearched) {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+			_cachedTestReportSearched) {
+
 			return _cachedTestClassReports;
 		}
 

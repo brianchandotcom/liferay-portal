@@ -66,7 +66,8 @@ public class SamlSpSessionDestroyAction extends SessionAction {
 
 	private void _run(HttpSession httpSession) throws ActionException {
 		if (!_samlProviderConfigurationHelper.isEnabled() ||
-			!_samlProviderConfigurationHelper.isRoleSp()) {
+			(!_samlProviderConfigurationHelper.isRoleIdpAndSp() &&
+			 !_samlProviderConfigurationHelper.isRoleSp())) {
 
 			return;
 		}

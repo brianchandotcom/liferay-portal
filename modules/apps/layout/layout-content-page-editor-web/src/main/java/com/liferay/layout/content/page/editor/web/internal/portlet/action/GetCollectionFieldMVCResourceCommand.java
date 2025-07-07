@@ -31,6 +31,8 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
+import com.liferay.info.item.renderer.InfoItemRenderer;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
@@ -331,6 +333,19 @@ public class GetCollectionFieldMVCResourceCommand
 					!Objects.equals(
 						infoListRenderer.getCollectionItemClassName(),
 						listObjectReference.getItemType())) {
+
+					return null;
+				}
+
+				InfoItemRenderer<Object> infoItemRenderer =
+					(InfoItemRenderer<Object>)
+						_infoItemRendererRegistry.getInfoItemRenderer(
+							listItemStyle);
+
+				if ((infoItemRenderer != null) &&
+					!Objects.equals(
+						infoItemRenderer.getItemClassName(),
+						infoListRenderer.getCollectionItemClassName())) {
 
 					return null;
 				}
@@ -669,6 +684,9 @@ public class GetCollectionFieldMVCResourceCommand
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
+
+	@Reference
+	private InfoItemRendererRegistry _infoItemRendererRegistry;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

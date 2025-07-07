@@ -6,6 +6,7 @@
 package com.liferay.asset.model.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.model.DDMStructureClassType;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,6 +43,38 @@ public class DDMStructureClassTypeTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testEscapeClassTypeFieldLabels() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourceBuilder.user(
+				TestPropsValues.getUser()
+			).build();
+
+		DataDefinition dataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				_group.getGroupId(), "journal",
+				DataDefinition.toDTO(
+					StringUtil.read(
+						DDMStructureClassTypeTest.class,
+						"dependencies/data-definition-xss.json")));
+
+		DDMStructureClassType ddmStructureClassType = new DDMStructureClassType(
+			dataDefinition.getId(), StringUtil.randomString(),
+			_language.getLanguageId(LocaleUtil.US));
+
+		ClassTypeField classTypeField = ddmStructureClassType.getClassTypeField(
+			"Text38954058");
+
+		Assert.assertEquals(
+			classTypeField.getLabel(),
+			HtmlUtil.escape("<script>alert(document.cookie)</script>"));
+	}
 
 	@Test
 	public void testGetClassTypeFields() throws Exception {

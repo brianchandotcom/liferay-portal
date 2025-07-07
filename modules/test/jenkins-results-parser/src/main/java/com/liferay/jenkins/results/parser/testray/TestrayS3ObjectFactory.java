@@ -28,7 +28,11 @@ public class TestrayS3ObjectFactory {
 			testrayS3Bucket.getName(), "/", blob.getName());
 
 		if (_testrayS3Objects.containsKey(mapKey)) {
-			return _testrayS3Objects.get(mapKey);
+			TestrayS3Object testrayS3Object = _testrayS3Objects.get(mapKey);
+
+			testrayS3Object.setBlob(blob);
+
+			return testrayS3Object;
 		}
 
 		TestrayS3Object testrayS3Object = new TestrayS3Object(

@@ -9,7 +9,7 @@ import {
 } from '../../components/ObjectView/objectViewContext';
 
 describe('viewReducer ADD_OBJECT_VIEW_COLUMN', () => {
-	it('preserves column order', () => {
+	it('can add new object field', () => {
 		const state = {
 			objectView: {
 				objectViewColumns: [
@@ -32,16 +32,16 @@ describe('viewReducer ADD_OBJECT_VIEW_COLUMN', () => {
 					{
 						businessType: 'Text',
 						label: {
-							en_US: 'External Reference Code',
+							en_US: 'Status',
 						},
-						name: 'externalReferenceCode',
+						name: 'status',
 					},
 					{
 						businessType: 'Text',
 						label: {
-							en_US: 'Status',
+							en_US: 'External Reference Code',
 						},
-						name: 'status',
+						name: 'externalReferenceCode',
 					},
 					{
 						businessType: 'Text',

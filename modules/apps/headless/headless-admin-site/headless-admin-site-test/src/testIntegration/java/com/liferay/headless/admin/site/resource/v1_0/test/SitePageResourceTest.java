@@ -251,24 +251,31 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
 
-		String publishedPageSpecificationExternalReferenceCode =
-			StringUtil.toLowerCase(RandomTestUtil.randomString());
-		String sitePageExternalReferenceCode = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
+		SitePage sitePage = _getRandomSitePage(SitePage.Type.CONTENT_PAGE);
+
+		ContentPageSpecification draftContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, PageSpecification.Status.APPROVED);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				PageSpecification.Status.APPROVED);
+
+		sitePage.setPageSpecifications(
+			() -> new PageSpecification[] {
+				publishedContentPageSpecification, draftContentPageSpecification
+			});
 
 		_assertProblemException(
 			StringBundler.concat(
 				"Site page external reference code ",
-				sitePageExternalReferenceCode,
+				sitePage.getExternalReferenceCode(),
 				" does not match published page specification external ",
 				"reference code ",
-				publishedPageSpecificationExternalReferenceCode),
+				publishedContentPageSpecification.getExternalReferenceCode()),
 			() -> sitePageResource.postByExternalReferenceCodeSitePage(
-				testGroup.getExternalReferenceCode(),
-				_getContentSitePage(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()),
-					publishedPageSpecificationExternalReferenceCode,
-					sitePageExternalReferenceCode)));
+				testGroup.getExternalReferenceCode(), sitePage));
 	}
 
 	@Override
@@ -686,44 +693,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			layout.getTypeSettingsProperty(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID),
 			widgetPageSettings.getLayoutTemplateId());
-	}
-
-	private ContentPageSpecification _getContentPageSpecification(
-		String curDraftContentPageSpecificationExternalReferenceCode,
-		String curExternalReferenceCode, PageSpecification.Status curStatus) {
-
-		return new ContentPageSpecification() {
-			{
-				setDraftContentPageSpecificationExternalReferenceCode(
-					curDraftContentPageSpecificationExternalReferenceCode);
-				setExternalReferenceCode(curExternalReferenceCode);
-				setStatus(curStatus);
-				setType(Type.CONTENT_PAGE_SPECIFICATION);
-			}
-		};
-	}
-
-	private SitePage _getContentSitePage(
-		String draftPageSpecificationExternalReferenceCode,
-		String publishedPageSpecificationExternalReferenceCode,
-		String sitePageExternalReferenceCode) {
-
-		return new SitePage() {
-			{
-				setExternalReferenceCode(sitePageExternalReferenceCode);
-				setPageSpecifications(
-					new PageSpecification[] {
-						_getContentPageSpecification(
-							draftPageSpecificationExternalReferenceCode,
-							publishedPageSpecificationExternalReferenceCode,
-							PageSpecification.Status.APPROVED),
-						_getContentPageSpecification(
-							null, draftPageSpecificationExternalReferenceCode,
-							PageSpecification.Status.DRAFT)
-					});
-				setType(Type.CONTENT_PAGE);
-			}
-		};
 	}
 
 	private int _getExpectedPriority(

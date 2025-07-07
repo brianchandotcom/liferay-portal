@@ -15,6 +15,7 @@
 		<frontend-data-set:headless-display
 			apiURL="/group/__mocks__/get-import-error-list"
 			id="<%= ExportImportFDSNames.IMPORT_ERRORS %>"
+			style="fluid"
 		/>
 	</aui:form>
 </c:if>

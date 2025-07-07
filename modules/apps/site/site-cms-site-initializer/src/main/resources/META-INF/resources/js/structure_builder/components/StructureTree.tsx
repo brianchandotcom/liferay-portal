@@ -325,7 +325,7 @@ function buildItems({
 	search,
 	structureERC,
 }: {
-	children: (Structure | RepeatableGroup)['children'];
+	children: (ReferencedStructure | RepeatableGroup | Structure)['children'];
 	path?: string[];
 	search: string;
 	structureERC: Structure['erc'];

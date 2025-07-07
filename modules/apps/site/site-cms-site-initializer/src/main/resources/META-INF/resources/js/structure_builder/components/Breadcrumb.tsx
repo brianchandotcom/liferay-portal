@@ -10,7 +10,11 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureChildren from '../selectors/selectStructureChildren';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
-import {RepeatableGroup, Structure} from '../types/Structure';
+import {
+	ReferencedStructure,
+	RepeatableGroup,
+	Structure,
+} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 
 type Path = {label: string; uuid: Uuid}[];
@@ -61,7 +65,7 @@ export default function Breadcrumb({uuid}: {uuid: Uuid}) {
 
 function getPath(
 	uuid: Uuid,
-	children: (Structure | RepeatableGroup)['children'],
+	children: (ReferencedStructure | RepeatableGroup | Structure)['children'],
 	path: Path = []
 ): Path | null {
 	for (const child of children.values()) {

@@ -50,7 +50,7 @@ export default function useSelectedItem(): SelectedItem {
 
 function findSelectedChild(
 	uuid: Uuid,
-	children: (Structure | RepeatableGroup)['children'],
+	children: (ReferencedStructure | RepeatableGroup | Structure)['children'],
 	isReferenced: boolean = false
 ): SelectedChild | null {
 	for (const child of children.values()) {

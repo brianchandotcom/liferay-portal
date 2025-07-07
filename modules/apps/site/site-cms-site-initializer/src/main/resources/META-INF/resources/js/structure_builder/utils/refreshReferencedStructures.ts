@@ -25,7 +25,7 @@ export default function refreshReferencedStructures({
 	ancestors?: Array<ObjectDefinition['externalReferenceCode']>;
 	objectDefinition?: ObjectDefinition;
 	objectDefinitions: ObjectDefinitions;
-	root: Structure | ReferencedStructure | RepeatableGroup;
+	root: ReferencedStructure | RepeatableGroup | Structure;
 }) {
 	const children = new Map();
 

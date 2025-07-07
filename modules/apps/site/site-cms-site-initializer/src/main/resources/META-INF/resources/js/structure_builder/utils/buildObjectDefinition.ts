@@ -89,7 +89,8 @@ export default function buildObjectDefinition({
 function getFields(children: Structure['children']): Field[] {
 	return Array.from(children.values()).filter(
 		(child) =>
-			!['referenced-structure', 'repeatable-group'].includes(child.type)
+			child.type !== 'referenced-structure' &&
+			child.type !== 'repeatable-group'
 	) as Field[];
 }
 

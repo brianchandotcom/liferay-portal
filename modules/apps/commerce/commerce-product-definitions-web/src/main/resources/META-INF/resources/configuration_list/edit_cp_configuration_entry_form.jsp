@@ -165,15 +165,20 @@ CPConfigurationEntry cpConfigurationEntry = cpConfigurationListDisplayContext.ge
 			</div>
 
 			<div class="col-6">
-				<aui:input data-qa-id="allowedOrderQuantitiesInput" helpMessage="separate-values-with-a-space-in-the-format" name="allowedOrderQuantities" value='<%= BeanParamUtil.getString(cpConfigurationEntry, request, "allowedOrderQuantities") %>' />
 
-				<aui:validator errorMessage="separate-values-with-a-space-in-the-format" name="custom">
-					function(val) {
-						const pattern = /^(\d{1,3}(,\d{3})*\.\d{2})(\s\d{1,3}(,\d{3})*\.\d{2})*$/;
+				<%
+				String allowedOrderQuantitiesHelpMessage = LanguageUtil.format(request, "separate-values-with-a-space-following-the-x-format", "###,##0.00", false);
+				%>
 
-						return pattern.test(val);
-					}
-				</aui:validator>
+				<aui:input data-qa-id="allowedOrderQuantitiesInput" helpMessage="<%= allowedOrderQuantitiesHelpMessage %>" name="allowedOrderQuantities" value='<%= BeanParamUtil.getString(cpConfigurationEntry, request, "allowedOrderQuantities") %>'>
+					<aui:validator errorMessage="<%= allowedOrderQuantitiesHelpMessage %>" name="custom">
+						function(val) {
+							const pattern = /^(\d{1,3}(,\d{3})*\.\d{2})(\s\d{1,3}(,\d{3})*\.\d{2})*$/;
+
+							return pattern.test(val);
+						}
+					</aui:validator>
+				</aui:input>
 			</div>
 		</div>
 	</liferay-frontend:fieldset>

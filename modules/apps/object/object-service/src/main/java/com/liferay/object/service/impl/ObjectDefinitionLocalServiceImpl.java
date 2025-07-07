@@ -592,15 +592,13 @@ public class ObjectDefinitionLocalServiceImpl
 					_deleteFromTable(
 						objectDefinition.getExtensionDBTableName());
 
-					List<ObjectField> localizedObjectFields =
-						_objectFieldLocalService.getLocalizedObjectFields(
-							objectDefinition.getObjectDefinitionId());
+					DynamicObjectDefinitionLocalizationTable
+						dynamicObjectDefinitionLocalizationTable =
+							DynamicObjectDefinitionLocalizationTableFactory.
+								create(
+									objectDefinition, _objectFieldLocalService);
 
-					if ((!FeatureFlagManagerUtil.isEnabled(
-							objectDefinition.getCompanyId(), "LPD-32050") &&
-						 objectDefinition.isEnableLocalization()) ||
-						!localizedObjectFields.isEmpty()) {
-
+					if (dynamicObjectDefinitionLocalizationTable != null) {
 						_deleteFromTable(
 							objectDefinition.getLocalizationDBTableName());
 					}

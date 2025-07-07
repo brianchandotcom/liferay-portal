@@ -390,6 +390,17 @@ test.describe('Item Actions in Data Set fragment', () => {
 			await expect(
 				(await itemAction.getAttribute('href')).valueOf()
 			).toContain(`/detail/${itemId}`);
+
+			await itemAction.click();
+
+			await page.getByText('Page Not Found').isVisible();
+
+			const goBackLink = page.getByRole('link', {
+				exact: true,
+				name: 'Go Back',
+			});
+
+			await goBackLink.click();
 		});
 
 		await test.step('Change visualization mode to List', async () => {

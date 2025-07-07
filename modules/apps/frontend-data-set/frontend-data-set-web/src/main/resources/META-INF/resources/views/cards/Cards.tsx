@@ -198,13 +198,14 @@ const Card = forwardRef<HTMLDivElement, any>(
 							? (event: any) => {
 									const target = getSelectionTrigger(event);
 
-									!!target &&
+									if (target) {
 										onItemSelectionChange?.({
 											item,
 											trigger: target,
 										});
 
-									event.preventDefault();
+										event.preventDefault();
+									}
 								}
 							: undefined
 					}

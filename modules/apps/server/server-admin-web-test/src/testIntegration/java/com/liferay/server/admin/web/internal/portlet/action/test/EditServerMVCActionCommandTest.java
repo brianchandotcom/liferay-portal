@@ -421,6 +421,12 @@ public class EditServerMVCActionCommandTest {
 			_testUpdateMailPortletPreferences(
 				() -> Boolean.FALSE, () -> 0, () -> StringPool.BLANK,
 				jxPortletPreferences);
+
+			_testUpdateMailWithAndWithoutSecureProtocol(
+				jxPortletPreferences, Boolean.TRUE);
+
+			_testUpdateMailWithAndWithoutSecureProtocol(
+				jxPortletPreferences, Boolean.FALSE);
 		}
 		finally {
 			PortalPreferencesWrapper portalPreferencesWrapper =
@@ -658,6 +664,36 @@ public class EditServerMVCActionCommandTest {
 			parameters.get("smtpUser"),
 			jxPortletPreferences.getValue(
 				PropsKeys.MAIL_SESSION_MAIL_SMTP_USER, null));
+	}
+
+	private void _testUpdateMailWithAndWithoutSecureProtocol(
+		jakarta.portlet.PortletPreferences jxPortletPreferences,
+		boolean secureEnable) {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"pop3Secure", String.valueOf(secureEnable));
+		mockLiferayPortletActionRequest.addParameter(
+			"smtpSecure", String.valueOf(secureEnable));
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_updateMail",
+			new Class<?>[] {
+				ActionRequest.class, jakarta.portlet.PortletPreferences.class
+			},
+			mockLiferayPortletActionRequest, jxPortletPreferences);
+
+		Assert.assertEquals(
+			secureEnable ? Account.PROTOCOL_POPS : Account.PROTOCOL_POP,
+			jxPortletPreferences.getValue(
+				PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL, null));
+
+		Assert.assertEquals(
+			secureEnable ? Account.PROTOCOL_SMTPS : Account.PROTOCOL_SMTP,
+			jxPortletPreferences.getValue(
+				PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL, null));
 	}
 
 	private static final String[] _COMMANDS = {

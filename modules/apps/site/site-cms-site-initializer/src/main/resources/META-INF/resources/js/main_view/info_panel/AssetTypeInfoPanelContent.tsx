@@ -9,12 +9,12 @@ import {
 	IAssetInformation,
 	IAssetObjectEntry,
 	getBaseAssetInformation,
-} from '../../../structure_builder/types/AssetType';
+} from '../../structure_builder/types/AssetType';
 import AssetTypeInfoPanelBody from './AssetTypeInfoPanelBody';
 import AssetTypeInfoPanelHeader from './AssetTypeInfoPanelHeader';
 import {AssetTypeInfoPanelContext, IAssetTypeInfoPanelContext} from './context';
 
-import '../../../../css/components/AssetTypeInfoPanel.scss';
+import '../../../css/components/AssetTypeInfoPanel.scss';
 import {EVENTS} from './util/constants';
 
 const AssetTypeInfoPanelContent = () => {

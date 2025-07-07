@@ -13,9 +13,6 @@ export {default as ContentEditorManagementBar} from './content_editor/components
 export {default as ContentEditorSidePanel} from './content_editor/components/ContentEditorSidePanel';
 export {default as SpaceList} from './content_editor/components/SpaceList';
 
-// Main
-
-export {default as AssetTypeInfoPanelContent} from './main/components/info_panel/AssetTypeInfoPanelContent';
 export {default as CategorizationToolbar} from './main_view/categorization/CategorizationToolbar';
 export {default as EditCategoryPage} from './main_view/categorization/categories/EditCategoryPage';
 export {default as CategorizationBreadcrumb} from './main_view/categorization/components/CategorizationBreadcrumb';
@@ -23,6 +20,10 @@ export {default as ViewTags} from './main_view/categorization/tags/ViewTags';
 export {default as EditVocabulary} from './main_view/categorization/vocabularies/EditVocabulary';
 export {default as ViewDashboard} from './main_view/dashboard/ViewDashboard';
 export {default as EditFolder} from './main_view/folders/EditFolder';
+
+// Main
+
+export {default as AssetTypeInfoPanelContent} from './main_view/info_panel/AssetTypeInfoPanelContent';
 export {default as AllFDSPropsTransformer} from './main_view/props_transformer/AllFDSPropsTransformer';
 export {default as AllSpacesFDSPropsTransformer} from './main_view/props_transformer/AllSpacesFDSPropsTransformer';
 export {default as CategoryFDSPropsTransformer} from './main_view/props_transformer/CategoryFDSPropsTransformer';

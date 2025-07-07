@@ -8,7 +8,7 @@ import React from 'react';
 import {
 	IAssetInformation,
 	IAssetObjectEntry,
-} from '../../../../structure_builder/types/AssetType';
+} from '../../../structure_builder/types/AssetType';
 
 export interface IAssetTypeInfoPanelContext extends IAssetInformation {
 	objectEntries?: IAssetObjectEntry[];

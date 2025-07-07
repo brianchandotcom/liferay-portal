@@ -7,8 +7,8 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, cleanup, render, screen, within} from '@testing-library/react';
 import React from 'react';
 
-import AssetTypeInfoPanelContent from '../../../../../src/main/resources/META-INF/resources/js/main/components/info_panel/AssetTypeInfoPanelContent';
-import {EVENTS} from '../../../../../src/main/resources/META-INF/resources/js/main/components/info_panel/util/constants';
+import AssetTypeInfoPanelContent from '../../../../src/main/resources/META-INF/resources/js/main_view/info_panel/AssetTypeInfoPanelContent';
+import {EVENTS} from '../../../../src/main/resources/META-INF/resources/js/main_view/info_panel/util/constants';
 import {DOCUMENT_OBJECT_ENTRY} from './mocks';
 
 describe.skip('CMS Asset Type Info Panel', () => {

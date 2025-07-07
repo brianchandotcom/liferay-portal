@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ASSET_TYPE} from '../../main/components/info_panel/util/constants';
+import {ASSET_TYPE} from '../../main_view/info_panel/util/constants';
 
 export interface IAssetTypeFile {
 	externalReferenceCode: string;

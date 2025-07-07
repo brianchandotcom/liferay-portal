@@ -6,7 +6,7 @@
 import ClayEmptyState from '@clayui/empty-state';
 import React, {useContext} from 'react';
 
-import {getImage} from '../../util/getImage';
+import {getImage} from '../../common/utils/getImage';
 import {AssetTypeInfoPanelContext} from './context';
 
 const AssetTypeInfoPanelDefaultView = () => {

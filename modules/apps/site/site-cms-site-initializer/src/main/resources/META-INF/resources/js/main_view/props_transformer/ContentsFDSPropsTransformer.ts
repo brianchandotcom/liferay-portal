@@ -5,8 +5,8 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
-import AssetTypeInfoPanel from '../components/info_panel/AssetTypeInfoPanelContent';
-import {EVENTS} from '../components/info_panel/util/constants';
+import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
+import {EVENTS} from '../info_panel/util/constants';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';

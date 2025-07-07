@@ -49,6 +49,35 @@ import org.opensaml.xmlsec.encryption.impl.KeySizeBuilder;
  */
 public class MetadataGeneratorUtil {
 
+	public static EntityDescriptor buildIdpAndSpEntityDescriptor(
+			String portalURL, String entityId, boolean signAuthnRequests,
+			boolean wantAuthnRequestSigned, boolean signMetadata,
+			Credential credential, Credential encryptionCredential)
+		throws Exception {
+
+		EntityDescriptor idpEntityDescriptor = buildIdpEntityDescriptor(
+			portalURL, entityId, wantAuthnRequestSigned, signMetadata,
+			credential, encryptionCredential);
+
+		EntityDescriptor spEntityDescriptor = buildSpEntityDescriptor(
+			portalURL, entityId, signAuthnRequests, signMetadata,
+			wantAuthnRequestSigned, credential, encryptionCredential);
+
+		List<RoleDescriptor> spRoleDescriptors =
+			spEntityDescriptor.getRoleDescriptors();
+
+		RoleDescriptor roleDescriptor = spRoleDescriptors.get(0);
+
+		roleDescriptor.detach();
+
+		List<RoleDescriptor> idpRoleDescriptors =
+			idpEntityDescriptor.getRoleDescriptors();
+
+		idpRoleDescriptors.addAll(spEntityDescriptor.getRoleDescriptors());
+
+		return idpEntityDescriptor;
+	}
+
 	public static EntityDescriptor buildIdpEntityDescriptor(
 			String portalURL, String entityId, boolean wantAuthnRequestSigned,
 			boolean signMetadata, Credential credential,

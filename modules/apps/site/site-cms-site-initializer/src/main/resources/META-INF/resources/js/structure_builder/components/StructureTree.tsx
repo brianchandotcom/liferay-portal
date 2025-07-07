@@ -333,13 +333,11 @@ function useSelectionMode() {
 function buildItems({
 	children,
 	invalids,
-	path = [],
 	search,
 	structureERC,
 }: {
 	children: (ReferencedStructure | RepeatableGroup | Structure)['children'];
 	invalids: State['invalids'];
-	path?: string[];
 	search: string;
 	structureERC: Structure['erc'];
 }): TreeItem[] {
@@ -355,7 +353,6 @@ function buildItems({
 					children: buildItems({
 						children: child.children,
 						invalids,
-						path: [...path, child.name],
 						search,
 						structureERC,
 					}),

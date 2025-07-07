@@ -395,7 +395,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 			await page.getByText('Not Found').isVisible();
 
-			await page.goto(layout.friendlyURL);
+			await dataSetFragmentPage.goToPage({layout});
 		});
 
 		await test.step('Change visualization mode to List', async () => {

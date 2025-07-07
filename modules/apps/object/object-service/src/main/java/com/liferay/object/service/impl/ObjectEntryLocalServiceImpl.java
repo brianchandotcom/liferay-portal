@@ -5757,11 +5757,8 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getCompanyId(), objectEntry, values);
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 
-		Date displayDate = objectEntry.getDisplayDate();
-
 		if ((workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) &&
-			(!objectEntry.isPending() || (displayDate == null) ||
-			 displayDate.before(new Date()))) {
+			!objectEntry.isPending()) {
 
 			objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 			objectEntry.setStatusByUserId(user.getUserId());

@@ -24,7 +24,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -101,7 +100,8 @@ public class ObjectEntryVersionLocalServiceTest {
 		_objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, null, false, false, true, false,
-				true, false, true, null, RandomTestUtil.randomLocaleStringMap(),
+				false, false, true, null,
+				RandomTestUtil.randomLocaleStringMap(),
 				"A" + StringUtil.randomString(), null, null,
 				RandomTestUtil.randomLocaleStringMap(), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
@@ -265,110 +265,486 @@ public class ObjectEntryVersionLocalServiceTest {
 	public void testAddObjectEntryVersionWithObjectEntryDraftEnabled()
 		throws Exception {
 
-		// Add draft object entry
+		_objectDefinition.setEnableObjectEntryDraft(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		try {
+
+			// Add draft object entry
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+				0, TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue1"
+				).build(),
+				serviceContext);
+
+			Assert.assertTrue(objectEntry.isDraft());
+			Assert.assertEquals(1, objectEntry.getVersion());
+
+			_assertEquals(
+				Arrays.asList(
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue1"),
+						WorkflowConstants.STATUS_DRAFT, 1)),
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId()));
+
+			// Update as draft
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue2"
+				).build(),
+				serviceContext);
+
+			Assert.assertTrue(objectEntry.isDraft());
+			Assert.assertEquals(1, objectEntry.getVersion());
+
+			_assertEquals(
+				Arrays.asList(
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue2"),
+						WorkflowConstants.STATUS_DRAFT, 1)),
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId()));
+
+			// Update as published
+
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue3"
+				).build(),
+				serviceContext);
+
+			Assert.assertTrue(objectEntry.isApproved());
+			Assert.assertEquals(1, objectEntry.getVersion());
+
+			_assertEquals(
+				Arrays.asList(
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue3"),
+						WorkflowConstants.STATUS_APPROVED, 1)),
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId()));
+
+			// Update published object entry as draft
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue4"
+				).build(),
+				serviceContext);
+
+			Assert.assertTrue(objectEntry.isDraft());
+			Assert.assertEquals(2, objectEntry.getVersion());
+
+			_assertEquals(
+				Arrays.asList(
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue3"),
+						WorkflowConstants.STATUS_APPROVED, 1),
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue4"),
+						WorkflowConstants.STATUS_DRAFT, 2)),
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId()));
+		}
+		finally {
+			_objectDefinition.setEnableObjectEntryDraft(false);
+
+			_objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition);
+		}
+	}
+
+	@Test
+	public void testAddObjectEntryVersionWithObjectEntryScheduleEnabled()
+		throws Exception {
+
+		// object entry draft disabled
+
+		ObjectEntryVersionConfiguration
+			originalObjectEntryVersionConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					ObjectEntryVersionConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectEntryVersionConfiguration.class,
+			TestPropsValues.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"maximumRetentionPeriod", 1
+			).put(
+				"maximumVersionsPerEntry", 5
+			).build());
+
+		_objectDefinition.setEnableObjectEntryDraft(false);
+		_objectDefinition.setEnableObjectEntrySchedule(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", "textObjectFieldValue1"
+			).build());
+
+		Assert.assertTrue(objectEntry1.isApproved());
+		Assert.assertEquals(1, objectEntry1.getVersion());
+
+		_assertEquals(
+			Arrays.asList(
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue1"),
+					WorkflowConstants.STATUS_APPROVED, 1)),
+			_objectEntryVersionLocalService.getObjectEntryVersions(
+				objectEntry1.getObjectEntryId()));
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new Date(System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
+			).put(
+				"textObjectFieldName", "textObjectFieldValue2"
+			).build(),
+			serviceContext);
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+		Assert.assertTrue(objectEntry1.isScheduled());
+		Assert.assertEquals(2, objectEntry1.getVersion());
+
+		_assertEquals(
+			Arrays.asList(
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue1"),
+					WorkflowConstants.STATUS_APPROVED, 1),
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue2"),
+					WorkflowConstants.STATUS_SCHEDULED, 2)),
+			_objectEntryVersionLocalService.getObjectEntryVersions(
+				objectEntry1.getObjectEntryId()));
+
+		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new Date(System.currentTimeMillis() + TimeUnit.DAY.toMillis(2))
+			).put(
+				"textObjectFieldName", "textObjectFieldValue3"
+			).build(),
+			serviceContext);
+
+		Assert.assertTrue(objectEntry1.isScheduled());
+		Assert.assertEquals(3, objectEntry1.getVersion());
+
+		_assertEquals(
+			Arrays.asList(
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue1"),
+					WorkflowConstants.STATUS_APPROVED, 1),
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue2"),
+					WorkflowConstants.STATUS_SCHEDULED, 2),
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue3"),
+					WorkflowConstants.STATUS_SCHEDULED, 3)),
+			_objectEntryVersionLocalService.getObjectEntryVersions(
+				objectEntry1.getObjectEntryId()));
+
+		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new Date(System.currentTimeMillis() - TimeUnit.DAY.toMillis(1))
+			).put(
+				"textObjectFieldName", "textObjectFieldValue4"
+			).build(),
+			serviceContext);
+
+		Assert.assertTrue(objectEntry1.isApproved());
+		Assert.assertEquals(4, objectEntry1.getVersion());
+
+		_assertEquals(
+			Arrays.asList(
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue1"),
+					WorkflowConstants.STATUS_APPROVED, 1),
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue2"),
+					WorkflowConstants.STATUS_SCHEDULED, 2),
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue3"),
+					WorkflowConstants.STATUS_SCHEDULED, 3),
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue4"),
+					WorkflowConstants.STATUS_APPROVED, 4)),
+			_objectEntryVersionLocalService.getObjectEntryVersions(
+				objectEntry1.getObjectEntryId()));
+
+		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", "textObjectFieldValue5"
+			).build(),
+			serviceContext);
+
+		Assert.assertTrue(objectEntry1.isApproved());
+		Assert.assertEquals(5, objectEntry1.getVersion());
+
+		_assertEquals(
+			Arrays.asList(
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue1"),
+					WorkflowConstants.STATUS_APPROVED, 1),
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue2"),
+					WorkflowConstants.STATUS_SCHEDULED, 2),
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue3"),
+					WorkflowConstants.STATUS_SCHEDULED, 3),
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue4"),
+					WorkflowConstants.STATUS_APPROVED, 4),
+				_createObjectEntryVersion(
+					objectEntry1.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue5"),
+					WorkflowConstants.STATUS_APPROVED, 5)),
+			_objectEntryVersionLocalService.getObjectEntryVersions(
+				objectEntry1.getObjectEntryId()));
+
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectEntryVersionConfiguration.class,
+			TestPropsValues.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"maximumRetentionPeriod", 1
+			).put(
+				"maximumVersionsPerEntry",
+				originalObjectEntryVersionConfiguration.
+					maximumVersionsPerEntry()
+			).build());
+
+		// object entry draft enabled
+
+		_objectDefinition.setEnableObjectEntryDraft(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new Date(System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
+			).put(
 				"textObjectFieldName", "textObjectFieldValue1"
 			).build(),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext());
 
-		Assert.assertTrue(objectEntry.isDraft());
-		Assert.assertEquals(1, objectEntry.getVersion());
+		Assert.assertTrue(objectEntry2.isScheduled());
+		Assert.assertEquals(1, objectEntry2.getVersion());
 
 		_assertEquals(
 			Arrays.asList(
 				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
+					objectEntry2.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue1"),
-					WorkflowConstants.STATUS_DRAFT, 1)),
+					WorkflowConstants.STATUS_SCHEDULED, 1)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId()));
+				objectEntry2.getObjectEntryId()));
 
-		// Update as draft
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+		objectEntry2 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new Date(System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
+			).put(
 				"textObjectFieldName", "textObjectFieldValue2"
 			).build(),
 			serviceContext);
 
-		Assert.assertTrue(objectEntry.isDraft());
-		Assert.assertEquals(1, objectEntry.getVersion());
+		Assert.assertTrue(objectEntry2.isDraft());
+		Assert.assertEquals(2, objectEntry2.getVersion());
 
 		_assertEquals(
 			Arrays.asList(
 				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
+					objectEntry2.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue1"),
+					WorkflowConstants.STATUS_SCHEDULED, 1),
+				_createObjectEntryVersion(
+					objectEntry2.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue2"),
-					WorkflowConstants.STATUS_DRAFT, 1)),
+					WorkflowConstants.STATUS_DRAFT, 2)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId()));
+				objectEntry2.getObjectEntryId()));
 
-		// Update as published
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+		objectEntry2 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new Date(System.currentTimeMillis() - TimeUnit.DAY.toMillis(1))
+			).put(
 				"textObjectFieldName", "textObjectFieldValue3"
 			).build(),
 			serviceContext);
 
-		Assert.assertTrue(objectEntry.isApproved());
-		Assert.assertEquals(1, objectEntry.getVersion());
+		Assert.assertTrue(objectEntry2.isDraft());
+		Assert.assertEquals(2, objectEntry2.getVersion());
 
 		_assertEquals(
 			Arrays.asList(
 				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
+					objectEntry2.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue1"),
+					WorkflowConstants.STATUS_SCHEDULED, 1),
+				_createObjectEntryVersion(
+					objectEntry2.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue3"),
-					WorkflowConstants.STATUS_APPROVED, 1)),
+					WorkflowConstants.STATUS_DRAFT, 2)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId()));
+				objectEntry2.getObjectEntryId()));
 
-		// Update published object entry as draft
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+		objectEntry2 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"textObjectFieldName", "textObjectFieldValue4"
 			).build(),
 			serviceContext);
 
-		Assert.assertTrue(objectEntry.isDraft());
-		Assert.assertEquals(2, objectEntry.getVersion());
+		Assert.assertTrue(objectEntry2.isDraft());
+		Assert.assertEquals(2, objectEntry2.getVersion());
 
 		_assertEquals(
 			Arrays.asList(
 				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
+					objectEntry2.getExternalReferenceCode(),
 					JSONUtil.put(
-						"textObjectFieldName", "textObjectFieldValue3"),
-					WorkflowConstants.STATUS_APPROVED, 1),
+						"textObjectFieldName", "textObjectFieldValue1"),
+					WorkflowConstants.STATUS_SCHEDULED, 1),
 				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
+					objectEntry2.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue4"),
 					WorkflowConstants.STATUS_DRAFT, 2)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId()));
+				objectEntry2.getObjectEntryId()));
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		objectEntry2 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new Date(System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
+			).put(
+				"textObjectFieldName", "textObjectFieldValue5"
+			).build(),
+			serviceContext);
+
+		Assert.assertTrue(objectEntry2.isScheduled());
+		Assert.assertEquals(2, objectEntry2.getVersion());
+
+		_assertEquals(
+			Arrays.asList(
+				_createObjectEntryVersion(
+					objectEntry2.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue1"),
+					WorkflowConstants.STATUS_SCHEDULED, 1),
+				_createObjectEntryVersion(
+					objectEntry2.getExternalReferenceCode(),
+					JSONUtil.put(
+						"textObjectFieldName", "textObjectFieldValue5"),
+					WorkflowConstants.STATUS_SCHEDULED, 2)),
+			_objectEntryVersionLocalService.getObjectEntryVersions(
+				objectEntry2.getObjectEntryId()));
+
+		_objectDefinition.setEnableObjectEntryDraft(false);
+		_objectDefinition.setEnableObjectEntrySchedule(false);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
 	}
 
 	@Test
@@ -491,37 +867,54 @@ public class ObjectEntryVersionLocalServiceTest {
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
 
-		// Update pending object entry as draft
+		_objectDefinition.setEnableObjectEntryDraft(true);
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", "textObjectFieldValue4"
-			).build(),
-			serviceContext);
+		try {
 
-		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-			workflowDefinitionLink);
+			// Update pending object entry as draft
 
-		Assert.assertTrue(objectEntry.isPending());
-		Assert.assertEquals(2, objectEntry.getVersion());
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		_assertEquals(
-			Arrays.asList(
-				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
-					JSONUtil.put(
-						"textObjectFieldName", "textObjectFieldValue2"),
-					WorkflowConstants.STATUS_APPROVED, 1),
-				_createObjectEntryVersion(
-					objectEntry.getExternalReferenceCode(),
-					JSONUtil.put(
-						"textObjectFieldName", "textObjectFieldValue4"),
-					WorkflowConstants.STATUS_PENDING, 2)),
-			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntry.getObjectEntryId()));
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue4"
+				).build(),
+				serviceContext);
+
+			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+				workflowDefinitionLink);
+
+			Assert.assertTrue(objectEntry.isPending());
+			Assert.assertEquals(2, objectEntry.getVersion());
+
+			_assertEquals(
+				Arrays.asList(
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue2"),
+						WorkflowConstants.STATUS_APPROVED, 1),
+					_createObjectEntryVersion(
+						objectEntry.getExternalReferenceCode(),
+						JSONUtil.put(
+							"textObjectFieldName", "textObjectFieldValue4"),
+						WorkflowConstants.STATUS_PENDING, 2)),
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId()));
+		}
+		finally {
+			_objectDefinition.setEnableObjectEntryDraft(false);
+
+			_objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition);
+		}
 	}
 
 	@Test
@@ -541,45 +934,54 @@ public class ObjectEntryVersionLocalServiceTest {
 					}));
 
 		_objectDefinition.setEnableObjectEntryHistory(true);
-		_objectDefinition.setEnableObjectEntryVersioning(true);
 
 		_objectDefinition =
 			_objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition);
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", "textObjectFieldValue1"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+		try {
+			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+				0, TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue1"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", "textObjectFieldValue2"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue2"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
 
-		_objectEntryVersionLocalService.deleteObjectEntryVersion(
-			objectEntry.getObjectEntryId(), 1);
+			_objectEntryVersionLocalService.deleteObjectEntryVersion(
+				objectEntry.getObjectEntryId(), 1);
 
-		AuditMessage auditMessage = auditMessages.poll();
+			AuditMessage auditMessage = auditMessages.poll();
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"textObjectFieldName", "textObjectFieldValue1"
-			).toString(),
-			String.valueOf(auditMessage.getAdditionalInfo()),
-			JSONCompareMode.STRICT_ORDER);
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					"textObjectFieldName", "textObjectFieldValue1"
+				).toString(),
+				String.valueOf(auditMessage.getAdditionalInfo()),
+				JSONCompareMode.STRICT_ORDER);
 
-		auditMessages.clear();
+			auditMessages.clear();
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				_objectEntryVersionModelListener, "_auditRouter", auditRouter);
 
-		ReflectionTestUtil.setFieldValue(
-			_objectEntryVersionModelListener, "_auditRouter", auditRouter);
+			_objectDefinition.setEnableObjectEntryHistory(false);
+
+			_objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition);
+		}
 	}
 
 	@Test
@@ -718,96 +1120,6 @@ public class ObjectEntryVersionLocalServiceTest {
 				objectEntry.getObjectEntryId()));
 	}
 
-	@FeatureFlag("LPD-17564")
-	@Test
-	public void testUpdateObjectEntryVersionWithDisplayDate() throws Exception {
-		_objectDefinition.setEnableObjectEntryDraft(true);
-		_objectDefinition.setEnableObjectEntrySchedule(true);
-
-		_objectDefinition =
-			_objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition);
-
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			0, _objectDefinition.getObjectDefinitionId(),
-			Collections.emptyMap());
-
-		try {
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
-
-			// Update as draft with null display date
-
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext();
-
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			objectEntry = _objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-				Collections.emptyMap(), serviceContext);
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_DRAFT, objectEntry.getStatus());
-
-			_assertObjectEntryVersionStatus(
-				objectEntry, WorkflowConstants.STATUS_APPROVED, 1);
-			_assertObjectEntryVersionStatus(
-				objectEntry, WorkflowConstants.STATUS_DRAFT, 2);
-
-			// Update as draft with display date in the past
-
-			objectEntry = _objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-				HashMapBuilder.<String, Serializable>put(
-					"displayDate",
-					new Date(
-						System.currentTimeMillis() - TimeUnit.DAY.toMillis(1))
-				).build(),
-				serviceContext);
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_DRAFT, objectEntry.getStatus());
-
-			_assertObjectEntryVersionStatus(
-				objectEntry, WorkflowConstants.STATUS_APPROVED, 1);
-			_assertObjectEntryVersionStatus(
-				objectEntry, WorkflowConstants.STATUS_DRAFT, 2);
-
-			// Update as scheduled with display date in the future
-
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-			objectEntry = _objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-				HashMapBuilder.<String, Serializable>put(
-					"displayDate",
-					new Date(
-						System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
-				).build(),
-				serviceContext);
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_SCHEDULED, objectEntry.getStatus());
-
-			_assertObjectEntryVersionStatus(
-				objectEntry, WorkflowConstants.STATUS_APPROVED, 1);
-			_assertObjectEntryVersionStatus(
-				objectEntry, WorkflowConstants.STATUS_INACTIVE, 2);
-		}
-		finally {
-			_objectDefinition.setEnableObjectEntryDraft(false);
-			_objectDefinition.setEnableObjectEntrySchedule(false);
-
-			_objectDefinition =
-				_objectDefinitionLocalService.updateObjectDefinition(
-					_objectDefinition);
-
-			_objectEntryLocalService.deleteObjectEntry(objectEntry);
-		}
-	}
-
 	private void _assertEquals(
 			List<ObjectEntryVersion> expectedObjectEntryVersions,
 			List<ObjectEntryVersion> actualObjectEntryVersions)
@@ -856,17 +1168,6 @@ public class ObjectEntryVersionLocalServiceTest {
 				expectedObjectEntryVersion.getStatus(),
 				actualObjectEntryVersion.getStatus());
 		}
-	}
-
-	private void _assertObjectEntryVersionStatus(
-			ObjectEntry objectEntry, int status, int version)
-		throws PortalException {
-
-		ObjectEntryVersion objectEntryVersion =
-			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getObjectEntryId(), version);
-
-		Assert.assertEquals(status, objectEntryVersion.getStatus());
 	}
 
 	private ObjectEntryVersion _createObjectEntryVersion(

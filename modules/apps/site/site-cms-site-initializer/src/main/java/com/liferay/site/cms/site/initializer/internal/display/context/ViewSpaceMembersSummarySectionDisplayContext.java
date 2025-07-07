@@ -5,7 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -93,23 +92,6 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {
-		long assetLibraryCreatorUserId = 0;
-		long assetLibraryId = 0;
-
-		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
-			_groupId);
-
-		if (depotEntry != null) {
-			assetLibraryId = depotEntry.getDepotEntryId();
-
-			Group group = _groupLocalService.fetchGroup(
-				depotEntry.getGroupId());
-
-			if (group != null) {
-				assetLibraryCreatorUserId = group.getCreatorUserId();
-			}
-		}
-
 		return SpaceAbstractHeaderUtil.getSpaceAbstractHeaderProps(
 			_httpServletRequest, "view-all-members",
 			_getSpaceMembersHeaderTitle(), StringPool.BLANK,
@@ -117,9 +99,13 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 				"action", "open-members-modal"
 			).put(
 				"assetLibraryCreatorUserId",
-				String.valueOf(assetLibraryCreatorUserId)
+				() -> {
+					Group group = _groupLocalService.getGroup(_groupId);
+
+					return String.valueOf(group.getCreatorUserId());
+				}
 			).put(
-				"assetLibraryId", String.valueOf(assetLibraryId)
+				"assetLibraryId", String.valueOf(_groupId)
 			).build());
 	}
 

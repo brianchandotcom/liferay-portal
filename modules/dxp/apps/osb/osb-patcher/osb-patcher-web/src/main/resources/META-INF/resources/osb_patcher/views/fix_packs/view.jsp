@@ -329,17 +329,6 @@ List<PatcherFix> patcherFixes = PatcherFixLocalServiceUtil.getPatcherFixPackPatc
 						url="<%= setFixPackFieldsURL %>"
 					/>
 				</c:if>
-
-				<c:if test="<%= false %>">
-					<portlet:actionURL name="/patcher/delete_fixes" var="deletePatcherFixURL">
-						<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-					</portlet:actionURL>
-
-					<liferay-ui:icon-delete
-						url="<%= deletePatcherFixURL %>"
-					/>
-				</c:if>
 			</liferay-ui:icon-menu>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>

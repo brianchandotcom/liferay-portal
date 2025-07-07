@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -62,6 +64,12 @@ public class DataCleanupPreupgradeProcessSuiteTest
 
 			_updatePortalSchemaVersion(_currentPortalSchemaVersion + ".0");
 		}
+
+		if (DBPartition.isPartitionEnabled()) {
+			long[] companyIds = PortalInstancePool.getCompanyIds();
+
+			_companiesCount = companyIds.length;
+		}
 	}
 
 	@AfterClass
@@ -105,7 +113,8 @@ public class DataCleanupPreupgradeProcessSuiteTest
 		cleanUp();
 
 		Assert.assertEquals(
-			_cleanUpMessages.toString(), 2, _cleanUpMessages.size());
+			_cleanUpMessages.toString(), 2 * _companiesCount,
+			_cleanUpMessages.size());
 
 		Assert.assertTrue(_cleanUpMessages.contains(_SUCCESS_MESSAGE_1));
 		Assert.assertTrue(_cleanUpMessages.contains(_SUCCESS_MESSAGE_2));
@@ -149,7 +158,8 @@ public class DataCleanupPreupgradeProcessSuiteTest
 		}
 
 		Assert.assertEquals(
-			_cleanUpMessages.toString(), 1, _cleanUpMessages.size());
+			_cleanUpMessages.toString(), _companiesCount,
+			_cleanUpMessages.size());
 
 		Assert.assertFalse(_cleanUpMessages.contains(_SUCCESS_MESSAGE_2));
 		Assert.assertTrue(_cleanUpMessages.contains(_SUCCESS_MESSAGE_1));
@@ -196,6 +206,7 @@ public class DataCleanupPreupgradeProcessSuiteTest
 	private static final String _SUCCESS_MESSAGE_2 =
 		RandomTestUtil.randomString();
 
+	private static int _companiesCount = 1;
 	private static String _currentPortalSchemaVersion;
 
 	private final List<String> _cleanUpMessages = new ArrayList<>();

@@ -100,8 +100,12 @@ public interface SamlProviderConfiguration {
 	@Meta.AD(
 		deflt = SamlProviderConfigurationKeys.SAML_ROLE_SP, id = "saml.role",
 		name = "saml-role",
-		optionLabels = {"identity-provider", "service-provider"},
+		optionLabels = {
+			"identity-and-service-provider", "identity-provider",
+			"service-provider"
+		},
 		optionValues = {
+			SamlProviderConfigurationKeys.SAML_ROLE_BOTH,
 			SamlProviderConfigurationKeys.SAML_ROLE_IDP,
 			SamlProviderConfigurationKeys.SAML_ROLE_SP
 		},

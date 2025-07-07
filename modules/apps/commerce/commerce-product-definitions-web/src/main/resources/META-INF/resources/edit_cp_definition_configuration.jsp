@@ -116,8 +116,12 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 							<aui:validator name="number" />
 						</aui:input>
 
-						<aui:input helpMessage="separate-values-with-a-space-in-the-format" name="allowedOrderQuantities">
-							<aui:validator errorMessage="separate-values-with-a-space-in-the-format" name="custom">
+						<%
+						String allowedOrderQuantitiesHelpMessage = LanguageUtil.format(request, "separate-values-with-a-space-following-the-x-format", "###,##0.00", false);
+						%>
+
+						<aui:input helpMessage="<%= allowedOrderQuantitiesHelpMessage %>" name="allowedOrderQuantities">
+							<aui:validator errorMessage="<%= allowedOrderQuantitiesHelpMessage %>" name="custom">
 								function(val) {
 									const pattern = /^(\d{1,3}(,\d{3})*\.\d{2})(\s\d{1,3}(,\d{3})*\.\d{2})*$/;
 

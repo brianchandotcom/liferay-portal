@@ -82,6 +82,10 @@ public class TestrayS3Object {
 		}
 	}
 
+	public void setBlob(Blob blob) {
+		_blob = blob;
+	}
+
 	@Override
 	public String toString() {
 		return getURLString();
@@ -101,7 +105,7 @@ public class TestrayS3Object {
 		}
 	}
 
-	private final Blob _blob;
+	private Blob _blob;
 	private final TestrayS3Bucket _testrayS3Bucket;
 	private final URL _url;
 

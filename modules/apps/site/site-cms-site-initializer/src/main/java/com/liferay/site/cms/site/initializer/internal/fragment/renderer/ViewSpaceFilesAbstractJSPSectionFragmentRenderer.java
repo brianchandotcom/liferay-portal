@@ -10,6 +10,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -48,6 +49,7 @@ public class ViewSpaceFilesAbstractJSPSectionFragmentRenderer
 			InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
 			httpServletRequest, _language, _objectDefinitionService,
 			_objectDefinitionSettingLocalService,
+			_objectEntryFolderLocalService,
 			_objectEntryFolderModelResourcePermission, _portal);
 	}
 
@@ -71,6 +73,9 @@ public class ViewSpaceFilesAbstractJSPSectionFragmentRenderer
 	@Reference
 	private ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"

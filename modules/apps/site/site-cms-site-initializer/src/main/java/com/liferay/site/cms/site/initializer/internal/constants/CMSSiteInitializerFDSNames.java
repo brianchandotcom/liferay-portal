@@ -40,16 +40,25 @@ public class CMSSiteInitializerFDSNames {
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
 			"-spaceContentsAbstractSection";
 
-	public static final String SPACE_CONTENTS_SECTION =
-		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
-			"-spaceContentsSection";
-
 	public static final String SPACE_FILES_ABSTRACT_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
 			"-spaceFilesAbstractSection";
 
-	public static final String SPACE_FILES_SECTION =
-		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-spaceFilesSection";
+	public static final String SPACE_MEMBERS_ABSTRACT_SECTION =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
+			"-spaceMembersAbstractSection";
+
+	public static final String SPACE_MEMBERS_USER_GROUPS_ABSTRACT_SECTION =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
+			"-spaceMembersUserGroupsAbstractSection";
+
+	public static final String SPACE_MEMBERS_USERS_ABSTRACT_SECTION =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
+			"-spaceMembersUsersAbstractSection";
+
+	public static final String SPACE_SITES_ABSTRACT_SECTION =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
+			"-spaceSitesAbstractSection";
 
 	public static final String STRUCTURE_USAGES =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-structureUsages";

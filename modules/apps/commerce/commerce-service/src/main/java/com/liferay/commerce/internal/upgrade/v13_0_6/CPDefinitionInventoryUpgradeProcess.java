@@ -69,10 +69,8 @@ public class CPDefinitionInventoryUpgradeProcess extends UpgradeProcess {
 					preparedStatement.setString(
 						1, allowedOrderQuantities.trim());
 
-					long cpDefinitionInventoryId = resultSet.getLong(
-						"CPDefinitionInventoryId");
-
-					preparedStatement.setLong(2, cpDefinitionInventoryId);
+					preparedStatement.setLong(
+						2, resultSet.getLong("CPDefinitionInventoryId"));
 
 					preparedStatement.execute();
 				}

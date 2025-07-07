@@ -102,7 +102,8 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 		if (depotEntry != null) {
 			assetLibraryId = depotEntry.getDepotEntryId();
 
-			Group group = _groupLocalService.fetchGroup(depotEntry.getGroupId());
+			Group group = _groupLocalService.fetchGroup(
+				depotEntry.getGroupId());
 
 			if (group != null) {
 				assetLibraryCreatorUserId = group.getCreatorUserId();
@@ -111,14 +112,15 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 
 		return SpaceAbstractHeaderUtil.getSpaceAbstractHeaderProps(
 			_httpServletRequest, "view-all-members",
-			_getSpaceMembersHeaderTitle(), StringPool.BLANK,HashMapBuilder.<String, Object>put(
-			"action", "open-members-modal"
+			_getSpaceMembersHeaderTitle(), StringPool.BLANK,
+			HashMapBuilder.<String, Object>put(
+				"action", "open-members-modal"
 			).put(
-			"assetLibraryId", String.valueOf(assetLibraryId)
+				"assetLibraryCreatorUserId",
+				String.valueOf(assetLibraryCreatorUserId)
 			).put(
-				"assetLibraryCreatorUserId", String.valueOf(assetLibraryCreatorUserId)
-			).build()
-			);
+				"assetLibraryId", String.valueOf(assetLibraryId)
+			).build());
 	}
 
 	public List<TabsItem> getTabsItems() {

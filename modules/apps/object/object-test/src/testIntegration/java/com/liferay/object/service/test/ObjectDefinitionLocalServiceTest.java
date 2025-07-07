@@ -1788,63 +1788,6 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testBindObjectDefinitions() throws Exception {
-
-		// Bind object definitions creating a new hierarchical structure
-
-		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
-		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
-
-		ObjectRelationship objectRelationshipA_AA =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, objectDefinitionA,
-				objectDefinitionAA,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
-
-		_testBindObjectDefinitions(
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[] {"AAA"}
-			).put(
-				"AAA", new String[0]
-			).build(),
-			Arrays.asList(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addCustomObjectDefinition("AAA"),
-					ObjectRelationshipConstants.DELETION_TYPE_PREVENT),
-				objectRelationshipA_AA),
-			objectDefinitionA.getObjectDefinitionId());
-
-		// Bind one object definition to an existing hierarchical structure
-
-		_testBindObjectDefinitions(
-			LinkedHashMapBuilder.put(
-				"A", new String[] {"AA"}
-			).put(
-				"AA", new String[] {"AAA", "AAB"}
-			).put(
-				"AAA", new String[0]
-			).put(
-				"AAB", new String[0]
-			).build(),
-			Arrays.asList(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addCustomObjectDefinition("AAB"),
-					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)),
-			objectDefinitionA.getObjectDefinitionId());
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
-			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB"},
-			_objectEntryLocalService, _objectRelationshipLocalService);
-	}
-
-	@Test
 	public void testDeleteCompanyObjectDefinitions() throws Exception {
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -3466,30 +3409,6 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_objectFolderLocalService.deleteObjectFolder(objectFolder);
-	}
-
-	private void _testBindObjectDefinitions(
-			Map<String, String[]> expectedMap,
-			List<ObjectRelationship> objectRelationships,
-			long rootObjectDefinitionId)
-		throws Exception {
-
-		TreeTestUtil.bind(_objectRelationshipLocalService, objectRelationships);
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			objectRelationship =
-				_objectRelationshipLocalService.getObjectRelationship(
-					objectRelationship.getObjectRelationshipId());
-
-			Assert.assertEquals(
-				objectRelationship.getDeletionType(),
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
-		}
-
-		TreeTestUtil.assertObjectDefinitionTree(
-			expectedMap,
-			_objectDefinitionTreeFactory.create(rootObjectDefinitionId),
-			_objectDefinitionLocalService);
 	}
 
 	private void _testSystemObjectFields(

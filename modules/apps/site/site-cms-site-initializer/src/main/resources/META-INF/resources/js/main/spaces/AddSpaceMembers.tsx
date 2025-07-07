@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -17,6 +18,7 @@ export interface AddSpaceMembersProps {
 	assetLibraryId: string;
 	assetLibraryName: string;
 	baseAssetLibraryURL: string;
+	learnResources: ILearnResourceContext;
 }
 
 export function AddSpaceMembers({
@@ -24,6 +26,7 @@ export function AddSpaceMembers({
 	assetLibraryId,
 	assetLibraryName,
 	baseAssetLibraryURL,
+	learnResources,
 }: AddSpaceMembersProps) {
 	const [hasSelectedMembers, setHasSelectedMembers] = useState(false);
 
@@ -38,6 +41,7 @@ export function AddSpaceMembers({
 					description={Liferay.Language.get(
 						'add-team-members-to-this-space-to-start-collaborating'
 					)}
+					learnResources={learnResources}
 					step={2}
 					title={sub(
 						Liferay.Language.get('add-members-to-x'),

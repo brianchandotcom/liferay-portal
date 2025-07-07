@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
-import {openToast} from 'frontend-js-components-web';
+import {ILearnResourceContext, openToast} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
@@ -27,9 +27,10 @@ import BaseFields from './SpaceBaseFields';
 
 export interface NewSpaceProps {
 	baseAddSpaceMembersURL: string;
+	learnResources: ILearnResourceContext;
 }
 
-const NewSpace = ({baseAddSpaceMembersURL}: NewSpaceProps) => {
+const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 	const {
 		errors,
 		handleBlur,
@@ -96,6 +97,7 @@ const NewSpace = ({baseAddSpaceMembersURL}: NewSpaceProps) => {
 					description={Liferay.Language.get(
 						'spaces-are-essential-for-organizing-defining-and-managing-your-content-and-files'
 					)}
+					learnResources={learnResources}
 					onSubmit={handleSubmit}
 					step={1}
 					title={Liferay.Language.get('create-a-space')}

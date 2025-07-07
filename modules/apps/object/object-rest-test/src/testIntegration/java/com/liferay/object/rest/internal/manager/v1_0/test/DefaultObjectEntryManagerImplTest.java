@@ -3448,10 +3448,10 @@ public class DefaultObjectEntryManagerImplTest
 		objectEntry = _defaultObjectEntryManager.expireObjectEntry(
 			dtoConverterContext, objectEntry.getId());
 
+		Status status = objectEntry.getStatus();
+
 		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED,
-			objectEntry.getStatus(
-			).getCode());
+			WorkflowConstants.STATUS_EXPIRED, status.getCode());
 
 		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(

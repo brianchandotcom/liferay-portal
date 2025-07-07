@@ -46,7 +46,7 @@ definition {
 
 		task ("Then a new column for SKU/UOM combination for the UOM Key can be searched with uomKey column empty") {
 			AssertTextEquals(
-				key_colunmPosition = 4,
+				key_columnPosition = 4,
 				key_linePosition = 1,
 				locator1 = "CommerceEntry#TABLE_EXPOSE_ENTRY_BY_POSITION",
 				value1 = "");
@@ -103,7 +103,7 @@ definition {
 				value1 = "MIN93015");
 
 			AssertTextEquals(
-				key_colunmPosition = 4,
+				key_columnPosition = 4,
 				key_linePosition = 1,
 				locator1 = "CommerceEntry#TABLE_EXPOSE_ENTRY_BY_POSITION",
 				value1 = "uomKey1");
@@ -149,7 +149,7 @@ definition {
 
 			for (var index : list "1,2") {
 				AssertTextEquals(
-					key_colunmPosition = 4,
+					key_columnPosition = 4,
 					key_linePosition = ${index},
 					locator1 = "CommerceEntry#TABLE_EXPOSE_ENTRY_BY_POSITION",
 					value1 = "uomKey${index}");

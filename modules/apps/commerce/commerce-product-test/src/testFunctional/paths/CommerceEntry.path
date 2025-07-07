@@ -952,7 +952,7 @@
 </tr>
 <tr>
 	<td>TABLE_EXPOSE_ENTRY_BY_POSITION</td>
-	<td>//*[contains(@class, 'table-responsive')]//tbody/tr[${key_linePosition}]/td[${key_colunmPosition}]</td>
+	<td>//*[contains(@class, 'table-responsive')]//tbody/tr[${key_linePosition}]/td[${key_columnPosition}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -194,63 +194,11 @@ public class ConfigurationModelRetrieverImpl
 	protected String getPidFilterString(
 		String pid, ExtendedObjectClassDefinition.Scope scope) {
 
-		String key = Constants.SERVICE_PID;
-
-		if (!scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM) ||
-			pid.contains("~")) {
-
-			key = ConfigurationAdmin.SERVICE_FACTORYPID;
-			pid = _getUnscopedPid(pid);
-		}
-
 		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
-			return StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
-				_getPropertyFilterString(key, pid), "(!(",
-				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-				"=*))(!(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				"=*))(!(siteExternalReferenceCode=*)))");
+			return _getSystemPidFilterString(pid);
 		}
 
-		String scopedFilterString = StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
-			_getPropertyFilterString(key, pid),
-			_getPropertyFilterString(key, pid + ".scoped"),
-			StringPool.CLOSE_PARENTHESIS);
-
-		if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
-			return StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
-				scopedFilterString, "(|(",
-				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-				"=*)(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				"=*))(!(siteExternalReferenceCode=*))(!(",
-				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
-					getPropertyKey(),
-				"=*)))");
-		}
-
-		if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
-			return StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
-				scopedFilterString, "(|(",
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				"=*)(siteExternalReferenceCode=*))(!(",
-				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
-					getPropertyKey(),
-				"=*)))");
-		}
-
-		return StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
-			scopedFilterString, "(|(",
-			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-			"=*)(siteExternalReferenceCode=*))(",
-			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
-				getPropertyKey(),
-			"=*))");
+		return _getScopedPidFilterString(pid, scope);
 	}
 
 	private void _collectConfigurationModels(
@@ -379,8 +327,92 @@ public class ConfigurationModelRetrieverImpl
 			StringPool.CLOSE_PARENTHESIS);
 	}
 
+	private String _getScopedPidFilterString(
+		String pid, ExtendedObjectClassDefinition.Scope scope) {
+
+		String unscopedPId = _getUnscopedPid(pid);
+
+		String filterString = StringBundler.concat(
+			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
+			_getPropertyFilterString(
+				ConfigurationAdmin.SERVICE_FACTORYPID, unscopedPId),
+			_getPropertyFilterString(
+				ConfigurationAdmin.SERVICE_FACTORYPID, unscopedPId + ".scoped"),
+			StringPool.CLOSE_PARENTHESIS);
+
+		if (pid.contains("~")) {
+			filterString = StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, filterString,
+				_getPropertyFilterString(Constants.SERVICE_PID, pid),
+				StringPool.CLOSE_PARENTHESIS);
+		}
+
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
+			return StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, filterString,
+				"(|(",
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				"=*)(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				"=*))(!(siteExternalReferenceCode=*))(!(",
+				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
+					getPropertyKey(),
+				"=*)))");
+		}
+
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+			return StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, filterString,
+				"(|(",
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				"=*)(siteExternalReferenceCode=*))(!(",
+				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
+					getPropertyKey(),
+				"=*)))");
+		}
+
+		return StringBundler.concat(
+			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, filterString,
+			"(|(", ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+			"=*)(siteExternalReferenceCode=*))(",
+			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
+				getPropertyKey(),
+			"=*))");
+	}
+
+	private String _getSystemPidFilterString(String pid) {
+		String filterString = StringBundler.concat(
+			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
+			_getPropertyFilterString(
+				ConfigurationAdmin.SERVICE_FACTORYPID, pid),
+			_getPropertyFilterString(Constants.SERVICE_PID, pid),
+			StringPool.CLOSE_PARENTHESIS);
+
+		if (pid.contains("~")) {
+			filterString = StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
+				_getPropertyFilterString(
+					ConfigurationAdmin.SERVICE_FACTORYPID,
+					_getUnscopedPid(pid)),
+				_getPropertyFilterString(Constants.SERVICE_PID, pid),
+				StringPool.CLOSE_PARENTHESIS);
+		}
+
+		return StringBundler.concat(
+			StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, filterString,
+			"(|(!(",
+			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+			"=*))(",
+			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+			"=0))(!(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
+			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+			"=*))(!(siteExternalReferenceCode=*)))");
+	}
+
 	private String _getUnscopedPid(String pid) {
-		return pid.replaceFirst("\\.scoped.*", StringPool.BLANK);
+		pid = pid.replaceFirst("\\.scoped.*", StringPool.BLANK);
+
+		return pid.replaceFirst("~.*", StringPool.BLANK);
 	}
 
 	private BundleContext _bundleContext;

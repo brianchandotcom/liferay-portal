@@ -241,41 +241,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				layout.getExternalReferenceCode(), SitePage.Type.CONTENT_PAGE,
 				StringUtil.toLowerCase(RandomTestUtil.randomString())));
 
-		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED);
-		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
-		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
-		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
-
-		SitePage sitePage = _getRandomSitePage(SitePage.Type.CONTENT_PAGE);
-
-		ContentPageSpecification draftContentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, PageSpecification.Status.APPROVED);
-
-		ContentPageSpecification publishedContentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				draftContentPageSpecification.getExternalReferenceCode(),
-				PageSpecification.Status.APPROVED);
-
-		sitePage.setPageSpecifications(
-			() -> new PageSpecification[] {
-				publishedContentPageSpecification, draftContentPageSpecification
-			});
-
-		_assertProblemException(
-			StringBundler.concat(
-				"Site page external reference code ",
-				sitePage.getExternalReferenceCode(),
-				" does not match published page specification external ",
-				"reference code ",
-				publishedContentPageSpecification.getExternalReferenceCode()),
-			() -> sitePageResource.postByExternalReferenceCodeSitePage(
-				testGroup.getExternalReferenceCode(), sitePage));
+		_testPostByExternalReferenceCodeSitePageWithPageSpecifications();
 	}
 
 	@Override
@@ -1037,6 +1003,46 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_layoutLocalService.getLayoutByExternalReferenceCode(
 				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
 			postSitePage);
+	}
+
+	private void _testPostByExternalReferenceCodeSitePageWithPageSpecifications()
+		throws Exception {
+
+		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
+		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
+
+		SitePage sitePage = _getRandomSitePage(SitePage.Type.CONTENT_PAGE);
+
+		ContentPageSpecification draftContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, PageSpecification.Status.APPROVED);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				PageSpecification.Status.APPROVED);
+
+		sitePage.setPageSpecifications(
+			() -> new PageSpecification[] {
+				publishedContentPageSpecification, draftContentPageSpecification
+			});
+
+		_assertProblemException(
+			StringBundler.concat(
+				"Site page external reference code ",
+				sitePage.getExternalReferenceCode(),
+				" does not match published page specification external ",
+				"reference code ",
+				publishedContentPageSpecification.getExternalReferenceCode()),
+			() -> sitePageResource.postByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(), sitePage));
 	}
 
 	private void _testPostByExternalReferenceCodeSitePageWithPageSpecifications(

@@ -453,7 +453,8 @@ public class ViewChangesDisplayContext {
 			"itemsOverview", itemsOverviewJSONArray
 		).put(
 			"publicationSizeClassification",
-			_ctCollection.getScoreSizeClassification()
+			_language.get(
+				_httpServletRequest, _ctCollection.getScoreSizeClassification())
 		).build();
 	}
 

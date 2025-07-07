@@ -1924,17 +1924,16 @@ public class ObjectEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if ((objectEntry.getDisplayDate() == null) &&
-			(objectEntry.getStatus() == status)) {
-
-			return objectEntry;
-		}
-
 		ObjectEntry originalObjectEntry = (ObjectEntry)objectEntry.clone();
 
 		Date date = new Date();
 		Date displayDate = objectEntry.getDisplayDate();
-		Date expirationDate = objectEntry.getExpirationDate();
+
+		if ((objectEntry.getStatus() == status) &&
+			((displayDate == null) || displayDate.before(date))) {
+
+			return objectEntry;
+		}
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			(displayDate != null) && date.before(displayDate)) {
@@ -1943,6 +1942,8 @@ public class ObjectEntryLocalServiceImpl
 
 			_inactiveLatestObjectEntryVersion(originalObjectEntry);
 		}
+
+		Date expirationDate = objectEntry.getExpirationDate();
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			(expirationDate != null) && expirationDate.before(date)) {

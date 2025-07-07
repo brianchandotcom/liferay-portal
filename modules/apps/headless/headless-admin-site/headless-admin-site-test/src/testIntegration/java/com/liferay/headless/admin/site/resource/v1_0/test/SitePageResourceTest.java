@@ -241,6 +241,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				layout.getExternalReferenceCode(), SitePage.Type.CONTENT_PAGE,
 				StringUtil.toLowerCase(RandomTestUtil.randomString())));
 
+		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
+		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
+
 		String publishedPageSpecificationExternalReferenceCode =
 			StringUtil.toLowerCase(RandomTestUtil.randomString());
 		String sitePageExternalReferenceCode = StringUtil.toLowerCase(
@@ -1058,6 +1068,50 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_layoutLocalService.getLayoutByExternalReferenceCode(
 				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
 			postSitePage);
+	}
+
+	private void _testPostByExternalReferenceCodeSitePageWithPageSpecifications(
+			PageSpecification.Status draftLayoutStatus,
+			PageSpecification.Status publishedLayoutStatus)
+		throws Exception {
+
+		SitePage sitePage = _getRandomSitePage(SitePage.Type.CONTENT_PAGE);
+
+		ContentPageSpecification draftContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, draftLayoutStatus);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				publishedLayoutStatus);
+
+		publishedContentPageSpecification.setExternalReferenceCode(
+			sitePage.getExternalReferenceCode());
+
+		sitePage.setPageSpecifications(
+			() -> new PageSpecification[] {
+				publishedContentPageSpecification, draftContentPageSpecification
+			});
+
+		SitePageResource sitePageResource = _getSitePageResource();
+
+		SitePage postSitePage =
+			sitePageResource.postByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(), sitePage);
+
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+			postSitePage.getExternalReferenceCode(), testGroup.getGroupId());
+
+		PageSpecification.Status status = PageSpecification.Status.APPROVED;
+
+		if (!layout.isPublished()) {
+			status = PageSpecification.Status.DRAFT;
+		}
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			draftContentPageSpecification, publishedContentPageSpecification,
+			postSitePage.getPageSpecifications(), layout, status);
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodeSitePage(

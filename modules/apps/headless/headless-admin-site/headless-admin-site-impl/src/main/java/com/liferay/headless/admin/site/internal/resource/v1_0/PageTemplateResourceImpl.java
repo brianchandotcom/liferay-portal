@@ -347,6 +347,11 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			existingPageTemplate.setKeywords(pageTemplate::getKeywords);
 		}
 
+		if (pageTemplate.getPageSpecifications() != null) {
+			existingPageTemplate.setPageSpecifications(
+				pageTemplate::getPageSpecifications);
+		}
+
 		if (pageTemplate.getPageTemplateSet() != null) {
 			existingPageTemplate.setPageTemplateSet(
 				pageTemplate::getPageTemplateSet);

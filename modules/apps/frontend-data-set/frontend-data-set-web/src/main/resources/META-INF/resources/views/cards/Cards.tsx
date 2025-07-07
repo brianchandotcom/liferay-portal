@@ -209,7 +209,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 								}
 							: undefined
 					}
-					onSelectChange={() => undefined}
+					onSelectChange={selectable ? () => undefined : undefined}
 					selectableType={
 						selectionType === 'single' ? 'radio' : 'checkbox'
 					}

@@ -113,32 +113,17 @@ const Card = forwardRef<HTMLDivElement, any>(
 		};
 
 		const getSelectionTrigger = (event: any): string | boolean => {
-			if (
-				event.nativeEvent?.target['classList'].contains(
-					'card-item-first'
-				) ||
-				(event.nativeEvent?.target['classList'].contains(
-					'lexicon-icon'
-				) &&
-					!event.nativeEvent?.target['classList'].contains(
-						'lexicon-icon-ellipsis-v'
-					)) ||
-				(event.nativeEvent?.target.nodeName === 'use' &&
-					!event.nativeEvent?.target.parentNode['classList'].contains(
-						'lexicon-icon-ellipsis-v'
-					))
-			) {
-				return ESelectionTrigger.CONTAINER;
-			}
-			else if (
-				event.nativeEvent?.target['classList'].contains(
-					'custom-control-input'
-				)
-			) {
+			const target = event.nativeEvent?.target;
+
+			if (target.classList.contains('custom-control-input')) {
 				return ESelectionTrigger.INPUT;
 			}
 
-			return false;
+			if (target.closest('.dropdown-toggle')) {
+				return false;
+			}
+
+			return ESelectionTrigger.CONTAINER;
 		};
 
 		const props = {

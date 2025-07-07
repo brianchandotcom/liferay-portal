@@ -173,6 +173,7 @@ LogParametersCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Validates t
 [MissingDeprecatedCheck](https://checkstyle.sourceforge.io/checks/annotation/missingdeprecated.html) | .java | Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present. |
 MissingDiamondOperatorCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks for missing diamond operator for types that require diamond operator. |
 MissingModifierCheck | .java | Verifies that a method or global variable has a modifier specified. |
+[ModelSetCallWithCompanyIdCheck](check/model_set_call_with_company_id_check.md#modelsetcallwithcompanyidcheck) | .java | Checks for inserting the companyId as part of a varchar field in the database. |
 ModifiedMethodCheck | .java | Checks for incorrect `modified` method with `@Modified` annotation. |
 NestedFieldAnnotationCheck | .java | Checks for `nested.field.support` in the `property` attribute of the `Component` annotation. |
 [NullAssertionInIfStatementCheck](check/null_assertion_in_if_statement_check.md#nullassertioninifstatementcheck) | .java | Verifies that null check should always be first in if-statement. |

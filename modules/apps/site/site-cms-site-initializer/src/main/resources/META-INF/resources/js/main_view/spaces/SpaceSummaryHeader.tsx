@@ -8,13 +8,13 @@ import ClayLink from '@clayui/link';
 import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
-import SpaceMembersModalContent from '../spaces/SpaceMembersModal';
+import SpaceMembersModal from '../spaces/SpaceMembersModal';
 
 enum SpaceSummaryHeaderActions {
 	OPEN_MEMBERS_MODAL = 'open-members-modal',
 }
 
-type ModalPropsType = {
+type SpaceMembersModalPropsType = {
 	action: SpaceSummaryHeaderActions;
 	assetLibraryCreatorUserId: string;
 	assetLibraryId: string;
@@ -22,22 +22,22 @@ type ModalPropsType = {
 
 interface SpaceSummaryHeaderProps {
 	label: string;
-	modalProps?: ModalPropsType;
+	spaceMembersModalProps?: SpaceMembersModalPropsType;
 	title: string;
 	url: string;
 }
 
 export default function SpaceSummaryHeader({
 	label,
-	modalProps,
+	spaceMembersModalProps,
 	title,
 	url,
 }: SpaceSummaryHeaderProps) {
-	const openMembersModal = (props: ModalPropsType) => {
+	const openMembersModal = (props: SpaceMembersModalPropsType) => {
 		openModal({
 			center: true,
 			contentComponent: () =>
-				SpaceMembersModalContent({
+				SpaceMembersModal({
 					assetLibraryCreatorUserId: props.assetLibraryCreatorUserId,
 					assetLibraryId: props.assetLibraryId,
 				}),
@@ -48,9 +48,10 @@ export default function SpaceSummaryHeader({
 
 	const getActionCallback = () => {
 		if (
-			modalProps?.action === SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL
+			spaceMembersModalProps?.action ===
+			SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL
 		) {
-			return openMembersModal(modalProps);
+			return openMembersModal(spaceMembersModalProps);
 		}
 	};
 
@@ -58,7 +59,7 @@ export default function SpaceSummaryHeader({
 		<div className="align-items-center d-flex justify-content-between">
 			<h2 className="font-weight-semi-bold m-0 text-4">{title}</h2>
 
-			{modalProps ? (
+			{spaceMembersModalProps ? (
 				<ClayButton
 					displayType="link"
 					onClick={getActionCallback}

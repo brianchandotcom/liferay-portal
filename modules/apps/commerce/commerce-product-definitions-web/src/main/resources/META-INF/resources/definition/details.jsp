@@ -111,7 +111,12 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 				title='<%= LanguageUtil.get(request, "seo") %>'
 			>
 				<div class="form-group">
-					<label><liferay-ui:message key="friendly-url" /><liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>news</em>", false) %>' /></label>
+					<label for="<portlet:namespace />urlTitleMapAsXML"><liferay-ui:message key="friendly-url" /><liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>news</em>", false) %>' /></label>
+
+					<div class="form-text">
+						<span class="lfr-portal-tooltip" title="<%= StringUtil.shorten(friendlyURLBase, 40) %>"><%= StringUtil.shorten(friendlyURLBase, 40) %></span>
+					</div>
+
 					<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="" localized="<%= true %>" name="urlTitleMapAsXML" type="text" value="<%= HttpComponentsUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>" />
 				</div>
 

@@ -9,8 +9,7 @@ Incorrect:
 
 ```java
 ddmFieldAttributeModel.setLargeAttributeValue(
-	"Value: a very large value\ncompanyId: " + companyId
-);
+	"Value: a very large value\ncompanyId: " + companyId);
 ```
 
 Correct:

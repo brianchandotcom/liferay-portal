@@ -648,8 +648,8 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ModelSetCallWithCompanyIdCheck">
 			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Checks companyId as part of a varchar field in the database." />
-			<message key="parameter.incorrect" value="Do not use &quot;companyId&quot; as the parameter when calling model set method, see LPD-43079" />
+			<property name="description" value="Checks for inserting the companyId as part of a varchar field in the database." />
+			<message key="parameter.incorrect" value="Do not use variable &quot;companyId&quot; as the parameter when calling model set method, see LPD-43079" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ModifiedMethodCheck">
 			<property name="category" value="Bug Prevention" />

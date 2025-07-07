@@ -60,17 +60,13 @@ public class ModelSetCallWithCompanyIdCheck extends BaseCheck {
 
 			String methodName = getMethodName(parentDetailAST);
 
-			if (!methodName.startsWith("set") ||
-				methodName.endsWith("CompanyId")) {
-
-				continue;
-			}
-
-			if ((typeName.equals("com.liferay.portal.kernel.model.Group") &&
-				 methodName.equals("setClassPK")) ||
-				(typeName.equals(
-					"com.liferay.portal.kernel.model.ResourcePermission") &&
-				 methodName.equals("setPrimKey"))) {
+			if (methodName.endsWith("CompanyId") ||
+				!methodName.startsWith("set") ||
+				(methodName.equals("setClassPK") &&
+				 typeName.equals("com.liferay.portal.kernel.model.Group")) ||
+				(methodName.equals("setPrimKey") &&
+				 typeName.equals(
+					 "com.liferay.portal.kernel.model.ResourcePermission"))) {
 
 				continue;
 			}

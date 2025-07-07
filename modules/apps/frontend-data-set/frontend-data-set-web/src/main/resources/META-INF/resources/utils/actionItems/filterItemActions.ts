@@ -5,6 +5,7 @@
 
 import {getLocalizedValue} from '../getLocalizedValue';
 import {IItemActionsDataFilter, IItemsActions} from '../types';
+import {ACTION_ITEM_TARGETS} from './constants';
 
 const hasPermission = (action: IItemsActions, itemData: any): boolean => {
 	if (!action?.data?.permissionKey) {
@@ -49,7 +50,11 @@ const isDisabled = (
 		return action.isDisabled(itemData);
 	}
 
-	if (infoPanelOpen && action.target === 'infoPanel' && selectedItem) {
+	if (
+		infoPanelOpen &&
+		action.target === ACTION_ITEM_TARGETS.INFO_PANEL &&
+		selectedItem
+	) {
 		return true;
 	}
 
@@ -64,7 +69,7 @@ const isVisible = (
 	if (
 		!hasPermission(action, itemData) ||
 		!matchesVisibilityFilters(action, itemData) ||
-		(action.target === 'infoPanel' && !selectable)
+		(action.target === ACTION_ITEM_TARGETS.INFO_PANEL && !selectable)
 	) {
 		return false;
 	}

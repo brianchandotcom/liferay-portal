@@ -26,7 +26,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.upgrade.datacleanup.DataCleanupPreupgradeProcessSuite;
+import com.liferay.portal.upgrade.data.cleanup.DataCleanupPreupgradeProcessSuite;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.Connection;

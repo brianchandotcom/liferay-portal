@@ -66,7 +66,8 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 		HttpServletResponse httpServletResponse) {
 
 		if (!_samlProviderConfigurationHelper.isEnabled() ||
-			!_samlProviderConfigurationHelper.isRoleSp()) {
+			(!_samlProviderConfigurationHelper.isRoleIdpAndSp() &&
+			 !_samlProviderConfigurationHelper.isRoleSp())) {
 
 			return false;
 		}

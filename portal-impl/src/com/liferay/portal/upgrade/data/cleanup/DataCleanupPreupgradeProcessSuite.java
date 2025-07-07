@@ -5,9 +5,15 @@
 
 package com.liferay.portal.upgrade.data.cleanup;
 
+import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
+
+import java.sql.Connection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +24,16 @@ import java.util.List;
 public class DataCleanupPreupgradeProcessSuite {
 
 	public void cleanUp() throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			if (StartupHelperUtil.isDBNew() ||
+				PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
+				(PortalUpgradeProcess.getCurrentState(connection) !=
+					ReleaseConstants.STATE_GOOD)) {
+
+				return;
+			}
+		}
+
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Starting " +

@@ -10,25 +10,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.introspect.AnnotatedClass;
-import com.fasterxml.jackson.databind.introspect.AnnotatedClassResolver;
-import com.fasterxml.jackson.databind.jsontype.NamedType;
-import com.fasterxml.jackson.databind.jsontype.SubtypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
-import com.liferay.batch.engine.exception.InvalidTypeIdException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,19 +53,18 @@ public class BatchEngineImportTaskItemReaderUtil {
 			List<ItemReaderPostAction> itemReaderPostActions)
 		throws Exception {
 
-		T item;
-		Class<? extends T> subtypeClass = null;
-
-		if (itemClass.getAnnotation(JsonTypeInfo.class) != null) {
-			subtypeClass = _resolveSubtypeClass(itemClass, fieldNameValueMap);
-
-			item = subtypeClass.newInstance();
-		}
-		else {
-			item = itemClass.newInstance();
-		}
-
 		Map<String, Serializable> extendedProperties = new HashMap<>();
+
+		ObjectMapper objectMapper =
+			ObjectMapperProviderUtil.getBatchEngineObjectMapper();
+
+		Class<? extends T> resolvedClass =
+			(Class<? extends T>)objectMapper.convertValue(
+				fieldNameValueMap, itemClass
+			).getClass();
+
+		T item = resolvedClass.getDeclaredConstructor(
+		).newInstance();
 
 		Set<String> batchRestrictFields = _getBatchRestrictFields(
 			batchEngineImportTask);
@@ -90,9 +80,11 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 			Field[] declaredFields = itemClass.getDeclaredFields();
 
-			if (subtypeClass != null) {
+			if (itemClass.getAnnotation(JsonTypeInfo.class) != null) {
 				declaredFields = ArrayUtil.append(
-					declaredFields, subtypeClass.getDeclaredFields());
+					declaredFields,
+					item.getClass(
+					).getDeclaredFields());
 			}
 
 			for (Field declaredField : declaredFields) {
@@ -111,7 +103,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 				Object value = entry.getValue();
 
-				ObjectMapper objectMapper = _getObjectMapper(
+				objectMapper = _getObjectMapper(
 					batchEngineImportTask, field, value);
 
 				field.set(
@@ -327,49 +319,6 @@ public class BatchEngineImportTaskItemReaderUtil {
 		}
 
 		return true;
-	}
-
-	private static <T> Class<? extends T> _resolveSubtypeClass(
-			Class<T> itemClass, Map<String, Object> fieldNameValueMap)
-		throws Exception {
-
-		JsonTypeInfo jsonTypeInfo = itemClass.getAnnotation(JsonTypeInfo.class);
-
-		String jsonTypeInfoProperty = jsonTypeInfo.property();
-
-		String jsonTypeInfoPropertyValue = GetterUtil.getString(
-			fieldNameValueMap.get(jsonTypeInfoProperty));
-
-		if (jsonTypeInfoPropertyValue == null) {
-			return null;
-		}
-
-		ObjectMapper objectMapper =
-			ObjectMapperProviderUtil.getBatchEngineObjectMapper();
-
-		MapperConfig<?> mapperConfig = objectMapper.getSerializationConfig();
-
-		TypeFactory typeFactory = objectMapper.getTypeFactory();
-
-		JavaType javaType = typeFactory.constructType(itemClass);
-
-		AnnotatedClass annotatedClass = AnnotatedClassResolver.resolve(
-			mapperConfig, javaType, mapperConfig);
-
-		SubtypeResolver subtypeResolver = objectMapper.getSubtypeResolver();
-
-		for (NamedType namedType :
-				subtypeResolver.collectAndResolveSubtypesByClass(
-					mapperConfig, annotatedClass)) {
-
-			if (Objects.equals(
-					jsonTypeInfoPropertyValue, namedType.getName())) {
-
-				return (Class<? extends T>)namedType.getType();
-			}
-		}
-
-		throw new InvalidTypeIdException(jsonTypeInfoPropertyValue);
 	}
 
 	private static final ObjectMapper _csvMapObjectMapper = new ObjectMapper() {

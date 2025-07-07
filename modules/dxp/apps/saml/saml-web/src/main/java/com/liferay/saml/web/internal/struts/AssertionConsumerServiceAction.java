@@ -39,7 +39,9 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 	@Override
 	public boolean isEnabled() {
-		if (_samlProviderConfigurationHelper.isRoleSp()) {
+		if (_samlProviderConfigurationHelper.isRoleIdpAndSp() ||
+			_samlProviderConfigurationHelper.isRoleSp()) {
+
 			return _samlProviderConfigurationHelper.isEnabled();
 		}
 

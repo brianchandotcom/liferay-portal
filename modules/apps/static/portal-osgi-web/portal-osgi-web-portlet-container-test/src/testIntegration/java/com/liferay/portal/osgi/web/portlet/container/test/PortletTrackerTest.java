@@ -86,6 +86,43 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
+	public void testLoadGetPortlets() throws Exception {
+		Company company1 = CompanyTestUtil.addCompany();
+		Company company2 = CompanyTestUtil.addCompany();
+
+		PortalInstances.initCompany(company1);
+		PortalInstances.initCompany(company2);
+
+		try {
+			setUpPortlet(
+				_internalClassTestPortlet,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.display-category", "company-scope"
+				).build(),
+				"companyPortlet", false);
+
+			_assertPortletDeployed(company1, "companyPortlet");
+			_assertPortletDeployed(company2, "companyPortlet");
+		}
+		finally {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+
+			serviceRegistrations.clear();
+
+			_companyLocalService.deleteCompany(company2);
+
+			_companyLocalService.deleteCompany(company1);
+
+			PortalInstances.removeCompany(company1.getCompanyId());
+			PortalInstances.removeCompany(company2.getCompanyId());
+		}
+	}
+
+	@Test
 	public void testLoadGetPortletsByCompany() throws Exception {
 		Company company1 = CompanyTestUtil.addCompany();
 		Company company2 = CompanyTestUtil.addCompany();

@@ -2312,6 +2312,68 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testGetClassName() throws Exception {
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
+
+		Company company = CompanyTestUtil.addCompany();
+
+		PortalInstances.initCompany(company);
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
+
+			User user = UserTestUtil.getAdminUser(company.getCompanyId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			ObjectDefinition objectDefinition2 =
+				_objectDefinitionLocalService.addCustomObjectDefinition(
+					user.getUserId(), 0, objectDefinition1.getClassName(),
+					false, false, true, false, false, false, false, null,
+					LocalizedMapUtil.getLocalizedMap(
+						objectDefinition1.getLabel()),
+					objectDefinition1.getShortName(), null, null,
+					LocalizedMapUtil.getLocalizedMap(
+						objectDefinition1.getPluralLabel()),
+					true, ObjectDefinitionConstants.SCOPE_COMPANY,
+					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+					Collections.emptyList(),
+					Arrays.asList(
+						new TextObjectFieldBuilder(
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).name(
+							StringUtil.randomId()
+						).build()));
+
+			objectDefinition2 =
+				_objectDefinitionLocalService.publishCustomObjectDefinition(
+					user.getUserId(),
+					objectDefinition2.getObjectDefinitionId());
+
+			Assert.assertNotEquals(
+				objectDefinition1.getClassName(),
+				objectDefinition2.getClassName());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
+	}
+
+	@Test
 	public void testPublishCustomObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(

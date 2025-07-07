@@ -30,7 +30,7 @@ components:
                     type: string
                     writeOnly: true
                 role:
-                    enum: [idp, sp]
+                    enum: [both, idp, sp]
                     type: string
                 signMetadata:
                     type: boolean
@@ -108,7 +108,7 @@ paths:
                                 $ref: "#/components/schemas/SamlProvider"
                     # @review
                     description:
-                        SAML provider configuration was successfully created
+                        SAML provider configuration was successfully created.
             tags: ["SamlProvider"]
         post:
             description:
@@ -133,5 +133,5 @@ paths:
                                 $ref: "#/components/schemas/SamlProvider"
                     # @review
                     description:
-                        SAML provider configuration was successfully created
+                        SAML provider configuration was successfully created.
             tags: ["SamlProvider"]

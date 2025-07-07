@@ -5,19 +5,42 @@
 
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.cards;
 
+import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.cards.BaseCardsFDSView;
 import com.liferay.frontend.data.set.view.cards.FDSCardSchema;
 import com.liferay.frontend.data.set.view.cards.FDSCardSchemaBuilder;
 import com.liferay.frontend.data.set.view.cards.FDSCardSchemaBuilderFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
+ * @author Balázs Sáfrány-Kovalik
+ * @author Marco Galluzzi
  * @author Mikel Lorza
+ * @author Roberto Díaz
  */
-public abstract class BaseSectionCardsFDSView extends BaseCardsFDSView {
+@Component(
+	property = {
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SECTION,
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.CONTENTS_SECTION,
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.FILES_SECTION,
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_FILES_ABSTRACT_SECTION,
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_FOLDER
+	},
+	service = FDSView.class
+)
+public class ContentAndFileSectionsCardsFDSView extends BaseCardsFDSView {
+
+	@Override
+	public String getDescription() {
+		return StringPool.BLANK;
+	}
 
 	@Override
 	public FDSCardSchema getFDSCardSchema(Locale locale) {
@@ -56,8 +79,14 @@ public abstract class BaseSectionCardsFDSView extends BaseCardsFDSView {
 		).build();
 	}
 
+	@Override
+	public String getTitle() {
+		return "embedded.title";
+	}
+
 	private static final Snapshot<FDSCardSchemaBuilderFactory>
 		_fdsCardSchemaBuilderFactorySnapshot = new Snapshot<>(
-			BaseSectionCardsFDSView.class, FDSCardSchemaBuilderFactory.class);
+			ContentAndFileSectionsCardsFDSView.class,
+			FDSCardSchemaBuilderFactory.class);
 
 }

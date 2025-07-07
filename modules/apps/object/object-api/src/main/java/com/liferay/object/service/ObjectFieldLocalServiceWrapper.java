@@ -426,6 +426,14 @@ public class ObjectFieldLocalServiceWrapper
 			objectDefinitionId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectField>
+		getLocalizedObjectFields(long objectDefinitionId, boolean system) {
+
+		return _objectFieldLocalService.getLocalizedObjectFields(
+			objectDefinitionId, system);
+	}
+
 	/**
 	 * Returns the object field with the primary key.
 	 *

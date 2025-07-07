@@ -303,6 +303,10 @@ public interface ObjectFieldLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectField> getLocalizedObjectFields(long objectDefinitionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectField> getLocalizedObjectFields(
+		long objectDefinitionId, boolean system);
+
 	/**
 	 * Returns the object field with the primary key.
 	 *

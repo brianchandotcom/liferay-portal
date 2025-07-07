@@ -14,7 +14,6 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -144,7 +143,7 @@ public class StructureBuilderDisplayContext {
 				"mainObjectDefinition",
 				_getObjectDefinitionJSONObject(_getObjectDefinition())
 			).put(
-				"objectDefinitions", _getObjectDefinitionsJSONArray()
+				"objectDefinitions", _getObjectDefinitionsJSONObject()
 			)
 		).build();
 	}
@@ -220,25 +219,28 @@ public class StructureBuilderDisplayContext {
 		return _objectDefinitions;
 	}
 
-	private JSONArray _getObjectDefinitionsJSONArray() throws Exception {
+	private JSONObject _getObjectDefinitionsJSONObject() throws Exception {
 		List<ObjectDefinition> objectDefinitions = _getObjectDefinitions();
 
 		if (objectDefinitions == null) {
 			return null;
 		}
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			JSONObject objectDefinitionJSONObject =
 				_getObjectDefinitionJSONObject(objectDefinition);
 
 			if (objectDefinitionJSONObject != null) {
-				jsonArray.put(objectDefinitionJSONObject);
+				jsonObject.put(
+					objectDefinitionJSONObject.getString(
+						"externalReferenceCode"),
+					objectDefinitionJSONObject);
 			}
 		}
 
-		return jsonArray;
+		return jsonObject;
 	}
 
 	private String _getObjectFolderExternalReferenceCode() throws Exception {

@@ -43,6 +43,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:object:object-admin-rest-client")
 	testIntegrationImplementation project(":apps:object:object-api")
 	testIntegrationImplementation project(":apps:object:object-info-api")
+	testIntegrationImplementation project(":apps:object:object-item-selector-api")
 	testIntegrationImplementation project(":apps:object:object-rest-api")
 	testIntegrationImplementation project(":apps:object:object-scripting-api")
 	testIntegrationImplementation project(":apps:object:object-test-util")

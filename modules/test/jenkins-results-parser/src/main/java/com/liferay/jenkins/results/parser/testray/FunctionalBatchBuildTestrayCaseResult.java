@@ -41,11 +41,13 @@ public class FunctionalBatchBuildTestrayCaseResult
 
 	@Override
 	public BuildReport getBuildReport() {
-		DownstreamBuildReport cachedDownstreamBuildReport =
-			_functionalTestClass.getCachedDownstreamBuildReport();
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_functionalTestClass.getCachedDownstreamBuildReport();
 
-		if (cachedDownstreamBuildReport != null) {
-			return cachedDownstreamBuildReport;
+			if (cachedDownstreamBuildReport != null) {
+				return cachedDownstreamBuildReport;
+			}
 		}
 
 		return super.getBuildReport();
@@ -128,11 +130,13 @@ public class FunctionalBatchBuildTestrayCaseResult
 
 	@Override
 	public TestReport getTestReport() {
-		TestReport cachedTestReport =
-			_functionalTestClass.getCachedTestReport();
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			TestReport cachedTestReport =
+				_functionalTestClass.getCachedTestReport();
 
-		if (cachedTestReport != null) {
-			return cachedTestReport;
+			if (cachedTestReport != null) {
+				return cachedTestReport;
+			}
 		}
 
 		DownstreamBuildReport downstreamBuildReport =

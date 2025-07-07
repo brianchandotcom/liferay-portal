@@ -103,6 +103,10 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 
 	@Override
 	public boolean isResultsCached() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			return false;
+		}
+
 		for (FunctionalTestClass functionalTestClass :
 				getFunctionalTestClasses()) {
 

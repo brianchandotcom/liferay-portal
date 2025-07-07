@@ -3725,6 +3725,22 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static boolean isBuildCachingEnabled() {
+		try {
+			String buildCachingEnabled = getBuildProperty(
+				"build.caching.enabled");
+
+			if (Objects.equals(buildCachingEnabled, "true")) {
+				return true;
+			}
+		}
+		catch (IOException ioException) {
+			return false;
+		}
+
+		return false;
+	}
+
 	public static boolean isCINode() {
 		if (_ciNode != null) {
 			return _ciNode;

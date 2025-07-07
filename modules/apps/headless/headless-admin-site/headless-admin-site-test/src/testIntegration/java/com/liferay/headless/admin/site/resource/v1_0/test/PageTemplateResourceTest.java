@@ -733,7 +733,16 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		PageSpecification.Status status = PageSpecification.Status.APPROVED;
 
-		if (!layout.isPublished()) {
+		if (layout.isPublished()) {
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED,
+				layoutPageTemplateEntry.getStatus());
+		}
+		else {
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_DRAFT,
+				layoutPageTemplateEntry.getStatus());
+
 			status = PageSpecification.Status.DRAFT;
 		}
 

@@ -1948,7 +1948,7 @@ public class ObjectEntryLocalServiceImpl
 
 			status = WorkflowConstants.STATUS_SCHEDULED;
 
-			_inactiveLatestObjectEntryVersion(originalObjectEntry);
+			_inactivePreviousObjectEntryVersion(originalObjectEntry);
 		}
 
 		Date expirationDate = objectEntry.getExpirationDate();
@@ -4550,7 +4550,7 @@ public class ObjectEntryLocalServiceImpl
 			new ValidationError(objectEntryValuesException.getMessage()));
 	}
 
-	private void _inactiveLatestObjectEntryVersion(ObjectEntry objectEntry)
+	private void _inactivePreviousObjectEntryVersion(ObjectEntry objectEntry)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -4561,13 +4561,15 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
+		int version = objectEntry.getVersion();
+
+		if (objectEntry.isDraft()) {
+			version = version - 1;
+		}
+
 		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getObjectEntryId(), objectEntry.getVersion());
-
-		if (objectEntryVersion.getDisplayDate() == null) {
-			return;
-		}
+				objectEntry.getObjectEntryId(), version);
 
 		objectEntryVersion.setStatus(WorkflowConstants.STATUS_INACTIVE);
 

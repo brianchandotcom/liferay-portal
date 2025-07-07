@@ -33,13 +33,12 @@ const ViewBuilderScreen: React.FC<
 		dispatch,
 	] = useViewContext();
 
-	const objectFieldNames = new Set(
-		objectViewColumns.map(({objectFieldName}) => objectFieldName)
-	);
-
-	const selected = objectFields.filter(({name}) =>
-		objectFieldNames.has(name)
-	);
+	const selected = objectViewColumns.map((objectViewColumn) => {
+		return objectFields.find(
+			(objectField) =>
+				objectViewColumn.objectFieldName === objectField.name
+		);
+	});
 
 	const handleAddColumns = () => {
 		const parentWindow = Liferay.Util.getOpener();

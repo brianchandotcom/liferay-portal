@@ -5,15 +5,25 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
+
+import java.text.Collator;
+
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Hugo Huijser
  */
 public class NaturalOrderStringComparatorTest {
+
+	@Before
+	public void setUp() {
+		PropsTestUtil.setProps("collator.rules", "");
+	}
 
 	@Test
 	public void testSortCaseSensitive() {
@@ -35,6 +45,34 @@ public class NaturalOrderStringComparatorTest {
 				"com.liferay.module-2.0.11.jar"
 			},
 			false);
+	}
+
+	@Test
+	public void testSortLocalizedWithAccentuation() {
+		testSort(
+			new String[] {
+				"joão", "Útil", "uva", "Amor", "único", "água", "Urso",
+				"abelha", "José", "Ânimo", "Árvore"
+			},
+			new String[] {
+				"abelha", "Amor", "água", "Árvore", "Ânimo", "joão", "José",
+				"Urso", "uva", "único", "Útil"
+			},
+			false, CollatorUtil.getInstance(LocaleUtil.getDefault()));
+	}
+
+	@Test
+	public void testSortLocalizedWithAccentuationCaseSensitive() {
+		testSort(
+			new String[] {
+				"joão", "Útil", "uva", "Amor", "único", "água", "Urso",
+				"abelha", "José", "Ânimo", "Árvore"
+			},
+			new String[] {
+				"abelha", "Amor", "água", "Árvore", "Ânimo", "joão", "José",
+				"uva", "Urso", "único", "Útil"
+			},
+			true, CollatorUtil.getInstance(LocaleUtil.getDefault()));
 	}
 
 	@Test
@@ -73,8 +111,16 @@ public class NaturalOrderStringComparatorTest {
 	protected void testSort(
 		String[] array, String[] sortedArray, boolean caseSensitive) {
 
+		testSort(array, sortedArray, caseSensitive, null);
+	}
+
+	protected void testSort(
+		String[] array, String[] sortedArray, boolean caseSensitive,
+		Collator collator) {
+
 		Arrays.sort(
-			array, new NaturalOrderStringComparator(true, caseSensitive));
+			array,
+			new NaturalOrderStringComparator(true, caseSensitive, collator));
 
 		Assert.assertEquals(
 			Arrays.toString(sortedArray), array.length, sortedArray.length);
@@ -84,7 +130,8 @@ public class NaturalOrderStringComparatorTest {
 		}
 
 		Arrays.sort(
-			array, new NaturalOrderStringComparator(false, caseSensitive));
+			array,
+			new NaturalOrderStringComparator(false, caseSensitive, collator));
 
 		for (int i = 0; i < array.length; i++) {
 			Assert.assertEquals(

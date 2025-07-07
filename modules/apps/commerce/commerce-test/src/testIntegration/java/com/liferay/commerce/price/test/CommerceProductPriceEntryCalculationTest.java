@@ -192,7 +192,7 @@ public class CommerceProductPriceEntryCalculationTest {
 			BigDecimalUtil.eq(new BigDecimal(20), commerceMoney.getPrice()));
 
 		CommerceDiscount commerceDiscount1 =
-			CommerceDiscountTestUtil.addAccountDiscount(
+			CommerceDiscountTestUtil.addAccountCommerceDiscount(
 				_user.getGroupId(), _accountEntry.getAccountEntryId(),
 				CommerceDiscountConstants.LEVEL_L1,
 				cpDefinition.getCPDefinitionId());
@@ -203,7 +203,7 @@ public class CommerceProductPriceEntryCalculationTest {
 		_commerceDiscountLocalService.updateCommerceDiscount(commerceDiscount1);
 
 		CommerceDiscount commerceDiscount2 =
-			CommerceDiscountTestUtil.addChannelDiscount(
+			CommerceDiscountTestUtil.addChannelCommerceDiscount(
 				_user.getGroupId(), _commerceChannel.getCommerceChannelId(),
 				CommerceDiscountConstants.LEVEL_L1,
 				cpDefinition.getCPDefinitionId());
@@ -216,7 +216,7 @@ public class CommerceProductPriceEntryCalculationTest {
 				commerceDiscount2);
 
 		CommerceDiscount commerceDiscount3 =
-			CommerceDiscountTestUtil.addOrderTypeDiscount(
+			CommerceDiscountTestUtil.addOrderTypeCommerceDiscount(
 				_user.getGroupId(), commerceOrderType.getCommerceOrderTypeId(),
 				CommerceDiscountConstants.LEVEL_L1,
 				cpDefinition.getCPDefinitionId(), 0);

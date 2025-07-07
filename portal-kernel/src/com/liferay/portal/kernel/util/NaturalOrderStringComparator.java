@@ -9,6 +9,8 @@ import com.liferay.petra.string.StringPool;
 
 import java.io.Serializable;
 
+import java.text.Collator;
+
 import java.util.Comparator;
 
 /**
@@ -24,8 +26,15 @@ public class NaturalOrderStringComparator
 	public NaturalOrderStringComparator(
 		boolean ascending, boolean caseSensitive) {
 
+		this(ascending, caseSensitive, null);
+	}
+
+	public NaturalOrderStringComparator(
+		boolean ascending, boolean caseSensitive, Collator collator) {
+
 		_ascending = ascending;
 		_caseSensitive = caseSensitive;
+		_collator = collator;
 	}
 
 	@Override
@@ -98,23 +107,29 @@ public class NaturalOrderStringComparator
 				continue;
 			}
 
-			if (_caseSensitive) {
-				value = c1 - c2;
+			char c1ToCompare = c1;
+			char c2ToCompare = c2;
+
+			if (!_caseSensitive) {
+				c1ToCompare = Character.toUpperCase(c1);
+				c2ToCompare = Character.toUpperCase(c2);
+
+				if (c1ToCompare == c2ToCompare) {
+					i1++;
+					i2++;
+
+					continue;
+				}
+			}
+
+			if (_collator != null) {
+				value = _collator.compare(
+					String.valueOf(c1ToCompare), String.valueOf(c2ToCompare));
 
 				break;
 			}
 
-			char c1UpperCase = Character.toUpperCase(c1);
-			char c2UpperCase = Character.toUpperCase(c2);
-
-			if (c1UpperCase == c2UpperCase) {
-				i1++;
-				i2++;
-
-				continue;
-			}
-
-			value = c1UpperCase - c2UpperCase;
+			value = c1ToCompare - c2ToCompare;
 
 			break;
 		}
@@ -149,5 +164,6 @@ public class NaturalOrderStringComparator
 
 	private final boolean _ascending;
 	private final boolean _caseSensitive;
+	private final Collator _collator;
 
 }

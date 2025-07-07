@@ -208,6 +208,13 @@ export default function StructureTree({search}: {search: string}) {
 
 						<span className="ml-1">{item.label}</span>
 
+						{item.type === 'referenced-structure' ||
+						item.type === 'repeatable-group' ? (
+							<ClayIcon className="ml-2" symbol="repeat" />
+						) : (
+							<></>
+						)}
+
 						{invalids.has(item.id) ||
 						(item.id === structureUuid && structureError) ? (
 							<ClayIcon

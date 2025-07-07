@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {EFDSVisualizationMode} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
@@ -44,7 +45,7 @@ test(
 		await test.step('Select the first item in the table', async () => {
 			await firstItemCheckbox.check();
 
-			await expect(firstItemRow).toHaveClass('table-active');
+			await expect(firstItemRow).toHaveClass(/table-active/);
 		});
 
 		await test.step('Check the highlighted bulk action "Label" is visible', async () => {
@@ -204,7 +205,10 @@ test(
 		const firstListItemCheckbox = firstListItem.getByRole('checkbox');
 
 		await test.step('Open list visualization mode', async () => {
-			await fdsSamplePage.changeVisualizationMode('List');
+			await fdsSamplePage.changeVisualizationMode({
+				page,
+				visualizationMode: EFDSVisualizationMode.LIST,
+			});
 		});
 
 		await test.step('Select the first item in the list', async () => {
@@ -435,7 +439,10 @@ test(
 	{tag: '@LPD-49159'},
 	async ({fdsSamplePage, page}) => {
 		await test.step('Change visualization mode to List', async () => {
-			await fdsSamplePage.selectVisualizationMode('list');
+			await fdsSamplePage.changeVisualizationMode({
+				page,
+				visualizationMode: EFDSVisualizationMode.LIST,
+			});
 
 			const listItem = fdsSamplePage.list.container
 				.locator('.list-group-item')
@@ -457,10 +464,13 @@ test(
 		await test.step('Change visualization mode to Cards', async () => {
 			await page.getByText('Clear').click();
 
-			await fdsSamplePage.selectVisualizationMode('cards');
+			await fdsSamplePage.changeVisualizationMode({
+				page,
+				visualizationMode: EFDSVisualizationMode.CARDS,
+			});
 
 			const cardItem = fdsSamplePage.cards.container
-				.locator('.file-card')
+				.locator('.form-check-card')
 				.first();
 
 			await cardItem.click();
@@ -479,7 +489,10 @@ test(
 		await test.step('Change visualization mode to Table', async () => {
 			await page.getByText('Clear').click();
 
-			await fdsSamplePage.selectVisualizationMode('customizedTable');
+			await fdsSamplePage.changeVisualizationMode({
+				page,
+				visualizationMode: EFDSVisualizationMode.TABLE,
+			});
 
 			const tableItem = fdsSamplePage.table.bodyRows.nth(0);
 

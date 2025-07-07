@@ -11,7 +11,7 @@ import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
-import {VisualizationMode} from '../../../../frontend-data-set-admin-web/main/utils/types';
+import {EFDSVisualizationMode} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
@@ -46,7 +46,7 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 
 			return dt;
 		},
-		readFileSync(path.join(__dirname, '/dependencies/image1.jpeg'))
+		readFileSync(path.join(__dirname, '../../dependencies/image1.jpeg'))
 	);
 });
 
@@ -126,38 +126,39 @@ test(
 			);
 		});
 
-		const visualizationModes: Record<
-			VisualizationMode,
+		const visualizations = [
 			{
-				initialClass: string[];
-				itemLocatorContainer: Locator;
-				wrapperClass: string;
-			}
-		> = {
-			Cards: {
 				initialClass: ['card'],
 				itemLocatorContainer: fdsSamplePage.cards.items,
+				visualizationMode: EFDSVisualizationMode.CARDS,
 				wrapperClass: 'visualization-mode-cards',
 			},
-			List: {
+			{
 				initialClass: ['list-group-item', 'list-group-item-flex'],
 				itemLocatorContainer: fdsSamplePage.list.items,
+				visualizationMode: EFDSVisualizationMode.LIST,
 				wrapperClass: 'visualization-mode-list',
 			},
-			Table: {
+			{
 				initialClass: [],
 				itemLocatorContainer: fdsSamplePage.table.bodyRows,
+				visualizationMode: EFDSVisualizationMode.TABLE,
 				wrapperClass: 'visualization-mode-table',
 			},
-		};
+		];
 
-		for (const [
-			visualizationMode,
-			{initialClass, itemLocatorContainer, wrapperClass},
-		] of Object.entries(visualizationModes)) {
-			await fdsSamplePage.changeVisualizationMode(
-				visualizationMode as VisualizationMode
-			);
+		for (const visualization of visualizations) {
+			const {
+				initialClass,
+				itemLocatorContainer,
+				visualizationMode,
+				wrapperClass,
+			} = visualization as any;
+
+			await fdsSamplePage.changeVisualizationMode({
+				page,
+				visualizationMode,
+			});
 
 			const blueItem = itemLocatorContainer
 				.filter({

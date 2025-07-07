@@ -8,7 +8,7 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
-import {VisualizationMode} from '../../../frontend-data-set-admin-web/main/utils/types';
+import {EFDSVisualizationMode, waitForFDS} from '../../../../utils/waitFor';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
@@ -138,7 +138,13 @@ export class FDSSamplePage {
 		this.visualizationModeSelector = page.getByLabel('Show View Options');
 	}
 
-	async changeVisualizationMode(visualizationMode: VisualizationMode) {
+	async changeVisualizationMode({
+		page,
+		visualizationMode,
+	}: {
+		page: Page;
+		visualizationMode: EFDSVisualizationMode;
+	}) {
 		await this.visualizationModeSelector.waitFor({
 			state: 'visible',
 		});
@@ -149,6 +155,8 @@ export class FDSSamplePage {
 			.getByRole('listbox')
 			.getByRole('option', {name: visualizationMode})
 			.click();
+
+		await waitForFDS({page, visualizationMode});
 	}
 
 	async clickItemAction(action: string, item: number = 0) {
@@ -258,26 +266,5 @@ export class FDSSamplePage {
 		await this.page.goto(url);
 
 		return {layout, url};
-	}
-
-	async selectVisualizationMode(
-		modeId: 'cards' | 'list' | 'customizedTable'
-	) {
-		await this.showViewOptionsButton.click();
-
-		const showViewOptionsDropdownId =
-			await this.showViewOptionsButton.getAttribute('aria-controls');
-
-		const showViewOptionsDropdown = this.page.locator(
-			`#${showViewOptionsDropdownId}`
-		);
-
-		await showViewOptionsDropdown.waitFor();
-
-		const menuItem = await showViewOptionsDropdown.locator(`#${modeId}`);
-
-		await expect(menuItem).toBeVisible();
-
-		await menuItem.click();
 	}
 }

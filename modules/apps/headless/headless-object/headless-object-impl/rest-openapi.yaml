@@ -1,5 +1,24 @@
 components:
     schemas:
+        BatchEngineJobResponse:
+            properties:
+                batchId:
+                    description:
+                        The batch ID.
+                    format: int64
+                    type: integer
+                objectType:
+                    description:
+                        The object type.
+                    example: ObjectEntry
+                    type: string
+                processedIds:
+                    description:
+                        The processed IDs.
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
         Collaborator:
             description:
                 Represents a collaborator for an entry.
@@ -62,6 +81,40 @@ components:
                 -   actionIds
                 -   type
             type: object
+        ObjectEntryCMSBulkActionRequest:
+            description:
+                Represents the request for CMS bulk actions
+            properties:
+                ids:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                keywords:
+                    items:
+                        type: string
+                    type: array
+                objectEntryFolderId:
+                    format: int64
+                    type: integer
+                permissions:
+                    items:
+                        type: permission
+                    type: array
+                status:
+                    format: int32
+                    type: integer
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+        ObjectEntryCMSBulkActionResponse:
+            properties:
+                batchEngineJobResponses:
+                    items:
+                        $ref: "#/components/schemas/BatchEngineJobResponse"
+                    type: array
         ObjectEntryFolder:
             description:
                 Represents a object entry folder that contains objects entries and other object entry folders.
@@ -205,6 +258,44 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/object-entry-cms-bulk-action/{bulkActionName}":
+        post:
+            description:
+                Execute the object entries bulk action.
+            parameters:
+                -   in: path
+                    name: bulkActionName
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntryCMSBulkActionRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntryCMSBulkActionRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryCMSBulkActionResponse"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryCMSBulkActionResponse"
+            tags: ["ObjectEntryCMSBulkAction"]
     "/object-entry-folders/{objectEntryFolderId}":
         delete:
             description:

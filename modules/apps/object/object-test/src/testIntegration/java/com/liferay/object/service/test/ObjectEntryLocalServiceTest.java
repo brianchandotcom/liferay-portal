@@ -144,6 +144,7 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -2419,6 +2420,174 @@ public class ObjectEntryLocalServiceTest {
 					_getMultiselectPicklistObjectFieldValue(prefixKey, 100)
 				).build(),
 				new ServiceContext()));
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testAddObjectEntryWithObjectEntryDraftAndScheduleEnabled()
+		throws Exception {
+
+		_objectDefinition.setEnableObjectEntryDraft(true);
+		_objectDefinition.setEnableObjectEntrySchedule(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		try {
+
+			// Add object entry as draft with null display date
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			Map<String, Serializable> requiredValues =
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired",
+					RandomTestUtil.randomString() + "@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build();
+
+			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+				0, TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue1"
+				).putAll(
+					requiredValues
+				).build(),
+				serviceContext);
+
+			Assert.assertTrue(objectEntry.isDraft());
+
+			// Update object entry as draft with display date in the future
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"displayDate",
+					new java.sql.Date(
+						System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
+				).put(
+					"textObjectFieldName", "textObjectFieldValue2"
+				).putAll(
+					requiredValues
+				).build(),
+				serviceContext);
+
+			Assert.assertTrue(objectEntry.isDraft());
+
+			// Update object entry as draft with display date in the past
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"displayDate",
+					new java.sql.Date(
+						System.currentTimeMillis() - TimeUnit.DAY.toMillis(1))
+				).put(
+					"textObjectFieldName", "textObjectFieldValue3"
+				).putAll(
+					requiredValues
+				).build(),
+				serviceContext);
+
+			Assert.assertTrue(objectEntry.isDraft());
+		}
+		finally {
+			_objectDefinition.setEnableObjectEntryDraft(false);
+			_objectDefinition.setEnableObjectEntrySchedule(false);
+
+			_objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition);
+		}
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testAddObjectEntryWithObjectEntryScheduleEnabled()
+		throws Exception {
+
+		_objectDefinition.setEnableObjectEntrySchedule(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		try {
+
+			// Add object entry with null display date
+
+			Map<String, Serializable> requiredValues =
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired",
+					RandomTestUtil.randomString() + "@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build();
+
+			ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "textObjectFieldValue1"
+				).putAll(
+					requiredValues
+				).build());
+
+			Assert.assertTrue(objectEntry.isApproved());
+
+			// Update object entry with display date in the future
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"displayDate",
+					new java.sql.Date(
+						System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
+				).put(
+					"textObjectFieldName", "textObjectFieldValue2"
+				).putAll(
+					requiredValues
+				).build(),
+				serviceContext);
+
+			Assert.assertTrue(objectEntry.isScheduled());
+
+			// Update object entry with display date in the past
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"displayDate",
+					new java.sql.Date(
+						System.currentTimeMillis() - TimeUnit.DAY.toMillis(1))
+				).put(
+					"textObjectFieldName", "textObjectFieldValue3"
+				).putAll(
+					requiredValues
+				).build(),
+				serviceContext);
+
+			Assert.assertTrue(objectEntry.isApproved());
+		}
+		finally {
+			_objectDefinition.setEnableObjectEntrySchedule(false);
+
+			_objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition);
+		}
 	}
 
 	@Test

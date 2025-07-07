@@ -106,10 +106,14 @@
 
 					journalArticleNameInput.innerText = itemValue.title;
 
-					let ckEditorToolbar = document.querySelector('#termsOfUseContent .ck-editor__top');
+					let ckEditorToolbar = document.querySelector(
+						'#termsOfUseContent .ck-editor__top'
+					);
 					ckEditorToolbar.style.display = 'none';
 
-					let ckEditorContent = document.querySelector('#termsOfUseContent .ck-editor__main .ck-content');
+					let ckEditorContent = document.querySelector(
+						'#termsOfUseContent .ck-editor__main .ck-content'
+					);
 					ckEditorContent.classList.add('ck-read-only');
 					ckEditorContent.setAttribute('contenteditable', false);
 				},
@@ -134,51 +138,62 @@
 
 			journalArticleRemove.classList.add('hide');
 
-			let ckEditorToolbar = document.querySelector('#termsOfUseContent .ck-editor__top');
+			let ckEditorToolbar = document.querySelector(
+				'#termsOfUseContent .ck-editor__top'
+			);
 			ckEditorToolbar.style.display = 'block';
 
-			let ckEditorContent = document.querySelector('#termsOfUseContent .ck-editor__main .ck-content');
+			let ckEditorContent = document.querySelector(
+				'#termsOfUseContent .ck-editor__main .ck-content'
+			);
 			ckEditorContent.classList.remove('ck-read-only');
 			ckEditorContent.setAttribute('contenteditable', true);
 		});
 	}
 
-	document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('DOMContentLoaded', function () {
 		waitForElement('#termsOfUseContent .ck-editor__top').then((element) => {
 			evaluateContentVisibility();
-		})	
+		});
 	});
 
-	Liferay.on('endNavigate', function(event) {
+	Liferay.on('endNavigate', function (event) {
 		waitForElement('#termsOfUseContent .ck-editor__top').then((element) => {
 			evaluateContentVisibility();
-		})	
+		});
 	});
 
-	function evaluateContentVisibility () {
-		let ckEditorToolbar = document.querySelector('#termsOfUseContent .ck-editor__top');
+	function evaluateContentVisibility() {
+		let ckEditorToolbar = document.querySelector(
+			'#termsOfUseContent .ck-editor__top'
+		);
 
 		if ('<%= useTermsOfUseJournal %>' === 'true') {
 			ckEditorToolbar.style.display = 'none';
-			let ckEditorContent = document.querySelector('#termsOfUseContent .ck-editor__main .ck-content');
+			let ckEditorContent = document.querySelector(
+				'#termsOfUseContent .ck-editor__main .ck-content'
+			);
 			ckEditorContent.classList.add('ck-read-only');
 			ckEditorContent.setAttribute('contenteditable', false);
-		} else {
+		}
+		else {
 			ckEditorToolbar.style.display = 'block';
-			let ckEditorContent = document.querySelector('#termsOfUseContent .ck-editor__main .ck-content');
+			let ckEditorContent = document.querySelector(
+				'#termsOfUseContent .ck-editor__main .ck-content'
+			);
 			ckEditorContent.classList.remove('ck-read-only');
 			ckEditorContent.setAttribute('contenteditable', true);
 		}
 	}
 
 	function waitForElement(selector) {
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			const selectedElement = document.querySelector(selector);
 			if (selectedElement) {
 				return resolve(selectedElement);
 			}
 
-			const observer = new MutationObserver(mutations => {
+			const observer = new MutationObserver((mutations) => {
 				const pendingElement = document.querySelector(selector);
 				if (pendingElement) {
 					observer.disconnect();
@@ -186,8 +201,7 @@
 				}
 			});
 
-			observer.observe(document.body, { childList: true, subtree: true });
+			observer.observe(document.body, {childList: true, subtree: true});
 		});
 	}
-	
 </aui:script>

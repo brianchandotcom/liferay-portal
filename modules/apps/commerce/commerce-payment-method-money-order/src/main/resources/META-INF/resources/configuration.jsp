@@ -44,5 +44,4 @@ String messageAsLocalizedXML = moneyOrderGroupServiceConfiguration.messageAsLoca
 		'<portlet:namespace />showMessagePage',
 		'<portlet:namespace />message'
 	);
-	console.log('<%= messageAsLocalizedXML %>');
 </aui:script>

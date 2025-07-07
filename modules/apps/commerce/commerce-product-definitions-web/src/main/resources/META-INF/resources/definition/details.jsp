@@ -298,8 +298,6 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 				metaTitleInputLocalized.selectFlag(languageId, false);
 				metaDescriptionInputLocalized.selectFlag(languageId, false);
 				metaKeywordsInputLocalized.selectFlag(languageId, false);
-
-				console.log('<%= descriptionMapAsXML %>');
 			});
 	</aui:script>
 </c:if>

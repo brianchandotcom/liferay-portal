@@ -5812,6 +5812,12 @@ public class ObjectEntryLocalServiceImpl
 
 		_deleteTempFileEntries(dlFileEntriesMap);
 
+		if (objectEntry.isScheduled() ||
+			(originalObjectEntry.isScheduled() && objectEntry.isApproved())) {
+
+			return objectEntry;
+		}
+
 		if (objectEntry.isPending() || originalObjectEntry.isDraft() ||
 			originalObjectEntry.isExpired()) {
 

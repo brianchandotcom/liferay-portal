@@ -749,7 +749,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			layout, nameMap, layout.getFriendlyURLMap(),
 			_getWidgetPageTemplateTypeSettingsUnicodeProperties(
 				layout, widgetPageTemplate.getPageTemplateSettings()),
-			null, serviceContext);
+			widgetPageTemplate.getPageSpecifications(), serviceContext);
 
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(

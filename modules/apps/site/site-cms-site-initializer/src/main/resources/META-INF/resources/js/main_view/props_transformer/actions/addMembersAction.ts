@@ -14,7 +14,10 @@ interface AddMembersData {
 	title: string;
 }
 
-export default function addMembersAction(data: AddMembersData) {
+export default function addMembersAction(
+	data: AddMembersData,
+	loadData?: () => {}
+) {
 	const {assetLibraryCreatorUserId, assetLibraryId, title} = data;
 
 	openModal({
@@ -24,6 +27,7 @@ export default function addMembersAction(data: AddMembersData) {
 				assetLibraryCreatorUserId,
 				assetLibraryId,
 			}),
+		onClose: loadData,
 		size: 'md',
 		title,
 	});

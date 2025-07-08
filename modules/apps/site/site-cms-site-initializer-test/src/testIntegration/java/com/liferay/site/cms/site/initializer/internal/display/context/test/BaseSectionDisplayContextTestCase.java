@@ -90,6 +90,11 @@ public abstract class BaseSectionDisplayContextTestCase
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			false, true, ObjectDefinitionConstants.SCOPE_DEPOT,
 			WorkflowConstants.STATUS_APPROVED);
+
+		addCustomObjectDefinition(
+			objectFolder.getObjectFolderId(), true, true,
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			WorkflowConstants.STATUS_APPROVED);
 		addCustomObjectDefinition(
 			objectFolder.getObjectFolderId(), false, true,
 			ObjectDefinitionConstants.SCOPE_DEPOT,
@@ -100,16 +105,12 @@ public abstract class BaseSectionDisplayContextTestCase
 			WorkflowConstants.STATUS_APPROVED);
 		addCustomObjectDefinition(
 			objectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			WorkflowConstants.STATUS_APPROVED);
+			ObjectDefinitionConstants.SCOPE_DEPOT,
+			WorkflowConstants.STATUS_DRAFT);
 		addCustomObjectDefinition(
 			objectFolder.getObjectFolderId(), true, true,
 			ObjectDefinitionConstants.SCOPE_SITE,
 			WorkflowConstants.STATUS_APPROVED);
-		addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_DEPOT,
-			WorkflowConstants.STATUS_DRAFT);
 
 		_testGetCreationMenu(getCreationMenu(), expectedResultMap);
 	}

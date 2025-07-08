@@ -5,16 +5,26 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-export type addMembersData = {
-	action: 'addMembers';
-	title: string;
-};
+import SpaceMembersModal from '../../spaces/SpaceMembersModal';
 
-export default function addMembersAction(data: addMembersData) {
+interface AddMembersData {
+	action: 'addMembers';
+	assetLibraryCreatorUserId: string;
+	assetLibraryId: string;
+	title: string;
+}
+
+export default function addMembersAction(data: AddMembersData) {
+	const {assetLibraryCreatorUserId, assetLibraryId, title} = data;
+
 	openModal({
 		center: true,
-		containerProps: {},
-		size: 'lg',
-		title: data.title,
+		contentComponent: () =>
+			SpaceMembersModal({
+				assetLibraryCreatorUserId,
+				assetLibraryId,
+			}),
+		size: 'md',
+		title,
 	});
 }

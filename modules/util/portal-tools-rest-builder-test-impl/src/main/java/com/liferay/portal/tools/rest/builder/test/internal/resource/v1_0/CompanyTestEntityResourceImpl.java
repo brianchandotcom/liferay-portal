@@ -8,7 +8,6 @@ package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -197,7 +195,7 @@ public class CompanyTestEntityResourceImpl
 		throws Exception {
 
 		for (Permission permission : permissions) {
-			_roleLocalService.getRole(
+			roleLocalService.getRole(
 				CompanyThreadLocal.getCompanyId(), permission.getRoleName());
 		}
 
@@ -237,8 +235,5 @@ public class CompanyTestEntityResourceImpl
 	private static final List<CompanyTestEntity> _companyTestEntities =
 		new ArrayList<>();
 	private static final Map<Long, Permission[]> _permissions = new HashMap<>();
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 }

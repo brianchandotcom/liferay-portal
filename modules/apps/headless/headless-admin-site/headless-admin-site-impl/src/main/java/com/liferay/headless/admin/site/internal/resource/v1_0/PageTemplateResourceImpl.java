@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSettings;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplateSettings;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -444,16 +444,13 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				widgetPageTemplate.getDescription_i18n());
 		}
 
-		PageSpecification[] pageSpecifications =
-			widgetPageTemplate.getPageSpecifications();
+		WidgetPageSpecification widgetPageSpecification =
+			PageSpecificationUtil.getWidgetPageSpecification(
+				widgetPageTemplate.getPageSpecifications());
 
-		if (ArrayUtil.isNotEmpty(pageSpecifications)) {
-			if (pageSpecifications.length != 1) {
-				throw new UnsupportedOperationException();
-			}
-
+		if (widgetPageSpecification != null) {
 			Layout prototypeLayout = LayoutUtil.getLayoutPrototypeLayout(
-				serviceContext.getScopeGroupId(), pageSpecifications[0],
+				serviceContext.getScopeGroupId(), widgetPageSpecification,
 				serviceContext);
 
 			if (prototypeLayout != null) {
@@ -497,7 +494,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			layout, nameMap, layout.getFriendlyURLMap(),
 			_getWidgetPageTemplateTypeSettingsUnicodeProperties(
 				layout, widgetPageTemplate.getPageTemplateSettings()),
-			pageSpecifications, serviceContext);
+			serviceContext, widgetPageSpecification);
 
 		return _pageTemplateDTOConverter.toDTO(layoutPageTemplateEntry);
 	}
@@ -749,7 +746,9 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			layout, nameMap, layout.getFriendlyURLMap(),
 			_getWidgetPageTemplateTypeSettingsUnicodeProperties(
 				layout, widgetPageTemplate.getPageTemplateSettings()),
-			widgetPageTemplate.getPageSpecifications(), serviceContext);
+			serviceContext,
+			PageSpecificationUtil.getWidgetPageSpecification(
+				widgetPageTemplate.getPageSpecifications()));
 
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(

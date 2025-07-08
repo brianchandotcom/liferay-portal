@@ -412,18 +412,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	private Layout _updateLayout(Layout layout, SitePage sitePage)
 		throws Exception {
 
-		long parentLayoutId = _getParentLayoutId(
-			layout.getParentLayoutId(), layout.getGroupId(),
-			sitePage.getParentSitePageExternalReferenceCode());
-
 		Map<Locale, String> nameMap = layout.getNameMap();
 
 		if (sitePage.getName_i18n() != null) {
 			nameMap = LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n());
 		}
-
-		boolean hiddenFromNavigation = _isHiddenFromNavigation(
-			layout.isHidden(), sitePage.getPageSettings());
 
 		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
 
@@ -436,10 +429,17 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			layout.getGroupId(), contextHttpServletRequest,
 			contextUser.getUserId());
 
-		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
-			serviceContext.setAttribute("hidden", hiddenFromNavigation);
-			serviceContext.setAttribute("parentLayoutId", parentLayoutId);
+		serviceContext.setAttribute(
+			"hidden",
+			_isHiddenFromNavigation(
+				layout.isHidden(), sitePage.getPageSettings()));
+		serviceContext.setAttribute(
+			"parentLayoutId",
+			_getParentLayoutId(
+				layout.getParentLayoutId(), layout.getGroupId(),
+				sitePage.getParentSitePageExternalReferenceCode()));
 
+		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.updateContentLayout(
 				layout, nameMap, layout.getTitleMap(),
 				layout.getDescriptionMap(), layout.getRobotsMap(),
@@ -447,25 +447,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				serviceContext);
 		}
 		else {
-			layout = _layoutService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), parentLayoutId, nameMap,
-				layout.getTitleMap(), layout.getDescriptionMap(),
-				layout.getKeywordsMap(), layout.getRobotsMap(),
-				layout.getType(), hiddenFromNavigation, friendlyURLMap,
-				layout.isIconImage(), null, layout.getStyleBookEntryId(),
-				layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
-				serviceContext);
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				_getTypeSettingsUnicodeProperties(sitePage);
-
-			if (typeSettingsUnicodeProperties != null) {
-				layout = _layoutService.updateLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(),
-					typeSettingsUnicodeProperties.toString());
-			}
+			layout = LayoutUtil.updatePortletLayout(
+				layout, nameMap, friendlyURLMap,
+				_getTypeSettingsUnicodeProperties(sitePage), serviceContext);
 		}
 
 		int priority = Integer.MAX_VALUE;

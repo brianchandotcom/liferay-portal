@@ -471,18 +471,14 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry);
 
-		PageTemplateSettings pageTemplateSettings =
-			widgetPageTemplate.getPageTemplateSettings();
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
 
-		if (pageTemplateSettings != null) {
-			Layout layout = _layoutLocalService.getLayout(
-				layoutPageTemplateEntry.getPlid());
-
-			LayoutUtil.updatePortletLayout(
-				layout,
-				_getWidgetPageTemplateTypeSettings(
-					layout, pageTemplateSettings));
-		}
+		LayoutUtil.updatePortletLayout(
+			layout, nameMap, layout.getFriendlyURLMap(),
+			_getWidgetPageTemplateTypeSettingsUnicodeProperties(
+				layout, widgetPageTemplate.getPageTemplateSettings()),
+			serviceContext);
 
 		return _pageTemplateDTOConverter.toDTO(layoutPageTemplateEntry);
 	}
@@ -571,8 +567,9 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			contextUser.getUserId(), uuid);
 	}
 
-	private String _getWidgetPageTemplateTypeSettings(
-		Layout layout, PageTemplateSettings pageTemplateSettings) {
+	private UnicodeProperties
+		_getWidgetPageTemplateTypeSettingsUnicodeProperties(
+			Layout layout, PageTemplateSettings pageTemplateSettings) {
 
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
@@ -584,7 +581,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			unicodeProperties.remove("target");
 			unicodeProperties.remove("targetType");
 
-			return unicodeProperties.toString();
+			return unicodeProperties;
 		}
 
 		if (!(pageTemplateSettings instanceof
@@ -621,7 +618,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			unicodeProperties.remove("targetType");
 		}
 
-		return unicodeProperties.toString();
+		return unicodeProperties;
 	}
 
 	private boolean _isTypeWidgetPageTemplate(PageTemplate pageTemplate) {
@@ -719,21 +716,21 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			active = widgetPageTemplate.getActive();
 		}
 
+		ServiceContext serviceContext = _getServiceContext(
+			layoutPageTemplateEntry.getGroupId(), widgetPageTemplate);
+
 		_layoutPrototypeService.updateLayoutPrototype(
 			layoutPrototype.getLayoutPrototypeId(), nameMap, descriptionMap,
-			active,
-			_getServiceContext(
-				layoutPageTemplateEntry.getGroupId(), widgetPageTemplate));
-
-		PageTemplateSettings pageTemplateSettings =
-			widgetPageTemplate.getPageTemplateSettings();
+			active, serviceContext);
 
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		LayoutUtil.updatePortletLayout(
-			layout,
-			_getWidgetPageTemplateTypeSettings(layout, pageTemplateSettings));
+			layout, nameMap, layout.getFriendlyURLMap(),
+			_getWidgetPageTemplateTypeSettingsUnicodeProperties(
+				layout, widgetPageTemplate.getPageTemplateSettings()),
+			serviceContext);
 
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(

@@ -1191,7 +1191,7 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
-	public void testRenderCollectionStyledLayoutStructureItemWithItemTypeChangedWithAssetListEntry()
+	public void testRenderCollectionStyledLayoutStructureItemWithAssetListEntryItemClassChanged()
 		throws Exception {
 
 		AssetListEntry assetListEntry =
@@ -1301,7 +1301,7 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	@TestInfo("LPD-58700")
-	public void testRenderCollectionStyledLayoutStructureItemWithItemTypeChangedWithCollectionProvider()
+	public void testRenderCollectionStyledLayoutStructureItemWithCollectionProviderItemClassChanged()
 		throws Exception {
 
 		Bundle bundle = FrameworkUtil.getBundle(

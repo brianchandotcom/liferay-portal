@@ -25,7 +25,7 @@ PatcherBuild patcherBuild = PatcherBuildLocalServiceUtil.fetchPatcherBuild(patch
 	<aui:input name="patcherBuildId" type="hidden" value="<%= patcherBuild.getPatcherBuildId() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:input name="comments" />
+		<aui:input name="comments" type="textarea" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

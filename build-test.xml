@@ -2748,9 +2748,9 @@ httpLoggingEnabled=&quot;false&quot;</echo>
 
 	<macrodef name="prepare-captcha-configuration">
 		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;false&quot;
-maxChallenges=&quot;-1&quot;
-sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;true&quot;
+maxChallenges=&quot;1&quot;
+sendPasswordCaptchaEnabled=&quot;true&quot;</echo>
 		</sequential>
 	</macrodef>
 
@@ -12223,9 +12223,7 @@ ${update.properties}</echo>
 		<get-testcase-property property.name="captcha.enabled" />
 
 		<if>
-			<not>
-				<equals arg1="${captcha.enabled}" arg2="true" />
-			</not>
+			<equals arg1="${captcha.enabled}" arg2="true" />
 			<then>
 				<prepare-captcha-configuration />
 			</then>

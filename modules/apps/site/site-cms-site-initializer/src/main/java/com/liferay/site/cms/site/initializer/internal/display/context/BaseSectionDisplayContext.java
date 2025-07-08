@@ -308,32 +308,6 @@ public abstract class BaseSectionDisplayContext {
 	protected final Portal portal;
 	protected final ThemeDisplay themeDisplay;
 
-	private boolean _isAcceptAllGroups(ObjectDefinition objectDefinition) {
-		ObjectDefinitionSetting objectDefinitionSetting =
-			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
-				objectDefinition.getObjectDefinitionId(),
-				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
-
-		if ((objectDefinitionSetting != null) &&
-			GetterUtil.getBoolean(objectDefinitionSetting.getValue())) {
-
-			return true;
-		}
-
-		objectDefinitionSetting =
-			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
-				objectDefinition.getObjectDefinitionId(),
-				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
-
-		if ((objectDefinitionSetting == null) ||
-			Validator.isNull(objectDefinitionSetting.getValue())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private List<Long> _getAcceptedGroupIds(ObjectDefinition objectDefinition) {
 		List<Long> acceptedGroupIds = new ArrayList<>();
 
@@ -474,6 +448,32 @@ public abstract class BaseSectionDisplayContext {
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isAcceptAllGroups(ObjectDefinition objectDefinition) {
+		ObjectDefinitionSetting objectDefinitionSetting =
+			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
+				objectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
+
+		if ((objectDefinitionSetting != null) &&
+			GetterUtil.getBoolean(objectDefinitionSetting.getValue())) {
+
+			return true;
+		}
+
+		objectDefinitionSetting =
+			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
+				objectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
+
+		if ((objectDefinitionSetting == null) ||
+			Validator.isNull(objectDefinitionSetting.getValue())) {
+
+			return true;
 		}
 
 		return false;

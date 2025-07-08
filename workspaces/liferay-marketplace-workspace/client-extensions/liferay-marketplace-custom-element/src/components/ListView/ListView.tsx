@@ -193,7 +193,7 @@ const ListView = <T extends Record<string, any>>({
 		page = 1,
 		pageSize,
 		totalCount = 0,
-	} = transformData(response || {});
+	} = transformData(response || {items: []});
 
 	if (loading || (isValidating && searchParams.get('filter'))) {
 		return <Loading />;

@@ -6,10 +6,9 @@
 package com.liferay.mcp.server.internal.servlet;
 
 import com.liferay.mcp.server.internal.company.MCPServerCompany;
+import com.liferay.mcp.server.internal.util.MCPServerToolCallHandler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -105,20 +104,9 @@ public class MCPServerServlet extends GenericServlet {
 				).put(
 					"type", "object"
 				).toString()),
-			(exchange, arguments) -> {
-				try {
-					return new McpSchema.CallToolResult(
-						mcpServerCompany.getAllOpenAPIs(
-							MCPServerCompany.getAccessToken(exchange)),
-						false);
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-
-					return new McpSchema.CallToolResult(
-						exception.getMessage(), true);
-				}
-			}
+			MCPServerToolCallHandler.of(
+				(exchange, arguments) -> mcpServerCompany.getAllOpenAPIs(
+					MCPServerCompany.getAccessToken(exchange)))
 		).tool(
 			new McpSchema.Tool(
 				"get-openapi", "Retrieves the OpenAPI YAML file.",
@@ -134,21 +122,10 @@ public class MCPServerServlet extends GenericServlet {
 				).put(
 					"type", "object"
 				).toString()),
-			(exchange, arguments) -> {
-				try {
-					return new McpSchema.CallToolResult(
-						mcpServerCompany.getOpenAPI(
-							String.valueOf(arguments.get("url")),
-							MCPServerCompany.getAccessToken(exchange)),
-						false);
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-
-					return new McpSchema.CallToolResult(
-						exception.getMessage(), true);
-				}
-			}
+			MCPServerToolCallHandler.of(
+				(exchange, arguments) -> mcpServerCompany.getOpenAPI(
+					String.valueOf(arguments.get("url")),
+					MCPServerCompany.getAccessToken(exchange)))
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
@@ -190,30 +167,16 @@ public class MCPServerServlet extends GenericServlet {
 				).put(
 					"type", "object"
 				).toString()),
-			(exchange, arguments) -> {
-				try {
-					return new McpSchema.CallToolResult(
-						mcpServerCompany.callEndpoint(
-							String.valueOf(arguments.get("method")),
-							String.valueOf(arguments.get("path")),
-							String.valueOf(arguments.get("payload")),
-							MCPServerCompany.getAccessToken(exchange)),
-						false);
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-
-					return new McpSchema.CallToolResult(
-						exception.getMessage(), true);
-				}
-			}
+			MCPServerToolCallHandler.of(
+				(exchange, arguments) -> mcpServerCompany.callEndpoint(
+					String.valueOf(arguments.get("method")),
+					String.valueOf(arguments.get("path")),
+					String.valueOf(arguments.get("payload")),
+					MCPServerCompany.getAccessToken(exchange)))
 		).build();
 
 		return mcpServerCompany;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MCPServerServlet.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;

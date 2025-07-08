@@ -6,7 +6,13 @@
 import {useCallback, useMemo} from 'react';
 
 import SearchBuilder from '../../core/SearchBuilder';
-import {APIResponse, FacetAggregation, TestrayBuild} from '../../services/rest';
+import {
+	APIResponse,
+	FacetAggregation,
+	TestrayBuild,
+	TestrayCaseDetail,
+	TestrayJiraIssue,
+} from '../../services/rest';
 import {chartColors} from '../../util/constants';
 import {CaseResultStatuses} from '../../util/statuses';
 import {useFetch} from '../useFetch';
@@ -32,7 +38,7 @@ function getStatusesMap(
 const getAggregationValue = (value: number | string) =>
 	value ? Number(value) : 0;
 
-const useTotalTestCases = (testrayBuild: TestrayBuild) => {
+const useTotalTestCasesByTestrayBuild = (testrayBuild: TestrayBuild) => {
 	const donutColumns = useMemo(
 		() => [
 			[
@@ -83,6 +89,98 @@ const useTotalTestCases = (testrayBuild: TestrayBuild) => {
 			statuses: Object.values(CaseResultStatuses),
 		}),
 		[donutColumns, testrayBuild]
+	);
+};
+
+const useTotalTestCasesByTestrayJiraIssue = (
+	testrayJiraIssue: TestrayJiraIssue,
+	testaryBuildId: number
+) => {
+
+	if (testaryBuildId <= 0) {
+		return {
+			colors: chartColors,
+			donut: {
+				columns: [
+					[CaseResultStatuses.PASSED, 0],
+					[CaseResultStatuses.FAILED, 0],
+					[CaseResultStatuses.BLOCKED, 0],
+					[CaseResultStatuses.TEST_FIX, 0],
+					[CaseResultStatuses.INCOMPLETE, 0],
+				],
+				total: 0,
+			},
+			ready: false,
+			statuses: Object.values(CaseResultStatuses),
+		}
+	}
+
+	const {data, loading} = useFetch<APIResponse<TestrayCaseDetail>>(
+		`/casedetails`,
+		{
+			params: {
+				aggregationTerms: 'dueStatus',
+				fields: 'id',
+				filter: `caseDetailsToJiraIssues/r_${testrayJiraIssue.issueType.key.toLowerCase()}_c_jiraIssueId eq '${testrayJiraIssue.id}' and r_buildToCaseDetail_c_buildId eq '${testaryBuildId}'`,
+				pageSize: 10,
+			},
+		}
+	);
+
+	const donutColumns = useMemo(() => {
+		if (!data) {
+			return [
+				[CaseResultStatuses.PASSED, 0],
+				[CaseResultStatuses.FAILED, 0],
+				[CaseResultStatuses.BLOCKED, 0],
+				[CaseResultStatuses.TEST_FIX, 0],
+				[CaseResultStatuses.INCOMPLETE, 0],
+			];
+		}
+
+		const statusCounts: Record<string, number> = {
+			BLOCKED: 0,
+			FAILED: 0,
+			INCOMPLETE: 0,
+			PASSED: 0,
+			TEST_FIX: 0,
+			UNTESTED: 0,
+		};
+
+		data.facets[0].facetValues.forEach(({numberOfOccurrences, term}) => {
+			if (term in statusCounts) {
+				statusCounts[term] = numberOfOccurrences;
+			}
+		});
+
+		return [
+			[CaseResultStatuses.PASSED, statusCounts.PASSED],
+			[CaseResultStatuses.FAILED, statusCounts.FAILED],
+			[CaseResultStatuses.BLOCKED, statusCounts.BLOCKED],
+			[CaseResultStatuses.TEST_FIX, statusCounts.TEST_FIX],
+			[
+				CaseResultStatuses.INCOMPLETE,
+				statusCounts.INCOMPLETE + statusCounts.UNTESTED,
+			],
+		];
+	}, [data]);
+
+	return useMemo(
+		() => ({
+			colors: chartColors,
+			donut: {
+				columns: donutColumns,
+				total: donutColumns
+					?.map(([, totalCase]) => Number(totalCase))
+					.reduce(
+						(previousValue, currentValue) =>
+							previousValue + currentValue
+					),
+			},
+			ready: !loading,
+			statuses: Object.values(CaseResultStatuses),
+		}),
+		[donutColumns, loading]
 	);
 };
 
@@ -138,6 +236,6 @@ const useCaseResultGroupBy = (buildId: number = 0) => {
 	};
 };
 
-export {useTotalTestCases};
+export {useTotalTestCasesByTestrayBuild, useTotalTestCasesByTestrayJiraIssue};
 
 export default useCaseResultGroupBy;

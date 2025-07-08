@@ -207,6 +207,10 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		return `/${this.uri}/${id}?${this.nestedFields}&nestedFieldsDepth=${this.nestedFieldsDepth}`;
 	}
 
+	public getResourceByExternalReferenceCode(externalReferenceCode: string) {
+		return `/${this.uri}/by-external-reference-code/${externalReferenceCode}?${this.nestedFields}`;
+	}
+
 	public async getPagePermission() {
 		const response = await this.fetcher<APIResponse<ObjectModel>>(
 			`/${this.uri}?pageSize=1&fields=id`

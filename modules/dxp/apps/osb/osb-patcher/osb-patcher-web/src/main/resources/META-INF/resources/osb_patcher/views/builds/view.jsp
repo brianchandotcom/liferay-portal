@@ -54,142 +54,244 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 	</a>
 </c:if>
 
-<aui:field-wrapper label="create-date">
-	<%= dateTimeFormat.format(patcherBuild.getCreateDate()) %>
-</aui:field-wrapper>
+<div class="details">
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="create-date" />
+		</p>
 
-<aui:field-wrapper label="modified-date">
-	<%= dateTimeFormat.format(patcherBuild.getModifiedDate()) %>
-</aui:field-wrapper>
+		<p class="text-secondary">
+			<%= dateTimeFormat.format(patcherBuild.getCreateDate()) %>
+		</p>
+	</div>
 
-<aui:field-wrapper label="status-date">
-	<%= dateTimeFormat.format(patcherBuild.getStatusDate()) %>
-</aui:field-wrapper>
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="modified-date" />
+		</p>
 
-<aui:field-wrapper label="created-by">
-	<%= patcherBuild.getUserName() %>
-</aui:field-wrapper>
+		<p class="text-secondary">
+			<%= dateTimeFormat.format(patcherBuild.getModifiedDate()) %>
+		</p>
+	</div>
 
-<aui:field-wrapper label="status-updated-by">
-	<%= patcherBuild.getStatusByUserName() %>
-</aui:field-wrapper>
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="status-date" />
+		</p>
 
-<aui:field-wrapper label="build-id">
-	<%= patcherBuild.getPatcherBuildId() %>
-</aui:field-wrapper>
+		<p class="text-secondary">
+			<%= dateTimeFormat.format(patcherBuild.getStatusDate()) %>
+		</p>
+	</div>
 
-<aui:field-wrapper label="version">
-	<%= patcherBuild.getKeyVersion() %>
-</aui:field-wrapper>
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="created-by" />
+		</p>
 
-<aui:field-wrapper label="status">
-	<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(patcherBuild.getStatus()) %>" />
+		<p class="text-secondary">
+			<%= patcherBuild.getUserName() %>
+		</p>
+	</div>
 
-	<c:if test="<%= patcherBuild.getStatus() == WorkflowConstants.STATUS_BUILD_FAILED %>">
-		<clay:link
-			href="<%= patcherConfiguration.troubleshootingURL() %>"
-			target="_blank"
-			title="troubleshooting-guide"
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="status-updated-by" />
+		</p>
+
+		<p class="text-secondary">
+			<%= patcherBuild.getStatusByUserName() %>
+		</p>
+	</div>
+
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="build-id" />
+		</p>
+
+		<p class="text-secondary">
+			<%= patcherBuild.getPatcherBuildId() %>
+		</p>
+	</div>
+
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="version" />
+		</p>
+
+		<p class="text-secondary">
+			<%= patcherBuild.getKeyVersion() %>
+		</p>
+	</div>
+
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="status" />
+		</p>
+
+		<liferay-portal-workflow:status
+			showStatusLabel="<%= false %>"
+			status="<%= patcherBuild.getStatus() %>"
+			statusMessage="<%= WorkflowConstants.getStatusLabel(patcherBuild.getStatus()) %>"
 		/>
-	</c:if>
-</aui:field-wrapper>
 
-<aui:field-wrapper label="qa-status">
-	<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(patcherBuild.getQaStatus()) %>" />
-</aui:field-wrapper>
+		<c:if test="<%= patcherBuild.getStatus() == WorkflowConstants.STATUS_BUILD_FAILED %>">
+			<clay:link
+				href="<%= patcherConfiguration.troubleshootingURL() %>"
+				target="_blank"
+				title="troubleshooting-guide"
+			/>
+		</c:if>
+	</div>
 
-<aui:field-wrapper label="qa-comments">
-	<%= patcherBuild.getQaComments() %>
-</aui:field-wrapper>
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="qa-status" />
+		</p>
 
-<aui:select disabled="<%= true %>" label="product-version" name="patcherProductVersionId" showEmptyOption="<%= true %>">
+		<liferay-portal-workflow:status
+			showStatusLabel="<%= false %>"
+			status="<%= patcherBuild.getQaStatus() %>"
+			statusMessage="<%= WorkflowConstants.getStatusLabel(patcherBuild.getQaStatus()) %>"
+		/>
+	</div>
+
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="qa-comments" />
+		</p>
+
+		<p class="text-secondary">
+			<%= patcherBuild.getQaComments() %>
+		</p>
+	</div>
 
 	<%
-	for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
+	PatcherProductVersion patcherProductVersion = PatcherProductVersionLocalServiceUtil.fetchPatcherProductVersion(patcherBuild.getPatcherProductVersionId());
 	%>
 
-		<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="product-version" />
+		</p>
+
+		<p class="text-secondary">
+			<%= patcherProductVersion.getName() %>
+		</p>
+	</div>
 
 	<%
-	}
+	PatcherProjectVersion patcherProjectVersion = PatcherProjectVersionLocalServiceUtil.fetchPatcherProjectVersion(patcherBuild.getPatcherProjectVersionId());
 	%>
 
-</aui:select>
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="project-version" />
+		</p>
 
-<aui:select disabled="<%= true %>" label="project-version" name="patcherProjectVersionId" showEmptyOption="<%= false %>">
+		<p class="text-secondary">
+			<%= patcherProjectVersion.getName() %>
+		</p>
+	</div>
 
 	<%
-	for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions()) {
+	PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherBuild.getPatcherFixId());
 	%>
 
-		<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
-
-	<%
-	}
-	%>
-
-</aui:select>
-
-<%
-PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherBuild.getPatcherFixId());
-%>
-
-<aui:field-wrapper label="git-hash">
 	<c:if test="<%= patcherFix != null %>">
-		<a href="<%= PatcherFixUtil.getPatcherFixGitHubURL(patcherFix.getPatcherFixId()) %>" target="_blank"><%= patcherFix.getGitHash() %></a>
+		<div class="c-mb-3">
+			<p class="c-mb-1 font-weight-semi-bold text-3">
+				<liferay-ui:message key="git-hash" />
+			</p>
+
+			<p class="text-secondary">
+				<a href="<%= PatcherFixUtil.getPatcherFixGitHubURL(patcherFix.getPatcherFixId()) %>" target="_blank"><%= patcherFix.getGitHash() %></a>
+			</p>
+		</div>
 	</c:if>
-</aui:field-wrapper>
 
-<aui:field-wrapper label="jenkins">
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="jenkins" />
+		</p>
+
+		<p class="text-secondary">
+
+			<%
+			for (Map<String, String> jenkinsResult : JenkinsUtil.getJenkinsResults(patcherBuild)) {
+			%>
+
+				<clay:link
+					cssClass="nobr"
+					href='<%= jenkinsResult.get("statusURL") %>'
+					target="_blank"
+					title='<%= jenkinsResult.get("jobName") %>'
+				/>
+
+			<%
+			}
+			%>
+
+		</p>
+	</div>
 
 	<%
-	for (Map<String, String> jenkinsResult : JenkinsUtil.getJenkinsResults(patcherBuild)) {
+	String fileName = patcherBuild.getFileName();
 	%>
 
-		<clay:link
-			cssClass="nobr"
-			href='<%= jenkinsResult.get("statusURL") %>'
-			target="_blank"
-			title='<%= jenkinsResult.get("jobName") %>'
-		/>
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="hotfix" />
+		</p>
 
-	<%
-	}
-	%>
+		<p class="text-secondary">
+			<c:choose>
+				<c:when test='<%= fileName.contains("/liferay-dxp-") %>'>
+					<a href="https://releases-cdn.liferay.com/dxp/hotfix/<%= fileName %>" target="_blank">https://releases-cdn.liferay.com/dxp/hotfix/<%= fileName %></a><br />
 
-</aui:field-wrapper>
+					<pre>patching-tool install hotfix-<%= PatcherBuildUtil.getHotfixIdByFileName(fileName) %></pre>
+					<pre>patching-tool.sh install hotfix-<%= PatcherBuildUtil.getHotfixIdByFileName(fileName) %></pre>
+				</c:when>
+				<c:otherwise>
+					<a href="<%= patcherConfiguration.patcherBuildDownloadURL() %>/<%= fileName %>" target="_blank"><%= Validator.isNotNull(fileName) ? LanguageUtil.get(request, "download") : StringPool.BLANK %></a>
+				</c:otherwise>
+			</c:choose>
+		</p>
+	</div>
 
-<%
-String fileName = patcherBuild.getFileName();
-%>
+	<c:if test="<%= Validator.isNotNull(patcherBuild.getSourceName()) %>">
+		<div class="c-mb-3">
+			<p class="c-mb-1 font-weight-semi-bold text-3">
+				<liferay-ui:message key="source-zip" />
+			</p>
 
-<aui:field-wrapper label="hotfix">
-	<c:choose>
-		<c:when test='<%= fileName.contains("/liferay-dxp-") %>'>
-			<a href="https://releases-cdn.liferay.com/dxp/hotfix/<%= fileName %>" target="_blank">https://releases-cdn.liferay.com/dxp/hotfix/<%= fileName %></a><br />
+			<p class="text-secondary">
+				<a href="<%= patcherConfiguration.patcherBuildDownloadURL() %>/<%= patcherBuild.getSourceName() %>" target="_blank"><liferay-ui:message key="download" /></a>
+			</p>
+		</div>
+	</c:if>
 
-			<pre>patching-tool install hotfix-<%= PatcherBuildUtil.getHotfixIdByFileName(fileName) %></pre>
-			<pre>patching-tool.sh install hotfix-<%= PatcherBuildUtil.getHotfixIdByFileName(fileName) %></pre>
-		</c:when>
-		<c:otherwise>
-			<a href="<%= patcherConfiguration.patcherBuildDownloadURL() %>/<%= fileName %>" target="_blank"><%= Validator.isNotNull(fileName) ? LanguageUtil.get(request, "download") : StringPool.BLANK %></a>
-		</c:otherwise>
-	</c:choose>
-</aui:field-wrapper>
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="tickets-list" />
+		</p>
 
-<c:if test="<%= Validator.isNotNull(patcherBuild.getSourceName()) %>">
-	<aui:field-wrapper label="source-zip">
-		<a href="<%= patcherConfiguration.patcherBuildDownloadURL() %>/<%= patcherBuild.getSourceName() %>" target="_blank"><liferay-ui:message key="download" /></a>
-	</aui:field-wrapper>
-</c:if>
+		<p class="text-secondary">
+			<%= patcherBuild.getName() %>
+		</p>
+	</div>
 
-<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="tickets-list" name="patcherBuildName" readonly="<%= true %>" type="textarea" value="<%= patcherBuild.getName() %>" />
+	<c:if test="<%= (patcherBuild.getPatcherProductVersionId() != PatcherProductVersionUtil.getPatcherProductVersionId(PatcherProductVersionConstants.LABEL_PRODUCT_VERSION_PORTAL_6X)) && !patcherBuild.isChildBuild() && !StringUtil.equalsIgnoreCase(patcherBuild.getName(), patcherBuild.getInitialName()) %>">
+		<div class="c-mb-3">
+			<p class="c-mb-1 font-weight-semi-bold text-3">
+				<liferay-ui:message key="original-tickets-list" />
+			</p>
 
-<c:if test="<%= (patcherBuild.getPatcherProductVersionId() != PatcherProductVersionUtil.getPatcherProductVersionId(PatcherProductVersionConstants.LABEL_PRODUCT_VERSION_PORTAL_6X)) && !patcherBuild.isChildBuild() && !StringUtil.equalsIgnoreCase(patcherBuild.getName(), patcherBuild.getInitialName()) %>">
-	<aui:field-wrapper>
-		<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="original-tickets-list" name="patcherBuildInitialName" readonly="<%= true %>" type="textarea" value="<%= patcherBuild.getInitialName() %>" />
+			<p class="text-secondary">
+				<%= patcherBuild.getInitialName() %>
+			</p>
 
-		<aui:field-wrapper>
 			<liferay-ui:icon
 				image="../api/exception"
 				message=""
@@ -200,36 +302,54 @@ String fileName = patcherBuild.getFileName();
 				label="click-here-to-find-out-why-the-ticket-list-changed"
 				target="_blank"
 			/>
-		</aui:field-wrapper>
-	</aui:field-wrapper>
-</c:if>
+		</div>
+	</c:if>
 
-<%
-PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount(patcherBuild.getPatcherAccountId());
-%>
+	<%
+	PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount(patcherBuild.getPatcherAccountId());
+	%>
 
-<portlet:renderURL var="viewPatcherAccountPatcherProductVersionURL">
-	<portlet:param name="mvcRenderCommandName" value="/patcher/view_accounts" />
-	<portlet:param name="patcherBuildAccountEntryCode" value="<%= patcherAccount.getAccountEntryCode() %>" />
-	<portlet:param name="patcherProductVersionId" value="<%= String.valueOf(patcherBuild.getPatcherProductVersionId()) %>" />
-</portlet:renderURL>
+	<portlet:renderURL var="viewPatcherAccountPatcherProductVersionURL">
+		<portlet:param name="mvcRenderCommandName" value="/patcher/view_accounts" />
+		<portlet:param name="patcherBuildAccountEntryCode" value="<%= patcherAccount.getAccountEntryCode() %>" />
+		<portlet:param name="patcherProductVersionId" value="<%= String.valueOf(patcherBuild.getPatcherProductVersionId()) %>" />
+	</portlet:renderURL>
 
-<aui:field-wrapper label="account-code">
-	<clay:link
-		href="<%= viewPatcherAccountPatcherProductVersionURL %>"
-		title="<%= patcherAccount.getAccountEntryCode() %>"
-	/>
-</aui:field-wrapper>
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="account-code" />
+		</p>
 
-<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" name="supportTicket" readonly="<%= true %>" type="text" />
+		<p class="text-secondary">
+			<clay:link
+				href="<%= viewPatcherAccountPatcherProductVersionURL %>"
+				title="<%= patcherAccount.getAccountEntryCode() %>"
+			/>
+		</p>
+	</div>
 
-<aui:select disabled="<%= true %>" name="type">
-	<aui:option label="<%= PatcherBuildConstants.LABEL_OFFICIAL %>" value="<%= PatcherBuildConstants.TYPE_OFFICIAL %>" />
-	<aui:option label="<%= PatcherBuildConstants.LABEL_DEBUG %>" value="<%= PatcherBuildConstants.TYPE_DEBUG %>" />
-	<aui:option label="<%= PatcherBuildConstants.LABEL_IGNORE %>" value="<%= PatcherBuildConstants.TYPE_IGNORE %>" />
-</aui:select>
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="support-ticket" />
+		</p>
 
-<aui:input disabled="<%= true %>" name="mergeOnly" type="checkbox" value="<%= PatcherBuildUtil.isMergeOnly(patcherBuild) %>" />
+		<p class="text-secondary">
+			<%= patcherBuild.getSupportTicket() %>
+		</p>
+	</div>
+
+	<div class="c-mb-3">
+		<p class="c-mb-1 font-weight-semi-bold text-3">
+			<liferay-ui:message key="type" />
+		</p>
+
+		<p class="text-secondary">
+			<%= PatcherBuildConstants.getTypeLabel(patcherBuild.getType()) %>
+		</p>
+	</div>
+
+	<aui:input disabled="<%= true %>" name="mergeOnly" type="checkbox" value="<%= PatcherBuildUtil.isMergeOnly(patcherBuild) %>" />
+</div>
 
 <aui:button-row>
 	<c:if test="<%= PatcherBuildUtil.isLatestPatcherBuild(patcherBuild) && (patcherBuild.getType() != PatcherBuildConstants.TYPE_FIX_PACK) && !PatcherBuildRelUtil.hasParentPatcherBuilds(patcherBuild) %>">
@@ -239,7 +359,7 @@ PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount
 			<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
 		</portlet:renderURL>
 
-		<aui:button href="<%= editPatcherBuildURL %>" value="edit" />
+		<aui:button href="<%= editPatcherBuildURL %>" primary="<%= true %>" value="edit" />
 	</c:if>
 
 	<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) && !PatcherBuildRelUtil.hasChildPatcherBuilds(patcherBuild) %>">
@@ -432,7 +552,9 @@ SearchContainer<PatcherBuild> patcherBuildSearchContainer = patcherViewBuildsDis
 %>
 
 <c:if test="<%= patcherBuildSearchContainer.getTotal() > 1 %>">
-	<aui:field-wrapper label="build-versions" />
+	<h3 class="header-title mb-0 mt-4">
+		<liferay-ui:message key="build-versions" />
+	</h3>
 
 	<liferay-ui:search-container
 		searchContainer="<%= patcherBuildSearchContainer %>"
@@ -450,6 +572,12 @@ SearchContainer<PatcherBuild> patcherBuildSearchContainer = patcherViewBuildsDis
 				/>
 			</c:if>
 
+			<liferay-ui:search-container-column-user
+				name="created-by"
+				showDetails="<%= true %>"
+				userId="<%= patcherBuildKeyVersion.getUserId() %>"
+			/>
+
 			<portlet:renderURL var="viewPatcherBuildKeyVersionURL">
 				<portlet:param name="mvcRenderCommandName" value="/patcher/view_builds" />
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuildKeyVersion.getPatcherBuildId()) %>" />
@@ -465,18 +593,6 @@ SearchContainer<PatcherBuild> patcherBuildSearchContainer = patcherViewBuildsDis
 				name="version"
 				property="keyVersion"
 			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="osb-patcher-user-display"
-				name="created-by"
-			>
-				<liferay-ui:user-display
-					displayStyle="<%= 1 %>"
-					url="<%= PatcherUtil.getUserDisplayURL(themeDisplay, patcherBuildKeyVersion.getUserId()) %>"
-					userId="<%= patcherBuildKeyVersion.getUserId() %>"
-					userName="<%= patcherBuildKeyVersion.getUserName() %>"
-				/>
-			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-date
 				name="modified-date"

@@ -62,9 +62,10 @@ public class MCPServerFilter extends BasePortalFilter {
 		).write(
 			JSONUtil.put(
 				"authorization_endpoint",
-				"https://supreme-goblin-steady.ngrok-free.app/o/oauth2" +
-					"/authorize?response_type=code&client_id=" +
-						oAuth2Application.getClientId()
+				_portal.getAbsoluteURL(
+					httpServletRequest,
+					"/o/oauth2/authorize?response_type=code&client_id=" +
+						oAuth2Application.getClientId())
 			).put(
 				"code_challenge_methods_supported",
 				JSONUtil.putAll("plain", "S256")
@@ -72,21 +73,21 @@ public class MCPServerFilter extends BasePortalFilter {
 				"grant_types_supported",
 				JSONUtil.putAll("authorization_code", "refresh_token")
 			).put(
-				"issuer", "https://supreme-goblin-steady.ngrok-free.app"
+				"issuer", _portal.getPortalURL(httpServletRequest)
 			).put(
 				"registration_endpoint",
-				"https://supreme-goblin-steady.ngrok-free.app/o/oauth2/register"
+				_portal.getAbsoluteURL(httpServletRequest, "/o/oauth2/register")
 			).put(
 				"response_modes_supported", JSONUtil.putAll("query")
 			).put(
 				"response_types_supported", JSONUtil.putAll("code")
 			).put(
 				"revocation_endpoint",
-				"https://supreme-goblin-steady.ngrok-free.app/o/oauth2/token"
+				_portal.getAbsoluteURL(httpServletRequest, "/o/oauth2/token")
 			).put(
 				"token_endpoint",
 				StringBundler.concat(
-					"https://supreme-goblin-steady.ngrok-free.app/o/oauth2",
+					_portal.getAbsoluteURL(httpServletRequest, "/o/oauth2"),
 					"/token?client_id=", oAuth2Application.getClientId(),
 					"&client_secret=", oAuth2Application.getClientSecret())
 			).put(

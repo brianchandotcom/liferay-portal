@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -77,25 +75,16 @@ public class MCPServerServlet extends GenericServlet {
 
 		MCPServerCompany mcpServerCompany = _mcpServerCompanies.computeIfAbsent(
 			_portal.getCompanyId((HttpServletRequest)servletRequest),
-			companyId -> {
-				try {
-					return _buildMCPCompany(companyId);
-				}
-				catch (Exception exception) {
-					throw new RuntimeException(exception);
-				}
-			});
+			companyId -> _buildMCPCompany(
+				_portal.getPortalURL((HttpServletRequest)servletRequest) +
+					_portal.getPathModule()));
 
 		Servlet servlet = mcpServerCompany.getServlet();
 
 		servlet.service(servletRequest, servletResponse);
 	}
 
-	private MCPServerCompany _buildMCPCompany(long companyId) throws Exception {
-		Company company = _companyLocalService.getCompany(companyId);
-
-		String baseURL = company.getPortalURL(0) + _portal.getPathModule();
-
+	private MCPServerCompany _buildMCPCompany(String baseURL) {
 		MCPServerCompany mcpServerCompany = new MCPServerCompany(baseURL);
 
 		McpServer.sync(
@@ -202,9 +191,6 @@ public class MCPServerServlet extends GenericServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MCPServerServlet.class);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

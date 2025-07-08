@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
@@ -16,6 +16,12 @@ export class RolesPage {
 	readonly applicationsMenuButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly deleteButton: Locator;
+	readonly duplicateFrame: FrameLocator;
+	readonly duplicateFrameEmptyErrorMessage: Locator;
+	readonly duplicateFrameErrorMessage: Locator;
+	readonly duplicateFrameNewRoleNameInput: Locator;
+	readonly duplicateFrameSaveButton: Locator;
+	readonly duplicateMenuItem: Locator;
 	readonly noPermissionMessage: Locator;
 	readonly numberAssigneesCell: (
 		roleName: string,
@@ -45,6 +51,24 @@ export class RolesPage {
 		this.deleteButton = page
 			.getByRole('menuitem', {name: 'Delete'})
 			.or(page.getByRole('link', {name: 'Delete'}));
+		this.duplicateFrame = page.frameLocator('iframe[id="modalIframe"]');
+		this.duplicateFrameEmptyErrorMessage = this.duplicateFrame.getByText(
+			'Please enter a valid name'
+		);
+		this.duplicateFrameErrorMessage = this.duplicateFrame.getByText(
+			'Please enter a unique name'
+		);
+		this.duplicateFrameNewRoleNameInput =
+			this.duplicateFrame.getByLabel('New Role Name');
+		this.duplicateFrameSaveButton = this.duplicateFrame.getByRole(
+			'button',
+			{
+				name: 'Save',
+			}
+		);
+		this.duplicateMenuItem = page.getByRole('menuitem', {
+			name: 'Duplicate',
+		});
 		this.noPermissionMessage = page
 			.getByText(
 				'You do not have the roles required to access this portlet.'

@@ -29,7 +29,7 @@ const UserRenderer = ({itemData, value}: {itemData: any; value: string}) => {
 
 			{value}
 
-			{isOwner ? '(' + Liferay.Language.get('owner') + ')' : ''}
+			{isOwner && <span>({Liferay.Language.get('owner')})</span>}
 		</span>
 	);
 };

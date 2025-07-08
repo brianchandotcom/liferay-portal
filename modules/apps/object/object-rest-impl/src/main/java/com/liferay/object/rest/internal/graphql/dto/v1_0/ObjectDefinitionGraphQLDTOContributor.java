@@ -67,6 +67,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -198,9 +199,12 @@ public class ObjectDefinitionGraphQLDTOContributor
 				GraphQLDTOProperty.of(objectRelationship.getName(), Map.class));
 		}
 
+		List<ObjectField> finalObjectFields = objectFields;
+
 		return new ObjectDefinitionGraphQLDTOContributor(
 			objectDefinition.getCompanyId(),
-			entityModelProvider.getEntityModel(objectDefinition, objectFields),
+			() -> entityModelProvider.getEntityModel(
+				objectDefinition, finalObjectFields),
 			extensionProviderRegistry, graphQLDTOProperties,
 			StringUtil.removeSubstring(
 				objectDefinition.getPKObjectFieldName(), "c_"),
@@ -276,7 +280,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	@Override
 	public EntityModel getEntityModel() {
-		return _entityModel;
+		return _entityModelSupplier.get();
 	}
 
 	@Override
@@ -421,7 +425,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	private ObjectDefinitionGraphQLDTOContributor(
-		long companyId, EntityModel entityModel,
+		long companyId, Supplier<EntityModel> entityModelSupplier,
 		ExtensionProviderRegistry extensionProviderRegistry,
 		List<GraphQLDTOProperty> graphQLDTOProperties, String idName,
 		ObjectDefinition objectDefinition,
@@ -436,7 +440,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		String typeName) {
 
 		_companyId = companyId;
-		_entityModel = entityModel;
+		_entityModelSupplier = entityModelSupplier;
 		_extensionProviderRegistry = extensionProviderRegistry;
 		_graphQLDTOProperties = graphQLDTOProperties;
 		_idName = idName;
@@ -624,7 +628,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		).build();
 
 	private final long _companyId;
-	private final EntityModel _entityModel;
+	private final Supplier<EntityModel> _entityModelSupplier;
 	private final ExtensionProviderRegistry _extensionProviderRegistry;
 	private final List<GraphQLDTOProperty> _graphQLDTOProperties;
 	private final String _idName;

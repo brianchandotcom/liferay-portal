@@ -13,11 +13,11 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
+import com.liferay.site.cms.site.initializer.internal.util.SpaceAbstractHeaderUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -59,23 +59,18 @@ public class ViewSpaceFilesAbstractSectionDisplayContext
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {
-		return HashMapBuilder.<String, Object>put(
-			"label", language.get(httpServletRequest, "view-all-files")
-		).put(
-			"title", language.get(httpServletRequest, "files")
-		).put(
-			"url",
-			() -> {
-				ObjectEntryFolder objectEntryFolder =
-					_objectEntryFolderLocalService.
-						getObjectEntryFolderByExternalReferenceCode(
-							getRootObjectEntryFolderExternalReferenceCode(),
-							_groupId, themeDisplay.getCompanyId());
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					getRootObjectEntryFolderExternalReferenceCode(), _groupId,
+					themeDisplay.getCompanyId());
 
-				return ActionUtil.getBaseViewFolderURL(themeDisplay) +
-					objectEntryFolder.getObjectEntryFolderId();
-			}
-		).build();
+		String url =
+			ActionUtil.getBaseViewFolderURL(themeDisplay) +
+				objectEntryFolder.getObjectEntryFolderId();
+
+		return SpaceAbstractHeaderUtil.getSpaceAbstractHeaderProps(
+			httpServletRequest, "view-all-files", "files", url);
 	}
 
 	@Override

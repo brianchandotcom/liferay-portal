@@ -393,7 +393,7 @@ public class PatcherFixesManagementToolbarDisplayContext
 	private List<DropdownItem> _getFilterTypeDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				dropdownItem.setActive(_getStatus() == -1);
+				dropdownItem.setActive(_getType() == -1);
 				dropdownItem.setHref(getPortletURL(), "type", -1);
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "any"));
@@ -401,7 +401,7 @@ public class PatcherFixesManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					_getStatus() == PatcherFixConstants.TYPE_PATCH);
+					_getType() == PatcherFixConstants.TYPE_PATCH);
 				dropdownItem.setHref(
 					getPortletURL(), "type", PatcherFixConstants.TYPE_PATCH);
 				dropdownItem.setLabel(
@@ -411,7 +411,7 @@ public class PatcherFixesManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					_getStatus() == PatcherFixConstants.TYPE_WORKAROUND);
+					_getType() == PatcherFixConstants.TYPE_WORKAROUND);
 				dropdownItem.setHref(
 					getPortletURL(), "type",
 					PatcherFixConstants.TYPE_WORKAROUND);
@@ -423,7 +423,7 @@ public class PatcherFixesManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					_getStatus() == PatcherFixConstants.TYPE_FIX_PACK);
+					_getType() == PatcherFixConstants.TYPE_FIX_PACK);
 				dropdownItem.setHref(
 					getPortletURL(), "type", PatcherFixConstants.TYPE_FIX_PACK);
 				dropdownItem.setLabel(
@@ -434,7 +434,7 @@ public class PatcherFixesManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					_getStatus() == PatcherFixConstants.TYPE_GENERATED);
+					_getType() == PatcherFixConstants.TYPE_GENERATED);
 				dropdownItem.setHref(
 					getPortletURL(), "type",
 					PatcherFixConstants.TYPE_GENERATED);
@@ -446,7 +446,7 @@ public class PatcherFixesManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					_getStatus() ==
+					_getType() ==
 						PatcherFixConstants.TYPE_GENERATED_PRIVATE_PUBLIC);
 				dropdownItem.setHref(
 					getPortletURL(), "type",
@@ -459,7 +459,7 @@ public class PatcherFixesManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					_getStatus() == PatcherFixConstants.TYPE_EXCLUDED);
+					_getType() == PatcherFixConstants.TYPE_EXCLUDED);
 				dropdownItem.setHref(
 					getPortletURL(), "type", PatcherFixConstants.TYPE_EXCLUDED);
 				dropdownItem.setLabel(
@@ -470,7 +470,7 @@ public class PatcherFixesManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					_getStatus() == PatcherFixConstants.TYPE_REBASE);
+					_getType() == PatcherFixConstants.TYPE_REBASE);
 				dropdownItem.setHref(
 					getPortletURL(), "type", PatcherFixConstants.TYPE_REBASE);
 				dropdownItem.setLabel(

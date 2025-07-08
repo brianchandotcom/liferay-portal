@@ -65,8 +65,6 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_companyId = TestPropsValues.getCompanyId();
-
 		_advancedFileSystemStoreConfiguration =
 			_configurationAdmin.getConfiguration(
 				"com.liferay.portal.store.file.system.configuration." +
@@ -81,6 +79,8 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			HashMapDictionaryBuilder.<String, Object>put(
 				"rootDir", _advancedFileSystemStoreRootDir
 			).build());
+
+		_companyId = TestPropsValues.getCompanyId();
 
 		_fileSystemStoreConfiguration = _configurationAdmin.getConfiguration(
 			"com.liferay.portal.store.file.system.configuration." +

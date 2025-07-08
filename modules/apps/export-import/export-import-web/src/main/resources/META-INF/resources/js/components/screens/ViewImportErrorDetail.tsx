@@ -47,22 +47,17 @@ export function ViewImportErrorDetail() {
 		errorType: '',
 		externalReferenceCode: '',
 	});
-	const [formatedDate, setFormattedDate] = useState<string>('');
 
 	useEffect(() => {
 		fetch('/group/__mocks__/get-import-error-detail').then((response) => {
 			response.json().then((data: ErrorDetail) => {
-				setErrorDetail(data);
+				setErrorDetail({
+					...data,
+					dateCreated: formatDate(data.dateCreated),
+				});
 			});
 		});
 	}, []);
-
-	useEffect(() => {
-		if (errorDetail.dateCreated) {
-			const formattedDate = formatDate(errorDetail.dateCreated);
-			setFormattedDate(formattedDate);
-		}
-	}, [errorDetail.dateCreated]);
 
 	function openStackTraceModal({
 		stackTraceMessage,
@@ -102,6 +97,7 @@ export function ViewImportErrorDetail() {
 		errorMessage,
 		errorStackTrace,
 		errorType,
+		dateCreated,
 	} = errorDetail;
 
     return (
@@ -110,7 +106,7 @@ export function ViewImportErrorDetail() {
                 <ClayLayout.SheetHeader>
                     <h2 className="sheet-title">{entityType}</h2>
                     <div className="sheet-text">
-                        {`${formatedDate} · ${creator.name}`}
+                        {`${dateCreated} · ${creator.name}`}
                     </div>
                 </ClayLayout.SheetHeader>
                 <ClayLayout.SheetSection>

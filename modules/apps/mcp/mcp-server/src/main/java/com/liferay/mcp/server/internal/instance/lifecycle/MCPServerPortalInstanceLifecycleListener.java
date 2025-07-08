@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -58,8 +59,14 @@ public class MCPServerPortalInstanceLifecycleListener
 			ClientProfile.WEB_APPLICATION.id(),
 			OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
 			null, 0, null, "MCP Server", null,
-			List.of("http://127.0.0.1:33418/"), false, false, null,
-			new ServiceContext());
+			List.of("http://127.0.0.1:33418/"), false,
+			Arrays.asList(
+				"Liferay.Headless.Delivery.everything",
+				"Liferay.Headless.Discovery.API.everything.read",
+				"Liferay.Headless.Discovery.OpenAPI.everything.read",
+				"Liferay.Object.Admin.REST.everything",
+				"c_formula1team.everything"),
+			false, new ServiceContext());
 	}
 
 	@Activate

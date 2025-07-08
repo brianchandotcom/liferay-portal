@@ -78,6 +78,14 @@ public class MCPServerFilter extends BasePortalFilter {
 					_portal.getAbsoluteURL(
 						httpServletRequest, "/o/oauth2/token")
 				).put(
+					"scopes_supported",
+					JSONUtil.putAll(
+						"Liferay.Headless.Delivery.everything",
+						"Liferay.Headless.Discovery.API.everything.read",
+						"Liferay.Headless.Discovery.OpenAPI.everything.read",
+						"Liferay.Object.Admin.REST.everything",
+						"c_formula1team.everything")
+				).put(
 					"token_endpoint",
 					StringBundler.concat(
 						_portal.getAbsoluteURL(httpServletRequest, "/o/oauth2"),

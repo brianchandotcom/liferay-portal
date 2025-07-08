@@ -17,7 +17,6 @@ interface MembersListItemProps {
 	emptyMessage: string;
 	itemType: 'user' | 'group';
 	items: (UserAccount | UserGroup)[];
-	numberOfUserAccounts: number;
 	onRemoveItem: (item: UserAccount | UserGroup) => Promise<void>;
 }
 
@@ -27,7 +26,6 @@ export function MembersListItem({
 	emptyMessage,
 	itemType,
 	items,
-	numberOfUserAccounts,
 	onRemoveItem,
 }: MembersListItemProps) {
 	if (!items || !items.length) {
@@ -82,12 +80,18 @@ export function MembersListItem({
 								</span>
 							)}
 
-							{!isUser && numberOfUserAccounts && (
-								<span className="ml-1 text-lowercase text-secondary">
-									Liferay.Util.sub( '(' +
-									Liferay.Language.get('x-members'), numberOfUserAccounts + ')'
-								</span>
-							)}
+							{!isUser &&
+								(item as UserGroup).numberOfUserAccounts && (
+									<span className="ml-1 text-lowercase text-secondary">
+										(
+										{Liferay.Util.sub(
+											Liferay.Language.get('x-members'),
+											(item as UserGroup)
+												.numberOfUserAccounts
+										)}
+										)
+									</span>
+								)}
 						</div>
 
 						{isOwner ? (

@@ -70,34 +70,28 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 				"com.liferay.portal.store.file.system.configuration." +
 					"AdvancedFileSystemStoreConfiguration",
 				StringPool.QUESTION);
-		_advancedFileSystemStoreRootDir =
-			PropsUtil.get(PropsKeys.LIFERAY_HOME) +
-				"/test/store/advanced_file_system";
 
 		ConfigurationTestUtil.saveConfiguration(
 			_advancedFileSystemStoreConfiguration,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"rootDir", _advancedFileSystemStoreRootDir
+				"rootDir", _ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE
 			).build());
 
+		_cacheEnabled = ReflectionTestUtil.getAndSetFieldValue(
+			PortalInstancePool.class, "_cacheEnabled", false);
 		_companyId = TestPropsValues.getCompanyId();
 
 		_fileSystemStoreConfiguration = _configurationAdmin.getConfiguration(
 			"com.liferay.portal.store.file.system.configuration." +
 				"FileSystemStoreConfiguration",
 			StringPool.QUESTION);
-		_fileSystemStoreRootDir =
-			PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/test/store/file_system";
 
 		ConfigurationTestUtil.saveConfiguration(
 			_fileSystemStoreConfiguration,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"rootDir", _fileSystemStoreRootDir
+				"rootDir", _ROOT_DIR_FILE_SYSTEM_STORE
 			).build());
 
-		_originalCacheEnabled = ReflectionTestUtil.getAndSetFieldValue(
-			PortalInstancePool.class, "_cacheEnabled", false);
-		_repositoryId = RandomTestUtil.nextLong();
 		_upgradeDatabaseDLStorageCheckDisabledSafeCloseable =
 			PropsValuesTestUtil.swapWithSafeCloseable(
 				"UPGRADE_DATABASE_DL_STORAGE_CHECK_DISABLED", false);
@@ -108,15 +102,15 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		ConfigurationTestUtil.deleteConfiguration(
 			_advancedFileSystemStoreConfiguration);
 
-		FileUtil.deltree(_advancedFileSystemStoreRootDir);
+		FileUtil.deltree(_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE);
 
 		ConfigurationTestUtil.deleteConfiguration(
 			_fileSystemStoreConfiguration);
 
-		FileUtil.deltree(_fileSystemStoreRootDir);
+		FileUtil.deltree(_ROOT_DIR_FILE_SYSTEM_STORE);
 
 		ReflectionTestUtil.setFieldValue(
-			PortalInstancePool.class, "_cacheEnabled", _originalCacheEnabled);
+			PortalInstancePool.class, "_cacheEnabled", _cacheEnabled);
 
 		_upgradeDatabaseDLStorageCheckDisabledSafeCloseable.close();
 	}
@@ -128,19 +122,20 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			companyId -> {
 				Files.createDirectories(
 					Paths.get(
-						_advancedFileSystemStoreRootDir,
+						_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE,
 						String.valueOf(companyId)));
 				Files.createDirectories(
 					Paths.get(
-						_fileSystemStoreRootDir, String.valueOf(companyId)));
+						_ROOT_DIR_FILE_SYSTEM_STORE,
+						String.valueOf(companyId)));
 			},
 			PortalInstancePool.getCompanyIds());
 	}
 
 	@After
 	public void tearDown() {
-		FileUtil.deltree(_advancedFileSystemStoreRootDir);
-		FileUtil.deltree(_fileSystemStoreRootDir);
+		FileUtil.deltree(_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE);
+		FileUtil.deltree(_ROOT_DIR_FILE_SYSTEM_STORE);
 	}
 
 	@Test
@@ -148,8 +143,8 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		throws Exception {
 
 		Path path = Paths.get(
-			_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_repositoryId), "100");
+			_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE, String.valueOf(_companyId),
+			String.valueOf(_REPOSITORY_ID), "100");
 
 		Files.createDirectories(path);
 
@@ -166,8 +161,9 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 		Files.createDirectories(
 			Paths.get(
-				_advancedFileSystemStoreRootDir, String.valueOf(_companyId),
-				String.valueOf(_repositoryId), "10", "100.afsh"));
+				_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE,
+				String.valueOf(_companyId), String.valueOf(_REPOSITORY_ID),
+				"10", "100.afsh"));
 
 		_assertVerifyValidDirectory(_DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE);
 	}
@@ -178,7 +174,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 		long companyId = PortalInstancePool.getCompanyIds()[0];
 
-		Path path = Paths.get(_fileSystemStoreRootDir);
+		Path path = Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE);
 
 		Path companyIdPath = path.resolve(String.valueOf(companyId));
 		Path companyIdBackupPath = path.resolve(
@@ -203,8 +199,8 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		throws Exception {
 
 		Path path = Paths.get(
-			_fileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_repositoryId), "invalidFile.txt");
+			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
+			String.valueOf(_REPOSITORY_ID), "invalidFile.txt");
 
 		Files.createDirectories(path.getParent());
 		Files.createFile(path);
@@ -219,7 +215,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		throws Exception {
 
 		Path path = Paths.get(
-			_fileSystemStoreRootDir, String.valueOf(_companyId),
+			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
 			"invalidFile.txt");
 
 		Files.createDirectories(path.getParent());
@@ -235,8 +231,8 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		throws Exception {
 
 		Path path = Paths.get(
-			_fileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_repositoryId), "100.txt");
+			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
+			String.valueOf(_REPOSITORY_ID), "100.txt");
 
 		Files.createDirectories(path);
 
@@ -252,8 +248,8 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		throws Exception {
 
 		Path path = Paths.get(
-			_fileSystemStoreRootDir, String.valueOf(_companyId),
-			String.valueOf(_repositoryId), "100", "invalidVersionLabel");
+			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
+			String.valueOf(_REPOSITORY_ID), "100", "invalidVersionLabel");
 
 		Files.createDirectories(path.getParent());
 		Files.createFile(path);
@@ -268,21 +264,22 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		throws Exception {
 
 		Files.deleteIfExists(
-			Paths.get(_fileSystemStoreRootDir, String.valueOf(_companyId)));
+			Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId)));
 
 		_assertVerifyExceptionMessage(
 			_DL_STORE_IMPL_FILE_SYSTEM_STORE,
 			StringBundler.concat(
-				"Missing directories in ", Paths.get(_fileSystemStoreRootDir),
-				" for companies: [", _companyId, "]"));
+				"Missing directories in ",
+				Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE), " for companies: [",
+				_companyId, "]"));
 	}
 
 	@Test
 	public void testVerifyFileSystemStoreValidDirectory() throws Exception {
 		Files.createDirectories(
 			Paths.get(
-				_fileSystemStoreRootDir, String.valueOf(_companyId),
-				String.valueOf(_repositoryId), "100", "1.0"));
+				_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
+				String.valueOf(_REPOSITORY_ID), "100", "1.0"));
 
 		_assertVerifyValidDirectory(_DL_STORE_IMPL_FILE_SYSTEM_STORE);
 	}
@@ -323,10 +320,11 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 				Path rootDirPath;
 
 				if (advancedFileSystemStore) {
-					rootDirPath = Paths.get(_advancedFileSystemStoreRootDir);
+					rootDirPath = Paths.get(
+						_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE);
 				}
 				else {
-					rootDirPath = Paths.get(_fileSystemStoreRootDir);
+					rootDirPath = Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE);
 				}
 
 				expectedExceptionMessage = StringBundler.concat(
@@ -393,17 +391,23 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	private static final String _DL_STORE_IMPL_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.FileSystemStore";
 
+	private static final long _REPOSITORY_ID = RandomTestUtil.nextLong();
+
+	private static final String _ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE =
+		PropsUtil.get(PropsKeys.LIFERAY_HOME) +
+			"/test/store/advanced_file_system";
+
+	private static final String _ROOT_DIR_FILE_SYSTEM_STORE =
+		PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/test/store/file_system";
+
 	private static Configuration _advancedFileSystemStoreConfiguration;
-	private static String _advancedFileSystemStoreRootDir;
+	private static boolean _cacheEnabled;
 	private static long _companyId;
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
 	private static Configuration _fileSystemStoreConfiguration;
-	private static String _fileSystemStoreRootDir;
-	private static boolean _originalCacheEnabled;
-	private static long _repositoryId;
 	private static SafeCloseable
 		_upgradeDatabaseDLStorageCheckDisabledSafeCloseable;
 

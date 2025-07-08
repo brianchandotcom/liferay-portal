@@ -62,7 +62,7 @@ public class MCPServerFilter extends BasePortalFilter {
 					JSONUtil.putAll("plain", "S256")
 				).put(
 					"grant_types_supported",
-					JSONUtil.putAll("authorization_code", "refresh_token")
+					JSONUtil.putAll("authorization_code")
 				).put(
 					"issuer", _portal.getPortalURL(httpServletRequest)
 				).put(

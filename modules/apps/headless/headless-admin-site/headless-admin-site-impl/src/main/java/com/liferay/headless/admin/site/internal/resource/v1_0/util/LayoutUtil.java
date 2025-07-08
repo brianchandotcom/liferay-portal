@@ -510,6 +510,13 @@ public class LayoutUtil {
 			WidgetPageSpecification widgetPageSpecification =
 				(WidgetPageSpecification)pageSpecifications[0];
 
+			if (!Objects.equals(
+					widgetPageSpecification.getStatus(),
+					WidgetPageSpecification.Status.APPROVED)) {
+
+				throw new UnsupportedOperationException();
+			}
+
 			settings = widgetPageSpecification.getSettings();
 		}
 

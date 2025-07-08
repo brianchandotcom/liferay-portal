@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -124,11 +125,13 @@ public class MCPServerCompany {
 			int status = connection.getResponseCode();
 
 			if (status >= 300) {
-				String errorMessage = "Request to " + path + " failed with status " + status;
+				String errorMessage = StringBundler.concat(
+					"Request to ", path, " failed with status ", status);
 
-				InputStream errorStream = connection.getErrorStream();
-				if (errorStream != null) {
-					errorMessage += StringUtil.read(errorStream);
+				InputStream inputStream = connection.getErrorStream();
+
+				if (inputStream != null) {
+					errorMessage += StringUtil.read(inputStream);
 				}
 
 				throw new Exception(errorMessage);

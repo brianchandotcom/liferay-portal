@@ -36,9 +36,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leandro Aguiar
  * @author Vendel Toreki
  * @author Alejandro Tardín
- * <p>
+ *
  * This servlet operates with the following considerations:
- * <p>
+ *
  * 1. No Reactivity:
  *    The server is initialized on the first request with the resources and
  *    tools available at that time. Any changes in Liferay after initialization

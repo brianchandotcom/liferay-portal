@@ -11,6 +11,7 @@ import com.liferay.osb.patcher.service.PatcherFixLocalServiceUtil;
 import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
@@ -48,8 +50,7 @@ public class PatcherFixesDisplayContext {
 
 		SearchContainer<PatcherFix> patcherPatcherFixSearchContainer =
 			new SearchContainer<>(
-				_renderRequest, _renderResponse.createRenderURL(), null,
-				"there-are-no-fixes");
+				_renderRequest, _getPortletURL(), null, "there-are-no-fixes");
 
 		Indexer<PatcherFix> indexer = IndexerRegistryUtil.getIndexer(
 			PatcherFix.class);
@@ -96,6 +97,16 @@ public class PatcherFixesDisplayContext {
 		return _patcherPatcherFixSearchContainer;
 	}
 
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
+		return _keywords;
+	}
+
 	private long _getPatcherProducttVersionId() {
 		if (_patcherProductVersionId != null) {
 			return _patcherProductVersionId;
@@ -116,6 +127,32 @@ public class PatcherFixesDisplayContext {
 			_httpServletRequest, "patcherProjectVersionId");
 
 		return _patcherProjectVersionId;
+	}
+
+	private PortletURL _getPortletURL() {
+		if (_portletURL != null) {
+			return _portletURL;
+		}
+
+		_portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/patcher/index_fixes"
+		).setKeywords(
+			_getKeywords()
+		).setTabs1(
+			"fixes"
+		).setParameter(
+			"patcherProductVersionId", _getPatcherProducttVersionId()
+		).setParameter(
+			"patcherProjectVersionId", _getPatcherProjectVersionId()
+		).setParameter(
+			"status", _getStatus()
+		).setParameter(
+			"type", _getType()
+		).buildPortletURL();
+
+		return _portletURL;
 	}
 
 	private int _getStatus() {
@@ -140,9 +177,11 @@ public class PatcherFixesDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private String _keywords;
 	private SearchContainer<PatcherFix> _patcherPatcherFixSearchContainer;
 	private Long _patcherProductVersionId;
 	private Long _patcherProjectVersionId;
+	private PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Integer _status;

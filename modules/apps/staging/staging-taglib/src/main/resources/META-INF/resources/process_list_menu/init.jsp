@@ -15,6 +15,7 @@ boolean deleteMenu = GetterUtil.getBoolean(request.getAttribute("liferay-staging
 boolean localPublishing = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-list-menu:localPublishing"));
 boolean relaunchMenu = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-list-menu:relaunchMenu"));
 boolean summaryMenu = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-list-menu:summaryMenu"));
+boolean viewDetailsMenu = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-list-menu:viewDetailsMenu"));
 
 Map<String, Serializable> contextMap = backgroundTask.getTaskContextMap();
 

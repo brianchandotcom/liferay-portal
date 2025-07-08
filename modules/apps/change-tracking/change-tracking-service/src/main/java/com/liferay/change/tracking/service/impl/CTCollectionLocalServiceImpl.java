@@ -569,8 +569,8 @@ public class CTCollectionLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			ctCollection.getCtCollectionId());
 
-		int count = ctCollectionPersistence.countBySchemaVersionId(
-			ctCollection.getSchemaVersionId());
+		int count = ctCollectionPersistence.countByC_SV(
+			ctCollection.getCompanyId(), ctCollection.getSchemaVersionId());
 
 		if (count == 1) {
 			CTSchemaVersion ctSchemaVersion =

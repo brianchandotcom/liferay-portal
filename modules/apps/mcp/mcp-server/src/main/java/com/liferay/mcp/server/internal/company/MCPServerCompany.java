@@ -23,6 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.lang.reflect.Field;
@@ -120,9 +121,17 @@ public class MCPServerCompany {
 				}
 			}
 
-			if (connection.getResponseCode() >= 300) {
-				throw new Exception(
-					StringUtil.read(connection.getErrorStream()));
+			int status = connection.getResponseCode();
+
+			if (status >= 300) {
+				String errorMessage = "Request to " + path + " failed with status " + status;
+
+				InputStream errorStream = connection.getErrorStream();
+				if (errorStream != null) {
+					errorMessage += StringUtil.read(errorStream);
+				}
+
+				throw new Exception(errorMessage);
 			}
 
 			return StringUtil.read(connection.getInputStream());

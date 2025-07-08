@@ -8,6 +8,8 @@ package com.liferay.mcp.server.internal.servlet;
 import com.liferay.mcp.server.internal.company.MCPServerCompany;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -36,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  * <p>
  * This servlet operates with the following considerations:
- *
+ * <p>
  * 1. No Reactivity:
  *    The server is initialized on the first request with the resources and
  *    tools available at that time. Any changes in Liferay after initialization
@@ -103,10 +105,20 @@ public class MCPServerServlet extends GenericServlet {
 				).put(
 					"type", "object"
 				).toString()),
-			(exchange, arguments) -> new McpSchema.CallToolResult(
-				mcpServerCompany.getAllOpenAPIs(
-					MCPServerCompany.getAccessToken(exchange)),
-				false)
+			(exchange, arguments) -> {
+				try {
+					return new McpSchema.CallToolResult(
+						mcpServerCompany.getAllOpenAPIs(
+							MCPServerCompany.getAccessToken(exchange)),
+						false);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+
+					return new McpSchema.CallToolResult(
+						exception.getMessage(), true);
+				}
+			}
 		).tool(
 			new McpSchema.Tool(
 				"get-openapi", "Retrieves the OpenAPI YAML file.",
@@ -122,11 +134,21 @@ public class MCPServerServlet extends GenericServlet {
 				).put(
 					"type", "object"
 				).toString()),
-			(exchange, arguments) -> new McpSchema.CallToolResult(
-				mcpServerCompany.getOpenAPI(
-					String.valueOf(arguments.get("url")),
-					MCPServerCompany.getAccessToken(exchange)),
-				false)
+			(exchange, arguments) -> {
+				try {
+					return new McpSchema.CallToolResult(
+						mcpServerCompany.getOpenAPI(
+							String.valueOf(arguments.get("url")),
+							MCPServerCompany.getAccessToken(exchange)),
+						false);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+
+					return new McpSchema.CallToolResult(
+						exception.getMessage(), true);
+				}
+			}
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
@@ -168,17 +190,30 @@ public class MCPServerServlet extends GenericServlet {
 				).put(
 					"type", "object"
 				).toString()),
-			(exchange, arguments) -> new McpSchema.CallToolResult(
-				mcpServerCompany.callEndpoint(
-					String.valueOf(arguments.get("method")),
-					String.valueOf(arguments.get("path")),
-					String.valueOf(arguments.get("payload")),
-					MCPServerCompany.getAccessToken(exchange)),
-				false)
+			(exchange, arguments) -> {
+				try {
+					return new McpSchema.CallToolResult(
+						mcpServerCompany.callEndpoint(
+							String.valueOf(arguments.get("method")),
+							String.valueOf(arguments.get("path")),
+							String.valueOf(arguments.get("payload")),
+							MCPServerCompany.getAccessToken(exchange)),
+						false);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+
+					return new McpSchema.CallToolResult(
+						exception.getMessage(), true);
+				}
+			}
 		).build();
 
 		return mcpServerCompany;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MCPServerServlet.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -56,24 +56,24 @@ public class ViewVersionHistoryDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				_language.get(
-					_httpServletRequest,
-					"are-you-sure-you-want-to-delete-this-entry"),
-				"{actions.delete.href}", "trash", "delete",
-				_language.get(_httpServletRequest, "delete"), "delete",
-				"delete", "headless"),
-			new FDSActionDropdownItem(
-				"{actions.expire.href}", "time", "expire",
-				_language.get(_httpServletRequest, "expire"), "post", "expire",
-				"headless"),
+				"{file.link.href}", "download", "download",
+				_language.get(_httpServletRequest, "download"), "get", null,
+				"link"),
 			new FDSActionDropdownItem(
 				"{actions.restore.href}", "restore", "restore",
 				_language.get(_httpServletRequest, "restore"), "put", "restore",
 				"headless"),
 			new FDSActionDropdownItem(
-				"{file.link.href}", "download", "download",
-				_language.get(_httpServletRequest, "download"), "get", null,
-				"link"));
+				"{actions.expire.href}", "time", "expire",
+				_language.get(_httpServletRequest, "expire"), "post", "expire",
+				"headless"),
+			new FDSActionDropdownItem(
+				_language.get(
+					_httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-entry"),
+				"{actions.delete.href}", "trash", "delete",
+				_language.get(_httpServletRequest, "delete"), "delete",
+				"delete", "headless"));
 	}
 
 	public Map<String, Object> getToolbarReactData() throws PortalException {

@@ -491,7 +491,36 @@ public class StagedGroupStagedModelDataHandler
 
 		_permissionImporter.clearCache();
 
+		List<Element> batchElements = new ArrayList<>();
+		List<Element> nonbatchElements = new ArrayList<>();
+
 		for (Element portletElement : sitePortletElements) {
+			String portletId = portletElement.attributeValue("portlet-id");
+
+			Portlet portlet = _portletLocalService.getPortletById(
+				portletDataContext.getCompanyId(), portletId);
+
+			if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if (portletDataHandler.isBatch()) {
+				batchElements.add(portletElement);
+			}
+			else {
+				nonbatchElements.add(portletElement);
+			}
+		}
+
+		List<Element> orderedPortletElements = new ArrayList<>();
+
+		orderedPortletElements.addAll(batchElements);
+		orderedPortletElements.addAll(nonbatchElements);
+
+		for (Element portletElement : orderedPortletElements) {
 			String portletId = portletElement.attributeValue("portlet-id");
 
 			Portlet portlet = _portletLocalService.getPortletById(

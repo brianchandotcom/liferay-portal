@@ -12930,7 +12930,10 @@ feature.flag.LPD-11342=true</echo>
 		<echo append="true" file="portal-impl/src/portal-ext.properties">
 analytics.cloud.domain.allowed=*
 
-captcha.enforce.disabled=true</echo>
+captcha.enforce.disabled=true
+configuration.override.com.liferay.captcha.configuration.CaptchaConfiguration_createAccountCaptchaEnabled=B"false"
+configuration.override.com.liferay.captcha.configuration.CaptchaConfiguration_maxChallenges=I"-1"
+configuration.override.com.liferay.captcha.configuration.CaptchaConfiguration_sendPasswordCaptchaEnabled=B"false"</echo>
 
 		<apply-portal-ext-properties />
 	</target>

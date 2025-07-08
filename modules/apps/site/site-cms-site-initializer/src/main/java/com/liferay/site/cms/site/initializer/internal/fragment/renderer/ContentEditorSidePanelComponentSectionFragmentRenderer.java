@@ -12,12 +12,18 @@ import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -138,15 +144,18 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 				return jsonArray;
 			}
 		).put(
+			"editorConfig",
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				StringPool.BLANK, "contentItemCommentEditor", StringPool.BLANK,
+				Collections.emptyMap(), themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest))
+		).put(
 			"id", String.valueOf(objectEntry.getObjectEntryId())
 		).put(
 			"isSubscribed",
-			() -> {
-				return _subscriptionLocalService.isSubscribed(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					objectEntry.getModelClassName(),
-					objectEntry.getObjectEntryId());
-			}
+			() -> _subscriptionLocalService.isSubscribed(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				objectEntry.getModelClassName(), objectEntry.getObjectEntryId())
 		).put(
 			"subscribeURL",
 			StringBundler.concat(
@@ -163,10 +172,6 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 				ObjectDefinition objectDefinition =
 					_objectDefinitionLocalService.fetchObjectDefinition(
 						objectEntry.getObjectDefinitionId());
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
 
 				return objectDefinition.getLabel(themeDisplay.getLocale());
 			}

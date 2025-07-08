@@ -10,8 +10,6 @@
 <%
 PatcherViewFixesDisplayContext patcherViewFixesDisplayContext = new PatcherViewFixesDisplayContext(request, renderRequest, renderResponse);
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 PatcherFix patcherFix = patcherViewFixesDisplayContext.getPatcherFix();
 
 PatcherFix latestPatcherFix = null;
@@ -30,22 +28,13 @@ if (!patcherFix.isLatestFix()) {
 
 <aui:model-context bean="<%= patcherFix %>" model="<%= PatcherFix.class %>" />
 
-<portlet:renderURL var="viewPatcherFixURL">
-	<portlet:param name="mvcRenderCommandName" value="/patcher/view_fixes" />
-	<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
-
-	<c:if test="<%= Validator.isNotNull(redirect) %>">
-		<portlet:param name="redirect" value="<%= redirect %>" />
-	</c:if>
-</portlet:renderURL>
-
 <c:if test="<%= !patcherFix.isLatestFix() %>">
 	<liferay-ui:message key="this-is-not-the-latest-fix-version-view-the-latest-fix-here" />
 
 	<portlet:renderURL var="viewLatestPatcherFixURL">
 		<portlet:param name="mvcRenderCommandName" value="/patcher/view_fixes" />
 		<portlet:param name="patcherFixId" value="<%= String.valueOf(latestPatcherFix.getPatcherFixId()) %>" />
-		<portlet:param name="redirect" value="<%= viewPatcherFixURL %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
 	<a href="<%= viewLatestPatcherFixURL %>">
@@ -152,7 +141,7 @@ if (!patcherFix.isLatestFix()) {
 		<portlet:renderURL var="editPatcherFixURL">
 			<portlet:param name="mvcRenderCommandName" value="/patcher/edit_fixes" />
 			<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
-			<portlet:param name="redirect" value="<%= viewPatcherFixURL %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<aui:button href="<%= editPatcherFixURL %>" value="edit" />

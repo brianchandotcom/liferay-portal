@@ -113,10 +113,15 @@ public abstract class Base${schemaName}ResourceImpl
 		generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures, schemaName)
 		generateCRUD = freeMarkerTool.generateCRUD(configYAML, javaMethodSignatures, schemaName)
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
+		hasFilterOrSortEndpoints = freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.kernel.search.filter.Filter") || freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.kernel.search.Sort[]")
 	/>
 
 	<#if generateBatch>
-		, EntityModelResource, VulcanBatchEngineTaskItemDelegate<${javaDataType}>
+		, VulcanBatchEngineTaskItemDelegate<${javaDataType}>
+	</#if>
+
+	<#if hasFilterOrSortEndpoints || generateBatch>
+		, EntityModelResource
 	</#if>
 
 	<#if generateCRUD>
@@ -1106,11 +1111,6 @@ public abstract class Base${schemaName}ResourceImpl
 			return getEntityModel(new MultivaluedHashMap<String, Object>(multivaluedMap));
 		}
 
-		@Override
-		public EntityModel getEntityModel(MultivaluedMap multivaluedMap) throws Exception {
-			return null;
-		}
-
 		public String getResourceName() {
 			return "${schemaName}";
 		}
@@ -1324,6 +1324,13 @@ public abstract class Base${schemaName}ResourceImpl
 				return null;
 			}
 		</#list>
+	</#if>
+
+	<#if hasFilterOrSortEndpoints || generateBatch>
+		@Override
+		public EntityModel getEntityModel(MultivaluedMap multivaluedMap) throws Exception {
+			return null;
+		}
 	</#if>
 
 	<#if generateCRUD>

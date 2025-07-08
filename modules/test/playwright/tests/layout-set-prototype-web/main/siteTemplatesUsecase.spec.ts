@@ -42,17 +42,17 @@ export const test = mergeTests(
 );
 
 test(
-	'Change localization after Site Template is added in virtual instance.',
+	'Change localization after Site Template is added in virtual instance',
 	{tag: ['@LPS-180299']},
 	async ({apiHelpers, localizationInstanceSettingsPage, page}) => {
-		const virtual =
+		const virtualInstance =
 			await apiHelpers.headlessPortalInstance.addVirtualInstance({
 				domain: VIRTUAL_INSTANCE_DOMAIN,
 				portalInstanceId: DEFAULT_VIRTUAL_INSTANCE_NAME,
 				virtualHost: DEFAULT_VIRTUAL_INSTANCE_NAME,
 			});
 		apiHelpers.data.push({
-			id: virtual.portalInstanceId,
+			id: virtualInstance.portalInstanceId,
 			type: 'virtual-instance',
 		});
 

@@ -27,6 +27,7 @@ const actionNames = [
 ];
 
 let user;
+let ctCollection;
 
 test.beforeEach(async ({changeTrackingPage, page}) => {
 	user = await changeTrackingPage.addUserWithPublicationsUserRole();
@@ -38,6 +39,47 @@ test.beforeEach(async ({changeTrackingPage, page}) => {
 			page.getByRole('cell', {exact: true, name: actionName})
 		).toBeVisible();
 	}
+});
+
+test.afterEach(async ({apiHelpers, changeTrackingPage, page}) => {
+	try {
+		await performLogout(page);
+	}
+	finally {
+		await performLoginViaApi({page, screenName: 'test'});
+	}
+
+	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+
+	await changeTrackingPage.gotoPublicationsPermissions();
+
+	const ownerRole = page.locator('tr').filter({hasText: 'Owner'});
+
+	for (let i = 1; i < 6; i++) {
+		const checkbox = ownerRole
+			.locator('td')
+			.nth(i)
+			.locator('.custom-control > label > .custom-control-input');
+
+		await checkbox.check();
+	}
+
+	const publicationsUserRole = page
+		.locator('tr')
+		.filter({hasText: 'Publications User'});
+
+	const publicationsUserRoleDeletePermission = publicationsUserRole
+		.locator('td')
+		.nth(1)
+		.locator('.custom-control > label > .custom-control-input');
+
+	await publicationsUserRoleDeletePermission.uncheck();
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection.body.id
+	);
 });
 
 test('LPD-53946 Update Permissions for Owner Role', async ({
@@ -78,7 +120,7 @@ test('LPD-53946 Update Permissions for Owner Role', async ({
 
 	await performLoginViaApi({page, screenName: user.alternateName});
 
-	const ctCollection =
+	ctCollection =
 		await apiHelpers.headlessChangeTracking.createCTCollection(
 			getRandomString()
 		);
@@ -93,21 +135,9 @@ test('LPD-53946 Update Permissions for Owner Role', async ({
 
 	await performLoginViaApi({page, screenName: 'test'});
 
-	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
-
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await expect(publishLink).toBeVisible();
-
-	await changeTrackingPage.gotoPublicationsPermissions();
-
-	await ownerRolePublishPermission.check();
-
-	await saveButton.click();
-
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(
-		ctCollection.body.id
-	);
 });
 
 test('LPD-53946 Update Permissions for Regular Role', async ({
@@ -145,7 +175,7 @@ test('LPD-53946 Update Permissions for Regular Role', async ({
 
 	await performLoginViaApi({page, screenName: user.alternateName});
 
-	const ctCollection =
+	ctCollection =
 		await apiHelpers.headlessChangeTracking.createCTCollection(
 			getRandomString()
 		);
@@ -156,32 +186,11 @@ test('LPD-53946 Update Permissions for Regular Role', async ({
 
 	await expect(page.getByRole('menuitem', {name: 'Edit'})).toBeHidden();
 
-	await page.on('dialog', (dialog) => dialog.accept());
+	page.on('dialog', (dialog) => dialog.accept());
 
 	await page.getByRole('menuitem', {name: 'Delete'}).click();
 
 	await page.reload();
 
 	await expect(page.getByText(ctCollection.body.name)).toBeHidden();
-
-	await performLogout(page);
-
-	await performLoginViaApi({page, screenName: 'test'});
-
-	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
-
-	await changeTrackingPage.gotoPublicationsPermissions();
-
-	for (let i = 1; i < 6; i++) {
-		const checkbox = ownerRole
-			.locator('td')
-			.nth(i)
-			.locator('.custom-control > label > .custom-control-input');
-
-		await checkbox.check();
-	}
-
-	await publicationsUserRoleDeletePermission.uncheck();
-
-	await saveButton.click();
 });

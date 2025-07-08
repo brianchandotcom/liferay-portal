@@ -162,68 +162,78 @@ test('LPD-29089 Assert Publication Overview filter', async ({
 	await page.getByRole('link', {name: 'Blogs Entry (1)'}).click();
 
 	await expect(
-		changeTrackingPage.frontendDataSetEntries.getByText('Blogs Entry')
+		changeTrackingPage.frontendDataSetEntries
+			.getByText('Blogs Entry')
+			.first()
 	).toBeVisible();
 
 	await expect(
-		changeTrackingPage.frontendDataSetEntries.getByText('Wiki Node')
+		changeTrackingPage.frontendDataSetEntries.getByText('Wiki Node').first()
 	).toBeHidden();
 });
 
-test('LPD-47743 Assert Publication Score is visible', async ({
-	apiHelpers,
-	changeTrackingPage,
-	ctCollection,
-	page,
-}) => {
-	await changeTrackingPage.workOnPublication(ctCollection);
+test.describe('Publication Score tests', () => {
+	test.beforeEach(
+		'Add documents to generate change entries in the Publication',
+		async ({apiHelpers, changeTrackingPage, ctCollection}) => {
+			await changeTrackingPage.workOnPublication(ctCollection);
 
-	const site =
-		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+			const site =
+				await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+					'guest'
+				);
 
-	for (let i = 0; i < 5; i++) {
-		await apiHelpers.headlessDelivery.postDocument(
-			site.id,
-			createReadStream(
-				path.join(__dirname, '/dependencies/attachment.txt')
-			)
-		);
-	}
-
-	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
-
-	await expect(page.getByText('Publication Size:')).toBeVisible();
-});
-
-test('LPD-45769 Assert Publication Score description is visible', async ({
-	apiHelpers,
-	changeTrackingPage,
-	ctCollection,
-	page,
-}) => {
-	await changeTrackingPage.workOnPublication(ctCollection);
-
-	const site =
-		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
-
-	for (let i = 0; i < 5; i++) {
-		await apiHelpers.headlessDelivery.postDocument(
-			site.id,
-			createReadStream(
-				path.join(__dirname, '/dependencies/attachment.txt')
-			)
-		);
-	}
-
-	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
-
-	const publicationSize = page.getByText('Publication Size:');
-	await expect(publicationSize).toBeVisible();
-
-	await publicationSize.hover();
-
-	const publicationSizeDescription = page.getByText(
-		'The size classification considers both the number of changes and the database size. Please allocate time for the publishing process accordingly.'
+			for (let i = 0; i < 5; i++) {
+				await apiHelpers.headlessDelivery.postDocument(
+					site.id,
+					createReadStream(
+						path.join(__dirname, '/dependencies/attachment.txt')
+					)
+				);
+			}
+		}
 	);
-	await expect(publicationSizeDescription).toBeVisible();
+
+	test('LPD-47743 Assert Publication Score is visible', async ({
+		changeTrackingPage,
+		ctCollection,
+		page,
+	}) => {
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await expect(page.getByText('Publication Size:')).toBeVisible();
+	});
+
+	test('LPD-45769 Assert Publication Score description is visible', async ({
+		changeTrackingPage,
+		ctCollection,
+		page,
+	}) => {
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		const publicationSize = page.getByText('Publication Size:');
+		await expect(publicationSize).toBeVisible();
+
+		await publicationSize.hover();
+
+		const publicationSizeDescription = page.getByText(
+			'The size classification considers both the number of changes and the database size. Please allocate time for the publishing process accordingly.'
+		);
+		await expect(publicationSizeDescription).toBeVisible();
+	});
+
+	test('LPD-52951 Assert Publication Score is localized', async ({
+		changeTrackingPage,
+		ctCollection,
+		page,
+	}) => {
+		await changeTrackingPage.goToReviewChanges(
+			ctCollection.body.name,
+			'es'
+		);
+
+		await expect(
+			page.getByText('Tamaño de la publicación: Pequeño')
+		).toBeVisible();
+	});
 });

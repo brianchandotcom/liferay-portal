@@ -17,11 +17,12 @@ import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.service.PatcherProjectVersionLocalService;
 import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -39,14 +40,20 @@ import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
 
 import java.util.Locale;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Balogh
  */
-@Component(service = Indexer.class)
+@Component(
+	configurationPid = "com.liferay.osb.patcher.configuration.PatcherConfiguration",
+	service = Indexer.class
+)
 public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 
 	public static final String CLASS_NAME = PatcherBuild.class.getName();
@@ -73,16 +80,12 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 				"patcherProductVersionId", patcherProductVersionId);
 		}
 
-		PatcherConfiguration patcherConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, searchContext.getCompanyId());
-
 		if (GetterUtil.getBoolean(
 				searchContext.getAttribute("advancedSearch"))) {
 
 			contextQuery.addRequiredTerm("childBuild", false);
 
-			if (patcherConfiguration.patcherScanningEnabled()) {
+			if (_patcherConfiguration.patcherScanningEnabled()) {
 				contextQuery.addRequiredTerm("latestSupportTicketBuild", true);
 			}
 			else {
@@ -106,7 +109,7 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 
 			contextQuery.addRequiredTerm("childBuild", false);
 
-			if (patcherConfiguration.patcherScanningEnabled()) {
+			if (_patcherConfiguration.patcherScanningEnabled()) {
 				contextQuery.addRequiredTerm("latestSupportTicketBuild", true);
 			}
 			else {
@@ -157,7 +160,7 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 		else {
 			contextQuery.addRequiredTerm("childBuild", false);
 
-			if (patcherConfiguration.patcherScanningEnabled()) {
+			if (_patcherConfiguration.patcherScanningEnabled()) {
 				contextQuery.addRequiredTerm("latestSupportTicketBuild", true);
 			}
 			else {
@@ -208,6 +211,15 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties)
+		throws ConfigurationException {
+
+		_patcherConfiguration = ConfigurableUtil.createConfigurable(
+			PatcherConfiguration.class, properties);
+	}
+
 	@Override
 	protected void doDelete(PatcherBuild patcherBuild) throws Exception {
 		deleteDocument(
@@ -225,14 +237,9 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 
 		document.addKeyword("childBuild", patcherBuild.isChildBuild());
 		document.addText("comments", patcherBuild.getComments());
-
-		PatcherConfiguration patcherConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, patcherBuild.getCompanyId());
-
 		document.addText(
 			"downloadURL",
-			patcherConfiguration.patcherBuildDownloadURL() + StringPool.SLASH +
+			_patcherConfiguration.patcherBuildDownloadURL() + StringPool.SLASH +
 				patcherBuild.getFileName());
 
 		if (Validator.isNotNull(patcherBuild.getFileName())) {
@@ -464,6 +471,8 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 
 	@Reference
 	private PatcherBuildLocalService _patcherBuildLocalService;
+
+	private volatile PatcherConfiguration _patcherConfiguration;
 
 	@Reference
 	private PatcherProjectVersionLocalService

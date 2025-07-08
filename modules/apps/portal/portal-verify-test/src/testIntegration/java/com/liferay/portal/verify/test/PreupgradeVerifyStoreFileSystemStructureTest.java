@@ -226,21 +226,12 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		Path path = Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE);
 
 		Path companyIdPath = path.resolve(String.valueOf(companyId));
-		Path companyIdBackupPath = path.resolve(
-			String.valueOf(companyId) + "_backup");
 
-		try {
-			Files.move(companyIdPath, companyIdBackupPath);
-			Files.createFile(companyIdPath);
+		Files.createFile(companyIdPath);
 
-			_assertVerifyExceptionMessage(
-				_DL_STORE_IMPL_FILE_SYSTEM_STORE,
-				companyIdPath + " is not a directory");
-		}
-		finally {
-			Files.delete(companyIdPath);
-			Files.move(companyIdBackupPath, companyIdPath);
-		}
+		_assertVerifyExceptionMessage(
+			_DL_STORE_IMPL_FILE_SYSTEM_STORE,
+			companyIdPath + " is not a directory");
 	}
 
 	@Override

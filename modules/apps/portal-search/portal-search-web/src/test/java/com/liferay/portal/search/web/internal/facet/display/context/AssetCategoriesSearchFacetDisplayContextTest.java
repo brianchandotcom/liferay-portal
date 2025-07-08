@@ -13,10 +13,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -352,6 +354,184 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 			facetParam, facetDisplayContext.getParameterValue());
 		Assert.assertFalse(facetDisplayContext.isNothingSelected());
 		Assert.assertFalse(facetDisplayContext.isRenderNothing());
+	}
+
+	@Test
+	public void testVocabularyInformationIsPopulated() throws Exception {
+		long categoryId = RandomTestUtil.randomLong();
+		long groupId = RandomTestUtil.randomLong();
+		long vocabularyId = RandomTestUtil.randomLong();
+
+		String vocabularyTitle = RandomTestUtil.randomString();
+		String vocabularyExternalReferenceCode = RandomTestUtil.randomString();
+		String groupExternalReferenceCode = RandomTestUtil.randomString();
+
+		AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
+
+		Mockito.when(
+			assetCategory.getCategoryId()
+		).thenReturn(
+			categoryId
+		);
+
+		Mockito.when(
+			assetCategory.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Mockito.when(
+			assetCategory.getTitle(Mockito.any(Locale.class))
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			assetCategory.getVocabularyId()
+		).thenReturn(
+			vocabularyId
+		);
+
+		AssetCategoryLocalService assetCategoryLocalService = Mockito.mock(
+			AssetCategoryLocalService.class);
+
+		Mockito.when(
+			assetCategoryLocalService.fetchAssetCategory(categoryId)
+		).thenReturn(
+			assetCategory
+		);
+
+		AssetVocabulary assetVocabulary = Mockito.mock(AssetVocabulary.class);
+
+		Mockito.when(
+			assetVocabulary.getVocabularyId()
+		).thenReturn(
+			vocabularyId
+		);
+
+		Mockito.when(
+			assetVocabulary.getTitle(Mockito.any(Locale.class))
+		).thenReturn(
+			vocabularyTitle
+		);
+
+		Mockito.when(
+			assetVocabulary.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Mockito.when(
+			assetVocabulary.getExternalReferenceCode()
+		).thenReturn(
+			vocabularyExternalReferenceCode
+		);
+
+		AssetVocabularyLocalService assetVocabularyLocalService = Mockito.mock(
+			AssetVocabularyLocalService.class);
+
+		Mockito.when(
+			assetVocabularyLocalService.fetchAssetVocabulary(vocabularyId)
+		).thenReturn(
+			assetVocabulary
+		);
+
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.getExternalReferenceCode()
+		).thenReturn(
+			groupExternalReferenceCode
+		);
+
+		GroupLocalService groupLocalService = Mockito.mock(
+			GroupLocalService.class);
+
+		Mockito.when(
+			groupLocalService.fetchGroup(groupId)
+		).thenReturn(
+			group
+		);
+
+		TermCollector termCollector = Mockito.mock(TermCollector.class);
+
+		Mockito.when(
+			termCollector.getTerm()
+		).thenReturn(
+			String.valueOf(categoryId)
+		);
+
+		Mockito.when(
+			termCollector.getFrequency()
+		).thenReturn(
+			1
+		);
+
+		FacetCollector facetCollector = Mockito.mock(FacetCollector.class);
+
+		Mockito.when(
+			facetCollector.getTermCollectors()
+		).thenReturn(
+			ListUtil.fromArray(termCollector)
+		);
+
+		Mockito.when(
+			facet.getFieldName()
+		).thenReturn(
+			"assetCategoryIds"
+		);
+
+		Mockito.when(
+			facet.getFacetCollector()
+		).thenReturn(
+			facetCollector
+		);
+
+		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
+
+		AssetCategoriesSearchFacetDisplayContextBuilder
+			assetCategoriesSearchFacetDisplayContextBuilder =
+				new AssetCategoriesSearchFacetDisplayContextBuilder(
+					groupLocalService, renderRequest);
+
+		assetCategoriesSearchFacetDisplayContextBuilder.
+			setAssetCategoryLocalService(assetCategoryLocalService);
+		assetCategoriesSearchFacetDisplayContextBuilder.
+			setAssetVocabularyLocalService(assetVocabularyLocalService);
+
+		assetCategoriesSearchFacetDisplayContextBuilder.
+			setAssetCategoryPermissionChecker(category -> true);
+		assetCategoriesSearchFacetDisplayContextBuilder.setDisplayStyle(
+			"cloud");
+		assetCategoriesSearchFacetDisplayContextBuilder.setFacet(facet);
+		assetCategoriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(
+			true);
+		assetCategoriesSearchFacetDisplayContextBuilder.setLocale(
+			LocaleUtil.US);
+		assetCategoriesSearchFacetDisplayContextBuilder.setMaxTerms(10);
+		assetCategoriesSearchFacetDisplayContextBuilder.setParameterName(
+			"category");
+		assetCategoriesSearchFacetDisplayContextBuilder.setPortal(
+			_getPortal(null));
+
+		AssetCategoriesSearchFacetDisplayContext
+			assetCategoriesSearchFacetDisplayContext =
+				assetCategoriesSearchFacetDisplayContextBuilder.build();
+
+		Assert.assertEquals(
+			ListUtil.fromArray(
+				groupExternalReferenceCode + "&&" +
+					vocabularyExternalReferenceCode),
+			assetCategoriesSearchFacetDisplayContext.
+				getGroupVocabularyExternalReferenceCodes());
+
+		Assert.assertEquals(
+			ListUtil.fromArray(vocabularyTitle),
+			assetCategoriesSearchFacetDisplayContext.getVocabularyNames());
+
+		Assert.assertEquals(
+			ListUtil.fromArray(vocabularyId),
+			assetCategoriesSearchFacetDisplayContext.getVocabularyIds());
 	}
 
 	protected Group createGroup(long groupId, long stagingGroupId) {

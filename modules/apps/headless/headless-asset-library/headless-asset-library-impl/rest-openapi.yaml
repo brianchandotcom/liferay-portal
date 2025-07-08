@@ -215,9 +215,6 @@ components:
             description:
                 Represents a user.
             properties:
-                assetLibraryCreator:
-                    readOnly: true
-                    type: boolean
                 externalReferenceCode:
                     description:
                         The user's external reference code

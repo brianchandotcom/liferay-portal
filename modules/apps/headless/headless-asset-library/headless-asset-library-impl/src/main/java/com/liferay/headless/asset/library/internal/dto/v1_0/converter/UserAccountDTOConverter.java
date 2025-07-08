@@ -5,8 +5,6 @@
 
 package com.liferay.headless.asset.library.internal.dto.v1_0.converter;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.asset.library.dto.v1_0.Role;
 import com.liferay.headless.asset.library.dto.v1_0.UserAccount;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -48,10 +46,6 @@ public class UserAccountDTOConverter
 
 		return new UserAccount() {
 			{
-				setAssetLibraryCreator(
-					() -> NestedFieldsSupplier.supply(
-						"assetLibraryCreator",
-						nestedFieldNames -> _isCreator(dtoConverterContext)));
 				setExternalReferenceCode(user::getExternalReferenceCode);
 				setId(user::getUserId);
 				setImage(
@@ -72,27 +66,18 @@ public class UserAccountDTOConverter
 				setRoles(
 					() -> NestedFieldsSupplier.supply(
 						"roles",
-						nestedFieldNames -> TransformUtil.transformToArray(
-							_roleLocalService.getUserRoles(user.getUserId()),
-							role -> _toRole(role), Role.class)));
+						nestedFieldNames -> {
+							long assetLibraryId = GetterUtil.getLong(
+								dtoConverterContext.getAttribute(
+									"assetLibraryId"));
+
+							return TransformUtil.transformToArray(
+								_roleLocalService.getUserGroupRoles(
+									user.getUserId(), assetLibraryId),
+								role -> _toRole(role), Role.class);
+						}));
 			}
 		};
-	}
-
-	private Boolean _isCreator(DTOConverterContext dtoConverterContext)
-		throws Exception {
-
-		long assetLibraryId = GetterUtil.getLong(
-			dtoConverterContext.getAttribute("assetLibraryId"));
-
-		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
-			assetLibraryId);
-
-		if (depotEntry == null) {
-			depotEntry = _depotEntryLocalService.getDepotEntry(assetLibraryId);
-		}
-
-		return depotEntry.getUserId() == dtoConverterContext.getUserId();
 	}
 
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)
@@ -107,9 +92,6 @@ public class UserAccountDTOConverter
 			}
 		};
 	}
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private Portal _portal;

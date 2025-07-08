@@ -53,7 +53,7 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE_SIZE);
 
 		if (type.equals("user-accounts")) {
-			sb.append("&nestedFields=assetLibraryCreator");
+			sb.append("&nestedFields=roles");
 		}
 		else {
 			sb.append("&nestedFields=numberOfUserAccounts");

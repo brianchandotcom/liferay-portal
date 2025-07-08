@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -32,8 +31,9 @@ import com.liferay.portal.verify.PreupgradeVerifyStoreFileSystemStructure;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
+import java.io.File;
+
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.List;
@@ -115,123 +115,79 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 	@Test
 	public void testVerifyAdvancedFileSystem() throws Exception {
-		Path path = Paths.get(
-			_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "100");
-
-		Files.createDirectories(path);
+		File file = _mkdirs(
+			_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID,
+			"100");
 
 		_testVerify(
 			true, null,
 			StringBundler.concat(
-				"File ", path, " name has more than 2 characters and no ",
+				"File ", file, " name has more than 2 characters and no ",
 				"extension in advanced file system structure"));
 
-		Files.createDirectories(
-			Paths.get(
-				_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE,
-				String.valueOf(_companyId), String.valueOf(_REPOSITORY_ID),
-				"10", "100.afsh"));
+		_mkdirs(
+			_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID,
+			"10", "100.afsh");
 
 		_testVerify(true, null, null);
 	}
 
 	@Test
 	public void testVerifyFileSystem() throws Exception {
-		Files.deleteIfExists(
-			Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId)));
+		FileUtil.deltree(_ROOT_DIR_FILE_SYSTEM_STORE + "/" + _companyId);
 
 		_testVerify(
 			false,
 			StringBundler.concat(
-				"Missing directories in ",
-				Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE), " for companies: [",
-				_companyId, "]"),
+				"Missing directories in ", _ROOT_DIR_FILE_SYSTEM_STORE,
+				" for companies: [", _companyId, "]"),
 			null);
 
-		Path path = Paths.get(
-			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "invalidFile.txt");
+		File file = _touch(
+			_mkdirs(_ROOT_DIR_FILE_SYSTEM_STORE),
+			PortalInstancePool.getCompanyIds()[0]);
 
-		Files.createDirectories(path.getParent());
-		Files.createFile(path);
+		_testVerify(false, file + " is not a directory", null);
 
-		_testVerify(
-			false, null,
-			"Unexpected file " + path + " in file system structure");
-
-
-
-
-
-
-		path = Paths.get(
-			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-			"invalidFile.txt");
-
-		Files.createDirectories(path.getParent());
-		Files.createFile(path);
+		file = _touch(
+			_mkdirs(_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID),
+			RandomTestUtil.randomString());
 
 		_testVerify(
 			false, null,
-			"Unexpected file " + path + " in file system structure");
+			"Unexpected file " + file + " in file system structure");
 
-
-		
-
-		path = Paths.get(
-			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "100", "invalidVersionLabel");
-
-		Files.createDirectories(path.getParent());
-		Files.createFile(path);
+		file = _touch(
+			_mkdirs(_ROOT_DIR_FILE_SYSTEM_STORE, _companyId),
+			RandomTestUtil.randomString());
 
 		_testVerify(
 			false, null,
-			"Unexpected file " + path + " not matching version label pattern");
+			"Unexpected file " + file + " in file system structure");
 
+		file = _touch(
+			_mkdirs(
+				_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID, "100"),
+			RandomTestUtil.randomString());
 
+		_testVerify(
+			false, null,
+			"Unexpected file " + file + " not matching version label pattern");
 
-		path = Paths.get(
-			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "100.txt");
-
-		Files.createDirectories(path);
+		file = _mkdirs(
+			_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID, "100.txt");
 
 		_testVerify(
 			false, null,
 			StringBundler.concat(
-				"Unexpected file name directory ", path,
+				"Unexpected file name directory ", file,
 				" with extension in file system structure"));
 
-
-
-
-
-
-		Files.createDirectories(
-			Paths.get(
-				_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-				String.valueOf(_REPOSITORY_ID), "100", "1.0"));
+		_mkdirs(
+			_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID, "100",
+			"1.0");
 
 		_testVerify(false, null, null);
-	}
-
-	@Test
-	public void testVerifyFileSystemStoreFileInsteadOfCompanyIdDirectory()
-		throws Exception {
-
-		long companyId = PortalInstancePool.getCompanyIds()[0];
-
-		Path path = Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE);
-
-		Path companyIdPath = path.resolve(String.valueOf(companyId));
-
-		Files.createFile(companyIdPath);
-
-		_assertVerifyExceptionMessage(
-			_DL_STORE_IMPL_FILE_SYSTEM_STORE,
-			companyIdPath + " is not a directory");
 	}
 
 	@Override
@@ -239,86 +195,42 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		return new PreupgradeVerifyStoreFileSystemStructure();
 	}
 
-	private void _assertVerify(
-			String dlStoreImpl, String expectedExceptionMessage,
-			String expectedLogEntry)
-		throws Exception {
+	private void _assertLogCapture(
+		String expectedLogEntryMessage, LogCapture logCapture) {
 
-		String originalDLStoreImpl = ReflectionTestUtil.getAndSetFieldValue(
-			PropsValues.class, "DL_STORE_IMPL", dlStoreImpl);
+		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-			PreupgradeVerifyStoreFileSystemStructure.class.getName(),
-			LoggerTestUtil.ERROR);
+		if (expectedLogEntryMessage == null) {
+			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
-		try {
-			testVerify();
-
-			_validateLogEntry(logCapture, expectedLogEntry);
-
-			if ((expectedExceptionMessage != null) ||
-				(expectedLogEntry != null)) {
-
-				Assert.fail();
-			}
+			return;
 		}
-		catch (Exception exception) {
-			if (expectedExceptionMessage == null) {
-				boolean advancedFileSystemStore = StringUtil.equals(
-					dlStoreImpl, _DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE);
 
-				Path rootDirPath;
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-				if (advancedFileSystemStore) {
-					rootDirPath = Paths.get(
-						_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE);
-				}
-				else {
-					rootDirPath = Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE);
-				}
+		LogEntry logEntry = logEntries.get(0);
 
-				expectedExceptionMessage = StringBundler.concat(
-					advancedFileSystemStore ? "Advanced file" : "File",
-					" system store directory structure ", rootDirPath,
-					" is invalid");
-			}
-
-			Assert.assertEquals(
-				expectedExceptionMessage, exception.getMessage());
-
-			_validateLogEntry(logCapture, expectedLogEntry);
-		}
-		finally {
-			logCapture.close();
-
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "DL_STORE_IMPL", originalDLStoreImpl);
-		}
+		Assert.assertEquals(expectedLogEntryMessage, logEntry.getMessage());
 	}
 
-	private void _assertVerifyExceptionMessage(
-			String dlStoreImpl, String expectedExceptionMessage)
-		throws Exception {
+	private File _mkdirs(Object... objects) {
+		StringBundler sb = new StringBundler();
 
-		_assertVerify(dlStoreImpl, expectedExceptionMessage, null);
-	}
+		for (Object object : objects) {
+			sb.append(object);
+			sb.append("/");
+		}
 
-	private void _assertVerifyLogEntry(
-			String dlStoreImpl, String expectedLogEntry)
-		throws Exception {
+		File file = new File(sb.toString());
 
-		_assertVerify(dlStoreImpl, null, expectedLogEntry);
-	}
+		FileUtil.mkdirs(file);
 
-	private void _assertVerifyValidDirectory(String dlStoreImpl)
-		throws Exception {
-
-		_assertVerify(dlStoreImpl, null, null);
+		return file;
 	}
 
 	private void _testVerify(
 			boolean advancedFileSystemStore, String expectedExceptionMessage,
-			String expectedLogEntry)
+			String expectedLogEntryMessage)
 		throws Exception {
 
 		CompanyLocalServiceUtil.forEachCompanyId(
@@ -334,39 +246,60 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			},
 			PortalInstancePool.getCompanyIds());
 
+		String dlStoreImpl = ReflectionTestUtil.getAndSetFieldValue(
+			PropsValues.class, "DL_STORE_IMPL",
+			advancedFileSystemStore ?
+				"com.liferay.portal.store.file.system.AdvancedFileSystemStore" :
+					"com.liferay.portal.store.file.system.FileSystemStore");
+		LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+			PreupgradeVerifyStoreFileSystemStructure.class.getName(),
+			LoggerTestUtil.ERROR);
+
 		try {
-			System.out.println("x");
+			testVerify();
+
+			_assertLogCapture(expectedLogEntryMessage, logCapture);
+
+			if ((expectedExceptionMessage != null) ||
+				(expectedLogEntryMessage != null)) {
+
+				Assert.fail();
+			}
+		}
+		catch (Exception exception) {
+			if (expectedExceptionMessage == null) {
+				expectedExceptionMessage = StringBundler.concat(
+					advancedFileSystemStore ? "Advanced file" : "File",
+					" system store directory structure ",
+					advancedFileSystemStore ?
+						_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE :
+							_ROOT_DIR_FILE_SYSTEM_STORE,
+					" is invalid");
+			}
+
+			Assert.assertEquals(
+				expectedExceptionMessage, exception.getMessage());
+
+			_assertLogCapture(expectedLogEntryMessage, logCapture);
 		}
 		finally {
+			logCapture.close();
+
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "DL_STORE_IMPL", dlStoreImpl);
+
 			FileUtil.deltree(_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE);
 			FileUtil.deltree(_ROOT_DIR_FILE_SYSTEM_STORE);
 		}
 	}
 
-	private void _validateLogEntry(
-		LogCapture logCapture, String expectedLogEntry) {
+	private File _touch(File file, Object fileName) throws Exception {
+		file = new File(file, String.valueOf(fileName));
 
-		List<LogEntry> logEntries = logCapture.getLogEntries();
+		FileUtil.write(file, "");
 
-		if (expectedLogEntry == null) {
-			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
-
-			return;
-		}
-
-		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-		Assert.assertEquals(
-			expectedLogEntry,
-			logEntries.get(
-				0
-			).getMessage());
+		return file;
 	}
-
-	private static final String _DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE =
-		"com.liferay.portal.store.file.system.AdvancedFileSystemStore";
-
-	private static final String _DL_STORE_IMPL_FILE_SYSTEM_STORE =
-		"com.liferay.portal.store.file.system.FileSystemStore";
 
 	private static final long _REPOSITORY_ID = RandomTestUtil.nextLong();
 

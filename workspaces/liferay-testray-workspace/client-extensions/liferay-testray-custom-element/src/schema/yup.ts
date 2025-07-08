@@ -191,6 +191,12 @@ const yupSchema = {
 		autoanalyze: yup.boolean().required(),
 		id: yup.number(),
 		name: yup.string().required(),
+		parentRoutines: yup.mixed(),
+		r_teamToRoutines_c_teamId: yup
+			.number()
+			.transform((value, originalValue) => {
+				return originalValue === '' ? 0 : value;
+			}),
 	}),
 	run: yup.object({
 		buildId: yup.number(),

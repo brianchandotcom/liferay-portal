@@ -238,6 +238,51 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		return fetcher.patch(`/${this.uri}/${id}`, this.adapter(data));
 	}
 
+	public async updateRelatedEntries(
+		currentId: number,
+		relatedId: number,
+		relationshipName: string
+	): Promise<ObjectModel> {
+		return fetcher.put(
+			`/${this.uri}/${currentId}/${relationshipName}/${relatedId}`,
+			''
+		);
+	}
+
+	public async removeRelatedEntries(
+		currentId: number,
+		relatedId: number,
+		relationshipName: string
+	): Promise<ObjectModel> {
+		return fetcher.delete(
+			`/${this.uri}/${currentId}/${relationshipName}/${relatedId}`
+		);
+	}
+
+	public async removeRelatedEntriesBatch(
+		currentId: number,
+		relatedIds: number[],
+		relationshipName: string
+	): Promise<void> {
+		await Promise.allSettled(
+			relatedIds.map((id) =>
+				this.removeRelatedEntries(currentId, id, relationshipName)
+			)
+		);
+	}
+
+	public async updateRelatedEntriesBatch(
+		currentId: number,
+		relatedIds: number[],
+		relationshipName: string
+	): Promise<void> {
+		await Promise.allSettled(
+			relatedIds.map((id) =>
+				this.updateRelatedEntries(currentId, id, relationshipName)
+			)
+		);
+	}
+
 	public async removeBatch(ids: number[]): Promise<void> {
 		await Promise.allSettled(ids.map((id) => this.remove(id)));
 	}

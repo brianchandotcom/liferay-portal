@@ -483,6 +483,8 @@ export type TestrayRoutine = {
 	actions: ObjectActionsItems;
 	id: number;
 	name: string;
+	parentRoutines: TestrayRoutine[];
+	r_teamToRoutines_c_teamId?: number;
 	routineToBuilds: TestrayBuild[];
 	routineToProjects?: TestrayProject;
 	testrayBuildCPUUseTime?: string;

@@ -247,10 +247,19 @@ public class CTCollectionPersistenceTest {
 	}
 
 	@Test
-	public void testCountBySchemaVersionId() throws Exception {
-		_persistence.countBySchemaVersionId(RandomTestUtil.nextLong());
+	public void testCountByC_U() throws Exception {
+		_persistence.countByC_U(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countBySchemaVersionId(0L);
+		_persistence.countByC_U(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_SV() throws Exception {
+		_persistence.countByC_SV(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_SV(0L, 0L);
 	}
 
 	@Test

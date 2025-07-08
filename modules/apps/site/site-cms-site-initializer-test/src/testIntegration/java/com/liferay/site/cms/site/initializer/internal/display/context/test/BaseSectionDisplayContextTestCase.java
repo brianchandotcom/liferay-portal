@@ -116,7 +116,7 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Test
 	@TestInfo("LPD-57827")
-	public void testGetDepotEntriesJSONArrayWithMultipleDepots()
+	public void testGetDepotEntriesJSONArrayWithMultipleDepotEntries()
 		throws Exception {
 
 		String depotName = StringUtil.randomString();
@@ -172,7 +172,7 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Test
 	@TestInfo("LPD-57827")
-	public void testGetDepotEntriesJSONArrayWithOneDepotOnly()
+	public void testGetDepotEntriesJSONArrayWithOneDepotEntryOnly()
 		throws Exception {
 
 		List<DepotEntry> depotEntries = _depotEntryLocalService.getDepotEntries(

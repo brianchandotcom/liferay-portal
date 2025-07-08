@@ -7,7 +7,15 @@
 
 <%@ include file="/import/init.jsp" %>
 
+<liferay-portlet:renderURL var="backURL" />
+
 <%
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
+
+renderResponse.setTitle("Example Error.lar");
+
 ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayContext(request);
 %>
 

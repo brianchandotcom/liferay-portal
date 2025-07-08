@@ -1130,9 +1130,15 @@ public class RenderLayoutStructureDisplayContext {
 			return StringPool.BLANK;
 		}
 
+		Object infoItemObject = _getInfoItem(infoItemReference);
+
+		if (infoItemObject == null) {
+			return StringPool.BLANK;
+		}
+
 		return _parseInfoFieldValue(
 			infoItemFieldValuesProvider.getInfoFieldValue(
-				_getInfoItem(infoItemReference), fieldId));
+				infoItemObject, fieldId));
 	}
 
 	private String _parseInfoFieldValue(InfoFieldValue<?> infoFieldValue) {

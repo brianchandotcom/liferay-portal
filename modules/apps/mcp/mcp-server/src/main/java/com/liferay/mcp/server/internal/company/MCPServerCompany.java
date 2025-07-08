@@ -41,24 +41,27 @@ import java.util.Map;
  */
 public class MCPServerCompany {
 
-	public static String getAccessToken(McpSyncServerExchange exchange)
-		throws Exception {
+	public static String getAccessToken(McpSyncServerExchange exchange) {
+		try {
+			Field exchangeField = McpSyncServerExchange.class.getDeclaredField(
+				"exchange");
 
-		Field exchangeField = McpSyncServerExchange.class.getDeclaredField(
-			"exchange");
+			exchangeField.setAccessible(true);
 
-		exchangeField.setAccessible(true);
+			Field sessionField = McpAsyncServerExchange.class.getDeclaredField(
+				"session");
 
-		Field sessionField = McpAsyncServerExchange.class.getDeclaredField(
-			"session");
+			sessionField.setAccessible(true);
 
-		sessionField.setAccessible(true);
+			MCPServerCompany.Session session =
+				(MCPServerCompany.Session)sessionField.get(
+					exchangeField.get(exchange));
 
-		MCPServerCompany.Session session =
-			(MCPServerCompany.Session)sessionField.get(
-				exchangeField.get(exchange));
-
-		return session.getAccessToken();
+			return session.getAccessToken();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	public MCPServerCompany(String baseURL) {
@@ -73,16 +76,17 @@ public class MCPServerCompany {
 		return _callEndpoint(method, _baseURL + path, payload, accessToken);
 	}
 
-	public String getAllOpenAPIs() {
+	public String getAllOpenAPIs(String accessToken) {
 		if (_openAPIs == null) {
-			_openAPIs = _callEndpoint("GET", _baseURL + "/openapi", null, null);
+			_openAPIs = _callEndpoint(
+				"GET", _baseURL + "/openapi", null, accessToken);
 		}
 
 		return _openAPIs;
 	}
 
-	public String getOpenAPI(String url) {
-		return _callEndpoint("GET", url, null, null);
+	public String getOpenAPI(String url, String accessToken) {
+		return _callEndpoint("GET", url, null, accessToken);
 	}
 
 	public HttpServletSseServerTransportProvider getServlet() {
@@ -98,8 +102,10 @@ public class MCPServerCompany {
 			HttpURLConnection connection =
 				(HttpURLConnection)url.openConnection();
 
-			connection.setRequestProperty(
-				"Authorization", "Bearer " + accessToken);
+			if (accessToken != null) {
+				connection.setRequestProperty(
+					"Authorization", "Bearer " + accessToken);
+			}
 
 			connection.setDoOutput(true);
 			connection.setRequestMethod(StringUtil.toUpperCase(method));

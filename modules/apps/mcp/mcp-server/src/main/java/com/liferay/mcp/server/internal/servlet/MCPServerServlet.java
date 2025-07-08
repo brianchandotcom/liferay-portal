@@ -8,8 +8,6 @@ package com.liferay.mcp.server.internal.servlet;
 import com.liferay.mcp.server.internal.company.MCPServerCompany;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -106,7 +104,9 @@ public class MCPServerServlet extends GenericServlet {
 					"type", "object"
 				).toString()),
 			(exchange, arguments) -> new McpSchema.CallToolResult(
-				mcpServerCompany.getAllOpenAPIs(), false)
+				mcpServerCompany.getAllOpenAPIs(
+					MCPServerCompany.getAccessToken(exchange)),
+				false)
 		).tool(
 			new McpSchema.Tool(
 				"get-openapi", "Retrieves the OpenAPI YAML file.",
@@ -124,7 +124,8 @@ public class MCPServerServlet extends GenericServlet {
 				).toString()),
 			(exchange, arguments) -> new McpSchema.CallToolResult(
 				mcpServerCompany.getOpenAPI(
-					String.valueOf(arguments.get("url"))),
+					String.valueOf(arguments.get("url")),
+					MCPServerCompany.getAccessToken(exchange)),
 				false)
 		).tool(
 			new McpSchema.Tool(
@@ -167,30 +168,17 @@ public class MCPServerServlet extends GenericServlet {
 				).put(
 					"type", "object"
 				).toString()),
-			(exchange, arguments) -> {
-				try {
-					return new McpSchema.CallToolResult(
-						mcpServerCompany.callEndpoint(
-							String.valueOf(arguments.get("method")),
-							String.valueOf(arguments.get("path")),
-							String.valueOf(arguments.get("payload")),
-							MCPServerCompany.getAccessToken(exchange)),
-						false);
-				}
-				catch (Throwable throwable) {
-					_log.error(throwable);
-
-					return new McpSchema.CallToolResult(
-						throwable.getMessage(), true);
-				}
-			}
+			(exchange, arguments) -> new McpSchema.CallToolResult(
+				mcpServerCompany.callEndpoint(
+					String.valueOf(arguments.get("method")),
+					String.valueOf(arguments.get("path")),
+					String.valueOf(arguments.get("payload")),
+					MCPServerCompany.getAccessToken(exchange)),
+				false)
 		).build();
 
 		return mcpServerCompany;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MCPServerServlet.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -1,6 +1,7 @@
-package com.liferay.mcp.server;
+package com.liferay.mcp.server.internal.mcp.company;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.liferay.mcp.server.internal.mcp.session.MCPSessionUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -176,7 +177,7 @@ public class MCPCompany {
 			return _companyId;
 		}
 
-		String getAccessToken() {
+		public String getAccessToken() {
 			return _accessToken;
 		}
 	}

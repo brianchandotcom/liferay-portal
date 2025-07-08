@@ -14,4 +14,5 @@ export interface UserAccount {
 export interface UserGroup {
 	id: string;
 	name: string;
+	numberOfUserAccounts?: string;
 }

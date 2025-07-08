@@ -62,12 +62,20 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			AssetCategory assetCategory =
 				AssetCategoryServiceUtil.fetchCategory(assetCategoryTreeNodeId);
 
+			if (assetCategory == null) {
+				return StringPool.BLANK;
+			}
+
 			return assetCategory.getTitle(_fragmentRendererContext.getLocale());
 		}
 		else if (assetCategoryTreeNodeType.equals("Vocabulary")) {
 			AssetVocabulary assetVocabulary =
 				AssetVocabularyServiceUtil.fetchVocabulary(
 					assetCategoryTreeNodeId);
+
+			if (assetVocabulary == null) {
+				return StringPool.BLANK;
+			}
 
 			return assetVocabulary.getTitle(
 				_fragmentRendererContext.getLocale());
@@ -156,6 +164,10 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			AssetVocabulary assetVocabulary =
 				AssetVocabularyServiceUtil.fetchVocabulary(
 					assetCategoryTreeNodeId);
+
+			if (assetVocabulary == null) {
+				return _assetCategories;
+			}
 
 			_assetCategories =
 				AssetCategoryServiceUtil.getVocabularyRootCategories(

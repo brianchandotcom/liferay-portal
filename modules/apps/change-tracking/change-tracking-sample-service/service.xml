@@ -15,10 +15,10 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
 		<column name="ctsGrandParentId" type="long" />
-		<column name="ctsParentName" type="String" />
 		<column name="parentCTSChildId" type="long" />
+		<column name="ctsParentName" type="String" />
+		<column name="name" type="String" />
 
 		<!-- Finder methods -->
 
@@ -46,8 +46,8 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
 		<column name="parentCTSGrandParentId" type="long" />
+		<column name="name" type="String" />
 
 		<!-- Finder methods -->
 
@@ -67,8 +67,8 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
 		<column name="ctsGrandParentId" type="long" />
+		<column name="name" type="String" />
 
 		<!-- Finder methods -->
 

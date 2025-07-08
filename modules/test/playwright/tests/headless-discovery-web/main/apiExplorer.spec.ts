@@ -28,7 +28,7 @@ test(
 			await filterRow.getByRole('button').click();
 			await expect(
 				apiExplorer.helpPopover.getByRole('link', {
-					name: 'Use this filter to narrow',
+					name: 'Learn more about filterable fields.',
 				})
 			).toBeVisible();
 		});

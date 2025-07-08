@@ -449,8 +449,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		else {
 			layout = LayoutUtil.updatePortletLayout(
 				layout, nameMap, friendlyURLMap,
-				_getTypeSettingsUnicodeProperties(sitePage), null,
-				serviceContext);
+				_getTypeSettingsUnicodeProperties(sitePage), serviceContext,
+				null);
 		}
 
 		int priority = Integer.MAX_VALUE;

@@ -1632,6 +1632,22 @@ public class DefaultObjectEntryManagerImpl
 			actions = HashMapBuilder.create(
 				actions
 			).<String, Map<String, String>>put(
+				"copy",
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled(
+							serviceBuilderObjectEntry.getCompanyId(),
+							"LPD-17564") ||
+						!objectEntryVersion.isApproved()) {
+
+						return null;
+					}
+
+					return _addAction(
+						ActionKeys.ADD_ENTRY, "postObjectEntryByVersionCopy",
+						serviceBuilderObjectEntry, templateParameterMap,
+						dtoConverterContext.getUriInfo());
+				}
+			).put(
 				"delete",
 				() -> {
 					if (latestObjectEntryVersion) {

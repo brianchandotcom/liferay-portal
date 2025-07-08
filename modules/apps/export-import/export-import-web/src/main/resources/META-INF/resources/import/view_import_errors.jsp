@@ -11,6 +11,21 @@
 ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayContext(request);
 %>
 
+<clay:navigation-bar
+	navigationItems='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(currentURL);
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "errors-report"));
+					});
+			}
+		}
+	%>'
+/>
+
 <liferay-frontend:component
 	module="{setupExportImportMocks} from exportimport-web"
 />

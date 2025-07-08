@@ -8,7 +8,6 @@ export default function ({
 	termsOfUseJournalArticleBrowserURL,
 	useTermsOfUseJournal,
 }) {
-    
 	Liferay.Util.toggleBoxes(
 		`<portlet:namespace />termsOfUseRequired`,
 		`<portlet:namespace />termsOfUseSettings`
@@ -48,17 +47,16 @@ export default function ({
 
 					journalArticleNameInput.innerText = itemValue.title;
 					if (isCKEditor5FeatureFlagEnabled) {
-										const ckEditorToolbar = document.querySelector(
-											'#termsOfUseContent .ck-editor__top'
-										);
-										ckEditorToolbar.style.display = 'none';
-					
-										const ckEditorContent = document.querySelector(
-											'#termsOfUseContent .ck-editor__main .ck-content'
-										);
-										ckEditorContent.classList.add('ck-read-only');
-										ckEditorContent.setAttribute('contenteditable', false);
+						const ckEditorToolbar = document.querySelector(
+							'#termsOfUseContent .ck-editor__top'
+						);
+						ckEditorToolbar.style.display = 'none';
 
+						const ckEditorContent = document.querySelector(
+							'#termsOfUseContent .ck-editor__main .ck-content'
+						);
+						ckEditorContent.classList.add('ck-read-only');
+						ckEditorContent.setAttribute('contenteditable', false);
 					}
 				},
 				selectEventName: 'selectJournalArticle',

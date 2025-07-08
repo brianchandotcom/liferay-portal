@@ -116,6 +116,7 @@ ProcessListDisplayContext processListDisplayContext = new ProcessListDisplayCont
 					localPublishing="<%= processListDisplayContext.isLocalPublishing() %>"
 					relaunchMenu="<%= relaunchMenu %>"
 					summaryMenu="<%= summaryMenu %>"
+					viewDetailsMenu="<%= viewDetailsMenu %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

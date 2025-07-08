@@ -79,7 +79,7 @@ async function getSpaceUserGroups({
 		page: number;
 		totalCount: number;
 	}>(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups?${nestedFields ? 'nestedFields=' + nestedFields : ''}${urlParams.toString()}`
+		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups?${urlParams.toString()}${nestedFields ? '&nestedFields=' + nestedFields : ''}`
 	);
 
 	if (data) {

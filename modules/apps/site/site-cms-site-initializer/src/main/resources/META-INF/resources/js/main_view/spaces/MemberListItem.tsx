@@ -17,6 +17,7 @@ interface MembersListItemProps {
 	emptyMessage: string;
 	itemType: 'user' | 'group';
 	items: (UserAccount | UserGroup)[];
+	numberOfUserAccounts: number;
 	onRemoveItem: (item: UserAccount | UserGroup) => Promise<void>;
 }
 
@@ -26,6 +27,7 @@ export function MembersListItem({
 	emptyMessage,
 	itemType,
 	items,
+	numberOfUserAccounts,
 	onRemoveItem,
 }: MembersListItemProps) {
 	if (!items || !items.length) {
@@ -77,6 +79,13 @@ export function MembersListItem({
 							{isUser && currentUserId === String(item.id) && (
 								<span className="ml-1 text-lowercase text-secondary">
 									({Liferay.Language.get('you')})
+								</span>
+							)}
+
+							{!isUser && numberOfUserAccounts && (
+								<span className="ml-1 text-lowercase text-secondary">
+									Liferay.Util.sub( '(' +
+									Liferay.Language.get('x-members'), numberOfUserAccounts + ')'
 								</span>
 							)}
 						</div>

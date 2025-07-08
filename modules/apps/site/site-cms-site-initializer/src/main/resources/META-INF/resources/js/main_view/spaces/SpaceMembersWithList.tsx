@@ -58,6 +58,7 @@ export function SpaceMembersWithList({
 					spaceId: assetLibraryId,
 				}),
 				SpaceService.getSpaceUserGroups({
+					nestedFields: 'numberOfUserAccounts',
 					page: 1,
 					pageSize,
 					spaceId: assetLibraryId,

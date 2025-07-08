@@ -183,25 +183,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 	@Override
 	@Test
 	public void testPatchOrderItem() throws Exception {
-		OrderItem postOrderItem = orderItemResource.postOrderIdOrderItem(
-			_commerceOrder.getCommerceOrderId(), randomPatchOrderItem());
-
-		OrderItem randomPatchOrderItem = randomPatchOrderItem();
-
-		orderItemResource.patchOrderItem(
-			postOrderItem.getId(), randomPatchOrderItem);
-
-		OrderItem expectedPatchOrderItem = postOrderItem.clone();
-
-		BaseOrderResourceTestCase.BeanTestUtil.copyProperties(
-			randomPatchOrderItem, expectedPatchOrderItem);
-
-		OrderItem getOrderItem = orderItemResource.getOrderItem(
-			postOrderItem.getId());
-
-		assertEquals(expectedPatchOrderItem, getOrderItem);
-		assertValid(getOrderItem);
-
+		_testPatchOrderItemById();
 		_testPatchOrderItemWithCustomDateField();
 	}
 
@@ -459,6 +441,27 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 					RandomTestUtil.randomString());
 			}
 		};
+	}
+
+	private void _testPatchOrderItemById() throws Exception {
+		OrderItem postOrderItem = orderItemResource.postOrderIdOrderItem(
+			_commerceOrder.getCommerceOrderId(), randomPatchOrderItem());
+
+		OrderItem randomPatchOrderItem = randomPatchOrderItem();
+
+		orderItemResource.patchOrderItem(
+			postOrderItem.getId(), randomPatchOrderItem);
+
+		OrderItem expectedPatchOrderItem = postOrderItem.clone();
+
+		BaseOrderResourceTestCase.BeanTestUtil.copyProperties(
+			randomPatchOrderItem, expectedPatchOrderItem);
+
+		OrderItem getOrderItem = orderItemResource.getOrderItem(
+			postOrderItem.getId());
+
+		assertEquals(expectedPatchOrderItem, getOrderItem);
+		assertValid(getOrderItem);
 	}
 
 	private void _testPatchOrderItemWithCustomDateField() throws Exception {

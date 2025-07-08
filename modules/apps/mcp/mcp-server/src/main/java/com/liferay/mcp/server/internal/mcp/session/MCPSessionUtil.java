@@ -1,5 +1,6 @@
-package com.liferay.mcp.server;
+package com.liferay.mcp.server.internal.mcp.session;
 
+import com.liferay.mcp.server.internal.mcp.company.MCPCompany;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import io.modelcontextprotocol.server.McpAsyncServerExchange;

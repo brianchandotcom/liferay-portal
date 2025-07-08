@@ -34,8 +34,8 @@ public class TicketAttachmentService extends BaseService {
 	public TicketAttachment addTicketAttachment(
 			String authorization, String accountKey,
 			String externalReferenceCode, String fileName, String fileSize,
-			String md5Checksum, int statusCode, String type,
-			long zendeskTicketId)
+			String jiraIssueKey, String md5Checksum, int statusCode,
+			String type)
 		throws Exception {
 
 		JSONObject requestJSONObject = new JSONObject();
@@ -51,13 +51,13 @@ public class TicketAttachmentService extends BaseService {
 		).put(
 			"gcsBucketName", _gcsBucketName
 		).put(
+			"jiraIssueKey", jiraIssueKey
+		).put(
 			"r_accountEntryToTicketAttachment_accountEntryERC", accountKey
 		).put(
 			"storageProvider", TicketAttachment.STORAGE_PROVIDER_GCS
 		).put(
 			"type", type
-		).put(
-			"zendeskTicketId", zendeskTicketId
 		);
 
 		if (!md5Checksum.equals("")) {
@@ -147,11 +147,11 @@ public class TicketAttachmentService extends BaseService {
 	}
 
 	public TicketAttachment fetchTicketAttachment(
-			String authorization, String fileName, String md5Checksum,
-			long zendeskTicketId)
+			String authorization, String fileName, String jiraIssueKey,
+			String md5Checksum)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("fileName eq '");
 		sb.append(fileName);
@@ -161,8 +161,9 @@ public class TicketAttachmentService extends BaseService {
 			sb.append(md5Checksum);
 		}
 
-		sb.append("' and zendeskTicketId eq ");
-		sb.append(zendeskTicketId);
+		sb.append("' and jiraIssueKey eq '");
+		sb.append(jiraIssueKey);
+		sb.append("'");
 
 		String response = get(
 			authorization,
@@ -188,8 +189,8 @@ public class TicketAttachmentService extends BaseService {
 		return null;
 	}
 
-	public List<TicketAttachment> searchTicketAttachments(
-			String authorization, String filter)
+	public List<TicketAttachment> search(
+			String authorization, String filter, int page, int pageSize)
 		throws Exception {
 
 		List<TicketAttachment> ticketAttachments = new ArrayList<>();
@@ -201,6 +202,10 @@ public class TicketAttachmentService extends BaseService {
 					"/o/c/ticketattachments"
 				).queryParam(
 					"filter", filter
+				).queryParam(
+					"page", page
+				).queryParam(
+					"pageSize", pageSize
 				).build(
 				).toUri()));
 

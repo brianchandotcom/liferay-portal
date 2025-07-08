@@ -6,14 +6,14 @@
 package com.liferay.customer.exception;
 
 /**
- * @author Karoline Silva
+ * @author Amos Fong
  */
-public class ZendeskTicketNotFoundException extends Exception {
+public class JiraIssueNotFoundException extends Exception {
 
-	public ZendeskTicketNotFoundException() {
+	public JiraIssueNotFoundException() {
 	}
 
-	public ZendeskTicketNotFoundException(Throwable throwable) {
+	public JiraIssueNotFoundException(Throwable throwable) {
 		super(throwable);
 	}
 

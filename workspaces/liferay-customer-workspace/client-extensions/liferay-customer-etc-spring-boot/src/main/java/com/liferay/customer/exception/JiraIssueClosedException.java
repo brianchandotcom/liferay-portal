@@ -8,16 +8,12 @@ package com.liferay.customer.exception;
 /**
  * @author Karoline Silva
  */
-public class ZendeskOrganizationNotFoundException extends Exception {
+public class JiraIssueClosedException extends Exception {
 
-	public ZendeskOrganizationNotFoundException() {
+	public JiraIssueClosedException() {
 	}
 
-	public ZendeskOrganizationNotFoundException(String message) {
-		super(message);
-	}
-
-	public ZendeskOrganizationNotFoundException(Throwable throwable) {
+	public JiraIssueClosedException(Throwable throwable) {
 		super(throwable);
 	}
 

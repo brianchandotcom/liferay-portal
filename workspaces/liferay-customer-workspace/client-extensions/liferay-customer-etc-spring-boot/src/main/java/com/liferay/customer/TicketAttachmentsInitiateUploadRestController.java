@@ -7,15 +7,17 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.customer.exception.FileServerUnavailableException;
-import com.liferay.customer.exception.ZendeskOrganizationNotFoundException;
-import com.liferay.customer.exception.ZendeskTicketClosedException;
-import com.liferay.customer.exception.ZendeskTicketNotFoundException;
+import com.liferay.customer.exception.JiraIssueClosedException;
+import com.liferay.customer.exception.JiraIssueNotFoundException;
+import com.liferay.customer.exception.JiraOrganizationNotFoundException;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.customer.service.GoogleCloudStorageService;
+import com.liferay.customer.service.JiraService;
 import com.liferay.customer.service.TicketAttachmentService;
-import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskOrganization;
-import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
-import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringUtil;
+
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -59,14 +61,14 @@ public class TicketAttachmentsInitiateUploadRestController
 			String gcsSessionURL = jsonObject.optString("gcsSessionURL");
 			String md5Checksum = jsonObject.optString("md5Checksum");
 
-			long zendeskTicketId = jsonObject.getLong("zendeskTicketId");
+			String ticketId = jsonObject.getString("ticketId");
 
-			String accountKey = _getAccountKey(zendeskTicketId);
+			String accountKey = _getAccountKey(ticketId);
 
 			TicketAttachment ticketAttachment =
 				_ticketAttachmentService.fetchTicketAttachment(
-					"Bearer " + jwt.getTokenValue(), fileName, md5Checksum,
-					zendeskTicketId);
+					"Bearer " + jwt.getTokenValue(), fileName, ticketId,
+					md5Checksum);
 
 			if (ticketAttachment != null) {
 				if (ticketAttachment.isApproved()) {
@@ -81,8 +83,8 @@ public class TicketAttachmentsInitiateUploadRestController
 
 				ticketAttachment = _ticketAttachmentService.addTicketAttachment(
 					"Bearer " + jwt.getTokenValue(), accountKey,
-					externalReferenceCode, fileName, fileSize, md5Checksum,
-					TicketAttachment.STATUS_DRAFT, type, zendeskTicketId);
+					externalReferenceCode, fileName, fileSize, ticketId,
+					md5Checksum, TicketAttachment.STATUS_DRAFT, type);
 			}
 
 			JSONObject responseJSONObject = new JSONObject();
@@ -120,29 +122,27 @@ public class TicketAttachmentsInitiateUploadRestController
 			return new ResponseEntity<>(
 				"FORBIDDEN_ACCESS", HttpStatus.FORBIDDEN);
 		}
-		catch (ZendeskOrganizationNotFoundException
-					zendeskOrganizationNotFoundException) {
-
-			_log.error(
-				zendeskOrganizationNotFoundException,
-				zendeskOrganizationNotFoundException);
-
-			return new ResponseEntity<>(
-				"ZENDESK_ORGANIZATION_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		catch (ZendeskTicketClosedException zendeskTicketClosedException) {
-			_log.error(
-				zendeskTicketClosedException, zendeskTicketClosedException);
+		catch (JiraIssueClosedException jiraIssueClosedException) {
+			_log.error(jiraIssueClosedException, jiraIssueClosedException);
 
 			return new ResponseEntity<>(
 				"TICKET_IS_CLOSED", HttpStatus.BAD_REQUEST);
 		}
-		catch (ZendeskTicketNotFoundException zendeskTicketNotFoundException) {
-			_log.error(
-				zendeskTicketNotFoundException, zendeskTicketNotFoundException);
+		catch (JiraIssueNotFoundException jiraIssueNotFoundException) {
+			_log.error(jiraIssueNotFoundException, jiraIssueNotFoundException);
 
 			return new ResponseEntity<>(
 				"INVALID_TICKET_NUMBER", HttpStatus.NOT_FOUND);
+		}
+		catch (JiraOrganizationNotFoundException
+					jiraOrganizationNotFoundException) {
+
+			_log.error(
+				jiraOrganizationNotFoundException,
+				jiraOrganizationNotFoundException);
+
+			return new ResponseEntity<>(
+				"JIRA_ORGANIZATION_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -152,33 +152,40 @@ public class TicketAttachmentsInitiateUploadRestController
 		}
 	}
 
-	private String _getAccountKey(long zendeskTicketId) throws Exception {
+	private String _getAccountKey(String jiraIssueKey) throws Exception {
 		try {
-			ZendeskTicket zendeskTicket = _zendeskService.getZendeskTicket(
-				zendeskTicketId);
+			JSONObject jsonObject = _jiraService.getIssueJSONObject(
+				jiraIssueKey);
 
-			if (zendeskTicket == null) {
-				throw new ZendeskTicketNotFoundException();
+			if (jsonObject == null) {
+				throw new JiraIssueNotFoundException();
 			}
 
-			if (zendeskTicket.isClosed()) {
-				throw new ZendeskTicketClosedException();
+			JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
+
+			String status = fieldsJSONObject.optString("status");
+
+			if (status.equals("Closed")) {
+				throw new JiraIssueClosedException();
 			}
 
-			ZendeskOrganization zendeskOrganization =
-				_zendeskService.getZendeskOrganization(
-					zendeskTicket.getZendeskOrganizationId());
+			List<String> organizationCompositeIdArray = StringUtil.split(
+				fieldsJSONObject.getString("organization"), CharPool.COLON);
 
-			if (zendeskOrganization == null) {
-				throw new ZendeskOrganizationNotFoundException();
+			JSONObject assetObjectJSONObject = _jiraService.getAssetObject(
+				organizationCompositeIdArray.get(0),
+				organizationCompositeIdArray.get(1));
+
+			if (assetObjectJSONObject == null) {
+				throw new JiraOrganizationNotFoundException();
 			}
 
-			return zendeskOrganization.getAccountKey();
+			return assetObjectJSONObject.getString("objectKey");
 		}
 		catch (WebClientResponseException.NotFound webClientResponseException) {
 			_log.error(webClientResponseException, webClientResponseException);
 
-			throw new ZendeskTicketNotFoundException();
+			throw new JiraIssueNotFoundException();
 		}
 	}
 
@@ -189,9 +196,9 @@ public class TicketAttachmentsInitiateUploadRestController
 	private GoogleCloudStorageService _googleCloudStorageService;
 
 	@Autowired
-	private TicketAttachmentService _ticketAttachmentService;
+	private JiraService _jiraService;
 
 	@Autowired
-	private ZendeskService _zendeskService;
+	private TicketAttachmentService _ticketAttachmentService;
 
 }

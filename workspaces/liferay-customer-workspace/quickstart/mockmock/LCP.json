@@ -1,0 +1,38 @@
+{
+	"cpu": 1,
+	"id": "mockmock",
+	"kind": "Deployment",
+	"livenessProbe": {
+		"httpGet": {
+			"path": "/ready",
+			"port": 80
+		}
+	},
+	"loadBalancer": {
+		"targetPort": 80
+	},
+	"memory": 512,
+	"ports": [
+		{
+			"external": true,
+			"port": 80,
+			"targetPort": 80
+		},
+		{
+			"external": true,
+			"port": 2525,
+			"targetPort": 2525
+		},
+		{
+			"external": false,
+			"port": 8282,
+			"targetPort": 8282
+		}
+	],
+	"readinessProbe": {
+		"httpGet": {
+			"path": "/ready",
+			"port": 80
+		}
+	}
+}

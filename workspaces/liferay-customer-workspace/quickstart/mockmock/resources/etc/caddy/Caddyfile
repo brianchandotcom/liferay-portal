@@ -1,0 +1,12 @@
+:80 {
+	route /ready {
+		respond "OK" 200
+	}
+
+	route {
+		basic_auth {
+			{env.MOCKMOCK_USERNAME} {env.MOCKMOCK_PASSWORD_HASH}
+		}
+		reverse_proxy http://localhost:8282
+	}
+}

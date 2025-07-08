@@ -102,6 +102,8 @@ export function SpaceMembersInputWithSelect({
 		}
 
 		return (item: UserGroup) => {
+			const groupCount = item.numberOfUserAccounts || 0;
+
 			return (
 				<Autocomplete.Item
 					className="align-items-center d-flex text-truncate"
@@ -120,12 +122,13 @@ export function SpaceMembersInputWithSelect({
 						/>
 					</ClaySticker>
 
-					<span className="ml-2 text-truncate">
-						{item.name}
- (
+					<span className="ml-2 text-truncate">{item.name}</span>
+
+					<span className="ml-1">
+						(
 						{Liferay.Util.sub(
 							Liferay.Language.get('x-members'),
-							(item as UserGroup).numberOfUserAccounts
+							groupCount
 						)}
 						)
 					</span>

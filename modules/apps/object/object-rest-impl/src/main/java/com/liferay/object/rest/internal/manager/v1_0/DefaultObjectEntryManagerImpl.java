@@ -1321,9 +1321,47 @@ public class DefaultObjectEntryManagerImpl
 
 		_removeReadOnlyProperties(objectDefinition, objectEntry);
 
-		return addObjectEntry(
+		String scopeKey = objectEntry.getScopeKey();
+
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
+
+		Map<String, Serializable> values = _toObjectValues(
+			dtoConverterContext.getLocale(), objectDefinition, objectEntry,
+			scopeKey, serviceContext);
+
+		ObjectField titleObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getTitleObjectFieldId());
+
+		if ((titleObjectField != null) &&
+			Objects.equals(
+				titleObjectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
+
+			if (titleObjectField.isLocalized()) {
+				Map<String, Object> i18nValues =
+					(Map<String, Object>)values.get(
+						titleObjectField.getI18nObjectFieldName());
+
+				String language = LocaleUtil.toLanguageId(
+					LocaleUtil.getSiteDefault());
+
+				i18nValues.put(
+					language,
+					_getNewValue(String.valueOf(i18nValues.get(language))));
+			}
+			else {
+				String value = GetterUtil.getString(
+					values.get(titleObjectField.getName()));
+
+				values.put(titleObjectField.getName(), _getNewValue(value));
+			}
+		}
+
+		return _addObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntry,
-			objectEntry.getScopeKey());
+			objectEntry.getScopeKey(), serviceContext, values);
 	}
 
 	private ServiceContext _createServiceContext(
@@ -1575,6 +1613,13 @@ public class DefaultObjectEntryManagerImpl
 		return objectRelatedModelsProvider.fetchRelatedModel(
 			GroupThreadLocal.getGroupId(),
 			objectRelationship.getObjectRelationshipId(), primaryKey);
+	}
+
+	private String _getNewValue(String value) {
+		return StringBundler.concat(
+			value, StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+			_language.get(LocaleUtil.getSiteDefault(), "copy"),
+			StringPool.CLOSE_PARENTHESIS);
 	}
 
 	private ObjectEntry _getObjectEntry(

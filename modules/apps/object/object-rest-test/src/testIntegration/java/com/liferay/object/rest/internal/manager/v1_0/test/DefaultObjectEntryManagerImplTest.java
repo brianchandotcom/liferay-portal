@@ -807,6 +807,35 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition4);
 
+		_objectDefinition5 = _createObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName"
+				).build(),
+				new TextObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedTextObjectFieldName"
+				).build()));
+
+		_objectDefinition5.setEnableObjectEntryVersioning(true);
+
+		_objectDefinition5 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition5);
+
 		_accountAdministratorRole = _roleLocalService.getRole(
 			companyId,
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
@@ -2927,6 +2956,41 @@ public class DefaultObjectEntryManagerImplTest
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition4, _group.getGroupKey(), 2));
+	}
+
+	@Test
+	public void testCopyObjectEntryByVersionWithTextField() throws Exception {
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition5,
+			new ObjectEntry() {
+				{
+					externalReferenceCode = RandomTestUtil.randomString();
+					keywords = new String[] {RandomTestUtil.randomString()};
+					properties = HashMapBuilder.<String, Object>put(
+						"localizedTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", "en_US localizedTextObjectFieldValue1"
+						).put(
+							"pt_BR", "pt_BR localizedTextObjectFieldValue1"
+						).build()
+					).put(
+						"textObjectFieldName", "textObjectFieldValue"
+					).build();
+					systemProperties = new SystemProperties() {
+						{
+							version = new Version() {
+								{
+									number = 1;
+								}
+							};
+						}
+					};
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_testCopyObjectEntryByVersionWithLocalizedTextField(objectEntry);
+		_testCopyObjectEntryByVersionWithNonlocalizedTextField(objectEntry);
 	}
 
 	@Test
@@ -8208,6 +8272,68 @@ public class DefaultObjectEntryManagerImplTest
 			WorkflowConstants.STATUS_APPROVED, objectEntry);
 	}
 
+	private void _testCopyObjectEntryByVersionWithLocalizedTextField(
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectField objectField = objectFieldLocalService.fetchObjectField(
+			_objectDefinition5.getObjectDefinitionId(),
+			"localizedTextObjectFieldName");
+
+		_objectDefinition5.setTitleObjectFieldId(
+			objectField.getObjectFieldId());
+
+		_objectDefinition5 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition5);
+
+		ObjectEntry copyObjectEntry =
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
+				1);
+
+		Assert.assertNotNull(copyObjectEntry);
+
+		Map<String, Object> properties = copyObjectEntry.getProperties();
+
+		Map<String, Object> i18nValues = (Map<String, Object>)properties.get(
+			objectField.getI18nObjectFieldName());
+
+		String language = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+
+		Assert.assertEquals(
+			"en_US localizedTextObjectFieldValue1 (Copy)",
+			String.valueOf(i18nValues.get(language)));
+	}
+
+	private void _testCopyObjectEntryByVersionWithNonlocalizedTextField(
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectField objectField = objectFieldLocalService.fetchObjectField(
+			_objectDefinition5.getObjectDefinitionId(), "textObjectFieldName");
+
+		_objectDefinition5.setTitleObjectFieldId(
+			objectField.getObjectFieldId());
+
+		_objectDefinition5 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition5);
+
+		ObjectEntry copyObjectEntry =
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
+				1);
+
+		Assert.assertNotNull(copyObjectEntry);
+
+		Map<String, Object> properties = copyObjectEntry.getProperties();
+
+		Assert.assertEquals(
+			"textObjectFieldValue (Copy)",
+			properties.get("textObjectFieldName"));
+	}
+
 	private void _testDeleteObjectEntryWithAccountEntryRestricted2(
 			String actionId, Tree tree)
 		throws Exception {
@@ -8420,6 +8546,9 @@ public class DefaultObjectEntryManagerImplTest
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition4;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition5;
 
 	@Inject
 	private ObjectDefinitionSettingLocalService

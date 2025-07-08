@@ -78,6 +78,10 @@ public class GetAvailableTemplatesMVCResourceCommand
 			if (infoItemRenderer instanceof InfoItemTemplatedRenderer) {
 				JSONArray templatesJSONArray = _jsonFactory.createJSONArray();
 
+				if (infoItemObject == null) {
+					continue;
+				}
+
 				InfoItemTemplatedRenderer<Object> infoItemTemplatedRenderer =
 					(InfoItemTemplatedRenderer<Object>)infoItemRenderer;
 

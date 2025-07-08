@@ -193,11 +193,10 @@ public class FileEntryInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getFileEntryInfoFieldValues(
 		FileEntry fileEntry) {
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+		List<InfoFieldValue<Object>> fileEntryFieldValues = new ArrayList<>();
 
 		try {
-			List<InfoFieldValue<Object>> fileEntryFieldValues =
-				new ArrayList<>();
+			ThemeDisplay themeDisplay = _getThemeDisplay();
 
 			fileEntryFieldValues.add(
 				new InfoFieldValue<>(

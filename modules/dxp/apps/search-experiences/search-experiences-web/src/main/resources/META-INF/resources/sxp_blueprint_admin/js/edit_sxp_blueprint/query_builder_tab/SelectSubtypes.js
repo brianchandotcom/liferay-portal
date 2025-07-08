@@ -486,7 +486,7 @@ function SelectSubtypes({
 								<span>
 									{label}
 
-									<span className="c-ml-2 inline-item">
+									<span className="inline-item inline-item-after">
 										<ClaySticker
 											displayType="warning"
 											size="sm"

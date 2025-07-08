@@ -59,7 +59,7 @@ public class CTSParentModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"ctsParentId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"ctsGrandParentId", Types.BIGINT}
+		{"ctsGrandParentId", Types.BIGINT}, {"name", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -70,12 +70,12 @@ public class CTSParentModelImpl
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctsParentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("ctsGrandParentId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTSParent (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,ctsParentId LONG not null,companyId LONG,name VARCHAR(75) null,ctsGrandParentId LONG,primary key (ctsParentId, ctCollectionId))";
+		"create table CTSParent (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,ctsParentId LONG not null,companyId LONG,ctsGrandParentId LONG,name VARCHAR(75) null,primary key (ctsParentId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CTSParent";
 
@@ -224,9 +224,9 @@ public class CTSParentModelImpl
 			attributeGetterFunctions.put(
 				"ctsParentId", CTSParent::getCtsParentId);
 			attributeGetterFunctions.put("companyId", CTSParent::getCompanyId);
-			attributeGetterFunctions.put("name", CTSParent::getName);
 			attributeGetterFunctions.put(
 				"ctsGrandParentId", CTSParent::getCtsGrandParentId);
+			attributeGetterFunctions.put("name", CTSParent::getName);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -256,10 +256,10 @@ public class CTSParentModelImpl
 				"companyId",
 				(BiConsumer<CTSParent, Long>)CTSParent::setCompanyId);
 			attributeSetterBiConsumers.put(
-				"name", (BiConsumer<CTSParent, String>)CTSParent::setName);
-			attributeSetterBiConsumers.put(
 				"ctsGrandParentId",
 				(BiConsumer<CTSParent, Long>)CTSParent::setCtsGrandParentId);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<CTSParent, String>)CTSParent::setName);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -334,25 +334,6 @@ public class CTSParentModelImpl
 	}
 
 	@Override
-	public String getName() {
-		if (_name == null) {
-			return "";
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_name = name;
-	}
-
-	@Override
 	public long getCtsGrandParentId() {
 		return _ctsGrandParentId;
 	}
@@ -374,6 +355,25 @@ public class CTSParentModelImpl
 	public long getOriginalCtsGrandParentId() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("ctsGrandParentId"));
+	}
+
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_name = name;
 	}
 
 	public long getColumnBitmask() {
@@ -436,8 +436,8 @@ public class CTSParentModelImpl
 		ctsParentImpl.setCtCollectionId(getCtCollectionId());
 		ctsParentImpl.setCtsParentId(getCtsParentId());
 		ctsParentImpl.setCompanyId(getCompanyId());
-		ctsParentImpl.setName(getName());
 		ctsParentImpl.setCtsGrandParentId(getCtsGrandParentId());
+		ctsParentImpl.setName(getName());
 
 		ctsParentImpl.resetOriginalValues();
 
@@ -456,9 +456,9 @@ public class CTSParentModelImpl
 			this.<Long>getColumnOriginalValue("ctsParentId"));
 		ctsParentImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
-		ctsParentImpl.setName(this.<String>getColumnOriginalValue("name"));
 		ctsParentImpl.setCtsGrandParentId(
 			this.<Long>getColumnOriginalValue("ctsGrandParentId"));
+		ctsParentImpl.setName(this.<String>getColumnOriginalValue("name"));
 
 		return ctsParentImpl;
 	}
@@ -542,6 +542,8 @@ public class CTSParentModelImpl
 
 		ctsParentCacheModel.companyId = getCompanyId();
 
+		ctsParentCacheModel.ctsGrandParentId = getCtsGrandParentId();
+
 		ctsParentCacheModel.name = getName();
 
 		String name = ctsParentCacheModel.name;
@@ -549,8 +551,6 @@ public class CTSParentModelImpl
 		if ((name != null) && (name.length() == 0)) {
 			ctsParentCacheModel.name = null;
 		}
-
-		ctsParentCacheModel.ctsGrandParentId = getCtsGrandParentId();
 
 		return ctsParentCacheModel;
 	}
@@ -617,8 +617,8 @@ public class CTSParentModelImpl
 	private long _ctCollectionId;
 	private long _ctsParentId;
 	private long _companyId;
-	private String _name;
 	private long _ctsGrandParentId;
+	private String _name;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CTSParent, Object> function =
@@ -652,8 +652,8 @@ public class CTSParentModelImpl
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("ctsParentId", _ctsParentId);
 		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("ctsGrandParentId", _ctsGrandParentId);
+		_columnOriginalValues.put("name", _name);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -675,9 +675,9 @@ public class CTSParentModelImpl
 
 		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("name", 16L);
+		columnBitmasks.put("ctsGrandParentId", 16L);
 
-		columnBitmasks.put("ctsGrandParentId", 32L);
+		columnBitmasks.put("name", 32L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

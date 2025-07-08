@@ -56,11 +56,11 @@ public class CTSChildLocalServiceUtil {
 	}
 
 	public static CTSChild addCTSChild(
-		long companyId, long ctsGrandParentId, String ctsParentName,
-		long parentCTSChildId) {
+		long companyId, long ctsGrandParentId, long parentCTSChildId,
+		String ctsParentName) {
 
 		return getService().addCTSChild(
-			companyId, ctsGrandParentId, ctsParentName, parentCTSChildId);
+			companyId, ctsGrandParentId, parentCTSChildId, ctsParentName);
 	}
 
 	/**

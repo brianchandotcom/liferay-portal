@@ -2415,10 +2415,10 @@ public class CTSChildPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("ctsGrandParentId");
-		ctMergeColumnNames.add("ctsParentName");
 		ctMergeColumnNames.add("parentCTSChildId");
+		ctMergeColumnNames.add("ctsParentName");
+		ctMergeColumnNames.add("name");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

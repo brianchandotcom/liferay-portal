@@ -38,8 +38,8 @@ public class CTSParentWrapper
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("ctsParentId", getCtsParentId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("name", getName());
 		attributes.put("ctsGrandParentId", getCtsGrandParentId());
+		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -70,16 +70,16 @@ public class CTSParentWrapper
 			setCompanyId(companyId);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		Long ctsGrandParentId = (Long)attributes.get("ctsGrandParentId");
 
 		if (ctsGrandParentId != null) {
 			setCtsGrandParentId(ctsGrandParentId);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 	}
 

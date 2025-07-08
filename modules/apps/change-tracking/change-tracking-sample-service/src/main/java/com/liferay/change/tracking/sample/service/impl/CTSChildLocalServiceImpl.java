@@ -45,9 +45,8 @@ public class CTSChildLocalServiceImpl extends CTSChildLocalServiceBaseImpl {
 		ctsChild.setCtsGrandParentId(ctsGrandParentId);
 		ctsChild.setParentCTSChildId(parentCTSChildId);
 
-		ctsChild.setName(String.valueOf(ctsChildId));
 		ctsChild.setCtsParentName(ctsParentName);
-
+		ctsChild.setName(String.valueOf(ctsChildId));
 
 		return ctsChildPersistence.update(ctsChild);
 	}

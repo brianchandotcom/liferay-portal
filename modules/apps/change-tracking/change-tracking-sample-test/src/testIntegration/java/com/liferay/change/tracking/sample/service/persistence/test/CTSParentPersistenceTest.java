@@ -119,9 +119,9 @@ public class CTSParentPersistenceTest {
 
 		newCTSParent.setCompanyId(RandomTestUtil.nextLong());
 
-		newCTSParent.setName(RandomTestUtil.randomString());
-
 		newCTSParent.setCtsGrandParentId(RandomTestUtil.nextLong());
+
+		newCTSParent.setName(RandomTestUtil.randomString());
 
 		_ctsParents.add(_persistence.update(newCTSParent));
 
@@ -138,10 +138,10 @@ public class CTSParentPersistenceTest {
 		Assert.assertEquals(
 			existingCTSParent.getCompanyId(), newCTSParent.getCompanyId());
 		Assert.assertEquals(
-			existingCTSParent.getName(), newCTSParent.getName());
-		Assert.assertEquals(
 			existingCTSParent.getCtsGrandParentId(),
 			newCTSParent.getCtsGrandParentId());
+		Assert.assertEquals(
+			existingCTSParent.getName(), newCTSParent.getName());
 	}
 
 	@Test
@@ -185,8 +185,8 @@ public class CTSParentPersistenceTest {
 	protected OrderByComparator<CTSParent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CTSParent", "mvccVersion", true, "ctCollectionId", true,
-			"ctsParentId", true, "companyId", true, "name", true,
-			"ctsGrandParentId", true);
+			"ctsParentId", true, "companyId", true, "ctsGrandParentId", true,
+			"name", true);
 	}
 
 	@Test
@@ -409,9 +409,9 @@ public class CTSParentPersistenceTest {
 
 		ctsParent.setCompanyId(RandomTestUtil.nextLong());
 
-		ctsParent.setName(RandomTestUtil.randomString());
-
 		ctsParent.setCtsGrandParentId(RandomTestUtil.nextLong());
+
+		ctsParent.setName(RandomTestUtil.randomString());
 
 		_ctsParents.add(_persistence.update(ctsParent));
 

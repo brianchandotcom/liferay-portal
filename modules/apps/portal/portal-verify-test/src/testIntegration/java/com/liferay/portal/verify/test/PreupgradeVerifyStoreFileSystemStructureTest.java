@@ -38,10 +38,8 @@ import java.nio.file.Paths;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -115,49 +113,19 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		_upgradeDatabaseDLStorageCheckDisabledSafeCloseable.close();
 	}
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		CompanyLocalServiceUtil.forEachCompanyId(
-			companyId -> {
-				Files.createDirectories(
-					Paths.get(
-						_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE,
-						String.valueOf(companyId)));
-				Files.createDirectories(
-					Paths.get(
-						_ROOT_DIR_FILE_SYSTEM_STORE,
-						String.valueOf(companyId)));
-			},
-			PortalInstancePool.getCompanyIds());
-	}
-
-	@After
-	public void tearDown() {
-		FileUtil.deltree(_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE);
-		FileUtil.deltree(_ROOT_DIR_FILE_SYSTEM_STORE);
-	}
-
 	@Test
-	public void testVerifyAdvancedFileSystemStoreLongFileNameDirectoryWithoutExtension()
-		throws Exception {
-
+	public void testVerifyAdvancedFileSystem() throws Exception {
 		Path path = Paths.get(
 			_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE, String.valueOf(_companyId),
 			String.valueOf(_REPOSITORY_ID), "100");
 
 		Files.createDirectories(path);
 
-		_assertVerifyLogEntry(
-			_DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE,
+		_testVerify(
+			true, null,
 			StringBundler.concat(
 				"File ", path, " name has more than 2 characters and no ",
 				"extension in advanced file system structure"));
-	}
-
-	@Test
-	public void testVerifyAdvancedFileSystemStoreValidDirectory()
-		throws Exception {
 
 		Files.createDirectories(
 			Paths.get(
@@ -165,7 +133,88 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 				String.valueOf(_companyId), String.valueOf(_REPOSITORY_ID),
 				"10", "100.afsh"));
 
-		_assertVerifyValidDirectory(_DL_STORE_IMPL_ADVANCED_FILE_SYSTEM_STORE);
+		_testVerify(true, null, null);
+	}
+
+	@Test
+	public void testVerifyFileSystem() throws Exception {
+		Files.deleteIfExists(
+			Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId)));
+
+		_testVerify(
+			false,
+			StringBundler.concat(
+				"Missing directories in ",
+				Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE), " for companies: [",
+				_companyId, "]"),
+			null);
+
+		Path path = Paths.get(
+			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
+			String.valueOf(_REPOSITORY_ID), "invalidFile.txt");
+
+		Files.createDirectories(path.getParent());
+		Files.createFile(path);
+
+		_testVerify(
+			false, null,
+			"Unexpected file " + path + " in file system structure");
+
+
+
+
+
+
+		path = Paths.get(
+			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
+			"invalidFile.txt");
+
+		Files.createDirectories(path.getParent());
+		Files.createFile(path);
+
+		_testVerify(
+			false, null,
+			"Unexpected file " + path + " in file system structure");
+
+
+		
+
+		path = Paths.get(
+			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
+			String.valueOf(_REPOSITORY_ID), "100", "invalidVersionLabel");
+
+		Files.createDirectories(path.getParent());
+		Files.createFile(path);
+
+		_testVerify(
+			false, null,
+			"Unexpected file " + path + " not matching version label pattern");
+
+
+
+		path = Paths.get(
+			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
+			String.valueOf(_REPOSITORY_ID), "100.txt");
+
+		Files.createDirectories(path);
+
+		_testVerify(
+			false, null,
+			StringBundler.concat(
+				"Unexpected file name directory ", path,
+				" with extension in file system structure"));
+
+
+
+
+
+
+		Files.createDirectories(
+			Paths.get(
+				_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
+				String.valueOf(_REPOSITORY_ID), "100", "1.0"));
+
+		_testVerify(false, null, null);
 	}
 
 	@Test
@@ -192,96 +241,6 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			Files.delete(companyIdPath);
 			Files.move(companyIdBackupPath, companyIdPath);
 		}
-	}
-
-	@Test
-	public void testVerifyFileSystemStoreFileInsteadOfFileNameDirectory()
-		throws Exception {
-
-		Path path = Paths.get(
-			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "invalidFile.txt");
-
-		Files.createDirectories(path.getParent());
-		Files.createFile(path);
-
-		_assertVerifyLogEntry(
-			_DL_STORE_IMPL_FILE_SYSTEM_STORE,
-			"Unexpected file " + path + " in file system structure");
-	}
-
-	@Test
-	public void testVerifyFileSystemStoreFileInsteadOfRepositoryIdDirectory()
-		throws Exception {
-
-		Path path = Paths.get(
-			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-			"invalidFile.txt");
-
-		Files.createDirectories(path.getParent());
-		Files.createFile(path);
-
-		_assertVerifyLogEntry(
-			_DL_STORE_IMPL_FILE_SYSTEM_STORE,
-			"Unexpected file " + path + " in file system structure");
-	}
-
-	@Test
-	public void testVerifyFileSystemStoreFileNameDirectoryContainingExtension()
-		throws Exception {
-
-		Path path = Paths.get(
-			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "100.txt");
-
-		Files.createDirectories(path);
-
-		_assertVerifyLogEntry(
-			_DL_STORE_IMPL_FILE_SYSTEM_STORE,
-			StringBundler.concat(
-				"Unexpected file name directory ", path,
-				" with extension in file system structure"));
-	}
-
-	@Test
-	public void testVerifyFileSystemStoreInvalidVersionLabelFile()
-		throws Exception {
-
-		Path path = Paths.get(
-			_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-			String.valueOf(_REPOSITORY_ID), "100", "invalidVersionLabel");
-
-		Files.createDirectories(path.getParent());
-		Files.createFile(path);
-
-		_assertVerifyLogEntry(
-			_DL_STORE_IMPL_FILE_SYSTEM_STORE,
-			"Unexpected file " + path + " not matching version label pattern");
-	}
-
-	@Test
-	public void testVerifyFileSystemStoreMissingCompanyIdDirectory()
-		throws Exception {
-
-		Files.deleteIfExists(
-			Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId)));
-
-		_assertVerifyExceptionMessage(
-			_DL_STORE_IMPL_FILE_SYSTEM_STORE,
-			StringBundler.concat(
-				"Missing directories in ",
-				Paths.get(_ROOT_DIR_FILE_SYSTEM_STORE), " for companies: [",
-				_companyId, "]"));
-	}
-
-	@Test
-	public void testVerifyFileSystemStoreValidDirectory() throws Exception {
-		Files.createDirectories(
-			Paths.get(
-				_ROOT_DIR_FILE_SYSTEM_STORE, String.valueOf(_companyId),
-				String.valueOf(_REPOSITORY_ID), "100", "1.0"));
-
-		_assertVerifyValidDirectory(_DL_STORE_IMPL_FILE_SYSTEM_STORE);
 	}
 
 	@Override
@@ -364,6 +323,33 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		throws Exception {
 
 		_assertVerify(dlStoreImpl, null, null);
+	}
+
+	private void _testVerify(
+			boolean advancedFileSystemStore, String expectedExceptionMessage,
+			String expectedLogEntry)
+		throws Exception {
+
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				Files.createDirectories(
+					Paths.get(
+						_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE,
+						String.valueOf(companyId)));
+				Files.createDirectories(
+					Paths.get(
+						_ROOT_DIR_FILE_SYSTEM_STORE,
+						String.valueOf(companyId)));
+			},
+			PortalInstancePool.getCompanyIds());
+
+		try {
+			System.out.println("x");
+		}
+		finally {
+			FileUtil.deltree(_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE);
+			FileUtil.deltree(_ROOT_DIR_FILE_SYSTEM_STORE);
+		}
 	}
 
 	private void _validateLogEntry(

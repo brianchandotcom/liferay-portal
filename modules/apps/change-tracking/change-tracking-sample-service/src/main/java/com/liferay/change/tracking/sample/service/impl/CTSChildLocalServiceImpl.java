@@ -28,13 +28,13 @@ public class CTSChildLocalServiceImpl extends CTSChildLocalServiceBaseImpl {
 
 	@Override
 	public CTSChild addCTSChild(long companyId) {
-		return addCTSChild(companyId, 0, "", 0);
+		return addCTSChild(companyId, 0, 0, "");
 	}
 
 	@Override
 	public CTSChild addCTSChild(
-		long companyId, long ctsGrandParentId, String ctsParentName,
-		long parentCTSChildId) {
+		long companyId, long ctsGrandParentId, long parentCTSChildId,
+		String ctsParentName) {
 
 		long ctsChildId = counterLocalService.increment(
 			CTSChild.class.getName());
@@ -42,10 +42,12 @@ public class CTSChildLocalServiceImpl extends CTSChildLocalServiceBaseImpl {
 		CTSChild ctsChild = ctsChildPersistence.create(ctsChildId);
 
 		ctsChild.setCompanyId(companyId);
-		ctsChild.setName(String.valueOf(ctsChildId));
 		ctsChild.setCtsGrandParentId(ctsGrandParentId);
-		ctsChild.setCtsParentName(ctsParentName);
 		ctsChild.setParentCTSChildId(parentCTSChildId);
+
+		ctsChild.setName(String.valueOf(ctsChildId));
+		ctsChild.setCtsParentName(ctsParentName);
+
 
 		return ctsChildPersistence.update(ctsChild);
 	}

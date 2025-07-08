@@ -8,9 +8,9 @@
 <%@ include file="/osb_patcher/views/init.jsp" %>
 
 <%
-long patcherBuildId = ParamUtil.getLong(request, "patcherBuildId");
+PatcherViewBuildsDisplayContext patcherViewBuildsDisplayContext = new PatcherViewBuildsDisplayContext(request, renderRequest, renderResponse);
 
-PatcherBuild patcherBuild = PatcherBuildLocalServiceUtil.fetchPatcherBuild(patcherBuildId);
+PatcherBuild patcherBuild = patcherViewBuildsDisplayContext.getPatcherBuild();
 
 PatcherBuild latestPatcherBuild = null;
 
@@ -538,8 +538,6 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 </aui:button-row>
 
 <%
-PatcherViewBuildsDisplayContext patcherViewBuildsDisplayContext = new PatcherViewBuildsDisplayContext(request, renderRequest, renderResponse);
-
 SearchContainer<PatcherBuild> patcherBuildSearchContainer = patcherViewBuildsDisplayContext.getSearchContainer();
 %>
 

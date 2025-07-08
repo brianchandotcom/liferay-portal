@@ -31,8 +31,9 @@ public class CTSParentLocalServiceImpl extends CTSParentLocalServiceBaseImpl {
 		CTSParent ctsParent = ctsParentPersistence.create(ctsParentId);
 
 		ctsParent.setCompanyId(companyId);
-		ctsParent.setName(String.valueOf(ctsParentId));
 		ctsParent.setCtsGrandParentId(ctsGrandParentId);
+
+		ctsParent.setName(String.valueOf(ctsParentId));
 
 		return ctsParentPersistence.update(ctsParent);
 	}

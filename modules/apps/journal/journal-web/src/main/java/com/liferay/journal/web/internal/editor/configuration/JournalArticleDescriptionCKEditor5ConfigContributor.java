@@ -9,6 +9,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -36,7 +37,11 @@ public class JournalArticleDescriptionCKEditor5ConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("preset", "basic");
+		jsonObject.put(
+			"preset", "basic"
+		).put(
+			"ui", JSONUtil.put("viewportOffset", JSONUtil.put("top", 120))
+		);
 	}
 
 }

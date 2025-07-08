@@ -27,10 +27,14 @@ const UserGroupRenderer = ({
 
 			{value}
 
-			{Liferay.Util.sub(
-				'(' + Liferay.Language.get('x-members'),
-				itemData.numberOfUserAccounts || 0 + ')'
-			)}
+			<span>
+				(
+				{Liferay.Util.sub(
+					Liferay.Language.get('x-members'),
+					itemData?.numberOfUserAccounts || 0
+				)}
+				)
+			</span>
 		</span>
 	);
 };

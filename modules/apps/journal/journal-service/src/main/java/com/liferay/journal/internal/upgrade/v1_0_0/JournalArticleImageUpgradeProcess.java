@@ -55,12 +55,9 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 							"where articleId = ? and elName = ?")) {
 
 				while (resultSet.next()) {
-					String articleId = resultSet.getString(1);
-					String elName = resultSet.getString(2);
-
 					preparedStatement2.setString(1, StringUtil.randomString(4));
-					preparedStatement2.setString(2, articleId);
-					preparedStatement2.setString(3, elName);
+					preparedStatement2.setString(2, resultSet.getString(1));
+					preparedStatement2.setString(3, resultSet.getString(2));
 
 					preparedStatement2.addBatch();
 				}

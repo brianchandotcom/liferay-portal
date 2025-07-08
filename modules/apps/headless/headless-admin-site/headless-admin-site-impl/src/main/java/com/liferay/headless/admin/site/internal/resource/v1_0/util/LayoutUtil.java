@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -496,27 +495,13 @@ public class LayoutUtil {
 			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> friendlyURLMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
-			PageSpecification[] pageSpecifications,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			WidgetPageSpecification widgetPageSpecification)
 		throws Exception {
 
 		Settings settings = null;
 
-		if (ArrayUtil.isNotEmpty(pageSpecifications)) {
-			if (pageSpecifications.length != 1) {
-				throw new UnsupportedOperationException();
-			}
-
-			WidgetPageSpecification widgetPageSpecification =
-				(WidgetPageSpecification)pageSpecifications[0];
-
-			if (!Objects.equals(
-					widgetPageSpecification.getStatus(),
-					WidgetPageSpecification.Status.APPROVED)) {
-
-				throw new UnsupportedOperationException();
-			}
-
+		if (widgetPageSpecification != null) {
 			settings = widgetPageSpecification.getSettings();
 		}
 

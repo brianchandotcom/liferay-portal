@@ -253,14 +253,6 @@ public class ObjectEntryVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_CD() throws Exception {
-		_persistence.countByC_CD(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextDate());
-
-		_persistence.countByC_CD(0L, RandomTestUtil.nextDate());
-	}
-
-	@Test
 	public void testCountByOEI_V() throws Exception {
 		_persistence.countByOEI_V(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());

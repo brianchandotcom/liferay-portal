@@ -17,14 +17,18 @@ PatcherBuild patcherBuild = PatcherBuildLocalServiceUtil.fetchPatcherBuild(patch
 
 <portlet:actionURL name="/patcher/update_comments_field_builds" var="updatePatcherBuildCommentsFieldURL" />
 
-<aui:form action="<%= updatePatcherBuildCommentsFieldURL %>" method="post">
+<liferay-frontend:edit-form
+	action="<%= updatePatcherBuildCommentsFieldURL %>"
+	cssClass="pt-0"
+	fluid="<%= true %>"
+>
 	<aui:input name="patcherBuildId" type="hidden" value="<%= patcherBuild.getPatcherBuildId() %>" />
 
-	<aui:input name="comments" />
+	<liferay-frontend:edit-form-body>
+		<aui:input name="comments" />
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
-		<aui:button type="submit" />
-
-		<aui:button value="cancel" />
-	</aui:button-row>
-</aui:form>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

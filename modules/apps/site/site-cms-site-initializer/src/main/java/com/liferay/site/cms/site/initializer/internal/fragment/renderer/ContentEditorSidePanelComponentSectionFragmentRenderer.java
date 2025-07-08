@@ -78,7 +78,21 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 
 		ObjectEntry objectEntry = (ObjectEntry)displayObject;
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		return HashMapBuilder.<String, Object>put(
+			"addCommentURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/add_content_item_comment?classNameId=",
+				_classNameLocalService.getClassNameId(
+					objectEntry.getModelClassName()),
+				"&classPK=", objectEntry.getObjectEntryId(),
+				"&objectDefinitionId=", objectEntry.getObjectDefinitionId())
+		).put(
 			"comments",
 			() -> {
 				JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -128,13 +142,21 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 		).put(
 			"isSubscribed",
 			() -> {
-				ThemeDisplay themeDisplay = (ThemeDisplay)httpServletRequest;
-
 				return _subscriptionLocalService.isSubscribed(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 					objectEntry.getModelClassName(),
 					objectEntry.getObjectEntryId());
 			}
+		).put(
+			"subscribeURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/subscribe_content_item?classNameId=",
+				_classNameLocalService.getClassNameId(
+					objectEntry.getModelClassName()),
+				"&classPK=", objectEntry.getObjectEntryId(),
+				"&objectDefinitionId=", objectEntry.getObjectDefinitionId())
 		).put(
 			"type",
 			() -> {
@@ -152,6 +174,9 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 			"version", () -> String.valueOf(objectEntry.getVersion())
 		).build();
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CommentManager _commentManager;

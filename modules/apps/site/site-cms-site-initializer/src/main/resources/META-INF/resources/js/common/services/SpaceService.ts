@@ -48,10 +48,12 @@ async function getSpace({
 }
 
 async function getSpaceUserGroups({
+	nestedFields,
 	page,
 	pageSize,
 	spaceId,
 }: {
+	nestedFields?: string;
 	page?: number;
 	pageSize?: number;
 	spaceId: string;
@@ -77,7 +79,7 @@ async function getSpaceUserGroups({
 		page: number;
 		totalCount: number;
 	}>(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups?${urlParams.toString()}`
+		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups?${nestedFields ? 'nestedFields=' + nestedFields : ''}${urlParams.toString()}`
 	);
 
 	if (data) {

@@ -5,16 +5,11 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-export type manageSitesData = {
-	title: string;
-};
+import SpaceSitesModal from '../../spaces/SpaceSitesModal';
 
-export default function manageSitesAction(data: manageSitesData) {
+export default function manageSitesAction() {
 	openModal({
-		bodyHTML: `<p>${data.title}</p>`,
-		center: true,
-		containerProps: {},
-		size: 'lg',
-		title: data.title,
+		contentComponent: () => SpaceSitesModal(),
+		size: 'md',
 	});
 }

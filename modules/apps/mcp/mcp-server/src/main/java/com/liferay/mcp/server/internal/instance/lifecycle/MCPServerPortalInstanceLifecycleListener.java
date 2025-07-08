@@ -53,9 +53,8 @@ public class MCPServerPortalInstanceLifecycleListener
 
 		_oAuth2ApplicationLocalService.addOAuth2Application(
 			company.getCompanyId(), user.getUserId(), user.getScreenName(),
-			List.of(GrantType.AUTHORIZATION_CODE, GrantType.REFRESH_TOKEN),
-			"client_secret_post", user.getUserId(),
-			MCPServerConstants.MCP_SERVER_OAUTH2_CLIENT_ID,
+			List.of(GrantType.AUTHORIZATION_CODE), "client_secret_post",
+			user.getUserId(), MCPServerConstants.MCP_SERVER_OAUTH2_CLIENT_ID,
 			ClientProfile.WEB_APPLICATION.id(),
 			OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
 			null, 0, null, "MCP Server", null,

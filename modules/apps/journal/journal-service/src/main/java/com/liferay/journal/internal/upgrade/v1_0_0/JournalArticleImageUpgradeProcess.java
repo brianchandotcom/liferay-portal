@@ -5,7 +5,6 @@
 
 package com.liferay.journal.internal.upgrade.v1_0_0;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -33,10 +32,9 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 	private void _deleteOrphanJournalArticleImages() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"delete from JournalArticleImage where not exists",
-					"(select 1 from Image where",
-					"(JournalArticleImage.articleImageId = Image.imageId))"))) {
+				"delete from JournalArticleImage where not exists(select 1 " +
+					"from Image where JournalArticleImage.articleImageId = " +
+						"Image.imageId)")) {
 
 			preparedStatement.executeUpdate();
 		}

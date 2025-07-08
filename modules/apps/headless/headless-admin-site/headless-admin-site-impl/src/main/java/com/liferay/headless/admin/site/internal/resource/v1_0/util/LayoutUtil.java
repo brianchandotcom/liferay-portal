@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -431,18 +433,35 @@ public class LayoutUtil {
 			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> friendlyURLMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
+			PageSpecification[] pageSpecifications,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		layout = _updateLayout(
+		Settings settings = null;
+
+		if (ArrayUtil.isNotEmpty(pageSpecifications)) {
+			if (pageSpecifications.length != 1) {
+				throw new UnsupportedOperationException();
+			}
+
+			WidgetPageSpecification widgetPageSpecification =
+				(WidgetPageSpecification)pageSpecifications[0];
+
+			settings = widgetPageSpecification.getSettings();
+		}
+
+		layout = updateLayout(
 			layout, nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
-			layout.getRobotsMap(), layout.getStyleBookEntryId(),
-			layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
-			friendlyURLMap, serviceContext);
+			layout.getRobotsMap(), friendlyURLMap, settings, serviceContext);
 
 		if (typeSettingsUnicodeProperties == null) {
 			return layout;
 		}
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		unicodeProperties.putAll(typeSettingsUnicodeProperties);
 
 		return LayoutServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),

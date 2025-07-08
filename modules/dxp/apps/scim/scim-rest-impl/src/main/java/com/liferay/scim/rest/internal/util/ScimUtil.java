@@ -5,6 +5,13 @@
 
 package com.liferay.scim.rest.internal.util;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -23,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -33,6 +41,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.rest.dto.v1_0.Operation;
 import com.liferay.scim.rest.dto.v1_0.PatchOp;
@@ -59,6 +68,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 import org.wso2.charon3.core.attributes.Attribute;
 import org.wso2.charon3.core.attributes.ComplexAttribute;
 import org.wso2.charon3.core.attributes.DefaultAttributeFactory;
+import org.wso2.charon3.core.attributes.MultiValuedAttribute;
 import org.wso2.charon3.core.attributes.SimpleAttribute;
 import org.wso2.charon3.core.config.SCIMUserSchemaExtensionBuilder;
 import org.wso2.charon3.core.exceptions.NotFoundException;
@@ -197,7 +207,9 @@ public class ScimUtil {
 		scimUser.setAutoPassword(user.getPassword() == null);
 		scimUser.setBirthday(_getBirthday(user));
 		scimUser.setCompanyId(companyId);
+		scimUser.setDisplayName(user.getDisplayName());
 		scimUser.setEmailAddress(_getEmailAddress(user));
+		scimUser.setEntitlements(_getEntitlements(user));
 		scimUser.setExternalReferenceCode(user.getExternalId());
 
 		ScimName scimName = user.getName();
@@ -210,8 +222,14 @@ public class ScimUtil {
 		scimUser.setLocale(locale);
 		scimUser.setMale(_isMale(user));
 		scimUser.setMiddleName(scimName.getMiddleName());
+		scimUser.setNickName(user.getNickName());
 		scimUser.setPassword(user.getPassword());
+		scimUser.setPhotos(_getScimValues(user.getPhotos()));
+		scimUser.setPreferredLanguage(user.getPreferredLanguage());
 		scimUser.setScreenName(user.getUserName());
+		scimUser.setUserType(user.getUserType());
+		scimUser.setX509Certificates(
+			_getScimValues(user.getX509Certificates()));
 
 		_validate(scimUser);
 
@@ -242,6 +260,8 @@ public class ScimUtil {
 			scimUser.setModifiedDate(
 				_truncateDate(portalUser.getModifiedDate()));
 			scimUser.setScreenName(portalUser.getScreenName());
+
+			_setExpandoValueAttributes(scimUser);
 
 			return scimUser;
 		}
@@ -630,6 +650,52 @@ public class ScimUtil {
 		return multiValuedComplexType.getValue();
 	}
 
+	private static String[] _getEntitlements(User user) {
+		try {
+			MultiValuedAttribute entitlements =
+				(MultiValuedAttribute)user.getAttribute("entitlements");
+
+			List<String> values = new ArrayList<>();
+
+			for (Attribute attribute : entitlements.getAttributeValues()) {
+				SimpleAttribute simpleAttribute =
+					(SimpleAttribute)attribute.getSubAttribute("value");
+
+				values.add(simpleAttribute.getStringValue());
+			}
+
+			return ArrayUtil.toStringArray(values);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to retrieve entitlements", exception);
+			}
+
+			return null;
+		}
+	}
+
+	private static String _getExpandoValue(
+			long expandoTableId, long userId, String name)
+		throws Exception {
+
+		ExpandoColumn expandoColumn = ExpandoColumnLocalServiceUtil.fetchColumn(
+			expandoTableId, name);
+
+		if (expandoColumn == null) {
+			return null;
+		}
+
+		ExpandoValue expandoValue = ExpandoValueLocalServiceUtil.getValue(
+			expandoTableId, expandoColumn.getColumnId(), userId);
+
+		if (expandoValue != null) {
+			return expandoValue.getString();
+		}
+
+		return null;
+	}
+
 	private static List<ScimAddress> _getScimAddresses(
 		com.liferay.portal.kernel.model.User portalUser) {
 
@@ -680,6 +746,24 @@ public class ScimUtil {
 		return scimAddresses;
 	}
 
+	private static String[] _getScimValues(
+		List<MultiValuedComplexType> multiValuedComplexTypes) {
+
+		if (multiValuedComplexTypes == null) {
+			return null;
+		}
+
+		List<String> values = new ArrayList<>();
+
+		for (MultiValuedComplexType multiValuedComplexType :
+				multiValuedComplexTypes) {
+
+			values.add(multiValuedComplexType.getValue());
+		}
+
+		return ArrayUtil.toStringArray(values);
+	}
+
 	private static boolean _isActive(User user) {
 		SimpleAttribute simpleAttribute = (SimpleAttribute)user.getAttribute(
 			"active");
@@ -716,6 +800,67 @@ public class ScimUtil {
 			}
 
 			return true;
+		}
+	}
+
+	private static void _setExpandoValueAttributes(ScimUser scimUser) {
+		ExpandoTable expandoTable = ExpandoTableLocalServiceUtil.fetchTable(
+			scimUser.getCompanyId(),
+			ClassNameLocalServiceUtil.getClassNameId(
+				com.liferay.portal.kernel.model.User.class.getName()),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		if (expandoTable == null) {
+			return;
+		}
+
+		try {
+			scimUser.setDisplayName(
+				_getExpandoValue(
+					expandoTable.getTableId(), Long.getLong(scimUser.getId()),
+					"scimDisplayName"));
+
+			scimUser.setEntitlements(
+				StringUtil.split(
+					_getExpandoValue(
+						expandoTable.getTableId(),
+						Long.getLong(scimUser.getId()), "scimEntitlements"),
+					StringPool.NEW_LINE));
+
+			scimUser.setNickName(
+				_getExpandoValue(
+					expandoTable.getTableId(), Long.getLong(scimUser.getId()),
+					"scimNickName"));
+
+			scimUser.setPhotos(
+				StringUtil.split(
+					_getExpandoValue(
+						expandoTable.getTableId(),
+						Long.getLong(scimUser.getId()), "scimPhotos"),
+					StringPool.NEW_LINE));
+
+			scimUser.setPreferredLanguage(
+				_getExpandoValue(
+					expandoTable.getTableId(), Long.getLong(scimUser.getId()),
+					"scimPreferredLanguage"));
+
+			scimUser.setUserType(
+				_getExpandoValue(
+					expandoTable.getTableId(), Long.getLong(scimUser.getId()),
+					"scimUserType"));
+
+			scimUser.setX509Certificates(
+				StringUtil.split(
+					_getExpandoValue(
+						expandoTable.getTableId(),
+						Long.getLong(scimUser.getId()), "scimX509Certificates"),
+					StringPool.NEW_LINE));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to set custom field related attributes", exception);
+			}
 		}
 	}
 

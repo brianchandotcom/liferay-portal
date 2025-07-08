@@ -12,7 +12,9 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
@@ -44,6 +47,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -491,6 +495,19 @@ public class UserManagerImpl implements UserManager {
 		return _addOrUpdateUser(user);
 	}
 
+	private void _addOrUpdateExpandoValue(
+			long classNameId, long companyId, long userId, boolean textBox,
+			String name, String value)
+		throws Exception {
+
+		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
+			classNameId, companyId, textBox, name);
+
+		_expandoValueLocalService.addValue(
+			classNameId, expandoColumn.getTableId(),
+			expandoColumn.getColumnId(), userId, value);
+	}
+
 	private Group _addOrUpdateGroup(Group group) throws CharonException {
 		try {
 			Company company = _companyLocalService.fetchCompany(
@@ -608,6 +625,45 @@ public class UserManagerImpl implements UserManager {
 
 			_addressLocalService.addAddress(address);
 		}
+
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			com.liferay.portal.kernel.model.User.class.getName());
+
+		_addOrUpdateExpandoValue(
+			classNameId, portalUser.getCompanyId(), portalUser.getUserId(),
+			false, "scimDisplayName", scimUser.getDisplayName());
+
+		_addOrUpdateExpandoValue(
+			classNameId, portalUser.getCompanyId(), portalUser.getUserId(),
+			true, "scimEntitlements",
+			ArrayUtil.toString(
+				scimUser.getEntitlements(), StringPool.BLANK,
+				StringPool.NEW_LINE));
+
+		_addOrUpdateExpandoValue(
+			classNameId, portalUser.getCompanyId(), portalUser.getUserId(),
+			false, "scimNickName", scimUser.getNickName());
+
+		_addOrUpdateExpandoValue(
+			classNameId, portalUser.getCompanyId(), portalUser.getUserId(),
+			true, "scimPhotos",
+			ArrayUtil.toString(
+				scimUser.getPhotos(), StringPool.BLANK, StringPool.NEW_LINE));
+
+		_addOrUpdateExpandoValue(
+			classNameId, portalUser.getCompanyId(), portalUser.getUserId(),
+			false, "scimPreferredLanguage", scimUser.getPreferredLanguage());
+
+		_addOrUpdateExpandoValue(
+			classNameId, portalUser.getCompanyId(), portalUser.getUserId(),
+			false, "scimUserType", scimUser.getUserType());
+
+		_addOrUpdateExpandoValue(
+			classNameId, portalUser.getCompanyId(), portalUser.getUserId(),
+			true, "scimX509Certificates",
+			ArrayUtil.toString(
+				scimUser.getX509Certificates(), StringPool.BLANK,
+				StringPool.NEW_LINE));
 
 		return ScimUtil.toScimUser(portalUser);
 	}
@@ -799,6 +855,58 @@ public class UserManagerImpl implements UserManager {
 
 				return ScimUtil.toGroup(Collections.emptyList(), userGroup);
 			});
+	}
+
+	private ExpandoColumn _getOrAddExpandoColumn(
+			long classNameId, long companyId, boolean textBox, String name)
+		throws Exception {
+
+		ExpandoTable expandoTable = ExpandoTableLocalServiceUtil.fetchTable(
+			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		if (expandoTable == null) {
+			expandoTable = ExpandoTableLocalServiceUtil.addTable(
+				companyId, classNameId,
+				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+		}
+
+		ExpandoColumn expandoColumn = ExpandoColumnLocalServiceUtil.fetchColumn(
+			expandoTable.getTableId(), name);
+
+		if (expandoColumn != null) {
+			return expandoColumn;
+		}
+
+		expandoColumn = ExpandoColumnLocalServiceUtil.addColumn(
+			expandoTable.getTableId(), name, ExpandoColumnConstants.STRING);
+
+		UnicodeProperties unicodeProperties =
+			expandoColumn.getTypeSettingsProperties();
+
+		if (textBox) {
+			unicodeProperties.setProperty(
+				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE,
+				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX);
+
+			unicodeProperties.setProperty(
+				ExpandoColumnConstants.PROPERTY_HEIGHT, "150");
+		}
+		else {
+			unicodeProperties.setProperty(
+				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE,
+				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD);
+		}
+
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.INDEX_TYPE,
+			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.PROPERTY_WIDTH, "400");
+
+		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+		return ExpandoColumnLocalServiceUtil.updateExpandoColumn(expandoColumn);
 	}
 
 	private String _getScimClientId(

@@ -321,10 +321,6 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 
-		if (layout == null) {
-			return 0;
-		}
-
 		return layout.getPlid();
 	}
 

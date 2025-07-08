@@ -319,10 +319,6 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 				utilityPage.getFriendlyUrlPath_i18n()),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		if (layout == null) {
-			return 0;
-		}
-
 		return layout.getPlid();
 	}
 

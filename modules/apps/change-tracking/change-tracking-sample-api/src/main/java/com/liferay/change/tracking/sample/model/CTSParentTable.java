@@ -29,10 +29,10 @@ public class CTSParentTable extends BaseTable<CTSParentTable> {
 		"ctsParentId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CTSParentTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CTSParentTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CTSParentTable, Long> ctsGrandParentId = createColumn(
 		"ctsGrandParentId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CTSParentTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CTSParentTable() {
 		super("CTSParent", CTSParentTable::new);

@@ -75,10 +75,10 @@ public class CTSParentCacheModel
 		sb.append(ctsParentId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", ctsGrandParentId=");
 		sb.append(ctsGrandParentId);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append("}");
 
 		return sb.toString();
@@ -92,6 +92,7 @@ public class CTSParentCacheModel
 		ctsParentImpl.setCtCollectionId(ctCollectionId);
 		ctsParentImpl.setCtsParentId(ctsParentId);
 		ctsParentImpl.setCompanyId(companyId);
+		ctsParentImpl.setCtsGrandParentId(ctsGrandParentId);
 
 		if (name == null) {
 			ctsParentImpl.setName("");
@@ -99,8 +100,6 @@ public class CTSParentCacheModel
 		else {
 			ctsParentImpl.setName(name);
 		}
-
-		ctsParentImpl.setCtsGrandParentId(ctsGrandParentId);
 
 		ctsParentImpl.resetOriginalValues();
 
@@ -116,9 +115,9 @@ public class CTSParentCacheModel
 		ctsParentId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
-		name = objectInput.readUTF();
 
 		ctsGrandParentId = objectInput.readLong();
+		name = objectInput.readUTF();
 	}
 
 	@Override
@@ -131,21 +130,21 @@ public class CTSParentCacheModel
 
 		objectOutput.writeLong(companyId);
 
+		objectOutput.writeLong(ctsGrandParentId);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
-
-		objectOutput.writeLong(ctsGrandParentId);
 	}
 
 	public long mvccVersion;
 	public long ctCollectionId;
 	public long ctsParentId;
 	public long companyId;
-	public String name;
 	public long ctsGrandParentId;
+	public String name;
 
 }

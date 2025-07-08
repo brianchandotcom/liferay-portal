@@ -42,8 +42,9 @@ public class CTSGrandParentLocalServiceImpl
 			ctsCTSGrandParentId);
 
 		ctsGrandParent.setCompanyId(companyId);
-		ctsGrandParent.setName(String.valueOf(ctsCTSGrandParentId));
 		ctsGrandParent.setParentCTSGrandParentId(parentCTSGrandParentId);
+
+		ctsGrandParent.setName(String.valueOf(ctsCTSGrandParentId));
 
 		return ctsGrandParentPersistence.update(ctsGrandParent);
 	}

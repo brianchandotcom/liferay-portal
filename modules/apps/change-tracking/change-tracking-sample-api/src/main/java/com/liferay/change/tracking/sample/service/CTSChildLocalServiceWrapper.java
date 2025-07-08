@@ -53,11 +53,11 @@ public class CTSChildLocalServiceWrapper
 
 	@Override
 	public CTSChild addCTSChild(
-		long companyId, long ctsGrandParentId, String ctsParentName,
-		long parentCTSChildId) {
+		long companyId, long ctsGrandParentId, long parentCTSChildId,
+		String ctsParentName) {
 
 		return _ctsChildLocalService.addCTSChild(
-			companyId, ctsGrandParentId, ctsParentName, parentCTSChildId);
+			companyId, ctsGrandParentId, parentCTSChildId, ctsParentName);
 	}
 
 	/**

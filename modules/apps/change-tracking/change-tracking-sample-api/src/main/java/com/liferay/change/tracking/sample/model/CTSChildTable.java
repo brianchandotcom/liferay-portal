@@ -29,14 +29,14 @@ public class CTSChildTable extends BaseTable<CTSChildTable> {
 		"ctsChildId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CTSChildTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CTSChildTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CTSChildTable, Long> ctsGrandParentId = createColumn(
 		"ctsGrandParentId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CTSChildTable, String> ctsParentName = createColumn(
-		"ctsParentName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CTSChildTable, Long> parentCTSChildId = createColumn(
 		"parentCTSChildId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CTSChildTable, String> ctsParentName = createColumn(
+		"ctsParentName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CTSChildTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CTSChildTable() {
 		super("CTSChild", CTSChildTable::new);

@@ -41,6 +41,20 @@ export function MembersListItem({
 				const isOwner =
 					isUser && assetLibraryCreatorUserId === String(item.id);
 
+				const renderGroupCount = () => {
+					if (!isUser) {
+						const userGroup = item as UserGroup;
+						const groupCount = userGroup.numberOfUserAccounts || 0;
+
+						return (
+							<span className="ml-1">{`(${Liferay.Util.sub(
+								Liferay.Language.get('x-members'),
+								groupCount
+							)})`}</span>
+						);
+					}
+				};
+
 				return (
 					<li
 						className="align-items-center d-flex justify-content-between"
@@ -80,18 +94,7 @@ export function MembersListItem({
 								</span>
 							)}
 
-							{!isUser &&
-								(item as UserGroup).numberOfUserAccounts && (
-									<span className="ml-1 text-lowercase text-secondary">
-										(
-										{Liferay.Util.sub(
-											Liferay.Language.get('x-members'),
-											(item as UserGroup)
-												.numberOfUserAccounts
-										)}
-										)
-									</span>
-								)}
+							{renderGroupCount()}
 						</div>
 
 						{isOwner ? (

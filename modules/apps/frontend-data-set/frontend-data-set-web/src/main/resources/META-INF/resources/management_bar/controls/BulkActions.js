@@ -205,7 +205,7 @@ function BulkActions({
 								</span>
 
 								<ClayLink
-									className="ml-3"
+									className="c-ml-3"
 									href="#"
 									onClick={(event) => {
 										event.preventDefault();
@@ -220,7 +220,7 @@ function BulkActions({
 									showSelectAll &&
 									!allItemsSelectedActive && (
 										<ClayLink
-											className="ml-3"
+											className="c-ml-3"
 											href="#"
 											onClick={(event) => {
 												event.preventDefault();

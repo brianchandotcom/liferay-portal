@@ -22,7 +22,10 @@ function FilterResume(props) {
 	const button = (
 		<ClayButton
 			className={classNames(
-				'filter-resume component-label tbar-label',
+				'c-ml-2',
+				'component-label',
+				'filter-resume',
+				'tbar-label',
 				open && 'active'
 			)}
 			disabled={props.disabled}
@@ -40,7 +43,7 @@ function FilterResume(props) {
 	);
 
 	const dropDownButtonGroup = (
-		<ClayButton.Group className="ml-2">
+		<ClayButton.Group>
 			<ClayDropDown
 				active={open}
 				className="d-inline-flex"

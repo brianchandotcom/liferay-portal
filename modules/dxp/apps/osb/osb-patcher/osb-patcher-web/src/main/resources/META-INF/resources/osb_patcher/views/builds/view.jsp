@@ -8,8 +8,6 @@
 <%@ include file="/osb_patcher/views/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 long patcherBuildId = ParamUtil.getLong(request, "patcherBuildId");
 
 PatcherBuild patcherBuild = PatcherBuildLocalServiceUtil.fetchPatcherBuild(patcherBuildId);
@@ -31,22 +29,13 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 
 <aui:model-context bean="<%= patcherBuild %>" model="<%= PatcherBuild.class %>" />
 
-<portlet:renderURL var="viewPatcherBuildURL">
-	<portlet:param name="mvcRenderCommandName" value="/patcher/view_builds" />
-	<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
-
-	<c:if test="<%= Validator.isNotNull(redirect) %>">
-		<portlet:param name="redirect" value="<%= redirect %>" />
-	</c:if>
-</portlet:renderURL>
-
 <c:if test="<%= (latestPatcherBuild != null) && !PatcherBuildUtil.isLatestPatcherBuild(patcherBuild) %>">
 	<liferay-ui:message key="this-is-not-the-latest-build-version-view-the-latest-build-here" />
 
 	<portlet:renderURL var="viewLatestPatcherBuildURL">
 		<portlet:param name="mvcRenderCommandName" value="/patcher/view_builds" />
 		<portlet:param name="patcherBuildId" value="<%= String.valueOf(latestPatcherBuild.getPatcherBuildId()) %>" />
-		<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
 	<a href="<%= viewLatestPatcherBuildURL %>">
@@ -356,7 +345,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 		<portlet:renderURL var="editPatcherBuildURL">
 			<portlet:param name="mvcRenderCommandName" value="/patcher/edit_builds" />
 			<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
-			<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<aui:button href="<%= editPatcherBuildURL %>" primary="<%= true %>" value="edit" />
@@ -395,7 +384,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 			<portlet:renderURL var="createPatcherBuildTemplateURL">
 				<portlet:param name="mvcRenderCommandName" value="/patcher/add_builds" />
 				<portlet:param name="templatePatcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
-				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:icon
@@ -439,7 +428,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 		<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherBuild, PatcherActionKeys.SEND_REQUEST, patcherBuild.getUserId()) && JenkinsUtil.isValidJenkinsSetup() && JenkinsUtil.isValidSendDistJenkinsRequest(patcherBuild) && (patcherBuild.getType() != PatcherBuildConstants.TYPE_FIX_PACK) %>">
 			<portlet:actionURL name="/patcher/build_builds" var="buildPatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
-				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon
@@ -454,7 +443,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 			<portlet:actionURL name="/patcher/test_builds" var="testPatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
 				<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_QA_AUTOMATION_STARTED) %>" />
-				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon
@@ -467,7 +456,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 			<portlet:actionURL name="/patcher/test_builds" var="smokeTestPatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
 				<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_QA_AUTOMATION_STARTED_SMOKE_ONLY) %>" />
-				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon
@@ -491,7 +480,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 			<portlet:actionURL name="/patcher/release_builds" var="releasePatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
 				<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_READY_TO_RELEASE) %>" />
-				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon
@@ -516,7 +505,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 			<portlet:actionURL name="/patcher/release_builds" var="releasePatcherBuildURL">
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
 				<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_RELEASED) %>" />
-				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon
@@ -531,7 +520,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
 				<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_BUILD_RELEASED) %>" />
 				<portlet:param name="releaseToHelpCenter" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="redirect" value="<%= viewPatcherBuildURL %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon

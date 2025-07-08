@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -443,6 +444,24 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				widgetPageTemplate.getDescription_i18n());
 		}
 
+		PageSpecification[] pageSpecifications =
+			widgetPageTemplate.getPageSpecifications();
+
+		if (ArrayUtil.isNotEmpty(pageSpecifications)) {
+			if (pageSpecifications.length != 1) {
+				throw new UnsupportedOperationException();
+			}
+
+			Layout prototypeLayout = LayoutUtil.getLayoutPrototypeLayout(
+				serviceContext.getScopeGroupId(), pageSpecifications[0],
+				serviceContext);
+
+			if (prototypeLayout != null) {
+				serviceContext.setAttribute(
+					"sourcePrototypeLayoutUuid", prototypeLayout.getUuid());
+			}
+		}
+
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeService.addLayoutPrototype(
 				nameMap, descriptionMap,
@@ -478,7 +497,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			layout, nameMap, layout.getFriendlyURLMap(),
 			_getWidgetPageTemplateTypeSettingsUnicodeProperties(
 				layout, widgetPageTemplate.getPageTemplateSettings()),
-			widgetPageTemplate.getPageSpecifications(), serviceContext);
+			pageSpecifications, serviceContext);
 
 		return _pageTemplateDTOConverter.toDTO(layoutPageTemplateEntry);
 	}

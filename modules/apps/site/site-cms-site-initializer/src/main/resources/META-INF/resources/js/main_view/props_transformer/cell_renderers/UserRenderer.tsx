@@ -29,7 +29,9 @@ const UserRenderer = ({itemData, value}: {itemData: any; value: string}) => {
 
 			{value}
 
-			{isOwner && <span>({Liferay.Language.get('owner')})</span>}
+			{isOwner && (
+				<span className="ml-1">({Liferay.Language.get('owner')})</span>
+			)}
 		</span>
 	);
 };

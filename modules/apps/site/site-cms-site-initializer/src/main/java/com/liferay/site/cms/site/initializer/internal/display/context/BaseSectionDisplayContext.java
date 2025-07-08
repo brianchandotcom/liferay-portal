@@ -308,7 +308,7 @@ public abstract class BaseSectionDisplayContext {
 	protected final Portal portal;
 	protected final ThemeDisplay themeDisplay;
 
-	private boolean _acceptAllGroups(ObjectDefinition objectDefinition) {
+	private boolean _isAcceptAllGroups(ObjectDefinition objectDefinition) {
 		ObjectDefinitionSetting objectDefinitionSetting =
 			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
 				objectDefinition.getObjectDefinitionId(),
@@ -384,7 +384,7 @@ public abstract class BaseSectionDisplayContext {
 	private JSONArray _getDepotEntriesJSONArray(
 		ObjectDefinition objectDefinition) {
 
-		if (_acceptAllGroups(objectDefinition)) {
+		if (_isAcceptAllGroups(objectDefinition)) {
 			return _getDepotEntriesJSONArray();
 		}
 

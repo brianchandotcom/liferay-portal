@@ -96,13 +96,24 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 				<aui:field-wrapper>
 					<label class="control-label" for="<portlet:namespace />descriptionMapAsXML"><liferay-ui:message key="full-description" /></label>
-
 					<div class="entry-content form-group">
-						<liferay-editor:input-localized
-							defaultLanguageId="<%= defaultLanguageId %>"
-							name="descriptionMapAsXML"
-							xml="<%= descriptionMapAsXML %>"
-						/>
+						<c:choose>
+							<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
+								<liferay-ui:input-localized
+									defaultLanguageId="<%= defaultLanguageId %>"
+									name="descriptionMapAsXML"
+									type="editor"
+									xml="<%= descriptionMapAsXML %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<liferay-editor:input-localized
+									defaultLanguageId="<%= defaultLanguageId %>"
+									name="descriptionMapAsXML"
+									xml="<%= descriptionMapAsXML %>"
+								/>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</aui:field-wrapper>
 			</commerce-ui:panel>

@@ -1,0 +1,16 @@
+{
+	"name": "commerce-product-type-virtual-web",
+	"version": "1.0.0",
+	"main": "js/index.js",
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"author": "",
+	"license": "ISC",
+	"description": "",
+  "dependencies": {
+    "frontend-js-components-web": "*"
+  }
+}

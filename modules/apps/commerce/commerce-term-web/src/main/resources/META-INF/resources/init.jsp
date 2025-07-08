@@ -39,6 +39,7 @@ page import="com.liferay.commerce.term.web.internal.display.context.CommerceTerm
 page import="com.liferay.commerce.term.web.internal.entry.constants.CommerceTermEntryFDSNames" %><%@
 page import="com.liferay.commerce.term.web.internal.entry.constants.CommerceTermEntryScreenNavigationEntryConstants" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@

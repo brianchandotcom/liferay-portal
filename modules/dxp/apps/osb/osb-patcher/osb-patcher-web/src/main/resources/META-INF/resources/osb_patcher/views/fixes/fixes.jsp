@@ -23,12 +23,6 @@ List<PatcherFix> patcherFixes = PatcherFixUtil.getParentPatcherFixes(childPatche
 		results="<%= patcherFixes %>"
 	/>
 
-	<%
-	int resultsTotal = patcherFixes.size();
-	%>
-
-	<%@ include file="/osb_patcher/views/show_results_count.jspf" %>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.osb.patcher.model.PatcherFix"
 		escapedModel="<%= true %>"
@@ -117,8 +111,6 @@ List<PatcherFix> patcherFixes = PatcherFixUtil.getParentPatcherFixes(childPatche
 		markupView="lexicon"
 		paginate="<%= false %>"
 	/>
-
-	<%@ include file="/osb_patcher/views/show_results_count.jspf" %>
 </liferay-ui:search-container>
 
 <aui:script>

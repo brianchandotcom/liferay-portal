@@ -23,12 +23,6 @@ List<PatcherBuild> childPatcherBuilds = PatcherBuildRelUtil.getChildPatcherBuild
 		results="<%= childPatcherBuilds %>"
 	/>
 
-	<%
-	int resultsTotal = childPatcherBuilds.size();
-	%>
-
-	<%@ include file="/osb_patcher/views/show_results_count.jspf" %>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.osb.patcher.model.PatcherBuild"
 		escapedModel="<%= true %>"
@@ -113,10 +107,6 @@ List<PatcherBuild> childPatcherBuilds = PatcherBuildRelUtil.getChildPatcherBuild
 
 		</liferay-ui:search-container-column-text>
 
-		<%
-		PatcherFix patcherFix = PatcherFixLocalServiceUtil.getPatcherFix(childPatcherBuild.getPatcherFixId());
-		%>
-
 		<liferay-ui:search-container-column-text
 			align="right"
 		>
@@ -148,8 +138,6 @@ List<PatcherBuild> childPatcherBuilds = PatcherBuildRelUtil.getChildPatcherBuild
 		markupView="lexicon"
 		paginate="<%= false %>"
 	/>
-
-	<%@ include file="/osb_patcher/views/show_results_count.jspf" %>
 </liferay-ui:search-container>
 
 <aui:script>

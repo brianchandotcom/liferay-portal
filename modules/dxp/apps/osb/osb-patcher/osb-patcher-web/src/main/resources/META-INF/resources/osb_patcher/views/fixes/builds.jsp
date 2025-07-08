@@ -23,12 +23,6 @@ List<PatcherBuild> patcherBuilds = PatcherBuildLocalServiceUtil.getPatcherFixPat
 		results="<%= patcherBuilds %>"
 	/>
 
-	<%
-	int resultsTotal = patcherBuilds.size();
-	%>
-
-	<%@ include file="/osb_patcher/views/show_results_count.jspf" %>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.osb.patcher.model.PatcherBuild"
 		escapedModel="<%= true %>"
@@ -238,8 +232,6 @@ List<PatcherBuild> patcherBuilds = PatcherBuildLocalServiceUtil.getPatcherFixPat
 		markupView="lexicon"
 		paginate="<%= false %>"
 	/>
-
-	<%@ include file="/osb_patcher/views/show_results_count.jspf" %>
 </liferay-ui:search-container>
 
 <aui:script>

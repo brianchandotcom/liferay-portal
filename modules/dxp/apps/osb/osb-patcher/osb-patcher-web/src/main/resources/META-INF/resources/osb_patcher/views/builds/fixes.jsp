@@ -45,12 +45,6 @@ else if (patcherFixes.size() > 1) {
 		results="<%= patcherFixes %>"
 	/>
 
-	<%
-	int resultsTotal = patcherFixes.size();
-	%>
-
-	<%@ include file="/osb_patcher/views/show_results_count.jspf" %>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.osb.patcher.model.PatcherFix"
 		escapedModel="<%= true %>"
@@ -194,8 +188,6 @@ else if (patcherFixes.size() > 1) {
 		markupView="lexicon"
 		paginate="<%= false %>"
 	/>
-
-	<%@ include file="/osb_patcher/views/show_results_count.jspf" %>
 </liferay-ui:search-container>
 
 <aui:script>

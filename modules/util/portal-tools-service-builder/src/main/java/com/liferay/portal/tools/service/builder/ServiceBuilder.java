@@ -6945,9 +6945,7 @@ public class ServiceBuilder {
 				finderReturn, finderUnique, finderWhere, finderDBWhere,
 				finderDBIndex, finderEntityColumns);
 
-			if (Objects.equals(dbIndex, "only") &&
-				entityName.equals("ResourcePermission")) {
-
+			if (Objects.equals(dbIndex, "only")) {
 				indexOnlyEntityFinders.add(entityFinder);
 			}
 			else {

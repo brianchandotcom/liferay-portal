@@ -7,8 +7,7 @@ import {openModal} from 'frontend-js-components-web';
 
 import SpaceMembersModal from '../../spaces/SpaceMembersModal';
 
-interface AddMembersData {
-	action: 'addMembers';
+export interface AddMembersData {
 	assetLibraryCreatorUserId: string;
 	assetLibraryId: string;
 	title: string;
@@ -16,7 +15,7 @@ interface AddMembersData {
 
 export default function addMembersAction(
 	data: AddMembersData,
-	loadData?: () => {}
+	loadData?: () => void
 ) {
 	const {assetLibraryCreatorUserId, assetLibraryId, title} = data;
 

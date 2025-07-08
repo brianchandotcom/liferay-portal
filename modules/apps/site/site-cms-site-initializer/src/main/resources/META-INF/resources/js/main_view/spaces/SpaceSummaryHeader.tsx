@@ -5,10 +5,9 @@
 
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
-import SpaceMembersModal from '../spaces/SpaceMembersModal';
+import addMembersAction, { AddMembersData } from '../FDSPropsTransformer/actions/addMembersAction';
 
 enum SpaceSummaryHeaderActions {
 	OPEN_MEMBERS_MODAL = 'open-members-modal',
@@ -34,17 +33,16 @@ export default function SpaceSummaryHeader({
 	url,
 }: SpaceSummaryHeaderProps) {
 	const openMembersModal = (props: SpaceMembersModalPropsType) => {
-		openModal({
-			center: true,
-			contentComponent: () =>
-				SpaceMembersModal({
-					assetLibraryCreatorUserId: props.assetLibraryCreatorUserId,
-					assetLibraryId: props.assetLibraryId,
-				}),
-			onClose: () => window.location.reload(),
-			size: 'md',
-			title,
-		});
+		const {assetLibraryCreatorUserId, assetLibraryId } = props;
+
+		const loadData = () => window.location.reload();
+		const data: AddMembersData = {
+				assetLibraryCreatorUserId,
+				assetLibraryId,
+				title
+		}
+
+		addMembersAction(data, loadData);
 	};
 
 	const getActionCallback = () => {

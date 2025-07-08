@@ -10,19 +10,36 @@ import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import React, {useContext, useState} from 'react';
 
+// @ts-ignore
+
 import ThemeContext from '../../shared/ThemeContext';
+
+// @ts-ignore
+
 import SearchableTypesModal from './SearchableTypesModal';
+
+// @ts-ignore
+
 import SelectSubtypes from './SelectSubtypes';
+
+export interface ISelectedSubtype {
+	label: string;
+	value: string;
+}
+
+interface ISelectedItem {
+	subtypes: ISelectedSubtype[];
+	type: string;
+}
 
 /**
  * Grabs all the selected subtypes of a certain type.
- *
- * @param {array} selected
- * @param {string} className
- * @returns {array}
  */
-const getSelectedSubtypes = (selected, className) => {
-	return selected.find((item) => item.type === className)?.subtypes;
+const getSelectedSubtypes = (
+	selected: ISelectedItem[],
+	className: string
+): ISelectedSubtype[] => {
+	return selected.find((item) => item.type === className)?.subtypes ?? [];
 };
 
 /**
@@ -34,8 +51,11 @@ const getSelectedSubtypes = (selected, className) => {
  * @param {*} assetSubtypesMap
  * @returns {array}
  */
-const setupSelected = (initialSelectedTypes, assetSubtypesMap = {}) => {
-	const selected = [];
+const setupSelected = (
+	initialSelectedTypes: string[],
+	assetSubtypesMap: {[key: string]: string} = {}
+): ISelectedItem[] => {
+	const selected: ISelectedItem[] = [];
 
 	initialSelectedTypes.forEach((item) => {
 		const selectedTypes = item.split('&&');
@@ -84,8 +104,8 @@ const setupSelected = (initialSelectedTypes, assetSubtypesMap = {}) => {
  * @param {*} selected
  * @returns {array}
  */
-const transformSelected = (selected) => {
-	const searchableAssetTypes = [];
+const transformSelected = (selected: ISelectedItem[]): string[] => {
+	const searchableAssetTypes: string[] = [];
 
 	selected.forEach(({subtypes, type}) => {
 		if (subtypes.length) {
@@ -100,14 +120,33 @@ const transformSelected = (selected) => {
 };
 
 function SelectTypes({
-	onAssetSubtypesMapChange,
-	onFrameworkConfigChange,
-	onFetchSearchableTypes,
-	searchableTypes = [],
-	initialSelectedTypes = [],
 	assetSubtypesMap,
+	initialSelectedTypes = [],
+	onAssetSubtypesMapChange,
+	onFetchSearchableTypes,
+	onFrameworkConfigChange,
+	searchableTypes = [],
+}: {
+	assetSubtypesMap: {
+		[key: string]: string;
+	};
+	initialSelectedTypes?: string[];
+	onAssetSubtypesMapChange: (subtypes: ISelectedSubtype[]) => void;
+	onFetchSearchableTypes: () => Promise<{
+		searchableTypes: {
+			className: string;
+			displayName: string;
+			hasSubtype?: boolean;
+		}[];
+	}>;
+	onFrameworkConfigChange: (config: {searchableAssetTypes: string[]}) => void;
+	searchableTypes?: {
+		className: string;
+		displayName: string;
+		hasSubtype?: boolean;
+	}[];
 }) {
-	const {locale} = useContext(ThemeContext);
+	const {locale}: {locale: string} = useContext(ThemeContext);
 
 	const [selected, setSelected] = useState(
 		setupSelected(initialSelectedTypes, assetSubtypesMap)
@@ -127,45 +166,54 @@ function SelectTypes({
 			searchableTypes.every(({className}) => type !== className)
 		);
 
-	const _handleRemoveType = (className) => {
+	const _handleChangeSelected = (newSelected: ISelectedItem[]) => {
+		setSelected(newSelected);
+
+		onFrameworkConfigChange({
+			searchableAssetTypes: transformSelected(newSelected),
+		});
+	};
+
+	const _handleRemoveType = (className: string) => {
 		const newSelected = selected.filter(({type}) => type !== className);
 
 		_handleChangeSelected(newSelected);
 	};
 
-	const _handleRemoveSubtype = (subtype) => {
+	const _handleRemoveSubtype = (subtypeValue: string) => {
 		const newSelected = selected.map(({subtypes, type}) => ({
-			subtypes: subtypes.filter(({value}) => value !== subtype),
+			subtypes: subtypes.filter(({value}) => value !== subtypeValue),
 			type,
 		}));
 
 		_handleChangeSelected(newSelected);
 	};
 
-	const _handleChangeSubtypes = (type) => (subtypes) => {
-		const newSelected = selected.map((item) => {
+	const _handleChangeSubtypes =
+		(type: string) => (subtypes: ISelectedSubtype[]) => {
+			const newSelected = selected.map((item) => {
 
-			// Handles changing the subtypes of one type
+				// Handles changing the subtypes of one type
 
-			if (item.type === type) {
-				return {
-					subtypes,
-					type,
-				};
-			}
+				if (item.type === type) {
+					return {
+						subtypes,
+						type,
+					};
+				}
 
-			return item;
-		});
+				return item;
+			});
 
-		_handleChangeSelected(newSelected);
+			_handleChangeSelected(newSelected);
 
-		// If any new subtypes are in this array, they should be
-		// added to the assetSubtypesMap.
+			// If any new subtypes are in this array, they should be
+			// added to the assetSubtypesMap.
 
-		onAssetSubtypesMapChange(subtypes);
-	};
+			onAssetSubtypesMapChange(subtypes);
+		};
 
-	const _handleChangeTypes = (types) => {
+	const _handleChangeTypes = (types: string[]) => {
 		const newSelected = types.map((type) => {
 
 			// Check if the type already exists in the selected array.
@@ -177,14 +225,6 @@ function SelectTypes({
 		});
 
 		_handleChangeSelected(newSelected);
-	};
-
-	const _handleChangeSelected = (newSelected) => {
-		setSelected(newSelected);
-
-		onFrameworkConfigChange({
-			searchableAssetTypes: transformSelected(newSelected),
-		});
 	};
 
 	return (
@@ -215,33 +255,87 @@ function SelectTypes({
 
 			{!!selected.length && (
 				<ClayList>
-					{mainSearchableTypesSorted
-						.filter(({className}) =>
-							selected.some(({type}) => type === className)
-						)
-						.map(({className, displayName, hasSubtype = false}) => (
-							<ClayList.Item flex key={className}>
-								<ClayList.ItemField expand>
-									<ClayList.ItemTitle>
-										{displayName}
-									</ClayList.ItemTitle>
+					<>
+						{mainSearchableTypesSorted
+							.filter(({className}) =>
+								selected.some(({type}) => type === className)
+							)
+							.map(
+								({
+									className,
+									displayName,
+									hasSubtype = false,
+								}) => (
+									<ClayList.Item flex key={className}>
+										<ClayList.ItemField expand>
+											<ClayList.ItemTitle>
+												{displayName}
+											</ClayList.ItemTitle>
 
-									{Liferay.FeatureFlags['LPS-129412'] &&
-										hasSubtype && (
-											<SelectSubtypes
-												className={className}
-												onChangeSubtypes={_handleChangeSubtypes(
-													className
+											{Liferay.FeatureFlags[
+												'LPS-129412'
+											] &&
+												hasSubtype && (
+													<SelectSubtypes
+														className={className}
+														onChangeSubtypes={_handleChangeSubtypes(
+															className
+														)}
+														onRemoveSubtype={
+															_handleRemoveSubtype
+														}
+														selectedSubtypes={getSelectedSubtypes(
+															selected,
+															className
+														)}
+													/>
 												)}
-												onRemoveSubtype={
-													_handleRemoveSubtype
+										</ClayList.ItemField>
+
+										<ClayList.ItemField>
+											<ClayButton
+												aria-label={Liferay.Language.get(
+													'delete'
+												)}
+												className="c-m-auto secondary"
+												displayType="unstyled"
+												onClick={() =>
+													_handleRemoveType(className)
 												}
-												selectedSubtypes={getSelectedSubtypes(
-													selected,
-													className
+												size="sm"
+											>
+												<ClayIcon symbol="times-circle" />
+											</ClayButton>
+										</ClayList.ItemField>
+									</ClayList.Item>
+								)
+							)}
+					</>
+
+					<>
+						{_getMissingTypes().map(({type}) => (
+							<ClayList.Item flex key={type}>
+								<ClayList.ItemField expand>
+									<div>
+										<span className="list-group-title">
+											{type}
+										</span>
+
+										<span className="inline-item inline-item-after">
+											<ClaySticker
+												displayType="warning"
+												size="sm"
+											>
+												<ClayIcon symbol="warning-full" />
+											</ClaySticker>
+
+											<strong className="text-2 text-warning">
+												{Liferay.Language.get(
+													'missing'
 												)}
-											/>
-										)}
+											</strong>
+										</span>
+									</div>
 								</ClayList.ItemField>
 
 								<ClayList.ItemField>
@@ -251,9 +345,7 @@ function SelectTypes({
 										)}
 										className="c-m-auto secondary"
 										displayType="unstyled"
-										onClick={() =>
-											_handleRemoveType(className)
-										}
+										onClick={() => _handleRemoveType(type)}
 										size="sm"
 									>
 										<ClayIcon symbol="times-circle" />
@@ -261,43 +353,7 @@ function SelectTypes({
 								</ClayList.ItemField>
 							</ClayList.Item>
 						))}
-
-					{_getMissingTypes().map(({type}) => (
-						<ClayList.Item flex key={type}>
-							<ClayList.ItemField expand>
-								<div>
-									<span className="list-group-title">
-										{type}
-									</span>
-
-									<span className="inline-item inline-item-after">
-										<ClaySticker
-											displayType="warning"
-											size="sm"
-										>
-											<ClayIcon symbol="warning-full" />
-										</ClaySticker>
-
-										<strong className="text-2 text-warning">
-											{Liferay.Language.get('missing')}
-										</strong>
-									</span>
-								</div>
-							</ClayList.ItemField>
-
-							<ClayList.ItemField>
-								<ClayButton
-									aria-label={Liferay.Language.get('delete')}
-									className="c-m-auto secondary"
-									displayType="unstyled"
-									onClick={() => _handleRemoveType(type)}
-									size="sm"
-								>
-									<ClayIcon symbol="times-circle" />
-								</ClayButton>
-							</ClayList.ItemField>
-						</ClayList.Item>
-					))}
+					</>
 				</ClayList>
 			)}
 		</>

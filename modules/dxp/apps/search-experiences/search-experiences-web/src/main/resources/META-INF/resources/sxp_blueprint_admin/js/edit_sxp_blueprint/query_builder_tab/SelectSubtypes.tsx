@@ -27,9 +27,28 @@ import React, {
 	useState,
 } from 'react';
 
+// @ts-ignore
+
 import ThemeContext from '../../shared/ThemeContext';
+
+// @ts-ignore
+
 import removeDuplicates from '../../utils/functions/remove_duplicates';
+
+// @ts-ignore
+
 import sub from '../../utils/language/sub';
+import {ISelectedSubtype} from './SelectTypes';
+
+interface IAssetSubtype {
+	assetSubtypeExternalReferenceCode: string;
+	assetSubtypeLocalizedName: string;
+	entryClassName: string;
+	groupExternalReferenceCode: string;
+	groupLocalizedName: string;
+	label: string;
+	value: string;
+}
 
 export function SearchableSubtypesModal({
 	className,
@@ -37,9 +56,18 @@ export function SearchableSubtypesModal({
 	onClose,
 	onDone,
 	selectedSubtypes,
+}: {
+	className: string;
+	observer: any;
+	onClose: () => void;
+	onDone: (selected: ISelectedSubtype[]) => void;
+	selectedSubtypes: ISelectedSubtype[];
 }) {
 	const [selected, setSelected] = useState(selectedSubtypes);
-	const [subtypes, setSubtypes] = useState({assetSubtypes: []});
+	const [subtypes, setSubtypes] = useState({
+		assetSubtypes: [],
+		totalCount: 0,
+	});
 
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(10);
@@ -47,32 +75,25 @@ export function SearchableSubtypesModal({
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const {getAssetSubtypesURL = '', namespace} = useContext(ThemeContext);
-
-	const getLabel = ({assetSubtypeLocalizedName, groupLocalizedName}) => {
-		return groupLocalizedName
-			? `${assetSubtypeLocalizedName} (${groupLocalizedName})`
-			: assetSubtypeLocalizedName;
-	};
-
-	const getValue = ({
-		assetSubtypeExternalReferenceCode,
-		entryClassName,
-		groupExternalReferenceCode,
-	}) => {
-		return `${entryClassName}&&${groupExternalReferenceCode}&&${assetSubtypeExternalReferenceCode}`;
-	};
+	const {
+		getAssetSubtypesURL = '',
+		namespace,
+	}: {getAssetSubtypesURL: string; namespace: string} =
+		useContext(ThemeContext);
 
 	const isSelected = useCallback(
-		(item) =>
-			selected.some((selectedItem) => selectedItem.value === item.value),
+		(item: IAssetSubtype) =>
+			selected.some(
+				(selectedItem: ISelectedSubtype) =>
+					selectedItem.value === item.value
+			),
 		[selected]
 	);
 
 	const isInAssetSubtypes = useCallback(
-		(item) =>
+		(item: ISelectedSubtype) =>
 			subtypes.assetSubtypes?.some(
-				(subtypeItem) => subtypeItem.value === item.value
+				(subtypeItem: IAssetSubtype) => subtypeItem.value === item.value
 			),
 		[subtypes.assetSubtypes]
 	);
@@ -87,7 +108,7 @@ export function SearchableSubtypesModal({
 		[allSubtypesSelected, isSelected, subtypes.assetSubtypes]
 	);
 
-	const _handleSelect = (item) => () => {
+	const _handleSelect = (item: IAssetSubtype) => () => {
 		if (isSelected(item)) {
 			setSelected(
 				selected.filter(
@@ -103,7 +124,9 @@ export function SearchableSubtypesModal({
 	const _handleSelectAll = () => {
 		setSelected(
 			allSubtypesSelected
-				? selected.filter((item) => !isInAssetSubtypes(item))
+				? selected.filter(
+						(item: ISelectedSubtype) => !isInAssetSubtypes(item)
+					)
 				: removeDuplicates(
 						[
 							...selected,
@@ -122,7 +145,7 @@ export function SearchableSubtypesModal({
 	};
 
 	const _handleFetchSubtypes = useCallback(
-		(page, pageSize) => {
+		(page: number, pageSize: number) => {
 			setLoading(true);
 
 			try {
@@ -142,10 +165,18 @@ export function SearchableSubtypesModal({
 						setSubtypes({
 							...items,
 							assetSubtypes: items.assetSubtypes?.map(
-								(subtype) => ({
+								(subtype: {
+									assetSubtypeExternalReferenceCode: string;
+									assetSubtypeLocalizedName: string;
+									entryClassName: string;
+									groupExternalReferenceCode: string;
+									groupLocalizedName?: string;
+								}) => ({
 									...subtype,
-									label: getLabel(subtype),
-									value: getValue(subtype),
+									label: subtype.groupLocalizedName
+										? `${subtype.assetSubtypeLocalizedName} (${subtype.groupLocalizedName})`
+										: subtype.assetSubtypeLocalizedName,
+									value: `${subtype.entryClassName}&&${subtype.groupExternalReferenceCode}&&${subtype.assetSubtypeExternalReferenceCode}`,
 								})
 							),
 						});
@@ -168,13 +199,13 @@ export function SearchableSubtypesModal({
 		[className, getAssetSubtypesURL, namespace]
 	);
 
-	const _handlePageChange = (newPage) => {
+	const _handlePageChange = (newPage: number) => {
 		setPage(newPage);
 
 		_handleFetchSubtypes(newPage, pageSize);
 	};
 
-	const _handlePageSizeChange = (newPageSize) => {
+	const _handlePageSizeChange = (newPageSize: number) => {
 		setPageSize(newPageSize);
 		setPage(1);
 
@@ -208,7 +239,7 @@ export function SearchableSubtypesModal({
 					>
 						<ClayButton
 							displayType="secondary"
-							onClick={_handleFetchSubtypes}
+							onClick={() => _handleFetchSubtypes(1, pageSize)}
 						>
 							{Liferay.Language.get('refresh')}
 						</ClayButton>
@@ -309,7 +340,12 @@ export function SearchableSubtypesModal({
 									},
 								]}
 							>
-								{(column) => (
+								{(column: {
+									expand?: boolean;
+									id: string;
+									name: string;
+									width: string;
+								}) => (
 									<Cell
 										className={getCN({
 											'table-cell-expand': column.expand,
@@ -323,47 +359,51 @@ export function SearchableSubtypesModal({
 							</Head>
 
 							<Body>
-								{subtypes.assetSubtypes.map((item) => {
-									return (
-										<Row
-											key={item.value}
-											onClick={_handleSelect(item)}
-										>
-											<Cell>
-												<div className="d-flex">
-													<ClayCheckbox
-														aria-label={sub(
-															Liferay.Language.get(
-																'select-x'
-															),
-															[
-																item.assetSubtypeLocalizedName,
-															]
-														)}
-														checked={isSelected(
-															item
-														)}
-														onChange={_handleSelect(
-															item
-														)}
-													/>
+								{subtypes.assetSubtypes.map(
+									(item: IAssetSubtype) => {
+										return (
+											<Row
+												key={item.value}
+												onClick={_handleSelect(item)}
+											>
+												<Cell>
+													<div className="d-flex">
+														<ClayCheckbox
+															aria-label={sub(
+																Liferay.Language.get(
+																	'select-x'
+																),
+																[
+																	item.assetSubtypeLocalizedName,
+																]
+															)}
+															checked={isSelected(
+																item
+															)}
+															onChange={_handleSelect(
+																item
+															)}
+														/>
 
-													<span className="c-ml-2 table-list-title">
+														<span className="c-ml-2 table-list-title">
+															{
+																item.assetSubtypeLocalizedName
+															}
+														</span>
+													</div>
+												</Cell>
+
+												<Cell>
+													<span>
 														{
-															item.assetSubtypeLocalizedName
+															item.groupLocalizedName
 														}
 													</span>
-												</div>
-											</Cell>
-
-											<Cell>
-												<span>
-													{item.groupLocalizedName}
-												</span>
-											</Cell>
-										</Row>
-									);
-								})}
+												</Cell>
+											</Row>
+										);
+									}
+								)}
 							</Body>
 						</Table>
 
@@ -397,7 +437,10 @@ export function SearchableSubtypesModal({
 							{Liferay.Language.get('clear')}
 						</ClayButton>
 
-						<ClayButton displayType="secondary" onClick={onClose}>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => onClose()}
+						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
@@ -416,6 +459,11 @@ function SelectSubtypes({
 	onChangeSubtypes,
 	onRemoveSubtype,
 	selectedSubtypes,
+}: {
+	className: string;
+	onChangeSubtypes: (newValues: ISelectedSubtype[]) => void;
+	onRemoveSubtype: (value: string) => void;
+	selectedSubtypes: ISelectedSubtype[];
 }) {
 	const {observer, onOpenChange, open} = useModal();
 
@@ -427,7 +475,7 @@ function SelectSubtypes({
 		onOpenChange(false);
 	};
 
-	const _handleModalDone = (newValues) => {
+	const _handleModalDone = (newValues: ISelectedSubtype[]) => {
 		onOpenChange(false);
 
 		onChangeSubtypes(newValues);
@@ -470,40 +518,44 @@ function SelectSubtypes({
 
 			{!!selectedSubtypes.length && (
 				<ClayList.ItemText className="c-mt-2">
-					{selectedSubtypes.map(({label, value}) => (
-						<ClayLabel
-							closeButtonProps={{
-								'aria-label': Liferay.Language.get('close'),
-								'id': `close-${value}`,
-								'onClick': () => onRemoveSubtype(value),
-								'title': Liferay.Language.get('close'),
-							}}
-							displayType="secondary"
-							key={value}
-							large
-						>
-							{label === value ? (
-								<span>
-									{label}
+					{selectedSubtypes.map(
+						({label, value}: ISelectedSubtype) => (
+							<ClayLabel
+								closeButtonProps={{
+									'aria-label': Liferay.Language.get('close'),
+									'id': `close-${value}`,
+									'onClick': () => onRemoveSubtype(value),
+									'title': Liferay.Language.get('close'),
+								}}
+								displayType="secondary"
+								key={value}
+								large
+							>
+								{label === value ? (
+									<span>
+										{label}
 
-									<span className="inline-item inline-item-after">
-										<ClaySticker
-											displayType="warning"
-											size="sm"
-										>
-											<ClayIcon symbol="warning-full" />
-										</ClaySticker>
+										<span className="inline-item inline-item-after">
+											<ClaySticker
+												displayType="warning"
+												size="sm"
+											>
+												<ClayIcon symbol="warning-full" />
+											</ClaySticker>
 
-										<strong className="c-ml-1 text-2 text-warning">
-											{Liferay.Language.get('missing')}
-										</strong>
+											<strong className="c-ml-1 text-2 text-warning">
+												{Liferay.Language.get(
+													'missing'
+												)}
+											</strong>
+										</span>
 									</span>
-								</span>
-							) : (
-								label
-							)}
-						</ClayLabel>
-					))}
+								) : (
+									label
+								)}
+							</ClayLabel>
+						)
+					)}
 				</ClayList.ItemText>
 			)}
 		</>

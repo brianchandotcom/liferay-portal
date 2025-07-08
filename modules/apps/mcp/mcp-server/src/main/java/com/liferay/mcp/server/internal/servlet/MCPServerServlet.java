@@ -5,6 +5,8 @@
 
 package com.liferay.mcp.server.internal.servlet;
 
+import com.liferay.mcp.server.internal.mcp.company.MCPCompany;
+import com.liferay.mcp.server.internal.mcp.session.MCPSessionUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -203,6 +205,6 @@ public class MCPServerServlet extends GenericServlet {
 
 	private final Map<Long, MCPCompany> _mcpCompanies = new ConcurrentHashMap<>();
 
-	private static final Log _log = LogFactoryUtil.getLog(MCPServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(MCPServerServlet.class);
 
 }

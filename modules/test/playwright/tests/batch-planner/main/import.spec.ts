@@ -8,6 +8,7 @@ import {
 	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
+import {readFileSync} from 'fs';
 import * as path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -494,6 +495,40 @@ const siteObjectDefinition: ObjectDefinition = {
 	scope: 'site',
 	status: {code: 0},
 };
+
+test('Can download custom object csv temp', async ({
+	apiHelpers,
+	dataMigrationCenterPage,
+}) => {
+	try {
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				companyObjectDefinition
+			);
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+	}
+	catch (error) {}
+
+	await dataMigrationCenterPage.gotoPage();
+	await dataMigrationCenterPage.goToImportFile();
+
+	const file = await dataMigrationCenterPage.downloadTempFile(
+		OBJECT_ENTRY_ENTITY_TYPE
+	);
+
+	expect(file).toEqual(
+		readFileSync(path.join(__dirname, '/dependencies/object_sample.csv'))
+			.toString()
+			.split('\n')
+			.map((event) => event.trim())
+	);
+});
 
 test('can handle OnlyAddNewRecords and UpdateChangedRecordFields import strategies with duplicate ERCs', async ({
 	apiHelpers,

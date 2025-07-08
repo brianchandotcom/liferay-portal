@@ -4,8 +4,10 @@
  */
 
 import {Locator, Page} from '@playwright/test';
+import {readFileSync} from 'fs';
 
 import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {getTempDir} from '../../../../utils/temp';
 import {unzipFile} from '../../../../utils/zip';
 
@@ -19,6 +21,7 @@ export class DataMigrationCenterPage {
 	readonly exportFileFormatSelector: Locator;
 	readonly exportButton: Locator;
 	readonly downloadButton: Locator;
+	readonly downloadSampleButton: Locator;
 	readonly attributeCodeCheckBox: Locator;
 	readonly importStrategySelector: Locator;
 	readonly fileSelector: Locator;
@@ -43,6 +46,7 @@ export class DataMigrationCenterPage {
 		});
 		this.exportButton = page.getByRole('button', {name: 'Export'});
 		this.downloadButton = page.getByRole('button', {name: 'Download'});
+		this.downloadSampleButton = page.getByRole('link', {name: 'Download'});
 		this.attributeCodeCheckBox = page
 			.getByRole('row', {name: 'Attribute Code'})
 			.getByLabel('');
@@ -65,6 +69,12 @@ export class DataMigrationCenterPage {
 		};
 	}
 
+	async gotoPage(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.batchExportImport}`
+		);
+	}
+
 	async goto() {
 		await this.applicationsMenuPage.goToDataMigrationCenter();
 	}
@@ -77,6 +87,21 @@ export class DataMigrationCenterPage {
 	async goToExportFile() {
 		await this.newButton.click();
 		await this.exportFileMenuItem.click();
+	}
+
+	async downloadTempFile(entitType: string) {
+		await this.selectEntityType(entitType);
+
+		const downloadPromise = this.page.waitForEvent('download');
+		await this.downloadSampleButton.click();
+		const download = await downloadPromise;
+		const filePath = getTempDir() + download.suggestedFilename();
+		await download.saveAs(filePath);
+
+		return readFileSync(filePath)
+			.toString()
+			.split('\n')
+			.map((event) => event.trim());
 	}
 
 	async importFile(

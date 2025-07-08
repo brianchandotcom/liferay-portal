@@ -7,11 +7,8 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
-
-import jakarta.ws.rs.core.Response;
 
 /**
  * @author Alberto Javier Moreno Lage
@@ -23,11 +20,7 @@ public class InvalidTypeIdExceptionMapper
 	protected Problem getProblem(
 		InvalidTypeIdException invalidTypeIdException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			StringBundler.concat(
-				"'", invalidTypeIdException.getTypeId(),
-				"' cannot be mapped to a valid entity subtype"));
+		return new Problem(invalidTypeIdException);
 	}
 
 }

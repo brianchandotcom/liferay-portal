@@ -50,6 +50,10 @@ public class ProcessListTag extends IncludeTag {
 		return _summaryMenu;
 	}
 
+	public boolean isViewDetailsMenu() {
+		return _viewDetailsMenu;
+	}
+
 	public void setDeleteMenu(boolean deleteMenu) {
 		_deleteMenu = deleteMenu;
 	}
@@ -93,6 +97,10 @@ public class ProcessListTag extends IncludeTag {
 		_summaryMenu = summaryMenu;
 	}
 
+	public void setViewDetailsMenu(boolean viewDetailsMenu) {
+		_viewDetailsMenu = viewDetailsMenu;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -105,6 +113,7 @@ public class ProcessListTag extends IncludeTag {
 		_remoteTaskExecutorClassName = StringPool.BLANK;
 		_resultRowSplitter = null;
 		_summaryMenu = true;
+		_viewDetailsMenu = false;
 	}
 
 	@Override
@@ -135,6 +144,8 @@ public class ProcessListTag extends IncludeTag {
 			_resultRowSplitter);
 		httpServletRequest.setAttribute(
 			"liferay-staging:process-list:summaryMenu", _summaryMenu);
+		httpServletRequest.setAttribute(
+			"liferay-staging:process-list:viewDetailsMenu", _viewDetailsMenu);
 	}
 
 	private static final String _PAGE = "/process_list/page.jsp";
@@ -147,5 +158,6 @@ public class ProcessListTag extends IncludeTag {
 	private String _remoteTaskExecutorClassName = StringPool.BLANK;
 	private ResultRowSplitter _resultRowSplitter;
 	private boolean _summaryMenu = true;
+	private boolean _viewDetailsMenu = false;
 
 }

@@ -166,7 +166,7 @@ public class ServiceContextUtil {
 			objectEntry.getTaxonomyCategoryBriefs();
 
 		if ((taxonomyCategoryBriefs == null) ||
-			!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+			!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 
 			return;
 		}

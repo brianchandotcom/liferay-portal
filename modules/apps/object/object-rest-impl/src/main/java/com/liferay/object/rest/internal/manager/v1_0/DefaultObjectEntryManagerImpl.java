@@ -177,29 +177,16 @@ public class DefaultObjectEntryManagerImpl
 
 		validateReadOnlyObjectFields(null, objectDefinition, objectEntry);
 
-		long groupId = getGroupId(objectDefinition, scopeKey);
-
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.addObjectEntry(
-				groupId, objectDefinition.getObjectDefinitionId(),
-				_getObjectEntryFolderId(
-					objectDefinition.getCompanyId(), groupId, objectEntry,
-					serviceContext),
-				objectEntry.getDefaultLanguageId(),
-				_toObjectValues(
-					dtoConverterContext.getLocale(), objectDefinition,
-					objectEntry, scopeKey, serviceContext),
-				serviceContext);
+		Map<String, Serializable> values = _toObjectValues(
+			dtoConverterContext.getLocale(), objectDefinition, objectEntry,
+			scopeKey, serviceContext);
 
-		return _toObjectEntry(
-			dtoConverterContext, objectDefinition,
-			_addOrUpdateNestedObjectEntries(
-				dtoConverterContext, objectDefinition, objectEntry,
-				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry, scopeKey));
+		return _addObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey,
+			serviceContext, values);
 	}
 
 	@Override
@@ -1101,6 +1088,33 @@ public class DefaultObjectEntryManagerImpl
 
 		return _addAction(
 			actionName, methodName, serviceBuilderObjectEntry, null, uriInfo);
+	}
+
+	private ObjectEntry _addObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String scopeKey, ServiceContext serviceContext,
+			Map<String, Serializable> values)
+		throws Exception {
+
+		validateReadOnlyObjectFields(null, objectDefinition, objectEntry);
+
+		long groupId = getGroupId(objectDefinition, scopeKey);
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.addObjectEntry(
+				groupId, objectDefinition.getObjectDefinitionId(),
+				_getObjectEntryFolderId(
+					objectDefinition.getCompanyId(), groupId, objectEntry,
+					serviceContext),
+				objectEntry.getDefaultLanguageId(), values, serviceContext);
+
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition,
+			_addOrUpdateNestedObjectEntries(
+				dtoConverterContext, objectDefinition, objectEntry,
+				_getObjectRelationships(objectDefinition, objectEntry),
+				serviceBuilderObjectEntry, scopeKey));
 	}
 
 	private com.liferay.object.model.ObjectEntry

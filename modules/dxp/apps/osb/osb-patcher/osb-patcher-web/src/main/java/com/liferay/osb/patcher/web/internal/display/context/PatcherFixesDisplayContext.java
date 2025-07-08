@@ -67,13 +67,11 @@ public class PatcherFixesDisplayContext {
 		searchContext.setEnd(patcherPatcherFixSearchContainer.getEnd());
 		searchContext.setGroupIds(null);
 
-		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
-
 		String patcherFixName = ParamUtil.getString(
 			_httpServletRequest, "patcherFixName");
 
-		if ((!PatcherUtil.isPatcherTickets(keywords) ||
-			 PatcherUtil.isPatcherProjectVersionName(keywords)) &&
+		if ((!PatcherUtil.isPatcherTickets(_getKeywords()) ||
+			 PatcherUtil.isPatcherProjectVersionName(_getKeywords())) &&
 			!PatcherUtil.isPatcherTickets(patcherFixName)) {
 
 			searchContext.setSorts(

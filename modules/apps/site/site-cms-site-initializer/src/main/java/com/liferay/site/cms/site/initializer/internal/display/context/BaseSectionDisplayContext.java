@@ -314,7 +314,9 @@ public abstract class BaseSectionDisplayContext {
 				objectDefinition.getObjectDefinitionId(),
 				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
 
-		if (objectDefinitionSetting != null) {
+		if ((objectDefinitionSetting != null) &&
+			GetterUtil.getBoolean(objectDefinitionSetting.getValue())) {
+
 			return true;
 		}
 

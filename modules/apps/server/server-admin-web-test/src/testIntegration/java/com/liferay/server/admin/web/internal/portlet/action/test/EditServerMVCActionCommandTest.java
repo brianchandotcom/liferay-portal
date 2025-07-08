@@ -427,6 +427,8 @@ public class EditServerMVCActionCommandTest {
 
 			_testUpdateMailWithAndWithoutSecureProtocol(
 				portletPreferences, Boolean.FALSE);
+
+			_testUpdateMailWithPasswords(portletPreferences);
 		}
 		finally {
 			PortalPreferencesWrapper portalPreferencesWrapper =
@@ -467,6 +469,20 @@ public class EditServerMVCActionCommandTest {
 		return _portletPreferencesLocalService.addPortletPreferences(
 			TestPropsValues.getCompanyId(), ownerId, ownerType, plid, portletId,
 			null, StringPool.BLANK);
+	}
+
+	private void _assertPasswords(
+		jakarta.portlet.PortletPreferences portletPreferences,
+		String expectedPop3Password, String expectedSmtpPassword) {
+
+		Assert.assertEquals(
+			expectedPop3Password,
+			portletPreferences.getValue(
+				PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD, null));
+		Assert.assertEquals(
+			expectedSmtpPassword,
+			portletPreferences.getValue(
+				PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD, null));
 	}
 
 	private LayoutRevision _getLayoutRevision() throws Exception {
@@ -694,6 +710,60 @@ public class EditServerMVCActionCommandTest {
 			secureEnable ? Account.PROTOCOL_SMTPS : Account.PROTOCOL_SMTP,
 			portletPreferences.getValue(
 				PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL, null));
+	}
+
+	private void _testUpdateMailWithPasswords(
+		jakarta.portlet.PortletPreferences portletPreferences) {
+
+		_assertPasswords(
+			portletPreferences, StringPool.BLANK, StringPool.BLANK);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		_updatePasswords(
+			mockLiferayPortletActionRequest, portletPreferences, "pop3Password",
+			"smtpPassword");
+
+		_assertPasswords(portletPreferences, "pop3Password", "smtpPassword");
+
+		_updatePasswords(
+			mockLiferayPortletActionRequest, portletPreferences,
+			Portal.TEMP_OBFUSCATION_VALUE, Portal.TEMP_OBFUSCATION_VALUE);
+
+		_assertPasswords(portletPreferences, "pop3Password", "smtpPassword");
+
+		_updatePasswords(
+			mockLiferayPortletActionRequest, portletPreferences,
+			"newPop3Password", "newSmtpPassword");
+
+		_assertPasswords(
+			portletPreferences, "newPop3Password", "newSmtpPassword");
+
+		_updatePasswords(
+			mockLiferayPortletActionRequest, portletPreferences,
+			StringPool.BLANK, StringPool.BLANK);
+
+		_assertPasswords(
+			portletPreferences, StringPool.BLANK, StringPool.BLANK);
+	}
+
+	private void _updatePasswords(
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest,
+		jakarta.portlet.PortletPreferences portletPreferences,
+		String pop3Password, String smtpPassword) {
+
+		mockLiferayPortletActionRequest.setParameter(
+			"pop3Password", pop3Password);
+		mockLiferayPortletActionRequest.setParameter(
+			"smtpPassword", smtpPassword);
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_updateMail",
+			new Class<?>[] {
+				ActionRequest.class, jakarta.portlet.PortletPreferences.class
+			},
+			mockLiferayPortletActionRequest, portletPreferences);
 	}
 
 	private static final String[] _COMMANDS = {

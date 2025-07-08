@@ -143,26 +143,32 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 		<liferay-ui:search-container-column-text
 			cssClass="osb-patcher-search-container-column-text-icon"
 		>
-			<liferay-ui:icon
-				image='<%= PatcherBuildUtil.isObsolete(patcherBuild.getPatcherBuildId()) ? "../common/activate" : StringPool.BLANK %>'
-				message="this-build-is-obsolete"
-				onClick='<%= hasPermissions ? liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "view-fixes-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + viewPatcherBuildPatcherFixesURL + "');" : StringPool.BLANK %>'
-				url='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
-			/>
+			<c:if test="<%= PatcherBuildUtil.isObsolete(patcherBuild.getPatcherBuildId()) %>">
+				<liferay-ui:icon
+					image="../common/activate"
+					message="this-build-is-obsolete"
+					onClick='<%= hasPermissions ? liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "view-fixes-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + viewPatcherBuildPatcherFixesURL + "');" : StringPool.BLANK %>'
+					url='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
+				/>
+			</c:if>
 
-			<liferay-ui:icon
-				image='<%= PatcherFixUtil.containsPatcherFixWorkaround(patcherBuild.getPatcherBuildId()) ? "../api/exception" : StringPool.BLANK %>'
-				message="this-build-contains-workaround-fixes"
-				onClick='<%= hasPermissions ? liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "view-fixes-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + viewPatcherBuildPatcherFixesURL + "');" : StringPool.BLANK %>'
-				url='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
-			/>
+			<c:if test="<%= PatcherFixUtil.containsPatcherFixWorkaround(patcherBuild.getPatcherBuildId()) %>">
+				<liferay-ui:icon
+					image="../api/exception"
+					message="this-build-contains-workaround-fixes"
+					onClick='<%= hasPermissions ? liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "view-fixes-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + viewPatcherBuildPatcherFixesURL + "');" : StringPool.BLANK %>'
+					url='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
+				/>
+			</c:if>
 
-			<liferay-ui:icon
-				image='<%= PatcherFixUtil.containsPatcherFixComment(patcherBuild.getPatcherBuildId()) ? "../common/message" : StringPool.BLANK %>'
-				message="this-build-contains-fixes-with-comments"
-				onClick='<%= hasPermissions ? liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "view-fixes-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + viewPatcherBuildPatcherFixesURL + "');" : StringPool.BLANK %>'
-				url='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
-			/>
+			<c:if test="<%= PatcherFixUtil.containsPatcherFixComment(patcherBuild.getPatcherBuildId()) %>">
+				<liferay-ui:icon
+					image="../common/message"
+					message="this-build-contains-fixes-with-comments"
+					onClick='<%= hasPermissions ? liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "view-fixes-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + viewPatcherBuildPatcherFixesURL + "');" : StringPool.BLANK %>'
+					url='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
+				/>
+			</c:if>
 		</liferay-ui:search-container-column-text>
 
 		<portlet:renderURL var="viewPatcherBuildURL">

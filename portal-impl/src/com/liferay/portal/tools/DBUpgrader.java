@@ -355,7 +355,7 @@ public class DBUpgrader {
 				}
 				catch (Exception exception) {
 					_log.error(
-						"Error executing preupgrade data cleanup process",
+						"Unable to execute preupgrade data cleanup process",
 						exception);
 
 					StartupHelperUtil.setUpgrading(false);

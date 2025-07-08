@@ -57,7 +57,9 @@ export function SpaceMembersInputWithSelect({
 
 			return {
 				cursor: json.next,
-				items: json.items,
+				items: json.items.map((item: any) => {
+					return {...item, numberOfUserAccounts: item.usersCount};
+				}),
 			};
 		},
 		fetchPolicy: 'no-cache' as FetchPolicy.NoCache,
@@ -118,7 +120,15 @@ export function SpaceMembersInputWithSelect({
 						/>
 					</ClaySticker>
 
-					<span className="ml-2 text-truncate">{item.name}</span>
+					<span className="ml-2 text-truncate">
+						{item.name}
+ (
+						{Liferay.Util.sub(
+							Liferay.Language.get('x-members'),
+							(item as UserGroup).numberOfUserAccounts
+						)}
+						)
+					</span>
 				</Autocomplete.Item>
 			);
 		};

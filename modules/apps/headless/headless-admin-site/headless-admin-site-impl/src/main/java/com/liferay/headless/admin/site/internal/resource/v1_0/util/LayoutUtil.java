@@ -427,6 +427,14 @@ public class LayoutUtil {
 			friendlyURLMap, serviceContext);
 	}
 
+	public static Layout updatePortletLayout(Layout layout, String typeSettings)
+		throws Exception {
+
+		return LayoutServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			typeSettings);
+	}
+
 	private static long _getFaviconFileEntryId(
 			Settings settings, ServiceContext serviceContext)
 		throws Exception {

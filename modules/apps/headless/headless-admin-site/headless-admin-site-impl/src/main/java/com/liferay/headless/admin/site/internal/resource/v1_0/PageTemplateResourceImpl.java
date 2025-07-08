@@ -478,9 +478,8 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			Layout layout = _layoutLocalService.getLayout(
 				layoutPageTemplateEntry.getPlid());
 
-			_layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(),
+			LayoutUtil.updatePortletLayout(
+				layout,
 				_getWidgetPageTemplateTypeSettings(
 					layout, pageTemplateSettings));
 		}
@@ -732,8 +731,8 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		_layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+		LayoutUtil.updatePortletLayout(
+			layout,
 			_getWidgetPageTemplateTypeSettings(layout, pageTemplateSettings));
 
 		return _pageTemplateDTOConverter.toDTO(

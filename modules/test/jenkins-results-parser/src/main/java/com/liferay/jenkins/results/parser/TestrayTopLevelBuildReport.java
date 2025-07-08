@@ -39,6 +39,8 @@ public class TestrayTopLevelBuildReport extends BaseTopLevelBuildReport {
 		}
 
 		_buildReportJSONObject = new JSONObject(value);
+
+		initialize(_buildReportJSONObject);
 	}
 
 	@Override

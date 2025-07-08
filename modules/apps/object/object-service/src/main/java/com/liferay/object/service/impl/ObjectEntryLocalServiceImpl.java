@@ -632,11 +632,11 @@ public class ObjectEntryLocalServiceImpl
 			getExtensionDynamicObjectDefinitionTableValues(
 				objectDefinition, primaryKey);
 
+		_deleteFromLocalizationTable(objectDefinition, primaryKey);
+
 		_deleteFromTable(
 			objectDefinition.getExtensionDBTableName(),
 			objectDefinition.getPKObjectFieldDBColumnName(), primaryKey);
-
-		_deleteFromLocalizationTable(objectDefinition, primaryKey);
 
 		deleteRelatedObjectEntries(
 			0, objectDefinition.getObjectDefinitionId(), primaryKey);
@@ -711,6 +711,9 @@ public class ObjectEntryLocalServiceImpl
 					objectDefinition.getClassName()),
 				objectEntry.getObjectEntryId());
 
+			_deleteFromLocalizationTable(
+				objectDefinition, objectEntry.getObjectEntryId());
+
 			_deleteFromTable(
 				objectDefinition.getDBTableName(),
 				objectDefinition.getPKObjectFieldDBColumnName(),
@@ -719,9 +722,6 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinition.getExtensionDBTableName(),
 				objectDefinition.getPKObjectFieldDBColumnName(),
 				objectEntry.getObjectEntryId());
-
-			_deleteFromLocalizationTable(
-				objectDefinition, objectEntry.getObjectEntryId());
 		}
 
 		deleteRelatedObjectEntries(
@@ -5650,9 +5650,11 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, Serializable> transientValues = objectEntry.getValues();
 
 		_deleteFromLocalizationTable(objectDefinition, objectEntryId);
+
 		_insertIntoLocalizationTable(
 			new HashMap<>(), objectDefinition, objectEntryId, transientValues,
 			partialUpdate, values);
+
 		_updateTable(
 			_getDynamicObjectDefinitionTable(
 				objectEntry.getObjectDefinitionId()),

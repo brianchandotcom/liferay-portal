@@ -5,9 +5,8 @@
 
 package com.liferay.mcp.server.internal.servlet;
 
-import com.liferay.mcp.server.internal.mcp.company.MCPCompany;
-import com.liferay.mcp.server.internal.mcp.session.MCPSessionUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.mcp.server.internal.company.MCPServerCompany;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -63,6 +62,7 @@ public class MCPServerServlet extends GenericServlet {
 	public void service(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
+
 		if ((servletRequest instanceof HttpServletRequest httpServletRequest) &&
 			Validator.isNull(httpServletRequest.getHeader("Authorization")) &&
 			(servletResponse instanceof
@@ -75,7 +75,7 @@ public class MCPServerServlet extends GenericServlet {
 			return;
 		}
 
-		_mcpCompanies.computeIfAbsent(
+		MCPServerCompany mcpServerCompany = _mcpServerCompanies.computeIfAbsent(
 			_portal.getCompanyId((HttpServletRequest)servletRequest),
 			companyId -> {
 				try {
@@ -84,24 +84,22 @@ public class MCPServerServlet extends GenericServlet {
 				catch (Exception exception) {
 					throw new RuntimeException(exception);
 				}
-			}
-		).getServlet().service(
-			servletRequest, servletResponse
-		);
+			});
+
+		Servlet servlet = mcpServerCompany.getServlet();
+
+		servlet.service(servletRequest, servletResponse);
 	}
 
-	private MCPCompany _buildMCPCompany(
-		long companyId)
-		throws Exception {
-
+	private MCPServerCompany _buildMCPCompany(long companyId) throws Exception {
 		Company company = _companyLocalService.getCompany(companyId);
 
 		String baseURL = company.getPortalURL(0) + _portal.getPathModule();
 
-		MCPCompany mcpCompany = new MCPCompany(baseURL, companyId);
+		MCPServerCompany mcpServerCompany = new MCPServerCompany(baseURL);
 
 		McpServer.sync(
-			mcpCompany.getServlet()
+			mcpServerCompany.getServlet()
 		).capabilities(
 			McpSchema.ServerCapabilities.builder(
 			).tools(
@@ -111,14 +109,15 @@ public class MCPServerServlet extends GenericServlet {
 			new McpSchema.Tool(
 				"get-openapis",
 				"Retrieves the current available Liferay OpenAPIs. Use it " +
-				"before interacting with Liferay upon user request to " +
-				"decide which API would be the best fit.",
+					"before interacting with Liferay upon user request to " +
+						"decide which API would be the best fit.",
 				JSONUtil.put(
-					"properties", JSONFactoryUtil.createJSONObject()
+					"properties", _jsonFactory.createJSONObject()
 				).put(
 					"type", "object"
 				).toString()),
-			(exchange, arguments) -> new McpSchema.CallToolResult(mcpCompany.getAllOpenAPIs(), false)
+			(exchange, arguments) -> new McpSchema.CallToolResult(
+				mcpServerCompany.getAllOpenAPIs(), false)
 		).tool(
 			new McpSchema.Tool(
 				"get-openapi", "Retrieves the OpenAPI YAML file.",
@@ -135,14 +134,15 @@ public class MCPServerServlet extends GenericServlet {
 					"type", "object"
 				).toString()),
 			(exchange, arguments) -> new McpSchema.CallToolResult(
-				mcpCompany.getOpenAPI(String.valueOf(arguments.get("url"))),
+				mcpServerCompany.getOpenAPI(
+					String.valueOf(arguments.get("url"))),
 				false)
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
 				"Calls an HTTP endpoint with method, path, and payload. It " +
-				"must always be performed after a having retrieved a " +
-				"valid Liferay OpenAPI through the get-openapi tool.",
+					"must always be performed after a having retrieved a " +
+						"valid Liferay OpenAPI through the get-openapi tool.",
 				JSONUtil.put(
 					"additionalProperties", false
 				).put(
@@ -159,7 +159,7 @@ public class MCPServerServlet extends GenericServlet {
 						JSONUtil.put(
 							"description",
 							"The full endpoint path starting with / relative " +
-							"to " + baseURL
+								"to " + baseURL
 						).put(
 							"type", "string"
 						)
@@ -168,7 +168,7 @@ public class MCPServerServlet extends GenericServlet {
 						JSONUtil.put(
 							"description",
 							"The endpoint payload. Can be an empty string if " +
-							"there is no payload."
+								"there is no payload."
 						).put(
 							"type", "string"
 						)
@@ -180,31 +180,39 @@ public class MCPServerServlet extends GenericServlet {
 				).toString()),
 			(exchange, arguments) -> {
 				try {
-					var session = MCPSessionUtil.getSession(exchange);
-					var method = String.valueOf(arguments.get("method"));
-					var path = String.valueOf(arguments.get("path"));
-					var payload = String.valueOf(arguments.get("payload"));
+					return new McpSchema.CallToolResult(
+						mcpServerCompany.callEndpoint(
+							String.valueOf(arguments.get("method")),
+							String.valueOf(arguments.get("path")),
+							String.valueOf(arguments.get("payload")),
+							MCPServerCompany.getAccessToken(exchange)),
+						false);
+				}
+				catch (Throwable throwable) {
+					_log.error(throwable);
 
-					return new McpSchema.CallToolResult(mcpCompany.callEndpoint(method, path, payload, session.getAccessToken()), false);
-				} catch (Throwable t) {
-					_log.error(t);
-
-					return new McpSchema.CallToolResult(t.getMessage(), true);
+					return new McpSchema.CallToolResult(
+						throwable.getMessage(), true);
 				}
 			}
 		).build();
 
-		return mcpCompany;
+		return mcpServerCompany;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MCPServerServlet.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	private final Map<Long, MCPServerCompany> _mcpServerCompanies =
+		new ConcurrentHashMap<>();
+
+	@Reference
 	private Portal _portal;
-
-	private final Map<Long, MCPCompany> _mcpCompanies = new ConcurrentHashMap<>();
-
-	private static final Log _log = LogFactoryUtil.getLog(MCPServerServlet.class);
 
 }

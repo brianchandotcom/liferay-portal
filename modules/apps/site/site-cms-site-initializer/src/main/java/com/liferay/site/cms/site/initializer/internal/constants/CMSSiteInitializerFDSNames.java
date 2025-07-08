@@ -36,6 +36,9 @@ public class CMSSiteInitializerFDSNames {
 	public static final String FILES_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-filesSection";
 
+	public static final String SHARED_WITH_ME =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-sharedWithMe";
+
 	public static final String SPACE_CONTENTS_SUMMARY_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
 			"-spaceContentsSummarySection";

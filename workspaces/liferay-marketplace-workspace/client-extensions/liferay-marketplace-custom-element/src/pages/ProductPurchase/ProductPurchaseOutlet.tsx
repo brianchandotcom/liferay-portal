@@ -76,9 +76,6 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	const {metadata, routes = []} = productTypeRoute || {};
 
 	const steps = routes
-		.filter(({stepVisible}) =>
-			typeof stepVisible === 'function' ? stepVisible(product) : true
-		)
 		.map((route) => {
 			const key = route.index ? '/' : `/${route.path}`;
 

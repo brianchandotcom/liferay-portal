@@ -31,20 +31,19 @@ const AccountSelection = () => {
 
 	const {isFreeApp} = getProductPriceModel(product);
 
-	const isFreeDXP = isFreeApp && !isCloudProduct(product);
 
 	return (
 		<ProductPurchaseAccountSelection
 			footerProps={{
 				continueButtonProps: {
 					children: i18n.translate(
-						isFreeDXP ? 'get-app' : 'continue'
+						isFreeApp ? 'get-app' : 'continue'
 					),
 					disabled:
 						!selectedAccount ||
 						(isFreeApp ? !eulaAgreement : false),
 					onClick: () => {
-						if (isFreeDXP) {
+						if (isFreeApp) {
 							return handlePurchase(ProductPurchaseApp);
 						}
 

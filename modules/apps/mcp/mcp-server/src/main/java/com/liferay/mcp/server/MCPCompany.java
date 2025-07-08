@@ -5,7 +5,6 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 import io.modelcontextprotocol.server.transport.HttpServletSseServerTransportProvider;
 import io.modelcontextprotocol.spec.McpServerSession;
 import io.modelcontextprotocol.spec.McpServerTransport;
@@ -19,7 +18,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.Base64;
 import java.util.Map;
 
 public class MCPCompany {
@@ -28,8 +26,6 @@ public class MCPCompany {
 		_baseURL = baseURL;
 		_companyId = companyId;
 		_servlet = new TransportProvider(baseURL + "/mcp");
-
-//		refreshAllOpenAPIs();
 	}
 
 	public TransportProvider getServlet() {
@@ -62,7 +58,7 @@ public class MCPCompany {
 
 	private final TransportProvider _servlet;
 
-	private String _openAPIs = "";
+	private String _openAPIs;
 
 	protected static String _callEndpoint(String method, String path, String payload, String accessToken) {
 		try {
@@ -71,14 +67,9 @@ public class MCPCompany {
 			HttpURLConnection connection =
 				(HttpURLConnection) url.openConnection();
 
-			String credentials =
-				"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-			Base64.Encoder encoder = Base64.getEncoder();
-
 			connection.setRequestProperty(
 				"Authorization",
-				"Basic " + encoder.encodeToString(credentials.getBytes()));
+				"Bearer " + accessToken);
 
 			connection.setDoOutput(true);
 			connection.setRequestMethod(StringUtil.toUpperCase(method));

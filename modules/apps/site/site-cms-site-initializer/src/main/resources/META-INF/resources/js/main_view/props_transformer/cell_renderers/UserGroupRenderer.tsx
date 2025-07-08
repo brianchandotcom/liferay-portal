@@ -14,6 +14,8 @@ const UserGroupRenderer = ({
 	itemData: any;
 	value: string;
 }) => {
+	const groupCount = itemData.numberOfUserAccounts || 0;
+
 	return (
 		<span className="align-items-center d-flex">
 			<ClaySticker
@@ -27,11 +29,11 @@ const UserGroupRenderer = ({
 
 			{value}
 
-			<span>
+			<span className="ml-1">
 				(
 				{Liferay.Util.sub(
 					Liferay.Language.get('x-members'),
-					itemData?.numberOfUserAccounts || 0
+					groupCount
 				)}
 				)
 			</span>

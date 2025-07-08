@@ -42,7 +42,7 @@ PatcherBuild patcherBuild = PatcherBuildLocalServiceUtil.fetchPatcherBuild(patch
 			<aui:option label="<%= WorkflowConstants.LABEL_BUILD_QA_PENDING_SMOKE_ONLY %>" value="<%= WorkflowConstants.STATUS_BUILD_QA_PENDING_SMOKE_ONLY %>" />
 		</aui:select>
 
-		<aui:input name="qaComments" />
+		<aui:input name="qaComments" type="textarea" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

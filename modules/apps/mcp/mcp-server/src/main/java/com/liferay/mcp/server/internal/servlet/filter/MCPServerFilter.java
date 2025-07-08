@@ -39,63 +39,85 @@ public class MCPServerFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if (!httpServletRequest.getRequestURI(
-			).contains(
-				".well-known"
-			)) {
-
-			processFilter(
-				MCPServerFilter.class.getName(), httpServletRequest,
-				httpServletResponse, filterChain);
-
-			return;
-		}
-
-		httpServletResponse.setHeader("Content-Type", "application/json");
-
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.getOAuth2Application(
 				_portal.getCompanyId(httpServletRequest),
 				MCPServerConstants.MCP_SERVER_OAUTH2_CLIENT_ID);
 
-		httpServletResponse.getWriter(
-		).write(
-			JSONUtil.put(
-				"authorization_endpoint",
-				_portal.getAbsoluteURL(
-					httpServletRequest,
-					"/o/oauth2/authorize?response_type=code&client_id=" +
-						oAuth2Application.getClientId())
-			).put(
-				"code_challenge_methods_supported",
-				JSONUtil.putAll("plain", "S256")
-			).put(
-				"grant_types_supported",
-				JSONUtil.putAll("authorization_code", "refresh_token")
-			).put(
-				"issuer", _portal.getPortalURL(httpServletRequest)
-			).put(
-				"registration_endpoint",
-				_portal.getAbsoluteURL(httpServletRequest, "/o/oauth2/register")
-			).put(
-				"response_modes_supported", JSONUtil.putAll("query")
-			).put(
-				"response_types_supported", JSONUtil.putAll("code")
-			).put(
-				"revocation_endpoint",
-				_portal.getAbsoluteURL(httpServletRequest, "/o/oauth2/token")
-			).put(
-				"token_endpoint",
-				StringBundler.concat(
-					_portal.getAbsoluteURL(httpServletRequest, "/o/oauth2"),
-					"/token?client_id=", oAuth2Application.getClientId(),
-					"&client_secret=", oAuth2Application.getClientSecret())
-			).put(
-				"token_endpoint_auth_methods_supported",
-				JSONUtil.putAll(
-					"client_secret_basic", "client_secret_post", "none")
-			).toString()
-		);
+		if (httpServletRequest.getRequestURI(
+			).endsWith(
+				"/.well-known/oauth-authorization-server"
+			)) {
+
+			httpServletResponse.getWriter(
+			).write(
+				JSONUtil.put(
+					"authorization_endpoint",
+					_portal.getAbsoluteURL(
+						httpServletRequest,
+						"/o/oauth2/authorize?response_type=code&client_id=" +
+							oAuth2Application.getClientId())
+				).put(
+					"code_challenge_methods_supported",
+					JSONUtil.putAll("plain", "S256")
+				).put(
+					"grant_types_supported",
+					JSONUtil.putAll("authorization_code", "refresh_token")
+				).put(
+					"issuer", _portal.getPortalURL(httpServletRequest)
+				).put(
+					"registration_endpoint",
+					_portal.getAbsoluteURL(
+						httpServletRequest, "/o/oauth2/register")
+				).put(
+					"response_modes_supported", JSONUtil.putAll("query")
+				).put(
+					"response_types_supported", JSONUtil.putAll("code")
+				).put(
+					"revocation_endpoint",
+					_portal.getAbsoluteURL(
+						httpServletRequest, "/o/oauth2/token")
+				).put(
+					"token_endpoint",
+					StringBundler.concat(
+						_portal.getAbsoluteURL(httpServletRequest, "/o/oauth2"),
+						"/token?client_id=", oAuth2Application.getClientId(),
+						"&client_secret=", oAuth2Application.getClientSecret())
+				).put(
+					"token_endpoint_auth_methods_supported",
+					JSONUtil.putAll(
+						"client_secret_basic", "client_secret_post", "none")
+				).toString()
+			);
+
+			return;
+		}
+
+		if (httpServletRequest.getRequestURI(
+			).endsWith(
+				"/o/oauth2/register"
+			)) {
+
+			httpServletResponse.setHeader("Content-Type", "application/json");
+			httpServletResponse.setHeader("Cache-Control", "no-cache");
+
+			httpServletResponse.getWriter(
+			).write(
+				JSONUtil.put(
+					"client_id", oAuth2Application.getClientId()
+				).put(
+					"client_secret", oAuth2Application.getClientSecret()
+				).put(
+					"client_secret_expires_at", 0
+				).toString()
+			);
+
+			return;
+		}
+
+		processFilter(
+			MCPServerFilter.class.getName(), httpServletRequest,
+			httpServletResponse, filterChain);
 	}
 
 	@Reference

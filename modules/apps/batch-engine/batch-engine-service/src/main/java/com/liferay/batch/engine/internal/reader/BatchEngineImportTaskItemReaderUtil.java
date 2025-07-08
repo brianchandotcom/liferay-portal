@@ -66,12 +66,13 @@ public class BatchEngineImportTaskItemReaderUtil {
 			ObjectMapper objectMapper =
 				ObjectMapperProviderUtil.getBatchEngineObjectMapper();
 
-			resolvedClass = (Class<? extends T>)objectMapper.convertValue(
+			T value = objectMapper.convertValue(
 				HashMapBuilder.put(
 					property, fieldNameValueMap.get(property)
 				).build(),
-				itemClass
-			).getClass();
+				itemClass);
+
+			resolvedClass = (Class<? extends T>)value.getClass();
 		}
 
 		T item = resolvedClass.getDeclaredConstructor(

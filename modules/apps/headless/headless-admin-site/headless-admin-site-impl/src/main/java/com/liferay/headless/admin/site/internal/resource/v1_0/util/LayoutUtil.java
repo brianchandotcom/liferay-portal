@@ -427,12 +427,26 @@ public class LayoutUtil {
 			friendlyURLMap, serviceContext);
 	}
 
-	public static Layout updatePortletLayout(Layout layout, String typeSettings)
+	public static Layout updatePortletLayout(
+			Layout layout, Map<Locale, String> nameMap,
+			Map<Locale, String> friendlyURLMap,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
 		throws Exception {
+
+		layout = _updateLayout(
+			layout, nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getRobotsMap(), layout.getStyleBookEntryId(),
+			layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
+			friendlyURLMap, serviceContext);
+
+		if (typeSettingsUnicodeProperties == null) {
+			return layout;
+		}
 
 		return LayoutServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			typeSettings);
+			typeSettingsUnicodeProperties.toString());
 	}
 
 	private static long _getFaviconFileEntryId(

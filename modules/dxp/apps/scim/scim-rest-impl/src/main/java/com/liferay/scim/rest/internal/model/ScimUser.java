@@ -32,8 +32,16 @@ public class ScimUser {
 		return _createDate;
 	}
 
+	public String getDisplayName() {
+		return _displayName;
+	}
+
 	public String getEmailAddress() {
 		return _emailAddress;
+	}
+
+	public String[] getEntitlements() {
+		return _entitlements;
 	}
 
 	public String getExternalReferenceCode() {
@@ -72,12 +80,24 @@ public class ScimUser {
 		return _modifiedDate;
 	}
 
+	public String getNickName() {
+		return _nickName;
+	}
+
 	public long[] getOrganizationIds() {
 		return _organizationIds;
 	}
 
 	public String getPassword() {
 		return _password;
+	}
+
+	public String[] getPhotos() {
+		return _photos;
+	}
+
+	public String getPreferredLanguage() {
+		return _preferredLanguage;
 	}
 
 	public long[] getRoleIds() {
@@ -90,6 +110,14 @@ public class ScimUser {
 
 	public long[] getUserGroupIds() {
 		return _userGroupIds;
+	}
+
+	public String getUserType() {
+		return _userType;
+	}
+
+	public String[] getX509Certificates() {
+		return _x509Certificates;
 	}
 
 	public boolean isActive() {
@@ -148,8 +176,16 @@ public class ScimUser {
 		_createDate = createDate;
 	}
 
+	public void setDisplayName(String displayName) {
+		_displayName = displayName;
+	}
+
 	public void setEmailAddress(String emailAddress) {
 		_emailAddress = emailAddress;
+	}
+
+	public void setEntitlements(String[] entitlements) {
+		_entitlements = entitlements;
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {
@@ -192,6 +228,10 @@ public class ScimUser {
 		_modifiedDate = modifiedDate;
 	}
 
+	public void setNickName(String nickName) {
+		_nickName = nickName;
+	}
+
 	public void setOrganizationIds(long[] organizationIds) {
 		_organizationIds = organizationIds;
 	}
@@ -202,6 +242,14 @@ public class ScimUser {
 
 	public void setPasswordReset(boolean passwordReset) {
 		_passwordReset = passwordReset;
+	}
+
+	public void setPhotos(String[] photos) {
+		_photos = photos;
+	}
+
+	public void setPreferredLanguage(String preferredLanguage) {
+		_preferredLanguage = preferredLanguage;
 	}
 
 	public void setRoleIds(long[] roleIds) {
@@ -224,6 +272,14 @@ public class ScimUser {
 		_userGroupIds = userGroupIds;
 	}
 
+	public void setUserType(String userType) {
+		_userType = userType;
+	}
+
+	public void setX509Certificates(String[] x509Certificates) {
+		_x509Certificates = x509Certificates;
+	}
+
 	private boolean _active;
 	private List<ScimAddress> _addresses;
 	private boolean _autoPassword;
@@ -231,7 +287,9 @@ public class ScimUser {
 	private Date _birthday;
 	private long _companyId;
 	private Date _createDate;
+	private String _displayName;
 	private String _emailAddress;
+	private String[] _entitlements;
 	private String _externalReferenceCode;
 	private String _firstName;
 	private long[] _groupIds;
@@ -242,13 +300,18 @@ public class ScimUser {
 	private boolean _male;
 	private String _middleName;
 	private Date _modifiedDate;
+	private String _nickName;
 	private long[] _organizationIds;
 	private String _password;
 	private boolean _passwordReset;
+	private String[] _photos;
+	private String _preferredLanguage;
 	private long[] _roleIds;
 	private String _screenName;
 	private boolean _sendEmail;
 	private boolean _updatePassword;
 	private long[] _userGroupIds;
+	private String _userType;
+	private String[] _x509Certificates;
 
 }

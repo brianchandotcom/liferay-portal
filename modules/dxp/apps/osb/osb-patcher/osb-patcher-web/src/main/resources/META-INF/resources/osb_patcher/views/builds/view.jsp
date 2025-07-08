@@ -30,17 +30,20 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 <aui:model-context bean="<%= patcherBuild %>" model="<%= PatcherBuild.class %>" />
 
 <c:if test="<%= (latestPatcherBuild != null) && !PatcherBuildUtil.isLatestPatcherBuild(patcherBuild) %>">
-	<liferay-ui:message key="this-is-not-the-latest-build-version-view-the-latest-build-here" />
-
 	<portlet:renderURL var="viewLatestPatcherBuildURL">
 		<portlet:param name="mvcRenderCommandName" value="/patcher/view_builds" />
 		<portlet:param name="patcherBuildId" value="<%= String.valueOf(latestPatcherBuild.getPatcherBuildId()) %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
-	<a href="<%= viewLatestPatcherBuildURL %>">
-		<%= latestPatcherBuild.getPatcherBuildId() %>
-	</a>
+	<clay:alert
+		displayType="warning"
+	>
+		<clay:link
+			href="<%= viewLatestPatcherBuildURL %>"
+			label="this-is-not-the-latest-build-version-view-the-latest-build-here"
+		/>
+	</clay:alert>
 </c:if>
 
 <div class="details">

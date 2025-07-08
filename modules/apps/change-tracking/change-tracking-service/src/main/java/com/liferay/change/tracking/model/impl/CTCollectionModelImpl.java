@@ -520,6 +520,15 @@ public class CTCollectionModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalUserId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
+	}
+
 	@JSON
 	@Override
 	public Date getCreateDate() {

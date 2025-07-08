@@ -1,16 +1,12 @@
 {
-	"name": "commerce-product-type-virtual-web",
-	"version": "1.0.0",
+	"dependencies": {
+	},
 	"main": "js/index.js",
+	"name": "@liferay/commerce-product-type-virtual-web",
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format"
 	},
-	"author": "",
-	"license": "ISC",
-	"description": "",
-  "dependencies": {
-    "frontend-js-components-web": "*"
-  }
+	"version": "4.0.58"
 }

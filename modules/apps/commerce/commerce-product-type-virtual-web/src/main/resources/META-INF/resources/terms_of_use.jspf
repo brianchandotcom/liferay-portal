@@ -81,14 +81,14 @@
 
 <liferay-frontend:component
 	componentId="termsOfUseInputUtil"
-		context='<%=
+	context='<%=
 		HashMapBuilder.<String, Object>put(
+			"isCKEditor5FeatureFlagEnabled", FeatureFlagManagerUtil.isEnabled("LPD-11235")
+		).put(
 			"termsOfUseJournalArticleBrowserURL", cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL()
 		).put(
 			"useTermsOfUseJournal", useTermsOfUseJournal
-		).put(
-			"isCKEditor5FeatureFlagEnabled", FeatureFlagManagerUtil.isEnabled("LPD-11235")
 		).build()
 	%>'
-	module="{termsOfUseInputUtil} from commerce-product-type-virtual-web"
+	module="{TermsOfUseInputUtil} from commerce-product-type-virtual-web"
 />

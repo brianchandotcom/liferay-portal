@@ -50,13 +50,13 @@ public class ContentItemCommentEditorConfigContributor
 		).put(
 			"preset", "basic"
 		).put(
-			"removePlugins",
-			new String[] {
-				"Bold", "GeneralHtmlSupport", "Italic", "Image", "Link", "List",
-				"Underline"
-			}
+			"removePlugins", new String[] {"Image"}
 		).put(
-			"toolbar", new String[0]
+			"toolbar",
+			new String[] {
+				"bold", "italic", "underline", "|", "numberedList",
+				"bulletedList", "|", "link"
+			}
 		);
 	}
 

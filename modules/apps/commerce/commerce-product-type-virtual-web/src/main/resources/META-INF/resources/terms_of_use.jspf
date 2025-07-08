@@ -83,8 +83,6 @@
 	componentId="termsOfUseInputUtil"
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"isCKEditor5FeatureFlagEnabled", FeatureFlagManagerUtil.isEnabled("LPD-11235")
-		).put(
 			"termsOfUseJournalArticleBrowserURL", cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL()
 		).put(
 			"useTermsOfUseJournal", useTermsOfUseJournal

@@ -73,6 +73,11 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "addMembers");
+				dropdownItem.putData(
+					"assetLibraryCreatorUserId",
+					_getAssetLibraryCreatorUserId());
+				dropdownItem.putData(
+					"assetLibraryId", String.valueOf(_groupId));
 				dropdownItem.putData("title", _getSpaceMembersHeaderTitle());
 				dropdownItem.setLabel(
 					_language.get(_httpServletRequest, "add-members"));
@@ -98,12 +103,7 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 			HashMapBuilder.<String, Object>put(
 				"action", "open-members-modal"
 			).put(
-				"assetLibraryCreatorUserId",
-				() -> {
-					Group group = _groupLocalService.getGroup(_groupId);
-
-					return String.valueOf(group.getCreatorUserId());
-				}
+				"assetLibraryCreatorUserId", _getAssetLibraryCreatorUserId()
 			).put(
 				"assetLibraryId", String.valueOf(_groupId)
 			).build());
@@ -122,6 +122,12 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 					_language.get(_httpServletRequest, "user-groups"));
 			}
 		).build();
+	}
+
+	private String _getAssetLibraryCreatorUserId() throws Exception {
+		Group group = _groupLocalService.getGroup(_groupId);
+
+		return String.valueOf(group.getCreatorUserId());
 	}
 
 	private String _getSpaceMembersHeaderTitle() {

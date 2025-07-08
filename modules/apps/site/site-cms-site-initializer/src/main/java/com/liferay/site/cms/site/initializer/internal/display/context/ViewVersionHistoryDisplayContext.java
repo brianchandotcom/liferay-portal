@@ -68,6 +68,10 @@ public class ViewVersionHistoryDisplayContext {
 				_language.get(_httpServletRequest, "expire"), "post", "expire",
 				"headless"),
 			new FDSActionDropdownItem(
+				"{actions.copy.href}", "copy", "copy",
+				_language.get(_httpServletRequest, "make-a-copy"), "post",
+				"copy", "headless"),
+			new FDSActionDropdownItem(
 				_language.get(
 					_httpServletRequest,
 					"are-you-sure-you-want-to-delete-this-entry"),

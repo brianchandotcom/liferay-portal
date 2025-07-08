@@ -230,7 +230,7 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 			<clay:button
 				cssClass="nobr"
 				displayType="link"
-				label='<%= PatcherFixPackUtil.getPatcherFixPackNamesCount(patcherBuild.getName()) + " " + LanguageUtil.get(request, "fix-packs") + " " + PatcherUtil.getTicketsCount(patcherBuild.getName()) + " " + LanguageUtil.get(request, "tickets") %>'
+				label='<%= PatcherFixPackUtil.getPatcherFixPackNamesCount(patcherBuild.getName()) + " " + LanguageUtil.get(request, "fix-packs") + " + " + PatcherUtil.getTicketsCount(patcherBuild.getName()) + " " + LanguageUtil.get(request, "tickets") %>'
 				onClick='<%= liferayPortletResponse.getNamespace() + "handleClick('" + LanguageUtil.get(request, "content") + "', '" + viewPatcherBuildContentURL + "');" %>'
 			/>
 		</liferay-ui:search-container-column-text>

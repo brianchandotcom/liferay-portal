@@ -6,16 +6,20 @@
 --%>
 
 <%@ include file="/import/init.jsp" %>
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
-	<liferay-frontend:component
-		module="{setupExportImportMocks} from exportimport-web"
-	/>
 
-	<aui:form method="post" name="fm">
-		<frontend-data-set:headless-display
-			apiURL="/group/__mocks__/get-import-error-list"
-			id="<%= ExportImportFDSNames.IMPORT_ERRORS %>"
-			style="fluid"
-		/>
-	</aui:form>
-</c:if>
+<%
+ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayContext(request);
+%>
+
+<liferay-frontend:component
+	module="{setupExportImportMocks} from exportimport-web"
+/>
+
+<aui:form method="post" name="fm">
+	<frontend-data-set:headless-display
+		apiURL="<%= importErrorsDisplayContext.getAPIURL() %>"
+		fdsActionDropdownItems="<%= importErrorsDisplayContext.getFDSActionDropdownItems() %>"
+		id="<%= ExportImportFDSNames.IMPORT_ERRORS %>"
+		style="fluid"
+	/>
+</aui:form>

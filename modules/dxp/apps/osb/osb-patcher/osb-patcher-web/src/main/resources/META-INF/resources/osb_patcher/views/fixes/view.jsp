@@ -29,17 +29,20 @@ if (!patcherFix.isLatestFix()) {
 <aui:model-context bean="<%= patcherFix %>" model="<%= PatcherFix.class %>" />
 
 <c:if test="<%= !patcherFix.isLatestFix() %>">
-	<liferay-ui:message key="this-is-not-the-latest-fix-version-view-the-latest-fix-here" />
-
 	<portlet:renderURL var="viewLatestPatcherFixURL">
 		<portlet:param name="mvcRenderCommandName" value="/patcher/view_fixes" />
 		<portlet:param name="patcherFixId" value="<%= String.valueOf(latestPatcherFix.getPatcherFixId()) %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
-	<a href="<%= viewLatestPatcherFixURL %>">
-		<%= latestPatcherFix.getPatcherFixId() %>
-	</a>
+	<clay:alert
+		displayType="warning"
+	>
+		<clay:link
+			href="<%= viewLatestPatcherFixURL %>"
+			label="this-is-not-the-latest-fix-version-view-the-latest-fix-here"
+		/>
+	</clay:alert>
 </c:if>
 
 <div class="details">

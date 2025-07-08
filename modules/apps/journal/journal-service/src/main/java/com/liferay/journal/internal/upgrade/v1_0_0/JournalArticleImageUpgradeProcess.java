@@ -32,7 +32,7 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 	private void _deleteOrphanJournalArticleImages() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"delete from JournalArticleImage where not exists(select 1 " +
+				"delete from JournalArticleImage where not exists (select 1 " +
 					"from Image where JournalArticleImage.articleImageId = " +
 						"Image.imageId)")) {
 

@@ -178,14 +178,14 @@ public class LayoutUtil {
 			"draftLayoutExternalReferenceCode",
 			draftContentPageSpecification.getExternalReferenceCode());
 
-		Layout prototypeLayout = _getLayoutPrototypeLayout(
+		Layout prototypeLayout = getLayoutPrototypeLayout(
 			groupId, publishedContentPageSpecification, serviceContext);
 
 		if (prototypeLayout != null) {
 			serviceContext.setAttribute(
 				"sourcePrototypeLayoutUuid", prototypeLayout.getUuid());
 
-			Layout draftPrototypeLayout = _getLayoutPrototypeLayout(
+			Layout draftPrototypeLayout = getLayoutPrototypeLayout(
 				groupId, draftContentPageSpecification, serviceContext);
 
 			if (draftPrototypeLayout != null) {
@@ -269,6 +269,69 @@ public class LayoutUtil {
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			draftLayout.getRobotsMap(), draftLayout.getFriendlyURLMap(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
+	}
+
+	public static Layout getLayoutPrototypeLayout(
+			long groupId, PageSpecification pageSpecification,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (Validator.isNull(
+				pageSpecification.
+					getSiteTemplatePageSpecificationExternalReferenceCode())) {
+
+			return null;
+		}
+
+		boolean privateLayout = Boolean.FALSE;
+
+		int layoutPageTemplateEntryType = GetterUtil.getInteger(
+			serviceContext.getAttribute("layout.page.template.entry.type"), -1);
+
+		if (Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.BASIC,
+				layoutPageTemplateEntryType) ||
+			Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				layoutPageTemplateEntryType) ||
+			Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
+				layoutPageTemplateEntryType)) {
+
+			privateLayout = Boolean.TRUE;
+		}
+		else if (Objects.equals(
+					PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
+					pageSpecification.getType())) {
+
+			ContentPageSpecification contentPageSpecification =
+				(ContentPageSpecification)pageSpecification;
+
+			if (Validator.isNull(
+					contentPageSpecification.
+						getDraftContentPageSpecificationExternalReferenceCode())) {
+
+				privateLayout = Boolean.TRUE;
+			}
+		}
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
+			return null;
+		}
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					layoutSet.getCompanyId());
+
+		return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			pageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode(),
+			layoutSetPrototype.getGroupId(), privateLayout);
 	}
 
 	public static boolean isPublished(Layout layout) {
@@ -506,69 +569,6 @@ public class LayoutUtil {
 		}
 
 		return dlFileEntry.getFileEntryId();
-	}
-
-	private static Layout _getLayoutPrototypeLayout(
-			long groupId, PageSpecification pageSpecification,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		if (Validator.isNull(
-				pageSpecification.
-					getSiteTemplatePageSpecificationExternalReferenceCode())) {
-
-			return null;
-		}
-
-		boolean privateLayout = Boolean.FALSE;
-
-		int layoutPageTemplateEntryType = GetterUtil.getInteger(
-			serviceContext.getAttribute("layout.page.template.entry.type"), -1);
-
-		if (Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.BASIC,
-				layoutPageTemplateEntryType) ||
-			Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
-				layoutPageTemplateEntryType) ||
-			Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
-				layoutPageTemplateEntryType)) {
-
-			privateLayout = Boolean.TRUE;
-		}
-		else if (Objects.equals(
-					PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
-					pageSpecification.getType())) {
-
-			ContentPageSpecification contentPageSpecification =
-				(ContentPageSpecification)pageSpecification;
-
-			if (Validator.isNull(
-					contentPageSpecification.
-						getDraftContentPageSpecificationExternalReferenceCode())) {
-
-				privateLayout = Boolean.TRUE;
-			}
-		}
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, privateLayout);
-
-		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
-			return null;
-		}
-
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			pageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode(),
-			layoutSetPrototype.getGroupId(), privateLayout);
 	}
 
 	private static long _getMasterLayoutPlid(

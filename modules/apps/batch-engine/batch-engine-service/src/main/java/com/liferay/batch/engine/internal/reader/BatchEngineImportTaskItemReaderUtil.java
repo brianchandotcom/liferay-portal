@@ -20,6 +20,7 @@ import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,13 +56,23 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 		Map<String, Serializable> extendedProperties = new HashMap<>();
 
-		ObjectMapper objectMapper =
-			ObjectMapperProviderUtil.getBatchEngineObjectMapper();
+		JsonTypeInfo jsonTypeInfo = itemClass.getAnnotation(JsonTypeInfo.class);
 
-		Class<? extends T> resolvedClass =
-			(Class<? extends T>)objectMapper.convertValue(
-				fieldNameValueMap, itemClass
+		Class<? extends T> resolvedClass = itemClass;
+
+		if (jsonTypeInfo != null) {
+			String property = jsonTypeInfo.property();
+
+			ObjectMapper objectMapper =
+				ObjectMapperProviderUtil.getBatchEngineObjectMapper();
+
+			resolvedClass = (Class<? extends T>)objectMapper.convertValue(
+				HashMapBuilder.put(
+					property, fieldNameValueMap.get(property)
+				).build(),
+				itemClass
 			).getClass();
+		}
 
 		T item = resolvedClass.getDeclaredConstructor(
 		).newInstance();
@@ -80,11 +91,9 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 			Field[] declaredFields = itemClass.getDeclaredFields();
 
-			if (itemClass.getAnnotation(JsonTypeInfo.class) != null) {
+			if (jsonTypeInfo != null) {
 				declaredFields = ArrayUtil.append(
-					declaredFields,
-					item.getClass(
-					).getDeclaredFields());
+					declaredFields, resolvedClass.getDeclaredFields());
 			}
 
 			for (Field declaredField : declaredFields) {
@@ -103,7 +112,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 				Object value = entry.getValue();
 
-				objectMapper = _getObjectMapper(
+				ObjectMapper objectMapper = _getObjectMapper(
 					batchEngineImportTask, field, value);
 
 				field.set(

@@ -119,7 +119,7 @@ public class AssetLibraryDTOConverter
 		};
 	}
 
-	private MimeTypeLimit[] _toMimeTypeLimits(long groupId) {
+	private MimeTypeLimit[] _getMimeTypeLimits(long groupId) {
 		Map<String, Long> groupMimeTypeSizeLimit =
 			_dlSizeLimitConfigurationProvider.getGroupMimeTypeSizeLimit(
 				groupId);
@@ -155,7 +155,7 @@ public class AssetLibraryDTOConverter
 				setLogoColor(
 					() -> GetterUtil.get(
 						unicodeProperties.get("logoColor"), "outline-0"));
-				setMimeTypeLimits(() -> _toMimeTypeLimits(group.getGroupId()));
+				setMimeTypeLimits(() -> _getMimeTypeLimits(group.getGroupId()));
 				setSharingEnabled(
 					() -> GetterUtil.getBoolean(
 						unicodeProperties.get("sharingEnabled")));

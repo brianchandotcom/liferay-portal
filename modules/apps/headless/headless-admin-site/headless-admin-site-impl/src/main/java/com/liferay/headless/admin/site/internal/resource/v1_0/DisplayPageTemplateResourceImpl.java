@@ -378,13 +378,13 @@ public class DisplayPageTemplateResourceImpl
 			layoutPageTemplateEntry.getPlid());
 
 		layout = LayoutUtil.updateContentLayout(
-			layout, _getUnicodeProperties(displayPageTemplateSettings),
-			layout.getNameMap(), layout.getTitleMap(),
+			layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(),
 			_getRobotsMap(displayPageTemplateSettings),
 			LocalizedMapUtil.getLocalizedMap(
 				displayPageTemplate.getFriendlyUrlPath_i18n()),
 			displayPageTemplate.getPageSpecifications(),
+			_getUnicodeProperties(displayPageTemplateSettings),
 			_getServiceContext(displayPageTemplate, groupId));
 
 		if (!layoutPageTemplateEntry.isApproved() &&

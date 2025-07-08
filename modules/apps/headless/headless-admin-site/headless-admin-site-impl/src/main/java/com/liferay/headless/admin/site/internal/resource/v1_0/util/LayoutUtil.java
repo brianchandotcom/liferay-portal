@@ -370,11 +370,11 @@ public class LayoutUtil {
 	}
 
 	public static Layout updateContentLayout(
-			Layout layout, UnicodeProperties typeSettingsUnicodeProperties,
-			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> robotsMap,
-			Map<Locale, String> friendlyURLMap,
+			Layout layout, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
 			PageSpecification[] pageSpecifications,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws Exception {
 

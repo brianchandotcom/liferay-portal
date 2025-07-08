@@ -103,8 +103,8 @@ List<PatcherBuild> childPatcherBuilds = PatcherBuildRelUtil.getChildPatcherBuild
 				<clay:link
 					cssClass="nobr"
 					href='<%= jenkinsResult.get("statusURL") %>'
+					label='<%= jenkinsResult.get("jobName") %>'
 					target="_blank"
-					title='<%= jenkinsResult.get("jobName") %>'
 				/>
 
 			<%

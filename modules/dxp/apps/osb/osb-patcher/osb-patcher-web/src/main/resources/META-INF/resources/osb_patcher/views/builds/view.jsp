@@ -131,8 +131,8 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 		<c:if test="<%= patcherBuild.getStatus() == WorkflowConstants.STATUS_BUILD_FAILED %>">
 			<clay:link
 				href="<%= patcherConfiguration.troubleshootingURL() %>"
+				label="troubleshooting-guide"
 				target="_blank"
-				title="troubleshooting-guide"
 			/>
 		</c:if>
 	</div>
@@ -217,8 +217,8 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 				<clay:link
 					cssClass="nobr"
 					href='<%= jenkinsResult.get("statusURL") %>'
+					label='<%= jenkinsResult.get("jobName") %>'
 					target="_blank"
-					title='<%= jenkinsResult.get("jobName") %>'
 				/>
 
 			<%
@@ -315,7 +315,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 		<p class="text-secondary">
 			<clay:link
 				href="<%= viewPatcherAccountPatcherProductVersionURL %>"
-				title="<%= patcherAccount.getAccountEntryCode() %>"
+				label="<%= patcherAccount.getAccountEntryCode() %>"
 			/>
 		</p>
 	</div>

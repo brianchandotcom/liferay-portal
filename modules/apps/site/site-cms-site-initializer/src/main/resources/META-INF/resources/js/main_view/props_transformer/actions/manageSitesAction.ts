@@ -5,11 +5,11 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-export type ConnectSitesData = {
+export type manageSitesData = {
 	title: string;
 };
 
-export default function connectSitesAction(data: ConnectSitesData) {
+export default function manageSitesAction(data: manageSitesData) {
 	openModal({
 		bodyHTML: `<p>${data.title}</p>`,
 		center: true,

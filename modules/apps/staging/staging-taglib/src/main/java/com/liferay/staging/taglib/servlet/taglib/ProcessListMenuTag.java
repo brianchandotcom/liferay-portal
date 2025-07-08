@@ -37,6 +37,10 @@ public class ProcessListMenuTag extends IncludeTag {
 		return _summaryMenu;
 	}
 
+	public boolean isViewDetailsMenu() {
+		return _viewDetailsMenu;
+	}
+
 	public void setBackgroundTask(BackgroundTask backgroundTask) {
 		_backgroundTask = backgroundTask;
 	}
@@ -64,6 +68,10 @@ public class ProcessListMenuTag extends IncludeTag {
 		_summaryMenu = summaryMenu;
 	}
 
+	public void setViewDetailsMenu(boolean viewDetailsMenu) {
+		_viewDetailsMenu = viewDetailsMenu;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -73,6 +81,7 @@ public class ProcessListMenuTag extends IncludeTag {
 		_localPublishing = false;
 		_relaunchMenu = true;
 		_summaryMenu = true;
+		_viewDetailsMenu = false;
 	}
 
 	@Override
@@ -94,6 +103,9 @@ public class ProcessListMenuTag extends IncludeTag {
 			"liferay-staging:process-list-menu:relaunchMenu", _relaunchMenu);
 		httpServletRequest.setAttribute(
 			"liferay-staging:process-list-menu:summaryMenu", _summaryMenu);
+		httpServletRequest.setAttribute(
+			"liferay-staging:process-list-menu:viewDetailsMenu",
+			_viewDetailsMenu);
 	}
 
 	private static final String _PAGE = "/process_list_menu/page.jsp";
@@ -103,5 +115,6 @@ public class ProcessListMenuTag extends IncludeTag {
 	private boolean _localPublishing;
 	private boolean _relaunchMenu = true;
 	private boolean _summaryMenu = true;
+	private boolean _viewDetailsMenu = false;
 
 }

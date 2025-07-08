@@ -58,8 +58,8 @@ public class CTSGrandParentModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctsGrandParentId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"parentCTSGrandParentId", Types.BIGINT}
+		{"companyId", Types.BIGINT}, {"parentCTSGrandParentId", Types.BIGINT},
+		{"name", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -69,12 +69,12 @@ public class CTSGrandParentModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctsGrandParentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("parentCTSGrandParentId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTSGrandParent (mvccVersion LONG default 0 not null,ctsGrandParentId LONG not null primary key,companyId LONG,name VARCHAR(75) null,parentCTSGrandParentId LONG)";
+		"create table CTSGrandParent (mvccVersion LONG default 0 not null,ctsGrandParentId LONG not null primary key,companyId LONG,parentCTSGrandParentId LONG,name VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTSGrandParent";
 
@@ -219,10 +219,10 @@ public class CTSGrandParentModelImpl
 				"ctsGrandParentId", CTSGrandParent::getCtsGrandParentId);
 			attributeGetterFunctions.put(
 				"companyId", CTSGrandParent::getCompanyId);
-			attributeGetterFunctions.put("name", CTSGrandParent::getName);
 			attributeGetterFunctions.put(
 				"parentCTSGrandParentId",
 				CTSGrandParent::getParentCTSGrandParentId);
+			attributeGetterFunctions.put("name", CTSGrandParent::getName);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -252,12 +252,12 @@ public class CTSGrandParentModelImpl
 				"companyId",
 				(BiConsumer<CTSGrandParent, Long>)CTSGrandParent::setCompanyId);
 			attributeSetterBiConsumers.put(
-				"name",
-				(BiConsumer<CTSGrandParent, String>)CTSGrandParent::setName);
-			attributeSetterBiConsumers.put(
 				"parentCTSGrandParentId",
 				(BiConsumer<CTSGrandParent, Long>)
 					CTSGrandParent::setParentCTSGrandParentId);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CTSGrandParent, String>)CTSGrandParent::setName);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -318,6 +318,20 @@ public class CTSGrandParentModelImpl
 	}
 
 	@Override
+	public long getParentCTSGrandParentId() {
+		return _parentCTSGrandParentId;
+	}
+
+	@Override
+	public void setParentCTSGrandParentId(long parentCTSGrandParentId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_parentCTSGrandParentId = parentCTSGrandParentId;
+	}
+
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -334,20 +348,6 @@ public class CTSGrandParentModelImpl
 		}
 
 		_name = name;
-	}
-
-	@Override
-	public long getParentCTSGrandParentId() {
-		return _parentCTSGrandParentId;
-	}
-
-	@Override
-	public void setParentCTSGrandParentId(long parentCTSGrandParentId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_parentCTSGrandParentId = parentCTSGrandParentId;
 	}
 
 	public long getColumnBitmask() {
@@ -409,9 +409,9 @@ public class CTSGrandParentModelImpl
 		ctsGrandParentImpl.setMvccVersion(getMvccVersion());
 		ctsGrandParentImpl.setCtsGrandParentId(getCtsGrandParentId());
 		ctsGrandParentImpl.setCompanyId(getCompanyId());
-		ctsGrandParentImpl.setName(getName());
 		ctsGrandParentImpl.setParentCTSGrandParentId(
 			getParentCTSGrandParentId());
+		ctsGrandParentImpl.setName(getName());
 
 		ctsGrandParentImpl.resetOriginalValues();
 
@@ -428,9 +428,9 @@ public class CTSGrandParentModelImpl
 			this.<Long>getColumnOriginalValue("ctsGrandParentId"));
 		ctsGrandParentImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
-		ctsGrandParentImpl.setName(this.<String>getColumnOriginalValue("name"));
 		ctsGrandParentImpl.setParentCTSGrandParentId(
 			this.<Long>getColumnOriginalValue("parentCTSGrandParentId"));
+		ctsGrandParentImpl.setName(this.<String>getColumnOriginalValue("name"));
 
 		return ctsGrandParentImpl;
 	}
@@ -513,6 +513,9 @@ public class CTSGrandParentModelImpl
 
 		ctsGrandParentCacheModel.companyId = getCompanyId();
 
+		ctsGrandParentCacheModel.parentCTSGrandParentId =
+			getParentCTSGrandParentId();
+
 		ctsGrandParentCacheModel.name = getName();
 
 		String name = ctsGrandParentCacheModel.name;
@@ -520,9 +523,6 @@ public class CTSGrandParentModelImpl
 		if ((name != null) && (name.length() == 0)) {
 			ctsGrandParentCacheModel.name = null;
 		}
-
-		ctsGrandParentCacheModel.parentCTSGrandParentId =
-			getParentCTSGrandParentId();
 
 		return ctsGrandParentCacheModel;
 	}
@@ -588,8 +588,8 @@ public class CTSGrandParentModelImpl
 	private long _mvccVersion;
 	private long _ctsGrandParentId;
 	private long _companyId;
-	private String _name;
 	private long _parentCTSGrandParentId;
+	private String _name;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CTSGrandParent, Object> function =
@@ -622,9 +622,9 @@ public class CTSGrandParentModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctsGrandParentId", _ctsGrandParentId);
 		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put(
 			"parentCTSGrandParentId", _parentCTSGrandParentId);
+		_columnOriginalValues.put("name", _name);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -644,9 +644,9 @@ public class CTSGrandParentModelImpl
 
 		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("name", 8L);
+		columnBitmasks.put("parentCTSGrandParentId", 8L);
 
-		columnBitmasks.put("parentCTSGrandParentId", 16L);
+		columnBitmasks.put("name", 16L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

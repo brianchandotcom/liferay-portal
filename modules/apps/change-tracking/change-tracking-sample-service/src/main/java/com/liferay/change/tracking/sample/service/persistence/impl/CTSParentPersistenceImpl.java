@@ -1871,8 +1871,8 @@ public class CTSParentPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("ctsGrandParentId");
+		ctMergeColumnNames.add("name");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

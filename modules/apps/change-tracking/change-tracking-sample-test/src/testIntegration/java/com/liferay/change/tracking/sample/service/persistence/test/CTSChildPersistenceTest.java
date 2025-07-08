@@ -119,13 +119,13 @@ public class CTSChildPersistenceTest {
 
 		newCTSChild.setCompanyId(RandomTestUtil.nextLong());
 
-		newCTSChild.setName(RandomTestUtil.randomString());
-
 		newCTSChild.setCtsGrandParentId(RandomTestUtil.nextLong());
+
+		newCTSChild.setParentCTSChildId(RandomTestUtil.nextLong());
 
 		newCTSChild.setCtsParentName(RandomTestUtil.randomString());
 
-		newCTSChild.setParentCTSChildId(RandomTestUtil.nextLong());
+		newCTSChild.setName(RandomTestUtil.randomString());
 
 		_ctsChilds.add(_persistence.update(newCTSChild));
 
@@ -141,16 +141,16 @@ public class CTSChildPersistenceTest {
 			existingCTSChild.getCtsChildId(), newCTSChild.getCtsChildId());
 		Assert.assertEquals(
 			existingCTSChild.getCompanyId(), newCTSChild.getCompanyId());
-		Assert.assertEquals(existingCTSChild.getName(), newCTSChild.getName());
 		Assert.assertEquals(
 			existingCTSChild.getCtsGrandParentId(),
 			newCTSChild.getCtsGrandParentId());
 		Assert.assertEquals(
-			existingCTSChild.getCtsParentName(),
-			newCTSChild.getCtsParentName());
-		Assert.assertEquals(
 			existingCTSChild.getParentCTSChildId(),
 			newCTSChild.getParentCTSChildId());
+		Assert.assertEquals(
+			existingCTSChild.getCtsParentName(),
+			newCTSChild.getCtsParentName());
+		Assert.assertEquals(existingCTSChild.getName(), newCTSChild.getName());
 	}
 
 	@Test
@@ -202,9 +202,8 @@ public class CTSChildPersistenceTest {
 	protected OrderByComparator<CTSChild> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CTSChild", "mvccVersion", true, "ctCollectionId", true,
-			"ctsChildId", true, "companyId", true, "name", true,
-			"ctsGrandParentId", true, "ctsParentName", true, "parentCTSChildId",
-			true);
+			"ctsChildId", true, "companyId", true, "ctsGrandParentId", true,
+			"parentCTSChildId", true, "ctsParentName", true, "name", true);
 	}
 
 	@Test
@@ -425,13 +424,13 @@ public class CTSChildPersistenceTest {
 
 		ctsChild.setCompanyId(RandomTestUtil.nextLong());
 
-		ctsChild.setName(RandomTestUtil.randomString());
-
 		ctsChild.setCtsGrandParentId(RandomTestUtil.nextLong());
+
+		ctsChild.setParentCTSChildId(RandomTestUtil.nextLong());
 
 		ctsChild.setCtsParentName(RandomTestUtil.randomString());
 
-		ctsChild.setParentCTSChildId(RandomTestUtil.nextLong());
+		ctsChild.setName(RandomTestUtil.randomString());
 
 		_ctsChilds.add(_persistence.update(ctsChild));
 

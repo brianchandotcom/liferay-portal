@@ -113,21 +113,6 @@ public interface CTSChildModel
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the name of this cts child.
-	 *
-	 * @return the name of this cts child
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cts child.
-	 *
-	 * @param name the name of this cts child
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the cts grand parent ID of this cts child.
 	 *
 	 * @return the cts grand parent ID of this cts child
@@ -140,6 +125,20 @@ public interface CTSChildModel
 	 * @param ctsGrandParentId the cts grand parent ID of this cts child
 	 */
 	public void setCtsGrandParentId(long ctsGrandParentId);
+
+	/**
+	 * Returns the parent cts child ID of this cts child.
+	 *
+	 * @return the parent cts child ID of this cts child
+	 */
+	public long getParentCTSChildId();
+
+	/**
+	 * Sets the parent cts child ID of this cts child.
+	 *
+	 * @param parentCTSChildId the parent cts child ID of this cts child
+	 */
+	public void setParentCTSChildId(long parentCTSChildId);
 
 	/**
 	 * Returns the cts parent name of this cts child.
@@ -157,18 +156,19 @@ public interface CTSChildModel
 	public void setCtsParentName(String ctsParentName);
 
 	/**
-	 * Returns the parent cts child ID of this cts child.
+	 * Returns the name of this cts child.
 	 *
-	 * @return the parent cts child ID of this cts child
+	 * @return the name of this cts child
 	 */
-	public long getParentCTSChildId();
+	@AutoEscape
+	public String getName();
 
 	/**
-	 * Sets the parent cts child ID of this cts child.
+	 * Sets the name of this cts child.
 	 *
-	 * @param parentCTSChildId the parent cts child ID of this cts child
+	 * @param name the name of this cts child
 	 */
-	public void setParentCTSChildId(long parentCTSChildId);
+	public void setName(String name);
 
 	@Override
 	public CTSChild cloneWithOriginalValues();

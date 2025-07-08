@@ -35,8 +35,8 @@ public class CTSGrandParentWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctsGrandParentId", getCtsGrandParentId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("name", getName());
 		attributes.put("parentCTSGrandParentId", getParentCTSGrandParentId());
+		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -61,17 +61,17 @@ public class CTSGrandParentWrapper
 			setCompanyId(companyId);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		Long parentCTSGrandParentId = (Long)attributes.get(
 			"parentCTSGrandParentId");
 
 		if (parentCTSGrandParentId != null) {
 			setParentCTSGrandParentId(parentCTSGrandParentId);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 	}
 

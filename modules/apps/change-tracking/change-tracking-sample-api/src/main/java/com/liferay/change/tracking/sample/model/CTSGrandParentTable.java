@@ -29,12 +29,12 @@ public class CTSGrandParentTable extends BaseTable<CTSGrandParentTable> {
 			"ctsGrandParentId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CTSGrandParentTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CTSGrandParentTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CTSGrandParentTable, Long> parentCTSGrandParentId =
 		createColumn(
 			"parentCTSGrandParentId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<CTSGrandParentTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CTSGrandParentTable() {
 		super("CTSGrandParent", CTSGrandParentTable::new);

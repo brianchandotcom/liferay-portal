@@ -74,8 +74,8 @@ public interface CTSChildLocalService
 	public CTSChild addCTSChild(long companyId);
 
 	public CTSChild addCTSChild(
-		long companyId, long ctsGrandParentId, String ctsParentName,
-		long parentCTSChildId);
+		long companyId, long ctsGrandParentId, long parentCTSChildId,
+		String ctsParentName);
 
 	/**
 	 * Creates a new cts child with the primary key. Does not add the cts child to the database.

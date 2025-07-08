@@ -75,14 +75,14 @@ public class CTSChildCacheModel
 		sb.append(ctsChildId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", ctsGrandParentId=");
 		sb.append(ctsGrandParentId);
-		sb.append(", ctsParentName=");
-		sb.append(ctsParentName);
 		sb.append(", parentCTSChildId=");
 		sb.append(parentCTSChildId);
+		sb.append(", ctsParentName=");
+		sb.append(ctsParentName);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,15 +96,8 @@ public class CTSChildCacheModel
 		ctsChildImpl.setCtCollectionId(ctCollectionId);
 		ctsChildImpl.setCtsChildId(ctsChildId);
 		ctsChildImpl.setCompanyId(companyId);
-
-		if (name == null) {
-			ctsChildImpl.setName("");
-		}
-		else {
-			ctsChildImpl.setName(name);
-		}
-
 		ctsChildImpl.setCtsGrandParentId(ctsGrandParentId);
+		ctsChildImpl.setParentCTSChildId(parentCTSChildId);
 
 		if (ctsParentName == null) {
 			ctsChildImpl.setCtsParentName("");
@@ -113,7 +106,12 @@ public class CTSChildCacheModel
 			ctsChildImpl.setCtsParentName(ctsParentName);
 		}
 
-		ctsChildImpl.setParentCTSChildId(parentCTSChildId);
+		if (name == null) {
+			ctsChildImpl.setName("");
+		}
+		else {
+			ctsChildImpl.setName(name);
+		}
 
 		ctsChildImpl.resetOriginalValues();
 
@@ -129,12 +127,12 @@ public class CTSChildCacheModel
 		ctsChildId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
-		name = objectInput.readUTF();
 
 		ctsGrandParentId = objectInput.readLong();
-		ctsParentName = objectInput.readUTF();
 
 		parentCTSChildId = objectInput.readLong();
+		ctsParentName = objectInput.readUTF();
+		name = objectInput.readUTF();
 	}
 
 	@Override
@@ -147,14 +145,9 @@ public class CTSChildCacheModel
 
 		objectOutput.writeLong(companyId);
 
-		if (name == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
 		objectOutput.writeLong(ctsGrandParentId);
+
+		objectOutput.writeLong(parentCTSChildId);
 
 		if (ctsParentName == null) {
 			objectOutput.writeUTF("");
@@ -163,16 +156,21 @@ public class CTSChildCacheModel
 			objectOutput.writeUTF(ctsParentName);
 		}
 
-		objectOutput.writeLong(parentCTSChildId);
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
 	}
 
 	public long mvccVersion;
 	public long ctCollectionId;
 	public long ctsChildId;
 	public long companyId;
-	public String name;
 	public long ctsGrandParentId;
-	public String ctsParentName;
 	public long parentCTSChildId;
+	public String ctsParentName;
+	public String name;
 
 }

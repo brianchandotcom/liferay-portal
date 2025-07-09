@@ -629,7 +629,7 @@ public class TestrayManagerImpl implements TestrayManager {
 				"dueStatus",
 				() -> {
 					String testrayTestcaseStatus =
-						(String)testrayCasePropertiesMap.get(
+						testrayCasePropertiesMap.get(
 							"testray.testcase.status");
 
 					if (testrayTestcaseStatus.equals("blocked")) {
@@ -757,7 +757,7 @@ public class TestrayManagerImpl implements TestrayManager {
 					testrayCasePropertiesMap.get("testray.testcase.description")
 				).put(
 					"name",
-					(String)testrayCasePropertiesMap.get(
+					testrayCasePropertiesMap.get(
 						"testray.testcase.name")
 				).put(
 					"number", 0

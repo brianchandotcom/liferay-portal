@@ -9,6 +9,9 @@ import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 
 export class ObjectFieldsPage {
 	readonly addObjectFieldButton: Locator;
+	readonly aggregationFieldDropdown: Locator;
+	readonly aggregationFunctionDropdown: Locator;
+	readonly agreggationRelationshipDropdown: Locator;
 	readonly deleteObjectFieldOption: Locator;
 	readonly editFieldSaveButton: Locator;
 	readonly externalReferenceCodeField: Locator;
@@ -22,6 +25,11 @@ export class ObjectFieldsPage {
 
 	constructor(page: Page) {
 		this.addObjectFieldButton = page.getByLabel('Add Object Field');
+		this.aggregationFieldDropdown = page.getByLabel('FieldMandatory');
+		this.aggregationFunctionDropdown = page.getByLabel('FunctionMandatory');
+		this.agreggationRelationshipDropdown = page.getByLabel(
+			'RelationshipMandatory'
+		);
 		this.deleteObjectFieldOption = page.getByRole('menuitem', {
 			name: 'Delete',
 		});
@@ -45,7 +53,11 @@ export class ObjectFieldsPage {
 	}
 
 	async addObjectField({
+		aggregationField,
+		aggregationFieldFunction,
+		aggregationFieldRelationship,
 		attachmentSource,
+		autoIncrementInitialValue,
 		formulaFieldOutput,
 		listTypeDefinitionName,
 		objectFieldBusinessType,
@@ -63,11 +75,36 @@ export class ObjectFieldsPage {
 			.getByRole('option', {exact: true, name: objectFieldBusinessType})
 			.click();
 
+		if (objectFieldBusinessType === 'Aggregation') {
+			await this.agreggationRelationshipDropdown.click();
+			await this.page
+				.getByRole('option', {name: aggregationFieldRelationship})
+				.click();
+
+			await this.aggregationFunctionDropdown.click();
+			await this.page
+				.getByRole('option', {name: aggregationFieldFunction})
+				.click();
+
+			if (aggregationField) {
+				await this.aggregationFieldDropdown.click();
+				await this.page
+					.getByRole('option', {name: aggregationField})
+					.click();
+			}
+		}
+
 		if (objectFieldBusinessType === 'Attachment') {
 			await this.objectFieldOptionsDropdown.click();
 			await this.page
 				.getByRole('option', {name: attachmentSource})
 				.click();
+		}
+
+		if (objectFieldBusinessType === 'Auto Increment') {
+			await this.page
+				.getByRole('spinbutton')
+				.fill(autoIncrementInitialValue);
 		}
 
 		if (objectFieldBusinessType === 'Formula') {

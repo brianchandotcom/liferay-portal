@@ -9,6 +9,7 @@ import {
 	ObjectFieldAPI,
 	ObjectFolder,
 	ObjectFolderAPI,
+	ObjectRelationshipAPI,
 	ObjectValidationRuleAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {Locator, Page, expect, mergeTests} from '@playwright/test';
@@ -883,33 +884,80 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		await objectFieldsPage.deleteObjectField(true, -1);
 	});
 
-	test('can create object fields of multiple types (except AutoIncrement, Date and Time, Encrypted and Aggregation)', async ({
+	test('can create object fields of all types', async ({
 		apiHelpers,
 		objectFieldsPage,
 		page,
 	}) => {
-		const {listTypeDefinitionIds, objectDefinitions} = createdEntities;
+		const {listTypeDefinitionIds} = createdEntities;
 
-		const objectDefinition =
+		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [],
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 1},
 			});
 
-		objectDefinitions.push(objectDefinition);
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 1},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionObjectRelationship(
+				objectDefinition1.id,
+				{
+					label: {
+						en_US: 'objectRelationshipLabel' + getRandomInt(),
+					},
+					name:
+						'objectRelationshipName' +
+						Math.floor(Math.random() * 99),
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition1.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition2.externalReferenceCode,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
 		listTypeDefinitionIds.push(listTypeDefinition.id);
 
-		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+		await objectFieldsPage.goto(objectDefinition1.label['en_US']);
 
 		const objectFieldsMock = [
 			{
+				objectFieldBusinessType: 'Aggregation',
+				objectFieldLabel: `aggregation${getRandomInt()}`,
+			},
+			{
 				objectFieldBusinessType: 'Attachment',
 				objectFieldLabel: `attachment${getRandomInt()}`,
+			},
+			{
+				objectFieldBusinessType: 'Auto Increment',
+				objectFieldLabel: `autoIncrement${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Boolean',
@@ -920,8 +968,16 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				objectFieldLabel: `date${getRandomInt()}`,
 			},
 			{
+				objectFieldBusinessType: 'Date Time',
+				objectFieldLabel: `dateTime${getRandomInt()}`,
+			},
+			{
 				objectFieldBusinessType: 'Decimal',
 				objectFieldLabel: `decimal${getRandomInt()}`,
+			},
+			{
+				objectFieldBusinessType: 'Encrypted',
+				objectFieldLabel: `encrypted${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Integer',
@@ -963,10 +1019,41 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		for (const objectField of objectFieldsMock) {
 			const {objectFieldBusinessType, objectFieldLabel} = objectField;
 
+			if (objectFieldBusinessType === 'Aggregation') {
+				await objectFieldsPage.addObjectField({
+					aggregationFieldFunction: 'count',
+					aggregationFieldRelationship:
+						objectRelationship.label['en_US'],
+					objectFieldBusinessType,
+					objectFieldLabel,
+				});
+
+				continue;
+			}
+
 			if (objectFieldBusinessType === 'Attachment') {
 				await objectFieldsPage.addObjectField({
 					attachmentSource: 'Upload Directly from the User',
 					objectFieldBusinessType,
+					objectFieldLabel,
+				});
+
+				continue;
+			}
+
+			if (objectFieldBusinessType === 'Auto Increment') {
+				await objectFieldsPage.addObjectField({
+					autoIncrementInitialValue: '1',
+					objectFieldBusinessType,
+					objectFieldLabel,
+				});
+
+				continue;
+			}
+
+			if (objectFieldBusinessType === 'Date Time') {
+				await objectFieldsPage.addObjectField({
+					objectFieldBusinessType: 'Date and Time',
 					objectFieldLabel,
 				});
 
@@ -992,9 +1079,12 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			});
 		}
 
+		await page.getByLabel('Items Per Page').click();
+		await page.getByRole('option', {name: '40 Items'}).click();
+
 		while (
 			(await page.locator('tbody > tr').all()).length !==
-			objectDefinition.objectFields.length + objectFieldsMock.length
+			objectDefinition1.objectFields.length + objectFieldsMock.length
 		) {
 			await page.waitForTimeout(1000);
 		}

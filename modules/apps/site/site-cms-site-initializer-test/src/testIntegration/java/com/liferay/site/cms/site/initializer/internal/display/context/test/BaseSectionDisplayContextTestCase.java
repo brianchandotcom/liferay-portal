@@ -447,7 +447,8 @@ public abstract class BaseSectionDisplayContextTestCase
 		for (Map.Entry<String, String> entry :
 				expectedCreationMenuItems.entrySet()) {
 
-			DropdownItem dropdownItem = _getDropdownItem(dropdownItems, entry.getKey());
+			DropdownItem dropdownItem = _getDropdownItem(
+				dropdownItems, entry.getKey());
 
 			Assert.assertNotNull(dropdownItem);
 

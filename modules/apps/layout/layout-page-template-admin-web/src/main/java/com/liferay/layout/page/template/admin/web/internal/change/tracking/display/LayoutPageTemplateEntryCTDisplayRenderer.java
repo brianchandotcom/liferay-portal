@@ -117,18 +117,16 @@ public class LayoutPageTemplateEntryCTDisplayRenderer
 
 		Layout previewLayout = layout;
 
-		if (layout.isTypeContent()) {
+		if (layout.isTypeContent() || layoutPageTemplateEntry.isDraft()) {
 			previewLayout = layout.fetchDraftLayout();
 		}
 
-		if ((layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.BASIC) ||
-			(layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
+		if (layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.BASIC) {
 
 			String friendlyURL = HttpComponentsUtil.addParameter(
-				_portal.getLayoutFriendlyURL(layout, themeDisplay), "p_l_mode",
-				"preview");
+				_portal.getLayoutFriendlyURL(previewLayout, themeDisplay),
+				"p_l_mode", "preview");
 
 			return StringBundler.concat(
 				"<iframe frameborder=\"0\" onload=\"this.style.height = ",
@@ -146,8 +144,10 @@ public class LayoutPageTemplateEntryCTDisplayRenderer
 
 		url = HttpComponentsUtil.addParameter(url, "p_p_state", "undefined");
 
-		if (layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
+		if ((layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) ||
+			(layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			url = HttpComponentsUtil.addParameter(
 				url, "selPlid", previewLayout.getPlid());

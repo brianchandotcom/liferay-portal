@@ -104,7 +104,6 @@ if ((commerceTermEntry != null) && (commerceTermEntry.getExpirationDate() != nul
 										/>
 									</c:otherwise>
 								</c:choose>
-
 							</div>
 						</aui:field-wrapper>
 					</div>

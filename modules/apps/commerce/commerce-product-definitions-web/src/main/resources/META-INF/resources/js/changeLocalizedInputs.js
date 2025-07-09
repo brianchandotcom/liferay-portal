@@ -18,7 +18,8 @@ export default function ({portletNamespace}) {
 				`${portletNamespace}shortDescriptionMapAsXML`
 			);
 
-            const descriptionInput = window[`${portletNamespace}descriptionMapAsXMLEditor`];
+			const descriptionInput =
+				window[`${portletNamespace}descriptionMapAsXMLEditor`];
 
 			const urlInput = document.getElementById(
 				`${portletNamespace}urlTitleMapAsXML`

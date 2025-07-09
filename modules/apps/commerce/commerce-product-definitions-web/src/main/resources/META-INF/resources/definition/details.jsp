@@ -96,6 +96,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 				<aui:field-wrapper>
 					<label class="control-label" for="<portlet:namespace />descriptionMapAsXML"><liferay-ui:message key="full-description" /></label>
+
 					<div class="entry-content form-group">
 						<c:choose>
 							<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
@@ -128,7 +129,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 						defaultLanguageId="<%= defaultLanguageId %>"
 						inputAddon="<%= StringUtil.shorten(friendlyURLBase, 40) %>"
 						name="urlTitleMapAsXML"
-						xml="<%= HttpComponentsUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML())%>"
+						xml="<%= HttpComponentsUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>"
 					/>
 				</div>
 
@@ -237,5 +238,4 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 		%>'
 		module="{changeLocalizedInputs} from commerce-product-definitions-web"
 	/>
-	
 </c:if>

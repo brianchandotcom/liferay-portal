@@ -229,8 +229,11 @@ public class OAuth2GraphQLRequestContextValidator
 		new AccessControlAdvisorImpl();
 	private BundleContext _bundleContext;
 
-	@Reference
-	private ScopeChecker _scopeChecker;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ScopeChecker _scopeChecker;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

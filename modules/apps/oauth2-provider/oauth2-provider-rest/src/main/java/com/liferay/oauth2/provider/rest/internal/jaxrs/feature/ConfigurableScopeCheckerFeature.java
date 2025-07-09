@@ -51,6 +51,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -174,8 +176,11 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 	private BundleContext _bundleContext;
 	private final List<CheckPattern> _checkPatterns = new ArrayList<>();
 
-	@Reference
-	private ScopeChecker _scopeChecker;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ScopeChecker _scopeChecker;
 
 	private ServiceRegistration<ScopeFinder> _serviceRegistration;
 

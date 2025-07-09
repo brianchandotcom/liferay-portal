@@ -1120,6 +1120,34 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	@Test
+	public void testSendNotificationToOwnerRole() throws Exception {
+		ObjectDefinition objectDefinition =
+			_addObjectDefinitionWithNotificationTemplateObjectAction(
+				_roleLocalService.fetchRole(
+					TestPropsValues.getCompanyId(), RoleConstants.OWNER));
+
+		try {
+			_testSendNotification(
+				null, null, user2, 1, user2.getEmailAddress(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				objectDefinition);
+
+			_setUser(user1);
+
+			_testSendNotification(
+				null, null, user1, 1, user1.getEmailAddress(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				objectDefinition);
+		}
+		finally {
+			_setUser(user2);
+
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
+	@Test
 	public void testSendNotificationToRegularRoles() throws Exception {
 		Role role1 = _addRole(RoleConstants.TYPE_REGULAR, user1);
 

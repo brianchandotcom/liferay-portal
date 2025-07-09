@@ -9,8 +9,12 @@ import com.liferay.mcp.server.internal.constants.MCPServerConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import jakarta.servlet.Filter;
@@ -18,7 +22,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -103,8 +109,25 @@ public class MCPServerFilter extends BasePortalFilter {
 			httpServletResponse.setHeader("Content-Type", "application/json");
 			httpServletResponse.setHeader("Cache-Control", "no-cache");
 
-			List<String> redirectURIsList =
-				oAuth2Application.getRedirectURIsList();
+			Set<String> redirectURIsSet = new HashSet<>(
+				oAuth2Application.getRedirectURIsList());
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				StringUtil.read(httpServletRequest.getInputStream()));
+
+			JSONArray redirectURIsJSONArray = jsonObject.getJSONArray(
+				"redirect_uris");
+
+			for (int i = 0; i < redirectURIsJSONArray.length(); i++) {
+				redirectURIsSet.add(redirectURIsJSONArray.getString(i));
+			}
+
+			oAuth2Application.setRedirectURIsList(
+				new ArrayList<>(redirectURIsSet));
+
+			oAuth2Application =
+				_oAuth2ApplicationLocalService.updateOAuth2Application(
+					oAuth2Application);
 
 			httpServletResponse.getWriter(
 			).write(
@@ -115,7 +138,7 @@ public class MCPServerFilter extends BasePortalFilter {
 				).put(
 					"client_secret_expires_at", 0
 				).put(
-					"redirect_uris", JSONUtil.putAll(redirectURIsList.toArray())
+					"redirect_uris", JSONUtil.putAll(redirectURIsSet.toArray())
 				).toString()
 			);
 
@@ -126,6 +149,9 @@ public class MCPServerFilter extends BasePortalFilter {
 			MCPServerFilter.class.getName(), httpServletRequest,
 			httpServletResponse, filterChain);
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

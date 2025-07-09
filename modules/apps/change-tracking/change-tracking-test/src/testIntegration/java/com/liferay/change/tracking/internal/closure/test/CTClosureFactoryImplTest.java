@@ -86,11 +86,11 @@ public class CTClosureFactoryImplTest {
 				"VARCHAR(75) null, primary key (ctsChildId, ctCollectionId))"));
 
 		_db.runSQL(
-			"create index IX_B9646ED7 on CTSChild (companyId, " +
-				"parentCTSChildId)");
-		_db.runSQL(
 			"create index IX_7333931B on CTSChild (companyId, " +
 				"ctsGrandParentId)");
+		_db.runSQL(
+			"create index IX_B9646ED7 on CTSChild (companyId, " +
+				"parentCTSChildId)");
 
 		_db.runSQL("drop table CTSGrandParent");
 

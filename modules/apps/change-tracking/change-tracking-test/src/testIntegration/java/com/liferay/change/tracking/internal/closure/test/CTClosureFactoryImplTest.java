@@ -75,28 +75,7 @@ public class CTClosureFactoryImplTest {
 			_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 		}
 
-		_db.runSQL("drop table CTSGrandParent");
-		_db.runSQL("drop table CTSParent");
 		_db.runSQL("drop table CTSChild");
-
-		_db.runSQL(
-			StringBundler.concat(
-				"create table CTSGrandParent (mvccVersion LONG default 0 not ",
-				"null, ctsGrandParentId LONG not null primary key, companyId ",
-				"LONG, name VARCHAR(75) null, parentCTSGrandParentId LONG)"));
-		_db.runSQL("create index IX_516F7BAC on CTSGrandParent (companyId)");
-
-		_db.runSQL(
-			StringBundler.concat(
-				"create table CTSParent (mvccVersion LONG default 0 not null, ",
-				"ctCollectionId LONG default 0 not null, ctsParentId LONG not ",
-				"null, companyId LONG, name VARCHAR(75) null, ",
-				"ctsGrandParentId LONG, primary key (ctsParentId, ",
-				"ctCollectionId))"));
-
-		_db.runSQL(
-			"create index IX_E0FFE1E9 on CTSParent (companyId, " +
-				"ctsGrandParentId)");
 
 		_db.runSQL(
 			StringBundler.concat(
@@ -111,6 +90,30 @@ public class CTClosureFactoryImplTest {
 				"parentCTSChildId)");
 		_db.runSQL(
 			"create index IX_7333931B on CTSChild (companyId, " +
+				"ctsGrandParentId)");
+
+		_db.runSQL("drop table CTSGrandParent");
+
+		_db.runSQL(
+			StringBundler.concat(
+				"create table CTSGrandParent (mvccVersion LONG default 0 not ",
+				"null, ctsGrandParentId LONG not null primary key, companyId ",
+				"LONG, name VARCHAR(75) null, parentCTSGrandParentId LONG)"));
+
+		_db.runSQL("create index IX_516F7BAC on CTSGrandParent (companyId)");
+
+		_db.runSQL("drop table CTSParent");
+
+		_db.runSQL(
+			StringBundler.concat(
+				"create table CTSParent (mvccVersion LONG default 0 not null, ",
+				"ctCollectionId LONG default 0 not null, ctsParentId LONG not ",
+				"null, companyId LONG, name VARCHAR(75) null, ",
+				"ctsGrandParentId LONG, primary key (ctsParentId, ",
+				"ctCollectionId))"));
+
+		_db.runSQL(
+			"create index IX_E0FFE1E9 on CTSParent (companyId, " +
 				"ctsGrandParentId)");
 	}
 

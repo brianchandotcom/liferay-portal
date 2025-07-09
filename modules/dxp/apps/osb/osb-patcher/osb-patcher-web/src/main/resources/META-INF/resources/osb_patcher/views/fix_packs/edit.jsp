@@ -165,48 +165,41 @@ boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PA
 </liferay-frontend:edit-form>
 
 <c:if test="<%= (jenkinsRequestParameters != null) && !jenkinsRequestParameters.isEmpty() %>">
-	<div class="layout">
-		<div class="layout-content">
-			<clay:row>
-				<clay:col
-					size="4"
-				>
-					<aui:field-wrapper label="jenkins-request-parameters" />
-				</clay:col>
+	<clay:container-fluid
+		cssClass="container-no-gutters"
+	>
+		<clay:sheet
+			size="full"
+		>
+			<h2 class="sheet-title">
+				<liferay-ui:message key="jenkins-request-parameters" />
+			</h2>
 
-				<clay:col
-					size="8"
-				>
-					<aui:field-wrapper label="value" />
-				</clay:col>
-			</clay:row>
-		</div>
-	</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th><liferay-ui:message key="parameter" /></th>
+						<th><liferay-ui:message key="value" /></th>
+					</tr>
+				</thead>
 
-	<%
-	for (Map.Entry<String, String> jenkinsRequestParameter : jenkinsRequestParameters.entrySet()) {
-	%>
+				<tbody>
 
-		<div class="layout">
-			<div class="layout-content">
-				<clay:row>
-					<clay:col
-						size="4"
-					>
-						<%= jenkinsRequestParameter.getKey() %>
-					</clay:col>
+					<%
+					for (Map.Entry<String, String> jenkinsRequestParameter : jenkinsRequestParameters.entrySet()) {
+					%>
 
-					<clay:col
-						size="8"
-					>
-						<%= jenkinsRequestParameter.getValue() %>
-					</clay:col>
-				</clay:row>
-			</div>
-		</div>
+						<tr>
+							<td><%= jenkinsRequestParameter.getKey() %></td>
+							<td><%= jenkinsRequestParameter.getValue() %></td>
+						</tr>
 
-	<%
-	}
-	%>
+					<%
+					}
+					%>
 
+				</tbody>
+			</table>
+		</clay:sheet>
+	</clay:container-fluid>
 </c:if>

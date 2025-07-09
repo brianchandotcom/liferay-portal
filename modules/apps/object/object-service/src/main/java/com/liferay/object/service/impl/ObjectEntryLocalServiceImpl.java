@@ -286,6 +286,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -1507,11 +1508,19 @@ public class ObjectEntryLocalServiceImpl
 			PersistedModelLocalServiceRegistryUtil.
 				getPersistedModelLocalService(objectDefinition.getClassName());
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			String.valueOf(
-				persistedModelLocalService.getPersistedModel(primaryKey)));
+		BaseModel<?> baseModel =
+			(BaseModel<?>)persistedModelLocalService.getPersistedModel(
+				primaryKey);
 
-		return jsonObject.getString(titleObjectField.getDBColumnName());
+		Map<String, ?> attributeGetterFunctions =
+			baseModel.getAttributeGetterFunctions();
+
+		@SuppressWarnings("unchecked")
+		Function<Object, Object> function =
+			(Function<Object, Object>)attributeGetterFunctions.get(
+				titleObjectField.getDBColumnName());
+
+		return String.valueOf(function.apply(baseModel));
 	}
 
 	@Override

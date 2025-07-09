@@ -75,16 +75,15 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 
 	const {metadata, routes = []} = productTypeRoute || {};
 
-	const steps = routes
-		.map((route) => {
-			const key = route.index ? '/' : `/${route.path}`;
+	const steps = routes.map((route) => {
+		const key = route.index ? '/' : `/${route.path}`;
 
-			return {
-				...route,
-				active: pathname === key,
-				key,
-			};
-		});
+		return {
+			...route,
+			active: pathname === key,
+			key,
+		};
+	});
 
 	const activeStepIndex = steps.findIndex(({active}) => active);
 

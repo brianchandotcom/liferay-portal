@@ -19,7 +19,6 @@ import {
 	getProductCategoriesByVocabularyName,
 	getProductPriceModel,
 	getProductSpecification,
-	isCloudProduct,
 } from '../../utils/productUtils';
 import ProductPurchaseOutlet from './ProductPurchaseOutlet';
 import ProductPurchaseAccountSelection from './pages/AccountSelection';

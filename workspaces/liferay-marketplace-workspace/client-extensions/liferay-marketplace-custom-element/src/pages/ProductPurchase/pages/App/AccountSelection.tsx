@@ -6,10 +6,7 @@
 import {useSelector} from '@xstate/store/react';
 
 import i18n from '../../../../i18n';
-import {
-	getProductPriceModel,
-	isCloudProduct,
-} from '../../../../utils/productUtils';
+import {getProductPriceModel} from '../../../../utils/productUtils';
 import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
 import ProductPurchaseApp from '../../services/ProductPurchaseApp';
 import {productPurchaseStore} from '../../store/AppPurchaseStore';
@@ -30,7 +27,6 @@ const AccountSelection = () => {
 	);
 
 	const {isFreeApp} = getProductPriceModel(product);
-
 
 	return (
 		<ProductPurchaseAccountSelection

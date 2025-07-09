@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -35,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -81,7 +78,14 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		String initialDefaultLanguageId = _language.getLanguageId(
 			LocaleUtil.US);
 		String initialLogoColor = RandomTestUtil.randomString();
-		MimeTypeLimit[] initialMimeTypeLimits = _getMimeTypeLimits();
+		MimeTypeLimit[] initialMimeTypeLimits = {
+			new MimeTypeLimit() {
+				{
+					setMaximumSize(1234);
+					setMimeType("application/pdf");
+				}
+			}
+		};
 		boolean initialSharingEnabled = true;
 		boolean initialUseCustomLanguages = true;
 
@@ -119,7 +123,14 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		String initialDefaultLanguageId = _language.getLanguageId(
 			LocaleUtil.US);
 		String initialLogoColor = RandomTestUtil.randomString();
-		MimeTypeLimit[] initialMimeTypeLimits = _getMimeTypeLimits();
+		MimeTypeLimit[] initialMimeTypeLimits = {
+			new MimeTypeLimit() {
+				{
+					setMaximumSize(1234);
+					setMimeType("application/pdf");
+				}
+			}
+		};
 		boolean initialSharingEnabled = true;
 		boolean initialUseCustomLanguages = true;
 
@@ -145,7 +156,16 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			_getAvailableLanguageIds(
 				LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			_language.getLanguageId(LocaleUtil.US),
-			RandomTestUtil.randomString(), _getMimeTypeLimits(), true, true);
+			RandomTestUtil.randomString(),
+			new MimeTypeLimit[] {
+				new MimeTypeLimit() {
+					{
+						setMaximumSize(1234);
+						setMimeType("application/pdf");
+					}
+				}
+			},
+			true, true);
 
 		boolean putAutoTaggingEnabled = true;
 		String[] putAvailableLanguageIds = _getAvailableLanguageIds(
@@ -386,10 +406,6 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		Assert.assertEquals(
 			expectedAvailableLanguageIds, settings.getAvailableLanguageIds());
 		Assert.assertEquals(expectedLogoColor, settings.getLogoColor());
-		Assert.assertEquals(
-			expectedSharingEnabled, settings.getSharingEnabled());
-		Assert.assertEquals(
-			expectedUseCustomLanguages, settings.getUseCustomLanguages());
 
 		MimeTypeLimit[] mimeTypeLimits = settings.getMimeTypeLimits();
 
@@ -403,31 +419,17 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 				mimeTypeLimits.length);
 			Assert.assertEquals(expectedMimeTypeLimits[0], mimeTypeLimits[0]);
 		}
+
+		Assert.assertEquals(
+			expectedSharingEnabled, settings.getSharingEnabled());
+		Assert.assertEquals(
+			expectedUseCustomLanguages, settings.getUseCustomLanguages());
 	}
 
 	private String[] _getAvailableLanguageIds(Locale... locales) {
 		return TransformUtil.transformToArray(
 			ListUtil.fromArray(locales),
 			(Locale locale) -> _language.getLanguageId(locale), String.class);
-	}
-
-	private MimeTypeLimit[] _getMimeTypeLimits() {
-		Map<String, Integer> mimeTypeLimitMap = HashMapBuilder.put(
-			"application/pdf", 1234
-		).build();
-
-		return TransformUtil.transformToArray(
-			mimeTypeLimitMap.entrySet(),
-			entry -> {
-				MimeTypeLimit mimeTypeLimit = new MimeTypeLimit();
-
-				mimeTypeLimit.setMimeType(entry::getKey);
-				mimeTypeLimit.setMaximumSize(
-					() -> GetterUtil.getInteger(entry.getValue()));
-
-				return mimeTypeLimit;
-			},
-			MimeTypeLimit.class);
 	}
 
 	private AssetLibrary _postAssetLibraryWithSettings(

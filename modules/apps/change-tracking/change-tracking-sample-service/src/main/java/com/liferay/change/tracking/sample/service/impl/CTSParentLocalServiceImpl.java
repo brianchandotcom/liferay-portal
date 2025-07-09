@@ -32,7 +32,6 @@ public class CTSParentLocalServiceImpl extends CTSParentLocalServiceBaseImpl {
 
 		ctsParent.setCompanyId(companyId);
 		ctsParent.setCtsGrandParentId(ctsGrandParentId);
-
 		ctsParent.setName(String.valueOf(ctsParentId));
 
 		return ctsParentPersistence.update(ctsParent);
@@ -60,7 +59,7 @@ public class CTSParentLocalServiceImpl extends CTSParentLocalServiceBaseImpl {
 		CTSParent ctsParent = ctsParentPersistence.findByPrimaryKey(
 			ctsParentId);
 
-		ctsParent.setName(ctsParent.getName() + " updated");
+		ctsParent.setName(ctsParent.getName() + " Updated");
 
 		return ctsParentPersistence.update(ctsParent);
 	}

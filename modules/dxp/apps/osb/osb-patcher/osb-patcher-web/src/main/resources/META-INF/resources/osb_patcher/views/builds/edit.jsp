@@ -28,14 +28,11 @@ patcherBuildTickets.retainAll(cumulativeFixedIssues);
 <aui:model-context bean="<%= patcherBuild %>" model="<%= PatcherBuild.class %>" />
 
 <c:if test="<%= !patcherBuildTickets.isEmpty() %>">
-	<aui:field-wrapper>
-		<liferay-ui:icon
-			image="../api/exception"
-			message=""
-		/>
-
+	<clay:alert
+		displayType="warning"
+	>
 		<liferay-ui:message arguments="<%= StringUtil.merge(patcherBuildTickets, StringPool.COMMA_AND_SPACE) %>" key="the-tickets-x-will-be-removed-from-the-list-since-they-are-included-in-the-project-version" />
-	</aui:field-wrapper>
+	</clay:alert>
 </c:if>
 
 <portlet:actionURL name="/patcher/update_builds" var="updatePatcherBuildURL" />

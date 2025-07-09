@@ -2098,14 +2098,14 @@ public class JournalArticleLocalServiceTest {
 				journalArticle.getGroupId(), journalArticle.getArticleId());
 
 		Assert.assertEquals(
-			journalArticle.getTitle(), latestArticle.getTitle());
-		Assert.assertEquals(
-			journalArticle.getContent(), latestArticle.getContent());
+			journalArticle.getResourcePrimKey(),
+			latestArticle.getResourcePrimKey());
 		Assert.assertTrue(
 			updatedJournalArticle.getVersion() < latestArticle.getVersion());
 		Assert.assertEquals(
-			journalArticle.getResourcePrimKey(),
-			latestArticle.getResourcePrimKey());
+			journalArticle.getTitle(), latestArticle.getTitle());
+		Assert.assertEquals(
+			journalArticle.getContent(), latestArticle.getContent());
 	}
 
 	@Test

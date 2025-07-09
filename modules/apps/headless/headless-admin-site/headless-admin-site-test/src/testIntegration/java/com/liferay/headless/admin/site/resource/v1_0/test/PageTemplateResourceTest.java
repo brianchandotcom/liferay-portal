@@ -25,6 +25,7 @@ import com.liferay.headless.admin.site.client.resource.v1_0.PageTemplateResource
 import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -1321,6 +1322,11 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		widgetPageSpecification.setExternalReferenceCode(
 			pageTemplate.getExternalReferenceCode());
+
+		widgetPageSpecification.setSettings(
+			SettingsTestUtil.getSettings(
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId(), TestPropsValues.getUserId())));
 
 		PageTemplate postPageTemplate =
 			pageTemplateResource.

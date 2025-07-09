@@ -274,7 +274,8 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 						image="edit"
 						message="edit-engineer-comments"
 						method="get"
-						url="<%= editPatcherBuildCommentsFieldURL %>"
+						onClick='<%= liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "edit-engineer-comments-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + editPatcherBuildCommentsFieldURL + "')" %>'
+						url="javascript:void(0);"
 					/>
 				</c:if>
 
@@ -283,7 +284,8 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 						image="edit"
 						message="edit-qa-status"
 						method="get"
-						url="<%= editPatcherBuildQAFieldsURL %>"
+						onClick='<%= liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "edit-qa-status-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + editPatcherBuildQAFieldsURL + "')" %>'
+						url="javascript:void(0);"
 					/>
 				</c:if>
 
@@ -334,7 +336,8 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 						image="view"
 						message="view-fixes"
 						method="get"
-						url="<%= viewPatcherBuildPatcherFixesURL %>"
+						onClick='<%= liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "view-fixes-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + viewPatcherBuildPatcherFixesURL + "')" %>'
+						url="javascript:void(0);"
 					/>
 				</c:if>
 

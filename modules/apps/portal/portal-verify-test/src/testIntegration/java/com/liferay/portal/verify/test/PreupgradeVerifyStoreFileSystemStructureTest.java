@@ -171,6 +171,10 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 				" for companies: [", _companyId, "]"),
 			null);
 
+		FileUtil.deltree(
+			_ROOT_DIR_FILE_SYSTEM_STORE + "/" +
+				PortalInstancePool.getCompanyIds()[0]);
+
 		File file = _touch(
 			_mkdirs(_ROOT_DIR_FILE_SYSTEM_STORE),
 			PortalInstancePool.getCompanyIds()[0]);

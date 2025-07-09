@@ -495,7 +495,8 @@ public class WorkflowDefinitionLinkDisplayContext {
 		throws PortalException {
 
 		return new WorkflowDefinitionLinkSearchEntry(
-			workflowHandler.getClassName(), workflowHandler.getType(locale),
+			workflowHandler.getClassName(),
+			HtmlUtil.escapeAttribute(workflowHandler.getType(locale)),
 			getWorkflowDefinitionLabel(workflowHandler));
 	}
 

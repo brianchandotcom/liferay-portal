@@ -14,7 +14,11 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
-renderResponse.setTitle("Example Error.lar");
+long backgroundTaskId = GetterUtil.getLong(request.getParameter("backgroundTaskId"));
+
+BackgroundTask backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
+
+renderResponse.setTitle(backgroundTask.getName());
 
 ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayContext(request);
 %>

@@ -77,7 +77,10 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 		_cacheEnabled = ReflectionTestUtil.getAndSetFieldValue(
 			PortalInstancePool.class, "_cacheEnabled", false);
+
 		_companyId = TestPropsValues.getCompanyId();
+
+		_repositoryId = RandomTestUtil.nextLong();
 
 		_fileSystemStoreConfiguration = _configurationAdmin.getConfiguration(
 			"com.liferay.portal.store.file.system.configuration." +
@@ -116,7 +119,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	@Test
 	public void testVerifyAdvancedFileSystem() throws Exception {
 		File file = _mkdirs(
-			_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID,
+			_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE, _companyId, _repositoryId,
 			"100");
 
 		_testVerify(
@@ -126,7 +129,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 				"extension in advanced file system structure"));
 
 		_mkdirs(
-			_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID,
+			_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE, _companyId, _repositoryId,
 			"10", "100.afsh");
 
 		_testVerify(true, null, null);
@@ -150,7 +153,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		_testVerify(false, file + " is not a directory", null);
 
 		file = _touch(
-			_mkdirs(_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID),
+			_mkdirs(_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _repositoryId),
 			RandomTestUtil.randomString());
 
 		_testVerify(
@@ -167,7 +170,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 		file = _touch(
 			_mkdirs(
-				_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID, "100"),
+				_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _repositoryId, "100"),
 			RandomTestUtil.randomString());
 
 		_testVerify(
@@ -175,7 +178,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			"Unexpected file " + file + " not matching version label pattern");
 
 		file = _mkdirs(
-			_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID, "100.txt");
+			_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _repositoryId, "100.txt");
 
 		_testVerify(
 			false, null,
@@ -184,7 +187,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 				" with extension in file system structure"));
 
 		_mkdirs(
-			_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _REPOSITORY_ID, "100",
+			_ROOT_DIR_FILE_SYSTEM_STORE, _companyId, _repositoryId, "100",
 			"1.0");
 
 		_testVerify(false, null, null);
@@ -301,8 +304,6 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 		return file;
 	}
 
-	private static final long _REPOSITORY_ID = RandomTestUtil.nextLong();
-
 	private static final String _ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE =
 		PropsUtil.get(PropsKeys.LIFERAY_HOME) +
 			"/test/store/advanced_file_system";
@@ -318,6 +319,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	private static ConfigurationAdmin _configurationAdmin;
 
 	private static Configuration _fileSystemStoreConfiguration;
+	private static long _repositoryId;
 	private static SafeCloseable
 		_upgradeDatabaseDLStorageCheckDisabledSafeCloseable;
 

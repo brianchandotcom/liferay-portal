@@ -118,10 +118,6 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 					externalReferenceCode);
 		}
 
-		if (!commerceOrder.isOpen()) {
-			throw new NoSuchOrderException();
-		}
-
 		return SearchUtil.search(
 			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), null,
 			CommerceOrderItem.class.getName(), search, pagination,
@@ -183,10 +179,6 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
-
-		if (!commerceOrder.isOpen()) {
-			throw new NoSuchOrderException();
-		}
 
 		return SearchUtil.search(
 			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), null,

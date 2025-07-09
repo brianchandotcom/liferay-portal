@@ -15,7 +15,6 @@ PatcherProductVersion patcherProductVersion = PatcherProductVersionLocalServiceU
 
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="<%= patcherProductVersion.getName() %>" />
-	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_product_versions" />
 </liferay-util:include>
 
 <aui:model-context bean="<%= patcherProductVersion %>" model="<%= PatcherProductVersion.class %>" />

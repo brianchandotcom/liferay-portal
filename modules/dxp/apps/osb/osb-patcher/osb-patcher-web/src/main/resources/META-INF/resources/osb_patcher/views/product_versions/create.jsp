@@ -9,7 +9,6 @@
 
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="create-product-version" />
-	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_product_versions" />
 </liferay-util:include>
 
 <aui:model-context bean="<%= null %>" model="<%= PatcherProductVersion.class %>" />

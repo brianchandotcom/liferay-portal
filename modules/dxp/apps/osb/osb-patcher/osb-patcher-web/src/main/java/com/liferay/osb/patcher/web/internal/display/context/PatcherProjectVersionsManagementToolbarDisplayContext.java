@@ -76,7 +76,8 @@ public class PatcherProjectVersionsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
-					"mvcRenderCommandName", "/patcher/add_project_versions");
+					"mvcRenderCommandName", "/patcher/add_project_versions",
+					"redirect", themeDisplay.getURLCurrent());
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest, "create-project-version"));

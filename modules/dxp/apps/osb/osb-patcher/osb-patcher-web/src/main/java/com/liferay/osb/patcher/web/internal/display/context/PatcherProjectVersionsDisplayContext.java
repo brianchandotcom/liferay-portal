@@ -113,6 +113,16 @@ public class PatcherProjectVersionsDisplayContext {
 		return _patcherProjectVersion;
 	}
 
+	public String getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+
+		return _redirect;
+	}
+
 	public SearchContainer<PatcherProjectVersion> getSearchContainer()
 		throws Exception {
 
@@ -213,6 +223,7 @@ public class PatcherProjectVersionsDisplayContext {
 	private SearchContainer<PatcherProjectVersion>
 		_patcherProjectVersionSearchContainer;
 	private PortletURL _portletURL;
+	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 

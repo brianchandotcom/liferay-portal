@@ -95,6 +95,7 @@ PatcherProjectVersionsDisplayContext patcherProjectVersionsDisplayContext = new 
 					<portlet:renderURL var="editPatcherProjectVersionURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_project_versions" />
 						<portlet:param name="patcherProjectVersionId" value="<%= String.valueOf(patcherProjectVersion.getPatcherProjectVersionId()) %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon

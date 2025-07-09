@@ -158,6 +158,6 @@ public class ProcessListTag extends IncludeTag {
 	private String _remoteTaskExecutorClassName = StringPool.BLANK;
 	private ResultRowSplitter _resultRowSplitter;
 	private boolean _summaryMenu = true;
-	private boolean _viewDetailsMenu = false;
+	private boolean _viewDetailsMenu;
 
 }

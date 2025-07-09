@@ -7,28 +7,13 @@
 
 <%@ include file="/import/init.jsp" %>
 
-<c:choose>
-	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
-		<liferay-staging:process-list
-			deleteMenu="<%= true %>"
-			emptyResultsMessage="no-publish-processes-were-found"
-			localTaskExecutorClassName="<%= BackgroundTaskExecutorNames.LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR %>"
-			mvcRenderCommandName="/export_import/view_import_layouts"
-			relaunchMenu="<%= false %>"
-			resultRowSplitter="<%= new ExportImportResultRowSplitter() %>"
-			summaryMenu="<%= false %>"
-			viewDetailsMenu="<%= true %>"
-		/>
-	</c:when>
-	<c:otherwise>
-		<liferay-staging:process-list
-			deleteMenu="<%= true %>"
-			emptyResultsMessage="no-publish-processes-were-found"
-			localTaskExecutorClassName="<%= BackgroundTaskExecutorNames.LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR %>"
-			mvcRenderCommandName="/export_import/view_import_layouts"
-			relaunchMenu="<%= false %>"
-			resultRowSplitter="<%= new ExportImportResultRowSplitter() %>"
-			summaryMenu="<%= false %>"
-		/>
-	</c:otherwise>
-</c:choose>
+<liferay-staging:process-list
+	deleteMenu="<%= true %>"
+	emptyResultsMessage="no-publish-processes-were-found"
+	localTaskExecutorClassName="<%= BackgroundTaskExecutorNames.LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR %>"
+	mvcRenderCommandName="/export_import/view_import_layouts"
+	relaunchMenu="<%= false %>"
+	resultRowSplitter="<%= new ExportImportResultRowSplitter() %>"
+	summaryMenu="<%= false %>"
+	viewDetailsMenu='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'
+/>

@@ -7,7 +7,6 @@ import {ApiHelpers} from './ApiHelpers';
 
 export class HeadlessPortalInstanceApiHelper {
 	readonly apiHelpers: ApiHelpers;
-
 	readonly basePath: string;
 
 	constructor(apiHelpers: ApiHelpers) {

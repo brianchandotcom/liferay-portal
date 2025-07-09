@@ -23,15 +23,22 @@ PatcherFixComponent patcherFixComponent = PatcherFixComponentLocalServiceUtil.fe
 
 <portlet:actionURL name="/patcher/update_fix_components" var="updatePatcherFixComponentURL" />
 
-<aui:form action="<%= updatePatcherFixComponentURL %>" method="post">
+<liferay-frontend:edit-form
+	action="<%= updatePatcherFixComponentURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="patcherFixComponentId" type="hidden" value="<%= patcherFixComponent.getPatcherFixComponentId() %>" />
 
-	<aui:input name="name" type="text" value="<%= patcherFixComponent.getName() %>" />
+	<liferay-frontend:edit-form-body>
+		<aui:input name="name" type="text" value="<%= patcherFixComponent.getName() %>" />
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
-		<aui:button type="submit" value="update" />
-
-		<aui:button href="<%= redirect %>" value="cancel" />
-	</aui:button-row>
-</aui:form>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

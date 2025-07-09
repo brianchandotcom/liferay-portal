@@ -19,14 +19,21 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 <portlet:actionURL name="/patcher/add_fix_components" var="addPatcherFixComponentURL" />
 
-<aui:form action="<%= addPatcherFixComponentURL %>" method="post">
+<liferay-frontend:edit-form
+	action="<%= addPatcherFixComponentURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<aui:input name="name" type="text" />
+	<liferay-frontend:edit-form-body>
+		<aui:input name="name" type="text" />
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
-		<aui:button type="submit" value="add" />
-
-		<aui:button href="<%= redirect %>" value="cancel" />
-	</aui:button-row>
-</aui:form>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

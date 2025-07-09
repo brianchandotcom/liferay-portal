@@ -126,14 +126,12 @@ public class AssetLibraryDTOConverter
 
 		return TransformUtil.transformToArray(
 			groupMimeTypeSizeLimit.entrySet(),
-			entry -> {
-				MimeTypeLimit mimeTypeLimit = new MimeTypeLimit();
-
-				mimeTypeLimit.setMimeType(entry::getKey);
-				mimeTypeLimit.setMaximumSize(
-					() -> GetterUtil.getInteger(entry.getValue()));
-
-				return mimeTypeLimit;
+			entry -> new MimeTypeLimit() {
+				{
+					setMaximumSize(
+						() -> GetterUtil.getInteger(entry.getValue()));
+					setMimeType(entry::getKey);
+				}
 			},
 			MimeTypeLimit.class);
 	}

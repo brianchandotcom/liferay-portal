@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.BatchHistory;
+import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -14,7 +15,9 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -118,6 +121,31 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 	public BatchTestClassGroup getBatchTestClassGroup() {
 		return _batchTestClassGroup;
+	}
+
+	public List<DownstreamBuildReport> getCachedDownstreamBuildReports() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+			!isResultsCached()) {
+
+			return null;
+		}
+
+		List<DownstreamBuildReport> cachedDownstreamBuildReports =
+			new ArrayList<>();
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		for (DownstreamBuildReport cachedDownstreamBuildReport :
+				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+
+			if (Objects.equals(
+					getAxisName(), cachedDownstreamBuildReport.getAxisName())) {
+
+				cachedDownstreamBuildReports.add(cachedDownstreamBuildReport);
+			}
+		}
+
+		return cachedDownstreamBuildReports;
 	}
 
 	public String getDownstreamJobName() {

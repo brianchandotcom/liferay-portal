@@ -73,7 +73,9 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 
 		_uploadJenkinsConsoleTestrayAttachment();
 
-		if (!JenkinsResultsParserUtil.isCloudCINode() || isFailing()) {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+			!JenkinsResultsParserUtil.isCloudCINode() || isFailing()) {
+
 			return;
 		}
 

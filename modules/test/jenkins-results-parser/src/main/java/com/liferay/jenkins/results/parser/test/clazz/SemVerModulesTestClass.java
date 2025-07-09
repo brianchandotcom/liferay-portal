@@ -5,7 +5,9 @@
 
 package com.liferay.jenkins.results.parser.test.clazz;
 
+import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 
 import java.io.File;
@@ -19,6 +21,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -26,6 +30,59 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class SemVerModulesTestClass extends ModulesTestClass {
+
+	public DownstreamBuildReport getCachedDownstreamBuildReport() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			return null;
+		}
+
+		if (_cachedTestReportsSearched) {
+			getCachedTestReports();
+		}
+
+		return _cachedDownstreamBuildReport;
+	}
+
+	public List<TestReport> getCachedTestReports() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+			_cachedTestReportsSearched) {
+
+			return _cachedTestReports;
+		}
+
+		_cachedTestReports = new ArrayList<>();
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		for (DownstreamBuildReport cachedDownstreamBuildReport :
+				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+
+			for (TestReport cachedTestReport :
+					cachedDownstreamBuildReport.getTestReports()) {
+
+				Matcher matcher = _modulePathPattern.matcher(
+					cachedTestReport.getTestName());
+
+				if (matcher.find()) {
+					String modulePath = matcher.group("modulePath");
+
+					if (modulePath.startsWith(getModulePath())) {
+						_cachedTestReports.add(cachedTestReport);
+					}
+				}
+
+				_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
+
+				_cachedTestReportsSearched = true;
+
+				return _cachedTestReports;
+			}
+		}
+
+		_cachedTestReportsSearched = true;
+
+		return _cachedTestReports;
+	}
 
 	@Override
 	public JSONObject getJSONObject() {
@@ -43,6 +100,16 @@ public class SemVerModulesTestClass extends ModulesTestClass {
 		}
 
 		return jsonObject;
+	}
+
+	public String getModulePath() {
+		String modulePath = getName();
+
+		if (modulePath.startsWith("modules")) {
+			modulePath = modulePath.substring(7);
+		}
+
+		return modulePath;
 	}
 
 	public String getTestrayMainComponentName() {
@@ -148,6 +215,12 @@ public class SemVerModulesTestClass extends ModulesTestClass {
 		return modulesProjectDirs;
 	}
 
+	private static final Pattern _modulePathPattern = Pattern.compile(
+		"testSemanticVersioning\\[(?<modulePath>[\\w\\/-]+)\\]");
+
+	private DownstreamBuildReport _cachedDownstreamBuildReport;
+	private List<TestReport> _cachedTestReports;
+	private boolean _cachedTestReportsSearched;
 	private final File _testPropertiesFile;
 	private final String _testrayMainComponentName;
 

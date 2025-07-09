@@ -37,6 +37,20 @@ public class SemVerModulesBatchBuildTestrayCaseResult
 	}
 
 	@Override
+	public BuildReport getBuildReport() {
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_semVerModulesTestClass.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				return cachedDownstreamBuildReport;
+			}
+		}
+
+		return super.getBuildReport();
+	}
+
+	@Override
 	public String getComponentName() {
 		String componentName =
 			_semVerModulesTestClass.getTestrayMainComponentName();
@@ -175,6 +189,15 @@ public class SemVerModulesBatchBuildTestrayCaseResult
 	}
 
 	public List<TestReport> getTestReports() {
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_semVerModulesTestClass.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				return _semVerModulesTestClass.getCachedTestReports();
+			}
+		}
+
 		if (_testReports != null) {
 			return _testReports;
 		}
@@ -211,23 +234,15 @@ public class SemVerModulesBatchBuildTestrayCaseResult
 			if (matcher.find()) {
 				String modulePath = matcher.group("modulePath");
 
-				if (modulePath.startsWith(_getModulePath())) {
+				if (modulePath.startsWith(
+						_semVerModulesTestClass.getModulePath())) {
+
 					_testReports.add(testReport);
 				}
 			}
 		}
 
 		return _testReports;
-	}
-
-	private String _getModulePath() {
-		String modulePath = _semVerModulesTestClass.getName();
-
-		if (modulePath.startsWith("modules")) {
-			modulePath = modulePath.substring(7);
-		}
-
-		return modulePath;
 	}
 
 	private static final String _TEST_CLASS_NAME =

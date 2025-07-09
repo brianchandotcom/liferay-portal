@@ -17,11 +17,11 @@ export class ObjectFieldsPage {
 	readonly externalReferenceCodeField: Locator;
 	readonly fieldsTabItem: Locator;
 	readonly maximumFileSize: Locator;
-	readonly page: Page;
-	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
-	readonly saveButton: Locator;
 	readonly objectFieldLabelInput: Locator;
 	readonly objectFieldOptionsDropdown: Locator;
+	readonly page: Page;
+	readonly saveButton: Locator;
+	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
 	constructor(page: Page) {
 		this.addObjectFieldButton = page.getByLabel('Add Object Field');
@@ -33,21 +33,21 @@ export class ObjectFieldsPage {
 		this.deleteObjectFieldOption = page.getByRole('menuitem', {
 			name: 'Delete',
 		});
-		this.fieldsTabItem = page.locator('.nav-item .nav-link').filter({
-			hasText: 'Fields',
-		});
-		this.maximumFileSize = page
-			.frameLocator('iframe')
-			.getByLabel('Maximum File Size' + 'Mandatory');
 		this.editFieldSaveButton = page
 			.frameLocator('iframe')
 			.getByRole('button', {name: 'Save'});
 		this.externalReferenceCodeField = page
 			.frameLocator('iframe')
 			.locator('[name="externalReferenceCode"]');
-		this.page = page;
+		this.fieldsTabItem = page.locator('.nav-item .nav-link').filter({
+			hasText: 'Fields',
+		});
+		this.maximumFileSize = page
+			.frameLocator('iframe')
+			.getByLabel('Maximum File Size' + 'Mandatory');
 		this.objectFieldLabelInput = page.locator('input[name="label"]');
 		this.objectFieldOptionsDropdown = page.getByText('Select an Option');
+		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 	}

@@ -9,7 +9,8 @@
 	<portlet:param name="mvcRenderCommandName" value="/export_import/view_import_errors" />
 </portlet:renderURL>
 
-<liferay-ui:icon
-	message="view-details"
-	url="<%= importErrorsList %>"
-/>
+<li>
+	<a class="dropdown-item" href="<%= importErrorsList %>">
+		<liferay-ui:message key="view-details" />
+	</a>
+</li>

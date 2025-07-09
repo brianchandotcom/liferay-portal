@@ -13,6 +13,7 @@ import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.util.ArrayList;
@@ -192,6 +193,19 @@ public class JUnitBatchBuildTestrayCaseResult
 		}
 
 		return "Failed for unknown reason";
+	}
+
+	@Override
+	public String getIssues() {
+		List<String> testClassAnnotations = new ArrayList<>();
+
+		for (TestClassMethod testClassMethod :
+				_jUnitTestClass.getTestClassMethods()) {
+
+			testClassAnnotations.add(testClassMethod.getAnnotations());
+		}
+
+		return String.join(", ", testClassAnnotations);
 	}
 
 	@Override

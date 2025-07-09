@@ -5,7 +5,13 @@
 
 package com.liferay.jenkins.results.parser.test.clazz;
 
+import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TestClassReport;
+import com.liferay.jenkins.results.parser.TestReport;
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+
+import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -13,6 +19,65 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class PlaywrightTestClassMethod extends TestClassMethod {
+
+	public DownstreamBuildReport getCachedDownstreamBuildReport() {
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled() &&
+			!_cachedTestReportSearched) {
+
+			getCachedTestReport();
+		}
+
+		return _cachedDownstreamBuildReport;
+	}
+
+	public TestReport getCachedTestReport() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+			_cachedTestReportSearched) {
+
+			return _cachedTestReport;
+		}
+
+		BatchTestClassGroup batchTestClassGroup =
+			_playwrightJUnitTestClass.getBatchTestClassGroup();
+
+		TestClassReport testClassReport = null;
+
+		for (DownstreamBuildReport cachedDownstreamBuildReport :
+				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+
+			for (TestClassReport cachedTestClassReport :
+					cachedDownstreamBuildReport.getTestClassReports()) {
+
+				if (Objects.equals(
+						_playwrightJUnitTestClass.getSpecFilePath(),
+						cachedTestClassReport.getTestClassName())) {
+
+					testClassReport = cachedTestClassReport;
+				}
+			}
+
+			if (testClassReport == null) {
+				return null;
+			}
+
+			for (TestReport testReport : testClassReport.getTestReports()) {
+				String fullTestName = JenkinsResultsParserUtil.combine(
+					testReport.getTestClassName(), " > ",
+					testReport.getTestName());
+
+				if (fullTestName.equals(getName())) {
+					_cachedDownstreamBuildReport =
+						testClassReport.getDownstreamBuildReport();
+					_cachedTestReport = testReport;
+					_cachedTestReportSearched = true;
+
+					return _cachedTestReport;
+				}
+			}
+		}
+
+		return null;
+	}
 
 	@Override
 	public String getName() {
@@ -30,12 +95,21 @@ public class PlaywrightTestClassMethod extends TestClassMethod {
 		boolean ignored, String name, TestClass testClass) {
 
 		super(ignored, name, testClass);
+
+		_playwrightJUnitTestClass = (PlaywrightJUnitTestClass)testClass;
 	}
 
 	protected PlaywrightTestClassMethod(
 		JSONObject jsonObject, TestClass testClass) {
 
 		super(jsonObject, testClass);
+
+		_playwrightJUnitTestClass = (PlaywrightJUnitTestClass)testClass;
 	}
+
+	private DownstreamBuildReport _cachedDownstreamBuildReport;
+	private TestReport _cachedTestReport;
+	private boolean _cachedTestReportSearched;
+	private final PlaywrightJUnitTestClass _playwrightJUnitTestClass;
 
 }

@@ -115,6 +115,6 @@ public class ProcessListMenuTag extends IncludeTag {
 	private boolean _localPublishing;
 	private boolean _relaunchMenu = true;
 	private boolean _summaryMenu = true;
-	private boolean _viewDetailsMenu = false;
+	private boolean _viewDetailsMenu;
 
 }

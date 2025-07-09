@@ -11,12 +11,21 @@ import {waitForAlert} from '../../utils/waitForAlert';
 
 export class WorkflowTasksPage {
 	readonly assignedToMyRolesLink: Locator;
+	readonly performanceTab: Locator;
+	readonly processSingleAprover: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.assignedToMyRolesLink = page.getByRole('link', {
 			name: 'Assigned to my roles',
 		});
+
+		this.processSingleAprover = page
+			.getByRole('cell', {name: 'Single Approver'})
+			.getByRole('link');
+
+		this.performanceTab = page.getByRole('link', {name: 'Performance'});
+
 		this.page = page;
 	}
 

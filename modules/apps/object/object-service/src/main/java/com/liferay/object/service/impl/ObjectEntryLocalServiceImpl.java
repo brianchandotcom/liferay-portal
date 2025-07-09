@@ -1939,8 +1939,6 @@ public class ObjectEntryLocalServiceImpl
 			(displayDate != null) && date.before(displayDate)) {
 
 			status = WorkflowConstants.STATUS_SCHEDULED;
-
-			_inactivePreviousObjectEntryVersion(originalObjectEntry);
 		}
 
 		Date expirationDate = objectEntry.getExpirationDate();
@@ -4539,33 +4537,6 @@ public class ObjectEntryLocalServiceImpl
 
 		validationErrors.add(
 			new ValidationError(objectEntryValuesException.getMessage()));
-	}
-
-	private void _inactivePreviousObjectEntryVersion(ObjectEntry objectEntry)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
-
-		if (!objectDefinition.isEnableObjectEntryVersioning()) {
-			return;
-		}
-
-		int version = objectEntry.getVersion();
-
-		if (objectEntry.isDraft()) {
-			version = version - 1;
-		}
-
-		ObjectEntryVersion objectEntryVersion =
-			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getObjectEntryId(), version);
-
-		objectEntryVersion.setStatus(WorkflowConstants.STATUS_INACTIVE);
-
-		_objectEntryVersionLocalService.updateObjectEntryVersion(
-			objectEntryVersion);
 	}
 
 	private void _insertIntoLocalizationTable(

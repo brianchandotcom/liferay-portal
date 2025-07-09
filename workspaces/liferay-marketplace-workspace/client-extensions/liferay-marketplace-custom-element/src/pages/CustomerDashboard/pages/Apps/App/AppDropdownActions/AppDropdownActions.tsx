@@ -22,12 +22,13 @@ function AppDropdownActions({placedOrder}: AppDropdownActionsProps) {
 	const {canDownload, dxpProvisioningEnabled, isFreeApp, isOrderCompleted} =
 		new MarketplaceDeliveryOrder(placedOrder);
 
-	const [placedOrderItem] = placedOrder.placedOrderItems;
-	const {name, virtualItemURLs} = placedOrderItem;
+	const [placedOrderItem] = placedOrder.placedOrderItems || [{}];
+
+	const {name, virtualItemURLs} = placedOrderItem || {};
 	const virtualURL = virtualItemURLs?.[0] || '';
 
 	const {account, id} = placedOrder;
-	const metadata = {account, productName: name};
+	const metadata = {account, productName: name || ''};
 
 	return (
 		<DropDown.ItemList>

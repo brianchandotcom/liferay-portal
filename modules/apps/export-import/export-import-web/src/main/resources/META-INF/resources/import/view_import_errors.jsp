@@ -20,7 +20,7 @@ BackgroundTask backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(ba
 
 renderResponse.setTitle(backgroundTask.getName());
 
-ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayContext(request);
+ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayContext(request, renderResponse);
 %>
 
 <clay:navigation-bar

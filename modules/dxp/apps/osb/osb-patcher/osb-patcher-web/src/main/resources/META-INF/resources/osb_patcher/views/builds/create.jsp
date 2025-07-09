@@ -21,99 +21,101 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 
 <portlet:actionURL name="/patcher/add_builds" var="addPatcherBuildURL" />
 
-<aui:form action="<%= addPatcherBuildURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "checkForExistingHotfix();" %>'>
-	<div class="layout osb-patcher-layout-flex">
-		<div class="layout-content">
-			<div class="osb-patcher-align-center">
-				<clay:row>
-					<clay:col>
-						<aui:input name="redirect" type="hidden" value="<%= patcherCreateBuildsDisplayContext.getRedirect() %>" />
+<liferay-frontend:edit-form
+	action="<%= addPatcherBuildURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "checkForExistingHotfix();" %>'
+>
+	<liferay-frontend:edit-form-body>
+		<clay:row>
+			<clay:col>
+				<aui:input name="redirect" type="hidden" value="<%= patcherCreateBuildsDisplayContext.getRedirect() %>" />
 
-						<aui:input name="useExistingHotfix" type="hidden" value="<%= false %>" />
+				<aui:input name="useExistingHotfix" type="hidden" value="<%= false %>" />
 
-						<aui:field-wrapper label="version">
-							<%= patcherBuild.getKeyVersion() %>
-						</aui:field-wrapper>
+				<aui:field-wrapper label="version">
+					<%= patcherBuild.getKeyVersion() %>
+				</aui:field-wrapper>
 
-						<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "productVersionOnChange(this.value);" %>' required="<%= true %>" showEmptyOption="<%= true %>">
+				<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "productVersionOnChange(this.value);" %>' required="<%= true %>" showEmptyOption="<%= true %>">
 
-							<%
-							for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
-							%>
+					<%
+					for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
+					%>
 
-								<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
+						<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
 
-							<%
-							}
-							%>
+					<%
+					}
+					%>
 
-						</aui:select>
+				</aui:select>
 
-						<aui:select label="project-version" name="patcherProjectVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "projectVersionOnChange(this.value);" %>' required="<%= true %>" />
+				<aui:select label="project-version" name="patcherProjectVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "projectVersionOnChange(this.value);" %>' required="<%= true %>" />
 
-						<aui:input inputCssClass="osb-patcher-input-wide" label="account-code" name="patcherBuildAccountEntryCode" required="<%= true %>" type="text" value="<%= patcherCreateBuildsDisplayContext.getPatcherBuildAccountEntryCode() %>" />
+				<aui:input inputCssClass="osb-patcher-input-wide" label="account-code" name="patcherBuildAccountEntryCode" required="<%= true %>" type="text" value="<%= patcherCreateBuildsDisplayContext.getPatcherBuildAccountEntryCode() %>" />
 
-						<aui:input helpMessage="the-support-ticket-must-contain-only-the-help-center-ticket-id" inputCssClass="osb-patcher-input-wide" name="supportTicket" type="text">
-							<aui:validator name="number" />
-						</aui:input>
+				<aui:input helpMessage="the-support-ticket-must-contain-only-the-help-center-ticket-id" inputCssClass="osb-patcher-input-wide" name="supportTicket" type="text">
+					<aui:validator name="number" />
+				</aui:input>
 
-						<aui:select name="type">
-							<aui:option label="<%= PatcherBuildConstants.LABEL_OFFICIAL %>" value="<%= PatcherBuildConstants.TYPE_OFFICIAL %>" />
-							<aui:option label="<%= PatcherBuildConstants.LABEL_DEBUG %>" value="<%= PatcherBuildConstants.TYPE_DEBUG %>" />
-							<aui:option label="<%= PatcherBuildConstants.LABEL_IGNORE %>" value="<%= PatcherBuildConstants.TYPE_IGNORE %>" />
-						</aui:select>
+				<aui:select name="type">
+					<aui:option label="<%= PatcherBuildConstants.LABEL_OFFICIAL %>" value="<%= PatcherBuildConstants.TYPE_OFFICIAL %>" />
+					<aui:option label="<%= PatcherBuildConstants.LABEL_DEBUG %>" value="<%= PatcherBuildConstants.TYPE_DEBUG %>" />
+					<aui:option label="<%= PatcherBuildConstants.LABEL_IGNORE %>" value="<%= PatcherBuildConstants.TYPE_IGNORE %>" />
+				</aui:select>
 
-						<aui:input name="mergeOnly" type="checkbox" value="<%= patcherCreateBuildsDisplayContext.isMergeOnly() %>" />
+				<aui:input name="mergeOnly" type="checkbox" value="<%= patcherCreateBuildsDisplayContext.isMergeOnly() %>" />
 
-						<aui:input name="smokeTestOnly" type="checkbox" wrapperCssClass="osb-patcher-display-none" />
+				<aui:input name="smokeTestOnly" type="checkbox" wrapperCssClass="osb-patcher-display-none" />
+			</clay:col>
 
-						<aui:button-row>
-							<aui:button type="submit" value="add" />
+			<clay:col
+				cssClass="osb-patcher-content-half"
+			>
+				<aui:input inputCssClass="osb-patcher-input-wide" label="tickets-list" name="patcherBuildName" type="textarea" value="<%= patcherBuild.getName() %>" wrapperCssClass="osb-patcher-max-height" />
+			</clay:col>
 
-							<aui:button href="<%= patcherCreateBuildsDisplayContext.getRedirect() %>" value="cancel" />
+			<clay:col
+				cssClass="mt-1"
+			>
+				<aui:field-wrapper>
+					<aui:input inputCssClass="osb-patcher-input-wide" label="troubleshooting-ticket-suggestions" name="troubleshootingTicketList" type="textarea" />
+
+					<aui:button-row cssClass="osb-patcher-button-row">
+						<aui:button cssClass="osb-patcher-button" icon="icon-plus-sign" onClick='<%= liferayPortletResponse.getNamespace() + "troubleshootAddOnClick(this.value);" %>' title="Apply" />
+					</aui:button-row>
+				</aui:field-wrapper>
+
+				<div class="d-none">
+					<aui:field-wrapper>
+						<aui:input inputCssClass="osb-patcher-input-wide" label="security-ticket-suggestions" name="securityTicketList" type="textarea" />
+
+						<aui:button-row cssClass="osb-patcher-button-row">
+							<aui:button cssClass="osb-patcher-button" icon="icon-plus-sign" onClick='<%= liferayPortletResponse.getNamespace() + "securityAddOnClick(this.value);" %>' title="Apply" />
 						</aui:button-row>
-					</clay:col>
+					</aui:field-wrapper>
 
-					<clay:col
-						cssClass="osb-patcher-content-half"
-					>
-						<aui:input inputCssClass="osb-patcher-input-wide" label="tickets-list" name="patcherBuildName" type="textarea" value="<%= patcherBuild.getName() %>" wrapperCssClass="osb-patcher-max-height" />
-					</clay:col>
+					<aui:field-wrapper>
+						<aui:input inputCssClass="osb-patcher-input-wide" label="regression-ticket-suggestions" name="regressionTicketList" type="textarea" />
 
-					<clay:col
-						cssClass="mt-1"
-					>
-						<aui:field-wrapper>
-							<aui:input inputCssClass="osb-patcher-input-wide" label="troubleshooting-ticket-suggestions" name="troubleshootingTicketList" type="textarea" />
+						<aui:button-row cssClass="osb-patcher-button-row">
+							<aui:button cssClass="osb-patcher-button" icon="icon-plus-sign" onClick='<%= liferayPortletResponse.getNamespace() + "regressionAddOnClick(this.value);" %>' title="Apply" />
+						</aui:button-row>
+					</aui:field-wrapper>
+				</div>
+			</clay:col>
+		</clay:row>
+	</liferay-frontend:edit-form-body>
 
-							<aui:button-row cssClass="osb-patcher-button-row">
-								<aui:button cssClass="osb-patcher-button" icon="icon-plus-sign" onClick='<%= liferayPortletResponse.getNamespace() + "troubleshootAddOnClick(this.value);" %>' title="Apply" />
-							</aui:button-row>
-						</aui:field-wrapper>
-
-						<div class="d-none">
-							<aui:field-wrapper>
-								<aui:input inputCssClass="osb-patcher-input-wide" label="security-ticket-suggestions" name="securityTicketList" type="textarea" />
-
-								<aui:button-row cssClass="osb-patcher-button-row">
-									<aui:button cssClass="osb-patcher-button" icon="icon-plus-sign" onClick='<%= liferayPortletResponse.getNamespace() + "securityAddOnClick(this.value);" %>' title="Apply" />
-								</aui:button-row>
-							</aui:field-wrapper>
-
-							<aui:field-wrapper>
-								<aui:input inputCssClass="osb-patcher-input-wide" label="regression-ticket-suggestions" name="regressionTicketList" type="textarea" />
-
-								<aui:button-row cssClass="osb-patcher-button-row">
-									<aui:button cssClass="osb-patcher-button" icon="icon-plus-sign" onClick='<%= liferayPortletResponse.getNamespace() + "regressionAddOnClick(this.value);" %>' title="Apply" />
-								</aui:button-row>
-							</aui:field-wrapper>
-						</div>
-					</clay:col>
-				</clay:row>
-			</div>
-		</div>
-	</div>
-</aui:form>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= patcherCreateBuildsDisplayContext.getRedirect() %>"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	var mergeOnly = document.getElementById('<portlet:namespace />mergeOnly');

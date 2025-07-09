@@ -46,6 +46,20 @@ public class PlaywrightBatchBuildTestrayCaseResult
 	}
 
 	@Override
+	public BuildReport getBuildReport() {
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_playwrightTestClassMethod.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				return cachedDownstreamBuildReport;
+			}
+		}
+
+		return super.getBuildReport();
+	}
+
+	@Override
 	public String getComponentName() {
 		String componentName =
 			_playwrightJUnitTestClass.getTestrayMainComponentName();
@@ -174,6 +188,15 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 	@Override
 	public TestReport getTestReport() {
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			TestReport cachedTestReport =
+				_playwrightTestClassMethod.getCachedTestReport();
+
+			if (cachedTestReport != null) {
+				return cachedTestReport;
+			}
+		}
+
 		DownstreamBuildReport downstreamBuildReport =
 			getDownstreamBuildReport();
 

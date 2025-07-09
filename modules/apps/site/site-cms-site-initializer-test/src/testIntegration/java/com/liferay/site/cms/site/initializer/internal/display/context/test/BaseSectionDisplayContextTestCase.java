@@ -343,11 +343,7 @@ public abstract class BaseSectionDisplayContextTestCase
 			}
 		}
 
-		Assert.assertNotNull(
-			String.format(
-				"Creation menu does not contain label '%s': %s", expectedLabel,
-				dropdownItems),
-			dropdownItemData);
+		Assert.assertNotNull(dropdownItemData);
 
 		JSONArray assetLibrariesJSONArray = (JSONArray)dropdownItemData.get(
 			"assetLibraries");

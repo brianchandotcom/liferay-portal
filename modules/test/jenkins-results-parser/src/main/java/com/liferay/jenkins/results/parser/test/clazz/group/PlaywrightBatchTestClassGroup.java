@@ -550,6 +550,24 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			for (int j = 0; j < specsJSONArray.length(); j++) {
 				JSONObject specJSONObject = specsJSONArray.getJSONObject(j);
 
+				JSONArray tagsJSONArray = specJSONObject.getJSONArray("tags");
+
+				if (!tagsJSONArray.isEmpty()) {
+					StringBuilder sb = new StringBuilder();
+
+					for (int k = 0; k < tagsJSONArray.length(); k++) {
+						sb.append(tagsJSONArray.get(k));
+
+						if (k < (tagsJSONArray.length() - 1)) {
+							sb.append(",");
+						}
+					}
+
+					System.out.println("tags into obj: " + sb);
+
+					specJSONObject.put("tags", sb.toString());
+				}
+
 				if (!title.equals(file)) {
 					specJSONObject.put("subSuite", title);
 				}
@@ -571,6 +589,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		File rootDir = new File(configJSONObject.getString("rootDir"));
 
 		Map<File, Set<String>> specTitlesMap = new HashMap<>();
+
+		Map<String, String> specTagsMap = new HashMap<>();
 
 		for (JSONObject specJSONObject : getSpecJSONObjects()) {
 			JSONArray testsJSONArray = specJSONObject.optJSONArray("tests");
@@ -595,13 +615,21 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				specTitles = new HashSet<>();
 			}
 
+			String title;
+
 			if (specJSONObject.has("subSuite")) {
-				specTitles.add(
+				title =
 					specJSONObject.getString("subSuite") + " › " +
-						specJSONObject.getString("title"));
+						specJSONObject.getString("title");
 			}
 			else {
-				specTitles.add(specJSONObject.getString("title"));
+				title = specJSONObject.getString("title");
+			}
+
+			specTitles.add(title);
+
+			if (specJSONObject.has("tags")) {
+				specTagsMap.put(title, specJSONObject.getString("tags"));
 			}
 
 			specTitlesMap.put(specFile, specTitles);
@@ -646,9 +674,17 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				this, entry.getKey());
 
 			for (String specTitle : entry.getValue()) {
-				testClass.addTestClassMethod(
-					TestClassFactory.newTestClassMethod(
-						false, specTitle, testClass));
+				if (specTagsMap.containsKey(specTitle)) {
+					testClass.addTestClassMethod(
+						TestClassFactory.newTestClassMethod(
+							false, specTitle, specTagsMap.get(specTitle),
+							testClass));
+				}
+				else {
+					testClass.addTestClassMethod(
+						TestClassFactory.newTestClassMethod(
+							false, specTitle, testClass));
+				}
 			}
 
 			testClasses.add(testClass);

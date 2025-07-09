@@ -15,8 +15,6 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="create-build" />
-	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_builds" />
-	<liferay-util:param name="patcherProductVersionId" value="<%= String.valueOf(patcherCreateBuildsDisplayContext.getPatcherProductVersionId()) %>" />
 </liferay-util:include>
 
 <aui:model-context bean="<%= patcherBuild %>" model="<%= PatcherBuild.class %>" />
@@ -72,11 +70,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 						<aui:button-row>
 							<aui:button type="submit" value="add" />
 
-							<portlet:renderURL var="viewPatcherBuildsURL">
-								<portlet:param name="mvcRenderCommandName" value="/patcher/index_builds" />
-							</portlet:renderURL>
-
-							<aui:button href="<%= Validator.isNotNull(patcherCreateBuildsDisplayContext.getRedirect()) ? patcherCreateBuildsDisplayContext.getRedirect() : viewPatcherBuildsURL %>" value="cancel" />
+							<aui:button href="<%= patcherCreateBuildsDisplayContext.getRedirect() %>" value="cancel" />
 						</aui:button-row>
 					</clay:col>
 

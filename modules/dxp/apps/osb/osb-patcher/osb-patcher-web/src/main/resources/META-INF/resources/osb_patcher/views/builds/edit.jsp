@@ -23,7 +23,6 @@ patcherBuildTickets.retainAll(cumulativeFixedIssues);
 
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="edit-build" />
-	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_builds" />
 </liferay-util:include>
 
 <aui:model-context bean="<%= patcherBuild %>" model="<%= PatcherBuild.class %>" />
@@ -112,10 +111,6 @@ patcherBuildTickets.retainAll(cumulativeFixedIssues);
 	<aui:button-row>
 		<aui:button type="submit" value="update" />
 
-		<portlet:renderURL var="viewPatcherBuildsURL">
-			<portlet:param name="mvcRenderCommandName" value="/patcher/index_builds" />
-		</portlet:renderURL>
-
-		<aui:button href="<%= Validator.isNotNull(redirect) ? redirect : viewPatcherBuildsURL %>" value="cancel" />
+		<aui:button href="<%= redirect %>" value="cancel" />
 	</aui:button-row>
 </aui:form>

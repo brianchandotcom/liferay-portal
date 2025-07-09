@@ -24,7 +24,6 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="view-build" />
-	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_builds" />
 </liferay-util:include>
 
 <aui:model-context bean="<%= patcherBuild %>" model="<%= PatcherBuild.class %>" />

@@ -51,15 +51,10 @@ else if (patcherFixes.size() > 1) {
 		keyProperty="patcherFixId"
 		modelVar="patcherFix"
 	>
-		<portlet:renderURL var="viewPatcherBuildPatcherFixesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcRenderCommandName" value="/patcher/view_fixes_builds" />
-			<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
-		</portlet:renderURL>
-
 		<portlet:renderURL var="viewPatcherFixURL">
 			<portlet:param name="mvcRenderCommandName" value="/patcher/view_fixes" />
 			<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
-			<portlet:param name="redirect" value="<%= viewPatcherBuildPatcherFixesURL %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text>
@@ -158,7 +153,7 @@ else if (patcherFixes.size() > 1) {
 					<portlet:renderURL var="editPatcherFixURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_fixes" />
 						<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
-						<portlet:param name="redirect" value="<%= viewPatcherBuildPatcherFixesURL %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon
@@ -171,7 +166,7 @@ else if (patcherFixes.size() > 1) {
 				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.EXCLUDE, patcherFix.getUserId()) && (patcherFix.getType() != PatcherFixConstants.TYPE_EXCLUDED) %>">
 					<portlet:actionURL name="/patcher/exclude_fixes" var="excludePatcherFixURL">
 						<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
-						<portlet:param name="redirect" value="<%= viewPatcherBuildPatcherFixesURL %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon

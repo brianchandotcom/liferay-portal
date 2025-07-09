@@ -15,10 +15,6 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 	<liferay-util:param name="tabs1" value="qa-builds" />
 </liferay-util:include>
 
-<portlet:renderURL var="viewPatcherBuildsURL">
-	<portlet:param name="mvcRenderCommandName" value="/patcher/index_builds" />
-</portlet:renderURL>
-
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new PatcherBuildsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, patcherBuildsDisplayContext.getSearchContainer()) %>"
 />
@@ -80,6 +76,7 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 		<portlet:renderURL var="viewPatcherBuildURL">
 			<portlet:param name="mvcRenderCommandName" value="/patcher/view_builds" />
 			<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
@@ -246,6 +243,7 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 					<portlet:renderURL var="editPatcherBuildURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_builds" />
 						<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon
@@ -259,6 +257,7 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 					<portlet:renderURL var="createPatcherBuildTemplateURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/add_builds" />
 						<portlet:param name="templatePatcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon

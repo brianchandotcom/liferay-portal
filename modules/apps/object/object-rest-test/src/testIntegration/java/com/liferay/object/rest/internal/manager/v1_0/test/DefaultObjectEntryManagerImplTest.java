@@ -2773,6 +2773,9 @@ public class DefaultObjectEntryManagerImplTest
 				"integerObjectField", randomInt1
 			).build());
 
+		objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntry.getId());
+
 		Assert.assertEquals(
 			randomInt1 + 2,
 			MapUtil.getInteger(

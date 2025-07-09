@@ -744,3 +744,98 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Can add different roles to a user and view their status',
+	{tag: ['@LPD-59032']},
+	async ({apiHelpers, editUserPage, site, usersAndOrganizationsPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: 'Organization' + getRandomInt(),
+			});
+
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization.id,
+			user.emailAddress
+		);
+
+		apiHelpers.data.push({
+			id: `${organization.id}_${user.emailAddress}`,
+			type: 'organizationUserAccountAssociation',
+		});
+
+		await apiHelpers.jsonWebServicesUser.assignUsersToSite(
+			site.id,
+			user.id
+		);
+
+		await usersAndOrganizationsPage.goToUsers();
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+
+		await expect(editUserPage.rolesLink).toBeVisible();
+
+		await editUserPage.rolesLink.click();
+		await editUserPage.selectRegularRolesButton.click();
+
+		await expect(editUserPage.selectRegularRolesSearchInput).toBeEnabled();
+		await expect(
+			editUserPage.selectRegularRolesTable.cell('Approved')
+		).toBeVisible();
+
+		await editUserPage
+			.selectRegularRolesChooseButton('Administrator')
+			.click();
+		await editUserPage.selectOrganizationRolesButton.click();
+
+		await expect(
+			editUserPage.selectOrganizationRolesSearchBar
+		).toBeEnabled();
+		await expect(
+			(
+				await editUserPage.selectOrganizationRolesTableRow(
+					0,
+					'Organization Owner'
+				)
+			).row.getByText('Approved')
+		).toBeVisible();
+
+		await (
+			await editUserPage.selectOrganizationRolesChooseButton(
+				'Organization Owner'
+			)
+		).click();
+		await editUserPage.selectSiteRolesButton.click();
+
+		await expect(editUserPage.selectSiteRolesSearchBar).toBeEnabled();
+		await expect(
+			(
+				await editUserPage.selectSiteRolesTableRow(0, 'Site Owner')
+			).row.getByText('Approved')
+		).toBeVisible();
+
+		await (
+			await editUserPage.selectSiteRolesChooseButton('Site Owner')
+		).click();
+		await editUserPage.saveButton.click();
+
+		await expect(
+			(await editUserPage.regularRolesTable.firstRow()).getByText(
+				'Approved'
+			)
+		).toBeVisible();
+		await expect(
+			(await editUserPage.organizationRolesTable.firstRow()).getByText(
+				'Approved'
+			)
+		).toBeVisible();
+		await expect(
+			(await editUserPage.siteRolesTable.firstRow()).getByText('Approved')
+		).toBeVisible();
+	}
+);

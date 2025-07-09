@@ -28,7 +28,7 @@ public class DynamicObjectDefinitionLocalizationTableFactory {
 				objectFieldLocalService.getLocalizedObjectFields(
 					objectDefinition.getObjectDefinitionId(), false);
 
-			if(localizedObjectFields.isEmpty()){
+			if (localizedObjectFields.isEmpty()) {
 				return null;
 			}
 		}

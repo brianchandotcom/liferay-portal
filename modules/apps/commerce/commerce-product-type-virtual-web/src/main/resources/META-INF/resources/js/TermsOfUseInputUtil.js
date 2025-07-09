@@ -4,9 +4,7 @@
  */
 
 export default function ({
-	noneText,
 	portletNamespace,
-	selectWebContent,
     termsOfUseJournalArticleBrowserURL,
     useTermsOfUseJournal,
 }) {
@@ -64,7 +62,7 @@ export default function ({
                     }
                 },
                 selectEventName: 'selectJournalArticle',
-                title: selectWebContent,
+                title: Liferay.Language.get('select-web-content'),
                 url: termsOfUseJournalArticleBrowserURL,
             });
         });
@@ -82,7 +80,7 @@ export default function ({
             }
 
             journalArticleNameInput.innerText =
-                noneText;
+                Liferay.Language.get('none');
 
             journalArticleRemove.classList.add('hide');
             

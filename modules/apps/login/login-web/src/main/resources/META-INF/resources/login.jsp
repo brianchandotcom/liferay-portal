@@ -52,7 +52,7 @@
 				<portlet:param name="mvcRenderCommandName" value="/login/login" />
 			</portlet:actionURL>
 
-			<aui:form action="<%= loginURL %>" autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>' cssClass="sign-in-form" method="post" name="<%= formName %>" onSubmit="event.preventDefault();" validateOnBlur="<%= false %>">
+			<aui:form autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>' cssClass="sign-in-form" method="post" name="<%= formName %>" onSubmit="event.preventDefault();" validateOnBlur="<%= false %>">
 				<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 				<aui:input name="doActionAfterLogin" type="hidden" value="<%= portletName.equals(PortletKeys.FAST_LOGIN) ? true : false %>" />
@@ -180,11 +180,13 @@
 			<%@ include file="/navigation.jspf" %>
 		</div>
 
-		<aui:script sandbox="<%= true %>">
+		<aui:script position="inline" sandbox="<%= true %>">
 			var form = document.getElementById('<portlet:namespace /><%= formName %>');
 
 			if (form) {
 				form.addEventListener('submit', (event) => {
+					event.preventDefault();
+
 					<c:if test="<%= PropsValues.SESSION_ENABLE_PERSISTENT_COOKIES && PropsValues.SESSION_TEST_COOKIE_SUPPORT %>">
 						if (!navigator.cookieEnabled) {
 							document
@@ -204,6 +206,8 @@
 							redirect.setAttribute('value', redirectVal + window.location.hash);
 						}
 					</c:if>
+
+					form.action= '<%= loginURL %>';
 
 					submitForm(form);
 				});

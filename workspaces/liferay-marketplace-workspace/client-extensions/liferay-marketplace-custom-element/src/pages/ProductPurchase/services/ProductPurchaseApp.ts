@@ -4,16 +4,12 @@
  */
 
 import {Analytics} from '../../../core/Analytics';
-import {
-	ProductSpecificationKey,
-	SkuOptions,
-} from '../../../enums/Product';
+import {ProductSpecificationKey, SkuOptions} from '../../../enums/Product';
 import HeadlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
 import {postEmailAppInformation} from '../../../utils/api';
 import {
 	getProductPriceModel,
 	getSkuByOptionValueKey,
-	isCloudProduct,
 } from '../../../utils/productUtils';
 import {getSiteURL} from '../../../utils/site';
 import {getProductOrderTypes} from '../../GetApp/utils/getProductOrderTypes';
@@ -104,6 +100,7 @@ export default class ProductPurchaseApp extends ProductPurchase {
 			product?.productSpecifications || []
 		);
 
-		return getProductOrderTypes(productSpecificationValues).externalReferenceCode;
+		return getProductOrderTypes(productSpecificationValues)
+			.externalReferenceCode;
 	}
 }

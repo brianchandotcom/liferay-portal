@@ -79,12 +79,7 @@ public class MCPServerCompany {
 	}
 
 	public String getAllOpenAPIs(String accessToken) {
-		if (_openAPIs == null) {
-			_openAPIs = _callEndpoint(
-				"GET", _baseURL + "/openapi", null, accessToken);
-		}
-
-		return _openAPIs;
+		return _callEndpoint("GET", _baseURL + "/openapi", null, accessToken);
 	}
 
 	public String getOpenAPI(String url, String accessToken) {
@@ -145,7 +140,6 @@ public class MCPServerCompany {
 	}
 
 	private final String _baseURL;
-	private String _openAPIs;
 	private final TransportProvider _servlet;
 
 	private static class AccessTokenThreadLocal {

@@ -207,7 +207,7 @@
 						}
 					</c:if>
 
-					form.action= '<%= loginURL %>';
+					form.action = '<%= loginURL %>';
 
 					submitForm(form);
 				});

@@ -1404,6 +1404,11 @@ public class TestrayImporter {
 				testrayCaseName = testrayCaseName.substring(0, 150);
 			}
 
+			if (testrayCaseResult.getIssues() != null) {
+				testcasePropertiesMap.put(
+					"testray.jira.issues", testrayCaseResult.getIssues());
+			}
+
 			testcasePropertiesMap.put("testray.testcase.name", testrayCaseName);
 
 			testcasePropertiesMap.put(

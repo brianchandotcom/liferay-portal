@@ -205,6 +205,8 @@ public class JUnitBatchBuildTestrayCaseResult
 			testClassAnnotations.add(testClassMethod.getAnnotations());
 		}
 
+		List<TestReport> testReportList = getTestReports();
+
 		return String.join(", ", testClassAnnotations);
 	}
 
@@ -371,7 +373,7 @@ public class JUnitBatchBuildTestrayCaseResult
 
 		for (TestClassReport testClassReport : getTestClassReports()) {
 			String testClassName = testClassReport.getTestClassName();
-
+			
 			if (!testClassName.equals("junit.framework.TestSuite")) {
 				testReports.addAll(testClassReport.getTestReports());
 

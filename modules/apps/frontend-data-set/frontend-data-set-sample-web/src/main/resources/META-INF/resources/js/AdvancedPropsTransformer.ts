@@ -12,6 +12,7 @@ import CustomAuthorTableCell from './CustomAuthorTableCell';
 import SampleInfoPanel from './SampleInfoPanel';
 
 import type {
+	ICardSchema,
 	IFileDropSettings,
 	IInternalRenderer,
 	IView,
@@ -45,6 +46,8 @@ export default function propsTransformer({
 		props: any;
 	}) => {
 		if (item.title === 'Sample1') {
+			const schema = cardView.schema as ICardSchema;
+
 			return {
 				...props,
 				imgProps: {
@@ -55,6 +58,7 @@ export default function propsTransformer({
 					position: 'bottom-left',
 					shape: 'circle',
 				},
+				title: `${item[schema.title]} 🚀`,
 			};
 		}
 

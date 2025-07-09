@@ -58,7 +58,9 @@ public class PageSpecificationUtil {
 			return null;
 		}
 
-		if (pageSpecifications.length != 1) {
+		if ((pageSpecifications.length != 1) ||
+			!(pageSpecifications[0] instanceof WidgetPageSpecification)) {
+
 			throw new UnsupportedOperationException();
 		}
 

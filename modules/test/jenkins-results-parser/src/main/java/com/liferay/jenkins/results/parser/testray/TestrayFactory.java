@@ -38,6 +38,14 @@ public class TestrayFactory {
 
 	public static TestrayCaseResult newBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
+		AxisTestClassGroup axisTestClassGroup) {
+
+		return newBuildTestrayCaseResult(
+			testrayBuild, topLevelBuildReport, axisTestClassGroup, null, null);
+	}
+
+	public static TestrayCaseResult newBuildTestrayCaseResult(
+		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
 		return newBuildTestrayCaseResult(

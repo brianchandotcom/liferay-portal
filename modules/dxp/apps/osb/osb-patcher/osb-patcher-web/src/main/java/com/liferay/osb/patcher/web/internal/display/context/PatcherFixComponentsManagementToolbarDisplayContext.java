@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -46,11 +48,16 @@ public class PatcherFixComponentsManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
-					"mvcRenderCommandName", "/patcher/add_fix_components");
+					"mvcRenderCommandName", "/patcher/add_fix_components",
+					"redirect", themeDisplay.getURLCurrent());
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest, "create-fix-component"));

@@ -46,6 +46,7 @@ PatcherFixComponentsDisplayContext patcherFixComponentsDisplayContext = new Patc
 					<portlet:renderURL var="editPatcherFixComponentURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_fix_components" />
 						<portlet:param name="patcherFixComponentId" value="<%= String.valueOf(patcherFixComponent.getPatcherFixComponentId()) %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon

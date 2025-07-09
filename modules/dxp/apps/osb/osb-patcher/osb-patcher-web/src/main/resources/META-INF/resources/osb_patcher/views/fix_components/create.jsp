@@ -7,9 +7,12 @@
 
 <%@ include file="/osb_patcher/views/init.jsp" %>
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+%>
+
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="add-fix-component" />
-	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_fix_components" />
 </liferay-util:include>
 
 <aui:model-context bean="<%= null %>" model="<%= PatcherFixComponent.class %>" />
@@ -17,17 +20,13 @@
 <portlet:actionURL name="/patcher/add_fix_components" var="addPatcherFixComponentURL" />
 
 <aui:form action="<%= addPatcherFixComponentURL %>" method="post">
-	<portlet:renderURL var="viewPatcherFixComponentsURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/index_fix_components" />
-	</portlet:renderURL>
-
-	<aui:input name="redirect" type="hidden" value="<%= viewPatcherFixComponentsURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<aui:input name="name" type="text" />
 
 	<aui:button-row>
 		<aui:button type="submit" value="add" />
 
-		<aui:button href="<%= viewPatcherFixComponentsURL %>" value="cancel" />
+		<aui:button href="<%= redirect %>" value="cancel" />
 	</aui:button-row>
 </aui:form>

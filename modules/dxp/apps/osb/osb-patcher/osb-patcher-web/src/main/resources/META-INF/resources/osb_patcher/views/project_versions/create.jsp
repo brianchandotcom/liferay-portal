@@ -19,68 +19,70 @@ PatcherProjectVersionsDisplayContext patcherProjectVersionsDisplayContext = new 
 
 <portlet:actionURL name="/patcher/add_project_versions" var="addPatcherProjectVersionURL" />
 
-<aui:form action="<%= addPatcherProjectVersionURL %>" method="post">
-	<portlet:renderURL var="viewPatcherProjectVersionsURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/index_project_versions" />
-		<portlet:param name="patcherProductVersionId" value="<%= String.valueOf(patcherProjectVersionsDisplayContext.getPatcherProductVersionId()) %>" />
-	</portlet:renderURL>
+<liferay-frontend:edit-form
+	action="<%= addPatcherProjectVersionURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
+	<liferay-frontend:edit-form-body>
+		<aui:input name="redirect" type="hidden" value="<%= patcherProjectVersionsDisplayContext.getRedirect() %>" />
 
-	<aui:input name="redirect" type="hidden" value="<%= viewPatcherProjectVersionsURL %>" />
+		<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "toggleFixedIssuesField();" + liferayPortletResponse.getNamespace() + "toggleHideCheckbox();" %>'>
 
-	<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "toggleFixedIssuesField();" + liferayPortletResponse.getNamespace() + "toggleHideCheckbox();" %>'>
+			<%
+			for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
+			%>
 
-		<%
-		for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
-		%>
+				<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
 
-			<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
+			<%
+			}
+			%>
 
-		<%
-		}
-		%>
+		</aui:select>
 
-	</aui:select>
+		<aui:input name="name" />
 
-	<aui:input name="name" />
+		<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+			<aui:input name="combinedBranch" onChange='<%= liferayPortletResponse.getNamespace() + "toggleHideCheckbox()" %>' type="checkbox" />
+		</c:if>
 
-	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
-		<aui:input name="combinedBranch" onChange='<%= liferayPortletResponse.getNamespace() + "toggleHideCheckbox()" %>' type="checkbox" />
-	</c:if>
+		<aui:input label="tag-name" name="committish" />
 
-	<aui:input label="tag-name" name="committish" />
+		<aui:input name="repositoryName" />
 
-	<aui:input name="repositoryName" />
-
-	<span class="hide" id="<portlet:namespace />displayingFixedIssues">
-		<aui:input name="fixedIssues" />
-	</span>
-
-	<aui:select label="project-version-root" name="rootPatcherProjectVersionId" showEmptyOption="<%= true %>">
-
-		<%
-		for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getRootPatcherProjectVersions()) {
-		%>
-
-			<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-
-	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
-		<span class="hide" id="<portlet:namespace />displayingHide">
-			<aui:input name="hide" />
+		<span class="hide" id="<portlet:namespace />displayingFixedIssues">
+			<aui:input name="fixedIssues" />
 		</span>
-	</c:if>
 
-	<aui:button-row>
-		<aui:button type="submit" value="add" />
+		<aui:select label="project-version-root" name="rootPatcherProjectVersionId" showEmptyOption="<%= true %>">
 
-		<aui:button href="<%= viewPatcherProjectVersionsURL %>" value="cancel" />
-	</aui:button-row>
-</aui:form>
+			<%
+			for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getRootPatcherProjectVersions()) {
+			%>
+
+				<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
+		<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+			<span class="hide" id="<portlet:namespace />displayingHide">
+				<aui:input name="hide" />
+			</span>
+		</c:if>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= patcherProjectVersionsDisplayContext.getRedirect() %>"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	AUI().ready(function () {

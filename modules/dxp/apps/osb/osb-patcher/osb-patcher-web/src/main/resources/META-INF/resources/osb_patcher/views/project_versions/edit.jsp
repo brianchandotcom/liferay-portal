@@ -21,54 +21,57 @@ PatcherProjectVersion patcherProjectVersion = patcherProjectVersionsDisplayConte
 
 <portlet:actionURL name="/patcher/update_project_versions" var="updatePatcherProjectVersionURL" />
 
-<aui:form action="<%= updatePatcherProjectVersionURL %>" method="post">
-	<portlet:renderURL var="viewPatcherProjectVersionsURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/index_project_versions" />
-	</portlet:renderURL>
+<liferay-frontend:edit-form
+	action="<%= updatePatcherProjectVersionURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
+	<liferay-frontend:edit-form-body>
+		<aui:input name="redirect" type="hidden" value="<%= patcherProjectVersionsDisplayContext.getRedirect() %>" />
+		<aui:input name="patcherProjectVersionId" type="hidden" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
 
-	<aui:input name="redirect" type="hidden" value="<%= viewPatcherProjectVersionsURL %>" />
-	<aui:input name="patcherProjectVersionId" type="hidden" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
+		<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "toggleFixedIssuesField();" + liferayPortletResponse.getNamespace() + "toggleHideCheckbox();" %>'>
 
-	<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "toggleFixedIssuesField();" + liferayPortletResponse.getNamespace() + "toggleHideCheckbox();" %>'>
+			<%
+			for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
+			%>
 
-		<%
-		for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
-		%>
+				<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
 
-			<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
+			<%
+			}
+			%>
 
-		<%
-		}
-		%>
+		</aui:select>
 
-	</aui:select>
+		<aui:input disabled="<%= patcherProjectVersionsDisplayContext.isNameDisabled() %>" name="name" />
 
-	<aui:input disabled="<%= patcherProjectVersionsDisplayContext.isNameDisabled() %>" name="name" />
+		<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+			<aui:input name="combinedBranch" onChange='<%= liferayPortletResponse.getNamespace() + "toggleHideCheckbox()" %>' type="checkbox" value="<%= patcherProjectVersion.isCombinedBranch() %>" />
+		</c:if>
 
-	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
-		<aui:input name="combinedBranch" onChange='<%= liferayPortletResponse.getNamespace() + "toggleHideCheckbox()" %>' type="checkbox" value="<%= patcherProjectVersion.isCombinedBranch() %>" />
-	</c:if>
+		<aui:input label="tag-name" name="committish" />
 
-	<aui:input label="tag-name" name="committish" />
+		<aui:input name="repositoryName" />
 
-	<aui:input name="repositoryName" />
-
-	<span class="hide" id="<portlet:namespace />displayingFixedIssues">
-		<aui:input name="fixedIssues" />
-	</span>
-
-	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
-		<span class="hide" id="<portlet:namespace />displayingHide">
-			<aui:input name="hide" />
+		<span class="hide" id="<portlet:namespace />displayingFixedIssues">
+			<aui:input name="fixedIssues" type="textarea" />
 		</span>
-	</c:if>
 
-	<aui:button-row>
-		<aui:button type="submit" value="update" />
+		<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+			<span class="hide" id="<portlet:namespace />displayingHide">
+				<aui:input name="hide" />
+			</span>
+		</c:if>
+	</liferay-frontend:edit-form-body>
 
-		<aui:button href="<%= viewPatcherProjectVersionsURL %>" value="cancel" />
-	</aui:button-row>
-</aui:form>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= patcherProjectVersionsDisplayContext.getRedirect() %>"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	AUI().ready(function () {

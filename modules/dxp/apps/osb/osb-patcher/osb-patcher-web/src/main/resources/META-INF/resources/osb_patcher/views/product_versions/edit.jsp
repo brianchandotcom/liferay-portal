@@ -8,6 +8,8 @@
 <%@ include file="/osb_patcher/views/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersionId");
 
 PatcherProductVersion patcherProductVersion = PatcherProductVersionLocalServiceUtil.fetchPatcherProductVersion(patcherProductVersionId);
@@ -21,27 +23,30 @@ PatcherProductVersion patcherProductVersion = PatcherProductVersionLocalServiceU
 
 <portlet:actionURL name="/patcher/update_product_versions" var="updatePatcherProductVersionURL" />
 
-<aui:form action="<%= updatePatcherProductVersionURL %>" method="post">
-	<portlet:renderURL var="viewPatcherProductVersionsURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/index_product_versions" />
-	</portlet:renderURL>
-
-	<aui:input name="redirect" type="hidden" value="<%= viewPatcherProductVersionsURL %>" />
+<liferay-frontend:edit-form
+	action="<%= updatePatcherProductVersionURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="patcherProductVersionId" type="hidden" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
 
-	<aui:input name="name" />
+	<liferay-frontend:edit-form-body>
+		<aui:input name="name" />
 
-	<aui:select label="fix-delivery-method" name="fixDeliveryMethod">
-		<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_FIX_PACK_20 %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_FIX_PACK_20 %>" />
-		<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_FIX_PACK_30 %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_FIX_PACK_30 %>" />
-		<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_MARKETPLACE_RELEASE %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_MARKETPLACE_RELEASE %>" />
-	</aui:select>
+		<aui:select label="fix-delivery-method" name="fixDeliveryMethod">
+			<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_FIX_PACK_20 %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_FIX_PACK_20 %>" />
+			<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_FIX_PACK_30 %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_FIX_PACK_30 %>" />
+			<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_MARKETPLACE_RELEASE %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_MARKETPLACE_RELEASE %>" />
+		</aui:select>
 
-	<aui:input label="module-folder-name" name="moduleFolderName" />
+		<aui:input label="module-folder-name" name="moduleFolderName" />
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
-		<aui:button type="submit" value="update" />
-
-		<aui:button href="<%= viewPatcherProductVersionsURL %>" value="cancel" />
-	</aui:button-row>
-</aui:form>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

@@ -1053,7 +1053,7 @@ public class PageSpecificationResourceTest
 		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithSettings(
 			pageSpecification, serviceContext,
 			settings -> PageSpecificationsTestUtil.getWidgetPageSpecification(
-				settings));
+				null, settings, null));
 
 		pageSpecification.setStatus(PageSpecification.Status.DRAFT);
 

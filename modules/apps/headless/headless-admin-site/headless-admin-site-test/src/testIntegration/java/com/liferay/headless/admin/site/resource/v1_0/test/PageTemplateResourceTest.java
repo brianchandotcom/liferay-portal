@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
+import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplateSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
@@ -1266,6 +1267,77 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testGroup.getExternalReferenceCode());
 	}
 
+	private void _testPostSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications()
+		throws Exception {
+
+		PageTemplateResource pageTemplateResource = _getPageTemplateResource();
+
+		PageTemplate pageTemplate = _getWidgetPageTemplate(testGroup);
+
+		pageTemplate.setPageSpecifications(
+			() -> new PageSpecification[] {
+				PageSpecificationsTestUtil.getContentPageSpecification(
+					null, PageSpecification.Status.APPROVED)
+			});
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
+				pageTemplate, testGroup.getExternalReferenceCode()));
+
+		WidgetPageSpecification widgetPageSpecification =
+			PageSpecificationsTestUtil.getWidgetPageSpecification(
+				pageTemplate.getExternalReferenceCode(), null,
+				PageSpecification.Status.APPROVED);
+
+		pageTemplate.setPageSpecifications(
+			() -> new PageSpecification[] {
+				widgetPageSpecification, widgetPageSpecification
+			});
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
+				pageTemplate, testGroup.getExternalReferenceCode()));
+
+		widgetPageSpecification.setStatus(PageSpecification.Status.DRAFT);
+
+		pageTemplate.setPageSpecifications(
+			() -> new PageSpecification[] {widgetPageSpecification});
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
+				pageTemplate, testGroup.getExternalReferenceCode()));
+
+		widgetPageSpecification.setExternalReferenceCode(
+			RandomTestUtil::randomString);
+		widgetPageSpecification.setStatus(PageSpecification.Status.APPROVED);
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
+				pageTemplate, testGroup.getExternalReferenceCode()));
+
+		widgetPageSpecification.setExternalReferenceCode(
+			pageTemplate.getExternalReferenceCode());
+
+		PageTemplate postPageTemplate =
+			pageTemplateResource.
+				postSiteSiteByExternalReferenceCodePageTemplate(
+					testGroup.getExternalReferenceCode(), pageTemplate);
+
+		PageSpecification[] pageSpecifications =
+			postPageTemplate.getPageSpecifications();
+
+		Assert.assertEquals(
+			Arrays.toString(pageSpecifications), 1, pageSpecifications.length);
+
+		PageSpecificationsTestUtil.assertWidgetPageSpecification(
+			widgetPageSpecification,
+			(WidgetPageSpecification)pageSpecifications[0]);
+	}
+
 	private void _testPostSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications()
 		throws Exception {
 
@@ -1278,6 +1350,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
 		_testPostSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
+		_testPostSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications();
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodePageTemplate(

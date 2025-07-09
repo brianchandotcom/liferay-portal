@@ -54,8 +54,7 @@ public class ObjectDefinitionItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _language.get(
-			_portal.getResourceBundle(locale), "object-definitions");
+		return _language.get(_portal.getResourceBundle(locale), "objects");
 	}
 
 	@Override

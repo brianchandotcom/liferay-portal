@@ -52,8 +52,7 @@ public class ObjectDefinitionDisplayContext {
 
 		SearchContainer<ObjectDefinition> objectDefinitionSearchContainer =
 			new SearchContainer<>(
-				_renderRequest, _portletURL, null,
-				"there-are-no-object-definitions");
+				_renderRequest, _portletURL, null, "there-are-no-objects");
 
 		objectDefinitionSearchContainer.setId("selectObjectDefinition");
 		objectDefinitionSearchContainer.setOrderByCol(_getOrderByCol());

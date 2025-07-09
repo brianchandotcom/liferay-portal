@@ -3726,9 +3726,14 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static boolean isBuildCachingEnabled() {
+		String buildCachingEnabled = System.getenv("BUILD_CACHING_ENABLED");
+
+		if (Objects.equals(buildCachingEnabled, "true")) {
+			return true;
+		}
+
 		try {
-			String buildCachingEnabled = getBuildProperty(
-				"build.caching.enabled");
+			buildCachingEnabled = getBuildProperty("build.caching.enabled");
 
 			if (Objects.equals(buildCachingEnabled, "true")) {
 				return true;

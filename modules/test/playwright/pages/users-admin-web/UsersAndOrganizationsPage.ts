@@ -57,6 +57,10 @@ export class UsersAndOrganizationsPage {
 	readonly assignOrganizationRolesTableRowLink: (
 		roleName: string
 	) => Promise<Locator>;
+	readonly assignOrganizationRolesTableStatus: (
+		roleName: string,
+		status: string
+	) => Promise<Locator>;
 	readonly assignOrganizationRolesUserCell: (
 		userName: string
 	) => Promise<Locator>;
@@ -228,6 +232,20 @@ export class UsersAndOrganizationsPage {
 			}
 
 			throw new Error(`Cannot locate role row with name ${roleName}`);
+		};
+		this.assignOrganizationRolesTableStatus = async (
+			roleName: string,
+			status: string
+		) => {
+			const assignOrganizationRolesTableRow =
+				await this.assignOrganizationRolesTableRow(0, roleName);
+
+			if (
+				assignOrganizationRolesTableRow &&
+				assignOrganizationRolesTableRow.row
+			) {
+				return assignOrganizationRolesTableRow.row.getByText(status);
+			}
 		};
 		this.assignOrganizationRolesUserCell = async (userName: string) => {
 			return page.getByRole('cell', {

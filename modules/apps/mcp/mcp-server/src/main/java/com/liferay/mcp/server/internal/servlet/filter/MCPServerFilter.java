@@ -18,6 +18,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -101,6 +103,9 @@ public class MCPServerFilter extends BasePortalFilter {
 			httpServletResponse.setHeader("Content-Type", "application/json");
 			httpServletResponse.setHeader("Cache-Control", "no-cache");
 
+			List<String> redirectURIsList =
+				oAuth2Application.getRedirectURIsList();
+
 			httpServletResponse.getWriter(
 			).write(
 				JSONUtil.put(
@@ -109,6 +114,8 @@ public class MCPServerFilter extends BasePortalFilter {
 					"client_secret", oAuth2Application.getClientSecret()
 				).put(
 					"client_secret_expires_at", 0
+				).put(
+					"redirect_uris", JSONUtil.putAll(redirectURIsList.toArray())
 				).toString()
 			);
 

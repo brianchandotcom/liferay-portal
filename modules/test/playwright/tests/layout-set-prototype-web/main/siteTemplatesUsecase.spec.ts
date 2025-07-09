@@ -5,17 +5,9 @@
 
 import {mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
-import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
-import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
-import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
-import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
-import {sitesPageTest} from '../../../fixtures/sitesPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi} from '../../../utils/performLogin';
 import {localizationPagesTest} from '../../site-admin-web/main/fixtures/localizationPagesTest';
@@ -25,20 +17,12 @@ const VIRTUAL_INSTANCE_DOMAIN = 'able.com';
 const VIRTUAL_INSTANCE_FULL_URL = `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`;
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-39304': {enabled: true},
 	}),
 	loginTest(),
-	localizationPagesTest,
-	masterPagesPagesTest,
-	pagesAdminPagesTest,
-	pageEditorPagesTest,
-	pageTemplatesPagesTest,
-	pageViewModePagesTest,
-	productMenuPageTest,
-	sitesPageTest
+	localizationPagesTest
 );
 
 test(

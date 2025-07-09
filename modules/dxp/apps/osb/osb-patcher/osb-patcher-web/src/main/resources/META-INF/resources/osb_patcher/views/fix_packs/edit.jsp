@@ -53,9 +53,15 @@ boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PA
 
 	<liferay-frontend:edit-form-body>
 		<c:if test="<%= patcherFix != null %>">
-			<aui:field-wrapper label="git-hash">
-				<a href="<%= gitHubURL %>" target="_blank"><%= patcherFix.getGitHash() %></a>
-			</aui:field-wrapper>
+			<div class="c-mb-3">
+				<p class="c-mb-1 font-weight-semi-bold text-3">
+					<liferay-ui:message key="git-hash" />
+				</p>
+
+				<p class="text-secondary">
+					<a href="<%= gitHubURL %>" target="_blank"><%= patcherFix.getGitHash() %></a>
+				</p>
+			</div>
 		</c:if>
 
 		<aui:select disabled="<%= true %>" label="project-version" name="patcherProjectVersionId" required="<%= true %>" showEmptyOption="<%= true %>">
@@ -88,9 +94,15 @@ boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PA
 
 		<aui:input name="version" type="hidden" value="<%= patcherFixPack.getVersion() %>" />
 
-		<aui:field-wrapper label="version">
-			<%= patcherFixPack.getVersion() %>
-		</aui:field-wrapper>
+		<div class="c-mb-3">
+			<p class="c-mb-1 font-weight-semi-bold text-3">
+				<liferay-ui:message key="version" />
+			</p>
+
+			<p class="text-secondary">
+				<%= patcherFixPack.getVersion() %>
+			</p>
+		</div>
 
 		<aui:select disabled="<%= released %>" name="status" showEmptyOption="<%= false %>">
 			<c:if test="<%= patcherFixPack.getStatus() != WorkflowConstants.STATUS_FIX_PACK_RELEASED %>">
@@ -104,9 +116,15 @@ boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PA
 		</aui:select>
 
 		<c:if test="<%= patcherFixPack.getReleasedDate() != null %>">
-			<aui:field-wrapper label="released-date">
-				<%= dateTimeFormat.format(patcherFixPack.getReleasedDate()) %>
-			</aui:field-wrapper>
+			<div class="c-mb-3">
+				<p class="c-mb-1 font-weight-semi-bold text-3">
+					<liferay-ui:message key="released-date" />
+				</p>
+
+				<p class="text-secondary">
+					<%= dateTimeFormat.format(patcherFixPack.getReleasedDate()) %>
+				</p>
+			</div>
 		</c:if>
 
 		<aui:input disabled="<%= released %>" name="requirements" />

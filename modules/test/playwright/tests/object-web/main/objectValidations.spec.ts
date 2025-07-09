@@ -46,13 +46,11 @@ test.describe('Object Unique Composite Key Validation', () => {
 	test.beforeEach(async ({apiHelpers}) => {
 		const newObjectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
 		const newObjectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 

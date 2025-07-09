@@ -50,7 +50,6 @@ test.describe('Manage object definitions through Model Builder', () => {
 	}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -198,13 +197,11 @@ test.describe('Manage object definitions through Model Builder', () => {
 	}) => {
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 2},
 			});
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 2},
 			});
 
@@ -260,7 +257,6 @@ test.describe('Manage object definitions through Model Builder', () => {
 	}) => {
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -335,7 +331,6 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -679,13 +674,11 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 	}) => {
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 2},
 			});
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 2},
 			});
 
@@ -739,7 +732,6 @@ test.describe('Manage object definitions through a Page', () => {
 	}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -778,7 +770,6 @@ test.describe('Manage object definitions through a Page', () => {
 	}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 

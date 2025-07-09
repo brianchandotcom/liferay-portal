@@ -334,7 +334,6 @@ test.describe('ensure picklist translation', () => {
 
 		const objectDefinition: ObjectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -431,7 +430,6 @@ test.describe('ensure picklist translation', () => {
 
 		const objectDefinition: ObjectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 		apiHelpers.data.push({

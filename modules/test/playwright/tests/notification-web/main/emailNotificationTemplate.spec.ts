@@ -38,7 +38,6 @@ const notificationTemplateInfo = {
 
 test.beforeEach(async ({apiHelpers}) => {
 	objectDefinition = await apiHelpers.objectAdmin.postRandomObjectDefinition({
-		objectFolderExternalReferenceCode: 'default',
 		status: {code: 0},
 	});
 });

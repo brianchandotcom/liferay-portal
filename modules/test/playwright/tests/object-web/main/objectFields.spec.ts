@@ -48,7 +48,6 @@ const createdEntities = {
 test.beforeEach(async ({apiHelpers}) => {
 	const newObjectDefinition =
 		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFolderExternalReferenceCode: 'default',
 			status: {code: 0},
 		});
 
@@ -318,7 +317,6 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		const draftObjectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 2},
 			});
 
@@ -772,7 +770,6 @@ test.describe('Manage object fields through Model Builder', () => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields,
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -1226,7 +1223,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 	}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -1340,7 +1336,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields,
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 

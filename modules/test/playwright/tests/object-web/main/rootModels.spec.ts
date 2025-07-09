@@ -45,13 +45,11 @@ test.describe('Manage root model elements through View Object Entries', () => {
 		try {
 			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 0},
 				});
 
 			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 0},
 				});
 
@@ -174,14 +172,12 @@ test.describe('Manage root model elements through View Object Entries', () => {
 
 			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					panelCategoryKey: 'control_panel.object',
 					status: {code: 0},
 				});
 
 			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					panelCategoryKey: 'control_panel.object',
 					status: {code: 0},
 					titleObjectFieldName: 'textField',
@@ -494,13 +490,11 @@ test.describe('Manage root models elements through Objects Admin', () => {
 		try {
 			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 0},
 				});
 
 			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 0},
 				});
 
@@ -591,13 +585,11 @@ test.describe('Manage root models elements through Objects Admin', () => {
 		try {
 			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 0},
 				});
 
 			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 0},
 				});
 
@@ -688,12 +680,10 @@ test.describe('Manage root models elements through Objects Admin', () => {
 		try {
 			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 1},
 				});
 			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 1},
 				});
 
@@ -1218,13 +1208,11 @@ test.describe('Manage root models elements through Model Builder', () => {
 		try {
 			const objectDefinition1 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 2},
 				});
 
 			const objectDefinition2 =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 2},
 				});
 

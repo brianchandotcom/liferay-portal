@@ -284,7 +284,6 @@ test.describe('Manage object relationships through Model Builder', () => {
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -452,7 +451,6 @@ test.describe('Manage object relationships through Model Builder', () => {
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -688,7 +686,6 @@ test.describe('Manage object relationships through Model Builder', () => {
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 		apiHelpers.data.push({
@@ -975,7 +972,6 @@ test.describe('Manage object relationships through Model Builder', () => {
 					},
 					name: 'Address',
 					objectFields: [],
-					objectFolderExternalReferenceCode: 'default',
 					pluralLabel: {
 						en_US: 'Custom Postal Addresses',
 					},
@@ -1176,7 +1172,6 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 	}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 

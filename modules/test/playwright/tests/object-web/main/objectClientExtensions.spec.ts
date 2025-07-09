@@ -72,7 +72,6 @@ test.beforeEach(async ({apiHelpers}) => {
 			},
 			name: 'Employee',
 			objectFields,
-			objectFolderExternalReferenceCode: 'default',
 			panelCategoryKey: 'control_panel.object',
 			pluralLabel: {
 				en_US: 'Employees',
@@ -107,7 +106,6 @@ test('Can create, read, update, and delete object entries that use the client ex
 			},
 			name: 'Name' + getRandomInt(),
 			objectFields: [],
-			objectFolderExternalReferenceCode: 'default',
 			panelCategoryKey: 'control_panel.object',
 			pluralLabel: {
 				en_US: getRandomString(),

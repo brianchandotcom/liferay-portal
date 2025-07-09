@@ -444,7 +444,6 @@ test.describe('Manage object entries through Object Definition widget', () => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				className: 'com.liferay.object.model.ObjectDefinition#1234',
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 				titleObjectFieldName: 'textField',
 			});
@@ -1151,7 +1150,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 	}) => {
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 				titleObjectFieldName: 'textField',
 			});
@@ -1163,7 +1161,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -1238,7 +1235,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				scope: 'company',
 				status: {code: 0},
 				titleObjectFieldName: objectField,
@@ -1251,7 +1247,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				scope: 'company',
 				status: {code: 0},
 				titleObjectFieldName: objectField,
@@ -1397,7 +1392,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 				objectFields: [
 					mockedObjectFields.attachmentFieldDocumentsAndMedia,
 				],
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -1434,7 +1428,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields,
-				objectFolderExternalReferenceCode: 'default',
 				panelCategoryKey: 'control_panel.object',
 				status: {code: 0},
 				titleObjectFieldName: 'customField',
@@ -1615,7 +1608,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 			objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					objectFields,
-					objectFolderExternalReferenceCode: 'default',
 					panelCategoryKey: 'control_panel.object',
 					status: {code: 0},
 					titleObjectFieldName: 'customField',
@@ -1880,7 +1872,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFields: [mockedObjectFields.attachmentFieldUserComputer],
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
@@ -2022,7 +2013,6 @@ test.describe('Manage object entries through Workflow', () => {
 	}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 				titleObjectFieldName: 'textField',
 			});
@@ -2091,7 +2081,6 @@ test.describe('Manage object entries through Workflow', () => {
 
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 				titleObjectFieldName: 'textField',
 			});

@@ -57,7 +57,6 @@ test('can add and remove new object fields from object view while maintaining co
 					state: false,
 				},
 			],
-			objectFolderExternalReferenceCode: 'default',
 			status: {code: 0},
 		});
 
@@ -106,13 +105,11 @@ test('can create an object custom view using object relationship entry', async (
 }) => {
 	const objectDefinition1 =
 		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFolderExternalReferenceCode: 'default',
 			status: {code: 0},
 		});
 
 	const objectDefinition2 =
 		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFolderExternalReferenceCode: 'default',
 			status: {code: 0},
 		});
 	apiHelpers.data.push({id: objectDefinition1.id, type: 'objectDefinition'});
@@ -217,7 +214,6 @@ test('cannot create an object custom view using empty multiselectpicklist entry'
 					state: false,
 				},
 			],
-			objectFolderExternalReferenceCode: 'default',
 			status: {code: 0},
 		});
 

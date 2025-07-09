@@ -1203,7 +1203,6 @@ test.describe('Manage object entries through Page Templates', () => {
 				},
 				name: objectDefinitionExternalReferenceCode,
 				objectFields,
-				objectFolderExternalReferenceCode: 'default',
 				pluralLabel: {
 					en_US: objectDefinitionExternalReferenceCode,
 				},
@@ -1220,7 +1219,6 @@ test.describe('Manage object entries through Page Templates', () => {
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 

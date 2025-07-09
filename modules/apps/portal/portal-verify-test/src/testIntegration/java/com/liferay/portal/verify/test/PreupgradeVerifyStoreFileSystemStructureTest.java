@@ -299,7 +299,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	private File _touch(File file, Object fileName) throws Exception {
 		file = new File(file, String.valueOf(fileName));
 
-		FileUtil.write(file, "");
+		FileUtil.touch(file);
 
 		return file;
 	}

@@ -44,7 +44,6 @@ public class CTSChildLocalServiceImpl extends CTSChildLocalServiceBaseImpl {
 		ctsChild.setCompanyId(companyId);
 		ctsChild.setCtsGrandParentId(ctsGrandParentId);
 		ctsChild.setParentCTSChildId(parentCTSChildId);
-
 		ctsChild.setCtsParentName(ctsParentName);
 		ctsChild.setName(String.valueOf(ctsChildId));
 
@@ -101,11 +100,11 @@ public class CTSChildLocalServiceImpl extends CTSChildLocalServiceBaseImpl {
 	public List<CTSChild> getCTSChildrenByCTSGrandParentId(
 		long ctsGrandParentId) {
 
-		CTSGrandParent grandParent = _grandParentPersistence.fetchByPrimaryKey(
-			ctsGrandParentId);
+		CTSGrandParent ctsGrandParent =
+			_grandParentPersistence.fetchByPrimaryKey(ctsGrandParentId);
 
 		return ctsChildPersistence.findByC_C(
-			grandParent.getCompanyId(), ctsGrandParentId);
+			ctsGrandParent.getCompanyId(), ctsGrandParentId);
 	}
 
 	@Override
@@ -122,7 +121,7 @@ public class CTSChildLocalServiceImpl extends CTSChildLocalServiceBaseImpl {
 
 	@Override
 	public CTSChild updateCTSChild(CTSChild ctsChild) {
-		ctsChild.setName(ctsChild.getName() + " updated");
+		ctsChild.setName(ctsChild.getName() + " Updated");
 
 		return ctsChildPersistence.update(ctsChild);
 	}

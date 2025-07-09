@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -485,8 +486,8 @@ public class EmailNotificationType extends BaseNotificationType {
 				_accountEntryUserRelLocalService, _groupLocalService,
 				_objectDefinitionLocalService, _objectFieldLocalService,
 				_organizationLocalService, _permissionCheckerFactory,
-				_roleLocalService, _userGroupRoleLocalService,
-				_userLocalService));
+				_resourcePermissionLocalService, _roleLocalService,
+				_userGroupRoleLocalService, _userLocalService));
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, TemplateContextContributor.class,
@@ -796,6 +797,9 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

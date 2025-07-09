@@ -449,6 +449,14 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				widgetPageTemplate.getPageSpecifications());
 
 		if (widgetPageSpecification != null) {
+			if ((widgetPageSpecification.getExternalReferenceCode() != null) &&
+				!Objects.equals(
+					widgetPageTemplate.getExternalReferenceCode(),
+					widgetPageSpecification.getExternalReferenceCode())) {
+
+				throw new UnsupportedOperationException();
+			}
+
 			Layout prototypeLayout = LayoutUtil.getLayoutPrototypeLayout(
 				serviceContext.getScopeGroupId(), widgetPageSpecification,
 				serviceContext);

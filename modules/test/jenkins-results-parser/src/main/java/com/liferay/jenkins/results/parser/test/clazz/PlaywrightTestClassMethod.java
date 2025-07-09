@@ -92,6 +92,12 @@ public class PlaywrightTestClassMethod extends TestClassMethod {
 	}
 
 	protected PlaywrightTestClassMethod(
+		boolean ignored, String name, String tags, TestClass testClass) {
+
+		super(ignored, name, tags, testClass);
+	}
+
+	protected PlaywrightTestClassMethod(
 		boolean ignored, String name, TestClass testClass) {
 
 		super(ignored, name, testClass);

@@ -59,9 +59,9 @@ public abstract class BaseSectionDisplayContextTestCase
 	@Test
 	@TestInfo("LPD-50664")
 	public void testGetCreationMenu() throws Exception {
-		Map<String, String> expectedResultMap = getExpectedCreationMenuItems();
+		Map<String, String> expectedCreationMenuItems = getExpectedCreationMenuItems();
 
-		_testGetCreationMenu(getCreationMenu(), expectedResultMap);
+		_testGetCreationMenu(getCreationMenu(), expectedCreationMenuItems);
 
 		ObjectFolder objectFolder = null;
 
@@ -78,7 +78,7 @@ public abstract class BaseSectionDisplayContextTestCase
 				ObjectDefinitionConstants.SCOPE_DEPOT,
 				WorkflowConstants.STATUS_APPROVED);
 
-			expectedResultMap.put(
+			expectedCreationMenuItems.put(
 				objectDefinition.getLabel(LocaleUtil.US),
 				getRedirect(
 					objectDefinition,
@@ -112,7 +112,7 @@ public abstract class BaseSectionDisplayContextTestCase
 			ObjectDefinitionConstants.SCOPE_SITE,
 			WorkflowConstants.STATUS_APPROVED);
 
-		_testGetCreationMenu(getCreationMenu(), expectedResultMap);
+		_testGetCreationMenu(getCreationMenu(), expectedCreationMenuItems);
 	}
 
 	@Test
@@ -447,21 +447,22 @@ public abstract class BaseSectionDisplayContextTestCase
 	}
 
 	private void _testGetCreationMenu(
-		CreationMenu creationMenu, Map<String, String> expectedResultMap) {
+		CreationMenu creationMenu,
+		Map<String, String> expectedCreationMenuItems) {
 
 		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(
 			"primaryItems");
 
 		Assert.assertEquals(
-			dropdownItems.toString(), expectedResultMap.size(),
+			dropdownItems.toString(), expectedCreationMenuItems.size(),
 			dropdownItems.size());
 
-		for (Map.Entry<String, String> entry : expectedResultMap.entrySet()) {
+		for (Map.Entry<String, String> entry :
+				expectedCreationMenuItems.entrySet()) {
+
 			DropdownItem dropdownItem = _get(dropdownItems, entry.getKey());
 
-			Assert.assertNotNull(
-				"Not found DropdownItem with label " + entry.getKey(),
-				dropdownItem);
+			Assert.assertNotNull(dropdownItem);
 
 			if (Validator.isNull(entry.getValue())) {
 				Assert.assertNull(_getRedirect(dropdownItem));

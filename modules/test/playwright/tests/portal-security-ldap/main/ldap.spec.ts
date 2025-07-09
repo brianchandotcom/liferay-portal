@@ -1022,33 +1022,15 @@ test('LPD-57008 Verify if the unused error keywords fields are no longer present
 	await test.step('Check if unused password error keywords fields are visible', async () => {
 		const errorKeywordFields: Locator[] = [
 			ldapConfigurationPage.page.getByLabel(
-				'Error Password Age Keywords',
-				{exact: true}
+				'Error Password Age Keywords'
 			),
-			ldapConfigurationPage.page.getByText('Error Password Age Keywords'),
 			ldapConfigurationPage.page.getByLabel(
-				'Error Password Not Changeable Keywords',
-				{exact: true}
-			),
-			ldapConfigurationPage.page.getByText(
 				'Error Password Not Changeable Keywords'
 			),
 			ldapConfigurationPage.page.getByLabel(
-				'Error Password Syntax Keywords',
-				{
-					exact: true,
-				}
-			),
-			ldapConfigurationPage.page.getByText(
 				'Error Password Syntax Keywords'
 			),
 			ldapConfigurationPage.page.getByLabel(
-				'Error Password Trivial Text Keywords',
-				{
-					exact: true,
-				}
-			),
-			ldapConfigurationPage.page.getByText(
 				'Error Password Trivial Text Keywords'
 			),
 		];

@@ -154,6 +154,11 @@ public class PlaywrightBatchBuildTestrayCaseResult
 	}
 
 	@Override
+	public String getIssues() {
+		return _playwrightTestClassMethod.getAnnotations();
+	}
+
+	@Override
 	public String getName() {
 		if (_playwrightJUnitTestClass == null) {
 			return super.getName();

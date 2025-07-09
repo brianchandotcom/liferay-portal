@@ -112,25 +112,6 @@ export class LdapConfigurationPage {
 		await this.page.getByText('Factory Initial').waitFor();
 	}
 
-	getUnusedPasswordErrorKeywordsFields() {
-		return [
-			this.page.getByText('Error Password Age Keywords'),
-			this.page.getByLabel('Error Password Age Keywords', {exact: true}),
-			this.page.getByText('Error Password Not Changeable Keywords'),
-			this.page.getByLabel('Error Password Not Changeable Keywords', {
-				exact: true,
-			}),
-			this.page.getByText('Error Password Syntax Keywords'),
-			this.page.getByLabel('Error Password Syntax Keywords', {
-				exact: true,
-			}),
-			this.page.getByText('Error Password Trivial Text Keywords'),
-			this.page.getByLabel('Error Password Trivial Text Keywords', {
-				exact: true,
-			}),
-		];
-	}
-
 	async resetLdapConfiguration() {
 		await this.goTo();
 

@@ -28,7 +28,7 @@ public class ObjectDefinitionTableItemView implements TableItemView {
 
 	@Override
 	public List<String> getHeaderNames() {
-		return ListUtil.fromArray("label", "modified-date");
+		return ListUtil.fromArray("label", "scope", "modified-date");
 	}
 
 	@Override
@@ -43,6 +43,15 @@ public class ObjectDefinitionTableItemView implements TableItemView {
 			HtmlUtil.escape(_objectDefinition.getLabel(locale)));
 
 		searchEntries.add(labelTextSearchEntry);
+
+		TextSearchEntry scopeTextSearchEntry = new TextSearchEntry();
+
+		scopeTextSearchEntry.setCssClass(
+			"entry entry-selector table-cell-expand table-cell-minw-200");
+		scopeTextSearchEntry.setName(
+			HtmlUtil.escape(_objectDefinition.getScope()));
+
+		searchEntries.add(scopeTextSearchEntry);
 
 		DateSearchEntry modifiedDateTextDateSearchEntry = new DateSearchEntry();
 

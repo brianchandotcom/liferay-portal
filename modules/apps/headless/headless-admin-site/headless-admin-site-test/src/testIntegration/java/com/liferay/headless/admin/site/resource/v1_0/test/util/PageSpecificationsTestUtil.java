@@ -9,6 +9,8 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
+import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -237,6 +239,16 @@ public class PageSpecificationsTestUtil {
 			pageSpecifications[1], draftLayout.getPlid());
 	}
 
+	public static void assertWidgetPageSpecification(
+		WidgetPageSpecification expectedWidgetPageSpecification,
+		WidgetPageSpecification actualWidgetPageSpecification) {
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				expectedWidgetPageSpecification.getWidgetPageSections(),
+				actualWidgetPageSpecification.getWidgetPageSections()));
+	}
+
 	public static ContentPageSpecification getContentPageSpecification(
 		String curDraftContentPageSpecificationExternalReferenceCode,
 		PageSpecification.Status curStatus) {
@@ -271,6 +283,17 @@ public class PageSpecificationsTestUtil {
 			});
 
 		return contentPageSpecification;
+	}
+
+	public static WidgetPageSpecification getWidgetPageSpecification(
+		Settings curSettings) {
+
+		return new WidgetPageSpecification() {
+			{
+				setSettings(() -> curSettings);
+				setType(() -> Type.WIDGET_PAGE_SPECIFICATION);
+			}
+		};
 	}
 
 	public static void testPostSiteSiteByExternalReferenceCodePageSpecification(

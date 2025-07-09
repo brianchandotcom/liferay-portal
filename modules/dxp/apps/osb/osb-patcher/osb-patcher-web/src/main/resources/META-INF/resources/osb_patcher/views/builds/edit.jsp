@@ -37,77 +37,84 @@ patcherBuildTickets.retainAll(cumulativeFixedIssues);
 
 <portlet:actionURL name="/patcher/update_builds" var="updatePatcherBuildURL" />
 
-<aui:form action="<%= updatePatcherBuildURL %>" method="post">
+<liferay-frontend:edit-form
+	action="<%= updatePatcherBuildURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="patcherBuildId" type="hidden" value="<%= patcherBuild.getPatcherBuildId() %>" />
 
-	<aui:field-wrapper label="modified-date">
-		<%= dateTimeFormat.format(patcherBuild.getModifiedDate()) %>
-	</aui:field-wrapper>
+	<liferay-frontend:edit-form-body>
+		<aui:field-wrapper label="modified-date">
+			<%= dateTimeFormat.format(patcherBuild.getModifiedDate()) %>
+		</aui:field-wrapper>
 
-	<aui:field-wrapper label="created-by">
-		<%= patcherBuild.getUserName() %>
-	</aui:field-wrapper>
+		<aui:field-wrapper label="created-by">
+			<%= patcherBuild.getUserName() %>
+		</aui:field-wrapper>
 
-	<aui:field-wrapper label="build-id">
-		<%= patcherBuild.getPatcherBuildId() %>
-	</aui:field-wrapper>
+		<aui:field-wrapper label="build-id">
+			<%= patcherBuild.getPatcherBuildId() %>
+		</aui:field-wrapper>
 
-	<aui:field-wrapper label="version">
-		<%= patcherBuild.getKeyVersion() %>
-	</aui:field-wrapper>
+		<aui:field-wrapper label="version">
+			<%= patcherBuild.getKeyVersion() %>
+		</aui:field-wrapper>
 
-	<aui:select disabled="<%= true %>" label="product-version" name="patcherProductVersionId" required="<%= true %>">
+		<aui:select disabled="<%= true %>" label="product-version" name="patcherProductVersionId" required="<%= true %>">
+
+			<%
+			for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
+			%>
+
+				<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
+		<aui:select disabled="<%= true %>" label="project-version" name="patcherProjectVersionId" required="<%= true %>" showEmptyOption="<%= true %>">
+
+			<%
+			for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions()) {
+			%>
+
+				<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
+		<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="tickets-list" name="patcherBuildName" readonly="<%= true %>" type="textarea" value="<%= patcherBuild.getName() %>" />
 
 		<%
-		for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
+		PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount(patcherBuild.getPatcherAccountId());
 		%>
 
-			<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
+		<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="account-code" name="patcherBuildAccountEntryCode" readonly="<%= true %>" type="text" value="<%= patcherAccount.getAccountEntryCode() %>" />
 
-		<%
-		}
-		%>
+		<aui:input inputCssClass="osb-patcher-input-wide" name="supportTicket" type="text" />
 
-	</aui:select>
+		<aui:select name="type">
+			<aui:option label="<%= PatcherBuildConstants.LABEL_OFFICIAL %>" value="<%= PatcherBuildConstants.TYPE_OFFICIAL %>" />
+			<aui:option label="<%= PatcherBuildConstants.LABEL_DEBUG %>" value="<%= PatcherBuildConstants.TYPE_DEBUG %>" />
+			<aui:option label="<%= PatcherBuildConstants.LABEL_IGNORE %>" value="<%= PatcherBuildConstants.TYPE_IGNORE %>" />
+		</aui:select>
 
-	<aui:select disabled="<%= true %>" label="project-version" name="patcherProjectVersionId" required="<%= true %>" showEmptyOption="<%= true %>">
+		<aui:input name="mergeOnly" type="checkbox" value="<%= PatcherBuildUtil.isMergeOnly(patcherBuild) %>" />
 
-		<%
-		for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions()) {
-		%>
+		<aui:input name="smokeTestOnly" type="checkbox" wrapperCssClass="osb-patcher-display-none" />
+	</liferay-frontend:edit-form-body>
 
-			<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-
-	<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="tickets-list" name="patcherBuildName" readonly="<%= true %>" type="textarea" value="<%= patcherBuild.getName() %>" />
-
-	<%
-	PatcherAccount patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount(patcherBuild.getPatcherAccountId());
-	%>
-
-	<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="account-code" name="patcherBuildAccountEntryCode" readonly="<%= true %>" type="text" value="<%= patcherAccount.getAccountEntryCode() %>" />
-
-	<aui:input inputCssClass="osb-patcher-input-wide" name="supportTicket" type="text" />
-
-	<aui:select name="type">
-		<aui:option label="<%= PatcherBuildConstants.LABEL_OFFICIAL %>" value="<%= PatcherBuildConstants.TYPE_OFFICIAL %>" />
-		<aui:option label="<%= PatcherBuildConstants.LABEL_DEBUG %>" value="<%= PatcherBuildConstants.TYPE_DEBUG %>" />
-		<aui:option label="<%= PatcherBuildConstants.LABEL_IGNORE %>" value="<%= PatcherBuildConstants.TYPE_IGNORE %>" />
-	</aui:select>
-
-	<aui:input name="mergeOnly" type="checkbox" value="<%= PatcherBuildUtil.isMergeOnly(patcherBuild) %>" />
-
-	<aui:input name="smokeTestOnly" type="checkbox" wrapperCssClass="osb-patcher-display-none" />
-
-	<aui:button-row>
-		<aui:button type="submit" value="update" />
-
-		<aui:button href="<%= redirect %>" value="cancel" />
-	</aui:button-row>
-</aui:form>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

@@ -286,11 +286,14 @@ public class PageSpecificationsTestUtil {
 	}
 
 	public static WidgetPageSpecification getWidgetPageSpecification(
-		Settings curSettings) {
+		String curExternalReferenceCode, Settings curSettings,
+		PageSpecification.Status curStatus) {
 
 		return new WidgetPageSpecification() {
 			{
+				setExternalReferenceCode(() -> curExternalReferenceCode);
 				setSettings(() -> curSettings);
+				setStatus(() -> curStatus);
 				setType(() -> Type.WIDGET_PAGE_SPECIFICATION);
 			}
 		};

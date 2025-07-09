@@ -38,7 +38,7 @@ import removeDuplicates from '../../utils/functions/remove_duplicates';
 // @ts-ignore
 
 import sub from '../../utils/language/sub';
-import {ISelectedSubtype} from './SelectTypes';
+import {ISelectedSubtype, isMissing} from './SelectTypes';
 
 interface IAssetSubtype {
 	assetSubtypeExternalReferenceCode: string;
@@ -531,7 +531,7 @@ function SelectSubtypes({
 								key={value}
 								large
 							>
-								{label === value ? (
+								{isMissing({label, value}) ? (
 									<span>
 										{label}
 

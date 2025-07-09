@@ -4,6 +4,7 @@
  */
 
 import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useMemo, useState} from 'react';
@@ -135,67 +136,82 @@ function PublicationsPermissionsTable({
 		return false;
 	};
 
-	return (
-		<Table
-			className="table table-striped"
-			columnsVisibility={false}
-			{...otherProps}
-		>
-			<>
-				<Head
-					items={[
-						{
-							id: 'role',
-							label: Liferay.Language.get('role'),
-						},
-						...actions,
-					]}
-				>
-					{(column) => <Cell key={column.id}>{column.label}</Cell>}
-				</Head>
+	return roles.length ? (
+		<div className="p-3">
+			<Table
+				className="table table-striped"
+				columnsVisibility={false}
+				{...otherProps}
+			>
+				<>
+					<Head
+						items={[
+							{
+								id: 'role',
+								label: Liferay.Language.get('role'),
+							},
+							...actions,
+						]}
+					>
+						{(column) => (
+							<Cell key={column.id}>{column.label}</Cell>
+						)}
+					</Head>
 
-				<Body>
-					{roles.map(({label: roleLabel, name: roleName}, index) => (
-						<Row key={roleName}>
-							<Cell>
-								<ClayIcon
-									style={{marginRight: '8px'}}
-									symbol="user"
-								/>
+					<Body>
+						{roles.map(
+							({label: roleLabel, name: roleName}, index) => (
+								<Row key={roleName}>
+									<Cell>
+										<ClayIcon
+											style={{marginRight: '8px'}}
+											symbol="user"
+										/>
 
-								<Text size={3} weight="semi-bold">
-									{roleLabel}
-								</Text>
-							</Cell>
+										<Text size={3} weight="semi-bold">
+											{roleLabel}
+										</Text>
+									</Cell>
 
-							{actions.map(({id: actionId}) => (
-								<Cell
-									key={`${roleName.replace(' ', '')}-${actionId}`}
-								>
-									<ClayCheckbox
-										aria-label={Liferay.Util.sub(
-											'give-x-permission-to-users-with-the-x-role',
-											[actionId, roleName]
-										)}
-										checked={_isActionChecked(
-											actionId,
-											index
-										)}
-										disabled={_isActionDisabled(
-											actionId,
-											roleName
-										)}
-										onChange={() =>
-											_handleChangeAction(actionId, index)
-										}
-									/>
-								</Cell>
-							))}
-						</Row>
-					))}
-				</Body>
-			</>
-		</Table>
+									{actions.map(({id: actionId}) => (
+										<Cell
+											key={`${roleName.replace(' ', '')}-${actionId}`}
+										>
+											<ClayCheckbox
+												aria-label={Liferay.Util.sub(
+													'give-x-permission-to-users-with-the-x-role',
+													[actionId, roleName]
+												)}
+												checked={_isActionChecked(
+													actionId,
+													index
+												)}
+												disabled={_isActionDisabled(
+													actionId,
+													roleName
+												)}
+												onChange={() =>
+													_handleChangeAction(
+														actionId,
+														index
+													)
+												}
+											/>
+										</Cell>
+									))}
+								</Row>
+							)
+						)}
+					</Body>
+				</>
+			</Table>
+		</div>
+	) : (
+		<ClayEmptyState
+			className="text-center"
+			description={Liferay.Language.get('no-roles-were-found')}
+			title=""
+		/>
 	);
 }
 

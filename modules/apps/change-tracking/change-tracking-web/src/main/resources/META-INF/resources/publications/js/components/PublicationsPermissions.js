@@ -9,6 +9,7 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {showNotification} from '../util/util';
+import PublicationsPermissionsSearchBar from './PublicationsPermissionsSearchBar';
 import PublicationsPermissionsTable from './form/PublicationsPermissionsTable';
 
 export default function PublicationsPermissions({
@@ -17,6 +18,7 @@ export default function PublicationsPermissions({
 	roles,
 	updatePermissionsURL,
 }) {
+	const [filteredRoles, setFilteredRoles] = useState(roles);
 	const [showModal, setShowModal] = useState(false);
 	const [permissions, setPermissions] = useState(defaultPermissions);
 
@@ -70,10 +72,16 @@ export default function PublicationsPermissions({
 				</ClayModal.Header>
 
 				<ClayModal.Body scrollable>
+					<PublicationsPermissionsSearchBar
+						filteredRoles={filteredRoles}
+						onChangeRoles={setFilteredRoles}
+						roles={roles}
+					/>
+
 					<PublicationsPermissionsTable
 						defaultPermissions={defaultPermissions}
 						onChange={setPermissions}
-						roles={roles}
+						roles={filteredRoles}
 					/>
 				</ClayModal.Body>
 

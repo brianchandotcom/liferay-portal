@@ -1377,8 +1377,7 @@ public class TestrayImporter {
 		else {
 			testrayCaseResults.add(
 				TestrayFactory.newBuildTestrayCaseResult(
-					testrayBuild, _topLevelBuildReport, axisTestClassGroup,
-					null));
+					testrayBuild, _topLevelBuildReport, axisTestClassGroup));
 		}
 
 		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {

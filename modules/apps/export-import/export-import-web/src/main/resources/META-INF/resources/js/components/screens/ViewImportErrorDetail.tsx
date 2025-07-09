@@ -109,110 +109,89 @@ export function ViewImportErrorDetail() {
                         {`${dateCreated} · ${creator.name}`}
                     </div>
                 </ClayLayout.SheetHeader>
-                <ClayLayout.SheetSection>
+                <ClayLayout.SheetSection className='mb-2'>
                     <span className="sheet-subtitle text-secondary">
                         {Liferay.Language.get('error-details')}
                     </span>
                     <ClayLayout.ContentRow>
                         <ClayLayout.Col md={4}  className='pl-0'>
-                            <div className='sheet-text'>
-                                <ClayLayout.ContentCol className='text-body'>
-                                    <strong>{Liferay.Language.get('error-id')}</strong> 
-                                </ClayLayout.ContentCol>
-                                <ClayLayout.ContentCol>
-                                    {errorId}
-                                </ClayLayout.ContentCol>
-                            </div>
+                            <DetailViewContentRow
+								title={Liferay.Language.get('error-id')}
+								body={errorId.toString()}
+							/>
                         </ClayLayout.Col>
                         <ClayLayout.Col md={4}>
-                            <div className='sheet-text'>
-                                <ClayLayout.ContentCol  className='text-body'>
-                                    <strong>{Liferay.Language.get('error-type')}</strong> 
-                                </ClayLayout.ContentCol>
-                                <ClayLayout.ContentCol>
-                                    {errorType}
-                                </ClayLayout.ContentCol>
-                            </div>
+                            <DetailViewContentRow
+								title={Liferay.Language.get('error-type')}
+								body={errorType}
+							/>
                         </ClayLayout.Col>
                         <ClayLayout.Col md={4}>
-                            <div className='sheet-text'>
-                                <ClayLayout.ContentCol  className='text-body'>
-                                    <strong>{Liferay.Language.get('entity-type')}</strong> 
-                                </ClayLayout.ContentCol>
-                                <ClayLayout.ContentCol>
-                                    {entityType}
-                                </ClayLayout.ContentCol>
-                            </div>
+							<DetailViewContentRow
+								title={Liferay.Language.get('entity-type')}								
+								body={entityType}
+							/>
                         </ClayLayout.Col>
                     </ClayLayout.ContentRow>
                     <ClayLayout.ContentRow>
                         <ClayLayout.Col md={12} className='pl-0'>
-                            <div className='sheet-text'>
-                                <ClayLayout.ContentCol className='text-body'>
-                                    <strong>{Liferay.Language.get('error-message')}</strong>
-                                </ClayLayout.ContentCol>
-                                <ClayLayout.ContentCol className='text-justify'>
-                                    <textarea className='lfr-textarea form-control' rows={5} readOnly value={errorMessage} />
-                                </ClayLayout.ContentCol>
-                            </div>
+							<DetailViewContentRow
+								title={Liferay.Language.get('error-message')}
+								body={
+									<textarea 
+										className='lfr-textarea form-control' 
+										rows={5} 
+										readOnly 
+										value={errorMessage} 
+									/>
+								}
+							/>
                         </ClayLayout.Col>
                     </ClayLayout.ContentRow>
-                    <div className='sheet-text'>
-                        <ClayButton displayType={'secondary'} onClick={() => openStackTraceModal({stackTraceMessage: errorStackTrace})}>
-                            {Liferay.Language.get('view-stack-trace')}
-                        </ClayButton>
-                    </div>
+					<ClayLayout.ContentRow>
+						<ClayLayout.Col md={3} className='pl-0'>
+							<DetailViewContentRow
+								body={
+									<ClayButton displayType={'secondary'} onClick={() => openStackTraceModal({stackTraceMessage: errorStackTrace})}>
+									{Liferay.Language.get('view-stack-trace')}
+								</ClayButton>
+								} 
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.ContentRow>
                 </ClayLayout.SheetSection>
                 <ClayLayout.SheetSection>
                     <span className="sheet-subtitle text-secondary">
                         {Liferay.Language.get('failed-event')}
                     </span>
-                    <div className='sheet-text'>
-                        <ClayLayout.Row>
-                            <ClayLayout.Col md={6}>
-                                <div className='sheet-text'>
-                                    <ClayLayout.ContentCol className='text-body'>
-                                        <strong>{Liferay.Language.get('entity-id')}</strong> 
-                                    </ClayLayout.ContentCol>
-                                    <ClayLayout.ContentCol>
-                                        {entityId}
-                                    </ClayLayout.ContentCol>
-                                </div>
-                            </ClayLayout.Col>
-                            <ClayLayout.Col md={6}>
-                                <div className='sheet-text'>
-                                    <ClayLayout.ContentCol className='text-body'>
-                                        <strong>{Liferay.Language.get('erc')}</strong> 
-                                    </ClayLayout.ContentCol>
-                                    <ClayLayout.ContentCol>
-                                        {entityExternalReferenceCode}
-                                    </ClayLayout.ContentCol>
-                                </div>
-                            </ClayLayout.Col>
-                        </ClayLayout.Row>
-                        <ClayLayout.Row>
-                            <ClayLayout.Col md={6}>
-                                <div className='sheet-text'>
-                                    <ClayLayout.ContentCol className='text-body'>
-                                        <strong>{Liferay.Language.get('scope')}</strong> 
-                                    </ClayLayout.ContentCol>
-                                    <ClayLayout.ContentCol>
-                                        {entityScope}
-                                    </ClayLayout.ContentCol>
-                                </div>
-                            </ClayLayout.Col>
-                            <ClayLayout.Col md={6}>
-                                <div className='sheet-text'>
-                                    <ClayLayout.ContentCol className='text-body'>
-                                        <strong>{Liferay.Language.get('site')}</strong> 
-                                    </ClayLayout.ContentCol>
-                                    <ClayLayout.ContentCol>
-                                        {entitySite}
-                                    </ClayLayout.ContentCol>
-                                </div>
-                            </ClayLayout.Col>
-                        </ClayLayout.Row>
-                    </div>
+					<ClayLayout.Row>
+						<ClayLayout.Col md={6}>
+							<DetailViewContentRow
+								title={Liferay.Language.get('entity-id')}
+								body={entityId.toString()}
+							/>
+						</ClayLayout.Col>
+						<ClayLayout.Col md={6}>
+							<DetailViewContentRow
+								title={Liferay.Language.get('external-reference-code')}
+								body={entityExternalReferenceCode}
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+					<ClayLayout.Row>
+						<ClayLayout.Col md={6}>
+							<DetailViewContentRow
+								title={Liferay.Language.get('scope')}
+								body={entityScope}
+							/>
+						</ClayLayout.Col>
+						<ClayLayout.Col md={6}>
+							<DetailViewContentRow 
+								title={Liferay.Language.get('site')}
+								body={entitySite}
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
                 </ClayLayout.SheetSection>
             </ClayLayout.Sheet>
             <ClayButton className='ml-4' displayType="secondary" onClick={() => window.history.back()}>
@@ -221,3 +200,19 @@ export function ViewImportErrorDetail() {
     </ ClayLayout.ContainerFluid>
     );
 }
+
+interface DetailViewContentRowProps {
+    title?: string;
+    body: React.ReactNode;
+}
+
+const DetailViewContentRow = ({title, body}: DetailViewContentRowProps) => (
+    <div className='sheet-text'>
+        {title && <ClayLayout.ContentCol className='text-body'>
+            <strong>{title}</strong> 
+        </ClayLayout.ContentCol>}
+        <ClayLayout.ContentCol>
+            {body}
+        </ClayLayout.ContentCol>
+    </div>
+);

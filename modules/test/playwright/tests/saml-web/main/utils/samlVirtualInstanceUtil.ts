@@ -53,6 +53,21 @@ export async function createIdentityProviderVirtualInstance(
 	);
 }
 
+export async function createIdentityAndServiceProviderVirtualInstance(
+	browser,
+	page: Page,
+	name = SECONDARY_IDP_NAME,
+	entityId = name
+): Promise<Page> {
+	return await createSamlVirtualInstance(
+		browser,
+		entityId,
+		name,
+		page,
+		'Identity and Service Provider'
+	);
+}
+
 export async function createUser(
 	adminPage: Page,
 	instanceName: string,

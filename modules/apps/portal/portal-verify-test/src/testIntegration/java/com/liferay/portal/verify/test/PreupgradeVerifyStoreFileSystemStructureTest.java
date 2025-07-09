@@ -261,19 +261,6 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			String expectedLogEntryMessage)
 		throws Exception {
 
-		CompanyLocalServiceUtil.forEachCompanyId(
-			companyId -> {
-				Files.createDirectories(
-					Paths.get(
-						_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE,
-						String.valueOf(companyId)));
-				Files.createDirectories(
-					Paths.get(
-						_ROOT_DIR_FILE_SYSTEM_STORE,
-						String.valueOf(companyId)));
-			},
-			PortalInstancePool.getCompanyIds());
-
 		String dlStoreImpl = ReflectionTestUtil.getAndSetFieldValue(
 			PropsValues.class, "DL_STORE_IMPL",
 			advancedFileSystemStore ?
@@ -318,6 +305,19 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 
 			FileUtil.deltree(_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE);
 			FileUtil.deltree(_ROOT_DIR_FILE_SYSTEM_STORE);
+
+			CompanyLocalServiceUtil.forEachCompanyId(
+				companyId -> {
+					Files.createDirectories(
+						Paths.get(
+							_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE,
+							String.valueOf(companyId)));
+					Files.createDirectories(
+						Paths.get(
+							_ROOT_DIR_FILE_SYSTEM_STORE,
+							String.valueOf(companyId)));
+				},
+				PortalInstancePool.getCompanyIds());
 		}
 	}
 

@@ -54,9 +54,9 @@ public class JiraService extends BaseService {
 					UriComponentsBuilder.fromPath(
 						"/o/c/jiraissues"
 					).queryParam(
-						"filter", "issueType eq null or issueType eq ''"
-					).queryParam(
 						"fields", "externalReferenceCode"
+					).queryParam(
+						"filter", "issueType eq null or issueType eq ''"
 					).queryParam(
 						"page", "{page}"
 					).queryParam(
@@ -78,11 +78,11 @@ public class JiraService extends BaseService {
 						"https://api.atlassian.com/ex/jira/{cloudId}/rest/api" +
 							"/3/search"
 					).queryParam(
-						"jql", "issuekey in ({issueKeys})"
-					).queryParam(
 						"expand", "renderedFields"
 					).queryParam(
 						"fields", "description,issuetype,parent,project,summary"
+					).queryParam(
+						"jql", "issuekey in ({issueKeys})"
 					).build(
 						_liferayTestrayJiraCloudId,
 						StringUtil.merge(

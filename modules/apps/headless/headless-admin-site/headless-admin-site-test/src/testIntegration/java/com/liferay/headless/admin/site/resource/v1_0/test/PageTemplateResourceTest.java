@@ -1137,28 +1137,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					pageTemplate.getExternalReferenceCode(), pageTemplate));
 	}
 
-	private void _testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications()
-		throws Exception {
-
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED);
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.DRAFT);
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED);
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
-	}
-
 	private void
-			_testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
+			_testPatchSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
 				PageSpecification.Status newDraftLayoutStatus,
 				PageSpecification.Status newPublishedLayoutStatus,
 				PageSpecification.Status oldDraftLayoutStatus,
@@ -1214,43 +1194,28 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					}));
 	}
 
-	private void _testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate()
+	private void _testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications()
 		throws Exception {
 
-		PageTemplate randomPageTemplate = randomPageTemplate();
-
-		PageTemplate postPageTemplate =
-			testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate_addPageTemplate(
-				randomPageTemplate);
-
-		assertEquals(randomPageTemplate, postPageTemplate);
-		assertValid(postPageTemplate);
-
-		_postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
-			_getContentPageTemplate(testGroup),
-			testGroup.getExternalReferenceCode());
-
-		_postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
-			_getWidgetPageTemplate(testGroup),
-			testGroup.getExternalReferenceCode());
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications()
-		throws Exception {
-
-		_testPostSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED);
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.DRAFT);
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED);
-		_testPostSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
-		_testPostSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
-		_testPostSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
 	}
 
 	private void
-			_testPostSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
+			_testPostSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
 				PageSpecification.Status draftLayoutStatus,
 				PageSpecification.Status publishedLayoutStatus)
 		throws Exception {
@@ -1280,6 +1245,41 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					testGroup.getExternalReferenceCode(), pageTemplate));
 	}
 
+	private void _testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate()
+		throws Exception {
+
+		PageTemplate randomPageTemplate = randomPageTemplate();
+
+		PageTemplate postPageTemplate =
+			testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate_addPageTemplate(
+				randomPageTemplate);
+
+		assertEquals(randomPageTemplate, postPageTemplate);
+		assertValid(postPageTemplate);
+
+		_postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
+			_getContentPageTemplate(testGroup),
+			testGroup.getExternalReferenceCode());
+
+		_postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
+			_getWidgetPageTemplate(testGroup),
+			testGroup.getExternalReferenceCode());
+	}
+
+	private void _testPostSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications()
+		throws Exception {
+
+		_testPostSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+		_testPostSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+		_testPostSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
+		_testPostSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
+	}
+
 	private void _testPutSiteSiteByExternalReferenceCodePageTemplate(
 			PageTemplate pageTemplate, String siteExternalReferenceCode)
 		throws Exception {
@@ -1291,28 +1291,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				pageTemplate.getExternalReferenceCode(), pageTemplate));
 	}
 
-	private void _testPutSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications()
-		throws Exception {
-
-		_testPutSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED);
-		_testPutSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.DRAFT);
-		_testPutSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED);
-		_testPutSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
-	}
-
 	private void
-			_testPutSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications(
+			_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
 				PageSpecification.Status newDraftLayoutStatus,
 				PageSpecification.Status newPublishedLayoutStatus,
 				PageSpecification.Status oldDraftLayoutStatus,
@@ -1352,6 +1332,37 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			pageTemplateResource.putSiteSiteByExternalReferenceCodePageTemplate(
 				testGroup.getExternalReferenceCode(),
 				pageTemplate.getExternalReferenceCode(), pageTemplate));
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodePageTemplate(
+			PageTemplate pageTemplate, String siteExternalReferenceCode)
+		throws Exception {
+
+		assertEquals(
+			pageTemplate,
+			pageTemplateResource.putSiteSiteByExternalReferenceCodePageTemplate(
+				siteExternalReferenceCode,
+				pageTemplate.getExternalReferenceCode(), pageTemplate));
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications()
+		throws Exception {
+
+		_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED);
+		_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.DRAFT);
+		_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+		_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 	}
 
 	private void _withCompanyGroupWidgetPageTemplate(

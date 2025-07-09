@@ -102,7 +102,7 @@ export default function ({formId, initialKeywords, retainFacetSelections}) {
 				queryString = FacetUtil.removeAllFacetParameters(queryString);
 			}
 
-			document.location.href = searchURL + queryString;
+			Liferay.Util.navigate(searchURL + queryString);
 		}
 	}
 

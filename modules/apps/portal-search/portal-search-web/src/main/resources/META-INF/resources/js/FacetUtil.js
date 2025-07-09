@@ -292,11 +292,17 @@ export const FacetUtil = {
 	},
 
 	selectTerms(form, selections) {
-		let search = document.location.search;
+		const search = document.location.search;
 
-		search = this.queryParameterAndUpdateValue(form, search, selections);
+		const url = new URL(window.location.href);
 
-		document.location.search = search;
+		url.search = this.queryParameterAndUpdateValue(
+			form,
+			search,
+			selections
+		);
+
+		Liferay.Util.navigate(url.toString());
 	},
 
 	setURLParameter(url, name, value) {

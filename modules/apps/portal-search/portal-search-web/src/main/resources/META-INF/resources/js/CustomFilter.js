@@ -25,7 +25,7 @@ export default function ({namespace: portletNamespace}) {
 			document.location.search
 		);
 
-		document.location.href = searchURL + queryString;
+		Liferay.Util.navigate(searchURL + queryString);
 	}
 
 	function _handleSubmit(event) {

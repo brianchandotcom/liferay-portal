@@ -82,7 +82,11 @@ AUI.add(
 			},
 
 			submitSearch(parameterString) {
-				document.location.search = parameterString;
+				const url = new URL(window.location.href);
+
+				url.search = parameterString;
+
+				Liferay.Util.navigate(url.toString());
 			},
 
 			/**

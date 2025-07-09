@@ -10,6 +10,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import formatDate from '../../utils/formatDate';
+import { DetailViewContentRow } from './DetailViewContentRow';
 
 interface ErrorDetail {
 	creator: {
@@ -200,19 +201,3 @@ export function ViewImportErrorDetail() {
     </ ClayLayout.ContainerFluid>
     );
 }
-
-interface DetailViewContentRowProps {
-    title?: string;
-    body: React.ReactNode;
-}
-
-const DetailViewContentRow = ({title, body}: DetailViewContentRowProps) => (
-    <div className='sheet-text'>
-        {title && <ClayLayout.ContentCol className='text-body'>
-            <strong>{title}</strong> 
-        </ClayLayout.ContentCol>}
-        <ClayLayout.ContentCol>
-            {body}
-        </ClayLayout.ContentCol>
-    </div>
-);

@@ -53,7 +53,7 @@ PatcherProjectVersionsDisplayContext patcherProjectVersionsDisplayContext = new 
 		<aui:input name="repositoryName" />
 
 		<span class="hide" id="<portlet:namespace />displayingFixedIssues">
-			<aui:input name="fixedIssues" />
+			<aui:input name="fixedIssues" type="textarea" />
 		</span>
 
 		<aui:select label="project-version-root" name="rootPatcherProjectVersionId" showEmptyOption="<%= true %>">

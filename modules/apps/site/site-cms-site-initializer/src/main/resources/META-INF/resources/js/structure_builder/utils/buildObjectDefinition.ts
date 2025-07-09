@@ -11,7 +11,11 @@ import {
 	ObjectField,
 	ObjectRelationship,
 } from '../types/ObjectDefinition';
-import {ReferencedStructure, Structure} from '../types/Structure';
+import {
+	ReferencedStructure,
+	RepeatableGroup,
+	Structure,
+} from '../types/Structure';
 import {
 	FIELD_TYPE_TO_BUSINESS_TYPE,
 	FIELD_TYPE_TO_DB_TYPE,
@@ -45,10 +49,11 @@ export default function buildObjectDefinition({
 		externalReferenceCode: erc,
 		label,
 		objectFields: buildFields(getFields(children)),
-		objectRelationships: buildRelationships(
-			erc,
-			getReferencedStructures(children)
-		),
+		objectRelationships: buildRelationships({
+			referencedStructures: getReferencedStructures(children),
+			repeatableGroups: getRepeatableGroups(children),
+			structureERC: erc,
+		}),
 		pluralLabel: label,
 		scope: 'depot',
 		status: {
@@ -102,6 +107,14 @@ function getReferencedStructures(
 	) as ReferencedStructure[];
 }
 
+function getRepeatableGroups(
+	children: Structure['children']
+): RepeatableGroup[] {
+	return Array.from(children.values()).filter(
+		(child) => child.type === 'repeatable-group'
+	) as RepeatableGroup[];
+}
+
 function buildFields(fields: Field[]) {
 	return fields.map((field) => {
 		const objectField: ObjectField = {
@@ -139,22 +152,40 @@ function buildFields(fields: Field[]) {
 	});
 }
 
-function buildRelationships(
-	erc: Structure['erc'],
-	referencedStructures: ReferencedStructure[]
-) {
-	return referencedStructures.map((referencedStructure) => {
-		const relationship: ObjectRelationship = {
+function buildRelationships({
+	referencedStructures,
+	repeatableGroups,
+	structureERC,
+}: {
+	referencedStructures: ReferencedStructure[];
+	repeatableGroups: RepeatableGroup[];
+	structureERC: Structure['erc'];
+}) {
+	const relationships: ObjectRelationship[] = [];
+
+	for (const referencedStructure of referencedStructures) {
+		relationships.push({
 			deletionType: 'cascade',
 			label: {
 				en_US: referencedStructure.name,
 			},
 			name: referencedStructure.relationshipName,
-			objectDefinitionExternalReferenceCode1: erc,
+			objectDefinitionExternalReferenceCode1: structureERC,
 			objectDefinitionExternalReferenceCode2: referencedStructure.erc,
 			type: 'oneToMany',
-		};
+		});
+	}
 
-		return relationship;
-	});
+	for (const repeatableGroup of repeatableGroups) {
+		relationships.push({
+			deletionType: 'cascade',
+			label: repeatableGroup.label,
+			name: repeatableGroup.relationshipName,
+			objectDefinitionExternalReferenceCode1: structureERC,
+			objectDefinitionExternalReferenceCode2: repeatableGroup.erc,
+			type: 'oneToMany',
+		});
+	}
+
+	return relationships;
 }

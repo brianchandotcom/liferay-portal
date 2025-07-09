@@ -124,6 +124,10 @@ public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 
 	@Override
 	public boolean isResultsCached() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			return false;
+		}
+
 		for (PlaywrightTestClassMethod playwrightTestClassMethod :
 				getPlaywrightTestClassMethods()) {
 

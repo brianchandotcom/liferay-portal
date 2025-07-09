@@ -65,6 +65,10 @@ public class SemVerModulesAxisTestClassGroup extends AxisTestClassGroup {
 
 	@Override
 	public boolean isResultsCached() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			return false;
+		}
+
 		for (SemVerModulesTestClass semVerModulesTestClass :
 				getSemVerModulesTestClasses()) {
 

@@ -230,6 +230,22 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public boolean isResultsCached() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			return false;
+		}
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		for (DownstreamBuildReport cachedDownstreamBuildReport :
+				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+
+			if (Objects.equals(
+					getAxisName(), cachedDownstreamBuildReport.getAxisName())) {
+
+				return true;
+			}
+		}
+
 		return false;
 	}
 

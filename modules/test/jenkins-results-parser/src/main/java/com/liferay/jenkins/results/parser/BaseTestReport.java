@@ -6,6 +6,8 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -32,6 +34,19 @@ public class BaseTestReport implements TestReport {
 	@Override
 	public String getErrorStackTrace() {
 		return _jsonObject.optString("errorStackTrace");
+	}
+
+	@Override
+	public String getModuleAppPath() {
+		Matcher matcher = _moduleAppPathPattern.matcher(getTestTaskName());
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String modulePath = matcher.group("moduleAppPath");
+
+		return "modules" + modulePath.replaceAll(":", "/");
 	}
 
 	@Override
@@ -90,6 +105,9 @@ public class BaseTestReport implements TestReport {
 		_downstreamBuildReport = downstreamBuildReport;
 		_jsonObject = jsonObject;
 	}
+
+	private static final Pattern _moduleAppPathPattern = Pattern.compile(
+		"(?<moduleAppPath>(:dxp)?:apps:[^:]+):.*");
 
 	private final DownstreamBuildReport _downstreamBuildReport;
 	private final JSONObject _jsonObject;

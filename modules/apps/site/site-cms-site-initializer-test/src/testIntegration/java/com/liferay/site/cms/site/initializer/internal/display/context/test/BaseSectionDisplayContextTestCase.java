@@ -120,9 +120,9 @@ public abstract class BaseSectionDisplayContextTestCase
 	public void testGetDepotEntriesJSONArrayWithMultipleDepotEntries()
 		throws Exception {
 
-		String depotName = StringUtil.randomString();
+		String name = StringUtil.randomString();
 
-		DepotEntry depotEntry = _addDepotEntry(depotName);
+		DepotEntry depotEntry = _addDepotEntry(name);
 
 		try {
 			List<DepotEntry> depotEntries =
@@ -142,7 +142,7 @@ public abstract class BaseSectionDisplayContextTestCase
 			Group depotGroup = _groupLocalService.fetchGroup(
 				depotEntry.getGroupId());
 
-			Assert.assertEquals(depotName, depotGroup.getGroupKey());
+			Assert.assertEquals(name, depotGroup.getGroupKey());
 
 			_testGetDepotEntriesJSONArray(depotEntries, null, null);
 			_testGetDepotEntriesJSONArray(

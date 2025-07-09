@@ -7,7 +7,12 @@ package com.liferay.exportimport.web.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -18,8 +23,14 @@ import java.util.List;
  */
 public class ImportErrorsDisplayContext {
 
-	public ImportErrorsDisplayContext(HttpServletRequest httpServletRequest) {
+	public ImportErrorsDisplayContext(
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+
 		_httpServletRequest = httpServletRequest;
+		_renderResponse = renderResponse;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAPIURL() {
@@ -29,11 +40,21 @@ public class ImportErrorsDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				"/export_import/view_import_error_detail&errorId={errorId}",
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/export_import/view_import_error_detail"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"errorId", "{id}"
+				).buildString(),
 				"view", "view", LanguageUtil.get(_httpServletRequest, "view"),
 				"get", null, "link"));
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
+	private final ThemeDisplay _themeDisplay;
 
 }

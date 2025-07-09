@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Michael Hashimoto
@@ -206,35 +207,15 @@ public class JSUnitBatchBuildTestrayCaseResult
 			return _testClassReports;
 		}
 
-		String taskDirectoryName = getName();
-
-		taskDirectoryName = taskDirectoryName.replace(":packageRunTest", "");
-
 		for (TestClassReport testClassResult :
 				downstreamBuildReport.getTestClassReports()) {
 
-			String testResultTaskName = _getTestResultTaskName(testClassResult);
-
-			if (testResultTaskName.startsWith(taskDirectoryName)) {
+			if (Objects.equals(testClassResult.getTestTaskName(), getName())) {
 				_testClassReports.add(testClassResult);
 			}
 		}
 
 		return _testClassReports;
-	}
-
-	private String _getTestResultTaskName(TestClassReport testClassReport) {
-		String testClassName = testClassReport.getTestClassName();
-
-		if (testClassName.contains(".modules.")) {
-			testClassName = testClassName.replaceAll(
-				".*\\.modules(\\..+)", "$1");
-		}
-		else {
-			testClassName = ".apps." + testClassName;
-		}
-
-		return testClassName.replaceAll("\\.", ":");
 	}
 
 	private boolean _isTestClassResultsFailing() {

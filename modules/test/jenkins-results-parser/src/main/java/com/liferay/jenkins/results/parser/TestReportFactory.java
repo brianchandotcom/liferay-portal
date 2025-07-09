@@ -31,6 +31,9 @@ public class TestReportFactory {
 
 			return new JUnitTestReport(downstreamBuildReport, jsonObject);
 		}
+		else if (batchName.startsWith("js-unit")) {
+			return new JSUnitTestReport(downstreamBuildReport, jsonObject);
+		}
 		else if (batchName.startsWith("playwright-js")) {
 			return new PlaywrightTestReport(downstreamBuildReport, jsonObject);
 		}

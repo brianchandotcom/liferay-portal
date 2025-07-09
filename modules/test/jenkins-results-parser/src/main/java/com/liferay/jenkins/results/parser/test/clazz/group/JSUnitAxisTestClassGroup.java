@@ -5,11 +5,15 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TestClassReport;
+import com.liferay.jenkins.results.parser.test.clazz.JSUnitModulesTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -20,6 +24,33 @@ import org.json.JSONObject;
 public class JSUnitAxisTestClassGroup extends AxisTestClassGroup {
 
 	@Override
+	public List<DownstreamBuildReport> getCachedDownstreamBuildReports() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+			!isResultsCached()) {
+
+			return null;
+		}
+
+		List<DownstreamBuildReport> cachedDownstreamBuildReports =
+			new ArrayList<>();
+
+		for (JSUnitModulesTestClass jsUnitModulesTestClass :
+				getJSUnitModulesTestClasses()) {
+
+			DownstreamBuildReport downstreamBuildReport =
+				jsUnitModulesTestClass.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReports.contains(downstreamBuildReport)) {
+				continue;
+			}
+
+			cachedDownstreamBuildReports.add(downstreamBuildReport);
+		}
+
+		return cachedDownstreamBuildReports;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
@@ -28,6 +59,20 @@ public class JSUnitAxisTestClassGroup extends AxisTestClassGroup {
 			JenkinsResultsParserUtil.getCanonicalPath(getTestBaseDir()));
 
 		return jsonObject;
+	}
+
+	public List<JSUnitModulesTestClass> getJSUnitModulesTestClasses() {
+		List<JSUnitModulesTestClass> jsUnitModulesTestClass = new ArrayList<>();
+
+		for (TestClass testClass : getTestClasses()) {
+			if (!(testClass instanceof JSUnitModulesTestClass)) {
+				continue;
+			}
+
+			jsUnitModulesTestClass.add((JSUnitModulesTestClass)testClass);
+		}
+
+		return jsUnitModulesTestClass;
 	}
 
 	@Override
@@ -47,6 +92,24 @@ public class JSUnitAxisTestClassGroup extends AxisTestClassGroup {
 		_testBaseDir = testClass.getTestClassFile();
 
 		return _testBaseDir;
+	}
+
+	@Override
+	public boolean isResultsCached() {
+		for (JSUnitModulesTestClass jsUnitModulesTestClass :
+				getJSUnitModulesTestClasses()) {
+
+			List<TestClassReport> cachedTestClassReports =
+				jsUnitModulesTestClass.getCachedTestClassReports();
+
+			if ((cachedTestClassReports == null) ||
+				cachedTestClassReports.isEmpty()) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected JSUnitAxisTestClassGroup(

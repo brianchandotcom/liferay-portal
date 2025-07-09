@@ -5,7 +5,9 @@
 
 package com.liferay.jenkins.results.parser.test.clazz;
 
+import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JSUnitModulesBatchTestClassGroup;
 
@@ -28,6 +30,58 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class JSUnitModulesTestClass extends ModulesTestClass {
+
+	public DownstreamBuildReport getCachedDownstreamBuildReport() {
+		if (!_cachedTestClassReportsSearched) {
+			getCachedTestClassReports();
+		}
+
+		return _cachedDownstreamBuildReport;
+	}
+
+	public List<TestClassReport> getCachedTestClassReports() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+			_cachedTestClassReportsSearched) {
+
+			return _cachedTestClassReports;
+		}
+
+		_cachedTestClassReports = new ArrayList<>();
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		for (DownstreamBuildReport cachedDownstreamBuildReport :
+				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+
+			for (TestClassReport cachedTestClassReport :
+					cachedDownstreamBuildReport.getTestClassReports()) {
+			}
+
+			String taskDirectoryName = getName();
+
+			taskDirectoryName = taskDirectoryName.replace(
+				":packageRunTest", "");
+
+			for (TestClassReport testClassResult :
+					cachedDownstreamBuildReport.getTestClassReports()) {
+
+				String testResultTaskName = _getTestResultTaskName(
+					testClassResult);
+
+				if (testResultTaskName.startsWith(taskDirectoryName)) {
+					_cachedTestClassReports.add(testClassResult);
+				}
+			}
+
+			_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
+
+			return _cachedTestClassReports;
+		}
+
+		_cachedTestClassReportsSearched = true;
+
+		return _cachedTestClassReports;
+	}
 
 	public String getTestrayMainComponentName() {
 		return _testrayMainComponentName;
@@ -198,6 +252,20 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 		return modulesProjectDirs;
 	}
 
+	private String _getTestResultTaskName(TestClassReport testClassReport) {
+		String testClassName = testClassReport.getTestClassName();
+
+		if (testClassName.contains(".modules.")) {
+			testClassName = testClassName.replaceAll(
+				".*\\.modules(\\..+)", "$1");
+		}
+		else {
+			testClassName = ".apps." + testClassName;
+		}
+
+		return testClassName.replaceAll("\\.", ":");
+	}
+
 	private boolean _testGitrepoJSUnit() {
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
@@ -213,6 +281,9 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 		return jsUnitModulesBatchTestClassGroup.testGitrepoJSUnit();
 	}
 
+	private DownstreamBuildReport _cachedDownstreamBuildReport;
+	private List<TestClassReport> _cachedTestClassReports = new ArrayList<>();
+	private boolean _cachedTestClassReportsSearched;
 	private final File _testPropertiesFile;
 	private final String _testrayMainComponentName;
 

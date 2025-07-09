@@ -33,6 +33,16 @@ interface ISelectedItem {
 }
 
 /**
+ * Checks whether the subtype is missing. Since missing subtypes resort to
+ * using the value for its view, label and value would be the same.
+ * @param subtype
+ * @returns boolean
+ */
+export function isMissing(subtype: ISelectedSubtype) {
+	return subtype.label === subtype.value;
+}
+
+/**
  * Grabs all the selected subtypes of a certain type.
  */
 const getSelectedSubtypes = (
@@ -158,7 +168,7 @@ function SelectTypes({
 
 	const _anyMissingSubtypes = () =>
 		selected.some(({subtypes}) =>
-			subtypes.some(({label, value}) => label === value)
+			subtypes.some((subtype) => isMissing(subtype))
 		);
 
 	const _getMissingTypes = () =>

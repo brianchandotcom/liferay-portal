@@ -42,33 +42,30 @@ export class LocalizationInstanceSettingsPage {
 	}
 
 	async setLanguage(languages: string[]) {
-		let firstIndex = 0;
-		const languagesSize = languages.length;
-		do {
-			const value = await this.currentLanguages
-				.locator('.reorder-option')
-				.nth(firstIndex)
-				.getAttribute('value');
+		const allCurrentLanguages = await this.currentLanguages
+			.locator('.reorder-option')
+			.all();
+
+		for (let i = allCurrentLanguages.length - 1; i >= 0; i--) {
+			const value = await allCurrentLanguages[i].getAttribute('value');
+
 			if (!languages.includes(value)) {
 				await this.currentLanguages.selectOption(value);
 				await this.moveToAvaiable.click();
 			}
-			else {
-				const index = languages.indexOf(value);
-				languages.splice(index, 1);
+		}
 
-				firstIndex++;
+		const allAvailableLanguages = await this.availableLanguages
+			.locator('.reorder-option')
+			.all();
+
+		for (let i = allAvailableLanguages.length - 1; i >= 0; i--) {
+			const value = await allAvailableLanguages[i].getAttribute('value');
+
+			if (languages.includes(value)) {
+				await this.availableLanguages.selectOption(value);
+				await this.moveToCurrent.click();
 			}
-		} while (
-			firstIndex + 1 <= languagesSize &&
-			firstIndex + 1 <=
-				(await this.currentLanguages.locator('.reorder-option').all())
-					.length
-		);
-
-		for (const language of languages) {
-			await this.availableLanguages.selectOption(language);
-			await this.moveToCurrent.click();
 		}
 
 		await this.saveSettings();

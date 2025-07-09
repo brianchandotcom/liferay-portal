@@ -10,12 +10,11 @@ import React from 'react';
 import manageMembersAction, {
 	ManageMembersData,
 } from '../props_transformer/actions/manageMembersAction';
-
 import manageSitesAction from '../props_transformer/actions/manageSitesAction';
 
 export enum SpaceSummaryHeaderActions {
 	OPEN_MEMBERS_MODAL = 'open-members-modal',
-	OPEN_SITES_MODAL = 'connectSites',
+	OPEN_SITES_MODAL = 'open-sites-modal',
 }
 
 export type SpaceSummaryHeaderPermissions = {
@@ -70,7 +69,7 @@ export default function SpaceSummaryHeader({
 			spaceModalProps?.action ===
 			SpaceSummaryHeaderActions.OPEN_SITES_MODAL
 		) {
-			return manageSitesAction();
+			return manageSitesAction({groupId: spaceModalProps.assetLibraryId});
 		}
 	};
 

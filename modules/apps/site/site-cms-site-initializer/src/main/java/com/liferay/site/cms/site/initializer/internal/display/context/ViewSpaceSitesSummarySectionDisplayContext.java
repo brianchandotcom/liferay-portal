@@ -55,6 +55,7 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "connectSites");
+				dropdownItem.putData("groupId", _groupId);
 				dropdownItem.putData("title", _getSpaceSitesHeaderTitle());
 				dropdownItem.setLabel(
 					_language.get(_httpServletRequest, "connect-sites"));
@@ -90,8 +91,12 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 	public Map<String, Object> getHeaderProps() throws Exception {
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			_httpServletRequest, "view-all-sites", Collections.emptyMap(),
-			Collections.emptyMap(), _getSpaceSitesHeaderTitle(),
-			StringPool.BLANK);
+			HashMapBuilder.<String, Object>put(
+				"action", "open-sites-modal"
+			).put(
+				"assetLibraryId", String.valueOf(_groupId)
+			).build(),
+			_getSpaceSitesHeaderTitle(), StringPool.BLANK);
 	}
 
 	private FDSActionDropdownItem _getSearchableFDSActionDropdownItem(

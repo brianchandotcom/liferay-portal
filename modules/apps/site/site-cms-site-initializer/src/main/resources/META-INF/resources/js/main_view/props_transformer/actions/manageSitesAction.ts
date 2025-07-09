@@ -7,9 +7,9 @@ import {openModal} from 'frontend-js-components-web';
 
 import SpaceSitesModal from '../../spaces/SpaceSitesModal';
 
-export default function manageSitesAction() {
+export default function manageSitesAction({groupId}: {groupId: string}) {
 	openModal({
-		contentComponent: () => SpaceSitesModal(),
+		contentComponent: () => SpaceSitesModal({groupId}),
 		size: 'md',
 	});
 }

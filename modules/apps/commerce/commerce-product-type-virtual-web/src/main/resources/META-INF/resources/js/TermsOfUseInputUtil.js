@@ -4,25 +4,28 @@
  */
 
 export default function ({
+	noneText,
+	portletNamespace,
+	selectWebContent,
     termsOfUseJournalArticleBrowserURL,
     useTermsOfUseJournal,
 }) {
-    
+
     Liferay.Util.toggleBoxes(
-        `<portlet:namespace />termsOfUseRequired`,
-        `<portlet:namespace />termsOfUseSettings`
+        `${portletNamespace}termsOfUseRequired`,
+        `${portletNamespace}termsOfUseSettings`
     );
 
     const journalArticleNameInput = document.getElementById(
-        `<portlet:namespace />journalArticleNameInput`
+        `${portletNamespace}journalArticleNameInput`
     );
 
     const journalArticleRemove = document.getElementById(
-        `<portlet:namespace />journalArticleRemove`
+        `${portletNamespace}journalArticleRemove`
     );
 
     const selectArticle = document.getElementById(
-        `<portlet:namespace />selectArticle`
+        `${portletNamespace}selectArticle`
     );
 
     if (journalArticleNameInput && journalArticleRemove && selectArticle) {
@@ -33,7 +36,7 @@ export default function ({
                 onSelect: (selectedItem) => {
                     const termsOfUseJournalArticleResourcePrimKey =
                         document.getElementById(
-                            `<portlet:namespace />termsOfUseJournalArticleResourcePrimKey`
+                            `${portletNamespace}termsOfUseJournalArticleResourcePrimKey`
                         );
 
                     const itemValue = JSON.parse(selectedItem.value);
@@ -46,7 +49,7 @@ export default function ({
                     journalArticleRemove.classList.remove('hide');
 
                     journalArticleNameInput.innerText = itemValue.title;
-                    if (!Liferay.FeatureFlags['LPD-51378']) {
+                    if (Liferay.FeatureFlags['LPD-11235']) {
                         const ckEditorToolbar = document.querySelector(
                             '#termsOfUseContent .ck-editor__top'
                         );
@@ -61,7 +64,7 @@ export default function ({
                     }
                 },
                 selectEventName: 'selectJournalArticle',
-                title: '<liferay-ui:message key="select-web-content" />',
+                title: selectWebContent,
                 url: termsOfUseJournalArticleBrowserURL,
             });
         });
@@ -71,7 +74,7 @@ export default function ({
 
             const termsOfUseJournalArticleResourcePrimKey =
                 document.getElementById(
-                    `<portlet:namespace />termsOfUseJournalArticleResourcePrimKey`
+                    `${portletNamespace}termsOfUseJournalArticleResourcePrimKey`
                 );
 
             if (termsOfUseJournalArticleResourcePrimKey) {
@@ -79,11 +82,11 @@ export default function ({
             }
 
             journalArticleNameInput.innerText =
-                '<liferay-ui:message key="none" />';
+                noneText;
 
             journalArticleRemove.classList.add('hide');
             
-            if (!Liferay.FeatureFlags['LPD-51378']) {
+            if (Liferay.FeatureFlags['LPD-11235']) {
                 const ckEditorToolbar = document.querySelector(
                     '#termsOfUseContent .ck-editor__top'
                 );
@@ -97,25 +100,19 @@ export default function ({
             }
         });
     }
-    if (!Liferay.FeatureFlags['LPD-51378']) {
-        document.addEventListener('DOMContentLoaded', () => {
+    if (Liferay.FeatureFlags['LPD-11235']) {
+        window.onload = () => {
             waitForElement('#termsOfUseContent .ck-editor__top').then(() => {
                 evaluateContentVisibility();
             });
-        });
-
-        Liferay.on('endNavigate', () => {
-            waitForElement('#termsOfUseContent .ck-editor__top').then(() => {
-                evaluateContentVisibility();
-            });
-        });
+        };
 
         const evaluateContentVisibility = () => {
             const ckEditorToolbar = document.querySelector(
                 '#termsOfUseContent .ck-editor__top'
             );
 
-            const hasTermsOfUseContent = useTermsOfUseJournal === 'true';
+            const hasTermsOfUseContent = useTermsOfUseJournal === true;
 
             if (hasTermsOfUseContent) {
                 ckEditorToolbar.style.display = 'none';

@@ -5,6 +5,11 @@
  */
 --%>
 
+<%
+    String selectWebContent = LanguageUtil.get(request, "select-web-content");
+	String noneText = LanguageUtil.get(request, "none");
+%>
+
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"
 	value="terms-of-use"
@@ -83,9 +88,15 @@
 	componentId="termsOfUseInputUtil"
 	context='<%=
 		HashMapBuilder.<String, Object>put(
+			"portletNamespace", portletDisplay.getNamespace()
+		).put(
 			"termsOfUseJournalArticleBrowserURL", cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL()
 		).put(
 			"useTermsOfUseJournal", useTermsOfUseJournal
+		).put(
+			"selectWebContent", selectWebContent
+		).put(
+			"noneText", noneText
 		).build()
 	%>'
 	module="{TermsOfUseInputUtil} from commerce-product-type-virtual-web"

@@ -211,6 +211,10 @@
 		<finder name="ObjectDefinitionId" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 		</finder>
+		<finder name="C_N" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+		</finder>
 		<finder name="ODI_N" return-type="ObjectDefinitionSetting" unique="true">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="name" />

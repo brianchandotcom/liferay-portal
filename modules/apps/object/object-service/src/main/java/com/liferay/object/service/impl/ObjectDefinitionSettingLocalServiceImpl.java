@@ -13,7 +13,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,6 +70,24 @@ public class ObjectDefinitionSettingLocalServiceImpl
 
 		return objectDefinitionSettingPersistence.findByODI_N(
 			objectDefinitionId, name);
+	}
+
+	@Override
+	public Map<Long, ObjectDefinitionSetting> getObjectDefinitionSettingMap(
+		long companyId, String name) {
+
+		Map<Long, ObjectDefinitionSetting> objectDefinitionSettingsMap =
+			new HashMap<>();
+
+		for (ObjectDefinitionSetting objectDefinitionSetting :
+				objectDefinitionSettingPersistence.findByC_N(companyId, name)) {
+
+			objectDefinitionSettingsMap.put(
+				objectDefinitionSetting.getObjectDefinitionId(),
+				objectDefinitionSetting);
+		}
+
+		return objectDefinitionSettingsMap;
 	}
 
 	@Override

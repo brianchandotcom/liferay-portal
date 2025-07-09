@@ -92,42 +92,13 @@ public class DataCleanupPreupgradeProcessSuiteTest
 	}
 
 	@Test
-	public void testCleanUpWithMultipleDataCleanupPreupgradeProcesses()
-		throws Exception {
-
+	public void testDataCleanupPreupgradeProcessesSuiteWithFailures() {
 		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
 			new ArrayList<>();
 
 		dataCleanupPreupgradeProcesses.add(
 			_createDataCleanupPreupgradeProcess(
-				() -> _cleanUpMessages.add(_SUCCESS_MESSAGE_1)));
-
-		dataCleanupPreupgradeProcesses.add(
-			_createDataCleanupPreupgradeProcess(
-				() -> _cleanUpMessages.add(_SUCCESS_MESSAGE_2)));
-
-		ReflectionTestUtil.setFieldValue(
-			this, "_dataCleanupPreupgradeProcesses",
-			dataCleanupPreupgradeProcesses);
-
-		cleanUp();
-
-		Assert.assertEquals(
-			_cleanUpMessages.toString(), 2 * _companiesCount,
-			_cleanUpMessages.size());
-
-		Assert.assertTrue(_cleanUpMessages.contains(_SUCCESS_MESSAGE_1));
-		Assert.assertTrue(_cleanUpMessages.contains(_SUCCESS_MESSAGE_2));
-	}
-
-	@Test
-	public void testCleanUpWithOneFailingDataCleanupPreupgradeProcesses() {
-		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
-			new ArrayList<>();
-
-		dataCleanupPreupgradeProcesses.add(
-			_createDataCleanupPreupgradeProcess(
-				() -> _cleanUpMessages.add(_SUCCESS_MESSAGE_1)));
+				() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1)));
 
 		dataCleanupPreupgradeProcesses.add(
 			_createDataCleanupPreupgradeProcess(
@@ -137,7 +108,7 @@ public class DataCleanupPreupgradeProcessSuiteTest
 
 		dataCleanupPreupgradeProcesses.add(
 			_createDataCleanupPreupgradeProcess(
-				() -> _cleanUpMessages.add(_SUCCESS_MESSAGE_2)));
+				() -> _cleanupMessages.add(_SUCCESS_MESSAGE_2)));
 
 		ReflectionTestUtil.setFieldValue(
 			this, "_dataCleanupPreupgradeProcesses",
@@ -158,11 +129,40 @@ public class DataCleanupPreupgradeProcessSuiteTest
 		}
 
 		Assert.assertEquals(
-			_cleanUpMessages.toString(), _companiesCount,
-			_cleanUpMessages.size());
+			_cleanupMessages.toString(), _companiesCount,
+			_cleanupMessages.size());
 
-		Assert.assertFalse(_cleanUpMessages.contains(_SUCCESS_MESSAGE_2));
-		Assert.assertTrue(_cleanUpMessages.contains(_SUCCESS_MESSAGE_1));
+		Assert.assertFalse(_cleanupMessages.contains(_SUCCESS_MESSAGE_2));
+		Assert.assertTrue(_cleanupMessages.contains(_SUCCESS_MESSAGE_1));
+	}
+
+	@Test
+	public void testDataCleanupPreupgradeProcessesSuiteWithMultipleData()
+		throws Exception {
+
+		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
+			new ArrayList<>();
+
+		dataCleanupPreupgradeProcesses.add(
+			_createDataCleanupPreupgradeProcess(
+				() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1)));
+
+		dataCleanupPreupgradeProcesses.add(
+			_createDataCleanupPreupgradeProcess(
+				() -> _cleanupMessages.add(_SUCCESS_MESSAGE_2)));
+
+		ReflectionTestUtil.setFieldValue(
+			this, "_dataCleanupPreupgradeProcesses",
+			dataCleanupPreupgradeProcesses);
+
+		cleanUp();
+
+		Assert.assertEquals(
+			_cleanupMessages.toString(), 2 * _companiesCount,
+			_cleanupMessages.size());
+
+		Assert.assertTrue(_cleanupMessages.contains(_SUCCESS_MESSAGE_1));
+		Assert.assertTrue(_cleanupMessages.contains(_SUCCESS_MESSAGE_2));
 	}
 
 	private static void _updatePortalSchemaVersion(String schemaVersion)
@@ -209,7 +209,7 @@ public class DataCleanupPreupgradeProcessSuiteTest
 	private static int _companiesCount = 1;
 	private static String _currentPortalSchemaVersion;
 
-	private final List<String> _cleanUpMessages = new ArrayList<>();
+	private final List<String> _cleanupMessages = new ArrayList<>();
 	private List<DataCleanupPreupgradeProcess>
 		_originalDataCleanupPreupgradeProcesses;
 

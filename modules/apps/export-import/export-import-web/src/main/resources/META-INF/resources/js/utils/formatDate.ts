@@ -4,17 +4,16 @@
  */
 
 export default function formatDate(date: string): string {
-	console.log('Formatting date:', date);
 	const dateObject = new Date(date);
 
 	const options: Intl.DateTimeFormatOptions = {
-		year: 'numeric',
-		month: 'short',
 		day: 'numeric',
 		hour: 'numeric',
-		minute: 'numeric',
-		second: 'numeric',
 		hour12: true,
+		minute: 'numeric',
+		month: 'short',
+		second: 'numeric',
+		year: 'numeric',
 	};
 
 	const formattedDate = new Intl.DateTimeFormat('en-US', options).format(

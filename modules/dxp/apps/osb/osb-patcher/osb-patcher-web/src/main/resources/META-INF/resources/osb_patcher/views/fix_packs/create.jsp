@@ -19,47 +19,54 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 <portlet:actionURL name="/patcher/add_fix_packs" var="addPatcherFixPackURL" />
 
-<aui:form action="<%= addPatcherFixPackURL %>" method="post">
+<liferay-frontend:edit-form
+	action="<%= addPatcherFixPackURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<aui:select label="project-version" name="patcherProjectVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "patcherFixPackFieldsOnChange();" %>' required="<%= true %>" showEmptyOption="<%= true %>">
+	<liferay-frontend:edit-form-body>
+		<aui:select label="project-version" name="patcherProjectVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "patcherFixPackFieldsOnChange();" %>' required="<%= true %>" showEmptyOption="<%= true %>">
 
-		<%
-		for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions()) {
-		%>
+			<%
+			for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions()) {
+			%>
 
-			<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
+				<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</aui:select>
+		</aui:select>
 
-	<aui:select label="component" name="patcherFixComponentId" onChange='<%= liferayPortletResponse.getNamespace() + "patcherFixPackFieldsOnChange();" %>' required="<%= true %>" showEmptyOption="<%= true %>">
+		<aui:select label="component" name="patcherFixComponentId" onChange='<%= liferayPortletResponse.getNamespace() + "patcherFixPackFieldsOnChange();" %>' required="<%= true %>" showEmptyOption="<%= true %>">
 
-		<%
-		for (PatcherFixComponent patcherFixComponent : PatcherFixComponentLocalServiceUtil.getPatcherFixComponents()) {
-		%>
+			<%
+			for (PatcherFixComponent patcherFixComponent : PatcherFixComponentLocalServiceUtil.getPatcherFixComponents()) {
+			%>
 
-			<aui:option label="<%= patcherFixComponent.getName() %>" value="<%= patcherFixComponent.getPatcherFixComponentId() %>" />
+				<aui:option label="<%= patcherFixComponent.getName() %>" value="<%= patcherFixComponent.getPatcherFixComponentId() %>" />
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</aui:select>
+		</aui:select>
 
-	<span class="aui-helper-hidden displaying-version" id="<portlet:namespace />displayingVersion">
-		<aui:input label="initial-version" name="version" type="text" value="" />
-	</span>
+		<span class="aui-helper-hidden displaying-version" id="<portlet:namespace />displayingVersion">
+			<aui:input label="initial-version" name="version" type="text" value="" />
+		</span>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
-		<aui:button type="submit" value="add" />
-
-		<aui:button href="<%= redirect %>" value="cancel" />
-	</aui:button-row>
-</aui:form>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	Liferay.provide(

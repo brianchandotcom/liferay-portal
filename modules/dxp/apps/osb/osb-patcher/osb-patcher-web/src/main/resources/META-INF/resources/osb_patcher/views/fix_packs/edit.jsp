@@ -30,6 +30,8 @@ if (patcherBuild != null) {
 		jenkinsRequestParameters.put("git.revision", patcherFix.getGitHash());
 	}
 }
+
+boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PACK_RELEASED;
 %>
 
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
@@ -40,75 +42,78 @@ if (patcherBuild != null) {
 
 <portlet:actionURL name="/patcher/update_fix_packs" var="updatePatcherFixPackURL" />
 
-<aui:form action="<%= updatePatcherFixPackURL %>" method="post">
+<liferay-frontend:edit-form
+	action="<%= updatePatcherFixPackURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="patcherFixPackId" type="hidden" value="<%= patcherFixPack.getPatcherFixPackId() %>" />
 
-	<c:if test="<%= patcherFix != null %>">
-		<aui:field-wrapper label="git-hash">
-			<a href="<%= gitHubURL %>" target="_blank"><%= patcherFix.getGitHash() %></a>
-		</aui:field-wrapper>
-	</c:if>
-
-	<aui:select disabled="<%= true %>" label="project-version" name="patcherProjectVersionId" required="<%= true %>" showEmptyOption="<%= true %>">
-
-		<%
-		for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions()) {
-		%>
-
-			<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-
-	<aui:select disabled="<%= true %>" label="component" name="patcherFixComponentId" required="<%= true %>" showEmptyOption="<%= true %>">
-
-		<%
-		for (PatcherFixComponent patcherFixComponent : PatcherFixComponentLocalServiceUtil.getPatcherFixComponents()) {
-		%>
-
-			<aui:option label="<%= patcherFixComponent.getName() %>" value="<%= patcherFixComponent.getPatcherFixComponentId() %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-
-	<aui:input name="version" type="hidden" value="<%= patcherFixPack.getVersion() %>" />
-
-	<aui:field-wrapper label="version">
-		<%= patcherFixPack.getVersion() %>
-	</aui:field-wrapper>
-
-	<%
-	boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PACK_RELEASED;
-	%>
-
-	<aui:select disabled="<%= released %>" name="status" showEmptyOption="<%= false %>">
-		<c:if test="<%= patcherFixPack.getStatus() != WorkflowConstants.STATUS_FIX_PACK_RELEASED %>">
-			<aui:option label="<%= WorkflowConstants.LABEL_FIX_PACK_UNDER_DEVELOPMENT %>" value="<%= WorkflowConstants.STATUS_FIX_PACK_UNDER_DEVELOPMENT %>" />
-			<aui:option label="<%= WorkflowConstants.LABEL_FIX_PACK_FROZEN %>" value="<%= WorkflowConstants.STATUS_FIX_PACK_FROZEN %>" />
+	<liferay-frontend:edit-form-body>
+		<c:if test="<%= patcherFix != null %>">
+			<aui:field-wrapper label="git-hash">
+				<a href="<%= gitHubURL %>" target="_blank"><%= patcherFix.getGitHash() %></a>
+			</aui:field-wrapper>
 		</c:if>
 
-		<c:if test="<%= patcherFixPack.getStatus() != WorkflowConstants.STATUS_FIX_PACK_UNDER_DEVELOPMENT %>">
-			<aui:option label="<%= WorkflowConstants.LABEL_FIX_PACK_RELEASED %>" value="<%= WorkflowConstants.STATUS_FIX_PACK_RELEASED %>" />
-		</c:if>
-	</aui:select>
+		<aui:select disabled="<%= true %>" label="project-version" name="patcherProjectVersionId" required="<%= true %>" showEmptyOption="<%= true %>">
 
-	<c:if test="<%= patcherFixPack.getReleasedDate() != null %>">
-		<aui:field-wrapper label="released-date">
-			<%= dateTimeFormat.format(patcherFixPack.getReleasedDate()) %>
+			<%
+			for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions()) {
+			%>
+
+				<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
+		<aui:select disabled="<%= true %>" label="component" name="patcherFixComponentId" required="<%= true %>" showEmptyOption="<%= true %>">
+
+			<%
+			for (PatcherFixComponent patcherFixComponent : PatcherFixComponentLocalServiceUtil.getPatcherFixComponents()) {
+			%>
+
+				<aui:option label="<%= patcherFixComponent.getName() %>" value="<%= patcherFixComponent.getPatcherFixComponentId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
+		<aui:input name="version" type="hidden" value="<%= patcherFixPack.getVersion() %>" />
+
+		<aui:field-wrapper label="version">
+			<%= patcherFixPack.getVersion() %>
 		</aui:field-wrapper>
-	</c:if>
 
-	<aui:input disabled="<%= released %>" name="requirements" />
+		<aui:select disabled="<%= released %>" name="status" showEmptyOption="<%= false %>">
+			<c:if test="<%= patcherFixPack.getStatus() != WorkflowConstants.STATUS_FIX_PACK_RELEASED %>">
+				<aui:option label="<%= WorkflowConstants.LABEL_FIX_PACK_UNDER_DEVELOPMENT %>" value="<%= WorkflowConstants.STATUS_FIX_PACK_UNDER_DEVELOPMENT %>" />
+				<aui:option label="<%= WorkflowConstants.LABEL_FIX_PACK_FROZEN %>" value="<%= WorkflowConstants.STATUS_FIX_PACK_FROZEN %>" />
+			</c:if>
 
-	<aui:button-row>
-		<aui:button disabled="<%= released %>" type="submit" value="update" />
+			<c:if test="<%= patcherFixPack.getStatus() != WorkflowConstants.STATUS_FIX_PACK_UNDER_DEVELOPMENT %>">
+				<aui:option label="<%= WorkflowConstants.LABEL_FIX_PACK_RELEASED %>" value="<%= WorkflowConstants.STATUS_FIX_PACK_RELEASED %>" />
+			</c:if>
+		</aui:select>
+
+		<c:if test="<%= patcherFixPack.getReleasedDate() != null %>">
+			<aui:field-wrapper label="released-date">
+				<%= dateTimeFormat.format(patcherFixPack.getReleasedDate()) %>
+			</aui:field-wrapper>
+		</c:if>
+
+		<aui:input disabled="<%= released %>" name="requirements" />
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<aui:button disabled="<%= released %>" type="submit" value="save" />
 
 		<aui:button href="<%= redirect %>" value="cancel" />
 
@@ -138,8 +143,8 @@ if (patcherBuild != null) {
 
 			<aui:button href="<%= mergePatcherFixPackURL %>" value="merge" />
 		</c:if>
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <c:if test="<%= (jenkinsRequestParameters != null) && !jenkinsRequestParameters.isEmpty() %>">
 	<div class="layout">

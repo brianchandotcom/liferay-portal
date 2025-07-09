@@ -287,6 +287,14 @@ public abstract class BaseTestClass implements TestClass {
 				methodIgnored, methodName, this));
 	}
 
+	protected void addTestClassMethod(
+		boolean methodIgnored, String methodName, String annotations) {
+
+		addTestClassMethod(
+			TestClassFactory.newTestClassMethod(
+				methodIgnored, methodName, annotations, this));
+	}
+
 	protected void addTestClassMethod(String methodName) {
 		addTestClassMethod(false, methodName);
 	}

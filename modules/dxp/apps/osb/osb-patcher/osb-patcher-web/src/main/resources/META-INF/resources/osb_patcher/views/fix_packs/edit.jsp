@@ -34,7 +34,6 @@ if (patcherBuild != null) {
 
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="edit-fix-pack" />
-	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_fix_packs" />
 </liferay-util:include>
 
 <aui:model-context bean="<%= patcherFixPack %>" model="<%= PatcherFixPack.class %>" />
@@ -42,11 +41,7 @@ if (patcherBuild != null) {
 <portlet:actionURL name="/patcher/update_fix_packs" var="updatePatcherFixPackURL" />
 
 <aui:form action="<%= updatePatcherFixPackURL %>" method="post">
-	<portlet:renderURL var="viewPatcherFixPacksURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/index_fix_packs" />
-	</portlet:renderURL>
-
-	<aui:input name="redirect" type="hidden" value="<%= viewPatcherFixPacksURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="patcherFixPackId" type="hidden" value="<%= patcherFixPack.getPatcherFixPackId() %>" />
 
 	<c:if test="<%= patcherFix != null %>">
@@ -115,12 +110,12 @@ if (patcherBuild != null) {
 	<aui:button-row>
 		<aui:button disabled="<%= released %>" type="submit" value="update" />
 
-		<aui:button href="<%= Validator.isNotNull(redirect) ? redirect : viewPatcherFixPacksURL %>" value="cancel" />
+		<aui:button href="<%= redirect %>" value="cancel" />
 
 		<c:if test="<%= (patcherFix != null) && Validator.isNotNull(patcherFix.getGitHash()) %>">
 			<portlet:actionURL name="/patcher/build_fix_packs" var="buildPatcherBuildURL">
 				<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFixPack.getPatcherFixPackId()) %>" />
-				<portlet:param name="redirect" value="<%= viewPatcherFixPacksURL %>" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
 			</portlet:actionURL>
 
 			<aui:button href="<%= buildPatcherBuildURL %>" value="build" />
@@ -138,7 +133,7 @@ if (patcherBuild != null) {
 		<c:if test="<%= (patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PACK_FROZEN) && (patcherFix != null) && Validator.isNull(patcherFix.getGitHash()) %>">
 			<portlet:actionURL name="/patcher/set_build_fix_packs" var="mergePatcherFixPackURL">
 				<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFixPack.getPatcherFixPackId()) %>" />
-				<portlet:param name="redirect" value="<%= Validator.isNotNull(redirect) ? redirect : viewPatcherFixPacksURL %>" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
 			</portlet:actionURL>
 
 			<aui:button href="<%= mergePatcherFixPackURL %>" value="merge" />

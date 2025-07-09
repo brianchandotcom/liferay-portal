@@ -31,6 +31,7 @@ PatcherFixPacksDisplayContext patcherFixPacksDisplayContext = new PatcherFixPack
 		<portlet:renderURL var="viewPatcherFixPackURL">
 			<portlet:param name="mvcRenderCommandName" value="/patcher/view_fix_packs" />
 			<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFixPack.getPatcherFixPackId()) %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
@@ -109,6 +110,7 @@ PatcherFixPacksDisplayContext patcherFixPacksDisplayContext = new PatcherFixPack
 					<portlet:renderURL var="editPatcherFixPackURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_fix_packs" />
 						<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFixPack.getPatcherFixPackId()) %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon

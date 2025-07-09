@@ -85,7 +85,8 @@ public class PatcherFixPacksManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
-					"mvcRenderCommandName", "/patcher/add_fix_packs");
+					"mvcRenderCommandName", "/patcher/add_fix_packs",
+					"redirect", themeDisplay.getURLCurrent());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "create-fix-pack"));
 			}

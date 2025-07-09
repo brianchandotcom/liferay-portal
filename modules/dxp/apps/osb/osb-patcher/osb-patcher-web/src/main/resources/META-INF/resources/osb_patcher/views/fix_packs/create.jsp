@@ -13,7 +13,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="create-fix-pack" />
-	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_fix_packs" />
 </liferay-util:include>
 
 <aui:model-context bean="<%= null %>" model="<%= PatcherFixPack.class %>" />
@@ -21,11 +20,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 <portlet:actionURL name="/patcher/add_fix_packs" var="addPatcherFixPackURL" />
 
 <aui:form action="<%= addPatcherFixPackURL %>" method="post">
-	<portlet:renderURL var="viewPatcherFixPacksURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/index_fix_packs" />
-	</portlet:renderURL>
-
-	<aui:input name="redirect" type="hidden" value="<%= viewPatcherFixPacksURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<aui:select label="project-version" name="patcherProjectVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "patcherFixPackFieldsOnChange();" %>' required="<%= true %>" showEmptyOption="<%= true %>">
 
@@ -62,7 +57,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	<aui:button-row>
 		<aui:button type="submit" value="add" />
 
-		<aui:button href="<%= Validator.isNotNull(redirect) ? redirect : viewPatcherFixPacksURL %>" value="cancel" />
+		<aui:button href="<%= redirect %>" value="cancel" />
 	</aui:button-row>
 </aui:form>
 

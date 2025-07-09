@@ -25,7 +25,6 @@ if (patcherBuild != null) {
 
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="view-fix-pack" />
-	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_fix_packs" />
 </liferay-util:include>
 
 <div class="details">
@@ -175,6 +174,7 @@ if (patcherBuild != null) {
 		<portlet:renderURL var="viewPatcherBuildURL">
 			<portlet:param name="mvcRenderCommandName" value="/patcher/view_builds" />
 			<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherFixPack.getPatcherBuildId()) %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<aui:button href="<%= viewPatcherBuildURL %>" value="view-build" />
@@ -289,6 +289,7 @@ List<PatcherFix> patcherFixes = PatcherFixLocalServiceUtil.getPatcherFixPackPatc
 					<portlet:renderURL var="editPatcherFixURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_fixes" />
 						<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon
@@ -313,14 +314,9 @@ List<PatcherFix> patcherFixes = PatcherFixLocalServiceUtil.getPatcherFixPackPatc
 				</c:if>
 
 				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.SET_FIX_PACK_FIELDS, patcherFix.getUserId()) %>">
-					<portlet:renderURL var="viewPatcherFixPackURL">
-						<portlet:param name="mvcRenderCommandName" value="/patcher/view_fix_packs" />
-						<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFixPack.getPatcherFixPackId()) %>" />
-					</portlet:renderURL>
-
 					<portlet:actionURL name="/patcher/set_fix_pack_fields_fixes" var="setFixPackFieldsURL">
 						<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
-						<portlet:param name="redirect" value="<%= viewPatcherFixPackURL %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon

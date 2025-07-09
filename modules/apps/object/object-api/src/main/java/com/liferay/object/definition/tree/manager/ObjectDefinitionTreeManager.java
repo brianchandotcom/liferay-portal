@@ -70,6 +70,26 @@ public class ObjectDefinitionTreeManager {
 		return _objectDefinitionTreeManager;
 	}
 
+	public static void populateRootObjectDefinitionIds(
+		List<ObjectDefinition> objectDefinitions,
+		Map<Long, ObjectDefinitionSetting> objectDefinitionSettingMap) {
+
+		for (Map.Entry<Long, ObjectDefinitionSetting> entry :
+				objectDefinitionSettingMap.entrySet()) {
+
+			ObjectDefinitionSetting objectDefinitionSetting = entry.getValue();
+
+			_rootObjectDefinitionIds.put(
+				entry.getKey(),
+				GetterUtil.getLong(objectDefinitionSetting.getValue()));
+		}
+
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			_rootObjectDefinitionIds.putIfAbsent(
+				objectDefinition.getObjectDefinitionId(), 0L);
+		}
+	}
+
 	public void bindObjectDefinitions(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectDefinitionPersistence objectDefinitionPersistence,

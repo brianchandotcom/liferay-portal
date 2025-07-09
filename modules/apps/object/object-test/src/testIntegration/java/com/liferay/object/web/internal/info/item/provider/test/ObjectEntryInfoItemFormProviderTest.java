@@ -7,6 +7,8 @@ package com.liferay.object.web.internal.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.OptionInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -62,6 +64,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -186,7 +189,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 				TestPropsValues.getUserId(),
 				_childObjectDefinition.getObjectDefinitionId());
 
-		ObjectDefinition parentObjectDefinition = _addObjectDefinition(
+		_parentObjectDefinition = _addObjectDefinition(
 			new TextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
@@ -194,15 +197,15 @@ public class ObjectEntryInfoItemFormProviderTest {
 				"parentTextObjectFieldName"
 			).build());
 
-		parentObjectDefinition =
+		_parentObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				parentObjectDefinition.getObjectDefinitionId());
+				_parentObjectDefinition.getObjectDefinitionId());
 
 		_objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
 				null, TestPropsValues.getUserId(),
-				parentObjectDefinition.getObjectDefinitionId(),
+				_parentObjectDefinition.getObjectDefinitionId(),
 				_childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -306,6 +309,36 @@ public class ObjectEntryInfoItemFormProviderTest {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	@FeatureFlag("LPD-50377")
+	@Test
+	public void testParentObjectEntryInfoItemFormProvider() throws Exception {
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class,
+				_parentObjectDefinition.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			String.valueOf(_parentObjectDefinition.getObjectDefinitionId()), 0);
+
+		Assert.assertNotNull(infoForm);
+		Assert.assertNotNull(
+			infoForm.getInfoField("parentTextObjectFieldName"));
+
+		InfoFieldSetEntry infoFieldSetEntry = infoForm.getInfoFieldSetEntry(
+			_objectRelationship.getName());
+
+		Assert.assertNotNull(infoFieldSetEntry);
+		Assert.assertTrue(infoFieldSetEntry instanceof InfoFieldSet);
+
+		InfoFieldSet childInfoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+		Assert.assertNotNull(
+			childInfoFieldSet.getInfoFieldSetEntry(
+				"attachmentObjectFieldName"));
+		Assert.assertNotNull(
+			childInfoFieldSet.getInfoFieldSetEntry("picklistObjectFieldName"));
 	}
 
 	private ListTypeEntry _addListTypeEntry() throws Exception {
@@ -479,5 +512,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 	@Inject
 	private ObjectStateTransitionLocalService
 		_objectStateTransitionLocalService;
+
+	private ObjectDefinition _parentObjectDefinition;
 
 }

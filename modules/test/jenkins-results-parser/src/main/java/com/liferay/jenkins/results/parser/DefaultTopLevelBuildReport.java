@@ -9,7 +9,9 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -100,6 +102,23 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 						(DownstreamBuild)build));
 			}
 		}
+	}
+
+	@Override
+	protected Set<String> getBatchNames() {
+		Set<String> batchNames = new HashSet<>(super.getBatchNames());
+
+		for (Build build : _topLevelBuild.getDownstreamBuilds()) {
+			if (!(build instanceof DownstreamBuild)) {
+				continue;
+			}
+
+			DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+			batchNames.add(downstreamBuild.getBatchName());
+		}
+
+		return batchNames;
 	}
 
 	private List<String> _getTestrayAttachmentURLStrings() {

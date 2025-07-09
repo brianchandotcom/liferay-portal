@@ -330,11 +330,14 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 	}
 
 	private static final String _ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE =
-		PropsUtil.get(PropsKeys.LIFERAY_HOME) +
-			"/test/store/advanced_file_system";
+		Paths.get(
+			PropsUtil.get(PropsKeys.LIFERAY_HOME), "test", "store",
+			"advanced_file_system"
+		).toString();
 
-	private static final String _ROOT_DIR_FILE_SYSTEM_STORE =
-		PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/test/store/file_system";
+	private static final String _ROOT_DIR_FILE_SYSTEM_STORE = Paths.get(
+		PropsUtil.get(PropsKeys.LIFERAY_HOME), "test", "store", "file_system"
+	).toString();
 
 	private static Configuration _advancedFileSystemStoreConfiguration;
 	private static boolean _cacheEnabled;

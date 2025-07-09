@@ -52,6 +52,21 @@ public abstract class BaseTopLevelBuildReport
 	}
 
 	@Override
+	public void addDownstreamBuildReports(
+		List<DownstreamBuildReport> downstreamBuildReports) {
+
+		if (downstreamBuildReports == null) {
+			return;
+		}
+
+		for (DownstreamBuildReport downstreamBuildReport :
+				downstreamBuildReports) {
+
+			addDownstreamBuildReport(downstreamBuildReport);
+		}
+	}
+
+	@Override
 	public void addTestrayAttachmentURL(URL testrayAttachmentURL) {
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
 

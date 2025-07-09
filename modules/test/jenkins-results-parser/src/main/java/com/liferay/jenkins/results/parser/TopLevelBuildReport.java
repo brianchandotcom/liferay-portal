@@ -20,6 +20,9 @@ public interface TopLevelBuildReport extends BuildReport {
 	public void addDownstreamBuildReport(
 		DownstreamBuildReport downstreamBuildReport);
 
+	public void addDownstreamBuildReports(
+		List<DownstreamBuildReport> downstreamBuildReports);
+
 	public void addTestrayAttachmentURL(URL testrayAttachmentURL);
 
 	public Map<String, String> getBuildParameters();

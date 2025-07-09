@@ -38,8 +38,10 @@ import java.nio.file.Paths;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -114,6 +116,29 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			PortalInstancePool.class, "_cacheEnabled", _cacheEnabled);
 
 		_upgradeDatabaseDLStorageCheckDisabledSafeCloseable.close();
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				Files.createDirectories(
+					Paths.get(
+						_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE,
+						String.valueOf(companyId)));
+				Files.createDirectories(
+					Paths.get(
+						_ROOT_DIR_FILE_SYSTEM_STORE,
+						String.valueOf(companyId)));
+			},
+			PortalInstancePool.getCompanyIds());
+	}
+
+	@After
+	public void tearDown() {
+		FileUtil.deltree(_ROOT_DIR_ADVANCED_FILE_SYSTEM_STORE);
+		FileUtil.deltree(_ROOT_DIR_FILE_SYSTEM_STORE);
 	}
 
 	@Test

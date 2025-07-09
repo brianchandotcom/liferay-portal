@@ -10,6 +10,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -258,17 +259,8 @@ public class SettingsTestUtil {
 			};
 		}
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
-				serviceContext, WorkflowConstants.STATUS_APPROVED);
-
 		ItemExternalReference itemExternalReference =
-			new ItemExternalReference() {
-				{
-					setExternalReferenceCode(
-						layoutPageTemplateEntry::getExternalReferenceCode);
-				}
-			};
+			_getMasterPageItemExternalReference(serviceContext);
 
 		settings.setMasterPageItemExternalReference(
 			() -> itemExternalReference);
@@ -276,6 +268,29 @@ public class SettingsTestUtil {
 		return new Settings() {
 			{
 				setMasterPageItemExternalReference(() -> itemExternalReference);
+			}
+		};
+	}
+
+	public static Settings getSettings(ServiceContext serviceContext) {
+		return new Settings() {
+			{
+				setColorSchemeName(() -> "01");
+				setCss(RandomTestUtil::randomString);
+				setJavascript(RandomTestUtil::randomString);
+				setMasterPageItemExternalReference(
+					() -> _getMasterPageItemExternalReference(serviceContext));
+				setStyleBookItemExternalReference(
+					() -> _getStyleBookItemExternalReference(serviceContext));
+				setThemeName(() -> "Classic");
+				setThemeSettings(
+					() -> TreeMapBuilder.put(
+						"lfr-theme:" + RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					).put(
+						"lfr-theme:" + RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					).build());
 			}
 		};
 	}
@@ -300,20 +315,8 @@ public class SettingsTestUtil {
 			};
 		}
 
-		StyleBookEntry styleBookEntry =
-			StyleBookEntryLocalServiceUtil.addStyleBookEntry(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(), false, null,
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(), serviceContext);
-
 		ItemExternalReference itemExternalReference =
-			new ItemExternalReference() {
-				{
-					setExternalReferenceCode(
-						styleBookEntry::getExternalReferenceCode);
-				}
-			};
+			_getStyleBookItemExternalReference(serviceContext);
 
 		settings.setStyleBookItemExternalReference(() -> itemExternalReference);
 
@@ -446,6 +449,41 @@ public class SettingsTestUtil {
 					"true"
 				).build());
 		}
+	}
+
+	private static ItemExternalReference _getMasterPageItemExternalReference(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
+				serviceContext, WorkflowConstants.STATUS_APPROVED);
+
+		return new ItemExternalReference() {
+			{
+				setExternalReferenceCode(
+					layoutPageTemplateEntry::getExternalReferenceCode);
+			}
+		};
+	}
+
+	private static ItemExternalReference _getStyleBookItemExternalReference(
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			StyleBookEntryLocalServiceUtil.addStyleBookEntry(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(), false, null,
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), serviceContext);
+
+		return new ItemExternalReference() {
+			{
+				setExternalReferenceCode(
+					styleBookEntry::getExternalReferenceCode);
+			}
+		};
 	}
 
 	private static UnicodeProperties _getThemeSettingsUnicodeProperties(

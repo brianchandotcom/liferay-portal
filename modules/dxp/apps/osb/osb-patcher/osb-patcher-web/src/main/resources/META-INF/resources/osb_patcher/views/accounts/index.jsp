@@ -49,7 +49,9 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 		keyProperty="patcherAccountId"
 		modelVar="patcherAccount"
 	>
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
 			<h5>
 				<portlet:renderURL var="viewPatcherAccountURL">
 					<portlet:param name="mvcRenderCommandName" value="/patcher/view_accounts" />
@@ -61,14 +63,14 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 				</a>
 			</h5>
 
-			<table class="account-table">
+			<table class="mt-3 table table-bordered table-sm table-striped">
 
 				<%
 				for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions(patcherAccount)) {
 				%>
 
 					<tr>
-						<td class="slim">
+						<td class="col-md-2">
 							<portlet:renderURL var="viewPatcherAccountPatcherProductVersionURL">
 								<portlet:param name="mvcRenderCommandName" value="/patcher/view_accounts" />
 								<portlet:param name="patcherBuildAccountEntryCode" value="<%= patcherAccount.getAccountEntryCode() %>" />
@@ -84,7 +86,7 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 						PatcherBuild patcherBuild = PatcherBuildUtil.fetchLastModifiedPatcherBuild(patcherAccount.getPatcherAccountId(), patcherProductVersion.getPatcherProductVersionId());
 						%>
 
-						<td class="slim">
+						<td class="col-md-1">
 
 							<%
 							PatcherProjectVersion curPatcherProjectVersion = PatcherProjectVersionLocalServiceUtil.fetchPatcherProjectVersion(patcherBuild.getPatcherProjectVersionId());
@@ -92,7 +94,7 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 
 							<%= curPatcherProjectVersion.getName() %>
 						</td>
-						<td class="wide">
+						<td class="col-md-3">
 
 							<%
 							List<String> patcherFixPackNames = PatcherFixPackUtil.getPatcherFixPackNames(patcherBuild.getName());
@@ -121,7 +123,7 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 								</c:otherwise>
 							</c:choose>
 						</td>
-						<td class="slim">
+						<td class="col-md-1">
 
 							<%
 							Date statusDate = patcherBuild.getStatusDate();
@@ -131,7 +133,7 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</span>
 						</td>
-						<td>
+						<td class="col-md-2">
 							<c:choose>
 								<c:when test="<%= PatcherBuildUtil.isCompleteReadyOrReleased(patcherBuild) %>">
 
@@ -139,10 +141,10 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 									String fileName = patcherBuild.getFileName();
 									%>
 
-									<span class="passed"><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(patcherBuild.getStatus()) %>" /></span> (<clay:link href='<%= fileName.contains("/liferay-dxp-") ? "https://releases-cdn.liferay.com/dxp/hotfix" : patcherConfiguration.patcherBuildDownloadURL() + "/" + fileName %>' label="download" target="_blank" />)
+									<span class="text-success"><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(patcherBuild.getStatus()) %>" /></span> (<clay:link href='<%= fileName.contains("/liferay-dxp-") ? "https://releases-cdn.liferay.com/dxp/hotfix" : patcherConfiguration.patcherBuildDownloadURL() + "/" + fileName %>' label="download" target="_blank" />)
 								</c:when>
 								<c:when test="<%= (patcherBuild.getStatus() == WorkflowConstants.STATUS_BUILD_FAILED) || (patcherBuild.getStatus() == WorkflowConstants.STATUS_BUILD_FAILED_MERGING_ONLY) %>">
-									<span class="failed"><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(patcherBuild.getStatus()) %>" /></span>
+									<span class="text-danger"><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(patcherBuild.getStatus()) %>" /></span>
 
 									<%
 									for (Map<String, String> jenkinsResults : JenkinsUtil.getJenkinsResults(patcherBuild)) {
@@ -160,16 +162,16 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 								</c:when>
 							</c:choose>
 						</td>
-						<td>
+						<td class="col-md-3">
 
 							<%
 							String qaStatusCSSClass = StringPool.BLANK;
 
 							if (PatcherBuildUtil.isTestingPassed(patcherBuild)) {
-								qaStatusCSSClass = "passed";
+								qaStatusCSSClass = "text-success";
 							}
 							else if (PatcherBuildUtil.isTestingFailed(patcherBuild)) {
-								qaStatusCSSClass = "failed";
+								qaStatusCSSClass = "text-danger";
 							}
 							%>
 
@@ -197,6 +199,7 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
+		displayStyle="descriptive"
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>

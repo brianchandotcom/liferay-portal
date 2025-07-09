@@ -5924,7 +5924,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectDefinition.setEnableObjectEntryVersioning(true);
 
-		_objectDefinition.isEnableObjectEntryVersioning()
+		_objectDefinition.isEnableObjectEntryVersioning();
 
 		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
 

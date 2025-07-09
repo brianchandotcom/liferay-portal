@@ -421,7 +421,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 				"builds", FIELD_NAMES, filter, null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
-				throw new RuntimeException("Unable to find entity JSONObject");
+				throw new RuntimeException("Unable to find entity JSON object");
 			}
 
 			_jsonObject = entityJSONObjects.get(0);

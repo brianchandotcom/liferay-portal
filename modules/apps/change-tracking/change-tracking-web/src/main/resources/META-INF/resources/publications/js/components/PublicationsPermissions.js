@@ -89,6 +89,7 @@ export default function PublicationsPermissions({
 					last={
 						<ClayButton.Group spaced>
 							<ClayButton
+								aria-label={Liferay.Language.get('cancel')}
 								displayType="secondary"
 								onClick={() =>
 									Liferay.Portlet.refresh(
@@ -100,6 +101,7 @@ export default function PublicationsPermissions({
 							</ClayButton>
 
 							<ClayButton
+								aria-label={Liferay.Language.get('save')}
 								onClick={() => {
 									saveRolePermissions();
 								}}
@@ -117,6 +119,7 @@ export default function PublicationsPermissions({
 	return (
 		<>
 			<ClayButton
+				aria-label={Liferay.Language.get('edit-permissions')}
 				displayType="secondary"
 				onClick={() => setShowModal(true)}
 				title={Liferay.Language.get('edit-permissions')}

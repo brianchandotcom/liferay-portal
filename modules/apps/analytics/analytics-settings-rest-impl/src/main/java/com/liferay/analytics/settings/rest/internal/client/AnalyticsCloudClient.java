@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -145,13 +144,18 @@ public class AnalyticsCloudClient {
 	}
 
 	public AnalyticsDataSource disconnectAnalyticsDataSource(
-			AnalyticsConfiguration analyticsConfiguration)
+			AnalyticsConfiguration analyticsConfiguration, Company company)
 		throws Exception {
 
 		try {
 			Http.Options options = _getOptions(analyticsConfiguration);
 
-			options.addHeader(HttpHeaders.CONTENT_LENGTH, "0");
+			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+			options.setBody(
+				JSONUtil.put(
+					"url", company.getPortalURL(0)
+				).toString(),
+				ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 			options.setLocation(
 				String.format(
 					"%s/api/1.0/data-sources/%s/disconnect",

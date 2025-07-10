@@ -6,3 +6,4 @@ Import-Package:\
 	\
 	*
 -fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=ignore
+Liferay-Client-Extension-Batch: com/liferay/mcp/server/internal/batch

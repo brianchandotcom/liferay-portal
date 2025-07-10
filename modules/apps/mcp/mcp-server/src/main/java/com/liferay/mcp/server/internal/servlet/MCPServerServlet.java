@@ -7,12 +7,19 @@ package com.liferay.mcp.server.internal.servlet;
 
 import com.liferay.mcp.server.internal.tenant.MCPServerTenant;
 import com.liferay.mcp.server.internal.util.MCPServerToolCallHandler;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import io.modelcontextprotocol.server.McpServer;
+import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
 
 import jakarta.servlet.GenericServlet;
@@ -24,7 +31,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -69,15 +80,21 @@ public class MCPServerServlet extends GenericServlet {
 			_portal.getCompanyId((HttpServletRequest)servletRequest),
 			companyId -> _buildMCPServerTenant(
 				_portal.getPortalURL((HttpServletRequest)servletRequest) +
-					_portal.getPathModule()));
+					_portal.getPathModule(),
+				companyId));
 
 		Servlet servlet = mcpServerTenant.getServlet();
 
 		servlet.service(servletRequest, servletResponse);
 	}
 
-	private MCPServerTenant _buildMCPServerTenant(String baseURL) {
+	private MCPServerTenant _buildMCPServerTenant(
+		String baseURL, long companyId) {
+
 		MCPServerTenant mcpServerTenant = new MCPServerTenant(baseURL);
+
+		List<McpServerFeatures.SyncPromptSpecification> prompts =
+			_getSyncPromptSpecifications(companyId);
 
 		McpServer.sync(
 			mcpServerTenant.getServlet()
@@ -85,6 +102,8 @@ public class MCPServerServlet extends GenericServlet {
 			McpSchema.ServerCapabilities.builder(
 			).tools(
 				true
+			).prompts(
+				!prompts.isEmpty()
 			).build()
 		).tool(
 			new McpSchema.Tool(
@@ -166,9 +185,73 @@ public class MCPServerServlet extends GenericServlet {
 					String.valueOf(arguments.get("path")),
 					String.valueOf(arguments.get("payload")),
 					MCPServerTenant.getAccessToken(exchange)))
+		).prompts(
+			prompts
 		).build();
 
 		return mcpServerTenant;
+	}
+
+	private List<McpServerFeatures.SyncPromptSpecification>
+		_getSyncPromptSpecifications(long companyId) {
+
+		List<McpServerFeatures.SyncPromptSpecification>
+			syncPromptSpecifications = new ArrayList<>();
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"MCP_PROMPT", companyId);
+
+		if (objectDefinition == null) {
+			return syncPromptSpecifications;
+		}
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				0, objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			Map<String, Serializable> objectEntryValues =
+				objectEntry.getValues();
+
+			String argumentName = (String)objectEntryValues.get("argumentName");
+			String resultText = (String)objectEntryValues.get("resultText");
+
+			McpServerFeatures.SyncPromptSpecification syncPromptSpecification =
+				new McpServerFeatures.SyncPromptSpecification(
+					new McpSchema.Prompt(
+						(String)objectEntryValues.get("name"),
+						(String)objectEntryValues.get("description"),
+						Arrays.asList(
+							new McpSchema.PromptArgument(
+								argumentName,
+								(String)objectEntryValues.get(
+									"argumentDescription"),
+								true))),
+					(exchange, request) -> {
+						String argumentValue = (String)request.arguments(
+						).get(
+							argumentName
+						);
+
+						String content = StringUtil.replace(
+							resultText, "${" + argumentName + "}",
+							argumentValue);
+
+						return new McpSchema.GetPromptResult(
+							(String)objectEntryValues.get("resultDescription"),
+							Arrays.asList(
+								new McpSchema.PromptMessage(
+									McpSchema.Role.USER,
+									new McpSchema.TextContent(content))));
+					});
+
+			syncPromptSpecifications.add(syncPromptSpecification);
+		}
+
+		return syncPromptSpecifications;
 	}
 
 	@Reference
@@ -176,6 +259,12 @@ public class MCPServerServlet extends GenericServlet {
 
 	private final Map<Long, MCPServerTenant> _mcpServerTenants =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private Portal _portal;

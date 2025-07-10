@@ -1082,7 +1082,7 @@ public class DefaultObjectEntryManagerImpl
 	private Map<String, String> _addAction(
 			String actionName, String methodName,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
-			HashMap<String, String> templateParameterMap, UriInfo uriInfo)
+			Map<String, String> templateParameterMap, UriInfo uriInfo)
 		throws Exception {
 
 		return ActionUtil.addAction(
@@ -1621,7 +1621,7 @@ public class DefaultObjectEntryManagerImpl
 		if (GetterUtil.getBoolean(
 				dtoConverterContext.getAttribute("addActions"), true)) {
 
-			HashMap<String, String> templateParameterMap = HashMapBuilder.put(
+			Map<String, String> templateParameterMap = HashMapBuilder.put(
 				"version", String.valueOf(objectEntryVersion.getVersion())
 			).build();
 

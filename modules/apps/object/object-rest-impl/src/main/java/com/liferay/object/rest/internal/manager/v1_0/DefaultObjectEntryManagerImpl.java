@@ -1326,6 +1326,11 @@ public class DefaultObjectEntryManagerImpl
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 
+		if (objectDefinition.isEnableObjectEntryDraft()) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
 		Map<String, Serializable> values = _toObjectValues(
 			dtoConverterContext.getLocale(), objectDefinition, objectEntry,
 			scopeKey, serviceContext);

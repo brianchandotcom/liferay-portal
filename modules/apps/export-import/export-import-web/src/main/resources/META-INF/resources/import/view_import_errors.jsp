@@ -38,10 +38,6 @@ ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayC
 	%>'
 />
 
-<liferay-frontend:component
-	module="{setupExportImportMocks} from exportimport-web"
-/>
-
 <aui:form method="post" name="fm">
 	<frontend-data-set:headless-display
 		apiURL="<%= importErrorsDisplayContext.getAPIURL() %>"

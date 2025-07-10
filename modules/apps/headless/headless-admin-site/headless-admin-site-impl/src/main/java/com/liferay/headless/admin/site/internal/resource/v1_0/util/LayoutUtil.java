@@ -652,17 +652,12 @@ public class LayoutUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (Validator.isNull(clientExtension.getExternalReferenceCode())) {
-			ClientExtensionEntryRelLocalServiceUtil.
-				deleteClientExtensionEntryRels(
-					PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-					type);
-
-			return;
-		}
-
 		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
 			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
+
+		if (Validator.isNull(clientExtension.getExternalReferenceCode())) {
+			return;
+		}
 
 		ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
 			serviceContext.getUserId(), layout.getGroupId(),

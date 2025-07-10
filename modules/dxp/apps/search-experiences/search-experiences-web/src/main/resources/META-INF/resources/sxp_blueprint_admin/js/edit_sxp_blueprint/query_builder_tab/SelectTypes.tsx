@@ -322,7 +322,7 @@ function SelectTypes({
 											{type}
 										</span>
 
-										<span className="inline-item inline-item-after">
+										<span className="c-ml-1 inline-item">
 											<ClaySticker
 												displayType="warning"
 												size="sm"

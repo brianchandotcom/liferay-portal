@@ -143,7 +143,12 @@ public abstract class BaseDownstreamBuildReport
 
 		_batchName = batchName;
 		_buildReportJSONObject = buildReportJSONObject;
+
 		_topLevelBuildReport = topLevelBuildReport;
+
+		if (topLevelBuildReport != null) {
+			_topLevelBuildReport.addDownstreamBuildReport(this);
+		}
 	}
 
 	private final String _batchName;

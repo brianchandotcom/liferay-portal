@@ -46,6 +46,7 @@ export default function SpaceLanguageSettings({
 		values,
 	} = useFormik({
 		initialValues: {
+			availableLanguageIds: space.settings?.availableLanguageIds ?? [],
 			availableLanguages:
 				companyAvailableLanguages.filter(
 					(availableLanguage) =>
@@ -53,14 +54,13 @@ export default function SpaceLanguageSettings({
 							availableLanguage.value
 						)
 				) || [],
+			defaultLanguageId: space.settings?.defaultLanguageId ?? '',
 			selectedLanguages:
 				companyAvailableLanguages.filter((availableLanguage) =>
 					space.settings?.availableLanguageIds?.includes(
 						availableLanguage.value
 					)
 				) || [],
-			availableLanguageIds: space.settings?.availableLanguageIds ?? [],
-			defaultLanguageId: space.settings?.defaultLanguageId ?? '',
 			useCustomLanguages: !!space.settings?.useCustomLanguages,
 		},
 		onSubmit: async (values) => {
@@ -128,11 +128,11 @@ export default function SpaceLanguageSettings({
 		else {
 			setValues({
 				...values,
-				availableLanguages: nextAvailableLanguages,
-				selectedLanguages: nextSelectedLanguages,
 				availableLanguageIds: nextSelectedLanguages.map(
 					(language) => language.value
 				),
+				availableLanguages: nextAvailableLanguages,
+				selectedLanguages: nextSelectedLanguages,
 			});
 
 			setShowRemoveDefaultLanguageWarning(false);

@@ -14,8 +14,8 @@ import SpaceGeneralSettings from './SpaceGeneralSettings';
 import SpaceLanguageSettings from './SpaceLanguageSettings';
 
 interface SpaceSettingsProps {
-	companyAvailableLanguages: LabelValueObject[];
 	backURL: string;
+	companyAvailableLanguages: LabelValueObject[];
 	depotEntryId: string;
 	groupId: string;
 }

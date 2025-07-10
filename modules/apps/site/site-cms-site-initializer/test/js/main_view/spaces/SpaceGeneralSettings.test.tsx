@@ -303,7 +303,7 @@ describe('SpaceGeneralSettings', () => {
 			await userEvent.click(screen.getByRole('button', {name: 'save'}));
 
 			await waitFor(() => {
-				const {externalReferenceCode, ...space} = SPACE;
+				const {externalReferenceCode} = SPACE;
 
 				expect(SpaceService.updateSpace).toBeCalledWith(
 					externalReferenceCode,

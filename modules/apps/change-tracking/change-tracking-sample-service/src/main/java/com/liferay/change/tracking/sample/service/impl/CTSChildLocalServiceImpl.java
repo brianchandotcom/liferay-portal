@@ -101,7 +101,7 @@ public class CTSChildLocalServiceImpl extends CTSChildLocalServiceBaseImpl {
 		long ctsGrandParentId) {
 
 		CTSGrandParent ctsGrandParent =
-			_grandParentPersistence.fetchByPrimaryKey(ctsGrandParentId);
+			_ctsGrandParentPersistence.fetchByPrimaryKey(ctsGrandParentId);
 
 		return ctsChildPersistence.findByC_C(
 			ctsGrandParent.getCompanyId(), ctsGrandParentId);
@@ -127,6 +127,6 @@ public class CTSChildLocalServiceImpl extends CTSChildLocalServiceBaseImpl {
 	}
 
 	@Reference
-	private CTSGrandParentPersistence _grandParentPersistence;
+	private CTSGrandParentPersistence _ctsGrandParentPersistence;
 
 }

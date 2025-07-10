@@ -50,7 +50,7 @@ public class CTSGrandParentLocalServiceImpl
 
 	@Override
 	public CTSGrandParent deleteCTSGrandParent(CTSGrandParent ctsGrandParent) {
-		_childPersistence.removeByC_C(
+		_ctsChildPersistence.removeByC_C(
 			ctsGrandParent.getCompanyId(),
 			ctsGrandParent.getCtsGrandParentId());
 
@@ -85,6 +85,6 @@ public class CTSGrandParentLocalServiceImpl
 	}
 
 	@Reference
-	private CTSChildPersistence _childPersistence;
+	private CTSChildPersistence _ctsChildPersistence;
 
 }

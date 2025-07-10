@@ -297,11 +297,6 @@ export function setupExportImportMocks() {
 				url: '/o/exportimport-web/ExportImportMockServiceWorker.js',
 			},
 		})
-		.then((registration) => {
-			Liferay.on('destroyPortlet', async () => {
-				await registration?.unregister?.();
-			});
-		})
 		.catch((error) => {
 			console.error('Error starting the service worker:', error);
 		});

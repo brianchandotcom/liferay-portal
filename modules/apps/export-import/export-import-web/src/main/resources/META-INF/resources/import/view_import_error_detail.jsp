@@ -8,8 +8,10 @@
 <%@ include file="/import/init.jsp" %>
 
 <%
+String backURL = String.valueOf(renderResponse.createRenderURL());
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", backURL));
 portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 renderResponse.setTitle(LanguageUtil.get(request, "error-details"));
 %>
@@ -17,5 +19,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "error-details"));
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
 	<react:component
 		module="{ViewImportErrorDetail} from exportimport-web"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"backURL", backURL
+			).build()
+		%>'
 	/>
 </c:if>

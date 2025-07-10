@@ -138,6 +138,9 @@
 		<finder name="AccountEntryRestricted" return-type="Collection">
 			<finder-column name="accountEntryRestricted" />
 		</finder>
+		<finder name="ClassName" return-type="ObjectDefinition">
+			<finder-column name="className" />
+		</finder>
 		<finder name="System" return-type="Collection">
 			<finder-column name="system" />
 		</finder>

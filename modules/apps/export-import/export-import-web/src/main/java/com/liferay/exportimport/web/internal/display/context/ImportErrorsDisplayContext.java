@@ -8,9 +8,8 @@ package com.liferay.exportimport.web.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import jakarta.portlet.RenderResponse;
 
@@ -28,9 +27,6 @@ public class ImportErrorsDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAPIURL() {
@@ -44,8 +40,8 @@ public class ImportErrorsDisplayContext {
 					_renderResponse
 				).setMVCRenderCommandName(
 					"/export_import/view_import_error_detail"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
+				).setBackURL(
+					ParamUtil.getString(_httpServletRequest, "redirect")
 				).setParameter(
 					"errorId", "{id}"
 				).buildString(),
@@ -55,6 +51,5 @@ public class ImportErrorsDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;
-	private final ThemeDisplay _themeDisplay;
 
 }

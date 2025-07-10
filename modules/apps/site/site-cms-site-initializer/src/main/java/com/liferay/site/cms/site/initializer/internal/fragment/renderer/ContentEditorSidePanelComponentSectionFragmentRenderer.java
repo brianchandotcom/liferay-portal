@@ -168,6 +168,20 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 				return jsonArray;
 			}
 		).put(
+			"deleteCommentURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL, "/delete_content_item_comment")
+		).put(
+			"editCommentURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/edit_content_item_comment?classNameId=",
+				_classNameLocalService.getClassNameId(
+					objectEntry.getModelClassName()),
+				"&classPK=", objectEntry.getObjectEntryId())
+		).put(
 			"editorConfig",
 			() -> {
 				EditorConfiguration contentItemCommentEditorConfiguration =

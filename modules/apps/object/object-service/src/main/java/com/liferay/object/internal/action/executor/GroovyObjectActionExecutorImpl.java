@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.action.executor;
 
+import com.liferay.object.action.executor.BaseObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
@@ -28,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(service = ObjectActionExecutor.class)
-public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
+public class GroovyObjectActionExecutorImpl extends BaseObjectActionExecutor {
 
 	@Override
 	public void execute(
@@ -41,18 +42,24 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		Map<String, Object> inputObjects =
-			ObjectEntryVariablesUtil.getVariables(
-				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionManagerRegistry);
+		registerTransactionCommitCallback(
+			() -> {
+				Map<String, Object> inputObjects =
+					ObjectEntryVariablesUtil.getVariables(
+						_dtoConverterRegistry, objectDefinition,
+						payloadJSONObject,
+						_systemObjectDefinitionManagerRegistry);
 
-		Map<String, Object> results = _objectScriptingExecutor.execute(
-			(Map<String, Object>)inputObjects.get("baseModel"), new HashSet<>(),
-			parametersUnicodeProperties.get("script"));
+				Map<String, Object> results = _objectScriptingExecutor.execute(
+					(Map<String, Object>)inputObjects.get("baseModel"),
+					new HashSet<>(), parametersUnicodeProperties.get("script"));
 
-		if (GetterUtil.getBoolean(results.get("invalidScript"))) {
-			throw new ScriptingException();
-		}
+				if (GetterUtil.getBoolean(results.get("invalidScript"))) {
+					throw new ScriptingException();
+				}
+
+				return null;
+			});
 	}
 
 	@Override

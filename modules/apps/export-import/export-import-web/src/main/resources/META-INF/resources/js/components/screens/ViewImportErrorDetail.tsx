@@ -103,7 +103,7 @@ export function ViewImportErrorDetail() {
 
 	return (
 		<ClayLayout.ContainerFluid>
-			<ClayLayout.Sheet className="m-4">
+			<ClayLayout.Sheet className="mt-4">
 				<ClayLayout.SheetHeader>
 					<h2 className="sheet-title">{entityType}</h2>
 
@@ -220,13 +220,14 @@ export function ViewImportErrorDetail() {
 				</ClayLayout.SheetSection>
 			</ClayLayout.Sheet>
 
-			<ClayButton
-				className="ml-4"
-				displayType="secondary"
-				onClick={() => window.history.back()}
-			>
-				{Liferay.Language.get('back')}
-			</ClayButton>
+			<ClayLayout.SheetFooter>
+				<ClayButton
+					displayType="secondary"
+					onClick={() => window.history.back()}
+				>
+					{Liferay.Language.get('back')}
+				</ClayButton>
+			</ClayLayout.SheetFooter>
 		</ClayLayout.ContainerFluid>
 	);
 }

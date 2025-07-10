@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.clazz;
 
 import com.liferay.jenkins.results.parser.TestHistory;
+import com.liferay.jenkins.results.parser.WeightedItem;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface TestClass extends Comparable<TestClass> {
+public interface TestClass extends Comparable<TestClass>, WeightedItem {
 
 	public void addTestClassMethod(TestClassMethod testClassMethod);
 

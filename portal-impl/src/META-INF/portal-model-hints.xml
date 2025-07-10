@@ -814,7 +814,7 @@
 		<field name="masterLayoutPlid" type="long" />
 		<field name="layoutPrototypeUuid" type="String" />
 		<field name="layoutPrototypeLinkEnabled" type="boolean" />
-		<field name="sourcePrototypeLayoutUuid" type="String" />
+		<field name="layoutSetPrototypeLayoutERC" type="String" />
 		<field name="publishDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />

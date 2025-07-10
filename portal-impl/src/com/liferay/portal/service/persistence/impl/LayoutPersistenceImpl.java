@@ -4393,76 +4393,77 @@ public class LayoutPersistenceImpl
 		_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3 =
 			"(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = '') AND layout.system = [$FALSE$]";
 
-	private FinderPath _finderPathWithPaginationFindBySourcePrototypeLayoutUuid;
 	private FinderPath
-		_finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid;
-	private FinderPath _finderPathCountBySourcePrototypeLayoutUuid;
+		_finderPathWithPaginationFindByLayoutSetPrototypeLayoutERC;
+	private FinderPath
+		_finderPathWithoutPaginationFindByLayoutSetPrototypeLayoutERC;
+	private FinderPath _finderPathCountByLayoutSetPrototypeLayoutERC;
 
 	/**
-	 * Returns all the layouts where sourcePrototypeLayoutUuid = &#63;.
+	 * Returns all the layouts where layoutSetPrototypeLayoutERC = &#63;.
 	 *
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @return the matching layouts
 	 */
 	@Override
-	public List<Layout> findBySourcePrototypeLayoutUuid(
-		String sourcePrototypeLayoutUuid) {
+	public List<Layout> findByLayoutSetPrototypeLayoutERC(
+		String layoutSetPrototypeLayoutERC) {
 
-		return findBySourcePrototypeLayoutUuid(
-			sourcePrototypeLayoutUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+		return findByLayoutSetPrototypeLayoutERC(
+			layoutSetPrototypeLayoutERC, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
 
 	/**
-	 * Returns a range of all the layouts where sourcePrototypeLayoutUuid = &#63;.
+	 * Returns a range of all the layouts where layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts
 	 */
 	@Override
-	public List<Layout> findBySourcePrototypeLayoutUuid(
-		String sourcePrototypeLayoutUuid, int start, int end) {
+	public List<Layout> findByLayoutSetPrototypeLayoutERC(
+		String layoutSetPrototypeLayoutERC, int start, int end) {
 
-		return findBySourcePrototypeLayoutUuid(
-			sourcePrototypeLayoutUuid, start, end, null);
+		return findByLayoutSetPrototypeLayoutERC(
+			layoutSetPrototypeLayoutERC, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where sourcePrototypeLayoutUuid = &#63;.
+	 * Returns an ordered range of all the layouts where layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts
 	 */
 	@Override
-	public List<Layout> findBySourcePrototypeLayoutUuid(
-		String sourcePrototypeLayoutUuid, int start, int end,
+	public List<Layout> findByLayoutSetPrototypeLayoutERC(
+		String layoutSetPrototypeLayoutERC, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return findBySourcePrototypeLayoutUuid(
-			sourcePrototypeLayoutUuid, start, end, orderByComparator, true);
+		return findByLayoutSetPrototypeLayoutERC(
+			layoutSetPrototypeLayoutERC, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where sourcePrototypeLayoutUuid = &#63;.
+	 * Returns an ordered range of all the layouts where layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -4470,16 +4471,16 @@ public class LayoutPersistenceImpl
 	 * @return the ordered range of matching layouts
 	 */
 	@Override
-	public List<Layout> findBySourcePrototypeLayoutUuid(
-		String sourcePrototypeLayoutUuid, int start, int end,
+	public List<Layout> findByLayoutSetPrototypeLayoutERC(
+		String layoutSetPrototypeLayoutERC, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		try (SafeCloseable safeCloseable =
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Layout.class)) {
 
-			sourcePrototypeLayoutUuid = Objects.toString(
-				sourcePrototypeLayoutUuid, "");
+			layoutSetPrototypeLayoutERC = Objects.toString(
+				layoutSetPrototypeLayoutERC, "");
 
 			FinderPath finderPath = null;
 			Object[] finderArgs = null;
@@ -4489,15 +4490,15 @@ public class LayoutPersistenceImpl
 
 				if (useFinderCache) {
 					finderPath =
-						_finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid;
-					finderArgs = new Object[] {sourcePrototypeLayoutUuid};
+						_finderPathWithoutPaginationFindByLayoutSetPrototypeLayoutERC;
+					finderArgs = new Object[] {layoutSetPrototypeLayoutERC};
 				}
 			}
 			else if (useFinderCache) {
 				finderPath =
-					_finderPathWithPaginationFindBySourcePrototypeLayoutUuid;
+					_finderPathWithPaginationFindByLayoutSetPrototypeLayoutERC;
 				finderArgs = new Object[] {
-					sourcePrototypeLayoutUuid, start, end, orderByComparator
+					layoutSetPrototypeLayoutERC, start, end, orderByComparator
 				};
 			}
 
@@ -4509,8 +4510,8 @@ public class LayoutPersistenceImpl
 
 				if ((list != null) && !list.isEmpty()) {
 					for (Layout layout : list) {
-						if (!sourcePrototypeLayoutUuid.equals(
-								layout.getSourcePrototypeLayoutUuid())) {
+						if (!layoutSetPrototypeLayoutERC.equals(
+								layout.getLayoutSetPrototypeLayoutERC())) {
 
 							list = null;
 
@@ -4533,17 +4534,17 @@ public class LayoutPersistenceImpl
 
 				sb.append(_SQL_SELECT_LAYOUT_WHERE);
 
-				boolean bindSourcePrototypeLayoutUuid = false;
+				boolean bindLayoutSetPrototypeLayoutERC = false;
 
-				if (sourcePrototypeLayoutUuid.isEmpty()) {
+				if (layoutSetPrototypeLayoutERC.isEmpty()) {
 					sb.append(
-						_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
+						_FINDER_COLUMN_LAYOUTSETPROTOTYPELAYOUTERC_LAYOUTSETPROTOTYPELAYOUTERC_3);
 				}
 				else {
-					bindSourcePrototypeLayoutUuid = true;
+					bindLayoutSetPrototypeLayoutERC = true;
 
 					sb.append(
-						_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2);
+						_FINDER_COLUMN_LAYOUTSETPROTOTYPELAYOUTERC_LAYOUTSETPROTOTYPELAYOUTERC_2);
 				}
 
 				if (orderByComparator != null) {
@@ -4565,8 +4566,8 @@ public class LayoutPersistenceImpl
 
 					QueryPos queryPos = QueryPos.getInstance(query);
 
-					if (bindSourcePrototypeLayoutUuid) {
-						queryPos.add(sourcePrototypeLayoutUuid);
+					if (bindLayoutSetPrototypeLayoutERC) {
+						queryPos.add(layoutSetPrototypeLayoutERC);
 					}
 
 					list = (List<Layout>)QueryUtil.list(
@@ -4591,21 +4592,21 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the first layout in the ordered set where layoutSetPrototypeLayoutERC = &#63;.
 	 *
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findBySourcePrototypeLayoutUuid_First(
-			String sourcePrototypeLayoutUuid,
+	public Layout findByLayoutSetPrototypeLayoutERC_First(
+			String layoutSetPrototypeLayoutERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchBySourcePrototypeLayoutUuid_First(
-			sourcePrototypeLayoutUuid, orderByComparator);
+		Layout layout = fetchByLayoutSetPrototypeLayoutERC_First(
+			layoutSetPrototypeLayoutERC, orderByComparator);
 
 		if (layout != null) {
 			return layout;
@@ -4615,8 +4616,8 @@ public class LayoutPersistenceImpl
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("sourcePrototypeLayoutUuid=");
-		sb.append(sourcePrototypeLayoutUuid);
+		sb.append("layoutSetPrototypeLayoutERC=");
+		sb.append(layoutSetPrototypeLayoutERC);
 
 		sb.append("}");
 
@@ -4624,19 +4625,19 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the first layout in the ordered set where layoutSetPrototypeLayoutERC = &#63;.
 	 *
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchBySourcePrototypeLayoutUuid_First(
-		String sourcePrototypeLayoutUuid,
+	public Layout fetchByLayoutSetPrototypeLayoutERC_First(
+		String layoutSetPrototypeLayoutERC,
 		OrderByComparator<Layout> orderByComparator) {
 
-		List<Layout> list = findBySourcePrototypeLayoutUuid(
-			sourcePrototypeLayoutUuid, 0, 1, orderByComparator);
+		List<Layout> list = findByLayoutSetPrototypeLayoutERC(
+			layoutSetPrototypeLayoutERC, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4646,21 +4647,21 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout in the ordered set where sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the last layout in the ordered set where layoutSetPrototypeLayoutERC = &#63;.
 	 *
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findBySourcePrototypeLayoutUuid_Last(
-			String sourcePrototypeLayoutUuid,
+	public Layout findByLayoutSetPrototypeLayoutERC_Last(
+			String layoutSetPrototypeLayoutERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchBySourcePrototypeLayoutUuid_Last(
-			sourcePrototypeLayoutUuid, orderByComparator);
+		Layout layout = fetchByLayoutSetPrototypeLayoutERC_Last(
+			layoutSetPrototypeLayoutERC, orderByComparator);
 
 		if (layout != null) {
 			return layout;
@@ -4670,8 +4671,8 @@ public class LayoutPersistenceImpl
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("sourcePrototypeLayoutUuid=");
-		sb.append(sourcePrototypeLayoutUuid);
+		sb.append("layoutSetPrototypeLayoutERC=");
+		sb.append(layoutSetPrototypeLayoutERC);
 
 		sb.append("}");
 
@@ -4679,25 +4680,26 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout in the ordered set where sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the last layout in the ordered set where layoutSetPrototypeLayoutERC = &#63;.
 	 *
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchBySourcePrototypeLayoutUuid_Last(
-		String sourcePrototypeLayoutUuid,
+	public Layout fetchByLayoutSetPrototypeLayoutERC_Last(
+		String layoutSetPrototypeLayoutERC,
 		OrderByComparator<Layout> orderByComparator) {
 
-		int count = countBySourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
+		int count = countByLayoutSetPrototypeLayoutERC(
+			layoutSetPrototypeLayoutERC);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Layout> list = findBySourcePrototypeLayoutUuid(
-			sourcePrototypeLayoutUuid, count - 1, count, orderByComparator);
+		List<Layout> list = findByLayoutSetPrototypeLayoutERC(
+			layoutSetPrototypeLayoutERC, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4707,22 +4709,22 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the layouts before and after the current layout in the ordered set where layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param plid the primary key of the current layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
 	@Override
-	public Layout[] findBySourcePrototypeLayoutUuid_PrevAndNext(
-			long plid, String sourcePrototypeLayoutUuid,
+	public Layout[] findByLayoutSetPrototypeLayoutERC_PrevAndNext(
+			long plid, String layoutSetPrototypeLayoutERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		sourcePrototypeLayoutUuid = Objects.toString(
-			sourcePrototypeLayoutUuid, "");
+		layoutSetPrototypeLayoutERC = Objects.toString(
+			layoutSetPrototypeLayoutERC, "");
 
 		Layout layout = findByPrimaryKey(plid);
 
@@ -4733,14 +4735,14 @@ public class LayoutPersistenceImpl
 
 			Layout[] array = new LayoutImpl[3];
 
-			array[0] = getBySourcePrototypeLayoutUuid_PrevAndNext(
-				session, layout, sourcePrototypeLayoutUuid, orderByComparator,
+			array[0] = getByLayoutSetPrototypeLayoutERC_PrevAndNext(
+				session, layout, layoutSetPrototypeLayoutERC, orderByComparator,
 				true);
 
 			array[1] = layout;
 
-			array[2] = getBySourcePrototypeLayoutUuid_PrevAndNext(
-				session, layout, sourcePrototypeLayoutUuid, orderByComparator,
+			array[2] = getByLayoutSetPrototypeLayoutERC_PrevAndNext(
+				session, layout, layoutSetPrototypeLayoutERC, orderByComparator,
 				false);
 
 			return array;
@@ -4753,8 +4755,8 @@ public class LayoutPersistenceImpl
 		}
 	}
 
-	protected Layout getBySourcePrototypeLayoutUuid_PrevAndNext(
-		Session session, Layout layout, String sourcePrototypeLayoutUuid,
+	protected Layout getByLayoutSetPrototypeLayoutERC_PrevAndNext(
+		Session session, Layout layout, String layoutSetPrototypeLayoutERC,
 		OrderByComparator<Layout> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
@@ -4770,17 +4772,17 @@ public class LayoutPersistenceImpl
 
 		sb.append(_SQL_SELECT_LAYOUT_WHERE);
 
-		boolean bindSourcePrototypeLayoutUuid = false;
+		boolean bindLayoutSetPrototypeLayoutERC = false;
 
-		if (sourcePrototypeLayoutUuid.isEmpty()) {
+		if (layoutSetPrototypeLayoutERC.isEmpty()) {
 			sb.append(
-				_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
+				_FINDER_COLUMN_LAYOUTSETPROTOTYPELAYOUTERC_LAYOUTSETPROTOTYPELAYOUTERC_3);
 		}
 		else {
-			bindSourcePrototypeLayoutUuid = true;
+			bindLayoutSetPrototypeLayoutERC = true;
 
 			sb.append(
-				_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2);
+				_FINDER_COLUMN_LAYOUTSETPROTOTYPELAYOUTERC_LAYOUTSETPROTOTYPELAYOUTERC_2);
 		}
 
 		if (orderByComparator != null) {
@@ -4852,8 +4854,8 @@ public class LayoutPersistenceImpl
 
 		QueryPos queryPos = QueryPos.getInstance(query);
 
-		if (bindSourcePrototypeLayoutUuid) {
-			queryPos.add(sourcePrototypeLayoutUuid);
+		if (bindLayoutSetPrototypeLayoutERC) {
+			queryPos.add(layoutSetPrototypeLayoutERC);
 		}
 
 		if (orderByComparator != null) {
@@ -4875,17 +4877,17 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Removes all the layouts where sourcePrototypeLayoutUuid = &#63; from the database.
+	 * Removes all the layouts where layoutSetPrototypeLayoutERC = &#63; from the database.
 	 *
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 */
 	@Override
-	public void removeBySourcePrototypeLayoutUuid(
-		String sourcePrototypeLayoutUuid) {
+	public void removeByLayoutSetPrototypeLayoutERC(
+		String layoutSetPrototypeLayoutERC) {
 
 		for (Layout layout :
-				findBySourcePrototypeLayoutUuid(
-					sourcePrototypeLayoutUuid, QueryUtil.ALL_POS,
+				findByLayoutSetPrototypeLayoutERC(
+					layoutSetPrototypeLayoutERC, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
 			remove(layout);
@@ -4893,25 +4895,26 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of layouts where sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the number of layouts where layoutSetPrototypeLayoutERC = &#63;.
 	 *
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @return the number of matching layouts
 	 */
 	@Override
-	public int countBySourcePrototypeLayoutUuid(
-		String sourcePrototypeLayoutUuid) {
+	public int countByLayoutSetPrototypeLayoutERC(
+		String layoutSetPrototypeLayoutERC) {
 
 		try (SafeCloseable safeCloseable =
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Layout.class)) {
 
-			sourcePrototypeLayoutUuid = Objects.toString(
-				sourcePrototypeLayoutUuid, "");
+			layoutSetPrototypeLayoutERC = Objects.toString(
+				layoutSetPrototypeLayoutERC, "");
 
-			FinderPath finderPath = _finderPathCountBySourcePrototypeLayoutUuid;
+			FinderPath finderPath =
+				_finderPathCountByLayoutSetPrototypeLayoutERC;
 
-			Object[] finderArgs = new Object[] {sourcePrototypeLayoutUuid};
+			Object[] finderArgs = new Object[] {layoutSetPrototypeLayoutERC};
 
 			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
@@ -4921,17 +4924,17 @@ public class LayoutPersistenceImpl
 
 				sb.append(_SQL_COUNT_LAYOUT_WHERE);
 
-				boolean bindSourcePrototypeLayoutUuid = false;
+				boolean bindLayoutSetPrototypeLayoutERC = false;
 
-				if (sourcePrototypeLayoutUuid.isEmpty()) {
+				if (layoutSetPrototypeLayoutERC.isEmpty()) {
 					sb.append(
-						_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
+						_FINDER_COLUMN_LAYOUTSETPROTOTYPELAYOUTERC_LAYOUTSETPROTOTYPELAYOUTERC_3);
 				}
 				else {
-					bindSourcePrototypeLayoutUuid = true;
+					bindLayoutSetPrototypeLayoutERC = true;
 
 					sb.append(
-						_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2);
+						_FINDER_COLUMN_LAYOUTSETPROTOTYPELAYOUTERC_LAYOUTSETPROTOTYPELAYOUTERC_2);
 				}
 
 				String sql = sb.toString();
@@ -4945,8 +4948,8 @@ public class LayoutPersistenceImpl
 
 					QueryPos queryPos = QueryPos.getInstance(query);
 
-					if (bindSourcePrototypeLayoutUuid) {
-						queryPos.add(sourcePrototypeLayoutUuid);
+					if (bindLayoutSetPrototypeLayoutERC) {
+						queryPos.add(layoutSetPrototypeLayoutERC);
 					}
 
 					count = (Long)query.uniqueResult();
@@ -4966,12 +4969,12 @@ public class LayoutPersistenceImpl
 	}
 
 	private static final String
-		_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2 =
-			"layout.sourcePrototypeLayoutUuid = ? AND layout.system = [$FALSE$]";
+		_FINDER_COLUMN_LAYOUTSETPROTOTYPELAYOUTERC_LAYOUTSETPROTOTYPELAYOUTERC_2 =
+			"layout.layoutSetPrototypeLayoutERC = ? AND layout.system = [$FALSE$]";
 
 	private static final String
-		_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3 =
-			"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = '') AND layout.system = [$FALSE$]";
+		_FINDER_COLUMN_LAYOUTSETPROTOTYPELAYOUTERC_LAYOUTSETPROTOTYPELAYOUTERC_3 =
+			"(layout.layoutSetPrototypeLayoutERC IS NULL OR layout.layoutSetPrototypeLayoutERC = '') AND layout.system = [$FALSE$]";
 
 	private FinderPath _finderPathWithPaginationFindByG_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P;
@@ -13407,29 +13410,30 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_3 =
 		"(layout.friendlyURL IS NULL OR layout.friendlyURL = '')";
 
-	private FinderPath _finderPathWithPaginationFindByG_P_SPLU;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_SPLU;
-	private FinderPath _finderPathCountByG_P_SPLU;
+	private FinderPath _finderPathWithPaginationFindByG_P_LSPLE;
+	private FinderPath _finderPathWithoutPaginationFindByG_P_LSPLE;
+	private FinderPath _finderPathCountByG_P_LSPLE;
 
 	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @return the matching layouts
 	 */
 	@Override
-	public List<Layout> findByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid) {
+	public List<Layout> findByG_P_LSPLE(
+		long groupId, boolean privateLayout,
+		String layoutSetPrototypeLayoutERC) {
 
-		return findByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid,
+		return findByG_P_LSPLE(
+			groupId, privateLayout, layoutSetPrototypeLayoutERC,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
@@ -13437,23 +13441,23 @@ public class LayoutPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts
 	 */
 	@Override
-	public List<Layout> findByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+	public List<Layout> findByG_P_LSPLE(
+		long groupId, boolean privateLayout, String layoutSetPrototypeLayoutERC,
 		int start, int end) {
 
-		return findByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid, start, end,
+		return findByG_P_LSPLE(
+			groupId, privateLayout, layoutSetPrototypeLayoutERC, start, end,
 			null);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
@@ -13461,24 +13465,24 @@ public class LayoutPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts
 	 */
 	@Override
-	public List<Layout> findByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+	public List<Layout> findByG_P_LSPLE(
+		long groupId, boolean privateLayout, String layoutSetPrototypeLayoutERC,
 		int start, int end, OrderByComparator<Layout> orderByComparator) {
 
-		return findByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid, start, end,
+		return findByG_P_LSPLE(
+			groupId, privateLayout, layoutSetPrototypeLayoutERC, start, end,
 			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
@@ -13486,7 +13490,7 @@ public class LayoutPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -13494,8 +13498,8 @@ public class LayoutPersistenceImpl
 	 * @return the ordered range of matching layouts
 	 */
 	@Override
-	public List<Layout> findByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+	public List<Layout> findByG_P_LSPLE(
+		long groupId, boolean privateLayout, String layoutSetPrototypeLayoutERC,
 		int start, int end, OrderByComparator<Layout> orderByComparator,
 		boolean useFinderCache) {
 
@@ -13503,8 +13507,8 @@ public class LayoutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Layout.class)) {
 
-			sourcePrototypeLayoutUuid = Objects.toString(
-				sourcePrototypeLayoutUuid, "");
+			layoutSetPrototypeLayoutERC = Objects.toString(
+				layoutSetPrototypeLayoutERC, "");
 
 			FinderPath finderPath = null;
 			Object[] finderArgs = null;
@@ -13513,16 +13517,16 @@ public class LayoutPersistenceImpl
 				(orderByComparator == null)) {
 
 				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_P_SPLU;
+					finderPath = _finderPathWithoutPaginationFindByG_P_LSPLE;
 					finderArgs = new Object[] {
-						groupId, privateLayout, sourcePrototypeLayoutUuid
+						groupId, privateLayout, layoutSetPrototypeLayoutERC
 					};
 				}
 			}
 			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_P_SPLU;
+				finderPath = _finderPathWithPaginationFindByG_P_LSPLE;
 				finderArgs = new Object[] {
-					groupId, privateLayout, sourcePrototypeLayoutUuid, start,
+					groupId, privateLayout, layoutSetPrototypeLayoutERC, start,
 					end, orderByComparator
 				};
 			}
@@ -13537,8 +13541,8 @@ public class LayoutPersistenceImpl
 					for (Layout layout : list) {
 						if ((groupId != layout.getGroupId()) ||
 							(privateLayout != layout.isPrivateLayout()) ||
-							!sourcePrototypeLayoutUuid.equals(
-								layout.getSourcePrototypeLayoutUuid())) {
+							!layoutSetPrototypeLayoutERC.equals(
+								layout.getLayoutSetPrototypeLayoutERC())) {
 
 							list = null;
 
@@ -13561,21 +13565,21 @@ public class LayoutPersistenceImpl
 
 				sb.append(_SQL_SELECT_LAYOUT_WHERE);
 
-				sb.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_P_LSPLE_GROUPID_2);
 
-				sb.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
+				sb.append(_FINDER_COLUMN_G_P_LSPLE_PRIVATELAYOUT_2);
 
-				boolean bindSourcePrototypeLayoutUuid = false;
+				boolean bindLayoutSetPrototypeLayoutERC = false;
 
-				if (sourcePrototypeLayoutUuid.isEmpty()) {
+				if (layoutSetPrototypeLayoutERC.isEmpty()) {
 					sb.append(
-						_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+						_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_3);
 				}
 				else {
-					bindSourcePrototypeLayoutUuid = true;
+					bindLayoutSetPrototypeLayoutERC = true;
 
 					sb.append(
-						_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+						_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_2);
 				}
 
 				if (orderByComparator != null) {
@@ -13601,8 +13605,8 @@ public class LayoutPersistenceImpl
 
 					queryPos.add(privateLayout);
 
-					if (bindSourcePrototypeLayoutUuid) {
-						queryPos.add(sourcePrototypeLayoutUuid);
+					if (bindLayoutSetPrototypeLayoutERC) {
+						queryPos.add(layoutSetPrototypeLayoutERC);
 					}
 
 					list = (List<Layout>)QueryUtil.list(
@@ -13627,24 +13631,24 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findByG_P_SPLU_First(
+	public Layout findByG_P_LSPLE_First(
 			long groupId, boolean privateLayout,
-			String sourcePrototypeLayoutUuid,
+			String layoutSetPrototypeLayoutERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_SPLU_First(
-			groupId, privateLayout, sourcePrototypeLayoutUuid,
+		Layout layout = fetchByG_P_LSPLE_First(
+			groupId, privateLayout, layoutSetPrototypeLayoutERC,
 			orderByComparator);
 
 		if (layout != null) {
@@ -13661,8 +13665,8 @@ public class LayoutPersistenceImpl
 		sb.append(", privateLayout=");
 		sb.append(privateLayout);
 
-		sb.append(", sourcePrototypeLayoutUuid=");
-		sb.append(sourcePrototypeLayoutUuid);
+		sb.append(", layoutSetPrototypeLayoutERC=");
+		sb.append(layoutSetPrototypeLayoutERC);
 
 		sb.append("}");
 
@@ -13670,21 +13674,21 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByG_P_SPLU_First(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+	public Layout fetchByG_P_LSPLE_First(
+		long groupId, boolean privateLayout, String layoutSetPrototypeLayoutERC,
 		OrderByComparator<Layout> orderByComparator) {
 
-		List<Layout> list = findByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid, 0, 1,
+		List<Layout> list = findByG_P_LSPLE(
+			groupId, privateLayout, layoutSetPrototypeLayoutERC, 0, 1,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -13695,24 +13699,24 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findByG_P_SPLU_Last(
+	public Layout findByG_P_LSPLE_Last(
 			long groupId, boolean privateLayout,
-			String sourcePrototypeLayoutUuid,
+			String layoutSetPrototypeLayoutERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_SPLU_Last(
-			groupId, privateLayout, sourcePrototypeLayoutUuid,
+		Layout layout = fetchByG_P_LSPLE_Last(
+			groupId, privateLayout, layoutSetPrototypeLayoutERC,
 			orderByComparator);
 
 		if (layout != null) {
@@ -13729,8 +13733,8 @@ public class LayoutPersistenceImpl
 		sb.append(", privateLayout=");
 		sb.append(privateLayout);
 
-		sb.append(", sourcePrototypeLayoutUuid=");
-		sb.append(sourcePrototypeLayoutUuid);
+		sb.append(", layoutSetPrototypeLayoutERC=");
+		sb.append(layoutSetPrototypeLayoutERC);
 
 		sb.append("}");
 
@@ -13738,29 +13742,29 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByG_P_SPLU_Last(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+	public Layout fetchByG_P_LSPLE_Last(
+		long groupId, boolean privateLayout, String layoutSetPrototypeLayoutERC,
 		OrderByComparator<Layout> orderByComparator) {
 
-		int count = countByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid);
+		int count = countByG_P_LSPLE(
+			groupId, privateLayout, layoutSetPrototypeLayoutERC);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Layout> list = findByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid, count - 1, count,
-			orderByComparator);
+		List<Layout> list = findByG_P_LSPLE(
+			groupId, privateLayout, layoutSetPrototypeLayoutERC, count - 1,
+			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -13770,25 +13774,25 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param plid the primary key of the current layout
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
 	@Override
-	public Layout[] findByG_P_SPLU_PrevAndNext(
+	public Layout[] findByG_P_LSPLE_PrevAndNext(
 			long plid, long groupId, boolean privateLayout,
-			String sourcePrototypeLayoutUuid,
+			String layoutSetPrototypeLayoutERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		sourcePrototypeLayoutUuid = Objects.toString(
-			sourcePrototypeLayoutUuid, "");
+		layoutSetPrototypeLayoutERC = Objects.toString(
+			layoutSetPrototypeLayoutERC, "");
 
 		Layout layout = findByPrimaryKey(plid);
 
@@ -13799,15 +13803,15 @@ public class LayoutPersistenceImpl
 
 			Layout[] array = new LayoutImpl[3];
 
-			array[0] = getByG_P_SPLU_PrevAndNext(
+			array[0] = getByG_P_LSPLE_PrevAndNext(
 				session, layout, groupId, privateLayout,
-				sourcePrototypeLayoutUuid, orderByComparator, true);
+				layoutSetPrototypeLayoutERC, orderByComparator, true);
 
 			array[1] = layout;
 
-			array[2] = getByG_P_SPLU_PrevAndNext(
+			array[2] = getByG_P_LSPLE_PrevAndNext(
 				session, layout, groupId, privateLayout,
-				sourcePrototypeLayoutUuid, orderByComparator, false);
+				layoutSetPrototypeLayoutERC, orderByComparator, false);
 
 			return array;
 		}
@@ -13819,9 +13823,9 @@ public class LayoutPersistenceImpl
 		}
 	}
 
-	protected Layout getByG_P_SPLU_PrevAndNext(
+	protected Layout getByG_P_LSPLE_PrevAndNext(
 		Session session, Layout layout, long groupId, boolean privateLayout,
-		String sourcePrototypeLayoutUuid,
+		String layoutSetPrototypeLayoutERC,
 		OrderByComparator<Layout> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
@@ -13837,19 +13841,19 @@ public class LayoutPersistenceImpl
 
 		sb.append(_SQL_SELECT_LAYOUT_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_P_LSPLE_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
+		sb.append(_FINDER_COLUMN_G_P_LSPLE_PRIVATELAYOUT_2);
 
-		boolean bindSourcePrototypeLayoutUuid = false;
+		boolean bindLayoutSetPrototypeLayoutERC = false;
 
-		if (sourcePrototypeLayoutUuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+		if (layoutSetPrototypeLayoutERC.isEmpty()) {
+			sb.append(_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_3);
 		}
 		else {
-			bindSourcePrototypeLayoutUuid = true;
+			bindLayoutSetPrototypeLayoutERC = true;
 
-			sb.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+			sb.append(_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_2);
 		}
 
 		if (orderByComparator != null) {
@@ -13925,8 +13929,8 @@ public class LayoutPersistenceImpl
 
 		queryPos.add(privateLayout);
 
-		if (bindSourcePrototypeLayoutUuid) {
-			queryPos.add(sourcePrototypeLayoutUuid);
+		if (bindLayoutSetPrototypeLayoutERC) {
+			queryPos.add(layoutSetPrototypeLayoutERC);
 		}
 
 		if (orderByComparator != null) {
@@ -13948,24 +13952,25 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @return the matching layouts that the user has permission to view
 	 */
 	@Override
-	public List<Layout> filterFindByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid) {
+	public List<Layout> filterFindByG_P_LSPLE(
+		long groupId, boolean privateLayout,
+		String layoutSetPrototypeLayoutERC) {
 
-		return filterFindByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid,
+		return filterFindByG_P_LSPLE(
+			groupId, privateLayout, layoutSetPrototypeLayoutERC,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
@@ -13973,23 +13978,23 @@ public class LayoutPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts that the user has permission to view
 	 */
 	@Override
-	public List<Layout> filterFindByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+	public List<Layout> filterFindByG_P_LSPLE(
+		long groupId, boolean privateLayout, String layoutSetPrototypeLayoutERC,
 		int start, int end) {
 
-		return filterFindByG_P_SPLU(
-			groupId, privateLayout, sourcePrototypeLayoutUuid, start, end,
+		return filterFindByG_P_LSPLE(
+			groupId, privateLayout, layoutSetPrototypeLayoutERC, start, end,
 			null);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
@@ -13997,25 +14002,25 @@ public class LayoutPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts that the user has permission to view
 	 */
 	@Override
-	public List<Layout> filterFindByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+	public List<Layout> filterFindByG_P_LSPLE(
+		long groupId, boolean privateLayout, String layoutSetPrototypeLayoutERC,
 		int start, int end, OrderByComparator<Layout> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P_SPLU(
-				groupId, privateLayout, sourcePrototypeLayoutUuid, start, end,
+			return findByG_P_LSPLE(
+				groupId, privateLayout, layoutSetPrototypeLayoutERC, start, end,
 				orderByComparator);
 		}
 
-		sourcePrototypeLayoutUuid = Objects.toString(
-			sourcePrototypeLayoutUuid, "");
+		layoutSetPrototypeLayoutERC = Objects.toString(
+			layoutSetPrototypeLayoutERC, "");
 
 		StringBundler sb = null;
 
@@ -14034,19 +14039,19 @@ public class LayoutPersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_P_LSPLE_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
+		sb.append(_FINDER_COLUMN_G_P_LSPLE_PRIVATELAYOUT_2);
 
-		boolean bindSourcePrototypeLayoutUuid = false;
+		boolean bindLayoutSetPrototypeLayoutERC = false;
 
-		if (sourcePrototypeLayoutUuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+		if (layoutSetPrototypeLayoutERC.isEmpty()) {
+			sb.append(_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_3);
 		}
 		else {
-			bindSourcePrototypeLayoutUuid = true;
+			bindLayoutSetPrototypeLayoutERC = true;
 
-			sb.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+			sb.append(_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -14096,8 +14101,8 @@ public class LayoutPersistenceImpl
 
 			queryPos.add(privateLayout);
 
-			if (bindSourcePrototypeLayoutUuid) {
-				queryPos.add(sourcePrototypeLayoutUuid);
+			if (bindLayoutSetPrototypeLayoutERC) {
+				queryPos.add(layoutSetPrototypeLayoutERC);
 			}
 
 			return (List<Layout>)QueryUtil.list(
@@ -14112,31 +14117,31 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param plid the primary key of the current layout
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
 	@Override
-	public Layout[] filterFindByG_P_SPLU_PrevAndNext(
+	public Layout[] filterFindByG_P_LSPLE_PrevAndNext(
 			long plid, long groupId, boolean privateLayout,
-			String sourcePrototypeLayoutUuid,
+			String layoutSetPrototypeLayoutERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P_SPLU_PrevAndNext(
-				plid, groupId, privateLayout, sourcePrototypeLayoutUuid,
+			return findByG_P_LSPLE_PrevAndNext(
+				plid, groupId, privateLayout, layoutSetPrototypeLayoutERC,
 				orderByComparator);
 		}
 
-		sourcePrototypeLayoutUuid = Objects.toString(
-			sourcePrototypeLayoutUuid, "");
+		layoutSetPrototypeLayoutERC = Objects.toString(
+			layoutSetPrototypeLayoutERC, "");
 
 		Layout layout = findByPrimaryKey(plid);
 
@@ -14147,15 +14152,15 @@ public class LayoutPersistenceImpl
 
 			Layout[] array = new LayoutImpl[3];
 
-			array[0] = filterGetByG_P_SPLU_PrevAndNext(
+			array[0] = filterGetByG_P_LSPLE_PrevAndNext(
 				session, layout, groupId, privateLayout,
-				sourcePrototypeLayoutUuid, orderByComparator, true);
+				layoutSetPrototypeLayoutERC, orderByComparator, true);
 
 			array[1] = layout;
 
-			array[2] = filterGetByG_P_SPLU_PrevAndNext(
+			array[2] = filterGetByG_P_LSPLE_PrevAndNext(
 				session, layout, groupId, privateLayout,
-				sourcePrototypeLayoutUuid, orderByComparator, false);
+				layoutSetPrototypeLayoutERC, orderByComparator, false);
 
 			return array;
 		}
@@ -14167,9 +14172,9 @@ public class LayoutPersistenceImpl
 		}
 	}
 
-	protected Layout filterGetByG_P_SPLU_PrevAndNext(
+	protected Layout filterGetByG_P_LSPLE_PrevAndNext(
 		Session session, Layout layout, long groupId, boolean privateLayout,
-		String sourcePrototypeLayoutUuid,
+		String layoutSetPrototypeLayoutERC,
 		OrderByComparator<Layout> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
@@ -14190,19 +14195,19 @@ public class LayoutPersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_P_LSPLE_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
+		sb.append(_FINDER_COLUMN_G_P_LSPLE_PRIVATELAYOUT_2);
 
-		boolean bindSourcePrototypeLayoutUuid = false;
+		boolean bindLayoutSetPrototypeLayoutERC = false;
 
-		if (sourcePrototypeLayoutUuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+		if (layoutSetPrototypeLayoutERC.isEmpty()) {
+			sb.append(_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_3);
 		}
 		else {
-			bindSourcePrototypeLayoutUuid = true;
+			bindLayoutSetPrototypeLayoutERC = true;
 
-			sb.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+			sb.append(_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -14314,8 +14319,8 @@ public class LayoutPersistenceImpl
 
 		queryPos.add(privateLayout);
 
-		if (bindSourcePrototypeLayoutUuid) {
-			queryPos.add(sourcePrototypeLayoutUuid);
+		if (bindLayoutSetPrototypeLayoutERC) {
+			queryPos.add(layoutSetPrototypeLayoutERC);
 		}
 
 		if (orderByComparator != null) {
@@ -14337,19 +14342,20 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; from the database.
+	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 */
 	@Override
-	public void removeByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid) {
+	public void removeByG_P_LSPLE(
+		long groupId, boolean privateLayout,
+		String layoutSetPrototypeLayoutERC) {
 
 		for (Layout layout :
-				findByG_P_SPLU(
-					groupId, privateLayout, sourcePrototypeLayoutUuid,
+				findByG_P_LSPLE(
+					groupId, privateLayout, layoutSetPrototypeLayoutERC,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(layout);
@@ -14357,28 +14363,29 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @return the number of matching layouts
 	 */
 	@Override
-	public int countByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid) {
+	public int countByG_P_LSPLE(
+		long groupId, boolean privateLayout,
+		String layoutSetPrototypeLayoutERC) {
 
 		try (SafeCloseable safeCloseable =
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Layout.class)) {
 
-			sourcePrototypeLayoutUuid = Objects.toString(
-				sourcePrototypeLayoutUuid, "");
+			layoutSetPrototypeLayoutERC = Objects.toString(
+				layoutSetPrototypeLayoutERC, "");
 
-			FinderPath finderPath = _finderPathCountByG_P_SPLU;
+			FinderPath finderPath = _finderPathCountByG_P_LSPLE;
 
 			Object[] finderArgs = new Object[] {
-				groupId, privateLayout, sourcePrototypeLayoutUuid
+				groupId, privateLayout, layoutSetPrototypeLayoutERC
 			};
 
 			Long count = (Long)FinderCacheUtil.getResult(
@@ -14389,21 +14396,21 @@ public class LayoutPersistenceImpl
 
 				sb.append(_SQL_COUNT_LAYOUT_WHERE);
 
-				sb.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_P_LSPLE_GROUPID_2);
 
-				sb.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
+				sb.append(_FINDER_COLUMN_G_P_LSPLE_PRIVATELAYOUT_2);
 
-				boolean bindSourcePrototypeLayoutUuid = false;
+				boolean bindLayoutSetPrototypeLayoutERC = false;
 
-				if (sourcePrototypeLayoutUuid.isEmpty()) {
+				if (layoutSetPrototypeLayoutERC.isEmpty()) {
 					sb.append(
-						_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+						_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_3);
 				}
 				else {
-					bindSourcePrototypeLayoutUuid = true;
+					bindLayoutSetPrototypeLayoutERC = true;
 
 					sb.append(
-						_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+						_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_2);
 				}
 
 				String sql = sb.toString();
@@ -14421,8 +14428,8 @@ public class LayoutPersistenceImpl
 
 					queryPos.add(privateLayout);
 
-					if (bindSourcePrototypeLayoutUuid) {
-						queryPos.add(sourcePrototypeLayoutUuid);
+					if (bindLayoutSetPrototypeLayoutERC) {
+						queryPos.add(layoutSetPrototypeLayoutERC);
 					}
 
 					count = (Long)query.uniqueResult();
@@ -14442,42 +14449,43 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
 	 * @return the number of matching layouts that the user has permission to view
 	 */
 	@Override
-	public int filterCountByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid) {
+	public int filterCountByG_P_LSPLE(
+		long groupId, boolean privateLayout,
+		String layoutSetPrototypeLayoutERC) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_P_SPLU(
-				groupId, privateLayout, sourcePrototypeLayoutUuid);
+			return countByG_P_LSPLE(
+				groupId, privateLayout, layoutSetPrototypeLayoutERC);
 		}
 
-		sourcePrototypeLayoutUuid = Objects.toString(
-			sourcePrototypeLayoutUuid, "");
+		layoutSetPrototypeLayoutERC = Objects.toString(
+			layoutSetPrototypeLayoutERC, "");
 
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_P_LSPLE_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
+		sb.append(_FINDER_COLUMN_G_P_LSPLE_PRIVATELAYOUT_2);
 
-		boolean bindSourcePrototypeLayoutUuid = false;
+		boolean bindLayoutSetPrototypeLayoutERC = false;
 
-		if (sourcePrototypeLayoutUuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+		if (layoutSetPrototypeLayoutERC.isEmpty()) {
+			sb.append(_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_3);
 		}
 		else {
-			bindSourcePrototypeLayoutUuid = true;
+			bindLayoutSetPrototypeLayoutERC = true;
 
-			sb.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
+			sb.append(_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_2);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -14500,8 +14508,8 @@ public class LayoutPersistenceImpl
 
 			queryPos.add(privateLayout);
 
-			if (bindSourcePrototypeLayoutUuid) {
-				queryPos.add(sourcePrototypeLayoutUuid);
+			if (bindLayoutSetPrototypeLayoutERC) {
+				queryPos.add(layoutSetPrototypeLayoutERC);
 			}
 
 			Long count = (Long)sqlQuery.uniqueResult();
@@ -14516,19 +14524,19 @@ public class LayoutPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_G_P_SPLU_GROUPID_2 =
+	private static final String _FINDER_COLUMN_G_P_LSPLE_GROUPID_2 =
 		"layout.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2 =
+	private static final String _FINDER_COLUMN_G_P_LSPLE_PRIVATELAYOUT_2 =
 		"layout.privateLayout = ? AND ";
 
 	private static final String
-		_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2 =
-			"layout.sourcePrototypeLayoutUuid = ?";
+		_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_2 =
+			"layout.layoutSetPrototypeLayoutERC = ?";
 
 	private static final String
-		_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3 =
-			"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = '')";
+		_FINDER_COLUMN_G_P_LSPLE_LAYOUTSETPROTOTYPELAYOUTERC_3 =
+			"(layout.layoutSetPrototypeLayoutERC IS NULL OR layout.layoutSetPrototypeLayoutERC = '')";
 
 	private FinderPath _finderPathWithPaginationFindByG_P_ST;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_ST;
@@ -21838,7 +21846,7 @@ public class LayoutPersistenceImpl
 		ctMergeColumnNames.add("masterLayoutPlid");
 		ctMergeColumnNames.add("layoutPrototypeUuid");
 		ctMergeColumnNames.add("layoutPrototypeLinkEnabled");
-		ctMergeColumnNames.add("sourcePrototypeLayoutUuid");
+		ctMergeColumnNames.add("layoutSetPrototypeLayoutERC");
 		ctMergeColumnNames.add("publishDate");
 		ctMergeColumnNames.add("lastPublishDate");
 		ctMergeColumnNames.add("status");
@@ -22023,28 +22031,28 @@ public class LayoutPersistenceImpl
 			"countByLayoutPrototypeUuid", new String[] {String.class.getName()},
 			new String[] {"layoutPrototypeUuid"}, false);
 
-		_finderPathWithPaginationFindBySourcePrototypeLayoutUuid =
+		_finderPathWithPaginationFindByLayoutSetPrototypeLayoutERC =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findBySourcePrototypeLayoutUuid",
+				"findByLayoutSetPrototypeLayoutERC",
 				new String[] {
 					String.class.getName(), Integer.class.getName(),
 					Integer.class.getName(), OrderByComparator.class.getName()
 				},
-				new String[] {"sourcePrototypeLayoutUuid"}, true);
+				new String[] {"layoutSetPrototypeLayoutERC"}, true);
 
-		_finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid =
+		_finderPathWithoutPaginationFindByLayoutSetPrototypeLayoutERC =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findBySourcePrototypeLayoutUuid",
+				"findByLayoutSetPrototypeLayoutERC",
 				new String[] {String.class.getName()},
-				new String[] {"sourcePrototypeLayoutUuid"}, true);
+				new String[] {"layoutSetPrototypeLayoutERC"}, true);
 
-		_finderPathCountBySourcePrototypeLayoutUuid = new FinderPath(
+		_finderPathCountByLayoutSetPrototypeLayoutERC = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBySourcePrototypeLayoutUuid",
+			"countByLayoutSetPrototypeLayoutERC",
 			new String[] {String.class.getName()},
-			new String[] {"sourcePrototypeLayoutUuid"}, false);
+			new String[] {"layoutSetPrototypeLayoutERC"}, false);
 
 		_finderPathWithPaginationFindByG_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
@@ -22242,37 +22250,37 @@ public class LayoutPersistenceImpl
 			},
 			new String[] {"groupId", "privateLayout", "friendlyURL"}, true);
 
-		_finderPathWithPaginationFindByG_P_SPLU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_SPLU",
+		_finderPathWithPaginationFindByG_P_LSPLE = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_LSPLE",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {
-				"groupId", "privateLayout", "sourcePrototypeLayoutUuid"
+				"groupId", "privateLayout", "layoutSetPrototypeLayoutERC"
 			},
 			true);
 
-		_finderPathWithoutPaginationFindByG_P_SPLU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_SPLU",
+		_finderPathWithoutPaginationFindByG_P_LSPLE = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_LSPLE",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
 			new String[] {
-				"groupId", "privateLayout", "sourcePrototypeLayoutUuid"
+				"groupId", "privateLayout", "layoutSetPrototypeLayoutERC"
 			},
 			true);
 
-		_finderPathCountByG_P_SPLU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_SPLU",
+		_finderPathCountByG_P_LSPLE = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_LSPLE",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
 			new String[] {
-				"groupId", "privateLayout", "sourcePrototypeLayoutUuid"
+				"groupId", "privateLayout", "layoutSetPrototypeLayoutERC"
 			},
 			false);
 

@@ -697,7 +697,7 @@ create table Layout (
 	masterLayoutPlid LONG,
 	layoutPrototypeUuid VARCHAR(75) null,
 	layoutPrototypeLinkEnabled BOOLEAN,
-	sourcePrototypeLayoutUuid VARCHAR(75) null,
+	layoutSetPrototypeLayoutERC VARCHAR(75) null,
 	publishDate DATE null,
 	lastPublishDate DATE null,
 	status INTEGER,

@@ -5,7 +5,6 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
-import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
 import {FormikHelpers, FormikTouched, useFormik} from 'formik';
 import {openToast, useId} from 'frontend-js-components-web';
@@ -28,6 +27,7 @@ import {LogoColor, MimeTypeLimit, Space} from '../../common/types/Space';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import getRandomId from '../../structure_builder/utils/getRandomId';
 import SpaceBaseFields from './SpaceBaseFields';
+import SpacePanel from './SpacePanel';
 
 type Touched = FormikTouched<Record<string, any>>;
 
@@ -40,9 +40,11 @@ const getInitialMimeTypeLimit = () =>
 
 export default function SpaceGeneralSettings({
 	groupId,
+	setSpace,
 	space,
 }: {
 	groupId: string;
+	setSpace?: React.Dispatch<React.SetStateAction<any>>;
 	space: Space;
 }) {
 	const id = useId();
@@ -63,7 +65,7 @@ export default function SpaceGeneralSettings({
 			description: space.description,
 			erc: space.externalReferenceCode,
 			logoColor: space.settings?.logoColor as LogoColor,
-			mimeTypeLimits: space.settings?.mimeTypeLimits.length
+			mimeTypeLimits: space.settings?.mimeTypeLimits?.length
 				? space.settings?.mimeTypeLimits
 				: [getInitialMimeTypeLimit()],
 			name: space.name,
@@ -79,18 +81,25 @@ export default function SpaceGeneralSettings({
 				sharingEnabled,
 			} = values;
 
-			const {data, error} = await SpaceService.updateSpace({
-				description,
+			const {data, error} = await SpaceService.updateSpace(
 				erc,
-				name,
-				settings: {
-					logoColor,
-					mimeTypeLimits: mimeTypeLimits.map(
-						({id: _id, ...rest}) => rest
-					),
-					sharingEnabled,
-				},
-			});
+				{
+					description,
+					externalReferenceCode: erc,
+					name,
+					settings: {
+						logoColor,
+						mimeTypeLimits: mimeTypeLimits
+							.map(
+								({id: _id, ...rest}) => rest
+							)
+							.filter(mimeTypeLimit =>
+								Object.values(mimeTypeLimit).some(value => value)
+							),
+						sharingEnabled,
+					},
+				}
+			);
 
 			if (error) {
 				openToast({
@@ -108,6 +117,10 @@ export default function SpaceGeneralSettings({
 					),
 					type: 'success',
 				});
+
+				if (setSpace) {
+					setSpace(data);
+				}
 			}
 		},
 		validate: (values): Errors =>
@@ -151,7 +164,7 @@ export default function SpaceGeneralSettings({
 			className="container-fluid container-fluid-max-md p-0 p-md-4"
 			onSubmit={handleSubmit}
 		>
-			<Panel title={Liferay.Language.get('general')}>
+			<SpacePanel title={Liferay.Language.get('general')}>
 				<SpaceBaseFields
 					errors={errors}
 					onBlurName={handleBlur}
@@ -192,9 +205,9 @@ export default function SpaceGeneralSettings({
 						/>
 					</>
 				</SpaceBaseFields>
-			</Panel>
+			</SpacePanel>
 
-			<Panel title={Liferay.Language.get('sharing')}>
+			<SpacePanel title={Liferay.Language.get('sharing')}>
 				<ClayForm.Group>
 					<ClayCheckbox
 						checked={values.sharingEnabled}
@@ -206,9 +219,9 @@ export default function SpaceGeneralSettings({
 						}
 					/>
 				</ClayForm.Group>
-			</Panel>
+			</SpacePanel>
 
-			<Panel title={Liferay.Language.get('mime-type-limit')}>
+			<SpacePanel title={Liferay.Language.get('mime-type-limit')}>
 				<p>{Liferay.Language.get('file-size-mime-type-description')}</p>
 
 				<MimeTypeLimitFields
@@ -219,7 +232,7 @@ export default function SpaceGeneralSettings({
 					setTouched={setTouched}
 					touched={touched}
 				/>
-			</Panel>
+			</SpacePanel>
 
 			<ClayButton.Group className="mt-2" spaced>
 				<ClayButton onClick={onSave}>
@@ -231,27 +244,6 @@ export default function SpaceGeneralSettings({
 				</ClayButton>
 			</ClayButton.Group>
 		</form>
-	);
-}
-
-function Panel({children, title}: {children: React.ReactNode; title: string}) {
-	return (
-		<ClayPanel
-			aria-label={title}
-			className="mb-4"
-			collapsable
-			defaultExpanded={true}
-			displayTitle={
-				<ClayPanel.Title>
-					<h2 className="mb-0 py-2 text-6 text-dark">{title}</h2>
-				</ClayPanel.Title>
-			}
-			displayType="secondary"
-			role="group"
-			showCollapseIcon
-		>
-			<div className="pt-4 px-4">{children}</div>
-		</ClayPanel>
 	);
 }
 

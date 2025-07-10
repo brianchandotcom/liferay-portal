@@ -1,5 +1,15 @@
 components:
     schemas:
+        ConnectionInfo:
+            properties:
+                admin:
+                    type: boolean
+                connectedToAnalyticsCloud:
+                    type: boolean
+                connectedToSpace:
+                    type: boolean
+                siteSyncedToAnalyticsCloud:
+                    type: boolean
         InventoryAnalysis:
             properties:
                 inventoryAnalysisItems:
@@ -78,6 +88,26 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/connection-info":
+        get:
+            operationId: getConnectionInfo
+            parameters:
+                -   in: query
+                    name: spaceId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ConnectionInfo"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ConnectionInfo"
+            tags: ["ConnectionInfo"]
     "/content-overview":
         get:
             operationId: getContentOverview

@@ -2422,6 +2422,10 @@ definition {
 			facetName = "User Facet",
 			facetTerm = "userfn userln");
 
+		AssertChecked(
+			checkboxName = "userfn userln",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
 		var currentURL = selenium.getLocation();
 
 		if (!(contains(${currentURL}, "username"))) {

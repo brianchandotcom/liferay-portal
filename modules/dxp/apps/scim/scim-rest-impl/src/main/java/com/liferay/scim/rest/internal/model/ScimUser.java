@@ -105,12 +105,20 @@ public class ScimUser {
 		return _preferredLanguage;
 	}
 
+	public long getPrefix() {
+		return _prefix;
+	}
+
 	public long[] getRoleIds() {
 		return _roleIds;
 	}
 
 	public String getScreenName() {
 		return _screenName;
+	}
+
+	public long getSuffix() {
+		return _suffix;
 	}
 
 	public long[] getUserGroupIds() {
@@ -261,6 +269,10 @@ public class ScimUser {
 		_preferredLanguage = preferredLanguage;
 	}
 
+	public void setPrefix(long prefix) {
+		_prefix = prefix;
+	}
+
 	public void setRoleIds(long[] roleIds) {
 		_roleIds = roleIds;
 	}
@@ -271,6 +283,10 @@ public class ScimUser {
 
 	public void setSendEmail(boolean sendEmail) {
 		_sendEmail = sendEmail;
+	}
+
+	public void setSuffix(long suffix) {
+		_suffix = suffix;
 	}
 
 	public void setUpdatePassword(boolean updatePassword) {
@@ -316,9 +332,11 @@ public class ScimUser {
 	private boolean _passwordReset;
 	private String[] _photos;
 	private String _preferredLanguage;
+	private long _prefix;
 	private long[] _roleIds;
 	private String _screenName;
 	private boolean _sendEmail;
+	private long _suffix;
 	private boolean _updatePassword;
 	private long[] _userGroupIds;
 	private String _userType;

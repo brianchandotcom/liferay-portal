@@ -821,11 +821,12 @@ public class UserManagerImpl implements UserManager {
 			scimUser.isAutoScreenName(), scimUser.getScreenName(),
 			scimUser.getEmails()[0], scimUser.getLocale(),
 			scimUser.getFirstName(), scimUser.getMiddleName(),
-			scimUser.getLastName(), 0, 0, scimUser.isMale(), birthdayMonth,
-			birthdayDay, birthdayYear, scimUser.getJobTitle(),
-			scimUser.getGroupIds(), scimUser.getOrganizationIds(),
-			scimUser.getRoleIds(), scimUser.getUserGroupIds(),
-			scimUser.isSendEmail(), new ServiceContext());
+			scimUser.getLastName(), scimUser.getPrefix(), scimUser.getSuffix(),
+			scimUser.isMale(), birthdayMonth, birthdayDay, birthdayYear,
+			scimUser.getJobTitle(), scimUser.getGroupIds(),
+			scimUser.getOrganizationIds(), scimUser.getRoleIds(),
+			scimUser.getUserGroupIds(), scimUser.isSendEmail(),
+			new ServiceContext());
 
 		portalUser.setExternalReferenceCode(
 			scimUser.getExternalReferenceCode());
@@ -1167,9 +1168,10 @@ public class UserManagerImpl implements UserManager {
 			scimUser.getEmails()[0], false, null, portalUser.getLanguageId(),
 			portalUser.getTimeZoneId(), portalUser.getGreeting(),
 			portalUser.getComments(), scimUser.getFirstName(),
-			scimUser.getMiddleName(), scimUser.getLastName(), 0, 0,
-			scimUser.isMale(), birthdayMonth, birthdayDay, birthdayYear,
-			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
+			scimUser.getMiddleName(), scimUser.getLastName(),
+			scimUser.getPrefix(), scimUser.getSuffix(), scimUser.isMale(),
+			birthdayMonth, birthdayDay, birthdayYear, contact.getSmsSn(),
+			contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(),
 			scimUser.getJobTitle(), portalUser.getGroupIds(),
 			portalUser.getOrganizationIds(), portalUser.getRoleIds(), null,

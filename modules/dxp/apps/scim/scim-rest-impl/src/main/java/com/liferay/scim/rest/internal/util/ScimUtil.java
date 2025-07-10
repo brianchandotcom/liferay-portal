@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
+import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -231,7 +233,15 @@ public class ScimUtil {
 		scimUser.setPassword(user.getPassword());
 		scimUser.setPhotos(_getScimValues(user.getPhotos()));
 		scimUser.setPreferredLanguage(user.getPreferredLanguage());
+		scimUser.setPrefix(
+			_getListTypeId(
+				scimUser.getCompanyId(), scimName.getHonorificPrefix(),
+				Contact.class.getName() + ".prefix"));
 		scimUser.setScreenName(user.getUserName());
+		scimUser.setSuffix(
+			_getListTypeId(
+				scimUser.getCompanyId(), scimName.getHonorificSuffix(),
+				Contact.class.getName() + ".suffix"));
 		scimUser.setUserType(user.getUserType());
 		scimUser.setX509Certificates(
 			_getScimValues(user.getX509Certificates()));
@@ -280,7 +290,9 @@ public class ScimUtil {
 			scimUser.setMiddleName(portalUser.getMiddleName());
 			scimUser.setModifiedDate(
 				_truncateDate(portalUser.getModifiedDate()));
+			scimUser.setPrefix(contact.getPrefixListTypeId());
 			scimUser.setScreenName(portalUser.getScreenName());
+			scimUser.setSuffix(contact.getSuffixListTypeId());
 
 			_setExpandoValueAttributes(scimUser);
 
@@ -762,6 +774,19 @@ public class ScimUtil {
 		}
 
 		return null;
+	}
+
+	private static long _getListTypeId(
+		long companyId, String name, String type) {
+
+		ListType listType = ListTypeLocalServiceUtil.getListType(
+			companyId, StringUtil.toLowerCase(name), type);
+
+		if (listType == null) {
+			return 0;
+		}
+
+		return listType.getListTypeId();
 	}
 
 	private static List<ScimAddress> _getScimAddresses(

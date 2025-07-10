@@ -43,25 +43,19 @@ public class FunctionObjectActionExecutorImpl
 	implements CompanyScoped, ObjectDefinitionScoped {
 
 	@Override
-	public void execute(
+	public void doExecute(
 			long companyId, long objectActionId,
 			UnicodeProperties parametersUnicodeProperties,
 			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
-		registerTransactionCommitCallback(
-			() -> {
-				_portalCatapult.launch(
-					_companyId, Http.Method.POST,
-					_functionObjectActionExecutorImplConfiguration.
-						oAuth2ApplicationExternalReferenceCode(),
-					payloadJSONObject,
-					_functionObjectActionExecutorImplConfiguration.
-						resourcePath(),
-					userId);
-
-				return null;
-			});
+		_portalCatapult.launch(
+			_companyId, Http.Method.POST,
+			_functionObjectActionExecutorImplConfiguration.
+				oAuth2ApplicationExternalReferenceCode(),
+			payloadJSONObject,
+			_functionObjectActionExecutorImplConfiguration.resourcePath(),
+			userId);
 	}
 
 	@Override

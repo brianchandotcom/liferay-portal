@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 public class GroovyObjectActionExecutorImpl extends BaseObjectActionExecutor {
 
 	@Override
-	public void execute(
+	public void doExecute(
 			long companyId, long objectActionId,
 			UnicodeProperties parametersUnicodeProperties,
 			JSONObject payloadJSONObject, long userId)
@@ -42,24 +42,18 @@ public class GroovyObjectActionExecutorImpl extends BaseObjectActionExecutor {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		registerTransactionCommitCallback(
-			() -> {
-				Map<String, Object> inputObjects =
-					ObjectEntryVariablesUtil.getVariables(
-						_dtoConverterRegistry, objectDefinition,
-						payloadJSONObject,
-						_systemObjectDefinitionManagerRegistry);
+		Map<String, Object> inputObjects =
+			ObjectEntryVariablesUtil.getVariables(
+				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				_systemObjectDefinitionManagerRegistry);
 
-				Map<String, Object> results = _objectScriptingExecutor.execute(
-					(Map<String, Object>)inputObjects.get("baseModel"),
-					new HashSet<>(), parametersUnicodeProperties.get("script"));
+		Map<String, Object> results = _objectScriptingExecutor.execute(
+			(Map<String, Object>)inputObjects.get("baseModel"), new HashSet<>(),
+			parametersUnicodeProperties.get("script"));
 
-				if (GetterUtil.getBoolean(results.get("invalidScript"))) {
-					throw new ScriptingException();
-				}
-
-				return null;
-			});
+		if (GetterUtil.getBoolean(results.get("invalidScript"))) {
+			throw new ScriptingException();
+		}
 	}
 
 	@Override

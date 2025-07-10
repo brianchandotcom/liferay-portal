@@ -50,7 +50,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 	extends BaseObjectActionExecutor {
 
 	@Override
-	public void execute(
+	public void doExecute(
 			long companyId, long objectActionId,
 			UnicodeProperties parametersUnicodeProperties,
 			JSONObject payloadJSONObject, long userId)
@@ -60,23 +60,17 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		registerTransactionCommitCallback(
-			() -> {
-				ObjectActionThreadLocal.setSkipObjectActionExecution(false);
+		ObjectActionThreadLocal.setSkipObjectActionExecution(false);
 
-				_execute(
-					objectActionId, objectDefinition,
-					GetterUtil.getLong(payloadJSONObject.getLong("classPK")),
-					_userLocalService.getUser(userId),
-					_getValues(
-						objectDefinition, parametersUnicodeProperties,
-						ObjectEntryVariablesUtil.getVariables(
-							_dtoConverterRegistry, objectDefinition,
-							payloadJSONObject,
-							_systemObjectDefinitionManagerRegistry)));
-
-				return null;
-			});
+		_execute(
+			objectActionId, objectDefinition,
+			GetterUtil.getLong(payloadJSONObject.getLong("classPK")),
+			_userLocalService.getUser(userId),
+			_getValues(
+				objectDefinition, parametersUnicodeProperties,
+				ObjectEntryVariablesUtil.getVariables(
+					_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+					_systemObjectDefinitionManagerRegistry)));
 	}
 
 	@Override

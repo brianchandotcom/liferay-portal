@@ -37,7 +37,10 @@ public class CKEditor5ClassicEditorConfigContributor
 
 		jsonObject.put(
 			"placeholder",
-			"This placeholder is set from EditorConfigContributor.");
+			"This placeholder is set from EditorConfigContributor."
+		).put(
+			"removePlugins", toJSONArray("['Underline']")
+		);
 	}
 
 }

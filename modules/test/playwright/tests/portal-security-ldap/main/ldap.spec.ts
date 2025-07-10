@@ -16,6 +16,7 @@ import {
 	TLdapConfiguration,
 	TLdapServer,
 } from '../../../helpers/LdapConfigurationHelper';
+import {InstanceSettingsPage} from '../../../pages/configuration-admin-web/InstanceSettingsPage';
 import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
 import {LdapConfigurationPage} from '../../../pages/portal-security-ldap/LdapConfigurationPage';
 import {LdapServerPage} from '../../../pages/portal-security-ldap/LdapServerPage';
@@ -984,6 +985,44 @@ test('smoke: Add LDAP server, verify connection, users, and groups are mapped pr
 				name: 'newServerName',
 			})
 		).toBeHidden();
+	});
+});
+
+test('LPD-59415 Verify that both System/Instance level LDAP settings have the same UI', async ({
+	page,
+}) => {
+	const systemSettingsPage = new SystemSettingsPage(page);
+	const instanceSettingsPage = new InstanceSettingsPage(page);
+	const ldapSettingsTabKeys = ['General', 'Servers', 'Export', 'Import'];
+
+	await test.step('Compare URLs from LDAP settings tabs (System and Instance level) and make sure they render the same UI', async () => {
+		for (const key of ldapSettingsTabKeys) {
+			await systemSettingsPage.goToSystemSetting('LDAP', key);
+			await instanceSettingsPage.goToInstanceSetting('LDAP', key);
+
+			const systemSettingsUrl = systemSettingsPage.page.url();
+			const instanceSettingsUrl = instanceSettingsPage.page.url();
+
+			const [, systemConfigurationScreenKey] = systemSettingsUrl.split(
+				'_configurationScreenKey'
+			);
+			const [, instanceConfigurationScreenKey] =
+				instanceSettingsUrl.split('_configurationScreenKey');
+
+			expect(systemConfigurationScreenKey).toBe(
+				instanceConfigurationScreenKey
+			);
+			expect(
+				systemSettingsUrl.includes(
+					'_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen'
+				)
+			).toBeTruthy();
+			expect(
+				instanceSettingsUrl.includes(
+					'_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen'
+				)
+			).toBeTruthy();
+		}
 	});
 });
 

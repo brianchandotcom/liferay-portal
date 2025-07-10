@@ -5,7 +5,7 @@
 
 package com.liferay.mcp.server.internal.servlet;
 
-import com.liferay.mcp.server.internal.company.MCPServerCompany;
+import com.liferay.mcp.server.internal.tenant.MCPServerTenant;
 import com.liferay.mcp.server.internal.util.MCPServerToolCallHandler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -65,22 +65,22 @@ public class MCPServerServlet extends GenericServlet {
 			return;
 		}
 
-		MCPServerCompany mcpServerCompany = _mcpServerCompanies.computeIfAbsent(
+		MCPServerTenant mcpServerTenant = _mcpServerTenants.computeIfAbsent(
 			_portal.getCompanyId((HttpServletRequest)servletRequest),
-			companyId -> _buildMCPCompany(
+			companyId -> _buildMCPServerTenant(
 				_portal.getPortalURL((HttpServletRequest)servletRequest) +
 					_portal.getPathModule()));
 
-		Servlet servlet = mcpServerCompany.getServlet();
+		Servlet servlet = mcpServerTenant.getServlet();
 
 		servlet.service(servletRequest, servletResponse);
 	}
 
-	private MCPServerCompany _buildMCPCompany(String baseURL) {
-		MCPServerCompany mcpServerCompany = new MCPServerCompany(baseURL);
+	private MCPServerTenant _buildMCPServerTenant(String baseURL) {
+		MCPServerTenant mcpServerTenant = new MCPServerTenant(baseURL);
 
 		McpServer.sync(
-			mcpServerCompany.getServlet()
+			mcpServerTenant.getServlet()
 		).capabilities(
 			McpSchema.ServerCapabilities.builder(
 			).tools(
@@ -98,8 +98,8 @@ public class MCPServerServlet extends GenericServlet {
 					"type", "object"
 				).toString()),
 			MCPServerToolCallHandler.of(
-				(exchange, arguments) -> mcpServerCompany.getAllOpenAPIs(
-					MCPServerCompany.getAccessToken(exchange)))
+				(exchange, arguments) -> mcpServerTenant.getOpenAPIs(
+					MCPServerTenant.getAccessToken(exchange)))
 		).tool(
 			new McpSchema.Tool(
 				"get-openapi", "Retrieves the OpenAPI YAML file.",
@@ -116,9 +116,9 @@ public class MCPServerServlet extends GenericServlet {
 					"type", "object"
 				).toString()),
 			MCPServerToolCallHandler.of(
-				(exchange, arguments) -> mcpServerCompany.getOpenAPI(
+				(exchange, arguments) -> mcpServerTenant.getOpenAPI(
 					String.valueOf(arguments.get("url")),
-					MCPServerCompany.getAccessToken(exchange)))
+					MCPServerTenant.getAccessToken(exchange)))
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
@@ -161,20 +161,20 @@ public class MCPServerServlet extends GenericServlet {
 					"type", "object"
 				).toString()),
 			MCPServerToolCallHandler.of(
-				(exchange, arguments) -> mcpServerCompany.callEndpoint(
+				(exchange, arguments) -> mcpServerTenant.callEndpoint(
 					String.valueOf(arguments.get("method")),
 					String.valueOf(arguments.get("path")),
 					String.valueOf(arguments.get("payload")),
-					MCPServerCompany.getAccessToken(exchange)))
+					MCPServerTenant.getAccessToken(exchange)))
 		).build();
 
-		return mcpServerCompany;
+		return mcpServerTenant;
 	}
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private final Map<Long, MCPServerCompany> _mcpServerCompanies =
+	private final Map<Long, MCPServerTenant> _mcpServerTenants =
 		new ConcurrentHashMap<>();
 
 	@Reference

@@ -11,7 +11,9 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export const test = mergeTests(
@@ -236,4 +238,89 @@ test.describe('Publication Score tests', () => {
 			page.getByText('Tamaño de la publicación: Pequeño')
 		).toBeVisible();
 	});
+});
+
+test('LPD-52950 Assert publications user cannot see publications they do not have permission to view when moving changes', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	const user = await changeTrackingPage.addUserWithPublicationsUserRole();
+
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection(
+		ctCollection.body.id
+	);
+
+	await apiHelpers.headlessDelivery.postDocument(
+		site.id,
+		createReadStream(path.join(__dirname, '/dependencies/attachment.txt'))
+	);
+
+	await apiHelpers.headlessChangeTracking.createCTCollection(
+		getRandomString()
+	);
+
+	const ctCollection3 =
+		await apiHelpers.headlessChangeTracking.createCTCollection(
+			getRandomString()
+		);
+
+	await changeTrackingPage.addUserToPublication(
+		ctCollection.body.name,
+		'Editor',
+		user
+	);
+
+	await changeTrackingPage.addUserToPublication(
+		ctCollection3.body.name,
+		'Editor',
+		user
+	);
+
+	await performLogout(page);
+
+	await performLoginViaApi({page, screenName: user.alternateName});
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	const firstDropdown = page
+		.locator('.cell-item-actions .dropdown svg.lexicon-icon-ellipsis-v')
+		.first();
+	await firstDropdown.waitFor();
+	await firstDropdown.click();
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Move Changes'}),
+		trigger: firstDropdown,
+	});
+
+	await expect(
+		page.getByRole('heading', {name: 'Moved Changes'})
+	).toBeVisible();
+
+	const publicationSelector = page.locator(
+		'#_com_liferay_change_tracking_web_portlet_PublicationsPortlet_toPublication'
+	);
+
+	await expect(publicationSelector).toBeVisible();
+
+	const publicationsOptions = await page.locator(
+		'#_com_liferay_change_tracking_web_portlet_PublicationsPortlet_toPublication > option'
+	);
+
+	await expect(publicationsOptions).toHaveText([
+		'None',
+		ctCollection3.body.name,
+	]);
+
+	await performLogout(page);
+
+	await performLoginViaApi({page, screenName: 'test'});
 });

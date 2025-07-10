@@ -146,8 +146,23 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
+	public long getOverheadWeight() {
+		return getAverageOverheadDuration();
+	}
+
+	@Override
 	public SegmentTestClassGroup getSegmentTestClassGroup() {
 		return _segmentTestClassGroup;
+	}
+
+	@Override
+	public long getSharedWeight() {
+		return 0L;
+	}
+
+	@Override
+	public String getSharedWeightName() {
+		return null;
 	}
 
 	@Override
@@ -184,6 +199,11 @@ public abstract class BaseTestClass implements TestClass {
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
 		return batchTestClassGroup.getTestTaskName(getTestName());
+	}
+
+	@Override
+	public long getWeight() {
+		return getAverageDuration();
 	}
 
 	@Override

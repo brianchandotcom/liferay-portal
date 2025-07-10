@@ -194,3 +194,63 @@ test('LPD-53946 Update Permissions for Regular Role', async ({
 
 	await expect(page.getByText(ctCollection.body.name)).toBeHidden();
 });
+
+test('LPD-57648 Filter Permission Roles with search bar', async ({page}) => {
+	const searchBar = page.getByLabel('Search');
+
+	await expect(searchBar).toBeVisible();
+
+	const searchKeyword = 'admin';
+
+	await searchBar.fill(searchKeyword);
+
+	const submitButton = page.getByLabel('Submit');
+
+	await submitButton.click();
+
+	const resultsBar = page.locator('.results-bar');
+	let rowCount = await page.locator('.role-row').count();
+
+	await expect(resultsBar).toBeVisible();
+
+	await expect(page.getByText('3 Results for admin')).toBeVisible();
+
+	expect(rowCount).toEqual(3);
+
+	const clearSearchButton = page.getByLabel('Clear');
+
+	await clearSearchButton.click();
+
+	await expect(resultsBar).toBeVisible({visible: false});
+
+	rowCount = await page.locator('.role-row').count();
+
+	expect(rowCount).toEqual(11);
+});
+
+test('LPD-57648 Show empty search results', async ({page}) => {
+	const searchBar = page.getByLabel('Search');
+
+	await expect(searchBar).toBeVisible();
+
+	const searchKeyword = getRandomString();
+
+	await searchBar.fill(searchKeyword);
+
+	const submitButton = page.getByLabel('Submit');
+
+	await submitButton.click();
+
+	const resultsBar = page.locator('.results-bar');
+	const rowCount = await page.locator('.role-row').count();
+
+	await expect(resultsBar).toBeVisible();
+
+	await expect(
+		page.getByText('0 Results for ' + searchKeyword)
+	).toBeVisible();
+
+	expect(rowCount).toEqual(0);
+
+	await expect(page.getByText('No roles were found.')).toBeVisible();
+});

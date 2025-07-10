@@ -57,6 +57,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MCPServerServlet extends GenericServlet {
 
+	public void reset() {
+		_mcpServerTenants.clear();
+	}
+
 	@Override
 	public void service(
 			ServletRequest servletRequest, ServletResponse servletResponse)

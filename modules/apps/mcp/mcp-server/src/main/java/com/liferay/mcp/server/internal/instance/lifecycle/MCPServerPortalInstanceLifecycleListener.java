@@ -51,6 +51,8 @@ public class MCPServerPortalInstanceLifecycleListener
 
 		User user = _userLocalService.getGuestUser(company.getCompanyId());
 
+		// TODO Avoid hardcoding redirect URL for GitHub Copilot
+
 		_oAuth2ApplicationLocalService.addOAuth2Application(
 			company.getCompanyId(), user.getUserId(), user.getScreenName(),
 			List.of(GrantType.AUTHORIZATION_CODE), "client_secret_post",

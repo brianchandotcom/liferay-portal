@@ -99,6 +99,8 @@ public class MCPServerCompany {
 			HttpURLConnection connection =
 				(HttpURLConnection)url.openConnection();
 
+			// TODO Allow guest access?
+
 			if (accessToken != null) {
 				connection.setRequestProperty(
 					"Authorization", "Bearer " + accessToken);

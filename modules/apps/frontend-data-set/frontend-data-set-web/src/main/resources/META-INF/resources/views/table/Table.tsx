@@ -400,6 +400,7 @@ function ClayTableRowOptionalDropTarget({
 	const {selectable} = useContext(FrontendDataSetContext);
 
 	const {className: dropClassName, dropRef} = useFDSDrop({item});
+	const {onSelect} = useContext(FrontendDataSetContext);
 
 	const activeView: IView = viewsContext.activeView;
 
@@ -413,6 +414,8 @@ function ClayTableRowOptionalDropTarget({
 						item,
 						trigger: ESelectionTrigger.CONTAINER,
 					});
+
+					onSelect?.({selectedItems: [item]});
 				}
 			: undefined,
 		ref: dropRef,

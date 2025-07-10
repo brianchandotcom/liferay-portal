@@ -46,6 +46,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 			loadData,
 			onActionDropdownItemClick,
 			onInfoPanelToggleButtonClick,
+			onSelect,
 			openModal,
 			openSidePanel,
 			selectable,
@@ -168,6 +169,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 								trigger: target,
 							});
 
+							onSelect?.({selectedItems: [item]});
 							event.preventDefault();
 						}
 					}

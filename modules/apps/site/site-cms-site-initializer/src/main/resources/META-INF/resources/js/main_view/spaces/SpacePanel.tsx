@@ -6,7 +6,13 @@
 import ClayPanel from '@clayui/panel';
 import React from 'react';
 
-function SpacePanel({children, title}: {children: React.ReactNode; title: string}) {
+function SpacePanel({
+	children,
+	title,
+}: {
+	children: React.ReactNode;
+	title: string;
+}) {
 	return (
 		<ClayPanel
 			aria-label={title}

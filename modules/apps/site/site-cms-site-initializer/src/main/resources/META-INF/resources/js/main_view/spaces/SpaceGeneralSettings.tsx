@@ -81,25 +81,20 @@ export default function SpaceGeneralSettings({
 				sharingEnabled,
 			} = values;
 
-			const {data, error} = await SpaceService.updateSpace(
-				erc,
-				{
-					description,
-					externalReferenceCode: erc,
-					name,
-					settings: {
-						logoColor,
-						mimeTypeLimits: mimeTypeLimits
-							.map(
-								({id: _id, ...rest}) => rest
-							)
-							.filter(mimeTypeLimit =>
-								Object.values(mimeTypeLimit).some(value => value)
-							),
-						sharingEnabled,
-					},
-				}
-			);
+			const {data, error} = await SpaceService.updateSpace(erc, {
+				description,
+				externalReferenceCode: erc,
+				name,
+				settings: {
+					logoColor,
+					mimeTypeLimits: mimeTypeLimits
+						.map(({id: _id, ...rest}) => rest)
+						.filter((mimeTypeLimit) =>
+							Object.values(mimeTypeLimit).some((value) => value)
+						),
+					sharingEnabled,
+				},
+			});
 
 			if (error) {
 				openToast({

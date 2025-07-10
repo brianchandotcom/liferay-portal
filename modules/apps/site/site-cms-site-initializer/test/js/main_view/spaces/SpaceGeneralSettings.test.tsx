@@ -141,12 +141,15 @@ describe('SpaceGeneralSettings', () => {
 		await waitFor(() => {
 			const {externalReferenceCode, ...space} = SPACE;
 
-			expect(SpaceService.updateSpace).toBeCalledWith({
-				...space,
-				description: 'My space description',
-				erc: externalReferenceCode,
-				name: 'My Space',
-			});
+			expect(SpaceService.updateSpace).toBeCalledWith(
+				externalReferenceCode,
+				{
+					...space,
+					description: 'My space description',
+					externalReferenceCode,
+					name: 'My Space',
+				}
+			);
 
 			expect(
 				screen.getByText('My Space-was-saved-successfully')
@@ -300,7 +303,10 @@ describe('SpaceGeneralSettings', () => {
 			await userEvent.click(screen.getByRole('button', {name: 'save'}));
 
 			await waitFor(() => {
+				const {externalReferenceCode, ...space} = SPACE;
+
 				expect(SpaceService.updateSpace).toBeCalledWith(
+					externalReferenceCode,
 					expect.objectContaining({
 						settings: expect.objectContaining({
 							mimeTypeLimits: [

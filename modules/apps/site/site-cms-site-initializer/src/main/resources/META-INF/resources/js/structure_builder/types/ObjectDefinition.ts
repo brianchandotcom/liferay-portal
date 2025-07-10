@@ -45,7 +45,10 @@ export type ObjectDefinition = {
 		value: string;
 	}[];
 	objectFields?: ObjectField[];
-	objectFolderExternalReferenceCode?: string;
+	objectFolderExternalReferenceCode?:
+		| 'L_CMS_CONTENT_STRUCTURES'
+		| 'L_CMS_FILE_TYPES'
+		| 'L_CMS_STRUCTURE_REPEATABLE_GROUPS';
 	objectRelationships?: ObjectRelationship[];
 	pluralLabel: Liferay.Language.LocalizedValue<string>;
 	scope: 'company' | 'depot' | 'site';

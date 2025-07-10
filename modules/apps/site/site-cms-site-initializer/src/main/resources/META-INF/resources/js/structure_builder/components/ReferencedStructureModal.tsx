@@ -137,13 +137,19 @@ export default function ReferencedStructureModal({
 }
 
 function getItems(objectDefinitions: ObjectDefinitions): Item[] {
-	return Object.values(objectDefinitions).map((objectDefinition) => ({
-		label:
-			objectDefinition.label[
-				Liferay.ThemeDisplay.getDefaultLanguageId()
-			] || '',
-		value: objectDefinition.externalReferenceCode,
-	}));
+	return Object.values(objectDefinitions)
+		.filter(
+			(objectDefinition) =>
+				objectDefinition.objectFolderExternalReferenceCode !==
+				'L_CMS_STRUCTURE_REPEATABLE_GROUPS'
+		)
+		.map((objectDefinition) => ({
+			label:
+				objectDefinition.label[
+					Liferay.ThemeDisplay.getDefaultLanguageId()
+				] || '',
+			value: objectDefinition.externalReferenceCode,
+		}));
 }
 
 function buildStructures(

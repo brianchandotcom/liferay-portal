@@ -21,6 +21,7 @@ import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUti
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -68,7 +69,7 @@ public class ViewSpaceContentsSummarySectionDisplayContext
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			httpServletRequest, "view-all-content", "content",
 			ActionUtil.getBaseViewFolderURL(themeDisplay) +
-				objectEntryFolder.getObjectEntryFolderId());
+				objectEntryFolder.getObjectEntryFolderId(), Collections.emptyMap());
 	}
 
 	@Override

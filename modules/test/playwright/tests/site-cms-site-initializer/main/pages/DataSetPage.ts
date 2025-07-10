@@ -45,9 +45,12 @@ export class DataSetPage {
 			.filter({has: this.page.getByRole('menu')});
 		await dropdownMenu.waitFor();
 
-		const dropdownMenuActionItem = dropdownMenu.getByRole('menuitem', {
-			name: action,
-		});
+		const dropdownMenuActionItem = dropdownMenu
+			.getByRole('menuitem', {
+				name: action,
+			})
+			.first();
+
 		await dropdownMenuActionItem.waitFor();
 		await dropdownMenuActionItem.click();
 	}

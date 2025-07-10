@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -105,11 +106,12 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 		_userManager = new UserManagerImpl(
 			_addressLocalService, _classNameLocalService, _companyLocalService,
 			_configurationAdmin, _contactLocalService, _counterLocalService,
-			_countryLocalService, _expandoColumnLocalService,
-			_expandoTableLocalService, _expandoValueLocalService,
-			_listTypeLocalService, _regionLocalService, _searcher,
-			_searchRequestBuilderFactory, _userGroupLocalService,
-			_userGroupService, _userLocalService, _userService);
+			_countryLocalService, _emailAddressLocalService,
+			_expandoColumnLocalService, _expandoTableLocalService,
+			_expandoValueLocalService, _listTypeLocalService,
+			_regionLocalService, _searcher, _searchRequestBuilderFactory,
+			_userGroupLocalService, _userGroupService, _userLocalService,
+			_userService);
 	}
 
 	private static final GroupResourceManager _groupResourceManager =
@@ -135,6 +137,9 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 
 	@Reference
 	private CountryLocalService _countryLocalService;
+
+	@Reference
+	private EmailAddressLocalService _emailAddressLocalService;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

@@ -16,15 +16,23 @@ String principal = ParamUtil.getString(request, "principal");
 
 String credentials = request.getParameter("credentials");
 
+long companyId = 0L;
+
+String portletId = PortalUtil.getPortletId(request);
+
+if (portletId.equals(ConfigurationAdminPortletKeys.INSTANCE_SETTINGS)) {
+	companyId = themeDisplay.getCompanyId();
+}
+
 if (credentials.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
-	LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId);
+	LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(companyId, ldapServerId);
 
 	credentials = ldapServerConfiguration.securityCredential();
 }
 
 SafePortalLDAP safePortalLDAP = SafePortalLDAPUtil.getSafePortalLDAP();
 
-SafeLdapContext safeLdapContext = safePortalLDAP.getSafeLdapContext(themeDisplay.getCompanyId(), baseProviderURL, principal, credentials);
+SafeLdapContext safeLdapContext = safePortalLDAP.getSafeLdapContext(companyId, baseProviderURL, principal, credentials);
 
 if (safeLdapContext == null) {
 %>

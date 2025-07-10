@@ -14,7 +14,15 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long ldapServerId = ParamUtil.getLong(request, "ldapServerId");
 
-LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId);
+long companyId = 0L;
+
+String portletId = PortalUtil.getPortletId(request);
+
+if (portletId.equals(ConfigurationAdminPortletKeys.INSTANCE_SETTINGS)) {
+	companyId = themeDisplay.getCompanyId();
+}
+
+LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(companyId, ldapServerId);
 
 String ldapServerName = ldapServerConfiguration.serverName();
 String ldapBaseProviderUrl = ldapServerConfiguration.baseProviderURL();

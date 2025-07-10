@@ -7,7 +7,9 @@ import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import React from 'react';
 
-import addMembersAction, { AddMembersData } from '../FDSPropsTransformer/actions/addMembersAction';
+import addMembersAction, {
+	AddMembersData,
+} from '../props_transformer/actions/addMembersAction';
 
 enum SpaceSummaryHeaderActions {
 	OPEN_MEMBERS_MODAL = 'open-members-modal',
@@ -33,14 +35,14 @@ export default function SpaceSummaryHeader({
 	url,
 }: SpaceSummaryHeaderProps) {
 	const openMembersModal = (props: SpaceMembersModalPropsType) => {
-		const {assetLibraryCreatorUserId, assetLibraryId } = props;
+		const {assetLibraryCreatorUserId, assetLibraryId} = props;
 
 		const loadData = () => window.location.reload();
 		const data: AddMembersData = {
-				assetLibraryCreatorUserId,
-				assetLibraryId,
-				title
-		}
+			assetLibraryCreatorUserId,
+			assetLibraryId,
+			title,
+		};
 
 		addMembersAction(data, loadData);
 	};

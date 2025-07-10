@@ -8,7 +8,7 @@ import React from 'react';
 
 import {SpaceMembersWithList} from './SpaceMembersWithList';
 
-export default function SpaceMembersModalContent({
+export default function SpaceMembersModal({
 	assetLibraryCreatorUserId,
 	assetLibraryId,
 }: {

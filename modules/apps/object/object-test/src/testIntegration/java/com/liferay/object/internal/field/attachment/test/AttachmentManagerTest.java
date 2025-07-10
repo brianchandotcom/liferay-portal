@@ -134,11 +134,26 @@ public class AttachmentManagerTest {
 
 		Assert.assertEquals(
 			externalReferenceCode, fileEntry.getExternalReferenceCode());
-	}
 
-	@Test(expected = FileExtensionException.class)
-	public void testGetOrAddFileEntryShouldFailIfDLConfigurationFileExtensionNotSupported()
-		throws Exception {
+		try {
+			tempFileEntry = _addTempFileEntry(
+				RandomTestUtil.randomString(), ".bmp",
+				RandomTestUtil.randomString(), ContentTypes.IMAGE_BMP);
+
+			folder = tempFileEntry.getFolder();
+
+			_attachmentManager.getOrAddFileEntry(
+				_objectField.getCompanyId(), RandomTestUtil.randomString(),
+				StreamUtil.toByteArray(tempFileEntry.getContentStream()),
+				tempFileEntry.getFileName(), folder.getExternalReferenceCode(),
+				TestPropsValues.getGroupId(), _objectField.getObjectFieldId(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (FileExtensionException fileExtensionException) {
+			Assert.assertNotNull(fileExtensionException);
+		}
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -147,11 +162,11 @@ public class AttachmentManagerTest {
 						"fileExtensions", new String[] {".doc"}
 					).build())) {
 
-			FileEntry tempFileEntry = _addTempFileEntry(
+			tempFileEntry = _addTempFileEntry(
 				RandomTestUtil.randomString(), ".txt",
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN);
 
-			Folder folder = tempFileEntry.getFolder();
+			folder = tempFileEntry.getFolder();
 
 			_attachmentManager.getOrAddFileEntry(
 				_objectField.getCompanyId(), RandomTestUtil.randomString(),
@@ -159,12 +174,12 @@ public class AttachmentManagerTest {
 				tempFileEntry.getFileName(), folder.getExternalReferenceCode(),
 				TestPropsValues.getGroupId(), _objectField.getObjectFieldId(),
 				ServiceContextTestUtil.getServiceContext());
-		}
-	}
 
-	@Test(expected = FileMimeTypeException.class)
-	public void testGetOrAddFileEntryShouldFailIfDLConfigurationMimeTypeNotSupported()
-		throws Exception {
+			Assert.fail();
+		}
+		catch (FileExtensionException fileExtensionException) {
+			Assert.assertNotNull(fileExtensionException);
+		}
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -175,11 +190,11 @@ public class AttachmentManagerTest {
 							"fileMimeTypes", new String[] {"text/html"}
 						).build())) {
 
-			FileEntry tempFileEntry = _addTempFileEntry(
+			tempFileEntry = _addTempFileEntry(
 				RandomTestUtil.randomString(), ".txt",
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN);
 
-			Folder folder = tempFileEntry.getFolder();
+			folder = tempFileEntry.getFolder();
 
 			_attachmentManager.getOrAddFileEntry(
 				_objectField.getCompanyId(), RandomTestUtil.randomString(),
@@ -187,12 +202,12 @@ public class AttachmentManagerTest {
 				tempFileEntry.getFileName(), folder.getExternalReferenceCode(),
 				TestPropsValues.getGroupId(), _objectField.getObjectFieldId(),
 				ServiceContextTestUtil.getServiceContext());
-		}
-	}
 
-	@Test(expected = FileSizeException.class)
-	public void testGetOrAddFileEntryShouldFailIfDLSizeLimitConfigurationMimeTypeLimitExceeded()
-		throws Exception {
+			Assert.fail();
+		}
+		catch (FileMimeTypeException fileMimeTypeException) {
+			Assert.assertNotNull(fileMimeTypeException);
+		}
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -202,11 +217,11 @@ public class AttachmentManagerTest {
 						"mimeTypeSizeLimit", new String[] {"text/plain:1"}
 					).build())) {
 
-			FileEntry tempFileEntry = _addTempFileEntry(
+			tempFileEntry = _addTempFileEntry(
 				RandomTestUtil.randomString(1000), ".txt",
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN);
 
-			Folder folder = tempFileEntry.getFolder();
+			folder = tempFileEntry.getFolder();
 
 			_attachmentManager.getOrAddFileEntry(
 				_objectField.getCompanyId(), RandomTestUtil.randomString(),
@@ -214,25 +229,12 @@ public class AttachmentManagerTest {
 				tempFileEntry.getFileName(), folder.getExternalReferenceCode(),
 				TestPropsValues.getGroupId(), _objectField.getObjectFieldId(),
 				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
 		}
-	}
-
-	@Test(expected = FileExtensionException.class)
-	public void testGetOrAddFileEntryShouldFailIfObjectDefinitionExtensionNotSupported()
-		throws Exception {
-
-		FileEntry tempFileEntry = _addTempFileEntry(
-			RandomTestUtil.randomString(), ".bmp",
-			RandomTestUtil.randomString(), ContentTypes.IMAGE_BMP);
-
-		Folder folder = tempFileEntry.getFolder();
-
-		_attachmentManager.getOrAddFileEntry(
-			_objectField.getCompanyId(), RandomTestUtil.randomString(),
-			StreamUtil.toByteArray(tempFileEntry.getContentStream()),
-			tempFileEntry.getFileName(), folder.getExternalReferenceCode(),
-			TestPropsValues.getGroupId(), _objectField.getObjectFieldId(),
-			ServiceContextTestUtil.getServiceContext());
+		catch (FileSizeException fileSizeException) {
+			Assert.assertNotNull(fileSizeException);
+		}
 	}
 
 	private FileEntry _addTempFileEntry(

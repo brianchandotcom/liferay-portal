@@ -605,3 +605,27 @@ The convertPermissions(long) and convertPermissions(long, PermissionConversionFi
 
 These methods are no longer used after refactoring the PermissionConverter APIs.
 ```
+
+----
+
+# 50b57897005e337516b53e1e592b1eeee70e2950
+
+This commit is missing a breaking change message. The correct message is:
+
+```
+LPD-47825 portal-search-web: skip deprecation for internal interface
+
+# breaking
+
+## What modules/apps/portal-search/portal-search-web/src/main/java/com/liferay/portal/search/web/internal/category/facet/portlet/CategoryFacetPortletPreferences.java
+
+Vocabulary Ids were removed from the CategoryFacetPortletPreferences and replaced by a GroupExternalReferenceCode VocabularyExternalReferenceCode pair. Category Facet Widget Display Templates using portletPreferences.getValues() will no longer be able to return vocabularyIds from the CategoryFacetPortletPreferences.
+
+## Why
+
+Vocabulary Ids were replaced by a External Reference Codes in Category Facet Portlet Preferences for better data preservation during imports, exports, and data migration.
+
+## Alternatives
+
+Vocabulary ids to all vocabularies related to the returned categories are available through the AssetCategoriesSearchFacetDisplayContext: use `assetCategoriesSearchFacetDisplayContext.getVocabularyIds()`.
+```

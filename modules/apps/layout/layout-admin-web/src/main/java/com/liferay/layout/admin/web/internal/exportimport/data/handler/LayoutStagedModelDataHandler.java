@@ -665,7 +665,8 @@ public class LayoutStagedModelDataHandler
 					PortletDataHandlerKeys.
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-				importedLayout.setSourcePrototypeLayoutUuid(uuid);
+				importedLayout.setLayoutSetPrototypeLayoutERC(
+					layout.getExternalReferenceCode());
 
 				layoutId = _layoutLocalService.getNextLayoutId(
 					groupId, privateLayout);
@@ -677,8 +678,8 @@ public class LayoutStagedModelDataHandler
 					layout.getLayoutPrototypeUuid());
 				importedLayout.setLayoutPrototypeLinkEnabled(
 					layout.isLayoutPrototypeLinkEnabled());
-				importedLayout.setSourcePrototypeLayoutUuid(
-					layout.getSourcePrototypeLayoutUuid());
+				importedLayout.setLayoutSetPrototypeLayoutERC(
+					layout.getLayoutSetPrototypeLayoutERC());
 			}
 
 			importedLayout.setUuid(uuid);

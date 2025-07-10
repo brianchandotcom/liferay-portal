@@ -127,7 +127,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				).and(
 					LayoutTable.INSTANCE.system.eq(false)
 				).and(
-					LayoutTable.INSTANCE.sourcePrototypeLayoutUuid.isNull()
+					LayoutTable.INSTANCE.layoutSetPrototypeLayoutERC.isNull()
 				)
 			));
 	}
@@ -181,7 +181,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					tempLayoutTable.friendlyURL.eq(
 						LayoutTable.INSTANCE.friendlyURL)
 				).and(
-					tempLayoutTable.sourcePrototypeLayoutUuid.isNull()
+					tempLayoutTable.layoutSetPrototypeLayoutERC.isNull()
 				)
 			).where(
 				LayoutTable.INSTANCE.groupId.eq(
@@ -194,16 +194,16 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 	@Override
 	public boolean hasDuplicatedFriendlyURLs(
-			String layoutUuid, long groupId, boolean privateLayout,
-			String friendlyURL)
+			String layoutExternalReferenceCode, long groupId,
+			boolean privateLayout, String friendlyURL)
 		throws PortalException {
 
 		Group group = _groupLocalService.getGroup(groupId);
 
 		if (group.isLayoutSetPrototype()) {
 			long count = _getDuplicatedFriendlyURLSiteLayoutsCount(
-				layoutUuid, group.getCompanyId(), group.getGroupId(),
-				friendlyURL);
+				layoutExternalReferenceCode, group.getCompanyId(),
+				group.getGroupId(), friendlyURL);
 
 			if (count > 0) {
 				return true;
@@ -213,7 +213,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		}
 
 		return _hasDuplicatedFriendlyURLPrototypeLayout(
-			layoutUuid, groupId, privateLayout, friendlyURL);
+			layoutExternalReferenceCode, groupId, privateLayout, friendlyURL);
 	}
 
 	/**
@@ -452,7 +452,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 						LayoutTable.INSTANCE.friendlyURL.eq(
 							layout.getFriendlyURL())
 					).and(
-						LayoutTable.INSTANCE.sourcePrototypeLayoutUuid.isNull()
+						LayoutTable.INSTANCE.layoutSetPrototypeLayoutERC.
+							isNull()
 					).and(
 						GroupTable.INSTANCE.groupId.eq(layout.getGroupId())
 					)
@@ -460,17 +461,18 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	private long _getDuplicatedFriendlyURLSiteLayoutsCount(
-			String layoutUuid, long companyId, long groupId, String friendlyURL)
+			String layoutExternalReferenceCode, long companyId, long groupId,
+			String friendlyURL)
 		throws PortalException {
 
-		Predicate sourcePrototypeLayoutUuidPredicate =
-			LayoutTable.INSTANCE.sourcePrototypeLayoutUuid.isNull();
+		Predicate layoutSetPrototypeLayoutERCPredicate =
+			LayoutTable.INSTANCE.layoutSetPrototypeLayoutERC.isNull();
 
-		if (Validator.isNotNull(layoutUuid)) {
-			sourcePrototypeLayoutUuidPredicate = Predicate.withParentheses(
-				sourcePrototypeLayoutUuidPredicate.or(
-					LayoutTable.INSTANCE.sourcePrototypeLayoutUuid.neq(
-						layoutUuid)));
+		if (Validator.isNotNull(layoutExternalReferenceCode)) {
+			layoutSetPrototypeLayoutERCPredicate = Predicate.withParentheses(
+				layoutSetPrototypeLayoutERCPredicate.or(
+					LayoutTable.INSTANCE.layoutSetPrototypeLayoutERC.neq(
+						layoutExternalReferenceCode)));
 		}
 
 		return _layoutLocalService.dslQuery(
@@ -512,13 +514,13 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				).and(
 					LayoutTable.INSTANCE.friendlyURL.eq(friendlyURL)
 				).and(
-					sourcePrototypeLayoutUuidPredicate
+					layoutSetPrototypeLayoutERCPredicate
 				)
 			));
 	}
 
 	private boolean _hasDuplicatedFriendlyURLPrototypeLayout(
-			String sourcePrototypeLayoutUuid, long groupId,
+			String layoutSetPrototypeLayoutERC, long groupId,
 			boolean privateLayout, String friendlyURL)
 		throws PortalException {
 
@@ -549,8 +551,9 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		Layout foundLayout = _layoutLocalService.getLayout(
 			layoutFriendlyURL.getPlid());
 
-		if (Validator.isNotNull(sourcePrototypeLayoutUuid) &&
-			sourcePrototypeLayoutUuid.equals(foundLayout.getUuid())) {
+		if (Validator.isNotNull(layoutSetPrototypeLayoutERC) &&
+			layoutSetPrototypeLayoutERC.equals(
+				foundLayout.getExternalReferenceCode())) {
 
 			return false;
 		}

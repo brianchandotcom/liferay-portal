@@ -182,15 +182,16 @@ public class LayoutUtil {
 
 		if (prototypeLayout != null) {
 			serviceContext.setAttribute(
-				"sourcePrototypeLayoutUuid", prototypeLayout.getUuid());
+				"layoutSetPrototypeLayoutERC",
+				prototypeLayout.getExternalReferenceCode());
 
 			Layout draftPrototypeLayout = getLayoutPrototypeLayout(
 				groupId, draftContentPageSpecification, serviceContext);
 
 			if (draftPrototypeLayout != null) {
 				serviceContext.setAttribute(
-					"draftLayoutSourcePrototypeLayoutUuid",
-					draftPrototypeLayout.getUuid());
+					"draftLayoutLayoutSetPrototypeLayoutERC",
+					draftPrototypeLayout.getExternalReferenceCode());
 			}
 		}
 

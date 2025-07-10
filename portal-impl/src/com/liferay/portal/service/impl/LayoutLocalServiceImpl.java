@@ -363,11 +363,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
 		}
 
-		String sourcePrototypeLayoutUuid = ParamUtil.getString(
-			serviceContext, "sourcePrototypeLayoutUuid");
+		String layoutSetPrototypeLayoutERC = ParamUtil.getString(
+			serviceContext, "layoutSetPrototypeLayoutERC");
 
-		if (Validator.isNotNull(sourcePrototypeLayoutUuid)) {
-			layout.setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
+		if (Validator.isNotNull(layoutSetPrototypeLayoutERC)) {
+			layout.setLayoutSetPrototypeLayoutERC(layoutSetPrototypeLayoutERC);
 		}
 
 		layout.setPublishDate(serviceContext.getModifiedDate(date));
@@ -458,9 +458,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					"draftLayoutDefaultSegmentsExperienceExternalReference" +
 						"Code"));
 			serviceContext.setAttribute(
-				"sourcePrototypeLayoutUuid",
+				"layoutSetPrototypeLayoutERC",
 				serviceContext.getAttribute(
-					"draftLayoutSourcePrototypeLayoutUuid"));
+					"draftLayoutLayoutSetPrototypeLayoutERC"));
 			serviceContext.setModifiedDate(date);
 
 			addLayout(

@@ -161,7 +161,7 @@ function PublicationsPermissionsTable({
 					<Body>
 						{roles.map(
 							({label: roleLabel, name: roleName}, index) => (
-								<Row key={roleName}>
+								<Row className="role-row" key={roleName}>
 									<Cell>
 										<ClayIcon
 											style={{marginRight: '8px'}}

@@ -12,6 +12,7 @@ import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.test.clazz.JSUnitModulesTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.JSUnitModulesTestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
@@ -34,10 +35,24 @@ public class JSUnitBatchBuildTestrayCaseResult
 
 		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
 
-		_testClassMethod = testClassMethod;
-
+		_jsUnitModulesTestClassMethod =
+			(JSUnitModulesTestClassMethod)testClassMethod;
 		_jsUnitModulesTestClass =
 			(JSUnitModulesTestClass)testClassMethod.getTestClass();
+	}
+
+	@Override
+	public BuildReport getBuildReport() {
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_jsUnitModulesTestClassMethod.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				return cachedDownstreamBuildReport;
+			}
+		}
+
+		return super.getBuildReport();
 	}
 
 	@Override
@@ -160,7 +175,7 @@ public class JSUnitBatchBuildTestrayCaseResult
 
 	@Override
 	public String getName() {
-		return _testClassMethod.getName();
+		return _jsUnitModulesTestClassMethod.getName();
 	}
 
 	@Override
@@ -198,6 +213,17 @@ public class JSUnitBatchBuildTestrayCaseResult
 			return _testClassReports;
 		}
 
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			List<TestClassReport> cachedTestClassReports =
+				_jsUnitModulesTestClassMethod.getCachedTestClassReports();
+
+			if ((cachedTestClassReports != null) &&
+				!cachedTestClassReports.isEmpty()) {
+
+				return cachedTestClassReports;
+			}
+		}
+
 		_testClassReports = new ArrayList<>();
 
 		DownstreamBuildReport downstreamBuildReport =
@@ -229,7 +255,7 @@ public class JSUnitBatchBuildTestrayCaseResult
 	}
 
 	private final JSUnitModulesTestClass _jsUnitModulesTestClass;
-	private final TestClassMethod _testClassMethod;
+	private final JSUnitModulesTestClassMethod _jsUnitModulesTestClassMethod;
 	private List<TestClassReport> _testClassReports;
 
 }

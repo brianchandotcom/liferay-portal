@@ -83,7 +83,10 @@ public class TestClassFactory {
 	public static TestClassMethod newTestClassMethod(
 		boolean ignored, String name, TestClass testClass) {
 
-		if (testClass instanceof PlaywrightJUnitTestClass) {
+		if (testClass instanceof JSUnitModulesTestClass) {
+			return new JSUnitModulesTestClassMethod(ignored, name, testClass);
+		}
+		else if (testClass instanceof PlaywrightJUnitTestClass) {
 			return new PlaywrightTestClassMethod(ignored, name, testClass);
 		}
 
@@ -93,7 +96,10 @@ public class TestClassFactory {
 	public static TestClassMethod newTestClassMethod(
 		JSONObject jsonObject, TestClass testClass) {
 
-		if (testClass instanceof PlaywrightJUnitTestClass) {
+		if (testClass instanceof JSUnitModulesTestClass) {
+			return new JSUnitModulesTestClassMethod(jsonObject, testClass);
+		}
+		else if (testClass instanceof PlaywrightJUnitTestClass) {
 			return new PlaywrightTestClassMethod(jsonObject, testClass);
 		}
 

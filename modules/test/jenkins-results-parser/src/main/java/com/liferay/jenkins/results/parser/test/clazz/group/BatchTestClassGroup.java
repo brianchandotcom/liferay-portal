@@ -242,6 +242,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			"cached-build-report-files/" + getBatchName());
 
 		if (!baseDir.exists()) {
+			baseDir.mkdirs();
+
 			sb.append("/");
 
 			Workspace workspace = workspaces.get(0);

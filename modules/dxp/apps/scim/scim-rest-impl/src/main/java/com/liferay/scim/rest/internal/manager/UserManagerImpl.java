@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
@@ -99,6 +100,7 @@ public class UserManagerImpl implements UserManager {
 		ClassNameLocalService classNameLocalService,
 		CompanyLocalService companyLocalService,
 		ConfigurationAdmin configurationAdmin,
+		ContactLocalService contactLocalService,
 		CounterLocalService counterLocalService,
 		CountryLocalService countryLocalService,
 		ExpandoColumnLocalService expandoColumnLocalService,
@@ -115,6 +117,7 @@ public class UserManagerImpl implements UserManager {
 		_classNameLocalService = classNameLocalService;
 		_companyLocalService = companyLocalService;
 		_configurationAdmin = configurationAdmin;
+		_contactLocalService = contactLocalService;
 		_counterLocalService = counterLocalService;
 		_countryLocalService = countryLocalService;
 		_expandoColumnLocalService = expandoColumnLocalService;
@@ -665,6 +668,32 @@ public class UserManagerImpl implements UserManager {
 				scimUser.getX509Certificates(), StringPool.BLANK,
 				StringPool.NEW_LINE));
 
+		Contact contact = portalUser.getContact();
+
+		String jabberSn = String.valueOf(
+			scimUser.getIms(
+			).get(
+				"Jabber"
+			));
+
+		if (Validator.isNotNull(jabberSn)) {
+			contact.setJabberSn(jabberSn);
+		}
+
+		String skypeSn = String.valueOf(
+			scimUser.getIms(
+			).get(
+				"Skype"
+			));
+
+		if (Validator.isNotNull(skypeSn)) {
+			contact.setSkypeSn(skypeSn);
+		}
+
+		contact = _contactLocalService.updateContact(contact);
+
+		portalUser.setContact(contact);
+
 		return ScimUtil.toScimUser(portalUser);
 	}
 
@@ -1210,6 +1239,7 @@ public class UserManagerImpl implements UserManager {
 	private final ClassNameLocalService _classNameLocalService;
 	private final CompanyLocalService _companyLocalService;
 	private final ConfigurationAdmin _configurationAdmin;
+	private final ContactLocalService _contactLocalService;
 	private final CounterLocalService _counterLocalService;
 	private final CountryLocalService _countryLocalService;
 	private final ExpandoColumnLocalService _expandoColumnLocalService;

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
@@ -58,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -217,6 +219,7 @@ public class ScimUtil {
 		scimUser.setFirstName(scimName.getGivenName());
 
 		scimUser.setId(user.getId());
+		scimUser.setIms(_getScimIms(user.getInstantMessagingAddresses()));
 		scimUser.setJobTitle(user.getTitle());
 		scimUser.setLastName(scimName.getFamilyName());
 		scimUser.setLocale(locale);
@@ -252,6 +255,20 @@ public class ScimUtil {
 			scimUser.setExternalReferenceCode(
 				portalUser.getExternalReferenceCode());
 			scimUser.setId(String.valueOf(portalUser.getUserId()));
+
+			Contact contact = portalUser.getContact();
+
+			Map<String, String> ims = new HashMap<>();
+
+			if (contact.getJabberSn() != null) {
+				ims.put("Jabber", contact.getJabberSn());
+			}
+
+			if (contact.getSkypeSn() != null) {
+				ims.put("Skype", contact.getSkypeSn());
+			}
+
+			scimUser.setIms(ims);
 			scimUser.setJobTitle(portalUser.getJobTitle());
 			scimUser.setLastName(portalUser.getLastName());
 			scimUser.setLocale(portalUser.getLocale());
@@ -744,6 +761,26 @@ public class ScimUtil {
 		}
 
 		return scimAddresses;
+	}
+
+	private static Map<String, String> _getScimIms(
+		List<MultiValuedComplexType> multiValuedComplexTypes) {
+
+		if (multiValuedComplexTypes == null) {
+			return null;
+		}
+
+		Map<String, String> imsMap = new HashMap<>();
+
+		for (MultiValuedComplexType multiValuedComplexType :
+				multiValuedComplexTypes) {
+
+			imsMap.put(
+				multiValuedComplexType.getType(),
+				multiValuedComplexType.getValue());
+		}
+
+		return imsMap;
 	}
 
 	private static String[] _getScimValues(

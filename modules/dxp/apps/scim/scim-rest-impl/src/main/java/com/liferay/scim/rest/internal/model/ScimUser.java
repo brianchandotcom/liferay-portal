@@ -8,6 +8,7 @@ package com.liferay.scim.rest.internal.model;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.wso2.charon3.core.objects.plainobjects.ScimAddress;
 
@@ -58,6 +59,10 @@ public class ScimUser {
 
 	public String getId() {
 		return _id;
+	}
+
+	public Map<String, String> getIms() {
+		return _ims;
 	}
 
 	public String getJobTitle() {
@@ -204,6 +209,10 @@ public class ScimUser {
 		_id = id;
 	}
 
+	public void setIms(Map<String, String> ims) {
+		_ims = ims;
+	}
+
 	public void setJobTitle(String jobTitle) {
 		_jobTitle = jobTitle;
 	}
@@ -294,6 +303,7 @@ public class ScimUser {
 	private String _firstName;
 	private long[] _groupIds;
 	private String _id;
+	private Map<String, String> _ims;
 	private String _jobTitle;
 	private String _lastName;
 	private Locale _locale;

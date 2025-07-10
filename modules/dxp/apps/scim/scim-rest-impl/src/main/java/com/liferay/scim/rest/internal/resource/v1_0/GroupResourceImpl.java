@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
@@ -103,12 +104,12 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 	protected void activate() {
 		_userManager = new UserManagerImpl(
 			_addressLocalService, _classNameLocalService, _companyLocalService,
-			_configurationAdmin, _counterLocalService, _countryLocalService,
-			_expandoColumnLocalService, _expandoTableLocalService,
-			_expandoValueLocalService, _listTypeLocalService,
-			_regionLocalService, _searcher, _searchRequestBuilderFactory,
-			_userGroupLocalService, _userGroupService, _userLocalService,
-			_userService);
+			_configurationAdmin, _contactLocalService, _counterLocalService,
+			_countryLocalService, _expandoColumnLocalService,
+			_expandoTableLocalService, _expandoValueLocalService,
+			_listTypeLocalService, _regionLocalService, _searcher,
+			_searchRequestBuilderFactory, _userGroupLocalService,
+			_userGroupService, _userLocalService, _userService);
 	}
 
 	private static final GroupResourceManager _groupResourceManager =
@@ -125,6 +126,9 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ContactLocalService _contactLocalService;
 
 	@Reference
 	private CounterLocalService _counterLocalService;

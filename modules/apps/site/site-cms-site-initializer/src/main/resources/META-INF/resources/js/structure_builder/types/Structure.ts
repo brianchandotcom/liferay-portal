@@ -29,6 +29,7 @@ export type RepeatableGroup = {
 	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
 	parent: Uuid;
+	relationshipName: string;
 	type: 'repeatable-group';
 	uuid: Uuid;
 };

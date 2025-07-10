@@ -68,8 +68,9 @@ export default function insertGroup({
 				[Liferay.ThemeDisplay.getDefaultLanguageId()]:
 					DEFAULT_GROUP_LABEL,
 			},
-			name: getRandomName(),
+			name: getRandomName({capitalize: true}),
 			parent: groupParent,
+			relationshipName: getRandomName(),
 			type: 'repeatable-group',
 			uuid: groupUuid,
 		};

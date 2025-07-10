@@ -6,6 +6,10 @@
 import getUuid from './getUuid';
 import normalizeName from './normalizeName';
 
-export default function getRandomName() {
-	return normalizeName(`name${getUuid()}`, {limit: 30});
+export default function getRandomName({
+	capitalize,
+}: {capitalize?: boolean} = {}) {
+	const prefix = capitalize ? 'Name' : 'name';
+
+	return normalizeName(`${prefix}${getUuid()}`, {limit: 30});
 }

@@ -5,20 +5,15 @@
 
 package com.liferay.site.cms.site.initializer.internal.struts;
 
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFunction;
@@ -57,28 +52,20 @@ public class AddContentItemCommentStrutsAction implements StrutsAction {
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					ParamUtil.getLong(
-						httpServletRequest, "objectDefinitionId"));
-
-			ModelResourcePermission<ObjectEntry> modelResourcePermission =
-				_objectEntryService.getModelResourcePermission(
-					objectDefinition.getObjectDefinitionId());
-
+			ClassName className = _classNameLocalService.getClassName(
+				ParamUtil.getLong(httpServletRequest, "classNameId"));
 			long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 
-			modelResourcePermission.check(
-				themeDisplay.getPermissionChecker(), classPK,
-				ActionKeys.ADD_DISCUSSION);
+			_discussionPermission.checkAddPermission(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				className.getClassName(), classPK);
 
 			User user = themeDisplay.getUser();
 
 			Function<String, ServiceContext> serviceContextFunction =
 				new ServiceContextFunction(httpServletRequest);
 
-			ClassName className = _classNameLocalService.getClassName(
-				ParamUtil.getLong(httpServletRequest, "classNameId"));
 			String body = ParamUtil.getString(httpServletRequest, "body");
 			long parentCommentId = ParamUtil.getLong(
 				httpServletRequest, "parentCommentId");
@@ -132,12 +119,9 @@ public class AddContentItemCommentStrutsAction implements StrutsAction {
 	private CommentManager _commentManager;
 
 	@Reference
+	private DiscussionPermission _discussionPermission;
+
+	@Reference
 	private Language _language;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryService _objectEntryService;
 
 }

@@ -25,6 +25,7 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -204,6 +205,12 @@ public class RelationshipObjectFieldBusinessType
 				}
 
 				portalException1 = portalException2;
+
+				if (portalException1 instanceof NoSuchModelException) {
+					portalException1 =
+						new ObjectEntryValuesException.NoSuchRelatedObjectEntry(
+							objectField.getName());
+				}
 			}
 		}
 

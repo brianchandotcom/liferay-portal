@@ -9,6 +9,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
@@ -26,7 +27,7 @@ test(
 	'Can edit a folder',
 	{tag: '@LPD-42841'},
 	async ({apiHelpers, filesPage, page}) => {
-		const folderTitle = 'Test Folder';
+		const folderTitle = getRandomString();
 
 		const folderData =
 			await apiHelpers.objectFolder.createObjectEntryFolder({
@@ -44,7 +45,7 @@ test(
 				.locator('.dropdown-toggle'),
 		});
 
-		const newFolderTitle = 'Edited Folder';
+		const newFolderTitle = getRandomString();
 
 		await page.getByLabel('Name').fill(newFolderTitle);
 		await page.getByLabel('Description').fill('folder description');

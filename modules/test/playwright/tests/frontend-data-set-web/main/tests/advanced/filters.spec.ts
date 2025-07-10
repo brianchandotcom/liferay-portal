@@ -100,7 +100,7 @@ test(
 
 		await test.step('Check searching the available filters in filter dropdown', async () => {
 			await test.step('Open filter dropdown', async () => {
-				await fdsSamplePage.managementToolbar
+				await fdsSamplePage.managementToolbar.container
 					.getByRole('button', {name: 'Filter'})
 					.click();
 			});
@@ -162,7 +162,7 @@ test(
 			});
 
 			await test.step('Open filter dropdown', async () => {
-				await fdsSamplePage.managementToolbar
+				await fdsSamplePage.managementToolbar.container
 					.getByRole('button', {name: 'Filter'})
 					.click();
 			});
@@ -192,7 +192,7 @@ test(
 			});
 
 			await test.step('Select "Red" color in the filters dropdown', async () => {
-				await fdsSamplePage.managementToolbar
+				await fdsSamplePage.managementToolbar.container
 					.getByRole('button', {name: 'Filter'})
 					.click();
 
@@ -236,7 +236,7 @@ test(
 			});
 
 			await test.step('Check exclude switch for "Blue", "Green", "Yellow" colors', async () => {
-				await fdsSamplePage.managementToolbar
+				await fdsSamplePage.managementToolbar.container
 					.getByRole('button', {name: 'Filter'})
 					.click();
 

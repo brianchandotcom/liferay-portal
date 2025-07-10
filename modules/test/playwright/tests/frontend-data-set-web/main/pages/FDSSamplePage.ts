@@ -35,7 +35,10 @@ export class FDSSamplePage {
 		container: Locator;
 		items: Locator;
 	};
-	readonly managementToolbar: Locator;
+	readonly managementToolbar: {
+		container: Locator;
+		searchInput: Locator;
+	};
 	readonly page: Page;
 	readonly showViewOptionsButton: Locator;
 	readonly sidePanel: Locator;
@@ -100,7 +103,13 @@ export class FDSSamplePage {
 			items: listContainer.locator('.list-group-item'),
 		};
 
-		this.managementToolbar = page.getByTestId('managementToolbar');
+		this.managementToolbar = {
+			container: page.getByTestId('managementToolbar'),
+			searchInput: page
+				.getByTestId('managementToolbar')
+				.locator('input[type="search"]'),
+		};
+
 		this.page = page;
 		this.selectAllCheckbox = page.getByText('Select All');
 

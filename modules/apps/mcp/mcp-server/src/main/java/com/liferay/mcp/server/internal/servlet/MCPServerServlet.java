@@ -51,6 +51,8 @@ public class MCPServerServlet extends GenericServlet {
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
+		// TODO Validate token using oauth2 infra
+
 		if ((servletRequest instanceof HttpServletRequest httpServletRequest) &&
 			Validator.isNull(httpServletRequest.getHeader("Authorization")) &&
 			(servletResponse instanceof

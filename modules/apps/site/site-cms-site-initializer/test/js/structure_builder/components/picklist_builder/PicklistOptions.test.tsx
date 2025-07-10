@@ -15,6 +15,11 @@ import {
 	MockStateProvider,
 } from '../../mocks/MockPicklistStateProvider';
 
+jest.mock('frontend-js-web', () => ({
+	...((jest.requireActual('frontend-js-web') ?? {}) as any),
+	loadClientExtensions: () => Promise.resolve(),
+}));
+
 const renderComponent = (state?: Partial<PicklistContext.State>) => {
 	return render(
 		<MockStateProvider state={state}>

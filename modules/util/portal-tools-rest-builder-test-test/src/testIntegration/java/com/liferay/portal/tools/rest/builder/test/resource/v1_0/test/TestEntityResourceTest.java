@@ -248,6 +248,8 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 				"missing type id property 'type'"
 			));
 
+		// TODO Split after LPD-60141
+
 		_testPostTestEntityImportTask();
 	}
 

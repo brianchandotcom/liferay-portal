@@ -204,8 +204,123 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		assertValid(getChildTestEntity2);
 	}
 
+	@Override
 	@Test
-	public void testPostImportTask() throws Exception {
+	public void testPostReservedWord() throws Exception {
+		testEntityResource.postReservedWord(true);
+	}
+
+	@Override
+	@Test
+	public void testPostTestEntity() throws Exception {
+		super.testPostTestEntity();
+
+		String invalidTypeId = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"name", StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				"type", invalidTypeId
+			).toString(),
+			"test/v1.0/test-entities", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
+		Assert.assertTrue(
+			jsonObject.getString(
+				"title"
+			).contains(
+				"Could not resolve type id '" + invalidTypeId + "' as a subtype"
+			));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"name", StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).toString(),
+			"test/v1.0/test-entities", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
+		Assert.assertTrue(
+			jsonObject.getString(
+				"title"
+			).contains(
+				"missing type id property 'type'"
+			));
+
+		_testPostTestEntityImportTask();
+	}
+
+	@Ignore
+	@Test
+	public void testPostTestEntityMultipartBulk() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		super.testVulcanCRUDItemDelegateGetItem();
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"property1", "property2"};
+	}
+
+	@Override
+	protected TestEntity testDeleteTestEntity_addTestEntity() throws Exception {
+		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
+	}
+
+	@Override
+	protected TestEntity testGetTestEntitiesPage_addTestEntity(
+			TestEntity testEntity)
+		throws Exception {
+
+		return testEntityResource.postTestEntity(testEntity);
+	}
+
+	@Override
+	protected TestEntity testGetTestEntity_addTestEntity() throws Exception {
+		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
+	}
+
+	@Override
+	protected TestEntity testGraphQLTestEntity_addTestEntity()
+		throws Exception {
+
+		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
+	}
+
+	@Override
+	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
+		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
+	}
+
+	@Override
+	protected Long testPatchTestEntity_getOptionalParameter() {
+		return RandomTestUtil.nextLong();
+	}
+
+	@Override
+	protected TestEntity testPostTestEntity_addTestEntity(TestEntity testEntity)
+		throws Exception {
+
+		return testGetTestEntitiesPage_addTestEntity(testEntity);
+	}
+
+	@Override
+	protected TestEntity testPutTestEntity_addTestEntity() throws Exception {
+		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
+	}
+
+	@Override
+	protected Long testPutTestEntity_getOptionalParameter() {
+		return RandomTestUtil.nextLong();
+	}
+
+	private void _testPostTestEntityImportTask() throws Exception {
 		ChildTestEntity1 childTestEntity1 = new ChildTestEntity1();
 
 		childTestEntity1.setName(
@@ -304,120 +419,6 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 					"missing type id property 'type'"
 				));
 		}
-	}
-
-	@Override
-	@Test
-	public void testPostReservedWord() throws Exception {
-		testEntityResource.postReservedWord(true);
-	}
-
-	@Override
-	@Test
-	public void testPostTestEntity() throws Exception {
-		super.testPostTestEntity();
-
-		String invalidTypeId = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"name", StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).put(
-				"type", invalidTypeId
-			).toString(),
-			"test/v1.0/test-entities", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
-		Assert.assertTrue(
-			jsonObject.getString(
-				"title"
-			).contains(
-				"Could not resolve type id '" + invalidTypeId + "' as a subtype"
-			));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"name", StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).toString(),
-			"test/v1.0/test-entities", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
-		Assert.assertTrue(
-			jsonObject.getString(
-				"title"
-			).contains(
-				"missing type id property 'type'"
-			));
-	}
-
-	@Ignore
-	@Test
-	public void testPostTestEntityMultipartBulk() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		super.testVulcanCRUDItemDelegateGetItem();
-	}
-
-	@Override
-	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"property1", "property2"};
-	}
-
-	@Override
-	protected TestEntity testDeleteTestEntity_addTestEntity() throws Exception {
-		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
-	}
-
-	@Override
-	protected TestEntity testGetTestEntitiesPage_addTestEntity(
-			TestEntity testEntity)
-		throws Exception {
-
-		return testEntityResource.postTestEntity(testEntity);
-	}
-
-	@Override
-	protected TestEntity testGetTestEntity_addTestEntity() throws Exception {
-		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
-	}
-
-	@Override
-	protected TestEntity testGraphQLTestEntity_addTestEntity()
-		throws Exception {
-
-		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
-	}
-
-	@Override
-	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
-		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
-	}
-
-	@Override
-	protected Long testPatchTestEntity_getOptionalParameter() {
-		return RandomTestUtil.nextLong();
-	}
-
-	@Override
-	protected TestEntity testPostTestEntity_addTestEntity(TestEntity testEntity)
-		throws Exception {
-
-		return testGetTestEntitiesPage_addTestEntity(testEntity);
-	}
-
-	@Override
-	protected TestEntity testPutTestEntity_addTestEntity() throws Exception {
-		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
-	}
-
-	@Override
-	protected Long testPutTestEntity_getOptionalParameter() {
-		return RandomTestUtil.nextLong();
 	}
 
 }

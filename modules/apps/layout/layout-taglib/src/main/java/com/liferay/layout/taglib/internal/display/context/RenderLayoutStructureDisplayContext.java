@@ -128,11 +128,8 @@ public class RenderLayoutStructureDisplayContext {
 
 		StringBundler sb = new StringBundler(4);
 
-		JSONObject itemConfigJSONObject =
-			styledLayoutStructureItem.getItemConfigJSONObject();
-
-		JSONObject stylesJSONObject = itemConfigJSONObject.getJSONObject(
-			"styles");
+		JSONObject stylesJSONObject =
+			styledLayoutStructureItem.getStylesJSONObject();
 
 		String backgroundColorCssClass = stylesJSONObject.getString(
 			"backgroundColor");

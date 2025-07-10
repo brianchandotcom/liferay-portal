@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.action.executor;
 
+import com.liferay.object.action.executor.BaseObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.configuration.FunctionObjectActionExecutorImplConfiguration;
@@ -17,7 +18,6 @@ import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -39,7 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectActionExecutor.class
 )
 public class FunctionObjectActionExecutorImpl
-	implements CompanyScoped, ObjectActionExecutor, ObjectDefinitionScoped {
+	extends BaseObjectActionExecutor
+	implements CompanyScoped, ObjectDefinitionScoped {
 
 	@Override
 	public void execute(
@@ -48,7 +49,7 @@ public class FunctionObjectActionExecutorImpl
 			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
-		TransactionCommitCallbackUtil.registerCallback(
+		registerTransactionCommitCallback(
 			() -> {
 				_portalCatapult.launch(
 					_companyId, Http.Method.POST,

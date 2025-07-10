@@ -60,17 +60,6 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 
 		content = _formatSQLQuery(content);
 
-		while (true) {
-			String sortedTestCategories = _sortTestCategories(
-				content, StringPool.BLANK, StringPool.POUND + StringPool.POUND);
-
-			if (content.equals(sortedTestCategories)) {
-				break;
-			}
-
-			content = sortedTestCategories;
-		}
-
 		if (isAttributeValue(
 				_CHECK_TESTRAY_MAIN_COMPONENT_NAME_KEY, absolutePath)) {
 
@@ -644,72 +633,6 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 		return sqlClauses;
 	}
 
-	private String _sortTestCategories(
-		String content, String indent, String pounds) {
-
-		String indentWithPounds = indent + pounds;
-
-		CommentComparator comparator = new CommentComparator();
-
-		Pattern pattern = Pattern.compile(
-			StringBundler.concat(
-				"((?<=\\A|\n\n)", indentWithPounds, "\n", indentWithPounds,
-				"( .+)\n", indentWithPounds, "\n\n[\\s\\S]*?)(?=(\n\n",
-				indentWithPounds, "\n|\\Z))"));
-
-		Matcher matcher = pattern.matcher(content);
-
-		String previousProperties = null;
-		String previousPropertiesComment = null;
-		int previousPropertiesStartPosition = -1;
-
-		while (matcher.find()) {
-			String properties = matcher.group(1);
-			String propertiesComment = matcher.group(2);
-			int propertiesStartPosition = matcher.start();
-
-			if (pounds.length() == 2) {
-				String newProperties = _sortTestCategories(
-					properties, indent + StringPool.FOUR_SPACES,
-					StringPool.POUND);
-
-				if (!newProperties.equals(properties)) {
-					return StringUtil.replaceFirst(
-						content, properties, newProperties,
-						propertiesStartPosition);
-				}
-			}
-
-			if (Validator.isNull(previousProperties)) {
-				previousProperties = properties;
-				previousPropertiesComment = propertiesComment;
-				previousPropertiesStartPosition = propertiesStartPosition;
-
-				continue;
-			}
-
-			int value = comparator.compare(
-				previousPropertiesComment, propertiesComment);
-
-			if (value > 0) {
-				content = StringUtil.replaceFirst(
-					content, properties, previousProperties,
-					propertiesStartPosition);
-				content = StringUtil.replaceFirst(
-					content, previousProperties, properties,
-					previousPropertiesStartPosition);
-
-				return content;
-			}
-
-			previousProperties = properties;
-			previousPropertiesComment = propertiesComment;
-			previousPropertiesStartPosition = propertiesStartPosition;
-		}
-
-		return content;
-	}
-
 	private static final String _CHECK_TESTRAY_MAIN_COMPONENT_NAME_KEY =
 		"checkTestrayMainComponentName";
 
@@ -721,22 +644,5 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 
 	private String _rootTestPropertiesContent;
 	private List<String> _testrayAllTeamsComponentNames;
-
-	private class CommentComparator extends NaturalOrderStringComparator {
-
-		@Override
-		public int compare(String comment1, String comment2) {
-			if (comment1.equals(" Default") || comment2.equals(" Others")) {
-				return -1;
-			}
-
-			if (comment2.equals(" Default") || comment1.equals(" Others")) {
-				return 1;
-			}
-
-			return super.compare(comment1, comment2);
-		}
-
-	}
 
 }

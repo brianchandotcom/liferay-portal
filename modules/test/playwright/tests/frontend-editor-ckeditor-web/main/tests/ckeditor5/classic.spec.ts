@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {waitForEditor} from '../../../../../utils/waitFor';
 import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
 import {classicPageTest} from './fixtures/classicPageTest';
 
@@ -24,7 +25,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.beforeEach(async ({ckeditorSamplePage, site}) => {
+test.beforeEach(async ({ckeditorSamplePage, page, site}) => {
 	await ckeditorSamplePage.createAndGotoSitePage({site});
 
 	const productMenuToggle =
@@ -36,56 +37,65 @@ test.beforeEach(async ({ckeditorSamplePage, site}) => {
 
 	await ckeditorSamplePage.selectTab('CKEditor 5');
 	await ckeditorSamplePage.selectTab('Classic');
+
+	await waitForEditor({page});
 });
 
 test(
-	'Toolbar contains all advanced preset controls',
+	'Editor configuration is applied',
 	{tag: '@LPD-11235'},
-	async ({classicPage}) => {
-		await expect(
-			classicPage.editable.getByText('Lorem ipsum dolor sit amet')
-		).toBeVisible();
+	async ({classicPage, page}) => {
+		await test.step('Initial data is set', async () => {
+			await expect(
+				page.getByText('Lorem ipsum dolor sit amet')
+			).toBeVisible();
+		});
 
-		await expect(
-			classicPage.page.locator(
-				'p[data-placeholder="This placeholder is set from EditorConfigContributor."]'
-			)
-		).toBeAttached();
+		await test.step('Placeholder is set', async () => {
+			await expect(
+				page.locator(
+					'p[data-placeholder="This placeholder is set from EditorConfigContributor."]'
+				)
+			).toBeAttached();
+		});
 
-		await expect(classicPage.toolbar).toBeVisible();
+		await test.step('Toolbar contains advanced preset controls', async () => {
+			const advancedPresetControls = [
+				'Undo',
+				'Redo',
+				'Styles',
+				'Normal',
+				'Bold',
+				'Italic',
+				'Strikethrough',
+				'Font Color',
+				'Font Background Color',
+				'Remove Format',
+				'Numbered List',
+				'Bulleted List',
+				'Increase indent',
+				'Decrease indent',
+				'Block quote',
+				'Link',
+				'Insert table',
+				'Image',
+				'Video',
+				'Horizontal line',
+				'Text alignment',
+				'Source',
+			];
 
-		const advancedPresetControls = [
-			'Undo',
-			'Redo',
-			'Styles',
-			'Normal',
-			'Bold',
-			'Italic',
-			'Underline',
-			'Strikethrough',
-			'Font Color',
-			'Font Background Color',
-			'Remove Format',
-			'Numbered List',
-			'Bulleted List',
-			'Increase indent',
-			'Decrease indent',
-			'Block quote',
-			'Link',
-			'Insert table',
-			'Image',
-			'Video',
-			'Horizontal line',
-			'Text alignment',
-			'Source',
-		];
+			const controls =
+				await classicPage.toolbar.buttonLabels.allInnerTexts();
 
-		const controls = await classicPage.toolbar
-			.getByRole('button')
-			.locator('.ck-button__label')
-			.allInnerTexts();
+			expect(controls).toEqual(advancedPresetControls);
+		});
 
-		expect(controls).toEqual(advancedPresetControls);
+		await test.step('Toolbar does not contain removed plugin', async () => {
+			await expect(
+				classicPage.toolbar.buttonLabels.getByLabel('Underline')
+			).toBeHidden();
+		});
 	}
 );
 
@@ -93,7 +103,9 @@ test(
 	'Select image from document library',
 	{tag: '@LPD-11235'},
 	async ({classicPage}) => {
-		await classicPage.toolbar.getByRole('button', {name: 'Image'}).click();
+		await classicPage.toolbar.container
+			.getByRole('button', {name: 'Image'})
+			.click();
 
 		const itemSelectorFrame = classicPage.itemSelectorFrame;
 
@@ -122,9 +134,7 @@ test(
 			.click();
 
 		await expect(
-			classicPage.editable.locator(
-				'img[src="/documents/d/guest/moon-png"]'
-			)
+			classicPage.editable.locator('img[src*="moon-png"]')
 		).toBeVisible();
 	}
 );
@@ -133,7 +143,9 @@ test(
 	'Select video by modal URL input',
 	{tag: '@LPD-11235'},
 	async ({classicPage}) => {
-		await classicPage.toolbar.getByRole('button', {name: 'Video'}).click();
+		await classicPage.toolbar.container
+			.getByRole('button', {name: 'Video'})
+			.click();
 
 		const itemSelectorFrame = classicPage.itemSelectorFrame;
 
@@ -166,13 +178,13 @@ test(
 	'Opening source editing disables all custom controls',
 	{tag: '@LPD-11235'},
 	async ({classicPage}) => {
-		const imageButton = classicPage.toolbar.getByRole('button', {
+		const imageButton = classicPage.toolbar.container.getByRole('button', {
 			name: 'Image',
 		});
-		const sourceButton = classicPage.toolbar.getByRole('button', {
+		const sourceButton = classicPage.toolbar.container.getByRole('button', {
 			name: 'Source',
 		});
-		const videoButton = classicPage.toolbar.getByRole('button', {
+		const videoButton = classicPage.toolbar.container.getByRole('button', {
 			name: 'Video',
 		});
 

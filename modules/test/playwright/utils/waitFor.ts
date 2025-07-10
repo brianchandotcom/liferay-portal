@@ -3,7 +3,36 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
+
+export enum EEditorType {
+	CKEDITOR4 = 'ckeditor4',
+	CKEDITOR5 = 'ckeditor5',
+}
+
+export async function waitForEditor({
+	container: containerProp,
+	editorType = EEditorType.CKEDITOR5,
+	page,
+}: {
+	container?: Locator;
+	editorType?: EEditorType;
+	page: Page;
+}) {
+	if (editorType === EEditorType.CKEDITOR5) {
+		const container = containerProp ?? page.locator('.lfr-ck');
+
+		await container.locator('.ck-content').waitFor({state: 'visible'});
+	}
+	else {
+		const container = containerProp ?? page.locator('.cke');
+
+		await container
+			.frameLocator('iframe')
+			.locator('.cke_editable')
+			.waitFor({state: 'visible'});
+	}
+}
 
 export enum EFDSVisualizationMode {
 	CARDS = 'cards',

@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
+import {waitForEditor} from '../../../../../utils/waitFor';
 import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
 import {inputLocalizedPageTest} from './fixtures/inputLocalizedPageTest';
 
@@ -25,11 +26,13 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.beforeEach(async ({ckeditorSamplePage, site}) => {
+test.beforeEach(async ({ckeditorSamplePage, page, site}) => {
 	await ckeditorSamplePage.createAndGotoSitePage({site});
 
 	await ckeditorSamplePage.selectTab('CKEditor 5');
 	await ckeditorSamplePage.selectTab('Input Localized');
+
+	await waitForEditor({page});
 });
 
 test(

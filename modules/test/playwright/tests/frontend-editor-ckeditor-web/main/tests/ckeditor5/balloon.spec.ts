@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {waitForEditor} from '../../../../../utils/waitFor';
 import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
 import {balloonPageTest} from './fixtures/balloonPageTest';
 
@@ -24,7 +25,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.beforeEach(async ({ckeditorSamplePage, site}) => {
+test.beforeEach(async ({ckeditorSamplePage, page, site}) => {
 	await ckeditorSamplePage.createAndGotoSitePage({site});
 
 	const productMenuToggle =
@@ -36,6 +37,8 @@ test.beforeEach(async ({ckeditorSamplePage, site}) => {
 
 	await ckeditorSamplePage.selectTab('CKEditor 5');
 	await ckeditorSamplePage.selectTab('Balloon');
+
+	await waitForEditor({page});
 });
 
 test(

@@ -7,10 +7,10 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -50,12 +50,18 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 	protected Map<String, Object> getProps(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
-		
-		ThemeDisplay themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		
-		JSONArray companyAvailableLanguagesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getScopeGroupId())) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		JSONArray companyAvailableLanguagesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (Locale availableLocale :
+				LanguageUtil.getAvailableLocales(
+					themeDisplay.getScopeGroupId())) {
+
 			companyAvailableLanguagesJSONArray.put(
 				JSONUtil.put(
 					"label",
@@ -66,9 +72,9 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"companyAvailableLanguages", companyAvailableLanguagesJSONArray
-		).put(
 			"backURL", ParamUtil.getString(httpServletRequest, "redirect")
+		).put(
+			"companyAvailableLanguages", companyAvailableLanguagesJSONArray
 		).put(
 			"depotEntryId", InfoItemUtil.getDepotEntryId(httpServletRequest)
 		).put(

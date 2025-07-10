@@ -33,10 +33,10 @@ jest.mock(
 );
 
 const COMPANY_AVAILABLE_LANGUAGES: LabelValueObject[] = [
-	{'label': 'English (United States)', 'value': 'en_US'},
-	{'label': 'French (France)', 'value': 'fr_FR'},
-	{'label': 'German (Germany)', 'value': 'de_DE'},
-	{'label': 'Japanese (Japan)', 'value': 'ja_JP'},
+	{label: 'English (United States)', value: 'en_US'},
+	{label: 'French (France)', value: 'fr_FR'},
+	{label: 'German (Germany)', value: 'de_DE'},
+	{label: 'Japanese (Japan)', value: 'ja_JP'},
 ];
 
 const mockProps = {
@@ -70,9 +70,7 @@ const closeToast = async () => {
 };
 
 const renderComponent = (props: any = mockProps) => {
-	return render(
-		<SpaceLanguageSettings {...props} />
-	);
+	return render(<SpaceLanguageSettings {...props} />);
 };
 
 describe('SpaceLanguageSettings', () => {
@@ -127,20 +125,17 @@ describe('SpaceLanguageSettings', () => {
 
 		await waitFor(() => {
 			const {
-				space: {
-					externalReferenceCode,
-					settings
-				}
+				space: {externalReferenceCode, settings},
 			} = mockProps;
 
 			expect(SpaceService.updateSpace).toBeCalledWith(
 				externalReferenceCode,
 				{
-                    externalReferenceCode,
+					externalReferenceCode,
 					settings: {
 						...settings,
 						useCustomLanguages: true,
-					}
+					},
 				}
 			);
 
@@ -209,13 +204,17 @@ describe('SpaceLanguageSettings', () => {
 			expect(defaultLanguageSelectionBox).toBeInTheDocument();
 			expect(defaultLanguageSelectionBox).toHaveValue('en_US');
 
-			const availableLanguages = screen.getByRole('listbox', {
-				name: 'available',
-			}).querySelectorAll('option');
+			const availableLanguages = screen
+				.getByRole('listbox', {
+					name: 'available',
+				})
+				.querySelectorAll('option');
 
-			const selectedLanguages = screen.getByRole('listbox', {
-				name: 'selected',
-			}).querySelectorAll('option');
+			const selectedLanguages = screen
+				.getByRole('listbox', {
+					name: 'selected',
+				})
+				.querySelectorAll('option');
 
 			expect(availableLanguages.length).toBe(2);
 			expect(selectedLanguages.length).toBe(2);
@@ -238,10 +237,12 @@ describe('SpaceLanguageSettings', () => {
 
 			await userEvent.selectOptions(availableLanguagesSelect, ['de_DE']);
 			await userEvent.click(ltrButton);
-	
-			const availableLanguages = availableLanguagesSelect.querySelectorAll('option');
-			const selectedLanguages = selectedLanguagesSelect.querySelectorAll('option');
-	
+
+			const availableLanguages =
+				availableLanguagesSelect.querySelectorAll('option');
+			const selectedLanguages =
+				selectedLanguagesSelect.querySelectorAll('option');
+
 			expect(availableLanguages.length).toBe(1);
 			expect(selectedLanguages.length).toBe(3);
 		});
@@ -261,12 +262,17 @@ describe('SpaceLanguageSettings', () => {
 				name: 'Transfer Item Left to Right',
 			});
 
-			await userEvent.selectOptions(availableLanguagesSelect, ['de_DE', 'ja_JP']);
+			await userEvent.selectOptions(availableLanguagesSelect, [
+				'de_DE',
+				'ja_JP',
+			]);
 			await userEvent.click(ltrButton);
-	
-			const availableLanguages = availableLanguagesSelect.querySelectorAll('option');
-			const selectedLanguages = selectedLanguagesSelect.querySelectorAll('option');
-	
+
+			const availableLanguages =
+				availableLanguagesSelect.querySelectorAll('option');
+			const selectedLanguages =
+				selectedLanguagesSelect.querySelectorAll('option');
+
 			expect(availableLanguages.length).toBe(0);
 			expect(selectedLanguages.length).toBe(4);
 			expect(ltrButton).toBeDisabled();
@@ -289,10 +295,12 @@ describe('SpaceLanguageSettings', () => {
 
 			await userEvent.selectOptions(selectedLanguagesSelect, ['fr_FR']);
 			await userEvent.click(rtlButton);
-	
-			const availableLanguages = availableLanguagesSelect.querySelectorAll('option');
-			const selectedLanguages = selectedLanguagesSelect.querySelectorAll('option');
-	
+
+			const availableLanguages =
+				availableLanguagesSelect.querySelectorAll('option');
+			const selectedLanguages =
+				selectedLanguagesSelect.querySelectorAll('option');
+
 			expect(availableLanguages.length).toBe(3);
 			expect(selectedLanguages.length).toBe(1);
 			expect(rtlButton).toBeDisabled();
@@ -315,14 +323,18 @@ describe('SpaceLanguageSettings', () => {
 
 			await userEvent.selectOptions(selectedLanguagesSelect, ['en_US']);
 			await userEvent.click(rtlButton);
-	
-			const availableLanguages = availableLanguagesSelect.querySelectorAll('option');
-			const selectedLanguages = selectedLanguagesSelect.querySelectorAll('option');
-	
+
+			const availableLanguages =
+				availableLanguagesSelect.querySelectorAll('option');
+			const selectedLanguages =
+				selectedLanguagesSelect.querySelectorAll('option');
+
 			expect(availableLanguages.length).toBe(2);
 			expect(selectedLanguages.length).toBe(2);
 			expect(
-				screen.getByText('you-cannot-remove-a-language-that-is-the-current-default-language')
+				screen.getByText(
+					'you-cannot-remove-a-language-that-is-the-current-default-language'
+				)
 			).toBeInTheDocument();
 		});
 	});

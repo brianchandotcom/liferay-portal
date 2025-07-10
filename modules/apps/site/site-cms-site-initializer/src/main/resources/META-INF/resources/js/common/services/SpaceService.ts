@@ -190,7 +190,7 @@ async function unlinkUserGroupFromSpace({
 async function updateSpace(externalReferenceCode: string, body: any) {
 	return await ApiHelper.patch(
 		body,
-		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`,
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`
 	);
 }
 

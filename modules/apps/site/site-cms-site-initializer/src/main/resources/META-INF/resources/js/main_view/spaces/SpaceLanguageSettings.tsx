@@ -5,17 +5,22 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayDualListBox, ClayRadio, ClayRadioGroup, ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {
+	ClayDualListBox,
+	ClayRadio,
+	ClayRadioGroup,
+	ClaySelectWithOption,
+} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
-import { useFormik } from 'formik';
-import { openToast } from 'frontend-js-components-web';
-import { navigate } from 'frontend-js-web';
+import {useFormik} from 'formik';
+import {openToast} from 'frontend-js-components-web';
+import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
-import SpacePanel from './SpacePanel';
 import SpaceService from '../../common/services/SpaceService';
 import {LabelValueObject, Space} from '../../common/types/Space';
+import SpacePanel from './SpacePanel';
 
 export default function SpaceLanguageSettings({
 	companyAvailableLanguages,
@@ -26,7 +31,10 @@ export default function SpaceLanguageSettings({
 	setSpace?: React.Dispatch<React.SetStateAction<any>>;
 	space: Space;
 }) {
-	const [showRemoveDefaultLanguageWarning, setShowRemoveDefaultLanguageWarning] = useState<boolean>(false);
+	const [
+		showRemoveDefaultLanguageWarning,
+		setShowRemoveDefaultLanguageWarning,
+	] = useState<boolean>(false);
 
 	const {
 		handleChange,
@@ -38,20 +46,31 @@ export default function SpaceLanguageSettings({
 		values,
 	} = useFormik({
 		initialValues: {
-			availableLanguages: companyAvailableLanguages.filter(availableLanguage =>
-				!space.settings?.availableLanguageIds?.includes(availableLanguage.value)
-			) || [],
-			selectedLanguages: companyAvailableLanguages.filter(availableLanguage =>
-				space.settings?.availableLanguageIds?.includes(availableLanguage.value)
-			) || [],
+			availableLanguages:
+				companyAvailableLanguages.filter(
+					(availableLanguage) =>
+						!space.settings?.availableLanguageIds?.includes(
+							availableLanguage.value
+						)
+				) || [],
+			selectedLanguages:
+				companyAvailableLanguages.filter((availableLanguage) =>
+					space.settings?.availableLanguageIds?.includes(
+						availableLanguage.value
+					)
+				) || [],
 			availableLanguageIds: space.settings?.availableLanguageIds ?? [],
 			defaultLanguageId: space.settings?.defaultLanguageId ?? '',
 			useCustomLanguages: !!space.settings?.useCustomLanguages,
 		},
 		onSubmit: async (values) => {
-			const {availableLanguageIds, defaultLanguageId, useCustomLanguages} = values;
+			const {
+				availableLanguageIds,
+				defaultLanguageId,
+				useCustomLanguages,
+			} = values;
 
-			const { data, error } = await SpaceService.updateSpace(
+			const {data, error} = await SpaceService.updateSpace(
 				space.externalReferenceCode,
 				{
 					externalReferenceCode: space.externalReferenceCode,
@@ -59,7 +78,7 @@ export default function SpaceLanguageSettings({
 						availableLanguageIds,
 						defaultLanguageId,
 						useCustomLanguages,
-					}
+					},
 				}
 			);
 
@@ -126,7 +145,11 @@ export default function SpaceLanguageSettings({
 			onSubmit={handleSubmit}
 		>
 			<SpacePanel title={Liferay.Language.get('languages')}>
-				<p>{Liferay.Language.get('select-the-language-configuration-for-the-space')}</p>
+				<p>
+					{Liferay.Language.get(
+						'select-the-language-configuration-for-the-space'
+					)}
+				</p>
 
 				<ClayForm.Group>
 					<ClayRadioGroup
@@ -137,7 +160,10 @@ export default function SpaceLanguageSettings({
 								resetForm();
 							}
 
-							setFieldValue('useCustomLanguages', JSON.parse(value))
+							setFieldValue(
+								'useCustomLanguages',
+								JSON.parse(value)
+							);
 						}}
 					>
 						<ClayRadio
@@ -156,23 +182,29 @@ export default function SpaceLanguageSettings({
 					</ClayRadioGroup>
 				</ClayForm.Group>
 
-				{values.useCustomLanguages &&
+				{values.useCustomLanguages && (
 					<ClayPanel
-						aria-label={Liferay.Language.get('custom-default-language')}
+						aria-label={Liferay.Language.get(
+							'custom-default-language'
+						)}
 						collapsable
 						defaultExpanded={true}
-						displayTitle={Liferay.Language.get('custom-default-language')}
+						displayTitle={Liferay.Language.get(
+							'custom-default-language'
+						)}
 						displayType="default"
 						role="group"
 						showCollapseIcon
 					>
 						<ClayPanel.Body>
-							{showRemoveDefaultLanguageWarning && 
+							{showRemoveDefaultLanguageWarning && (
 								<ClayAlert
 									autoClose
 									displayType="danger"
 									onClose={() => {
-										setShowRemoveDefaultLanguageWarning(false);
+										setShowRemoveDefaultLanguageWarning(
+											false
+										);
 									}}
 									title={Liferay.Language.get('error')}
 								>
@@ -180,14 +212,16 @@ export default function SpaceLanguageSettings({
 										'you-cannot-remove-a-language-that-is-the-current-default-language'
 									)}
 								</ClayAlert>
-							}
+							)}
 
 							<ClayForm.Group>
 								<label
-									htmlFor="defaultLanguageId"
 									className="sr-only"
+									htmlFor="defaultLanguageId"
 								>
-									{Liferay.Language.get('custom-default-language')}
+									{Liferay.Language.get(
+										'custom-default-language'
+									)}
 								</label>
 
 								<ClaySelectWithOption
@@ -199,14 +233,25 @@ export default function SpaceLanguageSettings({
 								/>
 							</ClayForm.Group>
 
-							<CustomLanguagesSelector defaultLanguageId={values.defaultLanguageId}>
+							<CustomLanguagesSelector
+								defaultLanguageId={values.defaultLanguageId}
+							>
 								<ClayDualListBox
-									disableLTR={!values.availableLanguages.length}
-									disableRTL={values.selectedLanguages.length === 1}
-									items={[values.availableLanguages, values.selectedLanguages]}
+									disableLTR={
+										!values.availableLanguages.length
+									}
+									disableRTL={
+										values.selectedLanguages.length === 1
+									}
+									items={[
+										values.availableLanguages,
+										values.selectedLanguages,
+									]}
 									left={{
 										id: 'availableLanguages',
-										label: Liferay.Language.get('available'),
+										label: Liferay.Language.get(
+											'available'
+										),
 									}}
 									onItemsChange={handleItemsChange}
 									right={{
@@ -218,7 +263,7 @@ export default function SpaceLanguageSettings({
 							</CustomLanguagesSelector>
 						</ClayPanel.Body>
 					</ClayPanel>
-				}
+				)}
 			</SpacePanel>
 
 			<ClayButton.Group className="mt-2" spaced>
@@ -234,8 +279,8 @@ export default function SpaceLanguageSettings({
 	);
 }
 
-const CustomLanguagesSelector = styled.div<{ defaultLanguageId: string; }>`
-	option[value='${props => props.defaultLanguageId}']::after {
+const CustomLanguagesSelector = styled.div<{defaultLanguageId: string}>`
+	option[value='${(props) => props.defaultLanguageId}']::after {
 		background-color: #fff;
 		border: 0.0625rem solid #89a7e0;
 		border-radius: 0.125rem;

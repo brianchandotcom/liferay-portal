@@ -21,8 +21,8 @@ interface SpaceSettingsProps {
 }
 
 export default function SpaceSettings({
-	companyAvailableLanguages,
 	backURL,
+	companyAvailableLanguages,
 	depotEntryId,
 	groupId,
 }: SpaceSettingsProps) {
@@ -40,16 +40,24 @@ export default function SpaceSettings({
 
 	const verticalNavItems = [
 		{
-			component: <SpaceGeneralSettings groupId={groupId} setSpace={setSpace} space={space} />,
+			component: (
+				<SpaceGeneralSettings
+					groupId={groupId}
+					setSpace={setSpace}
+					space={space}
+				/>
+			),
 			id: 'general',
 			label: Liferay.Language.get('general'),
 		},
 		{
-			component: <SpaceLanguageSettings
-				companyAvailableLanguages={companyAvailableLanguages}
-				setSpace={setSpace}
-				space={space}
-			/>,
+			component: (
+				<SpaceLanguageSettings
+					companyAvailableLanguages={companyAvailableLanguages}
+					setSpace={setSpace}
+					space={space}
+				/>
+			),
 			id: 'languages',
 			label: Liferay.Language.get('languages'),
 		},

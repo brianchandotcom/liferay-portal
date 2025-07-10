@@ -788,9 +788,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 					getLayoutSetPrototypeByUuidAndCompanyId(
 						layoutSet.getLayoutSetPrototypeUuid(), getCompanyId());
 
-			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				getSourcePrototypeLayoutUuid(), layoutSetPrototype.getGroupId(),
-				true);
+			return LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+				getLayoutSetPrototypeLayoutERC(),
+				layoutSetPrototype.getGroupId());
 		}
 		catch (Exception exception) {
 			_log.error(

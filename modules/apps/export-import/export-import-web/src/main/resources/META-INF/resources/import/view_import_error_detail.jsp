@@ -7,6 +7,13 @@
 
 <%@ include file="/import/init.jsp" %>
 
+<%
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
+renderResponse.setTitle(LanguageUtil.get(request, "error-details"));
+%>
+
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
 	<react:component
 		module="{ViewImportErrorDetail} from exportimport-web"

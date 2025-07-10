@@ -5924,8 +5924,6 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectDefinition.setEnableObjectEntryVersioning(true);
 
-		_objectDefinition.isEnableObjectEntryVersioning();
-
 		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
 
 		values = HashMapBuilder.<String, Serializable>put(

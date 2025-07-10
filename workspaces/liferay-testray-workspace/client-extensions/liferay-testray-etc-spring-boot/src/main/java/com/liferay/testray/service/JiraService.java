@@ -246,15 +246,13 @@ public class JiraService extends BaseService {
 							jsonObject, "fields", "issuetype", "name")),
 					" ")
 			).put(
-				"r_jiraProjectToJiraIssue_c_jiraProjectERC",
-				_getNestedKey(jsonObject, "fields", "project", "key")
-			).put(
-				"title", _getNestedKey(jsonObject, "fields", "summary")
-			).put(
 				"r_epic_c_jiraIssueERC", map.get("r_epic_c_jiraIssueERC")
 			).put(
 				"r_initiative_c_jiraIssueERC",
 				map.get("r_initiative_c_jiraIssueERC")
+			).put(
+				"r_jiraProjectToJiraIssue_c_jiraProjectERC",
+				_getNestedKey(jsonObject, "fields", "project", "key")
 			).put(
 				"r_parentIssue_c_jiraIssueERC",
 				map.get("r_parentIssue_c_jiraIssueERC")
@@ -262,6 +260,8 @@ public class JiraService extends BaseService {
 				"r_story_c_jiraIssueERC", map.get("r_story_c_jiraIssueERC")
 			).put(
 				"r_task_c_jiraIssueERC", map.get("r_task_c_jiraIssueERC")
+			).put(
+				"title", _getNestedKey(jsonObject, "fields", "summary")
 			).toString(),
 			UriComponentsBuilder.fromPath(
 				"/o/c/jiraissues/by-external-reference-code/{issueKey}"

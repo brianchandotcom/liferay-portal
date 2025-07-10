@@ -113,6 +113,16 @@ public class JUnitTestClass extends BaseTestClass {
 		return jsonObject;
 	}
 
+	@Override
+	public long getSharedWeight() {
+		return getAverageTestTaskDuration();
+	}
+
+	@Override
+	public String getSharedWeightName() {
+		return getTestTaskName();
+	}
+
 	public String getTestClassName() {
 		return JenkinsResultsParserUtil.combine(
 			_getPackageName(), ".", _getClassName());

@@ -1265,6 +1265,11 @@ public class LayoutWrapper
 		return model.getScopeGroup();
 	}
 
+	@Override
+	public String getSourcePrototypeLayoutUuid() {
+		return model.getSourcePrototypeLayoutUuid();
+	}
+
 	/**
 	 * Returns the status of this layout.
 	 *

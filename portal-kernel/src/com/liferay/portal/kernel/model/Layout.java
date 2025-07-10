@@ -264,6 +264,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public Group getScopeGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public String getSourcePrototypeLayoutUuid();
+
 	public String getTarget();
 
 	/**

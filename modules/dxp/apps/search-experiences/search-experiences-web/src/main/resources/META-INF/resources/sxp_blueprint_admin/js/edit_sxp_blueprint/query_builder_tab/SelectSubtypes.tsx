@@ -13,6 +13,7 @@ import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
+import {Observer} from '@clayui/modal/lib/types';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -58,13 +59,16 @@ export function SearchableSubtypesModal({
 	selectedSubtypes,
 }: {
 	className: string;
-	observer: any;
+	observer: Observer;
 	onClose: () => void;
 	onDone: (selected: ISelectedSubtype[]) => void;
 	selectedSubtypes: ISelectedSubtype[];
 }) {
 	const [selected, setSelected] = useState(selectedSubtypes);
-	const [subtypes, setSubtypes] = useState({
+	const [subtypes, setSubtypes] = useState<{
+		assetSubtypes: IAssetSubtype[];
+		totalCount: number;
+	}>({
 		assetSubtypes: [],
 		totalCount: 0,
 	});
@@ -161,27 +165,28 @@ export function SearchableSubtypesModal({
 					)
 				)
 					.then((response) => response.json())
-					.then((items) => {
-						setSubtypes({
-							...items,
-							assetSubtypes: items.assetSubtypes?.map(
-								(subtype: {
-									assetSubtypeExternalReferenceCode: string;
-									assetSubtypeLocalizedName: string;
-									entryClassName: string;
-									groupExternalReferenceCode: string;
-									groupLocalizedName?: string;
-								}) => ({
-									...subtype,
-									label: subtype.groupLocalizedName
-										? `${subtype.assetSubtypeLocalizedName} (${subtype.groupLocalizedName})`
-										: subtype.assetSubtypeLocalizedName,
-									value: `${subtype.entryClassName}&&${subtype.groupExternalReferenceCode}&&${subtype.assetSubtypeExternalReferenceCode}`,
-								})
-							),
-						});
-						setError(false);
-					})
+					.then(
+						(items: {
+							assetSubtypes: Omit<
+								IAssetSubtype,
+								'label' | 'value'
+							>[];
+							totalCount: number;
+						}) => {
+							setSubtypes({
+								...items,
+								assetSubtypes:
+									items.assetSubtypes?.map((subtype) => ({
+										...subtype,
+										label: subtype.groupLocalizedName
+											? `${subtype.assetSubtypeLocalizedName} (${subtype.groupLocalizedName})`
+											: subtype.assetSubtypeLocalizedName,
+										value: `${subtype.entryClassName}&&${subtype.groupExternalReferenceCode}&&${subtype.assetSubtypeExternalReferenceCode}`,
+									})) || [],
+							});
+							setError(false);
+						}
+					)
 					.catch(() => {
 						setTimeout(() => {
 							setError(true);
@@ -518,44 +523,40 @@ function SelectSubtypes({
 
 			{!!selectedSubtypes.length && (
 				<ClayList.ItemText className="c-mt-2">
-					{selectedSubtypes.map(
-						({label, value}: ISelectedSubtype) => (
-							<ClayLabel
-								closeButtonProps={{
-									'aria-label': Liferay.Language.get('close'),
-									'id': `close-${value}`,
-									'onClick': () => onRemoveSubtype(value),
-									'title': Liferay.Language.get('close'),
-								}}
-								displayType="secondary"
-								key={value}
-								large
-							>
-								{isMissing({label, value}) ? (
-									<span>
-										{label}
+					{selectedSubtypes.map(({label, value}) => (
+						<ClayLabel
+							closeButtonProps={{
+								'aria-label': Liferay.Language.get('close'),
+								'id': `close-${value}`,
+								'onClick': () => onRemoveSubtype(value),
+								'title': Liferay.Language.get('close'),
+							}}
+							displayType="secondary"
+							key={value}
+							large
+						>
+							{isMissing({label, value}) ? (
+								<span>
+									{label}
 
-										<span className="inline-item inline-item-after">
-											<ClaySticker
-												displayType="warning"
-												size="sm"
-											>
-												<ClayIcon symbol="warning-full" />
-											</ClaySticker>
+									<span className="inline-item inline-item-after">
+										<ClaySticker
+											displayType="warning"
+											size="sm"
+										>
+											<ClayIcon symbol="warning-full" />
+										</ClaySticker>
 
-											<strong className="c-ml-1 text-2 text-warning">
-												{Liferay.Language.get(
-													'missing'
-												)}
-											</strong>
-										</span>
+										<strong className="c-ml-1 text-2 text-warning">
+											{Liferay.Language.get('missing')}
+										</strong>
 									</span>
-								) : (
-									label
-								)}
-							</ClayLabel>
-						)
-					)}
+								</span>
+							) : (
+								label
+							)}
+						</ClayLabel>
+					))}
 				</ClayList.ItemText>
 			)}
 		</>

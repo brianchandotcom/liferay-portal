@@ -35,8 +35,6 @@ interface ISelectedItem {
 /**
  * Checks whether the subtype is missing. Since missing subtypes resort to
  * using the value for its view, label and value would be the same.
- * @param subtype
- * @returns boolean
  */
 export function isMissing(subtype: ISelectedSubtype) {
 	return subtype.label === subtype.value;
@@ -56,10 +54,6 @@ const getSelectedSubtypes = (
  * Turns a flat list of types and subtypes into a nested array of the types
  * with its subtypes as children. This is called when setting up the 'selected'
  * state and allows for easier manipulation of the data.
- *
- * @param {*} initialSelectedTypes
- * @param {*} assetSubtypesMap
- * @returns {array}
  */
 const setupSelected = (
 	initialSelectedTypes: string[],
@@ -110,9 +104,6 @@ const setupSelected = (
 /**
  * Transforms the selected types and subtypes into a flat array that
  * the backend expects for submission.
- *
- * @param {*} selected
- * @returns {array}
  */
 const transformSelected = (selected: ISelectedItem[]): string[] => {
 	const searchableAssetTypes: string[] = [];

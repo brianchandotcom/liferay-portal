@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -36,20 +37,40 @@ test(
 		const name1 = `Tag${getRandomInt()}`;
 		const name2 = `Tag${getRandomInt()}`;
 
-		await tagsPage.newTagButton.click();
+		await clickAndExpectToBeVisible({
+			target: page.locator('.modal-title', {
+				hasText: 'New Tag',
+			}),
+			timeout: 2000,
+			trigger: tagsPage.newTagButton,
+		});
 
 		await page.getByLabel('NameRequired').fill(name1);
 
-		await tagsPage.saveAndAddAnotherButton.click();
+		await expect(async () => {
+			await tagsPage.saveAndAddAnotherButton.click({timeout: 1000});
+
+			await expect(page.getByLabel('NameRequired')).toBeEmpty({
+				timeout: 1000,
+			});
+		}).toPass();
 
 		await page.getByLabel('NameRequired').fill(name2);
 
-		await tagsPage.saveButton.click();
+		await clickAndExpectToBeHidden({
+			target: page.locator('.modal-title', {
+				hasText: 'New Tag',
+			}),
+			timeout: 2000,
+			trigger: tagsPage.saveButton,
+		});
 
 		const tag1 = tagsPage.getItem(name1);
+
 		await expect(tag1).toBeVisible();
 
 		const tag2 = tagsPage.getItem(name2);
+
 		await expect(tag2).toBeVisible();
 	}
 );
@@ -165,6 +186,7 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 			.locator('tbody tr')
 			.filter({hasText: tagName1})
 	).toBeVisible();
+
 	await expect(
 		page
 			.locator('.fds table')
@@ -198,7 +220,7 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 	await expect(tag1).toBeVisible();
 	await expect(tag2).toBeVisible();
 
-	page.reload();
+	await page.reload();
 
 	await tagsPage.execItemAction({
 		action: 'Merge',
@@ -213,7 +235,13 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 	await page.getByLabel('Merge Tags').getByRole('combobox').click();
 
-	await page.getByRole('option', {name: tagName2}).click();
+	await expect(async () => {
+		await page.getByRole('option', {name: tagName2}).click({timeout: 1000});
+
+		await expect(
+			page.locator('.label-secondary', {hasText: tagName2})
+		).toBeVisible({timeout: 1000});
+	}).toPass();
 
 	await clickAndExpectToBeVisible({
 		target: page.getByRole('heading', {name: 'Confirm Merge Tags'}),

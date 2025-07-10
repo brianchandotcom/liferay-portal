@@ -351,20 +351,15 @@ public class CloudBucketUtil {
 					listS3Files(destination));
 
 				while (listS3FilesMatcher.find()) {
-					String s3FileDestination = JenkinsResultsParserUtil.combine(
-						destination, "/", listS3FilesMatcher.group("fileName"));
+					String fileName = listS3FilesMatcher.group("fileName");
 
-					_createChecksumFile(
-						s3FileDestination,
-						new File(
-							JenkinsResultsParserUtil.combine(
-								source, "/",
-								listS3FilesMatcher.group("fileName"))));
+					if (!fileName.endsWith(_CHECKSUM_FILE_EXTENSION)) {
+						_createChecksumFile(
+							destination + "/" + fileName,
+							new File(source + "/" + fileName));
+					}
 
-					createS3ObjectRef(
-						JenkinsResultsParserUtil.combine(
-							destination, "/",
-							listS3FilesMatcher.group("fileName")));
+					createS3ObjectRef(destination + "/" + fileName);
 				}
 			}
 
@@ -376,17 +371,15 @@ public class CloudBucketUtil {
 					listS3Files(source));
 
 				while (listS3FilesMatcher.find()) {
-					_validateChecksumFile(
-						new File(
-							JenkinsResultsParserUtil.combine(
-								destination, "/",
-								listS3FilesMatcher.group("fileName"))),
-						JenkinsResultsParserUtil.combine(
-							source, "/", listS3FilesMatcher.group("fileName")));
+					String fileName = listS3FilesMatcher.group("fileName");
 
-					createS3ObjectRef(
-						JenkinsResultsParserUtil.combine(
-							source, "/", listS3FilesMatcher.group("fileName")));
+					if (!fileName.endsWith(_CHECKSUM_FILE_EXTENSION)) {
+						_validateChecksumFile(
+							new File(destination + "/" + fileName),
+							source + "/" + fileName);
+					}
+
+					createS3ObjectRef(source + "/" + fileName);
 				}
 			}
 		}
@@ -440,7 +433,8 @@ public class CloudBucketUtil {
 		}
 
 		File sourceChecksumFile = new File(
-			sourceFile.getParentFile(), sourceFile.getName() + ".sha512");
+			sourceFile.getParentFile(),
+			sourceFile.getName() + _CHECKSUM_FILE_EXTENSION);
 
 		JenkinsResultsParserUtil.writeSHAFile(sourceFile, sourceChecksumFile);
 

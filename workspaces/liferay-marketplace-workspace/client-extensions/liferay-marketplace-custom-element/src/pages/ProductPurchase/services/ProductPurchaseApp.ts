@@ -38,16 +38,15 @@ export default class ProductPurchaseApp extends ProductPurchase {
 			this.getAppPurchaseCart(cart, cartOptions) as Cart
 		);
 
-		const productType = this.product?.productSpecifications.find(
-			(spec) => spec.specificationKey === ProductSpecificationKey.APP_TYPE
-		)?.value;
-
 		await postEmailAppInformation({
 			dashboardLink: getSiteURL() + '/customer-dashboard',
 			orderID: order.id,
 			priceModel: 'paid',
 			productName: this.product?.name as string,
-			productType: productType || '',
+			productType: this.product?.productSpecifications.find(
+				(spec) =>
+					spec.specificationKey === ProductSpecificationKey.APP_TYPE
+			)?.value,
 		});
 
 		return order;
@@ -96,11 +95,8 @@ export default class ProductPurchaseApp extends ProductPurchase {
 	}
 
 	static getOrderTypeExternalReferenceCode(product: DeliveryProduct) {
-		const productSpecificationValues = getProductSpecificationValues(
-			product?.productSpecifications || []
-		);
-
-		return getProductOrderTypes(productSpecificationValues)
-			.externalReferenceCode;
+		return getProductOrderTypes(
+			getProductSpecificationValues(product?.productSpecifications || [])
+		).externalReferenceCode;
 	}
 }

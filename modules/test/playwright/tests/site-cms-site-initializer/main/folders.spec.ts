@@ -40,9 +40,8 @@ test(
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Edit'}),
 			trigger: page
-				.locator('.card-row')
-				.filter({hasText: folderTitle})
-				.getByLabel('More actions'),
+				.getByRole('row', {name: folderTitle})
+				.locator('.dropdown-toggle'),
 		});
 
 		const newFolderTitle = 'Edited Folder';
@@ -56,7 +55,7 @@ test(
 			`Success:${newFolderTitle} was updated successfully.`
 		);
 
-		await expect(page.getByLabel(newFolderTitle)).toBeVisible();
+		await expect(page.getByText(newFolderTitle)).toBeVisible();
 
 		await apiHelpers.objectFolder.deleteObjectEntryFolder(folderData.id);
 	}

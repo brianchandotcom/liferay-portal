@@ -274,7 +274,7 @@ test(
 
 		// Check that the content is visible that means we redirected to the folder
 
-		await expect(page.getByTitle(title)).toBeVisible();
+		await expect(page.getByText(title)).toBeVisible();
 
 		// Delete content and folder
 

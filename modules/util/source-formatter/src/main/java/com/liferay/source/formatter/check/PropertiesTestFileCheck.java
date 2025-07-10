@@ -373,7 +373,7 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 
 			sqlClauses = _checkIndentation(sqlClauses);
 
-			sqlClauses = _sort(sqlClauses);
+			sqlClauses = _sortSQLClauses(sqlClauses);
 
 			sqlClauses = "\\\n" + sqlClauses;
 
@@ -561,39 +561,6 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 		return sqlClause;
 	}
 
-	private String _sort(String sqlClauses) {
-		Matcher matcher = _sqlPattern2.matcher(sqlClauses);
-
-		while (matcher.find()) {
-			int lineNumber = getLineNumber(sqlClauses, matcher.start());
-
-			if (Validator.isNull(matcher.group(4))) {
-				continue;
-			}
-
-			String nextSQLClause = _getSQLClause(
-				SourceUtil.getLine(sqlClauses, lineNumber + 1));
-
-			if (nextSQLClause == null) {
-				continue;
-			}
-
-			String sqlClause = matcher.group(1);
-
-			if (_compareTo(sqlClause, nextSQLClause) > 0) {
-				sqlClauses = StringUtil.replaceFirst(
-					sqlClauses, nextSQLClause, sqlClause,
-					getLineStartPos(sqlClauses, lineNumber + 1));
-
-				return StringUtil.replaceFirst(
-					sqlClauses, sqlClause, nextSQLClause,
-					getLineStartPos(sqlClauses, lineNumber));
-			}
-		}
-
-		return sqlClauses;
-	}
-
 	private String _sortProperties(String content) throws IOException {
 		String rootTestPropertiesContent = _getRootTestPropertiesContent();
 
@@ -642,6 +609,39 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 
 		return StringUtil.trimTrailing(
 			mergedProperties + "\n\n" + _mergeProperties(propertiesMap2));
+	}
+
+	private String _sortSQLClauses(String sqlClauses) {
+		Matcher matcher = _sqlPattern2.matcher(sqlClauses);
+
+		while (matcher.find()) {
+			int lineNumber = getLineNumber(sqlClauses, matcher.start());
+
+			if (Validator.isNull(matcher.group(4))) {
+				continue;
+			}
+
+			String nextSQLClause = _getSQLClause(
+				SourceUtil.getLine(sqlClauses, lineNumber + 1));
+
+			if (nextSQLClause == null) {
+				continue;
+			}
+
+			String sqlClause = matcher.group(1);
+
+			if (_compareTo(sqlClause, nextSQLClause) > 0) {
+				sqlClauses = StringUtil.replaceFirst(
+					sqlClauses, nextSQLClause, sqlClause,
+					getLineStartPos(sqlClauses, lineNumber + 1));
+
+				return StringUtil.replaceFirst(
+					sqlClauses, sqlClause, nextSQLClause,
+					getLineStartPos(sqlClauses, lineNumber));
+			}
+		}
+
+		return sqlClauses;
 	}
 
 	private String _sortTestCategories(

@@ -30,8 +30,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactConstants;
+import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -210,7 +212,7 @@ public class ScimUtil {
 		scimUser.setBirthday(_getBirthday(user));
 		scimUser.setCompanyId(companyId);
 		scimUser.setDisplayName(user.getDisplayName());
-		scimUser.setEmailAddress(_getEmailAddress(user));
+		scimUser.setEmails(_getEmails(user.getEmails()));
 		scimUser.setEntitlements(_getEntitlements(user));
 		scimUser.setExternalReferenceCode(user.getExternalId());
 
@@ -251,7 +253,9 @@ public class ScimUtil {
 			scimUser.setCompanyId(portalUser.getCompanyId());
 			scimUser.setCreateDate(_truncateDate(portalUser.getCreateDate()));
 			scimUser.setFirstName(portalUser.getFirstName());
-			scimUser.setEmailAddress(portalUser.getEmailAddress());
+			scimUser.setEmails(
+				_getEmails(
+					portalUser.getCompanyId(), portalUser.getContactId()));
 			scimUser.setExternalReferenceCode(
 				portalUser.getExternalReferenceCode());
 			scimUser.setId(String.valueOf(portalUser.getUserId()));
@@ -302,7 +306,7 @@ public class ScimUtil {
 		user.replaceEmails(
 			Collections.singletonList(
 				new MultiValuedComplexType(
-					"work", true, null, scimUser.getEmailAddress(), null)));
+					"work", true, null, scimUser.getEmails()[0], null)));
 
 		ScimName scimName = new ScimName();
 
@@ -646,25 +650,72 @@ public class ScimUtil {
 		}
 	}
 
-	private static String _getEmailAddress(User user) {
-		List<MultiValuedComplexType> multiValuedComplexTypes = user.getEmails();
+	private static String[] _getEmails(
+		List<MultiValuedComplexType> multiValuedComplexTypes) {
 
 		if (ListUtil.isEmpty(multiValuedComplexTypes)) {
-			return null;
+			return new String[0];
 		}
 
-		for (MultiValuedComplexType multiValuedComplexType :
-				multiValuedComplexTypes) {
+		String[] emails = new String[multiValuedComplexTypes.size()];
 
-			if (multiValuedComplexType.isPrimary()) {
-				return multiValuedComplexType.getValue();
+		boolean primarySet = false;
+
+		for (int i = 0; i < multiValuedComplexTypes.size(); i++) {
+			if (!primarySet &&
+				multiValuedComplexTypes.get(
+					i
+				).isPrimary()) {
+
+				emails[i] = emails[0];
+
+				emails[0] = multiValuedComplexTypes.get(
+					i
+				).getValue();
+
+				primarySet = true;
+			}
+			else {
+				emails[i] = multiValuedComplexTypes.get(
+					i
+				).getValue();
 			}
 		}
 
-		MultiValuedComplexType multiValuedComplexType =
-			multiValuedComplexTypes.get(0);
+		return emails;
+	}
 
-		return multiValuedComplexType.getValue();
+	private static String[] _getEmails(long companyId, long contactId) {
+		List<EmailAddress> emailAddresses =
+			EmailAddressLocalServiceUtil.getEmailAddresses(
+				companyId, Contact.class.getName(), contactId);
+
+		String[] emails = new String[emailAddresses.size()];
+
+		boolean primarySet = false;
+
+		for (int i = 0; i < emailAddresses.size(); i++) {
+			if (!primarySet &&
+				emailAddresses.get(
+					i
+				).isPrimary()) {
+
+				emails[i] = emails[0];
+
+				emails[0] = emailAddresses.get(
+					i
+				).getAddress();
+
+				primarySet = true;
+			}
+			else {
+				emails[i] = emailAddresses.get(
+					i
+				).getAddress();
+			}
+		}
+
+		return emails;
 	}
 
 	private static String[] _getEntitlements(User user) {
@@ -924,7 +975,7 @@ public class ScimUtil {
 					scimUser.getLastName()));
 		}
 
-		if (Validator.isNull(scimUser.getEmailAddress()) &&
+		if (Validator.isNull(scimUser.getEmails()[0]) &&
 			PrefsPropsUtil.getBoolean(
 				scimUser.getCompanyId(),
 				PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED)) {

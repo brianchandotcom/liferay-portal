@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -103,6 +104,7 @@ public class UserManagerImpl implements UserManager {
 		ContactLocalService contactLocalService,
 		CounterLocalService counterLocalService,
 		CountryLocalService countryLocalService,
+		EmailAddressLocalService emailAddressLocalService,
 		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoTableLocalService expandoTableLocalService,
 		ExpandoValueLocalService expandoValueLocalService,
@@ -120,6 +122,7 @@ public class UserManagerImpl implements UserManager {
 		_contactLocalService = contactLocalService;
 		_counterLocalService = counterLocalService;
 		_countryLocalService = countryLocalService;
+		_emailAddressLocalService = emailAddressLocalService;
 		_expandoColumnLocalService = expandoColumnLocalService;
 		_expandoTableLocalService = expandoTableLocalService;
 		_expandoValueLocalService = expandoValueLocalService;
@@ -694,6 +697,27 @@ public class UserManagerImpl implements UserManager {
 
 		portalUser.setContact(contact);
 
+		_emailAddressLocalService.deleteEmailAddresses(
+			portalUser.getCompanyId(), Contact.class.getName(),
+			portalUser.getContactId());
+
+		long listTypeId = _listTypeLocalService.getListTypeId(
+			portalUser.getCompanyId(), "email-address",
+			Contact.class.getName() + ".emailAddress");
+
+		boolean primary = true;
+
+		for (String email : scimUser.getEmails()) {
+			ServiceContext serviceContext = new ServiceContext();
+
+			_emailAddressLocalService.addEmailAddress(
+				serviceContext.getUuidWithoutReset(), portalUser.getUserId(),
+				Contact.class.getName(), portalUser.getContactId(), email,
+				listTypeId, primary, serviceContext);
+
+			primary = false;
+		}
+
 		return ScimUtil.toScimUser(portalUser);
 	}
 
@@ -795,7 +819,7 @@ public class UserManagerImpl implements UserManager {
 			scimUser.getCompanyId(), scimUser.isAutoPassword(),
 			scimUser.getPassword(), scimUser.getPassword(),
 			scimUser.isAutoScreenName(), scimUser.getScreenName(),
-			scimUser.getEmailAddress(), scimUser.getLocale(),
+			scimUser.getEmails()[0], scimUser.getLocale(),
 			scimUser.getFirstName(), scimUser.getMiddleName(),
 			scimUser.getLastName(), 0, 0, scimUser.isMale(), birthdayMonth,
 			birthdayDay, birthdayYear, scimUser.getJobTitle(),
@@ -839,7 +863,7 @@ public class UserManagerImpl implements UserManager {
 				"email")) {
 
 			return _userLocalService.fetchUserByEmailAddress(
-				scimUser.getCompanyId(), scimUser.getEmailAddress());
+				scimUser.getCompanyId(), scimUser.getEmails()[0]);
 		}
 		else if (Objects.equals(
 					scimClientOAuth2ApplicationConfiguration.matcherField(),
@@ -1140,7 +1164,7 @@ public class UserManagerImpl implements UserManager {
 			portalUser.getUserId(), scimUser.getPassword(), StringPool.BLANK,
 			StringPool.BLANK, false, portalUser.getReminderQueryQuestion(),
 			portalUser.getReminderQueryAnswer(), portalUser.getScreenName(),
-			scimUser.getEmailAddress(), false, null, portalUser.getLanguageId(),
+			scimUser.getEmails()[0], false, null, portalUser.getLanguageId(),
 			portalUser.getTimeZoneId(), portalUser.getGreeting(),
 			portalUser.getComments(), scimUser.getFirstName(),
 			scimUser.getMiddleName(), scimUser.getLastName(), 0, 0,
@@ -1242,6 +1266,7 @@ public class UserManagerImpl implements UserManager {
 	private final ContactLocalService _contactLocalService;
 	private final CounterLocalService _counterLocalService;
 	private final CountryLocalService _countryLocalService;
+	private final EmailAddressLocalService _emailAddressLocalService;
 	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final ExpandoTableLocalService _expandoTableLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;

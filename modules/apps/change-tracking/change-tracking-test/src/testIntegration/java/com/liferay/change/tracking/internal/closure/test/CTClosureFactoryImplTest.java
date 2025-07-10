@@ -109,7 +109,8 @@ public class CTClosureFactoryImplTest {
 				"create table CTSParent (mvccVersion LONG default 0 not null, ",
 				"ctCollectionId LONG default 0 not null, ctsParentId LONG not ",
 				"null, companyId LONG, ctsGrandParentId LONG, name ",
-				"VARCHAR(75) null, primary key (ctsParentId, ctCollectionId))"));
+				"VARCHAR(75) null, primary key (ctsParentId, ",
+				"ctCollectionId))"));
 
 		_db.runSQL(
 			"create index IX_E0FFE1E9 on CTSParent (companyId, " +
@@ -222,29 +223,29 @@ public class CTClosureFactoryImplTest {
 
 		if (addParents) {
 			_db.runSQL(
-				"insert into CTSParent (ctsParentId, ctCollectionId, " +
-					"ctsGrandParentId, name) values (11, 0, 0, 'p1')");
+				"insert into CTSParent (ctCollectionId, ctsParentId, " +
+					"ctsGrandParentId, name) values (0, 11, 0, 'p1')");
 
 			_db.runSQL(
-				"insert into CTSParent (ctsParentId, ctCollectionId, " +
-					"ctsGrandParentId, name) values (12, 0, 2, 'p2')");
+				"insert into CTSParent (ctCollectionId, ctsParentId, " +
+					"ctsGrandParentId, name) values (0, 12, 2, 'p2')");
 
 			_db.runSQL(
-				"insert into CTSParent (ctsParentId, ctCollectionId, " +
-					"ctsGrandParentId, name) values (13, 0, 2, 'p3')");
+				"insert into CTSParent (ctCollectionId, ctsParentId, " +
+					"ctsGrandParentId, name) values (0, 13, 2, 'p3')");
 
 			if (changeType != CTConstants.CT_CHANGE_TYPE_ADDITION) {
 				_db.runSQL(
-					"insert into CTSParent (ctsParentId, ctCollectionId, " +
-						"ctsGrandParentId, name) values (14, 0, 3, 'p4')");
+					"insert into CTSParent (ctCollectionId, ctsParentId, " +
+						"ctsGrandParentId, name) values (0, 14, 3, 'p4')");
 			}
 
 			if (changeType != CTConstants.CT_CHANGE_TYPE_DELETION) {
 				_db.runSQL(
 					StringBundler.concat(
-						"insert into CTSParent (ctsParentId, ctCollectionId, ",
-						"ctsGrandParentId, name) values (14, ",
-						_ctCollection.getCtCollectionId(), ", 3, 'p4')"));
+						"insert into CTSParent (ctCollectionId, ctsParentId, ",
+						"ctsGrandParentId, name) values (",
+						_ctCollection.getCtCollectionId(), ", 14, 3, 'p4')"));
 			}
 
 			_addCTEntry(_ctsParentLocalService.createCTSParent(14), changeType);
@@ -252,34 +253,34 @@ public class CTClosureFactoryImplTest {
 
 		_db.runSQL(
 			StringBundler.concat(
-				"insert into CTSChild (ctsChildId, ctCollectionId, ",
+				"insert into CTSChild (ctCollectionId, ctsChildId, ",
 				"ctsGrandParentId, parentCTSChildId, ctsParentName) values ",
-				"(21, 0, 2, 0, 'p1')"));
+				"(0, 21, 2, 0, 'p1')"));
 
 		if (changeType != CTConstants.CT_CHANGE_TYPE_ADDITION) {
 			_db.runSQL(
 				StringBundler.concat(
-					"insert into CTSChild (ctsChildId, ctCollectionId, ",
+					"insert into CTSChild (ctCollectionId, ctsChildId, ",
 					"ctsGrandParentId, parentCTSChildId, ctsParentName) ",
-					"values (22, 0, 2, 21, 'p2')"));
+					"values (0, 22, 2, 21, 'p2')"));
 		}
 
 		if (changeType != CTConstants.CT_CHANGE_TYPE_DELETION) {
 			_db.runSQL(
 				StringBundler.concat(
-					"insert into CTSChild (ctsChildId, ctCollectionId, ",
+					"insert into CTSChild (ctCollectionId, ctsChildId, ",
 					"ctsGrandParentId, parentCTSChildId, ctsParentName) ",
-					"values (22, ", _ctCollection.getCtCollectionId(),
-					", 2, 21, 'p2')"));
+					"values (", _ctCollection.getCtCollectionId(),
+					", 22, 2, 21, 'p2')"));
 		}
 
 		_addCTEntry(_ctsChildLocalService.createCTSChild(22), changeType);
 
 		_db.runSQL(
 			StringBundler.concat(
-				"insert into CTSChild (ctsChildId, ctCollectionId, ",
+				"insert into CTSChild (ctCollectionId, ctsChildId, ",
 				"ctsGrandParentId, parentCTSChildId, ctsParentName) values ",
-				"(23, 0, 2, 21, 'p3')"));
+				"(0, 23, 2, 21, 'p3')"));
 
 		CTClosure ctClosure = _ctClosureFactory.create(
 			_ctCollection.getCtCollectionId());
@@ -363,29 +364,29 @@ public class CTClosureFactoryImplTest {
 
 		if (addParents) {
 			_db.runSQL(
-				"insert into CTSParent (ctsParentId, ctCollectionId, " +
-					"ctsGrandParentId, name) values (11, 0, 0, 'p1')");
+				"insert into CTSParent (ctCollectionId, ctsParentId, " +
+					"ctsGrandParentId, name) values (0, 11, 0, 'p1')");
 
 			_db.runSQL(
-				"insert into CTSParent (ctsParentId, ctCollectionId, " +
-					"ctsGrandParentId, name) values (12, 0, 2, 'p2')");
+				"insert into CTSParent (ctCollectionId, ctsParentId, " +
+					"ctsGrandParentId, name) values (0, 12, 2, 'p2')");
 
 			_db.runSQL(
-				"insert into CTSParent (ctsParentId, ctCollectionId, " +
-					"ctsGrandParentId, name) values (13, 0, 2, 'p3')");
+				"insert into CTSParent (ctCollectionId, ctsParentId, " +
+					"ctsGrandParentId, name) values (0, 13, 2, 'p3')");
 
 			if (changeType != CTConstants.CT_CHANGE_TYPE_ADDITION) {
 				_db.runSQL(
-					"insert into CTSParent (ctsParentId, ctCollectionId, " +
-						"ctsGrandParentId, name) values (14, 0, 3, 'p4')");
+					"insert into CTSParent (ctCollectionId, ctsParentId, " +
+						"ctsGrandParentId, name) values (0, 14, 3, 'p4')");
 			}
 
 			if (changeType != CTConstants.CT_CHANGE_TYPE_DELETION) {
 				_db.runSQL(
 					StringBundler.concat(
-						"insert into CTSParent (ctsParentId, ctCollectionId, ",
-						"ctsGrandParentId, name) values (14, ",
-						_ctCollection.getCtCollectionId(), ", 3, 'p4')"));
+						"insert into CTSParent (ctCollectionId, ctsParentId, ",
+						"ctsGrandParentId, name) values (",
+						_ctCollection.getCtCollectionId(), ", 14, 3, 'p4')"));
 			}
 
 			_addCTEntry(_ctsParentLocalService.createCTSParent(14), changeType);
@@ -393,34 +394,34 @@ public class CTClosureFactoryImplTest {
 
 		_db.runSQL(
 			StringBundler.concat(
-				"insert into CTSChild (ctsChildId, ctCollectionId, ",
+				"insert into CTSChild (ctCollectionId, ctsChildId, ",
 				"ctsGrandParentId, parentCTSChildId, ctsParentName) values ",
-				"(21, 0, 2, 0, 'p2')"));
+				"(0, 21, 2, 0, 'p2')"));
 
 		if (changeType != CTConstants.CT_CHANGE_TYPE_ADDITION) {
 			_db.runSQL(
 				StringBundler.concat(
-					"insert into CTSChild (ctsChildId, ctCollectionId, ",
+					"insert into CTSChild (ctCollectionId, ctsChildId, ",
 					"ctsGrandParentId, parentCTSChildId, ctsParentName) ",
-					"values (22, 0, 2, 21, 'p2')"));
+					"values (0, 22, 2, 21, 'p2')"));
 		}
 
 		if (changeType != CTConstants.CT_CHANGE_TYPE_DELETION) {
 			_db.runSQL(
 				StringBundler.concat(
-					"insert into CTSChild (ctsChildId, ctCollectionId, ",
+					"insert into CTSChild (ctCollectionId, ctsChildId, ",
 					"ctsGrandParentId, parentCTSChildId, ctsParentName) ",
-					"values (22, ", _ctCollection.getCtCollectionId(),
-					", 2, 21, 'p2')"));
+					"values (", _ctCollection.getCtCollectionId(),
+					", 22, 2, 21, 'p2')"));
 		}
 
 		_addCTEntry(_ctsChildLocalService.createCTSChild(22), changeType);
 
 		_db.runSQL(
 			StringBundler.concat(
-				"insert into CTSChild (ctsChildId, ctCollectionId, ",
+				"insert into CTSChild (ctCollectionId, ctsChildId, ",
 				"ctsGrandParentId, parentCTSChildId, ctsParentName) values ",
-				"(23, 0, 2, 21, 'p3')"));
+				"(0, 23, 2, 21, 'p3')"));
 
 		CTClosure ctClosure = _ctClosureFactory.create(
 			_ctCollection.getCtCollectionId());

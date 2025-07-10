@@ -75,46 +75,9 @@ public class CTClosureFactoryImplTest {
 			_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 		}
 
-		_db.runSQL("drop table CTSChild");
-
-		_db.runSQL(
-			StringBundler.concat(
-				"create table CTSChild (mvccVersion LONG default 0 not null, ",
-				"ctCollectionId LONG default 0 not null, ctsChildId LONG not ",
-				"null, companyId LONG, ctsGrandParentId LONG, ",
-				"parentCTSChildId LONG, ctsParentName VARCHAR(75) null, name ",
-				"VARCHAR(75) null, primary key (ctsChildId, ctCollectionId))"));
-
-		_db.runSQL(
-			"create index IX_7333931B on CTSChild (companyId, " +
-				"ctsGrandParentId)");
-		_db.runSQL(
-			"create index IX_B9646ED7 on CTSChild (companyId, " +
-				"parentCTSChildId)");
-
-		_db.runSQL("drop table CTSGrandParent");
-
-		_db.runSQL(
-			StringBundler.concat(
-				"create table CTSGrandParent (mvccVersion LONG default 0 not ",
-				"null, ctsGrandParentId LONG not null primary key, companyId ",
-				"LONG, parentCTSGrandParentId LONG, name VARCHAR(75) null)"));
-
-		_db.runSQL("create index IX_516F7BAC on CTSGrandParent (companyId)");
-
-		_db.runSQL("drop table CTSParent");
-
-		_db.runSQL(
-			StringBundler.concat(
-				"create table CTSParent (mvccVersion LONG default 0 not null, ",
-				"ctCollectionId LONG default 0 not null, ctsParentId LONG not ",
-				"null, companyId LONG, ctsGrandParentId LONG, name ",
-				"VARCHAR(75) null, primary key (ctsParentId, ",
-				"ctCollectionId))"));
-
-		_db.runSQL(
-			"create index IX_E0FFE1E9 on CTSParent (companyId, " +
-				"ctsGrandParentId)");
+		_db.runSQL("truncate table CTSChild");
+		_db.runSQL("truncate table CTSGrandParent");
+		_db.runSQL("truncate table CTSParent");
 	}
 
 	@Test

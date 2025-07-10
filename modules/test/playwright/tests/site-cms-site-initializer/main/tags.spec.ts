@@ -25,7 +25,10 @@ test('Add a new tag', {tag: '@LPD-51250'}, async ({tagsPage}) => {
 	const tagName = await tagsPage.createTag();
 
 	const tag = tagsPage.getItem(tagName);
+
 	await expect(tag).toBeVisible();
+
+	await tagsPage.deleteTag(tagName);
 });
 
 test(
@@ -72,25 +75,17 @@ test(
 		const tag2 = tagsPage.getItem(name2);
 
 		await expect(tag2).toBeVisible();
+
+		await tagsPage.deleteTag(name1);
+
+		await tagsPage.deleteTag(name2);
 	}
 );
 
-test('Delete a tag', {tag: '@LPD-51252'}, async ({page, tagsPage}) => {
+test('Delete a tag', {tag: '@LPD-51252'}, async ({tagsPage}) => {
 	const tagName = await tagsPage.createTag();
 
-	await tagsPage.execItemAction({
-		action: 'Delete',
-		filter: tagName,
-	});
-
-	await expect(page.getByRole('heading', {name: `Delete Tag`})).toBeVisible();
-
-	await clickAndExpectToBeVisible({
-		target: page.getByText(`Success:${tagName} was deleted successfully.`),
-		trigger: page.getByRole('button', {name: 'Delete'}),
-	});
-
-	await expect(tagsPage.getItem(tagName)).not.toBeVisible();
+	await tagsPage.deleteTag(tagName);
 });
 
 test('Edit an existing tag', {tag: '@LPD-52395'}, async ({page, tagsPage}) => {
@@ -115,7 +110,10 @@ test('Edit an existing tag', {tag: '@LPD-52395'}, async ({page, tagsPage}) => {
 	});
 
 	const tag = tagsPage.getItem(newName);
+
 	await expect(tag).toBeVisible();
+
+	await tagsPage.deleteTag(newName);
 });
 
 test(
@@ -142,6 +140,7 @@ test(
 		});
 
 		const tag = tagsPage.getItem(name);
+
 		await expect(tag).toBeVisible();
 
 		await expect(
@@ -149,6 +148,8 @@ test(
 				.locator('[data-testid="visualization-mode-table"]')
 				.getByText('Default')
 		).toBeVisible();
+
+		await tagsPage.deleteTag(name);
 	}
 );
 
@@ -208,6 +209,8 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 	await expect(tag1).toBeVisible();
 	await expect(tag2).not.toBeVisible();
+
+	await tagsPage.deleteTag(tagName1);
 });
 
 test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
@@ -257,6 +260,8 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 	await expect(tag1).toBeVisible();
 	await expect(tag2).not.toBeVisible();
+
+	await tagsPage.deleteTag(tagName1);
 });
 
 test(
@@ -266,6 +271,7 @@ test(
 		const name1 = await tagsPage.createTag();
 
 		const tag1 = tagsPage.getItem(name1);
+
 		await expect(tag1).toBeVisible();
 
 		await tagsPage.newTagButton.click();

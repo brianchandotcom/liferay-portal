@@ -285,6 +285,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 					objectField);
 
+			// TODO: Temporary workaround for LPD-59378. Remove when filtering
+			// is supported for System Objects
+
 			ObjectDefinition relatedObjectDefinition =
 				ObjectRelationshipUtil.getRelatedObjectDefinition(
 					objectDefinition,

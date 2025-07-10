@@ -7,9 +7,11 @@ package com.liferay.analytics.cms.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.analytics.cms.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.analytics.cms.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.analytics.cms.rest.internal.resource.v1_0.ConnectionInfoResourceImpl;
 import com.liferay.analytics.cms.rest.internal.resource.v1_0.InventoryAnalysisResourceImpl;
 import com.liferay.analytics.cms.rest.internal.resource.v1_0.ObjectEntryMetricResourceImpl;
 import com.liferay.analytics.cms.rest.internal.resource.v1_0.OverviewResourceImpl;
+import com.liferay.analytics.cms.rest.resource.v1_0.ConnectionInfoResource;
 import com.liferay.analytics.cms.rest.resource.v1_0.InventoryAnalysisResource;
 import com.liferay.analytics.cms.rest.resource.v1_0.ObjectEntryMetricResource;
 import com.liferay.analytics.cms.rest.resource.v1_0.OverviewResource;
@@ -38,6 +40,8 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Query.setConnectionInfoResourceComponentServiceObjects(
+			_connectionInfoResourceComponentServiceObjects);
 		Query.setInventoryAnalysisResourceComponentServiceObjects(
 			_inventoryAnalysisResourceComponentServiceObjects);
 		Query.setObjectEntryMetricResourceComponentServiceObjects(
@@ -81,6 +85,11 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"query#connectionInfo",
+						new ObjectValuePair<>(
+							ConnectionInfoResourceImpl.class,
+							"getConnectionInfo"));
+					put(
 						"query#inventoryAnalysis",
 						new ObjectValuePair<>(
 							InventoryAnalysisResourceImpl.class,
@@ -100,6 +109,10 @@ public class ServletDataImpl implements ServletData {
 							OverviewResourceImpl.class, "getFileOverview"));
 				}
 			};
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ConnectionInfoResource>
+		_connectionInfoResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<InventoryAnalysisResource>

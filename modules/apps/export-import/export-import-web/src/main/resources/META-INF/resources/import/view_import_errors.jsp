@@ -38,6 +38,14 @@ ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayC
 	%>'
 />
 
+<clay:link
+	displayType="primary"
+	href="<%= importErrorsDisplayContext.getImportErrorDetailsURL() %>"
+	label="Link to mocked detailed view of an error"
+	small="<%= true %>"
+	type="button"
+/>
+
 <aui:form method="post" name="fm">
 	<frontend-data-set:headless-display
 		apiURL="<%= importErrorsDisplayContext.getAPIURL() %>"

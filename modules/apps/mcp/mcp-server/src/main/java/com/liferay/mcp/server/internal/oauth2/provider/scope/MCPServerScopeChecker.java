@@ -29,6 +29,9 @@ public class MCPServerScopeChecker implements ScopeChecker {
 
 	@Override
 	public boolean checkScope(String scope) {
+
+		// TODO Review the production readiness of this mechanism
+
 		OAuth2Authorization oAuth2Authorization =
 			_oAuth2AuthorizationLocalService.
 				fetchOAuth2AuthorizationByAccessTokenContent(

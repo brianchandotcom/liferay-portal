@@ -52,6 +52,8 @@ public class MCPServerFilter extends BasePortalFilter {
 				_portal.getCompanyId(httpServletRequest),
 				MCPServerConstants.MCP_SERVER_OAUTH2_CLIENT_ID);
 
+		// TODO Add support for https://datatracker.ietf.org/doc/html/rfc8414
+
 		if (httpServletRequest.getRequestURI(
 			).endsWith(
 				"/.well-known/oauth-authorization-server"
@@ -100,6 +102,8 @@ public class MCPServerFilter extends BasePortalFilter {
 
 			return;
 		}
+
+		// TODO Add support for https://www.rfc-editor.org/rfc/rfc7591
 
 		if (httpServletRequest.getRequestURI(
 			).endsWith(

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.mcp.server.internal.company;
+package com.liferay.mcp.server.internal.tenant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,7 +41,7 @@ import java.util.Map;
 /**
  * @author Leandro Aguiar
  */
-public class MCPServerCompany {
+public class MCPServerTenant {
 
 	public static String getAccessToken(McpSyncServerExchange exchange) {
 		try {
@@ -55,9 +55,8 @@ public class MCPServerCompany {
 
 			sessionField.setAccessible(true);
 
-			MCPServerCompany.Session session =
-				(MCPServerCompany.Session)sessionField.get(
-					exchangeField.get(exchange));
+			Session session = (Session)sessionField.get(
+				exchangeField.get(exchange));
 
 			return session.getAccessToken();
 		}
@@ -66,7 +65,7 @@ public class MCPServerCompany {
 		}
 	}
 
-	public MCPServerCompany(String baseURL) {
+	public MCPServerTenant(String baseURL) {
 		_baseURL = baseURL;
 
 		_servlet = new TransportProvider(baseURL + "/mcp");
@@ -78,12 +77,12 @@ public class MCPServerCompany {
 		return _callEndpoint(method, _baseURL + path, payload, accessToken);
 	}
 
-	public String getAllOpenAPIs(String accessToken) {
-		return _callEndpoint("GET", _baseURL + "/openapi", null, accessToken);
-	}
-
 	public String getOpenAPI(String url, String accessToken) {
 		return _callEndpoint("GET", url, null, accessToken);
+	}
+
+	public String getOpenAPIs(String accessToken) {
+		return _callEndpoint("GET", _baseURL + "/openapi", null, accessToken);
 	}
 
 	public HttpServletSseServerTransportProvider getServlet() {
@@ -186,15 +185,15 @@ public class MCPServerCompany {
 
 	}
 
-	private class Factory implements McpServerSession.Factory {
+	private class SessionFactory implements McpServerSession.Factory {
 
-		public Factory(McpServerSession.Factory factory) {
+		public SessionFactory(McpServerSession.Factory factory) {
 			_factory = factory;
 		}
 
 		@Override
 		public McpServerSession create(McpServerTransport transport) {
-			McpServerSession session = _factory.create(transport);
+			McpServerSession mcpServerSession = _factory.create(transport);
 
 			try {
 				Field requestTimeoutField =
@@ -226,16 +225,17 @@ public class MCPServerCompany {
 				notificationHandlersField.setAccessible(true);
 
 				return new Session(
-					session.getId(), (Duration)requestTimeoutField.get(session),
+					mcpServerSession.getId(),
+					(Duration)requestTimeoutField.get(mcpServerSession),
 					transport,
 					(McpServerSession.InitRequestHandler)
-						initRequestHandlerField.get(session),
+						initRequestHandlerField.get(mcpServerSession),
 					(McpServerSession.InitNotificationHandler)
-						initNotificationHandlerField.get(session),
+						initNotificationHandlerField.get(mcpServerSession),
 					(Map<String, McpServerSession.RequestHandler<?>>)
-						requestHandlersField.get(session),
+						requestHandlersField.get(mcpServerSession),
 					(Map<String, McpServerSession.NotificationHandler>)
-						notificationHandlersField.get(session));
+						notificationHandlersField.get(mcpServerSession));
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
@@ -255,7 +255,7 @@ public class MCPServerCompany {
 
 		@Override
 		public void setSessionFactory(McpServerSession.Factory sessionFactory) {
-			super.setSessionFactory(new Factory(sessionFactory));
+			super.setSessionFactory(new SessionFactory(sessionFactory));
 		}
 
 		@Override

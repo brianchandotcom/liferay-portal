@@ -31,7 +31,15 @@ export type Space = {
 };
 
 export type SpaceSettings = {
-	logoColor: LogoColor;
-	mimeTypeLimits: MimeTypeLimit[];
-	sharingEnabled: boolean;
+	availableLanguageIds?: string[];
+	defaultLanguageId?: string;
+	logoColor?: LogoColor;
+	mimeTypeLimits?: MimeTypeLimit[];
+	sharingEnabled?: boolean;
+	useCustomLanguages?: boolean;
 };
+
+export type LabelValueObject = {
+	label: string;
+	value: string;
+}

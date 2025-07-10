@@ -9,16 +9,19 @@ import React, {useEffect, useState} from 'react';
 import Toolbar from '../../common/components/Toolbar';
 import VerticalNavLayout from '../../common/components/VerticalNavLayout';
 import SpaceService from '../../common/services/SpaceService';
-import {Space} from '../../common/types/Space';
+import {LabelValueObject, Space} from '../../common/types/Space';
 import SpaceGeneralSettings from './SpaceGeneralSettings';
+import SpaceLanguageSettings from './SpaceLanguageSettings';
 
 interface SpaceSettingsProps {
+	companyAvailableLanguages: LabelValueObject[];
 	backURL: string;
 	depotEntryId: string;
 	groupId: string;
 }
 
 export default function SpaceSettings({
+	companyAvailableLanguages,
 	backURL,
 	depotEntryId,
 	groupId,
@@ -37,12 +40,16 @@ export default function SpaceSettings({
 
 	const verticalNavItems = [
 		{
-			component: <SpaceGeneralSettings groupId={groupId} space={space} />,
+			component: <SpaceGeneralSettings groupId={groupId} setSpace={setSpace} space={space} />,
 			id: 'general',
 			label: Liferay.Language.get('general'),
 		},
 		{
-			component: <Languages />,
+			component: <SpaceLanguageSettings
+				companyAvailableLanguages={companyAvailableLanguages}
+				setSpace={setSpace}
+				space={space}
+			/>,
 			id: 'languages',
 			label: Liferay.Language.get('languages'),
 		},
@@ -58,8 +65,4 @@ export default function SpaceSettings({
 			<VerticalNavLayout items={verticalNavItems} />
 		</>
 	);
-}
-
-function Languages() {
-	return null;
 }

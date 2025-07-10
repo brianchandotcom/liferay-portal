@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Space, SpaceSettings} from '../../common/types/Space';
+import {Space} from '../../common/types/Space';
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 import ApiHelper from './ApiHelper';
 
@@ -187,25 +187,10 @@ async function unlinkUserGroupFromSpace({
 	);
 }
 
-async function updateSpace({
-	description,
-	erc,
-	name,
-	settings,
-}: {
-	description?: string;
-	erc?: string;
-	name?: string;
-	settings?: SpaceSettings;
-}) {
-	return await ApiHelper.put(
-		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${erc}`,
-		{
-			description,
-			externalReferenceCode: erc,
-			name,
-			settings,
-		}
+async function updateSpace(externalReferenceCode: string, body: any) {
+	return await ApiHelper.patch(
+		body,
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`,
 	);
 }
 

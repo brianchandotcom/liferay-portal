@@ -96,8 +96,7 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 				"/add_content_item_comment?classNameId=",
 				_classNameLocalService.getClassNameId(
 					objectEntry.getModelClassName()),
-				"&classPK=", objectEntry.getObjectEntryId(),
-				"&objectDefinitionId=", objectEntry.getObjectDefinitionId())
+				"&classPK=", objectEntry.getObjectEntryId())
 		).put(
 			"comments",
 			() -> {

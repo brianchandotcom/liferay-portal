@@ -882,6 +882,19 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public String getSourcePrototypeLayoutUuid() {
+		if (Validator.isNull(_sourcePrototypeLayoutUuid)) {
+			Layout layout = getLayoutSetPrototypeLayout();
+
+			if (layout != null) {
+				_sourcePrototypeLayoutUuid = layout.getUuid();
+			}
+		}
+
+		return _sourcePrototypeLayoutUuid;
+	}
+
+	@Override
 	public String getTarget() {
 		return PortalUtil.getLayoutTarget(this);
 	}
@@ -1903,6 +1916,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	private LayoutSet _layoutSet;
 	private transient LayoutType _layoutType;
 	private Layout _masterLayout;
+	private String _sourcePrototypeLayoutUuid;
 	private Theme _theme;
 	private UnicodeProperties _typeSettingsUnicodeProperties;
 

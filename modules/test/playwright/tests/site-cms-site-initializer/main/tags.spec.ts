@@ -279,6 +279,15 @@ test(
 			trigger: tagsPage.saveButton,
 		});
 
+		await clickAndExpectToBeHidden({
+			target: page
+				.locator('.modal-body')
+				.getByText(
+					'Please enter a unique name. This one is already in use.'
+				),
+			trigger: page.getByText('Cancel'),
+		});
+
 		// Repeat test for attempting to edit tag since the edit and create modals are separate components
 
 		const name2 = await tagsPage.createTag();
@@ -303,5 +312,18 @@ test(
 			),
 			trigger: tagsPage.saveButton,
 		});
+
+		await clickAndExpectToBeHidden({
+			target: page
+				.locator('.modal-body')
+				.getByText(
+					'Please enter a unique name. This one is already in use.'
+				),
+			trigger: page.getByText('Cancel'),
+		});
+
+		await tagsPage.deleteTag(name1);
+
+		await tagsPage.deleteTag(name2);
 	}
 );

@@ -81,8 +81,8 @@ public class CTClosureFactoryImplTest {
 			StringBundler.concat(
 				"create table CTSChild (mvccVersion LONG default 0 not null, ",
 				"ctCollectionId LONG default 0 not null, ctsChildId LONG not ",
-				"null, companyId LONG, name VARCHAR(75) null, ",
-				"ctsGrandParentId LONG, parentCTSChildId LONG, ctsParentName ",
+				"null, companyId LONG, ctsGrandParentId LONG, ",
+				"parentCTSChildId LONG, ctsParentName VARCHAR(75) null, name ",
 				"VARCHAR(75) null, primary key (ctsChildId, ctCollectionId))"));
 
 		_db.runSQL(
@@ -98,7 +98,7 @@ public class CTClosureFactoryImplTest {
 			StringBundler.concat(
 				"create table CTSGrandParent (mvccVersion LONG default 0 not ",
 				"null, ctsGrandParentId LONG not null primary key, companyId ",
-				"LONG, name VARCHAR(75) null, parentCTSGrandParentId LONG)"));
+				"LONG, parentCTSGrandParentId LONG, name VARCHAR(75) null)"));
 
 		_db.runSQL("create index IX_516F7BAC on CTSGrandParent (companyId)");
 
@@ -108,9 +108,8 @@ public class CTClosureFactoryImplTest {
 			StringBundler.concat(
 				"create table CTSParent (mvccVersion LONG default 0 not null, ",
 				"ctCollectionId LONG default 0 not null, ctsParentId LONG not ",
-				"null, companyId LONG, name VARCHAR(75) null, ",
-				"ctsGrandParentId LONG, primary key (ctsParentId, ",
-				"ctCollectionId))"));
+				"null, companyId LONG, ctsGrandParentId LONG, name ",
+				"VARCHAR(75) null, primary key (ctsParentId, ctCollectionId))"));
 
 		_db.runSQL(
 			"create index IX_E0FFE1E9 on CTSParent (companyId, " +

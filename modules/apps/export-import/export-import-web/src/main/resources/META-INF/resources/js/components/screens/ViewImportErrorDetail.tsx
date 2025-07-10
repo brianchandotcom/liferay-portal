@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import {openModal} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -30,7 +31,7 @@ interface ErrorDetail {
 	externalReferenceCode: string;
 }
 
-export function ViewImportErrorDetail() {
+export function ViewImportErrorDetail({backURL}: {backURL: string}) {
 	const [errorDetail, setErrorDetail] = useState<ErrorDetail>({
 		creator: {
 			name: '',
@@ -221,12 +222,9 @@ export function ViewImportErrorDetail() {
 			</ClayLayout.Sheet>
 
 			<ClayLayout.SheetFooter>
-				<ClayButton
-					displayType="secondary"
-					onClick={() => window.history.back()}
-				>
+				<ClayLink button displayType="secondary" href={backURL}>
 					{Liferay.Language.get('back')}
-				</ClayButton>
+				</ClayLink>
 			</ClayLayout.SheetFooter>
 		</ClayLayout.ContainerFluid>
 	);

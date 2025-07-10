@@ -9,34 +9,32 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
-import java.util.concurrent.Callable;
-
 /**
- * Provides a base implementation for ObjectActionExecutors that need to perform logic
- * after a transaction is committed.
- *
- * Subclasses can register their callback using the provided utility method.
- *
- * This avoids duplicating TransactionCommitCallbackUtil logic in each executor.
- *
- * @author Aquiles Duarte
+ * @author Guilherme Camacho
  */
 public abstract class BaseObjectActionExecutor implements ObjectActionExecutor {
 
 	@Override
-	public abstract void execute(
+	public void execute(
+			long companyId, long objectActionId,
+			UnicodeProperties parametersUnicodeProperties,
+			JSONObject payloadJSONObject, long userId)
+		throws Exception {
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				doExecute(
+					companyId, objectActionId, parametersUnicodeProperties,
+					payloadJSONObject, userId);
+
+				return null;
+			});
+	}
+
+	protected abstract void doExecute(
 			long companyId, long objectActionId,
 			UnicodeProperties parametersUnicodeProperties,
 			JSONObject payloadJSONObject, long userId)
 		throws Exception;
-
-	@Override
-	public abstract String getKey();
-
-	protected void registerTransactionCommitCallback(Callable<Void> callback)
-		throws Exception {
-
-		TransactionCommitCallbackUtil.registerCallback(callback);
-	}
 
 }

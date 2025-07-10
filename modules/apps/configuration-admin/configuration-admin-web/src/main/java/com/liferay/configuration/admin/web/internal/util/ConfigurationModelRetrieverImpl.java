@@ -28,6 +28,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -86,18 +87,43 @@ public class ConfigurationModelRetrieverImpl
 		String pid, ExtendedObjectClassDefinition.Scope scope,
 		Serializable scopePK) {
 
+		return getConfiguration(pid, scope, scopePK, true);
+	}
+
+	@Override
+	public Configuration getConfiguration(
+		String pid, ExtendedObjectClassDefinition.Scope scope,
+		Serializable scopePK, boolean strictScope) {
+
 		Configuration[] configurations = _getConfigurations(
 			pid, scope, String.valueOf(scopePK));
 
 		if (ArrayUtil.isNotEmpty(configurations)) {
-			return configurations[0];
+			for (Configuration configuration : configurations) {
+				if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
+					return configuration;
+				}
+
+				Dictionary<String, Object> properties =
+					configuration.getProcessedProperties(null);
+
+				if (Objects.equals(
+						properties.get(scope.getPropertyKey()), scopePK)) {
+
+					return configuration;
+				}
+			}
 		}
 
-		if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
+		if (!strictScope &&
+			scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY)) {
+
 			return getConfiguration(
-				pid, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+				pid, ExtendedObjectClassDefinition.Scope.SYSTEM, null, false);
 		}
-		else if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+		else if (!strictScope &&
+				 scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+
 			long companyId = 0;
 
 			Group group = _groupLocalService.fetchGroup((Long)scopePK);
@@ -107,7 +133,8 @@ public class ConfigurationModelRetrieverImpl
 			}
 
 			return getConfiguration(
-				pid, ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
+				pid, ExtendedObjectClassDefinition.Scope.COMPANY, companyId,
+				false);
 		}
 
 		return null;
@@ -349,7 +376,7 @@ public class ConfigurationModelRetrieverImpl
 	private String _getScopedPidFilterString(
 		String pid, ExtendedObjectClassDefinition.Scope scope) {
 
-		String unscopedPId = _getUnscopedPid(pid);
+		String unscopedPId = ConfigurationPIDUtil.getUnscopedPid(pid);
 
 		String filterString = StringBundler.concat(
 			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
@@ -412,7 +439,7 @@ public class ConfigurationModelRetrieverImpl
 				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
 				_getPropertyFilterString(
 					ConfigurationAdmin.SERVICE_FACTORYPID,
-					_getUnscopedPid(pid)),
+					ConfigurationPIDUtil.getUnscopedPid(pid)),
 				_getPropertyFilterString(Constants.SERVICE_PID, pid),
 				StringPool.CLOSE_PARENTHESIS);
 		}
@@ -426,12 +453,6 @@ public class ConfigurationModelRetrieverImpl
 			"=0))(!(dxp.lxc.liferay.com.virtualInstanceId=*))(!(",
 			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
 			"=*))(!(siteExternalReferenceCode=*)))");
-	}
-
-	private String _getUnscopedPid(String pid) {
-		pid = pid.replaceFirst("\\.scoped.*", StringPool.BLANK);
-
-		return pid.replaceFirst("~.*", StringPool.BLANK);
 	}
 
 	private BundleContext _bundleContext;

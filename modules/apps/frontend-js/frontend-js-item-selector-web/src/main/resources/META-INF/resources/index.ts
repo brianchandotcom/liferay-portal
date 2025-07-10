@@ -4,3 +4,12 @@
  */
 
 export {default as ItemSelector} from './item_selector/ItemSelector';
+export {default as ItemSelectorModal} from './item_selector/itemSelectorModal';
+
+export {
+	documentsAndMediaViews,
+	assetLibraryViews,
+	userViews,
+} from './utils/defaultViews';
+
+export {default as EItemSelectorModalViewsConfig} from './utils/getDefaultItemSelectorModalView';

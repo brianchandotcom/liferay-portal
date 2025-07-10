@@ -8,17 +8,36 @@ package com.liferay.object.related.models.test.util;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
  * @author Pedro Leite
  */
 public class ObjectEntryTestUtil {
+
+	public static ObjectEntry addObjectEntry(
+			long groupId, long objectDefinitionId, boolean addPermission)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		serviceContext.setAddGroupPermissions(addPermission);
+		serviceContext.setAddGuestPermissions(addPermission);
+
+		return ObjectEntryLocalServiceUtil.addObjectEntry(
+			groupId, TestPropsValues.getUserId(), objectDefinitionId,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(), serviceContext);
+	}
 
 	public static ObjectEntry addObjectEntry(
 			long groupId, long objectDefinitionId,

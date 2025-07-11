@@ -70,20 +70,20 @@ public class ConfigurationModelRetrieverImplTest {
 
 		Group group = Mockito.mock(Group.class);
 
-		long companyId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			group.getCompanyId()
-		).thenReturn(
-			companyId
-		);
-
 		long groupId = RandomTestUtil.randomLong();
 
 		Mockito.when(
 			group.getGroupId()
 		).thenReturn(
 			groupId
+		);
+
+		long companyId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			group.getCompanyId()
+		).thenReturn(
+			companyId
 		);
 
 		Mockito.when(

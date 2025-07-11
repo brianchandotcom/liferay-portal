@@ -95,23 +95,6 @@ public class ViewVersionHistoryDisplayContextTest
 				"getAPIURL", new Class<?>[0]));
 	}
 
-	@Test
-	public void testGetBackButtonReactData() throws Exception {
-		String backURL = "http://localhost:8080/";
-
-		Assert.assertEquals(
-			HashMapBuilder.<String, Object>put(
-				"backURL", backURL
-			).put(
-				"headerTitle",
-				_objectEntry.getTitleValue(group.getDefaultLanguageId())
-			).build(),
-			ReflectionTestUtil.invoke(
-				_getViewVersionHistoryDisplayContext(
-					_getMockHttpServletRequest(backURL, _objectEntry)),
-				"getBackButtonReactData", new Class<?>[0]));
-	}
-
 	private String _getAPIURL(
 		ObjectEntry objectEntry, ObjectDefinition objectDefinition) {
 
@@ -129,18 +112,6 @@ public class ViewVersionHistoryDisplayContextTest
 
 		mockHttpServletRequest.setParameter(
 			"objectEntryId", String.valueOf(objectEntry.getObjectEntryId()));
-
-		return mockHttpServletRequest;
-	}
-
-	private MockHttpServletRequest _getMockHttpServletRequest(
-			String backURL, ObjectEntry objectEntry)
-		throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest(objectEntry);
-
-		mockHttpServletRequest.setParameter("backURL", backURL);
 
 		return mockHttpServletRequest;
 	}

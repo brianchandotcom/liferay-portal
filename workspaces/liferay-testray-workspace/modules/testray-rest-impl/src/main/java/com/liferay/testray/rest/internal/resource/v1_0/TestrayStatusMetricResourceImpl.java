@@ -413,7 +413,8 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("inprogress, passed, testfix, total, untested from ");
 		sb.append("O_[%COMPANY_ID%]_jiraissue i join objectentry oe ON ");
 		sb.append("i.c_jiraissueid_ = oe.objectentryid left join (select i.");
-		sb.append(StringUtil.merge(_childRelationships.get(issueType), ", i."));
+		sb.append(
+			StringUtil.merge(_objectRelationshipNames.get(issueType), ", i."));
 		sb.append(", count(duestatus_) as total, sum(case when duestatus_ = ");
 		sb.append("'BLOCKED' then 1 else 0 end) as blocked, sum(case when ");
 		sb.append("duestatus_ = 'FAILED' then 1 else 0 end) as failed, ");
@@ -432,13 +433,14 @@ public class TestrayStatusMetricResourceImpl
 		sb.append(issueType);
 		sb.append("_c_jiraissueid = ? and cd.r_buildtocasedetail_c_buildid = ");
 		sb.append("? group by i.");
-		sb.append(StringUtil.merge(_childRelationships.get(issueType), ", i."));
+		sb.append(
+			StringUtil.merge(_objectRelationshipNames.get(issueType), ", i."));
 		sb.append(") as status on i.c_jiraissueid_ = status.");
-		sb.append(_childRelationships.get(issueType)[0]);
+		sb.append(_objectRelationshipNames.get(issueType)[0]);
 
 		if (StringUtil.equalsIgnoreCase(issueType, "epic")) {
 			sb.append(" or i.c_jiraissueid_ = status.");
-			sb.append(_childRelationships.get(issueType)[1]);
+			sb.append(_objectRelationshipNames.get(issueType)[1]);
 		}
 
 		sb.append(" where i.r_parentissue_c_jiraissueid = ? group by ");
@@ -778,7 +780,16 @@ public class TestrayStatusMetricResourceImpl
 		return testrayStatusMetric;
 	}
 
-	private final Map<String, String[]> _childRelationships =
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	private final Map<String, String[]> _objectRelationshipNames =
 		HashMapBuilder.put(
 			"epic",
 			new String[] {"r_story_c_jiraissueid", "r_task_c_jiraissueid"}
@@ -789,15 +800,6 @@ public class TestrayStatusMetricResourceImpl
 		).put(
 			"task", new String[] {"c_jiraissueid_"}
 		).build();
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private TestrayManager _testrayManager;

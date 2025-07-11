@@ -93,6 +93,10 @@ public abstract class BasePortletParametersImpl
 	}
 
 	protected Map<String, String[]> deepCopyMap(Map<String, String[]> map) {
+		if (map.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
 		Map<String, String[]> copiedMap = new HashMap<>();
 
 		for (Map.Entry<String, String[]> entry : map.entrySet()) {

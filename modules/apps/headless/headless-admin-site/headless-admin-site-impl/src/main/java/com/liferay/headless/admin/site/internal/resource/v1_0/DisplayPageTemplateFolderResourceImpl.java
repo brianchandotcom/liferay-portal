@@ -39,7 +39,7 @@ public class DisplayPageTemplateFolderResourceImpl
 	extends BaseDisplayPageTemplateFolderResourceImpl {
 
 	@Override
-	public void deleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+	public void deleteSiteDisplayPageTemplateFolder(
 			String siteExternalReferenceCode,
 			String displayPageTemplateFolderExternalReferenceCode)
 		throws Exception {
@@ -56,10 +56,9 @@ public class DisplayPageTemplateFolderResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplateFolder
-			getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				String siteExternalReferenceCode,
-				String displayPageTemplateFolderExternalReferenceCode)
+	public DisplayPageTemplateFolder getSiteDisplayPageTemplateFolder(
+			String siteExternalReferenceCode,
+			String displayPageTemplateFolderExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -77,7 +76,7 @@ public class DisplayPageTemplateFolderResourceImpl
 
 	@Override
 	public Page<DisplayPageTemplateFolder>
-			getSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage(
+			getSiteDisplayPageTemplateFoldersPage(
 				String siteExternalReferenceCode, String search,
 				Aggregation aggregation, Filter filter, Pagination pagination,
 				Sort[] sorts)
@@ -108,10 +107,9 @@ public class DisplayPageTemplateFolderResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplateFolder
-			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				String siteExternalReferenceCode,
-				DisplayPageTemplateFolder displayPageTemplateFolder)
+	public DisplayPageTemplateFolder postSiteDisplayPageTemplateFolder(
+			String siteExternalReferenceCode,
+			DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -126,11 +124,10 @@ public class DisplayPageTemplateFolderResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplateFolder
-			putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				String siteExternalReferenceCode,
-				String displayPageTemplateFolderExternalReferenceCode,
-				DisplayPageTemplateFolder displayPageTemplateFolder)
+	public DisplayPageTemplateFolder putSiteDisplayPageTemplateFolder(
+			String siteExternalReferenceCode,
+			String displayPageTemplateFolderExternalReferenceCode,
+			DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {

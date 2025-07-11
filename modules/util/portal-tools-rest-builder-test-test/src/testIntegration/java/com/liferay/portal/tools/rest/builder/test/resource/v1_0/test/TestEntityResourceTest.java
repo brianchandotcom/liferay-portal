@@ -231,8 +231,7 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 			jsonObject.getString(
 				"title"
 			).contains(
-				"Unable to resolve type ID \"" + invalidTypeId +
-					"\" as a subtype"
+				"Could not resolve type id '" + invalidTypeId + "' as a subtype"
 			));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -246,7 +245,7 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 			jsonObject.getString(
 				"title"
 			).contains(
-				"Missing type ID property \"type\""
+				"missing type id property 'type'"
 			));
 
 		// TODO Split after LPD-60141
@@ -410,8 +409,8 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 				).getString(
 					"message"
 				).contains(
-					"Unable to resolve type ID \"" + invalidTypeId +
-						"\" as a subtype"
+					"Could not resolve type id '" + invalidTypeId +
+						"' as a subtype"
 				));
 			Assert.assertTrue(
 				failedItemsJSONArray.getJSONObject(
@@ -419,7 +418,7 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 				).getString(
 					"message"
 				).contains(
-					"Missing type ID property \"type\""
+					"missing type id property 'type'"
 				));
 		}
 	}

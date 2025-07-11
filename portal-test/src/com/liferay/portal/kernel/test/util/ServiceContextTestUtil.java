@@ -52,6 +52,16 @@ public class ServiceContextTestUtil {
 
 	public static ServiceContext getServiceContext(
 			long groupId, long userId, boolean addGroupPermissions,
+			boolean addGuestPermissions)
+		throws PortalException {
+
+		return getServiceContext(
+			groupId, userId, addGroupPermissions, addGuestPermissions,
+			new long[0], new String[0]);
+	}
+
+	public static ServiceContext getServiceContext(
+			long groupId, long userId, boolean addGroupPermissions,
 			boolean addGuestPermissions, long[] assetCategoryIds,
 			String[] assetTagNames)
 		throws PortalException {

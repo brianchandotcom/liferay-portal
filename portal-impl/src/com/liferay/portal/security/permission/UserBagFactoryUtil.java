@@ -9,12 +9,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.PropsValues;
@@ -50,8 +50,9 @@ public class UserBagFactoryUtil {
 
 		allGroupIds.addAll(userOrgGroupIds);
 
-		List<UserGroup> userUserGroups =
-			UserGroupLocalServiceUtil.getUserUserGroups(userId);
+		User user = UserLocalServiceUtil.getUser(userId);
+
+		List<UserGroup> userUserGroups = user.getUserGroups();
 
 		long[] userUserGroupGroupIds = new long[userUserGroups.size()];
 

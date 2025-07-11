@@ -2048,8 +2048,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return count;
 		}
 
-		long[] userGroupIds = _userPersistence.getUserGroupPrimaryKeys(
-			group.getClassPK());
+		User user = _userPersistence.findByPrimaryKey(group.getClassPK());
+
+		long[] userGroupIds = user.getUserGroupIds();
 
 		if (userGroupIds.length != 0) {
 			long userGroupClassNameId = _classNameLocalService.getClassNameId(

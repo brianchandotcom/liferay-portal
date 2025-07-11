@@ -34,10 +34,8 @@ export default function SpaceLanguageSettings({
 	setSpace?: React.Dispatch<React.SetStateAction<any>>;
 	space: Space;
 }) {
-	const [
-		defaultLanguageWarning,
-		setDefaultLanguageWarning,
-	] = useState<boolean>(false);
+	const [defaultLanguageWarning, setDefaultLanguageWarning] =
+		useState<boolean>(false);
 
 	const {
 		errors,
@@ -45,7 +43,6 @@ export default function SpaceLanguageSettings({
 		resetForm,
 		setFieldValue,
 		setValues,
-		submitForm,
 		touched,
 		values,
 	} = useFormik({
@@ -112,9 +109,11 @@ export default function SpaceLanguageSettings({
 			const errors: any = {};
 
 			if (values.useCustomLanguages && !values.defaultLanguageId) {
-				errors.defaultLanguageId = Liferay.Language.get('default-language-is-required');
+				errors.defaultLanguageId = Liferay.Language.get(
+					'default-language-is-required'
+				);
 			}
-			
+
 			return errors;
 		},
 	});
@@ -215,9 +214,7 @@ export default function SpaceLanguageSettings({
 									autoClose
 									displayType="danger"
 									onClose={() => {
-										setDefaultLanguageWarning(
-											false
-										);
+										setDefaultLanguageWarning(false);
 									}}
 									title={Liferay.Language.get('error')}
 								>
@@ -228,11 +225,17 @@ export default function SpaceLanguageSettings({
 							)}
 
 							<FieldPicker
-								errorMessage={touched.defaultLanguageId ? errors.defaultLanguageId : undefined}
+								errorMessage={
+									touched.defaultLanguageId
+										? errors.defaultLanguageId
+										: undefined
+								}
+								items={values.selectedLanguages}
 								label={Liferay.Language.get('default-language')}
 								name="defaultLanguageId"
-								onSelectionChange={(value: string) => setFieldValue('defaultLanguageId', value)}
-								items={values.selectedLanguages}
+								onSelectionChange={(value: string) =>
+									setFieldValue('defaultLanguageId', value)
+								}
 								selectedKey={values.defaultLanguageId}
 							/>
 

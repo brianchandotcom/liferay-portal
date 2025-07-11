@@ -703,12 +703,12 @@ public class LayoutSetModelImpl
 		String companyFallbackVirtualHostname) {
 	}
 
-	public java.util.TreeMap<String, String> getVirtualHostnames() {
+	public java.util.NavigableMap<String, String> getVirtualHostnames() {
 		return null;
 	}
 
 	public void setVirtualHostnames(
-		java.util.TreeMap<String, String> virtualHostnames) {
+		java.util.NavigableMap<String, String> virtualHostnames) {
 	}
 
 	public long getColumnBitmask() {
@@ -996,7 +996,7 @@ public class LayoutSetModelImpl
 			setVirtualHostnames(null);
 
 			layoutSetCacheModel.virtualHostnames =
-				(java.util.TreeMap<String, String>)
+				(java.util.NavigableMap<String, String>)
 					_virtualHostnamesMethodHandle.invokeExact(
 						(LayoutSetImpl)this);
 		}
@@ -1211,7 +1211,7 @@ public class LayoutSetModelImpl
 	private static final MethodHandle
 		_companyFallbackVirtualHostnameMethodHandle;
 
-	protected final transient Consumer<java.util.TreeMap<String, String>>
+	protected final transient Consumer<java.util.NavigableMap<String, String>>
 		virtualHostnamesUpdateEntityCacheConsumer = virtualHostnames -> {
 			LayoutSetCacheModel layoutSetCacheModel =
 				EntityCacheUtil.fetchCacheModel(
@@ -1237,7 +1237,7 @@ public class LayoutSetModelImpl
 
 			_virtualHostnamesMethodHandle = lookup.findGetter(
 				LayoutSetImpl.class, "_virtualHostnames",
-				java.util.TreeMap.class);
+				java.util.NavigableMap.class);
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			throw new ExceptionInInitializerError(reflectiveOperationException);

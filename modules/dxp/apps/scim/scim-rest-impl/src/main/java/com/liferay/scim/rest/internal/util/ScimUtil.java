@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -64,6 +65,7 @@ import org.wso2.charon3.core.exceptions.NotFoundException;
 import org.wso2.charon3.core.objects.Group;
 import org.wso2.charon3.core.objects.User;
 import org.wso2.charon3.core.objects.plainobjects.MultiValuedComplexType;
+import org.wso2.charon3.core.objects.plainobjects.ScimAddress;
 import org.wso2.charon3.core.objects.plainobjects.ScimName;
 import org.wso2.charon3.core.protocol.SCIMResponse;
 import org.wso2.charon3.core.protocol.endpoints.AbstractResourceManager;
@@ -188,6 +190,7 @@ public class ScimUtil {
 		ScimUser scimUser = new ScimUser();
 
 		scimUser.setActive(_isActive(user));
+		scimUser.setAddresses(user.getAddresses());
 		scimUser.setAutoScreenName(
 			PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE));
@@ -222,6 +225,7 @@ public class ScimUtil {
 			ScimUser scimUser = new ScimUser();
 
 			scimUser.setActive(portalUser.isActive());
+			scimUser.setAddresses(_getScimAddresses(portalUser));
 			scimUser.setBirthday(portalUser.getBirthday());
 			scimUser.setCompanyId(portalUser.getCompanyId());
 			scimUser.setCreateDate(_truncateDate(portalUser.getCreateDate()));
@@ -624,6 +628,56 @@ public class ScimUtil {
 			multiValuedComplexTypes.get(0);
 
 		return multiValuedComplexType.getValue();
+	}
+
+	private static List<ScimAddress> _getScimAddresses(
+		com.liferay.portal.kernel.model.User portalUser) {
+
+		List<ScimAddress> scimAddresses = new ArrayList<>();
+
+		for (Address address : portalUser.getAddresses()) {
+			StringBundler streetAddressSB = new StringBundler(6);
+
+			streetAddressSB.append(address.getStreet1());
+			streetAddressSB.append("\n");
+
+			if (Validator.isNotNull(address.getStreet2())) {
+				streetAddressSB.append(address.getStreet2());
+				streetAddressSB.append("\n");
+			}
+
+			if (Validator.isNotNull(address.getStreet3())) {
+				streetAddressSB.append(address.getStreet3());
+				streetAddressSB.append("\n");
+			}
+
+			StringBundler formattedAddressSB = new StringBundler(8);
+
+			formattedAddressSB.append(streetAddressSB.toString());
+			formattedAddressSB.append(address.getCity());
+			formattedAddressSB.append(StringPool.COMMA_AND_SPACE);
+			formattedAddressSB.append(address.getRegion());
+			formattedAddressSB.append(StringPool.SPACE);
+			formattedAddressSB.append(address.getZip());
+			formattedAddressSB.append("\n");
+			formattedAddressSB.append(address.getCountry());
+
+			ScimAddress scimAddress = new ScimAddress(
+				formattedAddressSB.toString(),
+				address.getListType(
+				).getName(),
+				streetAddressSB.toString(), address.getCity(),
+				address.getRegion(
+				).getName(),
+				address.getZip(),
+				address.getCountry(
+				).getA2(),
+				address.isPrimary());
+
+			scimAddresses.add(scimAddress);
+		}
+
+		return scimAddresses;
 	}
 
 	private static boolean _isActive(User user) {

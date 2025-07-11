@@ -5,6 +5,7 @@
 
 package com.liferay.scim.rest.internal.manager;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -19,14 +20,21 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -70,6 +78,7 @@ import org.wso2.charon3.core.extensions.UserManager;
 import org.wso2.charon3.core.objects.Group;
 import org.wso2.charon3.core.objects.User;
 import org.wso2.charon3.core.objects.plainobjects.GroupsGetResponse;
+import org.wso2.charon3.core.objects.plainobjects.ScimAddress;
 import org.wso2.charon3.core.objects.plainobjects.UsersGetResponse;
 import org.wso2.charon3.core.utils.codeutils.ExpressionNode;
 import org.wso2.charon3.core.utils.codeutils.Node;
@@ -82,23 +91,33 @@ import org.wso2.charon3.core.utils.codeutils.SearchRequest;
 public class UserManagerImpl implements UserManager {
 
 	public UserManagerImpl(
+		AddressLocalService addressLocalService,
 		ClassNameLocalService classNameLocalService,
 		CompanyLocalService companyLocalService,
 		ConfigurationAdmin configurationAdmin,
+		CounterLocalService counterLocalService,
+		CountryLocalService countryLocalService,
 		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoTableLocalService expandoTableLocalService,
-		ExpandoValueLocalService expandoValueLocalService, Searcher searcher,
+		ExpandoValueLocalService expandoValueLocalService,
+		ListTypeLocalService listTypeLocalService,
+		RegionLocalService regionLocalService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		UserGroupLocalService userGroupLocalService,
 		UserGroupService userGroupService, UserLocalService userLocalService,
 		UserService userService) {
 
+		_addressLocalService = addressLocalService;
 		_classNameLocalService = classNameLocalService;
 		_companyLocalService = companyLocalService;
 		_configurationAdmin = configurationAdmin;
+		_counterLocalService = counterLocalService;
+		_countryLocalService = countryLocalService;
 		_expandoColumnLocalService = expandoColumnLocalService;
 		_expandoTableLocalService = expandoTableLocalService;
 		_expandoValueLocalService = expandoValueLocalService;
+		_listTypeLocalService = listTypeLocalService;
+		_regionLocalService = regionLocalService;
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 		_userGroupLocalService = userGroupLocalService;
@@ -529,6 +548,65 @@ public class UserManagerImpl implements UserManager {
 			portalUser = _updatePortalUser(
 				birthdayMonth, birthdayDay, birthdayYear, portalUser, scimUser,
 				scimClientOAuth2ApplicationConfiguration);
+		}
+
+		_addressLocalService.deleteAddresses(
+			portalUser.getCompanyId(), Contact.class.getName(),
+			portalUser.getContactId());
+
+		for (ScimAddress scimAddress : scimUser.getAddresses()) {
+			Address address = _addressLocalService.createAddress(
+				_counterLocalService.increment());
+
+			address.setUserId(portalUser.getUserId());
+			address.setUserName(portalUser.getFullName());
+			address.setClassName(Contact.class.getName());
+			address.setClassPK(portalUser.getContactId());
+			address.setCity(scimAddress.getLocality());
+			address.setPrimary(scimAddress.isPrimary());
+			address.setZip(scimAddress.getPostalCode());
+
+			Country country = _countryLocalService.getCountryByA2(
+				portalUser.getCompanyId(), scimAddress.getCountry());
+
+			address.setCountryId(country.getCountryId());
+
+			if (Validator.isNull(scimAddress.getType())) {
+				scimAddress.setType("other");
+			}
+
+			address.setListTypeId(
+				_listTypeLocalService.getListTypeId(
+					portalUser.getCompanyId(), scimAddress.getType(),
+					Contact.class.getName() + ".address"));
+
+			for (Region region :
+					_regionLocalService.getRegions(
+						country.getCountryId(), true)) {
+
+				if (Objects.equals(region.getName(), scimAddress.getRegion())) {
+					address.setRegionId(region.getRegionId());
+
+					break;
+				}
+			}
+
+			String[] streetAddresses = scimAddress.getStreetAddress(
+			).split(
+				"\n"
+			);
+
+			address.setStreet1(streetAddresses[0]);
+
+			if (streetAddresses.length == 3) {
+				address.setStreet2(streetAddresses[1]);
+				address.setStreet3(streetAddresses[2]);
+			}
+			else if (streetAddresses.length == 2) {
+				address.setStreet2(streetAddresses[1]);
+			}
+
+			_addressLocalService.addAddress(address);
 		}
 
 		return ScimUtil.toScimUser(portalUser);
@@ -1020,12 +1098,17 @@ public class UserManagerImpl implements UserManager {
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
+	private final AddressLocalService _addressLocalService;
 	private final ClassNameLocalService _classNameLocalService;
 	private final CompanyLocalService _companyLocalService;
 	private final ConfigurationAdmin _configurationAdmin;
+	private final CounterLocalService _counterLocalService;
+	private final CountryLocalService _countryLocalService;
 	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final ExpandoTableLocalService _expandoTableLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;
+	private final ListTypeLocalService _listTypeLocalService;
+	private final RegionLocalService _regionLocalService;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final UserGroupLocalService _userGroupLocalService;

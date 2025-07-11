@@ -6,12 +6,19 @@
 package com.liferay.scim.rest.internal.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import org.wso2.charon3.core.objects.plainobjects.ScimAddress;
 
 /**
  * @author Rafael Praxedes
  */
 public class ScimUser {
+
+	public List<ScimAddress> getAddresses() {
+		return _addresses;
+	}
 
 	public Date getBirthday() {
 		return _birthday;
@@ -117,6 +124,10 @@ public class ScimUser {
 		_active = active;
 	}
 
+	public void setAddresses(List<ScimAddress> addresses) {
+		_addresses = addresses;
+	}
+
 	public void setAutoPassword(boolean autoPassword) {
 		_autoPassword = autoPassword;
 	}
@@ -214,6 +225,7 @@ public class ScimUser {
 	}
 
 	private boolean _active;
+	private List<ScimAddress> _addresses;
 	private boolean _autoPassword;
 	private boolean _autoScreenName;
 	private Date _birthday;

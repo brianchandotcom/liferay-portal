@@ -5,12 +5,17 @@
 
 package com.liferay.scim.rest.internal.resource.v1_0;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -92,15 +97,20 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	@Activate
 	protected void activate() {
 		_userManager = new UserManagerImpl(
-			_classNameLocalService, _companyLocalService, _configurationAdmin,
+			_addressLocalService, _classNameLocalService, _companyLocalService,
+			_configurationAdmin, _counterLocalService, _countryLocalService,
 			_expandoColumnLocalService, _expandoTableLocalService,
-			_expandoValueLocalService, _searcher, _searchRequestBuilderFactory,
+			_expandoValueLocalService, _listTypeLocalService,
+			_regionLocalService, _searcher, _searchRequestBuilderFactory,
 			_userGroupLocalService, _userGroupService, _userLocalService,
 			_userService);
 	}
 
 	private static final UserResourceManager _userResourceManager =
 		new UserResourceManagerImpl();
+
+	@Reference
+	private AddressLocalService _addressLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
@@ -112,6 +122,12 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
+	private CounterLocalService _counterLocalService;
+
+	@Reference
+	private CountryLocalService _countryLocalService;
+
+	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 	@Reference
@@ -119,6 +135,12 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
+	private RegionLocalService _regionLocalService;
 
 	@Reference
 	private Searcher _searcher;

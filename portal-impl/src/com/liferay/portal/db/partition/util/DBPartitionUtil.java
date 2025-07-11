@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -282,6 +283,16 @@ public class DBPartitionUtil {
 		}
 
 		return key + StringPool.AT + CompanyThreadLocal.getNonsystemCompanyId();
+	}
+
+	public static String getPartitionKey(
+		String key, ShardedModel shardedModel) {
+
+		if (!DBPartition.isPartitionEnabled()) {
+			return key;
+		}
+
+		return key + StringPool.AT + shardedModel.getCompanyId();
 	}
 
 	public static String getPartitionName(long companyId) {

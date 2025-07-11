@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -459,13 +460,17 @@ public class TestrayManagerImpl implements TestrayManager {
 
 		long startTime = System.currentTimeMillis();
 
+		_dtoConverterContext = new DefaultDTOConverterContext(
+			false, null, null, null, null, LocaleUtil.getSiteDefault(), null,
+			_userLocalService.fetchUser(userId));
+
 		String dueStatus = "successful";
 
 		try {
 			Element element = document.getDocumentElement();
 
 			Map<String, String> propertiesMap = _getPropertiesMap(
-				element, "properties");
+				element, "properties", 0);
 
 			long testrayProjectId = _getTestrayProjectId(
 				companyId, serviceContext, testrayCache,
@@ -630,6 +635,97 @@ public class TestrayManagerImpl implements TestrayManager {
 			values, serviceContext);
 	}
 
+	private void _addOrUpdateTestrayCaseDetail(
+			Map<String, String> propertiesMap, ServiceContext serviceContext,
+			long testrayBuildId, TestrayCache testrayCache, long testrayCaseId,
+			long userId)
+		throws Exception {
+
+		long testrayCaseDetailId = _getObjectEntryId(
+			serviceContext.getCompanyId(),
+			StringBundler.concat(
+				"r_buildToCaseDetail_c_buildId eq '", testrayBuildId,
+				"' and r_caseToCaseDetails_c_caseId eq '", testrayCaseId,
+				"' and name eq '",
+				propertiesMap.get("testray.testcase.detail.name"), "'"),
+			"", new String[] {"objectEntryId"}, "CaseDetail", testrayCache,
+			userId);
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			new com.liferay.object.rest.dto.v1_0.ObjectEntry();
+
+		objectEntry.setProperties(
+			() -> HashMapBuilder.<String, Object>put(
+				"caseDetailsToJiraIssues",
+				TransformUtil.transform(
+					StringUtil.split(propertiesMap.get("testray.jira.issues")),
+					jiraIssue -> Collections.singletonMap(
+						"externalReferenceCode", StringUtil.trim(jiraIssue)),
+					Object.class)
+			).put(
+				"dueStatus",
+				() -> {
+					String testrayTestDetailStatus = propertiesMap.get(
+						"testray.testcase.detail.status");
+
+					if (testrayTestDetailStatus.equals("blocked")) {
+						return "BLOCKED";
+					}
+					else if (testrayTestDetailStatus.equals("dnr")) {
+						return "DIDNOTRUN";
+					}
+					else if (testrayTestDetailStatus.equals("failed")) {
+						return "FAILED";
+					}
+					else if (testrayTestDetailStatus.equals("incomplete")) {
+						return "INCOMPLETE";
+					}
+					else if (testrayTestDetailStatus.equals("in-progress")) {
+						return "INPROGRESS";
+					}
+					else if (testrayTestDetailStatus.equals("passed")) {
+						return "PASSED";
+					}
+					else if (testrayTestDetailStatus.equals("test-fix")) {
+						return "TESTFIX";
+					}
+
+					return "UNTESTED";
+				}
+			).put(
+				"name", propertiesMap.get("testray.testcase.detail.name")
+			).put(
+				"r_buildToCaseDetail_c_buildId", testrayBuildId
+			).put(
+				"r_caseToCaseDetails_c_caseId", testrayCaseId
+			).build());
+
+		if (testrayCaseDetailId == 0) {
+			_objectEntryManager.addObjectEntry(
+				_dtoConverterContext,
+				testrayCache.getObjectDefinition("CaseDetail"), objectEntry,
+				null);
+
+			return;
+		}
+
+		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntriesPage =
+			_objectEntryManager.getObjectEntries(
+				serviceContext.getCompanyId(),
+				testrayCache.getObjectDefinition("CaseDetail"), null, null,
+				_dtoConverterContext, "id eq '" + testrayCaseDetailId + "'",
+				null, null, null);
+
+		_objectEntryManager.updateObjectEntry(
+			testrayCaseDetailId, _dtoConverterContext,
+			GetterUtil.getString(
+				objectEntriesPage.fetchFirstItem(
+				).getPropertyValue(
+					"externalReferenceCode"
+				)),
+			testrayCache.getObjectDefinition("CaseDetail"), objectEntry, null);
+	}
+
 	private void _addOrUpdateTestrayCaseResult(
 			ServiceContext serviceContext, Node testcaseNode,
 			JSONArray testrayAttachmentsJSONArray, String testrayBuildDate,
@@ -791,7 +887,9 @@ public class TestrayManagerImpl implements TestrayManager {
 					"number", 0
 				).put(
 					"priority",
-					testrayCasePropertiesMap.get("testray.testcase.priority")
+					GetterUtil.getInteger(
+						testrayCasePropertiesMap.get(
+							"testray.testcase.priority"))
 				).put(
 					"r_caseTypeToCases_c_caseTypeId", testrayCaseTypeId
 				).put(
@@ -828,6 +926,47 @@ public class TestrayManagerImpl implements TestrayManager {
 			testrayBuildDate, testrayBuildId, testrayCache, testrayCaseId,
 			testrayCasePropertiesMap, testrayComponentId, testrayRunId,
 			testrayTeamId, userId);
+
+		if (StringUtil.contains(
+				testrayCasePropertiesMap.get("testray.case.type.name"),
+				"Playwright")) {
+
+			_addOrUpdateTestrayCaseDetail(
+				HashMapBuilder.put(
+					"testray.jira.issues",
+					testrayCasePropertiesMap.get("testray.jira.issues")
+				).put(
+					"testray.testcase.detail.name",
+					StringUtil.extractLast(
+						testrayCasePropertiesMap.get("testray.testcase.name"),
+						">")
+				).put(
+					"testray.testcase.detail.status",
+					testrayCasePropertiesMap.get("testray.testcase.status")
+				).build(),
+				serviceContext, testrayBuildId, testrayCache, testrayCaseId,
+				userId);
+
+			return;
+		}
+
+		Element element = (Element)testcaseNode;
+
+		NodeList detailsNodeList = element.getElementsByTagName("details");
+
+		if (detailsNodeList.getLength() == 0) {
+			return;
+		}
+
+		Element detailsElement = (Element)detailsNodeList.item(0);
+
+		NodeList detailNodeList = detailsElement.getElementsByTagName("detail");
+
+		for (int i = 0; i < detailNodeList.getLength(); i++) {
+			_addOrUpdateTestrayCaseDetail(
+				_getPropertiesMap(detailsElement, "detail", i), serviceContext,
+				testrayBuildId, testrayCache, testrayCaseId, userId);
+		}
 	}
 
 	private JSONObject _addTestrayCases(
@@ -854,7 +993,7 @@ public class TestrayManagerImpl implements TestrayManager {
 				_getTestrayAttachmentsJSONArray(testcaseNode);
 
 			Map<String, String> testrayCasePropertiesMap = _getPropertiesMap(
-				(Element)testcaseNode, "properties");
+				(Element)testcaseNode, "properties", 0);
 
 			_addTestrayCase(
 				companyId, serviceContext, testcaseNode,
@@ -1011,13 +1150,13 @@ public class TestrayManagerImpl implements TestrayManager {
 	}
 
 	private Map<String, String> _getPropertiesMap(
-		Element element, String tagName) {
+		Element element, String tagName, int index) {
 
 		Map<String, String> map = new HashMap<>();
 
 		NodeList propertiesNodeList = element.getElementsByTagName(tagName);
 
-		Node propertiesNode = propertiesNodeList.item(0);
+		Node propertiesNode = propertiesNodeList.item(index);
 
 		Element propertiesElement = (Element)propertiesNode;
 
@@ -1712,6 +1851,8 @@ public class TestrayManagerImpl implements TestrayManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TestrayManagerImpl.class);
+
+	private DTOConverterContext _dtoConverterContext;
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

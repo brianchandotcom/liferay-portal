@@ -17,11 +17,11 @@ export enum EItemSelectorModalViewsConfig {
 	USERS = 'users',
 }
 
-const getDefaultItemSelectorModalViews = ({
+export const getDefaultItemSelectorModalViews = function ({
 	viewsConfig,
 }: {
 	viewsConfig: `${EItemSelectorModalViewsConfig}` | TView[];
-}): any => {
+}): any {
 	if (typeof viewsConfig === 'object') {
 		return viewsConfig;
 	}
@@ -37,5 +37,3 @@ const getDefaultItemSelectorModalViews = ({
 		return userViews;
 	}
 };
-
-export default getDefaultItemSelectorModalViews;

@@ -12,4 +12,7 @@ export {
 	userViews,
 } from './utils/defaultViews';
 
-export {default as EItemSelectorModalViewsConfig} from './utils/getDefaultItemSelectorModalView';
+export {
+	EItemSelectorModalViewsConfig,
+	getDefaultItemSelectorModalViews,
+} from './utils/getDefaultItemSelectorModalViews';

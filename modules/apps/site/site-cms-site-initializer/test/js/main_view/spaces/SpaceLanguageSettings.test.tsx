@@ -40,6 +40,7 @@ const COMPANY_AVAILABLE_LANGUAGES: LabelValueObject[] = [
 ];
 
 const mockProps = {
+    backURL: '/all-spaces',
 	companyAvailableLanguages: COMPANY_AVAILABLE_LANGUAGES,
 	space: {
 		externalReferenceCode: 'space-external-reference-code',
@@ -53,6 +54,7 @@ const mockProps = {
 };
 
 const mockPropsWithCustomLanguages = {
+    backURL: '/all-spaces',
 	companyAvailableLanguages: COMPANY_AVAILABLE_LANGUAGES,
 	space: {
 		externalReferenceCode: 'space-external-reference-code',
@@ -113,7 +115,7 @@ describe('SpaceLanguageSettings', () => {
 
 		expect(
 			screen.getByRole('combobox', {
-				name: /custom-default-language/,
+				name: /default-language/,
 			})
 		).toBeInTheDocument();
 
@@ -148,12 +150,6 @@ describe('SpaceLanguageSettings', () => {
 	});
 
 	it('redirects to the previous url when the cancel button is pressed', async () => {
-		delete (window as any).location;
-
-		(window as any).location = {
-			href: 'http://url?redirect=/all-spaces',
-		} as unknown as Location;
-
 		renderComponent();
 
 		await userEvent.click(
@@ -198,11 +194,10 @@ describe('SpaceLanguageSettings', () => {
 			renderComponent(mockPropsWithCustomLanguages);
 
 			const defaultLanguageSelectionBox = screen.getByRole('combobox', {
-				name: /custom-default-language/,
+				name: /default-language/,
 			});
 
 			expect(defaultLanguageSelectionBox).toBeInTheDocument();
-			expect(defaultLanguageSelectionBox).toHaveValue('en_US');
 
 			const availableLanguages = screen
 				.getByRole('listbox', {

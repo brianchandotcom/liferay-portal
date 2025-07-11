@@ -48,14 +48,16 @@ const closeToast = async () => {
 };
 
 const renderComponent = ({
+	backURL = '/all-spaces',
 	groupId = '1234',
 	space = SPACE,
 }: {
+	backURL?: string;
 	groupId?: string;
 	space?: Partial<Space>;
 } = {}) => {
 	return render(
-		<SpaceGeneralSettings groupId={groupId} space={space as Space} />
+		<SpaceGeneralSettings backURL={backURL} groupId={groupId} space={space as Space} />
 	);
 };
 
@@ -160,12 +162,6 @@ describe('SpaceGeneralSettings', () => {
 	});
 
 	it('redirects to the previous url when the cancel button is pressed', async () => {
-		delete (window as any).location;
-
-		(window as any).location = {
-			href: 'http://url?redirect=/all-spaces',
-		} as unknown as Location;
-
 		renderComponent();
 
 		await userEvent.click(

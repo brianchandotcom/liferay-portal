@@ -15,8 +15,8 @@ import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.batch.JUnitTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.JUnitTestSelector;
 import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
-import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClassBalancedListSplitter;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassBalancedListSplitter;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 
@@ -621,13 +621,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			else {
 				List<TestClass> batchTestClasses = new ArrayList<>(testClasses);
 
-				JUnitTestClassBalancedListSplitter
-					jUnitTestClassBalancedListSplitter =
-						new JUnitTestClassBalancedListSplitter(
-							targetAxisDuration);
+				TestClassBalancedListSplitter testClassBalancedListSplitter =
+					new TestClassBalancedListSplitter(targetAxisDuration);
 
 				List<List<TestClass>> testClassLists =
-					jUnitTestClassBalancedListSplitter.split(batchTestClasses);
+					testClassBalancedListSplitter.split(batchTestClasses);
 
 				for (List<TestClass> testClassList : testClassLists) {
 					AxisTestClassGroup axisTestClassGroup =

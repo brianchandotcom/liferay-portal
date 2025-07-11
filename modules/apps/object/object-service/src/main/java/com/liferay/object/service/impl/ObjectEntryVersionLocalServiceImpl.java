@@ -7,7 +7,6 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.configuration.ObjectEntryVersionConfiguration;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
-import com.liferay.object.exception.NoSuchObjectEntryVersionException;
 import com.liferay.object.exception.RequiredObjectEntryVersionException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
@@ -335,7 +334,7 @@ public class ObjectEntryVersionLocalServiceImpl
 	}
 
 	private ObjectEntryVersion _getLatestObjectEntryVersion(long objectEntryId)
-		throws NoSuchObjectEntryVersionException {
+		throws PortalException {
 
 		return objectEntryVersionPersistence.findByObjectEntryId_First(
 			objectEntryId,

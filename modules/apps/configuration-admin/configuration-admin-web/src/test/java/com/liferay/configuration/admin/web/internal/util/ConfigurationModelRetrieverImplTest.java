@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.io.IOException;
-
 import java.util.Map;
 
 import junit.framework.AssertionFailedError;
@@ -29,7 +27,6 @@ import org.mockito.Mockito;
 import org.osgi.framework.Constants;
 import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -45,9 +42,7 @@ public class ConfigurationModelRetrieverImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetConfiguration()
-		throws InvalidSyntaxException, IOException {
-
+	public void testGetConfiguration() throws Exception {
 		MockSettings mockSettings = Mockito.withSettings();
 
 		mockSettings = mockSettings.useConstructor();

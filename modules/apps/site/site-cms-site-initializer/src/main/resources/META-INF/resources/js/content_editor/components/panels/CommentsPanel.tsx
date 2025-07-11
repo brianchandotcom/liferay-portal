@@ -4,6 +4,9 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import List from '@clayui/list';
+import Sticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {
 	CKEditor5BalloonEditor,
@@ -54,6 +57,59 @@ export default function CommentsPanel({
 					}
 				/>
 			</div>
+
+			{comments.length ? (
+				<List>
+					{comments.map((comment) => (
+						<Comment comment={comment} key={comment.commentId} />
+					))}
+				</List>
+			) : null}
+		</>
+	);
+}
+
+function Comment({comment}: {comment: Comment}) {
+	return (
+		<>
+			<List.Item
+				className={classNames('mb-0 flex-wrap', {
+					'border-0 py-2': !comment.children,
+					'border-left-0 border-right-0 border-top-0 py-4':
+						comment.children,
+				})}
+				flex
+			>
+				<article className="d-flex flex-wrap">
+					<List.ItemField>
+						<Sticker shape="user-icon">
+							{comment.author.portraitURL ? (
+								<Sticker.Image
+									alt=""
+									src={comment.author.portraitURL}
+								/>
+							) : (
+								<ClayIcon symbol="user" />
+							)}
+						</Sticker>
+					</List.ItemField>
+
+					<header className="autofit-col autofit-col-expand">
+						<span className="list-group-title">
+							{comment.author.fullName}
+						</span>
+
+						<time className="list-group-text text-3">
+							{comment.dateDescription}
+						</time>
+					</header>
+
+					<List.ItemField
+						className="mt-2 text-3 w-100"
+						dangerouslySetInnerHTML={{__html: comment.body}}
+					/>
+				</article>
+			</List.Item>
 		</>
 	);
 }

@@ -2092,13 +2092,13 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		Boolean hasPrivateLayouts = null;
+		Integer privateLayoutsCount = null;
 
 		if (addDefaultUserPrivateLayouts) {
-			hasPrivateLayouts = LayoutLocalServiceUtil.hasLayouts(
-				user.getGroup(), true, false);
+			privateLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+				user.getGroupId(), true);
 
-			if (!hasPrivateLayouts) {
+			if (privateLayoutsCount == 0) {
 				_addDefaultUserPrivateLayouts(user);
 			}
 		}
@@ -2122,12 +2122,12 @@ public class ServicePreAction extends Action {
 		}
 
 		if (deleteDefaultUserPrivateLayouts) {
-			if (hasPrivateLayouts == null) {
-				hasPrivateLayouts = LayoutLocalServiceUtil.hasLayouts(
-					user.getGroup(), true, false);
+			if (privateLayoutsCount == null) {
+				privateLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+					user.getGroupId(), true);
 			}
 
-			if (hasPrivateLayouts) {
+			if (privateLayoutsCount > 0) {
 				_deleteDefaultUserPrivateLayouts(user);
 			}
 		}
@@ -2156,13 +2156,13 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		Boolean hasPublicLayouts = null;
+		Integer publicLayoutsCount = null;
 
 		if (addDefaultUserPublicLayouts) {
-			hasPublicLayouts = LayoutLocalServiceUtil.hasLayouts(
-				user.getGroup(), false, false);
+			publicLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+				user.getGroupId(), false);
 
-			if (!hasPublicLayouts) {
+			if (publicLayoutsCount == 0) {
 				_addDefaultUserPublicLayouts(user);
 			}
 		}
@@ -2186,12 +2186,12 @@ public class ServicePreAction extends Action {
 		}
 
 		if (deleteDefaultUserPublicLayouts) {
-			if (hasPublicLayouts == null) {
-				hasPublicLayouts = LayoutLocalServiceUtil.hasLayouts(
-					user.getGroup(), false, false);
+			if (publicLayoutsCount == null) {
+				publicLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+					user.getGroupId(), false);
 			}
 
-			if (hasPublicLayouts) {
+			if (publicLayoutsCount > 0) {
 				_deleteDefaultUserPublicLayouts(user);
 			}
 		}

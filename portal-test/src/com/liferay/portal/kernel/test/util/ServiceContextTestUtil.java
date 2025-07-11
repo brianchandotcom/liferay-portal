@@ -51,6 +51,27 @@ public class ServiceContextTestUtil {
 	}
 
 	public static ServiceContext getServiceContext(
+			long groupId, long userId, boolean addGroupPermissions,
+			boolean addGuestPermissions, long[] assetCategoryIds,
+			String[] assetTagNames)
+		throws PortalException {
+
+		if (groupId == TestPropsValues.getGroupId()) {
+			return getServiceContext(
+				TestPropsValues.getCompanyId(), groupId, userId,
+				addGroupPermissions, addGuestPermissions, assetCategoryIds,
+				assetTagNames);
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		return getServiceContext(
+			group.getCompanyId(), group.getGroupId(), userId,
+			addGroupPermissions, addGuestPermissions, assetCategoryIds,
+			assetTagNames);
+	}
+
+	public static ServiceContext getServiceContext(
 			long companyId, long groupId, long userId)
 		throws PortalException {
 
@@ -105,17 +126,8 @@ public class ServiceContextTestUtil {
 			String[] assetTagNames)
 		throws PortalException {
 
-		if (groupId == TestPropsValues.getGroupId()) {
-			return getServiceContext(
-				TestPropsValues.getCompanyId(), groupId, userId,
-				assetCategoryIds, assetTagNames);
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
 		return getServiceContext(
-			group.getCompanyId(), group.getGroupId(), userId, assetCategoryIds,
-			assetTagNames);
+			groupId, userId, true, true, assetCategoryIds, assetTagNames);
 	}
 
 	public static ServiceContext getServiceContext(

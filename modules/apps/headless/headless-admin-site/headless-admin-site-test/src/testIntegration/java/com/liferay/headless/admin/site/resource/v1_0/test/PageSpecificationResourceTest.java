@@ -1163,18 +1163,18 @@ public class PageSpecificationResourceTest
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			pageSpecification,
 			() -> unsafeFunction.apply(
-				SettingsTestUtil.getMasterPageItemExternalReferenceSettings(
-					serviceContext, settings)));
-
-		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
-			pageSpecification,
-			() -> unsafeFunction.apply(
 				SettingsTestUtil.getCssSettings(settings)));
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			pageSpecification,
 			() -> unsafeFunction.apply(
 				SettingsTestUtil.getJavaScriptSettings(settings)));
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			pageSpecification,
+			() -> unsafeFunction.apply(
+				SettingsTestUtil.getMasterPageItemExternalReferenceSettings(
+					serviceContext, settings)));
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			pageSpecification,

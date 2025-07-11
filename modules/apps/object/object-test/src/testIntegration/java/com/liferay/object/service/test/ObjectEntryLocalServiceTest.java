@@ -5863,7 +5863,7 @@ public class ObjectEntryLocalServiceTest {
 
 	@FeatureFlag("LPD-17564")
 	@Test
-	public void testUpdateObjectEntryWithAttachmentAndVersioning()
+	public void testUpdateObjectEntryWithAttachmentAndEnableObjectEntryVersioning()
 		throws Exception {
 
 		Map<String, Serializable> values =

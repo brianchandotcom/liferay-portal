@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -84,6 +85,7 @@ import org.wso2.charon3.core.extensions.UserManager;
 import org.wso2.charon3.core.objects.Group;
 import org.wso2.charon3.core.objects.User;
 import org.wso2.charon3.core.objects.plainobjects.GroupsGetResponse;
+import org.wso2.charon3.core.objects.plainobjects.MultiValuedComplexType;
 import org.wso2.charon3.core.objects.plainobjects.ScimAddress;
 import org.wso2.charon3.core.objects.plainobjects.UsersGetResponse;
 import org.wso2.charon3.core.utils.codeutils.ExpressionNode;
@@ -109,6 +111,7 @@ public class UserManagerImpl implements UserManager {
 		ExpandoTableLocalService expandoTableLocalService,
 		ExpandoValueLocalService expandoValueLocalService,
 		ListTypeLocalService listTypeLocalService,
+		PhoneLocalService phoneLocalService,
 		RegionLocalService regionLocalService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		UserGroupLocalService userGroupLocalService,
@@ -127,6 +130,7 @@ public class UserManagerImpl implements UserManager {
 		_expandoTableLocalService = expandoTableLocalService;
 		_expandoValueLocalService = expandoValueLocalService;
 		_listTypeLocalService = listTypeLocalService;
+		_phoneLocalService = phoneLocalService;
 		_regionLocalService = regionLocalService;
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
@@ -718,6 +722,25 @@ public class UserManagerImpl implements UserManager {
 			primary = false;
 		}
 
+		_phoneLocalService.deletePhones(
+			portalUser.getCompanyId(), Contact.class.getName(),
+			portalUser.getContactId());
+
+		for (MultiValuedComplexType phoneNumber : scimUser.getPhoneNumbers()) {
+			listTypeId = _listTypeLocalService.getListTypeId(
+				portalUser.getCompanyId(),
+				StringUtil.toLowerCase(phoneNumber.getType()),
+				Contact.class.getName() + ".phone");
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			_phoneLocalService.addPhone(
+				serviceContext.getUuidWithoutReset(), portalUser.getUserId(),
+				Contact.class.getName(), portalUser.getContactId(),
+				phoneNumber.getValue(), null, listTypeId,
+				phoneNumber.isPrimary(), serviceContext);
+		}
+
 		return ScimUtil.toScimUser(portalUser);
 	}
 
@@ -1273,6 +1296,7 @@ public class UserManagerImpl implements UserManager {
 	private final ExpandoTableLocalService _expandoTableLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;
 	private final ListTypeLocalService _listTypeLocalService;
+	private final PhoneLocalService _phoneLocalService;
 	private final RegionLocalService _regionLocalService;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;

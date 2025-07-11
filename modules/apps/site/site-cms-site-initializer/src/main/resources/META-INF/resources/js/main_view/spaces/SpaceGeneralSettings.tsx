@@ -39,10 +39,12 @@ const getInitialMimeTypeLimit = () =>
 	}) as MimeTypeLimit;
 
 export default function SpaceGeneralSettings({
+	backURL,
 	groupId,
 	setSpace,
 	space,
 }: {
+	backURL?: string;
 	groupId: string;
 	setSpace?: React.Dispatch<React.SetStateAction<any>>;
 	space: Space;
@@ -146,11 +148,11 @@ export default function SpaceGeneralSettings({
 	};
 
 	const onCancel = () => {
-		const url = new URL(window.location.href);
-		const redirect = url.searchParams.get('redirect');
-
-		if (redirect) {
-			navigate(redirect);
+		if (backURL) {
+			navigate(backURL);
+		}
+		else {
+			window.history.back();
 		}
 	};
 

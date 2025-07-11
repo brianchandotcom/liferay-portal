@@ -42,6 +42,7 @@ export default function SpaceSettings({
 		{
 			component: (
 				<SpaceGeneralSettings
+					backURL={backURL}
 					groupId={groupId}
 					setSpace={setSpace}
 					space={space}
@@ -53,6 +54,7 @@ export default function SpaceSettings({
 		{
 			component: (
 				<SpaceLanguageSettings
+					backURL={backURL}
 					companyAvailableLanguages={companyAvailableLanguages}
 					setSpace={setSpace}
 					space={space}

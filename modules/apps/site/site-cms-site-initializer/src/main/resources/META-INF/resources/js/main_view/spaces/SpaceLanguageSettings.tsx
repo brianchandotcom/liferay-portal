@@ -9,7 +9,6 @@ import ClayForm, {
 	ClayDualListBox,
 	ClayRadio,
 	ClayRadioGroup,
-	ClaySelectWithOption,
 } from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import {useFormik} from 'formik';
@@ -18,31 +17,36 @@ import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
+import {FieldPicker} from '../../common/components/forms';
+import {Errors} from '../../common/components/forms/validations';
 import SpaceService from '../../common/services/SpaceService';
 import {LabelValueObject, Space} from '../../common/types/Space';
 import SpacePanel from './SpacePanel';
 
 export default function SpaceLanguageSettings({
+	backURL,
 	companyAvailableLanguages,
 	setSpace,
 	space,
 }: {
+	backURL?: string;
 	companyAvailableLanguages: LabelValueObject[];
 	setSpace?: React.Dispatch<React.SetStateAction<any>>;
 	space: Space;
 }) {
 	const [
-		showRemoveDefaultLanguageWarning,
-		setShowRemoveDefaultLanguageWarning,
+		defaultLanguageWarning,
+		setDefaultLanguageWarning,
 	] = useState<boolean>(false);
 
 	const {
-		handleChange,
+		errors,
 		handleSubmit,
 		resetForm,
 		setFieldValue,
 		setValues,
 		submitForm,
+		touched,
 		values,
 	} = useFormik({
 		initialValues: {
@@ -104,14 +108,23 @@ export default function SpaceLanguageSettings({
 				}
 			}
 		},
+		validate: (values): Errors => {
+			const errors: any = {};
+
+			if (values.useCustomLanguages && !values.defaultLanguageId) {
+				errors.defaultLanguageId = Liferay.Language.get('default-language-is-required');
+			}
+			
+			return errors;
+		},
 	});
 
 	const onCancel = () => {
-		const url = new URL(window.location.href);
-		const redirect = url.searchParams.get('redirect');
-
-		if (redirect) {
-			navigate(redirect);
+		if (backURL) {
+			navigate(backURL);
+		}
+		else {
+			window.history.back();
 		}
 	};
 
@@ -123,7 +136,7 @@ export default function SpaceLanguageSettings({
 		);
 
 		if (removingDefaultLanguage) {
-			setShowRemoveDefaultLanguageWarning(true);
+			setDefaultLanguageWarning(true);
 		}
 		else {
 			setValues({
@@ -135,7 +148,7 @@ export default function SpaceLanguageSettings({
 				selectedLanguages: nextSelectedLanguages,
 			});
 
-			setShowRemoveDefaultLanguageWarning(false);
+			setDefaultLanguageWarning(false);
 		}
 	};
 
@@ -197,12 +210,12 @@ export default function SpaceLanguageSettings({
 						showCollapseIcon
 					>
 						<ClayPanel.Body>
-							{showRemoveDefaultLanguageWarning && (
+							{defaultLanguageWarning && (
 								<ClayAlert
 									autoClose
 									displayType="danger"
 									onClose={() => {
-										setShowRemoveDefaultLanguageWarning(
+										setDefaultLanguageWarning(
 											false
 										);
 									}}
@@ -214,24 +227,14 @@ export default function SpaceLanguageSettings({
 								</ClayAlert>
 							)}
 
-							<ClayForm.Group>
-								<label
-									className="sr-only"
-									htmlFor="defaultLanguageId"
-								>
-									{Liferay.Language.get(
-										'custom-default-language'
-									)}
-								</label>
-
-								<ClaySelectWithOption
-									id="defaultLanguageId"
-									name="defaultLanguageId"
-									onChange={handleChange}
-									options={values.selectedLanguages}
-									value={values.defaultLanguageId}
-								/>
-							</ClayForm.Group>
+							<FieldPicker
+								errorMessage={touched.defaultLanguageId ? errors.defaultLanguageId : undefined}
+								label={Liferay.Language.get('default-language')}
+								name="defaultLanguageId"
+								onSelectionChange={(value: string) => setFieldValue('defaultLanguageId', value)}
+								items={values.selectedLanguages}
+								selectedKey={values.defaultLanguageId}
+							/>
 
 							<CustomLanguagesSelector
 								defaultLanguageId={values.defaultLanguageId}
@@ -267,7 +270,7 @@ export default function SpaceLanguageSettings({
 			</SpacePanel>
 
 			<ClayButton.Group className="mt-2" spaced>
-				<ClayButton onClick={submitForm}>
+				<ClayButton type="submit">
 					{Liferay.Language.get('save')}
 				</ClayButton>
 

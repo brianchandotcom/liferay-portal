@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -37,13 +36,9 @@ public class GradleJakartaTransformCheck extends BaseJakartaTransformCheck {
 		while (matcher.find()) {
 			String dependency = matcher.group();
 
-			String group = matcher.group(1);
-
-			String name = matcher.group(2);
-
 			String jakartaTransformDependencies =
 				jakartaTransformDependenciesMap.get(
-					StringBundler.concat(group, ":", name));
+					matcher.group(1) + ":" + matcher.group(2));
 
 			if (jakartaTransformDependencies != null) {
 				String[] dependencies = StringUtil.split(

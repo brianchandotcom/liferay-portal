@@ -9,12 +9,18 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import manageMembersAction from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageMembersAction';
+import manageSitesAction from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageSitesAction';
 import SpaceSummaryHeader, {
 	SpaceSummaryHeaderActions,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceSummaryHeader';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageMembersAction',
+	() => jest.fn()
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageSitesAction',
 	() => jest.fn()
 );
 
@@ -84,7 +90,10 @@ describe('SpaceSummaryHeader', () => {
 					...defaultProps,
 					permissions:
 						hasAssignMembersPermission !== undefined
-							? {hasAssignMembersPermission}
+							? {
+									hasAssignMembersPermission,
+									hasConnectSitesPermission: false,
+								}
 							: undefined,
 					spaceModalProps,
 				};
@@ -106,6 +115,56 @@ describe('SpaceSummaryHeader', () => {
 						hasAssignMembersPermission:
 							expectedHasAssignMembersPermission,
 						title: defaultProps.title,
+					},
+					expect.any(Function)
+				);
+			}
+		);
+	});
+
+	describe('manageSitesAction', () => {
+		it.each([
+			[false, undefined],
+			[false, false],
+			[true, true],
+		])(
+			'is called with hasConnectSitesPermission=%s when permissions.hasConnectSitesPermission is %s',
+			async (
+				expectedHasConnectSitesPermission,
+				hasConnectSitesPermission
+			) => {
+				const spaceModalProps = {
+					action: SpaceSummaryHeaderActions.OPEN_SITES_MODAL,
+					assetLibraryCreatorUserId: '123',
+					assetLibraryId: '456',
+				};
+
+				const props = {
+					...defaultProps,
+					permissions:
+						hasConnectSitesPermission !== undefined
+							? {
+									hasAssignMembersPermission: false,
+									hasConnectSitesPermission,
+								}
+							: undefined,
+					spaceModalProps,
+				};
+
+				render(<SpaceSummaryHeader {...props} />);
+
+				const button = screen.getByRole('button', {
+					name: defaultProps.label,
+				});
+
+				await userEvent.click(button);
+
+				expect(manageSitesAction).toHaveBeenCalledTimes(1);
+				expect(manageSitesAction).toHaveBeenCalledWith(
+					{
+						groupId: spaceModalProps.assetLibraryId,
+						hasConnectSitesPermission:
+							expectedHasConnectSitesPermission,
 					},
 					expect.any(Function)
 				);

@@ -14,7 +14,7 @@ export interface ManageSitesData {
 
 export default function manageSitesAction(
 	data: ManageSitesData,
-	loadData: () => void
+	loadData?: () => void
 ) {
 	openModal({
 		contentComponent: () => SpaceSitesModal(data),

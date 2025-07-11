@@ -63,10 +63,7 @@ public class DBCopyTablesProcess {
 	}
 
 	public void run() throws Exception {
-		_loadColumnNamesMap(
-			_sourceColumnNamesMap, _sourceColumnsType, _sourceDataSource);
-		_loadColumnNamesMap(
-			_targetColumnNamesMap, _targetColumnsType, _targetDataSource);
+		_loadColumnsMetadata();
 
 		_copyTables();
 	}
@@ -514,6 +511,13 @@ public class DBCopyTablesProcess {
 		for (List<String> columnNames : columnNamesMap.values()) {
 			Collections.sort(columnNames, String.CASE_INSENSITIVE_ORDER);
 		}
+	}
+
+	private void _loadColumnsMetadata() throws Exception {
+		_loadColumnNamesMap(
+			_sourceColumnNamesMap, _sourceColumnsType, _sourceDataSource);
+		_loadColumnNamesMap(
+			_targetColumnNamesMap, _targetColumnsType, _targetDataSource);
 	}
 
 	private void _setColumn(

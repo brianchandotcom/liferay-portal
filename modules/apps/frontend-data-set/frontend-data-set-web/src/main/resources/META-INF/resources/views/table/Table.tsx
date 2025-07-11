@@ -135,8 +135,8 @@ const Head = ({
 						className={getCellColumnClassName(field.fieldName)}
 						columnName={field.fieldName}
 						key={field.fieldName}
-						sortable={(field as any).sortable}
-						textValue="select"
+						sortable={field.sortable}
+						textValue={field.fieldName}
 					>
 						{field.label || (
 							<span className="sr-only">

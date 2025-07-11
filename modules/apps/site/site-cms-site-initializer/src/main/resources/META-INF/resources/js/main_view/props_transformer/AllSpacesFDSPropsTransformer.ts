@@ -5,6 +5,7 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
+import addMembersAction, {AddMembersData} from './actions/addMembersAction';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 
@@ -62,11 +63,34 @@ export default function AllSpacesFDSPropsTransformer({
 		}),
 		onActionDropdownItemClick: ({
 			action,
+			itemData,
 		}: {
-			action: {data: {id: string}};
+			action: {
+				data: {
+					id: string;
+				};
+			};
+			itemData: {
+				creatorUserId: string;
+				id: string;
+			};
 		}) => {
 			if (action.data.id === 'pin' || action.data.id === 'unpin') {
 				window.location.reload();
+			}
+
+			if (action.data.id === 'view-members') {
+				const assetLibraryCreatorUserId = itemData.creatorUserId;
+				const assetLibraryId = itemData.id;
+
+				const loadData = () => window.location.reload();
+				const data: AddMembersData = {
+					assetLibraryCreatorUserId,
+					assetLibraryId,
+					title: Liferay.Language.get('all-members'),
+				};
+
+				addMembersAction(data, loadData);
 			}
 		},
 	};

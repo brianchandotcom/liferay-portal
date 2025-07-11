@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
+
 import '../../../css/content_editor/ContentEditorSidePanel.scss';
 
 import {Button, VerticalBar} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useState} from 'react';
 
 import GeneralPanel from './panels/GeneralPanel';
 
@@ -33,17 +35,38 @@ const items: Item[] = [
 ];
 
 export default function ContentEditorSidePanel(props: Props) {
+	const [panel, setPanel] = useState<React.Key | null>(null);
+
 	return (
-		<VerticalBar className="content-editor__side-panel">
+		<VerticalBar
+			active={panel}
+			className="content-editor__side-panel"
+			onActiveChange={setPanel}
+		>
 			<VerticalBar.Content items={items}>
 				{(item) => {
 					const Component = item.component;
 
 					return (
 						<VerticalBar.Panel key={item.title}>
-							<div className="sidebar-header">
+							<div className="align-items-center border-0 d-flex justify-content-between sidebar-header">
 								<div className="component-title">
 									{item.title}
+								</div>
+
+								<div>
+									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get(
+											'close'
+										)}
+										borderless
+										displayType="secondary"
+										monospaced
+										onClick={() => setPanel(null)}
+										size="sm"
+										symbol="times"
+										title={Liferay.Language.get('close')}
+									/>
 								</div>
 							</div>
 

@@ -502,7 +502,7 @@ function SelectionFilter({
 					{actionType === 'add' && Liferay.Language.get('add-filter')}
 
 					{actionType === 'edit' &&
-						Liferay.Language.get('edit-filter')}
+						Liferay.Language.get('show-results')}
 
 					{actionType === 'delete' &&
 						Liferay.Language.get('delete-filter')}

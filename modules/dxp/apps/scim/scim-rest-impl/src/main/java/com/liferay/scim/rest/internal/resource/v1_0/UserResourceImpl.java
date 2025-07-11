@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
@@ -104,9 +105,9 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 			_countryLocalService, _emailAddressLocalService,
 			_expandoColumnLocalService, _expandoTableLocalService,
 			_expandoValueLocalService, _listTypeLocalService,
-			_regionLocalService, _searcher, _searchRequestBuilderFactory,
-			_userGroupLocalService, _userGroupService, _userLocalService,
-			_userService);
+			_phoneLocalService, _regionLocalService, _searcher,
+			_searchRequestBuilderFactory, _userGroupLocalService,
+			_userGroupService, _userLocalService, _userService);
 	}
 
 	private static final UserResourceManager _userResourceManager =
@@ -147,6 +148,9 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
+	private PhoneLocalService _phoneLocalService;
 
 	@Reference
 	private RegionLocalService _regionLocalService;

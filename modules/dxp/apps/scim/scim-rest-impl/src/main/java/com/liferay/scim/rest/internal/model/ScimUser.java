@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.wso2.charon3.core.objects.plainobjects.MultiValuedComplexType;
 import org.wso2.charon3.core.objects.plainobjects.ScimAddress;
 
 /**
@@ -95,6 +96,10 @@ public class ScimUser {
 
 	public String getPassword() {
 		return _password;
+	}
+
+	public List<MultiValuedComplexType> getPhoneNumbers() {
+		return _phoneNumbers;
 	}
 
 	public String[] getPhotos() {
@@ -261,6 +266,10 @@ public class ScimUser {
 		_passwordReset = passwordReset;
 	}
 
+	public void setPhoneNumbers(List<MultiValuedComplexType> phoneNumbers) {
+		_phoneNumbers = phoneNumbers;
+	}
+
 	public void setPhotos(String[] photos) {
 		_photos = photos;
 	}
@@ -330,6 +339,7 @@ public class ScimUser {
 	private long[] _organizationIds;
 	private String _password;
 	private boolean _passwordReset;
+	private List<MultiValuedComplexType> _phoneNumbers;
 	private String[] _photos;
 	private String _preferredLanguage;
 	private long _prefix;

@@ -32,10 +32,12 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -231,6 +233,7 @@ public class ScimUtil {
 		scimUser.setMiddleName(scimName.getMiddleName());
 		scimUser.setNickName(user.getNickName());
 		scimUser.setPassword(user.getPassword());
+		scimUser.setPhoneNumbers(user.getPhoneNumbers());
 		scimUser.setPhotos(_getScimValues(user.getPhotos()));
 		scimUser.setPreferredLanguage(user.getPreferredLanguage());
 		scimUser.setPrefix(
@@ -290,6 +293,7 @@ public class ScimUtil {
 			scimUser.setMiddleName(portalUser.getMiddleName());
 			scimUser.setModifiedDate(
 				_truncateDate(portalUser.getModifiedDate()));
+			scimUser.setPhoneNumbers(_getScimPhoneNumbers(contact));
 			scimUser.setPrefix(contact.getPrefixListTypeId());
 			scimUser.setScreenName(portalUser.getScreenName());
 			scimUser.setSuffix(contact.getSuffixListTypeId());
@@ -857,6 +861,34 @@ public class ScimUtil {
 		}
 
 		return imsMap;
+	}
+
+	private static List<MultiValuedComplexType> _getScimPhoneNumbers(
+		Contact contact) {
+
+		List<MultiValuedComplexType> scimPhoneNumbers = new ArrayList<>();
+
+		for (Phone phone :
+				PhoneLocalServiceUtil.getPhones(
+					contact.getCompanyId(), Contact.class.getName(),
+					contact.getContactId())) {
+
+			MultiValuedComplexType scimPhoneNumber =
+				new MultiValuedComplexType();
+
+			scimPhoneNumber.setPrimary(phone.isPrimary());
+
+			ListType listType = ListTypeLocalServiceUtil.fetchListType(
+				phone.getListTypeId());
+
+			scimPhoneNumber.setType(listType.getName());
+
+			scimPhoneNumber.setValue(phone.getNumber());
+
+			scimPhoneNumbers.add(scimPhoneNumber);
+		}
+
+		return scimPhoneNumbers;
 	}
 
 	private static String[] _getScimValues(

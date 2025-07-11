@@ -289,12 +289,7 @@ public class TestrayManagerImpl implements TestrayManager {
 
 		_loadObjectDefinitions(companyId, testrayCache);
 
-		_loadTestrayCaseTypes(companyId, testrayCache, userId);
-		_loadTestrayComponents(companyId, testrayCache, userId);
-		_loadTestrayFactorCategories(companyId, testrayCache, userId);
-		_loadTestrayFactorOptions(companyId, testrayCache, userId);
 		_loadTestrayProjects(companyId, testrayCache, userId);
-		_loadTestrayTeams(companyId, testrayCache, userId);
 	}
 
 	@Override
@@ -1671,98 +1666,6 @@ public class TestrayManagerImpl implements TestrayManager {
 		}
 	}
 
-	private void _loadTestrayCaseTypes(
-			long companyId, TestrayCache testrayCache, long userId)
-		throws Exception {
-
-		List<Map<String, Serializable>> valuesList = _getValuesList(
-			companyId, null, new String[] {"caseTypeId", "name"}, "CaseType",
-			testrayCache, userId);
-
-		if (ListUtil.isEmpty(valuesList)) {
-			return;
-		}
-
-		for (Map<String, Serializable> values : valuesList) {
-			testrayCache.addObjectEntryId(
-				"CaseType#name" + values.get("name"),
-				GetterUtil.getLong(values.get("caseTypeId")));
-		}
-	}
-
-	private void _loadTestrayComponents(
-			long companyId, TestrayCache testrayCache, long userId)
-		throws Exception {
-
-		List<Map<String, Serializable>> valuesList = _getValuesList(
-			companyId, null,
-			new String[] {
-				"c_componentId", "name", "r_teamToComponents_c_teamId"
-			},
-			"Component", testrayCache, userId);
-
-		if (ListUtil.isEmpty(valuesList)) {
-			return;
-		}
-
-		for (Map<String, Serializable> values : valuesList) {
-			testrayCache.addObjectEntryId(
-				StringBundler.concat(
-					"Component#", GetterUtil.getString(values.get("name")),
-					"#TeamId#",
-					GetterUtil.getLong(
-						values.get("r_teamToComponents_c_teamId"))),
-				GetterUtil.getLong(values.get("c_componentId")));
-		}
-	}
-
-	private void _loadTestrayFactorCategories(
-			long companyId, TestrayCache testrayCache, long userId)
-		throws Exception {
-
-		List<Map<String, Serializable>> valuesList = _getValuesList(
-			companyId, null, new String[] {"c_factorCategoryId", "name"},
-			"FactorCategory", testrayCache, userId);
-
-		if (ListUtil.isEmpty(valuesList)) {
-			return;
-		}
-
-		for (Map<String, Serializable> values : valuesList) {
-			testrayCache.addObjectEntryId(
-				"FactorCategory#" + GetterUtil.getString(values.get("name")),
-				GetterUtil.getLong(values.get("c_factorCategoryId")));
-		}
-	}
-
-	private void _loadTestrayFactorOptions(
-			long companyId, TestrayCache testrayCache, long userId)
-		throws Exception {
-
-		List<Map<String, Serializable>> valuesList = _getValuesList(
-			companyId, null,
-			new String[] {
-				"c_factorOptionId", "name",
-				"r_factorCategoryToOptions_c_factorCategoryId"
-			},
-			"FactorOption", testrayCache, userId);
-
-		if (ListUtil.isEmpty(valuesList)) {
-			return;
-		}
-
-		for (Map<String, Serializable> values : valuesList) {
-			testrayCache.addObjectEntryId(
-				StringBundler.concat(
-					"FactorOption#", GetterUtil.getString(values.get("name")),
-					"#FactorCategoryId#",
-					GetterUtil.getLong(
-						values.get(
-							"r_factorCategoryToOptions_c_factorCategoryId"))),
-				GetterUtil.getLong(values.get("c_factorOptionId")));
-		}
-	}
-
 	private void _loadTestrayProjects(
 			long companyId, TestrayCache testrayCache, long userId)
 		throws Exception {
@@ -1779,30 +1682,6 @@ public class TestrayManagerImpl implements TestrayManager {
 			testrayCache.addObjectEntryId(
 				"Project#" + GetterUtil.getString(values.get("name")),
 				GetterUtil.getLong(values.get("c_projectId")));
-		}
-	}
-
-	private void _loadTestrayTeams(
-			long companyId, TestrayCache testrayCache, long userId)
-		throws Exception {
-
-		List<Map<String, Serializable>> valuesList = _getValuesList(
-			companyId, null,
-			new String[] {"c_teamId", "name", "r_projectToTeams_c_projectIds"},
-			"Team", testrayCache, userId);
-
-		if (ListUtil.isEmpty(valuesList)) {
-			return;
-		}
-
-		for (Map<String, Serializable> values : valuesList) {
-			testrayCache.addObjectEntryId(
-				StringBundler.concat(
-					"Team#", GetterUtil.getString(values.get("name")),
-					"#ProjectId#",
-					GetterUtil.getLong(
-						values.get("r_projectToTeams_c_projectIds"))),
-				GetterUtil.getLong(values.get("c_teamId")));
 		}
 	}
 

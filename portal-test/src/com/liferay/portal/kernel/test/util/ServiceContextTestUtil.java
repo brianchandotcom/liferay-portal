@@ -59,14 +59,15 @@ public class ServiceContextTestUtil {
 	}
 
 	public static ServiceContext getServiceContext(
-			long companyId, long groupId, long userId, long[] assetCategoryIds,
-			String[] assetTagNames)
+			long companyId, long groupId, long userId,
+			boolean addGroupPermissions, boolean addGuestPermissions,
+			long[] assetCategoryIds, String[] assetTagNames)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(addGroupPermissions);
+		serviceContext.setAddGuestPermissions(addGuestPermissions);
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 		serviceContext.setAssetTagNames(assetTagNames);
 		serviceContext.setCompanyId(companyId);
@@ -79,6 +80,16 @@ public class ServiceContextTestUtil {
 		serviceContext.setUserId(userId);
 
 		return serviceContext;
+	}
+
+	public static ServiceContext getServiceContext(
+			long companyId, long groupId, long userId, long[] assetCategoryIds,
+			String[] assetTagNames)
+		throws PortalException {
+
+		return getServiceContext(
+			companyId, groupId, userId, true, true, assetCategoryIds,
+			assetTagNames);
 	}
 
 	public static ServiceContext getServiceContext(

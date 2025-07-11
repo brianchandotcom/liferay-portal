@@ -42,6 +42,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -359,6 +362,14 @@ public class DisplayPageTemplateFolderResourceTest
 		return displayPageTemplateFolder;
 	}
 
+	@Override
+	protected String
+			testBatchEngineDeleteImportTask_getSiteExternalReferenceCode()
+		throws Exception {
+
+		return testGroup.getExternalReferenceCode();
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -389,6 +400,23 @@ public class DisplayPageTemplateFolderResourceTest
 		return displayPageTemplateFolderResource.
 			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 				siteExternalReferenceCode, displayPageTemplateFolder);
+	}
+
+	@Override
+	protected Map<String, Map<String, String>>
+			testGetSiteDisplayPageTemplateFoldersPage_getExpectedActions(
+				String siteExternalReferenceCode)
+		throws Exception {
+
+		return Collections.emptyMap();
+	}
+
+	@Override
+	protected String
+			testGraphQLGetSiteDisplayPageTemplateFolder_getSiteExternalReferenceCode()
+		throws Exception {
+
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Override

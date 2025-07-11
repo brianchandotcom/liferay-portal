@@ -43,9 +43,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
 import java.util.List;
+import java.util.NavigableMap;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -167,7 +167,7 @@ public class PortalInstances {
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					group.getGroupId(), false);
 
-				TreeMap<String, String> virtualHostnames =
+				NavigableMap<String, String> virtualHostnames =
 					layoutSet.getVirtualHostnames();
 
 				if (virtualHostnames.isEmpty() ||

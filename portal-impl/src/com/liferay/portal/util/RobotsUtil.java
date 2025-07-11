@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
-import java.util.TreeMap;
+import java.util.NavigableMap;
 
 /**
  * @author David Truong
@@ -44,7 +44,7 @@ public class RobotsUtil {
 
 		int portalServerPort = PortalUtil.getPortalServerPort(secure);
 
-		TreeMap<String, String> virtualHostnames =
+		NavigableMap<String, String> virtualHostnames =
 			PortalUtil.getVirtualHostnames(layoutSet);
 
 		String virtualHostname = StringPool.BLANK;

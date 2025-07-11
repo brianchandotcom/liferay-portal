@@ -79,6 +79,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
@@ -264,7 +265,7 @@ public class SitemapManagerTest {
 
 		LayoutSet layoutSet = group.getPublicLayoutSet();
 
-		TreeMap<String, String> originalVirtualHostnames =
+		NavigableMap<String, String> originalVirtualHostnames =
 			layoutSet.getVirtualHostnames();
 
 		try {
@@ -280,7 +281,8 @@ public class SitemapManagerTest {
 		}
 		finally {
 			_layoutSetLocalService.updateVirtualHosts(
-				group.getGroupId(), false, originalVirtualHostnames);
+				group.getGroupId(), false,
+				new TreeMap<>(originalVirtualHostnames));
 		}
 	}
 

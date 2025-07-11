@@ -2889,7 +2889,7 @@ public class PortalImpl implements Portal {
 		String portalURL = getPortalURL(
 			company.getVirtualHostname(), portalPort, secureConnection);
 
-		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
+		NavigableMap<String, String> virtualHostnames = getVirtualHostnames(
 			layoutSet);
 
 		if (!virtualHostnames.isEmpty() &&
@@ -2948,7 +2948,7 @@ public class PortalImpl implements Portal {
 
 		String virtualHostname = null;
 
-		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
+		NavigableMap<String, String> virtualHostnames = getVirtualHostnames(
 			layoutSet);
 
 		if (!virtualHostnames.isEmpty()) {

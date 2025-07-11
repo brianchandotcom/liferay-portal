@@ -122,9 +122,9 @@ page import="jakarta.portlet.PortletURL" %>
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
+page import="java.util.NavigableMap" %><%@
 page import="java.util.Objects" %><%@
-page import="java.util.Set" %><%@
-page import="java.util.TreeMap" %>
+page import="java.util.Set" %>
 
 <%@ page import="org.osgi.service.cm.ConfigurationException" %>
 

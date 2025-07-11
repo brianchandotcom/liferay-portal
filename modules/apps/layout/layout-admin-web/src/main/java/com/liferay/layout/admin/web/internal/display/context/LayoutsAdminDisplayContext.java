@@ -126,8 +126,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Objects;
-import java.util.TreeMap;
 
 /**
  * @author Eudaldo Alonso
@@ -594,7 +594,7 @@ public class LayoutsAdminDisplayContext {
 
 		LayoutSet layoutSet = selLayout.getLayoutSet();
 
-		TreeMap<String, String> virtualHostnames =
+		NavigableMap<String, String> virtualHostnames =
 			layoutSet.getVirtualHostnames();
 
 		if (virtualHostnames.isEmpty() ||
@@ -1570,7 +1570,7 @@ public class LayoutsAdminDisplayContext {
 
 		String virtualHostname = null;
 
-		TreeMap<String, String> virtualHostnames =
+		NavigableMap<String, String> virtualHostnames =
 			PortalUtil.getVirtualHostnames(layoutSet);
 
 		if (!virtualHostnames.isEmpty()) {
@@ -2437,7 +2437,7 @@ public class LayoutsAdminDisplayContext {
 
 	private boolean _matchesHostname(
 		StringBuilder friendlyURLBase,
-		TreeMap<String, String> virtualHostnames) {
+		NavigableMap<String, String> virtualHostnames) {
 
 		for (String virtualHostname : virtualHostnames.keySet()) {
 			if (friendlyURLBase.indexOf(virtualHostname) != -1) {

@@ -145,6 +145,17 @@ function Comment({
 						dangerouslySetInnerHTML={{__html: comment.body}}
 					/>
 
+					{comment.children?.length ? (
+						<List className="border-left border-secondary mb-3 ml-2 pl-1 rounded-0">
+							{comment.children.map((child: Comment) => (
+								<Comment
+									comment={child}
+									key={child.commentId}
+								/>
+							))}
+						</List>
+					) : null}
+
 					{showEditor ? (
 						<CommentEditor
 							addCommentURL={addCommentURL!}

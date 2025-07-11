@@ -23,6 +23,28 @@ import SpaceService from '../../common/services/SpaceService';
 import {LabelValueObject, Space} from '../../common/types/Space';
 import SpacePanel from './SpacePanel';
 
+const CustomLanguagesSelector = styled.div<{defaultLanguageId: string}>`
+	option[value='${(props) => props.defaultLanguageId}']::after {
+		background-color: #fff;
+		border: 0.0625rem solid #89a7e0;
+		border-radius: 0.125rem;
+		color: #2e5aac;
+		content: '${Liferay.Language.get('default')}';
+		display: inline-flex;
+		font-size: 0.625rem;
+		font-weight: 600;
+		line-height: 1;
+		margin-left: 0.25rem;
+		max-width: 100%;
+		padding: 0.125rem 0.25rem;
+		text-transform: uppercase;
+		white-space: inherit;
+		word-wrap: break-word;
+		outline: 0;
+		vertical-align: bottom;
+	}
+`;
+
 export default function SpaceLanguageSettings({
 	backURL,
 	companyAvailableLanguages,
@@ -165,7 +187,6 @@ export default function SpaceLanguageSettings({
 
 				<ClayForm.Group>
 					<ClayRadioGroup
-						defaultValue={values.useCustomLanguages.toString()}
 						name="useCustomLanguages"
 						onChange={(value: any) => {
 							if (value === 'false') {
@@ -177,6 +198,7 @@ export default function SpaceLanguageSettings({
 								JSON.parse(value)
 							);
 						}}
+						value={String(values.useCustomLanguages)}
 					>
 						<ClayRadio
 							label={Liferay.Language.get(
@@ -284,25 +306,3 @@ export default function SpaceLanguageSettings({
 		</form>
 	);
 }
-
-const CustomLanguagesSelector = styled.div<{defaultLanguageId: string}>`
-	option[value='${(props) => props.defaultLanguageId}']::after {
-		background-color: #fff;
-		border: 0.0625rem solid #89a7e0;
-		border-radius: 0.125rem;
-		color: #2e5aac;
-		content: '${Liferay.Language.get('default')}';
-		display: inline-flex;
-		font-size: 0.625rem;
-		font-weight: 600;
-		line-height: 1;
-		margin-left: 0.25rem;
-		max-width: 100%;
-		padding: 0.125rem 0.25rem;
-		text-transform: uppercase;
-		white-space: inherit;
-		word-wrap: break-word;
-		outline: 0;
-		vertical-align: bottom;
-	}
-`;

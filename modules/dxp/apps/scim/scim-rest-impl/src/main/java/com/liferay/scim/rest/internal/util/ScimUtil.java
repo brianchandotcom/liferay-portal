@@ -34,10 +34,12 @@ import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
+import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -240,6 +242,7 @@ public class ScimUtil {
 			_getListTypeId(
 				scimUser.getCompanyId(), scimName.getHonorificPrefix(),
 				Contact.class.getName() + ".prefix"));
+		scimUser.setProfileUrl(user.getProfileUrl());
 		scimUser.setScreenName(user.getUserName());
 		scimUser.setSuffix(
 			_getListTypeId(
@@ -295,6 +298,7 @@ public class ScimUtil {
 				_truncateDate(portalUser.getModifiedDate()));
 			scimUser.setPhoneNumbers(_getScimPhoneNumbers(contact));
 			scimUser.setPrefix(contact.getPrefixListTypeId());
+			scimUser.setProfileUrl(_getScimProfileUrl(contact));
 			scimUser.setScreenName(portalUser.getScreenName());
 			scimUser.setSuffix(contact.getSuffixListTypeId());
 
@@ -889,6 +893,26 @@ public class ScimUtil {
 		}
 
 		return scimPhoneNumbers;
+	}
+
+	private static String _getScimProfileUrl(Contact contact) {
+		long listTypeId = ListTypeLocalServiceUtil.getListTypeId(
+			contact.getCompanyId(), "personal",
+			Contact.class.getName() + ".website");
+
+		for (Website website :
+				WebsiteLocalServiceUtil.getWebsites(
+					contact.getCompanyId(), Contact.class.getName(),
+					contact.getContactId())) {
+
+			if (website.isPrimary() &&
+				(website.getListTypeId() == listTypeId)) {
+
+				return website.getUrl();
+			}
+		}
+
+		return null;
 	}
 
 	private static String[] _getScimValues(

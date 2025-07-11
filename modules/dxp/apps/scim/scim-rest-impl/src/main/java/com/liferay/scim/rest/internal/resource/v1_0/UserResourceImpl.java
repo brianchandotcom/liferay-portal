@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -107,7 +108,8 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 			_expandoValueLocalService, _listTypeLocalService,
 			_phoneLocalService, _regionLocalService, _searcher,
 			_searchRequestBuilderFactory, _userGroupLocalService,
-			_userGroupService, _userLocalService, _userService);
+			_userGroupService, _userLocalService, _userService,
+			_websiteLocalService);
 	}
 
 	private static final UserResourceManager _userResourceManager =
@@ -174,5 +176,8 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Reference
 	private UserService _userService;
+
+	@Reference
+	private WebsiteLocalService _websiteLocalService;
 
 }

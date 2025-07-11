@@ -114,6 +114,10 @@ public class ScimUser {
 		return _prefix;
 	}
 
+	public String getProfileUrl() {
+		return _profileUrl;
+	}
+
 	public long[] getRoleIds() {
 		return _roleIds;
 	}
@@ -282,6 +286,10 @@ public class ScimUser {
 		_prefix = prefix;
 	}
 
+	public void setProfileUrl(String profileUrl) {
+		_profileUrl = profileUrl;
+	}
+
 	public void setRoleIds(long[] roleIds) {
 		_roleIds = roleIds;
 	}
@@ -343,6 +351,7 @@ public class ScimUser {
 	private String[] _photos;
 	private String _preferredLanguage;
 	private long _prefix;
+	private String _profileUrl;
 	private long[] _roleIds;
 	private String _screenName;
 	private boolean _sendEmail;

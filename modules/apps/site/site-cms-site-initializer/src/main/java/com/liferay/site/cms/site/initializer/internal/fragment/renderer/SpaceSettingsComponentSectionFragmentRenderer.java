@@ -8,7 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -56,7 +56,7 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 				WebKeys.THEME_DISPLAY);
 
 		JSONArray companyAvailableLanguagesJSONArray =
-			JSONFactoryUtil.createJSONArray();
+			_jsonFactory.createJSONArray();
 
 		for (Locale availableLocale :
 				LanguageUtil.getAvailableLocales(
@@ -81,5 +81,8 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 			"groupId", InfoItemUtil.getGroupId(httpServletRequest)
 		).build();
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

@@ -40,7 +40,7 @@ const COMPANY_AVAILABLE_LANGUAGES: LabelValueObject[] = [
 ];
 
 const mockProps = {
-    backURL: '/all-spaces',
+	backURL: '/all-spaces',
 	companyAvailableLanguages: COMPANY_AVAILABLE_LANGUAGES,
 	space: {
 		externalReferenceCode: 'space-external-reference-code',
@@ -54,7 +54,7 @@ const mockProps = {
 };
 
 const mockPropsWithCustomLanguages = {
-    backURL: '/all-spaces',
+	backURL: '/all-spaces',
 	companyAvailableLanguages: COMPANY_AVAILABLE_LANGUAGES,
 	space: {
 		externalReferenceCode: 'space-external-reference-code',

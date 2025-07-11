@@ -57,7 +57,11 @@ const renderComponent = ({
 	space?: Partial<Space>;
 } = {}) => {
 	return render(
-		<SpaceGeneralSettings backURL={backURL} groupId={groupId} space={space as Space} />
+		<SpaceGeneralSettings
+			backURL={backURL}
+			groupId={groupId}
+			space={space as Space}
+		/>
 	);
 };
 

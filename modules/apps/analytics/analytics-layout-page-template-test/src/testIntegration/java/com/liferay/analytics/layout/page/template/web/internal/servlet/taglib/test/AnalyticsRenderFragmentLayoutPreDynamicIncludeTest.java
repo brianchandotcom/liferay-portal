@@ -91,7 +91,9 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"<div data-analytics-asset-id=\"", blogsEntry.getEntryId(),
+				"<div data-analytics-external-reference-code=\"",
+				blogsEntry.getExternalReferenceCode(),
+				"\" data-analytics-asset-id=\"", blogsEntry.getEntryId(),
 				"\" data-analytics-asset-title=\"", blogsEntry.getTitle(),
 				"\" data-analytics-asset-type=\"blog\">"),
 			mockHttpServletResponse.getContentAsString());
@@ -127,7 +129,9 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"<div data-analytics-asset-action=\"preview\" ",
-				"data-analytics-asset-id=\"", fileEntry.getFileEntryId(),
+				"data-analytics-external-reference-code=\"",
+				fileEntry.getExternalReferenceCode(),
+				"\" data-analytics-asset-id=\"", fileEntry.getFileEntryId(),
 				"\" data-analytics-asset-title=\"", fileEntry.getTitle(),
 				"\" data-analytics-asset-type=\"document\" ",
 				"data-analytics-asset-version=\"", fileEntry.getVersion(),
@@ -160,7 +164,9 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"<div data-analytics-asset-id=\"",
+				"<div data-analytics-external-reference-code=\"",
+				journalArticle.getExternalReferenceCode(),
+				"\" data-analytics-asset-id=\"",
 				journalArticle.getResourcePrimKey(),
 				"\" data-analytics-asset-title=\"", journalArticle.getTitle(),
 				"\" data-analytics-asset-type=\"web-content\" ",

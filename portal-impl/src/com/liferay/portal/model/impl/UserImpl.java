@@ -1189,7 +1189,7 @@ public class UserImpl extends UserBaseImpl {
 	private long[] _teamIds;
 	private TimeZone _timeZone;
 
-	@CacheField(propagateToInterface = true)
+	@CacheField(permanent = true, propagateToInterface = true)
 	private long[] _userGroupIds;
 
 	private List<UserGroup> _userGroups;

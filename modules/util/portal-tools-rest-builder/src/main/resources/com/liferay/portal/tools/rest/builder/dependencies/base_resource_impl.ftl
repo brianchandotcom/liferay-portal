@@ -112,7 +112,7 @@ public abstract class Base${schemaName}ResourceImpl
 		javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 		generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures, schemaName)
 		generateCRUD = freeMarkerTool.generateCRUD(configYAML, javaMethodSignatures, schemaName)
-		generateEntityModelResource = ((freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.kernel.search.filter.Filter") || freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.kernel.search.Sort[]")) && freeMarkerTool.isVersionCompatible(configYAML, 10)) || generateBatch
+		generateEntityModelResource = ((freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.kernel.search.filter.Filter") || freeMarkerTool.containsParameterType(javaMethodSignatures, "[Lcom.liferay.portal.kernel.search.Sort;")) && freeMarkerTool.isVersionCompatible(configYAML, 10)) || generateBatch
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
 	/>
 

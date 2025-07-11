@@ -44,9 +44,9 @@ public class BaseTestReport implements TestReport {
 			return null;
 		}
 
-		String modulePath = matcher.group("moduleAppPath");
+		String moduleAppPath = matcher.group("moduleAppPath");
 
-		return "modules" + modulePath.replaceAll(":", "/");
+		return "modules" + moduleAppPath.replaceAll(":", "/");
 	}
 
 	@Override

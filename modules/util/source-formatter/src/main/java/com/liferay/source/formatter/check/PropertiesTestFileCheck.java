@@ -124,7 +124,7 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(sqlClauses))) {
 
-			int level = 2;
+			int level = 1;
 
 			String line = StringPool.BLANK;
 
@@ -637,7 +637,7 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 		"checkTestrayMainComponentName";
 
 	private static final Pattern _sqlPattern1 = Pattern.compile(
-		"(?<=\\A|\n) +test\\.batch\\.run\\.property(\\.global)?\\.query.+]=" +
+		"(?<=\\A|\n)test\\.batch\\.run\\.property(\\.global)?\\.query.+]=" +
 			"([\\s\\S]*?[^\\\\])(?=(\\Z|\n))");
 	private static final Pattern _sqlPattern2 = Pattern.compile(
 		"\\s(\\(.* ([!=]=|~) .+\\))( (AND|OR) )?(\\\\)?");

@@ -26,8 +26,8 @@ public class ServiceContextTestUtil {
 		throws PortalException {
 
 		return getServiceContext(
-			group.getCompanyId(), group.getGroupId(), userId, new long[0],
-			new String[0]);
+			group.getCompanyId(), group.getGroupId(), userId, true, true,
+			new long[0], new String[0]);
 	}
 
 	public static ServiceContext getServiceContext(long groupId)
@@ -47,7 +47,8 @@ public class ServiceContextTestUtil {
 	public static ServiceContext getServiceContext(long groupId, long userId)
 		throws PortalException {
 
-		return getServiceContext(groupId, userId, new long[0], new String[0]);
+		return getServiceContext(
+			groupId, userId, true, true, new long[0], new String[0]);
 	}
 
 	public static ServiceContext getServiceContext(
@@ -86,7 +87,7 @@ public class ServiceContextTestUtil {
 		throws PortalException {
 
 		return getServiceContext(
-			companyId, groupId, userId, new long[0], new String[0]);
+			companyId, groupId, userId, true, true, new long[0], new String[0]);
 	}
 
 	public static ServiceContext getServiceContext(
@@ -128,7 +129,7 @@ public class ServiceContextTestUtil {
 		throws PortalException {
 
 		return getServiceContext(
-			groupId, userId, assetCategoryIds, new String[0]);
+			groupId, userId, true, true, assetCategoryIds, new String[0]);
 	}
 
 	public static ServiceContext getServiceContext(
@@ -144,7 +145,8 @@ public class ServiceContextTestUtil {
 			long groupId, long userId, String[] assetTagNames)
 		throws PortalException {
 
-		return getServiceContext(groupId, userId, new long[0], assetTagNames);
+		return getServiceContext(
+			groupId, userId, true, true, new long[0], assetTagNames);
 	}
 
 }

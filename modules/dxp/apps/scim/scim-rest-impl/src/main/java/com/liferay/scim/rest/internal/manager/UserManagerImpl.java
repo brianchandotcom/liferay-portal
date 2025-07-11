@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -116,7 +117,7 @@ public class UserManagerImpl implements UserManager {
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		UserGroupLocalService userGroupLocalService,
 		UserGroupService userGroupService, UserLocalService userLocalService,
-		UserService userService) {
+		UserService userService, WebsiteLocalService websiteLocalService) {
 
 		_addressLocalService = addressLocalService;
 		_classNameLocalService = classNameLocalService;
@@ -138,6 +139,7 @@ public class UserManagerImpl implements UserManager {
 		_userGroupService = userGroupService;
 		_userLocalService = userLocalService;
 		_userService = userService;
+		_websiteLocalService = websiteLocalService;
 	}
 
 	@Override
@@ -741,6 +743,23 @@ public class UserManagerImpl implements UserManager {
 				phoneNumber.isPrimary(), serviceContext);
 		}
 
+		_websiteLocalService.deleteWebsites(
+			portalUser.getCompanyId(), Contact.class.getName(),
+			portalUser.getContactId());
+
+		if (Validator.isNotNull(scimUser.getProfileUrl())) {
+			listTypeId = _listTypeLocalService.getListTypeId(
+				portalUser.getCompanyId(), "personal",
+				Contact.class.getName() + ".website");
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			_websiteLocalService.addWebsite(
+				serviceContext.getUuidWithoutReset(), portalUser.getUserId(),
+				Contact.class.getName(), portalUser.getContactId(),
+				scimUser.getProfileUrl(), listTypeId, true, serviceContext);
+		}
+
 		return ScimUtil.toScimUser(portalUser);
 	}
 
@@ -1304,5 +1323,6 @@ public class UserManagerImpl implements UserManager {
 	private final UserGroupService _userGroupService;
 	private final UserLocalService _userLocalService;
 	private final UserService _userService;
+	private final WebsiteLocalService _websiteLocalService;
 
 }

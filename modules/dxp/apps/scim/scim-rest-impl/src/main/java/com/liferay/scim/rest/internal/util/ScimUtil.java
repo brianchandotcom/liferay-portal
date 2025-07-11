@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.rest.dto.v1_0.Operation;
 import com.liferay.scim.rest.dto.v1_0.PatchOp;
@@ -251,6 +252,7 @@ public class ScimUtil {
 			_getListTypeId(
 				scimUser.getCompanyId(), scimName.getHonorificSuffix(),
 				Contact.class.getName() + ".suffix"));
+		scimUser.setTimeZoneId(_getTimeZoneId(user.getTimezone()));
 		scimUser.setUserType(user.getUserType());
 		scimUser.setX509Certificates(
 			_getScimValues(user.getX509Certificates()));
@@ -305,6 +307,7 @@ public class ScimUtil {
 			scimUser.setRoleIds(portalUser.getRoleIds());
 			scimUser.setScreenName(portalUser.getScreenName());
 			scimUser.setSuffix(contact.getSuffixListTypeId());
+			scimUser.setTimeZoneId(portalUser.getTimeZoneId());
 
 			_setExpandoValueAttributes(scimUser);
 
@@ -952,6 +955,16 @@ public class ScimUtil {
 		}
 
 		return ArrayUtil.toStringArray(values);
+	}
+
+	private static String _getTimeZoneId(String timezone) {
+		if (timezone == null) {
+			return null;
+		}
+
+		return TimeZoneUtil.getTimeZone(
+			timezone
+		).getID();
 	}
 
 	private static boolean _isActive(User user) {

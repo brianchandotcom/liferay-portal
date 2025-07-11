@@ -572,6 +572,12 @@ public class UserManagerImpl implements UserManager {
 			portalUser = _addPortalUser(
 				birthdayMonth, birthdayDay, birthdayYear,
 				scimClientOAuth2ApplicationConfiguration, scimUser);
+
+			if (Validator.isNotNull(scimUser.getTimeZoneId())) {
+				portalUser.setTimeZoneId(scimUser.getTimeZoneId());
+
+				portalUser = _userLocalService.updateUser(portalUser);
+			}
 		}
 		else {
 			portalUser = _updatePortalUser(
@@ -1208,7 +1214,7 @@ public class UserManagerImpl implements UserManager {
 			StringPool.BLANK, false, portalUser.getReminderQueryQuestion(),
 			portalUser.getReminderQueryAnswer(), portalUser.getScreenName(),
 			scimUser.getEmails()[0], false, null, portalUser.getLanguageId(),
-			portalUser.getTimeZoneId(), portalUser.getGreeting(),
+			scimUser.getTimeZoneId(), portalUser.getGreeting(),
 			portalUser.getComments(), scimUser.getFirstName(),
 			scimUser.getMiddleName(), scimUser.getLastName(),
 			scimUser.getPrefix(), scimUser.getSuffix(), scimUser.isMale(),

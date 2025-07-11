@@ -130,6 +130,10 @@ public class ScimUser {
 		return _suffix;
 	}
 
+	public String getTimeZoneId() {
+		return _timeZoneId;
+	}
+
 	public long[] getUserGroupIds() {
 		return _userGroupIds;
 	}
@@ -306,6 +310,10 @@ public class ScimUser {
 		_suffix = suffix;
 	}
 
+	public void setTimeZoneId(String timeZoneId) {
+		_timeZoneId = timeZoneId;
+	}
+
 	public void setUpdatePassword(boolean updatePassword) {
 		_updatePassword = updatePassword;
 	}
@@ -356,6 +364,7 @@ public class ScimUser {
 	private String _screenName;
 	private boolean _sendEmail;
 	private long _suffix;
+	private String _timeZoneId;
 	private boolean _updatePassword;
 	private long[] _userGroupIds;
 	private String _userType;

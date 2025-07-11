@@ -21,18 +21,6 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 		_maxListWeight = maxListWeight;
 	}
 
-	public long getWeight(ListItemList listItemList) {
-		long weight = 0;
-
-		for (ListItem listItem : listItemList) {
-			weight += listItem.getWeight(null);
-		}
-
-		return weight;
-	}
-
-	public abstract long getWeight(T item);
-
 	public List<List<T>> split(List<T> list) {
 		ListItemList listItems = new ListItemList(0L);
 
@@ -219,19 +207,8 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 			return list;
 		}
 
-		private BalancedListSplitter<T> _balancedListSplitter;
-		private Long _targetWeight;
+		private final Long _targetWeight;
 
-	}
-
-	private List<ListItemList> _createListItemSortedSetList(int size) {
-		List<ListItemList> listItemSortedSetList = new ArrayList<>();
-
-		for (int i = 0; i < size; i++) {
-			listItemSortedSetList.add(new ListItemList(this, _maxListWeight));
-		}
-
-		return listItemSortedSetList;
 	}
 
 	private final long _maxListWeight;

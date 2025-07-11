@@ -5,7 +5,9 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
-import addMembersAction, {AddMembersData} from './actions/addMembersAction';
+import manageMembersAction, {
+	ManageMembersData,
+} from './actions/manageMembersAction';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 
@@ -84,13 +86,13 @@ export default function AllSpacesFDSPropsTransformer({
 				const assetLibraryId = itemData.id;
 
 				const loadData = () => window.location.reload();
-				const data: AddMembersData = {
+				const data: ManageMembersData = {
 					assetLibraryCreatorUserId,
 					assetLibraryId,
 					title: Liferay.Language.get('all-members'),
 				};
 
-				addMembersAction(data, loadData);
+				manageMembersAction(data, loadData);
 			}
 		},
 	};

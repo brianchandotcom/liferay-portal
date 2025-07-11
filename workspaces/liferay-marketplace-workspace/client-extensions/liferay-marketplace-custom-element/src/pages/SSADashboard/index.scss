@@ -1,0 +1,12 @@
+.published-apps-dashboard-page {
+	&-container {
+		display: flex;
+		gap: 2rem;
+		padding: 0;
+		min-width: 300px;
+
+		.dashboard-navigation-container {
+			min-width: 250px;
+		}
+	}
+}

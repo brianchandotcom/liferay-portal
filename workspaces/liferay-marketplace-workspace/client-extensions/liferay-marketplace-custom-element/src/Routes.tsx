@@ -34,6 +34,9 @@ const lazyRoutes = {
 	'purchased-apps': React.lazy(
 		() => import('./pages/CustomerDashboard/CustomerDashboardRouter')
 	),
+	'ssa-dashboard': React.lazy(
+		() => import('./pages/SSADashboard/SSADashboardRouter')
+	),
 } as const;
 
 export type RouteType = keyof typeof lazyRoutes;

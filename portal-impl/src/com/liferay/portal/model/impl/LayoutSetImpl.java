@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 
 /**
@@ -331,9 +332,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	 *         configured, the returned map will be empty.
 	 */
 	@Override
-	public TreeMap<String, String> getVirtualHostnames() {
+	public NavigableMap<String, String> getVirtualHostnames() {
 		if (_virtualHostnames != null) {
-			return new TreeMap<>(_virtualHostnames);
+			return _virtualHostnames;
 		}
 
 		List<VirtualHost> virtualHosts =
@@ -341,7 +342,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 				getCompanyId(), getLayoutSetId());
 
 		if (ListUtil.isEmpty(virtualHosts)) {
-			_virtualHostnames = new TreeMap<>();
+			_virtualHostnames = Collections.emptyNavigableMap();
 		}
 		else {
 			TreeMap<String, String> virtualHostnames = new TreeMap<>();
@@ -351,12 +352,13 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 					virtualHost.getHostname(), virtualHost.getLanguageId());
 			}
 
-			_virtualHostnames = virtualHostnames;
+			_virtualHostnames = Collections.unmodifiableNavigableMap(
+				virtualHostnames);
 		}
 
 		virtualHostnamesUpdateEntityCacheConsumer.accept(_virtualHostnames);
 
-		return new TreeMap<>(_virtualHostnames);
+		return _virtualHostnames;
 	}
 
 	@Override
@@ -467,7 +469,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	 * @see   #getVirtualHostnames()
 	 */
 	@Override
-	public void setVirtualHostnames(TreeMap<String, String> virtualHostnames) {
+	public void setVirtualHostnames(
+		NavigableMap<String, String> virtualHostnames) {
+
 		_virtualHostnames = virtualHostnames;
 	}
 
@@ -505,6 +509,6 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	private UnicodeProperties _settingsUnicodeProperties;
 
 	@CacheField(propagateToInterface = true)
-	private TreeMap<String, String> _virtualHostnames;
+	private NavigableMap<String, String> _virtualHostnames;
 
 }

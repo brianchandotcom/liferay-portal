@@ -1246,6 +1246,8 @@ public class LayoutLocalServiceWrapper
 					_sourceLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
 
 				_sites.copyPortletPermissions(_targetLayout, _sourceLayout);
+
+				_copyLayoutClassedModelUsages(_sourceLayout, _targetLayout);
 			}
 			else {
 				List<String> oldPortletIds = _deletePortletPermissions(
@@ -1275,10 +1277,6 @@ public class LayoutLocalServiceWrapper
 
 				_deleteOrphanPortletPreferences(portletIds, oldPortletIds);
 			}
-
-			// Copy classedModelUsages after copying the structure
-
-			_copyLayoutClassedModelUsages(_sourceLayout, _targetLayout);
 
 			_sites.copyExpandoBridgeAttributes(_sourceLayout, _targetLayout);
 			_sites.copyPortletSetups(_sourceLayout, _targetLayout);

@@ -12,6 +12,7 @@ import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.process.ProcessLog;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -32,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.nio.file.DirectoryStream;
@@ -388,7 +390,13 @@ public class Sidecar {
 
 		URL sidecarAgentBundleURL = _getBundleURL(SidecarAgent.class);
 
-		arguments.add("-javaagent:" + sidecarAgentBundleURL.getPath());
+		try {
+			arguments.add(
+				"-javaagent:" + Path.of(sidecarAgentBundleURL.toURI()));
+		}
+		catch (URISyntaxException uriSyntaxException) {
+			ReflectionUtil.throwException(uriSyntaxException);
+		}
 
 		return arguments;
 	}

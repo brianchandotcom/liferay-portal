@@ -52,7 +52,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -111,24 +110,15 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 	}
 
-	private FragmentEntry _getContributedFragmentEntry(
-		FragmentEntryLink fragmentEntryLink) {
-
-		Map<String, FragmentEntry> fragmentCollectionContributorEntries =
-			_fragmentCollectionContributorRegistry.getFragmentEntries();
-
-		return fragmentCollectionContributorEntries.get(
-			fragmentEntryLink.getRendererKey());
-	}
-
 	private FragmentEntryLink _getFragmentEntryLink(
 		FragmentRendererContext fragmentRendererContext) {
 
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
-		FragmentEntry fragmentEntry = _getContributedFragmentEntry(
-			fragmentEntryLink);
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				fragmentEntryLink.getRendererKey());
 
 		if (fragmentEntry != null) {
 			fragmentEntryLink.setCss(fragmentEntry.getCss());

@@ -790,11 +790,19 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	}
 
 	private void _assertWidgetPageSpecifications(
-		PageSpecification[] pageSpecifications,
-		WidgetPageSpecification widgetPageSpecification) {
+			PageSpecification[] pageSpecifications,
+			WidgetPageSpecification widgetPageSpecification)
+		throws Exception {
 
-		Assert.assertEquals(
-			Arrays.toString(pageSpecifications), 1, pageSpecifications.length);
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					widgetPageSpecification.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			pageSpecifications);
 
 		PageSpecificationsTestUtil.assertWidgetPageSpecification(
 			widgetPageSpecification,

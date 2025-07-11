@@ -86,8 +86,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Scanner;
-import java.util.TreeMap;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1192,7 +1192,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		LayoutSet stagingPrivateLayoutSet = _stagingGroup.getPrivateLayoutSet();
 
-		TreeMap<String, String> stagingPrivateVirtualHostnames =
+		NavigableMap<String, String> stagingPrivateVirtualHostnames =
 			stagingPrivateLayoutSet.getVirtualHostnames();
 
 		Map<Locale, String> stagingPublicLayoutFriendlyURLMap =
@@ -1200,7 +1200,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		LayoutSet stagingPublicLayoutSet = _stagingGroup.getPublicLayoutSet();
 
-		TreeMap<String, String> stagingPublicVirtualHostnames =
+		NavigableMap<String, String> stagingPublicVirtualHostnames =
 			stagingPublicLayoutSet.getVirtualHostnames();
 
 		content = StringUtil.replace(

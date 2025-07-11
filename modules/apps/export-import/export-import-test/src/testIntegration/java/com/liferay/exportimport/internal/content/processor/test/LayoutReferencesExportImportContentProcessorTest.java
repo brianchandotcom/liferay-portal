@@ -59,7 +59,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.TreeMap;
+import java.util.NavigableMap;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -1042,7 +1042,7 @@ public class LayoutReferencesExportImportContentProcessorTest {
 			layoutSet = group.getPublicLayoutSet();
 		}
 
-		TreeMap<String, String> virtualHostnames =
+		NavigableMap<String, String> virtualHostnames =
 			layoutSet.getVirtualHostnames();
 
 		return _portal.getPortalURL(

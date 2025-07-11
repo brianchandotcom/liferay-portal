@@ -34,8 +34,8 @@ import com.liferay.portal.util.PropsValues;
 import java.security.Key;
 
 import java.util.Locale;
+import java.util.NavigableMap;
 import java.util.TimeZone;
-import java.util.TreeMap;
 
 /**
  * @author Brian Wing Shun Chan
@@ -193,7 +193,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				groupId, false);
 
-			TreeMap<String, String> virtualHostnames =
+			NavigableMap<String, String> virtualHostnames =
 				layoutSet.getVirtualHostnames();
 
 			if (!virtualHostnames.isEmpty()) {
@@ -205,7 +205,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				groupId, true);
 
-			TreeMap<String, String> virtualHostnames =
+			NavigableMap<String, String> virtualHostnames =
 				layoutSet.getVirtualHostnames();
 
 			if (!virtualHostnames.isEmpty()) {
@@ -233,7 +233,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);
 
-		TreeMap<String, String> virtualHostnames =
+		NavigableMap<String, String> virtualHostnames =
 			layoutSet.getVirtualHostnames();
 
 		if (!virtualHostnames.isEmpty()) {

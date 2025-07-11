@@ -8,10 +8,11 @@ import classNames from 'classnames';
 import {
 	CKEditor5BalloonEditor,
 	LiferayEditorConfig,
+	TEditor,
 } from 'frontend-editor-ckeditor-web';
 import {openToast} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 export type Comment = {
 	author: {
@@ -69,6 +70,7 @@ function CommentEditor({
 	parentCommentId?: string | null;
 }) {
 	const [content, setContent] = useState<string>();
+	const editorRef = useRef<TEditor | null>(null);
 
 	return (
 		<>
@@ -83,6 +85,9 @@ function CommentEditor({
 				}}
 				onChange={(_, editor) => {
 					setContent(editor.getData());
+				}}
+				onReady={(editor) => {
+					editorRef.current = editor;
 				}}
 			/>
 
@@ -127,6 +132,18 @@ function CommentEditor({
 					size="sm"
 				>
 					{Liferay.Language.get('save')}
+				</ClayButton>
+
+				<ClayButton
+					borderless
+					className="ml-1"
+					displayType="secondary"
+					onClick={() => {
+						editorRef.current?.setData('');
+					}}
+					size="sm"
+				>
+					{Liferay.Language.get('cancel')}
 				</ClayButton>
 			</div>
 		</>

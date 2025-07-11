@@ -56,14 +56,13 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		JSONArray companyAvailableLanguagesJSONArray =
-			_jsonFactory.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (Locale availableLocale :
 				LanguageUtil.getAvailableLocales(
 					themeDisplay.getScopeGroupId())) {
 
-			companyAvailableLanguagesJSONArray.put(
+			jsonArray.put(
 				JSONUtil.put(
 					"label",
 					availableLocale.getDisplayName(themeDisplay.getLocale())
@@ -75,7 +74,7 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 		return HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(httpServletRequest, "redirect")
 		).put(
-			"companyAvailableLanguages", companyAvailableLanguagesJSONArray
+			"companyAvailableLanguages", jsonArray
 		).put(
 			"depotEntryId", InfoItemUtil.getDepotEntryId(httpServletRequest)
 		).put(

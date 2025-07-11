@@ -46,6 +46,26 @@ export const documentsAndMediaViews = [
 			image: 'contentUrl',
 			title: 'title',
 		},
+		setItemComponentProps: ({item, props}: {item: any; props: any}) => {
+			const stickerProps = {
+				stickerProps: {
+					displayType: 'outline-1',
+				},
+			};
+
+			if (!item.encodingFormat.startsWith('image')) {
+				return {
+					...props,
+					imgProps: null,
+					...stickerProps,
+				};
+			}
+
+			return {
+				...props,
+				...stickerProps,
+			};
+		},
 		thumbnail: 'cards2',
 	},
 	{

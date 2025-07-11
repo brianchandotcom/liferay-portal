@@ -58,7 +58,7 @@ public class PageSpecificationResourceImpl
 	extends BasePageSpecificationResourceImpl {
 
 	@Override
-	public void deleteSiteSiteByExternalReferenceCodePageSpecification(
+	public void deleteSitePageSpecification(
 			String siteExternalReferenceCode,
 			String pageSpecificationExternalReferenceCode)
 		throws Exception {
@@ -89,7 +89,7 @@ public class PageSpecificationResourceImpl
 	)
 	@Override
 	public Page<PageSpecification>
-			getSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage(
+			getSiteDisplayPageTemplatePageSpecificationsPage(
 				String siteExternalReferenceCode,
 				@NestedFieldId(value = "externalReferenceCode") String
 					displayPageTemplateExternalReferenceCode)
@@ -122,11 +122,10 @@ public class PageSpecificationResourceImpl
 
 	@NestedField(parentClass = MasterPage.class, value = "pageSpecifications")
 	@Override
-	public Page<PageSpecification>
-			getSiteSiteByExternalReferenceCodeMasterPagePageSpecificationsPage(
-				String siteExternalReferenceCode,
-				@NestedFieldId(value = "externalReferenceCode") String
-					masterPageExternalReferenceCode)
+	public Page<PageSpecification> getSiteMasterPagePageSpecificationsPage(
+			String siteExternalReferenceCode,
+			@NestedFieldId(value = "externalReferenceCode") String
+				masterPageExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -155,10 +154,9 @@ public class PageSpecificationResourceImpl
 	}
 
 	@Override
-	public PageSpecification
-			getSiteSiteByExternalReferenceCodePageSpecification(
-				String siteExternalReferenceCode,
-				String pageSpecificationExternalReferenceCode)
+	public PageSpecification getSitePageSpecification(
+			String siteExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -182,11 +180,10 @@ public class PageSpecificationResourceImpl
 
 	@NestedField(parentClass = PageTemplate.class, value = "pageSpecifications")
 	@Override
-	public Page<PageSpecification>
-			getSiteSiteByExternalReferenceCodePageTemplatePageSpecificationsPage(
-				String siteExternalReferenceCode,
-				@NestedFieldId(value = "externalReferenceCode") String
-					pageTemplateExternalReferenceCode)
+	public Page<PageSpecification> getSitePageTemplatePageSpecificationsPage(
+			String siteExternalReferenceCode,
+			@NestedFieldId(value = "externalReferenceCode") String
+				pageTemplateExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -219,11 +216,10 @@ public class PageSpecificationResourceImpl
 
 	@NestedField(parentClass = SitePage.class, value = "pageSpecifications")
 	@Override
-	public Page<PageSpecification>
-			getSiteSiteByExternalReferenceCodeSitePagePageSpecificationsPage(
-				String siteExternalReferenceCode,
-				@NestedFieldId(value = "externalReferenceCode") String
-					sitePageExternalReferenceCode)
+	public Page<PageSpecification> getSiteSitePagePageSpecificationsPage(
+			String siteExternalReferenceCode,
+			@NestedFieldId(value = "externalReferenceCode") String
+				sitePageExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -255,11 +251,10 @@ public class PageSpecificationResourceImpl
 
 	@NestedField(parentClass = UtilityPage.class, value = "pageSpecifications")
 	@Override
-	public Page<PageSpecification>
-			getSiteSiteByExternalReferenceCodeUtilityPagePageSpecificationsPage(
-				String siteExternalReferenceCode,
-				@NestedFieldId(value = "externalReferenceCode") String
-					utilityPageExternalReferenceCode)
+	public Page<PageSpecification> getSiteUtilityPagePageSpecificationsPage(
+			String siteExternalReferenceCode,
+			@NestedFieldId(value = "externalReferenceCode") String
+				utilityPageExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -281,11 +276,10 @@ public class PageSpecificationResourceImpl
 	}
 
 	@Override
-	public PageSpecification
-			putSiteSiteByExternalReferenceCodePageSpecification(
-				String siteExternalReferenceCode,
-				String pageSpecificationExternalReferenceCode,
-				PageSpecification pageSpecification)
+	public PageSpecification putSitePageSpecification(
+			String siteExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode,
+			PageSpecification pageSpecification)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {

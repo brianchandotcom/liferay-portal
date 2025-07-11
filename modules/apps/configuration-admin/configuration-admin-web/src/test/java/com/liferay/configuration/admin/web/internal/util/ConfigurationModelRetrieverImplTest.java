@@ -6,8 +6,14 @@
 package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.io.IOException;
 
 import java.util.Map;
 
@@ -17,9 +23,14 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockSettings;
+import org.mockito.Mockito;
+
 import org.osgi.framework.Constants;
 import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
@@ -32,6 +43,110 @@ public class ConfigurationModelRetrieverImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testGetConfiguration()
+		throws InvalidSyntaxException, IOException {
+
+		MockSettings mockSettings = Mockito.withSettings();
+
+		mockSettings = mockSettings.useConstructor();
+
+		ConfigurationModelRetrieverImpl configurationModelRetrieverImpl =
+			Mockito.mock(
+				ConfigurationModelRetrieverImpl.class,
+				mockSettings.defaultAnswer(Mockito.CALLS_REAL_METHODS));
+
+		ConfigurationAdmin configurationAdmin = Mockito.mock(
+			ConfigurationAdmin.class);
+
+		Mockito.when(
+			configurationAdmin.listConfigurations(Mockito.anyString())
+		).thenReturn(
+			new Configuration[0]
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			configurationModelRetrieverImpl, "_configurationAdmin",
+			configurationAdmin);
+
+		GroupLocalService groupLocalService = Mockito.mock(
+			GroupLocalService.class);
+
+		Group group = Mockito.mock(Group.class);
+
+		long companyId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			group.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
+		long groupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Mockito.when(
+			groupLocalService.fetchGroup(Mockito.eq(groupId))
+		).thenReturn(
+			group
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			configurationModelRetrieverImpl, "_groupLocalService",
+			groupLocalService);
+
+		String pid = RandomTestUtil.randomString();
+
+		configurationModelRetrieverImpl.getConfiguration(
+			pid, ExtendedObjectClassDefinition.Scope.GROUP, groupId);
+
+		Mockito.verify(
+			configurationModelRetrieverImpl, Mockito.times(1)
+		).getConfiguration(
+			pid, ExtendedObjectClassDefinition.Scope.GROUP, groupId, true
+		);
+
+		Mockito.verify(
+			configurationModelRetrieverImpl, Mockito.never()
+		).getConfiguration(
+			pid, ExtendedObjectClassDefinition.Scope.COMPANY, companyId, true
+		);
+
+		Mockito.verify(
+			configurationModelRetrieverImpl, Mockito.never()
+		).getConfiguration(
+			pid, ExtendedObjectClassDefinition.Scope.SYSTEM, null, true
+		);
+
+		Mockito.clearInvocations(configurationModelRetrieverImpl);
+
+		configurationModelRetrieverImpl.getConfiguration(
+			pid, ExtendedObjectClassDefinition.Scope.GROUP, groupId, false);
+
+		Mockito.verify(
+			configurationModelRetrieverImpl, Mockito.times(1)
+		).getConfiguration(
+			pid, ExtendedObjectClassDefinition.Scope.GROUP, groupId, false
+		);
+
+		Mockito.verify(
+			configurationModelRetrieverImpl, Mockito.times(1)
+		).getConfiguration(
+			pid, ExtendedObjectClassDefinition.Scope.COMPANY, companyId, false
+		);
+
+		Mockito.verify(
+			configurationModelRetrieverImpl, Mockito.times(1)
+		).getConfiguration(
+			pid, ExtendedObjectClassDefinition.Scope.SYSTEM, null, false
+		);
+	}
 
 	@Test
 	public void testGetPidFilterStringScopeCompany() throws Exception {

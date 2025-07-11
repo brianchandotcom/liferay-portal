@@ -33,12 +33,14 @@ import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -243,6 +245,7 @@ public class ScimUtil {
 				scimUser.getCompanyId(), scimName.getHonorificPrefix(),
 				Contact.class.getName() + ".prefix"));
 		scimUser.setProfileUrl(user.getProfileUrl());
+		scimUser.setRoleIds(_getPortalRoleIds(companyId, user.getRoles()));
 		scimUser.setScreenName(user.getUserName());
 		scimUser.setSuffix(
 			_getListTypeId(
@@ -299,6 +302,7 @@ public class ScimUtil {
 			scimUser.setPhoneNumbers(_getScimPhoneNumbers(contact));
 			scimUser.setPrefix(contact.getPrefixListTypeId());
 			scimUser.setProfileUrl(_getScimProfileUrl(contact));
+			scimUser.setRoleIds(portalUser.getRoleIds());
 			scimUser.setScreenName(portalUser.getScreenName());
 			scimUser.setSuffix(contact.getSuffixListTypeId());
 
@@ -795,6 +799,23 @@ public class ScimUtil {
 		}
 
 		return listType.getListTypeId();
+	}
+
+	private static long[] _getPortalRoleIds(
+		long companyId, List<MultiValuedComplexType> roles) {
+
+		List<Long> portalRoleIds = new ArrayList<>();
+
+		for (MultiValuedComplexType role : roles) {
+			Role portalRole = RoleLocalServiceUtil.fetchRole(
+				companyId, role.getValue());
+
+			if (portalRole != null) {
+				portalRoleIds.add(portalRole.getRoleId());
+			}
+		}
+
+		return ArrayUtil.toLongArray(portalRoleIds);
 	}
 
 	private static List<ScimAddress> _getScimAddresses(

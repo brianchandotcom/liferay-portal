@@ -1216,7 +1216,7 @@ public class UserManagerImpl implements UserManager {
 			contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(),
 			scimUser.getJobTitle(), portalUser.getGroupIds(),
-			portalUser.getOrganizationIds(), portalUser.getRoleIds(), null,
+			portalUser.getOrganizationIds(), scimUser.getRoleIds(), null,
 			portalUser.getUserGroupIds(), portalUser.getAddresses(),
 			portalUser.getEmailAddresses(), portalUser.getPhones(),
 			portalUser.getWebsites(), null, new ServiceContext());

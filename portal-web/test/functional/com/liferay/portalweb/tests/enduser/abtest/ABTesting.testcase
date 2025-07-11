@@ -850,74 +850,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-99225: Validate if the admin can delete a segment in an experience with an A/B test in terminated status"
-	@priority = 3
-	test DeleteSegmentABTestTerminated {
-		task ("Create a segment and an Experience using the segment created") {
-			ContentPages.gotoPageEditor();
-
-			Segmentation.createExperienceWithSegment(
-				newExperience = "NewExp1",
-				newSegment = "SegmentForABTestNewExp1");
-
-			Button.clickPublish();
-		}
-
-		task ("Create a new A/B test with a new experience, run and terminate AB Test") {
-			ABTest.openABTestPanel();
-
-			ContentPages.changeExperience(experienceName = "NewExp1");
-
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
-
-			ABTest.runTest();
-
-			ABTest.terminateTest();
-		}
-
-		task ("Assert not being able to delete the segment that was added in an experience") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			Segmentation.deleteSegment(entry = "SegmentForABTest");
-
-			AssertElementPresent(locator1 = "ABTest#DELETE_SEGMENT_WITH_EXPERIENCE_MESSAGE");
-		}
-	}
-
-	@description = "LPS-97195: Validate if the user not will delete a variant for A/B Test, if when he will delete and he presses the cancel button"
-	@priority = 4
-	test DeleteVariantCancel {
-		task ("Create AB test and create variant") {
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
-		}
-
-		task ("Try to delete variant") {
-			Click(
-				key_index = 1,
-				locator1 = "ABTest#VARIANT_DROPDOWN");
-
-			MenuItem.clickNoError(menuItem = "Delete");
-
-			Click(
-				key_text = "Cancel",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-		}
-
-		task ("Assert that variant is not deleted") {
-			AssertVisible(
-				key_variantName = "Variant name",
-				locator1 = "ABTest#VARIANT_TITLE");
-		}
-	}
-
 	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to delete the experience"
 	@priority = 4
 	test DeleteExperienceWithDraftABTest {
@@ -1034,6 +966,74 @@ definition {
 				key_title = "AB test title",
 				locator1 = "ABTest#AB_TEST_TITLE_DXP",
 				value1 = "AB test title");
+		}
+	}
+
+	@description = "LPS-99225: Validate if the admin can delete a segment in an experience with an A/B test in terminated status"
+	@priority = 3
+	test DeleteSegmentABTestTerminated {
+		task ("Create a segment and an Experience using the segment created") {
+			ContentPages.gotoPageEditor();
+
+			Segmentation.createExperienceWithSegment(
+				newExperience = "NewExp1",
+				newSegment = "SegmentForABTestNewExp1");
+
+			Button.clickPublish();
+		}
+
+		task ("Create a new A/B test with a new experience, run and terminate AB Test") {
+			ABTest.openABTestPanel();
+
+			ContentPages.changeExperience(experienceName = "NewExp1");
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
+
+		task ("Assert not being able to delete the segment that was added in an experience") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			Segmentation.deleteSegment(entry = "SegmentForABTest");
+
+			AssertElementPresent(locator1 = "ABTest#DELETE_SEGMENT_WITH_EXPERIENCE_MESSAGE");
+		}
+	}
+
+	@description = "LPS-97195: Validate if the user not will delete a variant for A/B Test, if when he will delete and he presses the cancel button"
+	@priority = 4
+	test DeleteVariantCancel {
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Try to delete variant") {
+			Click(
+				key_index = 1,
+				locator1 = "ABTest#VARIANT_DROPDOWN");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			Click(
+				key_text = "Cancel",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Assert that variant is not deleted") {
+			AssertVisible(
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE");
 		}
 	}
 

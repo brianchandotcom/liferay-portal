@@ -5,13 +5,13 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
-import addMembersAction from './actions/addMembersAction';
+import manageMembersAction from './actions/manageMembersAction';
 import UserGroupRenderer from './cell_renderers/UserGroupRenderer';
 import UserRenderer from './cell_renderers/UserRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 
 const ACTIONS = {
-	addMembers: addMembersAction,
+	addMembers: manageMembersAction,
 };
 
 export default function MembersFDSPropsTransformer({

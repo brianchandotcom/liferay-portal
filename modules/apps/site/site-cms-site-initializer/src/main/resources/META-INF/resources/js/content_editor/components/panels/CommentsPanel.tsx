@@ -61,7 +61,31 @@ export default function CommentsPanel({
 			{comments.length ? (
 				<List>
 					{comments.map((comment) => (
-						<Comment comment={comment} key={comment.commentId} />
+						<Comment
+							addCommentURL={addCommentURL}
+							comment={comment}
+							editorConfig={editorConfig.configJSONObject}
+							key={comment.commentId}
+							onAddComment={(
+								childComment: Comment,
+								parentId: string
+							) => {
+								setComments((comments) =>
+									comments.map((comment) =>
+										comment.commentId === parentId
+											? {
+													...comment,
+													children: [
+														...(comment?.children ||
+															[]),
+														childComment,
+													],
+												}
+											: comment
+									)
+								);
+							}}
+						/>
 					))}
 				</List>
 			) : null}
@@ -69,7 +93,19 @@ export default function CommentsPanel({
 	);
 }
 
-function Comment({comment}: {comment: Comment}) {
+function Comment({
+	addCommentURL,
+	comment,
+	editorConfig,
+	onAddComment,
+}: {
+	addCommentURL?: string;
+	comment: Comment;
+	editorConfig?: LiferayEditorConfig;
+	onAddComment?: (comment: Comment, parentId: string) => void;
+}) {
+	const [showEditor, setShowEditor] = useState<boolean>(false);
+
 	return (
 		<>
 			<List.Item
@@ -108,6 +144,32 @@ function Comment({comment}: {comment: Comment}) {
 						className="mt-2 text-3 w-100"
 						dangerouslySetInnerHTML={{__html: comment.body}}
 					/>
+
+					{showEditor ? (
+						<CommentEditor
+							addCommentURL={addCommentURL!}
+							editorConfig={editorConfig!}
+							onAddComment={(childComment) => {
+								onAddComment?.(childComment, comment.commentId);
+								setShowEditor(false);
+							}}
+							onCancel={() => setShowEditor(false)}
+							parentCommentId={comment.commentId}
+						/>
+					) : (
+						<div className="w-100">
+							{comment.children ? (
+								<ClayButton
+									borderless
+									displayType="secondary"
+									onClick={() => setShowEditor(true)}
+									size="xs"
+								>
+									{Liferay.Language.get('reply')}
+								</ClayButton>
+							) : null}
+						</div>
+					)}
 				</article>
 			</List.Item>
 		</>
@@ -118,11 +180,13 @@ function CommentEditor({
 	addCommentURL,
 	editorConfig,
 	onAddComment,
+	onCancel,
 	parentCommentId = null,
 }: {
 	addCommentURL: string;
 	editorConfig: LiferayEditorConfig;
 	onAddComment: (comment: Comment, parentId?: string) => void;
+	onCancel?: () => void;
 	parentCommentId?: string | null;
 }) {
 	const [content, setContent] = useState<string>();
@@ -198,6 +262,8 @@ function CommentEditor({
 					displayType="secondary"
 					onClick={() => {
 						editorRef.current?.setData('');
+
+						onCancel?.();
 					}}
 					size="sm"
 				>

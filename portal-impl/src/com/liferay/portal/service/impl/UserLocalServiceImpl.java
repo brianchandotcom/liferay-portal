@@ -180,6 +180,7 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.UserCacheModel;
 import com.liferay.portal.model.impl.UserImpl;
+import com.liferay.portal.model.impl.UserModelImpl;
 import com.liferay.portal.security.auth.AuthPipeline;
 import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
@@ -233,6 +234,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * Provides the local service for accessing, adding, authenticating, deleting,
@@ -3143,8 +3145,26 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User loadGetGuestUser(long companyId) throws PortalException {
-		return userPersistence.findByC_T_First(
+		User user = userPersistence.findByC_T_First(
 			companyId, UserConstants.TYPE_GUEST, null);
+
+		long[] userGroupIds = new long[0];
+
+		user.setUserGroupIds(userGroupIds);
+
+		try {
+			java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
+				UserModelImpl.class, "userGroupIdsUpdateEntityCacheConsumer");
+
+			Consumer<long[]> consumer = (Consumer<long[]>)field.get(user);
+
+			consumer.accept(userGroupIds);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return user;
 	}
 
 	/**

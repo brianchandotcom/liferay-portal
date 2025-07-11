@@ -613,7 +613,7 @@ public class TestrayServer {
 		JenkinsResultsParserUtil.tarGzip(gcpResultsDir, resultsTarGzFile);
 
 		testrayS3Bucket.createTestrayS3Object(
-			"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
+			"ci-test/" + resultsTarGzFile.getName(), resultsTarGzFile);
 	}
 
 	private void _sendCommunicationFailureNotification(String message) {

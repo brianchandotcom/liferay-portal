@@ -985,6 +985,44 @@ public class TestrayImporter {
 		_sendPullRequestNotification();
 	}
 
+	private void _addDetailsElements(
+		Element propertiesElement,
+		JUnitBatchBuildTestrayCaseResult testrayCaseResult) {
+
+		Element detailsElement = propertiesElement.addElement("details");
+
+		for (String methodName : testrayCaseResult.getMethodNames()) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					testrayCaseResult.getMethodIssues(methodName))) {
+
+				continue;
+			}
+
+			Element detailElement = detailsElement.addElement("detail");
+
+			Element issuesPropertyElement = detailElement.addElement(
+				"property");
+
+			issuesPropertyElement.addAttribute("name", "testray.jira.issues");
+			issuesPropertyElement.addAttribute(
+				"value", testrayCaseResult.getMethodIssues(methodName));
+
+			Element statusPropertyElement = detailElement.addElement(
+				"property");
+
+			statusPropertyElement.addAttribute(
+				"name", "testray.testcase.detail.status");
+			statusPropertyElement.addAttribute(
+				"value", testrayCaseResult.getMethodStatus(methodName));
+
+			Element namePropertyElement = detailElement.addElement("property");
+
+			namePropertyElement.addAttribute(
+				"name", "testray.testcase.detail.name");
+			namePropertyElement.addAttribute("value", methodName);
+		}
+	}
+
 	private void _addPropertyElements(
 		Element propertiesElement, Map<String, String> propertiesMap) {
 
@@ -1404,11 +1442,6 @@ public class TestrayImporter {
 				testrayCaseName = testrayCaseName.substring(0, 150);
 			}
 
-			if (testrayCaseResult.getIssues() != null) {
-				testcasePropertiesMap.put(
-					"testray.jira.issues", testrayCaseResult.getIssues());
-			}
-
 			testcasePropertiesMap.put("testray.testcase.name", testrayCaseName);
 
 			testcasePropertiesMap.put(
@@ -1423,6 +1456,16 @@ public class TestrayImporter {
 
 			Element propertiesElement = testcaseElement.addElement(
 				"properties");
+
+			if (testrayCaseResult instanceof JUnitBatchBuildTestrayCaseResult) {
+				_addDetailsElements(
+					propertiesElement,
+					(JUnitBatchBuildTestrayCaseResult)testrayCaseResult);
+			}
+			else {
+				testcasePropertiesMap.put(
+					"testray.jira.issues", testrayCaseResult.getIssues());
+			}
 
 			_addPropertyElements(propertiesElement, testcasePropertiesMap);
 

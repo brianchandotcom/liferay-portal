@@ -9,10 +9,14 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryModel;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -245,6 +249,37 @@ public class TestrayManagerImpl implements TestrayManager {
 		}
 
 		return values.get(0);
+	}
+
+	public Long[] getRelatedTestrayRoutineIds(
+			long companyId, long testrayRoutineId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				companyId, "C_Routine");
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectDefinitionId1(
+					objectDefinition.getObjectDefinitionId(), "parentRoutines");
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getManyToManyObjectEntries(
+				0, objectRelationship.getObjectRelationshipId(),
+				testrayRoutineId, true, false, null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		if (objectEntries.isEmpty()) {
+			return new Long[] {testrayRoutineId};
+		}
+
+		List<Long> objectEntryIds = TransformUtil.transform(
+			objectEntries, ObjectEntryModel::getObjectEntryId);
+
+		objectEntryIds.add(testrayRoutineId);
+
+		return objectEntryIds.toArray(new Long[0]);
 	}
 
 	@Override
@@ -1815,6 +1850,9 @@ public class TestrayManagerImpl implements TestrayManager {
 
 	@Reference(target = "(object.entry.manager.storage.type=default)")
 	private ObjectEntryManager _objectEntryManager;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

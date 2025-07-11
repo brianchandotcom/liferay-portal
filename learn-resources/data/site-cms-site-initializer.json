@@ -1,4 +1,10 @@
 {
+	"add-space-members": {
+		"en_US": {
+			"message": "Learn more about space memberships.",
+			"url": "https://learn.liferay.com/w/dxp/content-management-system/liferay-cms/spaces/space-memberships"
+		}
+	},
 	"new-space": {
 		"en_US": {
 			"message": "Learn more about spaces.",

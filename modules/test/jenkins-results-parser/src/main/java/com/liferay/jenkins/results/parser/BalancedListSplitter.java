@@ -6,8 +6,11 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * @author Peter Yoo
@@ -37,44 +40,47 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 			listItems.add(new ListItem(item));
 		}
 
-		Collections.sort(listItems);
-
-		long totalWeight = listItems.getWeight();
-
-		int minNumberOfLists = (int)(totalWeight / _maxListWeight);
-
-		if ((totalWeight % _maxListWeight) >= 0) {
-			minNumberOfLists++;
-		}
-
-		List<ListItemList> listItemLists = _createListItemSortedSetList(
-			minNumberOfLists);
+		TreeMap<Long, List<ListItemList>> listItemListMap = new TreeMap<>();
 
 		for (ListItem listItem : listItems) {
-			Collections.sort(listItemLists);
+			Map.Entry<Long, List<ListItemList>> entry =
+				listItemListMap.ceilingEntry(listItem.getWeight());
 
-			ListItemList emptiestListItemList = listItemLists.get(0);
+			ListItemList listItemList = null;
 
-			if (emptiestListItemList.isEmpty() ||
-				(emptiestListItemList.getAvailableWeight() >=
-					listItem.getWeight(emptiestListItemList))) {
+			if (entry != null) {
+				List<ListItemList> availableListItemLists = entry.getValue();
 
-				emptiestListItemList.add(listItem);
+				if (!availableListItemLists.isEmpty()) {
+					listItemList = availableListItemLists.remove(0);
 
-				continue;
+					if (availableListItemLists.isEmpty()) {
+						listItemListMap.remove(entry.getKey());
+					}
+				}
 			}
 
-			ListItemList newListItemList = new ListItemList(
-				this, _maxListWeight);
+			if (listItemList == null) {
+				listItemList = new ListItemList(getMaxListWeight());
+			}
 
-			newListItemList.add(listItem);
+			listItemList.add(listItem);
 
-			listItemLists.add(newListItemList);
+			List<ListItemList> listItemLists = listItemListMap.computeIfAbsent(
+				listItemList.getAvailableWeight(), k -> new ArrayList<>());
+
+			listItemLists.add(listItemList);
 		}
 
-		List<List<T>> lists = new ArrayList<>(listItemLists.size());
+		List<ListItemList> allListItemLists = new ArrayList<>();
 
-		for (ListItemList listItemList : listItemLists) {
+		for (List<ListItemList> listItemLists : listItemListMap.values()) {
+			allListItemLists.addAll(listItemLists);
+		}
+
+		List<List<T>> lists = new ArrayList<>(allListItemLists.size());
+
+		for (ListItemList listItemList : allListItemLists) {
 			List<T> newList = listItemList.toList();
 
 			if ((newList == null) || newList.isEmpty()) {

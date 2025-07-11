@@ -1812,8 +1812,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		_setModifiedDate = false;
 
-		setUserGroupIds(null);
-
 		_columnBitmask = 0;
 	}
 
@@ -2088,8 +2086,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		try {
 			userCacheModel.groupId = (long)_groupIdMethodHandle.invokeExact(
 				(UserImpl)this);
-
-			setUserGroupIds(null);
 
 			userCacheModel.userGroupIds =
 				(long[])_userGroupIdsMethodHandle.invokeExact((UserImpl)this);

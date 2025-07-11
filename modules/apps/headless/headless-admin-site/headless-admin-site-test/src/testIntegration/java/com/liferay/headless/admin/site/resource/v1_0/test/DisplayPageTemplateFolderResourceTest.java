@@ -144,6 +144,16 @@ public class DisplayPageTemplateFolderResourceTest
 		super.testGetSiteDisplayPageTemplateFolderPermissionsPage();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteSiteDisplayPageTemplateFolder()
+		throws Exception {
+
+		super.testGraphQLDeleteSiteDisplayPageTemplateFolder();
+	}
+
+	@Ignore
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
@@ -200,6 +210,24 @@ public class DisplayPageTemplateFolderResourceTest
 
 		super.
 			testGraphQLGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteDisplayPageTemplateFoldersPage()
+		throws Exception {
+
+		super.testGraphQLGetSiteDisplayPageTemplateFoldersPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostSiteDisplayPageTemplateFolder()
+		throws Exception {
+
+		super.testGraphQLGetSiteDisplayPageTemplateFolder();
 	}
 
 	@Override

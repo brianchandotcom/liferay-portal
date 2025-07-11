@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Override
-	public void deleteSiteSiteByExternalReferenceCodeSitePage(
+	public void deleteSiteSitePage(
 			String siteExternalReferenceCode,
 			String sitePageExternalReferenceCode)
 		throws Exception {
@@ -95,7 +95,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public SitePage getSiteSiteByExternalReferenceCodeSitePage(
+	public SitePage getSiteSitePage(
 			String siteExternalReferenceCode,
 			String sitePageExternalReferenceCode)
 		throws Exception {
@@ -116,7 +116,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public Page<SitePage> getSiteSiteByExternalReferenceCodeSitePagesPage(
+	public Page<SitePage> getSiteSitePagesPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -153,7 +153,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public SitePage postByExternalReferenceCodeSitePage(
+	public SitePage postSiteSitePage(
 			String siteExternalReferenceCode, SitePage sitePage)
 		throws Exception {
 
@@ -171,11 +171,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public ContentPageSpecification
-			postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
-				ContentPageSpecification contentPageSpecification)
+	public ContentPageSpecification postSiteSitePagePageSpecification(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode,
+			ContentPageSpecification contentPageSpecification)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -201,7 +200,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public SitePage putSiteSiteByExternalReferenceCodeSitePage(
+	public SitePage putSiteSitePage(
 			String siteExternalReferenceCode,
 			String sitePageExternalReferenceCode, SitePage sitePage)
 		throws Exception {
@@ -248,7 +247,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			Group group = _groupLocalService.getGroup(
 				(Long)parameters.get("siteId"));
 
-			return getSiteSiteByExternalReferenceCodeSitePagesPage(
+			return getSiteSitePagesPage(
 				group.getExternalReferenceCode(), search, null, filter,
 				pagination, sorts);
 		}

@@ -1515,7 +1515,6 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, ?> attributeGetterFunctions =
 			baseModel.getAttributeGetterFunctions();
 
-		@SuppressWarnings("unchecked")
 		Function<Object, Object> function =
 			(Function<Object, Object>)attributeGetterFunctions.get(
 				titleObjectField.getDBColumnName());

@@ -124,9 +124,9 @@ public class ViewAllSpacesDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "space-settings"), "get",
 				"update", null),
 			new FDSActionDropdownItem(
-				"#", "users", "view-members",
-				LanguageUtil.get(_httpServletRequest, "view-members"), "get",
-				"update", null),
+				null, "users", "view-members",
+				LanguageUtil.get(_httpServletRequest, "view-members"), "get", null,
+				null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					PortalUtil.getControlPanelPortletURL(

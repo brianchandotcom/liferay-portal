@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -35,7 +36,9 @@ import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
+import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -79,6 +82,13 @@ public class ModifiedFacetDisplayContextBuilderTest
 		).when(
 			_facet
 		).getSearchContext();
+
+		_defaultLocale = LocaleThreadLocal.getDefaultLocale();
+	}
+
+	@After
+	public void tearDown() {
+		LocaleThreadLocal.setDefaultLocale(_defaultLocale);
 	}
 
 	@Test
@@ -303,6 +313,30 @@ public class ModifiedFacetDisplayContextBuilderTest
 
 		_assertTermDisplayContextsDoNotHaveFromAndToParameters(
 			modifiedFacetDisplayContext.getBucketDisplayContexts());
+	}
+
+	@Test
+	public void testModifiedFilterParametersUseUSFormat() {
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
+
+		modifiedFacetDisplayContextBuilder.setCurrentURL(
+			"/?modifiedFrom=2018-01-01&modifiedTo=2018-01-31");
+
+		for (Locale locale : _localesToTest) {
+			LocaleThreadLocal.setDefaultLocale(locale);
+
+			ModifiedFacetDisplayContext modifiedFacetDisplayContext =
+				modifiedFacetDisplayContextBuilder.build();
+
+			BucketDisplayContext bucketDisplayContext =
+				modifiedFacetDisplayContext.
+					getCustomRangeBucketDisplayContext();
+
+			Assert.assertEquals(
+				"/?modifiedFrom=2025-07-10&modifiedTo=2025-07-11",
+				bucketDisplayContext.getFilterValue());
+		}
 	}
 
 	@Override
@@ -620,9 +654,12 @@ public class ModifiedFacetDisplayContextBuilderTest
 		portalUtil.setPortal(portal);
 	}
 
+	private Locale _defaultLocale;
 	private final Facet _facet = Mockito.mock(Facet.class);
 	private final FacetCollector _facetCollector = Mockito.mock(
 		FacetCollector.class);
 	private JSONFactoryImpl _jsonFactoryImpl;
+	private final List<Locale> _localesToTest = List.of(
+		LocaleUtil.US, new Locale("ar", "EG"));
 
 }

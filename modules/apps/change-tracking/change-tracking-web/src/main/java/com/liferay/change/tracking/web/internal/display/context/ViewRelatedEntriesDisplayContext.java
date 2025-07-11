@@ -12,6 +12,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -208,7 +211,7 @@ public class ViewRelatedEntriesDisplayContext {
 		).buildString();
 	}
 
-	public List<SelectOption> getSelectOptions() {
+	public List<SelectOption> getSelectOptions() throws Exception {
 		List<SelectOption> selectOptions = new ArrayList<>();
 
 		List<CTCollection> ctCollections =
@@ -222,7 +225,11 @@ public class ViewRelatedEntriesDisplayContext {
 				StringPool.BLANK));
 
 		for (CTCollection ctCollection : ctCollections) {
-			if (ctCollection.getCtCollectionId() != _ctCollectionId) {
+			if ((ctCollection.getCtCollectionId() != _ctCollectionId) &&
+				CTCollectionPermission.contains(
+					PermissionThreadLocal.getPermissionChecker(), ctCollection,
+					ActionKeys.UPDATE)) {
+
 				selectOptions.add(
 					new SelectOption(
 						ctCollection.getName(),

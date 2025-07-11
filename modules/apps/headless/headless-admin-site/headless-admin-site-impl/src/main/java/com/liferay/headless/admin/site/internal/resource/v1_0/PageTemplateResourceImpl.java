@@ -76,7 +76,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 	@Override
-	public void deleteSiteSiteByExternalReferenceCodePageTemplate(
+	public void deleteSitePageTemplate(
 			String siteExternalReferenceCode,
 			String pageTemplateExternalReferenceCode)
 		throws Exception {
@@ -93,7 +93,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	@Override
-	public PageTemplate getSiteSiteByExternalReferenceCodePageTemplate(
+	public PageTemplate getSitePageTemplate(
 			String siteExternalReferenceCode,
 			String pageTemplateExternalReferenceCode)
 		throws Exception {
@@ -124,10 +124,9 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	@Override
-	public Page<PageTemplate>
-			getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage(
-				String siteExternalReferenceCode,
-				String pageTemplateSetExternalReferenceCode, Boolean flatten)
+	public Page<PageTemplate> getSitePageTemplateSetPageTemplatesPage(
+			String siteExternalReferenceCode,
+			String pageTemplateSetExternalReferenceCode, Boolean flatten)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -161,11 +160,10 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	@Override
-	public Page<PageTemplate>
-			getSiteSiteByExternalReferenceCodePageTemplatesPage(
-				String siteExternalReferenceCode, String search,
-				Aggregation aggregation, Filter filter, Pagination pagination,
-				Sort[] sorts)
+	public Page<PageTemplate> getSitePageTemplatesPage(
+			String siteExternalReferenceCode, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -198,7 +196,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	@Override
-	public PageTemplate postSiteSiteByExternalReferenceCodePageTemplate(
+	public PageTemplate postSitePageTemplate(
 			String siteExternalReferenceCode, PageTemplate pageTemplate)
 		throws Exception {
 
@@ -214,11 +212,10 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	@Override
-	public ContentPageSpecification
-			postSiteSiteByExternalReferenceCodePageTemplatePageSpecification(
-				String siteExternalReferenceCode,
-				String pageTemplateExternalReferenceCode,
-				ContentPageSpecification contentPageSpecification)
+	public ContentPageSpecification postSitePageTemplatePageSpecification(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode,
+			ContentPageSpecification contentPageSpecification)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -251,11 +248,10 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	@Override
-	public PageTemplate
-			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
-				String siteExternalReferenceCode,
-				String pageTemplateSetExternalReferenceCode,
-				PageTemplate pageTemplate)
+	public PageTemplate postSitePageTemplateSetPageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateSetExternalReferenceCode,
+			PageTemplate pageTemplate)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -284,7 +280,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	@Override
-	public PageTemplate putSiteSiteByExternalReferenceCodePageTemplate(
+	public PageTemplate putSitePageTemplate(
 			String siteExternalReferenceCode,
 			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
 		throws Exception {

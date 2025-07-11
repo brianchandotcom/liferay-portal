@@ -41,6 +41,7 @@ export function AddSpaceMembers({
 					description={Liferay.Language.get(
 						'add-team-members-to-this-space-to-start-collaborating'
 					)}
+					learnResourceKey="add-space-members"
 					learnResources={learnResources}
 					step={2}
 					title={sub(

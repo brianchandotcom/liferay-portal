@@ -97,6 +97,7 @@ const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 					description={Liferay.Language.get(
 						'spaces-are-essential-for-organizing-defining-and-managing-your-content-and-files'
 					)}
+					learnResourceKey="new-space"
 					learnResources={learnResources}
 					onSubmit={handleSubmit}
 					step={1}

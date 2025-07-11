@@ -15,6 +15,7 @@ import React, {PropsWithChildren} from 'react';
 
 export interface NewSpaceFormSectionProps {
 	description: string;
+	learnResourceKey: string;
 	learnResources: ILearnResourceContext;
 	onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
 	step: 1 | 2;
@@ -25,6 +26,7 @@ export interface NewSpaceFormSectionProps {
 export function NewSpaceFormSection({
 	children,
 	description,
+	learnResourceKey,
 	learnResources,
 	onSubmit,
 	step,
@@ -45,7 +47,7 @@ export function NewSpaceFormSection({
 				<LearnResourcesContext.Provider value={learnResources}>
 					<LearnMessage
 						resource="site-cms-site-initializer"
-						resourceKey="new-space"
+						resourceKey={learnResourceKey}
 					/>
 				</LearnResourcesContext.Provider>
 			</ClayLayout.Container>

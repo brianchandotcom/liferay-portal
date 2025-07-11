@@ -205,9 +205,47 @@ public class JUnitBatchBuildTestrayCaseResult
 			testClassAnnotations.add(testClassMethod.getAnnotations());
 		}
 
+		return String.join(", ", testClassAnnotations);
+	}
+
+	public String getMethodIssues(String testName) {
+		for (TestClassMethod testClassMethod :
+				_jUnitTestClass.getTestClassMethods()) {
+
+			String testClassMethodName = testClassMethod.getName();
+
+			if (testClassMethodName.equals(testName)) {
+				return testClassMethod.getAnnotations();
+			}
+		}
+
+		return null;
+	}
+
+	public List<String> getMethodNames() {
+		List<String> testClassMethodNames = new ArrayList<>();
+
+		for (TestClassMethod testClassMethod :
+				_jUnitTestClass.getTestClassMethods()) {
+
+			testClassMethodNames.add(testClassMethod.getName());
+		}
+
+		return testClassMethodNames;
+	}
+
+	public String getMethodStatus(String testName) {
 		List<TestReport> testReportList = getTestReports();
 
-		return String.join(", ", testClassAnnotations);
+		for (TestReport testReport : testReportList) {
+			String testReportName = testReport.getTestName();
+
+			if (testReportName.equals(testName)) {
+				return testReport.getStatus();
+			}
+		}
+
+		return null;
 	}
 
 	@Override

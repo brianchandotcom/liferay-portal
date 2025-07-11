@@ -1208,6 +1208,129 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					}));
 	}
 
+	private void _testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryTestUtil.
+				getWidgetPageLayoutPageTemplateEntry(serviceContext);
+
+		PageTemplateResource pageTemplateResource = _getPageTemplateResource();
+
+		PageTemplate pageTemplate =
+			pageTemplateResource.getSiteSiteByExternalReferenceCodePageTemplate(
+				testGroup.getExternalReferenceCode(),
+				layoutPageTemplateEntry.getExternalReferenceCode());
+
+		PageSpecification[] pageSpecifications =
+			pageTemplate.getPageSpecifications();
+
+		Assert.assertEquals(
+			Arrays.toString(pageSpecifications), 1, pageSpecifications.length);
+
+		WidgetPageSpecification widgetPageSpecification =
+			(WidgetPageSpecification)pageSpecifications[0];
+
+		widgetPageSpecification.setSettings(
+			SettingsTestUtil.getSettings(serviceContext));
+
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
+			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
+			widgetPageSpecification);
+
+		SettingsTestUtil.getColorSchemeNameSettings(
+			widgetPageSpecification.getSettings());
+
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
+			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
+			widgetPageSpecification);
+
+		SettingsTestUtil.getCssSettings(widgetPageSpecification.getSettings());
+
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
+			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
+			widgetPageSpecification);
+
+		SettingsTestUtil.getJavaScriptSettings(
+			widgetPageSpecification.getSettings());
+
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
+			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
+			widgetPageSpecification);
+
+		SettingsTestUtil.getMasterPageItemExternalReferenceSettings(
+			serviceContext, widgetPageSpecification.getSettings());
+
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
+			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
+			widgetPageSpecification);
+
+		SettingsTestUtil.getStyleBookItemExternalReferenceSettings(
+			serviceContext, widgetPageSpecification.getSettings());
+
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
+			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
+			widgetPageSpecification);
+
+		SettingsTestUtil.getThemeNameSettings(
+			widgetPageSpecification.getSettings());
+
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
+			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
+			widgetPageSpecification);
+
+		SettingsTestUtil.getThemeSettingsSettings(
+			widgetPageSpecification.getSettings());
+
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
+			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
+			widgetPageSpecification);
+	}
+
+	private void
+			_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
+				String externalReferenceCode,
+				PageTemplateResource pageTemplateResource,
+				WidgetPageSpecification widgetPageSpecification)
+		throws Exception {
+
+		PageTemplate pageTemplate =
+			pageTemplateResource.
+				patchSiteSiteByExternalReferenceCodePageTemplate(
+					testGroup.getExternalReferenceCode(), externalReferenceCode,
+					new WidgetPageTemplate() {
+						{
+							setPageSpecifications(
+								() -> new PageSpecification[] {
+									PageSpecificationsTestUtil.
+										getWidgetPageSpecification(
+											null,
+											widgetPageSpecification.
+												getSettings(),
+											PageSpecification.Status.APPROVED)
+								});
+							setType(Type.WIDGET_PAGE_TEMPLATE);
+						}
+					});
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		SettingsTestUtil.assertPageSpecificationSetting(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			widgetPageSpecification.getSettings());
+
+		_assertWidgetPageSpecifications(
+			pageTemplate.getPageSpecifications(), widgetPageSpecification);
+	}
+
 	private void _testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications()
 		throws Exception {
 
@@ -1226,6 +1349,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		_testPatchSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications();
 	}
 
 	private void

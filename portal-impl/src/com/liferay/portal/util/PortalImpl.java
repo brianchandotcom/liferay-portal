@@ -265,6 +265,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -1216,7 +1217,7 @@ public class PortalImpl implements Portal {
 			themeDisplay.getCompany());
 		String portalDomain = themeDisplay.getPortalDomain();
 
-		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
+		NavigableMap<String, String> virtualHostnames = getVirtualHostnames(
 			themeDisplay.getLayoutSet());
 
 		String virtualHostname = _getVirtualHostname(
@@ -2812,7 +2813,7 @@ public class PortalImpl implements Portal {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		TreeMap<String, String> virtualHostnames =
+		NavigableMap<String, String> virtualHostnames =
 			layoutSet.getVirtualHostnames();
 
 		if (!virtualHostnames.isEmpty()) {
@@ -3840,7 +3841,7 @@ public class PortalImpl implements Portal {
 	public String getPortalURL(LayoutSet layoutSet, ThemeDisplay themeDisplay) {
 		String serverName = themeDisplay.getServerName();
 
-		TreeMap<String, String> virtualHostnames =
+		NavigableMap<String, String> virtualHostnames =
 			layoutSet.getVirtualHostnames();
 
 		if (!virtualHostnames.isEmpty()) {
@@ -5490,8 +5491,10 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public TreeMap<String, String> getVirtualHostnames(LayoutSet layoutSet) {
-		TreeMap<String, String> virtualHostnames =
+	public NavigableMap<String, String> getVirtualHostnames(
+		LayoutSet layoutSet) {
+
+		NavigableMap<String, String> virtualHostnames =
 			layoutSet.getVirtualHostnames();
 
 		if (!virtualHostnames.isEmpty()) {
@@ -6823,7 +6826,7 @@ public class PortalImpl implements Portal {
 	}
 
 	protected String getCanonicalDomain(
-		TreeMap<String, String> virtualHostnames, String portalDomain,
+		NavigableMap<String, String> virtualHostnames, String portalDomain,
 		String defaultVirtualHostname) {
 
 		if (Validator.isBlank(portalDomain) ||
@@ -7441,7 +7444,7 @@ public class PortalImpl implements Portal {
 	}
 
 	private boolean _containsHostname(
-		TreeMap<String, String> virtualHostnames, String portalDomain) {
+		NavigableMap<String, String> virtualHostnames, String portalDomain) {
 
 		int pos = portalDomain.indexOf(CharPool.COLON);
 
@@ -7526,7 +7529,7 @@ public class PortalImpl implements Portal {
 
 		String portalDomain = themeDisplay.getPortalDomain();
 
-		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
+		NavigableMap<String, String> virtualHostnames = getVirtualHostnames(
 			layoutSet);
 
 		if (useGroupVirtualHostname) {
@@ -8001,7 +8004,8 @@ public class PortalImpl implements Portal {
 	}
 
 	private String _getVirtualHostname(
-		TreeMap<String, String> virtualHostnames, ThemeDisplay themeDisplay) {
+		NavigableMap<String, String> virtualHostnames,
+		ThemeDisplay themeDisplay) {
 
 		if (virtualHostnames.isEmpty()) {
 			Company company = themeDisplay.getCompany();

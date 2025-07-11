@@ -430,8 +430,8 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("o_[%COMPANY_ID%]_casedetail cd on cd.c_casedetailid_ = ");
 		sb.append("rel.c_casedetailid_ where i.r_");
 		sb.append(issueType);
-		sb.append("_c_jiraissueid = ? and cd.r_buildtocasedetail_c_buildid = ? ");
-		sb.append("group by i.");
+		sb.append("_c_jiraissueid = ? and cd.r_buildtocasedetail_c_buildid = ");
+		sb.append("? group by i.");
 		sb.append(StringUtil.merge(_childRelationships.get(issueType), ", i."));
 		sb.append(") as status on i.c_jiraissueid_ = status.");
 		sb.append(_childRelationships.get(issueType)[0]);
@@ -638,7 +638,7 @@ public class TestrayStatusMetricResourceImpl
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
-		sb = new StringBundler(30);
+		sb = new StringBundler(31);
 
 		sb.append("select (b.caseresultblocked_ + b.caseresultfailed_ + ");
 		sb.append("b.caseresultincomplete_ + b.caseresultinprogress_ + ");
@@ -780,7 +780,8 @@ public class TestrayStatusMetricResourceImpl
 
 	private final Map<String, String[]> _childRelationships =
 		HashMapBuilder.put(
-			"epic", new String[] {"r_story_c_jiraissueid", "r_task_c_jiraissueid"}
+			"epic",
+			new String[] {"r_story_c_jiraissueid", "r_task_c_jiraissueid"}
 		).put(
 			"initiative", new String[] {"r_epic_c_jiraissueid"}
 		).put(

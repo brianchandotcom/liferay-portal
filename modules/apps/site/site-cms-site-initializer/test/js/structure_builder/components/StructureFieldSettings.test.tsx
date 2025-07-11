@@ -51,7 +51,6 @@ const DEFAULT_STATE: State = {
 	structure: {
 		children: new Map([[TEXT_FIELD_UUID, FIELD]]),
 		erc: 'structure-erc',
-		id: null,
 		label: 'untitled-structure' as any,
 		name: 'UntitledStructure',
 		spaces: [],

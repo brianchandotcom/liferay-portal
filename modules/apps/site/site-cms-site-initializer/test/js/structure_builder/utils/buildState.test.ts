@@ -70,7 +70,6 @@ describe('buildState', () => {
 		const structure: State['structure'] = {
 			children: new Map(),
 			erc: 'structureERC',
-			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			spaces: [],
@@ -92,7 +91,6 @@ describe('buildState', () => {
 		const objectDefinition = buildObjectDefinition({
 			children: getChildren([TEXT_FIELD, DATE_TIME_FIELD]),
 			erc: structure.erc,
-			id: structure.id,
 			label: structure.label,
 			name: structure.name,
 			spaces: structure.spaces,
@@ -121,7 +119,6 @@ describe('buildState', () => {
 		const structure: State['structure'] = {
 			children: new Map(),
 			erc: 'structureERC',
-			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			spaces: [],
@@ -143,7 +140,6 @@ describe('buildState', () => {
 		const objectDefinition = buildObjectDefinition({
 			children: getChildren([TEXT_FIELD, DATE_TIME_FIELD]),
 			erc: structure.erc,
-			id: structure.id,
 			label: structure.label,
 			name: structure.name,
 			spaces: structure.spaces,
@@ -180,7 +176,6 @@ describe('buildState', () => {
 		const structure: State['structure'] = {
 			children: new Map(),
 			erc: 'structureERC',
-			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			spaces: ['space-1-erc', 'space-2-erc'],
@@ -202,7 +197,6 @@ describe('buildState', () => {
 		const objectDefinition = buildObjectDefinition({
 			children: getChildren([TEXT_FIELD, DATE_TIME_FIELD]),
 			erc: structure.erc,
-			id: structure.id,
 			label: structure.label,
 			name: structure.name,
 			spaces: structure.spaces,

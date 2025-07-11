@@ -51,6 +51,7 @@ const DEFAULT_CHILDREN = new Map([[getUuid(), {} as Field]]);
 const renderComponent = (state: MockState) => {
 	const structure: Partial<Structure> = {
 		children: DEFAULT_CHILDREN,
+		erc: 'structure-erc',
 		spaces: 'all',
 		...state.structure,
 	};
@@ -62,11 +63,11 @@ const renderComponent = (state: MockState) => {
 	);
 };
 
-describe('StructureBuilderManagementBar', () => {
+describe('StructureBuilderToolbar', () => {
 	beforeAll(() => {
 		StructureService.createStructure = jest
 			.fn()
-			.mockResolvedValue({data: {id: 1}});
+			.mockResolvedValue({error: null});
 
 		StructureService.updateStructure = jest
 			.fn()
@@ -258,7 +259,7 @@ describe('StructureBuilderManagementBar', () => {
 
 	it('Navigates to customize experience if the structure is published', async () => {
 		renderComponent({
-			structure: {id: 123, status: 'published'},
+			structure: {status: 'published'},
 		});
 
 		const managementBar: HTMLElement | null =
@@ -273,7 +274,7 @@ describe('StructureBuilderManagementBar', () => {
 		await waitFor(() => {
 			expect(require('frontend-js-web').navigate).toBeCalledWith(
 				expect.stringContaining(
-					'http://localhost:8080/edit?backURL=http%3A%2F%2Flocalhost%3A8080%2Fstructure-builder%3FobjectDefinitionId%3D123&objectDefinitionId=123'
+					'http://localhost:8080/edit?backURL=http%3A%2F%2Flocalhost%3A8080%2Fstructure-builder%3FobjectDefinitionExternalReferenceCode%3Dstructure-erc&objectDefinitionExternalReferenceCode=structure-erc'
 				)
 			);
 		});

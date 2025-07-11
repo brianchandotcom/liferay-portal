@@ -55,7 +55,6 @@ describe('refreshReferencedStructures', () => {
 				[referencedStructure.uuid, referencedStructure],
 			]),
 			erc: 'structure-erc',
-			id: 1,
 			label: {
 				en_US: 'Structure',
 			},

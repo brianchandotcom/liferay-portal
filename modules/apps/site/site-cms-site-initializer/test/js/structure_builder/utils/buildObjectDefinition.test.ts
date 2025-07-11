@@ -60,7 +60,6 @@ describe('buildObjectDefinition', () => {
 		const result = buildObjectDefinition({
 			children: getChildren([TEXT_FIELD]),
 			erc: 'structureERC',
-			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			spaces: [],
@@ -74,7 +73,6 @@ describe('buildObjectDefinition', () => {
 			enableObjectEntryDraft: true,
 			enableObjectEntryVersioning: true,
 			externalReferenceCode: 'structureERC',
-			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			objectFields: [
@@ -105,7 +103,6 @@ describe('buildObjectDefinition', () => {
 		const result = buildObjectDefinition({
 			children: getChildren([DATE_TIME_FIELD]),
 			erc: 'structureERC',
-			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			spaces: [],
@@ -119,7 +116,6 @@ describe('buildObjectDefinition', () => {
 			enableObjectEntryDraft: true,
 			enableObjectEntryVersioning: true,
 			externalReferenceCode: 'structureERC',
-			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			objectFields: [
@@ -150,7 +146,6 @@ describe('buildObjectDefinition', () => {
 		const result = buildObjectDefinition({
 			children: getChildren([TEXT_FIELD]),
 			erc: 'structureERC',
-			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			spaces: ['space-1-erc', 'space-2-erc'],
@@ -164,7 +159,6 @@ describe('buildObjectDefinition', () => {
 			enableObjectEntryDraft: true,
 			enableObjectEntryVersioning: true,
 			externalReferenceCode: 'structureERC',
-			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			objectDefinitionSettings: [

@@ -16,7 +16,6 @@ import getUuid from '../../../../src/main/resources/META-INF/resources/js/struct
 const DEFAULT_STRUCTURE: Structure = {
 	children: new Map(),
 	erc: 'default-erc',
-	id: null,
 	label: 'untitled-structure' as any,
 	name: 'UntitledStructure',
 	spaces: [],

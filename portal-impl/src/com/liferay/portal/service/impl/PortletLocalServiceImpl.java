@@ -3033,13 +3033,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		@Override
 		public Portlet put(String key, Portlet value) {
-			if (!DBPartition.isPartitionEnabled() || (value == null) ||
-				(value.getCompanyId() == CompanyConstants.SYSTEM)) {
-
+			if (value.getCompanyId() == CompanyConstants.SYSTEM) {
 				return super.put(key, value);
 			}
 
-			return super.put(key + StringPool.AT + value.getCompanyId(), value);
+			return super.put(
+				DBPartitionUtil.getPartitionKey(key, value), value);
 		}
 
 		@Override

@@ -9,13 +9,18 @@ import '../../../css/content_editor/ContentEditorSidePanel.scss';
 
 import {Button, VerticalBar} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import {LiferayEditorConfig} from 'frontend-editor-ckeditor-web';
 import {openToast} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import CommentsPanel, {Comment} from './panels/CommentsPanel';
 import GeneralPanel from './panels/GeneralPanel';
 
 type Props = {
+	addCommentURL: string;
+	comments: Comment[];
+	editorConfig: {configJSONObject: LiferayEditorConfig};
 	id: string;
 	isSubscribed: boolean;
 	subscribeURL: string;
@@ -39,7 +44,7 @@ const items: Item[] = [
 		title: Liferay.Language.get('general'),
 	},
 	{
-		component: () => null,
+		component: CommentsPanel,
 		icon: 'comments',
 		id: 'comments',
 		title: Liferay.Language.get('comments'),

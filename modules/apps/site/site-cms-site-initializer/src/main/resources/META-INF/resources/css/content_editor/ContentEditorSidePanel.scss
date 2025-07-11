@@ -1,3 +1,4 @@
+@import 'atlas-variables';
 @import 'cadmin-variables';
 @import 'variables';
 
@@ -13,6 +14,21 @@
 			var(--control-menu-container-height) +
 				$contentEditorManagementBarHeight
 		);
+
+		.form-control {
+			&.lfr-ck {
+				&:has(> .ck-focused) {
+					background-color: $input-focus-bg;
+					border-color: $input-focus-border-color;
+					box-shadow: $input-focus-box-shadow;
+				}
+
+				.ck-focused {
+					border: 1px solid transparent;
+					box-shadow: none;
+				}
+			}
+		}
 	}
 }
 

@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 
 	@Override
-	public void deleteSiteSiteByExternalReferenceCodeUtilityPage(
+	public void deleteSiteUtilityPage(
 			String siteExternalReferenceCode,
 			String utilityPageExternalReferenceCode)
 		throws Exception {
@@ -72,7 +72,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 	}
 
 	@Override
-	public UtilityPage getSiteSiteByExternalReferenceCodeUtilityPage(
+	public UtilityPage getSiteUtilityPage(
 			String siteExternalReferenceCode,
 			String utilityPageExternalReferenceCode)
 		throws Exception {
@@ -91,7 +91,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 	}
 
 	@Override
-	public Page<UtilityPage> getSiteSiteByExternalReferenceCodeUtilityPagesPage(
+	public Page<UtilityPage> getSiteUtilityPagesPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -117,7 +117,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 	}
 
 	@Override
-	public UtilityPage postSiteSiteByExternalReferenceCodeUtilityPage(
+	public UtilityPage postSiteUtilityPage(
 			String siteExternalReferenceCode, UtilityPage utilityPage)
 		throws Exception {
 
@@ -133,11 +133,10 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 	}
 
 	@Override
-	public ContentPageSpecification
-			postSiteSiteByExternalReferenceCodeUtilityPagePageSpecification(
-				String siteExternalReferenceCode,
-				String utilityPageExternalReferenceCode,
-				ContentPageSpecification contentPageSpecification)
+	public ContentPageSpecification postSiteUtilityPagePageSpecification(
+			String siteExternalReferenceCode,
+			String utilityPageExternalReferenceCode,
+			ContentPageSpecification contentPageSpecification)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -162,7 +161,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 	}
 
 	@Override
-	public UtilityPage putSiteSiteByExternalReferenceCodeUtilityPage(
+	public UtilityPage putSiteUtilityPage(
 			String siteExternalReferenceCode,
 			String utilityPageExternalReferenceCode, UtilityPage utilityPage)
 		throws Exception {

@@ -10,6 +10,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:document-library:document-library-test-util")
 	testIntegrationImplementation project(":apps:headless:headless-admin-site:headless-admin-site-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-site:headless-admin-site-client")
+	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationImplementation project(":apps:info:info-api")
 	testIntegrationImplementation project(":apps:info:info-list-provider-item-selector-api")
 	testIntegrationImplementation project(":apps:journal:journal-api")

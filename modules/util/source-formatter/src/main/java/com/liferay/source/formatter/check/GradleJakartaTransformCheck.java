@@ -40,11 +40,10 @@ public class GradleJakartaTransformCheck extends BaseJakartaTransformCheck {
 			String group = matcher.group(1);
 
 			String name = matcher.group(2);
-			String version = matcher.group(3);
 
 			String jakartaTransformDependencies =
 				jakartaTransformDependenciesMap.get(
-					StringBundler.concat(group, ":", name, ":", version));
+					StringBundler.concat(group, ":", name));
 
 			if (jakartaTransformDependencies != null) {
 				String[] dependencies = StringUtil.split(
@@ -55,13 +54,6 @@ public class GradleJakartaTransformCheck extends BaseJakartaTransformCheck {
 
 				for (int i = 0; i < dependencies.length; i++) {
 					String[] parts = StringUtil.split(dependencies[i], ":");
-
-					if (parts[0].equals("jakarta")) {
-						parts = new String[] {
-							"com.liferay", parts[1],
-							version + ".JAKARTA-LIFERAY-PATCHED-1"
-						};
-					}
 
 					dependencySB.append(
 						content.substring(matcher.start(0), matcher.start(1)));

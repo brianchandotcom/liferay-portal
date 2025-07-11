@@ -50,11 +50,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.TreeMap;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1587,7 +1587,7 @@ public class PortalUtil {
 		return _portal.getValidUserId(companyId, userId);
 	}
 
-	public static TreeMap<String, String> getVirtualHostnames(
+	public static NavigableMap<String, String> getVirtualHostnames(
 		LayoutSet layoutSet) {
 
 		return _portal.getVirtualHostnames(layoutSet);

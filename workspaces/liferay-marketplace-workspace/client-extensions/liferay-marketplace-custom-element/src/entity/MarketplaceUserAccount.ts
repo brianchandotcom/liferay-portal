@@ -38,4 +38,26 @@ export class MarketplaceUserAccount {
 				)
 		);
 	}
+
+	get isSSAAdmin() {
+		return this.userAccount?.accountBriefs.some(
+			(accountBrief) =>
+				accountBrief.id ===
+					Liferay.CommerceContext.account?.accountId &&
+				accountBrief.roleBriefs.some(
+					(roleBrief) => roleBrief.name === AccountRoleType.SSA_ADMIN
+				)
+		);
+	}
+
+	get isSSAUser() {
+		return this.userAccount?.accountBriefs.some(
+			(accountBrief) =>
+				accountBrief.id ===
+					Liferay.CommerceContext.account?.accountId &&
+				accountBrief.roleBriefs.some(
+					(roleBrief) => roleBrief.name === AccountRoleType.SSA
+				)
+		);
+	}
 }

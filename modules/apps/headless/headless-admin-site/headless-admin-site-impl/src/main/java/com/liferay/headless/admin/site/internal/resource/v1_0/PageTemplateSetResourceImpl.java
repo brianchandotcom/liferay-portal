@@ -35,7 +35,7 @@ public class PageTemplateSetResourceImpl
 	extends BasePageTemplateSetResourceImpl {
 
 	@Override
-	public void deleteSiteSiteByExternalReferenceCodePageTemplateSet(
+	public void deleteSitePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode)
 		throws Exception {
@@ -52,7 +52,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public PageTemplateSet getSiteSiteByExternalReferenceCodePageTemplateSet(
+	public PageTemplateSet getSitePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode)
 		throws Exception {
@@ -71,11 +71,10 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public Page<PageTemplateSet>
-			getSiteSiteByExternalReferenceCodePageTemplateSetsPage(
-				String siteExternalReferenceCode, String search,
-				Aggregation aggregation, Filter filter, Pagination pagination,
-				Sort[] sorts)
+	public Page<PageTemplateSet> getSitePageTemplateSetsPage(
+			String siteExternalReferenceCode, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -102,7 +101,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public PageTemplateSet postSiteSiteByExternalReferenceCodePageTemplateSet(
+	public PageTemplateSet postSitePageTemplateSet(
 			String siteExternalReferenceCode, PageTemplateSet pageTemplateSet)
 		throws Exception {
 
@@ -119,7 +118,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public PageTemplateSet putSiteSiteByExternalReferenceCodePageTemplateSet(
+	public PageTemplateSet putSitePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode,
 			PageTemplateSet pageTemplateSet)

@@ -3039,7 +3039,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				return super.put(key, value);
 			}
 
-			return super.put(DBPartitionUtil.getPartitionKey(key), value);
+			return super.put(key + StringPool.AT + value.getCompanyId(), value);
 		}
 
 		@Override

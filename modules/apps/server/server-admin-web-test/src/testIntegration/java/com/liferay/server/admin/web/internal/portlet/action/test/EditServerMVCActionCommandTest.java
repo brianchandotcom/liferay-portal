@@ -419,14 +419,14 @@ public class EditServerMVCActionCommandTest {
 				RandomTestUtil::randomString, portletPreferences);
 
 			_testUpdateMailPortletPreferences(
-				() -> Boolean.FALSE, () -> 0, () -> StringPool.BLANK,
+				() -> false, () -> 0, () -> StringPool.BLANK,
 				portletPreferences);
 
 			_testUpdateMailWithAndWithoutSecureProtocol(
-				portletPreferences, Boolean.TRUE);
+				portletPreferences, true);
 
 			_testUpdateMailWithAndWithoutSecureProtocol(
-				portletPreferences, Boolean.FALSE);
+				portletPreferences, false);
 
 			_testUpdateMailWithPasswords(portletPreferences);
 		}

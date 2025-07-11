@@ -15,7 +15,7 @@ import {
 
 const mockLearnResources = {
 	'site-cms-site-initializer': {
-		'new-space': {
+		'test-resource-key': {
 			en_US: {
 				message: 'Test Message',
 				url: 'https://learn.liferay.com/test-url',
@@ -28,6 +28,7 @@ describe('NewSpaceFormSection', () => {
 	const props: PropsWithChildren<NewSpaceFormSectionProps> = {
 		children: 'Test Children',
 		description: 'Test Description',
+		learnResourceKey: 'test-resource-key',
 		learnResources: mockLearnResources,
 		onSubmit: jest.fn(),
 		step: 1,

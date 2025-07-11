@@ -16,7 +16,7 @@ import {
 
 const mockLearnResources = {
 	'site-cms-site-initializer': {
-		'new-space': {
+		'add-space-members': {
 			en_US: {
 				message: 'Test Message',
 				url: 'https://learn.liferay.com/test-url',

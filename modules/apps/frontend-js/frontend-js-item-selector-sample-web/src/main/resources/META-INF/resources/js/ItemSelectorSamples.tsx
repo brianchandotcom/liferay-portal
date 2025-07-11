@@ -11,10 +11,12 @@ import {useModal} from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import {TView} from '@liferay/frontend-data-set-web';
 import {
+	EItemSelectorModalViewsConfig,
 	ItemSelector,
 	ItemSelectorModal,
 	assetLibraryViews,
 	documentsAndMediaViews,
+	getDefaultItemSelectorModalViews,
 	userViews,
 } from 'frontend-js-item-selector-web';
 import React, {useState} from 'react';
@@ -54,31 +56,44 @@ type Space = {
 
 export interface IItemSelectorConfiguration {
 	apiURL: string;
-	itemSelectionCallbackFn?: string;
 	selectedItemDescriptionKey: string;
 	type: string;
 	views: TView[];
 }
 
-const docsAndMediaItemSelectorConfig: IItemSelectorConfiguration = {
-	apiURL: `${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`,
-	itemSelectionCallbackFn: 'setDocuments',
-	selectedItemDescriptionKey: 'fileName',
-	type: Liferay.Language.get('file'),
-	views: documentsAndMediaViews,
+const FDS_DEFAULT_PROPS = {
+	id: getRandomId(),
+	pagination: {
+		deltas: [{label: 20}, {label: 40}, {label: 60}],
+		initialDelta: 20,
+	},
+	selectionType: 'single',
 };
+
 const assetsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
 	selectedItemDescriptionKey: 'name',
 	type: Liferay.Language.get('asset'),
 	views: assetLibraryViews,
 };
+
+const docsAndMediaItemSelectorConfig: IItemSelectorConfiguration = {
+	apiURL: `${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`,
+	selectedItemDescriptionKey: 'fileName',
+	type: Liferay.Language.get('file'),
+	views: documentsAndMediaViews,
+};
+
 const usersItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
 	selectedItemDescriptionKey: 'givenName',
 	type: Liferay.Language.get('user'),
 	views: userViews,
 };
+
+function getRandomId(): string {
+	return Math.random().toString(36).substring(2, 9);
+}
 
 export default function ItemSelectorSamples() {
 	const [documents, setDocuments] = useState<Document[]>([]);
@@ -287,7 +302,14 @@ export default function ItemSelectorSamples() {
 			<SampleContainer label="Item Selector Modal">
 				<ItemSelectorModal
 					{...{
-						apiURL: docsAndMediaItemSelectorConfig.apiURL,
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							apiURL: docsAndMediaItemSelectorConfig.apiURL,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.DOCUMENTS_AND_MEDIA,
+							}),
+						},
 						observer: fileItemSelectorObserver,
 						onItemSelectorSave: onFileSelection,
 						onOpenChange: fileItemSelectorOpenChange,
@@ -300,7 +322,14 @@ export default function ItemSelectorSamples() {
 
 				<ItemSelectorModal
 					{...{
-						apiURL: assetsItemSelectorConfig.apiURL,
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							apiURL: assetsItemSelectorConfig.apiURL,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.ASSET_LIBRARY,
+							}),
+						},
 						observer: spaceItemSelectorObserver,
 						onItemSelectorSave: onSpaceSelection,
 						onOpenChange: spaceItemSelectorOpenChange,
@@ -308,13 +337,18 @@ export default function ItemSelectorSamples() {
 						selectedItemDescriptionKey:
 							assetsItemSelectorConfig.selectedItemDescriptionKey,
 						type: assetsItemSelectorConfig.type,
-						viewsConfig: assetLibraryViews,
 					}}
 				/>
 
 				<ItemSelectorModal
 					{...{
-						apiURL: usersItemSelectorConfig.apiURL,
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							apiURL: usersItemSelectorConfig.apiURL,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig: 'users',
+							}),
+						},
 						observer: userItemSelectorObserver,
 						onItemSelectorSave: onUserSelection,
 						onOpenChange: userItemSelectorOpenChange,
@@ -322,7 +356,6 @@ export default function ItemSelectorSamples() {
 						selectedItemDescriptionKey:
 							usersItemSelectorConfig.selectedItemDescriptionKey,
 						type: usersItemSelectorConfig.type,
-						viewsConfig: 'users',
 					}}
 				/>
 

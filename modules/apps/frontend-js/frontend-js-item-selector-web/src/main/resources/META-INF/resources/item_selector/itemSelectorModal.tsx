@@ -5,21 +5,19 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {FrontendDataSet, TView} from '@liferay/frontend-data-set-web';
+import {
+	FrontendDataSet,
+	IFrontendDataSetProps,
+} from '@liferay/frontend-data-set-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
-
-import getDefaultItemSelectorModalViews, {
-	EItemSelectorModalViewsConfig,
-} from '../utils/getDefaultItemSelectorModalView';
-import getRandomId from '../utils/getRandomId';
 
 export interface IItemSelectorModalProps {
 
 	/**
-	 * The URL that will be fetched to return the items.
+	 * Configuration properties of the FDS used to display data
 	 */
-	apiURL: string;
+	fdsProps: IFrontendDataSetProps;
 
 	/**
 	 *
@@ -47,43 +45,19 @@ export interface IItemSelectorModalProps {
 	selectedItemDescriptionKey: string;
 
 	/**
-	 * Collection of items to be selected when opening the item selector
-	 */
-	selectedItems?: Array<any>;
-
-	/**
-	 * Fielname from apiURL response used to select items. Defaults to 'id'
-	 */
-	selectedItemsKey?: string;
-
-	/**
-	 * Type of selecton allowed. Defaults to'single'
-	 */
-	selectionType?: 'single' | 'multiple';
-
-	/**
 	 * Type of asset to be selected. Used to display modal title
 	 */
 	type: string;
-
-	/**
-	 * Collection of views used by the FDS component to display data fetched from apiURL
-	 */
-	viewsConfig?: `${EItemSelectorModalViewsConfig}` | TView[];
 }
 
 function ItemSelectorModal({
-	apiURL,
+	fdsProps,
 	observer,
 	onItemSelectorSave,
-	open,
 	onOpenChange,
+	open,
 	selectedItemDescriptionKey,
-	selectedItems,
-	selectedItemsKey = 'id',
-	selectionType = 'single',
 	type,
-	viewsConfig = EItemSelectorModalViewsConfig.DOCUMENTS_AND_MEDIA,
 }: IItemSelectorModalProps) {
 	const [selectedItem, setSelectedItem] = useState<any | null>(null);
 
@@ -96,25 +70,16 @@ function ItemSelectorModal({
 
 				<ClayModal.Body>
 					<FrontendDataSet
-						apiURL={apiURL}
-						id={`itemSelectorModal-${getRandomId()}`}
+						{...fdsProps}
 						onSelect={({
 							selectedItems,
 						}: {
 							selectedItems: Array<any>;
 						}) => {
-							selectionType === 'single'
+							fdsProps.selectionType === 'single'
 								? setSelectedItem(selectedItems[0])
 								: setSelectedItem(selectedItems);
 						}}
-						pagination={{
-							deltas: [{label: 20}, {label: 40}, {label: 60}],
-							initialDelta: 20,
-						}}
-						selectedItems={selectedItems}
-						selectedItemsKey={selectedItemsKey}
-						selectionType={selectionType}
-						views={getDefaultItemSelectorModalViews({viewsConfig})}
 					/>
 				</ClayModal.Body>
 

@@ -50,9 +50,7 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 	}
 
 	protected void addTestClass(TestClass testClass) {
-		if (!_testClasses.contains(testClass)) {
-			_testClasses.add(testClass);
-		}
+		_testClasses.add(testClass);
 	}
 
 	protected void addTestClasses(List<TestClass> testClasses) {

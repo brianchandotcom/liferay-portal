@@ -24,13 +24,11 @@ public class JSUnitTestReport extends BaseTestReport {
 		int x = testName.indexOf(".modules.");
 
 		if (x > 0) {
-			testName = testName.substring(x + 8);
+			testName = testName.substring(x + 9);
 		}
 
-		if (!testName.startsWith(".apps") &&
-			!testName.startsWith(".dxp.apps")) {
-
-			testName = ".apps." + testName;
+		if (!testName.startsWith("apps") && !testName.startsWith("dxp.apps")) {
+			testName = "apps." + testName;
 		}
 
 		return testName;
@@ -43,7 +41,7 @@ public class JSUnitTestReport extends BaseTestReport {
 		int x = testName.indexOf(".modules.");
 
 		if (x > 0) {
-			testName = testName.substring(x + 8);
+			testName = testName.substring(x + 9);
 		}
 
 		if (testName.contains(".src.")) {
@@ -53,13 +51,11 @@ public class JSUnitTestReport extends BaseTestReport {
 			testName = testName.substring(0, testName.indexOf(".test."));
 		}
 
-		if (!testName.startsWith(".apps") &&
-			!testName.startsWith(".dxp.apps")) {
-
-			testName = ".apps." + testName;
+		if (!testName.contains("apps.")) {
+			testName = "apps." + testName;
 		}
 
-		return testName.replaceAll("\\.", ":") + ":packageRunTest";
+		return ":" + testName.replaceAll("\\.", ":") + ":packageRunTest";
 	}
 
 	protected JSUnitTestReport(

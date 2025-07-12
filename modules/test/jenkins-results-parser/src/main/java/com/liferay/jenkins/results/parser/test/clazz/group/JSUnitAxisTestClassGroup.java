@@ -9,7 +9,6 @@ import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.test.clazz.JSUnitModulesTestClass;
-import com.liferay.jenkins.results.parser.test.clazz.JSUnitModulesTestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
@@ -38,21 +37,14 @@ public class JSUnitAxisTestClassGroup extends AxisTestClassGroup {
 		for (JSUnitModulesTestClass jsUnitModulesTestClass :
 				getJSUnitModulesTestClasses()) {
 
-			for (JSUnitModulesTestClassMethod jsUnitModulesTestClassMethod :
-					jsUnitModulesTestClass.getJSUnitModulesTestClassMethods()) {
+			DownstreamBuildReport downstreamBuildReport =
+				jsUnitModulesTestClass.getCachedDownstreamBuildReport();
 
-				DownstreamBuildReport downstreamBuildReport =
-					jsUnitModulesTestClassMethod.
-						getCachedDownstreamBuildReport();
-
-				if (cachedDownstreamBuildReports.contains(
-						downstreamBuildReport)) {
-
-					continue;
-				}
-
-				cachedDownstreamBuildReports.add(downstreamBuildReport);
+			if (cachedDownstreamBuildReports.contains(downstreamBuildReport)) {
+				continue;
 			}
+
+			cachedDownstreamBuildReports.add(downstreamBuildReport);
 		}
 
 		return cachedDownstreamBuildReports;
@@ -107,17 +99,13 @@ public class JSUnitAxisTestClassGroup extends AxisTestClassGroup {
 		for (JSUnitModulesTestClass jsUnitModulesTestClass :
 				getJSUnitModulesTestClasses()) {
 
-			for (JSUnitModulesTestClassMethod jsUnitModulesTestClassMethod :
-					jsUnitModulesTestClass.getJSUnitModulesTestClassMethods()) {
+			List<TestClassReport> cachedTestClassReports =
+				jsUnitModulesTestClass.getCachedTestClassReports();
 
-				List<TestClassReport> cachedTestClassReports =
-					jsUnitModulesTestClassMethod.getCachedTestClassReports();
+			if ((cachedTestClassReports == null) ||
+				cachedTestClassReports.isEmpty()) {
 
-				if ((cachedTestClassReports == null) ||
-					cachedTestClassReports.isEmpty()) {
-
-					return false;
-				}
+				return false;
 			}
 		}
 

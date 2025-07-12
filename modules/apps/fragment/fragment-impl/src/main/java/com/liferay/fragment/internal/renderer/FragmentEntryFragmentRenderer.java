@@ -25,10 +25,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,10 +56,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.AbstractMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -108,6 +116,20 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		catch (PortalException portalException) {
 			throw new IOException(portalException);
 		}
+	}
+
+	@Activate
+	protected void activate() {
+		_configurationPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM,
+			FragmentEntryFragmentRenderer.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		PortalCacheHelperUtil.removePortalCache(
+			PortalCacheManagerNames.SINGLE_VM,
+			FragmentEntryFragmentRenderer.class.getName());
 	}
 
 	private FragmentEntryLink _getFragmentEntryLink(
@@ -439,19 +461,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				httpServletResponse);
 		}
 
-		JSONObject configurationJSONObject = _jsonFactory.createJSONObject();
-
-		if (Validator.isNotNull(fragmentEntryLink.getConfiguration())) {
-			configurationJSONObject =
-				_fragmentEntryConfigurationParser.getConfigurationJSONObject(
-					fragmentEntryLink.getConfiguration(),
-					fragmentEntryLink.getEditableValues(),
-					fragmentRendererContext.getLocale());
-		}
-
 		content = _renderFragmentEntry(
-			configurationJSONObject.toString(), css, fragmentRendererContext,
-			html, httpServletRequest, nonce);
+			_toConfigurationString(fragmentEntryLink, fragmentRendererContext),
+			css, fragmentRendererContext, html, httpServletRequest, nonce);
 
 		if (cacheable) {
 			_fragmentEntryLinkCache.putFragmentEntryLinkContent(
@@ -465,6 +477,45 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 
 		return content;
+	}
+
+	private String _toConfigurationString(
+			FragmentEntryLink fragmentEntryLink,
+			FragmentRendererContext fragmentRendererContext)
+		throws JSONException {
+
+		String configuration = fragmentEntryLink.getConfiguration();
+
+		if (Validator.isNull(configuration)) {
+			return "{}";
+		}
+
+		String key = String.valueOf(fragmentEntryLink.getFragmentEntryLinkId());
+
+		if (configuration.contains("localizable")) {
+			key = key.concat(StringPool.POUND);
+			key = key.concat(
+				LocaleUtil.toLanguageId(fragmentRendererContext.getLocale()));
+		}
+
+		Map.Entry<Long, String> entry = _configurationPortalCache.get(key);
+
+		if ((entry == null) ||
+			(entry.getKey() != fragmentEntryLink.getMvccVersion())) {
+
+			JSONObject jsonObject =
+				_fragmentEntryConfigurationParser.getConfigurationJSONObject(
+					fragmentEntryLink.getConfiguration(),
+					fragmentEntryLink.getEditableValues(),
+					fragmentRendererContext.getLocale());
+
+			entry = new AbstractMap.SimpleImmutableEntry<>(
+				fragmentEntryLink.getMvccVersion(), jsonObject.toString());
+
+			_configurationPortalCache.put(key, entry);
+		}
+
+		return entry.getValue();
 	}
 
 	private String _writePortletPaths(
@@ -489,6 +540,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryFragmentRenderer.class);
 
+	private PortalCache<String, Map.Entry<Long, String>>
+		_configurationPortalCache;
+
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
@@ -511,9 +565,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

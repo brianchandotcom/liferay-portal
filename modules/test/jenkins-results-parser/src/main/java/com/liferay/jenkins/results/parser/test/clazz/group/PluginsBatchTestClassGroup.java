@@ -141,8 +141,6 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		for (File pluginsDir : pluginsDirs) {
 			addTestClass(TestClassFactory.newTestClass(this, pluginsDir));
 		}
-
-		sortTestClasses();
 	}
 
 	private List<JobProperty> _getExcludesJobProperties() {

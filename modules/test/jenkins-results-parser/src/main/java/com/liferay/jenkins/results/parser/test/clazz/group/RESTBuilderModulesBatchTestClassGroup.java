@@ -145,8 +145,6 @@ public class RESTBuilderModulesBatchTestClassGroup
 
 			addTestClass(testClass);
 		}
-
-		sortTestClasses();
 	}
 
 	private BuildType _buildType;

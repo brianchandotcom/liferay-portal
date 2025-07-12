@@ -129,8 +129,6 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 			addTestClass(
 				TestClassFactory.newTestClass(this, buildTestBatchFile));
 		}
-
-		sortTestClasses();
 	}
 
 	private List<JobProperty> _getExcludesJobProperties() {

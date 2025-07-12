@@ -78,8 +78,6 @@ public class CompileModulesBatchTestClassGroup
 
 			addTestClass(testClass);
 		}
-
-		sortTestClasses();
 	}
 
 }

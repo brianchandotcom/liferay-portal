@@ -148,8 +148,6 @@ public class JSUnitModulesBatchTestClassGroup
 				}
 			}
 		}
-
-		sortTestClasses();
 	}
 
 	private List<File> _getModulesProjectDirs(final File portalModulesBaseDir)

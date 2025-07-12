@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.change.tracking.sample.internal.test;
+package com.liferay.change.tracking.internal.db.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTConstants;
@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
  * @author Gislayne Vitorino
  */
 @RunWith(Arquillian.class)
-public class CTCollectionLargeDataSetTest {
+public class SQLServerDBCTTest {
 
 	@ClassRule
 	@Rule
@@ -59,7 +59,7 @@ public class CTCollectionLargeDataSetTest {
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, CTCollectionLargeDataSetTest.class.getSimpleName(),
+			0, SQLServerDBCTTest.class.getSimpleName(),
 			StringPool.BLANK);
 	}
 

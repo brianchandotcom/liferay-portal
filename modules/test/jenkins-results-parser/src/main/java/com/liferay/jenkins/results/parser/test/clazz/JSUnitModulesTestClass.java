@@ -50,7 +50,7 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 					cachedDownstreamBuildReport.getTestClassReports()) {
 
 				if (!Objects.equals(
-						getName(), testClassResult.getTestTaskName())) {
+						getName(), testClassResult.getTestClassName())) {
 
 					continue;
 				}

@@ -12,8 +12,7 @@ import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.test.clazz.JSUnitModulesTestClass;
-import com.liferay.jenkins.results.parser.test.clazz.JSUnitModulesTestClassMethod;
-import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.util.ArrayList;
@@ -30,22 +29,18 @@ public class JSUnitBatchBuildTestrayCaseResult
 
 	public JSUnitBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport,
-		AxisTestClassGroup axisTestClassGroup,
-		TestClassMethod testClassMethod) {
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
 		super(testrayBuild, topLevelBuildReport, axisTestClassGroup);
 
-		_jsUnitModulesTestClass =
-			(JSUnitModulesTestClass)testClassMethod.getTestClass();
-		_jsUnitModulesTestClassMethod =
-			(JSUnitModulesTestClassMethod)testClassMethod;
+		_jsUnitModulesTestClass = (JSUnitModulesTestClass)testClass;
 	}
 
 	@Override
 	public BuildReport getBuildReport() {
 		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
-				_jsUnitModulesTestClassMethod.getCachedDownstreamBuildReport();
+				_jsUnitModulesTestClass.getCachedDownstreamBuildReport();
 
 			if (cachedDownstreamBuildReport != null) {
 				return cachedDownstreamBuildReport;
@@ -175,7 +170,7 @@ public class JSUnitBatchBuildTestrayCaseResult
 
 	@Override
 	public String getName() {
-		return _jsUnitModulesTestClassMethod.getName();
+		return _jsUnitModulesTestClass.getTestTaskName();
 	}
 
 	@Override
@@ -215,7 +210,7 @@ public class JSUnitBatchBuildTestrayCaseResult
 
 		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
 			List<TestClassReport> cachedTestClassReports =
-				_jsUnitModulesTestClassMethod.getCachedTestClassReports();
+				_jsUnitModulesTestClass.getCachedTestClassReports();
 
 			if ((cachedTestClassReports != null) &&
 				!cachedTestClassReports.isEmpty()) {
@@ -255,7 +250,6 @@ public class JSUnitBatchBuildTestrayCaseResult
 	}
 
 	private final JSUnitModulesTestClass _jsUnitModulesTestClass;
-	private final JSUnitModulesTestClassMethod _jsUnitModulesTestClassMethod;
 	private List<TestClassReport> _testClassReports;
 
 }

@@ -79,7 +79,7 @@ public class TestrayFactory {
 			else if (axisTestClassGroup instanceof JSUnitAxisTestClassGroup) {
 				return new JSUnitBatchBuildTestrayCaseResult(
 					testrayBuild, topLevelBuildReport, axisTestClassGroup,
-					testClassMethod);
+					testClass);
 			}
 			else if (axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
 				return new JUnitBatchBuildTestrayCaseResult(

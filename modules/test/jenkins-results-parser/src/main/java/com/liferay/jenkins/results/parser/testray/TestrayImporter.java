@@ -1339,6 +1339,7 @@ public class TestrayImporter {
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
 		if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
+			axisTestClassGroup instanceof JSUnitAxisTestClassGroup ||
 			axisTestClassGroup instanceof JUnitAxisTestClassGroup ||
 			axisTestClassGroup instanceof SemVerModulesAxisTestClassGroup) {
 
@@ -1360,9 +1361,7 @@ public class TestrayImporter {
 						testClass));
 			}
 		}
-		else if (axisTestClassGroup instanceof JSUnitAxisTestClassGroup ||
-				 axisTestClassGroup instanceof PlaywrightAxisTestClassGroup) {
-
+		else if (axisTestClassGroup instanceof PlaywrightAxisTestClassGroup) {
 			for (TestClass testClass : axisTestClassGroup.getTestClasses()) {
 				for (TestClassMethod testClassMethod :
 						testClass.getTestClassMethods()) {

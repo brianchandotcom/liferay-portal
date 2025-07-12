@@ -16,10 +16,17 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -122,38 +129,132 @@ public class JSUnitModulesBatchTestClassGroup
 		}
 
 		for (File moduleDir : moduleDirs) {
-			TestClass testClass = TestClassFactory.newTestClass(
-				this, moduleDir);
+			List<File> moduleTestDirs = _getModulesProjectDirs(moduleDir);
 
-			if (!testClass.hasTestClassMethods()) {
-				continue;
-			}
+			for (File moduleTestDir : moduleTestDirs) {
+				TestClass testClass = TestClassFactory.newTestClass(
+					this, moduleTestDir);
 
-			List<TestClassMethod> testClassMethods =
-				testClass.getTestClassMethods();
+				if (!testClass.hasTestClassMethods()) {
+					continue;
+				}
 
-			Iterator<TestClassMethod> iterator = testClassMethods.iterator();
+				List<TestClassMethod> testClassMethods =
+					testClass.getTestClassMethods();
 
-			while (iterator.hasNext()) {
-				TestClassMethod testClassMethod = iterator.next();
+				Iterator<TestClassMethod> iterator =
+					testClassMethods.iterator();
 
-				String testClassMethodName = testClassMethod.getName();
+				while (iterator.hasNext()) {
+					TestClassMethod testClassMethod = iterator.next();
 
-				for (String excludedMethodName : excludedTestMethodNames) {
-					if (testClassMethodName.contains(excludedMethodName)) {
-						iterator.remove();
+					String testClassMethodName = testClassMethod.getName();
 
-						break;
+					for (String excludedMethodName : excludedTestMethodNames) {
+						if (testClassMethodName.contains(excludedMethodName)) {
+							iterator.remove();
+
+							break;
+						}
 					}
 				}
-			}
 
-			if (!testClassMethods.isEmpty()) {
-				addTestClass(testClass);
+				if (!testClassMethods.isEmpty()) {
+					addTestClass(testClass);
+				}
 			}
 		}
 
 		sortTestClasses();
+	}
+
+	private List<File> _getModulesProjectDirs(final File portalModulesBaseDir) {
+		final List<File> modulesProjectDirs = new ArrayList<>();
+
+		final boolean testGitrepoJSUnit = testGitrepoJSUnit();
+
+		try {
+			Files.walkFileTree(
+				portalModulesBaseDir.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+						Path filePath,
+						BasicFileAttributes basicFileAttributes) {
+
+						if (filePath.equals(portalModulesBaseDir.toPath())) {
+							return FileVisitResult.CONTINUE;
+						}
+
+						File file = filePath.toFile();
+
+						File currentDirectory =
+							JenkinsResultsParserUtil.getCanonicalFile(file);
+
+						String currentDirectoryPath =
+							currentDirectory.getAbsolutePath();
+
+						if (currentDirectoryPath.contains("modules") &&
+							!(currentDirectoryPath.contains("modules/apps") ||
+							  currentDirectoryPath.contains("modules/dxp"))) {
+
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						if (!testGitrepoJSUnit) {
+							File gitrepoFile = new File(
+								currentDirectory, ".gitrepo");
+
+							if (gitrepoFile.exists() &&
+								!currentDirectoryPath.contains("osb-faro")) {
+
+								return FileVisitResult.SKIP_SUBTREE;
+							}
+						}
+
+						File buildGradleFile = new File(
+							currentDirectory, "build.gradle");
+						File packageJSONFile = new File(
+							currentDirectory, "package.json");
+
+						if (!buildGradleFile.exists() ||
+							!packageJSONFile.exists()) {
+
+							return FileVisitResult.CONTINUE;
+						}
+
+						try {
+							JSONObject packageJSONObject = new JSONObject(
+								JenkinsResultsParserUtil.read(packageJSONFile));
+
+							if (!packageJSONObject.has("scripts")) {
+								return FileVisitResult.CONTINUE;
+							}
+
+							JSONObject scriptsJSONObject =
+								packageJSONObject.getJSONObject("scripts");
+
+							if (!scriptsJSONObject.has("test")) {
+								return FileVisitResult.CONTINUE;
+							}
+
+							modulesProjectDirs.add(currentDirectory);
+
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+						catch (IOException | JSONException exception) {
+							return FileVisitResult.CONTINUE;
+						}
+					}
+
+				});
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return modulesProjectDirs;
 	}
 
 }

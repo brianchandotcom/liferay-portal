@@ -141,8 +141,6 @@ public class SemVerModulesBatchTestClassGroup
 
 			addTestClass(testClass);
 		}
-
-		sortTestClasses();
 	}
 
 	private static final Pattern _quarterlyReleaseNamePattern = Pattern.compile(

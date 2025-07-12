@@ -172,8 +172,6 @@ public class ServiceBuilderModulesBatchTestClassGroup
 
 			addTestClass(testClass);
 		}
-
-		sortTestClasses();
 	}
 
 	private BuildType _buildType;

@@ -123,8 +123,6 @@ public class PluginsGulpBatchTestClassGroup extends BatchTestClassGroup {
 		for (File testBaseDirName : getTestBaseDirNames()) {
 			addTestClass(TestClassFactory.newTestClass(this, testBaseDirName));
 		}
-
-		sortTestClasses();
 	}
 
 	private final List<File> _modifiedFilesList;

@@ -740,8 +740,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				"[", getBatchName(), "] Found ",
 				String.valueOf(getTestClassCount()), " test classes in ",
 				JenkinsResultsParserUtil.toDurationString(duration)));
-
-		sortTestClasses();
 	}
 
 	protected void setTestClasses(JUnitTestSelector jUnitTestSelector) {
@@ -801,8 +799,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				"[", getBatchName(), "] Found ",
 				String.valueOf(getTestClassCount()), " test classes in ",
 				JenkinsResultsParserUtil.toDurationString(duration)));
-
-		sortTestClasses();
 	}
 
 	private File _getWorkingDirectory() {

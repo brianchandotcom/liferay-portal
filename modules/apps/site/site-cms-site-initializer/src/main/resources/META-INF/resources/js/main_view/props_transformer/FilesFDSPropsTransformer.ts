@@ -12,6 +12,7 @@ import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
+import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
@@ -109,16 +110,17 @@ export default function FilesFDSPropsTransformer({
 		}),
 		onActionDropdownItemClick: ({
 			action,
+			event,
 			itemData,
 		}: {
 			action: any;
+			event: Event;
 			itemData: any;
 		}) => {
 			if (action?.data?.id === 'show-details') {
 				Liferay.fire(EVENTS.ASSET_DATA, {items: [{...itemData}]});
 			}
-
-			if (action?.data?.id === 'view-file') {
+			else if (action?.data?.id === 'view-file') {
 				openModal({
 					containerProps: {
 						className: '',
@@ -126,6 +128,17 @@ export default function FilesFDSPropsTransformer({
 					contentComponent: () =>
 						FilePreviewerModalContent(itemData.embedded.file),
 					size: 'full-screen',
+				});
+			}
+			else if (action?.data?.id === 'share') {
+				event?.preventDefault();
+
+				shareAction({
+					autocompleteUserURL: '',
+					classNameId: '',
+					classPK: '',
+					shareActionURL: '',
+					title: itemData.embedded?.title,
 				});
 			}
 		},

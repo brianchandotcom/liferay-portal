@@ -12,7 +12,6 @@ import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -25,21 +24,19 @@ import org.json.JSONObject;
 public class JSUnitModulesTestClass extends ModulesTestClass {
 
 	public DownstreamBuildReport getCachedDownstreamBuildReport() {
-		if (!_cachedTestClassReportsSearched) {
-			getCachedTestClassReports();
+		if (!_cachedTestClassReportSearched) {
+			getCachedTestClassReport();
 		}
 
 		return _cachedDownstreamBuildReport;
 	}
 
-	public List<TestClassReport> getCachedTestClassReports() {
+	public TestClassReport getCachedTestClassReport() {
 		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
-			_cachedTestClassReportsSearched) {
+			_cachedTestClassReportSearched) {
 
-			return _cachedTestClassReports;
+			return _cachedTestClassReport;
 		}
-
-		_cachedTestClassReports = new ArrayList<>();
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
@@ -55,21 +52,17 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 					continue;
 				}
 
-				_cachedTestClassReports.add(testClassResult);
+				_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
+				_cachedTestClassReport = testClassResult;
+				_cachedTestClassReportSearched = true;
+
+				return _cachedTestClassReport;
 			}
-
-			if (_cachedTestClassReports.isEmpty()) {
-				continue;
-			}
-
-			_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
-
-			return _cachedTestClassReports;
 		}
 
-		_cachedTestClassReportsSearched = true;
+		_cachedTestClassReportSearched = true;
 
-		return _cachedTestClassReports;
+		return _cachedTestClassReport;
 	}
 
 	@Override
@@ -89,6 +82,11 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 		}
 
 		return jsonObject;
+	}
+
+	@Override
+	public String getName() {
+		return getTestTaskName();
 	}
 
 	public String getTestrayMainComponentName() {
@@ -180,8 +178,8 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 	}
 
 	private DownstreamBuildReport _cachedDownstreamBuildReport;
-	private List<TestClassReport> _cachedTestClassReports = new ArrayList<>();
-	private boolean _cachedTestClassReportsSearched;
+	private TestClassReport _cachedTestClassReport;
+	private boolean _cachedTestClassReportSearched;
 	private final File _testPropertiesFile;
 	private final String _testrayMainComponentName;
 

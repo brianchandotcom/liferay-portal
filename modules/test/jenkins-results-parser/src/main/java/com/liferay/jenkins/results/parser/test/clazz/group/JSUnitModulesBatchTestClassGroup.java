@@ -75,7 +75,7 @@ public class JSUnitModulesBatchTestClassGroup
 			for (TestClass testClass : axisTestClassGroup.getTestClasses()) {
 				String testClassName = testClass.getName();
 
-				if (testClassName.contains("modules/dxp/apps/osb/osb-faro")) {
+				if (testClassName.contains("osb-faro")) {
 					faroTestClass = testClass;
 
 					originalAxisTestClassGroup = axisTestClassGroup;

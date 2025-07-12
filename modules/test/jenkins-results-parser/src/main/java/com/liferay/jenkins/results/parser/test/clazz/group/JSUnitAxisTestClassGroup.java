@@ -99,17 +99,15 @@ public class JSUnitAxisTestClassGroup extends AxisTestClassGroup {
 		for (JSUnitModulesTestClass jsUnitModulesTestClass :
 				getJSUnitModulesTestClasses()) {
 
-			List<TestClassReport> cachedTestClassReports =
-				jsUnitModulesTestClass.getCachedTestClassReports();
+			TestClassReport cachedTestClassReport =
+				jsUnitModulesTestClass.getCachedTestClassReport();
 
-			if ((cachedTestClassReports == null) ||
-				cachedTestClassReports.isEmpty()) {
-
-				return false;
+			if (cachedTestClassReport != null) {
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	protected JSUnitAxisTestClassGroup(

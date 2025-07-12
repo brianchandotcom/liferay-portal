@@ -7,6 +7,7 @@ package com.liferay.scim.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -624,6 +625,13 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		String emailPrefix = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 
+		StringBundler profileUrlSB = new StringBundler(3);
+
+		profileUrlSB.append("http://");
+		profileUrlSB.append(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		profileUrlSB.append(".com");
+
 		HttpInvoker.HttpResponse httpResponse =
 			_userResource.postV2UserHttpResponse(
 				new User() {
@@ -655,8 +663,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 							RandomTestUtil.randomString());
 						preferredLanguage = StringUtil.toLowerCase(
 							RandomTestUtil.randomString());
-						profileUrl = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
+						profileUrl = profileUrlSB.toString();
 						schemas = new String[] {
 							"urn:ietf:params:scim:schemas:core:2.0:User"
 						};

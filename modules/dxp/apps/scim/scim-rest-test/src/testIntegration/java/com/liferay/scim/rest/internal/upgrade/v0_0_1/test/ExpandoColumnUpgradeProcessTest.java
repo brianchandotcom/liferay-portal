@@ -12,6 +12,7 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -175,6 +176,13 @@ public class ExpandoColumnUpgradeProcessTest {
 	private com.liferay.scim.rest.client.dto.v1_0.User _randomUser()
 		throws Exception {
 
+		StringBundler profileUrlSB = new StringBundler(3);
+
+		profileUrlSB.append("http://");
+		profileUrlSB.append(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		profileUrlSB.append(".com");
+
 		String randomUserName = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 
@@ -208,8 +216,7 @@ public class ExpandoColumnUpgradeProcessTest {
 					RandomTestUtil.randomString());
 				preferredLanguage = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				profileUrl = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				profileUrl = profileUrlSB.toString();
 				schemas = new String[] {
 					"urn:ietf:params:scim:schemas:core:2.0:User",
 					"urn:ietf:params:scim:schemas:extension:liferay:2.0:User"

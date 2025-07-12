@@ -13,9 +13,10 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Peter Yoo
@@ -24,7 +25,7 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 
 	@Override
 	public List<TestClass> getTestClasses() {
-		return _testClasses;
+		return new ArrayList<>(_testClasses);
 	}
 
 	@Override
@@ -85,10 +86,6 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 		_testClasses.remove(testClass);
 	}
 
-	protected void sortTestClasses() {
-		Collections.sort(_testClasses);
-	}
-
-	private final List<TestClass> _testClasses = new ArrayList<>();
+	private final Set<TestClass> _testClasses = new TreeSet<>();
 
 }

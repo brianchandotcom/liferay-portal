@@ -152,8 +152,6 @@ public class JSUnitModulesBatchTestClassGroup
 				addTestClass(testClass);
 			}
 		}
-
-		sortTestClasses();
 	}
 
 }

@@ -20,6 +20,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -760,10 +761,19 @@ public class UserManagerImpl implements UserManager {
 
 			ServiceContext serviceContext = new ServiceContext();
 
-			_websiteLocalService.addWebsite(
-				serviceContext.getUuidWithoutReset(), portalUser.getUserId(),
-				Contact.class.getName(), portalUser.getContactId(),
-				scimUser.getProfileUrl(), listTypeId, true, serviceContext);
+			try {
+				_websiteLocalService.addWebsite(
+					serviceContext.getUuidWithoutReset(),
+					portalUser.getUserId(), Contact.class.getName(),
+					portalUser.getContactId(), scimUser.getProfileUrl(),
+					listTypeId, true, serviceContext);
+			}
+			catch (WebsiteURLException websiteURLException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to create website URL", websiteURLException);
+				}
+			}
 		}
 
 		return ScimUtil.toScimUser(portalUser);

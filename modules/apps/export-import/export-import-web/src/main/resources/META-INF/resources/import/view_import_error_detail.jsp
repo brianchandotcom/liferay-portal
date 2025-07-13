@@ -21,7 +21,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "error-details"));
 		module="{ViewImportErrorDetail} from exportimport-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"backURL", backURL
+				"backURL", portletDisplay.getURLBack()
 			).build()
 		%>'
 	/>

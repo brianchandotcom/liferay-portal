@@ -3,6 +3,7 @@
 		"@clayui/button": "3.136.0",
 		"@clayui/layout": "3.128.0",
 		"@clayui/link": "3.128.0",
+		"@clayui/loading-indicator": "3.128.0",
 		"@clayui/modal": "3.140.0",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",

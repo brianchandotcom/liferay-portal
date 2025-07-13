@@ -42,7 +42,7 @@
 			"enableLocalization": false,
 			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "MCP_SERVER_PROMPT",
+			"externalReferenceCode": "L_MCP_SERVER_PROMPT",
 			"label": {
 				"en_US": "MCP Server Prompt"
 			},
@@ -210,7 +210,7 @@
 					"readOnlyConditionExpression": "",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String",
 					"unique": false
 				},
@@ -233,7 +233,7 @@
 					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String",
 					"unique": false
 				},
@@ -256,7 +256,7 @@
 					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String",
 					"unique": false
 				},
@@ -279,7 +279,7 @@
 					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String",
 					"unique": false
 				},
@@ -302,7 +302,7 @@
 					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String",
 					"unique": false
 				},
@@ -325,7 +325,7 @@
 					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String",
 					"unique": false
 				}
@@ -345,14 +345,13 @@
 				"en_US": "MCP Server Prompts"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/mcp-server-prompts",
 			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
 				"label_i18n": "Approved"
 			},
-			"system": false,
+			"system": true,
 			"titleObjectFieldName": "name"
 		}
 	]

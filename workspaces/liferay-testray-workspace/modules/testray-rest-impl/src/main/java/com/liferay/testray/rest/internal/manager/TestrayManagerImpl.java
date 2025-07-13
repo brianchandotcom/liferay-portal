@@ -470,7 +470,7 @@ public class TestrayManagerImpl implements TestrayManager {
 			Element element = document.getDocumentElement();
 
 			Map<String, String> propertiesMap = _getPropertiesMap(
-				element, "properties", 0);
+				element, 0, "properties");
 
 			long testrayProjectId = _getTestrayProjectId(
 				companyId, serviceContext, testrayCache,
@@ -964,7 +964,7 @@ public class TestrayManagerImpl implements TestrayManager {
 
 		for (int i = 0; i < detailNodeList.getLength(); i++) {
 			_addOrUpdateTestrayCaseDetail(
-				_getPropertiesMap(detailsElement, "detail", i), serviceContext,
+				_getPropertiesMap(detailsElement, i, "detail"), serviceContext,
 				testrayBuildId, testrayCache, testrayCaseId, userId);
 		}
 	}
@@ -993,7 +993,7 @@ public class TestrayManagerImpl implements TestrayManager {
 				_getTestrayAttachmentsJSONArray(testcaseNode);
 
 			Map<String, String> testrayCasePropertiesMap = _getPropertiesMap(
-				(Element)testcaseNode, "properties", 0);
+				(Element)testcaseNode, 0, "properties");
 
 			_addTestrayCase(
 				companyId, serviceContext, testcaseNode,
@@ -1150,7 +1150,7 @@ public class TestrayManagerImpl implements TestrayManager {
 	}
 
 	private Map<String, String> _getPropertiesMap(
-		Element element, String tagName, int index) {
+		Element element, int index, String tagName) {
 
 		Map<String, String> map = new HashMap<>();
 

@@ -105,13 +105,6 @@ public class LayoutPageTemplateEntryCTDisplayRenderer
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			displayContext.getModel();
 
-		HttpServletRequest httpServletRequest =
-			displayContext.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
@@ -120,6 +113,13 @@ public class LayoutPageTemplateEntryCTDisplayRenderer
 		if (layout.isTypeContent() || layoutPageTemplateEntry.isDraft()) {
 			previewLayout = layout.fetchDraftLayout();
 		}
+
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (layoutPageTemplateEntry.getType() ==
 				LayoutPageTemplateEntryTypeConstants.BASIC) {

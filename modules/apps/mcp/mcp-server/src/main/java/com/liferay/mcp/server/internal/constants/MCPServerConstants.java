@@ -13,6 +13,6 @@ public class MCPServerConstants {
 	public static final String MCP_SERVER_OAUTH2_CLIENT_ID = "MCPServer";
 
 	public static final String MCP_SERVER_PROMPT_OBJECT_DEFINITION_ERC =
-		"MCP_SERVER_PROMPT";
+		"L_MCP_SERVER_PROMPT";
 
 }

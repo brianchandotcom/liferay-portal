@@ -1621,14 +1621,13 @@ public class DefaultObjectEntryManagerImpl
 		if (GetterUtil.getBoolean(
 				dtoConverterContext.getAttribute("addActions"), true)) {
 
-			Map<String, String> templateParameterMap = HashMapBuilder.put(
-				"version", String.valueOf(objectEntryVersion.getVersion())
-			).build();
-
 			boolean latestObjectEntryVersion =
 				_objectEntryVersionLocalService.isLatestObjectEntryVersion(
 					serviceBuilderObjectEntry.getObjectEntryId(),
 					objectEntryVersion.getVersion());
+			Map<String, String> templateParameterMap = HashMapBuilder.put(
+				"version", String.valueOf(objectEntryVersion.getVersion())
+			).build();
 
 			actions = HashMapBuilder.create(
 				actions

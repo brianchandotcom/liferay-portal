@@ -52,7 +52,13 @@ interface ErrorDetail {
 	externalReferenceCode: string;
 }
 
-export function ViewImportErrorDetail({backURL}: {backURL: string}) {
+export function ViewImportErrorDetail({
+	apiURL,
+	backURL,
+}: {
+	apiURL: string;
+	backURL: string;
+}) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorDetail, setErrorDetail] = useState<ErrorDetail>({
 		creator: {
@@ -73,7 +79,7 @@ export function ViewImportErrorDetail({backURL}: {backURL: string}) {
 	});
 
 	useEffect(() => {
-		fetch('/group/__mocks__/get-import-error-detail').then((response) => {
+		fetch(apiURL).then((response) => {
 			response.json().then((data: ErrorDetail) => {
 				setErrorDetail({
 					...data,

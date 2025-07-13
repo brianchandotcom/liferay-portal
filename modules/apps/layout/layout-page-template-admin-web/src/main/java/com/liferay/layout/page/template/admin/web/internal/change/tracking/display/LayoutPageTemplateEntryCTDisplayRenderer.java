@@ -134,15 +134,23 @@ public class LayoutPageTemplateEntryCTDisplayRenderer
 				"src=\"", friendlyURL, "\" width=\"100%\"></iframe>");
 		}
 
-		String url = HttpComponentsUtil.addParameter(
-			themeDisplay.getPathMain() + "/portal/get_page_preview", "p_l_mode",
-			"preview");
+		String url = themeDisplay.getPathMain() + "/portal/get_page_preview";
+
+		if (layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) {
+
+			url = HttpComponentsUtil.addParameter(
+				url, "p_l_id", previewLayout.getPlid());
+		}
+
+		url = HttpComponentsUtil.addParameter(url, "p_l_mode", "preview");
+		url = HttpComponentsUtil.addParameter(url, "p_p_state", "undefined");
 
 		String languageId = LocaleUtil.toLanguageId(displayContext.getLocale());
 
 		url = HttpComponentsUtil.addParameter(url, "languageId", languageId);
-
-		url = HttpComponentsUtil.addParameter(url, "p_p_state", "undefined");
+		url = HttpComponentsUtil.addParameter(
+			url, "previewCTCollectionId", layout.getCtCollectionId());
 
 		if ((layoutPageTemplateEntry.getType() ==
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) ||
@@ -152,16 +160,6 @@ public class LayoutPageTemplateEntryCTDisplayRenderer
 			url = HttpComponentsUtil.addParameter(
 				url, "selPlid", previewLayout.getPlid());
 		}
-
-		if (layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) {
-
-			url = HttpComponentsUtil.addParameter(
-				url, "p_l_id", previewLayout.getPlid());
-		}
-
-		url = HttpComponentsUtil.addParameter(
-			url, "previewCTCollectionId", layout.getCtCollectionId());
 
 		return StringBundler.concat(
 			"<iframe frameborder=\"0\" onload=\"this.style.height = ",

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Users Admin Web
 Bundle-SymbolicName: com.liferay.users.admin.web
-Bundle-Version: 11.0.31
+Bundle-Version: 11.0.32
 Import-Package:\
 	javax.net.ssl,\
 	\

@@ -12,6 +12,7 @@ import com.liferay.change.tracking.sample.service.CTSChildLocalService;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.test.util.CTSampleTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -51,6 +52,8 @@ public class OracleDBCTTest {
 
 	@Before
 	public void setUp() throws Exception {
+		CTSampleTestUtil.reset();
+
 		_ctCollection1 = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, RandomTestUtil.randomString(), null);
@@ -64,44 +67,36 @@ public class OracleDBCTTest {
 
 	@After
 	public void tearDown() throws Exception {
+		CTSampleTestUtil.reset();
+
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection1);
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection2);
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection3);
-
-		_ctsChildLocalService.deleteCTSChildren(TestPropsValues.getCompanyId());
 	}
 
 	@Test
 	public void testDeleteCTCollectionWithOver1000CTEntries() throws Exception {
-		CTSChild parentCTSChild = null;
+		long parentCTSChildId = 0;
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			parentCTSChildId = CTSampleTestUtil.addCTSChild();
 
-			parentCTSChild = _ctsChildLocalService.addCTSChild(
-				TestPropsValues.getCompanyId());
-
-			for (int i = 0; i < _BATCH_SIZE; i++) {
-				_ctsChildLocalService.addCTSChild(
-					TestPropsValues.getCompanyId(), 0,
-					parentCTSChild.getCtsChildId(), "");
-			}
+			CTSampleTestUtil.addCTSChild(
+				0, parentCTSChildId, null, _BATCH_SIZE);
 		}
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			_ctsChildLocalService.deleteCTSChild(
-				parentCTSChild.getCtsChildId());
+			_ctsChildLocalService.deleteCTSChild(parentCTSChildId);
 		}
 
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection1);
 
 		List<CTSChild> ctsChildren =
 			_ctsChildLocalService.getCTSChildrenByParentCTSChildId(
-				parentCTSChild.getCtsChildId());
+				parentCTSChildId);
 
 		Assert.assertEquals(
 			ctsChildren.toString(), _BATCH_SIZE, ctsChildren.size());
@@ -111,21 +106,17 @@ public class OracleDBCTTest {
 	public void testMoveAndDiscardCTEntryWithOver1000CTEntries()
 		throws Exception {
 
-		CTSChild parentCTSChild = null;
+		long parentCTSChildId = 0;
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			parentCTSChild = _ctsChildLocalService.addCTSChild(
-				TestPropsValues.getCompanyId());
+			parentCTSChildId = CTSampleTestUtil.addCTSChild();
 
-			for (int i = 0; i < _BATCH_SIZE; i++) {
-				_ctsChildLocalService.addCTSChild(
-					TestPropsValues.getCompanyId(), 0,
-					parentCTSChild.getCtsChildId(), "");
-			}
+			CTSampleTestUtil.addCTSChild(
+				0, parentCTSChildId, null, _BATCH_SIZE);
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -133,7 +124,7 @@ public class OracleDBCTTest {
 				_ctCollection1.getCtCollectionId(),
 				_ctCollection2.getCtCollectionId(),
 				_classNameLocalService.getClassNameId(CTSChild.class),
-				parentCTSChild.getCtsChildId());
+				parentCTSChildId);
 		}
 
 		Assert.assertEquals(
@@ -146,19 +137,11 @@ public class OracleDBCTTest {
 			_ctEntryLocalService.getCTCollectionCTEntriesCount(
 				_ctCollection2.getCtCollectionId()));
 
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection2.getCtCollectionId())) {
-
-			parentCTSChild = _ctsChildLocalService.getCTSChild(
-				parentCTSChild.getCtsChildId());
-		}
-
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_ctCollectionService.discardCTEntry(
 				_ctCollection2.getCtCollectionId(),
 				_classNameLocalService.getClassNameId(CTSChild.class),
-				parentCTSChild.getCtsChildId());
+				parentCTSChildId);
 		}
 
 		Assert.assertEquals(
@@ -176,10 +159,7 @@ public class OracleDBCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			for (int i = 0; i < _BATCH_SIZE; i++) {
-				_ctsChildLocalService.addCTSChild(
-					TestPropsValues.getCompanyId());
-			}
+			CTSampleTestUtil.addCTSChild(_BATCH_SIZE);
 
 			_ctCollectionService.publishCTCollection(
 				TestPropsValues.getUserId(),
@@ -192,15 +172,16 @@ public class OracleDBCTTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, _ctCollection1.getStatus());
 
-		CTCollection revertedCTCollection =
-			_ctCollectionLocalService.undoCTCollection(
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_ctCollection1 = _ctCollectionLocalService.undoCTCollection(
 				_ctCollection1.getCtCollectionId(), TestPropsValues.getUserId(),
 				RandomTestUtil.randomString(), null);
+		}
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT, revertedCTCollection.getStatus());
+			WorkflowConstants.STATUS_DRAFT, _ctCollection1.getStatus());
 
-		_ctCollectionLocalService.deleteCTCollection(revertedCTCollection);
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection1);
 	}
 
 	@Test
@@ -212,10 +193,7 @@ public class OracleDBCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			for (int i = 0; i < _BATCH_SIZE; i++) {
-				_ctsChildLocalService.addCTSChild(
-					TestPropsValues.getCompanyId());
-			}
+			CTSampleTestUtil.addCTSChild(_BATCH_SIZE);
 
 			_ctCollectionService.publishCTCollection(
 				TestPropsValues.getUserId(),

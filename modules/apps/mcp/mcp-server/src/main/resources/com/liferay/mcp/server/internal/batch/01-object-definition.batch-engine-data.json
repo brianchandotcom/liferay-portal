@@ -42,12 +42,12 @@
 			"enableLocalization": false,
 			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "MCP_PROMPT",
+			"externalReferenceCode": "MCP_SERVER_PROMPT",
 			"label": {
-				"en_US": "MCP Prompt"
+				"en_US": "MCP Server Prompt"
 			},
 			"modifiable": true,
-			"name": "MCPPrompt",
+			"name": "MCPServerPrompt",
 			"objectActions": [
 			],
 			"objectDefinitionSettings": [
@@ -342,10 +342,10 @@
 			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "MCP Prompts"
+				"en_US": "MCP Server Prompts"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/mcpprompts",
+			"restContextPath": "/o/c/mcp-server-prompts",
 			"scope": "company",
 			"status": {
 				"code": 0,

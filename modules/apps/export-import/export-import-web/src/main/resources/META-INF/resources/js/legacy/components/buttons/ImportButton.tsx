@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import React, {useState} from 'react';
 
-import {ModalConfirmImport} from '../modal/ModalConfirmImport';
+import {ModalConfirmImport} from '../modals/ModalConfirmImport';
 
 export default function ImportButton({
 	copyAsNewCheckboxId,

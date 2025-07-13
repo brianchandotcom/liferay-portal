@@ -17,6 +17,7 @@ import com.liferay.change.tracking.sample.service.CTSChildLocalService;
 import com.liferay.change.tracking.sample.service.CTSParentLocalService;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.test.util.CTSampleTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -26,8 +27,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -57,6 +56,8 @@ public class CTClosureFactoryImplTest {
 
 	@Before
 	public void setUp() throws Exception {
+		CTSampleTestUtil.reset();
+
 		_db = DBManagerUtil.getDB();
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
@@ -67,17 +68,9 @@ public class CTClosureFactoryImplTest {
 
 	@After
 	public void tearDown() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.change.tracking.service.impl." +
-					"CTCollectionLocalServiceImpl",
-				LoggerTestUtil.WARN)) {
+		CTSampleTestUtil.reset();
 
-			_ctCollectionLocalService.deleteCTCollection(_ctCollection);
-		}
-
-		_db.runSQL("truncate table CTSChild");
-		_db.runSQL("truncate table CTSGrandParent");
-		_db.runSQL("truncate table CTSParent");
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 	}
 
 	@Test

@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.taglib.sample.web.internal.servlet.taglib;
 
-import com.liferay.portal.kernel.frontend.spa.FrontendSPAUtil;
+import com.liferay.portal.kernel.frontend.spa.FrontendSPA;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -35,9 +35,7 @@ public class SampleTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (!FrontendSPAUtil.isEnabled(
-				_portal.getCompanyId(httpServletRequest))) {
-
+		if (!_frontendSPA.isEnabled(_portal.getCompanyId(httpServletRequest))) {
 			return;
 		}
 
@@ -90,6 +88,9 @@ public class SampleTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	protected ServletContext getServletContext() {
 		return null;
 	}
+
+	@Reference
+	private FrontendSPA _frontendSPA;
 
 	@Reference
 	private Portal _portal;

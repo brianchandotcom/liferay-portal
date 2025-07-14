@@ -6,7 +6,7 @@
 package com.liferay.portal.security.content.security.policy.internal;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.frontend.spa.FrontendSPAUtil;
+import com.liferay.portal.kernel.frontend.spa.FrontendSPA;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -64,7 +64,7 @@ public class ContentSecurityPolicyNonceManager {
 		if (!contentSecurityPolicyConfiguration.enabled()) {
 			nonce = StringPool.BLANK;
 		}
-		else if (FrontendSPAUtil.isEnabled(
+		else if (_frontendSPA.isEnabled(
 					_portal.getCompanyId(httpServletRequest))) {
 
 			nonce = (String)httpSession.getAttribute(_NONCE);
@@ -104,6 +104,9 @@ public class ContentSecurityPolicyNonceManager {
 
 	private static final String _NONCE =
 		ContentSecurityPolicyNonceManager.class.getName() + "#NONCE";
+
+	@Reference
+	private FrontendSPA _frontendSPA;
 
 	@Reference
 	private Portal _portal;

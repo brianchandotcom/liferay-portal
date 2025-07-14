@@ -21,10 +21,6 @@ import org.json.JSONObject;
  */
 public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
-	public boolean getAnalyticsCloudEnabled() {
-		return _analyticsCloudEnabled;
-	}
-
 	@Override
 	public long getAverageDuration() {
 		if (_averageDuration != null) {
@@ -87,6 +83,10 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 		}
 
 		return matcher.group("specFilePath");
+	}
+
+	public boolean isAnalyticsCloudEnabled() {
+		return _analyticsCloudEnabled;
 	}
 
 	protected PlaywrightJUnitTestClass(

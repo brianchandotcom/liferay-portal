@@ -23,25 +23,6 @@ import org.json.JSONObject;
  */
 public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 
-	public Boolean getAnalyticsCloudEnabled() {
-		List<TestClass> testClasses = getTestClasses();
-
-		if (testClasses.isEmpty()) {
-			return false;
-		}
-
-		for (TestClass testClass : testClasses) {
-			PlaywrightJUnitTestClass playwrightJUnitTestClass =
-				(PlaywrightJUnitTestClass)testClass;
-
-			if (playwrightJUnitTestClass.getAnalyticsCloudEnabled()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	@Override
 	public List<DownstreamBuildReport> getCachedDownstreamBuildReports() {
 		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
@@ -139,6 +120,25 @@ public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 		}
 
 		return slaveLabel;
+	}
+
+	public Boolean isAnalyticsCloudEnabled() {
+		List<TestClass> testClasses = getTestClasses();
+
+		if (testClasses.isEmpty()) {
+			return false;
+		}
+
+		for (TestClass testClass : testClasses) {
+			PlaywrightJUnitTestClass playwrightJUnitTestClass =
+				(PlaywrightJUnitTestClass)testClass;
+
+			if (playwrightJUnitTestClass.isAnalyticsCloudEnabled()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

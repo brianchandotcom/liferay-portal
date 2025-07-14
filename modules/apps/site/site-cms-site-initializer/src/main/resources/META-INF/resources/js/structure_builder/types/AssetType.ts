@@ -25,7 +25,7 @@ export interface IAssetObjectEntry {
 	file?: IAssetFile;
 	friendlyUrlPath: string;
 	id: number;
-	keywords: any[];
+	keywords?: string[];
 	objectEntryFolderExternalReferenceCode: string;
 	objectEntryFolderId: number;
 	reviewDate: string;
@@ -36,6 +36,8 @@ export interface IAssetObjectEntry {
 		label: string;
 		label_i18n: string;
 	};
+    taxonomyCategoryBriefs?: any[];
+    taxonomyCategoryIds?: number[];
 	systemProperties: IAssetVersion;
 	taxonomyCategoryBriefs?: any[];
 	taxonomyCategoryIds?: number[];

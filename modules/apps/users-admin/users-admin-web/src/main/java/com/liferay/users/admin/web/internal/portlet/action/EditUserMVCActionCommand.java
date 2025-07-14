@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.portlet.DynamicActionRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
@@ -357,8 +358,11 @@ public class EditUserMVCActionCommand
 		Company company = portal.getCompany(actionRequest);
 
 		if (company.isUpdatePasswordRequired() &&
-			(!screenName.equals(oldScreenName) ||
-			 !emailAddress.equals(oldEmailAddress))) {
+			((!StringUtil.endsWith(
+				oldEmailAddress,
+				UserConstants.USERS_EMAIL_ADDRESS_AUTO_SUFFIX) &&
+			  !emailAddress.equals(oldEmailAddress)) ||
+			 !screenName.equals(oldScreenName))) {
 
 			int authResult = _userLocalService.authenticateByUserId(
 				themeDisplay.getCompanyId(), portal.getUserId(actionRequest),

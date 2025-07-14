@@ -49,7 +49,9 @@ test(
 
 			await test.step('Check the results only show results with colors Blue, Green, and Yellow', async () => {
 				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page.getByRole('cell', {name: 'Green'}).or(page.getByRole('cell', {name: '🍏'}));
+				const greenCells = page
+					.getByRole('cell', {name: 'Green'})
+					.or(page.getByRole('cell', {name: '🍏'}));
 				const redCells = page.getByRole('cell', {name: 'Red'});
 				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
 
@@ -216,7 +218,9 @@ test(
 
 			await test.step('Check the results are filtered by checking all results appear', async () => {
 				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page.getByRole('cell', {name: 'Green'}).or(page.getByRole('cell', {name: '🍏'}));
+				const greenCells = page
+					.getByRole('cell', {name: 'Green'})
+					.or(page.getByRole('cell', {name: '🍏'}));
 				const redCells = page.getByRole('cell', {name: 'Red'});
 				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
 
@@ -258,7 +262,9 @@ test(
 
 			await test.step('Check the only Red results are displayed', async () => {
 				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page.getByRole('cell', {name: 'Green'}).or(page.getByRole('cell', {name: '🍏'}));
+				const greenCells = page
+					.getByRole('cell', {name: 'Green'})
+					.or(page.getByRole('cell', {name: '🍏'}));
 				const redCells = page.getByRole('cell', {name: 'Red'});
 				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
 
@@ -297,7 +303,9 @@ test(
 
 			await test.step('Check the results only show "Green", "Yellow", and "Red"', async () => {
 				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page.getByRole('cell', {name: 'Green'}).or(page.getByRole('cell', {name: '🍏'}));
+				const greenCells = page
+					.getByRole('cell', {name: 'Green'})
+					.or(page.getByRole('cell', {name: '🍏'}));
 				const redCells = page.getByRole('cell', {name: 'Red'});
 				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
 
@@ -319,7 +327,51 @@ test(
 
 			await test.step('Check all results are shown', async () => {
 				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page.getByRole('cell', {name: 'Green'}).or(page.getByRole('cell', {name: '🍏'}));
+				const greenCells = page
+					.getByRole('cell', {name: 'Green'})
+					.or(page.getByRole('cell', {name: '🍏'}));
+				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
+				const redCells = page.getByRole('cell', {name: 'Red'});
+
+				expect.soft(await blueCells.count()).toBeGreaterThan(0);
+				expect.soft(await greenCells.count()).toBeGreaterThan(0);
+				expect.soft(await yellowCells.count()).toBeGreaterThan(0);
+				expect.soft(await redCells.count()).toBeGreaterThan(0);
+			});
+		});
+
+		await test.step('Check filter can be removed using delete button', async () => {
+			await test.step('Refresh the page', async () => {
+				await page.reload();
+
+				await page
+					.getByText('This is a description for sample 1.')
+					.waitFor();
+			});
+
+			await test.step('Open the "Color" filter summary box', async () => {
+				await page
+					.getByRole('button', {name: 'Color: Blue, Green, Yellow'})
+					.click();
+			});
+
+			await test.step('Uncheck filter and click on delete button on the filter summary box', async () => {
+				await page.getByRole('checkbox', {name: 'Blue'}).uncheck();
+				await page.getByRole('checkbox', {name: 'Green'}).uncheck();
+				await page.getByRole('checkbox', {name: 'Yellow'}).uncheck();
+
+				await page.getByRole('button', {name: 'Delete Filter'}).click();
+
+				await page
+					.getByText('This is a description for sample 1.')
+					.waitFor();
+			});
+
+			await test.step('Check all results are shown', async () => {
+				const blueCells = page.getByRole('cell', {name: 'Blue'});
+				const greenCells = page
+					.getByRole('cell', {name: 'Green'})
+					.or(page.getByRole('cell', {name: '🍏'}));
 				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
 				const redCells = page.getByRole('cell', {name: 'Red'});
 

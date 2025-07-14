@@ -64,6 +64,7 @@ import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/
 import {config as frontendEditorCKEditorWebConfig} from './tests/frontend-editor-ckeditor-web/main/config';
 import {config as frontendJsBootstrapSupportWebConfig} from './tests/frontend-js-bootstrap-support-web/main/config';
 import {config as frontendJsComponentsWebConfig} from './tests/frontend-js-components-web/main/config';
+import {config as frontendJsItemSelectorWebConfig} from './tests/frontend-js-item-selector-web/main/config';
 import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/main/config';
 import {config as frontendJsWebConfig} from './tests/frontend-js-web/main/config';
 import {config as frontendTaglibClayConfig} from './tests/frontend-taglib-clay/main/config';
@@ -223,6 +224,7 @@ export default defineConfig({
 		frontendEditorCKEditorWebConfig,
 		frontendJsBootstrapSupportWebConfig,
 		frontendJsComponentsWebConfig,
+		frontendJsItemSelectorWebConfig,
 		frontendJsSpaWebConfig,
 		frontendJsWebConfig,
 		frontendTaglibClayConfig,

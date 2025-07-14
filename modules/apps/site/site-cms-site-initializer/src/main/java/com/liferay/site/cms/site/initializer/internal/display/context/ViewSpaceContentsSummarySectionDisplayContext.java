@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
-import com.liferay.site.cms.site.initializer.internal.util.SpaceAbstractHeaderUtil;
+import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -26,10 +26,10 @@ import java.util.Map;
 /**
  * @author Roberto Díaz
  */
-public class ViewSpaceContentsAbstractSectionDisplayContext
+public class ViewSpaceContentsSummarySectionDisplayContext
 	extends BaseContentsSectionDisplayContext {
 
-	public ViewSpaceContentsAbstractSectionDisplayContext(
+	public ViewSpaceContentsSummarySectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService, long groupId,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
@@ -53,8 +53,8 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 	@Override
 	public String getAPIURL() {
 		return HttpComponentsUtil.addParameters(
-			super.getAPIURL(), "page", CMSSpaceConstants.SPACE_ABSTRACT_PAGE,
-			"pageSize", CMSSpaceConstants.SPACE_ABSTRACT_PAGE_SIZE, "sort",
+			super.getAPIURL(), "page", CMSSpaceConstants.SPACE_SUMMARY_PAGE,
+			"pageSize", CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE, "sort",
 			"dateModified:desc");
 	}
 
@@ -69,7 +69,7 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 			ActionUtil.getBaseViewFolderURL(themeDisplay) +
 				objectEntryFolder.getObjectEntryFolderId();
 
-		return SpaceAbstractHeaderUtil.getSpaceAbstractHeaderProps(
+		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			httpServletRequest, "view-all-content", "content", url);
 	}
 

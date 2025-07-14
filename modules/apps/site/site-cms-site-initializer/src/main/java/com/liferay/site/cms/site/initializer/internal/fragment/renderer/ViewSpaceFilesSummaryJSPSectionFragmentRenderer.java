@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceFilesAbstractSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceFilesSummarySectionDisplayContext;
 import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,9 +27,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(service = FragmentRenderer.class)
-public class ViewSpaceFilesAbstractJSPSectionFragmentRenderer
+public class ViewSpaceFilesSummaryJSPSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer
-		<ViewSpaceFilesAbstractSectionDisplayContext> {
+		<ViewSpaceFilesSummarySectionDisplayContext> {
 
 	public String getCollectionKey() {
 		return "sections";
@@ -37,14 +37,14 @@ public class ViewSpaceFilesAbstractJSPSectionFragmentRenderer
 
 	@Override
 	public String getLabelKey() {
-		return "space-files-abstract";
+		return "space-files-summary";
 	}
 
 	@Override
-	protected ViewSpaceFilesAbstractSectionDisplayContext getDisplayContext(
+	protected ViewSpaceFilesSummarySectionDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewSpaceFilesAbstractSectionDisplayContext(
+		return new ViewSpaceFilesSummarySectionDisplayContext(
 			_depotEntryLocalService,
 			InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
 			httpServletRequest, _language, _objectDefinitionService,
@@ -55,7 +55,7 @@ public class ViewSpaceFilesAbstractJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_space_files_abstract.jsp";
+		return "/view_space_files_summary.jsp";
 	}
 
 	@Reference

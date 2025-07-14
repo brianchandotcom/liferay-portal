@@ -7,18 +7,18 @@ import ClayLink from '@clayui/link';
 import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
-interface SpaceAbstractHeaderProps {
+interface SpaceSummaryHeaderProps {
 	label: string;
 	title: string;
 	url: string;
 }
 
-export default function SpaceAbstractHeader({
+export default function SpaceSummaryHeader({
 	label,
 	title,
 	url,
-}: SpaceAbstractHeaderProps) {
-	const openAbstractModal = () => {
+}: SpaceSummaryHeaderProps) {
+	const openSummaryModal = () => {
 		openModal({
 			bodyHTML: `<p>${label}</p>`,
 			center: true,
@@ -35,7 +35,7 @@ export default function SpaceAbstractHeader({
 			{url ? (
 				<ClayLink href={url}>{label}</ClayLink>
 			) : (
-				<ClayLink href="#" onClick={openAbstractModal}>
+				<ClayLink href="#" onClick={openSummaryModal}>
 					{label}
 				</ClayLink>
 			)}

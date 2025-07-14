@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
-import com.liferay.site.cms.site.initializer.internal.util.SpaceAbstractHeaderUtil;
+import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -27,9 +27,9 @@ import java.util.Map;
 /**
  * @author Roberto Díaz
  */
-public class ViewSpaceSitesAbstractSectionDisplayContext {
+public class ViewSpaceSitesSummarySectionDisplayContext {
 
-	public ViewSpaceSitesAbstractSectionDisplayContext(
+	public ViewSpaceSitesSummarySectionDisplayContext(
 		DepotEntryService depotEntryService,
 		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService,
 		long groupId, HttpServletRequest httpServletRequest, Language language,
@@ -49,9 +49,9 @@ public class ViewSpaceSitesAbstractSectionDisplayContext {
 		sb.append("/o/headless-asset-library/v1.0/asset-libraries/");
 		sb.append(_groupId);
 		sb.append("/sites?page=");
-		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE);
+		sb.append(CMSSpaceConstants.SPACE_SUMMARY_PAGE);
 		sb.append("&pageSize=");
-		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE_SIZE);
+		sb.append(CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
 
 		return sb.toString();
 	}
@@ -93,7 +93,7 @@ public class ViewSpaceSitesAbstractSectionDisplayContext {
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {
-		return SpaceAbstractHeaderUtil.getSpaceAbstractHeaderProps(
+		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			_httpServletRequest, "view-all-sites", _getSpaceSitesHeaderTitle(),
 			StringPool.BLANK);
 	}

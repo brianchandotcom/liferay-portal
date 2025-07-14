@@ -21,10 +21,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_SITES_ABSTRACT_SECTION,
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_CONTENTS_SUMMARY_SECTION,
 	service = FDSView.class
 )
-public class SitesAbstractSectionTableFDSView extends BaseTableFDSView {
+public class SpaceContentsSummarySectionTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -32,9 +32,12 @@ public class SitesAbstractSectionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"name", "sites",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"siteTableCellRenderer")
+			"embedded.title", "title",
+			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
+				"actionLink"
+			).setContentRenderer(
+				"simpleActionLinkTableCellRenderer"
+			)
 		).build();
 	}
 

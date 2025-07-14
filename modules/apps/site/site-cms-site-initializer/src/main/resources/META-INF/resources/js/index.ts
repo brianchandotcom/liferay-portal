@@ -40,7 +40,7 @@ export {default as ViewVersionHistoryFDSPropsTransformer} from './main_view/prop
 export {default as VocabularyFDSPropsTransformer} from './main_view/props_transformer/VocabularyFDSPropsTransformer';
 export {default as AddSpaceMembers} from './main_view/spaces/AddSpaceMembers';
 export {default as NewSpace} from './main_view/spaces/NewSpace';
-export {default as SpaceAbstractHeader} from './main_view/spaces/SpaceAbstractHeader';
+export {default as SpaceSummaryHeader} from './main_view/spaces/SpaceSummaryHeader';
 export {default as SpaceSettings} from './main_view/spaces/SpaceSettings';
 export {default as SpacesNavigation} from './main_view/spaces_navigation/SpacesNavigation';
 

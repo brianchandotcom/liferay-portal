@@ -219,6 +219,10 @@ function CommentEditor({
 				}}
 				onReady={(editor) => {
 					editorRef.current = editor;
+
+					if (parentCommentId) {
+						editor.focus();
+					}
 				}}
 			/>
 

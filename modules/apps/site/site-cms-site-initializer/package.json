@@ -15,6 +15,7 @@
 		"@clayui/label": "3.128.0",
 		"@clayui/layout": "3.128.0",
 		"@clayui/link": "3.128.0",
+		"@clayui/list": "3.140.0",
 		"@clayui/loading-indicator": "3.128.0",
 		"@clayui/modal": "3.140.0",
 		"@clayui/multi-select": "3.140.0",

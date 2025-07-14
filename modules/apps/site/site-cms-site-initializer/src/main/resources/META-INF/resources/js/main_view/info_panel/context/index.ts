@@ -6,12 +6,13 @@
 import React from 'react';
 
 import {
-	IAssetInformation,
-	IAssetObjectEntry,
+	ISearchAssetObjectEntry,
+	ISearchAssetTypeInformation,
 } from '../../../structure_builder/types/AssetType';
 
-export interface IAssetTypeInfoPanelContext extends IAssetInformation {
-	objectEntries?: IAssetObjectEntry[];
+export interface IAssetTypeInfoPanelContext
+	extends ISearchAssetTypeInformation {
+	objectEntries?: ISearchAssetObjectEntry[];
 }
 
 const BASE_CONTEXT: IAssetTypeInfoPanelContext = {

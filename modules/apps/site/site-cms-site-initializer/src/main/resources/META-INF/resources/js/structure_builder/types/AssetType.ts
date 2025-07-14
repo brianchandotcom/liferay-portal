@@ -5,7 +5,7 @@
 
 import {ASSET_TYPE} from '../../main_view/info_panel/util/constants';
 
-export interface IAssetTypeFile {
+export interface IAssetFile {
 	externalReferenceCode: string;
 	id: number;
 	link: {
@@ -17,28 +17,43 @@ export interface IAssetTypeFile {
 }
 
 export interface IAssetObjectEntry {
+	creator: any;
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	file?: IAssetFile;
+	id: number;
+	keywords: any[];
+	objectEntryFolderExternalReferenceCode: string;
+	objectEntryFolderId: number;
+	scopeId: number;
+	scopeKey: string;
+	status: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
+	systemProperties: IAssetVersion;
+	title: string;
+	title_i18n: any;
+}
+
+export interface IAssetVersion {
+	version: {
+		number: number;
+	};
+}
+
+export interface ISearchAssetObjectEntry {
 	actions: any;
 	dateCreated: string;
 	dateModified: string;
-	embedded: Partial<{
-		creator: any;
-		externalReferenceCode: string;
-		file: IAssetTypeFile;
-		id: number;
-		keywords: any[];
-		objectEntryFolderExternalReferenceCode: string;
-		objectEntryFolderId: number;
-		scopeId: number;
-		scopeKey: string;
-		status: any;
-		title: string;
-		title_i18n: any;
-	}>;
+	embedded: Partial<IAssetObjectEntry>;
 	entryClassName: string;
 	score: number;
 }
 
-export interface IAssetInformation {
+export interface ISearchAssetTypeInformation {
 	externalReferenceCode?: string | null;
 	icon?: string | null;
 	id?: number | null;
@@ -54,8 +69,8 @@ export function getBaseAssetInformation({
 		get: {href},
 	},
 	embedded: {externalReferenceCode, id, title, title_i18n},
-}: IAssetObjectEntry): IAssetInformation {
-	const baseAssetInfo: IAssetInformation = {
+}: ISearchAssetObjectEntry): ISearchAssetTypeInformation {
+	const baseAssetInfo: ISearchAssetTypeInformation = {
 		externalReferenceCode,
 		id,
 		title,

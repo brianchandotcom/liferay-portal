@@ -6,8 +6,8 @@
 import React, {useEffect, useState} from 'react';
 
 import {
-	IAssetInformation,
-	IAssetObjectEntry,
+	ISearchAssetObjectEntry,
+	ISearchAssetTypeInformation,
 	getBaseAssetInformation,
 } from '../../structure_builder/types/AssetType';
 import AssetTypeInfoPanelBody from './AssetTypeInfoPanelBody';
@@ -18,14 +18,16 @@ import '../../../css/components/AssetTypeInfoPanel.scss';
 import {EVENTS} from './util/constants';
 
 const AssetTypeInfoPanelContent = () => {
-	const [assetInfo, setAssetInfo] = useState({} as IAssetInformation);
+	const [assetInfo, setAssetInfo] = useState(
+		{} as ISearchAssetTypeInformation
+	);
 	const [objectEntries, setObjectEntries] = useState(
-		[] as IAssetObjectEntry[]
+		[] as ISearchAssetObjectEntry[]
 	);
 
 	useEffect(() => {
-		const handler = ({items}: {items: IAssetObjectEntry[]}): void => {
-			setObjectEntries(items as IAssetObjectEntry[]);
+		const handler = ({items}: {items: ISearchAssetObjectEntry[]}): void => {
+			setObjectEntries(items as ISearchAssetObjectEntry[]);
 		};
 
 		Liferay.on(EVENTS.ASSET_DATA, handler);

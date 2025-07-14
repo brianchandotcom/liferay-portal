@@ -7,6 +7,10 @@
 .c-slideout .sidebar {
 	background-color: $white !important;
 
+	.nav {
+		flex-wrap: nowrap;
+	}
+
 	.nav-link {
 		&:focus-visible,
 		&:hover,

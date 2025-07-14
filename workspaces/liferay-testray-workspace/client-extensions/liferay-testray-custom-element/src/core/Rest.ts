@@ -126,10 +126,6 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		return searchParams.toString();
 	}
 
-	protected async beforeCreate(_data: YupModel) {}
-	protected async beforeUpdate(_id: number, _data: YupModel) {}
-	protected async beforeRemove(_id: number | string) {}
-
 	public async create(data: YupModel): Promise<ObjectModel> {
 		await this.beforeCreate(data);
 
@@ -140,6 +136,17 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		}
 
 		return response;
+	}
+
+	public async createBatch(data: YupModel[]): Promise<void> {
+		if (data.length >= this.batchMinimumThreshold) {
+			return fetcher.post(
+				`/${this.uri}/batch`,
+				data.map((item) => this.adapter(item))
+			);
+		}
+
+		await Promise.allSettled(data.map((item) => this.create(item)));
 	}
 
 	public async createIfNotExist(data: YupModel): Promise<ObjectModel> {
@@ -167,17 +174,6 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		return this.create(data);
 	}
 
-	public async createBatch(data: YupModel[]): Promise<void> {
-		if (data.length >= this.batchMinimumThreshold) {
-			return fetcher.post(
-				`/${this.uri}/batch`,
-				data.map((item) => this.adapter(item))
-			);
-		}
-
-		await Promise.allSettled(data.map((item) => this.create(item)));
-	}
-
 	public getAll(
 		options: APIParametersOptions = {}
 	): Promise<APIResponse<ObjectModel> | undefined> {
@@ -192,10 +188,6 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		return this.fetcher(`${this.resource}${searchParams}`);
 	}
 
-	public getOne(id: number): Promise<ObjectModel | undefined> {
-		return this.fetcher(this.getResource(id));
-	}
-
 	public getNestedObject(
 		objectName: NestedObjectOptions,
 		parentId: number | string
@@ -203,12 +195,8 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		return `/${this.uri}/${parentId}/${objectName}`;
 	}
 
-	public getResource(id: number | string) {
-		return `/${this.uri}/${id}?${this.nestedFields}&nestedFieldsDepth=${this.nestedFieldsDepth}`;
-	}
-
-	public getResourceByExternalReferenceCode(externalReferenceCode: string) {
-		return `/${this.uri}/by-external-reference-code/${externalReferenceCode}?${this.nestedFields}`;
+	public getOne(id: number): Promise<ObjectModel | undefined> {
+		return this.fetcher(this.getResource(id));
 	}
 
 	public async getPagePermission() {
@@ -219,38 +207,22 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		return !!response?.actions?.create;
 	}
 
+	public getResource(id: number | string) {
+		return `/${this.uri}/${id}?${this.nestedFields}&nestedFieldsDepth=${this.nestedFieldsDepth}`;
+	}
+
+	public getResourceByExternalReferenceCode(externalReferenceCode: string) {
+		return `/${this.uri}/by-external-reference-code/${externalReferenceCode}?${this.nestedFields}`;
+	}
+
 	public async remove(id: number | string): Promise<void> {
 		await this.beforeRemove(id);
 
 		await fetcher.delete(`/${this.uri}/${id}`);
 	}
 
-	public removeResource(id: number | string) {
-		if (
-			confirm(i18n.translate('are-you-sure-you-want-to-delete-this-item'))
-		) {
-			return this.remove(id);
-		}
-	}
-
-	public async update(
-		id: number,
-		data: Partial<YupModel>
-	): Promise<ObjectModel> {
-		await this.beforeUpdate(id, data as YupModel);
-
-		return fetcher.patch(`/${this.uri}/${id}`, this.adapter(data));
-	}
-
-	public async updateRelatedEntries(
-		currentId: number,
-		relatedId: number,
-		relationshipName: string
-	): Promise<ObjectModel> {
-		return fetcher.put(
-			`/${this.uri}/${currentId}/${relationshipName}/${relatedId}`,
-			''
-		);
+	public async removeBatch(ids: number[]): Promise<void> {
+		await Promise.allSettled(ids.map((id) => this.remove(id)));
 	}
 
 	public async removeRelatedEntries(
@@ -275,6 +247,52 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		);
 	}
 
+	public removeResource(id: number | string) {
+		if (
+			confirm(i18n.translate('are-you-sure-you-want-to-delete-this-item'))
+		) {
+			return this.remove(id);
+		}
+	}
+
+	public transformDataFromList(
+		response: APIResponse<ObjectModel>
+	): APIResponse<ObjectModel> {
+		return {
+			...response,
+			items: response?.items?.map(this.transformData),
+		};
+	}
+
+	public async update(
+		id: number,
+		data: Partial<YupModel>
+	): Promise<ObjectModel> {
+		await this.beforeUpdate(id, data as YupModel);
+
+		return fetcher.patch(`/${this.uri}/${id}`, this.adapter(data));
+	}
+
+	public async updateBatch(
+		ids: number[],
+		data: Partial<YupModel>[]
+	): Promise<PromiseSettledResult<ObjectModel>[]> {
+		return Promise.allSettled(
+			data.map((item, index) => this.update(ids[index], item))
+		);
+	}
+
+	public async updateRelatedEntries(
+		currentId: number,
+		relatedId: number,
+		relationshipName: string
+	): Promise<ObjectModel> {
+		return fetcher.put(
+			`/${this.uri}/${currentId}/${relationshipName}/${relatedId}`,
+			''
+		);
+	}
+
 	public async updateRelatedEntriesBatch(
 		currentId: number,
 		relatedIds: number[],
@@ -287,27 +305,9 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		);
 	}
 
-	public async removeBatch(ids: number[]): Promise<void> {
-		await Promise.allSettled(ids.map((id) => this.remove(id)));
-	}
-
-	public async updateBatch(
-		ids: number[],
-		data: Partial<YupModel>[]
-	): Promise<PromiseSettledResult<ObjectModel>[]> {
-		return Promise.allSettled(
-			data.map((item, index) => this.update(ids[index], item))
-		);
-	}
-
-	public transformDataFromList(
-		response: APIResponse<ObjectModel>
-	): APIResponse<ObjectModel> {
-		return {
-			...response,
-			items: response?.items?.map(this.transformData),
-		};
-	}
+	protected async beforeCreate(_data: YupModel) {}
+	protected async beforeRemove(_id: number | string) {}
+	protected async beforeUpdate(_id: number, _data: YupModel) {}
 }
 
 export default Rest;

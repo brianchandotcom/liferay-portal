@@ -86,8 +86,6 @@
 			"portletNamespace", portletDisplay.getNamespace()
 		).put(
 			"termsOfUseJournalArticleBrowserURL", cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL()
-		).put(
-			"useTermsOfUseJournal", useTermsOfUseJournal
 		).build()
 	%>'
 	module="{TermsOfUseInputUtil} from commerce-product-type-virtual-web"

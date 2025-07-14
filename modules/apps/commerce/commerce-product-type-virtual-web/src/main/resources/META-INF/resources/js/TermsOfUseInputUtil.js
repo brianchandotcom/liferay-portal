@@ -6,7 +6,6 @@
 export default function ({
 	portletNamespace,
 	termsOfUseJournalArticleBrowserURL,
-	useTermsOfUseJournal,
 }) {
 	Liferay.Util.toggleBoxes(
 		`${portletNamespace}termsOfUseRequired`,
@@ -46,18 +45,6 @@ export default function ({
 					journalArticleRemove.classList.remove('hide');
 
 					journalArticleNameInput.innerText = itemValue.title;
-					if (Liferay.FeatureFlags['LPD-11235']) {
-						const ckEditorToolbar = document.querySelector(
-							'#termsOfUseContent .ck-editor__top'
-						);
-						ckEditorToolbar.style.display = 'none';
-
-						const ckEditorContent = document.querySelector(
-							'#termsOfUseContent .ck-editor__main .ck-content'
-						);
-						ckEditorContent.classList.add('ck-read-only');
-						ckEditorContent.setAttribute('contenteditable', false);
-					}
 				},
 				selectEventName: 'selectJournalArticle',
 				title: Liferay.Language.get('select-web-content'),
@@ -80,73 +67,6 @@ export default function ({
 			journalArticleNameInput.innerText = Liferay.Language.get('none');
 
 			journalArticleRemove.classList.add('hide');
-
-			if (Liferay.FeatureFlags['LPD-11235']) {
-				const ckEditorToolbar = document.querySelector(
-					'#termsOfUseContent .ck-editor__top'
-				);
-				ckEditorToolbar.style.display = 'block';
-
-				const ckEditorContent = document.querySelector(
-					'#termsOfUseContent .ck-editor__main .ck-content'
-				);
-				ckEditorContent.classList.remove('ck-read-only');
-				ckEditorContent.setAttribute('contenteditable', true);
-			}
 		});
-	}
-	if (Liferay.FeatureFlags['LPD-11235']) {
-		window.onload = () => {
-			waitForElement('#termsOfUseContent .ck-editor__top').then(() => {
-				evaluateContentVisibility();
-			});
-		};
-
-		const evaluateContentVisibility = () => {
-			const ckEditorToolbar = document.querySelector(
-				'#termsOfUseContent .ck-editor__top'
-			);
-
-			const hasTermsOfUseContent = useTermsOfUseJournal === true;
-
-			if (hasTermsOfUseContent) {
-				ckEditorToolbar.style.display = 'none';
-				const ckEditorContent = document.querySelector(
-					'#termsOfUseContent .ck-editor__main .ck-content'
-				);
-				ckEditorContent.classList.add('ck-read-only');
-				ckEditorContent.setAttribute('contenteditable', false);
-			}
-			else {
-				ckEditorToolbar.style.display = 'block';
-				const ckEditorContent = document.querySelector(
-					'#termsOfUseContent .ck-editor__main .ck-content'
-				);
-				ckEditorContent.classList.remove('ck-read-only');
-				ckEditorContent.setAttribute('contenteditable', true);
-			}
-		};
-
-		const waitForElement = (selector) => {
-			return new Promise((resolve) => {
-				const selectedElement = document.querySelector(selector);
-				if (selectedElement) {
-					return resolve(selectedElement);
-				}
-
-				const observer = new MutationObserver(() => {
-					const pendingElement = document.querySelector(selector);
-					if (pendingElement) {
-						observer.disconnect();
-						resolve(pendingElement);
-					}
-				});
-
-				observer.observe(document.body, {
-					childList: true,
-					subtree: true,
-				});
-			});
-		};
 	}
 }

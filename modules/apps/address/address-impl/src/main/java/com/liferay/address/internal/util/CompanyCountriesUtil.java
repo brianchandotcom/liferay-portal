@@ -250,6 +250,7 @@ public class CompanyCountriesUtil {
 			}
 
 			regionPreparedStatement.executeBatch();
+
 			regionLocalizationPreparedStatement.executeBatch();
 		}
 		catch (Exception exception) {

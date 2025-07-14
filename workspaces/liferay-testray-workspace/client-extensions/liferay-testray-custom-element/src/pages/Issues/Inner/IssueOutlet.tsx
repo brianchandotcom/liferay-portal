@@ -129,9 +129,9 @@ const IssueOutlet = () => {
 	return (
 		<PageRenderer error={error} loading={loading}>
 			<>
-				{testrayJiraIssue && testrayBuilds?.items[0] && (
+				{testrayJiraIssue && (
 					<IssueOverview
-						testrayBuild={testrayBuilds.items[0]}
+						testrayBuild={testrayBuilds?.items[0]}
 						testrayJiraIssue={testrayJiraIssue}
 					/>
 				)}

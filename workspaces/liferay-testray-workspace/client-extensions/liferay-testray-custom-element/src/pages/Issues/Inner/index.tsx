@@ -13,7 +13,7 @@ import {TestrayBuild, TestrayJiraIssue} from '~/services/rest';
 import getJiraIconImage from '~/util/icons';
 
 type OutletContext = {
-	testrayBuild: TestrayBuild;
+	testrayBuild?: TestrayBuild;
 	testrayJiraIssue?: TestrayJiraIssue;
 };
 
@@ -42,7 +42,7 @@ const ChildIssues = () => {
 					display: {columns: true},
 					title: i18n.translate('jira-child-issues'),
 				}}
-				resource={`/testray-status-metrics/by-testray-jiraIssueId/${testrayJiraIssue?.id}/testray-issues-metrics?testrayBuildId=${testrayBuild.id}`}
+				resource={`/testray-status-metrics/by-testray-jiraIssueId/${testrayJiraIssue?.id}/testray-issues-metrics?testrayBuildId=${testrayBuild?.id}`}
 				tableProps={{
 					columns: [
 						{

@@ -19,10 +19,14 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -136,11 +140,30 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-60259")
-	public void testDoProcessActionCopyLayoutWithLayoutClassedModelUsageWithFragmentEntryLinkContainerType()
+	public void testDoProcessActionCopyLayoutWithLayoutClassedModelUsage()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0);
+
+		ContentLayoutTestUtil.addItemToLayout(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"backgroundImage",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classNameId",
+						_portal.getClassNameId(JournalArticle.class)
+					).put(
+						"classPK", journalArticle.getResourcePrimKey()
+					).put(
+						"fieldId", "JournalArticle_authorProfileImage"
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER, _draftLayout,
+			_layoutStructureProvider, _segmentsExperienceId);
 
 		_addFragmentEntryLinkToLayout(
 			JSONUtil.put(
@@ -161,9 +184,9 @@ public class CopyLayoutMVCActionCommandTest {
 			).toString());
 
 		_assertLayoutClassedModelUsages(
-			1, journalArticle.getResourcePrimKey(), _layout.getPlid());
+			2, journalArticle.getResourcePrimKey(), _layout.getPlid());
 		_assertLayoutClassedModelUsages(
-			1, journalArticle.getResourcePrimKey(), _draftLayout.getPlid());
+			2, journalArticle.getResourcePrimKey(), _draftLayout.getPlid());
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
@@ -175,15 +198,15 @@ public class CopyLayoutMVCActionCommandTest {
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		_assertLayoutClassedModelUsages(
-			1, journalArticle.getResourcePrimKey(), draftLayout.getPlid());
+			2, journalArticle.getResourcePrimKey(), draftLayout.getPlid());
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		_assertLayoutClassedModelUsages(
-			1, journalArticle.getResourcePrimKey(), draftLayout.getPlid());
+			2, journalArticle.getResourcePrimKey(), draftLayout.getPlid());
 
 		_assertLayoutClassedModelUsages(
-			1, journalArticle.getResourcePrimKey(), layout.getPlid());
+			2, journalArticle.getResourcePrimKey(), layout.getPlid());
 	}
 
 	@Test
@@ -462,16 +485,31 @@ public class CopyLayoutMVCActionCommandTest {
 				layoutClassedModelUsages.get(i);
 
 			Assert.assertEquals(classPK, layoutClassedModelUsage.getClassPK());
+
+			if (_portal.getClassNameId(FragmentEntryLink.class) ==
+					layoutClassedModelUsage.getContainerType()) {
+
+				FragmentEntryLink fragmentEntryLink =
+					_fragmentEntryLinkLocalService.getFragmentEntryLink(
+						GetterUtil.getLong(
+							layoutClassedModelUsage.getContainerKey()));
+
+				Assert.assertEquals(plid, fragmentEntryLink.getPlid());
+
+				continue;
+			}
+
 			Assert.assertEquals(
-				_portal.getClassNameId(FragmentEntryLink.class),
+				_portal.getClassNameId(LayoutPageTemplateStructure.class),
 				layoutClassedModelUsage.getContainerType());
 
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.getFragmentEntryLink(
-					GetterUtil.getLong(
-						layoutClassedModelUsage.getContainerKey()));
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					getLayoutPageTemplateStructure(
+						GetterUtil.getLong(
+							layoutClassedModelUsage.getContainerKey()));
 
-			Assert.assertEquals(plid, fragmentEntryLink.getPlid());
+			Assert.assertEquals(plid, layoutPageTemplateStructure.getPlid());
 		}
 	}
 
@@ -610,6 +648,13 @@ public class CopyLayoutMVCActionCommandTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
 
 	@Inject(filter = "mvc.command.name=/layout_admin/copy_layout")
 	private MVCActionCommand _mvcActionCommand;

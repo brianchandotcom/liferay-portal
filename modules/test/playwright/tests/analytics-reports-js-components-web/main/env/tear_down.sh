@@ -8,8 +8,6 @@ source ${CURRENT_DIR_NAME}/../../../../env/common.sh
 
 function main {
 	default_tear_down
-
-	stop_analytics_cloud
 }
 
 main "${@}"

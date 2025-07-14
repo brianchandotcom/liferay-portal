@@ -525,12 +525,6 @@ function start_additional_bundles {
 	done
 }
 
-function start_analytics_cloud {
-	cd ${_PORTAL_PROJECT_DIR}
-
-	ant -f build-test-analytics-cloud.xml start-analytics-cloud
-}
-
 function start_app_server {
 	local liferay_home=${1}
 

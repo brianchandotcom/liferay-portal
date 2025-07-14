@@ -33,7 +33,7 @@ const Sidebar = () => {
 	const {pathname} = useLocation();
 
 	const relevantPaths = [
-		['project', 'case-result'],
+		['case-result', 'project'],
 		['issues'],
 		['testflow'],
 	];

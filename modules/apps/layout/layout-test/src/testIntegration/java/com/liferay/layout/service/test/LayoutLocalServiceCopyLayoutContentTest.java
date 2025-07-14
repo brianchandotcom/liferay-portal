@@ -554,7 +554,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 				getLayoutClassedModelUsagesByPlid(targetLayout.getPlid());
 
 		Assert.assertEquals(
-			layoutClassedModelUsages.toString(), 0,
+			layoutClassedModelUsages.toString(), 1,
 			layoutClassedModelUsages.size());
 	}
 

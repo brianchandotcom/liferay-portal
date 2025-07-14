@@ -725,7 +725,12 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		long totalCount = page.getTotalCount();
 
+		Thread.sleep(1000);
+
 		Role role1 = _addRole(false, randomRole());
+
+		Thread.sleep(1000);
+
 		Role role2 = _addRole(false, randomRole());
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
@@ -744,6 +749,8 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
+
+		Thread.sleep(1000);
 
 		role1.setDescription(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));

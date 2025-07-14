@@ -19,6 +19,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.Date;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -35,6 +36,19 @@ public class UserNotificationResourceTest
 
 		_irrelevantUser = UserTestUtil.addGroupAdminUser(irrelevantGroup);
 		_testUser = UserTestUtil.addGroupAdminUser(testGroup);
+	}
+
+	@Override
+	@Test
+	public void testGetMyUserNotificationsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		// Sleep for 2 seconds to ensure that the new user notification
+		// is created 2 seconds after the one created in the previous test
+
+		Thread.sleep(2000);
+
+		super.testGetMyUserNotificationsPageWithFilterDateTimeEquals();
 	}
 
 	@Override

@@ -727,6 +727,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetUserAccountsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		// Sleep for 2 seconds to ensure that the new user account
+		// is created 2 seconds after the one created in the previous test
+
+		Thread.sleep(2000);
+
+		super.testGetUserAccountsPageWithFilterDateTimeEquals();
+	}
+
+	@Override
+	@Test
 	public void testGraphQLGetMyUserAccount() throws Exception {
 		Assert.assertTrue(
 			equals(

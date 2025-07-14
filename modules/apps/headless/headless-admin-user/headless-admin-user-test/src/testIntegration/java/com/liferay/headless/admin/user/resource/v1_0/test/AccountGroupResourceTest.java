@@ -415,8 +415,13 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 
 		long totalCount = page.getTotalCount();
 
+		Thread.sleep(1000);
+
 		AccountGroup accountGroup1 = testGetAccountGroupsPage_addAccountGroup(
 			randomAccountGroup());
+
+		Thread.sleep(1000);
+
 		AccountGroup accountGroup2 = testGetAccountGroupsPage_addAccountGroup(
 			randomAccountGroup());
 
@@ -436,6 +441,8 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
+
+		Thread.sleep(1000);
 
 		accountGroup1.setDescription(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));

@@ -937,8 +937,13 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		long totalCount = page.getTotalCount();
 
+		Thread.sleep(1000);
+
 		Organization organization1 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());
+
+		Thread.sleep(1000);
+
 		Organization organization2 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());
 
@@ -960,6 +965,8 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
+
+		Thread.sleep(1000);
 
 		organization1.setName(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));

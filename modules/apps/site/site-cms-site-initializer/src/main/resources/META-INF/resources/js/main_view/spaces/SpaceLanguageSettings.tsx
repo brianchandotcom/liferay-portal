@@ -15,35 +15,12 @@ import {useFormik} from 'formik';
 import {openToast} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
-import styled from 'styled-components';
 
 import {FieldPicker} from '../../common/components/forms';
 import {Errors} from '../../common/components/forms/validations';
 import SpaceService from '../../common/services/SpaceService';
 import {LabelValueObject, Space} from '../../common/types/Space';
 import SpacePanel from './SpacePanel';
-
-const CustomLanguagesSelector = styled.div<{defaultLanguageId: string}>`
-	option[value='${(props) => props.defaultLanguageId}']::after {
-		background-color: #fff;
-		border: 0.0625rem solid #89a7e0;
-		border-radius: 0.125rem;
-		color: #2e5aac;
-		content: '${Liferay.Language.get('default')}';
-		display: inline-flex;
-		font-size: 0.625rem;
-		font-weight: 600;
-		line-height: 1;
-		margin-left: 0.25rem;
-		max-width: 100%;
-		padding: 0.125rem 0.25rem;
-		text-transform: uppercase;
-		white-space: inherit;
-		word-wrap: break-word;
-		outline: 0;
-		vertical-align: bottom;
-	}
-`;
 
 export default function SpaceLanguageSettings({
 	backURL,
@@ -261,34 +238,30 @@ export default function SpaceLanguageSettings({
 								selectedKey={values.defaultLanguageId}
 							/>
 
-							<CustomLanguagesSelector
-								defaultLanguageId={values.defaultLanguageId}
-							>
-								<ClayDualListBox
-									disableLTR={
-										!values.availableLanguages.length
-									}
-									disableRTL={
-										values.selectedLanguages.length === 1
-									}
-									items={[
-										values.availableLanguages,
-										values.selectedLanguages,
-									]}
-									left={{
-										id: 'availableLanguages',
-										label: Liferay.Language.get(
-											'available'
-										),
-									}}
-									onItemsChange={handleItemsChange}
-									right={{
-										id: 'selectedLanguages',
-										label: Liferay.Language.get('selected'),
-									}}
-									size={10}
-								/>
-							</CustomLanguagesSelector>
+							<ClayDualListBox
+								disableLTR={
+									!values.availableLanguages.length
+								}
+								disableRTL={
+									values.selectedLanguages.length === 1
+								}
+								items={[
+									values.availableLanguages,
+									values.selectedLanguages,
+								]}
+								left={{
+									id: 'availableLanguages',
+									label: Liferay.Language.get(
+										'available'
+									),
+								}}
+								onItemsChange={handleItemsChange}
+								right={{
+									id: 'selectedLanguages',
+									label: Liferay.Language.get('selected'),
+								}}
+								size={10}
+							/>
 						</ClayPanel.Body>
 					</ClayPanel>
 				)}

@@ -37,7 +37,6 @@
 		"frontend-js-web": "*",
 		"react": "18.2.0",
 		"react-dropzone": "^14.3.8",
-		"styled-components": "^6.1.19",
 		"uuid": "^9.0.1"
 	},
 	"jest": {

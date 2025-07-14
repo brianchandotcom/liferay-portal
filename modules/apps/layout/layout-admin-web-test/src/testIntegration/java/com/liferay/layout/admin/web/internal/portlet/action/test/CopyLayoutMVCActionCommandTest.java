@@ -7,18 +7,24 @@ package com.liferay.layout.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -51,7 +57,9 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -119,11 +127,63 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	public void testDoProcessActionCopyLayout() throws Exception {
-		_addFragmentEntryLinkToLayout();
+		_addFragmentEntryLinkToLayout(null);
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
 		_assertCopyLayout(false, Collections.emptyMap());
+	}
+
+	@Test
+	@TestInfo("LPD-60259")
+	public void testDoProcessActionCopyLayoutWithLayoutClassedModelUsageWithFragmentEntryLinkContainerType()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0);
+
+		_addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classNameId",
+						_portal.getClassNameId(JournalArticle.class)
+					).put(
+						"classPK", journalArticle.getResourcePrimKey()
+					).put(
+						"fieldId", "JournalArticle_title"
+					))
+			).toString());
+
+		_assertLayoutClassedModelUsages(
+			1, journalArticle.getResourcePrimKey(), _layout.getPlid());
+		_assertLayoutClassedModelUsages(
+			1, journalArticle.getResourcePrimKey(), _draftLayout.getPlid());
+
+		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
+
+		Layout layout = _assertCopyLayout(false, Collections.emptyMap());
+
+		_assertLayoutClassedModelUsages(
+			0, journalArticle.getResourcePrimKey(), layout.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_assertLayoutClassedModelUsages(
+			1, journalArticle.getResourcePrimKey(), draftLayout.getPlid());
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertLayoutClassedModelUsages(
+			1, journalArticle.getResourcePrimKey(), draftLayout.getPlid());
+
+		_assertLayoutClassedModelUsages(
+			1, journalArticle.getResourcePrimKey(), layout.getPlid());
 	}
 
 	@Test
@@ -157,7 +217,7 @@ public class CopyLayoutMVCActionCommandTest {
 	public void testDoProcessActionCopyLayoutWithNavigationMenu()
 		throws Exception {
 
-		_addFragmentEntryLinkToLayout();
+		_addFragmentEntryLinkToLayout(null);
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
@@ -185,7 +245,7 @@ public class CopyLayoutMVCActionCommandTest {
 	public void testDoProcessActionCopyLayoutWithPermissions()
 		throws Exception {
 
-		_addFragmentEntryLinkToLayout();
+		_addFragmentEntryLinkToLayout(null);
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -223,14 +283,17 @@ public class CopyLayoutMVCActionCommandTest {
 		Assert.assertEquals(
 			count,
 			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
-				_group.getGroupId(), layout.getPlid()));
+				_group.getGroupId(), draftLayout.getPlid()));
 	}
 
-	private void _addFragmentEntryLinkToLayout() throws Exception {
+	private void _addFragmentEntryLinkToLayout(String editableValues)
+		throws Exception {
+
 		FragmentEntry fragmentEntry = _getFragmentEntry();
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			editableValues, fragmentEntry.getCss(),
+			fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), _draftLayout,
 			fragmentEntry.getFragmentEntryKey(), _segmentsExperienceId,
@@ -382,6 +445,36 @@ public class CopyLayoutMVCActionCommandTest {
 		return layout;
 	}
 
+	private void _assertLayoutClassedModelUsages(
+			int count, long classPK, long plid)
+		throws Exception {
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(plid);
+
+		Assert.assertEquals(
+			layoutClassedModelUsages.toString(), count,
+			layoutClassedModelUsages.size());
+
+		for (int i = 0; i < count; i++) {
+			LayoutClassedModelUsage layoutClassedModelUsage =
+				layoutClassedModelUsages.get(i);
+
+			Assert.assertEquals(classPK, layoutClassedModelUsage.getClassPK());
+			Assert.assertEquals(
+				_portal.getClassNameId(FragmentEntryLink.class),
+				layoutClassedModelUsage.getContainerType());
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					GetterUtil.getLong(
+						layoutClassedModelUsage.getContainerKey()));
+
+			Assert.assertEquals(plid, fragmentEntryLink.getPlid());
+		}
+	}
+
 	private void _assertViewResourcePermission(
 			long plid, long roleId, boolean permission)
 		throws Exception {
@@ -415,7 +508,8 @@ public class CopyLayoutMVCActionCommandTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry-key",
 			RandomTestUtil.randomString(), StringPool.BLANK,
-			"<div data-lfr-styles><span>Test</span>Fragment</div>",
+			"<h1 data-lfr-editable-id=\"element-text\" " +
+				"data-lfr-editable-type=\"text\">Heading Example</h1>",
 			StringPool.BLANK, false, StringPool.BLANK, null, 0, false, false,
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
@@ -507,6 +601,10 @@ public class CopyLayoutMVCActionCommandTest {
 	private Layout _layout;
 
 	@Inject
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+
+	@Inject
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
@@ -515,6 +613,9 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/layout_admin/copy_layout")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private ResourceLocalService _resourceLocalService;

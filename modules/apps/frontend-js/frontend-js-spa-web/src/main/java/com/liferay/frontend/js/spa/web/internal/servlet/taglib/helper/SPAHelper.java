@@ -9,6 +9,7 @@ import com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -233,47 +233,8 @@ public class SPAHelper {
 	private static final String _REDIRECT_PARAM_NAME;
 
 	private static final SPAConfiguration _SPA_CONFIGURATION =
-		new SPAConfiguration() {
-
-			@Override
-			public long cacheExpirationTime() {
-				return -1;
-			}
-
-			@Override
-			public String[] customExcludedPaths() {
-				return new String[0];
-			}
-
-			@Override
-			public boolean enabled() {
-				return PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED;
-			}
-
-			@Override
-			public String[] navigationExceptionSelectors() {
-				return new String[] {
-					":not([target=\"_blank\"])", ":not([data-senna-off])",
-					":not([data-resource-href])"
-				};
-			}
-
-			@Override
-			public boolean preloadCSS() {
-				return false;
-			}
-
-			@Override
-			public int requestTimeout() {
-				return 0;
-			}
-
-			@Override
-			public int userNotificationTimeout() {
-				return 30000;
-			}
-
-		};
+		ConfigurableUtil.createConfigurable(
+			SPAConfiguration.class, Collections.emptyMap());
 
 	private static final String[] _SPA_DEFAULT_EXCLUDED_PATHS = {
 		"/c/document_library", "/documents", "/image", "/o/cms/download-folder"

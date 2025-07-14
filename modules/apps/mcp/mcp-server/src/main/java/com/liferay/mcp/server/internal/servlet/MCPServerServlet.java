@@ -16,9 +16,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import io.modelcontextprotocol.server.McpServer;
@@ -38,6 +36,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -252,32 +251,19 @@ public class MCPServerServlet extends GenericServlet {
 				Map<String, Serializable> objectEntryValues =
 					objectEntry.getValues();
 
-				String argumentName = (String)objectEntryValues.get(
-					"argumentName");
-
 				return new McpServerFeatures.SyncPromptSpecification(
 					new McpSchema.Prompt(
 						(String)objectEntryValues.get("name"),
 						(String)objectEntryValues.get("description"),
-						List.of(
-							new McpSchema.PromptArgument(
-								argumentName,
-								(String)objectEntryValues.get(
-									"argumentDescription"),
-								true))),
+						Collections.emptyList()),
 					(exchange, request) -> new McpSchema.GetPromptResult(
-						(String)objectEntryValues.get("resultDescription"),
+						(String)objectEntryValues.get("description"),
 						List.of(
 							new McpSchema.PromptMessage(
 								McpSchema.Role.USER,
 								new McpSchema.TextContent(
-									StringUtil.replace(
-										(String)objectEntryValues.get(
-											"resultText"),
-										"${" + argumentName + "}",
-										MapUtil.getString(
-											request.arguments(),
-											argumentName)))))));
+									(String)objectEntryValues.get(
+										"prompt"))))));
 			});
 	}
 

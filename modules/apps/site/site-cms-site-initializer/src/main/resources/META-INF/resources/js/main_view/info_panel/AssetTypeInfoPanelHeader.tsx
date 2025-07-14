@@ -54,7 +54,7 @@ const AssetTypeInfoPanelHeader = () => {
 	return (
 		<SidePanel.Header>
 			<SidePanel.Title>
-				<span className="text-truncate-inline">
+				<span className="text-nowrap">
 					{context.objectEntries?.length === 1 && (
 						<ClayIcon
 							className={classnames(
@@ -67,10 +67,11 @@ const AssetTypeInfoPanelHeader = () => {
 							symbol={context.icon || ''}
 						></ClayIcon>
 					)}
-
-					<h3 className="asset-title inline-item inline-item-after">
-						{renderTitle(context)}
-					</h3>
+					<span className="text-truncate-inline">
+						<h3 className="asset-title inline-item-after text-truncate">
+							{renderTitle(context)}
+						</h3>
+					</span>
 				</span>
 			</SidePanel.Title>
 		</SidePanel.Header>

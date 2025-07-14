@@ -25,7 +25,6 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +41,6 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 /**
  * @author Amos Fong
  */
-@ComponentScan(basePackages = "com.liferay.osb")
 @RequestMapping("/ticket-attachments/initiate-upload")
 @RestController
 public class TicketAttachmentsInitiateUploadRestController

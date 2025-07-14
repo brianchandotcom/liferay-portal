@@ -239,9 +239,7 @@ export default function SpaceLanguageSettings({
 							/>
 
 							<ClayDualListBox
-								disableLTR={
-									!values.availableLanguages.length
-								}
+								disableLTR={!values.availableLanguages.length}
 								disableRTL={
 									values.selectedLanguages.length === 1
 								}
@@ -251,9 +249,7 @@ export default function SpaceLanguageSettings({
 								]}
 								left={{
 									id: 'availableLanguages',
-									label: Liferay.Language.get(
-										'available'
-									),
+									label: Liferay.Language.get('available'),
 								}}
 								onItemsChange={handleItemsChange}
 								right={{

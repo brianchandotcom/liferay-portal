@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -21,12 +22,19 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('Add a new tag', {tag: '@LPD-51250'}, async ({tagsPage}) => {
+test('Add a new tag', {tag: '@LPD-51250'}, async ({page, tagsPage}) => {
 	const tagName = await tagsPage.createTag();
 
 	const tag = tagsPage.getItem(tagName);
 
 	await expect(tag).toBeVisible();
+
+	// Check accessibility
+
+	await checkAccessibility({
+		page,
+		selectors: ['.categorization-section'],
+	});
 
 	await tagsPage.deleteTag(tagName);
 });
@@ -46,6 +54,13 @@ test(
 			}),
 			timeout: 2000,
 			trigger: tagsPage.newTagButton,
+		});
+
+		// Check accessibility
+
+		await checkAccessibility({
+			page,
+			selectors: ['.modal-content'],
 		});
 
 		await page.getByLabel('NameRequired').fill(name1);
@@ -99,6 +114,13 @@ test('Edit an existing tag', {tag: '@LPD-52395'}, async ({page, tagsPage}) => {
 	await expect(page.getByText(`Edit "${tagName}"`)).toBeVisible();
 
 	await expect(tagsPage.saveAndAddAnotherButton).not.toBeVisible();
+
+	// Check accessibility
+
+	await checkAccessibility({
+		page,
+		selectors: ['.modal-content'],
+	});
 
 	const newName = `Tag${getRandomInt()}`;
 
@@ -195,6 +217,13 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 			.filter({hasText: tagName2})
 	).toBeVisible();
 
+	// Check accessibility
+
+	await checkAccessibility({
+		page,
+		selectors: ['.merge-tags'],
+	});
+
 	await page.getByRole('row', {name: tagName1}).getByLabel('').click();
 	await page.getByRole('row', {name: tagName2}).getByLabel('').click();
 
@@ -231,6 +260,13 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 	});
 
 	await expect(page.getByText('Merge Tags')).toBeVisible();
+
+	// Check accessibility
+
+	await checkAccessibility({
+		page,
+		selectors: ['.categorization-section'],
+	});
 
 	await expect(
 		page.getByRole('gridcell', {exact: true, name: tagName1})

@@ -103,6 +103,10 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_draftLayout = _layout.fetchDraftLayout();
 
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_draftLayout.getPlid());
+
 		_serviceContext = _getServiceContext(_group);
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
@@ -115,9 +119,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	public void testDoProcessActionCopyLayout() throws Exception {
-		_addFragmentEntryLinkToLayout(
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_draftLayout.getPlid()));
+		_addFragmentEntryLinkToLayout();
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
@@ -155,9 +157,7 @@ public class CopyLayoutMVCActionCommandTest {
 	public void testDoProcessActionCopyLayoutWithNavigationMenu()
 		throws Exception {
 
-		_addFragmentEntryLinkToLayout(
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_draftLayout.getPlid()));
+		_addFragmentEntryLinkToLayout();
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
@@ -185,9 +185,7 @@ public class CopyLayoutMVCActionCommandTest {
 	public void testDoProcessActionCopyLayoutWithPermissions()
 		throws Exception {
 
-		_addFragmentEntryLinkToLayout(
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_draftLayout.getPlid()));
+		_addFragmentEntryLinkToLayout();
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -226,16 +224,14 @@ public class CopyLayoutMVCActionCommandTest {
 				_group.getGroupId(), layout.getPlid()));
 	}
 
-	private void _addFragmentEntryLinkToLayout(long segmentsExperienceId)
-		throws Exception {
-
+	private void _addFragmentEntryLinkToLayout() throws Exception {
 		FragmentEntry fragmentEntry = _getFragmentEntry();
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), _draftLayout,
-			fragmentEntry.getFragmentEntryKey(), segmentsExperienceId,
+			fragmentEntry.getFragmentEntryKey(), _segmentsExperienceId,
 			fragmentEntry.getType());
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
@@ -523,6 +519,8 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private long _segmentsExperienceId;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

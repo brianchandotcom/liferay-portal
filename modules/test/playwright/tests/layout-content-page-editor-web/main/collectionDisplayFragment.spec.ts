@@ -952,7 +952,7 @@ test(
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		const row = page.locator('.lfr-layout-structure-item-collection row');
+		const row = page.locator('.lfr-layout-structure-item-collection .row');
 
 		for (const col of await row.locator('.col').all()) {
 			await expect(col).toHaveClass(/col-lg-3/);
@@ -984,16 +984,25 @@ test(
 			value: '2 Columns',
 		});
 
+		await pageEditorPage.switchViewport('Desktop');
+
 		// Go to view mode again and check correct layout is displayed on each viewport
+
+		await pageEditorPage.publishPage();
 
 		await page.goto(
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
+		await expect(
+			page.locator('.lfr-layout-structure-item-collection .row')
+		).toHaveCount(1);
+
 		for (const col of await row.locator('.col').all()) {
 			await expect(col).toHaveClass(/col-lg-3/);
 			await expect(col).toHaveClass(/col-md-6/);
-			await expect(col).toHaveClass(/col-sm-6/);
+			await expect(col).toHaveClass(/col-sm-12/);
+			await expect(col).toHaveClass(/col-6/);
 		}
 	}
 );

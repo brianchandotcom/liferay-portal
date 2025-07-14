@@ -93,8 +93,8 @@ const useTotalTestCasesByTestrayBuild = (testrayBuild: TestrayBuild) => {
 };
 
 const useTotalTestCasesByTestrayJiraIssue = (
-	testrayJiraIssue: TestrayJiraIssue,
-	testaryBuildId: number
+	testrayBuildId: number,
+	testrayJiraIssue: TestrayJiraIssue
 ) => {
 	const {data, loading} = useFetch<APIResponse<TestrayCaseDetail>>(
 		`/casedetails`,
@@ -102,7 +102,7 @@ const useTotalTestCasesByTestrayJiraIssue = (
 			params: {
 				aggregationTerms: 'dueStatus',
 				fields: 'id',
-				filter: `caseDetailsToJiraIssues/r_${testrayJiraIssue.issueType.key.toLowerCase()}_c_jiraIssueId eq '${testrayJiraIssue.id}' and r_buildToCaseDetail_c_buildId eq '${testaryBuildId}'`,
+				filter: `caseDetailsToJiraIssues/r_${testrayJiraIssue.issueType.key.toLowerCase()}_c_jiraIssueId eq '${testrayJiraIssue.id}' and r_buildToCaseDetail_c_buildId eq '${testrayBuildId}'`,
 				pageSize: 10,
 			},
 		}

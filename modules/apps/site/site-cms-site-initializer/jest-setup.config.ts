@@ -31,3 +31,24 @@ class MockBroadcastChannel {
 }
 
 (globalThis as any).BroadcastChannel = MockBroadcastChannel;
+
+(globalThis as any).Liferay = {
+	...(globalThis.Liferay || {}),
+	Language: {
+		...(globalThis.Liferay.Language || {}),
+		direction: {en_US: 'rtl'},
+		get: (key: string) => key,
+	},
+	ThemeDisplay: {
+		...(globalThis.Liferay.ThemeDisplay || {}),
+		getDefaultLanguageId: () => 'en_US',
+		getLanguageId: () => 'en_US',
+		getUserId: () => '1',
+	},
+	Util: {
+		...(globalThis.Liferay.Util || {}),
+		escapeHTML: (str: string) => str,
+		formatStorage: (size: number) => `${size / 1024} KB`,
+	},
+	authToken: 'mocked-auth-token',
+};

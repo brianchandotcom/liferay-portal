@@ -130,17 +130,17 @@ public class CopyLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	public void testDoProcessActionCopyLayout() throws Exception {
+	public void testCopyLayout() throws Exception {
 		_addFragmentEntryLinkToLayout(null);
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
-		_assertCopyLayout(false, Collections.emptyMap());
+		_testCopyLayout(false, Collections.emptyMap());
 	}
 
 	@Test
 	@TestInfo("LPD-60259")
-	public void testDoProcessActionCopyLayoutWithLayoutClassedModelUsage()
+	public void testCopyLayoutWithLayoutClassedModelUsage()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -190,7 +190,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
-		Layout layout = _assertCopyLayout(false, Collections.emptyMap());
+		Layout layout = _testCopyLayout(false, Collections.emptyMap());
 
 		_assertLayoutClassedModelUsages(
 			0, journalArticle.getResourcePrimKey(), layout.getPlid());
@@ -211,7 +211,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPS-131982")
-	public void testDoProcessActionCopyLayoutWithMasterLayout()
+	public void testCopyLayoutWithMasterLayout()
 		throws Exception {
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
@@ -237,7 +237,7 @@ public class CopyLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	public void testDoProcessActionCopyLayoutWithNavigationMenu()
+	public void testCopyLayoutWithNavigationMenu()
 		throws Exception {
 
 		_addFragmentEntryLinkToLayout(null);
@@ -249,7 +249,7 @@ public class CopyLayoutMVCActionCommandTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
 				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
 
-		_assertCopyLayout(
+		_testCopyLayout(
 			false,
 			HashMapBuilder.put(
 				"TypeSettingsProperties--siteNavigationMenuId--",
@@ -265,7 +265,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	@TestInfo({"LPS-175090", "LPS-192724"})
-	public void testDoProcessActionCopyLayoutWithPermissions()
+	public void testCopyLayoutWithPermissions()
 		throws Exception {
 
 		_addFragmentEntryLinkToLayout(null);
@@ -279,7 +279,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_removeViewResourcePermission(guestRole.getRoleId());
 
-		Layout layout = _assertCopyLayout(true, Collections.emptyMap());
+		Layout layout = _testCopyLayout(true, Collections.emptyMap());
 
 		_assertViewResourcePermission(
 			layout.getPlid(), guestRole.getRoleId(), false);
@@ -288,7 +288,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-42253")
-	public void testDoProcessActionCopyLayoutWithSegmentsExperience()
+	public void testCopyLayoutWithSegmentsExperience()
 		throws Exception {
 
 		_addSegmentsExperience();
@@ -372,7 +372,7 @@ public class CopyLayoutMVCActionCommandTest {
 				_group.getGroupId(), _layout.getPlid()));
 	}
 
-	private Layout _assertCopyLayout(
+	private Layout _testCopyLayout(
 			boolean copyPermissions, Map<String, String> map)
 		throws Exception {
 

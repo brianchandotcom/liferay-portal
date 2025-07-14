@@ -328,17 +328,21 @@ public class ObjectEntryInfoItemFormProviderUtil {
 								fetchObjectRelationshipByObjectFieldId2(
 									objectField.getObjectFieldId());
 
+						if ((parentObjectDefinition != null) &&
+							Objects.equals(
+								objectRelationship.getObjectDefinitionId1(),
+								parentObjectDefinition.
+									getObjectDefinitionId())) {
+
+							continue;
+						}
+
 						ObjectDefinition relatedObjectDefinition =
 							objectDefinitionLocalService.fetchObjectDefinition(
 								objectRelationship.getObjectDefinitionId1());
 
 						if ((relatedObjectDefinition == null) ||
-							!relatedObjectDefinition.isActive() ||
-							((parentObjectDefinition != null) &&
-							 Objects.equals(
-								 objectRelationship.getObjectDefinitionId1(),
-								 parentObjectDefinition.
-									 getObjectDefinitionId()))) {
+							!relatedObjectDefinition.isActive()) {
 
 							continue;
 						}

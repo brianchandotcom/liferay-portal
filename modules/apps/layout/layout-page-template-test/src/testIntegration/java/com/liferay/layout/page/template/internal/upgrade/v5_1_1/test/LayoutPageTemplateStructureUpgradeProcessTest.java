@@ -75,8 +75,8 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 	public void testUpgradePortletLayoutWithoutUser() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(), 0, null,
-				0, 0, RandomTestUtil.randomString(),
+				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				0, null, 0, 0, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
 
@@ -111,13 +111,13 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			if (!dbInspector.hasColumn(
-				"LayoutPageTemplateStructure", "classNameId") &&
+					"LayoutPageTemplateStructure", "classNameId") &&
 				!dbInspector.hasColumn(
 					"LayoutPageTemplateStructure", "classPK")) {
 
 				_db.runSQLTemplate(
 					"alter table LayoutPageTemplateStructure add classNameId " +
-					"LONG;",
+						"LONG;",
 					true);
 				_db.runSQLTemplate(
 					"alter table LayoutPageTemplateStructure add classPK LONG;",
@@ -143,17 +143,17 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			if (dbInspector.hasColumn(
-				"LayoutPageTemplateStructure", "classNameId") &&
+					"LayoutPageTemplateStructure", "classNameId") &&
 				dbInspector.hasColumn(
 					"LayoutPageTemplateStructure", "classPK")) {
 
 				_db.runSQLTemplate(
 					"alter table LayoutPageTemplateStructure drop column " +
-					"classNameId;",
+						"classNameId;",
 					true);
 				_db.runSQLTemplate(
 					"alter table LayoutPageTemplateStructure drop column " +
-					"classPK;",
+						"classPK;",
 					true);
 			}
 
@@ -165,7 +165,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	private void _runUpgrade() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-			_CLASS_NAME, LoggerTestUtil.OFF)) {
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
 
 			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 				_upgradeStepRegistrator, _CLASS_NAME);
@@ -176,7 +176,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	private static final String _CLASS_NAME =
 		"com.liferay.layout.page.template.internal.upgrade.v5_1_1." +
-		"LayoutPageTemplateStructureUpgradeProcess";
+			"LayoutPageTemplateStructureUpgradeProcess";
 
 	private static boolean _classPKColumnsAdded;
 	private static DB _db;

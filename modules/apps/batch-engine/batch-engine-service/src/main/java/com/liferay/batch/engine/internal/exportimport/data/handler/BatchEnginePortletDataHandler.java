@@ -29,6 +29,7 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -46,6 +48,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -66,15 +69,18 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineExportTaskService batchEngineExportTaskService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,
 		BatchEngineImportTaskService batchEngineImportTaskService,
-		String className, String itemClassName,
-		ExportImportVulcanBatchEngineTaskItemDelegate.Scope scope,
-		String taskItemDelegateName) {
+		String className,
+		ExportImportVulcanBatchEngineTaskItemDelegate
+			exportImportVulcanBatchEngineTaskItemDelegate,
+		String itemClassName, String taskItemDelegateName) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
 		_batchEngineExportTaskService = batchEngineExportTaskService;
 		_batchEngineImportTaskExecutor = batchEngineImportTaskExecutor;
 		_batchEngineImportTaskService = batchEngineImportTaskService;
 		_className = className;
+		_exportImportVulcanBatchEngineTaskItemDelegate =
+			exportImportVulcanBatchEngineTaskItemDelegate;
 		_itemClassName = itemClassName;
 		_taskItemDelegateName = taskItemDelegateName;
 
@@ -86,7 +92,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_fileName = fileNamePrefix + ".json";
 
 		if (ExportImportVulcanBatchEngineTaskItemDelegate.Scope.COMPANY.equals(
-				scope)) {
+				exportImportVulcanBatchEngineTaskItemDelegate.getScope())) {
 
 			setDataLevel(DataLevel.PORTAL);
 		}
@@ -199,15 +205,28 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					setPortletDataContextWithSafeCloseable(
 						portletDataContext)) {
 
+			Map<String, Serializable> parameters =
+				BatchEnginePortletDataHandlerUtil.buildExportParameters(
+					portletDataContext);
+
+			List<String> nestedFields =
+				_exportImportVulcanBatchEngineTaskItemDelegate.
+					getNestedFields();
+
+			if (ListUtil.isNotEmpty(nestedFields)) {
+				parameters.merge(
+					"batchNestedFields",
+					StringUtil.merge(nestedFields, StringPool.COMMA),
+					(oldValue, value) -> oldValue + "," + value);
+			}
+
 			BatchEngineExportTaskExecutor.Result result =
 				_batchEngineExportTaskExecutor.execute(
 					_batchEngineExportTaskService.addBatchEngineExportTask(
 						null, portletDataContext.getCompanyId(), _getUserId(),
 						null, _className, "JSON",
 						BatchEngineTaskExecuteStatus.INITIAL.name(),
-						Collections.emptyList(),
-						BatchEnginePortletDataHandlerUtil.buildExportParameters(
-							portletDataContext),
+						Collections.emptyList(), parameters,
 						_taskItemDelegateName),
 					new BatchEngineExportTaskExecutor.Settings() {
 
@@ -358,6 +377,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
 	private final String _className;
 	private final String _deletionsFileName;
+	private final ExportImportVulcanBatchEngineTaskItemDelegate<?>
+		_exportImportVulcanBatchEngineTaskItemDelegate;
 	private final String _fileName;
 	private final String _itemClassName;
 	private final String _taskItemDelegateName;

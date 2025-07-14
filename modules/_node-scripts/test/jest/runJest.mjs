@@ -19,7 +19,7 @@ const FORCE_DEBUG_FLAG = '--force-debug';
 const SILENT_FLAG = '--silent';
 
 export default async function runJest({
-	cliFlags,
+	cliFlags = [],
 	cwd: projectDir,
 	execaConfig = {},
 }) {
@@ -73,7 +73,7 @@ export default async function runJest({
 
 		const childProcess = $(
 			config
-		)`jest --projects ${projectDir} --config ${CONFIG_PATH} ${cliFlags.join(' ')}`;
+		)`jest --projects ${projectDir} --config ${CONFIG_PATH} ${cliFlags}`;
 
 		result = await childProcess;
 	}

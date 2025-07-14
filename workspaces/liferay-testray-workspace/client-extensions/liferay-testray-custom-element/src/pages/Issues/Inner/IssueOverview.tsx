@@ -26,7 +26,7 @@ import {
 import {getDonutLegend} from '../../../util/graph';
 
 type IssueOverviewProps = {
-	testrayBuild?: TestrayBuild;
+	testrayBuild: TestrayBuild;
 	testrayJiraIssue: TestrayJiraIssue;
 };
 
@@ -43,8 +43,10 @@ const IssueOverview: React.FC<IssueOverviewProps> = ({
 	testrayJiraIssue,
 }) => {
 	const ref = useRef<any>();
-	const totalTestCasesGroup =
-		useTotalTestCasesByTestrayJiraIssue(testrayJiraIssue, testrayBuild?.id || 0);
+	const totalTestCasesGroup = useTotalTestCasesByTestrayJiraIssue(
+		testrayJiraIssue,
+		testrayBuild.id
+	);
 	const {testrayJiraProject}: OutletContext = useOutletContext();
 
 	const {

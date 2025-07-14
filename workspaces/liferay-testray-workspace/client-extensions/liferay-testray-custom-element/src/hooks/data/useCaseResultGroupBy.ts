@@ -96,25 +96,6 @@ const useTotalTestCasesByTestrayJiraIssue = (
 	testrayJiraIssue: TestrayJiraIssue,
 	testaryBuildId: number
 ) => {
-
-	if (testaryBuildId <= 0) {
-		return {
-			colors: chartColors,
-			donut: {
-				columns: [
-					[CaseResultStatuses.PASSED, 0],
-					[CaseResultStatuses.FAILED, 0],
-					[CaseResultStatuses.BLOCKED, 0],
-					[CaseResultStatuses.TEST_FIX, 0],
-					[CaseResultStatuses.INCOMPLETE, 0],
-				],
-				total: 0,
-			},
-			ready: false,
-			statuses: Object.values(CaseResultStatuses),
-		}
-	}
-
 	const {data, loading} = useFetch<APIResponse<TestrayCaseDetail>>(
 		`/casedetails`,
 		{

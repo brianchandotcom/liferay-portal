@@ -169,11 +169,10 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 				return 0L;
 			}
 
+			Set<String> sharedWeightNames = new HashSet<>();
+			long totalOverheadWeight = 0L;
 			long totalSharedWeight = 0L;
 			long totalWeight = 0L;
-			long totalOverheadWeight = 0L;
-
-			Set<String> sharedWeightNames = new HashSet<>();
 
 			for (ListItem listItem : this) {
 				totalOverheadWeight += listItem.getOverheadWeight();

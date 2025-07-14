@@ -738,6 +738,8 @@ public class LayoutsAdminDisplayContext {
 				return portletDisplay.getURLBackTitle();
 			}
 		).setParameter(
+			"privateLayout", isPrivateLayout()
+		).setParameter(
 			"selPlid", plid
 		).buildPortletURL();
 	}

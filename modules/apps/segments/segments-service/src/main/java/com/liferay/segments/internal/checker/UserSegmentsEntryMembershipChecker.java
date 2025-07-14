@@ -103,16 +103,16 @@ public class UserSegmentsEntryMembershipChecker {
 			return null;
 		}
 
-		String dateValueString = _getDateValueString(value);
-
-		if (dateValueString != null) {
-			return StringUtil.quote(dateValueString, StringPool.QUOTE);
-		}
-
 		String booleanValueString = _getBooleanValueString(value);
 
 		if (booleanValueString != null) {
 			return StringUtil.quote(booleanValueString, StringPool.QUOTE);
+		}
+
+		String dateValueString = _getDateValueString(value);
+
+		if (dateValueString != null) {
+			return StringUtil.quote(dateValueString, StringPool.QUOTE);
 		}
 
 		return value;

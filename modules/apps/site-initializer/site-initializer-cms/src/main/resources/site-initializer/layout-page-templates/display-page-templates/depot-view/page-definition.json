@@ -58,7 +58,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSpaceContentsAbstractJSPSectionFragmentRenderer"
+										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSpaceContentsSummaryJSPSectionFragmentRenderer"
 									},
 									"fragmentConfig": {
 									},
@@ -109,7 +109,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSpaceMembersAbstractJSPSectionFragmentRenderer"
+										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSpaceMembersSummaryJSPSectionFragmentRenderer"
 									},
 									"fragmentConfig": {
 									},
@@ -160,7 +160,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSpaceFilesAbstractJSPSectionFragmentRenderer"
+										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSpaceFilesSummaryJSPSectionFragmentRenderer"
 									},
 									"fragmentConfig": {
 									},
@@ -212,7 +212,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSpaceSitesAbstractJSPSectionFragmentRenderer"
+										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSpaceSitesSummaryJSPSectionFragmentRenderer"
 									},
 									"fragmentConfig": {
 									},

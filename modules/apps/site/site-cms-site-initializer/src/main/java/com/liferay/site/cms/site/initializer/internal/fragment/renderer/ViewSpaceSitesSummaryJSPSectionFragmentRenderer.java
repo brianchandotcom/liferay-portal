@@ -10,7 +10,7 @@ import com.liferay.depot.service.DepotEntryService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceSitesAbstractSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceSitesSummarySectionDisplayContext;
 import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(service = FragmentRenderer.class)
-public class ViewSpaceSitesAbstractJSPSectionFragmentRenderer
+public class ViewSpaceSitesSummaryJSPSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer {
 
 	@Override
@@ -32,7 +32,7 @@ public class ViewSpaceSitesAbstractJSPSectionFragmentRenderer
 
 	@Override
 	protected Object getDisplayContext(HttpServletRequest httpServletRequest) {
-		return new ViewSpaceSitesAbstractSectionDisplayContext(
+		return new ViewSpaceSitesSummarySectionDisplayContext(
 			_depotEntryService, _depotEntryGroupRelLocalService,
 			InfoItemUtil.getGroupId(httpServletRequest), httpServletRequest,
 			_language, _portal);
@@ -40,12 +40,12 @@ public class ViewSpaceSitesAbstractJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_space_sites_abstract.jsp";
+		return "/view_space_sites_summary.jsp";
 	}
 
 	@Override
 	protected String getLabelKey() {
-		return "space-sites-abstract";
+		return "space-sites-summary";
 	}
 
 	@Reference

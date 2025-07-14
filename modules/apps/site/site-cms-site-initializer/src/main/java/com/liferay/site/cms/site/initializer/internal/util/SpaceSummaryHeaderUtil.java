@@ -15,9 +15,9 @@ import java.util.Map;
 /**
  * @author Roberto Díaz
  */
-public class SpaceAbstractHeaderUtil {
+public class SpaceSummaryHeaderUtil {
 
-	public static Map<String, Object> getSpaceAbstractHeaderProps(
+	public static Map<String, Object> getSpaceSummaryHeaderProps(
 			HttpServletRequest httpServletRequest, String labelKey,
 			String titleKey, String url)
 		throws Exception {

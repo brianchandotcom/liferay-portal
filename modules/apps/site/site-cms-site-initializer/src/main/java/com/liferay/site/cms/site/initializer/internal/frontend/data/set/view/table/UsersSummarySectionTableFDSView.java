@@ -21,10 +21,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_MEMBERS_USERS_ABSTRACT_SECTION,
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_MEMBERS_USERS_SUMMARY_SECTION,
 	service = FDSView.class
 )
-public class UsersAbstractSectionTableFDSView extends BaseTableFDSView {
+public class UsersSummarySectionTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {

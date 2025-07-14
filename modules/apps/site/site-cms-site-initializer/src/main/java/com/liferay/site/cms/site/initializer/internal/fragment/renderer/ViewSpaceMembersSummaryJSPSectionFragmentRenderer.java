@@ -9,7 +9,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceMembersAbstractSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceMembersSummarySectionDisplayContext;
 import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(service = FragmentRenderer.class)
-public class ViewSpaceMembersAbstractJSPSectionFragmentRenderer
+public class ViewSpaceMembersSummaryJSPSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer {
 
 	@Override
@@ -31,19 +31,19 @@ public class ViewSpaceMembersAbstractJSPSectionFragmentRenderer
 
 	@Override
 	protected Object getDisplayContext(HttpServletRequest httpServletRequest) {
-		return new ViewSpaceMembersAbstractSectionDisplayContext(
+		return new ViewSpaceMembersSummarySectionDisplayContext(
 			InfoItemUtil.getGroupId(httpServletRequest), httpServletRequest,
 			_language, _userGroupLocalService, _userLocalService);
 	}
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_space_members_abstract.jsp";
+		return "/view_space_members_summary.jsp";
 	}
 
 	@Override
 	protected String getLabelKey() {
-		return "space-members-abstract";
+		return "space-members-summary";
 	}
 
 	@Reference

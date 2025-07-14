@@ -616,12 +616,6 @@ public abstract class BaseTopLevelBuild
 
 	@Override
 	public TopLevelBuildReport getTopLevelBuildReport() {
-		if (_topLevelBuildReport != null) {
-			return _topLevelBuildReport;
-		}
-
-		_topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(this);
-
 		return _topLevelBuildReport;
 	}
 
@@ -864,6 +858,8 @@ public abstract class BaseTopLevelBuild
 
 	protected BaseTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
+
+		_topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(this);
 
 		Properties buildProperties = null;
 
@@ -2500,6 +2496,6 @@ public abstract class BaseTopLevelBuild
 	private int _metricsHostPort;
 	private final boolean _sendBuildMetrics;
 	private final List<URL> _testrayAttachmentURLs = new ArrayList<>();
-	private TopLevelBuildReport _topLevelBuildReport;
+	private final TopLevelBuildReport _topLevelBuildReport;
 
 }

@@ -15,6 +15,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -39,16 +40,7 @@ public abstract class BaseTopLevelBuildReport
 			return;
 		}
 
-		String batchName = downstreamBuildReport.getBatchName();
-
-		List<DownstreamBuildReport> downstreamBuildReports =
-			_downstreamBuildReports.getOrDefault(batchName, new ArrayList<>());
-
-		if (!downstreamBuildReports.contains(downstreamBuildReport)) {
-			downstreamBuildReports.add(downstreamBuildReport);
-		}
-
-		_downstreamBuildReports.put(batchName, downstreamBuildReports);
+		_downstreamBuildReports.add(downstreamBuildReport);
 	}
 
 	@Override
@@ -213,15 +205,7 @@ public abstract class BaseTopLevelBuildReport
 
 	@Override
 	public List<DownstreamBuildReport> getDownstreamBuildReports() {
-		List<DownstreamBuildReport> downstreamBuildReports = new ArrayList<>();
-
-		for (List<DownstreamBuildReport> downstreamBuildReportsList :
-				_downstreamBuildReports.values()) {
-
-			downstreamBuildReports.addAll(downstreamBuildReportsList);
-		}
-
-		return downstreamBuildReports;
+		return new ArrayList<>(_downstreamBuildReports);
 	}
 
 	@Override
@@ -378,17 +362,6 @@ public abstract class BaseTopLevelBuildReport
 		_jobReport = jobReport;
 	}
 
-	protected Set<String> getBatchNames() {
-		return _downstreamBuildReports.keySet();
-	}
-
-	protected List<DownstreamBuildReport> getDownstreamBuildReports(
-		String batchName) {
-
-		return _downstreamBuildReports.getOrDefault(
-			batchName, new ArrayList<>());
-	}
-
 	protected String getStartYearMonth() {
 		return JenkinsResultsParserUtil.toDateString(
 			getStartDate(), "yyyy-MM", "America/Los_Angeles");
@@ -436,8 +409,8 @@ public abstract class BaseTopLevelBuildReport
 				"(/AXIS_VARIABLE=(?<axisVariable>\\d+))?/(?<buildNumber>\\d+)");
 
 	private ControllerBuildReport _controllerBuildReport;
-	private final Map<String, List<DownstreamBuildReport>>
-		_downstreamBuildReports = new HashMap<>();
+	private final Set<DownstreamBuildReport> _downstreamBuildReports =
+		new HashSet<>();
 	private JobReport _jobReport;
 
 }

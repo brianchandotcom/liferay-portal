@@ -9,8 +9,10 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -35,13 +37,32 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 		JSONObject buildReportJSONObject =
 			_topLevelBuild.getBuildReportJSONObject();
 
+		Map<String, Set<DownstreamBuildReport>> downstreamBuildReportsMap =
+			new HashMap<>();
+
+		for (DownstreamBuildReport downstreamBuildReport :
+				getDownstreamBuildReports()) {
+
+			String batchName = downstreamBuildReport.getBatchName();
+
+			Set<DownstreamBuildReport> downstreamBuildReports =
+				downstreamBuildReportsMap.getOrDefault(
+					batchName, new HashSet<>());
+
+			downstreamBuildReports.add(downstreamBuildReport);
+
+			downstreamBuildReportsMap.put(batchName, downstreamBuildReports);
+		}
+
 		JSONArray batchesJSONArray = new JSONArray();
 
-		for (String batchName : getBatchNames()) {
+		for (Map.Entry<String, Set<DownstreamBuildReport>> entry :
+				downstreamBuildReportsMap.entrySet()) {
+
 			JSONArray buildsJSONArray = new JSONArray();
 
 			for (DownstreamBuildReport downstreamBuildReport :
-					getDownstreamBuildReports(batchName)) {
+					entry.getValue()) {
 
 				buildsJSONArray.put(
 					downstreamBuildReport.getBuildReportJSONObject());
@@ -50,7 +71,7 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 			JSONObject batchJSONObject = new JSONObject();
 
 			batchJSONObject.put(
-				"batchName", batchName
+				"batchName", entry.getKey()
 			).put(
 				"builds", buildsJSONArray
 			);
@@ -74,6 +95,30 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 	}
 
 	@Override
+	public List<DownstreamBuildReport> getDownstreamBuildReports() {
+		Set<DownstreamBuildReport> downstreamBuildReports = new HashSet<>(
+			super.getDownstreamBuildReports());
+
+		for (Build build : _topLevelBuild.getDownstreamBuilds()) {
+			if (!build.isCompleted()) {
+				continue;
+			}
+
+			String batchName = _getBatchName(build);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(batchName)) {
+				continue;
+			}
+
+			downstreamBuildReports.add(
+				BuildReportFactory.newDownstreamBuildReport(
+					batchName, build.getBuildReportJSONObject(), this));
+		}
+
+		return new ArrayList<>(downstreamBuildReports);
+	}
+
+	@Override
 	public Date getStartDate() {
 		return new Date(_topLevelBuild.getStartTime());
 	}
@@ -82,43 +127,26 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 		super(topLevelBuild.getBuildURL());
 
 		_topLevelBuild = topLevelBuild;
-
-		Build controllerBuild = topLevelBuild.getControllerBuild();
-
-		if ((controllerBuild != null) && controllerBuild.isCompleted()) {
-			setControllerBuildReport(
-				BuildReportFactory.newControllerBuildReport(
-					controllerBuild, this));
-		}
-
-		for (Build build : topLevelBuild.getDownstreamBuilds()) {
-			if (!build.isCompleted()) {
-				continue;
-			}
-
-			if (build instanceof DownstreamBuild) {
-				addDownstreamBuildReport(
-					BuildReportFactory.newDownstreamBuildReport(
-						(DownstreamBuild)build));
-			}
-		}
 	}
 
-	@Override
-	protected Set<String> getBatchNames() {
-		Set<String> batchNames = new HashSet<>(super.getBatchNames());
+	private String _getBatchName(Build build) {
+		if (build instanceof AxisBuild) {
+			AxisBuild axisBuild = (AxisBuild)build;
 
-		for (Build build : _topLevelBuild.getDownstreamBuilds()) {
-			if (!(build instanceof DownstreamBuild)) {
-				continue;
-			}
+			return axisBuild.getBatchName();
+		}
+		else if (build instanceof BatchBuild) {
+			BatchBuild batchBuild = (BatchBuild)build;
 
+			return batchBuild.getBatchName();
+		}
+		else if (build instanceof DownstreamBuild) {
 			DownstreamBuild downstreamBuild = (DownstreamBuild)build;
 
-			batchNames.add(downstreamBuild.getBatchName());
+			return downstreamBuild.getBatchName();
 		}
 
-		return batchNames;
+		return null;
 	}
 
 	private List<String> _getTestrayAttachmentURLStrings() {

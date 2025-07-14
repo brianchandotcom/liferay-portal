@@ -1,0 +1,68 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+function mockSub(str: string, arg: string | number | string[]): string {
+	if (Array.isArray(arg)) {
+		return arg.reduce((acc, val) => acc.replace('x', String(val)), str);
+	}
+
+	return str.replace('x', String(arg));
+}
+
+export const mockFetch = jest.fn(() => {
+	return Promise.resolve({
+		json: async () => ({}),
+		ok: true,
+		status: 200,
+		text: async () => '',
+	} as Response);
+});
+
+export const mockNavigate = jest.fn();
+
+export const addParams = jest.fn();
+export const fetch = mockFetch;
+export const navigate = mockNavigate;
+export const sub = mockSub;
+export const throttle = jest.fn();
+export const debounce = jest.fn((fn, delay) => {
+	const debouncedFunctions = new Map();
+	let timerId: any;
+
+	const debounced = function (...args: any[]) {
+		if (timerId) {
+			clearTimeout(timerId);
+		}
+
+		timerId = setTimeout(() => {
+			fn(...args);
+			timerId = null;
+		}, delay);
+	};
+
+	Object.defineProperty(debounced, 'id', {
+		get: () => timerId,
+		set: (newId) => {
+			timerId = newId;
+		},
+	});
+
+	debouncedFunctions.set(fn, debounced);
+
+	return debounced;
+});
+
+export function buildFragment(html: string) {
+	const template = document.createElement('template');
+	template.innerHTML = html.trim();
+
+	return template.content;
+}
+
+export function loadClientExtensions() {
+	return Promise.resolve();
+}
+
+export default {};

@@ -98,7 +98,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 		if (nextSiblingDetailAST.getType() == TokenTypes.EXPR) {
 			List<String> enforceEmptyLineAfterMethodNames = getAttributeValues(
-				_ENFORCE_EMPTY_LINE_AFTER_METHOD_NAMES);
+				_ENFORCE_EMPTY_LINE_AFTER_METHOD_NAMES_KEY);
 
 			String methodName = getMethodName(detailAST);
 
@@ -351,7 +351,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				variableName.equals(getVariableName(firstChildDetailAST))) {
 
 				List<String> enforceEmptyLineBeforeMethodNames =
-					getAttributeValues(_ENFORCE_EMPTY_LINE_BEFORE_METHOD_NAMES);
+					getAttributeValues(
+						_ENFORCE_EMPTY_LINE_BEFORE_METHOD_NAMES_KEY);
 
 				String methodName = getMethodName(detailAST);
 				List<DetailAST> parameterExprDetailASTList =
@@ -789,10 +790,10 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		return false;
 	}
 
-	private static final String _ENFORCE_EMPTY_LINE_AFTER_METHOD_NAMES =
+	private static final String _ENFORCE_EMPTY_LINE_AFTER_METHOD_NAMES_KEY =
 		"enforceEmptyLineAfterMethodNames";
 
-	private static final String _ENFORCE_EMPTY_LINE_BEFORE_METHOD_NAMES =
+	private static final String _ENFORCE_EMPTY_LINE_BEFORE_METHOD_NAMES_KEY =
 		"enforceEmptyLineBeforeMethodNames";
 
 	private static final String _MSG_MISSING_EMPTY_LINE_AFTER_METHOD_NAME =

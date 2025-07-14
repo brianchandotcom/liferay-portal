@@ -6,6 +6,7 @@
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
+import {useId} from 'frontend-js-components-web';
 import React, {useEffect} from 'react';
 
 import focusInvalidElement from '../../../common/utils/focusInvalidElement';
@@ -55,6 +56,8 @@ export default function RepeatableGroupSettings({
 function GeneralTab({group}: {group: RepeatableGroup}) {
 	const dispatch = useStateDispatch();
 
+	const labelInputId = useId();
+
 	return (
 		<div>
 			<div className="pb-2">
@@ -69,6 +72,7 @@ function GeneralTab({group}: {group: RepeatableGroup}) {
 
 			<LocalizedInput
 				formGroupClassName="mt-4"
+				id={labelInputId}
 				label={Liferay.Language.get('label')}
 				onSave={(translations) => {
 					dispatch({

@@ -106,12 +106,14 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 
 		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
 			PlaywrightAxisTestClassGroup playwrightAxisTestClassGroup =
-					(PlaywrightAxisTestClassGroup)axisTestClassGroup;
+				(PlaywrightAxisTestClassGroup)axisTestClassGroup;
 
-			if(playwrightAxisTestClassGroup.getAnalyticsCloudEnabled()){
+			if (playwrightAxisTestClassGroup.getAnalyticsCloudEnabled()) {
 				_testAnalyticsCloud = true;
+
 				break;
 			}
+
 			_testAnalyticsCloud = false;
 		}
 
@@ -172,8 +174,8 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 		return filteredJobProperties;
 	}
 
-	private Boolean _testAnalyticsCloud;
 	private String _projectName;
 	private String _slaveLabel;
+	private Boolean _testAnalyticsCloud;
 
 }

@@ -123,13 +123,13 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			_slaveLabel = slaveLabel;
 
 			String analyticsCloudEnabled = JenkinsResultsParserUtil.getProperty(
-					testProperties, "analytics.cloud.enabled");
+				testProperties, "analytics.cloud.enabled");
 
 			System.out.println("ac property: " + analyticsCloudEnabled);
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(
 					analyticsCloudEnabled) &&
-					analyticsCloudEnabled.equals("true")) {
+				analyticsCloudEnabled.equals("true")) {
 
 				System.out.println("ac is true");
 

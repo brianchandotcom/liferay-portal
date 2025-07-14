@@ -135,6 +135,50 @@ public class ImportDataDefinitionMVCActionCommandTest
 	}
 
 	@Test
+	public void testProcessActionWithMultipleImportOfSameDataDefinition()
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			createMockLiferayPortletActionRequest(
+				"data_definition_with_valid_fields.json", "Imported Structure");
+
+		setUpUploadPortletRequest(mockLiferayPortletActionRequest);
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Assert.assertNotNull(
+			SessionMessages.get(
+				mockLiferayPortletActionRequest,
+				portal.getPortletId(mockLiferayPortletActionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE));
+		Assert.assertNotNull(
+			SessionMessages.get(
+				mockLiferayPortletActionRequest,
+				"importDataDefinitionSuccessMessage"));
+
+		mockLiferayPortletActionRequest = createMockLiferayPortletActionRequest(
+			"data_definition_with_valid_fields.json", "Imported Structure");
+
+		setUpUploadPortletRequest(mockLiferayPortletActionRequest);
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Assert.assertNotNull(
+			SessionMessages.get(
+				mockLiferayPortletActionRequest,
+				portal.getPortletId(mockLiferayPortletActionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE));
+		Assert.assertNotNull(
+			SessionMessages.get(
+				mockLiferayPortletActionRequest,
+				"importDataDefinitionSuccessMessage"));
+	}
+
+	@Test
 	public void testProcessActionWithoutName() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.journal.web.internal.portlet.action." +

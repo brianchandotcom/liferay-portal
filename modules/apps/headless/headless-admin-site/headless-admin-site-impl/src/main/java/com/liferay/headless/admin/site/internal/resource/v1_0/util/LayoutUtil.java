@@ -645,28 +645,6 @@ public class LayoutUtil {
 		return styleBookEntry.getStyleBookEntryId();
 	}
 
-	private static void _updateClientExtensionEntryRel(
-			ClientExtension clientExtension, Layout layout, String type,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
-
-		if (clientExtension == null) {
-			return;
-		}
-
-		ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
-			serviceContext.getUserId(), layout.getGroupId(),
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-			clientExtension.getExternalReferenceCode(), type,
-			UnicodePropertiesBuilder.create(
-				clientExtension.getClientExtensionConfig(), true
-			).buildString(),
-			serviceContext);
-	}
-
 	private static void _updateClientExtensionEntryRels(
 			ClientExtension[] clientExtensions, Layout layout, String type,
 			ServiceContext serviceContext)
@@ -674,6 +652,10 @@ public class LayoutUtil {
 
 		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
 			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
+
+		if (clientExtensions == null) {
+			return;
+		}
 
 		for (ClientExtension clientExtension : clientExtensions) {
 			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
@@ -709,19 +691,23 @@ public class LayoutUtil {
 			return;
 		}
 
-		_updateClientExtensionEntryRel(
-			settings.getFavIcon() instanceof ClientExtension ?
-				(ClientExtension)settings.getFavIcon() : null,
+		_updateClientExtensionEntryRels(
+			new ClientExtension[] {
+				settings.getFavIcon() instanceof ClientExtension ?
+					(ClientExtension)settings.getFavIcon() : null
+			},
 			layout, ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
 			serviceContext);
 
-		_updateClientExtensionEntryRel(
-			settings.getThemeCSSClientExtension(), layout,
-			ClientExtensionEntryConstants.TYPE_THEME_CSS, serviceContext);
+		_updateClientExtensionEntryRels(
+			new ClientExtension[] {settings.getThemeCSSClientExtension()},
+			layout, ClientExtensionEntryConstants.TYPE_THEME_CSS,
+			serviceContext);
 
-		_updateClientExtensionEntryRel(
-			settings.getThemeSpritemapClientExtension(), layout,
-			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, serviceContext);
+		_updateClientExtensionEntryRels(
+			new ClientExtension[] {settings.getThemeSpritemapClientExtension()},
+			layout, ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP,
+			serviceContext);
 
 		_updateClientExtensionEntryRels(
 			settings.getGlobalCSSClientExtensions(), layout,

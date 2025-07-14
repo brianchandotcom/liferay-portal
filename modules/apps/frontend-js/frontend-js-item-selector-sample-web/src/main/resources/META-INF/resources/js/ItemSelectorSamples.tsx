@@ -56,7 +56,7 @@ type Space = {
 
 export interface IItemSelectorConfiguration {
 	apiURL: string;
-	itemNameLocator: string;
+	itemNameLocator: string | ((item: any) => any);
 	type: string;
 	views: TView[];
 }
@@ -111,7 +111,7 @@ export default function ItemSelectorSamples() {
 	} = useModal();
 	const {
 		observer: spaceItemSelectorObserver,
-		onOpenChange: spaceItemSelectorOpenChange,
+		onOpenChange: assetItemSelectorOpenChange,
 		open: spaceItemSelectorOpen,
 	} = useModal();
 	const {
@@ -334,7 +334,7 @@ export default function ItemSelectorSamples() {
 						itemNameLocator:
 							assetsItemSelectorConfig.itemNameLocator,
 						observer: spaceItemSelectorObserver,
-						onOpenChange: spaceItemSelectorOpenChange,
+						onOpenChange: assetItemSelectorOpenChange,
 						onSelection: onAssetSelection,
 						open: spaceItemSelectorOpen,
 						type: assetsItemSelectorConfig.type,
@@ -373,10 +373,10 @@ export default function ItemSelectorSamples() {
 					<ClayButton
 						displayType="primary"
 						onClick={() => {
-							spaceItemSelectorOpenChange(true);
+							assetItemSelectorOpenChange(true);
 						}}
 					>
-						Select Space
+						Select Asset
 					</ClayButton>
 
 					<ClayButton
@@ -406,11 +406,7 @@ export default function ItemSelectorSamples() {
 				)}
 
 				{user && (
-					<ClayAlert
-						displayType="info"
-						symbol="user"
-						title={user['givenName']}
-					/>
+					<ClayAlert displayType="info" symbol="user" title={user} />
 				)}
 			</SampleContainer>
 		</>

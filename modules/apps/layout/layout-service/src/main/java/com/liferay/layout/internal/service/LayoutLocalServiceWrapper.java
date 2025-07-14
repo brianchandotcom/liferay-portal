@@ -298,9 +298,6 @@ public class LayoutLocalServiceWrapper
 				continue;
 			}
 
-			String containerKey =
-				sourceLayoutLayoutClassedModelUsage.getContainerKey();
-
 			long containerType =
 				sourceLayoutLayoutClassedModelUsage.getContainerType();
 
@@ -315,7 +312,8 @@ public class LayoutLocalServiceWrapper
 				sourceLayoutLayoutClassedModelUsage.
 					getClassExternalReferenceCode(),
 				sourceLayoutLayoutClassedModelUsage.getClassNameId(),
-				sourceLayoutLayoutClassedModelUsage.getClassPK(), containerKey,
+				sourceLayoutLayoutClassedModelUsage.getClassPK(),
+				sourceLayoutLayoutClassedModelUsage.getContainerKey(),
 				sourceLayoutLayoutClassedModelUsage.getContainerType(),
 				targetLayout.getPlid(),
 				ServiceContextThreadLocal.getServiceContext());

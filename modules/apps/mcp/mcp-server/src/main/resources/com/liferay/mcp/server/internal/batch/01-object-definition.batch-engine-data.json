@@ -47,71 +47,23 @@
 						"en_US": "Description"
 					},
 					"name": "description",
-					"required": false,
+					"required": true,
 					"state": false,
 					"system": true,
 					"type": "String"
 				},
 				{
-					"DBType": "String",
-					"businessType": "Text",
+					"DBType": "Clob",
+					"businessType": "LongText",
 					"defaultValue": "null",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Argument Name"
+						"en_US": "Prompt"
 					},
-					"name": "argumentName",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"defaultValue": "null",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Argument Description"
-					},
-					"name": "argumentDescription",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"defaultValue": "null",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Result Description"
-					},
-					"name": "resultDescription",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"defaultValue": "null",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Result Text"
-					},
-					"name": "resultText",
-					"required": false,
+					"name": "prompt",
+					"required": true,
 					"state": false,
 					"system": true,
 					"type": "String"

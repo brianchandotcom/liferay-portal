@@ -7,11 +7,15 @@ package com.liferay.exportimport.vulcan.batch.engine;
 
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
+import java.util.List;
+
 /**
  * @author Alejandro Tardín
  */
 public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 	extends VulcanBatchEngineTaskItemDelegate<T> {
+
+	public List<String> getNestedFields();
 
 	public String getPortletId();
 

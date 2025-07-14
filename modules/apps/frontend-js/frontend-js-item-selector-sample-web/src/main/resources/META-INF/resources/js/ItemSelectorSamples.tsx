@@ -56,7 +56,7 @@ type Space = {
 
 export interface IItemSelectorConfiguration {
 	apiURL: string;
-	selectedItemDescriptionKey: string;
+	itemNameLocator: string;
 	type: string;
 	views: TView[];
 }
@@ -72,21 +72,22 @@ const FDS_DEFAULT_PROPS = {
 
 const assetsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
-	selectedItemDescriptionKey: 'name',
+	itemNameLocator: 'name',
 	type: Liferay.Language.get('asset'),
 	views: assetLibraryViews,
 };
 
 const docsAndMediaItemSelectorConfig: IItemSelectorConfiguration = {
 	apiURL: `${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`,
-	selectedItemDescriptionKey: 'fileName',
+	itemNameLocator: 'fileName',
 	type: Liferay.Language.get('file'),
 	views: documentsAndMediaViews,
 };
 
 const usersItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
-	selectedItemDescriptionKey: 'givenName',
+	itemNameLocator: (item: any) =>
+		item.roleBriefs?.map((role: any) => role.name).join(','),
 	type: Liferay.Language.get('user'),
 	views: userViews,
 };
@@ -119,12 +120,12 @@ export default function ItemSelectorSamples() {
 		open: userItemSelectorOpen,
 	} = useModal();
 
-	function onFileSelection(file: any) {
-		setFile(file);
+	function onAssetSelection(asset: any) {
+		setAsset(asset);
 	}
 
-	function onSpaceSelection(asset: any) {
-		setAsset(asset);
+	function onFileSelection(file: any) {
+		setFile(file);
 	}
 
 	function onUserSelection(user: any) {
@@ -310,12 +311,12 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.DOCUMENTS_AND_MEDIA,
 							}),
 						},
+						itemNameLocator:
+							docsAndMediaItemSelectorConfig.itemNameLocator,
 						observer: fileItemSelectorObserver,
-						onItemSelectorSave: onFileSelection,
 						onOpenChange: fileItemSelectorOpenChange,
+						onSelection: onFileSelection,
 						open: fileItemSelectorOpen,
-						selectedItemDescriptionKey:
-							docsAndMediaItemSelectorConfig.selectedItemDescriptionKey,
 						type: docsAndMediaItemSelectorConfig.type,
 					}}
 				/>
@@ -330,12 +331,12 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.ASSET_LIBRARY,
 							}),
 						},
+						itemNameLocator:
+							assetsItemSelectorConfig.itemNameLocator,
 						observer: spaceItemSelectorObserver,
-						onItemSelectorSave: onSpaceSelection,
 						onOpenChange: spaceItemSelectorOpenChange,
+						onSelection: onAssetSelection,
 						open: spaceItemSelectorOpen,
-						selectedItemDescriptionKey:
-							assetsItemSelectorConfig.selectedItemDescriptionKey,
 						type: assetsItemSelectorConfig.type,
 					}}
 				/>
@@ -349,12 +350,12 @@ export default function ItemSelectorSamples() {
 								viewsConfig: 'users',
 							}),
 						},
+						itemNameLocator:
+							usersItemSelectorConfig.itemNameLocator,
 						observer: userItemSelectorObserver,
-						onItemSelectorSave: onUserSelection,
 						onOpenChange: userItemSelectorOpenChange,
+						onSelection: onUserSelection,
 						open: userItemSelectorOpen,
-						selectedItemDescriptionKey:
-							usersItemSelectorConfig.selectedItemDescriptionKey,
 						type: usersItemSelectorConfig.type,
 					}}
 				/>

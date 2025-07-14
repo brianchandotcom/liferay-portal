@@ -15,9 +15,14 @@ import React, {useState} from 'react';
 export interface IItemSelectorModalProps {
 
 	/**
-	 * Configuration properties of the FDS used to display data
+	 * Configuration properties of the FDS used to display data.
 	 */
 	fdsProps: IFrontendDataSetProps;
+
+	/**
+	 * Fieldname from apiURL response used to display selection value in the modal.
+	 */
+	itemNameLocator: string | ((item: any) => any);
 
 	/**
 	 *
@@ -25,41 +30,45 @@ export interface IItemSelectorModalProps {
 	observer: any;
 
 	/**
-	 * Callback function called when after using the selection modal primary button
-	 */
-	onItemSelectorSave: Function;
-
-	/**
-	 *
+	 * Callback to change open state.
 	 */
 	onOpenChange: (value: boolean) => void;
 
 	/**
-	 * Flag that controls if modal is open
+	 * Callback function called when item selection is confirmed.
+	 */
+	onSelection: Function;
+
+	/**
+	 * Flag that controls if modal is open.
 	 */
 	open: boolean;
 
 	/**
-	 * Fieldname from apiURL response used to display selection value in the modal
-	 */
-	selectedItemDescriptionKey: string;
-
-	/**
-	 * Type of asset to be selected. Used to display modal title
+	 * Type of asset to be selected. Used to display modal title.
 	 */
 	type: string;
 }
 
 function ItemSelectorModal({
 	fdsProps,
+	itemNameLocator,
 	observer,
-	onItemSelectorSave,
 	onOpenChange,
+	onSelection,
 	open,
-	selectedItemDescriptionKey,
 	type,
 }: IItemSelectorModalProps) {
 	const [selectedItem, setSelectedItem] = useState<any | null>(null);
+
+	const getSelectedItemValue = function (selectedItem: any) {
+		if (typeof itemNameLocator === 'string') {
+			return selectedItem[itemNameLocator];
+		}
+		else {
+			return itemNameLocator(selectedItem);
+		}
+	};
 
 	return (
 		open && (
@@ -68,7 +77,7 @@ function ItemSelectorModal({
 					{sub(Liferay.Language.get('select-x'), type)}
 				</ClayModal.Header>
 
-				<ClayModal.Body>
+				<ClayModal.Body className="p-0">
 					<FrontendDataSet
 						{...fdsProps}
 						onSelect={({
@@ -87,10 +96,10 @@ function ItemSelectorModal({
 					first={
 						selectedItem ? (
 							<>
-								<b>
-									{selectedItem[selectedItemDescriptionKey]}
-								</b>{' '}
-								{sub(Liferay.Language.get('x-selected'), type)}
+								<strong>
+									{getSelectedItemValue(selectedItem)}
+								</strong>{' '}
+								{Liferay.Language.get('selected')}
 							</>
 						) : undefined
 					}
@@ -110,7 +119,7 @@ function ItemSelectorModal({
 							<ClayButton
 								className="item-preview selector-button"
 								onClick={() => {
-									onItemSelectorSave(selectedItem);
+									onSelection(selectedItem);
 									onOpenChange(false);
 								}}
 							>

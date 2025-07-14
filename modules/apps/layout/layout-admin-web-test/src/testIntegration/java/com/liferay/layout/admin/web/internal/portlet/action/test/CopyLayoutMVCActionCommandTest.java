@@ -218,6 +218,8 @@ public class CopyLayoutMVCActionCommandTest {
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			_group.getGroupId(), _layout.isPrivateLayout(), "/" + _NAME);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		Assert.assertEquals(
 			count,
 			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
@@ -304,14 +306,17 @@ public class CopyLayoutMVCActionCommandTest {
 							fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 						_layout.getPlid());
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		List<FragmentEntryLink>
 			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks =
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinksBySegmentsExperienceId(
 						_group.getGroupId(),
 						_segmentsExperienceLocalService.
-							fetchDefaultSegmentsExperienceId(layout.getPlid()),
-						layout.getPlid());
+							fetchDefaultSegmentsExperienceId(
+								draftLayout.getPlid()),
+						draftLayout.getPlid());
 
 		Assert.assertEquals(
 			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.toString(),

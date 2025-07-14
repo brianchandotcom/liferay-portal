@@ -747,6 +747,10 @@ public class LayoutUtil {
 			Layout layout, Settings settings, ServiceContext serviceContext)
 		throws Exception {
 
+		if (settings == null) {
+			return;
+		}
+
 		if (layout.isTypeUtility()) {
 			if ((settings.getFavIcon() instanceof ClientExtension) ||
 				ArrayUtil.isNotEmpty(settings.getGlobalCSSClientExtensions()) ||

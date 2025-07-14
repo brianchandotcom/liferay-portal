@@ -1335,6 +1335,7 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-60383")
 	public void testFragmentEntryProcessorEditableWithLocalizableImageAlt()
 		throws Exception {
 
@@ -1369,6 +1370,17 @@ public class EditableFragmentEntryProcessorTest {
 					LocaleUtil.fromLanguageId("es_ES"),
 					FragmentEntryLinkConstants.EDIT)),
 			CoreMatchers.containsString("es_ES-alt"));
+
+		LocaleThreadLocal.setThemeDisplayLocale(
+			LocaleUtil.fromLanguageId("de_DE"));
+
+		Assert.assertThat(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.fromLanguageId("de_DE"),
+					FragmentEntryLinkConstants.EDIT)),
+			CoreMatchers.containsString("en_US-alt"));
 
 		LocaleThreadLocal.setThemeDisplayLocale(currentLocale);
 	}

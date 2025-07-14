@@ -73,25 +73,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 
 		_uploadJenkinsConsoleTestrayAttachment();
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (topLevelBuild != null) {
-			TopLevelBuildReport topLevelBuildReport =
-				topLevelBuild.getTopLevelBuildReport();
-
-			_downstreamBuildReport =
-				topLevelBuildReport.getDownstreamBuildReport(getAxisName());
-
-			if (_downstreamBuildReport == null) {
-				_downstreamBuildReport =
-					BuildReportFactory.newDownstreamBuildReport(
-						getBatchName(), getBuildReportJSONObject(),
-						topLevelBuildReport);
-			}
-		}
-
-		if ((_downstreamBuildReport == null) ||
-			!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
 			!JenkinsResultsParserUtil.isCloudCINode() || isFailing()) {
 
 			return;
@@ -111,10 +93,14 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		String s3ObjectPath = _getS3ObjectPath(buildReportGzipFile);
 
 		try {
+			JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+			if (buildReportJSONObject == null) {
+				return;
+			}
+
 			JenkinsResultsParserUtil.write(
-				buildReportFile,
-				String.valueOf(
-					_downstreamBuildReport.getBuildReportJSONObject()));
+				buildReportFile, String.valueOf(buildReportJSONObject));
 
 			JenkinsResultsParserUtil.gzip(buildReportFile, buildReportGzipFile);
 

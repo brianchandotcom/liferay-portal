@@ -8,6 +8,7 @@ import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
 import ClayModal from '@clayui/modal';
 import classnames from 'classnames';
+import {dateUtils} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -104,11 +105,27 @@ export default function ScheduleModal({
 
 					<ClayDatePicker
 						dateFormat="yyyy-MM-dd"
+						firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
+						months={[
+							`${Liferay.Language.get('january')}`,
+							`${Liferay.Language.get('february')}`,
+							`${Liferay.Language.get('march')}`,
+							`${Liferay.Language.get('april')}`,
+							`${Liferay.Language.get('may')}`,
+							`${Liferay.Language.get('june')}`,
+							`${Liferay.Language.get('july')}`,
+							`${Liferay.Language.get('august')}`,
+							`${Liferay.Language.get('september')}`,
+							`${Liferay.Language.get('october')}`,
+							`${Liferay.Language.get('november')}`,
+							`${Liferay.Language.get('december')}`,
+						]}
 						onChange={setDisplayDate}
 						placeholder="yyyy-MM-dd HH:mm"
 						time
 						timezone={timeZone}
 						value={displayDate}
+						weekdaysShort={dateUtils.getWeekdaysShort()}
 						years={{
 							end: currentYear + DIFFERENCE_IN_YEARS,
 							start: currentYear,

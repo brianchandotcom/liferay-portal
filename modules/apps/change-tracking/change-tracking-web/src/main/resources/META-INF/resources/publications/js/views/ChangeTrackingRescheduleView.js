@@ -5,7 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayDatePicker from '@clayui/date-picker';
-import {navigate} from 'frontend-js-web';
+import {dateUtils, navigate} from 'frontend-js-web';
 import React from 'react';
 
 import ChangeTrackingBaseScheduleView from './ChangeTrackingBaseScheduleView';
@@ -56,6 +56,21 @@ class ChangeTrackingRescheduleView extends ChangeTrackingBaseScheduleView {
 						<div className={this.getDateClassName()}>
 							<div>
 								<ClayDatePicker
+									firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
+									months={[
+										`${Liferay.Language.get('january')}`,
+										`${Liferay.Language.get('february')}`,
+										`${Liferay.Language.get('march')}`,
+										`${Liferay.Language.get('april')}`,
+										`${Liferay.Language.get('may')}`,
+										`${Liferay.Language.get('june')}`,
+										`${Liferay.Language.get('july')}`,
+										`${Liferay.Language.get('august')}`,
+										`${Liferay.Language.get('september')}`,
+										`${Liferay.Language.get('october')}`,
+										`${Liferay.Language.get('november')}`,
+										`${Liferay.Language.get('december')}`,
+									]}
 									onValueChange={this.handleDateChange}
 									placeholder="YYYY-MM-DD"
 									spritemap={this.spritemap}
@@ -74,6 +89,7 @@ class ChangeTrackingRescheduleView extends ChangeTrackingBaseScheduleView {
 													this.state.date.getDate()
 												)
 									}
+									weekdaysShort={dateUtils.getWeekdaysShort()}
 									years={{
 										end: new Date().getFullYear() + 1,
 										start: new Date().getFullYear() - 1,

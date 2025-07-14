@@ -22,6 +22,21 @@ function DateInput({disabled, name, setFieldTouched, setFieldValue, value}) {
 			<ClayDatePicker
 				dateFormat="MM/dd/yyyy"
 				disabled={disabled}
+				firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
+				months={[
+					`${Liferay.Language.get('january')}`,
+					`${Liferay.Language.get('february')}`,
+					`${Liferay.Language.get('march')}`,
+					`${Liferay.Language.get('april')}`,
+					`${Liferay.Language.get('may')}`,
+					`${Liferay.Language.get('june')}`,
+					`${Liferay.Language.get('july')}`,
+					`${Liferay.Language.get('august')}`,
+					`${Liferay.Language.get('september')}`,
+					`${Liferay.Language.get('october')}`,
+					`${Liferay.Language.get('november')}`,
+					`${Liferay.Language.get('december')}`,
+				]}
 				onKeyDown={_handleKeyDown}
 				onValueChange={(value) => {
 					setFieldValue(
@@ -40,6 +55,7 @@ function DateInput({disabled, name, setFieldTouched, setFieldValue, value}) {
 						? dateUtils.format(new Date(value * 1000), 'MM/dd/yyyy')
 						: ''
 				}
+				weekdaysShort={dateUtils.getWeekdaysShort()}
 				years={{
 					end: 2024,
 					start: 1997,

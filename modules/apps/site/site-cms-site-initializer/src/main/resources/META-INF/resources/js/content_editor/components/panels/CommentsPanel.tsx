@@ -127,6 +127,8 @@ function CommentEditor({
 								),
 								type: 'success',
 							});
+
+							editorRef.current?.setData('');
 						}
 					}}
 					size="sm"

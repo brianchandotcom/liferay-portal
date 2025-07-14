@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -357,9 +357,12 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 			String invalidTypeId = StringUtil.toLowerCase(
 				RandomTestUtil.randomString());
 
-			JSONObject jsonObject = waitForFinish(
-				"COMPLETED",
-				HTTPTestUtil.invokeToJSONObject(
+			HttpInvoker.HttpResponse httpResponse =
+				importTaskResource.postImportTaskHttpResponse(
+					"com.liferay.portal.tools.rest.builder.test.dto.v1_0." +
+						"TestEntity",
+					null, null, null, null, null, null, "ON_ERROR_CONTINUE",
+					null,
 					JSONUtil.putAll(
 						JSONFactoryUtil.createJSONObject(
 							ChildTestEntity1SerDes.toJSON(childTestEntity1)),
@@ -377,13 +380,12 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString())),
 						JSONFactoryUtil.createJSONObject(
-							ChildTestEntity3SerDes.toJSON(childTestEntity3))
-					).toString(),
-					StringBundler.concat(
-						"headless-batch-engine/v1.0/import-task",
-						"/com.liferay.portal.tools.rest.builder.test.dto.v1_0.",
-						"TestEntity?importStrategy=ON_ERROR_CONTINUE"),
-					Http.Method.POST));
+							ChildTestEntity3SerDes.toJSON(childTestEntity3))));
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				httpResponse.getContent());
+
+			waitForFinish("COMPLETED", jsonObject);
 
 			page = testEntityResource.getTestEntitiesPage(null);
 

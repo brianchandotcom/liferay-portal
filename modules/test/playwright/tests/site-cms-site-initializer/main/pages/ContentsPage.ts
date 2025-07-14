@@ -10,6 +10,8 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
+type SidePanelName = 'General' | 'Comments';
+
 export class ContentsPage {
 	readonly page: Page;
 
@@ -49,9 +51,7 @@ export class ContentsPage {
 			trigger: this.newButton,
 		});
 
-		await this.openSidePanel('General');
-
-		await this.closeSidePanel();
+		await this.page.getByRole('tab', {name: 'General'}).waitFor();
 	}
 
 	async deleteContent(title: string) {
@@ -88,7 +88,7 @@ export class ContentsPage {
 		await this.closeSidePanel();
 	}
 
-	async openSidePanel(panelName: 'General') {
+	async openSidePanel(panelName: SidePanelName = 'General') {
 		await clickAndExpectToBeVisible({
 			target: this.page.locator('.sidebar-header', {hasText: panelName}),
 			trigger: this.page.getByLabel(panelName),

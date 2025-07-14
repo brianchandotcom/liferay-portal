@@ -10,12 +10,12 @@ package com.liferay.site.cms.site.initializer.internal.constants;
  */
 public class CMSSpaceConstants {
 
-	public static final int SPACE_SUMMARY_PAGE = 1;
-
-	public static final int SPACE_SUMMARY_PAGE_SIZE = 8;
-
 	public static final String SPACE_STICKER_LG = "lg";
 
 	public static final String SPACE_STICKER_SM = "sm";
+
+	public static final int SPACE_SUMMARY_PAGE = 1;
+
+	public static final int SPACE_SUMMARY_PAGE_SIZE = 8;
 
 }

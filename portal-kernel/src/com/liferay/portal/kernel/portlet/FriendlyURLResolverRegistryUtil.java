@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.util.ArrayList;
@@ -59,15 +60,25 @@ public class FriendlyURLResolverRegistryUtil {
 	}
 
 	public static String[] getURLSeparators() {
-		List<String> urlSeparators = new ArrayList<>();
+		String[] urlSeparators = _urlSeparators.get();
 
-		for (FriendlyURLResolver friendlyURLResolver : _serviceTrackerList) {
-			if (friendlyURLResolver != null) {
-				urlSeparators.add(friendlyURLResolver.getURLSeparator());
+		if (urlSeparators == null) {
+			List<String> urlSeparatorList = new ArrayList<>();
+
+			for (FriendlyURLResolver friendlyURLResolver :
+					_serviceTrackerList) {
+
+				if (friendlyURLResolver != null) {
+					urlSeparatorList.add(friendlyURLResolver.getURLSeparator());
+				}
 			}
+
+			urlSeparators = urlSeparatorList.toArray(new String[0]);
+
+			_urlSeparators.set(urlSeparators);
 		}
 
-		return urlSeparators.toArray(new String[0]);
+		return urlSeparators;
 	}
 
 	private static final BundleContext _bundleContext =
@@ -75,5 +86,9 @@ public class FriendlyURLResolverRegistryUtil {
 	private static final ServiceTrackerList<FriendlyURLResolver>
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			_bundleContext, FriendlyURLResolver.class);
+	private static final ThreadLocal<String[]> _urlSeparators =
+		new CentralizedThreadLocal<>(
+			FriendlyURLResolverRegistryUtil.class.getName() +
+				"._urlSeparators");
 
 }

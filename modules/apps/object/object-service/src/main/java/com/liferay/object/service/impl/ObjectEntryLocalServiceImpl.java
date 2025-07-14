@@ -5779,8 +5779,8 @@ public class ObjectEntryLocalServiceImpl
 
 		_deleteTempFileEntries(dlFileEntriesMap);
 
-		if (objectEntry.isScheduled() ||
-			(objectEntry.isApproved() && originalObjectEntry.isScheduled())) {
+		if ((objectEntry.isApproved() && originalObjectEntry.isScheduled()) ||
+			objectEntry.isScheduled()) {
 
 			return objectEntry;
 		}

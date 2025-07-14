@@ -60,23 +60,9 @@ export function ViewImportErrorDetail({
 	backURL: string;
 }) {
 	const [isLoading, setIsLoading] = useState(true);
-	const [errorDetail, setErrorDetail] = useState<ErrorDetail>({
-		creator: {
-			name: '',
-		},
-		dateCreated: '',
-		dateModified: '',
-		entityExternalReferenceCode: '',
-		entityId: 0,
-		entityScope: '',
-		entitySite: '',
-		entityType: '',
-		errorId: 0,
-		errorMessage: '',
-		errorStackTrace: '',
-		errorType: '',
-		externalReferenceCode: '',
-	});
+	const [errorDetail, setErrorDetail] = useState<ErrorDetail>(
+		{} as ErrorDetail
+	);
 
 	useEffect(() => {
 		fetch(apiURL).then((response) => {

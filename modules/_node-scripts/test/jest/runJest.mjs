@@ -15,6 +15,8 @@ import getJestConfig from './getJestConfig.js';
 import getJestModuleNameMapper from './getJestModuleNameMapper.mjs';
 
 const CONFIG_NAME = 'TEMP_jest.config.json';
+const FORCE_DEBUG_FLAG = '--force-debug';
+const SILENT_FLAG = '--silent';
 
 export default async function runJest({
 	cliFlags,
@@ -22,6 +24,15 @@ export default async function runJest({
 	execaConfig = {},
 }) {
 	const CONFIG_PATH = path.join(projectDir, CONFIG_NAME);
+
+	const hasForceDebug = cliFlags.includes(FORCE_DEBUG_FLAG);
+
+	if (!hasForceDebug) {
+		cliFlags.push(SILENT_FLAG);
+	}
+	else {
+		cliFlags = cliFlags.filter((flag) => flag !== FORCE_DEBUG_FLAG);
+	}
 
 	let result = false;
 
@@ -62,7 +73,7 @@ export default async function runJest({
 
 		const childProcess = $(
 			config
-		)`jest --projects ${projectDir} --config ${CONFIG_PATH} --silent ${cliFlags.join(' ')}`;
+		)`jest --projects ${projectDir} --config ${CONFIG_PATH} ${cliFlags.join(' ')}`;
 
 		result = await childProcess;
 	}

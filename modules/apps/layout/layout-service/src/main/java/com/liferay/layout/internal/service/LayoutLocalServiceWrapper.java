@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -308,47 +307,7 @@ public class LayoutLocalServiceWrapper
 			if (containerType == _portal.getClassNameId(
 					FragmentEntryLink.class.getName())) {
 
-				long originalFragmentEntryLinkId = GetterUtil.getLong(
-					sourceLayoutLayoutClassedModelUsage.getContainerKey());
-
-				FragmentEntryLink originalFragmentEntryLink =
-					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-						originalFragmentEntryLinkId);
-
-				if ((originalFragmentEntryLink != null) &&
-					originalFragmentEntryLink.isDeleted()) {
-
-					continue;
-				}
-
-				FragmentEntryLink fragmentEntryLink =
-					_fragmentEntryLinkLocalService.getFragmentEntryLink(
-						sourceLayout.getGroupId(), originalFragmentEntryLinkId,
-						targetLayout.getPlid());
-
-				if (fragmentEntryLink != null) {
-					containerKey = String.valueOf(
-						fragmentEntryLink.getFragmentEntryLinkId());
-
-					LayoutClassedModelUsage layoutClassedModelUsage =
-						_layoutClassedModelUsageLocalService.
-							fetchLayoutClassedModelUsage(
-								targetLayout.getGroupId(),
-								sourceLayoutLayoutClassedModelUsage.
-									getClassExternalReferenceCode(),
-								sourceLayoutLayoutClassedModelUsage.
-									getClassNameId(),
-								sourceLayoutLayoutClassedModelUsage.
-									getClassPK(),
-								containerKey,
-								sourceLayoutLayoutClassedModelUsage.
-									getContainerType(),
-								targetLayout.getPlid());
-
-					if (layoutClassedModelUsage != null) {
-						continue;
-					}
-				}
+				continue;
 			}
 
 			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(

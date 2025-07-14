@@ -4894,6 +4894,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return user;
 	}
 
+	@CTAware(onProduction = true)
 	@Override
 	public User updateLanguageId(long userId, String languageId)
 		throws PortalException {

@@ -2175,6 +2175,7 @@ public interface UserLocalService
 	public User updateJobTitle(long userId, String jobTitle)
 		throws PortalException;
 
+	@CTAware(onProduction = true)
 	public User updateLanguageId(long userId, String languageId)
 		throws PortalException;
 

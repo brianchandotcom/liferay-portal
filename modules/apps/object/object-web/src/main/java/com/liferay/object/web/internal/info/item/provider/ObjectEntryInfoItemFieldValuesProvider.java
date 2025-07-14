@@ -34,6 +34,9 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.model.ProxyObjectEntry;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -98,28 +101,43 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	@Override
 	public InfoItemFieldValues getInfoItemFieldValues(ObjectEntry objectEntry) {
-		try {
-			return InfoItemFieldValues.builder(
-			).infoFieldValues(
-				_getInfoFieldValues(objectEntry)
-			).infoFieldValues(
-				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
-					_getInfoItemReference(objectEntry), StringPool.BLANK,
-					ObjectEntry.class.getSimpleName(), objectEntry,
-					_getThemeDisplay())
-			).infoFieldValues(
-				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
-					objectEntry.getModelClassName(), objectEntry)
-			).infoFieldValues(
-				_templateInfoItemFieldSetProvider.getInfoFieldValues(
-					objectEntry.getModelClassName(), objectEntry)
-			).infoItemReference(
-				_getInfoItemReference(objectEntry)
-			).build();
+		ThreadLocalCache<InfoItemFieldValues> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST,
+				ObjectEntryInfoItemFieldValuesProvider.class.getName());
+
+		String key = String.valueOf(objectEntry.getObjectEntryId());
+
+		InfoItemFieldValues infoItemFieldValues = threadLocalCache.get(key);
+
+		if (infoItemFieldValues == null) {
+			try {
+				infoItemFieldValues = InfoItemFieldValues.builder(
+				).infoFieldValues(
+					_getInfoFieldValues(objectEntry)
+				).infoFieldValues(
+					_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
+						_getInfoItemReference(objectEntry), StringPool.BLANK,
+						ObjectEntry.class.getSimpleName(), objectEntry,
+						_getThemeDisplay())
+				).infoFieldValues(
+					_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
+						objectEntry.getModelClassName(), objectEntry)
+				).infoFieldValues(
+					_templateInfoItemFieldSetProvider.getInfoFieldValues(
+						objectEntry.getModelClassName(), objectEntry)
+				).infoItemReference(
+					_getInfoItemReference(objectEntry)
+				).build();
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+
+			threadLocalCache.put(key, infoItemFieldValues);
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+
+		return infoItemFieldValues;
 	}
 
 	private List<InfoFieldValue<Object>> _getInfoFieldValues(

@@ -190,10 +190,6 @@ public class ObjectEntryInfoItemFormProviderUtil {
 							objectDefinitionId,
 							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-					if (objectRelationship.isSelf()) {
-						continue;
-					}
-
 					ObjectDefinition relatedObjectDefinition = null;
 
 					if (Objects.equals(

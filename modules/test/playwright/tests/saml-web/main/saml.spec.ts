@@ -25,6 +25,7 @@ import {
 import {EActions} from '../../../helpers/ServerAdministrationHelper';
 import {liferayConfig} from '../../../liferay.config';
 import {InstanceSettingsPage} from '../../../pages/configuration-admin-web/InstanceSettingsPage';
+import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
 import {GeneralPage} from '../../../pages/instance-configuration-web/GeneralPage';
 import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
@@ -3429,28 +3430,19 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 
 	// Enable Prompt Enabled option
 
-	const siteSettingsPage = new SiteSettingsPage(localhostAdminPage);
+	const systemSettingsPage = new SystemSettingsPage(localhostAdminPage);
 
-	await siteSettingsPage.goToSiteSetting('Login', 'Login');
+	await systemSettingsPage.goToSystemSetting('Login', 'Login');
 
-	await waitForLoading(siteSettingsPage.page);
+	await waitForLoading(systemSettingsPage.page);
 
-	await siteSettingsPage.page.getByLabel('Prompt Enabled').setChecked(true);
+	await systemSettingsPage.page.getByLabel('Prompt Enabled').setChecked(true);
 
-	if (
-		await siteSettingsPage.page
-			.getByRole('button', {name: 'Save'})
-			.isVisible()
-	) {
-		await siteSettingsPage.page.getByRole('button', {name: 'Save'}).click();
-	}
-	else {
-		await siteSettingsPage.page
-			.getByRole('button', {name: 'Update'})
-			.click();
-	}
+	await systemSettingsPage.page
+		.getByRole('button', {name: /save|update/i})
+		.click();
 
-	await waitForAlert(siteSettingsPage.page);
+	await waitForAlert(systemSettingsPage.page);
 
 	const idpSpAdminPage =
 		await createIdentityAndServiceProviderVirtualInstance(
@@ -3554,6 +3546,8 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 		await spInstancePage.getByTitle('User Profile Menu')
 	).toBeVisible();
 
+	await spInstancePage.reload();
+
 	await spInstancePage.goto(spNewPageUrl);
 
 	// Verify user is logged in
@@ -3565,4 +3559,18 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 	// Verify user is redirected back to restricted resource
 
 	expect(await spInstancePage.url()).toContain(spNewPageUrl);
+
+	await systemSettingsPage.goToSystemSetting('Login', 'Login');
+
+	await waitForLoading(systemSettingsPage.page);
+
+	await systemSettingsPage.page
+		.getByLabel('Prompt Enabled')
+		.setChecked(false);
+
+	await systemSettingsPage.page
+		.getByRole('button', {name: /save|update/i})
+		.click();
+
+	await waitForAlert(systemSettingsPage.page);
 });

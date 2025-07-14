@@ -22,7 +22,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -704,7 +702,10 @@ public class LayoutUtil {
 		ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
 			serviceContext.getUserId(), layout.getGroupId(),
 			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-			clientExtension.getExternalReferenceCode(), type, StringPool.BLANK,
+			clientExtension.getExternalReferenceCode(), type,
+			UnicodePropertiesBuilder.create(
+				clientExtension.getClientExtensionConfig(), true
+			).buildString(),
 			serviceContext);
 	}
 
@@ -717,29 +718,14 @@ public class LayoutUtil {
 			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
 
 		for (ClientExtension clientExtension : clientExtensions) {
-			String externalReferenceCode =
-				clientExtension.getExternalReferenceCode();
-			String typeSettings = StringPool.BLANK;
-
-			if (type.equals(ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
-				String[] parts = StringUtil.split(
-					externalReferenceCode, StringPool.UNDERLINE);
-
-				externalReferenceCode = parts[0];
-				typeSettings = UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"loadType", parts[1]
-				).put(
-					"scriptLocation", parts[2]
-				).build(
-				).toString();
-			}
-
 			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
 				serviceContext.getUserId(), layout.getGroupId(),
 				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-				externalReferenceCode, type, typeSettings, serviceContext);
+				clientExtension.getExternalReferenceCode(), type,
+				UnicodePropertiesBuilder.create(
+					clientExtension.getClientExtensionConfig(), true
+				).buildString(),
+				serviceContext);
 		}
 	}
 

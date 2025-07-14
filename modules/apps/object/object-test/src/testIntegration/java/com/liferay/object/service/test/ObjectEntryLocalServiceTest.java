@@ -2478,7 +2478,6 @@ public class ObjectEntryLocalServiceTest {
 		_testAddObjectEntryWithObjectEntryScheduleEnabled(
 			false, WorkflowConstants.STATUS_APPROVED,
 			WorkflowConstants.ACTION_PUBLISH);
-
 		_testAddObjectEntryWithObjectEntryScheduleEnabled(
 			true, WorkflowConstants.STATUS_DRAFT,
 			WorkflowConstants.ACTION_SAVE_DRAFT);

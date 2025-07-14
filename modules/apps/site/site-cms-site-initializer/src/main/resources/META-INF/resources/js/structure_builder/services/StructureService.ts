@@ -5,6 +5,7 @@
 
 import ApiHelper from '../../common/services/ApiHelper';
 import {Structure} from '../types/Structure';
+import buildGroupObjectDefinitions from '../utils/buildGroupObjectDefinitions';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
 import getRandomId from '../utils/getRandomId';
 
@@ -23,7 +24,29 @@ async function createStructure({
 	spaces: Structure['spaces'];
 	status: Structure['status'];
 }) {
-	const objectDefinition = buildObjectDefinition({
+
+	// Publish object definitions for repeatable groups
+
+	const objectDefinitions = buildGroupObjectDefinitions({children});
+
+	for (const objectDefinition of objectDefinitions) {
+		const {error} = await ApiHelper.put(
+			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinition.externalReferenceCode}`,
+			objectDefinition
+		);
+
+		if (error) {
+			return {
+				error: Liferay.Language.get(
+					'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+				),
+			};
+		}
+	}
+
+	// Publish the main object definition
+
+	const mainObjectDefinition = buildObjectDefinition({
 		children,
 		erc,
 		label,
@@ -34,7 +57,7 @@ async function createStructure({
 
 	return await ApiHelper.post<{id: number}>(
 		'/o/object-admin/v1.0/object-definitions',
-		objectDefinition
+		mainObjectDefinition
 	);
 }
 
@@ -53,7 +76,29 @@ async function updateStructure({
 	spaces: Structure['spaces'];
 	status: Structure['status'];
 }) {
-	const objectDefinition = buildObjectDefinition({
+
+	// Publish object definitions for repeatable groups
+
+	const objectDefinitions = buildGroupObjectDefinitions({children});
+
+	for (const objectDefinition of objectDefinitions) {
+		const {error} = await ApiHelper.put(
+			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinition.externalReferenceCode}`,
+			objectDefinition
+		);
+
+		if (error) {
+			return {
+				error: Liferay.Language.get(
+					'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+				),
+			};
+		}
+	}
+
+	// Publish the main object definition
+
+	const mainObjectDefinition = buildObjectDefinition({
 		children,
 		erc,
 		label,
@@ -64,7 +109,7 @@ async function updateStructure({
 
 	return await ApiHelper.put(
 		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${erc}`,
-		objectDefinition
+		mainObjectDefinition
 	);
 }
 

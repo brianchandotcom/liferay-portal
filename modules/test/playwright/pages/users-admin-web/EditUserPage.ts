@@ -12,6 +12,7 @@ export class EditUserPage {
 	readonly accountsLink: Locator;
 	readonly appsLink: Locator;
 	readonly backLink: Locator;
+	readonly birthdayInput: Locator;
 	readonly cancelButton: Locator;
 	readonly changeImageButton: Locator;
 	readonly clearImageButton: Locator;
@@ -134,6 +135,9 @@ export class EditUserPage {
 			exact: true,
 			name: 'Apps',
 		});
+		this.birthdayInput = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_birthday'
+		);
 		this.backLink = page
 			.getByRole('link', {exact: true, name: 'Back'})
 			.or(page.getByRole('link', {name: 'Return to Full Page'}));

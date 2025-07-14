@@ -123,9 +123,9 @@ public class BatchEnginePortletDataHandlerRegistry {
 							"batch.engine.task.item.delegate.class.name"),
 						() -> (String)serviceReference.getProperty(
 							"batch.engine.entity.class.name")),
+					exportImportVulcanBatchEngineTaskItemDelegate,
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.item.class.name"),
-					exportImportVulcanBatchEngineTaskItemDelegate.getScope(),
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.name"));
 

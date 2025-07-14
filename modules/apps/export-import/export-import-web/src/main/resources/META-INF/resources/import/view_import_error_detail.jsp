@@ -16,15 +16,13 @@ portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 renderResponse.setTitle(LanguageUtil.get(request, "error-details"));
 %>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
-	<react:component
-		module="{ViewImportErrorDetail} from exportimport-web"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"apiURL", "/group/__mocks__/get-import-error-detail"
-			).put(
-				"backURL", portletDisplay.getURLBack()
-			).build()
-		%>'
-	/>
-</c:if>
+<react:component
+	module="{ViewImportErrorDetail} from exportimport-web"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"apiURL", "/group/__mocks__/get-import-error-detail"
+		).put(
+			"backURL", portletDisplay.getURLBack()
+		).build()
+	%>'
+/>

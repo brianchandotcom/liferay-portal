@@ -201,7 +201,7 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 	await page.getByRole('button', {name: 'OK'}).click();
 
-	await page.getByLabel('Select').click();
+	await page.getByLabel('Select', {exact: true}).click();
 
 	await expect(
 		page

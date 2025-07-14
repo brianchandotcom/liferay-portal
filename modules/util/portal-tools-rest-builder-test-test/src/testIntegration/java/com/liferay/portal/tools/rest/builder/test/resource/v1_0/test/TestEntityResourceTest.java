@@ -250,7 +250,7 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 
 		// TODO Split after LPD-60141
 
-		_testPostTestEntityImportTask();
+		_testBatchEnginePostImportTask();
 	}
 
 	@Ignore
@@ -322,7 +322,7 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		return RandomTestUtil.nextLong();
 	}
 
-	private void _testPostTestEntityImportTask() throws Exception {
+	private void _testBatchEnginePostImportTask() throws Exception {
 		ChildTestEntity1 childTestEntity1 = new ChildTestEntity1();
 
 		childTestEntity1.setName(

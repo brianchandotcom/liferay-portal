@@ -13,8 +13,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.ws.rs.core.Response;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +35,10 @@ public class BatchTestEntityResourceImpl
 	public Response deleteBatchTestEntityByExternalReferenceCode(
 		String externalReferenceCode) {
 
-		_batchTestEntities.remove(externalReferenceCode);
+		BatchTestEntity batchTestEntity = _fetchBatchTestEntity(
+			externalReferenceCode);
+
+		_batchTestEntities.remove(batchTestEntity);
 
 		return Response.status(
 			204
@@ -44,18 +47,21 @@ public class BatchTestEntityResourceImpl
 
 	@Override
 	public Page<BatchTestEntity> getBatchTestEntitiesPage() {
-		return Page.of(_batchTestEntities.values());
+		return Page.of(_batchTestEntities);
 	}
 
 	@Override
-	public BatchTestEntity getBatchTestEntity(Long batchTestEntityId) {
-		for (BatchTestEntity batchTestEntity : _batchTestEntities.values()) {
-			if (Objects.equals(batchTestEntity.getId(), batchTestEntityId)) {
-				return batchTestEntity;
-			}
+	public BatchTestEntity getBatchTestEntity(Long batchTestEntityId)
+		throws NoSuchModelException {
+
+		BatchTestEntity batchTestEntity = _fetchBatchTestEntity(
+			batchTestEntityId);
+
+		if (batchTestEntity == null) {
+			throw new NoSuchModelException();
 		}
 
-		return null;
+		return batchTestEntity;
 	}
 
 	@Override
@@ -63,7 +69,7 @@ public class BatchTestEntityResourceImpl
 			String externalReferenceCode)
 		throws Exception {
 
-		BatchTestEntity batchTestEntity = _batchTestEntities.get(
+		BatchTestEntity batchTestEntity = _fetchBatchTestEntity(
 			externalReferenceCode);
 
 		if (batchTestEntity == null) {
@@ -88,10 +94,9 @@ public class BatchTestEntityResourceImpl
 	public BatchTestEntity postBatchTestEntity(
 		BatchTestEntity batchTestEntity) {
 
-		_batchTestEntities.put(
-			batchTestEntity.getExternalReferenceCode(), batchTestEntity);
+		batchTestEntity.setId(Long.valueOf(_batchTestEntities.size()));
 
-		batchTestEntity.setId(_batchTestEntities.size() - 1L);
+		_batchTestEntities.add(batchTestEntity);
 
 		return batchTestEntity;
 	}
@@ -100,19 +105,45 @@ public class BatchTestEntityResourceImpl
 	public BatchTestEntity putBatchTestEntityByExternalReferenceCode(
 		String externalReferenceCode, BatchTestEntity batchTestEntity) {
 
-		BatchTestEntity oldBatchTestEntity = _batchTestEntities.put(
-			externalReferenceCode, batchTestEntity);
-
 		batchTestEntity.setExternalReferenceCode(externalReferenceCode);
-		batchTestEntity.setId(
-			(oldBatchTestEntity != null) ? oldBatchTestEntity.getId() :
-				_batchTestEntities.size() - 1L);
+
+		BatchTestEntity existingBatchTestEntity = _fetchBatchTestEntity(
+			externalReferenceCode);
+
+		if (existingBatchTestEntity == null) {
+			return postBatchTestEntity(batchTestEntity);
+		}
+
+		batchTestEntity.setId(existingBatchTestEntity.getId());
 		batchTestEntity.setName(batchTestEntity.getName());
 
 		return batchTestEntity;
 	}
 
-	private static final Map<String, BatchTestEntity> _batchTestEntities =
-		new HashMap<>();
+	private BatchTestEntity _fetchBatchTestEntity(long id) {
+		if (_batchTestEntities.size() > id) {
+			return _batchTestEntities.get(Math.toIntExact(id));
+		}
+
+		return null;
+	}
+
+	private BatchTestEntity _fetchBatchTestEntity(
+		String externalReferenceCode) {
+
+		for (BatchTestEntity batchTestEntity : _batchTestEntities) {
+			if (Objects.equals(
+					externalReferenceCode,
+					batchTestEntity.getExternalReferenceCode())) {
+
+				return batchTestEntity;
+			}
+		}
+
+		return null;
+	}
+
+	private static final List<BatchTestEntity> _batchTestEntities =
+		new ArrayList<>();
 
 }

@@ -88,7 +88,7 @@ export function ViewImportErrorDetail({
 				setIsLoading(false);
 			});
 		});
-	}, []);
+	}, [apiURL]);
 
 	function openStackTraceModal({
 		stackTraceMessage,

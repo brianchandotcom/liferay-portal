@@ -10,10 +10,12 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -285,5 +287,100 @@ test(
 		await folderPage.deleteFolder(folderName);
 
 		await expect(page.getByText(folderName)).not.toBeVisible();
+	}
+);
+
+test(
+	'Add comments in the comments panel',
+	{tag: '@LPD-59851'},
+	async ({contentsPage, page}) => {
+		await contentsPage.goto();
+
+		// Create new Blog content and go to the Comments tab
+
+		await contentsPage.createContent('Blog');
+
+		await contentsPage.openSidePanel('Comments');
+
+		// Add a comment
+
+		const editor = page.getByLabel('Add Comment.');
+
+		await expect(editor).toBeVisible();
+
+		await editor.scrollIntoViewIfNeeded();
+
+		await editor.click({force: true});
+
+		await page.keyboard.type('New comment');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, 'Success:Your comment has been posted.', {
+			autoClose: true,
+		});
+
+		// Check that the text typed is removed when the comment is saved or when the button cancel is pressed
+
+		await expect(editor).not.toContainText('New Comment');
+
+		await editor.click({force: true});
+
+		await page.keyboard.type('New comment to cancel');
+
+		await page.getByRole('button', {name: 'Cancel'}).click();
+
+		await expect(editor).not.toContainText('New comment to cancel');
+
+		// Check that the comment has been added
+
+		const comment = page.locator('article');
+
+		await expect(comment.filter({hasText: 'New comment'})).toBeAttached();
+
+		// Add a reply the comment
+
+		await comment.getByText('Reply').click();
+
+		let replyEditor = comment.getByLabel('Add Comment.');
+
+		await expect(replyEditor).toBeAttached();
+
+		await page.keyboard.type('New child comment');
+
+		await comment.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, 'Success:Your comment has been posted.', {
+			autoClose: true,
+		});
+
+		// Check that the reply has been added
+
+		const childComment = page.locator('article article');
+
+		await expect(
+			childComment.filter({hasText: 'New child comment'})
+		).toBeAttached();
+
+		await expect(childComment.getByText('Reply')).not.toBeAttached();
+
+		// Check that the reply editor is removed when the button cancel is pressed
+
+		await comment.getByText('Reply').click();
+
+		replyEditor = comment.getByLabel('Add Comment.');
+
+		await expect(replyEditor).toBeAttached();
+
+		await comment.getByRole('button', {name: 'Cancel'}).click();
+
+		await expect(replyEditor).not.toBeAttached();
+
+		// Check the accessibility of the panel
+
+		await checkAccessibility({
+			page,
+			selectors: ['.content-editor__side-panel'],
+		});
 	}
 );

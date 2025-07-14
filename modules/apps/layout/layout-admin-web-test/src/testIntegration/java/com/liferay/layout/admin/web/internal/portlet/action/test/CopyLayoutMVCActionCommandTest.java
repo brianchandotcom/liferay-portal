@@ -140,9 +140,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-60259")
-	public void testCopyLayoutWithLayoutClassedModelUsage()
-		throws Exception {
-
+	public void testCopyLayoutWithLayoutClassedModelUsage() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0);
 
@@ -211,9 +209,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPS-131982")
-	public void testCopyLayoutWithMasterLayout()
-		throws Exception {
-
+	public void testCopyLayoutWithMasterLayout() throws Exception {
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, null,
@@ -237,9 +233,7 @@ public class CopyLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	public void testCopyLayoutWithNavigationMenu()
-		throws Exception {
-
+	public void testCopyLayoutWithNavigationMenu() throws Exception {
 		_addFragmentEntryLinkToLayout(null);
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
@@ -265,9 +259,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	@TestInfo({"LPS-175090", "LPS-192724"})
-	public void testCopyLayoutWithPermissions()
-		throws Exception {
-
+	public void testCopyLayoutWithPermissions() throws Exception {
 		_addFragmentEntryLinkToLayout(null);
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
@@ -288,9 +280,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-42253")
-	public void testCopyLayoutWithSegmentsExperience()
-		throws Exception {
-
+	public void testCopyLayoutWithSegmentsExperience() throws Exception {
 		_addSegmentsExperience();
 
 		int count = _segmentsExperienceLocalService.getSegmentsExperiencesCount(
@@ -370,102 +360,6 @@ public class CopyLayoutMVCActionCommandTest {
 			count + 1,
 			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
 				_group.getGroupId(), _layout.getPlid()));
-	}
-
-	private Layout _testCopyLayout(
-			boolean copyPermissions, Map<String, String> map)
-		throws Exception {
-
-		_processAction(copyPermissions, map);
-
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			_layout.getGroupId(), _layout.isPrivateLayout(), "/" + _NAME);
-
-		Assert.assertNotNull(layout);
-
-		List<FragmentEntryLink>
-			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks =
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksBySegmentsExperienceId(
-						_group.getGroupId(),
-						_segmentsExperienceLocalService.
-							fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-						_layout.getPlid());
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		List<FragmentEntryLink>
-			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks =
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksBySegmentsExperienceId(
-						_group.getGroupId(),
-						_segmentsExperienceLocalService.
-							fetchDefaultSegmentsExperienceId(
-								draftLayout.getPlid()),
-						draftLayout.getPlid());
-
-		Assert.assertEquals(
-			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.toString(),
-			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks.size(),
-			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.size());
-
-		FragmentEntryLink expectedLayoutFragmentEntryLink =
-			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks.get(0);
-
-		FragmentEntryLink actualLayoutFragmentEntryLink =
-			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.get(0);
-
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getConfiguration(),
-			actualLayoutFragmentEntryLink.getConfiguration());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getCss(),
-			actualLayoutFragmentEntryLink.getCss());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getEditableValues(),
-			actualLayoutFragmentEntryLink.getEditableValues());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getHtml(),
-			actualLayoutFragmentEntryLink.getHtml());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getJs(),
-			actualLayoutFragmentEntryLink.getJs());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getRendererKey(),
-			actualLayoutFragmentEntryLink.getRendererKey());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getEditableValues(),
-			actualLayoutFragmentEntryLink.getEditableValues());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getPosition(),
-			actualLayoutFragmentEntryLink.getPosition());
-
-		List<ResourcePermission> expectedResourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				_layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(_layout.getPlid()));
-
-		List<ResourcePermission> actualResourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				_layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()));
-
-		if (copyPermissions) {
-			Assert.assertEquals(
-				expectedResourcePermissions.toString(),
-				expectedResourcePermissions.size(),
-				actualResourcePermissions.size());
-		}
-		else {
-			Assert.assertNotEquals(
-				expectedResourcePermissions.toString(),
-				expectedResourcePermissions.size(),
-				actualResourcePermissions.size());
-		}
-
-		return layout;
 	}
 
 	private void _assertLayoutClassedModelUsages(
@@ -612,6 +506,102 @@ public class CopyLayoutMVCActionCommandTest {
 			String.valueOf(_layout.getPlid()), roleId, ActionKeys.VIEW);
 
 		_assertViewResourcePermission(_layout.getPlid(), roleId, false);
+	}
+
+	private Layout _testCopyLayout(
+			boolean copyPermissions, Map<String, String> map)
+		throws Exception {
+
+		_processAction(copyPermissions, map);
+
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			_layout.getGroupId(), _layout.isPrivateLayout(), "/" + _NAME);
+
+		Assert.assertNotNull(layout);
+
+		List<FragmentEntryLink>
+			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks =
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						_group.getGroupId(),
+						_segmentsExperienceLocalService.
+							fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+						_layout.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		List<FragmentEntryLink>
+			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks =
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						_group.getGroupId(),
+						_segmentsExperienceLocalService.
+							fetchDefaultSegmentsExperienceId(
+								draftLayout.getPlid()),
+						draftLayout.getPlid());
+
+		Assert.assertEquals(
+			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.toString(),
+			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks.size(),
+			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.size());
+
+		FragmentEntryLink expectedLayoutFragmentEntryLink =
+			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks.get(0);
+
+		FragmentEntryLink actualLayoutFragmentEntryLink =
+			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.get(0);
+
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getConfiguration(),
+			actualLayoutFragmentEntryLink.getConfiguration());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getCss(),
+			actualLayoutFragmentEntryLink.getCss());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getEditableValues(),
+			actualLayoutFragmentEntryLink.getEditableValues());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getHtml(),
+			actualLayoutFragmentEntryLink.getHtml());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getJs(),
+			actualLayoutFragmentEntryLink.getJs());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getRendererKey(),
+			actualLayoutFragmentEntryLink.getRendererKey());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getEditableValues(),
+			actualLayoutFragmentEntryLink.getEditableValues());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getPosition(),
+			actualLayoutFragmentEntryLink.getPosition());
+
+		List<ResourcePermission> expectedResourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				_layout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(_layout.getPlid()));
+
+		List<ResourcePermission> actualResourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				_layout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()));
+
+		if (copyPermissions) {
+			Assert.assertEquals(
+				expectedResourcePermissions.toString(),
+				expectedResourcePermissions.size(),
+				actualResourcePermissions.size());
+		}
+		else {
+			Assert.assertNotEquals(
+				expectedResourcePermissions.toString(),
+				expectedResourcePermissions.size(),
+				actualResourcePermissions.size());
+		}
+
+		return layout;
 	}
 
 	private static final String _NAME = StringUtil.toLowerCase(

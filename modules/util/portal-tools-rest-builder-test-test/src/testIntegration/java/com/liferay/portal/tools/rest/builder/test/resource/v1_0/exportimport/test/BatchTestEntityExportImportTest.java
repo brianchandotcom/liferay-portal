@@ -90,6 +90,8 @@ public class BatchTestEntityExportImportTest {
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
 			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "nestedField"
 		).build();
 	}
 
@@ -109,6 +111,8 @@ public class BatchTestEntityExportImportTest {
 						id = RandomTestUtil.randomLong();
 						name = StringUtil.toLowerCase(
 							RandomTestUtil.randomString());
+						nestedField = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
 					}
 				});
 		BatchTestEntity batchTestEntity2 =
@@ -119,6 +123,8 @@ public class BatchTestEntityExportImportTest {
 							RandomTestUtil.randomString());
 						id = RandomTestUtil.randomLong();
 						name = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						nestedField = StringUtil.toLowerCase(
 							RandomTestUtil.randomString());
 					}
 				});
@@ -181,6 +187,15 @@ public class BatchTestEntityExportImportTest {
 
 		Assert.assertEquals(
 			totalCount + 2, batchTestEntitiesPage.getTotalCount());
+
+		Assert.assertEquals(
+			batchTestEntity1,
+			_batchTestEntityResource.getBatchTestEntity(
+				batchTestEntity1.getId()));
+		Assert.assertEquals(
+			batchTestEntity2,
+			_batchTestEntityResource.getBatchTestEntity(
+				batchTestEntity2.getId()));
 	}
 
 	private BatchTestEntityResource _batchTestEntityResource;

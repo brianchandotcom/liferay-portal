@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
 import {userGroupsPageTest} from '../../../fixtures/userGroupsPageTest';
@@ -19,6 +20,10 @@ import {getRandomInt} from '../../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 
 export const test = mergeTests(
+	featureFlagsTest({
+		'LPD-56434': {enabled: true},
+	}),
+
 	loginTest(),
 	applicationsMenuPageTest,
 	serverAdministrationPageTest,

@@ -5,6 +5,8 @@
 
 package com.liferay.scim.rest.internal.model;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -295,7 +297,9 @@ public class ScimUser {
 	}
 
 	public void setRoleIds(long[] roleIds) {
-		_roleIds = roleIds;
+		if (FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
+			_roleIds = roleIds;
+		}
 	}
 
 	public void setScreenName(String screenName) {

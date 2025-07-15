@@ -21,6 +21,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -574,7 +575,9 @@ public class UserManagerImpl implements UserManager {
 				birthdayMonth, birthdayDay, birthdayYear,
 				scimClientOAuth2ApplicationConfiguration, scimUser);
 
-			if (Validator.isNotNull(scimUser.getTimeZoneId())) {
+			if (FeatureFlagManagerUtil.isEnabled("LPD-56434") &&
+				Validator.isNotNull(scimUser.getTimeZoneId())) {
+
 				portalUser.setTimeZoneId(scimUser.getTimeZoneId());
 
 				portalUser = _userLocalService.updateUser(portalUser);
@@ -584,6 +587,10 @@ public class UserManagerImpl implements UserManager {
 			portalUser = _updatePortalUser(
 				birthdayMonth, birthdayDay, birthdayYear, portalUser, scimUser,
 				scimClientOAuth2ApplicationConfiguration);
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
+			return ScimUtil.toScimUser(portalUser);
 		}
 
 		_addressLocalService.deleteAddresses(

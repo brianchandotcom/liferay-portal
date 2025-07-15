@@ -21,6 +21,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -274,9 +275,16 @@ public class ScimUtil {
 			scimUser.setCompanyId(portalUser.getCompanyId());
 			scimUser.setCreateDate(_truncateDate(portalUser.getCreateDate()));
 			scimUser.setFirstName(portalUser.getFirstName());
-			scimUser.setEmails(
-				_getEmails(
-					portalUser.getCompanyId(), portalUser.getContactId()));
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
+				scimUser.setEmails(
+					_getEmails(
+						portalUser.getCompanyId(), portalUser.getContactId()));
+			}
+			else {
+				scimUser.setEmails(new String[] {portalUser.getEmailAddress()});
+			}
+
 			scimUser.setExternalReferenceCode(
 				portalUser.getExternalReferenceCode());
 			scimUser.setId(String.valueOf(portalUser.getUserId()));
@@ -794,6 +802,10 @@ public class ScimUtil {
 	private static long _getListTypeId(
 		long companyId, String name, String type) {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
+			return 0;
+		}
+
 		ListType listType = ListTypeLocalServiceUtil.getListType(
 			companyId, StringUtil.toLowerCase(name), type);
 
@@ -1007,6 +1019,10 @@ public class ScimUtil {
 	}
 
 	private static void _setExpandoValueAttributes(ScimUser scimUser) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
+			return;
+		}
+
 		ExpandoTable expandoTable = ExpandoTableLocalServiceUtil.fetchTable(
 			scimUser.getCompanyId(),
 			ClassNameLocalServiceUtil.getClassNameId(

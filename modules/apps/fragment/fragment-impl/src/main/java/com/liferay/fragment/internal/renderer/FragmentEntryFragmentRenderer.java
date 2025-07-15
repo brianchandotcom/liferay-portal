@@ -330,53 +330,55 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			}
 		}
 
-		if (Validator.isNotNull(fragmentEntryLink.getJs())) {
-			boolean javaScriptModuleEnabled = _isJavaScriptModuleEnabled(
-				httpServletRequest);
+		if (Validator.isNull(fragmentEntryLink.getJs())) {
+			return sb.toString();
+		}
 
-			if (javaScriptModuleEnabled) {
-				sb.append("<script type=\"module\" ");
-				sb.append(nonce);
-				sb.append(StringPool.GREATER_THAN);
-			}
-			else {
-				sb.append("<script>(function() {");
-			}
+		boolean javaScriptModuleEnabled = _isJavaScriptModuleEnabled(
+			httpServletRequest);
 
-			sb.append("const configuration = ");
-			sb.append(configuration);
-			sb.append("; const fragmentElement = document.querySelector('#");
-			sb.append(fragmentRendererContext.getFragmentElementId());
-			sb.append("'); const fragmentEntryLinkNamespace = '");
-			sb.append(fragmentEntryLink.getNamespace());
-			sb.append("'; const fragmentNamespace = '");
-			sb.append(fragmentEntryLink.getNamespace());
-			sb.append("'");
+		if (javaScriptModuleEnabled) {
+			sb.append("<script type=\"module\" ");
+			sb.append(nonce);
+			sb.append(StringPool.GREATER_THAN);
+		}
+		else {
+			sb.append("<script>(function() {");
+		}
 
-			if (fragmentEntryLink.isTypeInput()) {
-				sb.append("; const input = ");
-				sb.append(
-					JSONUtil.toString(
-						_getInputJSONObject(
-							fragmentEntryLink, fragmentRendererContext,
-							httpServletRequest)));
-			}
+		sb.append("const configuration = ");
+		sb.append(configuration);
+		sb.append("; const fragmentElement = document.querySelector('#");
+		sb.append(fragmentRendererContext.getFragmentElementId());
+		sb.append("'); const fragmentEntryLinkNamespace = '");
+		sb.append(fragmentEntryLink.getNamespace());
+		sb.append("'; const fragmentNamespace = '");
+		sb.append(fragmentEntryLink.getNamespace());
+		sb.append("'");
 
-			sb.append("; const layoutMode = '");
+		if (fragmentEntryLink.isTypeInput()) {
+			sb.append("; const input = ");
 			sb.append(
-				HtmlUtil.escapeJS(
-					ParamUtil.getString(
-						_portal.getOriginalServletRequest(httpServletRequest),
-						"p_l_mode", Constants.VIEW)));
-			sb.append("';");
-			sb.append(fragmentEntryLink.getJs());
+				JSONUtil.toString(
+					_getInputJSONObject(
+						fragmentEntryLink, fragmentRendererContext,
+						httpServletRequest)));
+		}
 
-			if (javaScriptModuleEnabled) {
-				sb.append(";</script>");
-			}
-			else {
-				sb.append(";}());</script>");
-			}
+		sb.append("; const layoutMode = '");
+		sb.append(
+			HtmlUtil.escapeJS(
+				ParamUtil.getString(
+					_portal.getOriginalServletRequest(httpServletRequest),
+					"p_l_mode", Constants.VIEW)));
+		sb.append("';");
+		sb.append(fragmentEntryLink.getJs());
+
+		if (javaScriptModuleEnabled) {
+			sb.append(";</script>");
+		}
+		else {
+			sb.append(";}());</script>");
 		}
 
 		return sb.toString();

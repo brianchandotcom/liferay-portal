@@ -36,6 +36,13 @@ test(
 		tag: ['@LPS-150047'],
 	},
 	async ({fdsSamplePage, page}) => {
+		const blueCells = page.getByRole('cell', {name: 'Blue'});
+		const greenCells = page
+			.getByRole('cell', {name: 'Green'})
+			.or(page.getByRole('cell', {name: '🍏'}));
+		const redCells = page.getByRole('cell', {name: 'Red'});
+		const yellowCells = page.getByRole('cell', {name: 'Yellow'});
+
 		await test.step('Check filter is preloaded when entering on an FDS page for first time', async () => {
 			await test.step('Check the active filters button displays with "Blue, Green, Yellow"', async () => {
 				await expect
@@ -48,13 +55,6 @@ test(
 			});
 
 			await test.step('Check the results only show results with colors Blue, Green, and Yellow', async () => {
-				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page
-					.getByRole('cell', {name: 'Green'})
-					.or(page.getByRole('cell', {name: '🍏'}));
-				const redCells = page.getByRole('cell', {name: 'Red'});
-				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
-
 				expect.soft(await blueCells.count()).toBeGreaterThan(0);
 				expect.soft(await greenCells.count()).toBeGreaterThan(0);
 				expect.soft(await redCells.count()).toEqual(0);
@@ -217,13 +217,6 @@ test(
 			});
 
 			await test.step('Check the results are filtered by checking all results appear', async () => {
-				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page
-					.getByRole('cell', {name: 'Green'})
-					.or(page.getByRole('cell', {name: '🍏'}));
-				const redCells = page.getByRole('cell', {name: 'Red'});
-				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
-
 				page.getByRole('cell', {name: 'Yellow'});
 
 				expect.soft(await blueCells.count()).toBeGreaterThan(0);
@@ -261,13 +254,6 @@ test(
 			});
 
 			await test.step('Check the only Red results are displayed', async () => {
-				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page
-					.getByRole('cell', {name: 'Green'})
-					.or(page.getByRole('cell', {name: '🍏'}));
-				const redCells = page.getByRole('cell', {name: 'Red'});
-				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
-
 				expect.soft(await blueCells.count()).toEqual(0);
 				expect.soft(await greenCells.count()).toEqual(0);
 				expect.soft(await redCells.count()).toBeGreaterThan(0);
@@ -302,13 +288,6 @@ test(
 			});
 
 			await test.step('Check the results only show "Green", "Yellow", and "Red"', async () => {
-				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page
-					.getByRole('cell', {name: 'Green'})
-					.or(page.getByRole('cell', {name: '🍏'}));
-				const redCells = page.getByRole('cell', {name: 'Red'});
-				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
-
 				expect.soft(await blueCells.count()).toEqual(0);
 				expect.soft(await greenCells.count()).toBeGreaterThan(0);
 				expect.soft(await redCells.count()).toBeGreaterThan(0);
@@ -326,13 +305,6 @@ test(
 			});
 
 			await test.step('Check all results are shown', async () => {
-				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page
-					.getByRole('cell', {name: 'Green'})
-					.or(page.getByRole('cell', {name: '🍏'}));
-				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
-				const redCells = page.getByRole('cell', {name: 'Red'});
-
 				expect.soft(await blueCells.count()).toBeGreaterThan(0);
 				expect.soft(await greenCells.count()).toBeGreaterThan(0);
 				expect.soft(await yellowCells.count()).toBeGreaterThan(0);
@@ -368,13 +340,6 @@ test(
 			});
 
 			await test.step('Check all results are shown', async () => {
-				const blueCells = page.getByRole('cell', {name: 'Blue'});
-				const greenCells = page
-					.getByRole('cell', {name: 'Green'})
-					.or(page.getByRole('cell', {name: '🍏'}));
-				const yellowCells = page.getByRole('cell', {name: 'Yellow'});
-				const redCells = page.getByRole('cell', {name: 'Red'});
-
 				expect.soft(await blueCells.count()).toBeGreaterThan(0);
 				expect.soft(await greenCells.count()).toBeGreaterThan(0);
 				expect.soft(await yellowCells.count()).toBeGreaterThan(0);

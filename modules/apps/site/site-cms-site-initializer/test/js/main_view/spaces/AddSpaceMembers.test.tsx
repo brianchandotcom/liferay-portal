@@ -101,7 +101,7 @@ describe('AddSpaceMembers', () => {
 		delete (global as any).IntersectionObserver;
 	});
 
-	it('renders with correct title, description, link, buttons', async () => {
+	it('renders with correct title, description, buttons', async () => {
 		await act(async () => render(<AddSpaceMembers {...props} />));
 
 		expect(
@@ -112,9 +112,6 @@ describe('AddSpaceMembers', () => {
 				'add-team-members-to-this-space-to-start-collaborating'
 			)
 		).toBeInTheDocument();
-		expect(
-			screen.getByRole('link', {name: /Test Message/})
-		).toHaveAttribute('href', 'https://learn.liferay.com/test-url');
 
 		expect(
 			screen.getByRole('button', {

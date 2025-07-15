@@ -7,6 +7,39 @@
 .c-slideout .sidebar {
 	background-color: $white !important;
 
+	.asset-metadata {
+		color: $gray-600;
+	}
+
+	.asset-metadata-block {
+		h3 {
+			font-size: 14px;
+			margin-bottom: 0;
+		}
+
+		p {
+			font-size: 14px;
+			margin-bottom: 0;
+		}
+	}
+
+	.asset-type-default-view {
+		.c-empty-state-title {
+			display: none;
+		}
+
+		.c-empty-state-text {
+			color: $gray-600;
+			margin-top: 2rem;
+		}
+	}
+
+	.card-image {
+		height: 250px;
+		object-fit: contain;
+		width: 100%;
+	}
+
 	.nav {
 		flex-wrap: nowrap;
 	}
@@ -41,14 +74,7 @@
 		}
 	}
 
-	.asset-type-default-view {
-		.c-empty-state-title {
-			display: none;
-		}
-
-		.c-empty-state-text {
-			color: $gray-600;
-			margin-top: 2rem;
-		}
+	.tab-content {
+		overflow-y: auto;
 	}
 }

@@ -229,45 +229,28 @@ public class CTServicePublisher<T extends CTModel<T>> {
 					primaryKey, tempCTCollectionId);
 			}
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("delete from ");
 			sb.append(tableName);
 			sb.append(" where ctCollectionId = ");
 			sb.append(tempCTCollectionId);
-			sb.append(" and (");
+			sb.append(" and ");
 			sb.append(primaryKeyName);
-			sb.append(" in (");
-
-			int i = 0;
-
-			for (Serializable primaryKey : _modificationCTEntries.keySet()) {
-				if (i == _BATCH_SIZE) {
-					sb.setStringAt(")", sb.index() - 1);
-
-					sb.append(" or ");
-					sb.append(tableName);
-					sb.append(".");
-					sb.append(primaryKeyName);
-					sb.append(" in (");
-
-					i = 0;
-				}
-
-				sb.append(primaryKey);
-				sb.append(", ");
-
-				i++;
-			}
-
-			sb.setStringAt(")", sb.index() - 1);
-
-			sb.append(")");
+			sb.append(" = ?");
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(sb.toString())) {
 
-				preparedStatement.executeUpdate();
+				for (Serializable primaryKey :
+						_modificationCTEntries.keySet()) {
+
+					preparedStatement.setLong(1, tempCTCollectionId);
+
+					preparedStatement.addBatch();
+				}
+
+				preparedStatement.executeBatch();
 			}
 
 			_updateModelMvccVersion(
@@ -297,7 +280,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			boolean checkRowCount)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("update ");
 		sb.append(tableName);
@@ -308,73 +291,46 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		sb.append(".ctCollectionId = ");
 		sb.append(fromCTCollectionId);
 		sb.append(" and ");
+		sb.append(tableName);
+		sb.append(".");
+		sb.append(primaryKeyName);
+		sb.append(" = ?");
 
 		if (includeMvccVersion) {
-			sb.append("(");
-
-			for (CTEntry ctEntry : ctEntries) {
-				sb.append("(");
-				sb.append(tableName);
-				sb.append(".");
-				sb.append(primaryKeyName);
-				sb.append(" = ");
-				sb.append(ctEntry.getModelClassPK());
-				sb.append(" and ");
-				sb.append(tableName);
-				sb.append(".mvccVersion = ");
-				sb.append(ctEntry.getModelMvccVersion());
-				sb.append(")");
-				sb.append(" or ");
-			}
-
-			sb.setStringAt(")", sb.index() - 1);
-		}
-		else {
-			sb.append("(");
+			sb.append(" and ");
 			sb.append(tableName);
-			sb.append(".");
-			sb.append(primaryKeyName);
-			sb.append(" in (");
-
-			int i = 0;
-
-			for (CTEntry ctEntry : ctEntries) {
-				if (i == _BATCH_SIZE) {
-					sb.setStringAt(")", sb.index() - 1);
-
-					sb.append(" or ");
-					sb.append(tableName);
-					sb.append(".");
-					sb.append(primaryKeyName);
-					sb.append(" in (");
-
-					i = 0;
-				}
-
-				sb.append(ctEntry.getModelClassPK());
-				sb.append(", ");
-
-				i++;
-			}
-
-			sb.setStringAt(")", sb.index() - 1);
-
-			sb.append(")");
+			sb.append(".mvccVersion = ?");
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sb.toString())) {
 
-			int rowCount = preparedStatement.executeUpdate();
+			for (CTEntry ctEntry : ctEntries) {
+				preparedStatement.setLong(1, ctEntry.getModelClassPK());
 
-			if (checkRowCount && (rowCount != ctEntries.size())) {
+				if (includeMvccVersion) {
+					preparedStatement.setLong(2, ctEntry.getModelMvccVersion());
+				}
+
+				preparedStatement.addBatch();
+			}
+
+			int[] rowCounts = preparedStatement.executeBatch();
+
+			int totalRowCount = 0;
+
+			for (int rowCount : rowCounts) {
+				totalRowCount += rowCount;
+			}
+
+			if (checkRowCount && (totalRowCount != ctEntries.size())) {
 				throw new SystemException(
 					StringBundler.concat(
 						"Size mismatch expected ", ctEntries.size(),
-						" but was ", rowCount));
+						" but was ", totalRowCount));
 			}
 
-			return rowCount;
+			return totalRowCount;
 		}
 	}
 

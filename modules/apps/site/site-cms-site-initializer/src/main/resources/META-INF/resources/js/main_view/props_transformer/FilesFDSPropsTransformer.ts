@@ -134,10 +134,8 @@ export default function FilesFDSPropsTransformer({
 				event?.preventDefault();
 
 				shareAction({
-					autocompleteUserURL: '',
-					classNameId: '',
-					classPK: '',
-					shareActionURL: '',
+					autocompleteUserURL: `/o/search/v1.0/search?emptySearch=true&entryClassNames=com.liferay.portal.kernel.model.User%2Ccom.liferay.portal.kernel.model.UserGroup&nestedFields=embedded`,
+					shareActionURL: `/o/cms/basic-documents/${itemData.embedded.id}/collaborators`,
 					title: itemData.embedded?.title,
 				});
 			}

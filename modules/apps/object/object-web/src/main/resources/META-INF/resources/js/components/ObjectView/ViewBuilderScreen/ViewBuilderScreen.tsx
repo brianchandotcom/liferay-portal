@@ -33,11 +33,16 @@ const ViewBuilderScreen: React.FC<
 		dispatch,
 	] = useViewContext();
 
-	const selected = objectViewColumns.map((objectViewColumn) => {
-		return objectFields.find(
-			(objectField) =>
-				objectViewColumn.objectFieldName === objectField.name
-		);
+	const objectFieldsMap = new Map();
+
+	objectFields.forEach((field) => {
+		objectFieldsMap.set(field.name, field);
+	});
+
+	const selected = objectViewColumns.map((column) => {
+		if (objectFieldsMap.has(column.objectFieldName)) {
+			return objectFieldsMap.get(column.objectFieldName);
+		}
 	});
 
 	const handleAddColumns = () => {

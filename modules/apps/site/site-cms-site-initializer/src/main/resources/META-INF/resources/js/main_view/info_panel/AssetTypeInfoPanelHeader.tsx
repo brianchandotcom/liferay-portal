@@ -40,7 +40,9 @@ const renderTitle = ({
 			<>
 				{!title_i18n
 					? title
-					: title_i18n[Liferay.ThemeDisplay.getLanguageId()] || title}
+					: title_i18n[
+							Liferay.ThemeDisplay.getLanguageId() as keyof typeof title_i18n
+						] || title}
 			</>
 		);
 	}

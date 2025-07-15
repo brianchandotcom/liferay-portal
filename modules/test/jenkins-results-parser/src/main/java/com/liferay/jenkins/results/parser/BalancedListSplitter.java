@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -28,11 +29,12 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 			listItems.add(new ListItem(item));
 		}
 
-		TreeMap<Long, List<ListItemList>> listItemListMap = new TreeMap<>();
+		NavigableMap<Long, List<ListItemList>> listItemListsNavigableMap =
+			new TreeMap<>();
 
 		for (ListItem listItem : listItems) {
 			Map.Entry<Long, List<ListItemList>> entry =
-				listItemListMap.ceilingEntry(listItem.getWeight());
+				listItemListsNavigableMap.ceilingEntry(listItem.getWeight());
 
 			ListItemList listItemList = null;
 
@@ -43,7 +45,7 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 					listItemList = availableListItemLists.remove(0);
 
 					if (availableListItemLists.isEmpty()) {
-						listItemListMap.remove(entry.getKey());
+						listItemListsNavigableMap.remove(entry.getKey());
 					}
 				}
 			}
@@ -54,15 +56,18 @@ public abstract class BalancedListSplitter<T extends WeightedItem> {
 
 			listItemList.add(listItem);
 
-			List<ListItemList> listItemLists = listItemListMap.computeIfAbsent(
-				listItemList.getAvailableWeight(), k -> new ArrayList<>());
+			List<ListItemList> listItemLists =
+				listItemListsNavigableMap.computeIfAbsent(
+					listItemList.getAvailableWeight(), k -> new ArrayList<>());
 
 			listItemLists.add(listItemList);
 		}
 
 		List<ListItemList> allListItemLists = new ArrayList<>();
 
-		for (List<ListItemList> listItemLists : listItemListMap.values()) {
+		for (List<ListItemList> listItemLists :
+				listItemListsNavigableMap.values()) {
+
 			allListItemLists.addAll(listItemLists);
 		}
 

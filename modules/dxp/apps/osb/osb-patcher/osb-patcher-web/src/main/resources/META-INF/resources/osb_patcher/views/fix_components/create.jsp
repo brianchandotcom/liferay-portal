@@ -11,9 +11,9 @@
 String redirect = ParamUtil.getString(request, "redirect");
 %>
 
-<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="title" value="add-fix-component" />
-</liferay-util:include>
+<liferay-ui:header
+	title="add-fix-component"
+/>
 
 <aui:model-context bean="<%= null %>" model="<%= PatcherFixComponent.class %>" />
 

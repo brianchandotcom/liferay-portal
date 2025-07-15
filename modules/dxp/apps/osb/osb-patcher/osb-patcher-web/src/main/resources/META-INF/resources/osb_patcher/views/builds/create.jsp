@@ -13,9 +13,9 @@ PatcherCreateBuildsDisplayContext patcherCreateBuildsDisplayContext = new Patche
 PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 %>
 
-<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="title" value="create-build" />
-</liferay-util:include>
+<liferay-ui:header
+	title="create-build"
+/>
 
 <aui:model-context bean="<%= patcherBuild %>" model="<%= PatcherBuild.class %>" />
 

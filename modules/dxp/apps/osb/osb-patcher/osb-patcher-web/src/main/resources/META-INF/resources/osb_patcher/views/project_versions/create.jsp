@@ -11,9 +11,9 @@
 PatcherProjectVersionsDisplayContext patcherProjectVersionsDisplayContext = new PatcherProjectVersionsDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="title" value="create-project-version" />
-</liferay-util:include>
+<liferay-ui:header
+	title="create-project-version"
+/>
 
 <aui:model-context bean="<%= null %>" model="<%= PatcherProjectVersion.class %>" />
 

@@ -20,10 +20,9 @@ if (!patcherFix.isLatestFix()) {
 %>
 
 <c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
-	<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="title" value="view-fix" />
-		<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_fixes" />
-	</liferay-util:include>
+	<liferay-ui:header
+		title="view-fix"
+	/>
 </c:if>
 
 <aui:model-context bean="<%= patcherFix %>" model="<%= PatcherFix.class %>" />

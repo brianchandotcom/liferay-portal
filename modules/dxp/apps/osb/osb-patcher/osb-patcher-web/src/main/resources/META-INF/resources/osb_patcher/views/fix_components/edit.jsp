@@ -15,9 +15,9 @@ long patcherFixComponentId = ParamUtil.getLong(request, "patcherFixComponentId")
 PatcherFixComponent patcherFixComponent = PatcherFixComponentLocalServiceUtil.fetchPatcherFixComponent(patcherFixComponentId);
 %>
 
-<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="title" value="<%= patcherFixComponent.getName() %>" />
-</liferay-util:include>
+<liferay-ui:header
+	title="<%= patcherFixComponent.getName() %>"
+/>
 
 <aui:model-context bean="<%= patcherFixComponent %>" model="<%= PatcherFixComponent.class %>" />
 

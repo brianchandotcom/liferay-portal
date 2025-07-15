@@ -21,9 +21,9 @@ List<String> cumulativeFixedIssues = PatcherProjectVersionUtil.getCumulativePatc
 patcherBuildTickets.retainAll(cumulativeFixedIssues);
 %>
 
-<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="title" value="edit-build" />
-</liferay-util:include>
+<liferay-ui:header
+	title="edit-build"
+/>
 
 <aui:model-context bean="<%= patcherBuild %>" model="<%= PatcherBuild.class %>" />
 

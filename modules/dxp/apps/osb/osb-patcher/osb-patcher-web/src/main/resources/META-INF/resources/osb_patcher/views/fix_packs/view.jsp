@@ -23,9 +23,9 @@ if (patcherBuild != null) {
 }
 %>
 
-<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="title" value="view-fix-pack" />
-</liferay-util:include>
+<liferay-ui:header
+	title="view-fix-pack"
+/>
 
 <clay:container-fluid
 	cssClass="container-form-lg container-no-gutters"

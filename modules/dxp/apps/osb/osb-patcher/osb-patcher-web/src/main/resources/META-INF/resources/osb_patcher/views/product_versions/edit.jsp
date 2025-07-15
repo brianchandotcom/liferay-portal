@@ -15,9 +15,9 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 PatcherProductVersion patcherProductVersion = PatcherProductVersionLocalServiceUtil.fetchPatcherProductVersion(patcherProductVersionId);
 %>
 
-<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="title" value="<%= patcherProductVersion.getName() %>" />
-</liferay-util:include>
+<liferay-ui:header
+	title="<%= patcherProductVersion.getName() %>"
+/>
 
 <aui:model-context bean="<%= patcherProductVersion %>" model="<%= PatcherProductVersion.class %>" />
 

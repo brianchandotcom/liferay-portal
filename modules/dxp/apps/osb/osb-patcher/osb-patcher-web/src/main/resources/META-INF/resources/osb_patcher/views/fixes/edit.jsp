@@ -15,10 +15,9 @@ long patcherFixId = ParamUtil.getLong(request, "patcherFixId");
 PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId);
 %>
 
-<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="title" value="edit-fix" />
-	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_fixes" />
-</liferay-util:include>
+<liferay-ui:header
+	title="edit-fix"
+/>
 
 <aui:model-context bean="<%= patcherFix %>" model="<%= PatcherFix.class %>" />
 

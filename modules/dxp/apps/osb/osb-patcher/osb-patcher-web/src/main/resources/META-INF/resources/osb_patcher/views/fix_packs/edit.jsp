@@ -34,9 +34,9 @@ if (patcherBuild != null) {
 boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PACK_RELEASED;
 %>
 
-<liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="title" value="edit-fix-pack" />
-</liferay-util:include>
+<liferay-ui:header
+	title="edit-fix-pack"
+/>
 
 <aui:model-context bean="<%= patcherFixPack %>" model="<%= PatcherFixPack.class %>" />
 

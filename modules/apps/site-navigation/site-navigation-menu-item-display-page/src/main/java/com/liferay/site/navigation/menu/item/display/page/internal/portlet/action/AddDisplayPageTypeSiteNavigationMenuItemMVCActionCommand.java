@@ -97,10 +97,6 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 							String.valueOf(
 								ParamUtil.getLong(actionRequest, "classTypeId"))
 						).put(
-							"externalReferenceCode",
-							ParamUtil.getString(
-								actionRequest, "externalReferenceCode")
-						).put(
 							"title", ParamUtil.getString(actionRequest, "title")
 						).put(
 							"type", ParamUtil.getString(actionRequest, "type")

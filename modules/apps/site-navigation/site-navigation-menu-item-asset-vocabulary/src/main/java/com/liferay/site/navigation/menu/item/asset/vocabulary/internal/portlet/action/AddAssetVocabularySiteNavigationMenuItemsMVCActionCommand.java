@@ -92,10 +92,6 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 							assetVocabularyJSONObject.getString(
 								"assetVocabularyId")
 						).put(
-							"externalReferenceCode",
-							assetVocabularyJSONObject.getString(
-								"externalReferenceCode")
-						).put(
 							"groupId",
 							assetVocabularyJSONObject.getString("groupId")
 						).put(

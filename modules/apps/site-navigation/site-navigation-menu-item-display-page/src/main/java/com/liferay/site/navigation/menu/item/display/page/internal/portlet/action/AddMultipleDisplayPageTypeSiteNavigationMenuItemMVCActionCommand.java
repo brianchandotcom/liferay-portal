@@ -221,9 +221,6 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				).put(
 					"classTypeId", jsonObject.getString("classTypeId")
 				).put(
-					"externalReferenceCode",
-					jsonObject.getString("externalReferenceCode")
-				).put(
 					"title", jsonObject.getString("title")
 				).put(
 					"type", jsonObject.getString("type")

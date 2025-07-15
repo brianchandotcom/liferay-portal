@@ -86,6 +86,16 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	}
 
 	@Test
+	public void testExportImportFaviconDisabled() throws Exception {
+		_testExportImportFavicon(false, false);
+	}
+
+	@Test
+	public void testExportImportFaviconEnabled() throws Exception {
+		_testExportImportFavicon(true, true);
+	}
+
+	@Test
 	@TestInfo("LPD-47835")
 	public void testExportImportLayoutPriorityWithDuplicateLayoutId()
 		throws Exception {
@@ -182,20 +192,6 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		Assert.assertEquals(
 			importedMasterLayout.getPlid(),
 			importedLayout4.getMasterLayoutPlid());
-	}
-
-	@Test
-	public void testExportImportFaviconWithSiteTemplatePropagationDisabled()
-		throws Exception {
-
-		_testExportImportFavicon(false, false);
-	}
-
-	@Test
-	public void testExportImportFaviconWithSiteTemplatePropagationEnabled()
-		throws Exception {
-
-		_testExportImportFavicon(true, true);
 	}
 
 	@Override

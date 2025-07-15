@@ -732,47 +732,35 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testDeleteCompanyDeletesGroups() throws Exception {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
 		Assert.assertEquals(
 			0,
 			_groupLocalService.getGroupsCount(
-				company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
-				true));
+				_deletedCompany.getCompanyId(),
+				GroupConstants.ANY_PARENT_GROUP_ID, true));
 		Assert.assertEquals(
 			0,
 			_groupLocalService.getGroupsCount(
-				company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
-				false));
+				_deletedCompany.getCompanyId(),
+				GroupConstants.ANY_PARENT_GROUP_ID, false));
 	}
 
 	@Test
 	public void testDeleteCompanyDeletesLayoutPrototypes() throws Exception {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
 		Assert.assertEquals(
 			0,
 			_layoutPrototypeLocalService.searchCount(
-				company.getCompanyId(), true));
+				_deletedCompany.getCompanyId(), true));
 		Assert.assertEquals(
 			0,
 			_layoutPrototypeLocalService.searchCount(
-				company.getCompanyId(), false));
+				_deletedCompany.getCompanyId(), false));
 	}
 
 	@Test
 	public void testDeleteCompanyDeletesLayoutSetPrototypes() throws Exception {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
 		List<LayoutSetPrototype> layoutSetPrototypes =
 			_layoutSetPrototypeLocalService.getLayoutSetPrototypes(
-				company.getCompanyId());
+				_deletedCompany.getCompanyId());
 
 		Assert.assertEquals(
 			layoutSetPrototypes.toString(), 0, layoutSetPrototypes.size());
@@ -780,23 +768,15 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testDeleteCompanyDeletesOrganizations() throws Exception {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
 		Assert.assertEquals(
 			0,
 			_organizationLocalService.getOrganizationsCount(
-				company.getCompanyId(),
+				_deletedCompany.getCompanyId(),
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID));
 	}
 
 	@Test
 	public void testDeleteCompanyDeletesPasswordPolicies() throws Throwable {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
 		TransactionInvokerUtil.invoke(
 			_transactionConfig,
 			() -> {
@@ -808,7 +788,7 @@ public class CompanyLocalServiceTest {
 							PasswordPolicyTable.INSTANCE
 						).where(
 							PasswordPolicyTable.INSTANCE.companyId.eq(
-								company.getCompanyId())
+								_deletedCompany.getCompanyId())
 						)));
 
 				return null;
@@ -817,28 +797,20 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testDeleteCompanyDeletesPortalInstance() throws Exception {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
 		_companyLocalService.forEachCompanyId(
 			companyId -> Assert.assertNotEquals(
-				"Company instance was not deleted", company.getCompanyId(),
-				(long)companyId));
+				"Company instance was not deleted",
+				_deletedCompany.getCompanyId(), (long)companyId));
 	}
 
 	@Test
 	public void testDeleteCompanyDeletesPortalPreferences() throws Throwable {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
 		TransactionInvokerUtil.invoke(
 			_transactionConfig,
 			() -> {
 				Assert.assertNull(
 					_portalPreferencesLocalService.fetchPortalPreferences(
-						company.getCompanyId(),
+						_deletedCompany.getCompanyId(),
 						PortletKeys.PREFS_OWNER_TYPE_COMPANY));
 
 				return null;
@@ -847,17 +819,13 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testDeleteCompanyDeletesPortlets() throws Throwable {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
 		TransactionInvokerUtil.invoke(
 			_transactionConfig,
 			() -> {
 				Assert.assertEquals(
 					0,
 					_portletLocalService.getPortletsCount(
-						company.getCompanyId()));
+						_deletedCompany.getCompanyId()));
 
 				return null;
 			});
@@ -865,11 +833,8 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testDeleteCompanyDeletesRoles() throws Exception {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
-		List<Role> roles = _roleLocalService.getRoles(company.getCompanyId());
+		List<Role> roles = _roleLocalService.getRoles(
+			_deletedCompany.getCompanyId());
 
 		Assert.assertEquals(roles.toString(), 0, roles.size());
 	}
@@ -880,69 +845,23 @@ public class CompanyLocalServiceTest {
 
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		List<String> list = _registerModelListeners();
-
-		Company company = addCompany();
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
-
-			long userId = _userLocalService.getGuestUserId(
-				company.getCompanyId());
-
-			Group group = GroupTestUtil.addGroup(
-				company.getCompanyId(), userId,
-				GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-			UserGroup userGroup = UserGroupTestUtil.addUserGroup(
-				group.getGroupId());
-
-			User user = addUser(
-				company.getCompanyId(), userId, group.getGroupId(),
-				getServiceContext(company.getCompanyId()));
-
-			_userGroupLocalService.addUserUserGroup(
-				user.getUserId(), userGroup);
-
-			Role role = _roleLocalService.addRole(
-				RandomTestUtil.randomString(), userId, Group.class.getName(),
-				group.getClassPK(), StringUtil.randomString(),
-				Collections.singletonMap(
-					LocaleUtil.getDefault(), StringUtil.randomString()),
-				Collections.emptyMap(), RoleConstants.TYPE_SITE,
-				StringPool.BLANK, getServiceContext(company.getCompanyId()));
-
-			_userGroupRoleLocalService.addUserGroupRole(
-				user.getUserId(), group.getGroupId(), role.getRoleId());
-		}
-		finally {
-			_companyLocalService.deleteCompany(company.getCompanyId());
-		}
-
-		Assert.assertEquals(UserGroupRole.class.getName(), list.get(0));
-		Assert.assertEquals(Role.class.getName(), list.get(1));
+		Assert.assertEquals(
+			UserGroupRole.class.getName(), _modelListenerList.get(0));
+		Assert.assertEquals(Role.class.getName(), _modelListenerList.get(1));
 	}
 
 	@Test
 	public void testDeleteCompanyDeletesUsers() throws Exception {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
 		List<User> users = _userLocalService.getCompanyUsers(
-			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			_deletedCompany.getCompanyId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(users.toString(), 0, users.size());
 	}
 
 	@Test(expected = NoSuchVirtualHostException.class)
 	public void testDeleteCompanyDeletesVirtualHost() throws Exception {
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-
-		_virtualHostLocalService.getVirtualHost(company.getWebId());
+		_virtualHostLocalService.getVirtualHost(_deletedCompany.getWebId());
 	}
 
 	@Test(expected = RequiredCompanyException.class)

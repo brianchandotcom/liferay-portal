@@ -305,6 +305,13 @@ public class FragmentEntryLinkWrapper
 		return model.getConfiguration();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject
+		getConfigurationJSONObject() {
+
+		return model.getConfigurationJSONObject();
+	}
+
 	/**
 	 * Returns the create date of this fragment entry link.
 	 *
@@ -353,6 +360,13 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public String getEditableValues() {
 		return model.getEditableValues();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject
+		getEditableValuesJSONObject() {
+
+		return model.getEditableValuesJSONObject();
 	}
 
 	/**

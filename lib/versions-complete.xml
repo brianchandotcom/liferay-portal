@@ -420,18 +420,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.commerce.report.impl.jar!jxl.jar</file-name>
-				<version>2.6.10</version>
-				<project-name>jxl</project-name>
-				<project-url>http://www.jexcelapi.org</project-url>
-				<licenses>
-					<license>
-						<license-name>GNU Lesser General Public License</license-name>
-						<license-url>http://www.opensource.org/licenses/lgpl-license.php</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!lucene-analyzers-common.jar</file-name>
 				<version>7.1.0</version>
 				<project-name>Lucene Common Analyzers</project-name>
@@ -2624,6 +2612,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.search.elasticsearch7.sidecar.agent.jar!asm.jar</file-name>
+				<version>9.7</version>
+				<project-name>org.objectweb.asm</project-name>
+				<project-url>http://asm.ow2.org</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.search.rest.api.jar!jackson-dataformat-xml.jar</file-name>
 				<version>2.18.2</version>
 				<project-name>Jackson-dataformat-XML</project-name>
@@ -3530,6 +3530,88 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.tools.db.migration.importer.jar!HikariCP.jar</file-name>
+				<version>4.0.3</version>
+				<project-name>HikariCP</project-name>
+				<project-url>https://github.com/brettwooldridge/HikariCP</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.migration.importer.jar!commons-cli.jar</file-name>
+				<version>1.4</version>
+				<project-name>Apache Commons CLI</project-name>
+				<project-url>http://commons.apache.org/proper/commons-cli/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.migration.importer.jar!mariadb-java-client.jar</file-name>
+				<version>3.2.0</version>
+				<project-name>mariadb-java-client</project-name>
+				<project-url>https://mariadb.com/kb/en/mariadb/about-mariadb-connector-j/</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL-2.1</license-name>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.migration.importer.jar!mysql-connector-j.jar</file-name>
+				<version>8.3.0</version>
+				<project-name>Oracle Corporation's JDBC and XDevAPI Driver for MySQL</project-name>
+				<project-url>http://dev.mysql.com/doc/connector-j/en/</project-url>
+				<licenses>
+					<license>
+						<license-name>The GNU General Public License, v2 with Universal FOSS Exception, v1.0</license-name>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.migration.importer.jar!postgresql.jar</file-name>
+				<version>42.4.4</version>
+				<project-name>PostgreSQL JDBC Driver</project-name>
+				<project-url>https://jdbc.postgresql.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD-2-Clause</license-name>
+						<license-url>https://jdbc.postgresql.org/about/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.migration.importer.jar!slf4j-api.jar</file-name>
+				<version>1.7.26</version>
+				<project-name>SLF4J API Module</project-name>
+				<project-url>http://www.slf4j.org</project-url>
+				<licenses>
+					<license>
+						<license-name>MIT License</license-name>
+						<license-url>http://www.opensource.org/licenses/mit-license.php</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.migration.importer.jar!slf4j-simple.jar</file-name>
+				<version>1.7.10</version>
+				<project-name>SLF4J Simple Binding</project-name>
+				<project-url>http://www.slf4j.org</project-url>
+				<licenses>
+					<license>
+						<license-name>MIT License</license-name>
+						<license-url>http://www.opensource.org/licenses/mit-license.php</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.tools.db.partition.migration.validator.jar!commons-cli.jar</file-name>
 				<version>1.4</version>
 				<project-name>Apache Commons CLI</project-name>
@@ -3601,6 +3683,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.tools.db.partition.migration.validator.jar!org.apache.logging.log4j.core.jar</file-name>
+				<version>2.17.1.LIFERAY-PATCHED-2</version>
+				<project-name>Apache Log4j Core</project-name>
+				<project-url>https://www.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.partition.migration.validator.jar!org.apache.logging.log4j.jar</file-name>
+				<version>2.17.1.LIFERAY-PATCHED-1</version>
+				<project-name>Apache Log4j API</project-name>
+				<project-url>https://www.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.tools.db.partition.migration.validator.jar!postgresql.jar</file-name>
 				<version>42.4.4</version>
 				<project-name>PostgreSQL JDBC Driver</project-name>
@@ -3609,88 +3715,6 @@
 					<license>
 						<license-name>BSD-2-Clause</license-name>
 						<license-url>https://jdbc.postgresql.org/about/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tools.db.schema.importer.jar!HikariCP.jar</file-name>
-				<version>4.0.3</version>
-				<project-name>HikariCP</project-name>
-				<project-url>https://github.com/brettwooldridge/HikariCP</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tools.db.schema.importer.jar!commons-cli.jar</file-name>
-				<version>1.4</version>
-				<project-name>Apache Commons CLI</project-name>
-				<project-url>http://commons.apache.org/proper/commons-cli/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tools.db.schema.importer.jar!mariadb-java-client.jar</file-name>
-				<version>3.2.0</version>
-				<project-name>mariadb-java-client</project-name>
-				<project-url>https://mariadb.com/kb/en/mariadb/about-mariadb-connector-j/</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL-2.1</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tools.db.schema.importer.jar!mysql-connector-j.jar</file-name>
-				<version>8.3.0</version>
-				<project-name>Oracle Corporation's JDBC and XDevAPI Driver for MySQL</project-name>
-				<project-url>http://dev.mysql.com/doc/connector-j/en/</project-url>
-				<licenses>
-					<license>
-						<license-name>The GNU General Public License, v2 with Universal FOSS Exception, v1.0</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tools.db.schema.importer.jar!postgresql.jar</file-name>
-				<version>42.4.4</version>
-				<project-name>PostgreSQL JDBC Driver</project-name>
-				<project-url>https://jdbc.postgresql.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD-2-Clause</license-name>
-						<license-url>https://jdbc.postgresql.org/about/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tools.db.schema.importer.jar!slf4j-api.jar</file-name>
-				<version>1.7.26</version>
-				<project-name>SLF4J API Module</project-name>
-				<project-url>http://www.slf4j.org</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://www.opensource.org/licenses/mit-license.php</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tools.db.schema.importer.jar!slf4j-simple.jar</file-name>
-				<version>1.7.10</version>
-				<project-name>SLF4J Simple Binding</project-name>
-				<project-url>http://www.slf4j.org</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://www.opensource.org/licenses/mit-license.php</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -6375,7 +6399,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/catalina-ha.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -6387,7 +6411,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/catalina.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7098,7 +7122,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-annotations-api.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7110,7 +7134,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-api.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7122,7 +7146,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-coyote.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7134,7 +7158,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-el-api.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7146,7 +7170,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-jasper-el.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7158,7 +7182,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-jasper.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7170,7 +7194,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-jsp-api.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7182,7 +7206,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-juli.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7194,7 +7218,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-servlet-api.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7206,7 +7230,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-tribes.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7218,7 +7242,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-util-scan.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7230,7 +7254,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-util.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>
@@ -7242,7 +7266,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-websocket-api.jar</file-name>
-				<version>10.1.42</version>
+				<version>10.1.43</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
 				<licenses>

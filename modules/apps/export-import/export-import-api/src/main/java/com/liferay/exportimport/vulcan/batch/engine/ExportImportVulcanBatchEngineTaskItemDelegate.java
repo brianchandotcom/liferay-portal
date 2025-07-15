@@ -15,7 +15,9 @@ import java.util.List;
 public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 	extends VulcanBatchEngineTaskItemDelegate<T> {
 
-	public List<String> getNestedFields();
+	public default List<String> getNestedFields() {
+		return null;
+	}
 
 	public String getPortletId();
 

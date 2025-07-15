@@ -185,17 +185,17 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testFaviconImportDuringSiteTemplatePropagationDisabled()
+	public void testExportImportFaviconWithSiteTemplatePropagationDisabled()
 		throws Exception {
 
-		_testFaviconImportScenario(false, false);
+		_testExportImportFavicon(false, false);
 	}
 
 	@Test
-	public void testFaviconImportDuringSiteTemplatePropagationEnabled()
+	public void testExportImportFaviconWithSiteTemplatePropagationEnabled()
 		throws Exception {
 
-		_testFaviconImportScenario(true, true);
+		_testExportImportFavicon(true, true);
 	}
 
 	@Override
@@ -389,7 +389,7 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 					importedLayoutSet.getLayoutSetId(), type));
 	}
 
-	private void _testFaviconImportScenario(
+	private void _testExportImportFavicon(
 			boolean faviconEnabled, boolean shouldImportFavicon)
 		throws Exception {
 

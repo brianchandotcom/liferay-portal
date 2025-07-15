@@ -303,6 +303,7 @@ SearchContainer<PatcherFix> patcherFixSearchContainer = patcherViewFixesDisplayC
 			<portlet:renderURL var="viewPatcherFixKeyVersionURL">
 				<portlet:param name="mvcRenderCommandName" value="/patcher/view_fixes" />
 				<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFixKeyVersion.getPatcherFixId()) %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text

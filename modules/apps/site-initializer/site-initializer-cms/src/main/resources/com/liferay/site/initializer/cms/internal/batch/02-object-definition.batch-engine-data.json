@@ -53,7 +53,7 @@
 					"objectFieldSettings": [
 						{
 							"name": "acceptedFileExtensions",
-							"value": "jpeg, jpg, pdf, png"
+							"value": "*"
 						},
 						{
 							"name": "maximumFileSize",

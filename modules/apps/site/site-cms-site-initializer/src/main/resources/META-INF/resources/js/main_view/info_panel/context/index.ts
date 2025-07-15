@@ -21,7 +21,7 @@ const BASE_CONTEXT: IAssetTypeInfoPanelContext = {
 	id: null,
 	objectEntries: [],
 	title: null,
-	title_i18n: null,
+	title_i18n: {},
 	type: null,
 };
 

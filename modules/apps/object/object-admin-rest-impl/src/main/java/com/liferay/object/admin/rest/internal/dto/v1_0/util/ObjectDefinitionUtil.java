@@ -169,6 +169,15 @@ public class ObjectDefinitionUtil {
 						return serviceBuilderObjectDefinition.
 							isEnableObjectEntrySchedule();
 					});
+				setEnableObjectEntrySubscription(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+							return null;
+						}
+
+						return serviceBuilderObjectDefinition.
+							isEnableObjectEntrySubscription();
+					});
 				setEnableObjectEntryVersioning(
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {

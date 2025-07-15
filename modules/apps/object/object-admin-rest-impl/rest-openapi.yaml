@@ -98,6 +98,8 @@ components:
                     type: boolean
                 enableObjectEntrySchedule:
                     type: boolean
+                enableObjectEntrySubscription:
+                    type: boolean
                 enableObjectEntryVersioning:
                     type: boolean
                 externalReferenceCode:

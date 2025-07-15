@@ -112,8 +112,6 @@ public class KBArticleItemSelectorViewDisplayContext {
 		).put(
 			"classPK", kbArticle.getResourcePrimKey()
 		).put(
-			"externalReferenceCode", kbArticle.getExternalReferenceCode()
-		).put(
 			"title", kbArticle.getTitle()
 		).put(
 			"type",

@@ -5,7 +5,6 @@
 
 import {useModal} from '@clayui/core';
 import {useEffect, useState} from 'react';
-import {PAGE_ROUTER_TYPES} from '~/utils/constants';
 import i18n from '~/utils/I18n';
 import ActionTable from '~/components/ActionTable';
 import {getTicketAttachments} from '~/services/liferay/api';
@@ -20,6 +19,7 @@ import useSort from './hooks/useSortTicketAttachments';
 import getAttachmentDownloadUrl from './utils/getAttachmentDownloadUrl';
 import getAttachmentFormattedDateTime from './utils/getAttachmentFormattedDateTime';
 import {getColumns} from './utils/getColumns';
+import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 
 import './TicketAttachmentsTable.css';
 
@@ -34,8 +34,8 @@ const TicketAttachmentsTable = ({
 		koroneikiAccount?.accountKey,
 		koroneikiAccountLoading
 	);
+	const {helpCenterURL} = useAppPropertiesContext();
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
-
 	const [ticketAttachments, setTicketAttachments] = useState([]);
 	const [selectedTicketAttachment, setSelectedTicketAttachment] = useState();
 
@@ -66,7 +66,7 @@ const TicketAttachmentsTable = ({
 						fileSize: ticketAttachment.fileSize,
 						storageBucket: ticketAttachment.storageBucket,
 						ticketAttachmentId: ticketAttachment.id,
-						zendeskTicketId: ticketAttachment.zendeskTicketId,
+						ticketId: ticketAttachment.jiraIssueKey,
 					};
 				}
 			);
@@ -175,11 +175,9 @@ const TicketAttachmentsTable = ({
 								ticket: (
 									<a
 										className="m-0 text-truncate"
-										href={PAGE_ROUTER_TYPES.request(
-											ticketAttachment?.zendeskTicketId
-										)}
+										href={`${helpCenterURL}/browse/${ticketAttachment?.ticketId}`}
 									>
-										{'#' + ticketAttachment?.zendeskTicketId}
+										{'#' + ticketAttachment?.ticketId}
 									</a>
 								),
 							})

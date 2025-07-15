@@ -50,7 +50,7 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 							gcsSessionURL:
 								sessionStorage.getItem('gcsSessionURL'),
 							md5Checksum: fileMd5,
-							zendeskTicketId: ticketId,
+							ticketId,
 						}),
 						method: 'POST',
 					})) as unknown as Response;

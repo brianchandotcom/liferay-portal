@@ -46,29 +46,35 @@ PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDispl
 			cssClass="osb-patcher-search-container-column-text-icon"
 		>
 			<c:if test="<%= PatcherBuildUtil.isObsolete(patcherBuild.getPatcherBuildId()) %>">
-				<liferay-ui:icon
-					image="../common/activate"
-					message="this-build-is-obsolete"
+				<clay:link
+					aria-label='<%= LanguageUtil.get(request, "this-build-is-obsolete") %>'
+					cssClass="lfr-portal-tooltip"
+					href='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
+					icon="check-circle"
 					onClick='<%= hasPermissions ? liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "view-fixes-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + viewPatcherBuildPatcherFixesURL + "');" : StringPool.BLANK %>'
-					url='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
+					title='<%= LanguageUtil.get(request, "this-build-is-obsolete") %>'
 				/>
 			</c:if>
 
 			<c:if test="<%= PatcherFixUtil.containsPatcherFixWorkaround(patcherBuild.getPatcherBuildId()) %>">
-				<liferay-ui:icon
-					image="../api/exception"
-					message="this-build-contains-workaround-fixes"
+				<clay:link
+					aria-label='<%= LanguageUtil.get(request, "this-build-contains-workaround-fixes") %>'
+					cssClass="lfr-portal-tooltip"
+					href='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
+					icon="warning"
 					onClick='<%= hasPermissions ? liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "view-fixes-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + viewPatcherBuildPatcherFixesURL + "');" : StringPool.BLANK %>'
-					url='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
+					title='<%= LanguageUtil.get(request, "this-build-contains-workaround-fixes") %>'
 				/>
 			</c:if>
 
 			<c:if test="<%= PatcherFixUtil.containsPatcherFixComment(patcherBuild.getPatcherBuildId()) %>">
-				<liferay-ui:icon
-					image="../common/message"
-					message="this-build-contains-fixes-with-comments"
+				<clay:link
+					aria-label='<%= LanguageUtil.get(request, "this-build-contains-fixes-with-comments") %>'
+					cssClass="lfr-portal-tooltip"
+					href='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
+					icon="message"
 					onClick='<%= hasPermissions ? liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.format(request, "view-fixes-for-build-id-x", patcherBuild.getPatcherBuildId()) + "', '" + viewPatcherBuildPatcherFixesURL + "');" : StringPool.BLANK %>'
-					url='<%= hasPermissions ? "javascript:void(0);" : StringPool.BLANK %>'
+					title='<%= LanguageUtil.get(request, "this-build-contains-fixes-with-comments") %>'
 				/>
 			</c:if>
 		</liferay-ui:search-container-column-text>

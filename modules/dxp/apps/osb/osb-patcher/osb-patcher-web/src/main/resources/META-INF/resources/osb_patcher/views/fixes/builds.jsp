@@ -44,26 +44,32 @@ List<PatcherBuild> patcherBuilds = PatcherBuildLocalServiceUtil.getPatcherFixPat
 							<portlet:param name="redirect" value="<%= viewPatcherFixPatcherBuildsURL %>" />
 						</portlet:renderURL>
 
-						<liferay-ui:icon
-							image="../common/activate"
-							message="this-build-is-obsolete"
+						<clay:link
+							aria-label='<%= LanguageUtil.get(request, "this-build-is-obsolete") %>'
+							cssClass="lfr-portal-tooltip"
+							href="javascript:void(0);"
+							icon="check-circle"
 							onClick='<%= liferayPortletResponse.getNamespace() + "navigateWindow('" + viewPatcherBuildPatcherFixesURL + "'); " %>'
-							url="javascript:void(0);"
+							title='<%= LanguageUtil.get(request, "this-build-is-obsolete") %>'
 						/>
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:icon
-							image="../common/activate"
-							message="this-build-is-obsolete"
+						<clay:icon
+							cssClass="lfr-portal-tooltip"
+							symbol="check-circle"
+							title='<%= LanguageUtil.get(request, "this-build-is-obsolete") %>'
 						/>
 					</c:otherwise>
 				</c:choose>
 			</c:if>
 
-			<liferay-ui:icon
-				image='<%= PatcherFixUtil.containsPatcherFixWorkaround(patcherBuild.getPatcherBuildId()) ? "../api/exception" : StringPool.BLANK %>'
-				message="this-build-contains-workaround-fixes"
-			/>
+			<c:if test="<%= PatcherFixUtil.containsPatcherFixWorkaround(patcherBuild.getPatcherBuildId()) %>">
+				<clay:icon
+					cssClass="lfr-portal-tooltip"
+					symbol="warning"
+					title='<%= LanguageUtil.get(request, "this-build-contains-workaround-fixes") %>'
+				/>
+			</c:if>
 		</liferay-ui:search-container-column-text>
 
 		<portlet:renderURL var="viewPatcherBuildURL">

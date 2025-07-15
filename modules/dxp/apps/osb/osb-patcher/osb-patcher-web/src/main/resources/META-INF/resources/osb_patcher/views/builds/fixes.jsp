@@ -59,11 +59,13 @@ else if (patcherFixes.size() > 1) {
 
 		<liferay-ui:search-container-column-text>
 			<c:if test="<%= patcherFix.isObsolete() %>">
-				<liferay-ui:icon
-					image="../common/activate"
-					message="this-fix-is-obsolete"
+				<clay:link
+					aria-label='<%= LanguageUtil.get(request, "this-fix-is-obsolete") %>'
+					cssClass="lfr-portal-tooltip"
+					href="javascript:void(0);"
+					icon="check-circle"
 					onClick='<%= liferayPortletResponse.getNamespace() + "navigateWindow('" + viewPatcherFixURL + "')" %>'
-					url="javascript:void(0);"
+					title='<%= LanguageUtil.get(request, "this-fix-is-obsolete") %>'
 				/>
 			</c:if>
 		</liferay-ui:search-container-column-text>

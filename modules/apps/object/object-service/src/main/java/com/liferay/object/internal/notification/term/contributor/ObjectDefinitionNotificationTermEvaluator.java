@@ -7,20 +7,25 @@ package com.liferay.object.internal.notification.term.contributor;
 
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.internal.notification.term.evaluator.util.ObjectDefinitionNotificationTermEvaluatorUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.UnsafeTriFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
@@ -29,6 +34,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,6 +58,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		ListTypeLocalService listTypeLocalService,
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryFolderLocalService objectEntryFolderLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -60,6 +67,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		_listTypeLocalService = listTypeLocalService;
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
@@ -178,6 +186,63 @@ public class ObjectDefinitionNotificationTermEvaluator
 				GetterUtil.getLong(termValues.get("currentUserId"))));
 	}
 
+	private String _evaluateObjectDefinition(
+		Context context, String termName, Map<String, Object> termValues) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-42577") ||
+			!termName.equals("[%OBJECT_DEFINITION_NAME%]")) {
+
+			return null;
+		}
+
+		return _objectDefinition.getName();
+	}
+
+	private String _evaluateObjectEntry(
+		Context context, String termName, Map<String, Object> termValues) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+			return null;
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			GetterUtil.getLong(termValues.get("id")));
+
+		if (objectEntry == null) {
+			return null;
+		}
+
+		if (termName.equals("[%OBJECT_ENTRY_FOLDER_NAME%]")) {
+			if (objectEntry.getObjectEntryFolderId() ==
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+				return LanguageUtil.get(LocaleUtil.getDefault(), "home");
+			}
+
+			ObjectEntryFolder objectEntryFolder =
+				_objectEntryFolderLocalService.fetchObjectEntryFolder(
+					objectEntry.getObjectEntryFolderId());
+
+			if (objectEntryFolder == null) {
+				return null;
+			}
+
+			return objectEntryFolder.getName();
+		}
+		else if (termName.equals("[%OBJECT_ENTRY_TITLE_FIELD%]")) {
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				_objectDefinition.getTitleObjectFieldId());
+
+			return _getObjectFieldValue(objectField, termValues);
+		}
+		else if (termName.equals("[%OBJECT_ENTRY_VERSION%]")) {
+			return String.valueOf(objectEntry.getVersion());
+		}
+
+		return null;
+	}
+
 	private String _evaluateObjectFields(
 		Context context, String termName, Map<String, Object> termValues) {
 
@@ -193,15 +258,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 				continue;
 			}
 
-			Object termValue = termValues.get(objectField.getName());
-
-			if (Validator.isNotNull(termValue)) {
-				return String.valueOf(termValue);
-			}
-
-			return Objects.toString(
-				termValues.get(objectField.getDBColumnName()),
-				StringPool.BLANK);
+			return _getObjectFieldValue(objectField, termValues);
 		}
 
 		return null;
@@ -363,6 +420,19 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return dateFormat.format(date);
 	}
 
+	private String _getObjectFieldValue(
+		ObjectField objectField, Map<String, Object> termValues) {
+
+		Object termValue = termValues.get(objectField.getName());
+
+		if (Validator.isNotNull(termValue)) {
+			return String.valueOf(termValue);
+		}
+
+		return Objects.toString(
+			termValues.get(objectField.getDBColumnName()), StringPool.BLANK);
+	}
+
 	private String _getTermValue(String partialTermName, User user)
 		throws PortalException {
 
@@ -435,12 +505,14 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 	private final List<EvaluatorFunction> _evaluatorFunctions = Arrays.asList(
 		this::_evaluateAuthor, this::_evaluateCurrentDate,
-		this::_evaluateCurrentUser, this::_evaluateObjectFields,
+		this::_evaluateCurrentUser, this::_evaluateObjectDefinition,
+		this::_evaluateObjectEntry, this::_evaluateObjectFields,
 		this::_evaluateParentObjectDefinitionAuthor,
 		this::_evaluateParentObjectDefinitionObjectFields);
 	private final ListTypeLocalService _listTypeLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService

@@ -43,6 +43,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -348,6 +349,15 @@ public class EmailNotificationType extends BaseNotificationType {
 			if (emailAddressUser == null) {
 				emailAddressUser = userLocalService.getGuestUser(
 					CompanyThreadLocal.getCompanyId());
+			}
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+				body = StringUtil.replace(
+					body, "[%EMAIL_RECIPIENT_ADDRESS%]",
+					emailAddressUser.getDisplayEmailAddress());
+				body = StringUtil.replace(
+					body, "[%EMAIL_RECIPIENT_NAME%]",
+					emailAddressUser.getFullName());
 			}
 
 			prepareNotificationContext(

@@ -376,7 +376,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				NotificationTermEvaluator.class,
 				new ObjectDefinitionNotificationTermEvaluator(
 					_listTypeLocalService, objectDefinition,
-					_objectDefinitionLocalService, _objectEntryLocalService,
+					_objectDefinitionLocalService,
+					_objectEntryFolderLocalService, _objectEntryLocalService,
 					_objectFieldLocalService, _objectRelationshipLocalService,
 					_userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(

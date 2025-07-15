@@ -870,7 +870,6 @@ public class SitesImpl implements Sites {
 			parameterMap.put(
 				PortletDataHandlerKeys.DELETIONS,
 				new String[] {Boolean.TRUE.toString()});
-
 			parameterMap.put(
 				PortletDataHandlerKeys.FAVICON,
 				new String[] {Boolean.FALSE.toString()});

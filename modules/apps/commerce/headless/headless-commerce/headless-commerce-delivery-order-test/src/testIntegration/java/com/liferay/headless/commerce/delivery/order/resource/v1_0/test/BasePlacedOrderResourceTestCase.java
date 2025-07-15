@@ -2725,6 +2725,14 @@ public abstract class BasePlacedOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("authorId", additionalAssertFieldName)) {
+				if (placedOrder.getAuthorId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("channelId", additionalAssertFieldName)) {
 				if (placedOrder.getChannelId() == null) {
 					valid = false;
@@ -3223,6 +3231,17 @@ public abstract class BasePlacedOrderResourceTestCase {
 			if (Objects.equals("author", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						placedOrder1.getAuthor(), placedOrder2.getAuthor())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("authorId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						placedOrder1.getAuthorId(),
+						placedOrder2.getAuthorId())) {
 
 					return false;
 				}
@@ -3903,6 +3922,11 @@ public abstract class BasePlacedOrderResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("authorId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("channelId")) {
@@ -4907,6 +4931,7 @@ public abstract class BasePlacedOrderResourceTestCase {
 				account = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				accountId = RandomTestUtil.randomLong();
 				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				authorId = RandomTestUtil.randomLong();
 				channelId = RandomTestUtil.randomLong();
 				couponCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

@@ -42,7 +42,7 @@ describe('NewSpace', () => {
 		apiPostSpy.mockRestore();
 	});
 
-	it('renders with correct title, description, link, buttons', () => {
+	it('renders with correct title, description, buttons', () => {
 		render(<NewSpace {...props} />);
 
 		expect(
@@ -54,10 +54,6 @@ describe('NewSpace', () => {
 				'spaces-are-essential-for-organizing-defining-and-managing-your-content-and-files'
 			)
 		).toBeInTheDocument();
-
-		expect(
-			screen.getByRole('link', {name: /Test Message/})
-		).toHaveAttribute('href', 'https://learn.liferay.com/test-url');
 
 		expect(
 			screen.getByRole('button', {name: 'continue'})

@@ -18,6 +18,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import java.text.DecimalFormat;
+
 /**
  * @author Ivica Cardic
  */
@@ -56,12 +58,16 @@ public class CPDefinitionInventoryUpgradeProcess extends UpgradeProcess {
 					StringBundler sb = new StringBundler(
 						allowedOrderQuantitiesItems.length * 2);
 
+					DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+
 					for (String allowedOrderQuantitiesItem :
 							allowedOrderQuantitiesItems) {
 
 						sb.append(
-							GetterUtil.getDouble(allowedOrderQuantitiesItem));
-						sb.append(",.2f ");
+							decimalFormat.format(
+								GetterUtil.getDouble(
+									allowedOrderQuantitiesItem)));
+						sb.append(StringPool.SPACE);
 					}
 
 					allowedOrderQuantities = sb.toString();

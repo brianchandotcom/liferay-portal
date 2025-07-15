@@ -363,7 +363,9 @@ function buildItems({
 						children: child.children,
 						dispatch,
 						invalids,
-						isReferenced: child.type === 'referenced-structure',
+						isReferenced:
+							isReferenced ||
+							child.type === 'referenced-structure',
 						search,
 						structureERC,
 					}),

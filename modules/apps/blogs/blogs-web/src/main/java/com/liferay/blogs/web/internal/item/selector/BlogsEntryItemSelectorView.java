@@ -178,8 +178,6 @@ public class BlogsEntryItemSelectorView
 			).put(
 				"classPK", _blogsEntry.getEntryId()
 			).put(
-				"externalReferenceCode", _blogsEntry.getExternalReferenceCode()
-			).put(
 				"title",
 				BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry)
 			).put(

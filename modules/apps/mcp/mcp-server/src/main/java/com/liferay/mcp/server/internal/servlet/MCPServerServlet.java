@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -147,9 +148,13 @@ public class MCPServerServlet extends GenericServlet {
 		).tool(
 			new McpSchema.Tool(
 				"get-openapis",
-				"Retrieves the current available Liferay OpenAPIs. Use it " +
-					"before interacting with Liferay upon user request to " +
-						"decide which API would be the best fit.",
+				StringBundler.concat(
+					"Retrieves the current available Liferay OpenAPIs. Use it ",
+					"to discover the most suitable API that could fulfill the ",
+					"user request. The flow should be: get-openapis, ",
+					"get-openapi, call-http-endpoint. If you are not sure ",
+					"what the user wants, just call this to get an idea of ",
+					"what is possible."),
 				JSONUtil.put(
 					"properties", _jsonFactory.createJSONObject()
 				).put(
@@ -181,9 +186,10 @@ public class MCPServerServlet extends GenericServlet {
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
-				"Calls an HTTP endpoint with method, path, and payload. It " +
-					"must always be performed after a having retrieved a " +
-						"valid Liferay OpenAPI through the get-openapi tool.",
+				StringBundler.concat(
+					"Calls an HTTP endpoint from a Liferay OpenAPI. Never ",
+					"call a batch endpoint or you will suffer the ",
+					"consequences, always use individual operations."),
 				JSONUtil.put(
 					"additionalProperties", false
 				).put(
@@ -199,8 +205,10 @@ public class MCPServerServlet extends GenericServlet {
 						"path",
 						JSONUtil.put(
 							"description",
-							"The full endpoint path starting with / relative " +
-								"to " + baseURL
+							StringBundler.concat(
+								"The full endpoint path starting with / ",
+								"relative to ", baseURL,
+								". Do not include the leading /o")
 						).put(
 							"type", "string"
 						)

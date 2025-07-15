@@ -64,33 +64,33 @@ boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PA
 			</div>
 		</c:if>
 
-		<aui:select disabled="<%= true %>" label="project-version" name="patcherProjectVersionId" required="<%= true %>" showEmptyOption="<%= true %>">
+		<%
+		PatcherProjectVersion patcherProjectVersion = PatcherProjectVersionLocalServiceUtil.fetchPatcherProjectVersion(patcherFixPack.getPatcherProjectVersionId());
+		%>
 
-			<%
-			for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions()) {
-			%>
+		<div class="c-mb-3">
+			<p class="c-mb-1 font-weight-semi-bold text-3">
+				<liferay-ui:message key="project-version" />
+			</p>
 
-				<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
+			<p class="text-secondary">
+				<%= patcherProjectVersion.getName() %>
+			</p>
+		</div>
 
-			<%
-			}
-			%>
+		<%
+		PatcherFixComponent patcherFixComponent = PatcherFixComponentLocalServiceUtil.fetchPatcherFixComponent(patcherFixPack.getPatcherFixComponentId());
+		%>
 
-		</aui:select>
+		<div class="c-mb-3">
+			<p class="c-mb-1 font-weight-semi-bold text-3">
+				<liferay-ui:message key="component" />
+			</p>
 
-		<aui:select disabled="<%= true %>" label="component" name="patcherFixComponentId" required="<%= true %>" showEmptyOption="<%= true %>">
-
-			<%
-			for (PatcherFixComponent patcherFixComponent : PatcherFixComponentLocalServiceUtil.getPatcherFixComponents()) {
-			%>
-
-				<aui:option label="<%= patcherFixComponent.getName() %>" value="<%= patcherFixComponent.getPatcherFixComponentId() %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
+			<p class="text-secondary">
+				<%= patcherFixComponent.getName() %>
+			</p>
+		</div>
 
 		<aui:input name="version" type="hidden" value="<%= patcherFixPack.getVersion() %>" />
 

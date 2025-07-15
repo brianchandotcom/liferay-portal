@@ -163,7 +163,10 @@ const ContentAndFilesCard: React.FC<IContentAndFilesCard> = ({
 						<Text color={statsColor} size={3}>
 							{statsIcon && (
 								<span className="mr-1">
-									<ClayIcon symbol={statsIcon} />
+									<ClayIcon
+										aria-label={statsIcon}
+										symbol={statsIcon}
+									/>
 								</span>
 							)}
 

@@ -62,7 +62,7 @@ describe('FieldFile', () => {
 			target: {files: [file]},
 		});
 
-		fireEvent.click(screen.getByTitle('remove-x'));
+		fireEvent.click(screen.getByTitle('remove-file'));
 
 		expect(screen.getByRole('textbox')).toHaveValue('');
 		expect(screen.getByTitle('add')).toBeInTheDocument();
@@ -85,7 +85,7 @@ describe('FieldFile', () => {
 			target: {files: [file1]},
 		});
 
-		fireEvent.click(screen.getByTitle('change-x'));
+		fireEvent.click(screen.getByTitle('change-file'));
 
 		fireEvent.change(input, {
 			target: {files: [file2]},

@@ -16,11 +16,6 @@ import SpaceService from '../../../../src/main/resources/META-INF/resources/js/c
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 import SpaceGeneralSettings from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceGeneralSettings';
 
-jest.mock('frontend-js-web', () => ({
-	...(jest.requireActual('frontend-js-web') as object),
-	navigate: jest.fn(),
-}));
-
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService',
 	() => ({
@@ -210,11 +205,13 @@ describe('SpaceGeneralSettings', () => {
 
 		expect(screen.getAllByLabelText('maximum-file-size').length).toBe(1);
 
-		await userEvent.click(screen.getByLabelText('add-x'));
+		await userEvent.click(screen.getByLabelText('add-mime-type-limit'));
 
 		expect(screen.getAllByLabelText('maximum-file-size').length).toBe(2);
 
-		await userEvent.click(screen.getAllByLabelText('remove-x')[1]);
+		await userEvent.click(
+			screen.getAllByLabelText('remove-mime-type-limit')[1]
+		);
 
 		expect(screen.getAllByLabelText('maximum-file-size').length).toBe(1);
 	});
@@ -272,7 +269,7 @@ describe('SpaceGeneralSettings', () => {
 		it('saves the form when a maximum file size field has an error and this field is removed', async () => {
 			renderComponent();
 
-			await userEvent.click(screen.getByLabelText('add-x'));
+			await userEvent.click(screen.getByLabelText('add-mime-type-limit'));
 
 			const inputs = screen.getAllByLabelText('maximum-file-size');
 
@@ -292,7 +289,9 @@ describe('SpaceGeneralSettings', () => {
 				).toBeInTheDocument();
 			});
 
-			await userEvent.click(screen.getAllByLabelText('remove-x')[0]);
+			await userEvent.click(
+				screen.getAllByLabelText('remove-mime-type-limit')[0]
+			);
 
 			await waitFor(() => {
 				expect(

@@ -73,7 +73,6 @@ describe('SpaceMembersWithList', () => {
 		learnResources: {},
 	};
 
-	const LiferayOriginal = global.Liferay;
 	const {ResizeObserver: ResizeObserverOriginal} = window;
 
 	let getSpaceSpy: jest.SpyInstance;
@@ -105,16 +104,6 @@ describe('SpaceMembersWithList', () => {
 	});
 
 	beforeAll(() => {
-		global.Liferay = {
-			Language: {
-				get: jest.fn((key) => key),
-			},
-			ThemeDisplay: {
-				...LiferayOriginal.ThemeDisplay,
-				getUserId: jest.fn(() => '1'),
-			},
-		} as any;
-
 		window.ResizeObserver = jest.fn().mockImplementation(() => ({
 			disconnect: jest.fn(),
 			observe: jest.fn(),

@@ -12,14 +12,42 @@ import {
 	SelectOptions,
 	SpaceMembersInputWithSelect,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersInputWithSelect';
-
-jest.mock('frontend-js-web', () => ({
-	...(jest.requireActual('frontend-js-web') as any),
-	navigate: jest.fn(),
-}));
+import {mockFetch} from '../../__mocks__/frontend-js-web';
 
 describe('SpaceMembersInputWithSelect', () => {
 	const {ResizeObserver: ResizeObserverOriginal} = window;
+
+	const mockUserApiResponse = {
+		items: [
+			{
+				emailAddress: 'john.doe@example.com',
+				id: '1',
+				image: '/image/user_portrait',
+				name: 'John Doe',
+			},
+			{
+				emailAddress: 'jane.smith@example.com',
+				id: '2',
+				image: '/image/user_portrait',
+				name: 'Jane Smith',
+			},
+		],
+	};
+
+	const mockGroupApiResponse = {
+		items: [
+			{
+				id: '1',
+				name: 'Group 1',
+				usersCount: 5,
+			},
+			{
+				id: '2',
+				name: 'Group 2',
+				usersCount: 10,
+			},
+		],
+	};
 
 	beforeAll(() => {
 		window.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -29,15 +57,9 @@ describe('SpaceMembersInputWithSelect', () => {
 		}));
 	});
 
-	let fetchSpier: jest.SpyInstance;
-
-	beforeEach(() => {
-		fetchSpier = jest.spyOn(window, 'fetch');
-	});
-
 	afterEach(() => {
 		jest.clearAllMocks();
-		fetchSpier.mockClear();
+		mockFetch.mockClear();
 	});
 
 	afterAll(() => {
@@ -84,24 +106,9 @@ describe('SpaceMembersInputWithSelect', () => {
 	});
 
 	it('displays a list of users when the select value is "users"', async () => {
-		fetchSpier.mockResolvedValue({
-			json: async () => ({
-				items: [
-					{
-						emailAddress: 'john.doe@example.com',
-						id: '1',
-						image: '/image/user_portrait',
-						name: 'John Doe',
-					},
-					{
-						emailAddress: 'jane.smith@example.com',
-						id: '2',
-						image: '/image/user_portrait',
-						name: 'Jane Smith',
-					},
-				],
-			}),
-		});
+		mockFetch.mockResolvedValue({
+			json: async () => mockUserApiResponse,
+		} as Response);
 
 		render(
 			<SpaceMembersInputWithSelect selectValue={SelectOptions.USERS} />
@@ -118,29 +125,18 @@ describe('SpaceMembersInputWithSelect', () => {
 			expect(
 				screen.getByRole('option', {name: /Jane Smith \(jane.smith\)/})
 			).toBeInTheDocument();
-		});
 
-		expect(fetchSpier).toHaveBeenCalledWith(
-			'http://localhost/o/headless-admin-user/v1.0/user-accounts?search=',
-			expect.any(Object)
-		);
+			expect(mockFetch).toHaveBeenCalledWith(
+				'http://localhost/o/headless-admin-user/v1.0/user-accounts?search=',
+				expect.any(Object)
+			);
+		});
 	});
 
 	it('displays a list of groups when the select value is "groups"', async () => {
-		fetchSpier.mockResolvedValue({
-			json: async () => ({
-				items: [
-					{
-						id: '1',
-						name: 'Group 1',
-					},
-					{
-						id: '2',
-						name: 'Group 2',
-					},
-				],
-			}),
-		});
+		mockFetch.mockResolvedValue({
+			json: async () => mockGroupApiResponse,
+		} as Response);
 
 		render(
 			<SpaceMembersInputWithSelect selectValue={SelectOptions.GROUPS} />
@@ -159,25 +155,16 @@ describe('SpaceMembersInputWithSelect', () => {
 			).toBeInTheDocument();
 		});
 
-		expect(fetchSpier).toHaveBeenCalledWith(
+		expect(mockFetch).toHaveBeenCalledWith(
 			'http://localhost/o/headless-admin-user/v1.0/user-groups?search=',
 			expect.any(Object)
 		);
 	});
 
 	it('calls "onAutocompleteItemSelected" callback when an item is selected', async () => {
-		fetchSpier.mockResolvedValue({
-			json: async () => ({
-				items: [
-					{
-						emailAddress: 'john.doe@example.com',
-						id: '1',
-						image: '/image/user_portrait',
-						name: 'John Doe',
-					},
-				],
-			}),
-		});
+		mockFetch.mockResolvedValue({
+			json: async () => mockUserApiResponse,
+		} as Response);
 
 		const onAutocompleteItemSelected = jest.fn();
 

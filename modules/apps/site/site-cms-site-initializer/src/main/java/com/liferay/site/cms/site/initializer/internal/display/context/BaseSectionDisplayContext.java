@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
@@ -83,17 +84,14 @@ public abstract class BaseSectionDisplayContext {
 		_objectEntryFolderModelResourcePermission =
 			objectEntryFolderModelResourcePermission;
 
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-
-		objectEntryFolder =
-			object instanceof ObjectEntryFolder ? (ObjectEntryFolder)object :
-				null;
-
 		this.portal = portal;
 
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		objectEntryFolder = _getObjectEntryFolder(
+			themeDisplay.getCompanyId(),
+			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM));
 	}
 
 	public String getAPIURL() {
@@ -125,28 +123,33 @@ public abstract class BaseSectionDisplayContext {
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{
-				if (getRootObjectEntryFolderExternalReferenceCode() != null) {
-					addPrimaryDropdownItem(
-						dropdownItem -> {
-							dropdownItem.putData("action", "createFolder");
-							dropdownItem.putData(
-								"assetLibraries", _getDepotEntriesJSONArray());
-							dropdownItem.putData(
-								"baseAssetLibraryViewURL",
-								ActionUtil.getBaseSpaceURL(themeDisplay));
-							dropdownItem.putData(
-								"baseFolderViewURL",
-								ActionUtil.getBaseViewFolderURL(themeDisplay));
-							dropdownItem.putData(
-								"parentObjectEntryFolderExternalReferenceCode",
-								_getParentObjectEntryFolderExternalReferenceCode());
-							dropdownItem.setIcon("folder");
-							dropdownItem.setLabel(
-								language.get(httpServletRequest, "folder"));
-						});
-				}
-
 				if (_hasAddEntryPermission()) {
+					if (getRootObjectEntryFolderExternalReferenceCode() !=
+							null) {
+
+						addPrimaryDropdownItem(
+							dropdownItem -> {
+								dropdownItem.putData("action", "createFolder");
+								dropdownItem.putData(
+									"assetLibraries",
+									_getDepotEntriesJSONArray());
+								dropdownItem.putData(
+									"baseAssetLibraryViewURL",
+									ActionUtil.getBaseSpaceURL(themeDisplay));
+								dropdownItem.putData(
+									"baseFolderViewURL",
+									ActionUtil.getBaseViewFolderURL(
+										themeDisplay));
+								dropdownItem.putData(
+									"parentObjectEntryFolderExternalReference" +
+										"Code",
+									_getParentObjectEntryFolderExternalReferenceCode());
+								dropdownItem.setIcon("folder");
+								dropdownItem.setLabel(
+									language.get(httpServletRequest, "folder"));
+							});
+					}
+
 					if (!Objects.equals(
 							getRootObjectEntryFolderExternalReferenceCode(),
 							ObjectEntryFolderConstants.
@@ -394,6 +397,24 @@ public abstract class BaseSectionDisplayContext {
 		).put(
 			"name", group.getName(themeDisplay.getLocale())
 		);
+	}
+
+	private ObjectEntryFolder _getObjectEntryFolder(
+		long companyId, Object object) {
+
+		if (object instanceof DepotEntry) {
+			DepotEntry depotEntry = (DepotEntry)object;
+
+			return ObjectEntryFolderLocalServiceUtil.
+				fetchObjectEntryFolderByExternalReferenceCode(
+					getRootObjectEntryFolderExternalReferenceCode(),
+					depotEntry.getGroupId(), companyId);
+		}
+		else if (object instanceof ObjectEntryFolder) {
+			return (ObjectEntryFolder)object;
+		}
+
+		return null;
 	}
 
 	private String _getObjectEntryFolderExternalReferenceCode(

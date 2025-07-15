@@ -1536,6 +1536,62 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
+	private void _addCompanyUserGroupRole(Company company) throws Exception {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
+
+			long userId = _userLocalService.getGuestUserId(
+				company.getCompanyId());
+
+			Group group = GroupTestUtil.addGroup(
+				company.getCompanyId(), userId,
+				GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+			UserGroup userGroup = UserGroupTestUtil.addUserGroup(
+				group.getGroupId());
+
+			User user = addUser(
+				company.getCompanyId(), userId, group.getGroupId(),
+				getServiceContext(company.getCompanyId()));
+
+			_userGroupLocalService.addUserUserGroup(
+				user.getUserId(), userGroup);
+
+			Role role = _roleLocalService.addRole(
+				RandomTestUtil.randomString(), userId, Group.class.getName(),
+				group.getClassPK(), StringUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), StringUtil.randomString()),
+				Collections.emptyMap(), RoleConstants.TYPE_SITE,
+				StringPool.BLANK, getServiceContext(company.getCompanyId()));
+
+			_userGroupRoleLocalService.addUserGroupRole(
+				user.getUserId(), group.getGroupId(), role.getRoleId());
+		}
+	}
+
+	private void _cleanupData() throws Exception {
+		List<ClassName> classNames = ListUtil.remove(
+			_classNameLocalService.getClassNames(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			_classNames);
+
+		for (ClassName className : classNames) {
+			_classNameLocalService.deleteClassName(className);
+		}
+
+		resetBackgroundTaskThreadLocal();
+
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
+	}
+
 	private List<String> _getObjectNames(String objectType, long companyId)
 		throws Exception {
 
@@ -1568,6 +1624,11 @@ public class CompanyLocalServiceTest {
 		List<String> viewNames = _getObjectNames("VIEW", companyId);
 
 		return viewNames.size();
+	}
+
+	private void _initializeClassNames() throws Exception {
+		_classNames = _classNameLocalService.getClassNames(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	private List<String> _registerModelListeners() {

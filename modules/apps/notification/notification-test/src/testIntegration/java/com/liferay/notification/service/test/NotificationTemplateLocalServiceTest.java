@@ -9,8 +9,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationRecipientSettingNameException;
 import com.liferay.notification.exception.NotificationTemplateDescriptionException;
+import com.liferay.notification.exception.NotificationTemplateExternalReferenceCodeException;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -54,6 +57,7 @@ public class NotificationTemplateLocalServiceTest {
 		_externalReferenceCode = RandomTestUtil.randomString();
 	}
 
+	@FeatureFlag("LPD-42577")
 	@Test
 	public void testAddNotificationTemplate() throws Exception {
 		User user = TestPropsValues.getUser();
@@ -115,12 +119,29 @@ public class NotificationTemplateLocalServiceTest {
 					user, StringUtil.randomString(256),
 					NotificationConstants.TYPE_USER_NOTIFICATION)));
 
+		NotificationContext notificationContext =
+			NotificationTemplateUtil.createNotificationContext(
+				user, StringUtil.randomString(255),
+				NotificationConstants.TYPE_USER_NOTIFICATION);
+
+		NotificationTemplate notificationTemplate =
+			notificationContext.getNotificationTemplate();
+
+		notificationTemplate.setExternalReferenceCode("L_INVALID_ERC_TEST");
+
+		AssertUtils.assertFailure(
+			NotificationTemplateExternalReferenceCodeException.
+				MustNotStartWithPrefix.class,
+			"The prefix L_ is reserved",
+			() -> _notificationTemplateLocalService.addNotificationTemplate(
+				notificationContext));
+
 		_notificationTemplateLocalService.addNotificationTemplate(
 			NotificationTemplateUtil.createNotificationContext(
 				user, StringUtil.randomString(255),
 				NotificationConstants.TYPE_USER_NOTIFICATION));
 
-		NotificationTemplate notificationTemplate =
+		notificationTemplate =
 			_notificationTemplateLocalService.addNotificationTemplate(
 				_externalReferenceCode, user.getUserId(),
 				NotificationConstants.TYPE_EMAIL);

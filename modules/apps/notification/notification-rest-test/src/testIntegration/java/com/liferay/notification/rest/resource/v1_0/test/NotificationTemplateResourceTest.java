@@ -129,6 +129,34 @@ public class NotificationTemplateResourceTest
 			).put(
 				"toType", NotificationRecipientConstants.TYPE_ROLE
 			));
+
+		// Notification template recipient type subscribers
+
+		_testPostNotificationTemplate(
+			JSONUtil.put(
+				"toType", NotificationRecipientConstants.TYPE_SUBSCRIBERS));
+	}
+
+	@Override
+	@Test
+	public void testPostNotificationTemplateCopy() throws Exception {
+		super.testPostNotificationTemplateCopy();
+
+		NotificationTemplate systemNotificationTemplate =
+			randomNotificationTemplate();
+
+		systemNotificationTemplate.setSystem(true);
+
+		systemNotificationTemplate = _addNotificationTemplate(
+			systemNotificationTemplate);
+
+		Assert.assertTrue(systemNotificationTemplate.getSystem());
+
+		NotificationTemplate notificationTemplate =
+			notificationTemplateResource.postNotificationTemplateCopy(
+				systemNotificationTemplate.getId());
+
+		Assert.assertFalse(notificationTemplate.getSystem());
 	}
 
 	@Override

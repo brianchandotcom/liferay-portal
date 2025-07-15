@@ -1786,6 +1786,93 @@ public class ObjectActionLocalServiceTest {
 					"usePreferredLanguageForGuests")));
 	}
 
+	@FeatureFlag("LPD-42577")
+	@Test
+	public void testAddOrUpdateSubscriptionObjectActions() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		objectDefinition.setEnableObjectEntrySubscription(true);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		_objectActionLocalService.addOrUpdateSubscriptionObjectActions(
+			objectDefinition);
+
+		List<ObjectAction> objectActions =
+			_objectActionLocalService.getObjectActions(
+				objectDefinition.getObjectDefinitionId());
+
+		Assert.assertEquals(objectActions.size(), 5, objectActions.size());
+
+		_assertObjectAction(
+			true, "SubscriptionAdded",
+			"L_SUBSCRIPTION_ADDED_NOTIFICATION_TEMPLATE", objectActions.get(0));
+		_assertObjectAction(
+			true, "SubscriptionExpired",
+			"L_SUBSCRIPTION_EXPIRED_NOTIFICATION_TEMPLATE",
+			objectActions.get(1));
+		_assertObjectAction(
+			true, "SubscriptionMovedFromFolder",
+			"L_SUBSCRIPTION_MOVED_FROM_FOLDER_NOTIFICATION_TEMPLATE",
+			objectActions.get(2));
+		_assertObjectAction(
+			true, "SubscriptionMovedToFolder",
+			"L_SUBSCRIPTION_MOVED_TO_FOLDER_NOTIFICATION_TEMPLATE",
+			objectActions.get(3));
+		_assertObjectAction(
+			true, "SubscriptionUpdated",
+			"L_SUBSCRIPTION_UPDATED_NOTIFICATION_TEMPLATE",
+			objectActions.get(4));
+
+		_objectActionLocalService.deleteObjectAction(objectActions.get(4));
+
+		objectDefinition.setEnableObjectEntrySubscription(false);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		_objectActionLocalService.addOrUpdateSubscriptionObjectActions(
+			objectDefinition);
+
+		objectActions = _objectActionLocalService.getObjectActions(
+			objectDefinition.getObjectDefinitionId());
+
+		Assert.assertEquals(objectActions.size(), 4, objectActions.size());
+
+		_assertObjectAction(false, "SubscriptionAdded", objectActions.get(0));
+		_assertObjectAction(false, "SubscriptionExpired", objectActions.get(1));
+		_assertObjectAction(
+			false, "SubscriptionMovedFromFolder", objectActions.get(2));
+		_assertObjectAction(
+			false, "SubscriptionMovedToFolder", objectActions.get(3));
+
+		objectDefinition.setEnableObjectEntrySubscription(true);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		_objectActionLocalService.addOrUpdateSubscriptionObjectActions(
+			objectDefinition);
+
+		objectActions = _objectActionLocalService.getObjectActions(
+			objectDefinition.getObjectDefinitionId());
+
+		Assert.assertEquals(objectActions.size(), 5, objectActions.size());
+
+		_assertObjectAction(true, "SubscriptionAdded", objectActions.get(0));
+		_assertObjectAction(true, "SubscriptionExpired", objectActions.get(1));
+		_assertObjectAction(
+			true, "SubscriptionMovedFromFolder", objectActions.get(2));
+		_assertObjectAction(
+			true, "SubscriptionMovedToFolder", objectActions.get(3));
+		_assertObjectAction(true, "SubscriptionUpdated", objectActions.get(4));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+	}
+
 	@Test
 	public void testConcurrentObjectActions() throws Exception {
 		_addObjectAction(
@@ -3257,6 +3344,13 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	private void _assertObjectAction(
+		boolean active, String name, ObjectAction objectAction) {
+
+		Assert.assertEquals(active, objectAction.isActive());
+		Assert.assertEquals(name, objectAction.getName());
+	}
+
+	private void _assertObjectAction(
 		boolean active, String conditionExpression, String description,
 		Map<Locale, String> errorMessageMap, Map<Locale, String> labelMap,
 		String name, ObjectAction objectAction, String objectActionExecutorKey,
@@ -3278,6 +3372,29 @@ public class ObjectActionLocalServiceTest {
 			parametersUnicodeProperties,
 			objectAction.getParametersUnicodeProperties());
 		Assert.assertEquals(status, objectAction.getStatus());
+	}
+
+	private void _assertObjectAction(
+		boolean active, String name,
+		String notificationTemplateExternalReferenceCode,
+		ObjectAction objectAction) {
+
+		_assertObjectAction(active, name, objectAction);
+
+		UnicodeProperties unicodeProperties =
+			objectAction.getParametersUnicodeProperties();
+
+		NotificationTemplate notificationTemplate =
+			_notificationTemplateLocalService.fetchNotificationTemplate(
+				GetterUtil.getLong(
+					unicodeProperties.getProperty("notificationTemplateId")));
+
+		Assert.assertEquals(
+			notificationTemplateExternalReferenceCode,
+			notificationTemplate.getExternalReferenceCode());
+		Assert.assertTrue(notificationTemplate.isSystem());
+		Assert.assertEquals(
+			NotificationConstants.TYPE_EMAIL, notificationTemplate.getType());
 	}
 
 	private void _assertOrganization(

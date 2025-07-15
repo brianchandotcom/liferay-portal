@@ -14,7 +14,7 @@ import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
 import {openToast} from 'frontend-js-components-web';
-import {fetch, objectToFormData, sub} from 'frontend-js-web';
+import {dateUtils, fetch, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
@@ -25,8 +25,15 @@ export interface collaborator {
 	isOwner?: boolean;
 	permission?: string;
 	toBeShared?: boolean;
+	type: string;
 	user: UserAccount | UserGroup;
 }
+
+const formatDateToISO = (date: string): string => {
+	const formattedDate = new Date(date);
+
+	return formattedDate.toISOString();
+};
 
 function ListItem({
 	allowResharing,
@@ -36,6 +43,7 @@ function ListItem({
 	onRemoveUser,
 	permission,
 	toBeShared,
+	type = 'User',
 	user,
 }: {
 	allowResharing?: boolean;
@@ -45,6 +53,7 @@ function ListItem({
 	onRemoveUser: (user: UserAccount | UserGroup) => void;
 	permission?: string;
 	toBeShared?: boolean;
+	type: string;
 	user: UserAccount | UserGroup;
 }) {
 	return (
@@ -54,7 +63,7 @@ function ListItem({
 		>
 			<div className="align-items-center d-flex">
 				<ClaySticker displayType="primary" shape="circle" size="sm">
-					{'image' in user ? (
+					{type === 'User' ? (
 						<img
 							alt={user.name}
 							className="sticker-img"
@@ -127,6 +136,7 @@ function ListItem({
 										'set-expiration-date'
 									)}
 									borderless
+									className="c-m-1"
 									displayType="secondary"
 									monospaced
 									size="xs"
@@ -137,6 +147,21 @@ function ListItem({
 							<ClayDropDown.ItemList>
 								<ClayDropDown.Section>
 									<ClayDatePicker
+										firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
+										months={[
+											`${Liferay.Language.get('january')}`,
+											`${Liferay.Language.get('february')}`,
+											`${Liferay.Language.get('march')}`,
+											`${Liferay.Language.get('april')}`,
+											`${Liferay.Language.get('may')}`,
+											`${Liferay.Language.get('june')}`,
+											`${Liferay.Language.get('july')}`,
+											`${Liferay.Language.get('august')}`,
+											`${Liferay.Language.get('september')}`,
+											`${Liferay.Language.get('october')}`,
+											`${Liferay.Language.get('november')}`,
+											`${Liferay.Language.get('december')}`,
+										]}
 										onChange={(value: string) =>
 											onChangeUser(user, {
 												expirationDate: value,
@@ -163,6 +188,7 @@ function ListItem({
 										'more-options'
 									)}
 									borderless
+									className="c-m-1"
 									displayType="secondary"
 									monospaced
 									size="xs"
@@ -201,17 +227,13 @@ function ListItem({
 }
 
 export default function ShareModalContent({
-	autocompleteUserURL = '', // need API to fetch users in autocomplete
-	classNameId,
-	classPK,
+	autocompleteUserURL = '/o/search/v1.0/search?emptySearch=true&entryClassNames=com.liferay.portal.kernel.model.User%2Ccom.liferay.portal.kernel.model.UserGroup&nestedFields=embedded', // added for testing
 	closeModal,
-	shareActionURL = '', // need API for submission of data
-	initialCollaborators = [], // need to fetch initial collaborators from API
+	shareActionURL = '',
+	initialCollaborators = [],
 	title = '',
 }: {
 	autocompleteUserURL: string;
-	classNameId: string;
-	classPK: string;
 	closeModal: () => void;
 	initialCollaborators?: collaborator[];
 	shareActionURL: string;
@@ -224,31 +246,35 @@ export default function ShareModalContent({
 
 	const {resource: users} = useResource({
 		fetchOptions: {
-
-			// credentials: 'include',
-			// headers: new Headers({'x-csrf-token': Liferay.authToken}),
-
+			credentials: 'include',
+			headers: new Headers({'x-csrf-token': Liferay.authToken}),
 			method: 'GET',
 		},
 		fetchRetry: {
 			attempts: 0,
 		},
-		link:
-			autocompleteUserURL || 'https://rickandmortyapi.com/api/character/',
+		link: `${window.location.origin}${autocompleteUserURL}`,
 		onNetworkStatusChange: setNetworkStatus,
-		variables: {name: multiSelectValue},
+		variables: {search: multiSelectValue},
 	});
 
-	const _handleAddUser = (user: UserAccount | UserGroup) => {
-		setCollaborators([
-			...collaborators,
-			{
-				isOwner: false,
-				permission: 'VIEW-AND-DOWNLOAD',
-				toBeShared: true,
-				user,
-			},
-		]);
+	const _handleAddUser = (user: UserAccount | UserGroup, type: string) => {
+		if (
+			!collaborators.some(
+				({user: collabUser}) => collabUser.id === user.id
+			)
+		) {
+			setCollaborators([
+				...collaborators,
+				{
+					isOwner: false,
+					permission: 'VIEW-AND-DOWNLOAD',
+					toBeShared: true,
+					type,
+					user,
+				},
+			]);
+		}
 		setMultiSelectValue('');
 	};
 
@@ -283,20 +309,26 @@ export default function ShareModalContent({
 	const _handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 
-		const data = {
-			[`classNameId`]: classNameId,
-			[`classPK`]: classPK,
-			[`shareable`]: true, // this cannot be individual to user
-			[`sharingEntryPermissionDisplayActionId`]: 'VIEW', // this cannot be individual to user
-			[`userEmailAddress`]: collaborators
-				.map(({user}) => user.id)
-				.join(','),
-		};
-
-		const formData = objectToFormData(data);
+		const data = collaborators.map(
+			({allowResharing, expirationDate, permission, user}) => ({
+				actionIds:
+					permission === 'VIEW-AND-DOWNLOAD'
+						? ['VIEW', 'DOWNLOAD']
+						: ['VIEW'],
+				dateExpired: formatDateToISO(expirationDate || ''),
+				id: user.id,
+				share: allowResharing,
+				type: 'User',
+			})
+		);
 
 		fetch(shareActionURL, {
-			body: formData,
+			body: JSON.stringify(data),
+			headers: {
+				'Accept': 'application/json',
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Content-Type': 'application/json',
+			},
 			method: 'POST',
 		})
 			.then((response) => {
@@ -305,10 +337,9 @@ export default function ShareModalContent({
 				return response.ok
 					? jsonResponse
 					: jsonResponse.then((json) => {
-							const error = new Error(
-								json.errorMessage || response.statusText
-							);
-							throw Object.assign(error, {response});
+							throw Object.assign(new Error(json.title), {
+								response,
+							});
 						});
 			})
 			.then(() => {
@@ -362,23 +393,39 @@ export default function ShareModalContent({
 									'enter-name-email-or-groups'
 								)}
 								sourceItems={
-									multiSelectValue && !!users?.results?.length // remove results
-										? users.results?.map((user: any) => {
+									multiSelectValue && !!users?.items?.length
+										? users.items?.map((item: any) => {
 												return {
-													emailAddress: user.status, // emailAddress
-													id: user.id, // userId
-													image: user.image, // portraitURL
-													name: user.name, // fullName
+													type: item.entryClassName?.includes(
+														'UserGroup'
+													)
+														? 'UserGroup'
+														: 'User',
+													user: {
+														emailAddress:
+															item.emailAddress, // not available
+														id: item.title, // not available so use title
+														image: item.image, // not available
+														name: item.title,
+													},
 												};
 											})
 										: []
 								}
 								value={multiSelectValue}
 							>
-								{(user: UserAccount | UserGroup) => (
+								{({
+									type,
+									user,
+								}: {
+									type: string;
+									user: UserAccount | UserGroup;
+								}) => (
 									<ClayMultiSelect.Item
 										key={user.id}
-										onClick={() => _handleAddUser(user)}
+										onClick={() =>
+											_handleAddUser(user, type)
+										}
 										textValue={user.name}
 									>
 										<div className="autofit-row autofit-row-center">

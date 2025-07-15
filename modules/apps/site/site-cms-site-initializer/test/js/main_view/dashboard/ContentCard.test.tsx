@@ -11,6 +11,7 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
+import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import {
 	IMetricsProps,
 	TrendClassification,
@@ -30,9 +31,9 @@ describe('[CMS Dashboard] Components: ContentCard', () => {
 			vocabulariesCount: 10,
 		};
 
-		global.fetch = jest.fn().mockResolvedValue({
-			json: () => Promise.resolve(mockedResponse),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockedResponse,
+			error: null,
 		});
 	});
 
@@ -68,10 +69,10 @@ describe('[CMS Dashboard] Components: ContentCard', () => {
 			screen.getByTestId('loading-animation')
 		);
 
-		const MainMetric = screen.getByText('x-new-content-items');
+		const MainMetric = screen.getByText('30-new-content-items');
 		expect(MainMetric).toBeInTheDocument();
 
-		const Comparison = screen.getByText('x-vs-previous-period');
+		const Comparison = screen.getByText('-vs-previous-period');
 		expect(Comparison).toBeInTheDocument();
 
 		const VocabulariesBreakdown = screen.getByText('vocabularies');

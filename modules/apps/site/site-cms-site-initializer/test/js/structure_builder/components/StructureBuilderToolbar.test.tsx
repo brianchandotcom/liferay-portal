@@ -13,6 +13,7 @@ import StructureService from '../../../../src/main/resources/META-INF/resources/
 import {Structure} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Structure';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
+import {addParams, mockNavigate} from '../../__mocks__/frontend-js-web';
 import {MockState, MockStateProvider} from '../mocks/MockStateProvider';
 
 jest.mock('@liferay/layout-js-components-web', () => {
@@ -21,15 +22,6 @@ jest.mock('@liferay/layout-js-components-web', () => {
 	return {
 		...actual,
 		openConfirmModal: jest.fn(),
-	};
-});
-
-jest.mock('frontend-js-web', () => {
-	const actual = jest.requireActual('frontend-js-web');
-
-	return {
-		...actual,
-		navigate: jest.fn(),
 	};
 });
 
@@ -258,6 +250,11 @@ describe('StructureBuilderToolbar', () => {
 	});
 
 	it('Navigates to customize experience if the structure is published', async () => {
+		const expectedUrl =
+			'http://localhost:8080/edit?backURL=http%3A%2F%2Flocalhost%3A8080%2Fstructure-builder%3FobjectDefinitionExternalReferenceCode%3Dstructure-erc&objectDefinitionExternalReferenceCode=structure-erc';
+
+		addParams.mockReturnValue(expectedUrl);
+
 		renderComponent({
 			structure: {status: 'published'},
 		});
@@ -272,10 +269,8 @@ describe('StructureBuilderToolbar', () => {
 		await userEvent.click(customizeExperienceButton);
 
 		await waitFor(() => {
-			expect(require('frontend-js-web').navigate).toBeCalledWith(
-				expect.stringContaining(
-					'http://localhost:8080/edit?backURL=http%3A%2F%2Flocalhost%3A8080%2Fstructure-builder%3FobjectDefinitionExternalReferenceCode%3Dstructure-erc&objectDefinitionExternalReferenceCode=structure-erc'
-				)
+			expect(mockNavigate).toBeCalledWith(
+				expect.stringContaining(expectedUrl)
 			);
 		});
 	});

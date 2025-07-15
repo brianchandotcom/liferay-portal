@@ -8,9 +8,11 @@ import {
 	render,
 	screen,
 	waitForElementToBeRemoved,
+	within,
 } from '@testing-library/react';
 import React from 'react';
 
+import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import {
 	ContentAndFilesCard,
 	IMetricsProps,
@@ -49,9 +51,9 @@ describe('[CMS Dashboard] Components: ContentAndFilesCard', () => {
 	});
 
 	it('renders correctly with given props', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: () => Promise.resolve(mockedResponse),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockedResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent />);
@@ -63,7 +65,7 @@ describe('[CMS Dashboard] Components: ContentAndFilesCard', () => {
 		const Title = screen.getByText('30 new content items');
 		expect(Title).toBeInTheDocument();
 
-		const Trend = screen.getByText('x-vs-previous-period');
+		const Trend = screen.getByText('-vs-previous-period');
 		expect(Trend).toBeInTheDocument();
 
 		const VocabulariesBreakdown = screen.getByText('vocabularies');
@@ -77,16 +79,15 @@ describe('[CMS Dashboard] Components: ContentAndFilesCard', () => {
 	});
 
 	it('renders correctly with POSITIVE trend', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: () =>
-				Promise.resolve({
-					...mockedResponse,
-					trend: {
-						classification: TrendClassification.Positive,
-						percentage: -42,
-					},
-				}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
+				...mockedResponse,
+				trend: {
+					classification: TrendClassification.Positive,
+					percentage: 42,
+				},
+			},
+			error: null,
 		});
 
 		render(<WrappedComponent />);
@@ -95,24 +96,28 @@ describe('[CMS Dashboard] Components: ContentAndFilesCard', () => {
 			screen.getByTestId('loading-animation')
 		);
 
-		const Trend = screen.getByText('42%').parentElement;
+		const trendParent = screen.getByText('42%')
+			.parentElement as HTMLElement;
+		expect(trendParent).toBeInTheDocument();
+		expect(trendParent).toHaveTextContent('42%');
+		expect(trendParent).toHaveClass('text-success');
 
-		expect(Trend).toBeInTheDocument();
-		expect(Trend).toHaveTextContent('42%');
-		expect(Trend).toHaveClass('text-success');
+		const trendIcon = within(trendParent).getByRole('presentation', {
+			name: 'caret-top',
+		});
+		expect(trendIcon).toBeInTheDocument();
 	});
 
 	it('renders correctly with NEGATIVE trend', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: () =>
-				Promise.resolve({
-					...mockedResponse,
-					trend: {
-						classification: TrendClassification.Negative,
-						percentage: 42,
-					},
-				}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
+				...mockedResponse,
+				trend: {
+					classification: TrendClassification.Negative,
+					percentage: -42,
+				},
+			},
+			error: null,
 		});
 
 		render(<WrappedComponent />);
@@ -121,9 +126,15 @@ describe('[CMS Dashboard] Components: ContentAndFilesCard', () => {
 			screen.getByTestId('loading-animation')
 		);
 
-		const Trend = screen.getByText('42%').parentElement;
-		expect(Trend).toBeInTheDocument();
-		expect(Trend).toHaveTextContent('42%');
-		expect(Trend).toHaveClass('text-danger');
+		const trendParent = screen.getByText('42%')
+			.parentElement as HTMLElement;
+		expect(trendParent).toBeInTheDocument();
+		expect(trendParent).toHaveTextContent('42%');
+		expect(trendParent).toHaveClass('text-danger');
+
+		const trendIcon = within(trendParent).getByRole('presentation', {
+			name: 'caret-bottom',
+		});
+		expect(trendIcon).toBeInTheDocument();
 	});
 });

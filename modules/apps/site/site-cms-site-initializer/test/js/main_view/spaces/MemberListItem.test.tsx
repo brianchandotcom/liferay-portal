@@ -20,6 +20,7 @@ describe('MemberListItem', () => {
 	const testUserGroup = {
 		id: 'group',
 		name: 'Sample Group',
+		numberOfUserAccounts: '5',
 	};
 
 	const props = {
@@ -50,7 +51,7 @@ describe('MemberListItem', () => {
 		);
 
 		expect(
-			within(listItemElement).getByRole('button', {name: 'remove-x'})
+			within(listItemElement).getByRole('button', {name: 'remove-user'})
 		).toBeInTheDocument();
 	});
 
@@ -84,7 +85,9 @@ describe('MemberListItem', () => {
 
 		expect(onRemoveItem).not.toHaveBeenCalled();
 
-		await userEvent.click(screen.getByRole('button', {name: 'remove-x'}));
+		await userEvent.click(
+			screen.getByRole('button', {name: 'remove-user'})
+		);
 
 		expect(onRemoveItem).toHaveBeenCalledTimes(1);
 		expect(onRemoveItem).toHaveBeenCalledWith(testUserAccount);
@@ -102,9 +105,34 @@ describe('MemberListItem', () => {
 		const listItemElement = screen.getByRole('listitem');
 		expect(listItemElement).toBeInTheDocument();
 		expect(listItemElement).toHaveTextContent(testUserGroup.name);
+		expect(listItemElement).toHaveTextContent(
+			`(${testUserGroup.numberOfUserAccounts}-members)`
+		);
 
 		expect(
-			within(listItemElement).getByRole('button', {name: 'remove-x'})
+			within(listItemElement).getByRole('button', {name: 'remove-group'})
 		).toBeInTheDocument();
+	});
+
+	it('renders correctly when items is group and there is no members', () => {
+		const testUserGroupWithoutMembers = {
+			id: 'group',
+			name: 'Sample Group',
+		};
+
+		render(
+			<MembersListItem
+				{...props}
+				itemType="group"
+				items={[testUserGroupWithoutMembers]}
+			/>
+		);
+
+		const listItemElement = screen.getByRole('listitem');
+		expect(listItemElement).toBeInTheDocument();
+		expect(listItemElement).toHaveTextContent(
+			testUserGroupWithoutMembers.name
+		);
+		expect(listItemElement).toHaveTextContent('(0-members)');
 	});
 });

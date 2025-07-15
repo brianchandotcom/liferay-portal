@@ -499,20 +499,22 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		Map.Entry<Long, String> entry = _configurationPortalCache.get(key);
 
-		if ((entry == null) ||
-			(entry.getKey() != fragmentEntryLink.getMvccVersion())) {
+		if ((entry != null) &&
+			(entry.getKey() == fragmentEntryLink.getMvccVersion())) {
 
-			JSONObject jsonObject =
-				_fragmentEntryConfigurationParser.getConfigurationJSONObject(
-					fragmentEntryLink.getConfiguration(),
-					fragmentEntryLink.getEditableValues(),
-					fragmentRendererContext.getLocale());
-
-			entry = new AbstractMap.SimpleImmutableEntry<>(
-				fragmentEntryLink.getMvccVersion(), jsonObject.toString());
-
-			_configurationPortalCache.put(key, entry);
+			return entry.getValue();
 		}
+
+		JSONObject jsonObject =
+			_fragmentEntryConfigurationParser.getConfigurationJSONObject(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(),
+				fragmentRendererContext.getLocale());
+
+		entry = new AbstractMap.SimpleImmutableEntry<>(
+			fragmentEntryLink.getMvccVersion(), jsonObject.toString());
+
+		_configurationPortalCache.put(key, entry);
 
 		return entry.getValue();
 	}

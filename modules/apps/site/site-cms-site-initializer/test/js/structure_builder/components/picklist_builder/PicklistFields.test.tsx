@@ -24,12 +24,6 @@ const renderComponent = (state?: Partial<State>) => {
 };
 
 describe('PicklistFields', () => {
-	beforeEach(() => {
-		(global as any).Liferay.Language.direction = {
-			en_US: 'rtl',
-		};
-	});
-
 	it('updates the name when name input changes', async () => {
 		renderComponent();
 

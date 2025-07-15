@@ -13,6 +13,7 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
+import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/ViewDashboardContext';
 import {AllCategoriesDropdown} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/AllCategoriesDropdown';
 import {Item} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/FilterDropdown';
@@ -34,16 +35,15 @@ const WrappedComponent = ({
 );
 
 describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
-	beforeEach(() => {
-		global.fetch = jest.fn().mockResolvedValue({});
-
+	afterEach(() => {
 		jest.clearAllMocks();
+		jest.restoreAllMocks();
 	});
 
 	it('renders correctly', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({items: []}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {items: []},
+			error: null,
 		});
 
 		const onSelectItem = jest.fn();
@@ -82,8 +82,8 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 	});
 
 	it('renders a vocabulary list in the dropdown if there is a numberOfTaxonomyCategories > 0', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
 				items: [
 					{
 						assetLibraries: [{id: -1}],
@@ -98,8 +98,8 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 						numberOfTaxonomyCategories: 1,
 					},
 				],
-			}),
-			ok: true,
+			},
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -128,8 +128,8 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 	});
 
 	it('does not render a vocabulary list in the dropdown if there is a numberOfTaxonomyCategories === 0', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
 				items: [
 					{
 						assetLibraries: [{id: -1}],
@@ -144,8 +144,8 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 						numberOfTaxonomyCategories: 0,
 					},
 				],
-			}),
-			ok: true,
+			},
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -168,8 +168,8 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 	it('navigates to drill down and selects a category', async () => {
 		const onSelectItem = jest.fn();
 
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
 				items: [
 					{
 						assetLibraries: [{id: -1}],
@@ -178,8 +178,8 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 						numberOfTaxonomyCategories: 1,
 					},
 				],
-			}),
-			ok: true,
+			},
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={onSelectItem} />);
@@ -194,8 +194,8 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(2);
 
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
 				items: [
 					{
 						assetLibraries: [{id: -1}],
@@ -218,8 +218,8 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 						},
 					},
 				],
-			}),
-			ok: true,
+			},
+			error: null,
 		});
 
 		fireEvent.click(screen.getByRole('menuitem', {name: 'vocabulary 01'}));
@@ -255,10 +255,9 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 	it('navigates to drill down, renders a category list and go back to the vocabulary list', async () => {
 		const onSelectItem = jest.fn();
 
-		global.fetch = jest
-			.fn()
+		jest.spyOn(ApiHelper, 'get')
 			.mockResolvedValueOnce({
-				json: jest.fn().mockResolvedValue({
+				data: {
 					items: [
 						{
 							assetLibraries: [{id: -1}],
@@ -267,11 +266,11 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 							numberOfTaxonomyCategories: 1,
 						},
 					],
-				}),
-				ok: true,
+				},
+				error: null,
 			})
-			.mockResolvedValue({
-				json: jest.fn().mockResolvedValue({
+			.mockResolvedValueOnce({
+				data: {
 					items: [
 						{
 							assetLibraries: [{id: -1}],
@@ -294,8 +293,8 @@ describe('[CMS Dashboard] Components: AllCategoriesDropdown', () => {
 							},
 						},
 					],
-				}),
-				ok: true,
+				},
+				error: null,
 			});
 
 		render(<WrappedComponent onSelectItem={onSelectItem} />);

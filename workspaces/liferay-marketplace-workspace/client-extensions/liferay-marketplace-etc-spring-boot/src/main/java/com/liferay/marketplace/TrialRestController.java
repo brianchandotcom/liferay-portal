@@ -107,7 +107,7 @@ public class TrialRestController extends BaseRestController {
 			(Map<String, String>)order.getCustomFields();
 
 		_marketplaceService.postNotificationQueueEntry(
-			order.getCreatorEmailAddress(), "TRY-IT-NOW-EXPIRING-ORDER",
+			order.getCreatorEmailAddress(), "TRIAL-EXPIRING-ORDER",
 			new HashMapBuilder<String, Object>().put(
 				"%TRIAL_CREATOR_FIRST_NAME%", userAccount.getGivenName()
 			).put(
@@ -185,7 +185,7 @@ public class TrialRestController extends BaseRestController {
 		if (sendNotificationEmail) {
 			_marketplaceService.postNotificationQueueEntry(
 				modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-				"TRY-IT-NOW-PROCESSING-ORDER",
+				"TRIAL-PROCESSING-ORDER",
 				new HashMapBuilder<String, Object>().put(
 					"[%COMMERCEORDER_AUTHOR_FIRST_NAME%]",
 					userAccount.getGivenName()
@@ -228,7 +228,7 @@ public class TrialRestController extends BaseRestController {
 			if (sendNotificationEmail) {
 				_marketplaceService.postNotificationQueueEntry(
 					modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-					"TRY-IT-NOW-COMPLETED-ORDER",
+					"TRIAL-COMPLETED-ORDER",
 					new HashMapBuilder<String, Object>().put(
 						"%EMAIL%",
 						modelDTOOrderJSONObject.getString("creatorEmailAddress")

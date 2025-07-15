@@ -166,6 +166,22 @@ public class CompanyLocalServiceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	public static void resetBackgroundTaskThreadLocal() throws Exception {
+		Class<?> backgroundTaskThreadLocalClass =
+			BackgroundTaskThreadLocal.class;
+
+		Field backgroundTaskIdField =
+			backgroundTaskThreadLocalClass.getDeclaredField(
+				"_backgroundTaskId");
+
+		backgroundTaskIdField.setAccessible(true);
+
+		Method setMethod = ThreadLocal.class.getDeclaredMethod(
+			"set", Object.class);
+
+		setMethod.invoke(backgroundTaskIdField.get(null), 0L);
+	}
+
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -188,6 +204,18 @@ public class CompanyLocalServiceTest {
 			DBPartitionUtil.class, "_dbPartitionDB");
 		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 			PortalInstancePool.getDefaultCompanyId());
+
+		_initializeClassNames();
+
+		_modelListenerList = _registerModelListeners();
+
+		_deletedCompany = addCompany();
+
+		_addCompanyUserGroupRole(_deletedCompany);
+
+		_companyLocalService.deleteCompany(_deletedCompany);
+
+		_cleanupData();
 	}
 
 	@AfterClass
@@ -197,48 +225,14 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	public void resetBackgroundTaskThreadLocal() throws Exception {
-		Class<?> backgroundTaskThreadLocalClass =
-			BackgroundTaskThreadLocal.class;
-
-		Field backgroundTaskIdField =
-			backgroundTaskThreadLocalClass.getDeclaredField(
-				"_backgroundTaskId");
-
-		backgroundTaskIdField.setAccessible(true);
-
-		Method setMethod = ThreadLocal.class.getDeclaredMethod(
-			"set", Object.class);
-
-		setMethod.invoke(backgroundTaskIdField.get(null), 0L);
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_classNames = _classNameLocalService.getClassNames(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		_initializeClassNames();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		List<ClassName> classNames = ListUtil.remove(
-			_classNameLocalService.getClassNames(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			_classNames);
-
-		for (ClassName className : classNames) {
-			_classNameLocalService.deleteClassName(className);
-		}
-
-		resetBackgroundTaskThreadLocal();
-
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
-
-		_serviceRegistrations.clear();
+		_cleanupData();
 	}
 
 	@Test
@@ -1364,7 +1358,7 @@ public class CompanyLocalServiceTest {
 			false);
 	}
 
-	protected Company addCompany() throws Exception {
+	protected static Company addCompany() throws Exception {
 		long counterCompanyId =
 			_counterLocalService.increment(Company.class.getName()) + 1;
 
@@ -1384,7 +1378,7 @@ public class CompanyLocalServiceTest {
 		return company;
 	}
 
-	protected Company addCompany(String webId) throws Exception {
+	protected static Company addCompany(String webId) throws Exception {
 		Company company = _companyLocalService.addCompany(
 			null, webId, webId, "test.com", 0, true, true, null, null, null,
 			null, null, null);
@@ -1392,6 +1386,29 @@ public class CompanyLocalServiceTest {
 		PortalInstances.initCompany(company);
 
 		return company;
+	}
+
+	protected static User addUser(
+			long companyId, long userId, long groupId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return UserTestUtil.addUser(
+			companyId, userId,
+			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {groupId},
+			serviceContext);
+	}
+
+	protected static ServiceContext getServiceContext(long companyId) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(companyId);
+
+		return serviceContext;
 	}
 
 	protected LayoutSetPrototype addLayoutSetPrototype(
@@ -1405,29 +1422,6 @@ public class CompanyLocalServiceTest {
 			).build(),
 			new HashMap<Locale, String>(), true, true,
 			getServiceContext(companyId));
-	}
-
-	protected User addUser(
-			long companyId, long userId, long groupId,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return UserTestUtil.addUser(
-			companyId, userId,
-			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new long[] {groupId},
-			serviceContext);
-	}
-
-	protected ServiceContext getServiceContext(long companyId) {
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(companyId);
-
-		return serviceContext;
 	}
 
 	protected void testUpdateCompanyNames(
@@ -1536,7 +1530,9 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	private void _addCompanyUserGroupRole(Company company) throws Exception {
+	private static void _addCompanyUserGroupRole(Company company)
+		throws Exception {
+
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
@@ -1571,7 +1567,7 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	private void _cleanupData() throws Exception {
+	private static void _cleanupData() throws Exception {
 		List<ClassName> classNames = ListUtil.remove(
 			_classNameLocalService.getClassNames(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
@@ -1590,6 +1586,50 @@ public class CompanyLocalServiceTest {
 		}
 
 		_serviceRegistrations.clear();
+	}
+
+	private static void _initializeClassNames() throws Exception {
+		_classNames = _classNameLocalService.getClassNames(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	private static List<String> _registerModelListeners() {
+		List<String> list = new CopyOnWriteArrayList<>();
+
+		Bundle bundle = FrameworkUtil.getBundle(CompanyLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				ModelListener.class,
+				new BaseModelListener<Role>() {
+
+					@Override
+					public void onBeforeRemove(Role role)
+						throws ModelListenerException {
+
+						list.add(Role.class.getName());
+					}
+
+				},
+				new HashMapDictionary<>()));
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				ModelListener.class,
+				new BaseModelListener<UserGroupRole>() {
+
+					@Override
+					public void onBeforeRemove(UserGroupRole userGroupRole)
+						throws ModelListenerException {
+
+						list.add(UserGroupRole.class.getName());
+					}
+
+				},
+				new HashMapDictionary<>()));
+
+		return list;
 	}
 
 	private List<String> _getObjectNames(String objectType, long companyId)
@@ -1626,50 +1666,6 @@ public class CompanyLocalServiceTest {
 		return viewNames.size();
 	}
 
-	private void _initializeClassNames() throws Exception {
-		_classNames = _classNameLocalService.getClassNames(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	private List<String> _registerModelListeners() {
-		List<String> list = new CopyOnWriteArrayList<>();
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				ModelListener.class,
-				new BaseModelListener<Role>() {
-
-					@Override
-					public void onBeforeRemove(Role role)
-						throws ModelListenerException {
-
-						list.add(Role.class.getName());
-					}
-
-				},
-				new HashMapDictionary<>()));
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				ModelListener.class,
-				new BaseModelListener<UserGroupRole>() {
-
-					@Override
-					public void onBeforeRemove(UserGroupRole userGroupRole)
-						throws ModelListenerException {
-
-						list.add(UserGroupRole.class.getName());
-					}
-
-				},
-				new HashMapDictionary<>()));
-
-		return list;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyLocalServiceTest.class);
 
@@ -1690,6 +1686,8 @@ public class CompanyLocalServiceTest {
 
 	private static DB _db;
 	private static DBPartitionDB _dbPartitionDB;
+	private static Company _deletedCompany;
+	private static List<String> _modelListenerList;
 
 	@Inject
 	private static RoleLocalService _roleLocalService;

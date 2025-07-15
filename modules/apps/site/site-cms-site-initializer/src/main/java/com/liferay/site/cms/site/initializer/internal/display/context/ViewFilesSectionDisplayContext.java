@@ -68,9 +68,9 @@ public class ViewFilesSectionDisplayContext
 		fdsActionDropdownItems.add(
 			3,
 			new FDSActionDropdownItem(
-				"#", "share", "share", LanguageUtil.get(httpServletRequest, "share"),
-				"get", null, "link"
-			));
+				"#", "share", "share",
+				LanguageUtil.get(httpServletRequest, "share"), "get", null,
+				"link"));
 
 		fdsActionDropdownItems.add(
 			4,

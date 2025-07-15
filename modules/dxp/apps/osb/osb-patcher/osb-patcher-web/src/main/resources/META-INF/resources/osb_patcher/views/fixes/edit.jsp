@@ -23,71 +23,78 @@ PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId)
 
 <portlet:actionURL name="/patcher/update_fixes" var="updatePatcherFixURL" />
 
-<aui:form action="<%= updatePatcherFixURL %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="patcherFixId" type="hidden" value="<%= patcherFix.getPatcherFixId() %>" />
+<liferay-frontend:edit-form
+	action="<%= updatePatcherFixURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
+	<liferay-frontend:edit-form-body>
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="patcherFixId" type="hidden" value="<%= patcherFix.getPatcherFixId() %>" />
 
-	<aui:field-wrapper label="modified-date">
-		<%= dateTimeFormat.format(patcherFix.getModifiedDate()) %>
-	</aui:field-wrapper>
+		<aui:field-wrapper label="modified-date">
+			<%= dateTimeFormat.format(patcherFix.getModifiedDate()) %>
+		</aui:field-wrapper>
 
-	<aui:field-wrapper label="created-by">
-		<%= patcherFix.getUserName() %>
-	</aui:field-wrapper>
+		<aui:field-wrapper label="created-by">
+			<%= patcherFix.getUserName() %>
+		</aui:field-wrapper>
 
-	<aui:field-wrapper label="fix-id">
-		<%= patcherFix.getPatcherFixId() %>
-	</aui:field-wrapper>
+		<aui:field-wrapper label="fix-id">
+			<%= patcherFix.getPatcherFixId() %>
+		</aui:field-wrapper>
 
-	<aui:field-wrapper label="version">
-		<%= patcherFix.getKeyVersion() %>
-	</aui:field-wrapper>
+		<aui:field-wrapper label="version">
+			<%= patcherFix.getKeyVersion() %>
+		</aui:field-wrapper>
 
-	<aui:field-wrapper label="patcher-status">
-		<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(patcherFix.getStatus()) %>" />
-	</aui:field-wrapper>
+		<aui:field-wrapper label="patcher-status">
+			<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(patcherFix.getStatus()) %>" />
+		</aui:field-wrapper>
 
-	<aui:select disabled="<%= true %>" label="product-version" name="patcherProductVersionId" required="<%= true %>">
+		<aui:select disabled="<%= true %>" label="product-version" name="patcherProductVersionId" required="<%= true %>">
 
-		<%
-		for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
-		%>
+			<%
+			for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
+			%>
 
-			<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
+				<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</aui:select>
+		</aui:select>
 
-	<aui:select disabled="<%= true %>" label="project-version" name="patcherProjectVersionId" required="<%= true %>" showEmptyOption="<%= true %>">
+		<aui:select disabled="<%= true %>" label="project-version" name="patcherProjectVersionId" required="<%= true %>" showEmptyOption="<%= true %>">
 
-		<%
-		for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions(patcherFix.getPatcherProductVersionId())) {
-		%>
+			<%
+			for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions(patcherFix.getPatcherProductVersionId())) {
+			%>
 
-			<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
+				<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</aui:select>
+		</aui:select>
 
-	<aui:field-wrapper label="git-hash">
-		<a href="<%= PatcherFixUtil.getPatcherFixGitHubURL(patcherFix.getPatcherFixId()) %>" target="_blank"><%= patcherFix.getGitHash() %></a>
-	</aui:field-wrapper>
+		<aui:field-wrapper label="git-hash">
+			<a href="<%= PatcherFixUtil.getPatcherFixGitHubURL(patcherFix.getPatcherFixId()) %>" target="_blank"><%= patcherFix.getGitHash() %></a>
+		</aui:field-wrapper>
 
-	<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="content" name="patcherFixName" readonly="<%= true %>" type="textarea" value="<%= patcherFix.getName() %>" />
+		<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="content" name="patcherFixName" readonly="<%= true %>" type="textarea" value="<%= patcherFix.getName() %>" />
 
-	<aui:input label="branch-name" name="committish" />
+		<aui:input label="branch-name" name="committish" />
 
-	<aui:input label="github-url" name="gitRemoteURL" />
+		<aui:input label="github-url" name="gitRemoteURL" />
 
-	<aui:input name="workaround" type="checkbox" value="<%= patcherFix.getType() == PatcherFixConstants.TYPE_WORKAROUND %>" />
+		<aui:input name="workaround" type="checkbox" value="<%= patcherFix.getType() == PatcherFixConstants.TYPE_WORKAROUND %>" />
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" value="update" />
 
 		<aui:button href="<%= redirect %>" value="cancel" />
@@ -99,8 +106,8 @@ PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId)
 				onClick='<%= liferayPortletResponse.getNamespace() + "handleClick()" %>'
 			/>
 		</c:if>
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	function <portlet:namespace />handleClick() {

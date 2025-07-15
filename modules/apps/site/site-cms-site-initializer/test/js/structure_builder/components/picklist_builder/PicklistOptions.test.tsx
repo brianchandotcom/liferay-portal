@@ -15,11 +15,6 @@ import {
 	MockStateProvider,
 } from '../../mocks/MockPicklistStateProvider';
 
-jest.mock('frontend-js-web', () => ({
-	...((jest.requireActual('frontend-js-web') ?? {}) as any),
-	loadClientExtensions: () => Promise.resolve(),
-}));
-
 const renderComponent = (state?: Partial<PicklistContext.State>) => {
 	return render(
 		<MockStateProvider state={state}>
@@ -29,14 +24,6 @@ const renderComponent = (state?: Partial<PicklistContext.State>) => {
 };
 
 describe('PicklistOptions', () => {
-	beforeEach(() => {
-		(global as any).Liferay.Language.direction = {
-			en_US: 'rtl',
-		};
-
-		jest.clearAllMocks();
-	});
-
 	it('shows an empty state when there are no picklists', () => {
 		renderComponent({options: new Map()});
 
@@ -145,7 +132,9 @@ describe('PicklistOptions', () => {
 
 		await waitFor(() => {
 			expect(
-				screen.getByText('x-of-x-items-selected')
+				screen.getByText(
+					`all-selected-${selecItemCheckboxs.length}-of-x-items`
+				)
 			).toBeInTheDocument();
 		});
 

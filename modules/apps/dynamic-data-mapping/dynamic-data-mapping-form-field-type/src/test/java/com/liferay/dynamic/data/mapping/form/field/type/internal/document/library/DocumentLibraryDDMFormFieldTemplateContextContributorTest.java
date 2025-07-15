@@ -110,7 +110,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				themeDisplay);
+				true, themeDisplay);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			_createDDMFormFieldRenderingContext();
@@ -130,7 +130,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 	public void testGetParametersForAllowedGuestUser() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				_mockThemeDisplay());
+				true, _mockThemeDisplay());
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"field", "document_library");
@@ -166,21 +166,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 
 	@Test
 	public void testGetParametersForDDMFormAdminPortlet() {
-		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
-
-		ThemeDisplay themeDisplay = _mockThemeDisplay();
-
-		Mockito.when(
-			themeDisplay.getPortletDisplay()
-		).thenReturn(
-			portletDisplay
-		);
-
-		Mockito.when(
-			portletDisplay.getRootPortletId()
-		).thenReturn(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN
-		);
+		ThemeDisplay themeDisplay = _mockThemeDisplay(
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
 
 		Mockito.when(
 			themeDisplay.isSignedIn()
@@ -190,7 +177,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				false, false, themeDisplay);
+				themeDisplay);
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -205,7 +192,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 	public void testGetParametersForGuestUser() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				_mockThemeDisplay());
+				true, _mockThemeDisplay());
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -228,7 +215,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				themeDisplay);
+				true, themeDisplay);
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -252,7 +239,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				false, true, themeDisplay);
+				false, themeDisplay);
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -283,7 +270,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				themeDisplay);
+				true, themeDisplay);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			_createDDMFormFieldRenderingContext();
@@ -314,7 +301,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 	public void testGetParametersShouldContainMaximumRepetitions() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				_mockThemeDisplay());
+				true, _mockThemeDisplay());
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"field", "document_library");
@@ -332,7 +319,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 	public void testGetParametersShouldUseExistingGuestUploadURL() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				_mockThemeDisplay());
+				true, _mockThemeDisplay());
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"field", "document_library");
@@ -364,7 +351,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				themeDisplay);
+				true, themeDisplay);
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"field", "document_library");
@@ -386,7 +373,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 	public void testGetParametersShouldUseFileEntryTitle() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				_mockThemeDisplay());
+				true, _mockThemeDisplay());
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -416,7 +403,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				themeDisplay);
+				true, themeDisplay);
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -465,23 +452,29 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 	}
 
 	private DocumentLibraryDDMFormFieldTemplateContextContributor _createSpy(
-		boolean containsPermission, boolean mockPermission,
+		boolean containsPermission, ThemeDisplay themeDisplay) {
+
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
+				themeDisplay);
+
+		Mockito.doReturn(
+			containsPermission
+		).when(
+			documentLibraryDDMFormFieldTemplateContextContributor
+		).containsPermission(
+			Mockito.any(DDMFormFieldRenderingContext.class), Mockito.anyString()
+		);
+
+		return documentLibraryDDMFormFieldTemplateContextContributor;
+	}
+
+	private DocumentLibraryDDMFormFieldTemplateContextContributor _createSpy(
 		ThemeDisplay themeDisplay) {
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = Mockito.spy(
 				_documentLibraryDDMFormFieldTemplateContextContributor);
-
-		if (mockPermission) {
-			Mockito.doReturn(
-				containsPermission
-			).when(
-				documentLibraryDDMFormFieldTemplateContextContributor
-			).containsPermission(
-				Mockito.any(DDMFormFieldRenderingContext.class),
-				Mockito.anyString()
-			);
-		}
 
 		Mockito.doReturn(
 			_resourceBundle
@@ -500,12 +493,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 		);
 
 		return documentLibraryDDMFormFieldTemplateContextContributor;
-	}
-
-	private DocumentLibraryDDMFormFieldTemplateContextContributor _createSpy(
-		ThemeDisplay themeDisplay) {
-
-		return _createSpy(true, true, themeDisplay);
 	}
 
 	private void _mockDDMFormPortletItemSelector() {
@@ -553,6 +540,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 	}
 
 	private ThemeDisplay _mockThemeDisplay() {
+		return _mockThemeDisplay(DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+	}
+
+	private ThemeDisplay _mockThemeDisplay(String rootPortletId) {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
@@ -578,7 +569,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 		Mockito.when(
 			portletDisplay.getRootPortletId()
 		).thenReturn(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM
+			rootPortletId
 		);
 
 		Mockito.when(

@@ -462,8 +462,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 
 		content = _renderFragmentEntry(
-			_toConfiguration(fragmentEntryLink, fragmentRendererContext),
-			css, fragmentRendererContext, html, httpServletRequest, nonce);
+			_toConfiguration(fragmentEntryLink, fragmentRendererContext), css,
+			fragmentRendererContext, html, httpServletRequest, nonce);
 
 		if (cacheable) {
 			_fragmentEntryLinkCache.putFragmentEntryLinkContent(

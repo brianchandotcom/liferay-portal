@@ -18,6 +18,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import java.text.DecimalFormat;
+
 /**
  * @author Ivica Cardic
  */
@@ -34,7 +36,7 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 			Statement statement = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			ResultSet resultSet = statement.executeQuery(
-				"select distinct CPConfigurationEntryId, " +
+				"select distinct ctCollectionId, CPConfigurationEntryId, " +
 					"allowedOrderQuantities from CPConfigurationEntry")) {
 
 			while (resultSet.next()) {
@@ -55,12 +57,16 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 					StringBundler sb = new StringBundler(
 						allowedOrderQuantitiesItems.length * 2);
 
+					DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+
 					for (String allowedOrderQuantitiesItem :
 							allowedOrderQuantitiesItems) {
 
 						sb.append(
-							GetterUtil.getDouble(allowedOrderQuantitiesItem));
-						sb.append(",.2f ");
+							decimalFormat.format(
+								GetterUtil.getDouble(
+									allowedOrderQuantitiesItem)));
+						sb.append(StringPool.SPACE);
 					}
 
 					allowedOrderQuantities = sb.toString();
@@ -71,7 +77,7 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 					preparedStatement.setLong(
 						2, resultSet.getLong("ctCollectionId"));
 					preparedStatement.setLong(
-						2, resultSet.getLong("CPConfigurationEntryId"));
+						3, resultSet.getLong("CPConfigurationEntryId"));
 
 					preparedStatement.execute();
 				}

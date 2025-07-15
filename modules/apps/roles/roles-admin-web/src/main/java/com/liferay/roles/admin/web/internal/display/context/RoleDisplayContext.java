@@ -82,10 +82,9 @@ public class RoleDisplayContext {
 	public List<DropdownItem> getActionDropdownItems(Role role)
 		throws Exception {
 
+		String currentURL = PortalUtil.getCurrentURL(_httpServletRequest);
 		PermissionChecker permissionChecker =
 			_themeDisplay.getPermissionChecker();
-
-		String currentURL = PortalUtil.getCurrentURL(_httpServletRequest);
 
 		return DropdownItemListBuilder.add(
 			() -> RolePermissionUtil.contains(

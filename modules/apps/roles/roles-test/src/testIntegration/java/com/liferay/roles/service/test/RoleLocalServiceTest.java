@@ -155,7 +155,6 @@ public class RoleLocalServiceTest {
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
 		String name = RandomTestUtil.randomString();
-
 		Role sourceRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.ADMINISTRATOR);
 

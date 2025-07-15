@@ -63,8 +63,6 @@ public class AssetVocabularyItemDescriptor
 			"assetVocabularyId",
 			String.valueOf(_assetVocabulary.getVocabularyId())
 		).put(
-			"externalReferenceCode", _assetVocabulary.getExternalReferenceCode()
-		).put(
 			"groupId", String.valueOf(_assetVocabulary.getGroupId())
 		).put(
 			"title", _assetVocabulary.getTitle(themeDisplay.getLocale())

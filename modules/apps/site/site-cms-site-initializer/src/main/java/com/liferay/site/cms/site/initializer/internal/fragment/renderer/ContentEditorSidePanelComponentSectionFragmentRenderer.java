@@ -17,6 +17,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -144,10 +145,19 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 			}
 		).put(
 			"editorConfig",
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				StringPool.BLANK, "contentItemCommentEditor", StringPool.BLANK,
-				Collections.emptyMap(), themeDisplay,
-				RequestBackedPortletURLFactoryUtil.create(httpServletRequest))
+			() -> {
+				EditorConfiguration contentItemCommentEditorConfiguration =
+					EditorConfigurationFactoryUtil.getEditorConfiguration(
+						StringPool.BLANK, "contentItemCommentEditor",
+						StringPool.BLANK, Collections.emptyMap(), themeDisplay,
+						RequestBackedPortletURLFactoryUtil.create(
+							httpServletRequest));
+
+				Map<String, Object> data =
+					contentItemCommentEditorConfiguration.getData();
+
+				return data.get("editorConfig");
+			}
 		).put(
 			"id", String.valueOf(objectEntry.getObjectEntryId())
 		).put(

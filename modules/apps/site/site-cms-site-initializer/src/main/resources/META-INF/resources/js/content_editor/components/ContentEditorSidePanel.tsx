@@ -120,6 +120,7 @@ function SubscribeButton({
 	isSubscribed: boolean;
 	subscribeURL: string;
 }) {
+	const [disabled, setDisabled] = useState<boolean>(false);
 	const [subscribed, setSubscribed] = useState<boolean>(isSubscribed);
 
 	const title = subscribed
@@ -130,9 +131,12 @@ function SubscribeButton({
 		<ClayButtonWithIcon
 			aria-label={title}
 			borderless
+			disabled={disabled}
 			displayType="secondary"
 			monospaced
 			onClick={async () => {
+				setDisabled(true);
+
 				const response = await fetch(subscribeURL, {
 					body: objectToFormData({
 						cmd: !subscribed ? 'subscribe' : 'unsubscribe',
@@ -141,6 +145,8 @@ function SubscribeButton({
 				});
 
 				const subscription = await response.json();
+
+				setDisabled(false);
 
 				if (subscription.error) {
 					openToast({

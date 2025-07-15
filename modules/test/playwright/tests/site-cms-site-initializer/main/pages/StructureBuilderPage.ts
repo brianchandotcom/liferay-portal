@@ -249,6 +249,56 @@ export class StructureBuilderPage {
 		}
 	}
 
+	async clickFieldAction(field: Field, action: string) {
+		await this.selectFields([field]);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: action,
+			}),
+			trigger: this.page.getByRole('button', {name: 'Field Options'}),
+		});
+	}
+
+	async createRepeatableGroup({
+		fields,
+		label,
+	}: {
+		fields: Field[];
+		label?: string;
+	}) {
+		await this.selectFields(fields);
+
+		if (fields.length > 1) {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('menuitem', {
+					name: 'Create Repeatable Group',
+				}),
+				trigger: this.page.getByLabel('Selection Options'),
+			});
+		}
+		else {
+			await this.clickFieldAction(fields[0], 'Create Repeatable Group');
+		}
+
+		await this.page
+			.locator('.label-item', {hasText: 'Repeatable Group'})
+			.waitFor();
+
+		if (label) {
+			const labelInput = this.page.getByLabel('Label');
+
+			await labelInput.fill(label);
+			await labelInput.blur();
+
+			await expect(
+				this.page.locator('.treeview-link', {hasText: label})
+			).toBeVisible();
+		}
+	}
+
 	async createStructure(type: StructureType = 'content') {
 		await this.goto({type});
 	}

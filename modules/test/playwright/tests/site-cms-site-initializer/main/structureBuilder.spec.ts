@@ -979,6 +979,18 @@ test.describe('Referenced structures', () => {
 			await expect(page.getByLabel('ERC')).toBeDisabled();
 			await expect(structureBuilderPage.spaceSelector).toBeDisabled();
 
+			// Check we can't edit referenced structure fields
+
+			await structureBuilderPage.selectFields([{label: 'Title', nth: 1}]);
+
+			await expect(
+				page.getByRole('button', {name: 'Field Options'})
+			).not.toBeVisible();
+
+			await expect(page.getByLabel('Label')).toBeDisabled();
+			await expect(page.getByLabel('ERC')).toBeDisabled();
+			await expect(page.getByLabel('Field Name')).toBeDisabled();
+
 			// Publish the structure
 
 			await structureBuilderPage.publishStructure();
@@ -987,17 +999,12 @@ test.describe('Referenced structures', () => {
 
 			const pagePromise = context.waitForEvent('page');
 
-			const treeItem = page
-				.locator('.treeview-item')
-				.getByLabel(label1, {exact: true});
-
 			await structureBuilderPage.selectFields([{label: label1}]);
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('menuitem', {name: 'Edit'}),
-				trigger: treeItem.getByLabel('Field Options'),
-			});
+			await structureBuilderPage.clickFieldAction(
+				{label: label1},
+				'Edit'
+			);
 
 			const newPage = await pagePromise;
 
@@ -1056,6 +1063,238 @@ test.describe('Referenced structures', () => {
 			await structureBuilderPage.selectFields([{label: 'Date'}]);
 
 			await expect(page.getByLabel('Label')).toHaveValue('Date');
+		}
+	);
+});
+
+test.describe('Repeatable groups', () => {
+	test(
+		'Groups can be created, persisted and ungrouped',
+		{
+			tag: '@LPD-50378',
+		},
+		async ({page, structureBuilderPage}) => {
+
+			// Create structure
+
+			const erc = await createStructure({
+				label: getRandomString(),
+				name: `StructureName${getRandomInt()}`,
+				page: structureBuilderPage,
+				publish: false,
+			});
+
+			// Add fields
+
+			await structureBuilderPage.addField('Text');
+			await structureBuilderPage.addField('Date');
+			await structureBuilderPage.addField('Decimal');
+
+			// Create repeatable group with two of them
+
+			await structureBuilderPage.createRepeatableGroup({
+				fields: [{label: 'Text'}, {label: 'Date'}],
+				label: 'Repeatable Group 1',
+			});
+
+			// Check recently added group is expanded by default
+
+			await expect(
+				page.locator('.treeview-link', {hasText: 'Text'})
+			).toBeVisible();
+
+			await expect(
+				page.locator('.treeview-link', {hasText: 'Date'})
+			).toBeVisible();
+
+			// Create another group inside the first one
+
+			await structureBuilderPage.createRepeatableGroup({
+				fields: [{label: 'Date'}],
+				label: 'Repeatable Group 2',
+			});
+
+			// Check groups are persisted
+
+			await structureBuilderPage.publishStructure();
+
+			await structureBuilderPage.editStructure(erc);
+
+			await expect(
+				page.locator('.treeview-link', {hasText: 'Repeatable Group 1'})
+			).toBeVisible();
+
+			await structureBuilderPage.expandField({
+				label: 'Repeatable Group 1',
+			});
+
+			await expect(
+				page.locator('.treeview-link', {hasText: 'Repeatable Group 2'})
+			).toBeVisible();
+
+			// Add a new group and ungroup it
+
+			await structureBuilderPage.addField('Boolean');
+
+			await structureBuilderPage.createRepeatableGroup({
+				fields: [{label: 'Boolean'}],
+				label: 'Repeatable Group 3',
+			});
+
+			await structureBuilderPage.clickFieldAction(
+				{label: 'Repeatable Group 3'},
+				'Ungroup'
+			);
+
+			await expect(
+				page.locator('.treeview-link', {hasText: 'Repeatable Group 2'})
+			).toBeVisible();
+
+			await expect(
+				page.locator('.treeview-link', {hasText: 'Boolean'})
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Check restrictions for group creation',
+		{
+			tag: '@LPD-50378',
+		},
+		async ({page, structureBuilderPage}) => {
+
+			// Create structure
+
+			const erc = await createStructure({
+				label: getRandomString(),
+				name: `StructureName${getRandomInt()}`,
+				page: structureBuilderPage,
+				publish: false,
+			});
+
+			// Check a group can't be created if there's only one field
+
+			await structureBuilderPage.selectFields([{label: 'Title'}]);
+
+			await structureBuilderPage.clickFieldAction(
+				{label: 'Title'},
+				'Create Repeatable Group'
+			);
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText(
+					'The repeatable group cannot be created because at least one field is required.'
+				),
+				trigger: page.getByRole('menuitem', {
+					name: 'Create Repeatable Group',
+				}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByText(
+					'The repeatable group cannot be created because at least one field is required.'
+				),
+				trigger: page.locator('.modal-footer').getByText('Done'),
+			});
+
+			// Add fields
+
+			await structureBuilderPage.addField('Text');
+			await structureBuilderPage.addField('Date');
+			await structureBuilderPage.addField('Decimal');
+
+			// Create repeatable group with two of them
+
+			await structureBuilderPage.createRepeatableGroup({
+				fields: [{label: 'Text'}, {label: 'Date'}],
+				label: 'Repeatable Group 1',
+			});
+
+			// Check a group can't be created with fields that have different parent
+
+			await structureBuilderPage.selectFields([
+				{label: 'Date'},
+				{label: 'Decimal'},
+			]);
+
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('menuitem', {
+					name: 'Create Repeatable Group',
+				}),
+				trigger: page.getByLabel('Selection Options'),
+			});
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText(
+					'A repeatable group requires all selected items to be at the same hierarchy level. Adjust your selection and try again.'
+				),
+				trigger: page.getByRole('menuitem', {
+					name: 'Create Repeatable Group',
+				}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByText(
+					'A repeatable group requires all selected items to be at the same hierarchy level. Adjust your selection and try again.'
+				),
+				trigger: page.locator('.modal-footer').getByText('Done'),
+			});
+
+			// Check a group can't be created with published fields
+
+			await structureBuilderPage.publishStructure();
+
+			await structureBuilderPage.selectFields([
+				{label: 'Title'},
+				{label: 'Decimal'},
+			]);
+
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('menuitem', {
+					name: 'Create Repeatable Group',
+				}),
+				trigger: page.getByLabel('Selection Options'),
+			});
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText(
+					'The repeatable group cannot be created because one or more fields of the selection are already published.'
+				),
+				trigger: page.getByRole('menuitem', {
+					name: 'Create Repeatable Group',
+				}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByText(
+					'The repeatable group cannot be created because one or more fields of the selection are already published.'
+				),
+				trigger: page.locator('.modal-footer').getByText('Done'),
+			});
+
+			// Check we can't ungroup the published group
+
+			await structureBuilderPage.publishStructure();
+
+			await structureBuilderPage.editStructure(erc);
+
+			await structureBuilderPage.clickFieldAction(
+				{label: 'Repeatable Group 1'},
+				'Ungroup'
+			);
+
+			await page
+				.getByText(
+					'The ungroup action cannot be done because this repeatable group is already published.'
+				)
+				.waitFor();
+
+			await clickAndExpectToBeHidden({
+				target: page.getByText(
+					'The ungroup action cannot be done because this repeatable group is already published.'
+				),
+				trigger: page.locator('.modal-footer').getByText('Done'),
+			});
 		}
 	);
 });

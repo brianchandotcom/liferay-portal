@@ -15,6 +15,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import jakarta.ws.rs.core.Response;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -106,6 +107,11 @@ public class BatchTestEntityResourceImpl
 		}
 
 		return batchTestEntity;
+	}
+
+	@Override
+	public List<String> getNestedFields() {
+		return Collections.singletonList("nestedField");
 	}
 
 	@Override

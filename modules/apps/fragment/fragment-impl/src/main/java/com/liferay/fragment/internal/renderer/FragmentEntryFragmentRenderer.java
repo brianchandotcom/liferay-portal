@@ -465,18 +465,17 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			_toConfiguration(fragmentEntryLink, fragmentRendererContext), css,
 			fragmentRendererContext, html, httpServletRequest, nonce);
 
-		if (cacheable) {
-			_fragmentEntryLinkCache.putFragmentEntryLinkContent(
-				content, fragmentEntryLink,
-				fragmentRendererContext.getLocale());
-
-			content = StringUtil.replace(
-				content, _NONCE,
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-					httpServletRequest));
+		if (!cacheable) {
+			return content;
 		}
 
-		return content;
+		_fragmentEntryLinkCache.putFragmentEntryLinkContent(
+			content, fragmentEntryLink, fragmentRendererContext.getLocale());
+
+		return StringUtil.replace(
+			content, _NONCE,
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
 	}
 
 	private String _toConfiguration(

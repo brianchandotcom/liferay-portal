@@ -12,6 +12,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
@@ -55,6 +56,7 @@ const baseTest = mergeTests(
 	loginTest(),
 	pageViewModePagesTest,
 	pagesAdminPagesTest,
+	systemSettingsPageTest,
 	workflowPagesTest
 );
 
@@ -1690,6 +1692,38 @@ ckeditor4Test(
 		await expect(
 			editableFrame.locator('img[src="/documents/d/guest/satellite-png"]')
 		).toBeVisible();
+	}
+);
+
+baseTest(
+	'Check if Web Content can be saved as draft after changing default language',
+	{
+		tag: '@LPD-60603',
+	},
+	async ({journalEditArticlePage, page, site, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Web Content',
+			'Administration'
+		);
+
+		await page.getByLabel('Changeable Default Language').check();
+
+		await page.getByRole('button', {name: /save|update/i}).click();
+
+		await waitForAlert(page);
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.changeDefaultLanguage('pt_BR');
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.saveAsDraftWithPermissions(title);
+
+		await waitForAlert(
+			page,
+			`Success:${title} was successfully saved as a draft.`
+		);
 	}
 );
 

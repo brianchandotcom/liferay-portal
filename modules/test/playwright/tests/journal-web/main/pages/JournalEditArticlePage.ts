@@ -148,6 +148,12 @@ export class JournalEditArticlePage {
 		await this.page.locator(`button[id="${languageId}"]`).click();
 	}
 
+	async changeDefaultLanguage(languageId: string) {
+		await this.page.getByRole('button', {name: 'Change'}).click();
+
+		await this.page.getByRole('menuitem', {name: languageId}).click();
+	}
+
 	async changeViewInRelatedAssetPopUp(assetType: string, viewType: string) {
 		await this.page
 			.frameLocator(`iframe[title="Select ${assetType}"]`)

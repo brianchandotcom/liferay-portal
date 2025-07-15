@@ -35,7 +35,7 @@ boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PA
 %>
 
 <liferay-ui:header
-	title="edit-fix-pack"
+	title='<%= LanguageUtil.format(request, "edit-x", String.valueOf(patcherFixPack.getPatcherFixPackId())) %>'
 />
 
 <aui:model-context bean="<%= patcherFixPack %>" model="<%= PatcherFixPack.class %>" />

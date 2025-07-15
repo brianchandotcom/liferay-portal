@@ -16,7 +16,7 @@ PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId)
 %>
 
 <liferay-ui:header
-	title="edit-fix"
+	title='<%= LanguageUtil.format(request, "edit-x", String.valueOf(patcherFix.getPatcherFixId())) %>'
 />
 
 <aui:model-context bean="<%= patcherFix %>" model="<%= PatcherFix.class %>" />

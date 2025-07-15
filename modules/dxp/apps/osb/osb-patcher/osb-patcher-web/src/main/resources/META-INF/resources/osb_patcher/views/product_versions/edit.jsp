@@ -16,7 +16,7 @@ PatcherProductVersion patcherProductVersion = PatcherProductVersionLocalServiceU
 %>
 
 <liferay-ui:header
-	title="<%= patcherProductVersion.getName() %>"
+	title='<%= LanguageUtil.format(request, "edit-x", patcherProductVersion.getName()) %>'
 />
 
 <aui:model-context bean="<%= patcherProductVersion %>" model="<%= PatcherProductVersion.class %>" />

@@ -14,7 +14,7 @@ PatcherProjectVersion patcherProjectVersion = patcherProjectVersionsDisplayConte
 %>
 
 <liferay-ui:header
-	title="<%= patcherProjectVersion.getName() %>"
+	title='<%= LanguageUtil.format(request, "edit-x", patcherProjectVersion.getName()) %>'
 />
 
 <aui:model-context bean="<%= patcherProjectVersion %>" model="<%= PatcherProjectVersion.class %>" />

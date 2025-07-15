@@ -22,7 +22,7 @@ patcherBuildTickets.retainAll(cumulativeFixedIssues);
 %>
 
 <liferay-ui:header
-	title="edit-build"
+	title='<%= LanguageUtil.format(request, "edit-x", String.valueOf(patcherBuildId)) %>'
 />
 
 <aui:model-context bean="<%= patcherBuild %>" model="<%= PatcherBuild.class %>" />

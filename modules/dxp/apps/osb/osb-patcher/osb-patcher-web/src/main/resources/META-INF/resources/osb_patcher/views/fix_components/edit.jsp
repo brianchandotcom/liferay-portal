@@ -16,7 +16,7 @@ PatcherFixComponent patcherFixComponent = PatcherFixComponentLocalServiceUtil.fe
 %>
 
 <liferay-ui:header
-	title="<%= patcherFixComponent.getName() %>"
+	title='<%= LanguageUtil.format(request, "edit-x", String.valueOf(patcherFixComponent.getName())) %>'
 />
 
 <aui:model-context bean="<%= patcherFixComponent %>" model="<%= PatcherFixComponent.class %>" />

@@ -35,6 +35,7 @@ PatcherFixesDisplayContext patcherFixesDisplayContext = new PatcherFixesDisplayC
 				<portlet:renderURL var="viewPatcherFixPopUpURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcRenderCommandName" value="/patcher/view_fixes" />
 					<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
 				<clay:button
@@ -49,6 +50,7 @@ PatcherFixesDisplayContext patcherFixesDisplayContext = new PatcherFixesDisplayC
 		<portlet:renderURL var="viewPatcherFixURL">
 			<portlet:param name="mvcRenderCommandName" value="/patcher/view_fixes" />
 			<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
@@ -76,6 +78,7 @@ PatcherFixesDisplayContext patcherFixesDisplayContext = new PatcherFixesDisplayC
 						<portlet:renderURL var="viewPatcherFixPackURL">
 							<portlet:param name="mvcRenderCommandName" value="/patcher/view_fix_packs" />
 							<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFixPack.getPatcherFixPackId()) %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:renderURL>
 
 						<a class="nobr" href="<%= viewPatcherFixPackURL %>"><%= token %></a>,
@@ -184,6 +187,7 @@ PatcherFixesDisplayContext patcherFixesDisplayContext = new PatcherFixesDisplayC
 					<portlet:renderURL var="editPatcherFixURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_fixes" />
 						<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon

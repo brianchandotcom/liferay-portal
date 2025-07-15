@@ -24,11 +24,7 @@ PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId)
 <portlet:actionURL name="/patcher/update_fixes" var="updatePatcherFixURL" />
 
 <aui:form action="<%= updatePatcherFixURL %>" method="post" name="fm">
-	<portlet:renderURL var="viewPatcherFixesURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/index_fixes" />
-	</portlet:renderURL>
-
-	<aui:input name="redirect" type="hidden" value="<%= viewPatcherFixesURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="patcherFixId" type="hidden" value="<%= patcherFix.getPatcherFixId() %>" />
 
 	<aui:field-wrapper label="modified-date">
@@ -94,7 +90,7 @@ PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId)
 	<aui:button-row>
 		<aui:button type="submit" value="update" />
 
-		<aui:button href="<%= Validator.isNotNull(redirect) ? redirect : viewPatcherFixesURL %>" value="cancel" />
+		<aui:button href="<%= redirect %>" value="cancel" />
 
 		<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.EDIT_FIX_PACK_FIELDS, patcherFix.getUserId()) %>">
 			<clay:button

@@ -9,8 +9,6 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-
-long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersionId");
 %>
 
 <liferay-ui:header
@@ -22,12 +20,7 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 <portlet:actionURL name="/patcher/add_fixes" var="addPatcherFixURL" />
 
 <aui:form action="<%= addPatcherFixURL %>" method="post" name="fm">
-	<portlet:renderURL var="viewPatcherFixesURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/index_fixes" />
-		<portlet:param name="patcherProductVersionId" value="<%= String.valueOf(patcherProductVersionId) %>" />
-	</portlet:renderURL>
-
-	<aui:input name="redirect" type="hidden" value="<%= viewPatcherFixesURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "productVersionOnChange(this.value);" %>' required="<%= true %>" showEmptyOption="<%= true %>">
 
@@ -56,7 +49,7 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 	<aui:button-row>
 		<aui:button type="submit" value="add" />
 
-		<aui:button href="<%= Validator.isNotNull(redirect) ? redirect : viewPatcherFixesURL %>" value="cancel" />
+		<aui:button href="<%= redirect %>" value="cancel" />
 	</aui:button-row>
 </aui:form>
 

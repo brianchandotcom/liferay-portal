@@ -51,7 +51,7 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 			TestPropsValues.getUserId(), objectFolderId, null, false, false,
-			true, enableLocalization, false, false, false, null,
+			true, enableLocalization, false, false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(value), value, null, null,
 			LocalizedMapUtil.getLocalizedMap(value), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY,
@@ -69,7 +69,7 @@ public class ObjectDefinitionTestUtil {
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 			"L_" + StringUtil.toLowerCase(RandomTestUtil.randomString()),
 			TestPropsValues.getUserId(), 0, null, null, false, false, false,
-			false, false, false, false, null,
+			false, false, false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(value), true, "Test", null, null,
 			null, null, LocalizedMapUtil.getLocalizedMap(value), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1, 0,

@@ -168,7 +168,7 @@ public class ExecuteInfoItemActionStrutsActionTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				_user.getUserId(), 0, null, false, false, true, false, false,
-				false, false, null,
+				false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null,
 				"control_panel.sites",

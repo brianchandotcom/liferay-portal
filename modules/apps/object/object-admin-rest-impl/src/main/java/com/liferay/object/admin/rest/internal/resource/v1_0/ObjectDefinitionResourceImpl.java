@@ -266,6 +266,8 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntrySchedule()),
 					GetterUtil.getBoolean(
+						objectDefinition.getEnableObjectEntrySubscription()),
+					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryVersioning()),
 					objectDefinition.getFriendlyURLSeparator(),
 					LocalizedMapUtil.populateLocalizedMap(
@@ -312,6 +314,8 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableObjectEntryDraft()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntrySchedule()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableObjectEntrySubscription()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryVersioning()),
 					objectDefinition.getFriendlyURLSeparator(),
@@ -583,6 +587,8 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableObjectEntryHistory()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntrySchedule()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableObjectEntrySubscription()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryVersioning()),
 					GetterUtil.getString(

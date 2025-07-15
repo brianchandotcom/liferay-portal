@@ -3921,6 +3921,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.isEnableObjectEntryDraft(),
 			_objectDefinition.isEnableObjectEntryHistory(),
 			_objectDefinition.isEnableObjectEntrySchedule(),
+			_objectDefinition.isEnableObjectEntrySubscription(),
 			_objectDefinition.isEnableObjectEntryVersioning(),
 			_objectDefinition.getFriendlyURLSeparator(),
 			_objectDefinition.getLabelMap(), _objectDefinition.getName(),

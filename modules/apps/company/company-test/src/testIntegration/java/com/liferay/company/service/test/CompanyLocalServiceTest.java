@@ -1613,12 +1613,39 @@ public class CompanyLocalServiceTest {
 		CompanyLocalServiceTest.class);
 
 	private static BundleContext _bundleContext;
+
+	@Inject
+	private static ClassNameLocalService _classNameLocalService;
+
 	private static List<ClassName> _classNames;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
 	private static Connection _connection;
+
+	@Inject
+	private static CounterLocalService _counterLocalService;
+
 	private static DB _db;
 	private static DBPartitionDB _dbPartitionDB;
+
+	@Inject
+	private static RoleLocalService _roleLocalService;
+
 	private static SafeCloseable _safeCloseable;
+	private static final List<ServiceRegistration<?>> _serviceRegistrations =
+		new CopyOnWriteArrayList<>();
 	private static final TransactionConfig _transactionConfig;
+
+	@Inject
+	private static UserGroupLocalService _userGroupLocalService;
+
+	@Inject
+	private static UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private static UserLocalService _userLocalService;
 
 	static {
 		TransactionConfig.Builder builder = new TransactionConfig.Builder();
@@ -1631,16 +1658,7 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Inject
-	private ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
-	@Inject
 	private ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private CounterLocalService _counterLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
@@ -1685,25 +1703,10 @@ public class CompanyLocalServiceTest {
 	private PrefsProps _prefsProps;
 
 	@Inject
-	private RoleLocalService _roleLocalService;
-
-	private final List<ServiceRegistration<?>> _serviceRegistrations =
-		new CopyOnWriteArrayList<>();
-
-	@Inject
 	private Sites _sites;
 
 	@Inject
 	private StagingLocalService _stagingLocalService;
-
-	@Inject
-	private UserGroupLocalService _userGroupLocalService;
-
-	@Inject
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 	@Inject
 	private VirtualHostLocalService _virtualHostLocalService;

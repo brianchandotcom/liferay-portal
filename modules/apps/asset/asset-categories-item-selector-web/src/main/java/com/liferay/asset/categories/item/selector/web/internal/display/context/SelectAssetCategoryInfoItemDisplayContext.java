@@ -246,9 +246,6 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 				"classNameId",
 				PortalUtil.getClassNameId(AssetCategory.class.getName())
 			).put(
-				"externalReferenceCode",
-				assetCategory.getExternalReferenceCode()
-			).put(
 				"icon", "categories"
 			).put(
 				"id", assetCategory.getCategoryId()

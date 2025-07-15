@@ -236,9 +236,13 @@ public class AttachmentManagerImpl implements AttachmentManager {
 	public void validateFileExtension(String fileName, long objectFieldId)
 		throws FileExtensionException {
 
-		if (!ArrayUtil.contains(
-				getAcceptedFileExtensions(objectFieldId),
-				FileUtil.getExtension(fileName), true)) {
+		String[] acceptedFileExtensions = getAcceptedFileExtensions(
+			objectFieldId);
+
+		if (!ArrayUtil.contains(acceptedFileExtensions, StringPool.STAR) &&
+			!ArrayUtil.contains(
+				acceptedFileExtensions, FileUtil.getExtension(fileName),
+				true)) {
 
 			throw new FileExtensionException.InvalidExtension(
 				"Invalid file extension for " + fileName);

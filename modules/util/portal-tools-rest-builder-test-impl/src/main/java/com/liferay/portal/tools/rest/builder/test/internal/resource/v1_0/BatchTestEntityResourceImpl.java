@@ -9,6 +9,7 @@ import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngin
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.BatchTestEntityResource;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.ws.rs.core.Response;
@@ -47,7 +48,24 @@ public class BatchTestEntityResourceImpl
 
 	@Override
 	public Page<BatchTestEntity> getBatchTestEntitiesPage() {
-		return Page.of(_batchTestEntities);
+		List<BatchTestEntity> batchTestEntities = new ArrayList<>();
+
+		for (BatchTestEntity batchTestEntity : _batchTestEntities) {
+			BatchTestEntity getBatchTestEntity = new BatchTestEntity();
+
+			getBatchTestEntity.setExternalReferenceCode(
+				batchTestEntity.getExternalReferenceCode());
+			getBatchTestEntity.setId(batchTestEntity.getId());
+			getBatchTestEntity.setName(batchTestEntity.getName());
+			getBatchTestEntity.setNestedField(
+				() -> NestedFieldsSupplier.supply(
+					"nestedField",
+					nestedField -> batchTestEntity.getNestedField()));
+
+			batchTestEntities.add(getBatchTestEntity);
+		}
+
+		return Page.of(batchTestEntities);
 	}
 
 	@Override
@@ -61,7 +79,18 @@ public class BatchTestEntityResourceImpl
 			throw new NoSuchModelException();
 		}
 
-		return batchTestEntity;
+		BatchTestEntity getBatchTestEntity = new BatchTestEntity();
+
+		getBatchTestEntity.setExternalReferenceCode(
+			batchTestEntity.getExternalReferenceCode());
+		getBatchTestEntity.setId(batchTestEntity.getId());
+		getBatchTestEntity.setName(batchTestEntity.getName());
+		getBatchTestEntity.setNestedField(
+			() -> NestedFieldsSupplier.supply(
+				"nestedField",
+				nestedField -> batchTestEntity.getNestedField()));
+
+		return getBatchTestEntity;
 	}
 
 	@Override

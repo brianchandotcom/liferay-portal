@@ -640,6 +640,11 @@ public class ObjectServiceUpgradeStepRegistrator
 				"ObjectEntryFolder", "status INTEGER"),
 			UpgradeProcessFactory.runSQL(
 				"update ObjectEntryFolder set status = 0"));
+
+		registry.register(
+			"10.21.0", "10.22.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectDefinition", "enableObjectEntrySubscription BOOLEAN"));
 	}
 
 	@Reference

@@ -30,20 +30,53 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Amos Fong
  */
-@RequestMapping("/ticket-attachments/{ticketAttachmentId}/download")
+@RequestMapping("/ticket-attachments/")
 @RestController
 public class TicketAttachmentsDownloadRestController
 	extends BaseRestController {
 
-	@GetMapping
+	@GetMapping("/by-ticket-attachment-id/{ticketAttachmentId}/download")
 	public ResponseEntity<String> get(
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable("ticketAttachmentId") long ticketAttachmentId) {
 
+		return _getResponse(
+			"Bearer " + jwt.getTokenValue(),
+			new TicketAttachmentIdentifier(ticketAttachmentId));
+	}
+
+	@GetMapping("/by-external-reference-code/{externalReferenceCode}/download")
+	public ResponseEntity<String> get(
+		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable("externalReferenceCode") String externalReferenceCode) {
+
+		return _getResponse(
+			"Bearer " + jwt.getTokenValue(),
+			new TicketAttachmentIdentifier(externalReferenceCode));
+	}
+
+	private ResponseEntity<String> _getResponse(
+		String bearerToken,
+		TicketAttachmentIdentifier ticketAttachmentIdentifier) {
+
 		try {
-			TicketAttachment ticketAttachment =
-				_ticketAttachmentService.fetchTicketAttachment(
-					"Bearer " + jwt.getTokenValue(), ticketAttachmentId);
+			TicketAttachment ticketAttachment = null;
+
+			if (ticketAttachmentIdentifier.isById()) {
+				ticketAttachment =
+					_ticketAttachmentService.fetchTicketAttachment(
+						bearerToken, ticketAttachmentIdentifier.getId());
+			}
+			else if (ticketAttachmentIdentifier.isByExternalReferenceCode()) {
+				ticketAttachment =
+					_ticketAttachmentService.fetchTicketAttachment(
+						bearerToken,
+						ticketAttachmentIdentifier.getExternalReferenceCode());
+			}
+			else {
+				return new ResponseEntity<>(
+					"MISSING_IDENTIFIER", HttpStatus.BAD_REQUEST);
+			}
 
 			String downloadURL = _googleCloudStorageService.getDownloadURL(
 				ticketAttachment.getGCSBucketName(),

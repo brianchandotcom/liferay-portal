@@ -1,13 +1,29 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 const currentURL = window.location.href;
-const ticketAttachmentID = currentURL.split("/#/")[1]
+const identifier = currentURL.split('/#/')[1].split('/');
+let redirectURL = '';
 
-
-const redirectURL = await Liferay.OAuth2Client.FromUserAgentApplication(
-	'liferay-customer-etc-spring-boot-oaua'
-).fetch(
-	`/ticket-attachments/${ticketAttachmentID}/download`
-).then(
-	(response) => response.text()
-);
+if (identifier[0] === 'id') {
+	redirectURL = await Liferay.OAuth2Client.FromUserAgentApplication(
+		'liferay-customer-etc-spring-boot-oaua'
+	)
+		.fetch(
+			`/ticket-attachments/by-ticket-attachment-id/${identifier[1]}/download`
+		)
+		.then((response) => response.text());
+}
+else {
+	redirectURL = await Liferay.OAuth2Client.FromUserAgentApplication(
+		'liferay-customer-etc-spring-boot-oaua'
+	)
+		.fetch(
+			`/ticket-attachments/by-external-reference-code/${identifier[1]}/download`
+		)
+		.then((response) => response.text());
+}
 
 window.open(redirectURL, '_blank');

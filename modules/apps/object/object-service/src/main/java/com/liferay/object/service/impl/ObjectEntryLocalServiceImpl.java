@@ -6120,9 +6120,11 @@ public class ObjectEntryLocalServiceImpl
 			List<ValidationError> validationErrors)
 		throws PortalException {
 
-		if (!ArrayUtil.contains(
-				_attachmentManager.getAcceptedFileExtensions(objectFieldId),
-				fileExtension, true)) {
+		String[] acceptedFileExtensions =
+			_attachmentManager.getAcceptedFileExtensions(objectFieldId);
+
+		if (!ArrayUtil.contains(acceptedFileExtensions, StringPool.STAR) &&
+			!ArrayUtil.contains(acceptedFileExtensions, fileExtension, true)) {
 
 			_handle(
 				new ObjectEntryValuesException.InvalidFileExtension(

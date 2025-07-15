@@ -19,39 +19,46 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 <portlet:actionURL name="/patcher/add_fixes" var="addPatcherFixURL" />
 
-<aui:form action="<%= addPatcherFixURL %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+<liferay-frontend:edit-form
+	action="<%= addPatcherFixURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
+	<liferay-frontend:edit-form-body>
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "productVersionOnChange(this.value);" %>' required="<%= true %>" showEmptyOption="<%= true %>">
+		<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "productVersionOnChange(this.value);" %>' required="<%= true %>" showEmptyOption="<%= true %>">
 
-		<%
-		for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
-		%>
+			<%
+			for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
+			%>
 
-			<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
+				<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</aui:select>
+		</aui:select>
 
-	<aui:select label="project-version" name="patcherProjectVersionId" required="<%= true %>" />
+		<aui:select label="project-version" name="patcherProjectVersionId" required="<%= true %>" />
 
-	<aui:input label="content" name="name" type="textarea" />
+		<aui:input label="content" name="name" type="textarea" />
 
-	<aui:input label="branch-name" name="committish" />
+		<aui:input label="branch-name" name="committish" />
 
-	<aui:input label="github-url" name="gitRemoteURL" />
+		<aui:input label="github-url" name="gitRemoteURL" />
 
-	<aui:input name="workaround" type="checkbox" />
+		<aui:input name="workaround" type="checkbox" />
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
-		<aui:button type="submit" value="add" />
-
-		<aui:button href="<%= redirect %>" value="cancel" />
-	</aui:button-row>
-</aui:form>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	var select = document.getElementById(

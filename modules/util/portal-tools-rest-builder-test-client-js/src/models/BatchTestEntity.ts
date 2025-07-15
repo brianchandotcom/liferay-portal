@@ -16,6 +16,7 @@
 			"externalReferenceCode"?: string;
 			"id"?: number;
 			"name"?: string;
+			"nestedField"?: string;
 
 		static "discriminator": string | undefined = undefined;
 
@@ -37,6 +38,11 @@
 		{
 			baseName: "name",
 			name: "name",
+			type: "string",
+		},
+		{
+			baseName: "nestedField",
+			name: "nestedField",
 			type: "string",
 		},
 		];

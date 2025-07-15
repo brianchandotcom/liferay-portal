@@ -235,7 +235,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {batchTestEntity(batchTestEntityId: ___){externalReferenceCode, id, name}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {batchTestEntity(batchTestEntityId: ___){externalReferenceCode, id, name, nestedField}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public BatchTestEntity batchTestEntity(
@@ -252,7 +252,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {batchTestEntityByExternalReferenceCode(externalReferenceCode: ___){externalReferenceCode, id, name}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {batchTestEntityByExternalReferenceCode(externalReferenceCode: ___){externalReferenceCode, id, name, nestedField}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public BatchTestEntity batchTestEntityByExternalReferenceCode(

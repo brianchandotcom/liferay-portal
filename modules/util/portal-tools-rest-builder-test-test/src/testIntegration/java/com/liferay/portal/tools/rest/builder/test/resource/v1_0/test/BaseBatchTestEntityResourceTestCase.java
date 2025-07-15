@@ -205,6 +205,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 
 		batchTestEntity.setExternalReferenceCode(regex);
 		batchTestEntity.setName(regex);
+		batchTestEntity.setNestedField(regex);
 
 		String json = BatchTestEntitySerDes.toJSON(batchTestEntity);
 
@@ -214,6 +215,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 
 		Assert.assertEquals(regex, batchTestEntity.getExternalReferenceCode());
 		Assert.assertEquals(regex, batchTestEntity.getName());
+		Assert.assertEquals(regex, batchTestEntity.getNestedField());
 	}
 
 	@Test
@@ -1056,6 +1058,14 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("nestedField", additionalAssertFieldName)) {
+				if (batchTestEntity.getNestedField() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1203,6 +1213,17 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 				if (!Objects.deepEquals(
 						batchTestEntity1.getName(),
 						batchTestEntity2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("nestedField", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						batchTestEntity1.getNestedField(),
+						batchTestEntity2.getNestedField())) {
 
 					return false;
 				}
@@ -1415,6 +1436,52 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("nestedField")) {
+			Object object = batchTestEntity.getNestedField();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1464,6 +1531,8 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				nestedField = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

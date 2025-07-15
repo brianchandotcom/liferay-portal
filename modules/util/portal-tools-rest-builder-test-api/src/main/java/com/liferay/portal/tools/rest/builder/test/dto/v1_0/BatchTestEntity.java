@@ -167,6 +167,47 @@ public class BatchTestEntity implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getNestedField() {
+		if (_nestedFieldSupplier != null) {
+			nestedField = _nestedFieldSupplier.get();
+
+			_nestedFieldSupplier = null;
+		}
+
+		return nestedField;
+	}
+
+	public void setNestedField(String nestedField) {
+		this.nestedField = nestedField;
+
+		_nestedFieldSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setNestedField(
+		UnsafeSupplier<String, Exception> nestedFieldUnsafeSupplier) {
+
+		_nestedFieldSupplier = () -> {
+			try {
+				return nestedFieldUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String nestedField;
+
+	@JsonIgnore
+	private Supplier<String> _nestedFieldSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -234,6 +275,22 @@ public class BatchTestEntity implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		String nestedField = getNestedField();
+
+		if (nestedField != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nestedField\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(nestedField));
 
 			sb.append("\"");
 		}

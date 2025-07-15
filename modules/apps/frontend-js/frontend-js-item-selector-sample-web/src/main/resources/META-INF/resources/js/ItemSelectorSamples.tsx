@@ -86,8 +86,14 @@ const docsAndMediaItemSelectorConfig: IItemSelectorConfiguration = {
 
 const usersItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
-	itemNameLocator: (item: any) =>
-		item.roleBriefs?.map((role: any) => role.name).join(','),
+	itemNameLocator: (item: any) => {
+		return (
+			item.givenName +
+			' (' +
+			item.roleBriefs?.map((role: any) => role.name).join(',') +
+			')'
+		);
+	},
 	type: Liferay.Language.get('user'),
 	views: userViews,
 };

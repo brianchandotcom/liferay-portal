@@ -25,6 +25,7 @@ import com.liferay.notification.exception.NotificationRecipientSettingValueExcep
 import com.liferay.notification.internal.type.email.provider.DefaultEmailProvider;
 import com.liferay.notification.internal.type.email.provider.EmailProvider;
 import com.liferay.notification.internal.type.email.provider.RoleEmailProvider;
+import com.liferay.notification.internal.type.email.provider.SubscribersEmailProvider;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.model.NotificationRecipient;
@@ -85,6 +86,7 @@ import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.template.transformer.TemplateNodeFactory;
 
 import jakarta.mail.internet.InternetAddress;
@@ -498,6 +500,10 @@ public class EmailNotificationType extends BaseNotificationType {
 				_organizationLocalService, _permissionCheckerFactory,
 				_resourcePermissionLocalService, _roleLocalService,
 				_userGroupRoleLocalService, _userLocalService));
+		_emailProviders.put(
+			NotificationRecipientConstants.TYPE_SUBSCRIBERS,
+			new SubscribersEmailProvider(
+				_subscriptionLocalService, _userLocalService));
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, TemplateContextContributor.class,
@@ -816,6 +822,9 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	private volatile ServiceTrackerList<TemplateContextContributor>
 		_serviceTrackerList;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private TemplateNodeFactory _templateNodeFactory;

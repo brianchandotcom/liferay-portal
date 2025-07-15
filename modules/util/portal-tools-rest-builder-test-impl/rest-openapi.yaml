@@ -31,6 +31,8 @@ components:
                     type: integer
                 name:
                     type: string
+                nestedField:
+                    type: string
             type: object
         ChildTestEntity1:
             allOf:

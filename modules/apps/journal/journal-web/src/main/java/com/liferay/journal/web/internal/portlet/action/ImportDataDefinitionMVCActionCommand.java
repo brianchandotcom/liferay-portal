@@ -74,8 +74,6 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getUser()
 				).build();
 
-			dataDefinition.setExternalReferenceCode(() -> null);
-
 			if (_ddmStructureLocalService.hasStructure(
 					themeDisplay.getScopeGroupId(),
 					_portal.getClassNameId(JournalArticle.class.getName()),
@@ -83,6 +81,8 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 				dataDefinition.setDataDefinitionKey(() -> null);
 			}
+
+			dataDefinition.setExternalReferenceCode(() -> null);
 
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
 				themeDisplay.getScopeGroupId(), "journal", dataDefinition);

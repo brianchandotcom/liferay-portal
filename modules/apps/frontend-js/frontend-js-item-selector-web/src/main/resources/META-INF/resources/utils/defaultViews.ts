@@ -49,7 +49,8 @@ export const documentsAndMediaViews = [
 		setItemComponentProps: ({item, props}: {item: any; props: any}) => {
 			const stickerProps = {
 				stickerProps: {
-					displayType: 'outline-1',
+					className: 'file-icon-color-5',
+					displayType: 'unstyled',
 				},
 			};
 

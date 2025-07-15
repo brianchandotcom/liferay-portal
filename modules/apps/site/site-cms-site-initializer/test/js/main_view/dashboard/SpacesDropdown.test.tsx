@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {
+	act,
 	fireEvent,
 	render,
 	screen,
@@ -13,6 +14,7 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
+import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/ViewDashboardContext';
 import {SpacesDropdown} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/SpacesDropdown';
 
@@ -23,16 +25,22 @@ const WrappedComponent = ({constants}: any) => (
 );
 
 describe('[CMS Dashboard] Components: SpacesDropdown', () => {
-	beforeEach(() => {
-		global.fetch = jest.fn().mockResolvedValue({});
+	const mockSpacesApiResponse = {
+		items: [
+			{id: '01', name: 'space 01'},
+			{id: '02', name: 'space 02'},
+		],
+	};
 
+	afterEach(() => {
 		jest.clearAllMocks();
+		jest.restoreAllMocks();
 	});
 
 	it('renders correctly', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({items: []}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {items: []},
+			error: null,
 		});
 
 		render(<WrappedComponent />);
@@ -59,14 +67,9 @@ describe('[CMS Dashboard] Components: SpacesDropdown', () => {
 	});
 
 	it('renders a space list', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{id: '01', name: 'space 01'},
-					{id: '02', name: 'space 02'},
-				],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockSpacesApiResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent />);
@@ -97,22 +100,14 @@ describe('[CMS Dashboard] Components: SpacesDropdown', () => {
 	it('search by a space and returns a filtered result', async () => {
 		jest.useFakeTimers();
 
-		global.fetch = jest
-			.fn()
+		jest.spyOn(ApiHelper, 'get')
 			.mockResolvedValueOnce({
-				json: jest.fn().mockResolvedValue({
-					items: [
-						{id: '01', name: 'space 01'},
-						{id: '02', name: 'space 02'},
-					],
-				}),
-				ok: true,
+				data: mockSpacesApiResponse,
+				error: null,
 			})
 			.mockResolvedValueOnce({
-				json: jest
-					.fn()
-					.mockResolvedValue({items: [{id: '02', name: 'space 02'}]}),
-				ok: true,
+				data: {items: [{id: '02', name: 'space 02'}]},
+				error: null,
 			});
 
 		render(<WrappedComponent />);
@@ -127,13 +122,15 @@ describe('[CMS Dashboard] Components: SpacesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		fireEvent.change(screen.getByPlaceholderText('search'), {
-			target: {
-				value: 'space 02',
-			},
-		});
+		await act(async () => {
+			fireEvent.change(screen.getByPlaceholderText('search'), {
+				target: {
+					value: 'space 02',
+				},
+			});
 
-		jest.advanceTimersByTime(300);
+			jest.advanceTimersByTime(300);
+		});
 
 		await waitFor(() => {
 			expect(screen.getAllByRole('menuitem').length).toBe(1);
@@ -157,20 +154,14 @@ describe('[CMS Dashboard] Components: SpacesDropdown', () => {
 	it('search by a space and returns a empty result', async () => {
 		jest.useFakeTimers();
 
-		global.fetch = jest
-			.fn()
+		jest.spyOn(ApiHelper, 'get')
 			.mockResolvedValueOnce({
-				json: jest.fn().mockResolvedValue({
-					items: [
-						{id: '01', name: 'space 01'},
-						{id: '02', name: 'space 02'},
-					],
-				}),
-				ok: true,
+				data: mockSpacesApiResponse,
+				error: null,
 			})
 			.mockResolvedValueOnce({
-				json: jest.fn().mockResolvedValue({items: []}),
-				ok: true,
+				data: {items: []},
+				error: null,
 			});
 
 		render(<WrappedComponent />);
@@ -185,13 +176,15 @@ describe('[CMS Dashboard] Components: SpacesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		fireEvent.change(screen.getByPlaceholderText('search'), {
-			target: {
-				value: 'empty?',
-			},
-		});
+		await act(async () => {
+			fireEvent.change(screen.getByPlaceholderText('search'), {
+				target: {
+					value: 'empty?',
+				},
+			});
 
-		jest.advanceTimersByTime(300);
+			jest.advanceTimersByTime(300);
+		});
 
 		await waitFor(() => {
 			expect(screen.getAllByRole('menuitem').length).toBe(1);
@@ -211,14 +204,9 @@ describe('[CMS Dashboard] Components: SpacesDropdown', () => {
 	});
 
 	it('selects a new space', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{id: '01', name: 'space 01'},
-					{id: '02', name: 'space 02'},
-				],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockSpacesApiResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent />);

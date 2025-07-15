@@ -18,7 +18,7 @@ type SpacesNavigationProps = {
 
 const renderComponent = ({
 	assetLibraries = [],
-	assetLibrariesCount = 0,
+	assetLibrariesCount = 5,
 	showAddButton = false,
 }: SpacesNavigationProps = {}) => {
 	return render(
@@ -48,6 +48,6 @@ describe('SpacesNavigation', () => {
 
 	it('renders "All Spaces (X)"', async () => {
 		renderComponent();
-		expect(screen.getByText('all-spaces-x')).toBeInTheDocument();
+		expect(screen.getByText('all-spaces-5')).toBeInTheDocument();
 	});
 });

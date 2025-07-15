@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {
+	act,
 	fireEvent,
 	render,
 	screen,
@@ -13,6 +14,7 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
+import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/ViewDashboardContext';
 import {AllTagsDropdown} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/AllTagsDropdown';
 import {Item} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/FilterDropdown';
@@ -41,16 +43,28 @@ const WrappedComponent = ({
 };
 
 describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
-	beforeEach(() => {
-		global.fetch = jest.fn().mockResolvedValue({});
+	const mockTagsApiResponse = {
+		items: [
+			{
+				id: '01',
+				name: 'tag 01',
+			},
+			{
+				id: '02',
+				name: 'tag 02',
+			},
+		],
+	};
 
+	afterEach(() => {
 		jest.clearAllMocks();
+		jest.restoreAllMocks();
 	});
 
 	it('renders correctly', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({items: []}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {items: []},
+			error: null,
 		});
 
 		const onSelectItem = jest.fn();
@@ -90,20 +104,9 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 	});
 
 	it('renders a tag list', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{
-						id: '01',
-						name: 'tag 01',
-					},
-					{
-						id: '02',
-						name: 'tag 02',
-					},
-				],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockTagsApiResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -134,22 +137,14 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 	it('search by a tag and returns a filtered result', async () => {
 		jest.useFakeTimers();
 
-		global.fetch = jest
-			.fn()
+		jest.spyOn(ApiHelper, 'get')
 			.mockResolvedValueOnce({
-				json: jest.fn().mockResolvedValue({
-					items: [
-						{id: '01', name: 'tag 01'},
-						{id: '02', name: 'tag 02'},
-					],
-				}),
-				ok: true,
+				data: mockTagsApiResponse,
+				error: null,
 			})
 			.mockResolvedValueOnce({
-				json: jest
-					.fn()
-					.mockResolvedValue({items: [{id: '02', name: 'tag 02'}]}),
-				ok: true,
+				data: {items: [{id: '02', name: 'tag 02'}]},
+				error: null,
 			});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -164,13 +159,15 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		fireEvent.change(screen.getByPlaceholderText('search'), {
-			target: {
-				value: 'tag 02',
-			},
-		});
+		await act(async () => {
+			fireEvent.change(screen.getByPlaceholderText('search'), {
+				target: {
+					value: 'tag 02',
+				},
+			});
 
-		jest.advanceTimersByTime(300);
+			jest.advanceTimersByTime(300);
+		});
 
 		await waitFor(() => {
 			expect(screen.getAllByRole('menuitem').length).toBe(1);
@@ -194,20 +191,14 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 	it('search by a tag and returns a empty result', async () => {
 		jest.useFakeTimers();
 
-		global.fetch = jest
-			.fn()
+		jest.spyOn(ApiHelper, 'get')
 			.mockResolvedValueOnce({
-				json: jest.fn().mockResolvedValue({
-					items: [
-						{id: '01', name: 'tag 01'},
-						{id: '02', name: 'tag 02'},
-					],
-				}),
-				ok: true,
+				data: mockTagsApiResponse,
+				error: null,
 			})
 			.mockResolvedValueOnce({
-				json: jest.fn().mockResolvedValue({items: []}),
-				ok: true,
+				data: {items: []},
+				error: null,
 			});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -222,13 +213,15 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		fireEvent.change(screen.getByPlaceholderText('search'), {
-			target: {
-				value: 'empty?',
-			},
-		});
+		await act(async () => {
+			fireEvent.change(screen.getByPlaceholderText('search'), {
+				target: {
+					value: 'empty?',
+				},
+			});
 
-		jest.advanceTimersByTime(300);
+			jest.advanceTimersByTime(300);
+		});
 
 		await waitFor(() => {
 			expect(screen.getAllByRole('menuitem').length).toBe(1);
@@ -248,14 +241,9 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 	});
 
 	it('selects a new tag', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{id: '01', name: 'tag 01'},
-					{id: '02', name: 'tag 02'},
-				],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValueOnce({
+			data: mockTagsApiResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={() => {}} />);

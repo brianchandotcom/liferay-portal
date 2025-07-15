@@ -53,7 +53,6 @@ describe('AddSpaceMembers', () => {
 		learnResources: mockLearnResources,
 	};
 
-	const LiferayOriginal = global.Liferay;
 	let getSpaceSpy: jest.SpyInstance;
 	let getSpaceUsersSpy: jest.SpyInstance;
 	let getSpaceUserGroupsSpy: jest.SpyInstance;
@@ -76,18 +75,6 @@ describe('AddSpaceMembers', () => {
 		}));
 	});
 
-	beforeAll(() => {
-		global.Liferay = {
-			Language: {
-				get: jest.fn((key) => key),
-			},
-			ThemeDisplay: {
-				...LiferayOriginal.ThemeDisplay,
-				getUserId: jest.fn(() => '1'),
-			},
-		} as any;
-	});
-
 	afterEach(() => {
 		getSpaceSpy.mockClear();
 		getSpaceUsersSpy.mockClear();
@@ -105,7 +92,9 @@ describe('AddSpaceMembers', () => {
 		await act(async () => render(<AddSpaceMembers {...props} />));
 
 		expect(
-			screen.getByRole('heading', {name: 'add-members-to-x'})
+			screen.getByRole('heading', {
+				name: `add-members-to-${testSpace.name}`,
+			})
 		).toBeInTheDocument();
 		expect(
 			screen.getByText(

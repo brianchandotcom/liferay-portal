@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {
+	act,
 	fireEvent,
 	render,
 	screen,
@@ -13,6 +14,7 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
+import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/ViewDashboardContext';
 import {AllVocabulariesDropdown} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/AllVocabulariesDropdown';
 import {Item} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/FilterDropdown';
@@ -41,16 +43,28 @@ const WrappedComponent = ({
 };
 
 describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
-	beforeEach(() => {
-		global.fetch = jest.fn().mockResolvedValue({});
+	const mockVocabularyApiResponse = {
+		items: [
+			{
+				id: '01',
+				name: 'vocabulary 01',
+			},
+			{
+				id: '02',
+				name: 'vocabulary 02',
+			},
+		],
+	};
 
+	afterEach(() => {
 		jest.clearAllMocks();
+		jest.restoreAllMocks();
 	});
 
 	it('renders correctly', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({items: []}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {items: []},
+			error: null,
 		});
 
 		const onSelectItem = jest.fn();
@@ -90,20 +104,9 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 	});
 
 	it('renders a vocabulary list', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{
-						id: '01',
-						name: 'vocabulary 01',
-					},
-					{
-						id: '02',
-						name: 'vocabulary 02',
-					},
-				],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockVocabularyApiResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -134,14 +137,9 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 	it('search by a vocabulary and returns a filtered result', async () => {
 		jest.useFakeTimers();
 
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{id: '01', name: 'vocabulary 01'},
-					{id: '02', name: 'vocabulary 02'},
-				],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockVocabularyApiResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -156,20 +154,27 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [{id: '02', name: 'vocabulary 02'}],
-			}),
-			ok: true,
-		});
-
-		fireEvent.change(screen.getByPlaceholderText('search'), {
-			target: {
-				value: 'vocabulary 02',
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
+				items: [
+					{
+						id: '02',
+						name: 'vocabulary 02',
+					},
+				],
 			},
+			error: null,
 		});
 
-		jest.advanceTimersByTime(300);
+		await act(async () => {
+			fireEvent.change(screen.getByPlaceholderText('search'), {
+				target: {
+					value: 'vocabulary 02',
+				},
+			});
+
+			jest.advanceTimersByTime(300);
+		});
 
 		await waitFor(() => {
 			expect(screen.getAllByRole('menuitem').length).toBe(1);
@@ -193,14 +198,9 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 	it('search by a vocabulary and returns a empty result', async () => {
 		jest.useFakeTimers();
 
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{id: '01', name: 'vocabulary 01'},
-					{id: '02', name: 'vocabulary 02'},
-				],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockVocabularyApiResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -215,18 +215,18 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {items: []},
+			error: null,
 		});
 
-		fireEvent.change(screen.getByPlaceholderText('search'), {
-			target: {value: 'empty?'},
-		});
+		await act(async () => {
+			fireEvent.change(screen.getByPlaceholderText('search'), {
+				target: {value: 'empty?'},
+			});
 
-		jest.advanceTimersByTime(300);
+			jest.advanceTimersByTime(300);
+		});
 
 		await waitFor(() => {
 			expect(screen.getAllByRole('menuitem').length).toBe(1);
@@ -246,14 +246,9 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 	});
 
 	it('selects a new vocabulary', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{id: '01', name: 'vocabulary 01'},
-					{id: '02', name: 'vocabulary 02'},
-				],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockVocabularyApiResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={() => {}} />);

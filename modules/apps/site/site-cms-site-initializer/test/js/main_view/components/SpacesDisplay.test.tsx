@@ -10,27 +10,6 @@ import React from 'react';
 import SpacesDisplay from '../../../../src/main/resources/META-INF/resources/js/common/components/SpacesDisplay';
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 
-const mockLiferayLanguageGet = jest.fn((key: string) => {
-	if (key === 'available-in-spaces-x') {
-		return 'Available in spaces: {0}';
-	}
-
-	return key;
-});
-
-const mockLiferayUtilSub = jest.fn((message, args) => {
-	return message.replace('{0}', args);
-});
-
-(global as any).Liferay = {
-	Language: {
-		get: mockLiferayLanguageGet,
-	},
-	Util: {
-		sub: mockLiferayUtilSub,
-	},
-};
-
 const spaces = [
 	{
 		name: 'First space',
@@ -88,10 +67,6 @@ describe('SpacesDisplay', () => {
 	});
 
 	describe('When multiple spaces are provided', () => {
-		beforeEach(() => {
-			mockLiferayLanguageGet.mockClear();
-		});
-
 		it('renders the first letter and the name for the first space', () => {
 			render(<SpacesDisplay spaces={spaces} />);
 
@@ -119,7 +94,7 @@ describe('SpacesDisplay', () => {
 			const badge = screen.getByText(`+${additionalSpacesCount}`);
 			expect(badge.parentElement).toHaveAttribute(
 				'title',
-				`Available in spaces: ${spaceNames}`
+				`available-in-spaces-${spaceNames}`
 			);
 		});
 	});

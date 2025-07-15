@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {
+	act,
 	fireEvent,
 	render,
 	screen,
@@ -13,6 +14,7 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
+import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/ViewDashboardContext';
 import {AllStructureTypesDropdown} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/AllStructureTypesDropdown';
 import {Item} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/FilterDropdown';
@@ -41,16 +43,32 @@ const WrappedComponent = ({
 };
 
 describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
-	beforeEach(() => {
-		global.fetch = jest.fn().mockResolvedValue({});
+	const mockStructureTypesApiResponse = {
+		items: [
+			{
+				id: '01',
+				label: {
+					en_US: 'structure 01',
+				},
+			},
+			{
+				id: '02',
+				label: {
+					en_US: 'structure 02',
+				},
+			},
+		],
+	};
 
+	afterEach(() => {
 		jest.clearAllMocks();
+		jest.restoreAllMocks();
 	});
 
 	it('renders correctly', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({items: []}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {items: []},
+			error: null,
 		});
 
 		const onSelectItem = jest.fn();
@@ -92,24 +110,9 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 	});
 
 	it('renders a structure list', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{
-						id: '01',
-						label: {
-							en_US: 'structure 01',
-						},
-					},
-					{
-						id: '02',
-						label: {
-							en_US: 'structure 02',
-						},
-					},
-				],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockStructureTypesApiResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -140,29 +143,13 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 	it('searches by structure name and returns a filtered result', async () => {
 		jest.useFakeTimers();
 
-		global.fetch = jest
-			.fn()
+		jest.spyOn(ApiHelper, 'get')
 			.mockResolvedValueOnce({
-				json: jest.fn().mockResolvedValue({
-					items: [
-						{
-							id: '01',
-							label: {
-								en_US: 'structure 01',
-							},
-						},
-						{
-							id: '02',
-							label: {
-								en_US: 'structure 02',
-							},
-						},
-					],
-				}),
-				ok: true,
+				data: mockStructureTypesApiResponse,
+				error: null,
 			})
 			.mockResolvedValueOnce({
-				json: jest.fn().mockResolvedValue({
+				data: {
 					items: [
 						{
 							id: '02',
@@ -171,8 +158,8 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 							},
 						},
 					],
-				}),
-				ok: true,
+				},
+				error: null,
 			});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
@@ -187,11 +174,13 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
-		fireEvent.change(screen.getByPlaceholderText('search'), {
-			target: {value: 'structure 02'},
-		});
+		await act(async () => {
+			fireEvent.change(screen.getByPlaceholderText('search'), {
+				target: {value: 'structure 02'},
+			});
 
-		jest.advanceTimersByTime(300);
+			jest.advanceTimersByTime(300);
+		});
 
 		await waitFor(() => {
 			expect(screen.getAllByRole('menuitem').length).toBe(1);
@@ -215,25 +204,17 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 	it('search by a structure and returns a empty result', async () => {
 		jest.useFakeTimers();
 
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{
-						id: '01',
-						label: {
-							en_US: 'structure 01',
-						},
-					},
-					{
-						id: '02',
-						label: {
-							en_US: 'structure 02',
-						},
-					},
-				],
-			}),
-			ok: true,
-		});
+		jest.spyOn(ApiHelper, 'get')
+			.mockResolvedValueOnce({
+				data: mockStructureTypesApiResponse,
+				error: null,
+			})
+			.mockResolvedValueOnce({
+				data: {
+					items: [],
+				},
+				error: null,
+			});
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
@@ -252,13 +233,15 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 			ok: true,
 		});
 
-		fireEvent.change(screen.getByPlaceholderText('search'), {
-			target: {
-				value: 'empty?',
-			},
-		});
+		await act(async () => {
+			fireEvent.change(screen.getByPlaceholderText('search'), {
+				target: {
+					value: 'empty?',
+				},
+			});
 
-		jest.advanceTimersByTime(300);
+			jest.advanceTimersByTime(300);
+		});
 
 		await waitFor(() => {
 			expect(screen.getAllByRole('menuitem').length).toBe(1);
@@ -278,24 +261,9 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 	});
 
 	it('selects a new strucuture', async () => {
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({
-				items: [
-					{
-						id: '01',
-						label: {
-							en_US: 'structure 01',
-						},
-					},
-					{
-						id: '02',
-						label: {
-							en_US: 'structure 02',
-						},
-					},
-				],
-			}),
-			ok: true,
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockStructureTypesApiResponse,
+			error: null,
 		});
 
 		render(<WrappedComponent onSelectItem={() => {}} />);

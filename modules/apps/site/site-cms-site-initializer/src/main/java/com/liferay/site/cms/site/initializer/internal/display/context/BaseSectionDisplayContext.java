@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.portlet.ActionRequest;
@@ -54,6 +55,7 @@ import jakarta.portlet.ActionRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -339,6 +341,11 @@ public abstract class BaseSectionDisplayContext {
 
 	protected abstract String getRootObjectEntryFolderExternalReferenceCode();
 
+	protected String getStatusFilterString() {
+		return StringBundler.concat(
+			"status in (", StringUtil.merge(_statuses, ","), ")");
+	}
+
 	protected final DepotEntryLocalService depotEntryLocalService;
 	protected final GroupLocalService groupLocalService;
 	protected final HttpServletRequest httpServletRequest;
@@ -538,6 +545,10 @@ public abstract class BaseSectionDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSectionDisplayContext.class);
+
+	private static final List<Integer> _statuses = Arrays.asList(
+		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_DRAFT,
+		WorkflowConstants.STATUS_EXPIRED);
 
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final ObjectDefinitionSettingLocalService

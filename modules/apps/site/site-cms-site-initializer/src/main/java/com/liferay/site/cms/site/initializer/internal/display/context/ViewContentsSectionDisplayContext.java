@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -93,7 +94,16 @@ public class ViewContentsSectionDisplayContext
 
 	@Override
 	protected String getCMSSectionFilterString() {
-		return "cmsRoot eq true and cmsSection eq 'contents'";
+		String filterString = "cmsRoot eq true and cmsSection eq 'contents'";
+
+		String statusFilterString = getStatusFilterString();
+
+		if (Validator.isNotNull(statusFilterString)) {
+			filterString = StringBundler.concat(
+				filterString, " and ", statusFilterString);
+		}
+
+		return filterString;
 	}
 
 	@Override

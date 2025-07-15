@@ -10,7 +10,13 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,6 +28,46 @@ import java.util.Map;
  * @author Eudaldo Alonso
  */
 public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
+
+	@Override
+	public JSONObject getConfigurationJSONObject() {
+		if (_configurationJSONObject == null) {
+			try {
+				_configurationJSONObject = JSONFactoryUtil.createJSONObject(
+					getConfiguration());
+			}
+			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(jsonException);
+				}
+			}
+
+			configurationJSONObjectUpdateEntityCacheBiConsumer.accept(
+				this, _configurationJSONObject);
+		}
+
+		return _configurationJSONObject;
+	}
+
+	@Override
+	public JSONObject getEditableValuesJSONObject() {
+		if (_editableValuesJSONObject == null) {
+			try {
+				_editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+					getEditableValues());
+			}
+			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(jsonException);
+				}
+			}
+
+			editableValuesJSONObjectUpdateEntityCacheBiConsumer.accept(
+				this, _editableValuesJSONObject);
+		}
+
+		return _editableValuesJSONObject;
+	}
 
 	@Override
 	public boolean isCacheable() {
@@ -140,9 +186,32 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 		return false;
 	}
 
+	@Override
+	public void setConfiguration(String configuration) {
+		super.setConfiguration(configuration);
+
+		_configurationJSONObject = null;
+	}
+
+	@Override
+	public void setEditableValues(String editableValues) {
+		super.setEditableValues(editableValues);
+
+		_editableValuesJSONObject = null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryLinkImpl.class);
+
 	private static final Snapshot<FragmentCollectionContributorRegistry>
 		_fragmentCollectionContributorRegistrySnapshot = new Snapshot<>(
 			FragmentEntryLinkImpl.class,
 			FragmentCollectionContributorRegistry.class);
+
+	@CacheField(permanent = true, propagateToInterface = true)
+	private transient JSONObject _configurationJSONObject;
+
+	@CacheField(permanent = true, propagateToInterface = true)
+	private transient JSONObject _editableValuesJSONObject;
 
 }

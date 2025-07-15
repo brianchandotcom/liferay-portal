@@ -249,16 +249,16 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 			PortletDataHandlerKeys.DELETIONS,
 			new String[] {String.valueOf(deletionsParameter)});
 
+		parameterMap.put(
+			PortletDataHandlerKeys.FAVICON,
+			new String[] {Boolean.TRUE.toString()});
+
 		boolean ignoreLastPublishDateParameter = true;
 
 		if (ignoreLastPublishDate != null) {
 			ignoreLastPublishDateParameter =
 				ignoreLastPublishDate.booleanValue();
 		}
-
-		parameterMap.put(
-			PortletDataHandlerKeys.FAVICON,
-			new String[] {Boolean.TRUE.toString()});
 
 		parameterMap.put(
 			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,

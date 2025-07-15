@@ -84,6 +84,27 @@ public class BatchTestEntity implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getNestedField() {
+		return nestedField;
+	}
+
+	public void setNestedField(String nestedField) {
+		this.nestedField = nestedField;
+	}
+
+	public void setNestedField(
+		UnsafeSupplier<String, Exception> nestedFieldUnsafeSupplier) {
+
+		try {
+			nestedField = nestedFieldUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String nestedField;
+
 	@Override
 	public BatchTestEntity clone() throws CloneNotSupportedException {
 		return (BatchTestEntity)super.clone();

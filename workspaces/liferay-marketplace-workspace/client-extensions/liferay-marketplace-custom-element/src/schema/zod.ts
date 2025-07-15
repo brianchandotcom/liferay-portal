@@ -278,6 +278,26 @@ const zodSchema = {
 		}),
 		termsAndConditions: z.boolean().refine((data) => data === true),
 	},
+	ssaTrialForm: z.object({
+		demoDuration: z.coerce
+			.number()
+			.int()
+			.min(1, 'Please enter a valid number (1-60)')
+			.max(60, 'Please enter a valid number (1-60)'),
+		emailAddress: z
+			.string()
+			.email({message: 'Please enter a valid email'})
+			.or(z.literal('')),
+		objective: z.string().refine((val) => ['Test', 'Trial'].includes(val), {
+			message: 'Select an Option',
+		}),
+		projectId: z
+			.string()
+			.min(3, {message: 'Project ID must have at least 3 characters'})
+			.regex(/^[a-zA-Z0-9\s-]*$/, {
+				message: 'Special characters are not allowed',
+			}),
+	}),
 	trialForm: z.object({
 		accountId: z.string().optional(),
 		consoleInviteEmailAddresses: z.array(z.string().email()),

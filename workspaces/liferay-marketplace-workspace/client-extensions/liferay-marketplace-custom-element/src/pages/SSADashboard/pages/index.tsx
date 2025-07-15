@@ -12,9 +12,7 @@ import Page from '../../../components/Page';
 import i18n from '../../../i18n';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {useOutletContext} from 'react-router-dom';
-import OrderStatus from '../../../components/OrderStatus';
-import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
-import SearchBuilder from '../../../core/SearchBuilder';
+import {OrderCustomFields} from '../../../enums/Order';
 import TrialStatus from '../components/TrialStatus/TrialStatus';
 import ExtensionStatus from '../components/ExtensionStatus/ExtensionStatus';
 import getSSATrialsResourceURL, {
@@ -22,6 +20,7 @@ import getSSATrialsResourceURL, {
 } from '../util';
 import {useModal} from '@clayui/modal';
 import Modal from '../../../components/Modal';
+import { useSSAForm } from '../components/SSAForm';
 
 type SSATrialsListViewProps = {
 	isSortable?: boolean;
@@ -180,12 +179,13 @@ export function SSATrialsListView({
 
 export default function SSATrials() {
 	const modal = useModal();
+	const ssaForm = useSSAForm();
 	return (
 		<>
 			<Page
 				pageRendererProps={{className: 'border py-2'}}
 				rightButton={
-					<ClayButton onClick={() => modal.onOpenChange(true)}>
+					<ClayButton onClick={() => ssaForm.openModal()}>
 						Add New Trials
 					</ClayButton>
 				}

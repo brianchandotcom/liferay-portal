@@ -200,9 +200,14 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 
 		exportImportPortlet(FragmentPortletKeys.FRAGMENT, false);
 
+		FragmentCollection importedFragmentCollection =
+			_fragmentCollectionLocalService.
+				getFragmentCollectionByUuidAndGroupId(
+					fragmentCollection.getUuid(), importedGroup.getGroupId());
+
 		List<FragmentEntry> fragmentEntries =
 			_fragmentEntryLocalService.getFragmentEntries(
-				fragmentCollection.getFragmentCollectionId());
+				importedFragmentCollection.getFragmentCollectionId());
 
 		Assert.assertEquals(
 			fragmentEntries.toString(), 1, fragmentEntries.size());

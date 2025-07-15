@@ -194,9 +194,11 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 				serviceContext.getScopeGroupId(), RandomTestUtil.randomString(),
 				StringPool.BLANK, serviceContext);
 
-		_addFragmentEntry(fragmentCollection, false, serviceContext);
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			fragmentCollection, false, serviceContext);
 
-		_addFragmentEntry(fragmentCollection, true, serviceContext);
+		FragmentEntry marketplaceFragmentEntry = _addFragmentEntry(
+			fragmentCollection, true, serviceContext);
 
 		exportImportPortlet(FragmentPortletKeys.FRAGMENT, false);
 
@@ -211,6 +213,17 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 
 		Assert.assertEquals(
 			fragmentEntries.toString(), 1, fragmentEntries.size());
+
+		FragmentEntry actualFragmentEntry = fragmentEntries.get(0);
+
+		Assert.assertEquals(
+			fragmentEntry.getUuid(), actualFragmentEntry.getUuid());
+
+		Assert.assertNull(
+			_fragmentEntryLinkLocalService.
+				fetchFragmentEntryLinkByUuidAndGroupId(
+					marketplaceFragmentEntry.getUuid(),
+					importedGroup.getGroupId()));
 	}
 
 	@Test

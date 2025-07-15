@@ -953,6 +953,31 @@ public class ObjectEntryLocalServiceTest {
 						).getFileEntryId()
 					).build());
 			});
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinition.getObjectDefinitionId(), "upload");
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), "acceptedFileExtensions");
+
+		_objectFieldSettingLocalService.updateObjectFieldSetting(
+			objectFieldSetting.getObjectFieldSettingId(), "*");
+
+		_addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "peter@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"upload",
+				_addTempFileEntry(
+					StringUtil.randomString()
+				).getFileEntryId()
+			).build());
+
+		_assertCount(9);
+
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.ListTypeEntry.class,
 			"Object field name \"listTypeEntryKeyRequired\" is not mapped to " +

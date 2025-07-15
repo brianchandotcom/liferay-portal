@@ -62,38 +62,7 @@ public class AttachmentManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false,
-			Arrays.asList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
-					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
-					RandomTestUtil.randomString(), "attachment",
-					Arrays.asList(
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.
-								NAME_ACCEPTED_FILE_EXTENSIONS
-						).value(
-							"txt, png"
-						).build(),
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.NAME_FILE_SOURCE
-						).value(
-							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
-						).build(),
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
-						).value(
-							"100"
-						).build()),
-					false),
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-					ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
-					RandomTestUtil.randomString(), "integer", false)));
+		_objectDefinition = _createObjectDefinition("txt, png");
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -107,7 +76,8 @@ public class AttachmentManagerTest {
 	public void testGetOrAddFileEntry() throws Exception {
 		FileEntry tempFileEntry = _addTempFileEntry(
 			RandomTestUtil.randomString(), ".txt",
-			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN);
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			_objectDefinition);
 
 		Folder folder = tempFileEntry.getFolder();
 
@@ -138,7 +108,8 @@ public class AttachmentManagerTest {
 		try {
 			tempFileEntry = _addTempFileEntry(
 				RandomTestUtil.randomString(), ".bmp",
-				RandomTestUtil.randomString(), ContentTypes.IMAGE_BMP);
+				RandomTestUtil.randomString(), ContentTypes.IMAGE_BMP,
+				_objectDefinition);
 
 			folder = tempFileEntry.getFolder();
 
@@ -155,6 +126,30 @@ public class AttachmentManagerTest {
 			Assert.assertNotNull(fileExtensionException);
 		}
 
+		ObjectDefinition objectDefinition = _createObjectDefinition("*");
+
+		tempFileEntry = _addTempFileEntry(
+			RandomTestUtil.randomString(), ".bmp",
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_BMP,
+			objectDefinition);
+
+		folder = tempFileEntry.getFolder();
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getObjectDefinitionId(), "attachment");
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		fileEntry = _attachmentManager.getOrAddFileEntry(
+			objectField.getCompanyId(), externalReferenceCode,
+			StreamUtil.toByteArray(tempFileEntry.getContentStream()),
+			tempFileEntry.getFileName(), folder.getExternalReferenceCode(),
+			TestPropsValues.getGroupId(), objectField.getObjectFieldId(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			externalReferenceCode, fileEntry.getExternalReferenceCode());
+
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					DLConfiguration.class.getName(),
@@ -164,7 +159,8 @@ public class AttachmentManagerTest {
 
 			tempFileEntry = _addTempFileEntry(
 				RandomTestUtil.randomString(), ".txt",
-				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN);
+				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+				_objectDefinition);
 
 			folder = tempFileEntry.getFolder();
 
@@ -192,7 +188,8 @@ public class AttachmentManagerTest {
 
 			tempFileEntry = _addTempFileEntry(
 				RandomTestUtil.randomString(), ".txt",
-				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN);
+				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+				_objectDefinition);
 
 			folder = tempFileEntry.getFolder();
 
@@ -219,7 +216,8 @@ public class AttachmentManagerTest {
 
 			tempFileEntry = _addTempFileEntry(
 				RandomTestUtil.randomString(1000), ".txt",
-				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN);
+				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+				_objectDefinition);
 
 			folder = tempFileEntry.getFolder();
 
@@ -238,14 +236,53 @@ public class AttachmentManagerTest {
 	}
 
 	private FileEntry _addTempFileEntry(
-			String content, String extension, String fileName, String mimeType)
+			String content, String extension, String fileName, String mimeType,
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		return TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
-			_objectDefinition.getPortletId(),
+			objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName(fileName + extension),
 			FileUtil.createTempFile(content.getBytes()), mimeType);
+	}
+
+	private ObjectDefinition _createObjectDefinition(
+			String acceptedFileExtensions)
+		throws Exception {
+
+		return ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			false,
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+					RandomTestUtil.randomString(), "attachment",
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							acceptedFileExtensions
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
+							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							"100"
+						).build()),
+					false),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+					ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
+					RandomTestUtil.randomString(), "integer", false)));
 	}
 
 	@Inject

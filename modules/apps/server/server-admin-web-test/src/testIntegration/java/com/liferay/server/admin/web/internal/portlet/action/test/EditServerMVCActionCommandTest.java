@@ -469,14 +469,14 @@ public class EditServerMVCActionCommandTest {
 
 	private void _assertPasswords(
 		jakarta.portlet.PortletPreferences jxPortletPreferences,
-		String expectedPop3Password, String expectedSmtpPassword) {
+		String expectedPOP3Password, String expectedSMTPPassword) {
 
 		Assert.assertEquals(
-			expectedPop3Password,
+			expectedPOP3Password,
 			jxPortletPreferences.getValue(
 				PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD, null));
 		Assert.assertEquals(
-			expectedSmtpPassword,
+			expectedSMTPPassword,
 			jxPortletPreferences.getValue(
 				PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD, null));
 	}
@@ -731,10 +731,10 @@ public class EditServerMVCActionCommandTest {
 
 		_updatePasswords(
 			mockLiferayPortletActionRequest, jxPortletPreferences,
-			"newPop3Password", "newSmtpPassword");
+			"newPOP3Password", "newSMTPPassword");
 
 		_assertPasswords(
-			jxPortletPreferences, "newPop3Password", "newSmtpPassword");
+			jxPortletPreferences, "newPOP3Password", "newSMTPPassword");
 
 		_updatePasswords(
 			mockLiferayPortletActionRequest, jxPortletPreferences,

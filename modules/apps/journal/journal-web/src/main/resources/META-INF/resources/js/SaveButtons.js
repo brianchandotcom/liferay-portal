@@ -18,7 +18,7 @@ const ACTION_SCHEDULE = 'schedule';
 
 export default function SaveButtons({
 	articleId: initialArticleId,
-	defaultLanguageId,
+	defaultLanguageId: initialDefaultLanguageId,
 	displayDate,
 	editingDefaultValues,
 	permissionsURL,
@@ -34,10 +34,30 @@ export default function SaveButtons({
 
 	const [articleId, setArticleId] = useState(initialArticleId);
 
+	const [defaultLanguageId, setDefaultLanguageId] = useState(
+		initialDefaultLanguageId
+	);
+
 	const [{publishModalAction, publishModalVisible}, setPublishModalState] =
 		useState({publishModalAction: '', publishModalVisible: false});
 
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
+
+	useEffect(() => {
+		const localeChangeHandler = (event) => {
+			const defaultLanguageId = event.item.getAttribute('data-value');
+
+			setDefaultLanguageId(defaultLanguageId);
+		};
+
+		Liferay.on('inputLocalized:defaultLocaleChanged', localeChangeHandler);
+
+		return () =>
+			Liferay.detach(
+				'inputLocalized:defaultLocaleChanged',
+				localeChangeHandler
+			);
+	}, []);
 
 	useEffect(() => {
 		initializeLock('publishing', {

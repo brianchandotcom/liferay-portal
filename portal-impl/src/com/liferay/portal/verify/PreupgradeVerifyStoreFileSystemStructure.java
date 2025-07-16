@@ -29,6 +29,8 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -161,7 +163,9 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				companyIdPath)) {
 
 			for (Path repositoryIdPath : directoryStream) {
-				if (_isSystemCompanyRepositoryIdPath(repositoryIdPath)) {
+				if (_isExcludedFileNamePath(repositoryIdPath) ||
+					_isSystemCompanyRepositoryIdPath(repositoryIdPath)) {
+
 					continue;
 				}
 
@@ -192,6 +196,10 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				repositoryIdPath)) {
 
 			for (Path fileNamePath : directoryStream) {
+				if (_isExcludedFileNamePath(fileNamePath)) {
+					continue;
+				}
+
 				if (!Files.isDirectory(fileNamePath)) {
 					_log.error(
 						"Unexpected file " + fileNamePath +
@@ -233,7 +241,9 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				companyIdPath)) {
 
 			for (Path repositoryIdPath : directoryStream) {
-				if (_isSystemCompanyRepositoryIdPath(repositoryIdPath)) {
+				if (_isExcludedFileNamePath(repositoryIdPath) ||
+					_isSystemCompanyRepositoryIdPath(repositoryIdPath)) {
+
 					continue;
 				}
 
@@ -275,7 +285,9 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				fileNamePath)) {
 
 			for (Path versionLabelPath : directoryStream) {
-				if (Files.isDirectory(versionLabelPath)) {
+				if (_isExcludedFileNamePath(versionLabelPath) ||
+					Files.isDirectory(versionLabelPath)) {
+
 					continue;
 				}
 
@@ -310,6 +322,10 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				repositoryIdPath)) {
 
 			for (Path fileNamePath : directoryStream) {
+				if (_isExcludedFileNamePath(fileNamePath)) {
+					continue;
+				}
+
 				if (!Files.isDirectory(fileNamePath)) {
 					_log.error(
 						"Unexpected file " + fileNamePath +
@@ -327,6 +343,10 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		}
 	}
 
+	private boolean _isExcludedFileNamePath(Path path) {
+		return _excludedFileNames.contains(String.valueOf(path.getFileName()));
+	}
+
 	private boolean _isSystemCompanyRepositoryIdPath(Path repositoryIdPath) {
 		return StringUtil.equals(
 			String.valueOf(repositoryIdPath.getFileName()),
@@ -335,5 +355,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PreupgradeVerifyStoreFileSystemStructure.class);
+
+	private static final Set<String> _excludedFileNames = new HashSet<>(
+		Arrays.asList(".DS_Store"));
 
 }

@@ -34,6 +34,7 @@ import com.liferay.petra.sql.dsl.spi.query.Join;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -970,8 +971,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(primaryKeyName);
 		sb.append(" = ?");
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
+		try (PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection, sb.toString())) {
 
 			for (Long primaryKey : resolvedPrimaryKeys) {
 				preparedStatement.setLong(1, primaryKey);
@@ -1003,8 +1005,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(primaryKeyName);
 		sb.append(" = ?");
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
+		try (PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection, sb.toString())) {
 
 			for (Long primaryKey : resolvedPrimaryKeys) {
 				preparedStatement.setLong(1, primaryKey);

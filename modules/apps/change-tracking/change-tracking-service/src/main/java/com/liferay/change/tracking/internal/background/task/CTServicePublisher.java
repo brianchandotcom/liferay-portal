@@ -11,6 +11,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
@@ -240,7 +241,8 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			sb.append(" = ?");
 
 			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(sb.toString())) {
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection, sb.toString())) {
 
 				for (Serializable primaryKey :
 						_modificationCTEntries.keySet()) {
@@ -302,8 +304,9 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			sb.append(".mvccVersion = ?");
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
+		try (PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection, sb.toString())) {
 
 			for (CTEntry ctEntry : ctEntries) {
 				preparedStatement.setLong(1, ctEntry.getModelClassPK());

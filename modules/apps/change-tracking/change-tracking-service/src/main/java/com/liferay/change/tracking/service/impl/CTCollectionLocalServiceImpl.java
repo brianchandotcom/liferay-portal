@@ -60,6 +60,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -502,7 +503,8 @@ public class CTCollectionLocalServiceImpl
 						ctPersistence.getDataSource());
 
 					try (PreparedStatement preparedStatement =
-							connection.prepareStatement(sb.toString())) {
+							AutoBatchPreparedStatementUtil.autoBatch(
+								connection, sb.toString())) {
 
 						for (long modelClassPK : entry.getValue()) {
 							preparedStatement.setLong(1, modelClassPK);
@@ -1536,8 +1538,9 @@ public class CTCollectionLocalServiceImpl
 		Connection connection = _currentConnection.getConnection(
 			ctPersistence.getDataSource());
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
+		try (PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection, sb.toString())) {
 
 			for (CTEntry ctEntry : ctEntries) {
 				preparedStatement.setLong(1, ctEntry.getModelClassPK());
@@ -1555,7 +1558,8 @@ public class CTCollectionLocalServiceImpl
 			sb.setStringAt(mappingTableName, 1);
 
 			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(sb.toString())) {
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection, sb.toString())) {
 
 				for (CTEntry ctEntry : ctEntries) {
 					preparedStatement.setLong(1, ctEntry.getModelClassPK());
@@ -1590,8 +1594,9 @@ public class CTCollectionLocalServiceImpl
 		Connection connection = _currentConnection.getConnection(
 			ctPersistence.getDataSource());
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
+		try (PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection, sb.toString())) {
 
 			for (CTEntry ctEntry : ctEntries) {
 				preparedStatement.setLong(1, ctEntry.getModelClassPK());
@@ -1609,7 +1614,8 @@ public class CTCollectionLocalServiceImpl
 			sb.setStringAt(mappingTableName, 1);
 
 			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(sb.toString())) {
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection, sb.toString())) {
 
 				for (CTEntry ctEntry : ctEntries) {
 					preparedStatement.setLong(1, ctEntry.getModelClassPK());

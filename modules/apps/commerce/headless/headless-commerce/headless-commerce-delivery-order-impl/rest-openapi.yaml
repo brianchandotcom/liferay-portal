@@ -93,6 +93,10 @@ components:
                 author:
                     readOnly: true
                     type: string
+                authorId:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 channelId:
                     format: int64
                     readOnly: true

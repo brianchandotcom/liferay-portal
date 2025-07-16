@@ -149,6 +149,7 @@ public class CommerceOrderModelDocumentContributor
 			if (user != null) {
 				document.addKeyword(
 					"orderCreatorEmailAddress", user.getEmailAddress());
+				document.addKeyword("orderCreatorUserId", user.getUserId());
 			}
 
 			document.addDate("orderDate", commerceOrder.getOrderDate());

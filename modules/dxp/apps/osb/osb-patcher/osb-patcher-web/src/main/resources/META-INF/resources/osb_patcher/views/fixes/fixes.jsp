@@ -65,7 +65,6 @@ List<PatcherFix> patcherFixes = PatcherFixUtil.getParentPatcherFixes(childPatche
 		<liferay-ui:search-container-column-text
 			name="content"
 		>
-			<c:set value="<%= StringUtil.split(patcherFix.getName()) %>" var="jiraTickets" />
 
 			<%
 			for (String jiraTicket : StringUtil.split(patcherFix.getName())) {

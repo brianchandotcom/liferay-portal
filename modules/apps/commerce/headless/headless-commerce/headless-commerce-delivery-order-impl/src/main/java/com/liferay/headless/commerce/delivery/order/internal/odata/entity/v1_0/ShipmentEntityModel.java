@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.commerce.delivery.order.internal.odate.entity.v1_0;
+package com.liferay.headless.commerce.delivery.order.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.CollectionEntityField;

@@ -90,6 +90,7 @@ public class PlacedOrderDTOConverter
 				setAccountId(commerceOrder::getCommerceAccountId);
 				setAttachments(() -> _getAttachments(commerceOrder));
 				setAuthor(commerceOrder::getUserName);
+				setAuthorId(commerceOrder::getUserId);
 				setChannelId(
 					() -> {
 						CommerceChannel commerceChannel =

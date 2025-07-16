@@ -1415,6 +1415,16 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				}
 			}
 		}
+		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+			String nameIdFormat = _fetchSamlIdpSPNameIdFormat(
+				companyId, entityId);
+
+			if (Validator.isNull(nameIdFormat)) {
+				nameIdFormat = _fetchSamlSpIdpNameIdFormat(companyId, entityId);
+			}
+
+			return nameIdFormat;
+		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
 			try {
 				SamlSpIdpConnection samlSpIdpConnection =
@@ -1428,16 +1438,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 					_log.debug(exception);
 				}
 			}
-		}
-		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
-			String nameIdFormat = _fetchSamlIdpSPNameIdFormat(
-				companyId, entityId);
-
-			if (Validator.isNull(nameIdFormat)) {
-				nameIdFormat = _fetchSamlSpIdpNameIdFormat(companyId, entityId);
-			}
-
-			return nameIdFormat;
 		}
 
 		return null;

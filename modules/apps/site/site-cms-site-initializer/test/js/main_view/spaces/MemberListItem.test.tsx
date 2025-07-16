@@ -14,6 +14,7 @@ describe('MemberListItem', () => {
 	const testUserAccount = {
 		emailAddress: 'brian.smith@example.com',
 		id: 'user',
+		image: '/images/brian_smith.png',
 		name: 'Brian Smith',
 	};
 
@@ -53,9 +54,33 @@ describe('MemberListItem', () => {
 		expect(
 			within(listItemElement).getByRole('button', {name: 'remove-user'})
 		).toBeInTheDocument();
+
+		const image = within(listItemElement).getByAltText(
+			testUserAccount.name
+		);
+		expect(image).toHaveAttribute('src', testUserAccount.image);
 	});
 
-	it('renders the word owner when listing the user is the owner of the space', () => {
+	it('renders a user with fallback image and without the (you) tag', () => {
+		const anotherUser = {
+			emailAddress: 'another.user@example.com',
+			id: 'another-user-id',
+			name: 'Another User',
+		};
+
+		render(
+			<MembersListItem {...props} itemType="user" items={[anotherUser]} />
+		);
+
+		const listItemElement = screen.getByRole('listitem');
+		expect(listItemElement).toHaveTextContent(anotherUser.name);
+		expect(listItemElement).not.toHaveTextContent('(you)');
+
+		const image = within(listItemElement).getByAltText(anotherUser.name);
+		expect(image).toHaveAttribute('src', '/image/user_portrait');
+	});
+
+	it('renders the word owner and hides the remove button when the user is the owner', () => {
 		render(
 			<MembersListItem
 				{...props}
@@ -68,29 +93,10 @@ describe('MemberListItem', () => {
 		expect(screen.getByRole('listitem')).toHaveTextContent(
 			`${testUserAccount.name}(you)(owner)`
 		);
-	});
 
-	it('calls onRemoveItem when remove button is clicked', async () => {
-		const onRemoveItem = jest.fn();
-
-		render(
-			<MembersListItem
-				currentUserId={testUserAccount.id}
-				emptyMessage="No users"
-				itemType="user"
-				items={[testUserAccount]}
-				onRemoveItem={onRemoveItem}
-			/>
-		);
-
-		expect(onRemoveItem).not.toHaveBeenCalled();
-
-		await userEvent.click(
-			screen.getByRole('button', {name: 'remove-user'})
-		);
-
-		expect(onRemoveItem).toHaveBeenCalledTimes(1);
-		expect(onRemoveItem).toHaveBeenCalledWith(testUserAccount);
+		expect(
+			screen.queryByRole('button', {name: /remove/i})
+		).not.toBeInTheDocument();
 	});
 
 	it('renders correctly when items is group', () => {
@@ -135,4 +141,32 @@ describe('MemberListItem', () => {
 		);
 		expect(listItemElement).toHaveTextContent('(0-members)');
 	});
+
+	it.each([
+		['user', [testUserAccount]],
+		['group', [testUserGroup]],
+	])(
+		'calls onRemoveItem when the remove %s button is clicked',
+		async (itemType, items) => {
+			const onRemoveItem = jest.fn();
+
+			render(
+				<MembersListItem
+					{...props}
+					itemType={itemType as 'user' | 'group'}
+					items={items}
+					onRemoveItem={onRemoveItem}
+				/>
+			);
+
+			expect(onRemoveItem).not.toHaveBeenCalled();
+
+			await userEvent.click(
+				screen.getByRole('button', {name: `remove-${itemType}`})
+			);
+
+			expect(onRemoveItem).toHaveBeenCalledTimes(1);
+			expect(onRemoveItem).toHaveBeenCalledWith(items[0]);
+		}
+	);
 });

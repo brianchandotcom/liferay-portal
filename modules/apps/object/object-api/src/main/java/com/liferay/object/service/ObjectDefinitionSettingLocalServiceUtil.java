@@ -305,12 +305,6 @@ public class ObjectDefinitionSettingLocalServiceUtil {
 			uuid, companyId);
 	}
 
-	public static Map<Long, ObjectDefinitionSetting>
-		getObjectDefinitionSettingsMap(long companyId, String name) {
-
-		return getService().getObjectDefinitionSettingsMap(companyId, name);
-	}
-
 	/**
 	 * Returns a range of all the object definition settings.
 	 *
@@ -341,6 +335,12 @@ public class ObjectDefinitionSettingLocalServiceUtil {
 	 */
 	public static int getObjectDefinitionSettingsCount() {
 		return getService().getObjectDefinitionSettingsCount();
+	}
+
+	public static Map<Long, ObjectDefinitionSetting>
+		getObjectDefinitionSettingsMap(long companyId, String name) {
+
+		return getService().getObjectDefinitionSettingsMap(companyId, name);
 	}
 
 	/**

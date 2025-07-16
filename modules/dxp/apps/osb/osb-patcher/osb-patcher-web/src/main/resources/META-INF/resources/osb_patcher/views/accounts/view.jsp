@@ -13,6 +13,10 @@ PatcherAccountsViewDisplayContext patcherAccountsViewDisplayContext = new Patche
 long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersionId");
 %>
 
+<liferay-ui:header
+	title='<%= LanguageUtil.format(request, "view-x", patcherAccountsViewDisplayContext.getPatcherBuildAccountEntryCode()) %>'
+/>
+
 <portlet:renderURL var="viewPatcherAccountURL">
 	<portlet:param name="mvcRenderCommandName" value="/patcher/view_accounts" />
 	<portlet:param name="patcherBuildAccountEntryCode" value="<%= patcherAccountsViewDisplayContext.getPatcherBuildAccountEntryCode() %>" />

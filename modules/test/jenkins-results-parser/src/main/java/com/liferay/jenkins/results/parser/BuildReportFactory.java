@@ -104,14 +104,7 @@ public class BuildReportFactory {
 	public static TopLevelBuildReport newTopLevelBuildReport(
 		TopLevelBuild topLevelBuild) {
 
-		String buildURLString = topLevelBuild.getBuildURL();
-
-		if (!_topLevelBuildReports.containsKey(buildURLString)) {
-			_topLevelBuildReports.put(
-				buildURLString, new DefaultTopLevelBuildReport(topLevelBuild));
-		}
-
-		return _topLevelBuildReports.get(buildURLString);
+		return new DefaultTopLevelBuildReport(topLevelBuild);
 	}
 
 	public static TopLevelBuildReport newTopLevelBuildReport(URL buildURL) {

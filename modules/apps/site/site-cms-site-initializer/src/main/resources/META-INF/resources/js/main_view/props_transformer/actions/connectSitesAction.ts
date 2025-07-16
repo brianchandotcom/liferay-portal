@@ -6,7 +6,6 @@
 import {openModal} from 'frontend-js-components-web';
 
 export type ConnectSitesData = {
-	action: 'connectSites';
 	title: string;
 };
 

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
-import com.liferay.site.cms.site.initializer.internal.util.SpaceAbstractHeaderUtil;
+import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -29,9 +29,9 @@ import java.util.Map;
 /**
  * @author Roberto Díaz
  */
-public class ViewSpaceMembersAbstractSectionDisplayContext {
+public class ViewSpaceMembersSummarySectionDisplayContext {
 
-	public ViewSpaceMembersAbstractSectionDisplayContext(
+	public ViewSpaceMembersSummarySectionDisplayContext(
 		long groupId, HttpServletRequest httpServletRequest, Language language,
 		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService,
@@ -55,9 +55,9 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 		sb.append("/");
 		sb.append(type);
 		sb.append("?page=");
-		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE);
+		sb.append(CMSSpaceConstants.SPACE_SUMMARY_PAGE);
 		sb.append("&pageSize=");
-		sb.append(CMSSpaceConstants.SPACE_ABSTRACT_PAGE_SIZE);
+		sb.append(CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
 
 		if (type.equals("user-accounts")) {
 			sb.append("&nestedFields=roles");
@@ -97,7 +97,7 @@ public class ViewSpaceMembersAbstractSectionDisplayContext {
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {
-		return SpaceAbstractHeaderUtil.getSpaceAbstractHeaderProps(
+		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			_httpServletRequest, "view-all-members",
 			_getSpaceMembersHeaderTitle(), StringPool.BLANK,
 			HashMapBuilder.<String, Object>put(

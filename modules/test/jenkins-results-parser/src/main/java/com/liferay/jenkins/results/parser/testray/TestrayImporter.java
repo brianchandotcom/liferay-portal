@@ -1457,14 +1457,20 @@ public class TestrayImporter {
 			Element propertiesElement = testcaseElement.addElement(
 				"properties");
 
-			if (testrayCaseResult instanceof JUnitBatchBuildTestrayCaseResult) {
-				_addDetailsElements(
-					propertiesElement,
-					(JUnitBatchBuildTestrayCaseResult)testrayCaseResult);
-			}
-			else {
-				testcasePropertiesMap.put(
-					"testray.jira.issues", testrayCaseResult.getIssues());
+			String jobName = _topLevelBuildReport.getJobName();
+
+			if (jobName.contains("upstream-dxp")) {
+				if (testrayCaseResult instanceof
+						JUnitBatchBuildTestrayCaseResult) {
+
+					_addDetailsElements(
+						propertiesElement,
+						(JUnitBatchBuildTestrayCaseResult)testrayCaseResult);
+				}
+				else {
+					testcasePropertiesMap.put(
+						"testray.jira.issues", testrayCaseResult.getIssues());
+				}
 			}
 
 			_addPropertyElements(propertiesElement, testcasePropertiesMap);

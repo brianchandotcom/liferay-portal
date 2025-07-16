@@ -7,17 +7,11 @@ package com.liferay.osb.patcher.web.internal.display.context;
 
 import com.liferay.osb.patcher.model.PatcherAccount;
 import com.liferay.osb.patcher.service.PatcherAccountLocalServiceUtil;
-import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.osb.patcher.util.comparator.PatcherAccountModifiedDateComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.search.SearchResultUtil;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
@@ -45,40 +39,41 @@ public class PatcherAccountsDisplayContext {
 			return _patcherAccountSearchContainer;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		SearchContainer<PatcherAccount> patcherAccountSearchContainer =
 			new SearchContainer<>(
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-accounts");
 
-		Indexer<PatcherAccount> indexer = IndexerRegistryUtil.getIndexer(
-			PatcherAccount.class);
-
-		SearchContext searchContext = SearchContextFactory.getInstance(
-			_httpServletRequest);
-
-		searchContext.setEnd(patcherAccountSearchContainer.getEnd());
-		searchContext.setGroupIds(null);
-		searchContext.setSorts(
-			new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true));
-		searchContext.setStart(patcherAccountSearchContainer.getStart());
-
-		Hits hits = indexer.search(searchContext);
-
 		patcherAccountSearchContainer.setResultsAndTotal(
-			() -> TransformUtil.transform(
-				SearchResultUtil.getSearchResults(
-					hits, LocaleUtil.getDefault()),
-				searchResult ->
-					PatcherAccountLocalServiceUtil.fetchPatcherAccount(
-						searchResult.getClassPK())),
-			hits.getLength());
+			() -> PatcherAccountLocalServiceUtil.getPatcherAccounts(
+				themeDisplay.getCompanyId(), _getKeywords(),
+				patcherAccountSearchContainer.getStart(),
+				patcherAccountSearchContainer.getEnd(),
+				PatcherAccountModifiedDateComparator.getInstance(false)),
+			PatcherAccountLocalServiceUtil.getPatcherAccountsCount(
+				themeDisplay.getCompanyId(), _getKeywords()));
 
 		_patcherAccountSearchContainer = patcherAccountSearchContainer;
 
 		return _patcherAccountSearchContainer;
 	}
 
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
+		return _keywords;
+	}
+
 	private final HttpServletRequest _httpServletRequest;
+	private String _keywords;
 	private SearchContainer<PatcherAccount> _patcherAccountSearchContainer;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

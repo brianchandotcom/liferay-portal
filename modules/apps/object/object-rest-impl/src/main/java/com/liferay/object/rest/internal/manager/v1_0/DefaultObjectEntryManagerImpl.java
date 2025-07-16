@@ -64,6 +64,8 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1339,30 +1341,7 @@ public class DefaultObjectEntryManagerImpl
 			_objectFieldLocalService.fetchObjectField(
 				objectDefinition.getTitleObjectFieldId());
 
-		if ((titleObjectField != null) &&
-			Objects.equals(
-				titleObjectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
-
-			if (titleObjectField.isLocalized()) {
-				Map<String, Object> i18nValues =
-					(Map<String, Object>)values.get(
-						titleObjectField.getI18nObjectFieldName());
-
-				String language = LocaleUtil.toLanguageId(
-					LocaleUtil.getSiteDefault());
-
-				i18nValues.put(
-					language,
-					_getNewValue(String.valueOf(i18nValues.get(language))));
-			}
-			else {
-				String value = GetterUtil.getString(
-					values.get(titleObjectField.getName()));
-
-				values.put(titleObjectField.getName(), _getNewValue(value));
-			}
-		}
+		_replaceValues(objectDefinition, scopeKey, titleObjectField, values);
 
 		return _addObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntry,
@@ -1620,11 +1599,40 @@ public class DefaultObjectEntryManagerImpl
 			objectRelationship.getObjectRelationshipId(), primaryKey);
 	}
 
-	private String _getNewValue(String value) {
-		return StringBundler.concat(
-			value, StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-			_language.get(LocaleUtil.getSiteDefault(), "copy"),
+	private String _getNewValue(
+			long groupId, ObjectDefinition objectDefinition,
+			ObjectField objectField, String value)
+		throws Exception {
+
+		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
+
+		String newValue = StringBundler.concat(
+			value, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copy,
 			StringPool.CLOSE_PARENTHESIS);
+
+		String prefix = value;
+
+		Table<?> table = _objectFieldLocalService.getTable(
+			objectDefinition.getObjectDefinitionId(), objectField.getName());
+
+		Column<?, String> objectFieldColumn =
+			(Column<?, String>)table.getColumn(objectField.getDBColumnName());
+
+		for (int i = 1;; i++) {
+			long count = objectEntryLocalService.getValuesListCount(
+				new Long[] {groupId}, objectDefinition.getCompanyId(),
+				objectDefinition.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				objectFieldColumn.eq(newValue), null);
+
+			if (count == 0) {
+				return newValue;
+			}
+
+			newValue = StringBundler.concat(
+				prefix, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copy,
+				StringPool.SPACE, i, StringPool.CLOSE_PARENTHESIS);
+		}
 	}
 
 	private ObjectEntry _getObjectEntry(
@@ -2214,6 +2222,44 @@ public class DefaultObjectEntryManagerImpl
 
 				properties.remove(objectField.getName());
 			}
+		}
+	}
+
+	private void _replaceValues(
+			ObjectDefinition objectDefinition, String scopeKey,
+			ObjectField objectField, Map<String, Serializable> values)
+		throws Exception {
+
+		if ((objectField == null) ||
+			!Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
+
+			return;
+		}
+
+		long groupId = getGroupId(objectDefinition, scopeKey);
+
+		if (objectField.isLocalized()) {
+			Map<String, Object> i18nValues = (Map<String, Object>)values.get(
+				objectField.getI18nObjectFieldName());
+
+			String languageId = LocaleUtil.toLanguageId(
+				LocaleUtil.getSiteDefault());
+
+			String value = GetterUtil.getString(i18nValues.get(languageId));
+
+			i18nValues.put(
+				languageId,
+				_getNewValue(groupId, objectDefinition, objectField, value));
+		}
+		else {
+			String value = GetterUtil.getString(
+				values.get(objectField.getName()));
+
+			values.put(
+				objectField.getName(),
+				_getNewValue(groupId, objectDefinition, objectField, value));
 		}
 	}
 

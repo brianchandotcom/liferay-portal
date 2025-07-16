@@ -46,11 +46,8 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -73,66 +70,57 @@ public class ObjectEntrySharingWhenSystemSharingIsDisabledTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_configurationTemporarySwapper = new ConfigurationTemporarySwapper(
-			"com.liferay.sharing.internal.configuration." +
-				"SharingSystemConfiguration",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"enabled", false
-			).build());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_configurationTemporarySwapper.close();
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_groupUser = UserTestUtil.addGroupUser(
-			_group, RoleConstants.POWER_USER);
-
-		_objectDefinition = _addObjectDefinition();
-
-		_modelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				_objectDefinition.getClassName());
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_sharingPermissionCheckerServiceTracker = ServiceTrackerFactory.open(
-			bundle.getBundleContext(),
-			StringBundler.concat(
-				"(&(model.class.name=", _objectDefinition.getClassName(),
-				")(objectClass=", SharingPermissionChecker.class.getName(),
-				"))"));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_sharingPermissionCheckerServiceTracker.close();
 	}
 
 	@Test
 	public void testUserWithViewSharingEntryActionCannotViewPrivateModel()
 		throws Exception {
 
-		ObjectEntry objectEntry = _addObjectEntry();
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.sharing.internal.configuration." +
+						"SharingSystemConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", false
+					).build())) {
 
-		_addSharingEntry(objectEntry, _groupUser.getUserId());
+			ObjectDefinition objectDefinition = _addObjectDefinition();
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
+			ModelResourcePermission<ObjectEntry> modelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					objectDefinition.getClassName());
 
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
+			ServiceTracker<SharingPermissionChecker, SharingPermissionChecker>
+				sharingPermissionCheckerServiceTracker =
+					_getSharingPermissionCheckerServiceTracker(
+						objectDefinition.getClassName());
 
-			Assert.assertFalse(
-				_modelResourcePermission.contains(
-					permissionChecker, objectEntry, ActionKeys.VIEW));
+			try {
+				ObjectEntry objectEntry = _addObjectEntry(
+					objectDefinition.getObjectDefinitionId());
+
+				User user = UserTestUtil.addGroupUser(
+					_group, RoleConstants.POWER_USER);
+
+				_addSharingEntry(objectEntry, user.getUserId());
+
+				PermissionChecker permissionChecker =
+					PermissionCheckerFactoryUtil.create(user);
+
+				try (ContextUserReplace contextUserReplace =
+						new ContextUserReplace(user, permissionChecker)) {
+
+					Assert.assertFalse(
+						modelResourcePermission.contains(
+							permissionChecker, objectEntry, ActionKeys.VIEW));
+				}
+			}
+			finally {
+				sharingPermissionCheckerServiceTracker.close();
+			}
 		}
 	}
 
@@ -146,7 +134,9 @@ public class ObjectEntrySharingWhenSystemSharingIsDisabledTest {
 			ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
-	private ObjectEntry _addObjectEntry() throws Exception {
+	private ObjectEntry _addObjectEntry(long objectDefinitionId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
@@ -156,7 +146,7 @@ public class ObjectEntrySharingWhenSystemSharingIsDisabledTest {
 
 		return ObjectEntryLocalServiceUtil.addObjectEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
+			objectDefinitionId,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null, Collections.emptyMap(), serviceContext);
 	}
@@ -174,7 +164,19 @@ public class ObjectEntrySharingWhenSystemSharingIsDisabledTest {
 				_group, TestPropsValues.getUserId()));
 	}
 
-	private static ConfigurationTemporarySwapper _configurationTemporarySwapper;
+	private ServiceTracker<SharingPermissionChecker, SharingPermissionChecker>
+		_getSharingPermissionCheckerServiceTracker(
+			String objectDefinitionClassName) {
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		return ServiceTrackerFactory.open(
+			bundle.getBundleContext(),
+			StringBundler.concat(
+				"(&(model.class.name=", objectDefinitionClassName,
+				")(objectClass=", SharingPermissionChecker.class.getName(),
+				"))"));
+	}
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
@@ -182,16 +184,7 @@ public class ObjectEntrySharingWhenSystemSharingIsDisabledTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private User _groupUser;
-	private ModelResourcePermission<ObjectEntry> _modelResourcePermission;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition;
-
 	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;
-
-	private ServiceTracker<SharingPermissionChecker, SharingPermissionChecker>
-		_sharingPermissionCheckerServiceTracker;
 
 }

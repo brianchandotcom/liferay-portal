@@ -6,11 +6,11 @@
 package com.liferay.exportimport.web.internal.constants;
 
 /**
- * @author Jorge González
+ * @author Carlos Correa
  */
-public class ExportImportFDSNames {
+public class ExportImportConstants {
 
-	public static final String IMPORT_ERRORS =
-		ExportImportConstants.BUNDLE_SYMBOLIC_NAME + "-importErrors";
+	public static final String BUNDLE_SYMBOLIC_NAME =
+		"com.liferay.exportimport.web";
 
 }

@@ -58,6 +58,7 @@ import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributo
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -199,6 +200,11 @@ public class AccountGroupResourceImpl
 					com.liferay.account.model.AccountGroup.class.getName()),
 				contextCompany.getCompanyId(), _expandoBridgeIndexer,
 				_expandoColumnLocalService, _expandoTableLocalService));
+	}
+
+	@Override
+	public List<String> getNestedFields() {
+		return List.of("accountBriefs");
 	}
 
 	@Override

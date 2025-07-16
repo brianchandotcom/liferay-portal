@@ -985,10 +985,7 @@ public class SingleLogoutProfileImpl
 			SAMLPeerEntityContext samlPeerEntityContext =
 				messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
-			if (_isSpIdPConnection(samlPeerEntityContext.getEntityId())) {
-				_processSpLogoutRequest(httpServletResponse, messageContext);
-			}
-			else if (_isIdpSpConnection(samlPeerEntityContext.getEntityId())) {
+			if (_isIdpSpConnection(samlPeerEntityContext.getEntityId())) {
 				_processIdpLogoutRequest(
 					httpServletRequest, httpServletResponse, messageContext);
 			}
@@ -1018,10 +1015,6 @@ public class SingleLogoutProfileImpl
 			if (_isSpIdPConnection(samlPeerEntityContext.getEntityId())) {
 				_processSpLogoutResponse(
 					httpServletRequest, httpServletResponse);
-			}
-			else if (_isIdpSpConnection(samlPeerEntityContext.getEntityId())) {
-				_processIdpLogoutResponse(
-					httpServletRequest, httpServletResponse, messageContext);
 			}
 			else {
 				_processIdpLogoutResponse(

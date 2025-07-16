@@ -14,4 +14,7 @@ public class NotificationTemplateConstants {
 
 	public static final String EDITOR_TYPE_RICH_TEXT = "richText";
 
+	public static final String
+		EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_NOTIFICATION_TEMPLATE = "L_";
+
 }

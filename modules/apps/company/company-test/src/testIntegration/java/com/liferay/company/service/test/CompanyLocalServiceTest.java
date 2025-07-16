@@ -188,6 +188,18 @@ public class CompanyLocalServiceTest {
 			DBPartitionUtil.class, "_dbPartitionDB");
 		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 			PortalInstancePool.getDefaultCompanyId());
+
+		_initializeClassNames();
+
+		_modelListenerList = _registerModelListeners();
+
+		_deletedCompany = addCompany();
+
+		_addCompanyUserGroupRole(_deletedCompany);
+
+		_companyLocalService.deleteCompany(_deletedCompany);
+
+		_cleanupData();
 	}
 
 	@AfterClass
@@ -197,7 +209,7 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	private void resetBackgroundTaskThreadLocal() throws Exception {
+	private static void resetBackgroundTaskThreadLocal() throws Exception {
 		Class<?> backgroundTaskThreadLocalClass =
 			BackgroundTaskThreadLocal.class;
 
@@ -215,30 +227,12 @@ public class CompanyLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_classNames = _classNameLocalService.getClassNames(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		_initializeClassNames();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		List<ClassName> classNames = ListUtil.remove(
-			_classNameLocalService.getClassNames(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			_classNames);
-
-		for (ClassName className : classNames) {
-			_classNameLocalService.deleteClassName(className);
-		}
-
-		resetBackgroundTaskThreadLocal();
-
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
-
-		_serviceRegistrations.clear();
+		_cleanupData();
 	}
 
 	@Test
@@ -1364,7 +1358,7 @@ public class CompanyLocalServiceTest {
 			false);
 	}
 
-	private Company addCompany() throws Exception {
+	private static Company addCompany() throws Exception {
 		long counterCompanyId =
 			_counterLocalService.increment(Company.class.getName()) + 1;
 
@@ -1384,7 +1378,7 @@ public class CompanyLocalServiceTest {
 		return company;
 	}
 
-	private Company addCompany(String webId) throws Exception {
+	private static Company addCompany(String webId) throws Exception {
 		Company company = _companyLocalService.addCompany(
 			null, webId, webId, "test.com", 0, true, true, null, null, null,
 			null, null, null);
@@ -1407,7 +1401,7 @@ public class CompanyLocalServiceTest {
 			getServiceContext(companyId));
 	}
 
-	private User addUser(
+	private static User addUser(
 			long companyId, long userId, long groupId,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -1420,7 +1414,7 @@ public class CompanyLocalServiceTest {
 			serviceContext);
 	}
 
-	private ServiceContext getServiceContext(long companyId) {
+	private static ServiceContext getServiceContext(long companyId) {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
@@ -1536,7 +1530,7 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	private void _addCompanyUserGroupRole(Company company) throws Exception {
+	private static void _addCompanyUserGroupRole(Company company) throws Exception {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
@@ -1571,7 +1565,7 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	private void _cleanupData() throws Exception {
+	private static void _cleanupData() throws Exception {
 		List<ClassName> classNames = ListUtil.remove(
 			_classNameLocalService.getClassNames(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
@@ -1626,15 +1620,15 @@ public class CompanyLocalServiceTest {
 		return viewNames.size();
 	}
 
-	private void _initializeClassNames() throws Exception {
+	private static void _initializeClassNames() throws Exception {
 		_classNames = _classNameLocalService.getClassNames(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
-	private List<String> _registerModelListeners() {
+	private static List<String> _registerModelListeners() {
 		List<String> list = new CopyOnWriteArrayList<>();
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+		Bundle bundle = FrameworkUtil.getBundle(CompanyLocalServiceTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -1690,6 +1684,8 @@ public class CompanyLocalServiceTest {
 
 	private static DB _db;
 	private static DBPartitionDB _dbPartitionDB;
+	private static Company _deletedCompany;
+	private static List<String> _modelListenerList;
 
 	@Inject
 	private static RoleLocalService _roleLocalService;

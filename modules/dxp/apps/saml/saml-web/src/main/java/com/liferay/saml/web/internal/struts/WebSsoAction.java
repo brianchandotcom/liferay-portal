@@ -23,9 +23,7 @@ public class WebSsoAction extends BaseSamlStrutsAction {
 
 	@Override
 	public boolean isEnabled() {
-		if (_samlProviderConfigurationHelper.isRoleIdp() ||
-			_samlProviderConfigurationHelper.isRoleIdpAndSp()) {
-
+		if (!_samlProviderConfigurationHelper.isRoleSp()) {
 			return _samlProviderConfigurationHelper.isEnabled();
 		}
 

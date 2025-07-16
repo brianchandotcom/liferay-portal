@@ -1326,6 +1326,13 @@ public abstract class Base${schemaName}ResourceImpl
 		</#list>
 	</#if>
 
+	<#if generateEntityModelResource>
+		@Override
+		public EntityModel getEntityModel(MultivaluedMap multivaluedMap) throws Exception {
+			return null;
+		}
+	</#if>
+
 	<#if generateCRUD>
 		@Override
 		public ${schemaName} getItem(Long id) throws Exception {
@@ -1340,13 +1347,6 @@ public abstract class Base${schemaName}ResourceImpl
 				<#sep>, </#sep>
 			</#list>
 			);
-		}
-	</#if>
-
-	<#if generateEntityModelResource>
-		@Override
-		public EntityModel getEntityModel(MultivaluedMap multivaluedMap) throws Exception {
-			return null;
 		}
 	</#if>
 

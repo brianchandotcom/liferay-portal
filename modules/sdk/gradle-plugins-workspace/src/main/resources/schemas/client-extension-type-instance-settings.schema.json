@@ -4158,6 +4158,14 @@
 					"title": "Sites Included in the XML Sitemap",
 					"type": "array"
 				},
+				"companySitemapObjectDefinitionIds": {
+					"default": "",
+					"items": {
+						"type": "string"
+					},
+					"title": "Objects and CMS Structures",
+					"type": "array"
+				},
 				"includeCategories": {
 					"default": true,
 					"title": "Include Category URLs in the XML Sitemap",

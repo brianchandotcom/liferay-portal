@@ -122,8 +122,13 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 							</c:choose>
 						</td>
 						<td class="slim">
-							<span class="relative-date">
-								<%= dateTimeFormat.format(patcherBuild.getStatusDate()) %>
+
+							<%
+							Date statusDate = patcherBuild.getStatusDate();
+							%>
+
+							<span class="lfr-portal-tooltip" title="<%= dateTimeFormat.format(patcherBuild.getStatusDate()) %>">
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</span>
 						</td>
 						<td>
@@ -195,19 +200,3 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>
-
-<aui:script>
-	Liferay.on('allPortletsReady', function (event) {
-		if (typeof moment !== 'undefined') {
-			AUI()
-				.all('.relative-date')
-				.each(function (node, index, nodeList) {
-					var date = node.getData('date');
-
-					var relativeTime = moment(date).fromNow();
-
-					node.text(relativeTime);
-				});
-		}
-	});
-</aui:script>

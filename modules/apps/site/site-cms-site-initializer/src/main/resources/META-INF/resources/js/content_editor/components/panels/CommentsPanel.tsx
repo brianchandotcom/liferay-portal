@@ -74,17 +74,57 @@ export default function CommentsPanel({
 		}
 	};
 
+	const saveComment = async (
+		content: string,
+		editor: TEditor,
+		parentCommentId: string | null = null
+	) => {
+		try {
+			const newComment = await CommentService.addComment({
+				content,
+				parentCommentId,
+				url: addCommentURL!,
+			});
+
+			setComments((comments) =>
+				parentCommentId
+					? comments.map((comment) =>
+							comment.commentId === parentCommentId
+								? {
+										...comment,
+										children: [
+											...(comment?.children || []),
+											newComment,
+										],
+									}
+								: comment
+						)
+					: [...comments, newComment]
+			);
+
+			openToast({
+				message: Liferay.Language.get('your-comment-has-been-posted'),
+				type: 'success',
+			});
+
+			editor.setData('');
+		}
+		catch (error) {
+			openToast({
+				message: (error as Error).message,
+				type: 'danger',
+			});
+		}
+	};
+
 	return (
 		<>
-			<div className="border-bottom pb-4 px-3">
+			<div className="border-bottom pb-2 px-3">
 				<label>{Liferay.Language.get('add-comment')}</label>
 
 				<CommentEditor
-					addCommentURL={addCommentURL}
 					editorConfig={editorConfig}
-					onAddComment={(comment) =>
-						setComments((comments) => [...comments, comment])
-					}
+					onSave={saveComment}
 				/>
 			</div>
 
@@ -92,30 +132,11 @@ export default function CommentsPanel({
 				<ul className="p-0">
 					{comments.map((comment) => (
 						<CommentNode
-							addCommentURL={addCommentURL}
 							comment={comment}
 							editorConfig={editorConfig}
 							key={comment.commentId}
-							onAddComment={(
-								childComment: Comment,
-								parentId: string
-							) => {
-								setComments((comments) =>
-									comments.map((comment) =>
-										comment.commentId === parentId
-											? {
-													...comment,
-													children: [
-														...(comment?.children ||
-															[]),
-														childComment,
-													],
-												}
-											: comment
-									)
-								);
-							}}
 							onDeleteComment={deleteComment}
+							onSave={saveComment}
 						/>
 					))}
 				</ul>
@@ -125,21 +146,19 @@ export default function CommentsPanel({
 }
 
 function CommentNode({
-	addCommentURL,
 	comment,
 	editorConfig,
-	onAddComment,
 	onDeleteComment,
+	onSave,
 	parentCommentId,
 }: {
-	addCommentURL?: string;
 	comment: Comment;
-	editorConfig?: LiferayEditorConfig;
-	onAddComment?: (comment: Comment, parentId: string) => void;
+	editorConfig: LiferayEditorConfig;
 	onDeleteComment: (
 		commentId: string,
 		parentCommentId?: string
 	) => Promise<void>;
+	onSave: (content: string, editor: TEditor, parentCommentId: string) => void;
 	parentCommentId?: string;
 }) {
 	const [status, setStatus] = useState<Status>(null);
@@ -216,8 +235,10 @@ function CommentNode({
 							{comment.children.map((child: Comment) => (
 								<CommentNode
 									comment={child}
+									editorConfig={editorConfig}
 									key={child.commentId}
 									onDeleteComment={onDeleteComment}
+									onSave={() => null}
 									parentCommentId={comment.commentId}
 								/>
 							))}
@@ -226,13 +247,13 @@ function CommentNode({
 
 					{status === 'reply' ? (
 						<CommentEditor
-							addCommentURL={addCommentURL!}
-							editorConfig={editorConfig!}
-							onAddComment={(childComment) => {
-								onAddComment?.(childComment, comment.commentId);
+							editorConfig={editorConfig}
+							onCancel={() => setStatus(null)}
+							onSave={(content, editor) => {
+								onSave(content, editor, comment.commentId);
+
 								setStatus(null);
 							}}
-							onCancel={() => setStatus(null)}
 							parentCommentId={comment.commentId}
 						/>
 					) : comment.rootComment ? (
@@ -252,16 +273,16 @@ function CommentNode({
 }
 
 function CommentEditor({
-	addCommentURL,
 	editorConfig,
-	onAddComment,
+	initialData,
 	onCancel,
+	onSave,
 	parentCommentId = null,
 }: {
-	addCommentURL: string;
 	editorConfig: LiferayEditorConfig;
-	onAddComment: (comment: Comment, parentId?: string) => void;
+	initialData?: string;
 	onCancel?: () => void;
+	onSave: (content: string, editor: TEditor) => void;
 	parentCommentId?: string | null;
 }) {
 	const [content, setContent] = useState<string>();
@@ -274,6 +295,7 @@ function CommentEditor({
 				className="form-control form-control-sm"
 				config={{
 					...editorConfig,
+					initialData,
 					label: Liferay.Language.get('add-comment'),
 					placeholder: Liferay.Language.get('type-your-comment-here'),
 				}}
@@ -289,7 +311,7 @@ function CommentEditor({
 				}}
 			/>
 
-			<div className="mt-3">
+			<div className="my-3">
 				<ClayButton
 					disabled={disabled}
 					onClick={async () => {
@@ -299,30 +321,7 @@ function CommentEditor({
 
 						setDisabled(true);
 
-						try {
-							const comment = await CommentService.addComment({
-								content,
-								parentCommentId,
-								url: addCommentURL,
-							});
-
-							onAddComment(comment);
-
-							openToast({
-								message: Liferay.Language.get(
-									'your-comment-has-been-posted'
-								),
-								type: 'success',
-							});
-
-							editorRef.current?.setData('');
-						}
-						catch (error) {
-							openToast({
-								message: (error as Error).message,
-								type: 'danger',
-							});
-						}
+						onSave(content, editorRef.current!);
 
 						setDisabled(false);
 					}}

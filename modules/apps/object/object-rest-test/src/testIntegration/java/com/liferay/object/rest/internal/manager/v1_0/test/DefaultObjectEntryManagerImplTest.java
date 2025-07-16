@@ -115,6 +115,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -812,6 +813,8 @@ public class DefaultObjectEntryManagerImplTest
 				new TextObjectFieldBuilder(
 				).indexed(
 					true
+				).indexedLanguageId(
+					LanguageUtil.getLanguageId(LocaleUtil.getDefault())
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
@@ -821,6 +824,8 @@ public class DefaultObjectEntryManagerImplTest
 				new TextObjectFieldBuilder(
 				).indexed(
 					true
+				).indexedLanguageId(
+					LanguageUtil.getLanguageId(LocaleUtil.getDefault())
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
@@ -7567,6 +7572,21 @@ public class DefaultObjectEntryManagerImplTest
 		}
 	}
 
+	private void _assertLocalizedTextObjectFieldValueCopy(
+		String expectedValue, ObjectEntry objectEntry,
+		ObjectField objectField) {
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		Map<String, Object> i18nValues = (Map<String, Object>)properties.get(
+			objectField.getI18nObjectFieldName());
+
+		String language = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+
+		Assert.assertEquals(
+			expectedValue, String.valueOf(i18nValues.get(language)));
+	}
+
 	private void _assertLocalizedValues(
 			Map<String, Object> expectedLocalizedValues, String languageId,
 			long objectEntryId)
@@ -7702,6 +7722,15 @@ public class DefaultObjectEntryManagerImplTest
 					).build();
 				}
 			});
+	}
+
+	private void _assertTextObjectFieldValueCopy(
+		String expectedValue, ObjectEntry objectEntry) {
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		Assert.assertEquals(
+			expectedValue, properties.get("textObjectFieldName"));
 	}
 
 	private void _assignAccountEntryRole(
@@ -8335,23 +8364,19 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition5);
 
-		ObjectEntry copyObjectEntry =
+		_assertLocalizedTextObjectFieldValueCopy(
+			"en_US localizedTextObjectFieldValue1 (Copy)",
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
 				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
-				1);
+				1),
+			objectField);
 
-		Assert.assertNotNull(copyObjectEntry);
-
-		Map<String, Object> properties = copyObjectEntry.getProperties();
-
-		Map<String, Object> i18nValues = (Map<String, Object>)properties.get(
-			objectField.getI18nObjectFieldName());
-
-		String language = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-
-		Assert.assertEquals(
-			"en_US localizedTextObjectFieldValue1 (Copy)",
-			String.valueOf(i18nValues.get(language)));
+		_assertLocalizedTextObjectFieldValueCopy(
+			"en_US localizedTextObjectFieldValue1 (Copy 1)",
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
+				1),
+			objectField);
 	}
 
 	private void _testCopyObjectEntryByVersionWithNonlocalizedTextField(
@@ -8368,18 +8393,17 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition5);
 
-		ObjectEntry copyObjectEntry =
+		_assertTextObjectFieldValueCopy(
+			"textObjectFieldValue (Copy)",
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
 				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
-				1);
+				1));
 
-		Assert.assertNotNull(copyObjectEntry);
-
-		Map<String, Object> properties = copyObjectEntry.getProperties();
-
-		Assert.assertEquals(
-			"textObjectFieldValue (Copy)",
-			properties.get("textObjectFieldName"));
+		_assertTextObjectFieldValueCopy(
+			"textObjectFieldValue (Copy 1)",
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
+				1));
 	}
 
 	private void _testDeleteObjectEntryWithAccountEntryRestricted2(

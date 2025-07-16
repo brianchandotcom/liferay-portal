@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -41,20 +42,27 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 			keywordQueryContributorHelper.getSearchContext();
 
 		_addHighlightFieldNames(searchContext);
-
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "city", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "country", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "emailAddress.text", false);
+		queryHelper.addSearchLocalizedTerm(
+			booleanQuery, searchContext, "firstName", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "firstName", false);
+		queryHelper.addSearchLocalizedTerm(
+			booleanQuery, searchContext, "fullName", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "fullName", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "jobTitle", false);
+		queryHelper.addSearchLocalizedTerm(
+			booleanQuery, searchContext, "lastName", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "lastName", false);
+		queryHelper.addSearchLocalizedTerm(
+			booleanQuery, searchContext, "middleName", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "middleName", false);
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "region", false);

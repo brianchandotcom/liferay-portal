@@ -44,16 +44,10 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("/o/headless-asset-library/v1.0/asset-libraries/");
-		sb.append(_groupId);
-		sb.append("/sites?page=");
-		sb.append(CMSSpaceConstants.SPACE_SUMMARY_PAGE);
-		sb.append("&pageSize=");
-		sb.append(CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
-
-		return sb.toString();
+		return StringBundler.concat(
+			"/o/headless-asset-library/v1.0/asset-libraries/", _groupId,
+			"/sites?page=", CMSSpaceConstants.SPACE_SUMMARY_PAGE, "&pageSize=",
+			CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
 	}
 
 	public CreationMenu getCreationMenu() {

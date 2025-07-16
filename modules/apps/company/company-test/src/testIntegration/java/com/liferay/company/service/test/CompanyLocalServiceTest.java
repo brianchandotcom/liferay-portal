@@ -193,7 +193,7 @@ public class CompanyLocalServiceTest {
 
 		_modelListenerList = _registerModelListeners();
 
-		_deletedCompany = addCompany();
+		_deletedCompany = _addCompany();
 
 		_addCompanyUserGroupRole(_deletedCompany);
 
@@ -209,22 +209,6 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	private static void resetBackgroundTaskThreadLocal() throws Exception {
-		Class<?> backgroundTaskThreadLocalClass =
-			BackgroundTaskThreadLocal.class;
-
-		Field backgroundTaskIdField =
-			backgroundTaskThreadLocalClass.getDeclaredField(
-				"_backgroundTaskId");
-
-		backgroundTaskIdField.setAccessible(true);
-
-		Method setMethod = ThreadLocal.class.getDeclaredMethod(
-			"set", Object.class);
-
-		setMethod.invoke(backgroundTaskIdField.get(null), 0L);
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_initializeClassNames();
@@ -237,7 +221,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompany() throws Exception {
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		_companyLocalService.deleteCompany(company.getCompanyId());
 
@@ -250,7 +234,7 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithChildOrganizationSite()
 		throws Exception {
 
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		long companyId = company.getCompanyId();
 
@@ -297,7 +281,7 @@ public class CompanyLocalServiceTest {
 
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		Group companyGroup = null;
 		Group companyStagingGroup = null;
@@ -328,7 +312,7 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithDLFileEntryTypes() throws Exception {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		long companyId = company.getCompanyId();
 
@@ -344,7 +328,7 @@ public class CompanyLocalServiceTest {
 			Group guestGroup = _groupLocalService.getGroup(
 				companyId, GroupConstants.GUEST);
 
-			ServiceContext serviceContext = getServiceContext(companyId);
+			ServiceContext serviceContext = _getServiceContext(companyId);
 
 			serviceContext.setScopeGroupId(guestGroup.getGroupId());
 			serviceContext.setUserId(userId);
@@ -399,7 +383,7 @@ public class CompanyLocalServiceTest {
 
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		long companyId = company.getCompanyId();
 
@@ -414,7 +398,7 @@ public class CompanyLocalServiceTest {
 			Group group = GroupTestUtil.addGroup(
 				companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-			layoutSetPrototype = addLayoutSetPrototype(
+			layoutSetPrototype = _addLayoutSetPrototype(
 				companyId, userId, RandomTestUtil.randomString());
 
 			long layoutSetPrototypeId =
@@ -444,7 +428,7 @@ public class CompanyLocalServiceTest {
 
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		long companyId = company.getCompanyId();
 
@@ -463,7 +447,7 @@ public class CompanyLocalServiceTest {
 			UserGroup userGroup = UserGroupTestUtil.addUserGroup(
 				group.getGroupId());
 
-			LayoutSetPrototype layoutSetPrototype = addLayoutSetPrototype(
+			LayoutSetPrototype layoutSetPrototype = _addLayoutSetPrototype(
 				companyId, userId, RandomTestUtil.randomString());
 
 			layoutSetPrototypeId = layoutSetPrototype.getLayoutSetPrototypeId();
@@ -495,7 +479,7 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithParentGroup() throws Exception {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		long companyId = company.getCompanyId();
 
@@ -602,7 +586,7 @@ public class CompanyLocalServiceTest {
 
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		Organization companyOrganization = null;
 		Group companyOrganizationGroup = null;
@@ -639,7 +623,7 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithUserGroup() throws Exception {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		long companyId = company.getCompanyId();
 
@@ -657,9 +641,9 @@ public class CompanyLocalServiceTest {
 
 			userGroup = UserGroupTestUtil.addUserGroup(group.getGroupId());
 
-			user = addUser(
+			user = _addUser(
 				companyId, userId, group.getGroupId(),
-				getServiceContext(companyId));
+				_getServiceContext(companyId));
 
 			_userGroupLocalService.addUserUserGroup(
 				user.getUserId(), userGroup);
@@ -679,7 +663,7 @@ public class CompanyLocalServiceTest {
 
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		Group group = null;
 		Role role = null;
@@ -699,9 +683,9 @@ public class CompanyLocalServiceTest {
 
 			userGroup = UserGroupTestUtil.addUserGroup(group.getGroupId());
 
-			user = addUser(
+			user = _addUser(
 				company.getCompanyId(), userId, group.getGroupId(),
-				getServiceContext(company.getCompanyId()));
+				_getServiceContext(company.getCompanyId()));
 
 			_userGroupLocalService.addUserUserGroup(
 				user.getUserId(), userGroup);
@@ -712,7 +696,7 @@ public class CompanyLocalServiceTest {
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), StringUtil.randomString()),
 				Collections.emptyMap(), RoleConstants.TYPE_SITE,
-				StringPool.BLANK, getServiceContext(company.getCompanyId()));
+				StringPool.BLANK, _getServiceContext(company.getCompanyId()));
 
 			_userGroupRoleLocalService.addUserGroupRole(
 				user.getUserId(), group.getGroupId(), role.getRoleId());
@@ -1018,7 +1002,7 @@ public class CompanyLocalServiceTest {
 	public void testGetCompanyByVirtualHost() throws Exception {
 		String virtualHostName = "::1";
 
-		Company company = addCompany(virtualHostName);
+		Company company = _addCompany(virtualHostName);
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
@@ -1039,7 +1023,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateCompanyLocales() throws Exception {
-		Company company = addCompany();
+		Company company = _addCompany();
 		String languageId = "ca_ES";
 
 		try (SafeCloseable safeCloseable =
@@ -1068,7 +1052,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateCompanyLocalesUpdateGroupLocales() throws Exception {
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
@@ -1148,7 +1132,7 @@ public class CompanyLocalServiceTest {
 	public void testUpdateCompanyLocalesWithLayoutSetPrototype()
 		throws Exception {
 
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		long companyId = company.getCompanyId();
 
@@ -1160,7 +1144,7 @@ public class CompanyLocalServiceTest {
 
 			long userId = _userLocalService.getGuestUserId(companyId);
 
-			addLayoutSetPrototype(
+			_addLayoutSetPrototype(
 				companyId, userId, RandomTestUtil.randomString());
 
 			TimeZone timeZone = company.getTimeZone();
@@ -1185,7 +1169,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateDisplay() throws Exception {
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
@@ -1212,7 +1196,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateInvalidCompanyNames() throws Exception {
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		long companyId = company.getCompanyId();
 
@@ -1224,7 +1208,7 @@ public class CompanyLocalServiceTest {
 				companyId, _userLocalService.getGuestUserId(companyId),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-			testUpdateCompanyNames(
+			_testUpdateCompanyNames(
 				company,
 				new String[] {StringPool.BLANK, group.getDescriptiveName()},
 				true);
@@ -1236,30 +1220,30 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateInvalidMx() throws Exception {
-		testUpdateMx("abc", false, true);
-		testUpdateMx(StringPool.BLANK, false, true);
+		_testUpdateMx("abc", false, true);
+		_testUpdateMx(StringPool.BLANK, false, true);
 	}
 
 	@Test
 	public void testUpdateInvalidVirtualHostnames() throws Exception {
-		testUpdateVirtualHostnames(
+		_testUpdateVirtualHostnames(
 			new String[] {StringPool.BLANK, "localhost", ".abc"}, true);
 	}
 
 	@Test
 	public void testUpdateMx() throws Exception {
-		testUpdateMx("abc.com", true, true);
-		testUpdateMx("abc.com", true, false);
-		testUpdateMx(StringPool.BLANK, false, true);
-		testUpdateMx(StringPool.BLANK, false, false);
+		_testUpdateMx("abc.com", true, true);
+		_testUpdateMx("abc.com", true, false);
+		_testUpdateMx(StringPool.BLANK, false, true);
+		_testUpdateMx(StringPool.BLANK, false, false);
 	}
 
 	@Test
 	public void testUpdateValidCompanyNames() throws Exception {
-		Company company = addCompany();
+		Company company = _addCompany();
 
 		try {
-			testUpdateCompanyNames(
+			_testUpdateCompanyNames(
 				company, new String[] {RandomTestUtil.randomString()}, false);
 		}
 		finally {
@@ -1269,7 +1253,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateValidVirtualHostnames() throws Exception {
-		testUpdateVirtualHostnames(
+		_testUpdateVirtualHostnames(
 			new String[] {
 				"abc.com", "255.0.0.0", "0:0:0:0:0:0:0:1", "::1",
 				"0000:0000:0000:0000:0000:0000:0000:0001"
@@ -1277,11 +1261,11 @@ public class CompanyLocalServiceTest {
 			false);
 	}
 
-	private static Company addCompany() throws Exception {
+	private static Company _addCompany() throws Exception {
 		long counterCompanyId =
 			_counterLocalService.increment(Company.class.getName()) + 1;
 
-		Company company = addCompany(
+		Company company = _addCompany(
 			RandomTestUtil.randomString() + "test.com");
 
 		if (PropsValues.COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED) {
@@ -1297,7 +1281,7 @@ public class CompanyLocalServiceTest {
 		return company;
 	}
 
-	private static Company addCompany(String webId) throws Exception {
+	private static Company _addCompany(String webId) throws Exception {
 		Company company = _companyLocalService.addCompany(
 			null, webId, webId, "test.com", 0, true, true, null, null, null,
 			null, null, null);
@@ -1307,149 +1291,9 @@ public class CompanyLocalServiceTest {
 		return company;
 	}
 
-	private LayoutSetPrototype addLayoutSetPrototype(
-			long companyId, long userId, String name)
+	private static void _addCompanyUserGroupRole(Company company)
 		throws Exception {
 
-		return _layoutSetPrototypeLocalService.addLayoutSetPrototype(
-			userId, companyId,
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), name
-			).build(),
-			new HashMap<Locale, String>(), true, true,
-			getServiceContext(companyId));
-	}
-
-	private static User addUser(
-			long companyId, long userId, long groupId,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return UserTestUtil.addUser(
-			companyId, userId,
-			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new long[] {groupId},
-			serviceContext);
-	}
-
-	private static ServiceContext getServiceContext(long companyId) {
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(companyId);
-
-		return serviceContext;
-	}
-
-	private void testUpdateCompanyNames(
-			Company company, String[] companyNames, boolean expectFailure)
-		throws Exception {
-
-		for (String companyName : companyNames) {
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						company.getCompanyId())) {
-
-				company = _companyLocalService.updateCompany(
-					company.getCompanyId(), company.getVirtualHostname(),
-					company.getMx(), company.getHomeURL(), true, null,
-					companyName, company.getLegalName(), company.getLegalId(),
-					company.getLegalType(), company.getSicCode(),
-					company.getTickerSymbol(), company.getIndustry(),
-					company.getType(), company.getSize());
-
-				Assert.assertFalse(expectFailure);
-			}
-			catch (CompanyNameException companyNameException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(companyNameException);
-				}
-
-				Assert.assertTrue(expectFailure);
-			}
-		}
-	}
-
-	private void testUpdateMx(String mx, boolean valid, boolean mailMxUpdate)
-		throws Exception {
-
-		Company company = addCompany();
-
-		String originalMx = company.getMx();
-
-		try (SafeCloseable safeCloseable1 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"MAIL_MX_UPDATE", mailMxUpdate);
-			SafeCloseable safeCloseable2 =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
-
-			_companyLocalService.updateCompany(
-				company.getCompanyId(), company.getVirtualHostname(), mx,
-				company.getMaxUsers(), company.isActive());
-
-			company = _companyLocalService.getCompany(company.getCompanyId());
-
-			String updatedMx = company.getMx();
-
-			if (valid && mailMxUpdate) {
-				Assert.assertNotEquals(originalMx, updatedMx);
-			}
-			else {
-				Assert.assertEquals(originalMx, updatedMx);
-			}
-		}
-		catch (CompanyMxException companyMxException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(companyMxException);
-			}
-
-			Assert.assertFalse(valid);
-			Assert.assertTrue(mailMxUpdate);
-		}
-		finally {
-			_companyLocalService.deleteCompany(company.getCompanyId());
-		}
-	}
-
-	private void testUpdateVirtualHostnames(
-			String[] virtualHostnames, boolean expectFailure)
-		throws Exception {
-
-		Company company = addCompany();
-
-		try {
-			for (String virtualHostname : virtualHostnames) {
-				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-							company.getCompanyId())) {
-
-					_companyLocalService.updateCompany(
-						company.getCompanyId(), virtualHostname,
-						company.getMx(), company.getMaxUsers(),
-						company.isActive());
-
-					Assert.assertFalse(expectFailure);
-				}
-				catch (CompanyVirtualHostException
-							companyVirtualHostException) {
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(companyVirtualHostException);
-					}
-
-					Assert.assertTrue(expectFailure);
-				}
-			}
-		}
-		finally {
-			_companyLocalService.deleteCompany(company.getCompanyId());
-		}
-	}
-
-	private static void _addCompanyUserGroupRole(Company company) throws Exception {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
@@ -1464,9 +1308,9 @@ public class CompanyLocalServiceTest {
 			UserGroup userGroup = UserGroupTestUtil.addUserGroup(
 				group.getGroupId());
 
-			User user = addUser(
+			User user = _addUser(
 				company.getCompanyId(), userId, group.getGroupId(),
-				getServiceContext(company.getCompanyId()));
+				_getServiceContext(company.getCompanyId()));
 
 			_userGroupLocalService.addUserUserGroup(
 				user.getUserId(), userGroup);
@@ -1477,11 +1321,24 @@ public class CompanyLocalServiceTest {
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), StringUtil.randomString()),
 				Collections.emptyMap(), RoleConstants.TYPE_SITE,
-				StringPool.BLANK, getServiceContext(company.getCompanyId()));
+				StringPool.BLANK, _getServiceContext(company.getCompanyId()));
 
 			_userGroupRoleLocalService.addUserGroupRole(
 				user.getUserId(), group.getGroupId(), role.getRoleId());
 		}
+	}
+
+	private static User _addUser(
+			long companyId, long userId, long groupId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return UserTestUtil.addUser(
+			companyId, userId,
+			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {groupId},
+			serviceContext);
 	}
 
 	private static void _cleanupData() throws Exception {
@@ -1494,7 +1351,7 @@ public class CompanyLocalServiceTest {
 			_classNameLocalService.deleteClassName(className);
 		}
 
-		resetBackgroundTaskThreadLocal();
+		_resetBackgroundTaskThreadLocal();
 
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
@@ -1505,38 +1362,14 @@ public class CompanyLocalServiceTest {
 		_serviceRegistrations.clear();
 	}
 
-	private List<String> _getObjectNames(String objectType, long companyId)
-		throws Exception {
+	private static ServiceContext _getServiceContext(long companyId) {
+		ServiceContext serviceContext = new ServiceContext();
 
-		List<String> objectNames = new ArrayList<>();
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(companyId);
 
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-		String partitionName = CompanyLocalServiceTestUtil.getPartitionName(
-			companyId);
-
-		try (ResultSet resultSet = databaseMetaData.getTables(
-				_dbPartitionDB.getCatalog(_connection, partitionName),
-				_dbPartitionDB.getSchema(_connection, partitionName), null,
-				new String[] {objectType})) {
-
-			while (resultSet.next()) {
-				objectNames.add(resultSet.getString("TABLE_NAME"));
-			}
-		}
-
-		return objectNames;
-	}
-
-	private int _getTablesCount(long companyId) throws Exception {
-		List<String> tableNames = _getObjectNames("TABLE", companyId);
-
-		return tableNames.size();
-	}
-
-	private int _getViewsCount(long companyId) throws Exception {
-		List<String> viewNames = _getObjectNames("VIEW", companyId);
-
-		return viewNames.size();
+		return serviceContext;
 	}
 
 	private static void _initializeClassNames() throws Exception {
@@ -1581,6 +1414,175 @@ public class CompanyLocalServiceTest {
 				new HashMapDictionary<>()));
 
 		return list;
+	}
+
+	private static void _resetBackgroundTaskThreadLocal() throws Exception {
+		Class<?> backgroundTaskThreadLocalClass =
+			BackgroundTaskThreadLocal.class;
+
+		Field backgroundTaskIdField =
+			backgroundTaskThreadLocalClass.getDeclaredField(
+				"_backgroundTaskId");
+
+		backgroundTaskIdField.setAccessible(true);
+
+		Method setMethod = ThreadLocal.class.getDeclaredMethod(
+			"set", Object.class);
+
+		setMethod.invoke(backgroundTaskIdField.get(null), 0L);
+	}
+
+	private LayoutSetPrototype _addLayoutSetPrototype(
+			long companyId, long userId, String name)
+		throws Exception {
+
+		return _layoutSetPrototypeLocalService.addLayoutSetPrototype(
+			userId, companyId,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), name
+			).build(),
+			new HashMap<Locale, String>(), true, true,
+			_getServiceContext(companyId));
+	}
+
+	private List<String> _getObjectNames(String objectType, long companyId)
+		throws Exception {
+
+		List<String> objectNames = new ArrayList<>();
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+		String partitionName = CompanyLocalServiceTestUtil.getPartitionName(
+			companyId);
+
+		try (ResultSet resultSet = databaseMetaData.getTables(
+				_dbPartitionDB.getCatalog(_connection, partitionName),
+				_dbPartitionDB.getSchema(_connection, partitionName), null,
+				new String[] {objectType})) {
+
+			while (resultSet.next()) {
+				objectNames.add(resultSet.getString("TABLE_NAME"));
+			}
+		}
+
+		return objectNames;
+	}
+
+	private int _getTablesCount(long companyId) throws Exception {
+		List<String> tableNames = _getObjectNames("TABLE", companyId);
+
+		return tableNames.size();
+	}
+
+	private int _getViewsCount(long companyId) throws Exception {
+		List<String> viewNames = _getObjectNames("VIEW", companyId);
+
+		return viewNames.size();
+	}
+
+	private void _testUpdateCompanyNames(
+			Company company, String[] companyNames, boolean expectFailure)
+		throws Exception {
+
+		for (String companyName : companyNames) {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						company.getCompanyId())) {
+
+				company = _companyLocalService.updateCompany(
+					company.getCompanyId(), company.getVirtualHostname(),
+					company.getMx(), company.getHomeURL(), true, null,
+					companyName, company.getLegalName(), company.getLegalId(),
+					company.getLegalType(), company.getSicCode(),
+					company.getTickerSymbol(), company.getIndustry(),
+					company.getType(), company.getSize());
+
+				Assert.assertFalse(expectFailure);
+			}
+			catch (CompanyNameException companyNameException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(companyNameException);
+				}
+
+				Assert.assertTrue(expectFailure);
+			}
+		}
+	}
+
+	private void _testUpdateMx(String mx, boolean valid, boolean mailMxUpdate)
+		throws Exception {
+
+		Company company = _addCompany();
+
+		String originalMx = company.getMx();
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"MAIL_MX_UPDATE", mailMxUpdate);
+			SafeCloseable safeCloseable2 =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
+
+			_companyLocalService.updateCompany(
+				company.getCompanyId(), company.getVirtualHostname(), mx,
+				company.getMaxUsers(), company.isActive());
+
+			company = _companyLocalService.getCompany(company.getCompanyId());
+
+			String updatedMx = company.getMx();
+
+			if (valid && mailMxUpdate) {
+				Assert.assertNotEquals(originalMx, updatedMx);
+			}
+			else {
+				Assert.assertEquals(originalMx, updatedMx);
+			}
+		}
+		catch (CompanyMxException companyMxException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(companyMxException);
+			}
+
+			Assert.assertFalse(valid);
+			Assert.assertTrue(mailMxUpdate);
+		}
+		finally {
+			_companyLocalService.deleteCompany(company.getCompanyId());
+		}
+	}
+
+	private void _testUpdateVirtualHostnames(
+			String[] virtualHostnames, boolean expectFailure)
+		throws Exception {
+
+		Company company = _addCompany();
+
+		try {
+			for (String virtualHostname : virtualHostnames) {
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							company.getCompanyId())) {
+
+					_companyLocalService.updateCompany(
+						company.getCompanyId(), virtualHostname,
+						company.getMx(), company.getMaxUsers(),
+						company.isActive());
+
+					Assert.assertFalse(expectFailure);
+				}
+				catch (CompanyVirtualHostException
+							companyVirtualHostException) {
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(companyVirtualHostException);
+					}
+
+					Assert.assertTrue(expectFailure);
+				}
+			}
+		}
+		finally {
+			_companyLocalService.deleteCompany(company.getCompanyId());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

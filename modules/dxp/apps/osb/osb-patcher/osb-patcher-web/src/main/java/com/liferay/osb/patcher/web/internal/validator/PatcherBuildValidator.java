@@ -56,8 +56,7 @@ public class PatcherBuildValidator {
 
 	public void validateAccount() throws Exception {
 		String accountEntryCode = StringUtil.toUpperCase(
-			ParamUtil.getString(
-				_httpServletRequest, "patcherBuildAccountEntryCode"));
+			ParamUtil.getString(_httpServletRequest, "accountEntryCode"));
 
 		if (Validator.isNull(accountEntryCode)) {
 			throw new PortalException("the-account-code-is-invalid");
@@ -220,8 +219,7 @@ public class PatcherBuildValidator {
 		}
 
 		String accountEntryCode = StringUtil.toUpperCase(
-			ParamUtil.getString(
-				_httpServletRequest, "patcherBuildAccountEntryCode"));
+			ParamUtil.getString(_httpServletRequest, "accountEntryCode"));
 
 		String key = PatcherBuildUtil.generateKey(
 			patcherBuild.getPatcherProjectVersionId(), patcherBuild.getName(),

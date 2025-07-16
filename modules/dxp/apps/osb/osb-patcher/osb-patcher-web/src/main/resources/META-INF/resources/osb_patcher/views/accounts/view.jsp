@@ -12,7 +12,7 @@ PatcherAccountsViewDisplayContext patcherAccountsViewDisplayContext = new Patche
 %>
 
 <liferay-ui:header
-	title='<%= LanguageUtil.format(request, "view-x", patcherAccountsViewDisplayContext.getPatcherBuildAccountEntryCode()) %>'
+	title='<%= LanguageUtil.format(request, "view-x", patcherAccountsViewDisplayContext.getAccountEntryCode()) %>'
 />
 
 <clay:management-toolbar

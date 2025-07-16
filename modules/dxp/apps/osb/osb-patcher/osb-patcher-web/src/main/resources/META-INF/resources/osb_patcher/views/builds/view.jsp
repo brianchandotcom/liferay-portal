@@ -311,7 +311,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 
 		<portlet:renderURL var="viewPatcherAccountPatcherProductVersionURL">
 			<portlet:param name="mvcRenderCommandName" value="/patcher/view_accounts" />
-			<portlet:param name="patcherBuildAccountEntryCode" value="<%= patcherAccount.getAccountEntryCode() %>" />
+			<portlet:param name="accountEntryCode" value="<%= patcherAccount.getAccountEntryCode() %>" />
 			<portlet:param name="patcherProductVersionId" value="<%= String.valueOf(patcherBuild.getPatcherProductVersionId()) %>" />
 		</portlet:renderURL>
 

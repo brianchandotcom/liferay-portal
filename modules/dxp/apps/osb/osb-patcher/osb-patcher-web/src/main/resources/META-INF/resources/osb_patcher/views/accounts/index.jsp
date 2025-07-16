@@ -38,7 +38,7 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 			<h5>
 				<portlet:renderURL var="viewPatcherAccountURL">
 					<portlet:param name="mvcRenderCommandName" value="/patcher/view_accounts" />
-					<portlet:param name="patcherBuildAccountEntryCode" value="<%= patcherAccount.getAccountEntryCode() %>" />
+					<portlet:param name="accountEntryCode" value="<%= patcherAccount.getAccountEntryCode() %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
@@ -57,7 +57,7 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 						<td class="col-md-2">
 							<portlet:renderURL var="viewPatcherAccountPatcherProductVersionURL">
 								<portlet:param name="mvcRenderCommandName" value="/patcher/view_accounts" />
-								<portlet:param name="patcherBuildAccountEntryCode" value="<%= patcherAccount.getAccountEntryCode() %>" />
+								<portlet:param name="accountEntryCode" value="<%= patcherAccount.getAccountEntryCode() %>" />
 								<portlet:param name="patcherProductVersionId" value="<%= String.valueOf(patcherProductVersion.getPatcherProductVersionId()) %>" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 							</portlet:renderURL>

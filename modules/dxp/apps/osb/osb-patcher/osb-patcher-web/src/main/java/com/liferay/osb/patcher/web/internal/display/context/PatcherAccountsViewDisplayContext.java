@@ -42,15 +42,15 @@ public class PatcherAccountsViewDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public String getPatcherBuildAccountEntryCode() {
-		if (Validator.isNotNull(_patcherBuildAccountEntryCode)) {
-			return _patcherBuildAccountEntryCode;
+	public String getAccountEntryCode() {
+		if (Validator.isNotNull(_accountEntryCode)) {
+			return _accountEntryCode;
 		}
 
-		_patcherBuildAccountEntryCode = ParamUtil.getString(
-			_httpServletRequest, "patcherBuildAccountEntryCode");
+		_accountEntryCode = ParamUtil.getString(
+			_httpServletRequest, "accountEntryCode");
 
-		return _patcherBuildAccountEntryCode;
+		return _accountEntryCode;
 	}
 
 	public SearchContainer<PatcherBuild> getSearchContainer() throws Exception {
@@ -69,8 +69,7 @@ public class PatcherAccountsViewDisplayContext {
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_httpServletRequest);
 
-		searchContext.setAttribute(
-			"patcherBuildAccountEntryCode", getPatcherBuildAccountEntryCode());
+		searchContext.setAttribute("accountEntryCode", getAccountEntryCode());
 		searchContext.setAttribute(
 			"patcherProductVersionId", _getPatcherProductVersionId());
 		searchContext.setAttribute(
@@ -155,8 +154,8 @@ public class PatcherAccountsViewDisplayContext {
 		return _type;
 	}
 
+	private String _accountEntryCode;
 	private final HttpServletRequest _httpServletRequest;
-	private String _patcherBuildAccountEntryCode;
 	private SearchContainer<PatcherBuild> _patcherBuildSearchContainer;
 	private Long _patcherProductVersionId;
 	private Long _patcherProjectVersionId;

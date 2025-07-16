@@ -60,7 +60,7 @@ public class AddBuildsMVCActionCommand extends BaseMVCActionCommand {
 		long patcherProjectVersionId = ParamUtil.getLong(
 			actionRequest, "patcherProjectVersionId");
 		String accountEntryCode = StringUtil.toUpperCase(
-			ParamUtil.getString(actionRequest, "patcherBuildAccountEntryCode"));
+			ParamUtil.getString(actionRequest, "accountEntryCode"));
 		String patcherBuildName = PatcherUtil.preparePatcherName(
 			ParamUtil.getString(actionRequest, "patcherBuildName"));
 		String supportTicket = ParamUtil.getString(

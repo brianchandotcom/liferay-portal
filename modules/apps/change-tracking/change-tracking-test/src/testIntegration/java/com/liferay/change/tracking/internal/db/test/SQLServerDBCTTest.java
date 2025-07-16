@@ -127,6 +127,11 @@ public class SQLServerDBCTTest {
 	private static final int _BATCH_SIZE = 50001;
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	private CTCollection _ctCollection;
+
+	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
@@ -134,11 +139,6 @@ public class SQLServerDBCTTest {
 
 	@Inject
 	private CTEntryLocalService _ctEntryLocalService;
-
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
-
-	private CTCollection _ctCollection;
 
 	@Inject
 	private CTSChildLocalService _ctsChildLocalService;

@@ -254,6 +254,10 @@ public class OracleDBCTTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	private CTCollection _ctCollection1;
+	private CTCollection _ctCollection2;
+	private CTCollection _ctCollection3;
+
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
 
@@ -261,13 +265,9 @@ public class OracleDBCTTest {
 	private CTCollectionService _ctCollectionService;
 
 	@Inject
-	private CTSChildLocalService _ctsChildLocalService;
-
-	private CTCollection _ctCollection1;
-	private CTCollection _ctCollection2;
-	private CTCollection _ctCollection3;
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Inject
-	private CTEntryLocalService _ctEntryLocalService;
+	private CTSChildLocalService _ctsChildLocalService;
 
 }

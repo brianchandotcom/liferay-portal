@@ -365,7 +365,7 @@ public class UserIndexerIndexedFieldsTest {
 			"screenName_sortable", StringUtil.toLowerCase(user.getScreenName())
 		).build();
 
-		_populateLocalizedNameFieldValues(user, map);
+		_populateLocalizedNameFieldValues(map, user);
 
 		indexedFieldsFixture.populateUID(user, map);
 
@@ -455,15 +455,15 @@ public class UserIndexerIndexedFieldsTest {
 		map.put("zip", _getStringValue(zips));
 	}
 
-	private void _populateLocalizedNameFieldValues (
-		User user, Map<String, String> map) {
+	private void _populateLocalizedNameFieldValues(
+		Map<String, String> map, User user) {
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-
 			String languageId = LocaleUtil.toLanguageId(locale);
+
 			map.put(
-				LocalizationUtil.getLocalizedName(
-					"firstName", languageId), user.getFirstName());
+				LocalizationUtil.getLocalizedName("firstName", languageId),
+				user.getFirstName());
 			map.put(
 				LocalizationUtil.getLocalizedName("fullName", languageId),
 				user.getFullName());

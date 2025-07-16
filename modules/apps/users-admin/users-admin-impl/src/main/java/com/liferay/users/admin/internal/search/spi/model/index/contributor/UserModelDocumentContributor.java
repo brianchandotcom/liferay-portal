@@ -131,7 +131,7 @@ public class UserModelDocumentContributor
 			_populateAddresses(document, user.getAddresses(), 0, 0);
 
 			for (Locale locale :
-				_language.getAvailableLocales(user.getGroupId())) {
+					_language.getAvailableLocales(user.getGroupId())) {
 
 				String languageId = LocaleUtil.toLanguageId(locale);
 

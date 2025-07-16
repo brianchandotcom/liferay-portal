@@ -8,11 +8,23 @@
 <%@ include file="/osb_patcher/views/init.jsp" %>
 
 <%
+long patcherBuildId = ParamUtil.getLong(request, "patcherBuildId");
 long patcherProjectVersionId = ParamUtil.getLong(request, "patcherProjectVersionId");
 
-PatcherProjectVersion patcherProjectVersion = PatcherProjectVersionLocalServiceUtil.fetchPatcherProjectVersion(patcherProjectVersionId);
+String tickets = null;
 
-for (String ticket : StringUtil.split(patcherProjectVersion.getFixedIssues())) {
+PatcherBuild patcherBuild = PatcherBuildLocalServiceUtil.fetchPatcherBuild(patcherBuildId);
+
+if (patcherBuild != null) {
+	tickets = patcherBuild.getName();
+}
+else {
+	PatcherProjectVersion patcherProjectVersion = PatcherProjectVersionLocalServiceUtil.fetchPatcherProjectVersion(patcherProjectVersionId);
+
+	tickets = patcherProjectVersion.getFixedIssues();
+}
+
+for (String ticket : StringUtil.split(tickets)) {
 %>
 
 	<c:choose>

@@ -10,43 +10,55 @@
 <%
 long patcherBuildId = ParamUtil.getLong(request, "patcherBuildId");
 long patcherProjectVersionId = ParamUtil.getLong(request, "patcherProjectVersionId");
-
-String tickets = null;
-
-PatcherBuild patcherBuild = PatcherBuildLocalServiceUtil.fetchPatcherBuild(patcherBuildId);
-
-if (patcherBuild != null) {
-	tickets = patcherBuild.getName();
-}
-else {
-	PatcherProjectVersion patcherProjectVersion = PatcherProjectVersionLocalServiceUtil.fetchPatcherProjectVersion(patcherProjectVersionId);
-
-	tickets = patcherProjectVersion.getFixedIssues();
-}
-
-for (String ticket : StringUtil.split(tickets)) {
 %>
 
-	<c:choose>
-		<c:when test="<%= PatcherFixPackUtil.containsPatcherFixPackName(ticket) %>">
+<clay:container-fluid
+	cssClass="container-form-lg container-no-gutters"
+>
+	<clay:sheet
+		size="full"
+	>
 
-			<%
-			PatcherFixPack patcherFixPack = PatcherFixPackUtil.getPatcherFixPack(ticket, patcherProjectVersionId);
-			%>
+		<%
+		String tickets = null;
 
-			<portlet:renderURL var="viewPatcherFixPackURL">
-				<portlet:param name="mvcRenderCommandName" value="/patcher/view_fix_packs" />
-				<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFixPack.getPatcherFixPackId()) %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
+		PatcherBuild patcherBuild = PatcherBuildLocalServiceUtil.fetchPatcherBuild(patcherBuildId);
 
-			<a class="nobr" href="<%= viewPatcherFixPackURL %>"><%= ticket %></a>,
-		</c:when>
-		<c:otherwise>
-			<a class="nobr" href="<%= patcherConfiguration.jiraURL() %>/<%= ticket %>" target="_blank"><%= ticket %></a>,
-		</c:otherwise>
-	</c:choose>
+		if (patcherBuild != null) {
+			tickets = patcherBuild.getName();
+		}
+		else {
+			PatcherProjectVersion patcherProjectVersion = PatcherProjectVersionLocalServiceUtil.fetchPatcherProjectVersion(patcherProjectVersionId);
 
-<%
-}
-%>
+			tickets = patcherProjectVersion.getFixedIssues();
+		}
+
+		for (String ticket : StringUtil.split(tickets)) {
+		%>
+
+			<c:choose>
+				<c:when test="<%= PatcherFixPackUtil.containsPatcherFixPackName(ticket) %>">
+
+					<%
+					PatcherFixPack patcherFixPack = PatcherFixPackUtil.getPatcherFixPack(ticket, patcherProjectVersionId);
+					%>
+
+					<portlet:renderURL var="viewPatcherFixPackURL">
+						<portlet:param name="mvcRenderCommandName" value="/patcher/view_fix_packs" />
+						<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFixPack.getPatcherFixPackId()) %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:renderURL>
+
+					<a class="nobr" href="<%= viewPatcherFixPackURL %>"><%= ticket %></a>,
+				</c:when>
+				<c:otherwise>
+					<a class="nobr" href="<%= patcherConfiguration.jiraURL() %>/<%= ticket %>" target="_blank"><%= ticket %></a>,
+				</c:otherwise>
+			</c:choose>
+
+		<%
+		}
+		%>
+
+	</clay:sheet>
+</clay:container-fluid>

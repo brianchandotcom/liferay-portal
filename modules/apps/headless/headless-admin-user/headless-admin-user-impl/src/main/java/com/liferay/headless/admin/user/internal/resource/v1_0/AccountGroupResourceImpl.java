@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.DuplicateAccountGroupRelException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroupRel;
@@ -14,6 +15,7 @@ import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
@@ -27,6 +29,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -68,7 +71,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/account-group.properties",
 	scope = ServiceScope.PROTOTYPE, service = AccountGroupResource.class
 )
-public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
+public class AccountGroupResourceImpl
+	extends BaseAccountGroupResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<AccountGroup> {
 
 	@Override
 	public void deleteAccountGroup(Long accountGroupId) throws Exception {
@@ -194,6 +199,22 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 					com.liferay.account.model.AccountGroup.class.getName()),
 				contextCompany.getCompanyId(), _expandoBridgeIndexer,
 				_expandoColumnLocalService, _expandoTableLocalService));
+	}
+
+	@Override
+	public String getPortletId() {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyConstants.SYSTEM, "LPD-35914")) {
+
+			return AccountPortletKeys.ACCOUNT_GROUPS_ADMIN;
+		}
+
+		return null;
+	}
+
+	@Override
+	public Scope getScope() {
+		return Scope.COMPANY;
 	}
 
 	@Override

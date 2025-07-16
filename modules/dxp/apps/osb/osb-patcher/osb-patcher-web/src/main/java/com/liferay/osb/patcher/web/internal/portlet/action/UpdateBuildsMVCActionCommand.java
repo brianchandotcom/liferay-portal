@@ -72,7 +72,7 @@ public class UpdateBuildsMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		String accountEntryCode = StringUtil.toUpperCase(
-			ParamUtil.getString(actionRequest, "patcherBuildAccountEntryCode"));
+			ParamUtil.getString(actionRequest, "accountEntryCode"));
 		boolean smokeTestOnly = ParamUtil.getBoolean(
 			actionRequest, "smokeTestOnly", true);
 		boolean mergeOnly = ParamUtil.getBoolean(actionRequest, "mergeOnly");

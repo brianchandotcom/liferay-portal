@@ -36,12 +36,11 @@ public class ViewAccountsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		String patcherBuildAccountEntryCode = ParamUtil.getString(
-			renderRequest, "patcherBuildAccountEntryCode");
+		String accountEntryCode = ParamUtil.getString(
+			renderRequest, "accountEntryCode");
 
 		try {
-			_patcherAccountLocalService.getPatcherAccount(
-				patcherBuildAccountEntryCode);
+			_patcherAccountLocalService.getPatcherAccount(accountEntryCode);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchPatcherFixComponentException) {

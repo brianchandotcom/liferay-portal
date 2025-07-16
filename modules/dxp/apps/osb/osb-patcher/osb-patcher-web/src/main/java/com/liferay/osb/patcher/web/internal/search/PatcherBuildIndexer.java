@@ -97,12 +97,12 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 			contextBooleanFilter.addRequiredTerm("latestKeyBuild", true);
 		}
 
-		String patcherBuildAccountEntryCode = GetterUtil.getString(
-			searchContext.getAttribute("patcherBuildAccountEntryCode"));
+		String accountEntryCode = GetterUtil.getString(
+			searchContext.getAttribute("accountEntryCode"));
 
-		if (Validator.isNotNull(patcherBuildAccountEntryCode)) {
+		if (Validator.isNotNull(accountEntryCode)) {
 			contextBooleanFilter.addRequiredTerm(
-				"patcherBuildAccountEntryCode", patcherBuildAccountEntryCode);
+				"accountEntryCode", accountEntryCode);
 		}
 
 		int qaStatus = GetterUtil.getInteger(
@@ -138,8 +138,7 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 		}
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchTerm(
-			searchQuery, searchContext, "patcherBuildAccountEntryCode", true);
+		addSearchTerm(searchQuery, searchContext, "accountEntryCode", true);
 		addSearchTerm(searchQuery, searchContext, "patcherBuildName", true);
 		addSearchTerm(
 			searchQuery, searchContext, "patcherProjectVersionName", true);
@@ -193,8 +192,7 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 				patcherBuild.getPatcherAccountId());
 
 		document.addKeyword(
-			"patcherBuildAccountEntryCode",
-			patcherAccount.getAccountEntryCode());
+			"accountEntryCode", patcherAccount.getAccountEntryCode());
 
 		document.addKeyword("patcherBuildId", patcherBuild.getPatcherBuildId());
 		document.addText("patcherBuildName", patcherBuild.getName());

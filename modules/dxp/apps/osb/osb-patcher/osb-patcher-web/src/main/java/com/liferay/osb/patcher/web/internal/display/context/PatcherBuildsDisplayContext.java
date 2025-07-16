@@ -58,8 +58,7 @@ public class PatcherBuildsDisplayContext {
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_httpServletRequest);
 
-		searchContext.setAttribute(
-			"patcherBuildAccountEntryCode", _getPatcherBuildAccountEntryCode());
+		searchContext.setAttribute("accountEntryCode", _getAccountEntryCode());
 		searchContext.setAttribute(
 			"patcherProjectVersionId", _getPatcherProjectVersionId());
 		searchContext.setAttribute("qaStatus", _getQAStatus());
@@ -98,6 +97,17 @@ public class PatcherBuildsDisplayContext {
 		return _patcherBuildSearchContainer;
 	}
 
+	private String _getAccountEntryCode() {
+		if (_accountEntryCode != null) {
+			return _accountEntryCode;
+		}
+
+		_accountEntryCode = ParamUtil.getString(
+			_httpServletRequest, "accountEntryCode");
+
+		return _accountEntryCode;
+	}
+
 	private String _getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -106,17 +116,6 @@ public class PatcherBuildsDisplayContext {
 		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
-	}
-
-	private String _getPatcherBuildAccountEntryCode() {
-		if (_patcherBuildAccountEntryCode != null) {
-			return _patcherBuildAccountEntryCode;
-		}
-
-		_patcherBuildAccountEntryCode = ParamUtil.getString(
-			_httpServletRequest, "patcherBuildAccountEntryCode");
-
-		return _patcherBuildAccountEntryCode;
 	}
 
 	private long _getPatcherProjectVersionId() {
@@ -189,9 +188,9 @@ public class PatcherBuildsDisplayContext {
 		return _type;
 	}
 
+	private String _accountEntryCode;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
-	private String _patcherBuildAccountEntryCode;
 	private SearchContainer<PatcherBuild> _patcherBuildSearchContainer;
 	private Long _patcherProjectVersionId;
 	private PortletURL _portletURL;

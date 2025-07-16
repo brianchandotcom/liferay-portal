@@ -73,7 +73,7 @@ public class ObjectDefinitionSettingLocalServiceImpl
 	}
 
 	@Override
-	public Map<Long, ObjectDefinitionSetting> getObjectDefinitionSettingMap(
+	public Map<Long, ObjectDefinitionSetting> getObjectDefinitionSettingsMap(
 		long companyId, String name) {
 
 		Map<Long, ObjectDefinitionSetting> objectDefinitionSettingsMap =

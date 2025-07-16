@@ -39,11 +39,10 @@ public class PatcherDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<NavigationItem> getNavigationItems() {
+	public List<NavigationItem> getNavigationItems(String tabs1) {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
-				navigationItem.setActive(
-					Objects.equals(_getTabs1(), "accounts"));
+				navigationItem.setActive(Objects.equals(tabs1, "accounts"));
 				navigationItem.setHref(
 					_getPortletURL(), "mvcRenderCommandName",
 					"/patcher/index_accounts");
@@ -52,7 +51,7 @@ public class PatcherDisplayContext {
 			}
 		).add(
 			navigationItem -> {
-				navigationItem.setActive(Objects.equals(_getTabs1(), "fixes"));
+				navigationItem.setActive(Objects.equals(tabs1, "fixes"));
 				navigationItem.setHref(
 					_getPortletURL(), "mvcRenderCommandName",
 					"/patcher/index_fixes");
@@ -61,8 +60,7 @@ public class PatcherDisplayContext {
 			}
 		).add(
 			navigationItem -> {
-				navigationItem.setActive(
-					Objects.equals(_getTabs1(), "qa-builds"));
+				navigationItem.setActive(Objects.equals(tabs1, "qa-builds"));
 				navigationItem.setHref(
 					_getPortletURL(), "mvcRenderCommandName",
 					"/patcher/index_builds");
@@ -72,7 +70,7 @@ public class PatcherDisplayContext {
 		).add(
 			navigationItem -> {
 				navigationItem.setActive(
-					Objects.equals(_getTabs1(), "fix-components"));
+					Objects.equals(tabs1, "fix-components"));
 				navigationItem.setHref(
 					_getPortletURL(), "mvcRenderCommandName",
 					"/patcher/index_fix_components");
@@ -84,8 +82,7 @@ public class PatcherDisplayContext {
 				_themeDisplay.getPermissionChecker(), "fix_packs",
 				PatcherActionKeys.INDEX),
 			navigationItem -> {
-				navigationItem.setActive(
-					Objects.equals(_getTabs1(), "fix-packs"));
+				navigationItem.setActive(Objects.equals(tabs1, "fix-packs"));
 				navigationItem.setHref(
 					_getPortletURL(), "mvcRenderCommandName",
 					"/patcher/index_fix_packs");
@@ -98,7 +95,7 @@ public class PatcherDisplayContext {
 				PatcherActionKeys.INDEX),
 			navigationItem -> {
 				navigationItem.setActive(
-					Objects.equals(_getTabs1(), "product-versions"));
+					Objects.equals(tabs1, "product-versions"));
 				navigationItem.setHref(
 					_getPortletURL(), "mvcRenderCommandName",
 					"/patcher/index_product_versions");
@@ -108,7 +105,7 @@ public class PatcherDisplayContext {
 		).add(
 			navigationItem -> {
 				navigationItem.setActive(
-					Objects.equals(_getTabs1(), "project-versions"));
+					Objects.equals(tabs1, "project-versions"));
 				navigationItem.setHref(
 					_getPortletURL(), "mvcRenderCommandName",
 					"/patcher/index_project_versions");
@@ -145,19 +142,8 @@ public class PatcherDisplayContext {
 		).buildRenderURL();
 	}
 
-	private String _getTabs1() {
-		if (_tabs1 != null) {
-			return _tabs1;
-		}
-
-		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1", "accounts");
-
-		return _tabs1;
-	}
-
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;
-	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
 
 }

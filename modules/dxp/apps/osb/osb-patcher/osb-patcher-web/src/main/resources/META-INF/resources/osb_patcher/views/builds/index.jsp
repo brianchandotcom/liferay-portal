@@ -11,9 +11,9 @@
 PatcherBuildsDisplayContext patcherBuildsDisplayContext = new PatcherBuildsDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<liferay-util:include page="/osb_patcher/views/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="qa-builds" />
-</liferay-util:include>
+<clay:navigation-bar
+	navigationItems='<%= patcherDisplayContext.getNavigationItems("qa-builds") %>'
+/>
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new PatcherBuildsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, patcherBuildsDisplayContext.getSearchContainer()) %>"

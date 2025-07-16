@@ -11,9 +11,9 @@
 PatcherProjectVersionsDisplayContext patcherProjectVersionsDisplayContext = new PatcherProjectVersionsDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<liferay-util:include page="/osb_patcher/views/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="project-versions" />
-</liferay-util:include>
+<clay:navigation-bar
+	navigationItems='<%= patcherDisplayContext.getNavigationItems("project-versions") %>'
+/>
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new PatcherProjectVersionsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, patcherProjectVersionsDisplayContext.getSearchContainer()) %>"

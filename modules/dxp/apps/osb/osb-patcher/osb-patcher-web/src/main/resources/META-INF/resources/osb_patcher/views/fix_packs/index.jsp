@@ -11,9 +11,9 @@
 PatcherFixPacksDisplayContext patcherFixPacksDisplayContext = new PatcherFixPacksDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<liferay-util:include page="/osb_patcher/views/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="fix-packs" />
-</liferay-util:include>
+<clay:navigation-bar
+	navigationItems='<%= patcherDisplayContext.getNavigationItems("fix-packs") %>'
+/>
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new PatcherFixPacksManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, patcherFixPacksDisplayContext.getSearchContainer()) %>"

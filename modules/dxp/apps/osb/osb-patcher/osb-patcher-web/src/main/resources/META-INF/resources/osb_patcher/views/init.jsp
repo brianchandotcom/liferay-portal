@@ -15,8 +15,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portal-workflow" prefix="liferay-portal-workflow" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.osb.patcher.configuration.PatcherConfiguration" %><%@
 page import="com.liferay.osb.patcher.constants.PatcherActionKeys" %><%@
@@ -104,6 +103,8 @@ page import="java.util.Set" %>
 
 <%
 PatcherConfiguration patcherConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(PatcherConfiguration.class, themeDisplay.getCompanyId());
+
+PatcherDisplayContext patcherDisplayContext = new PatcherDisplayContext(request, renderResponse);
 
 Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

@@ -11,9 +11,9 @@
 PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccountsDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<liferay-util:include page="/osb_patcher/views/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="accounts" />
-</liferay-util:include>
+<clay:navigation-bar
+	navigationItems='<%= patcherDisplayContext.getNavigationItems("accounts") %>'
+/>
 
 <portlet:renderURL var="viewPatcherAccountsURL">
 	<portlet:param name="mvcRenderCommandName" value="/patcher/index_accounts" />

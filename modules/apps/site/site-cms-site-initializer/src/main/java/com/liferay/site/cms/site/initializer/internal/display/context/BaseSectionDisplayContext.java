@@ -54,6 +54,7 @@ import jakarta.portlet.ActionRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -92,6 +93,19 @@ public abstract class BaseSectionDisplayContext {
 		objectEntryFolder = _getObjectEntryFolder(
 			themeDisplay.getCompanyId(),
 			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM));
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"autocompleteURL",
+			() -> StringBundler.concat(
+				"/o/search/v1.0/search?emptySearch=",
+				"true&entryClassNames=com.liferay.portal.kernel.model.User,",
+				"com.liferay.portal.kernel.model.UserGroup&nestedFields=",
+				"embedded")
+		).put(
+			"collaboratorURLs", () -> _getCollaboratorURLs()
+		).build();
 	}
 
 	public String getAPIURL() {
@@ -331,6 +345,29 @@ public abstract class BaseSectionDisplayContext {
 		}
 
 		return acceptedGroupIds;
+	}
+
+	private Map<String, String> _getCollaboratorURLs() {
+		Map<String, String> collaboratorURLs = new HashMap<>();
+
+		for (ObjectDefinition objectDefinition :
+				_objectDefinitionService.getCMSObjectDefinitions(
+					themeDisplay.getCompanyId(),
+					getObjectFolderExternalReferenceCodes())) {
+
+			collaboratorURLs.put(
+				objectDefinition.getClassName(),
+				StringBundler.concat(
+					"/o", objectDefinition.getRESTContextPath(),
+					"/{objectEntryId}/collaborators"));
+		}
+
+		collaboratorURLs.put(
+			ObjectEntryFolder.class.getName(),
+			"/o/headless-object/v1.0/object-entry-folders" +
+				"/{objectEntryFolderId}/collaborators");
+
+		return collaboratorURLs;
 	}
 
 	private JSONArray _getDepotEntriesJSONArray() {

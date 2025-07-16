@@ -306,10 +306,10 @@ public abstract class BaseProfile {
 		}
 		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
 			if (Validator.isNotNull(
-					httpServletRequest.getAttribute(
-						"SAML_SP_IDP_CONNECTION")) ||
+					httpServletRequest.getAttribute("ACS_LOGIN")) ||
 				Validator.isNotNull(
-					httpServletRequest.getAttribute("ACS_LOGIN"))) {
+					httpServletRequest.getAttribute(
+						"SAML_SP_IDP_CONNECTION"))) {
 
 				roleDescriptor = entityDescriptor.getSPSSODescriptor(
 					SAMLConstants.SAML20P_NS);
@@ -336,10 +336,10 @@ public abstract class BaseProfile {
 		}
 		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
 			if (Validator.isNotNull(
-					httpServletRequest.getAttribute(
-						"SAML_SP_IDP_CONNECTION")) ||
+					httpServletRequest.getAttribute("ACS_LOGIN")) ||
 				Validator.isNotNull(
-					httpServletRequest.getAttribute("ACS_LOGIN"))) {
+					httpServletRequest.getAttribute(
+						"SAML_SP_IDP_CONNECTION"))) {
 
 				samlPeerEntityContext.setRole(
 					IDPSSODescriptor.DEFAULT_ELEMENT_NAME);

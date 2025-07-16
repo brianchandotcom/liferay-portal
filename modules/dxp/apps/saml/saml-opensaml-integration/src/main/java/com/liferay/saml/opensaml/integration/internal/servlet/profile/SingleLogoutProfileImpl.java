@@ -1015,9 +1015,6 @@ public class SingleLogoutProfileImpl
 			_processIdpLogoutResponse(
 				httpServletRequest, httpServletResponse, messageContext);
 		}
-		else if (samlProviderConfigurationHelper.isRoleSp()) {
-			_processSpLogoutResponse(httpServletRequest, httpServletResponse);
-		}
 		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
 			SAMLPeerEntityContext samlPeerEntityContext =
 				messageContext.getSubcontext(SAMLPeerEntityContext.class);
@@ -1034,6 +1031,9 @@ public class SingleLogoutProfileImpl
 				_processIdpLogoutResponse(
 					httpServletRequest, httpServletResponse, messageContext);
 			}
+		}
+		else if (samlProviderConfigurationHelper.isRoleSp()) {
+			_processSpLogoutResponse(httpServletRequest, httpServletResponse);
 		}
 	}
 

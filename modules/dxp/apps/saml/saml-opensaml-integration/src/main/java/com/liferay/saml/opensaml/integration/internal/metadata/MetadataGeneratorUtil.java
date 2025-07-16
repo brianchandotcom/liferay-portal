@@ -63,17 +63,17 @@ public class MetadataGeneratorUtil {
 			portalURL, entityId, signAuthnRequests, signMetadata,
 			wantAuthnRequestSigned, credential, encryptionCredential);
 
+		List<RoleDescriptor> idpRoleDescriptors =
+			idpEntityDescriptor.getRoleDescriptors();
+
+		idpRoleDescriptors.addAll(spEntityDescriptor.getRoleDescriptors());
+
 		List<RoleDescriptor> spRoleDescriptors =
 			spEntityDescriptor.getRoleDescriptors();
 
 		RoleDescriptor roleDescriptor = spRoleDescriptors.get(0);
 
 		roleDescriptor.detach();
-
-		List<RoleDescriptor> idpRoleDescriptors =
-			idpEntityDescriptor.getRoleDescriptors();
-
-		idpRoleDescriptors.addAll(spEntityDescriptor.getRoleDescriptors());
 
 		return idpEntityDescriptor;
 	}

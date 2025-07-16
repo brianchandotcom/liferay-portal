@@ -47,9 +47,7 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 
 	@Override
 	public boolean isEnabled() {
-		if (_samlProviderConfigurationHelper.isRoleIdpAndSp() ||
-			_samlProviderConfigurationHelper.isRoleSp()) {
-
+		if (!_samlProviderConfigurationHelper.isRoleIdp()) {
 			return _samlProviderConfigurationHelper.isEnabled();
 		}
 

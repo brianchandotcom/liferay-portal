@@ -100,10 +100,10 @@ public class TicketAttachmentsRestController extends BaseRestController {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append("project in (");
+		sb.append("(project in (");
 		sb.append(_jiraSupportProjects);
-		sb.append(") and status = Closed and status changed to (Closed) ");
-		sb.append("after -8d and status changed to (Closed) before -7d");
+		sb.append(")) and (status = Closed) and (status changed to (Closed) ");
+		sb.append("after -8d) and (status changed to (Closed) before -7d)");
 
 		int page = 1;
 

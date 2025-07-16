@@ -60,7 +60,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 
 				<aui:select label="project-version" name="patcherProjectVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "projectVersionOnChange(this.value);" %>' required="<%= true %>" />
 
-				<aui:input label="account-code" name="accountEntryCode" required="<%= true %>" type="text" value="<%= patcherCreateBuildsDisplayContext.getAccountEntryCode() %>" />
+				<aui:input label="account-code" name="accountEntryCode" required="<%= true %>" type="text" />
 
 				<aui:input helpMessage="the-support-ticket-must-contain-only-the-help-center-ticket-id" name="supportTicket" type="text">
 					<aui:validator name="number" />

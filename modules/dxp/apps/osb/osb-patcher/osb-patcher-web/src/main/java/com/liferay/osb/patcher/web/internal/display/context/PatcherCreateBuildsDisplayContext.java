@@ -41,7 +41,7 @@ public class PatcherCreateBuildsDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public PatcherBuild getPatcherBuild() {
+	public PatcherBuild getPatcherBuild() throws Exception {
 		PatcherBuild patcherBuild =
 			PatcherBuildLocalServiceUtil.createPatcherBuild(0);
 
@@ -50,6 +50,7 @@ public class PatcherCreateBuildsDisplayContext {
 		PatcherBuild templatePatcherBuild = _getTemplatePatcherBuild();
 
 		if (templatePatcherBuild != null) {
+			patcherBuild.setAccountEntryCode(getAccountEntryCode());
 			patcherBuild.setPatcherAccountId(
 				templatePatcherBuild.getPatcherAccountId());
 			patcherBuild.setPatcherProductVersionId(

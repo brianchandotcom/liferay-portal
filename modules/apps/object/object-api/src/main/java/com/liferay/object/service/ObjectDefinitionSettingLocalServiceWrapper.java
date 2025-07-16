@@ -345,10 +345,10 @@ public class ObjectDefinitionSettingLocalServiceWrapper
 
 	@Override
 	public java.util.Map<Long, com.liferay.object.model.ObjectDefinitionSetting>
-		getObjectDefinitionSettingMap(long companyId, String name) {
+		getObjectDefinitionSettingsMap(long companyId, String name) {
 
 		return _objectDefinitionSettingLocalService.
-			getObjectDefinitionSettingMap(companyId, name);
+			getObjectDefinitionSettingsMap(companyId, name);
 	}
 
 	/**

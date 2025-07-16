@@ -259,7 +259,7 @@ public interface ObjectDefinitionSettingLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, ObjectDefinitionSetting> getObjectDefinitionSettingMap(
+	public Map<Long, ObjectDefinitionSetting> getObjectDefinitionSettingsMap(
 		long companyId, String name);
 
 	/**

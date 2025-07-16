@@ -173,20 +173,19 @@ public class UserMultiLanguageSearchTest {
 			_PREFIX + "_sortable", keywords
 		).build();
 
-		_populateLocalizedNameFieldValues(keywords, map);
+		_populateLocalizedNameFieldValues(map, keywords);
 
 		return map;
 	}
 
-	private void _populateLocalizedNameFieldValues (
-		String name, Map<String, String> map) {
+	private void _populateLocalizedNameFieldValues(
+		Map<String, String> map, String name) {
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-
-			String languageId = LocaleUtil.toLanguageId(locale);
 			map.put(
 				LocalizationUtil.getLocalizedName(
-					_PREFIX, languageId), name);
+					_PREFIX, LocaleUtil.toLanguageId(locale)),
+				name);
 		}
 	}
 

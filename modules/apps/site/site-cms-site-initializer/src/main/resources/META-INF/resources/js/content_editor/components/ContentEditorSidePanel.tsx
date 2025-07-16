@@ -21,7 +21,7 @@ import {Comment} from './services/CommentService';
 type Props = {
 	addCommentURL: string;
 	comments: Comment[];
-	editorConfig: {configJSONObject: LiferayEditorConfig};
+	editorConfig: LiferayEditorConfig;
 	id: string;
 	isSubscribed: boolean;
 	subscribeURL: string;

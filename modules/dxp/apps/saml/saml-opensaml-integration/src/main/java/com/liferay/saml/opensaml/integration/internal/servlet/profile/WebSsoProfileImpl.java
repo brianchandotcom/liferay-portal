@@ -1279,9 +1279,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			return samlIdpSpConnection.getNameIdFormat();
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 		}
 
@@ -1298,9 +1298,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			return samlSpIdpConnection.getNameIdFormat();
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 		}
 

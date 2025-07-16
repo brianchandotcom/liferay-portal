@@ -550,12 +550,12 @@ public class ObjectDefinitionTreeManager {
 
 		DataSource dataSource = objectRelationshipPersistence.getDataSource();
 
-		DB db = DBManagerUtil.getDB();
-
 		Connection currentConnection = CurrentConnectionUtil.getConnection(
 			dataSource);
 
 		try {
+			DB db = DBManagerUtil.getDB();
+
 			if (currentConnection != null) {
 				db.runSQL(currentConnection, new String[] {sql});
 

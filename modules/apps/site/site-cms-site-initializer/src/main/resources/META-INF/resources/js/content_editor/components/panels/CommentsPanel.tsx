@@ -14,24 +14,9 @@ import {
 	TEditor,
 } from 'frontend-editor-ckeditor-web';
 import {openToast} from 'frontend-js-components-web';
-import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-export type Comment = {
-	author: {
-		fullName: string;
-		portraitURL: string;
-		userId: string;
-	};
-	body: string;
-	children: Comment[];
-	className: string;
-	commentId: string;
-	dateDescription: string;
-	edited: boolean;
-	negativeVotes: number;
-	positiveVotes: number;
-};
+import CommentService, {Comment} from '../services/CommentService';
 
 export default function CommentsPanel({
 	addCommentURL,
@@ -61,7 +46,7 @@ export default function CommentsPanel({
 			{comments.length ? (
 				<List>
 					{comments.map((comment) => (
-						<Comment
+						<CommentNode
 							addCommentURL={addCommentURL}
 							comment={comment}
 							editorConfig={editorConfig.configJSONObject}
@@ -93,7 +78,7 @@ export default function CommentsPanel({
 	);
 }
 
-function Comment({
+function CommentNode({
 	addCommentURL,
 	comment,
 	editorConfig,
@@ -148,7 +133,7 @@ function Comment({
 					{comment.children?.length ? (
 						<List className="border-left border-secondary mb-3 ml-2 pl-1 rounded-0">
 							{comment.children.map((child: Comment) => (
-								<Comment
+								<CommentNode
 									comment={child}
 									key={child.commentId}
 								/>
@@ -233,27 +218,13 @@ function CommentEditor({
 							return;
 						}
 
-						const response = await fetch(addCommentURL, {
-							body: objectToFormData({
-								body: content,
+						try {
+							const comment = await CommentService.addComment({
+								content,
 								parentCommentId,
-							}),
-							method: 'POST',
-						});
-
-						const comment = await response.json();
-
-						if (comment.error) {
-							openToast({
-								message:
-									comment.error ||
-									Liferay.Language.get(
-										'an-unexpected-system-error-occurred'
-									),
-								type: 'danger',
+								url: addCommentURL,
 							});
-						}
-						else {
+
 							onAddComment(comment);
 
 							openToast({
@@ -264,6 +235,12 @@ function CommentEditor({
 							});
 
 							editorRef.current?.setData('');
+						}
+						catch (error) {
+							openToast({
+								message: (error as Error).message,
+								type: 'danger',
+							});
 						}
 					}}
 					size="sm"

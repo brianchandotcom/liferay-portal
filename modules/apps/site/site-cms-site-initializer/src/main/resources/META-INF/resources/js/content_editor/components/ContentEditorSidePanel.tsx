@@ -14,8 +14,9 @@ import {openToast} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import CommentsPanel, {Comment} from './panels/CommentsPanel';
+import CommentsPanel from './panels/CommentsPanel';
 import GeneralPanel from './panels/GeneralPanel';
+import {Comment} from './services/CommentService';
 
 type Props = {
 	addCommentURL: string;

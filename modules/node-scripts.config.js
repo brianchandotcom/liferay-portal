@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '9553985d826d794ed06041bc0e45b5ea6a417fe23deaf5620ab915355b6c140e',
+	hash: 'e0c3b7ab45d91780f5628568407d67f0e5ad6e1ab7bd3b5f761790631084aa5e',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -165,6 +165,7 @@ module.exports = {
 		'@liferay/layout-locked-layouts-web': [],
 		'@liferay/layout-page-template-admin-web': [],
 		'@liferay/layout-page-template-item-selector-web': [],
+		'@liferay/layout-type-controller-embedded': [],
 		'@liferay/layout-type-controller-panel': [],
 		'@liferay/layout-utility-page-terms-of-use': [],
 		'@liferay/liferay-cms-theme': [],

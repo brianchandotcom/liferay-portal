@@ -73,6 +73,14 @@ public class ObjectDefinitionSettingLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectDefinitionSetting> getObjectDefinitionSettings(
+		long objectDefinitionId) {
+
+		return objectDefinitionSettingPersistence.findByObjectDefinitionId(
+			objectDefinitionId);
+	}
+
+	@Override
 	public Map<Long, ObjectDefinitionSetting> getObjectDefinitionSettingsMap(
 		long companyId, String name) {
 
@@ -88,14 +96,6 @@ public class ObjectDefinitionSettingLocalServiceImpl
 		}
 
 		return objectDefinitionSettingsMap;
-	}
-
-	@Override
-	public List<ObjectDefinitionSetting> getObjectDefinitionSettings(
-		long objectDefinitionId) {
-
-		return objectDefinitionSettingPersistence.findByObjectDefinitionId(
-			objectDefinitionId);
 	}
 
 	@Reference

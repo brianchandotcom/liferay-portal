@@ -32,6 +32,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -117,13 +118,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	public void testPostAssetLibrary() throws Exception {
 		super.testPostAssetLibrary();
 
-		boolean initialAutoTaggingEnabled = true;
-		String[] initialAvailableLanguageIds = _getAvailableLanguageIds(
-			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
-		String initialDefaultLanguageId = _language.getLanguageId(
-			LocaleUtil.US);
-		String initialLogoColor = RandomTestUtil.randomString();
-		MimeTypeLimit[] initialMimeTypeLimits = {
+		MimeTypeLimit[] mimeTypeLimits = {
 			new MimeTypeLimit() {
 				{
 					setMaximumSize(1234);
@@ -131,19 +126,10 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 				}
 			}
 		};
-		boolean initialSharingEnabled = true;
-		boolean initialUseCustomLanguages = true;
 
-		AssetLibrary assetLibrary = _postAssetLibraryWithSettings(
-			initialAutoTaggingEnabled, initialAvailableLanguageIds,
-			initialDefaultLanguageId, initialLogoColor, initialMimeTypeLimits,
-			initialSharingEnabled, initialUseCustomLanguages);
+		_testPostAssetLibrary(mimeTypeLimits);
 
-		_assertSettings(
-			assetLibrary, initialAutoTaggingEnabled,
-			initialAvailableLanguageIds, initialDefaultLanguageId,
-			initialLogoColor, initialMimeTypeLimits, initialSharingEnabled,
-			initialUseCustomLanguages);
+		_testPostAssetLibrary(null);
 	}
 
 	@Override
@@ -151,45 +137,18 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	public void testPutAssetLibraryByExternalReferenceCode() throws Exception {
 		super.testPutAssetLibraryByExternalReferenceCode();
 
-		AssetLibrary assetLibrary = _postAssetLibraryWithSettings(
-			true,
-			_getAvailableLanguageIds(
-				LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
-			_language.getLanguageId(LocaleUtil.US),
-			RandomTestUtil.randomString(),
-			new MimeTypeLimit[] {
-				new MimeTypeLimit() {
-					{
-						setMaximumSize(1234);
-						setMimeType("application/pdf");
-					}
-				}
-			},
-			true, true);
-
-		boolean putAutoTaggingEnabled = true;
-		String[] putAvailableLanguageIds = _getAvailableLanguageIds(
-			LocaleUtil.SPAIN);
-		String putDefaultLanguageId = _language.getLanguageId(LocaleUtil.SPAIN);
-		boolean putUseCustomLanguages = true;
-
-		assetLibrary.setSettings(
-			new Settings() {
+		MimeTypeLimit[] mimeTypeLimits = {
+			new MimeTypeLimit() {
 				{
-					setAutoTaggingEnabled(() -> putAutoTaggingEnabled);
-					setAvailableLanguageIds(() -> putAvailableLanguageIds);
-					setDefaultLanguageId(() -> putDefaultLanguageId);
-					setUseCustomLanguages(() -> putUseCustomLanguages);
+					setMaximumSize(1234);
+					setMimeType("application/pdf");
 				}
-			});
+			}
+		};
 
-		assetLibrary =
-			assetLibraryResource.putAssetLibraryByExternalReferenceCode(
-				assetLibrary.getExternalReferenceCode(), assetLibrary);
+		_testPutAssetLibraryByExternalReferenceCode(mimeTypeLimits);
 
-		_assertSettings(
-			assetLibrary, putAutoTaggingEnabled, putAvailableLanguageIds,
-			putDefaultLanguageId, "outline-0", null, false, true);
+		_testPutAssetLibraryByExternalReferenceCode(null);
 	}
 
 	@Override
@@ -456,6 +415,69 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			});
 
 		return assetLibraryResource.postAssetLibrary(assetLibrary);
+	}
+
+	private void _testPostAssetLibrary(MimeTypeLimit[] initialMimeTypeLimits)
+		throws Exception {
+
+		boolean initialAutoTaggingEnabled = true;
+		String[] initialAvailableLanguageIds = _getAvailableLanguageIds(
+			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
+		String initialDefaultLanguageId = _language.getLanguageId(
+			LocaleUtil.US);
+		String initialLogoColor = RandomTestUtil.randomString();
+		boolean initialSharingEnabled = true;
+		boolean initialUseCustomLanguages = true;
+
+		AssetLibrary assetLibrary = _postAssetLibraryWithSettings(
+			initialAutoTaggingEnabled, initialAvailableLanguageIds,
+			initialDefaultLanguageId, initialLogoColor, initialMimeTypeLimits,
+			initialSharingEnabled, initialUseCustomLanguages);
+
+		_assertSettings(
+			assetLibrary, initialAutoTaggingEnabled,
+			initialAvailableLanguageIds, initialDefaultLanguageId,
+			initialLogoColor, initialMimeTypeLimits, initialSharingEnabled,
+			initialUseCustomLanguages);
+	}
+
+	private void _testPutAssetLibraryByExternalReferenceCode(
+			MimeTypeLimit[] mimeTypeLimits)
+		throws Exception {
+
+		AssetLibrary assetLibrary = _postAssetLibraryWithSettings(
+			true,
+			_getAvailableLanguageIds(
+				LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
+			_language.getLanguageId(LocaleUtil.US),
+			RandomTestUtil.randomString(), mimeTypeLimits, true, true);
+
+		boolean putAutoTaggingEnabled = true;
+		String[] putAvailableLanguageIds = _getAvailableLanguageIds(
+			LocaleUtil.SPAIN);
+		String putDefaultLanguageId = _language.getLanguageId(LocaleUtil.SPAIN);
+		boolean putUseCustomLanguages = true;
+
+		assetLibrary.setName_i18n(
+			Collections.singletonMap(
+				putDefaultLanguageId, RandomTestUtil.randomString()));
+		assetLibrary.setSettings(
+			new Settings() {
+				{
+					setAutoTaggingEnabled(() -> putAutoTaggingEnabled);
+					setAvailableLanguageIds(() -> putAvailableLanguageIds);
+					setDefaultLanguageId(() -> putDefaultLanguageId);
+					setUseCustomLanguages(() -> putUseCustomLanguages);
+				}
+			});
+
+		assetLibrary =
+			assetLibraryResource.putAssetLibraryByExternalReferenceCode(
+				assetLibrary.getExternalReferenceCode(), assetLibrary);
+
+		_assertSettings(
+			assetLibrary, putAutoTaggingEnabled, putAvailableLanguageIds,
+			putDefaultLanguageId, "outline-0", null, false, true);
 	}
 
 	@Inject

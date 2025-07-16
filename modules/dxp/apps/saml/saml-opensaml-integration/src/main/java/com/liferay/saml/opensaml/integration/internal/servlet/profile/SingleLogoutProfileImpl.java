@@ -782,11 +782,9 @@ public class SingleLogoutProfileImpl
 	}
 
 	private boolean _isIdpSpConnection(String entityId) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		try {
 			_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-				companyId, entityId);
+				CompanyThreadLocal.getCompanyId(), entityId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -800,11 +798,9 @@ public class SingleLogoutProfileImpl
 	}
 
 	private boolean _isSpIdPConnection(String entityId) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		try {
 			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-				companyId, entityId);
+				CompanyThreadLocal.getCompanyId(), entityId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

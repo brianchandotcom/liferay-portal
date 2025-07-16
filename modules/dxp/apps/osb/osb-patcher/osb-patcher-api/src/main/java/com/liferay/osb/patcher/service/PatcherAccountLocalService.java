@@ -280,6 +280,9 @@ public interface PatcherAccountLocalService
 	public int getPatcherAccountsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPatcherAccountsCount(long companyId, String keyword);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PatcherAccount> getPatcherBuildPatcherAccounts(
 		long patcherBuildId);
 

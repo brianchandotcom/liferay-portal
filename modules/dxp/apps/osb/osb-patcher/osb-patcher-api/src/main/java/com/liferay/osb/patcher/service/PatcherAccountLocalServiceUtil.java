@@ -349,6 +349,10 @@ public class PatcherAccountLocalServiceUtil {
 		return getService().getPatcherAccountsCount();
 	}
 
+	public static int getPatcherAccountsCount(long companyId, String keyword) {
+		return getService().getPatcherAccountsCount(companyId, keyword);
+	}
+
 	public static List<PatcherAccount> getPatcherBuildPatcherAccounts(
 		long patcherBuildId) {
 

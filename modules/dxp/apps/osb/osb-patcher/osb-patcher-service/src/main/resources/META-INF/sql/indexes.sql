@@ -17,6 +17,7 @@ create index IX_B470DAA1 on OSBPatcher_PProjectVersion (patcherProductVersionId,
 create index IX_64D9A2F0 on OSBPatcher_PProjectVersion (rootPatcherProjectVersionId);
 
 create unique index IX_AFEBA92C on OSBPatcher_PatcherAccount (accountEntryCode[$COLUMN_LENGTH:75$]);
+create index IX_FB5EC1C8 on OSBPatcher_PatcherAccount (companyId, accountEntryCode[$COLUMN_LENGTH:75$]);
 
 create unique index IX_D4018EE8 on OSBPatcher_PatcherBuild (key_[$COLUMN_LENGTH:75$], keyVersion);
 create index IX_686637A5 on OSBPatcher_PatcherBuild (key_[$COLUMN_LENGTH:75$], latestKeyBuild);

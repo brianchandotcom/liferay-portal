@@ -411,6 +411,12 @@ public class PatcherAccountLocalServiceWrapper
 	}
 
 	@Override
+	public int getPatcherAccountsCount(long companyId, String keyword) {
+		return _patcherAccountLocalService.getPatcherAccountsCount(
+			companyId, keyword);
+	}
+
+	@Override
 	public java.util.List<com.liferay.osb.patcher.model.PatcherAccount>
 		getPatcherBuildPatcherAccounts(long patcherBuildId) {
 

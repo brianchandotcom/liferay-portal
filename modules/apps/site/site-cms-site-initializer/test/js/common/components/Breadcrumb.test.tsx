@@ -11,24 +11,6 @@ import Breadcrumb, {
 	BreadcrumbItem,
 } from '../../../../src/main/resources/META-INF/resources/js/common/components/Breadcrumb';
 
-const testBreadcrumbItemsShort = [
-	{
-		active: false,
-		href: 'http://www.liferay.com/e/space/123/001',
-		label: 'My Space',
-	},
-	{
-		active: false,
-		href: 'http://localhost:8080/e/view-folder/123/001',
-		label: 'My Folder 1',
-	},
-	{
-		active: true,
-		href: 'http://localhost:8080/e/view-folder/123/002',
-		label: 'My Folder 2',
-	},
-];
-
 const testBreadcrumbItemsLong = [
 	{
 		active: false,
@@ -49,6 +31,32 @@ const testBreadcrumbItemsLong = [
 		active: true,
 		href: 'http://localhost:8080/e/view-folder/123/003',
 		label: 'My Folder 3',
+	},
+];
+
+const testBreadcrumbItemsShort = [
+	{
+		active: false,
+		href: 'http://www.liferay.com/e/space/123/001',
+		label: 'My Space',
+	},
+	{
+		active: false,
+		href: 'http://localhost:8080/e/view-folder/123/001',
+		label: 'My Folder 1',
+	},
+	{
+		active: true,
+		href: 'http://localhost:8080/e/view-folder/123/002',
+		label: 'My Folder 2',
+	},
+];
+
+const testBreadcrumbItemsSingle = [
+	{
+		active: false,
+		href: 'http://www.liferay.com/e/space/123/001',
+		label: 'My Space',
 	},
 ];
 
@@ -79,7 +87,7 @@ function expectBreadcrumbItemSticker(breadcrumbItem: BreadcrumbItem) {
 	).toHaveClass('sticker-overlay');
 }
 
-describe('FolderBreadcrumb', () => {
+describe('Breadcrumb', () => {
 	it('renders all elements of a short breadcrumb', () => {
 		render(<Breadcrumb breadcrumbItems={testBreadcrumbItemsShort} />);
 
@@ -100,5 +108,25 @@ describe('FolderBreadcrumb', () => {
 
 		expectBreadcrumbItem(testBreadcrumbItemsLong[2]);
 		expectBreadcrumbItem(testBreadcrumbItemsLong[3], true);
+	});
+
+	it('applies the provided props to the SpaceSticker', () => {
+		const {container} = render(
+			<Breadcrumb
+				breadcrumbItems={testBreadcrumbItemsSingle}
+				displayType="outline-7"
+				size="lg"
+			/>
+		);
+
+		expectBreadcrumbItemSticker(testBreadcrumbItemsSingle[0]);
+
+		expect(container.getElementsByClassName('sticker')[0]).toHaveClass(
+			'sticker-outline-7'
+		);
+
+		expect(container.getElementsByClassName('sticker')[0]).toHaveClass(
+			'sticker-lg'
+		);
 	});
 });

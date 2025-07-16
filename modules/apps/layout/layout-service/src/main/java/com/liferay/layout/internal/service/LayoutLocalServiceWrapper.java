@@ -277,14 +277,13 @@ public class LayoutLocalServiceWrapper
 	private void _copyLayoutClassedModelUsages(
 		Layout sourceLayout, Layout targetLayout) {
 
-		List<LayoutClassedModelUsage> sourceLayoutLayoutClassedModelUsages =
-			_layoutClassedModelUsageLocalService.
-				getLayoutClassedModelUsagesByPlid(sourceLayout.getPlid());
-
 		long[] classNameIds = {
 			_portal.getClassNameId(FragmentEntryLink.class.getName()),
 			_portal.getClassNameId(LayoutPageTemplateStructure.class.getName())
 		};
+		List<LayoutClassedModelUsage> sourceLayoutLayoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(sourceLayout.getPlid());
 
 		_deleteLayoutClassedModelUsages(
 			classNameIds, sourceLayoutLayoutClassedModelUsages, targetLayout);

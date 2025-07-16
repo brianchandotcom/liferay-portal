@@ -182,9 +182,9 @@ public class CopyLayoutMVCActionCommandTest {
 			).toString());
 
 		_assertLayoutClassedModelUsages(
-			2, journalArticle.getResourcePrimKey(), _layout.getPlid());
-		_assertLayoutClassedModelUsages(
 			2, journalArticle.getResourcePrimKey(), _draftLayout.getPlid());
+		_assertLayoutClassedModelUsages(
+			2, journalArticle.getResourcePrimKey(), _layout.getPlid());
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 

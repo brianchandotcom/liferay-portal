@@ -15,11 +15,6 @@ PatcherAccountsViewDisplayContext patcherAccountsViewDisplayContext = new Patche
 	title='<%= LanguageUtil.format(request, "view-x", patcherAccountsViewDisplayContext.getPatcherBuildAccountEntryCode()) %>'
 />
 
-<portlet:renderURL var="viewPatcherAccountURL">
-	<portlet:param name="mvcRenderCommandName" value="/patcher/view_accounts" />
-	<portlet:param name="patcherBuildAccountEntryCode" value="<%= patcherAccountsViewDisplayContext.getPatcherBuildAccountEntryCode() %>" />
-</portlet:renderURL>
-
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new PatcherAccountsViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, patcherAccountsViewDisplayContext.getSearchContainer()) %>"
 />
@@ -88,7 +83,7 @@ PatcherAccountsViewDisplayContext patcherAccountsViewDisplayContext = new Patche
 		<portlet:renderURL var="viewPatcherBuildURL">
 			<portlet:param name="mvcRenderCommandName" value="/patcher/view_builds" />
 			<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
-			<portlet:param name="redirect" value="<%= viewPatcherAccountURL %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
@@ -241,7 +236,7 @@ PatcherAccountsViewDisplayContext patcherAccountsViewDisplayContext = new Patche
 					<portlet:renderURL var="editPatcherBuildURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_builds" />
 						<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
-						<portlet:param name="redirect" value="<%= viewPatcherAccountURL %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon
@@ -255,7 +250,7 @@ PatcherAccountsViewDisplayContext patcherAccountsViewDisplayContext = new Patche
 					<portlet:renderURL var="createPatcherBuildTemplateURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/add_builds" />
 						<portlet:param name="templatePatcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />
-						<portlet:param name="redirect" value="<%= viewPatcherAccountURL %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon

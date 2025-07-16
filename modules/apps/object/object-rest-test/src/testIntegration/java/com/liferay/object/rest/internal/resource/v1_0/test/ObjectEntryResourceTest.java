@@ -14547,8 +14547,6 @@ public class ObjectEntryResourceTest {
 						URLCodec.encodeURL(fileEntry.getName()), "/",
 						serviceBuilderFileEntry.getUuid(), "?version=",
 						fileVersion.getVersion(), "&t=", modifiedDate.getTime(),
-						"&previewCTCollectionId=",
-						dlFileEntry.getCtCollectionId(),
 						"&download=true&objectDefinitionExternalReferenceCode=",
 						objectDefinition.getExternalReferenceCode(),
 						"&objectEntryExternalReferenceCode=",

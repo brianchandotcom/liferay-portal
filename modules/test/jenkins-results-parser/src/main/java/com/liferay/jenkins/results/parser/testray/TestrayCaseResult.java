@@ -124,6 +124,10 @@ public class TestrayCaseResult {
 		return _jsonObject.optLong("id");
 	}
 
+	public String getIssues() {
+		return null;
+	}
+
 	public JSONObject getJSONObject() {
 		return _jsonObject;
 	}

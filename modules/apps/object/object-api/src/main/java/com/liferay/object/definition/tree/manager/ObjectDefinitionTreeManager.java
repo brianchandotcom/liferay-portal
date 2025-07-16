@@ -209,10 +209,10 @@ public class ObjectDefinitionTreeManager {
 
 	public static void populateRootObjectDefinitionIds(
 		List<ObjectDefinition> objectDefinitions,
-		Map<Long, ObjectDefinitionSetting> objectDefinitionSettingMap) {
+		Map<Long, ObjectDefinitionSetting> objectDefinitionSettingsMap) {
 
 		for (Map.Entry<Long, ObjectDefinitionSetting> entry :
-				objectDefinitionSettingMap.entrySet()) {
+				objectDefinitionSettingsMap.entrySet()) {
 
 			ObjectDefinitionSetting objectDefinitionSetting = entry.getValue();
 

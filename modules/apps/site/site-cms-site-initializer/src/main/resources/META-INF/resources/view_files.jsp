@@ -13,6 +13,7 @@ ViewFilesSectionDisplayContext viewFilesSectionDisplayContext = (ViewFilesSectio
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
+		additionalProps="<%= viewFilesSectionDisplayContext.getAdditionalProps() %>"
 		apiURL="<%= viewFilesSectionDisplayContext.getAPIURL() %>"
 		bulkActionDropdownItems="<%= viewFilesSectionDisplayContext.getBulkActionDropdownItems() %>"
 		creationMenu="<%= viewFilesSectionDisplayContext.getCreationMenu() %>"

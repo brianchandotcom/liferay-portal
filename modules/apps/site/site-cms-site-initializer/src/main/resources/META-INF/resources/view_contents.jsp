@@ -13,6 +13,7 @@ ViewContentsSectionDisplayContext viewContentsSectionDisplayContext = (ViewConte
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
+		additionalProps="<%= viewContentsSectionDisplayContext.getAdditionalProps() %>"
 		apiURL="<%= viewContentsSectionDisplayContext.getAPIURL() %>"
 		bulkActionDropdownItems="<%= viewContentsSectionDisplayContext.getBulkActionDropdownItems() %>"
 		creationMenu="<%= viewContentsSectionDisplayContext.getCreationMenu() %>"

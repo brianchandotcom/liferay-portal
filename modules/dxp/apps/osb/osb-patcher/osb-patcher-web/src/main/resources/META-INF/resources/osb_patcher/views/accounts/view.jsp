@@ -9,8 +9,6 @@
 
 <%
 PatcherAccountsViewDisplayContext patcherAccountsViewDisplayContext = new PatcherAccountsViewDisplayContext(request, renderRequest, renderResponse);
-
-long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersionId");
 %>
 
 <liferay-ui:header
@@ -22,115 +20,9 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 	<portlet:param name="patcherBuildAccountEntryCode" value="<%= patcherAccountsViewDisplayContext.getPatcherBuildAccountEntryCode() %>" />
 </portlet:renderURL>
 
-<div class="layout">
-	<div class="layout-content">
-		<clay:row>
-			<clay:col>
-				<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "productVersionOnChange(this.value);" %>' showEmptyOption="<%= true %>">
-
-					<%
-					for (PatcherProductVersion patcherProductVersion : PatcherProductVersionLocalServiceUtil.getPatcherProductVersions()) {
-					%>
-
-						<aui:option label="<%= patcherProductVersion.getName() %>" value="<%= patcherProductVersion.getPatcherProductVersionId() %>" />
-
-					<%
-					}
-					%>
-
-					<aui:option label="any" value="0" />
-				</aui:select>
-			</clay:col>
-		</clay:row>
-	</div>
-</div>
-
-<aui:button-row>
-	<portlet:renderURL var="createPatcherBuildURL">
-		<portlet:param name="mvcRenderCommandName" value="/patcher/add_builds" />
-		<portlet:param name="patcherProductVersionId" value="<%= String.valueOf(patcherProductVersionId) %>" />
-		<portlet:param name="redirect" value="<%= viewPatcherAccountURL %>" />
-	</portlet:renderURL>
-
-	<aui:button disabled='<%= !PatcherPermission.contains(permissionChecker, "builds", PatcherActionKeys.CREATE) %>' href="<%= createPatcherBuildURL %>" value="create-build" />
-</aui:button-row>
-
-<aui:form action="<%= viewPatcherAccountURL %>" method="get" name="fm">
-	<liferay-ui:search-toggle
-		buttonLabel="search"
-		displayTerms="<%= new DisplayTerms(renderRequest) %>"
-		id="toggle_id_patcher_build_search"
-	>
-		<div class="layout">
-			<div class="layout-content">
-				<clay:row>
-					<clay:col>
-						<aui:input label="build-id" name="<%= Field.ENTRY_CLASS_PK %>" size="30" type="text" />
-					</clay:col>
-
-					<clay:col>
-						<aui:input label="content" name="patcherBuildName" size="30" title="search-builds" type="text" />
-					</clay:col>
-
-					<clay:col>
-						<aui:input label="account-code" name="patcherBuildAccountEntryCode" size="30" title="search-accounts" type="text" />
-					</clay:col>
-
-					<clay:col>
-						<aui:input label="support-ticket" name="supportTicket" size="30" title="search-support-tickets" type="text" />
-					</clay:col>
-
-					<clay:col>
-						<aui:input checked="<%= true %>" name="hideOldBuildVersions" type="checkbox" />
-					</clay:col>
-				</clay:row>
-			</div>
-		</div>
-
-		<div class="layout">
-			<div class="layout-content">
-				<clay:row>
-					<clay:col>
-						<aui:select label="patcher-status" name="statusFilter" showEmptyOption="<%= true %>">
-							<aui:option label="<%= WorkflowConstants.LABEL_BUILD_MERGING %>" value="<%= WorkflowConstants.STATUS_BUILD_MERGING %>" />
-							<aui:option label="<%= WorkflowConstants.LABEL_BUILD_COMPILING %>" value="<%= WorkflowConstants.STATUS_BUILD_COMPILING %>" />
-							<aui:option label="<%= WorkflowConstants.LABEL_BUILD_CONFLICT %>" value="<%= WorkflowConstants.STATUS_BUILD_CONFLICT %>" />
-							<aui:option label="<%= WorkflowConstants.LABEL_BUILD_COMPLETE %>" value="<%= WorkflowConstants.STATUS_BUILD_COMPLETE %>" />
-							<aui:option label="<%= WorkflowConstants.LABEL_BUILD_READY_TO_RELEASE %>" value="<%= WorkflowConstants.STATUS_BUILD_READY_TO_RELEASE %>" />
-							<aui:option label="<%= WorkflowConstants.LABEL_BUILD_RELEASED %>" value="<%= WorkflowConstants.STATUS_BUILD_RELEASED %>" />
-							<aui:option label="<%= WorkflowConstants.LABEL_BUILD_FAILED %>" value="<%= WorkflowConstants.STATUS_BUILD_FAILED %>" />
-						</aui:select>
-					</clay:col>
-
-					<clay:col>
-						<aui:select label="type" name="typeFilter" showEmptyOption="<%= true %>">
-							<aui:option label="<%= PatcherBuildConstants.LABEL_OFFICIAL %>" value="<%= PatcherBuildConstants.TYPE_OFFICIAL %>" />
-							<aui:option label="<%= PatcherBuildConstants.LABEL_DEBUG %>" value="<%= PatcherBuildConstants.TYPE_DEBUG %>" />
-							<aui:option label="<%= PatcherBuildConstants.LABEL_IGNORE %>" value="<%= PatcherBuildConstants.TYPE_IGNORE %>" />
-							<aui:option label="<%= PatcherBuildConstants.LABEL_FIX_PACK %>" value="<%= PatcherBuildConstants.TYPE_FIX_PACK %>" />
-						</aui:select>
-					</clay:col>
-
-					<clay:col>
-						<aui:select label="project-version" name="patcherProjectVersionIdFilter" showEmptyOption="<%= true %>">
-
-							<%
-							for (PatcherProjectVersion patcherProjectVersion : PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersions()) {
-							%>
-
-								<aui:option label="<%= patcherProjectVersion.getName() %>" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</clay:col>
-				</clay:row>
-			</div>
-		</div>
-	</liferay-ui:search-toggle>
-</aui:form>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new PatcherAccountsViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, patcherAccountsViewDisplayContext.getSearchContainer()) %>"
+/>
 
 <liferay-ui:search-container
 	emptyResultsMessage="there-are-no-builds"
@@ -538,21 +430,6 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 			url: url,
 		});
 	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />productVersionOnChange',
-		function (productVersionId) {
-			var namespace = '<portlet:namespace />';
-
-			window.location.href = Liferay.Patcher.updateProductVersionId(
-				'<%= viewPatcherAccountURL %>',
-				productVersionId,
-				namespace
-			);
-		},
-		['aui-base']
-	);
 
 	Liferay.provide(
 		window,

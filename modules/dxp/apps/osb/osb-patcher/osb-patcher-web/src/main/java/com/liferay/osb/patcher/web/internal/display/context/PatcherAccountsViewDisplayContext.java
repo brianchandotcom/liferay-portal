@@ -5,6 +5,8 @@
 
 package com.liferay.osb.patcher.web.internal.display.context;
 
+import com.liferay.osb.patcher.constants.PatcherBuildConstants;
+import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.service.PatcherBuildLocalServiceUtil;
 import com.liferay.osb.patcher.util.PatcherUtil;
@@ -69,6 +71,13 @@ public class PatcherAccountsViewDisplayContext {
 
 		searchContext.setAttribute(
 			"patcherBuildAccountEntryCode", getPatcherBuildAccountEntryCode());
+		searchContext.setAttribute(
+			"patcherProductVersionId", _getPatcherProductVersionId());
+		searchContext.setAttribute(
+			"patcherProjectVersionId", _getPatcherProjectVersionId());
+		searchContext.setAttribute("qaStatus", WorkflowConstants.STATUS_ANY);
+		searchContext.setAttribute("status", _getStatus());
+		searchContext.setAttribute("type", _getType());
 		searchContext.setEnd(patcherBuildSearchContainer.getEnd());
 		searchContext.setGroupIds(null);
 
@@ -102,10 +111,58 @@ public class PatcherAccountsViewDisplayContext {
 		return _patcherBuildSearchContainer;
 	}
 
+	private long _getPatcherProductVersionId() {
+		if (_patcherProductVersionId != null) {
+			return _patcherProductVersionId;
+		}
+
+		_patcherProductVersionId = ParamUtil.getLong(
+			_httpServletRequest, "patcherProductVersionId");
+
+		return _patcherProductVersionId;
+	}
+
+	private long _getPatcherProjectVersionId() {
+		if (_patcherProjectVersionId != null) {
+			return _patcherProjectVersionId;
+		}
+
+		_patcherProjectVersionId = ParamUtil.getLong(
+			_httpServletRequest, "patcherProjectVersionId");
+
+		return _patcherProjectVersionId;
+	}
+
+	private int _getStatus() {
+		if (_status != null) {
+			return _status;
+		}
+
+		_status = ParamUtil.getInteger(
+			_httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
+
+		return _status;
+	}
+
+	private int _getType() {
+		if (_type != null) {
+			return _type;
+		}
+
+		_type = ParamUtil.getInteger(
+			_httpServletRequest, "type", PatcherBuildConstants.TYPE_ANY);
+
+		return _type;
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private String _patcherBuildAccountEntryCode;
 	private SearchContainer<PatcherBuild> _patcherBuildSearchContainer;
+	private Long _patcherProductVersionId;
+	private Long _patcherProjectVersionId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private Integer _status;
+	private Integer _type;
 
 }

@@ -39,8 +39,7 @@ public class WebSsoAutoLogin extends BaseAutoLogin {
 
 		try {
 			if (!_samlProviderConfigurationHelper.isEnabled() ||
-				(!_samlProviderConfigurationHelper.isRoleIdp() &&
-				 !_samlProviderConfigurationHelper.isRoleIdpAndSp())) {
+				_samlProviderConfigurationHelper.isRoleSp()) {
 
 				return null;
 			}

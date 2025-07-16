@@ -31,6 +31,7 @@ import useFDSDrop from '../../dnd/useFDSDrop';
 import persistVisibleFieldNames, {
 	VisibleFieldNames,
 } from '../../thunks/persistVisibleFieldNames';
+import getItemValueFromSelectedItemsKey from '../../utils/getItemValueFromSelectedItemsKey';
 import {
 	ILocalizedItemDetails,
 	getLocalizedValue,
@@ -168,7 +169,7 @@ const Row = ({
 	const SelectionComponent =
 		selectionType === 'multiple' ? ClayCheckbox : ClayRadio;
 
-	const id = item[selectedItemsKey ?? 'id'];
+	const id = getItemValueFromSelectedItemsKey(item, selectedItemsKey ?? 'id');
 
 	return (
 		<ClayTableRowOptionalDropTarget
@@ -368,7 +369,12 @@ const Body = ({
 								!!selectedItemsValue?.find(
 									(element: any) =>
 										String(element) ===
-										String(item[selectedItemsKey ?? 'id'])
+										String(
+											getItemValueFromSelectedItemsKey(
+												item,
+												selectedItemsKey ?? 'id'
+											)
+										)
 								)
 							}
 							columns={columns}

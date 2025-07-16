@@ -16,6 +16,7 @@ import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
 import FDSDndProvider from '../../dnd/FDSDndProvider';
 import useFDSDrop from '../../dnd/useFDSDrop';
+import getItemValueFromSelectedItemsKey from '../../utils/getItemValueFromSelectedItemsKey';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import {
 	ESelectionTrigger,
@@ -86,7 +87,10 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 		const SelectionInput =
 			selectionType === 'single' ? ClayRadio : ClayCheckbox;
 
-		const itemId = item[selectedItemsKey || 'id'];
+		const itemId = getItemValueFromSelectedItemsKey(
+			item,
+			selectedItemsKey || 'id'
+		);
 
 		const props = {
 			className: classNames(className, {
@@ -247,7 +251,10 @@ const List = ({
 							item={item}
 							key={
 								selectedItemsKey
-									? item[selectedItemsKey]
+									? getItemValueFromSelectedItemsKey(
+											item,
+											selectedItemsKey
+										)
 									: index
 							}
 							onItemSelectionChange={onItemSelectionChange}

@@ -6,6 +6,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import getItemValueFromSelectedItemsKey from '../utils/getItemValueFromSelectedItemsKey';
 import BulkActions from './controls/BulkActions';
 import NavBar from './controls/NavBar';
 import ActiveFiltersBar from './controls/filters/ActiveFiltersBar';
@@ -28,11 +29,16 @@ function ManagementBar({
 	total,
 }) {
 	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
-		items.some((item) => item.id === id)
+		items.some(
+			(item) =>
+				getItemValueFromSelectedItemsKey(item, selectedItemsKey) === id
+		)
 	);
 
 	function handleCheckboxClick() {
-		const itemKeys = items.map((item) => item[selectedItemsKey]);
+		const itemKeys = items.map((item) =>
+			getItemValueFromSelectedItemsKey(item, selectedItemsKey)
+		);
 
 		if (pageSelectedItemsValue.length === items.length) {
 			return deselectItems(itemKeys);

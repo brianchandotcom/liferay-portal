@@ -411,7 +411,7 @@ public class JUnitBatchBuildTestrayCaseResult
 
 		for (TestClassReport testClassReport : getTestClassReports()) {
 			String testClassName = testClassReport.getTestClassName();
-			
+
 			if (!testClassName.equals("junit.framework.TestSuite")) {
 				testReports.addAll(testClassReport.getTestReports());
 

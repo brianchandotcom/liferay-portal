@@ -63,11 +63,11 @@ public class TestClassMethod {
 		_jsonObject = new JSONObject();
 
 		_jsonObject.put(
-				"annotations", ""
+			"annotations", ""
 		).put(
-				"ignored", ignored
+			"ignored", ignored
 		).put(
-				"name", name
+			"name", name
 		);
 	}
 

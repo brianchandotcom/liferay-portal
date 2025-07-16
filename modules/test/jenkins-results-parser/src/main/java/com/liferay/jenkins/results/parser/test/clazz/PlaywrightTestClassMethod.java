@@ -95,6 +95,8 @@ public class PlaywrightTestClassMethod extends TestClassMethod {
 		boolean ignored, String name, String tags, TestClass testClass) {
 
 		super(ignored, name, tags, testClass);
+
+		_playwrightJUnitTestClass = (PlaywrightJUnitTestClass)testClass;
 	}
 
 	protected PlaywrightTestClassMethod(

@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
@@ -363,6 +365,8 @@ public class UserIndexerIndexedFieldsTest {
 			"screenName_sortable", StringUtil.toLowerCase(user.getScreenName())
 		).build();
 
+		_populateLocalizedNameFieldValues(user, map);
+
 		indexedFieldsFixture.populateUID(user, map);
 
 		indexedFieldsFixture.populateDate(
@@ -449,6 +453,24 @@ public class UserIndexerIndexedFieldsTest {
 		map.put("region", _getStringValue(regions));
 		map.put("street", _getStringValue(streets));
 		map.put("zip", _getStringValue(zips));
+	}
+
+	private void _populateLocalizedNameFieldValues (
+		User user, Map<String, String> map) {
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+
+			String languageId = LocaleUtil.toLanguageId(locale);
+			map.put(
+				LocalizationUtil.getLocalizedName(
+					"firstName", languageId), user.getFirstName());
+			map.put(
+				LocalizationUtil.getLocalizedName("fullName", languageId),
+				user.getFullName());
+			map.put(
+				LocalizationUtil.getLocalizedName("lastName", languageId),
+				user.getLastName());
+		}
 	}
 
 	@DeleteAfterTestRun

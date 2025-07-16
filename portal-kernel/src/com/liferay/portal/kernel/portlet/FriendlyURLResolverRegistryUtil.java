@@ -62,22 +62,21 @@ public class FriendlyURLResolverRegistryUtil {
 	public static String[] getURLSeparators() {
 		String[] urlSeparators = _urlSeparators.get();
 
-		if (urlSeparators == null) {
-			List<String> urlSeparatorsList = new ArrayList<>();
-
-			for (FriendlyURLResolver friendlyURLResolver :
-					_serviceTrackerList) {
-
-				if (friendlyURLResolver != null) {
-					urlSeparatorsList.add(
-						friendlyURLResolver.getURLSeparator());
-				}
-			}
-
-			urlSeparators = urlSeparatorsList.toArray(new String[0]);
-
-			_urlSeparators.set(urlSeparators);
+		if (urlSeparators != null) {
+			return urlSeparators;
 		}
+
+		List<String> urlSeparatorsList = new ArrayList<>();
+
+		for (FriendlyURLResolver friendlyURLResolver : _serviceTrackerList) {
+			if (friendlyURLResolver != null) {
+				urlSeparatorsList.add(friendlyURLResolver.getURLSeparator());
+			}
+		}
+
+		urlSeparators = urlSeparatorsList.toArray(new String[0]);
+
+		_urlSeparators.set(urlSeparators);
 
 		return urlSeparators;
 	}

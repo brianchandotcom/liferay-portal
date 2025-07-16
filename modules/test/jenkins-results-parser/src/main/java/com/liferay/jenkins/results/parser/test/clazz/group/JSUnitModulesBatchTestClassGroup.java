@@ -35,22 +35,6 @@ import org.json.JSONObject;
 public class JSUnitModulesBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
-	private boolean _isTestGitrepoJSUnit() {
-		JobProperty jobProperty = getJobProperty("test.gitrepo.js.unit");
-
-		String jobPropertyValue = jobProperty.getValue();
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue) &&
-			jobPropertyValue.equals("true")) {
-
-			recordJobProperty(jobProperty);
-
-			return true;
-		}
-
-		return false;
-	}
-
 	protected JSUnitModulesBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
@@ -251,6 +235,22 @@ public class JSUnitModulesBatchTestClassGroup
 			});
 
 		return modulesProjectDirs;
+	}
+
+	private boolean _isTestGitrepoJSUnit() {
+		JobProperty jobProperty = getJobProperty("test.gitrepo.js.unit");
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue) &&
+			jobPropertyValue.equals("true")) {
+
+			recordJobProperty(jobProperty);
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -142,10 +142,13 @@ public class AccountEntriesAdminPortletDataHandlerTest {
 							).build())),
 			larFile);
 
-		Assert.assertNotNull(
+		accountEntry =
 			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
 				accountEntry.getExternalReferenceCode(),
-				TestPropsValues.getCompanyId()));
+				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, accountEntry.getStatus());
 
 		organization =
 			_organizationLocalService.fetchOrganizationByExternalReferenceCode(

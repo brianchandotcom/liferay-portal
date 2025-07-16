@@ -66,31 +66,7 @@ import javax.sql.DataSource;
  */
 public class ObjectDefinitionTreeManager {
 
-	public static ObjectDefinitionTreeManager getInstance() {
-		return _objectDefinitionTreeManager;
-	}
-
-	public static void populateRootObjectDefinitionIds(
-		List<ObjectDefinition> objectDefinitions,
-		Map<Long, ObjectDefinitionSetting> objectDefinitionSettingMap) {
-
-		for (Map.Entry<Long, ObjectDefinitionSetting> entry :
-				objectDefinitionSettingMap.entrySet()) {
-
-			ObjectDefinitionSetting objectDefinitionSetting = entry.getValue();
-
-			_rootObjectDefinitionIds.put(
-				entry.getKey(),
-				GetterUtil.getLong(objectDefinitionSetting.getValue()));
-		}
-
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			_rootObjectDefinitionIds.putIfAbsent(
-				objectDefinition.getObjectDefinitionId(), 0L);
-		}
-	}
-
-	public void bindObjectDefinitions(
+	public static void bindObjectDefinitions(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
 			ObjectDefinitionSettingLocalService
@@ -202,7 +178,7 @@ public class ObjectDefinitionTreeManager {
 		}
 	}
 
-	public long getRootObjectDefinitionId(
+	public static long getRootObjectDefinitionId(
 		long objectDefinitionId,
 		ObjectDefinitionSettingLocalService
 			objectDefinitionSettingLocalService) {
@@ -231,7 +207,27 @@ public class ObjectDefinitionTreeManager {
 		return rootObjectDefinitionId;
 	}
 
-	public void unbindObjectDefinitions(
+	public static void populateRootObjectDefinitionIds(
+		List<ObjectDefinition> objectDefinitions,
+		Map<Long, ObjectDefinitionSetting> objectDefinitionSettingMap) {
+
+		for (Map.Entry<Long, ObjectDefinitionSetting> entry :
+				objectDefinitionSettingMap.entrySet()) {
+
+			ObjectDefinitionSetting objectDefinitionSetting = entry.getValue();
+
+			_rootObjectDefinitionIds.put(
+				entry.getKey(),
+				GetterUtil.getLong(objectDefinitionSetting.getValue()));
+		}
+
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			_rootObjectDefinitionIds.putIfAbsent(
+				objectDefinition.getObjectDefinitionId(), 0L);
+		}
+	}
+
+	public static void unbindObjectDefinitions(
 			ObjectActionPersistence objectActionPersistence,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
@@ -336,7 +332,7 @@ public class ObjectDefinitionTreeManager {
 		}
 	}
 
-	public void updateNodeObjectDefinition(
+	public static void updateNodeObjectDefinition(
 			ObjectDefinition objectDefinition,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
@@ -355,10 +351,7 @@ public class ObjectDefinitionTreeManager {
 			objectRelationshipLocalService, objectRelationshipPersistence);
 	}
 
-	private ObjectDefinitionTreeManager() {
-	}
-
-	private void _copyResourcePermissions(
+	private static void _copyResourcePermissions(
 			long companyId,
 			ResourceActionLocalService resourceActionLocalService,
 			ResourcePermissionLocalService resourcePermissionLocalService,
@@ -384,7 +377,7 @@ public class ObjectDefinitionTreeManager {
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID));
 	}
 
-	private void _copyResourcePermissions(
+	private static void _copyResourcePermissions(
 			ObjectActionPersistence objectActionPersistence,
 			ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2,
@@ -436,7 +429,7 @@ public class ObjectDefinitionTreeManager {
 			objectDefinition2.getResourceName(), null);
 	}
 
-	private void _copyResourcePermissions(
+	private static void _copyResourcePermissions(
 			ResourcePermissionLocalService resourcePermissionLocalService,
 			List<ResourceAction> sourceResourceActions,
 			List<ResourcePermission> sourceResourcePermissions,
@@ -479,7 +472,7 @@ public class ObjectDefinitionTreeManager {
 		}
 	}
 
-	private void _copyWorkflowDefinitionLinks(
+	private static void _copyWorkflowDefinitionLinks(
 			ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2,
 			WorkflowDefinitionLinkLocalService
@@ -507,7 +500,7 @@ public class ObjectDefinitionTreeManager {
 		}
 	}
 
-	private void _deployObjectDefinition(
+	private static void _deployObjectDefinition(
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService) {
 
@@ -518,7 +511,7 @@ public class ObjectDefinitionTreeManager {
 		objectDefinitionLocalService.deployObjectDefinition(objectDefinition);
 	}
 
-	private long _getRootObjectDefinitionId(
+	private static long _getRootObjectDefinitionId(
 		ObjectDefinition objectDefinition,
 		ObjectRelationshipPersistence objectRelationshipPersistence) {
 
@@ -532,7 +525,7 @@ public class ObjectDefinitionTreeManager {
 		return objectDefinition.getObjectDefinitionId();
 	}
 
-	private void _performActions(
+	private static void _performActions(
 			long objectDefinitionId,
 			ObjectEntryLocalService objectEntryLocalService, boolean parallel,
 			ActionableDynamicQuery.PerformActionMethod<?> performActionMethod)
@@ -551,7 +544,7 @@ public class ObjectDefinitionTreeManager {
 		actionableDynamicQuery.performActions();
 	}
 
-	private void _runSQL(
+	private static void _runSQL(
 		ObjectRelationshipPersistence objectRelationshipPersistence,
 		String sql) {
 
@@ -578,7 +571,7 @@ public class ObjectDefinitionTreeManager {
 		}
 	}
 
-	private void _setRootObjectDefinitionId(
+	private static void _setRootObjectDefinitionId(
 			ObjectDefinition objectDefinition,
 			ObjectDefinitionSettingLocalService
 				objectDefinitionSettingLocalService,
@@ -611,7 +604,7 @@ public class ObjectDefinitionTreeManager {
 			objectDefinition.getObjectDefinitionId(), rootObjectDefinitionId);
 	}
 
-	private void _updateDescendantNodeObjectDefinitions(
+	private static void _updateDescendantNodeObjectDefinitions(
 			ObjectDefinition objectDefinition1,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
@@ -704,7 +697,7 @@ public class ObjectDefinitionTreeManager {
 		}
 	}
 
-	private void _updateNodeObjectDefinition(
+	private static void _updateNodeObjectDefinition(
 			ObjectDefinition objectDefinition2,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
 			ObjectDefinitionSettingLocalService
@@ -740,7 +733,7 @@ public class ObjectDefinitionTreeManager {
 		objectDefinition2.setPreviousRESTContextPath(previousRESTContextPath);
 	}
 
-	private void _updateObjectDefinitionTree(
+	private static void _updateObjectDefinitionTree(
 			ObjectActionPersistence objectActionPersistence,
 			ObjectDefinition objectDefinition1,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -836,7 +829,7 @@ public class ObjectDefinitionTreeManager {
 		}
 	}
 
-	private void _updateObjectEntries(
+	private static void _updateObjectEntries(
 			ObjectDefinition objectDefinition,
 			ObjectEntryLocalService objectEntryLocalService,
 			long oldRootObjectDefinitionId, long newRootObjectDefinitionId)
@@ -864,7 +857,7 @@ public class ObjectDefinitionTreeManager {
 			});
 	}
 
-	private void _updateRootObjectDefinitionId(
+	private static void _updateRootObjectDefinitionId(
 			ObjectDefinition objectDefinition,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectDefinitionSettingLocalService
@@ -890,8 +883,6 @@ public class ObjectDefinitionTreeManager {
 		_deployObjectDefinition(objectDefinition, objectDefinitionLocalService);
 	}
 
-	private static final ObjectDefinitionTreeManager
-		_objectDefinitionTreeManager = new ObjectDefinitionTreeManager();
 	private static final Map<Long, Long> _rootObjectDefinitionIds =
 		new ConcurrentHashMap<>();
 

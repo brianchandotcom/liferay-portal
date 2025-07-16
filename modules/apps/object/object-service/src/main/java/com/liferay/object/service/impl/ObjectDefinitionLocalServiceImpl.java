@@ -2311,10 +2311,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
-		ObjectDefinitionTreeManager objectDefinitionTreeManager =
-			ObjectDefinitionTreeManager.getInstance();
-
-		objectDefinitionTreeManager.updateNodeObjectDefinition(
+		ObjectDefinitionTreeManager.updateNodeObjectDefinition(
 			objectDefinition, objectDefinitionLocalService,
 			objectDefinitionPersistence, _objectDefinitionSettingLocalService,
 			_objectRelationshipLocalService, _objectRelationshipPersistence);

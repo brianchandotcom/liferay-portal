@@ -279,7 +279,7 @@ function reducer(state: State, action: Action): State {
 				if (child.parent !== parent.uuid) {
 					showWarning({
 						text: Liferay.Language.get(
-							'the-repeatable-group-cannot-be-created-because-the-selection-includes-items-from-different-levels'
+							'a-repeatable-group-requires-all-selected-items-to-be-at-the-same-hierarchy-level'
 						),
 						title: Liferay.Language.get(
 							'repeatable-group-creation-not-allowed'

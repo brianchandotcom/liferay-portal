@@ -788,9 +788,9 @@ public class SingleLogoutProfileImpl
 
 			return true;
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 		}
 
@@ -804,9 +804,9 @@ public class SingleLogoutProfileImpl
 
 			return true;
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 		}
 

@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import Sticker from '@clayui/sticker';
 import classNames from 'classnames';
@@ -121,6 +122,30 @@ function CommentNode({
 								{comment.dateDescription}
 							</time>
 						</header>
+
+						<ClayDropDownWithItems
+							items={[
+								{
+									label: Liferay.Language.get('edit'),
+									symbolLeft: 'pencil',
+								},
+								{
+									label: Liferay.Language.get('delete'),
+									symbolLeft: 'trash',
+								},
+							]}
+							menuWidth="shrink"
+							trigger={
+								<ClayButtonWithIcon
+									borderless
+									displayType="secondary"
+									monospaced
+									size="xs"
+									symbol="ellipsis-v"
+									title={Liferay.Language.get('actions')}
+								/>
+							}
+						/>
 					</div>
 
 					<div

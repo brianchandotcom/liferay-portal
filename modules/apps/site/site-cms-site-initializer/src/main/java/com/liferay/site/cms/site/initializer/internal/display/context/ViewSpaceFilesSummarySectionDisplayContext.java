@@ -65,12 +65,10 @@ public class ViewSpaceFilesSummarySectionDisplayContext
 					getRootObjectEntryFolderExternalReferenceCode(), _groupId,
 					themeDisplay.getCompanyId());
 
-		String url =
-			ActionUtil.getBaseViewFolderURL(themeDisplay) +
-				objectEntryFolder.getObjectEntryFolderId();
-
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
-			httpServletRequest, "view-all-files", "files", url);
+			httpServletRequest, "view-all-files", "files",
+			ActionUtil.getBaseViewFolderURL(themeDisplay) +
+				objectEntryFolder.getObjectEntryFolderId());
 	}
 
 	@Override

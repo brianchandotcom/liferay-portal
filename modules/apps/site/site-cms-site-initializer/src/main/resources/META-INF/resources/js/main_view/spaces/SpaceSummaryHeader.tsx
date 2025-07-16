@@ -11,7 +11,7 @@ import manageMembersAction, {
 	ManageMembersData,
 } from '../props_transformer/actions/manageMembersAction';
 
-enum SpaceSummaryHeaderActions {
+export enum SpaceSummaryHeaderActions {
 	OPEN_MEMBERS_MODAL = 'open-members-modal',
 }
 

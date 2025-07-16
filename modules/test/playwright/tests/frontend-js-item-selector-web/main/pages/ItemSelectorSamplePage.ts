@@ -5,11 +5,9 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {EFDSVisualizationMode, waitForFDS} from '../../../../utils/waitFor';
 
 export class ItemSelectorSamplePage {
-	private readonly apiHelpers: ApiHelpers;
 	readonly fragmentWidgetSearchInput: Locator;
 	readonly page: Page;
 	readonly publishPageButton: Locator;
@@ -22,7 +20,6 @@ export class ItemSelectorSamplePage {
 	readonly visualizationModeSelector: Locator;
 
 	constructor(page: Page) {
-		this.apiHelpers = new ApiHelpers(page);
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
 		);

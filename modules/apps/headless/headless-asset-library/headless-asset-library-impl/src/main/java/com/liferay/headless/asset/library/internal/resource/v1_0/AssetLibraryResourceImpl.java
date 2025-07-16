@@ -609,9 +609,13 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 		if (mimeTypeLimits != null) {
 			for (MimeTypeLimit mimeTypeLimit : settings.getMimeTypeLimits()) {
-				mimeTypeSizeLimits.put(
-					mimeTypeLimit.getMimeType(),
-					GetterUtil.getLong(mimeTypeLimit.getMaximumSize()));
+				String mimeType = mimeTypeLimit.getMimeType();
+
+				if (Validator.isNotNull(mimeType)) {
+					mimeTypeSizeLimits.put(
+						mimeType,
+						GetterUtil.getLong(mimeTypeLimit.getMaximumSize()));
+				}
 			}
 		}
 

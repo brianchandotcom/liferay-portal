@@ -8,12 +8,14 @@ package com.liferay.notification.type;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.constants.NotificationRecipientSettingConstants;
+import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationQueueEntrySubjectException;
 import com.liferay.notification.exception.NotificationRecipientSettingNameException;
 import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
 import com.liferay.notification.exception.NotificationTemplateDescriptionException;
 import com.liferay.notification.exception.NotificationTemplateEditorTypeException;
+import com.liferay.notification.exception.NotificationTemplateExternalReferenceCodeException;
 import com.liferay.notification.exception.NotificationTemplateNameException;
 import com.liferay.notification.exception.NotificationTemplateObjectDefinitionIdException;
 import com.liferay.notification.exception.NotificationTemplateSubjectException;
@@ -33,6 +35,7 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -249,6 +253,18 @@ public abstract class BaseNotificationType implements NotificationType {
 
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				notificationContext.getCompanyId(), "LPD-42577") &&
+			!notificationTemplate.isSystem() &&
+			StringUtil.startsWith(
+				notificationTemplate.getExternalReferenceCode(),
+				NotificationTemplateConstants.
+					EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_NOTIFICATION_TEMPLATE)) {
+
+			throw new NotificationTemplateExternalReferenceCodeException.
+				MustNotStartWithPrefix();
+		}
 
 		if (notificationTemplate.getObjectDefinitionId() > 0) {
 			ObjectDefinition objectDefinition =

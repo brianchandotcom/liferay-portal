@@ -13,11 +13,16 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
+import com.liferay.exportimport.test.util.exportimport.data.handler.FailingLayoutStagedModelDataHandler;
+import com.liferay.journal.constants.JournalContentPortletKeys;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -40,6 +45,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -52,6 +58,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -89,6 +96,10 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -177,7 +188,7 @@ public class BatchEnginePortletDataHandlerTest {
 			3, 0L, objectDefinition);
 
 		File larFile = _exportLayouts(
-			false, group.getGroupId(), false, objectDefinition);
+			false, group.getGroupId(), false, new long[0], objectDefinition);
 
 		_deleteObjectEntries(objectEntries);
 
@@ -195,7 +206,7 @@ public class BatchEnginePortletDataHandlerTest {
 				LoggerTestUtil.OFF)) {
 
 			_importLayouts(
-				false, larFile, group.getGroupId(), objectDefinition);
+				false, larFile, group.getGroupId(), false, objectDefinition);
 		}
 
 		List<ObjectEntry> objectEntriesList =
@@ -225,6 +236,66 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Ignore("LPD-40798")
 	@Test
+	@TestInfo("LPD-57756")
+	public void testExportImportPriorityWithSiteScopeObjectEntries()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group1);
+
+		LayoutTestUtil.addPortletToLayout(
+			layout, JournalContentPortletKeys.JOURNAL_CONTENT);
+
+		ObjectEntry[] objectEntries = _addObjectEntries(
+			3, group1.getGroupId(), objectDefinition);
+
+		File larFile = _exportLayouts(
+			false, group1.getGroupId(), false,
+			new long[] {layout.getLayoutId()}, objectDefinition);
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		BundleContext bundleContext = FrameworkUtil.getBundle(
+			getClass()
+		).getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			StagedModelDataHandler.class,
+			new FailingLayoutStagedModelDataHandler(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"model.class.name", Layout.class.getName()
+			).put(
+				"service.ranking", Integer.MAX_VALUE
+			).build());
+
+		try {
+			_importLayouts(
+				false, larFile, group2.getGroupId(), true, objectDefinition);
+		}
+		catch (PortletDataException portletDataException) {
+			List<ObjectEntry> objectEntriesList =
+				_objectEntryLocalService.getObjectEntries(
+					group2.getGroupId(),
+					objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+			Assert.assertEquals(
+				Arrays.toString(objectEntries), objectEntriesList.size(),
+				objectEntries.length);
+		}
+		finally {
+			if (_serviceRegistration != null) {
+				_serviceRegistration.unregister();
+			}
+		}
+	}
+
+	@Ignore("LPD-40798")
+	@Test
 	public void testExportImportSiteObjectEntriesToOtherSite()
 		throws Exception {
 
@@ -237,11 +308,12 @@ public class BatchEnginePortletDataHandlerTest {
 			3, group1.getGroupId(), objectDefinition);
 
 		File larFile = _exportLayouts(
-			false, group1.getGroupId(), false, objectDefinition);
+			false, group1.getGroupId(), false, new long[0], objectDefinition);
 
 		Group group2 = GroupTestUtil.addGroup();
 
-		_importLayouts(false, larFile, group2.getGroupId(), objectDefinition);
+		_importLayouts(
+			false, larFile, group2.getGroupId(), false, objectDefinition);
 
 		List<ObjectEntry> objectEntriesList =
 			_objectEntryLocalService.getObjectEntries(
@@ -291,7 +363,7 @@ public class BatchEnginePortletDataHandlerTest {
 		_deleteObjectEntries(objectEntry);
 
 		File file = _exportLayouts(
-			true, group.getGroupId(), false, objectDefinition1);
+			true, group.getGroupId(), false, new long[0], objectDefinition1);
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -309,7 +381,7 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONCompareMode.STRICT);
 
 		file = _exportLayouts(
-			true, group.getGroupId(), true, objectDefinition2);
+			true, group.getGroupId(), true, new long[0], objectDefinition2);
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -327,7 +399,7 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONCompareMode.STRICT);
 
 		file = _exportLayouts(
-			true, group.getGroupId(), false, objectDefinition1,
+			true, group.getGroupId(), false, new long[0], objectDefinition1,
 			objectDefinition2);
 
 		JSONAssert.assertEquals(
@@ -366,32 +438,48 @@ public class BatchEnginePortletDataHandlerTest {
 			3, GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition);
 
 		File larFile1 = _exportLayouts(
-			false, group.getGroupId(), false, objectDefinition);
+			false, group.getGroupId(), false, new long[0], objectDefinition);
 
 		_deleteObjectEntries(objectEntries[0], objectEntries[1]);
 
 		File larFile2 = _exportLayouts(
-			true, group.getGroupId(), false, objectDefinition);
+			true, group.getGroupId(), false, new long[0], objectDefinition);
 
 		_deleteObjectEntries(objectEntries[2]);
 
-		_importLayouts(false, larFile1, group.getGroupId(), objectDefinition);
+		_importLayouts(
+			false, larFile1, group.getGroupId(), false, objectDefinition);
 
 		_assertObjectEntries(
 			objectDefinition.getObjectDefinitionId(), objectEntries);
 
-		_importLayouts(false, larFile2, group.getGroupId(), objectDefinition);
+		_importLayouts(
+			false, larFile2, group.getGroupId(), false, objectDefinition);
 
 		_assertObjectEntries(
 			objectDefinition.getObjectDefinitionId(), objectEntries);
 
-		_importLayouts(true, larFile2, group.getGroupId(), objectDefinition);
+		_importLayouts(
+			true, larFile2, group.getGroupId(), false, objectDefinition);
 
 		_assertObjectEntries(
 			objectDefinition.getObjectDefinitionId(), objectEntries[2]);
 		_assertNull(
 			objectDefinition.getObjectDefinitionId(), objectEntries[0],
 			objectEntries[1]);
+	}
+
+	protected LogCapture getLogCapture(boolean expectError) {
+		LogCapture logCapture = null;
+
+		if (expectError) {
+			logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.exportimport.internal.lifecycle." +
+					"LoggerExportImportLifecycleListener",
+				LoggerTestUtil.ERROR);
+		}
+
+		return logCapture;
 	}
 
 	private DLFileEntry _addDLFileEntry(String content, long groupId)
@@ -664,7 +752,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 	private File _exportLayouts(
 			boolean deletions, long groupId, boolean privateLayouts,
-			ObjectDefinition... objectDefinitions)
+			long[] layoutIds, ObjectDefinition... objectDefinitions)
 		throws Exception {
 
 		return _exportImportLocalService.exportLayoutsAsFile(
@@ -675,7 +763,7 @@ public class BatchEnginePortletDataHandlerTest {
 					ExportImportConfigurationSettingsMapFactoryUtil.
 						buildExportLayoutSettingsMap(
 							TestPropsValues.getUser(), groupId, privateLayouts,
-							new long[0],
+							layoutIds,
 							_getExportImportParameterMap(
 								deletions, Arrays.asList(objectDefinitions)))));
 	}
@@ -802,28 +890,31 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private void _importLayouts(
-			boolean deletions, File file, long groupId,
+			boolean deletions, File file, long groupId, boolean expectError,
 			ObjectDefinition... objectDefinitions)
 		throws Exception {
 
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildImportLayoutSettingsMap(
-							TestPropsValues.getUser(), groupId, false, null,
-							_getExportImportParameterMap(
-								deletions, Arrays.asList(objectDefinitions))));
+		try (LogCapture logCapture = getLogCapture(expectError)) {
+			ExportImportConfiguration exportImportConfiguration =
+				_exportImportConfigurationLocalService.
+					addDraftExportImportConfiguration(
+						TestPropsValues.getUserId(),
+						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+						ExportImportConfigurationSettingsMapFactoryUtil.
+							buildImportLayoutSettingsMap(
+								TestPropsValues.getUser(), groupId, false, null,
+								_getExportImportParameterMap(
+									deletions,
+									Arrays.asList(objectDefinitions))));
 
-		if (deletions) {
-			_exportImportLocalService.importLayoutsDataDeletions(
+			if (deletions) {
+				_exportImportLocalService.importLayoutsDataDeletions(
+					exportImportConfiguration, file);
+			}
+
+			_exportImportLocalService.importLayouts(
 				exportImportConfiguration, file);
 		}
-
-		_exportImportLocalService.importLayouts(
-			exportImportConfiguration, file);
 	}
 
 	private void _testExportImportObjectEntriesToSameGroup(
@@ -837,11 +928,12 @@ public class BatchEnginePortletDataHandlerTest {
 			objectDefinition);
 
 		File larFile = _exportLayouts(
-			false, group.getGroupId(), false, objectDefinition);
+			false, group.getGroupId(), false, new long[0], objectDefinition);
 
 		_deleteObjectEntries(objectEntries);
 
-		_importLayouts(false, larFile, group.getGroupId(), objectDefinition);
+		_importLayouts(
+			false, larFile, group.getGroupId(), false, objectDefinition);
 
 		_assertObjectEntries(
 			objectDefinition.getObjectDefinitionId(), objectEntries);
@@ -895,6 +987,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private SAXReader _saxReader;
+
+	private ServiceRegistration<?> _serviceRegistration;
 
 	@Inject
 	private StagingGroupHelper _stagingGroupHelper;

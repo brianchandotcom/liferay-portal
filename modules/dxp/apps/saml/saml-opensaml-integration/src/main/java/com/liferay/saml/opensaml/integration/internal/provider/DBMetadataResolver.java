@@ -5,7 +5,6 @@
 
 package com.liferay.saml.opensaml.integration.internal.provider;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -116,9 +115,9 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 				return samlIdpSpConnection.getMetadataXml();
 			}
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 		}
 
@@ -135,9 +134,9 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 				return samlSpIdpConnection.getMetadataXml();
 			}
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 		}
 

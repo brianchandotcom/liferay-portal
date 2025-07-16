@@ -404,9 +404,9 @@ public abstract class BaseProfile {
 						SAMLConstants.SAML20P_NS);
 				}
 			}
-			catch (PortalException portalException) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
+					_log.debug(exception);
 				}
 			}
 
@@ -420,9 +420,9 @@ public abstract class BaseProfile {
 						SAMLConstants.SAML20P_NS);
 				}
 			}
-			catch (PortalException portalException) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
+					_log.debug(exception);
 				}
 			}
 		}

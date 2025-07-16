@@ -785,32 +785,32 @@ public class SingleLogoutProfileImpl
 		try {
 			_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 				CompanyThreadLocal.getCompanyId(), entityId);
+
+			return true;
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
 			}
-
-			return false;
 		}
 
-		return true;
+		return false;
 	}
 
 	private boolean _isSpIdPConnection(String entityId) {
 		try {
 			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 				CompanyThreadLocal.getCompanyId(), entityId);
+
+			return true;
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
 			}
-
-			return false;
 		}
 
-		return true;
+		return false;
 	}
 
 	private void _performIdpFinishLogout(

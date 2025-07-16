@@ -1037,14 +1037,11 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getObjectFieldId2(), false);
 		}
 
-		ObjectDefinitionTreeManager objectDefinitionTreeManager =
-			ObjectDefinitionTreeManager.getInstance();
-
 		if (edge && !objectRelationship.isEdge() &&
 			FeatureFlagManagerUtil.isEnabled(
 				objectRelationship.getCompanyId(), "LPD-34594")) {
 
-			objectDefinitionTreeManager.bindObjectDefinitions(
+			ObjectDefinitionTreeManager.bindObjectDefinitions(
 				_objectDefinitionLocalServiceSnapshot.get(),
 				_objectDefinitionPersistence,
 				_objectDefinitionSettingLocalService, _objectEntryLocalService,
@@ -1054,7 +1051,7 @@ public class ObjectRelationshipLocalServiceImpl
 				 FeatureFlagManagerUtil.isEnabled(
 					 objectRelationship.getCompanyId(), "LPD-34594")) {
 
-			objectDefinitionTreeManager.unbindObjectDefinitions(
+			ObjectDefinitionTreeManager.unbindObjectDefinitions(
 				_objectActionPersistence,
 				_objectDefinitionLocalServiceSnapshot.get(),
 				_objectDefinitionPersistence,
@@ -1366,10 +1363,7 @@ public class ObjectRelationshipLocalServiceImpl
 			FeatureFlagManagerUtil.isEnabled(
 				objectRelationship.getCompanyId(), "LPD-34594")) {
 
-			ObjectDefinitionTreeManager objectDefinitionTreeManager =
-				ObjectDefinitionTreeManager.getInstance();
-
-			objectDefinitionTreeManager.bindObjectDefinitions(
+			ObjectDefinitionTreeManager.bindObjectDefinitions(
 				_objectDefinitionLocalServiceSnapshot.get(),
 				_objectDefinitionPersistence,
 				_objectDefinitionSettingLocalService, _objectEntryLocalService,

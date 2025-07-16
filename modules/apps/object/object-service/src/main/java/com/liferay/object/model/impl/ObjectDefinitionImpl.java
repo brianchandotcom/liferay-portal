@@ -210,10 +210,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			return 0L;
 		}
 
-		ObjectDefinitionTreeManager objectDefinitionTreeManager =
-			ObjectDefinitionTreeManager.getInstance();
-
-		return objectDefinitionTreeManager.getRootObjectDefinitionId(
+		return ObjectDefinitionTreeManager.getRootObjectDefinitionId(
 			getObjectDefinitionId(),
 			ObjectDefinitionSettingLocalServiceUtil.getService());
 	}

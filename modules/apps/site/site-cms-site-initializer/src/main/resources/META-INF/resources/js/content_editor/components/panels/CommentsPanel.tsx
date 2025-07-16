@@ -25,7 +25,7 @@ export default function CommentsPanel({
 }: {
 	addCommentURL: string;
 	comments: Comment[];
-	editorConfig: {configJSONObject: LiferayEditorConfig};
+	editorConfig: LiferayEditorConfig;
 }) {
 	const [comments, setComments] = useState<Comment[]>(initialComments);
 
@@ -36,7 +36,7 @@ export default function CommentsPanel({
 
 				<CommentEditor
 					addCommentURL={addCommentURL}
-					editorConfig={editorConfig.configJSONObject}
+					editorConfig={editorConfig}
 					onAddComment={(comment) =>
 						setComments((comments) => [...comments, comment])
 					}
@@ -49,7 +49,7 @@ export default function CommentsPanel({
 						<CommentNode
 							addCommentURL={addCommentURL}
 							comment={comment}
-							editorConfig={editorConfig.configJSONObject}
+							editorConfig={editorConfig}
 							key={comment.commentId}
 							onAddComment={(
 								childComment: Comment,

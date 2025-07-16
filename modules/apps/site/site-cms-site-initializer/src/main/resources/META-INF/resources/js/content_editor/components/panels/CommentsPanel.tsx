@@ -18,6 +18,8 @@ import React, {useRef, useState} from 'react';
 
 import CommentService, {Comment} from '../services/CommentService';
 
+type Status = 'edit' | 'reply' | null;
+
 export default function CommentsPanel({
 	addCommentURL,
 	comments: initialComments,
@@ -140,7 +142,7 @@ function CommentNode({
 	) => Promise<void>;
 	parentCommentId?: string;
 }) {
-	const [showEditor, setShowEditor] = useState<boolean>(false);
+	const [status, setStatus] = useState<Status>(null);
 
 	return (
 		<>
@@ -222,22 +224,22 @@ function CommentNode({
 						</ul>
 					) : null}
 
-					{showEditor ? (
+					{status === 'reply' ? (
 						<CommentEditor
 							addCommentURL={addCommentURL!}
 							editorConfig={editorConfig!}
 							onAddComment={(childComment) => {
 								onAddComment?.(childComment, comment.commentId);
-								setShowEditor(false);
+								setStatus(null);
 							}}
-							onCancel={() => setShowEditor(false)}
+							onCancel={() => setStatus(null)}
 							parentCommentId={comment.commentId}
 						/>
 					) : comment.rootComment ? (
 						<ClayButton
 							borderless
 							displayType="secondary"
-							onClick={() => setShowEditor(true)}
+							onClick={() => setStatus('reply')}
 							size="xs"
 						>
 							{Liferay.Language.get('reply')}

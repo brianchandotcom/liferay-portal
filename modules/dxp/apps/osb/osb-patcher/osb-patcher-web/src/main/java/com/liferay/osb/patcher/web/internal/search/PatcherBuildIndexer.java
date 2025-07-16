@@ -191,7 +191,7 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 			_patcherAccountLocalService.getPatcherAccount(
 				patcherBuild.getPatcherAccountId());
 
-		document.addText(
+		document.addKeyword(
 			"patcherBuildAccountEntryCode",
 			patcherAccount.getAccountEntryCode());
 

@@ -1445,7 +1445,7 @@ public class CompanyLocalServiceTest {
 			_getServiceContext(companyId));
 	}
 
-	private List<String> _getObjectNames(String objectType, long companyId)
+	private List<String> _getObjectNames(String type, long companyId)
 		throws Exception {
 
 		List<String> objectNames = new ArrayList<>();
@@ -1457,7 +1457,7 @@ public class CompanyLocalServiceTest {
 		try (ResultSet resultSet = databaseMetaData.getTables(
 				_dbPartitionDB.getCatalog(_connection, partitionName),
 				_dbPartitionDB.getSchema(_connection, partitionName), null,
-				new String[] {objectType})) {
+				new String[] {type})) {
 
 			while (resultSet.next()) {
 				objectNames.add(resultSet.getString("TABLE_NAME"));

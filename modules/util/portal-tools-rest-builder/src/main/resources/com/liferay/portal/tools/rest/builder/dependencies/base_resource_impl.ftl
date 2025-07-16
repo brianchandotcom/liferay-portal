@@ -116,12 +116,12 @@ public abstract class Base${schemaName}ResourceImpl
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
 	/>
 
-	<#if generateBatch>
-		, VulcanBatchEngineTaskItemDelegate<${javaDataType}>
-	</#if>
-
 	<#if generateEntityModelResource>
 		, EntityModelResource
+	</#if>
+
+	<#if generateBatch>
+		, VulcanBatchEngineTaskItemDelegate<${javaDataType}>
 	</#if>
 
 	<#if generateCRUD>

@@ -5,7 +5,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import List from '@clayui/list';
 import Sticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {
@@ -31,7 +30,7 @@ export default function CommentsPanel({
 
 	return (
 		<>
-			<div className="border-bottom pb-2 px-3">
+			<div className="border-bottom pb-4 px-3">
 				<label>{Liferay.Language.get('add-comment')}</label>
 
 				<CommentEditor
@@ -44,7 +43,7 @@ export default function CommentsPanel({
 			</div>
 
 			{comments.length ? (
-				<List>
+				<ul className="p-0">
 					{comments.map((comment) => (
 						<CommentNode
 							addCommentURL={addCommentURL}
@@ -72,7 +71,7 @@ export default function CommentsPanel({
 							}}
 						/>
 					))}
-				</List>
+				</ul>
 			) : null}
 		</>
 	);
@@ -93,52 +92,51 @@ function CommentNode({
 
 	return (
 		<>
-			<List.Item
-				className={classNames('mb-0 flex-wrap', {
-					'border-0 py-2': !comment.rootComment,
-					'border-left-0 border-right-0 border-top-0 py-4':
-						comment.rootComment,
+			<li
+				className={classNames('list-unstyled pl-3', {
+					'border-bottom pr-3 py-3': comment.rootComment,
 				})}
-				flex
 			>
-				<article className="d-flex flex-wrap">
-					<List.ItemField>
-						<Sticker shape="user-icon">
-							{comment.author.portraitURL ? (
-								<Sticker.Image
-									alt=""
-									src={comment.author.portraitURL}
-								/>
-							) : (
-								<ClayIcon symbol="user" />
-							)}
-						</Sticker>
-					</List.ItemField>
+				<article>
+					<div className="autofit-padded autofit-row mb-1 pt-2">
+						<div className="autofit-col pl-0">
+							<Sticker shape="user-icon">
+								{comment.author.portraitURL ? (
+									<Sticker.Image
+										alt=""
+										src={comment.author.portraitURL}
+									/>
+								) : (
+									<ClayIcon symbol="user" />
+								)}
+							</Sticker>
+						</div>
 
-					<header className="autofit-col autofit-col-expand">
-						<span className="list-group-title">
-							{comment.author.fullName}
-						</span>
+						<header className="autofit-col autofit-col-expand">
+							<span className="list-group-title">
+								{comment.author.fullName}
+							</span>
 
-						<time className="list-group-text text-3">
-							{comment.dateDescription}
-						</time>
-					</header>
+							<time className="list-group-text text-3">
+								{comment.dateDescription}
+							</time>
+						</header>
+					</div>
 
-					<List.ItemField
-						className="mt-2 text-3 w-100"
+					<div
+						className="text-3"
 						dangerouslySetInnerHTML={{__html: comment.body}}
 					/>
 
 					{comment.children?.length ? (
-						<List className="border-left border-secondary mb-3 ml-2 pl-1 rounded-0">
+						<ul className="border-left border-secondary pl-0">
 							{comment.children.map((child: Comment) => (
 								<CommentNode
 									comment={child}
 									key={child.commentId}
 								/>
 							))}
-						</List>
+						</ul>
 					) : null}
 
 					{showEditor ? (
@@ -152,22 +150,18 @@ function CommentNode({
 							onCancel={() => setShowEditor(false)}
 							parentCommentId={comment.commentId}
 						/>
-					) : (
-						<div className="w-100">
-							{comment.rootComment ? (
-								<ClayButton
-									borderless
-									displayType="secondary"
-									onClick={() => setShowEditor(true)}
-									size="xs"
-								>
-									{Liferay.Language.get('reply')}
-								</ClayButton>
-							) : null}
-						</div>
-					)}
+					) : comment.rootComment ? (
+						<ClayButton
+							borderless
+							displayType="secondary"
+							onClick={() => setShowEditor(true)}
+							size="xs"
+						>
+							{Liferay.Language.get('reply')}
+						</ClayButton>
+					) : null}
 				</article>
-			</List.Item>
+			</li>
 		</>
 	);
 }
@@ -192,9 +186,7 @@ function CommentEditor({
 	return (
 		<>
 			<CKEditor5BalloonEditor
-				className={classNames('form-control form-control-sm', {
-					'mx-2': parentCommentId,
-				})}
+				className="form-control form-control-sm"
 				config={{
 					...editorConfig,
 					label: Liferay.Language.get('add-comment'),
@@ -212,7 +204,7 @@ function CommentEditor({
 				}}
 			/>
 
-			<div className="my-3">
+			<div className="mt-3">
 				<ClayButton
 					disabled={disabled}
 					onClick={async () => {

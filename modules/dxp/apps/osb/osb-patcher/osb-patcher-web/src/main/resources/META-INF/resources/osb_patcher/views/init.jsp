@@ -14,7 +14,6 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portal-workflow" prefix="liferay-portal-workflow" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
-taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
@@ -50,6 +49,7 @@ page import="com.liferay.osb.patcher.util.PatcherProjectVersionUtil" %><%@
 page import="com.liferay.osb.patcher.util.PatcherUtil" %><%@
 page import="com.liferay.osb.patcher.util.comparator.PatcherFixStatusComparator" %><%@
 page import="com.liferay.osb.patcher.web.internal.display.context.PatcherAccountsDisplayContext" %><%@
+page import="com.liferay.osb.patcher.web.internal.display.context.PatcherAccountsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.osb.patcher.web.internal.display.context.PatcherAccountsViewDisplayContext" %><%@
 page import="com.liferay.osb.patcher.web.internal.display.context.PatcherBuildsDisplayContext" %><%@
 page import="com.liferay.osb.patcher.web.internal.display.context.PatcherBuildsManagementToolbarDisplayContext" %><%@

@@ -19,26 +19,9 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 	<portlet:param name="mvcRenderCommandName" value="/patcher/index_accounts" />
 </portlet:renderURL>
 
-<aui:button-row>
-	<clay:col>
-		<aui:form action="" method="get" name="fm">
-			<div class="py-3">
-				<react:component
-					module="{PatcherAccountsAutocomplete} from osb-patcher-web"
-				/>
-			</div>
-		</aui:form>
-	</clay:col>
-
-	<clay:col>
-		<portlet:renderURL var="createPatcherBuildURL">
-			<portlet:param name="mvcRenderCommandName" value="/patcher/add_builds" />
-			<portlet:param name="redirect" value="<%= viewPatcherAccountsURL %>" />
-		</portlet:renderURL>
-
-		<aui:button disabled='<%= !PatcherPermission.contains(permissionChecker, "builds", PatcherActionKeys.CREATE) %>' href="<%= createPatcherBuildURL %>" value="create-build-for-new-account" />
-	</clay:col>
-</aui:button-row>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new PatcherAccountsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, patcherAccountsDisplayContext.getSearchContainer()) %>"
+/>
 
 <liferay-ui:search-container
 	searchContainer="<%= patcherAccountsDisplayContext.getSearchContainer() %>"

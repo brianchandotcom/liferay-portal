@@ -5,6 +5,7 @@
 
 package com.liferay.osb.patcher.web.internal.display.context;
 
+import com.liferay.osb.patcher.constants.PatcherBuildConstants;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.service.PatcherBuildLocalServiceUtil;
@@ -182,7 +183,8 @@ public class PatcherBuildsDisplayContext {
 			return _type;
 		}
 
-		_type = ParamUtil.getInteger(_httpServletRequest, "type", -1);
+		_type = ParamUtil.getInteger(
+			_httpServletRequest, "type", PatcherBuildConstants.TYPE_ANY);
 
 		return _type;
 	}

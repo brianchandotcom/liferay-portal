@@ -6,6 +6,7 @@
 package com.liferay.osb.patcher.web.internal.search;
 
 import com.liferay.osb.patcher.configuration.PatcherConfiguration;
+import com.liferay.osb.patcher.constants.PatcherBuildConstants;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.model.PatcherAccount;
 import com.liferay.osb.patcher.model.PatcherBuild;
@@ -120,7 +121,7 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 
 		int type = GetterUtil.getInteger(searchContext.getAttribute("type"));
 
-		if (type >= 0) {
+		if (type != PatcherBuildConstants.TYPE_ANY) {
 			contextBooleanFilter.addRequiredTerm("type", type);
 		}
 	}

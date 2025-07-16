@@ -1704,7 +1704,7 @@ public class JournalDisplayContext {
 				String.valueOf(highlightedDDMStructureId));
 		}
 
-		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+		String keywords = getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);

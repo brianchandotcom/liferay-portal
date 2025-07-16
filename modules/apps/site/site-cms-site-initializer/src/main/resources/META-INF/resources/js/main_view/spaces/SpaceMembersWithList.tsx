@@ -19,7 +19,7 @@ import {
 	SpaceMembersInputWithSelect,
 } from './SpaceMembersInputWithSelect';
 
-interface SpaceMembersWithListProps {
+export interface SpaceMembersWithListProps {
 	assetLibraryCreatorUserId: string;
 	assetLibraryId: string;
 	className?: string;
@@ -51,37 +51,37 @@ export function SpaceMembersWithList({
 
 	useEffect(() => {
 		const fetchMembers = async () => {
-			const [spaceUsers, spaceUserGroups] = await Promise.all([
-				SpaceService.getSpaceUsers({
-					page: 1,
-					pageSize,
-					spaceId: assetLibraryId,
-				}),
-				SpaceService.getSpaceUserGroups({
-					nestedFields: 'numberOfUserAccounts',
-					page: 1,
-					pageSize,
-					spaceId: assetLibraryId,
-				}),
-			]);
+			setIsFetchingMembers(true);
 
-			setSelectedUsers(spaceUsers.items);
-			setSelectedUserGroups(spaceUserGroups.items);
-			setUserGroupsLastPage(spaceUserGroups.lastPage);
-			setUsersLastPage(spaceUsers.lastPage);
+			try {
+				const [spaceUsers, spaceUserGroups] = await Promise.all([
+					SpaceService.getSpaceUsers({
+						page: 1,
+						pageSize,
+						spaceId: assetLibraryId,
+					}),
+					SpaceService.getSpaceUserGroups({
+						nestedFields: 'numberOfUserAccounts',
+						page: 1,
+						pageSize,
+						spaceId: assetLibraryId,
+					}),
+				]);
+
+				setSelectedUsers(spaceUsers.items);
+				setSelectedUserGroups(spaceUserGroups.items);
+				setUserGroupsLastPage(spaceUserGroups.lastPage);
+				setUsersLastPage(spaceUsers.lastPage);
+			}
+			catch (error) {
+				console.error(error);
+			}
+			finally {
+				setIsFetchingMembers(false);
+			}
 		};
 
-		setIsFetchingMembers(true);
-
-		try {
-			fetchMembers();
-		}
-		catch (error) {
-			console.error(error);
-		}
-		finally {
-			setIsFetchingMembers(false);
-		}
+		fetchMembers();
 	}, [assetLibraryId, pageSize]);
 
 	useEffect(() => {
@@ -306,7 +306,7 @@ export function SpaceMembersWithList({
 					),
 					[`<strong>${item.name}</strong>`]
 				),
-				type: 'success',
+				type: 'danger',
 			});
 		}
 		else {

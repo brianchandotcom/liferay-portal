@@ -147,12 +147,13 @@ describe('SpaceMembersInputWithSelect', () => {
 		);
 
 		await waitFor(() => {
-			expect(
-				screen.getByRole('option', {name: /Group 1/})
-			).toBeInTheDocument();
-			expect(
-				screen.getByRole('option', {name: /Group 2/})
-			).toBeInTheDocument();
+			const group1 = screen.getByRole('option', {name: /Group 1/});
+			expect(group1).toBeInTheDocument();
+			expect(group1).toHaveTextContent('(5-members)');
+
+			const group2 = screen.getByRole('option', {name: /Group 2/});
+			expect(group2).toBeInTheDocument();
+			expect(group2).toHaveTextContent('(10-members)');
 		});
 
 		expect(mockFetch).toHaveBeenCalledWith(
@@ -161,7 +162,47 @@ describe('SpaceMembersInputWithSelect', () => {
 		);
 	});
 
-	it('calls "onAutocompleteItemSelected" callback when an item is selected', async () => {
+	it('displays a group with 0 members if usersCount is not provided', async () => {
+		mockFetch.mockResolvedValue({
+			json: async () => ({
+				items: [{id: '1', name: 'Group 1'}],
+			}),
+		} as Response);
+
+		render(
+			<SpaceMembersInputWithSelect selectValue={SelectOptions.GROUPS} />
+		);
+
+		await userEvent.click(
+			screen.getByPlaceholderText('enter-name-or-email')
+		);
+
+		await waitFor(() => {
+			const group1 = screen.getByRole('option', {name: /Group 1/});
+			expect(group1).toBeInTheDocument();
+			expect(group1).toHaveTextContent('(0-members)');
+		});
+	});
+
+	it('displays "no results found" message when search returns no items', async () => {
+		mockFetch.mockResolvedValue({
+			json: async () => ({items: []}),
+		} as Response);
+
+		render(
+			<SpaceMembersInputWithSelect selectValue={SelectOptions.USERS} />
+		);
+
+		const input = screen.getByPlaceholderText('enter-name-or-email');
+
+		await userEvent.type(input, 'non-existent');
+
+		await waitFor(() => {
+			expect(screen.getByText('no-results-found')).toBeInTheDocument();
+		});
+	});
+
+	it('calls "onAutocompleteItemSelected" callback when a user is selected', async () => {
 		mockFetch.mockResolvedValue({
 			json: async () => mockUserApiResponse,
 		} as Response);
@@ -197,5 +238,49 @@ describe('SpaceMembersInputWithSelect', () => {
 			image: '/image/user_portrait',
 			name: 'John Doe',
 		});
+
+		await waitFor(() => {
+			expect(
+				screen.getByPlaceholderText('enter-name-or-email')
+			).toHaveValue('');
+		});
+	});
+
+	it('calls "onAutocompleteItemSelected" callback when a group is selected', async () => {
+		mockFetch.mockResolvedValue({
+			json: async () => mockGroupApiResponse,
+		} as Response);
+
+		const onAutocompleteItemSelected = jest.fn();
+
+		render(
+			<SpaceMembersInputWithSelect
+				onAutocompleteItemSelected={onAutocompleteItemSelected}
+				selectValue={SelectOptions.GROUPS}
+			/>
+		);
+
+		const input = screen.getByPlaceholderText('enter-name-or-email');
+		await userEvent.click(input);
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('option', {name: /Group 1/})
+			).toBeInTheDocument();
+		});
+
+		await userEvent.click(screen.getByRole('option', {name: /Group 1/}));
+
+		expect(onAutocompleteItemSelected).toHaveBeenCalledTimes(1);
+
+		expect(onAutocompleteItemSelected).toHaveBeenCalledWith({
+			_key: '1',
+			id: '1',
+			name: 'Group 1',
+			numberOfUserAccounts: 5,
+			usersCount: 5,
+		});
+
+		await waitFor(() => expect(input).toHaveValue(''));
 	});
 });

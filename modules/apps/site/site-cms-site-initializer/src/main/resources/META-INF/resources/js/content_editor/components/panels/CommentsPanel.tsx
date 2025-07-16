@@ -186,6 +186,7 @@ function CommentEditor({
 	parentCommentId?: string | null;
 }) {
 	const [content, setContent] = useState<string>();
+	const [disabled, setDisabled] = useState<boolean>(false);
 	const editorRef = useRef<TEditor | null>(null);
 
 	return (
@@ -213,10 +214,13 @@ function CommentEditor({
 
 			<div className="my-3">
 				<ClayButton
+					disabled={disabled}
 					onClick={async () => {
 						if (!content) {
 							return;
 						}
+
+						setDisabled(true);
 
 						try {
 							const comment = await CommentService.addComment({
@@ -242,6 +246,8 @@ function CommentEditor({
 								type: 'danger',
 							});
 						}
+
+						setDisabled(false);
 					}}
 					size="sm"
 				>

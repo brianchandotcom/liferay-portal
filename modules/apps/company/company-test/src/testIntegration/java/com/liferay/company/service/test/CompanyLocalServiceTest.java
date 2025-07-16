@@ -199,7 +199,7 @@ public class CompanyLocalServiceTest {
 
 		_companyLocalService.deleteCompany(_deletedCompany);
 
-		_cleanupData();
+		_cleanUpData();
 	}
 
 	@AfterClass
@@ -216,7 +216,7 @@ public class CompanyLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_cleanupData();
+		_cleanUpData();
 	}
 
 	@Test
@@ -1341,7 +1341,7 @@ public class CompanyLocalServiceTest {
 			serviceContext);
 	}
 
-	private static void _cleanupData() throws Exception {
+	private static void _cleanUpData() throws Exception {
 		List<ClassName> classNames = ListUtil.remove(
 			_classNameLocalService.getClassNames(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),

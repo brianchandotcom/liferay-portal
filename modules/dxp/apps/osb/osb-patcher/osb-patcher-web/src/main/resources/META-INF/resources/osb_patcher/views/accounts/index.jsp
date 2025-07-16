@@ -61,8 +61,6 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 				</a>
 			</h5>
 
-			<c:set value="<%= PatcherProductVersionUtil.getPatcherProductVersions(patcherAccount) %>" var="patcherProductVersions" />
-
 			<table class="account-table">
 
 				<%

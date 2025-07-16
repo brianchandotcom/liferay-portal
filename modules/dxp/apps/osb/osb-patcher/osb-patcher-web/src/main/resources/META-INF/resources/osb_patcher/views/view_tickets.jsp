@@ -25,6 +25,7 @@ for (String ticket : StringUtil.split(patcherProjectVersion.getFixedIssues())) {
 			<portlet:renderURL var="viewPatcherFixPackURL">
 				<portlet:param name="mvcRenderCommandName" value="/patcher/view_fix_packs" />
 				<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFixPack.getPatcherFixPackId()) %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
 			<a class="nobr" href="<%= viewPatcherFixPackURL %>"><%= ticket %></a>,

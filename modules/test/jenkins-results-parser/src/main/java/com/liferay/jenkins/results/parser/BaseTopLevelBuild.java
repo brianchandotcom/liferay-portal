@@ -616,6 +616,16 @@ public abstract class BaseTopLevelBuild
 
 	@Override
 	public TopLevelBuildReport getTopLevelBuildReport() {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(getBuildURL())) {
+			return null;
+		}
+
+		if (_topLevelBuildReport != null) {
+			return _topLevelBuildReport;
+		}
+
+		_topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(this);
+
 		return _topLevelBuildReport;
 	}
 
@@ -858,8 +868,6 @@ public abstract class BaseTopLevelBuild
 
 	protected BaseTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
-
-		_topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(this);
 
 		Properties buildProperties = null;
 
@@ -2496,6 +2504,6 @@ public abstract class BaseTopLevelBuild
 	private int _metricsHostPort;
 	private final boolean _sendBuildMetrics;
 	private final List<URL> _testrayAttachmentURLs = new ArrayList<>();
-	private final TopLevelBuildReport _topLevelBuildReport;
+	private TopLevelBuildReport _topLevelBuildReport;
 
 }

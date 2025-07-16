@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.definition.tree.manager;
+package com.liferay.object.definition.tree.util;
 
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
@@ -64,7 +64,7 @@ import javax.sql.DataSource;
 /**
  * @author Feliphe Marinho
  */
-public class ObjectDefinitionTreeManager {
+public class ObjectDefinitionTreeUtil {
 
 	public static void bindObjectDefinitions(
 			ObjectDefinitionLocalService objectDefinitionLocalService,

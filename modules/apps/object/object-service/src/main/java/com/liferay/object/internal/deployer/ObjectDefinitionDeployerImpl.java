@@ -15,7 +15,7 @@ import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.definition.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
-import com.liferay.object.definition.tree.manager.ObjectDefinitionTreeManager;
+import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.layout.tab.screen.navigation.category.ObjectLayoutTabScreenNavigationCategory;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
@@ -212,7 +212,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				companyId, true, ObjectActionTriggerConstants.KEY_STANDALONE);
 
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-34594")) {
-			ObjectDefinitionTreeManager.populateRootObjectDefinitionIds(
+			ObjectDefinitionTreeUtil.populateRootObjectDefinitionIds(
 				objectDefinitions,
 				_objectDefinitionSettingLocalService.
 					getObjectDefinitionSettingsMap(

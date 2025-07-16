@@ -10,7 +10,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.definition.tree.manager.ObjectDefinitionTreeManager;
+import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.DuplicateObjectRelationshipExternalReferenceCodeException;
@@ -1041,7 +1041,7 @@ public class ObjectRelationshipLocalServiceImpl
 			FeatureFlagManagerUtil.isEnabled(
 				objectRelationship.getCompanyId(), "LPD-34594")) {
 
-			ObjectDefinitionTreeManager.bindObjectDefinitions(
+			ObjectDefinitionTreeUtil.bindObjectDefinitions(
 				_objectDefinitionLocalServiceSnapshot.get(),
 				_objectDefinitionPersistence,
 				_objectDefinitionSettingLocalService, _objectEntryLocalService,
@@ -1051,7 +1051,7 @@ public class ObjectRelationshipLocalServiceImpl
 				 FeatureFlagManagerUtil.isEnabled(
 					 objectRelationship.getCompanyId(), "LPD-34594")) {
 
-			ObjectDefinitionTreeManager.unbindObjectDefinitions(
+			ObjectDefinitionTreeUtil.unbindObjectDefinitions(
 				_objectActionPersistence,
 				_objectDefinitionLocalServiceSnapshot.get(),
 				_objectDefinitionPersistence,
@@ -1363,7 +1363,7 @@ public class ObjectRelationshipLocalServiceImpl
 			FeatureFlagManagerUtil.isEnabled(
 				objectRelationship.getCompanyId(), "LPD-34594")) {
 
-			ObjectDefinitionTreeManager.bindObjectDefinitions(
+			ObjectDefinitionTreeUtil.bindObjectDefinitions(
 				_objectDefinitionLocalServiceSnapshot.get(),
 				_objectDefinitionPersistence,
 				_objectDefinitionSettingLocalService, _objectEntryLocalService,

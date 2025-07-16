@@ -95,7 +95,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlag("LPD-34594")
 @RunWith(Arquillian.class)
-public class ObjectDefinitionTreeManagerTest {
+public class ObjectDefinitionTreeUtilTest {
 
 	@ClassRule
 	@Rule

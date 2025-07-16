@@ -7,7 +7,7 @@ package com.liferay.object.model.impl;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
-import com.liferay.object.definition.tree.manager.ObjectDefinitionTreeManager;
+import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionSetting;
@@ -210,7 +210,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			return 0L;
 		}
 
-		return ObjectDefinitionTreeManager.getRootObjectDefinitionId(
+		return ObjectDefinitionTreeUtil.getRootObjectDefinitionId(
 			getObjectDefinitionId(),
 			ObjectDefinitionSettingLocalServiceUtil.getService());
 	}

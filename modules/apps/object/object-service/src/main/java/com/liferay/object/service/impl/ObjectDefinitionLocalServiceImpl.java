@@ -20,7 +20,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
-import com.liferay.object.definition.tree.manager.ObjectDefinitionTreeManager;
+import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
 import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
@@ -2311,7 +2311,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
-		ObjectDefinitionTreeManager.updateNodeObjectDefinition(
+		ObjectDefinitionTreeUtil.updateNodeObjectDefinition(
 			objectDefinition, objectDefinitionLocalService,
 			objectDefinitionPersistence, _objectDefinitionSettingLocalService,
 			_objectRelationshipLocalService, _objectRelationshipPersistence);

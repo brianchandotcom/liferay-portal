@@ -14,7 +14,7 @@ Export-Package:\
 	com.liferay.object.definition.security.permission.resource.util,\
 	com.liferay.object.definition.setting.builder,\
 	com.liferay.object.definition.setting.util,\
-	com.liferay.object.definition.tree.manager,\
+	com.liferay.object.definition.tree.util,\
 	com.liferay.object.definition.util,\
 	com.liferay.object.deployer,\
 	com.liferay.object.display.context,\

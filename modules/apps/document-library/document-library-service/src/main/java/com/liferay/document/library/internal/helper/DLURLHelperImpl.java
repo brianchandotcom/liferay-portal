@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.internal.helper;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.processor.ImageProcessorUtil;
@@ -214,9 +215,13 @@ public class DLURLHelperImpl implements DLURLHelper {
 		String previewURLPrefix = _getPreviewURLPrefix(
 			themeDisplay, absoluteURL);
 
-		queryString = StringBundler.concat(
-			"&previewCTCollectionId=", fileVersion.getCtCollectionId(),
-			queryString);
+		if (fileVersion.getCtCollectionId() !=
+				CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+
+			queryString = StringBundler.concat(
+				"&previewCTCollectionId=", fileVersion.getCtCollectionId(),
+				queryString);
+		}
 
 		String previewURL = _getFriendlyURL(
 			fileEntry, previewURLPrefix, queryString, appendVersion);

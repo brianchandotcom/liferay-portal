@@ -116,15 +116,24 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 				previewCTCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 			}
 
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						previewCTCollectionId)) {
+			if (previewCTCollectionId !=
+					CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 
-				String embedVideoURL = HttpComponentsUtil.addParameter(
-					_getEmbedVideoURL(httpServletRequest),
-					"previewCTCollectionId", previewCTCollectionId);
+				try (SafeCloseable safeCloseable =
+						CTCollectionThreadLocal.
+							setCTCollectionIdWithSafeCloseable(
+								previewCTCollectionId)) {
 
-				httpServletResponse.sendRedirect(embedVideoURL);
+					String embedVideoURL = HttpComponentsUtil.addParameter(
+						_getEmbedVideoURL(httpServletRequest),
+						"previewCTCollectionId", previewCTCollectionId);
+
+					httpServletResponse.sendRedirect(embedVideoURL);
+				}
+			}
+			else {
+				httpServletResponse.sendRedirect(
+					_getEmbedVideoURL(httpServletRequest));
 			}
 		}
 		else {

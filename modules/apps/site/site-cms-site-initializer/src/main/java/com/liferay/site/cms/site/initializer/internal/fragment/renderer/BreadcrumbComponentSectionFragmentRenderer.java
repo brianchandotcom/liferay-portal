@@ -9,7 +9,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
-import com.liferay.site.cms.site.initializer.internal.display.context.SpaceStickerDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.BreadcrumbDisplayContext;
 import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(service = FragmentRenderer.class)
-public class SpaceStickerComponentSectionFragmentRenderer
+public class BreadcrumbComponentSectionFragmentRenderer
 	extends BaseComponentSectionFragmentRenderer {
 
 	@Override
@@ -33,12 +33,12 @@ public class SpaceStickerComponentSectionFragmentRenderer
 
 	@Override
 	protected String getLabelKey() {
-		return "space-sticker";
+		return "breadcrumb";
 	}
 
 	@Override
 	protected String getModuleName() {
-		return "SpaceSticker";
+		return "Breadcrumb";
 	}
 
 	@Override
@@ -47,12 +47,12 @@ public class SpaceStickerComponentSectionFragmentRenderer
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		SpaceStickerDisplayContext spaceStickerDisplayContext =
-			new SpaceStickerDisplayContext(
+		BreadcrumbDisplayContext breadcrumbDisplayContext =
+			new BreadcrumbDisplayContext(
 				InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
 				httpServletRequest, CMSSpaceConstants.SPACE_STICKER_LG);
 
-		return spaceStickerDisplayContext.getProps();
+		return breadcrumbDisplayContext.getProps();
 	}
 
 	@Reference

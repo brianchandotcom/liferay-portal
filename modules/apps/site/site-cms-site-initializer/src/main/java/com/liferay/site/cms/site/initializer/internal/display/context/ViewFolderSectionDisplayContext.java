@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -100,6 +101,17 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"breadcrumbItems", jsonArray
+		).put(
+			"displayType",
+			() -> {
+				UnicodeProperties unicodeProperties =
+					group.getTypeSettingsProperties();
+
+				return GetterUtil.get(
+					unicodeProperties.get("logoColor"), "outline-0");
+			}
+		).put(
+			"size", "sm"
 		).build();
 	}
 

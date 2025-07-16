@@ -159,7 +159,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpaceStickerComponentSectionFragmentRenderer"
+										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.BreadcrumbComponentSectionFragmentRenderer"
 									},
 									"fragmentConfig": {
 									},

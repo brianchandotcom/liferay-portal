@@ -7,6 +7,7 @@ import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import Nav from '@clayui/nav';
+import ClaySticker from '@clayui/sticker';
 import React, {ComponentProps} from 'react';
 
 import SpaceSticker from './SpaceSticker';
@@ -27,8 +28,11 @@ export interface BreadcrumbItem {
 export default function Breadcrumb({
 	actionItems,
 	breadcrumbItems,
+	displayType,
 	hideSpace,
-}: Props) {
+	size,
+}: Props &
+	Pick<React.ComponentProps<typeof ClaySticker>, 'displayType' | 'size'>) {
 	return (
 		<Nav
 			aria-label={Liferay.Language.get('breadcrumb')}
@@ -37,9 +41,10 @@ export default function Breadcrumb({
 			{!hideSpace && (
 				<div className="autofit-col mr-1">
 					<SpaceSticker
+						displayType={displayType}
 						hideName
 						name={breadcrumbItems[0]?.label}
-						size="sm"
+						size={size}
 					/>
 				</div>
 			)}

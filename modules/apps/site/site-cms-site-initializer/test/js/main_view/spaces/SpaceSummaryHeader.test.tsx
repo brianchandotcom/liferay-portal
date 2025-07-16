@@ -1,0 +1,113 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import '@testing-library/jest-dom/extend-expect';
+import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+
+import manageMembersAction from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageMembersAction';
+import SpaceSummaryHeader, {
+	SpaceSummaryHeaderActions,
+} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceSummaryHeader';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageMembersAction',
+	() => jest.fn()
+);
+
+describe('SpaceSummaryHeader', () => {
+	const defaultProps = {
+		label: 'View All',
+		title: 'Recent Content',
+		url: '/some-url',
+	};
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it('renders a title and a link when no modal props are provided', () => {
+		render(<SpaceSummaryHeader {...defaultProps} />);
+
+		expect(
+			screen.getByRole('heading', {name: defaultProps.title})
+		).toBeInTheDocument();
+
+		const link = screen.getByRole('link', {name: defaultProps.label});
+		expect(link).toBeInTheDocument();
+		expect(link).toHaveAttribute('href', defaultProps.url);
+		expect(screen.queryByRole('button')).not.toBeInTheDocument();
+	});
+
+	it('renders a button instead of a link when modal props are provided', () => {
+		const props = {
+			...defaultProps,
+			spaceMembersModalProps: {
+				action: SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL,
+				assetLibraryCreatorUserId: '1',
+				assetLibraryId: '2',
+			},
+		};
+
+		render(<SpaceSummaryHeader {...props} />);
+
+		expect(
+			screen.getByRole('heading', {name: defaultProps.title})
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole('button', {name: defaultProps.label})
+		).toBeInTheDocument();
+		expect(screen.queryByRole('link')).not.toBeInTheDocument();
+	});
+
+	it('calls manageMembersAction when the button is clicked', async () => {
+		const spaceMembersModalProps = {
+			action: SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL,
+			assetLibraryCreatorUserId: '123',
+			assetLibraryId: '456',
+		};
+
+		const props = {
+			...defaultProps,
+			spaceMembersModalProps,
+		};
+
+		render(<SpaceSummaryHeader {...props} />);
+
+		const button = screen.getByRole('button', {name: defaultProps.label});
+
+		await userEvent.click(button);
+
+		expect(manageMembersAction).toHaveBeenCalledTimes(1);
+		expect(manageMembersAction).toHaveBeenCalledWith(
+			{
+				assetLibraryCreatorUserId:
+					spaceMembersModalProps.assetLibraryCreatorUserId,
+				assetLibraryId: spaceMembersModalProps.assetLibraryId,
+				title: defaultProps.title,
+			},
+			expect.any(Function)
+		);
+	});
+
+	it('does not call manageMembersAction if action is not "open-members-modal"', async () => {
+		const props = {
+			...defaultProps,
+			spaceMembersModalProps: {
+				action: 'some-other-action' as any,
+				assetLibraryCreatorUserId: '1',
+				assetLibraryId: '2',
+			},
+		};
+
+		render(<SpaceSummaryHeader {...props} />);
+
+		const button = screen.getByRole('button', {name: defaultProps.label});
+		await userEvent.click(button);
+
+		expect(manageMembersAction).not.toHaveBeenCalled();
+	});
+});

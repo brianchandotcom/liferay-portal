@@ -81,6 +81,8 @@ const DEFAULT_VISUALIZATION_MODES: Array<IBaseVisualizationMode<any>> = [
 
 const ALLOWED_ENDPOINTS_PARAMETERS = ['scopeKey', 'siteId', 'userId'];
 
+const PAGE_SIZE = '100';
+
 export {
 	API_URL,
 	DEFAULT_VISUALIZATION_MODES,
@@ -89,4 +91,5 @@ export {
 	DEFAULT_FETCH_HEADERS,
 	OBJECT_RELATIONSHIP,
 	ALLOWED_ENDPOINTS_PARAMETERS,
+	PAGE_SIZE,
 };

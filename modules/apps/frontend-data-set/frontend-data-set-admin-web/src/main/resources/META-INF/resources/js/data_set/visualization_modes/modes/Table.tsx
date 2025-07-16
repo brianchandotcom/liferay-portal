@@ -29,6 +29,7 @@ import {
 	DEFAULT_FETCH_HEADERS,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,
+	PAGE_SIZE,
 } from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
@@ -372,7 +373,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 
 	const getFDSFields = async () => {
 		const response = await fetch(
-			`${API_URL.TABLE_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS_ID} eq '${dataSet.id}')&nestedFields=${OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS}&sort=dateCreated:asc`,
+			`${API_URL.TABLE_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS_ID} eq '${dataSet.id}')&nestedFields=${OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS}&pageSize=${PAGE_SIZE}&sort=dateCreated:asc`,
 			{
 				headers: DEFAULT_FETCH_HEADERS,
 			}

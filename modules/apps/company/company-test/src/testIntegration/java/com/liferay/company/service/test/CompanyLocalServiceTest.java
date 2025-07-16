@@ -197,7 +197,7 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	public void resetBackgroundTaskThreadLocal() throws Exception {
+	private void resetBackgroundTaskThreadLocal() throws Exception {
 		Class<?> backgroundTaskThreadLocalClass =
 			BackgroundTaskThreadLocal.class;
 
@@ -1364,7 +1364,7 @@ public class CompanyLocalServiceTest {
 			false);
 	}
 
-	protected Company addCompany() throws Exception {
+	private Company addCompany() throws Exception {
 		long counterCompanyId =
 			_counterLocalService.increment(Company.class.getName()) + 1;
 
@@ -1384,7 +1384,7 @@ public class CompanyLocalServiceTest {
 		return company;
 	}
 
-	protected Company addCompany(String webId) throws Exception {
+	private Company addCompany(String webId) throws Exception {
 		Company company = _companyLocalService.addCompany(
 			null, webId, webId, "test.com", 0, true, true, null, null, null,
 			null, null, null);
@@ -1394,7 +1394,7 @@ public class CompanyLocalServiceTest {
 		return company;
 	}
 
-	protected LayoutSetPrototype addLayoutSetPrototype(
+	private LayoutSetPrototype addLayoutSetPrototype(
 			long companyId, long userId, String name)
 		throws Exception {
 
@@ -1407,7 +1407,7 @@ public class CompanyLocalServiceTest {
 			getServiceContext(companyId));
 	}
 
-	protected User addUser(
+	private User addUser(
 			long companyId, long userId, long groupId,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -1420,7 +1420,7 @@ public class CompanyLocalServiceTest {
 			serviceContext);
 	}
 
-	protected ServiceContext getServiceContext(long companyId) {
+	private ServiceContext getServiceContext(long companyId) {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
@@ -1430,7 +1430,7 @@ public class CompanyLocalServiceTest {
 		return serviceContext;
 	}
 
-	protected void testUpdateCompanyNames(
+	private void testUpdateCompanyNames(
 			Company company, String[] companyNames, boolean expectFailure)
 		throws Exception {
 
@@ -1459,7 +1459,7 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	protected void testUpdateMx(String mx, boolean valid, boolean mailMxUpdate)
+	private void testUpdateMx(String mx, boolean valid, boolean mailMxUpdate)
 		throws Exception {
 
 		Company company = addCompany();
@@ -1501,7 +1501,7 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	protected void testUpdateVirtualHostnames(
+	private void testUpdateVirtualHostnames(
 			String[] virtualHostnames, boolean expectFailure)
 		throws Exception {
 

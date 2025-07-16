@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -73,6 +74,13 @@ public class CommentUtil {
 				}
 
 				return 0;
+			}
+		).put(
+			"rootComment", () -> {
+				Comment parentComment = CommentManagerUtil.fetchComment(
+					comment.getParentCommentId());
+
+				return parentComment.isRoot();
 			}
 		);
 	}

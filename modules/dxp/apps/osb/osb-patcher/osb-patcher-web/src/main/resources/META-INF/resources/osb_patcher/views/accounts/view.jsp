@@ -128,10 +128,26 @@ PatcherAccountsViewDisplayContext patcherAccountsViewDisplayContext = new Patche
 				<portlet:param name="patcherProjectVersionId" value="<%= String.valueOf(patcherBuild.getPatcherProjectVersionId()) %>" />
 			</portlet:renderURL>
 
+			<%
+			String label = StringPool.BLANK;
+
+			int patcherFixPackNamesCount = PatcherFixPackUtil.getPatcherFixPackNamesCount(patcherBuild.getName());
+
+			if (patcherFixPackNamesCount > 0) {
+				label += patcherFixPackNamesCount + " " + LanguageUtil.get(request, "fix-packs") + " ";
+			}
+
+			int ticketsCount = PatcherUtil.getTicketsCount(patcherBuild.getName());
+
+			if (ticketsCount > 0) {
+				label += ticketsCount + " " + LanguageUtil.get(request, "tickets");
+			}
+			%>
+
 			<clay:button
 				cssClass="nobr"
 				displayType="link"
-				label='<%= PatcherFixPackUtil.getPatcherFixPackNamesCount(patcherBuild.getName()) + " " + LanguageUtil.get(request, "fix-packs") + " - " + PatcherUtil.getTicketsCount(patcherBuild.getName()) + " " + LanguageUtil.get(request, "tickets") %>'
+				label="<%= label %>"
 				onClick='<%= liferayPortletResponse.getNamespace() + "handleClick('" + UnicodeLanguageUtil.get(request, "content") + "', '" + viewPatcherBuildContentURL + "');" %>'
 			/>
 		</liferay-ui:search-container-column-text>

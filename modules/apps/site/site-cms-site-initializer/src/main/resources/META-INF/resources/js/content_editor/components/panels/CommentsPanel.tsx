@@ -95,9 +95,9 @@ function CommentNode({
 		<>
 			<List.Item
 				className={classNames('mb-0 flex-wrap', {
-					'border-0 py-2': !comment.children,
+					'border-0 py-2': !comment.rootComment,
 					'border-left-0 border-right-0 border-top-0 py-4':
-						comment.children,
+						comment.rootComment,
 				})}
 				flex
 			>
@@ -154,7 +154,7 @@ function CommentNode({
 						/>
 					) : (
 						<div className="w-100">
-							{comment.children ? (
+							{comment.rootComment ? (
 								<ClayButton
 									borderless
 									displayType="secondary"

@@ -76,7 +76,8 @@ public class CommentUtil {
 				return 0;
 			}
 		).put(
-			"rootComment", () -> {
+			"rootComment",
+			() -> {
 				Comment parentComment = CommentManagerUtil.fetchComment(
 					comment.getParentCommentId());
 

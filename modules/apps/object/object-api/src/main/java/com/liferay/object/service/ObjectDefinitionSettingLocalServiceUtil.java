@@ -306,9 +306,9 @@ public class ObjectDefinitionSettingLocalServiceUtil {
 	}
 
 	public static Map<Long, ObjectDefinitionSetting>
-		getObjectDefinitionSettingMap(long companyId, String name) {
+		getObjectDefinitionSettingsMap(long companyId, String name) {
 
-		return getService().getObjectDefinitionSettingMap(companyId, name);
+		return getService().getObjectDefinitionSettingsMap(companyId, name);
 	}
 
 	/**

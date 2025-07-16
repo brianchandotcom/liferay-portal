@@ -215,7 +215,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			ObjectDefinitionTreeManager.populateRootObjectDefinitionIds(
 				objectDefinitions,
 				_objectDefinitionSettingLocalService.
-					getObjectDefinitionSettingMap(
+					getObjectDefinitionSettingsMap(
 						companyId,
 						ObjectDefinitionSettingConstants.
 							NAME_ROOT_OBJECT_DEFINITION_IDS));

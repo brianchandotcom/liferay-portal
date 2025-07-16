@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.SharedAsset;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
@@ -151,6 +152,24 @@ public class SharedAssetDTOConverter
 				sharingEntry.getClassName())) {
 
 			return null;
+		}
+
+		if (StringUtil.equals(
+				DLFileEntry.class.getName(), sharingEntry.getClassName())) {
+
+			try {
+				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					sharingEntry.getClassPK());
+
+				return fileEntry.getMimeType();
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(portalException);
+				}
+
+				return null;
+			}
 		}
 
 		ObjectDefinition objectDefinition =

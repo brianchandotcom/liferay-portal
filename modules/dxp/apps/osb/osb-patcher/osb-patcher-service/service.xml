@@ -28,6 +28,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="AccountEntryCode" return-type="PatcherAccount" unique="true">
 			<finder-column name="accountEntryCode" />
 		</finder>

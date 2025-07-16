@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
@@ -75,10 +76,26 @@ public class PatcherAccountLocalServiceImpl
 		long companyId, String keyword, int start, int end,
 		OrderByComparator<PatcherAccount> orderByComparator) {
 
+		if (Validator.isNull(keyword)) {
+			return patcherAccountPersistence.findByCompanyId(
+				companyId, start, end, orderByComparator);
+		}
+
 		return patcherAccountPersistence.findByC_LikeA(
 			companyId,
 			_customSQL.keywords(keyword, false, WildcardMode.SURROUND)[0],
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getPatcherAccountsCount(long companyId, String keyword) {
+		if (Validator.isNull(keyword)) {
+			return patcherAccountPersistence.countByCompanyId(companyId);
+		}
+
+		return patcherAccountPersistence.countByC_LikeA(
+			companyId,
+			_customSQL.keywords(keyword, false, WildcardMode.SURROUND)[0]);
 	}
 
 	@Reference

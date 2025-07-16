@@ -37,110 +37,108 @@ import java.util.Set;
  */
 public class LayoutStructure {
 
-	public static LayoutStructure of(String layoutStructure) {
-		if (Validator.isNull(layoutStructure)) {
+	public static LayoutStructure of(JSONObject layoutStructureJSONObject) {
+		if (JSONUtil.isEmpty(layoutStructureJSONObject)) {
 			return new LayoutStructure();
 		}
 
+		Set<String> deletedItemIds = new HashSet<>();
+		Set<String> deletedPortletIds = new HashSet<>();
+
+		JSONObject rootItemsJSONObject =
+			layoutStructureJSONObject.getJSONObject("rootItems");
+
+		JSONObject itemsJSONObject = layoutStructureJSONObject.getJSONObject(
+			"items");
+
+		List<CollectionStyledLayoutStructureItem>
+			collectionStyledLayoutStructureItems = new ArrayList<>();
+		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
+			new ArrayList<>();
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			new HashMap<>(itemsJSONObject.length());
+		Map<String, LayoutStructureItem> layoutStructureItems = new HashMap<>(
+			itemsJSONObject.length());
+
+		for (String key : itemsJSONObject.keySet()) {
+			LayoutStructureItem layoutStructureItem = LayoutStructureItem.of(
+				itemsJSONObject.getJSONObject(key));
+
+			layoutStructureItems.put(key, layoutStructureItem);
+
+			_updateLayoutStructureItemMaps(
+				layoutStructureItem, collectionStyledLayoutStructureItems,
+				formStyledLayoutStructureItems, fragmentLayoutStructureItems);
+		}
+
+		JSONArray deletedLayoutStructureItemJSONArray =
+			layoutStructureJSONObject.getJSONArray("deletedItems");
+
+		if (deletedLayoutStructureItemJSONArray == null) {
+			deletedLayoutStructureItemJSONArray =
+				JSONFactoryUtil.createJSONArray();
+		}
+
+		Map<String, DeletedLayoutStructureItem> deletedLayoutStructureItems =
+			new HashMap<>(deletedLayoutStructureItemJSONArray.length());
+
+		deletedLayoutStructureItemJSONArray.forEach(
+			deletedLayoutStructureItemJSONObject -> {
+				DeletedLayoutStructureItem deletedLayoutStructureItem =
+					DeletedLayoutStructureItem.of(
+						(JSONObject)deletedLayoutStructureItemJSONObject);
+
+				deletedItemIds.add(deletedLayoutStructureItem.getItemId());
+				deletedItemIds.addAll(
+					deletedLayoutStructureItem.getChildrenItemIds());
+
+				deletedPortletIds.addAll(
+					deletedLayoutStructureItem.getPortletIds());
+
+				deletedLayoutStructureItems.put(
+					deletedLayoutStructureItem.getItemId(),
+					deletedLayoutStructureItem);
+			});
+
+		List<LayoutStructureRule> layoutStructureRules = new ArrayList<>();
+		Map<String, LayoutStructureRule> layoutStructureRulesMap =
+			new HashMap<>();
+
+		JSONArray layoutStructureRulesJSONArray =
+			layoutStructureJSONObject.getJSONArray("pageRules");
+
+		if (!JSONUtil.isEmpty(layoutStructureRulesJSONArray)) {
+			try {
+				layoutStructureRules = JSONUtil.toList(
+					layoutStructureJSONObject.getJSONArray("pageRules"),
+					jsonObject -> {
+						LayoutStructureRule layoutStructureRule =
+							LayoutStructureRule.of(jsonObject);
+
+						layoutStructureRulesMap.put(
+							layoutStructureRule.getId(), layoutStructureRule);
+
+						return layoutStructureRule;
+					});
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+		}
+
+		return new LayoutStructure(
+			collectionStyledLayoutStructureItems, deletedItemIds,
+			deletedLayoutStructureItems, deletedPortletIds,
+			formStyledLayoutStructureItems, fragmentLayoutStructureItems,
+			layoutStructureItems, layoutStructureRules, layoutStructureRulesMap,
+			rootItemsJSONObject.getString("main"));
+	}
+
+	public static LayoutStructure of(String layoutStructure) {
 		try {
-			Set<String> deletedItemIds = new HashSet<>();
-			Set<String> deletedPortletIds = new HashSet<>();
-
-			JSONObject layoutStructureJSONObject =
-				JSONFactoryUtil.createJSONObject(layoutStructure);
-
-			JSONObject rootItemsJSONObject =
-				layoutStructureJSONObject.getJSONObject("rootItems");
-
-			JSONObject itemsJSONObject =
-				layoutStructureJSONObject.getJSONObject("items");
-
-			List<CollectionStyledLayoutStructureItem>
-				collectionStyledLayoutStructureItems = new ArrayList<>();
-			List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
-				new ArrayList<>();
-			Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
-				new HashMap<>(itemsJSONObject.length());
-			Map<String, LayoutStructureItem> layoutStructureItems =
-				new HashMap<>(itemsJSONObject.length());
-
-			for (String key : itemsJSONObject.keySet()) {
-				LayoutStructureItem layoutStructureItem =
-					LayoutStructureItem.of(itemsJSONObject.getJSONObject(key));
-
-				layoutStructureItems.put(key, layoutStructureItem);
-
-				_updateLayoutStructureItemMaps(
-					layoutStructureItem, collectionStyledLayoutStructureItems,
-					formStyledLayoutStructureItems,
-					fragmentLayoutStructureItems);
-			}
-
-			JSONArray deletedLayoutStructureItemJSONArray =
-				layoutStructureJSONObject.getJSONArray("deletedItems");
-
-			if (deletedLayoutStructureItemJSONArray == null) {
-				deletedLayoutStructureItemJSONArray =
-					JSONFactoryUtil.createJSONArray();
-			}
-
-			Map<String, DeletedLayoutStructureItem>
-				deletedLayoutStructureItems = new HashMap<>(
-					deletedLayoutStructureItemJSONArray.length());
-
-			deletedLayoutStructureItemJSONArray.forEach(
-				deletedLayoutStructureItemJSONObject -> {
-					DeletedLayoutStructureItem deletedLayoutStructureItem =
-						DeletedLayoutStructureItem.of(
-							(JSONObject)deletedLayoutStructureItemJSONObject);
-
-					deletedItemIds.add(deletedLayoutStructureItem.getItemId());
-					deletedItemIds.addAll(
-						deletedLayoutStructureItem.getChildrenItemIds());
-
-					deletedPortletIds.addAll(
-						deletedLayoutStructureItem.getPortletIds());
-
-					deletedLayoutStructureItems.put(
-						deletedLayoutStructureItem.getItemId(),
-						deletedLayoutStructureItem);
-				});
-
-			List<LayoutStructureRule> layoutStructureRules = new ArrayList<>();
-			Map<String, LayoutStructureRule> layoutStructureRulesMap =
-				new HashMap<>();
-
-			JSONArray layoutStructureRulesJSONArray =
-				layoutStructureJSONObject.getJSONArray("pageRules");
-
-			if (!JSONUtil.isEmpty(layoutStructureRulesJSONArray)) {
-				try {
-					layoutStructureRules = JSONUtil.toList(
-						layoutStructureJSONObject.getJSONArray("pageRules"),
-						jsonObject -> {
-							LayoutStructureRule layoutStructureRule =
-								LayoutStructureRule.of(jsonObject);
-
-							layoutStructureRulesMap.put(
-								layoutStructureRule.getId(),
-								layoutStructureRule);
-
-							return layoutStructureRule;
-						});
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
-			}
-
-			return new LayoutStructure(
-				collectionStyledLayoutStructureItems, deletedItemIds,
-				deletedLayoutStructureItems, deletedPortletIds,
-				formStyledLayoutStructureItems, fragmentLayoutStructureItems,
-				layoutStructureItems, layoutStructureRules,
-				layoutStructureRulesMap, rootItemsJSONObject.getString("main"));
+			return of(JSONFactoryUtil.createJSONObject(layoutStructure));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {

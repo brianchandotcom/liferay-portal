@@ -21,6 +21,7 @@ import {Comment} from './services/CommentService';
 type Props = {
 	addCommentURL: string;
 	comments: Comment[];
+	deleteCommentURL: string;
 	editorConfig: LiferayEditorConfig;
 	id: string;
 	isSubscribed: boolean;

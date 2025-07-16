@@ -21,13 +21,56 @@ import CommentService, {Comment} from '../services/CommentService';
 export default function CommentsPanel({
 	addCommentURL,
 	comments: initialComments,
+	deleteCommentURL,
 	editorConfig,
 }: {
 	addCommentURL: string;
 	comments: Comment[];
+	deleteCommentURL: string;
 	editorConfig: LiferayEditorConfig;
 }) {
 	const [comments, setComments] = useState<Comment[]>(initialComments);
+
+	const deleteComment = async (
+		commentId: string,
+		parentCommentId?: string
+	) => {
+		try {
+			await CommentService.deleteComment({
+				commentId,
+				url: deleteCommentURL,
+			});
+
+			const filterComments = (comments: Comment[]) =>
+				comments.filter((comment) => comment.commentId !== commentId);
+
+			setComments((comments) =>
+				parentCommentId
+					? comments.map((comment) =>
+							comment.commentId === parentCommentId
+								? {
+										...comment,
+										children: filterComments(
+											comment.children
+										),
+									}
+								: comment
+						)
+					: filterComments(comments)
+			);
+
+			openToast({
+				message: Liferay.Language.get('your-comment-has-been-deleted'),
+				type: 'success',
+			});
+		}
+		catch (error) {
+			openToast({
+				message: (error as Error).message,
+				type: 'danger',
+			});
+		}
+	};
 
 	return (
 		<>
@@ -70,6 +113,7 @@ export default function CommentsPanel({
 									)
 								);
 							}}
+							onDeleteComment={deleteComment}
 						/>
 					))}
 				</ul>
@@ -83,11 +127,18 @@ function CommentNode({
 	comment,
 	editorConfig,
 	onAddComment,
+	onDeleteComment,
+	parentCommentId,
 }: {
 	addCommentURL?: string;
 	comment: Comment;
 	editorConfig?: LiferayEditorConfig;
 	onAddComment?: (comment: Comment, parentId: string) => void;
+	onDeleteComment: (
+		commentId: string,
+		parentCommentId?: string
+	) => Promise<void>;
+	parentCommentId?: string;
 }) {
 	const [showEditor, setShowEditor] = useState<boolean>(false);
 
@@ -131,6 +182,11 @@ function CommentNode({
 								},
 								{
 									label: Liferay.Language.get('delete'),
+									onClick: () =>
+										onDeleteComment(
+											comment.commentId,
+											parentCommentId
+										),
 									symbolLeft: 'trash',
 								},
 							]}
@@ -159,6 +215,8 @@ function CommentNode({
 								<CommentNode
 									comment={child}
 									key={child.commentId}
+									onDeleteComment={onDeleteComment}
+									parentCommentId={comment.commentId}
 								/>
 							))}
 						</ul>

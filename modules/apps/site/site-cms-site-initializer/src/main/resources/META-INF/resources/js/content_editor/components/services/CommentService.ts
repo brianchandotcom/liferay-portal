@@ -48,6 +48,24 @@ async function addComment({
 	return data as Comment;
 }
 
+async function deleteComment({
+	commentId,
+	url,
+}: {
+	commentId: string;
+	url: string;
+}) {
+	const {error} = await ApiHelper.postFormData(
+		objectToFormData({commentId}),
+		url
+	);
+
+	if (error) {
+		throw new Error(error);
+	}
+}
+
 export default {
 	addComment,
+	deleteComment,
 };

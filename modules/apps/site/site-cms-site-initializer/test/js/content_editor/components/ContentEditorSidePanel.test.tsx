@@ -16,6 +16,7 @@ const renderComponent = ({isSubscribed = false} = {}) => {
 		<ContentEditorSidePanel
 			addCommentURL="addCommentURL"
 			comments={[]}
+			deleteCommentURL="deleteCommentURL"
 			editorConfig={{}}
 			id="contentId"
 			isSubscribed={isSubscribed}

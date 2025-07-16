@@ -343,14 +343,6 @@ public class ObjectDefinitionSettingLocalServiceWrapper
 			getObjectDefinitionSettingByUuidAndCompanyId(uuid, companyId);
 	}
 
-	@Override
-	public java.util.Map<Long, com.liferay.object.model.ObjectDefinitionSetting>
-		getObjectDefinitionSettingsMap(long companyId, String name) {
-
-		return _objectDefinitionSettingLocalService.
-			getObjectDefinitionSettingsMap(companyId, name);
-	}
-
 	/**
 	 * Returns a range of all the object definition settings.
 	 *
@@ -387,6 +379,14 @@ public class ObjectDefinitionSettingLocalServiceWrapper
 	public int getObjectDefinitionSettingsCount() {
 		return _objectDefinitionSettingLocalService.
 			getObjectDefinitionSettingsCount();
+	}
+
+	@Override
+	public java.util.Map<Long, com.liferay.object.model.ObjectDefinitionSetting>
+		getObjectDefinitionSettingsMap(long companyId, String name) {
+
+		return _objectDefinitionSettingLocalService.
+			getObjectDefinitionSettingsMap(companyId, name);
 	}
 
 	/**

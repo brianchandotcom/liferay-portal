@@ -697,7 +697,7 @@ test(
 		const borderedListCollection = getCollectionDefinition({
 			classPK: animalsClassPK,
 			id: getRandomString(),
-			listStyle: 'Bordered List (Collection Provider)',
+			listStyle: 'Bordered List (Journal)',
 			pageElements: [
 				getFragmentDefinition({
 					id: getRandomString(),
@@ -709,7 +709,7 @@ test(
 		const bulletedListCollection = getCollectionDefinition({
 			classPK: animalsClassPK,
 			id: getRandomString(),
-			listStyle: 'Bulleted List (Collection Provider)',
+			listStyle: 'Bulleted List (Journal)',
 			pageElements: [
 				getFragmentDefinition({
 					id: getRandomString(),

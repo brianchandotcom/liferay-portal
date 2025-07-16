@@ -331,17 +331,31 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public JSONObject getBuildJSONObject() {
+		if (_buildJSONObject != null) {
+			return _buildJSONObject;
+		}
+
 		String archiveFileContent = getArchiveFileContent("api/json");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
-			return new JSONObject(archiveFileContent);
+			_buildJSONObject = new JSONObject(archiveFileContent);
+
+			return _buildJSONObject;
 		}
 
 		try {
-			return JenkinsResultsParserUtil.toJSONObject(
+			JSONObject buildJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
 					getBuildURL() + "api/json"),
 				false);
+
+			if (!isCompleted()) {
+				return buildJSONObject;
+			}
+
+			_buildJSONObject = buildJSONObject;
+
+			return _buildJSONObject;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -1310,6 +1324,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public JSONObject getTestReportJSONObject(boolean checkCache) {
+		if (_testReportJSONObject != null) {
+			return _testReportJSONObject;
+		}
+
 		String result = getResult();
 
 		if (result == null) {
@@ -1321,17 +1339,23 @@ public abstract class BaseBuild implements Build {
 		String archiveFileContent = getArchiveFileContent(urlSuffix);
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
-			return new JSONObject(archiveFileContent);
+			_testReportJSONObject = new JSONObject(archiveFileContent);
+
+			return _testReportJSONObject;
 		}
 
 		try {
-			return JenkinsResultsParserUtil.toJSONObject(
+			_testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(getBuildURL() + urlSuffix),
 				checkCache, 5000);
+
+			return _testReportJSONObject;
 		}
 		catch (Exception exception) {
-			return new JSONObject();
+			_testReportJSONObject = new JSONObject();
 		}
+
+		return _testReportJSONObject;
 	}
 
 	@Override
@@ -1616,10 +1640,12 @@ public abstract class BaseBuild implements Build {
 
 		_jenkinsConsoleTextLoader = null;
 
+		_buildJSONObject = null;
 		_jenkinsMaster = null;
 		_jenkinsSlave = null;
 		_result = null;
 		_statusModifiedTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
+		_testReportJSONObject = null;
 
 		if (_buildUpdater != null) {
 			_buildUpdater.reset();
@@ -3566,6 +3592,7 @@ public abstract class BaseBuild implements Build {
 	private BuildDatabase _buildDatabase;
 	private String _buildDescription;
 	private Boolean _buildDurationsEnabled;
+	private JSONObject _buildJSONObject;
 	private final BuildUpdater _buildUpdater;
 	private String _buildURL;
 	private Long _duration;
@@ -3591,5 +3618,6 @@ public abstract class BaseBuild implements Build {
 	private Map<String, TestClassResult> _testClassResults;
 	private final List<URL> _testrayAttachmentURLs = new ArrayList<>();
 	private boolean _testrayAttachmentURLsFound;
+	private JSONObject _testReportJSONObject;
 
 }

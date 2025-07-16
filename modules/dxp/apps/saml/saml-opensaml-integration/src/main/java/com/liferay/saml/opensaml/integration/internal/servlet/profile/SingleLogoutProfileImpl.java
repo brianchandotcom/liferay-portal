@@ -1135,9 +1135,7 @@ public class SingleLogoutProfileImpl
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (samlProviderConfigurationHelper.isRoleIdp() ||
-			samlProviderConfigurationHelper.isRoleIdpAndSp()) {
-
+		if (!samlProviderConfigurationHelper.isRoleSp()) {
 			terminateSsoSession(httpServletRequest, httpServletResponse);
 		}
 

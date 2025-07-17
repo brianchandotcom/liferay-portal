@@ -199,7 +199,7 @@ public class SamlIdpSsoSessionMaxAgePropertyUpgradeProcessTest {
 
 		PropsUtil.set(
 			LegacySamlPropsKeys.SAML_IDP_SSO_SESSION_MAX_AGE,
-			RandomTestUtil.randomInt());
+			String.valueOf(RandomTestUtil.randomInt()));
 
 		SamlIdpSsoSessionMaxAgePropertyUpgradeProcess
 			samlIdpSsoSessionMaxAgePropertyUpgradeProcess =

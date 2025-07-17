@@ -25,6 +25,7 @@ import {
 
 interface SecondaryRecipientsProps {
 	emailNotificationRoles: MultiSelectItem[];
+	emailNotificationUserGroups: MultiSelectItem[];
 	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
 	setValues: (values: Partial<NotificationTemplate>) => void;
@@ -41,13 +42,20 @@ export function resetRecipientTypeValue(newRecipientTypeValue: string) {
 
 export function SecondaryRecipient({
 	emailNotificationRoles,
+	emailNotificationUserGroups,
 	learnResources,
 	recipientOptions,
 	setValues,
 	values,
 }: SecondaryRecipientsProps) {
 	const [bccRolesList, setBCCRolesList] = useState<MultiSelectItem[]>([]);
+	const [bccUserGroupsList, setBCCUserGroupsList] = useState<
+		MultiSelectItem[]
+	>([]);
 	const [ccRolesList, setCCRolesList] = useState<MultiSelectItem[]>([]);
+	const [ccUserGroupsList, setCCUserGroupsList] = useState<MultiSelectItem[]>(
+		[]
+	);
 	const [recipient] = values.recipients as EmailRecipients[];
 
 	const handleRecipientItemChange = (
@@ -76,11 +84,18 @@ export function SecondaryRecipient({
 		recipientKey: 'cc' | 'bcc',
 		roleList: MultiSelectItem[],
 		recipientTypeKey: 'ccType' | 'bccType',
-		setRoleList: (value: MultiSelectItem[]) => void
+		setRoleList: (value: MultiSelectItem[]) => void,
+		setUserGroupList: (value: MultiSelectItem[]) => void,
+		userGroupList: MultiSelectItem[]
 	) => {
-		if (newRecipientTypeValue === 'email') {
+		if (newRecipientTypeValue !== 'role') {
 			const newRoleList = uncheckMultiSelectItemChildrens(roleList);
 			setRoleList(newRoleList);
+		}
+		if (newRecipientTypeValue !== 'user-group') {
+			const newUserGroupList =
+				uncheckMultiSelectItemChildrens(userGroupList);
+			setUserGroupList(newUserGroupList);
 		}
 		setValues({
 			...values,
@@ -101,68 +116,120 @@ export function SecondaryRecipient({
 			setCCRolesList(emailNotificationRoles);
 		}
 
-		if (
-			recipient.ccType === 'role' &&
-			Array.isArray(recipient.cc) &&
-			!!recipient.cc.length &&
-			(!!ccRolesList.length || !!emailNotificationRoles.length)
-		) {
-			const baseRoleList = ccRolesList.length
-				? ccRolesList
-				: emailNotificationRoles;
+		if (emailNotificationUserGroups.length && !ccUserGroupsList.length) {
+			setCCUserGroupsList(emailNotificationUserGroups);
+		}
 
-			setCCRolesList(
-				baseRoleList.map((baseRoleElement) => {
-					return {
-						...baseRoleElement,
-						children: getCheckedChildren(
-							recipient.cc as EmailNotificationRecipients[],
-							baseRoleElement.children,
-							'roleName'
-						),
-					};
-				})
-			);
+		if (Array.isArray(recipient.cc) && !!recipient.cc.length) {
+			if (
+				recipient.ccType === 'role' &&
+				(!!ccRolesList.length || !!emailNotificationRoles.length)
+			) {
+				const baseRoleList = ccRolesList.length
+					? ccRolesList
+					: emailNotificationRoles;
+
+				setCCRolesList(
+					baseRoleList.map((baseRoleElement) => {
+						return {
+							...baseRoleElement,
+							children: getCheckedChildren(
+								recipient.cc as EmailNotificationRecipients[],
+								baseRoleElement.children,
+								'roleName'
+							),
+						};
+					})
+				);
+			}
+			else if (
+				recipient.ccType === 'user-group' &&
+				(!!ccUserGroupsList.length ||
+					!!emailNotificationUserGroups.length)
+			) {
+				const baseUserGroupList = ccUserGroupsList.length
+					? ccUserGroupsList
+					: emailNotificationUserGroups;
+
+				setCCUserGroupsList(
+					baseUserGroupList.map((baseUserGroupElement) => {
+						return {
+							...baseUserGroupElement,
+							children: getCheckedChildren(
+								recipient.cc as EmailNotificationRecipients[],
+								baseUserGroupElement.children,
+								'userGroupName'
+							),
+						};
+					})
+				);
+			}
 
 			return;
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [emailNotificationRoles, recipient.cc]);
+	}, [emailNotificationRoles, emailNotificationUserGroups, recipient.cc]);
 
 	useEffect(() => {
 		if (emailNotificationRoles.length && !bccRolesList.length) {
 			setBCCRolesList(emailNotificationRoles);
 		}
 
-		if (
-			recipient.bccType === 'role' &&
-			Array.isArray(recipient.bcc) &&
-			!!recipient.bcc.length &&
-			(!!bccRolesList.length || !!emailNotificationRoles.length)
-		) {
-			const baseRoleList = bccRolesList.length
-				? bccRolesList
-				: emailNotificationRoles;
+		if (emailNotificationUserGroups.length && !bccUserGroupsList.length) {
+			setBCCUserGroupsList(emailNotificationUserGroups);
+		}
 
-			setBCCRolesList(
-				baseRoleList.map((baseRoleElement) => {
-					return {
-						...baseRoleElement,
-						children: getCheckedChildren(
-							recipient.bcc as EmailNotificationRecipients[],
-							baseRoleElement.children,
-							'roleName'
-						),
-					};
-				})
-			);
+		if (Array.isArray(recipient.bcc) && !!recipient.bcc.length) {
+			if (
+				recipient.bccType === 'role' &&
+				(!!bccRolesList.length || !!emailNotificationRoles.length)
+			) {
+				const baseRoleList = bccRolesList.length
+					? bccRolesList
+					: emailNotificationRoles;
+
+				setBCCRolesList(
+					baseRoleList.map((baseRoleElement) => {
+						return {
+							...baseRoleElement,
+							children: getCheckedChildren(
+								recipient.bcc as EmailNotificationRecipients[],
+								baseRoleElement.children,
+								'roleName'
+							),
+						};
+					})
+				);
+			}
+			else if (
+				recipient.bccType === 'user-group' &&
+				(!!bccUserGroupsList.length ||
+					!!emailNotificationUserGroups.length)
+			) {
+				const baseUserGroupList = bccUserGroupsList.length
+					? bccUserGroupsList
+					: emailNotificationUserGroups;
+
+				setBCCUserGroupsList(
+					baseUserGroupList.map((baseUserGroupElement) => {
+						return {
+							...baseUserGroupElement,
+							children: getCheckedChildren(
+								recipient.bcc as EmailNotificationRecipients[],
+								baseUserGroupElement.children,
+								'userGroupName'
+							),
+						};
+					})
+				);
+			}
 
 			return;
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [emailNotificationRoles, recipient.bcc]);
+	}, [emailNotificationRoles, emailNotificationUserGroups, recipient.bcc]);
 
 	return (
 		<>
@@ -184,7 +251,9 @@ export function SecondaryRecipient({
 										'cc',
 										ccRolesList,
 										'ccType',
-										setCCRolesList
+										setCCRolesList,
+										setCCUserGroupsList,
+										ccUserGroupsList
 									);
 								}}
 								selectedKey={recipient.ccType}
@@ -268,6 +337,35 @@ export function SecondaryRecipient({
 									</LearnResourcesContext.Provider>
 								</div>
 							)}
+
+							{recipient.ccType === 'user-group' && (
+								<div className="lfr__notification-template-email-notification-settings-multiple-select">
+									<MultipleSelect
+										disabled={values.system}
+										id="secondaryRecipientUserGroupsCC"
+										label={Liferay.Language.get(
+											'user-group'
+										)}
+										options={ccUserGroupsList}
+										placeholder={Liferay.Language.get(
+											'select-user-group'
+										)}
+										search
+										searchPlaceholder={Liferay.Language.get(
+											'search-for-a-user-group'
+										)}
+										selectAllOption
+										setOptions={(items) => {
+											handleRecipientItemChange(
+												items,
+												'cc',
+												setCCUserGroupsList,
+												'userGroupName'
+											);
+										}}
+									/>
+								</div>
+							)}
 						</div>
 					</div>
 				</ClayPanel.Body>
@@ -291,7 +389,9 @@ export function SecondaryRecipient({
 										'bcc',
 										bccRolesList,
 										'bccType',
-										setBCCRolesList
+										setBCCRolesList,
+										setBCCUserGroupsList,
+										bccUserGroupsList
 									);
 								}}
 								selectedKey={recipient.bccType}
@@ -373,6 +473,35 @@ export function SecondaryRecipient({
 											/>
 										</div>
 									</LearnResourcesContext.Provider>
+								</div>
+							)}
+
+							{recipient.bccType === 'user-group' && (
+								<div className="lfr__notification-template-email-notification-settings-multiple-select">
+									<MultipleSelect
+										disabled={values.system}
+										id="secondaryRecipientUserGroupsBCC"
+										label={Liferay.Language.get(
+											'user-group'
+										)}
+										options={bccUserGroupsList}
+										placeholder={Liferay.Language.get(
+											'select-user-group'
+										)}
+										search
+										searchPlaceholder={Liferay.Language.get(
+											'search-for-a-user-group'
+										)}
+										selectAllOption
+										setOptions={(items) => {
+											handleRecipientItemChange(
+												items,
+												'bcc',
+												setBCCUserGroupsList,
+												'userGroupName'
+											);
+										}}
+									/>
 								</div>
 							)}
 						</div>

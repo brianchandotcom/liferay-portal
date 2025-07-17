@@ -18,6 +18,7 @@ import {UserNotificationSettings} from './UserNotificationSettings';
 
 interface SettingsContainerProps {
 	emailNotificationRoles: MultiSelectItem[];
+	emailNotificationUserGroups: MultiSelectItem[];
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
 	selectedLocale: Locale;
@@ -27,6 +28,7 @@ interface SettingsContainerProps {
 
 export function SettingsContainer({
 	emailNotificationRoles,
+	emailNotificationUserGroups,
 	errors,
 	learnResources,
 	selectedLocale,
@@ -49,6 +51,7 @@ export function SettingsContainer({
 			) : (
 				<EmailNotificationSettings
 					emailNotificationRoles={emailNotificationRoles}
+					emailNotificationUserGroups={emailNotificationUserGroups}
 					errors={errors}
 					learnResources={learnResources}
 					selectedLocale={selectedLocale}

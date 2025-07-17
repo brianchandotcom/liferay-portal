@@ -42,7 +42,7 @@ describe('NewSpaceFormSection', () => {
 			screen.getByRole('heading', {name: props.title})
 		).toBeInTheDocument();
 		expect(screen.getByText(props.description)).toBeInTheDocument();
-		expect(screen.getByText('step-1-of-2')).toBeInTheDocument();
+		expect(screen.getByText('step-x-of-x')).toBeInTheDocument();
 		expect(
 			screen.getByText(props.children!.toString())
 		).toBeInTheDocument();

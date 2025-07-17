@@ -609,7 +609,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 			await modelBuilderRightSidebarPage.objectDefinitionLabelLocalizationButton.click();
 
 			await page
-				.getByRole('menuitem', {name: 'pt_BR Translated'})
+				.getByRole('option', {name: 'pt_BR language: Translated'})
 				.click();
 
 			await expect(
@@ -624,7 +624,9 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 			await modelBuilderRightSidebarPage.objectDefinitionPluralLabelLocalizationButton.click();
 
-			await page.getByRole('menuitem', {name: 'en_US Default'}).click();
+			await page
+				.getByRole('option', {name: 'en_US language: Default'})
+				.click();
 
 			await expect(
 				modelBuilderRightSidebarPage.objectDefinitionPluralLabel

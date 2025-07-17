@@ -65,7 +65,7 @@
 				"en_US": "Jira Issue"
 			},
 			"name": "jiraIssueKey",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",
@@ -104,6 +104,16 @@
 				"en_US": "Type"
 			},
 			"name": "type",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Zendesk Ticket"
+			},
+			"name": "zendeskTicketId",
 			"required": false
 		}
 	],

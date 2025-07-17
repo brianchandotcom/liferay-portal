@@ -43,16 +43,16 @@
 		"uuid": "^9.0.1"
 	},
 	"jest": {
+		"moduleNameMapper": {
+			"^frontend-js-web$": "<rootDir>/test/js/__mocks__/frontend-js-web.ts"
+		},
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.ts"
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/.*/mocks",
 			"<rootDir>/.*/__mocks__"
-		],
-		"moduleNameMapper": {
-			"^frontend-js-web$": "<rootDir>/test/js/__mocks__/frontend-js-web.ts"
-		}
+		]
 	},
 	"main": "js/index.ts",
 	"name": "@liferay/site-cms-site-initializer",

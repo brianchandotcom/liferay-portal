@@ -202,6 +202,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_assertLayoutClassedModelUsages(
 			2, journalArticle.getResourcePrimKey(), draftLayout.getPlid());
+
 		_assertLayoutClassedModelUsages(
 			2, journalArticle.getResourcePrimKey(), layout.getPlid());
 	}

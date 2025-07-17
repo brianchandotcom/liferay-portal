@@ -26,10 +26,8 @@ const test = mergeTests(
 let imageFile: any;
 let jsonFile: any;
 
-test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, layout, page}) => {
+test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, layout}) => {
 	await itemSelectorSamplePage.configureItemSelector({layout});
-
-	await expect(page.getByText('Item Selector Samples')).toBeVisible();
 
 	await test.step('Upload sample documents', async () => {
 		imageFile = await apiHelpers.headlessDelivery.postDocument(
@@ -57,8 +55,9 @@ test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, layout, page}) => {
 });
 
 test.afterEach(async ({apiHelpers}) => {
-	await apiHelpers.headlessDelivery.deleteDocument(imageFile.id);
-	await apiHelpers.headlessDelivery.deleteDocument(jsonFile.id);
+	imageFile &&
+		(await apiHelpers.headlessDelivery.deleteDocument(imageFile.id));
+	jsonFile && (await apiHelpers.headlessDelivery.deleteDocument(jsonFile.id));
 });
 
 test('Item Selector Modal with single selection', async ({

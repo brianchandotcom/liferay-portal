@@ -24,12 +24,6 @@ public class JUnitDownstreamBuild extends BaseDownstreamBuild {
 		testResults.addAll(getTestResults("FAILED"));
 		testResults.addAll(getTestResults("REGRESSION"));
 
-		List<TestResult> passedTestResults = getTestResults("PASSED");
-
-		if (passedTestResults.size() == 1) {
-			testResults.addAll(passedTestResults);
-		}
-
 		if (testResults.isEmpty()) {
 			return true;
 		}

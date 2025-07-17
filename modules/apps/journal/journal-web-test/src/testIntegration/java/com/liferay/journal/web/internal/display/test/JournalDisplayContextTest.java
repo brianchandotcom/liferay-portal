@@ -187,13 +187,13 @@ public class JournalDisplayContextTest {
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		Function<String, ServiceContext> serviceContextFunction =
-			new ServiceContextFunction(mockLiferayPortletRenderRequest);
+		Function<String, ServiceContext> function = new ServiceContextFunction(
+			mockLiferayPortletRenderRequest);
 
 		_commentManager.addComment(
 			_user.getUserId(), _group.getGroupId(),
 			JournalArticle.class.getName(), journalArticle.getResourcePrimKey(),
-			"test", serviceContextFunction);
+			"test", function);
 
 		Assert.assertFalse(_isShowComments(journalFolder, StringPool.BLANK));
 		Assert.assertTrue(_isShowComments(journalFolder, "test"));

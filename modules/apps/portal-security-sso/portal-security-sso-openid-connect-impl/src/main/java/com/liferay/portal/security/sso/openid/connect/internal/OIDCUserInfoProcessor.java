@@ -646,7 +646,11 @@ public class OIDCUserInfoProcessor {
 			userGroupIds.add(userGroup.getUserGroupId());
 		}
 
-		return ArrayUtil.toLongArray(userGroupIds);
+		if (userGroupIds != null) {
+			return ArrayUtil.toLongArray(userGroupIds);
+		}
+
+		return null;
 	}
 
 	private boolean _isMale(

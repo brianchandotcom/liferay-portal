@@ -141,8 +141,8 @@ public class LayoutServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.0.0", "3.0.0",
-			new com.liferay.layout.internal.upgrade.v3_0_0.
-				LayoutUpgradeProcess());
+			new com.liferay.layout.internal.upgrade.v3_0_0.LayoutUpgradeProcess(
+				_portal));
 	}
 
 	@Reference

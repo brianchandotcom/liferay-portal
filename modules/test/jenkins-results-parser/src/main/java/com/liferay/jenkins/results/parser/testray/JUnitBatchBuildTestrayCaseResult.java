@@ -197,15 +197,15 @@ public class JUnitBatchBuildTestrayCaseResult
 
 	@Override
 	public String getIssues() {
-		List<String> testClassAnnotations = new ArrayList<>();
+		List<String> testClassIssues = new ArrayList<>();
 
 		for (TestClassMethod testClassMethod :
 				_jUnitTestClass.getTestClassMethods()) {
 
-			testClassAnnotations.add(testClassMethod.getAnnotations());
+			testClassIssues.add(testClassMethod.getIssues());
 		}
 
-		return String.join(", ", testClassAnnotations);
+		return String.join(", ", testClassIssues);
 	}
 
 	public String getMethodIssues(String testName) {
@@ -215,7 +215,7 @@ public class JUnitBatchBuildTestrayCaseResult
 			String testClassMethodName = testClassMethod.getName();
 
 			if (testClassMethodName.equals(testName)) {
-				return testClassMethod.getAnnotations();
+				return testClassMethod.getIssues();
 			}
 		}
 

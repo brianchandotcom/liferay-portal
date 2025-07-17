@@ -12,8 +12,8 @@ import org.json.JSONObject;
  */
 public class TestClassMethod {
 
-	public String getAnnotations() {
-		return _annotations;
+	public String getIssues() {
+		return _issues;
 	}
 
 	public JSONObject getJSONObject() {
@@ -33,17 +33,17 @@ public class TestClassMethod {
 	}
 
 	protected TestClassMethod(
-		boolean ignored, String name, String annotations, TestClass testClass) {
+		boolean ignored, String name, String issues, TestClass testClass) {
 
 		_ignored = ignored;
 		_name = name;
-		_annotations = annotations;
+		_issues = issues;
 		_testClass = testClass;
 
 		_jsonObject = new JSONObject();
 
 		_jsonObject.put(
-			"annotations", annotations
+			"issues", issues
 		).put(
 			"ignored", ignored
 		).put(
@@ -58,7 +58,7 @@ public class TestClassMethod {
 		_name = name;
 		_testClass = testClass;
 
-		_annotations = null;
+		_issues = null;
 
 		_jsonObject = new JSONObject();
 
@@ -75,12 +75,12 @@ public class TestClassMethod {
 		_jsonObject = jsonObject;
 		_testClass = testClass;
 
-		_annotations = jsonObject.getString("annotations");
+		_issues = jsonObject.getString("annotations");
 		_ignored = jsonObject.getBoolean("ignored");
 		_name = jsonObject.getString("name");
 	}
 
-	private final String _annotations;
+	private final String _issues;
 	private final boolean _ignored;
 	private final JSONObject _jsonObject;
 	private final String _name;

@@ -205,7 +205,6 @@ public class StructureBuilderDisplayContext {
 				null, null,
 				objectDefinitionResource.toFilter(
 					StringBundler.concat(
-						"(status/any(x:(x eq 0))) and ",
 						"((objectFolderExternalReferenceCode eq '",
 						ObjectFolderConstants.
 							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
@@ -215,7 +214,7 @@ public class StructureBuilderDisplayContext {
 						"') or (objectFolderExternalReferenceCode eq '",
 						ObjectFolderConstants.
 							EXTERNAL_REFERENCE_CODE_STRUCTURE_REPEATABLE_GROUPS,
-						"'))"),
+						"')) and (status/any(x:(x eq 0)))"),
 					Collections.emptyMap()),
 				null, null);
 

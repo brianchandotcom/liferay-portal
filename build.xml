@@ -92,6 +92,7 @@
 		<attribute name="to.branch.name" />
 
 		<sequential>
+
 			<!-- build.profile-dxp.properties -->
 
 			<echo>build.profile-dxp.properties</echo>

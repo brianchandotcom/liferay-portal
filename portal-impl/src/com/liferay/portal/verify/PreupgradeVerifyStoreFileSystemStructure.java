@@ -163,7 +163,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				companyIdPath)) {
 
 			for (Path repositoryIdPath : directoryStream) {
-				if (_isExcludedFileNamePath(repositoryIdPath) ||
+				if (_isExcludedPath(repositoryIdPath) ||
 					_isSystemCompanyRepositoryIdPath(repositoryIdPath)) {
 
 					continue;
@@ -196,7 +196,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				repositoryIdPath)) {
 
 			for (Path fileNamePath : directoryStream) {
-				if (_isExcludedFileNamePath(fileNamePath)) {
+				if (_isExcludedPath(fileNamePath)) {
 					continue;
 				}
 
@@ -241,7 +241,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				companyIdPath)) {
 
 			for (Path repositoryIdPath : directoryStream) {
-				if (_isExcludedFileNamePath(repositoryIdPath) ||
+				if (_isExcludedPath(repositoryIdPath) ||
 					_isSystemCompanyRepositoryIdPath(repositoryIdPath)) {
 
 					continue;
@@ -285,7 +285,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				fileNamePath)) {
 
 			for (Path versionLabelPath : directoryStream) {
-				if (_isExcludedFileNamePath(versionLabelPath) ||
+				if (_isExcludedPath(versionLabelPath) ||
 					Files.isDirectory(versionLabelPath)) {
 
 					continue;
@@ -322,7 +322,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				repositoryIdPath)) {
 
 			for (Path fileNamePath : directoryStream) {
-				if (_isExcludedFileNamePath(fileNamePath)) {
+				if (_isExcludedPath(fileNamePath)) {
 					continue;
 				}
 
@@ -343,7 +343,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		}
 	}
 
-	private boolean _isExcludedFileNamePath(Path path) {
+	private boolean _isExcludedPath(Path path) {
 		return _excludedFileNames.contains(String.valueOf(path.getFileName()));
 	}
 

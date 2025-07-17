@@ -211,7 +211,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 				regressionTextArea.value = data.regression;
 				securityTextArea.value = data.security;
 				troubleshootingTextArea.value = String(
-					responseData.troubleshooting
+					data.troubleshooting
 				).replaceAll(' ', '');
 			});
 	}

@@ -103,19 +103,19 @@ public interface Job {
 
 	public boolean isStandaloneBatchEnabled();
 
+	public boolean isTestAnalyticsCloud();
+
+	public boolean isTestHotfixChanges();
+
+	public boolean isTestJaCoCoCodeCoverage();
+
+	public boolean isTestReleaseBundle();
+
+	public boolean isTestRelevantChanges();
+
+	public boolean isTestRelevantChangesInStable();
+
 	public boolean isValidationRequired();
-
-	public boolean testAnalyticsCloud();
-
-	public boolean testHotfixChanges();
-
-	public boolean testJaCoCoCodeCoverage();
-
-	public boolean testReleaseBundle();
-
-	public boolean testRelevantChanges();
-
-	public boolean testRelevantChangesInStable();
 
 	public static enum BuildProfile {
 

@@ -507,7 +507,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return testTaskHistory.getTestTaskName();
 	}
 
-	public boolean testAnalyticsCloud() {
+	public boolean isTestAnalyticsCloud() {
 		if (_testAnalyticsCloud != null) {
 			return _testAnalyticsCloud;
 		}
@@ -515,7 +515,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		for (SegmentTestClassGroup segmentTestClassGroup :
 				getSegmentTestClassGroups()) {
 
-			if (segmentTestClassGroup.testAnalyticsCloud()) {
+			if (segmentTestClassGroup.isTestAnalyticsCloud()) {
 				_testAnalyticsCloud = true;
 
 				return _testAnalyticsCloud;
@@ -1490,25 +1490,25 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private void _setTestHotfixChanges() {
 		Job job = getJob();
 
-		testHotfixChanges = job.testHotfixChanges();
+		testHotfixChanges = job.isTestHotfixChanges();
 	}
 
 	private void _setTestReleaseBundle() {
 		Job job = getJob();
 
-		testReleaseBundle = job.testReleaseBundle();
+		testReleaseBundle = job.isTestReleaseBundle();
 	}
 
 	private void _setTestRelevantChanges() {
 		Job job = getJob();
 
-		testRelevantChanges = job.testRelevantChanges();
+		testRelevantChanges = job.isTestRelevantChanges();
 	}
 
 	private void _setTestRelevantChangesInStable() {
 		Job job = getJob();
 
-		testRelevantChangesInStable = job.testRelevantChangesInStable();
+		testRelevantChangesInStable = job.isTestRelevantChangesInStable();
 	}
 
 	private void _setTestRelevantJUnitTestsOnly() {

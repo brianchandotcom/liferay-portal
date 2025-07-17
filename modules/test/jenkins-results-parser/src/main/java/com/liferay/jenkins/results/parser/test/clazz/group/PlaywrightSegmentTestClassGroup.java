@@ -90,16 +90,8 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 		return sb.toString();
 	}
 
-	public void setProjectName(String projectName) {
-		_projectName = projectName;
-	}
-
-	public void setSlaveLabel(String slaveLabel) {
-		_slaveLabel = slaveLabel;
-	}
-
 	@Override
-	public boolean testAnalyticsCloud() {
+	public boolean isTestAnalyticsCloud() {
 		if (_testAnalyticsCloud != null) {
 			return _testAnalyticsCloud;
 		}
@@ -118,6 +110,14 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 		}
 
 		return _testAnalyticsCloud;
+	}
+
+	public void setProjectName(String projectName) {
+		_projectName = projectName;
+	}
+
+	public void setSlaveLabel(String slaveLabel) {
+		_slaveLabel = slaveLabel;
 	}
 
 	protected PlaywrightSegmentTestClassGroup(

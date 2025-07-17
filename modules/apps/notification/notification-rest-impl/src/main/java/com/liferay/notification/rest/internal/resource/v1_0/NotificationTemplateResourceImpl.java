@@ -184,6 +184,7 @@ public class NotificationTemplateResourceImpl
 		notificationTemplate.setName(
 			StringUtil.appendParentheticalSuffix(
 				notificationTemplate.getName(), "copy"));
+		notificationTemplate.setSystem(false);
 
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();

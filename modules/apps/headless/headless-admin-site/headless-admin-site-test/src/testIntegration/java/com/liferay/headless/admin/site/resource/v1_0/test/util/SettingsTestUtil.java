@@ -181,12 +181,12 @@ public class SettingsTestUtil {
 		}
 
 		settings.setColorSchemeName(() -> "01");
-		settings.setThemeName(() -> "Classic");
+		settings.setThemeName(() -> "classic_WAR_classictheme");
 
 		return new Settings() {
 			{
 				setColorSchemeName(() -> "01");
-				setThemeName(() -> "Classic");
+				setThemeName(() -> "classic_WAR_classictheme");
 			}
 		};
 	}
@@ -278,7 +278,7 @@ public class SettingsTestUtil {
 					() -> _getMasterPageItemExternalReference(serviceContext));
 				setStyleBookItemExternalReference(
 					() -> _getStyleBookItemExternalReference(serviceContext));
-				setThemeName(() -> "Classic");
+				setThemeName(() -> "classic_WAR_classictheme");
 				setThemeSettings(
 					() -> TreeMapBuilder.put(
 						"lfr-theme:" + RandomTestUtil.randomString(),
@@ -336,11 +336,11 @@ public class SettingsTestUtil {
 			};
 		}
 
-		settings.setThemeName(() -> "Classic");
+		settings.setThemeName(() -> "classic_WAR_classictheme");
 
 		return new Settings() {
 			{
-				setThemeName(() -> "Classic");
+				setThemeName(() -> "classic_WAR_classictheme");
 			}
 		};
 	}
@@ -431,7 +431,7 @@ public class SettingsTestUtil {
 				settings.setColorSchemeName("01");
 			}
 
-			settings.setThemeName("Classic");
+			settings.setThemeName("classic_WAR_classictheme");
 		}
 
 		if (Validator.isNotNull(settings.getThemeSettings())) {

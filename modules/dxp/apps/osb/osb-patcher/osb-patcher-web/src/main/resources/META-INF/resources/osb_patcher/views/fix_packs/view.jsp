@@ -232,6 +232,7 @@ if (patcherBuild != null) {
 				<portlet:renderURL var="viewPatcherFixURL">
 					<portlet:param name="mvcRenderCommandName" value="/patcher/view_fixes" />
 					<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
 				<liferay-ui:search-container-column-text
@@ -384,6 +385,7 @@ Set<PatcherFixPack> prerequisitePatcherFixPacks = PatcherFixPackUtil.getPrerequi
 					<portlet:renderURL var="viewPatcherFixPackURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/view_fix_packs" />
 						<portlet:param name="patcherFixPackId" value="<%= String.valueOf(curPatcherFixPack.getPatcherFixPackId()) %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:search-container-column-text

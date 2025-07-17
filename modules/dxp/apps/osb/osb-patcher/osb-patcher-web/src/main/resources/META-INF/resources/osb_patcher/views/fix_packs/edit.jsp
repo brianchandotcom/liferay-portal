@@ -148,6 +148,7 @@ boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PA
 			<portlet:renderURL var="viewPatcherBuildURL">
 				<portlet:param name="mvcRenderCommandName" value="/patcher/view_builds" />
 				<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherFixPack.getPatcherBuildId()) %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
 			<aui:button href="<%= viewPatcherBuildURL %>" value="view-build" />

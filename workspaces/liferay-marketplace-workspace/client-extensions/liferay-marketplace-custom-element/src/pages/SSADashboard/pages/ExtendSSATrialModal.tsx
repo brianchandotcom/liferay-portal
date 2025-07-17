@@ -3,21 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import zodSchema, {z} from '../../../schema/zod';
-import {Liferay} from '../../../liferay/liferay';
-import i18n from '../../../i18n';
+
 import BaseWrapper from '../../../components/Form/BaseWrapper';
-import ClayAlert from '@clayui/alert';
 import {OrderCustomFields} from '../../../enums/Order';
+import i18n from '../../../i18n';
+import {Liferay} from '../../../liferay/liferay';
+import zodSchema from '../../../schema/zod';
+import {EXTEND_OPTIONS} from '../constants';
 import {TrialSettings} from '../enums/SSATrials';
 import {SSASettings} from '../types';
-import {EXTEND_OPTIONS} from '../constants';
 
 type ExtendSSATrialModalProps = {
 	onClose: () => void;
@@ -53,9 +54,10 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 
 	const [duration, setDuration] = useState<number | undefined>(undefined);
 
-	const onSubmit = async (form: z.infer<typeof zodSchema.extendSSATrial>) => {
+	// const onSubmit = async (form: z.infer<typeof zodSchema.extendSSATrial>) => {
+
+	const onSubmit = async () => {
 		try {
-			console.log(form.duration);
 			onClose();
 		}
 		catch (error) {
@@ -78,20 +80,20 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 					className={classNames('my-4', {
 						'has-error': formState.errors.duration,
 					})}
-					onChange={(e) => {
+					max={60}
+					min={1}
+					onChange={(event) => {
 						setDuration(
-							Number(e.target.value) < 1
+							Number(event.target.value) < 1
 								? undefined
-								: Number(e.target.value)
+								: Number(event.target.value)
 						);
-						setValue('duration', Number(e.target.value));
+						setValue('duration', Number(event.target.value));
 						trigger();
 					}}
-					min={1}
-					max={60}
 					placeholder="Value between 1 and 60"
-					value={duration}
 					type="number"
+					value={duration}
 				></ClayInput>
 				<ClayForm.FeedbackItem>
 					{formState.errors.duration?.message}

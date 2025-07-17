@@ -1701,7 +1701,8 @@ public class DefaultObjectEntryManagerImpl
 					if (!FeatureFlagManagerUtil.isEnabled(
 							serviceBuilderObjectEntry.getCompanyId(),
 							"LPD-17564") ||
-						!objectEntryVersion.isApproved()) {
+						(!objectEntryVersion.isApproved() &&
+						 !objectEntryVersion.isDraft())) {
 
 						return null;
 					}

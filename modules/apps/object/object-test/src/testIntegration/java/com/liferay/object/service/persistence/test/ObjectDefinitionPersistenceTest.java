@@ -402,6 +402,15 @@ public class ObjectDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByClassName() throws Exception {
+		_persistence.countByClassName("");
+
+		_persistence.countByClassName("null");
+
+		_persistence.countByClassName((String)null);
+	}
+
+	@Test
 	public void testCountBySystem() throws Exception {
 		_persistence.countBySystem(RandomTestUtil.randomBoolean());
 
@@ -827,6 +836,12 @@ public class ObjectDefinitionPersistenceTest {
 	}
 
 	private void _assertOriginalValues(ObjectDefinition objectDefinition) {
+		Assert.assertEquals(
+			objectDefinition.getClassName(),
+			ReflectionTestUtil.invoke(
+				objectDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "className"));
+
 		Assert.assertEquals(
 			Long.valueOf(objectDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(

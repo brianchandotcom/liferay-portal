@@ -6,6 +6,7 @@ create index IX_E817201B on ObjectAction (objectDefinitionId, name[$COLUMN_LENGT
 create index IX_570E3859 on ObjectAction (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_2B2CA94C on ObjectDefinition (accountEntryRestricted);
+create index IX_659D02BB on ObjectDefinition (className[$COLUMN_LENGTH:255$]);
 create index IX_2A008543 on ObjectDefinition (companyId, className[$COLUMN_LENGTH:255$]);
 create unique index IX_F861636D on ObjectDefinition (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_3E56F38F on ObjectDefinition (companyId, name[$COLUMN_LENGTH:75$]);

@@ -335,6 +335,7 @@ export default function MergeTagsModalContent({
 						</label>
 
 						<ClayMultiSelect
+							aria-label="multiSelect"
 							inputName="multiSelect"
 							items={selectedTags}
 							loadingState={3}
@@ -358,7 +359,7 @@ export default function MergeTagsModalContent({
 				</ClayInput.Group>
 
 				<Form.Group className="c-mt-3">
-					<label htmlFor="picker">
+					<label>
 						{Liferay.Language.get('into-this-tag')}
 
 						<span className="ml-1 reference-mark">
@@ -366,7 +367,7 @@ export default function MergeTagsModalContent({
 						</span>
 					</label>
 
-					<ClayInput disabled value={tagName} />
+					<ClayInput disabled role="presentation" value={tagName} />
 				</Form.Group>
 			</ClayModal.Body>
 

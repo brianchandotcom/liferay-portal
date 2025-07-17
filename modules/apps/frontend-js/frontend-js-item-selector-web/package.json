@@ -9,6 +9,7 @@
 		"@clayui/multi-select": "3.140.0",
 		"@clayui/shared": "3.140.0",
 		"@liferay/frontend-data-set-web": "*",
+		"classnames": "2.3.1",
 		"frontend-js-web": "*",
 		"react": "18.2.0",
 		"react-dom": "18.2.0"

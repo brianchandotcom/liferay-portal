@@ -179,10 +179,11 @@ public class PatcherFixLocalServiceUtil {
 	 *
 	 * @param patcherFixId the primary key of the patcher fix
 	 * @return the patcher fix that was removed
+	 * @throws Exception
 	 * @throws PortalException if a patcher fix with the primary key could not be found
 	 */
 	public static PatcherFix deletePatcherFix(long patcherFixId)
-		throws PortalException {
+		throws Exception, PortalException {
 
 		return getService().deletePatcherFix(patcherFixId);
 	}

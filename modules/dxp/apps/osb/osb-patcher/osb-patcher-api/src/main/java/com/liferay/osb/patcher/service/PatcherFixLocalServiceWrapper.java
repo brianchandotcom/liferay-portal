@@ -203,12 +203,13 @@ public class PatcherFixLocalServiceWrapper
 	 *
 	 * @param patcherFixId the primary key of the patcher fix
 	 * @return the patcher fix that was removed
+	 * @throws Exception
 	 * @throws PortalException if a patcher fix with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.osb.patcher.model.PatcherFix deletePatcherFix(
 			long patcherFixId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portal.kernel.exception.PortalException, Exception {
 
 		return _patcherFixLocalService.deletePatcherFix(patcherFixId);
 	}

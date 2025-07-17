@@ -136,11 +136,12 @@ public interface PatcherFixLocalService
 	 *
 	 * @param patcherFixId the primary key of the patcher fix
 	 * @return the patcher fix that was removed
+	 * @throws Exception
 	 * @throws PortalException if a patcher fix with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public PatcherFix deletePatcherFix(long patcherFixId)
-		throws PortalException;
+		throws Exception, PortalException;
 
 	/**
 	 * Deletes the patcher fix from the database. Also notifies the appropriate model listeners.

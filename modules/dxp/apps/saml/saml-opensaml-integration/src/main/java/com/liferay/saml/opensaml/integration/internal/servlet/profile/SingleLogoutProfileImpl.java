@@ -1477,10 +1477,6 @@ public class SingleLogoutProfileImpl
 				samlSpSessionLocalService.fetchSamlSpSessionsBySessionIndex(
 					CompanyThreadLocal.getCompanyId(), sessionIndex);
 
-			if (samlSpSessions == null) {
-				continue;
-			}
-
 			for (SamlSpSession samlSpSession : samlSpSessions) {
 				SamlPeerBinding samlPeerBinding =
 					_samlPeerBindingLocalService.getSamlPeerBinding(

@@ -53,7 +53,9 @@ export class EditUserPage {
 	readonly organizationRolesTable: DataTablePage;
 	readonly organizationsLink: Locator;
 	readonly organizationsTable: Locator;
-	readonly organizationsTableRemoveButton: (organizationName: string) => Locator;
+	readonly organizationsTableRemoveButton: (
+		organizationName: string
+	) => Locator;
 	readonly page: Page;
 	readonly passwordConfirmationFrame: FrameLocator;
 	readonly passwordInput: Locator;

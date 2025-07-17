@@ -1550,29 +1550,26 @@ test(
 	}
 );
 
-
 test(
 	'Organization Administrator can remove member from organization from User menu as well',
 	{tag: ['@LPD-61092']},
-	async ({
-		apiHelpers,
-		editUserPage,
-		page,
-		usersAndOrganizationsPage
-	}) => {
+	async ({apiHelpers, editUserPage, page, usersAndOrganizationsPage}) => {
 		const organization =
 			await apiHelpers.headlessAdminUser.postOrganization();
 
-		const organizationAdministratorUser = await apiHelpers.headlessAdminUser.postUserAccount();
+		const organizationAdministratorUser =
+			await apiHelpers.headlessAdminUser.postUserAccount();
 
 		userData[organizationAdministratorUser.alternateName] = {
 			name: organizationAdministratorUser.givenName,
 			password: 'test',
 			surname: organizationAdministratorUser.familyName,
 		};
-		
+
 		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
-			organization.id, organizationAdministratorUser.emailAddress);
+			organization.id,
+			organizationAdministratorUser.emailAddress
+		);
 
 		const orgRole = await apiHelpers.headlessAdminUser.getRoleByName(
 			'Organization Administrator'
@@ -1583,7 +1580,7 @@ test(
 			organizationAdministratorUser.id,
 			organization.id
 		);
-		
+
 		const companyId = await page.evaluate(() => {
 			return Liferay.ThemeDisplay.getCompanyId();
 		});
@@ -1601,38 +1598,41 @@ test(
 		});
 
 		await apiHelpers.headlessAdminUser.assignUserToRole(
-			regularRole.externalReferenceCode, organizationAdministratorUser.id);
+			regularRole.externalReferenceCode,
+			organizationAdministratorUser.id
+		);
 
 		const memberUser = await apiHelpers.headlessAdminUser.postUserAccount();
 
 		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
-			organization.id, memberUser.emailAddress
+			organization.id,
+			memberUser.emailAddress
 		);
 
 		await performLogout(page);
-		await performLoginViaApi({page, screenName: organizationAdministratorUser.alternateName});
+		await performLoginViaApi({
+			page,
+			screenName: organizationAdministratorUser.alternateName,
+		});
 
 		await usersAndOrganizationsPage.goToUsersWithLimitedAccess();
 		await usersAndOrganizationsPage.goToUser(memberUser.alternateName);
-		
+
 		await expect(editUserPage.changeImageButton).toBeVisible();
 
 		await editUserPage.organizationsLink.click();
 
 		await expect(
-			editUserPage.organizationsTable.getByText(
-				`${organization.name}`
-			)
+			editUserPage.organizationsTable.getByText(`${organization.name}`)
 		).toHaveCount(1);
 
-
 		await Promise.all([
-			editUserPage.organizationsTableRemoveButton(organization.name).click(),
-			page.waitForResponse(
-				(response: any) => response.status() === 200
-			),
+			editUserPage
+				.organizationsTableRemoveButton(organization.name)
+				.click(),
+			page.waitForResponse((response: any) => response.status() === 200),
 		]);
 
-		await expect(usersAndOrganizationsPage.usersTable).toBeVisible();		
+		await expect(usersAndOrganizationsPage.usersTable).toBeVisible();
 	}
 );

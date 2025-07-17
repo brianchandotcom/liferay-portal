@@ -764,6 +764,8 @@ export class UsersAndOrganizationsPage {
 	}
 
 	async goToUser(userName: string) {
-		await this.page.getByRole('link', {name: userName, exact: true},).click();
+		await this.page
+			.getByRole('link', {exact: true, name: userName})
+			.click();
 	}
 }

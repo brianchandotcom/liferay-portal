@@ -20,176 +20,213 @@ export const VIEWS_ACTION_TYPES = {
 	UPDATE_VISIBLE_FIELD_NAMES: 'UPDATE_VISIBLE_FIELD_NAMES',
 };
 
-export function viewsReducer(state, {type, value}) {
-	const {
-		activeCustomViewId,
+const VIEWS_ACTIONS = {};
+
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.ADD_OR_UPDATE_CUSTOM_VIEW] = (
+	state,
+	value
+) => {
+	const {customViews} = state;
+
+	const {id, viewState} = value;
+
+	return {
+		...state,
+		activeCustomViewId: id,
+		customViews: {
+			...customViews,
+			[id]: viewState,
+		},
+		viewUpdated: false,
+	};
+};
+
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.DELETE_CUSTOM_VIEW] = (state, value) => {
+	const {customViews, defaultView} = state;
+
+	/* eslint-disable-next-line no-unused-vars */
+	const {[value.id]: unusedVar, ...remainingCustomViews} = customViews;
+
+	return {
+		...state,
+		...defaultView,
+		activeCustomViewId: null,
+		customViews: remainingCustomViews,
+		viewUpdated: false,
+	};
+};
+
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.RENAME_ACTIVE_CUSTOM_VIEW] = (
+	state,
+	value
+) => {
+	const {activeCustomViewId, customViews} = state;
+
+	const customView = customViews[activeCustomViewId];
+
+	customView.customViewLabel = value.label;
+
+	return {
+		...state,
+		customViews: {
+			...customViews,
+			[activeCustomViewId]: customView,
+		},
+	};
+};
+
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.RESET_TO_DEFAULT_VIEW] = (state) => {
+	const {defaultView} = state;
+
+	return {
+		...state,
+		...defaultView,
+		activeCustomViewId: null,
+		modifiedFields: {},
+		viewUpdated: false,
+	};
+};
+
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.UPDATE_ACTIVE_CUSTOM_VIEW] = (
+	state,
+	value
+) => {
+	const {customViews, defaultView} = state;
+
+	const activeCustomView = customViews[value];
+
+	if (!activeCustomView) {
+		return state;
+	}
+
+	if (!activeCustomView.activeView) {
+		activeCustomView.activeView = defaultView.activeView;
+	}
+
+	activeCustomView.activeView.component =
+		getViewComponent(activeCustomView.activeView) ??
+		getViewComponent(defaultView.activeView);
+
+	return {
+		...state,
+		...activeCustomView,
+		activeCustomViewId: value,
+		modifiedFields: {},
+		viewUpdated: false,
+	};
+};
+
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW] = (state, value) => {
+	const {views} = state;
+
+	const activeView = views.find(({name}) => name === value);
+
+	if (activeView) {
+		activeView.component = getViewComponent(activeView);
+	}
+
+	return {
+		...state,
 		activeView,
-		customViews,
-		defaultView,
-		modifiedFields,
-		views,
-	} = state;
+		viewUpdated: true,
+	};
+};
 
-	if (type === VIEWS_ACTION_TYPES.ADD_OR_UPDATE_CUSTOM_VIEW) {
-		const {id, viewState} = value;
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.UPDATE_FILTERS] = (state, value) => {
+	return {
+		...state,
+		filters: value,
+		viewUpdated: true,
+	};
+};
 
-		return {
-			...state,
-			activeCustomViewId: id,
-			customViews: {
-				...customViews,
-				[id]: viewState,
-			},
-			viewUpdated: false,
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.DELETE_CUSTOM_VIEW) {
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.UPDATE_FIELD] = (state, value) => {
+	const {modifiedFields} = state;
 
-		/* eslint-disable-next-line no-unused-vars */
-		const {[value.id]: unusedVar, ...remainingCustomViews} = customViews;
+	const {name} = value;
 
-		return {
-			...state,
-			...defaultView,
-			activeCustomViewId: null,
-			customViews: remainingCustomViews,
-			viewUpdated: false,
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.RENAME_ACTIVE_CUSTOM_VIEW) {
-		const customView = customViews[activeCustomViewId];
+	const fieldAttributes = modifiedFields[name] ?? {};
 
-		customView.customViewLabel = value.label;
+	return {
+		...state,
+		modifiedFields: {
+			...modifiedFields,
+			[name]: {...fieldAttributes, ...value},
+		},
+	};
+};
 
-		return {
-			...state,
-			customViews: {
-				...customViews,
-				[activeCustomViewId]: customView,
-			},
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.RESET_TO_DEFAULT_VIEW) {
-		return {
-			...state,
-			...defaultView,
-			activeCustomViewId: null,
-			modifiedFields: {},
-			viewUpdated: false,
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.UPDATE_ACTIVE_CUSTOM_VIEW) {
-		const activeCustomView = customViews[value];
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA] = (state, value) => {
+	return {
+		...state,
+		paginationDelta: value,
+		viewUpdated: true,
+	};
+};
 
-		if (!activeCustomView) {
-			return state;
-		}
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.UPDATE_SORTING] = (state, value) => {
+	return {
+		...state,
+		sorts: value,
+		viewUpdated: true,
+	};
+};
 
-		if (!activeCustomView.activeView) {
-			activeCustomView.activeView = defaultView.activeView;
-		}
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.UPDATE_VIEW_COMPONENT] = (state, value) => {
+	const {activeView, views} = state;
 
-		activeCustomView.activeView.component =
-			getViewComponent(activeCustomView.activeView) ??
-			getViewComponent(defaultView.activeView);
+	const {component, name} = value;
 
-		return {
-			...state,
-			...activeCustomView,
-			activeCustomViewId: value,
-			modifiedFields: {},
-			viewUpdated: false,
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW) {
-		const activeView = views.find(({name}) => name === value);
+	return {
+		...state,
+		activeView:
+			name === activeView?.name
+				? {
+						...activeView,
+						component,
+					}
+				: activeView,
+		views: views.map((view) =>
+			view.name === name
+				? {
+						...view,
+						component,
+					}
+				: view
+		),
+	};
+};
 
-		if (activeView) {
-			activeView.component = getViewComponent(activeView);
-		}
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.UPDATE_VISIBLE_FIELD_NAMES] = (
+	state,
+	value
+) => {
+	const {modifiedFields} = state;
 
-		return {
-			...state,
-			activeView,
-			viewUpdated: true,
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.UPDATE_FILTERS) {
-		return {
-			...state,
-			filters: value,
-			viewUpdated: true,
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.UPDATE_FIELD) {
-		const {name} = value;
+	const fieldNames = Object.keys(value);
 
-		const fieldAttributes = modifiedFields[name] ?? {};
+	const fields = {};
 
-		return {
-			...state,
-			modifiedFields: {
-				...modifiedFields,
-				[name]: {...fieldAttributes, ...value},
-			},
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA) {
-		return {
-			...state,
-			paginationDelta: value,
-			viewUpdated: true,
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.UPDATE_SORTING) {
-		return {
-			...state,
-			sorts: value,
-			viewUpdated: true,
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.UPDATE_VIEW_COMPONENT) {
-		const {component, name} = value;
+	fieldNames.forEach((fieldName) => {
+		const fieldAttributes = modifiedFields[fieldName] ?? {};
 
-		return {
-			...state,
-			activeView:
-				name === activeView?.name
-					? {
-							...activeView,
-							component,
-						}
-					: activeView,
-			views: views.map((view) =>
-				view.name === name
-					? {
-							...view,
-							component,
-						}
-					: view
-			),
-		};
-	}
-	else if (type === VIEWS_ACTION_TYPES.UPDATE_VISIBLE_FIELD_NAMES) {
-		const fieldNames = Object.keys(value);
+		fieldAttributes.visible = value[fieldName];
+		fieldAttributes.width = null;
 
-		const fields = {};
+		fields[fieldName] = fieldAttributes;
+	});
 
-		fieldNames.forEach((fieldName) => {
-			const fieldAttributes = modifiedFields[fieldName] ?? {};
+	return {
+		...state,
+		modifiedFields: fields,
+		viewUpdated: true,
+		visibleFieldNames: value,
+	};
+};
 
-			fieldAttributes.visible = value[fieldName];
-			fieldAttributes.width = null;
-
-			fields[fieldName] = fieldAttributes;
-		});
-
-		return {
-			...state,
-			modifiedFields: fields,
-			viewUpdated: true,
-			visibleFieldNames: value,
-		};
+export function viewsReducer(state, {type, value}) {
+	if (VIEWS_ACTIONS[type]) {
+		return VIEWS_ACTIONS[type](state, value);
 	}
 
 	return state;

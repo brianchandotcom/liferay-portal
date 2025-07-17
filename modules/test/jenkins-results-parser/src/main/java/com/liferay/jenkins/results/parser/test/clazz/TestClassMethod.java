@@ -43,9 +43,9 @@ public class TestClassMethod {
 		_jsonObject = new JSONObject();
 
 		_jsonObject.put(
-			"issues", issues
-		).put(
 			"ignored", ignored
+		).put(
+			"issues", issues
 		).put(
 			"name", name
 		);
@@ -80,8 +80,8 @@ public class TestClassMethod {
 		_name = jsonObject.getString("name");
 	}
 
-	private final String _issues;
 	private final boolean _ignored;
+	private final String _issues;
 	private final JSONObject _jsonObject;
 	private final String _name;
 	private final TestClass _testClass;

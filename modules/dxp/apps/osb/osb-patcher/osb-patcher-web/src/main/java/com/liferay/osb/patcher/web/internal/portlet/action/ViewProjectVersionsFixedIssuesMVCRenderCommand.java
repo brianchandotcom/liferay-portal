@@ -6,12 +6,18 @@
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.exception.NoSuchPatcherProjectVersionException;
+import com.liferay.osb.patcher.service.PatcherProjectVersionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 
+import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -28,9 +34,31 @@ public class ViewProjectVersionsFixedIssuesMVCRenderCommand
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		long patcherProjectVersionId = ParamUtil.getLong(
+			renderRequest, "patcherProjectVersionId");
+
+		try {
+			_patcherProjectVersionLocalService.getPatcherProjectVersion(
+				patcherProjectVersionId);
+		}
+		catch (Exception exception) {
+			if (exception instanceof NoSuchPatcherProjectVersionException) {
+				SessionErrors.add(renderRequest, exception.getClass());
+
+				return "/osb_patcher/views/error.jsp";
+			}
+
+			throw new PortletException(exception);
+		}
 
 		return "/osb_patcher/views/view_tickets.jsp";
 	}
+
+	@Reference
+	private PatcherProjectVersionLocalService
+		_patcherProjectVersionLocalService;
 
 }

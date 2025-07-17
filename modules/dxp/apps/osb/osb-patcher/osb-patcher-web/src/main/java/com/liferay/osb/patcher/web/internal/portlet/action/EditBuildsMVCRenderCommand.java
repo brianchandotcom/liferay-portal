@@ -6,8 +6,9 @@
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
-import com.liferay.osb.patcher.exception.NoSuchPatcherBuildException;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
+import com.liferay.osb.patcher.util.PatcherBuildRelUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,10 +41,16 @@ public class EditBuildsMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, "patcherBuildId");
 
 		try {
-			_patcherBuildLocalService.getPatcherBuild(patcherBuildId);
+			if (PatcherBuildRelUtil.hasParentPatcherBuilds(
+					_patcherBuildLocalService.getPatcherBuild(
+						patcherBuildId))) {
+
+				throw new PortalException(
+					"the-action-cannot-be-performed-on-child-builds");
+			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchPatcherBuildException) {
+			if (exception instanceof PortalException) {
 				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/osb_patcher/views/error.jsp";

@@ -6,12 +6,18 @@
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException;
+import com.liferay.osb.patcher.service.PatcherFixPackLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 
+import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -27,9 +33,29 @@ public class ViewFixPacksMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		long patcherFixPackId = ParamUtil.getLong(
+			renderRequest, "patcherFixPackId");
+
+		try {
+			_patcherFixPackLocalService.getPatcherFixPack(patcherFixPackId);
+		}
+		catch (Exception exception) {
+			if (exception instanceof NoSuchPatcherFixPackException) {
+				SessionErrors.add(renderRequest, exception.getClass());
+
+				return "/osb_patcher/views/error.jsp";
+			}
+
+			throw new PortletException(exception);
+		}
 
 		return "/osb_patcher/views/fix_packs/view.jsp";
 	}
+
+	@Reference
+	private PatcherFixPackLocalService _patcherFixPackLocalService;
 
 }

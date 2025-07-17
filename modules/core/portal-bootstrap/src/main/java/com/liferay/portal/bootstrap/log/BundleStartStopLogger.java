@@ -5,7 +5,6 @@
 
 package com.liferay.portal.bootstrap.log;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.ShutdownHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,10 +31,9 @@ public class BundleStartStopLogger implements SynchronousBundleListener {
 			new ServiceTracker<Object, Void>(
 				bundleContext,
 				bundleContext.createFilter(
-					StringBundler.concat(
-						"(&(module.service.lifecycle=portal.initialized)(",
-						"objectClass=com.liferay.portal.kernel.module.",
-						"framework.ModuleServiceLifecycle))")),
+					"(&(module.service.lifecycle=portal.initialized)(" +
+						"objectClass=com.liferay.portal.kernel.module." +
+							"framework.ModuleServiceLifecycle))"),
 				null) {
 
 				@Override

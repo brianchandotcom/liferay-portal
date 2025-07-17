@@ -233,7 +233,10 @@ public class SXPBlueprintLocalServiceImpl
 				(JSONArray)generalConfigurationJSONObject.get(
 					"searchableAssetTypes");
 
-			if (searchableAssetTypesJSONArray == null) {
+			if ((searchableAssetTypesJSONArray == null) ||
+				generalConfigurationJSONObject.getBoolean(
+					"legacyAssetCollectionProvider")) {
+
 				return _setCollectionProviderType(
 					configurationJSONObject, generalConfigurationJSONObject,
 					AssetEntry.class.getName());

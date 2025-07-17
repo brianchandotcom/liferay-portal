@@ -10,6 +10,24 @@ import React from 'react';
 import SpacesDisplay from '../../../../src/main/resources/META-INF/resources/js/common/components/SpacesDisplay';
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 
+jest.mock('frontend-js-web', () => ({
+	sub: (str: string, arg: string) => str.replace('{0}', arg),
+}));
+
+const mockLiferayLanguageGet = jest.fn((key: string) => {
+	if (key === 'available-in-spaces-x') {
+		return 'Available in spaces: {0}';
+	}
+
+	return key;
+});
+
+(global as any).Liferay = {
+	Language: {
+		get: mockLiferayLanguageGet,
+	},
+};
+
 const spaces = [
 	{
 		name: 'First space',
@@ -38,6 +56,10 @@ const allSpaces = [
 ] as Space[];
 
 describe('SpacesDisplay', () => {
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('renders all spaces when no spaces are provided', () => {
 		render(<SpacesDisplay spaces={[]} />);
 
@@ -94,7 +116,7 @@ describe('SpacesDisplay', () => {
 			const badge = screen.getByText(`+${additionalSpacesCount}`);
 			expect(badge.parentElement).toHaveAttribute(
 				'title',
-				`available-in-spaces-${spaceNames}`
+				`Available in spaces: ${spaceNames}`
 			);
 		});
 	});

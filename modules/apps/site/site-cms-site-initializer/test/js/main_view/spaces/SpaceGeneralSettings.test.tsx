@@ -205,13 +205,11 @@ describe('SpaceGeneralSettings', () => {
 
 		expect(screen.getAllByLabelText('maximum-file-size').length).toBe(1);
 
-		await userEvent.click(screen.getByLabelText('add-mime-type-limit'));
+		await userEvent.click(screen.getByLabelText('add-x'));
 
 		expect(screen.getAllByLabelText('maximum-file-size').length).toBe(2);
 
-		await userEvent.click(
-			screen.getAllByLabelText('remove-mime-type-limit')[1]
-		);
+		await userEvent.click(screen.getAllByLabelText('remove-x')[1]);
 
 		expect(screen.getAllByLabelText('maximum-file-size').length).toBe(1);
 	});
@@ -269,7 +267,7 @@ describe('SpaceGeneralSettings', () => {
 		it('saves the form when a maximum file size field has an error and this field is removed', async () => {
 			renderComponent();
 
-			await userEvent.click(screen.getByLabelText('add-mime-type-limit'));
+			await userEvent.click(screen.getByLabelText('add-x'));
 
 			const inputs = screen.getAllByLabelText('maximum-file-size');
 
@@ -289,9 +287,7 @@ describe('SpaceGeneralSettings', () => {
 				).toBeInTheDocument();
 			});
 
-			await userEvent.click(
-				screen.getAllByLabelText('remove-mime-type-limit')[0]
-			);
+			await userEvent.click(screen.getAllByLabelText('remove-x')[0]);
 
 			await waitFor(() => {
 				expect(

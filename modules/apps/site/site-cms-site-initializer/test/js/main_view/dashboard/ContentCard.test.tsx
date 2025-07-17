@@ -69,10 +69,10 @@ describe('[CMS Dashboard] Components: ContentCard', () => {
 			screen.getByTestId('loading-animation')
 		);
 
-		const MainMetric = screen.getByText('30-new-content-items');
+		const MainMetric = screen.getByText('x-new-content-items');
 		expect(MainMetric).toBeInTheDocument();
 
-		const Comparison = screen.getByText('-vs-previous-period');
+		const Comparison = screen.getByText('x-vs-previous-period');
 		expect(Comparison).toBeInTheDocument();
 
 		const VocabulariesBreakdown = screen.getByText('vocabularies');

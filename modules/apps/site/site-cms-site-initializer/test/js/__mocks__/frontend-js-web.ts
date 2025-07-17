@@ -3,31 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-function mockSub(str: string, arg: string | number | string[]): string {
-	if (Array.isArray(arg)) {
-		return arg.reduce((acc, val) => acc.replace('x', String(val)), str);
-	}
+export function buildFragment(html: string) {
+	const template = document.createElement('template');
+	template.innerHTML = html.trim();
 
-	return str.replace('x', String(arg));
+	return template.content;
 }
 
-export const mockFetch = jest.fn(() => {
-	return Promise.resolve({
-		json: async () => ({}),
-		ok: true,
-		status: 200,
-		text: async () => '',
-	} as Response);
-});
-
-export const mockNavigate = jest.fn();
-
-export const addParams = jest.fn();
-export const fetch = mockFetch;
-export const navigate = mockNavigate;
-export const sub = mockSub;
-export const throttle = jest.fn();
-export const debounce = jest.fn((fn, delay) => {
+function debounceFunction(fn: Function, delay: number) {
 	const debouncedFunctions = new Map();
 	let timerId: any;
 
@@ -52,17 +35,30 @@ export const debounce = jest.fn((fn, delay) => {
 	debouncedFunctions.set(fn, debounced);
 
 	return debounced;
-});
-
-export function buildFragment(html: string) {
-	const template = document.createElement('template');
-	template.innerHTML = html.trim();
-
-	return template.content;
 }
 
 export function loadClientExtensions() {
 	return Promise.resolve();
 }
+
+export function sub(str: string) {
+	return str;
+}
+
+export const mockFetch = jest.fn(() => {
+	return Promise.resolve({
+		json: async () => ({}),
+		ok: true,
+		status: 200,
+		text: async () => '',
+	} as Response);
+});
+
+export const addParams = jest.fn();
+export const debounce = jest.fn(debounceFunction);
+export const fetch = mockFetch;
+export const mockNavigate = jest.fn();
+export const navigate = mockNavigate;
+export const throttle = jest.fn();
 
 export default {};

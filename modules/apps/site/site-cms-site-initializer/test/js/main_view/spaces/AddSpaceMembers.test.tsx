@@ -93,7 +93,7 @@ describe('AddSpaceMembers', () => {
 
 		expect(
 			screen.getByRole('heading', {
-				name: `add-members-to-${testSpace.name}`,
+				name: `add-members-to-x`,
 			})
 		).toBeInTheDocument();
 		expect(

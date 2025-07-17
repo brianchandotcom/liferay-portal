@@ -10,6 +10,10 @@ import React from 'react';
 
 import {MembersListItem} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/MemberListItem';
 
+jest.mock('frontend-js-web', () => ({
+	sub: (str: string, arg: string) => str.replace('x', arg),
+}));
+
 describe('MemberListItem', () => {
 	const testUserAccount = {
 		emailAddress: 'brian.smith@example.com',

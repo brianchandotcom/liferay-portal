@@ -48,6 +48,6 @@ describe('SpacesNavigation', () => {
 
 	it('renders "All Spaces (X)"', async () => {
 		renderComponent();
-		expect(screen.getByText('all-spaces-5')).toBeInTheDocument();
+		expect(screen.getByText('all-spaces-x')).toBeInTheDocument();
 	});
 });

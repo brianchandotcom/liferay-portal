@@ -211,7 +211,7 @@ public class CTCollectionLocalServiceImpl
 			String toCTCollectionName)
 		throws PortalException {
 
-		Map<Long, List<ConflictInfo>> conflictInfoMap = new HashMap<>();
+		Map<Long, List<ConflictInfo>> conflictInfosMap = new HashMap<>();
 
 		Map<Long, CTConflictChecker<?>> ctConflictCheckers = new HashMap<>();
 		CTSettingsConfiguration ctSettingsConfiguration =
@@ -261,13 +261,13 @@ public class CTCollectionLocalServiceImpl
 				List<ConflictInfo> conflictInfos = ctConflictChecker.check();
 
 				if (!conflictInfos.isEmpty()) {
-					conflictInfoMap.put(entry.getKey(), conflictInfos);
+					conflictInfosMap.put(entry.getKey(), conflictInfos);
 				}
 			}
 		}
 
 		if (toCTCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			return conflictInfoMap;
+			return conflictInfosMap;
 		}
 
 		// Exclude created CTAutoResolutionInfos
@@ -277,7 +277,7 @@ public class CTCollectionLocalServiceImpl
 				fromCTCollectionId);
 
 		for (Map.Entry<Long, List<ConflictInfo>> entry :
-				conflictInfoMap.entrySet()) {
+				conflictInfosMap.entrySet()) {
 
 			for (ConflictInfo conflictInfo : entry.getValue()) {
 				if (!conflictInfo.isResolved()) {
@@ -332,7 +332,7 @@ public class CTCollectionLocalServiceImpl
 		for (CTAutoResolutionInfo ctAutoResolutionInfo :
 				ctAutoResolutionInfos) {
 
-			List<ConflictInfo> conflictInfos = conflictInfoMap.computeIfAbsent(
+			List<ConflictInfo> conflictInfos = conflictInfosMap.computeIfAbsent(
 				ctAutoResolutionInfo.getModelClassNameId(),
 				key -> new ArrayList<>());
 
@@ -379,7 +379,7 @@ public class CTCollectionLocalServiceImpl
 			}
 		}
 
-		return conflictInfoMap;
+		return conflictInfosMap;
 	}
 
 	@Override
@@ -937,12 +937,12 @@ public class CTCollectionLocalServiceImpl
 			relatedCTEntries.addAll(value);
 		}
 
-		Map<Long, List<ConflictInfo>> conflictInfoMap = checkConflicts(
+		Map<Long, List<ConflictInfo>> conflictInfosMap = checkConflicts(
 			fromCTCollection.getCompanyId(), relatedCTEntries,
 			fromCTCollectionId, fromCTCollection.getName(), toCTCollectionId,
 			toCTCollection.getName());
 
-		if (!conflictInfoMap.isEmpty()) {
+		if (!conflictInfosMap.isEmpty()) {
 			throw new CTPublishConflictException("Conflict detected");
 		}
 
@@ -954,7 +954,7 @@ public class CTCollectionLocalServiceImpl
 				toCTCollectionId, entry.getKey(), entry.getValue());
 		}
 
-		conflictInfoMap = checkConflicts(
+		conflictInfosMap = checkConflicts(
 			toCTCollection.getCompanyId(),
 			getRelatedCTEntries(
 				toCTCollection.getCtCollectionId(),
@@ -964,7 +964,7 @@ public class CTCollectionLocalServiceImpl
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, "Production");
 
 		for (Map.Entry<Long, List<ConflictInfo>> entry :
-				conflictInfoMap.entrySet()) {
+				conflictInfosMap.entrySet()) {
 
 			List<ConflictInfo> conflictInfos = entry.getValue();
 

@@ -88,14 +88,14 @@ public class CTEntryConflictHelperTest {
 			}
 		}
 
-		Map<Long, List<ConflictInfo>> conflictInfos =
+		Map<Long, List<ConflictInfo>> conflictInfosMap =
 			_ctCollectionLocalService.checkConflicts(_ctCollection1);
 
-		List<ConflictInfo> dlFileEntryConflictInfos = conflictInfos.get(
+		List<ConflictInfo> dlFileEntryConflictInfos = conflictInfosMap.get(
 			_classNameLocalService.getClassNameId(DLFileEntry.class));
 
 		Assert.assertEquals(
-			conflictInfos.toString(), 1, dlFileEntryConflictInfos.size());
+			conflictInfosMap.toString(), 1, dlFileEntryConflictInfos.size());
 
 		ConflictInfo conflictInfo = dlFileEntryConflictInfos.get(0);
 
@@ -134,10 +134,11 @@ public class CTEntryConflictHelperTest {
 		_ctProcessLocalService.addCTProcess(
 			_ctCollection1.getUserId(), _ctCollection1.getCtCollectionId());
 
-		Map<Long, List<ConflictInfo>> conflictInfos =
+		Map<Long, List<ConflictInfo>> conflictInfosMap =
 			_ctCollectionLocalService.checkConflicts(_ctCollection2);
 
-		Assert.assertEquals(conflictInfos.toString(), 2, conflictInfos.size());
+		Assert.assertEquals(
+			conflictInfosMap.toString(), 2, conflictInfosMap.size());
 	}
 
 	@Inject

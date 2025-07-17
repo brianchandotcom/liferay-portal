@@ -117,6 +117,7 @@ const EditCategoryGeneralInfoTab = ({
 					</label>
 
 					<ClayInput
+						aria-label={Liferay.Language.get('name')}
 						data-testid="name-input"
 						id="name"
 						onChange={({target: {value}}) => onChangeName(value)}
@@ -139,6 +140,7 @@ const EditCategoryGeneralInfoTab = ({
 					<label>{Liferay.Language.get('description')}</label>
 
 					<ClayInput
+						aria-label={Liferay.Language.get('description')}
 						component="textarea"
 						data-testid="description-input"
 						id="description"

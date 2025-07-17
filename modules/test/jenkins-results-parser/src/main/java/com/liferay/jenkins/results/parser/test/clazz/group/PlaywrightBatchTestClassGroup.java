@@ -59,7 +59,9 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				portalBatchTestSelector);
 
 			if (matcher.matches()) {
-				_addProjectNames(matcher.group("projectName"));
+				String projectName = matcher.group("projectName");
+
+				_addProjectNames(projectName.replaceAll("/", "."));
 			}
 			else {
 				_addProjectNames(portalBatchTestSelector);
@@ -779,7 +781,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	private static final Set<String> _loadedProjectNames =
 		Collections.synchronizedSet(new HashSet<>());
 	private static final Pattern _playwrightFileNamePattern = Pattern.compile(
-		"tests/(?<filePath>(?<projectName>[^/]+)/.*.spec.ts)");
+		"tests/(?<filePath>(?<projectName>.+)/[^/]*.spec.ts)");
 	private static JSONObject _playwrightJSONObject;
 	private static final AtomicBoolean _playwrightJSONObjectsLoaded =
 		new AtomicBoolean();

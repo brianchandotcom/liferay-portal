@@ -27,31 +27,25 @@ const CategorizationBreadcrumb = ({breadcrumbItems}: Props) => {
 			className="categorization-toolbar"
 			light
 		>
-			<div className="container-fluid">
-				<ClayToolbar.Nav>
-					<ClayBreadcrumb items={breadcrumbItems} />
+			<div className="align-items-center container-fluid">
+				<ClayBreadcrumb items={breadcrumbItems} />
 
-					<ClayToolbar.Item>
-						<ClayDropDownWithItems
-							items={[
-								{
-									label: Liferay.Language.get('order-by'),
-									type: 'group',
-								},
-							]}
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'more-actions'
-									)}
-									displayType="unstyled"
-									size="xs"
-									symbol="ellipsis-v"
-								/>
-							}
+				<ClayDropDownWithItems
+					items={[
+						{
+							label: Liferay.Language.get('order-by'),
+							type: 'group',
+						},
+					]}
+					trigger={
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('more-actions')}
+							displayType="unstyled"
+							size="xs"
+							symbol="ellipsis-v"
 						/>
-					</ClayToolbar.Item>
-				</ClayToolbar.Nav>
+					}
+				/>
 			</div>
 		</ClayToolbar>
 	);

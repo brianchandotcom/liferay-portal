@@ -81,10 +81,14 @@ test('Item Selector Modal with single selection', async ({
 	});
 
 	await test.step('Check that a single item can be selected in the Cards visualization mode', async () => {
+		await expect(itemSelectorSamplePage.modal.selectButton).toBeDisabled();
+
 		await itemSelectorSamplePage.page
 			.locator('.custom-radio')
 			.first()
 			.click();
+
+		await expect(itemSelectorSamplePage.modal.selectButton).toBeEnabled();
 
 		await expect(
 			itemSelectorSamplePage.page.getByText(

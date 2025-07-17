@@ -9,6 +9,10 @@ import {EFDSVisualizationMode, waitForFDS} from '../../../../utils/waitFor';
 
 export class ItemSelectorSamplePage {
 	readonly fragmentWidgetSearchInput: Locator;
+	readonly modal: {
+		cancelButton: Locator;
+		selectButton: Locator;
+	};
 	readonly page: Page;
 	readonly publishPageButton: Locator;
 	readonly samplePageHeader: Locator;
@@ -24,6 +28,16 @@ export class ItemSelectorSamplePage {
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
 		);
+		this.modal = {
+			cancelButton: page.getByRole('button', {
+				exact: true,
+				name: 'Cancel',
+			}),
+			selectButton: page.getByRole('button', {
+				exact: true,
+				name: 'Select',
+			}),
+		};
 		this.page = page;
 		this.publishPageButton = page.getByRole('button', {
 			name: 'Publish',

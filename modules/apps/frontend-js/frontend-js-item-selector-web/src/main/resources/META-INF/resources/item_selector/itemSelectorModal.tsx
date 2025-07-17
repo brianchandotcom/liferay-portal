@@ -9,6 +9,7 @@ import {
 	FrontendDataSet,
 	IFrontendDataSetProps,
 } from '@liferay/frontend-data-set-web';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -92,6 +93,9 @@ function ItemSelectorModal({
 			</ClayModal.Body>
 
 			<ClayModal.Footer
+				className={classNames({
+					'bg-primary-l3 border-primary border-top': selectedItem,
+				})}
 				first={
 					selectedItem ? (
 						<>
@@ -117,6 +121,7 @@ function ItemSelectorModal({
 
 						<ClayButton
 							className="item-preview selector-button"
+							disabled={!selectedItem}
 							onClick={() => {
 								onSelection(selectedItem);
 								onOpenChange(false);

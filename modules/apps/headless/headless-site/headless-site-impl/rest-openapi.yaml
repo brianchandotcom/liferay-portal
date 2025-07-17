@@ -76,6 +76,38 @@ paths:
                         application/xml: {}
             tags: ["Site"]
     /sites:
+        get:
+            description:
+                Retrieves the sites. Results can be paginated, filtered, searched, and sorted.
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Site"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Site"
+                                type: array
+                    description:
+                        default response
+            tags: ["Site"]
         post:
             description:
                 Adds a new site

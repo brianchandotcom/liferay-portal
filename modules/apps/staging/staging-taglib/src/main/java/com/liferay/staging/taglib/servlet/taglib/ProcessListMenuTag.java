@@ -25,6 +25,10 @@ public class ProcessListMenuTag extends IncludeTag {
 		return _deleteMenu;
 	}
 
+	public boolean isDetailsMenu() {
+		return _detailsMenu;
+	}
+
 	public boolean isLocalPublishing() {
 		return _localPublishing;
 	}
@@ -37,16 +41,16 @@ public class ProcessListMenuTag extends IncludeTag {
 		return _summaryMenu;
 	}
 
-	public boolean isViewDetailsMenu() {
-		return _viewDetailsMenu;
-	}
-
 	public void setBackgroundTask(BackgroundTask backgroundTask) {
 		_backgroundTask = backgroundTask;
 	}
 
 	public void setDeleteMenu(boolean deleteMenu) {
 		_deleteMenu = deleteMenu;
+	}
+
+	public void setDetailsMenu(boolean detailsMenu) {
+		_detailsMenu = detailsMenu;
 	}
 
 	public void setLocalPublishing(boolean localPublishing) {
@@ -68,20 +72,16 @@ public class ProcessListMenuTag extends IncludeTag {
 		_summaryMenu = summaryMenu;
 	}
 
-	public void setViewDetailsMenu(boolean viewDetailsMenu) {
-		_viewDetailsMenu = viewDetailsMenu;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_backgroundTask = null;
 		_deleteMenu = true;
+		_detailsMenu = false;
 		_localPublishing = false;
 		_relaunchMenu = true;
 		_summaryMenu = true;
-		_viewDetailsMenu = false;
 	}
 
 	@Override
@@ -97,24 +97,23 @@ public class ProcessListMenuTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-staging:process-list-menu:deleteMenu", _deleteMenu);
 		httpServletRequest.setAttribute(
+			"liferay-staging:process-list-menu:detailsMenu", _detailsMenu);
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list-menu:localPublishing",
 			_localPublishing);
 		httpServletRequest.setAttribute(
 			"liferay-staging:process-list-menu:relaunchMenu", _relaunchMenu);
 		httpServletRequest.setAttribute(
 			"liferay-staging:process-list-menu:summaryMenu", _summaryMenu);
-		httpServletRequest.setAttribute(
-			"liferay-staging:process-list-menu:viewDetailsMenu",
-			_viewDetailsMenu);
 	}
 
 	private static final String _PAGE = "/process_list_menu/page.jsp";
 
 	private BackgroundTask _backgroundTask;
 	private boolean _deleteMenu = true;
+	private boolean _detailsMenu;
 	private boolean _localPublishing;
 	private boolean _relaunchMenu = true;
 	private boolean _summaryMenu = true;
-	private boolean _viewDetailsMenu;
 
 }

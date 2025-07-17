@@ -36,6 +36,7 @@
 			"enableObjectEntryDraft"?: boolean;
 			"enableObjectEntryHistory"?: boolean;
 			"enableObjectEntrySchedule"?: boolean;
+			"enableObjectEntrySubscription"?: boolean;
 			"enableObjectEntryVersioning"?: boolean;
 			"externalReferenceCode"?: string;
 			"friendlyURLSeparator"?: string;
@@ -154,6 +155,11 @@
 		{
 			baseName: "enableObjectEntrySchedule",
 			name: "enableObjectEntrySchedule",
+			type: "boolean",
+		},
+		{
+			baseName: "enableObjectEntrySubscription",
+			name: "enableObjectEntrySubscription",
 			type: "boolean",
 		},
 		{

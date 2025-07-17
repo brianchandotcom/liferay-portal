@@ -67,6 +67,8 @@ public class ObjectDefinitionWrapper
 		attributes.put(
 			"enableObjectEntrySchedule", isEnableObjectEntrySchedule());
 		attributes.put(
+			"enableObjectEntrySubscription", isEnableObjectEntrySubscription());
+		attributes.put(
 			"enableObjectEntryVersioning", isEnableObjectEntryVersioning());
 		attributes.put("friendlyURLSeparator", getFriendlyURLSeparator());
 		attributes.put("label", getLabel());
@@ -250,6 +252,13 @@ public class ObjectDefinitionWrapper
 
 		if (enableObjectEntrySchedule != null) {
 			setEnableObjectEntrySchedule(enableObjectEntrySchedule);
+		}
+
+		Boolean enableObjectEntrySubscription = (Boolean)attributes.get(
+			"enableObjectEntrySubscription");
+
+		if (enableObjectEntrySubscription != null) {
+			setEnableObjectEntrySubscription(enableObjectEntrySubscription);
 		}
 
 		Boolean enableObjectEntryVersioning = (Boolean)attributes.get(
@@ -535,6 +544,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean getEnableObjectEntrySchedule() {
 		return model.getEnableObjectEntrySchedule();
+	}
+
+	/**
+	 * Returns the enable object entry subscription of this object definition.
+	 *
+	 * @return the enable object entry subscription of this object definition
+	 */
+	@Override
+	public boolean getEnableObjectEntrySubscription() {
+		return model.getEnableObjectEntrySubscription();
 	}
 
 	/**
@@ -1117,6 +1136,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object definition is enable object entry subscription.
+	 *
+	 * @return <code>true</code> if this object definition is enable object entry subscription; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnableObjectEntrySubscription() {
+		return model.isEnableObjectEntrySubscription();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is enable object entry versioning.
 	 *
 	 * @return <code>true</code> if this object definition is enable object entry versioning; <code>false</code> otherwise
@@ -1371,6 +1400,18 @@ public class ObjectDefinitionWrapper
 		boolean enableObjectEntrySchedule) {
 
 		model.setEnableObjectEntrySchedule(enableObjectEntrySchedule);
+	}
+
+	/**
+	 * Sets whether this object definition is enable object entry subscription.
+	 *
+	 * @param enableObjectEntrySubscription the enable object entry subscription of this object definition
+	 */
+	@Override
+	public void setEnableObjectEntrySubscription(
+		boolean enableObjectEntrySubscription) {
+
+		model.setEnableObjectEntrySubscription(enableObjectEntrySubscription);
 	}
 
 	/**

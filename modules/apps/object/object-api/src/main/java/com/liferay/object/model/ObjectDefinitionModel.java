@@ -516,6 +516,28 @@ public interface ObjectDefinitionModel
 	public void setEnableObjectEntrySchedule(boolean enableObjectEntrySchedule);
 
 	/**
+	 * Returns the enable object entry subscription of this object definition.
+	 *
+	 * @return the enable object entry subscription of this object definition
+	 */
+	public boolean getEnableObjectEntrySubscription();
+
+	/**
+	 * Returns <code>true</code> if this object definition is enable object entry subscription.
+	 *
+	 * @return <code>true</code> if this object definition is enable object entry subscription; <code>false</code> otherwise
+	 */
+	public boolean isEnableObjectEntrySubscription();
+
+	/**
+	 * Sets whether this object definition is enable object entry subscription.
+	 *
+	 * @param enableObjectEntrySubscription the enable object entry subscription of this object definition
+	 */
+	public void setEnableObjectEntrySubscription(
+		boolean enableObjectEntrySubscription);
+
+	/**
 	 * Returns the enable object entry versioning of this object definition.
 	 *
 	 * @return the enable object entry versioning of this object definition

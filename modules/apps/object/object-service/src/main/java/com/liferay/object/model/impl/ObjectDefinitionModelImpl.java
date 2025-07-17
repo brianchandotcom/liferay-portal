@@ -89,6 +89,7 @@ public class ObjectDefinitionModelImpl
 		{"enableObjectEntryDraft", Types.BOOLEAN},
 		{"enableObjectEntryHistory", Types.BOOLEAN},
 		{"enableObjectEntrySchedule", Types.BOOLEAN},
+		{"enableObjectEntrySubscription", Types.BOOLEAN},
 		{"enableObjectEntryVersioning", Types.BOOLEAN},
 		{"friendlyURLSeparator", Types.VARCHAR}, {"label", Types.VARCHAR},
 		{"modifiable", Types.BOOLEAN}, {"name", Types.VARCHAR},
@@ -129,6 +130,7 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("enableObjectEntryDraft", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("enableObjectEntryHistory", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("enableObjectEntrySchedule", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("enableObjectEntrySubscription", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("enableObjectEntryVersioning", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("friendlyURLSeparator", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
@@ -148,7 +150,7 @@ public class ObjectDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountERObjectFieldId LONG,descriptionObjectFieldId LONG,objectFolderId LONG,titleObjectFieldId LONG,accountEntryRestricted BOOLEAN,active_ BOOLEAN,className VARCHAR(255) null,dbTableName VARCHAR(75) null,enableCategorization BOOLEAN,enableComments BOOLEAN,enableFriendlyURLCustomization BOOLEAN,enableIndexSearch BOOLEAN,enableLocalization BOOLEAN,enableObjectEntryDraft BOOLEAN,enableObjectEntryHistory BOOLEAN,enableObjectEntrySchedule BOOLEAN,enableObjectEntryVersioning BOOLEAN,friendlyURLSeparator VARCHAR(75) null,label STRING null,modifiable BOOLEAN,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,portlet BOOLEAN,scope VARCHAR(75) null,storageType VARCHAR(255) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountERObjectFieldId LONG,descriptionObjectFieldId LONG,objectFolderId LONG,titleObjectFieldId LONG,accountEntryRestricted BOOLEAN,active_ BOOLEAN,className VARCHAR(255) null,dbTableName VARCHAR(75) null,enableCategorization BOOLEAN,enableComments BOOLEAN,enableFriendlyURLCustomization BOOLEAN,enableIndexSearch BOOLEAN,enableLocalization BOOLEAN,enableObjectEntryDraft BOOLEAN,enableObjectEntryHistory BOOLEAN,enableObjectEntrySchedule BOOLEAN,enableObjectEntrySubscription BOOLEAN,enableObjectEntryVersioning BOOLEAN,friendlyURLSeparator VARCHAR(75) null,label STRING null,modifiable BOOLEAN,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,portlet BOOLEAN,scope VARCHAR(75) null,storageType VARCHAR(255) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -418,6 +420,9 @@ public class ObjectDefinitionModelImpl
 				"enableObjectEntrySchedule",
 				ObjectDefinition::getEnableObjectEntrySchedule);
 			attributeGetterFunctions.put(
+				"enableObjectEntrySubscription",
+				ObjectDefinition::getEnableObjectEntrySubscription);
+			attributeGetterFunctions.put(
 				"enableObjectEntryVersioning",
 				ObjectDefinition::getEnableObjectEntryVersioning);
 			attributeGetterFunctions.put(
@@ -565,6 +570,10 @@ public class ObjectDefinitionModelImpl
 				"enableObjectEntrySchedule",
 				(BiConsumer<ObjectDefinition, Boolean>)
 					ObjectDefinition::setEnableObjectEntrySchedule);
+			attributeSetterBiConsumers.put(
+				"enableObjectEntrySubscription",
+				(BiConsumer<ObjectDefinition, Boolean>)
+					ObjectDefinition::setEnableObjectEntrySubscription);
 			attributeSetterBiConsumers.put(
 				"enableObjectEntryVersioning",
 				(BiConsumer<ObjectDefinition, Boolean>)
@@ -1209,6 +1218,29 @@ public class ObjectDefinitionModelImpl
 		}
 
 		_enableObjectEntrySchedule = enableObjectEntrySchedule;
+	}
+
+	@JSON
+	@Override
+	public boolean getEnableObjectEntrySubscription() {
+		return _enableObjectEntrySubscription;
+	}
+
+	@JSON
+	@Override
+	public boolean isEnableObjectEntrySubscription() {
+		return _enableObjectEntrySubscription;
+	}
+
+	@Override
+	public void setEnableObjectEntrySubscription(
+		boolean enableObjectEntrySubscription) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_enableObjectEntrySubscription = enableObjectEntrySubscription;
 	}
 
 	@JSON
@@ -1939,6 +1971,8 @@ public class ObjectDefinitionModelImpl
 			isEnableObjectEntryHistory());
 		objectDefinitionImpl.setEnableObjectEntrySchedule(
 			isEnableObjectEntrySchedule());
+		objectDefinitionImpl.setEnableObjectEntrySubscription(
+			isEnableObjectEntrySubscription());
 		objectDefinitionImpl.setEnableObjectEntryVersioning(
 			isEnableObjectEntryVersioning());
 		objectDefinitionImpl.setFriendlyURLSeparator(getFriendlyURLSeparator());
@@ -2018,6 +2052,9 @@ public class ObjectDefinitionModelImpl
 			this.<Boolean>getColumnOriginalValue("enableObjectEntryHistory"));
 		objectDefinitionImpl.setEnableObjectEntrySchedule(
 			this.<Boolean>getColumnOriginalValue("enableObjectEntrySchedule"));
+		objectDefinitionImpl.setEnableObjectEntrySubscription(
+			this.<Boolean>getColumnOriginalValue(
+				"enableObjectEntrySubscription"));
 		objectDefinitionImpl.setEnableObjectEntryVersioning(
 			this.<Boolean>getColumnOriginalValue(
 				"enableObjectEntryVersioning"));
@@ -2233,6 +2270,9 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionCacheModel.enableObjectEntrySchedule =
 			isEnableObjectEntrySchedule();
 
+		objectDefinitionCacheModel.enableObjectEntrySubscription =
+			isEnableObjectEntrySubscription();
+
 		objectDefinitionCacheModel.enableObjectEntryVersioning =
 			isEnableObjectEntryVersioning();
 
@@ -2422,6 +2462,7 @@ public class ObjectDefinitionModelImpl
 	private boolean _enableObjectEntryDraft;
 	private boolean _enableObjectEntryHistory;
 	private boolean _enableObjectEntrySchedule;
+	private boolean _enableObjectEntrySubscription;
 	private boolean _enableObjectEntryVersioning;
 	private String _friendlyURLSeparator;
 	private String _label;
@@ -2505,6 +2546,8 @@ public class ObjectDefinitionModelImpl
 			"enableObjectEntryHistory", _enableObjectEntryHistory);
 		_columnOriginalValues.put(
 			"enableObjectEntrySchedule", _enableObjectEntrySchedule);
+		_columnOriginalValues.put(
+			"enableObjectEntrySubscription", _enableObjectEntrySubscription);
 		_columnOriginalValues.put(
 			"enableObjectEntryVersioning", _enableObjectEntryVersioning);
 		_columnOriginalValues.put(
@@ -2601,37 +2644,39 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("enableObjectEntrySchedule", 16777216L);
 
-		columnBitmasks.put("enableObjectEntryVersioning", 33554432L);
+		columnBitmasks.put("enableObjectEntrySubscription", 33554432L);
 
-		columnBitmasks.put("friendlyURLSeparator", 67108864L);
+		columnBitmasks.put("enableObjectEntryVersioning", 67108864L);
 
-		columnBitmasks.put("label", 134217728L);
+		columnBitmasks.put("friendlyURLSeparator", 134217728L);
 
-		columnBitmasks.put("modifiable", 268435456L);
+		columnBitmasks.put("label", 268435456L);
 
-		columnBitmasks.put("name", 536870912L);
+		columnBitmasks.put("modifiable", 536870912L);
 
-		columnBitmasks.put("panelAppOrder", 1073741824L);
+		columnBitmasks.put("name", 1073741824L);
 
-		columnBitmasks.put("panelCategoryKey", 2147483648L);
+		columnBitmasks.put("panelAppOrder", 2147483648L);
 
-		columnBitmasks.put("pkObjectFieldDBColumnName", 4294967296L);
+		columnBitmasks.put("panelCategoryKey", 4294967296L);
 
-		columnBitmasks.put("pkObjectFieldName", 8589934592L);
+		columnBitmasks.put("pkObjectFieldDBColumnName", 8589934592L);
 
-		columnBitmasks.put("pluralLabel", 17179869184L);
+		columnBitmasks.put("pkObjectFieldName", 17179869184L);
 
-		columnBitmasks.put("portlet", 34359738368L);
+		columnBitmasks.put("pluralLabel", 34359738368L);
 
-		columnBitmasks.put("scope", 68719476736L);
+		columnBitmasks.put("portlet", 68719476736L);
 
-		columnBitmasks.put("storageType", 137438953472L);
+		columnBitmasks.put("scope", 137438953472L);
 
-		columnBitmasks.put("system_", 274877906944L);
+		columnBitmasks.put("storageType", 274877906944L);
 
-		columnBitmasks.put("version", 549755813888L);
+		columnBitmasks.put("system_", 549755813888L);
 
-		columnBitmasks.put("status", 1099511627776L);
+		columnBitmasks.put("version", 1099511627776L);
+
+		columnBitmasks.put("status", 2199023255552L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

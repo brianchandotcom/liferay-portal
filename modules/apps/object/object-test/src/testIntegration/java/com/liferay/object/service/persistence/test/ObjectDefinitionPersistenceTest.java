@@ -175,6 +175,9 @@ public class ObjectDefinitionPersistenceTest {
 		newObjectDefinition.setEnableObjectEntrySchedule(
 			RandomTestUtil.randomBoolean());
 
+		newObjectDefinition.setEnableObjectEntrySubscription(
+			RandomTestUtil.randomBoolean());
+
 		newObjectDefinition.setEnableObjectEntryVersioning(
 			RandomTestUtil.randomBoolean());
 
@@ -289,6 +292,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableObjectEntrySchedule(),
 			newObjectDefinition.isEnableObjectEntrySchedule());
+		Assert.assertEquals(
+			existingObjectDefinition.isEnableObjectEntrySubscription(),
+			newObjectDefinition.isEnableObjectEntrySubscription());
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableObjectEntryVersioning(),
 			newObjectDefinition.isEnableObjectEntryVersioning());
@@ -559,6 +565,7 @@ public class ObjectDefinitionPersistenceTest {
 			"enableFriendlyURLCustomization", true, "enableIndexSearch", true,
 			"enableLocalization", true, "enableObjectEntryDraft", true,
 			"enableObjectEntryHistory", true, "enableObjectEntrySchedule", true,
+			"enableObjectEntrySubscription", true,
 			"enableObjectEntryVersioning", true, "friendlyURLSeparator", true,
 			"label", true, "modifiable", true, "name", true, "panelAppOrder",
 			true, "panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
@@ -935,6 +942,9 @@ public class ObjectDefinitionPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableObjectEntrySchedule(
+			RandomTestUtil.randomBoolean());
+
+		objectDefinition.setEnableObjectEntrySubscription(
 			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableObjectEntryVersioning(

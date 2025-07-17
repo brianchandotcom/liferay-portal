@@ -1361,17 +1361,6 @@ public class EditableFragmentEntryProcessorTest {
 		Locale currentLocale = LocaleThreadLocal.getThemeDisplayLocale();
 
 		LocaleThreadLocal.setThemeDisplayLocale(
-			LocaleUtil.fromLanguageId("es_ES"));
-
-		Assert.assertThat(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink,
-				_getFragmentEntryProcessorContext(
-					LocaleUtil.fromLanguageId("es_ES"),
-					FragmentEntryLinkConstants.EDIT)),
-			CoreMatchers.containsString("es_ES-alt"));
-
-		LocaleThreadLocal.setThemeDisplayLocale(
 			LocaleUtil.fromLanguageId("de_DE"));
 
 		Assert.assertThat(
@@ -1381,6 +1370,17 @@ public class EditableFragmentEntryProcessorTest {
 					LocaleUtil.fromLanguageId("de_DE"),
 					FragmentEntryLinkConstants.EDIT)),
 			CoreMatchers.containsString("en_US-alt"));
+
+		LocaleThreadLocal.setThemeDisplayLocale(
+			LocaleUtil.fromLanguageId("es_ES"));
+
+		Assert.assertThat(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.fromLanguageId("es_ES"),
+					FragmentEntryLinkConstants.EDIT)),
+			CoreMatchers.containsString("es_ES-alt"));
 
 		LocaleThreadLocal.setThemeDisplayLocale(currentLocale);
 	}

@@ -163,16 +163,7 @@ test.afterEach(async ({browser}) => {
 
 		// Delete all connections
 
-		if ((await samlAdminPage.samlRoleField.inputValue()) === 'both') {
-			const serviceProviderConnectionsPage =
-				new ServiceProviderConnectionsPage(samlAdminPage.page);
-
-			await serviceProviderConnectionsPage.goTo();
-
-			await serviceProviderConnectionsPage.deleteServiceProviderConnections();
-
-			await configureIdentityProvider(newPage);
-
+		if ((await samlAdminPage.samlRoleField.inputValue()) !== 'idp') {
 			const identityProviderConnectionsPage =
 				new IdentityProviderConnectionsPage(samlAdminPage.page);
 
@@ -182,7 +173,8 @@ test.afterEach(async ({browser}) => {
 
 			await configureServiceProvider(newPage);
 		}
-		else if ((await samlAdminPage.samlRoleField.inputValue()) === 'idp') {
+
+		if ((await samlAdminPage.samlRoleField.inputValue()) !== 'sp') {
 			const serviceProviderConnectionsPage =
 				new ServiceProviderConnectionsPage(samlAdminPage.page);
 
@@ -191,16 +183,6 @@ test.afterEach(async ({browser}) => {
 			await serviceProviderConnectionsPage.deleteServiceProviderConnections();
 
 			await configureIdentityProvider(newPage);
-		}
-		else {
-			const identityProviderConnectionsPage =
-				new IdentityProviderConnectionsPage(samlAdminPage.page);
-
-			await identityProviderConnectionsPage.goTo();
-
-			await identityProviderConnectionsPage.deleteIdentityProviderConnections();
-
-			await configureServiceProvider(newPage);
 		}
 
 		await newPage.close();

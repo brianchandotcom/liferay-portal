@@ -15,10 +15,6 @@ PatcherAccountsDisplayContext patcherAccountsDisplayContext = new PatcherAccount
 	navigationItems='<%= patcherDisplayContext.getNavigationItems("accounts") %>'
 />
 
-<portlet:renderURL var="viewPatcherAccountsURL">
-	<portlet:param name="mvcRenderCommandName" value="/patcher/index_accounts" />
-</portlet:renderURL>
-
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new PatcherAccountsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, patcherAccountsDisplayContext.getSearchContainer()) %>"
 />

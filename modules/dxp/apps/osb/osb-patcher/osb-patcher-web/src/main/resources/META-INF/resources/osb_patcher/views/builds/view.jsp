@@ -313,6 +313,7 @@ else if (!patcherBuild.getLatestKeyBuild()) {
 			<portlet:param name="mvcRenderCommandName" value="/patcher/view_accounts" />
 			<portlet:param name="accountEntryCode" value="<%= patcherAccount.getAccountEntryCode() %>" />
 			<portlet:param name="patcherProductVersionId" value="<%= String.valueOf(patcherBuild.getPatcherProductVersionId()) %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<div class="c-mb-3">
@@ -586,6 +587,7 @@ SearchContainer<PatcherBuild> patcherBuildSearchContainer = patcherViewBuildsDis
 					<portlet:renderURL var="viewPatcherBuildKeyVersionURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/view_builds" />
 						<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuildKeyVersion.getPatcherBuildId()) %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:search-container-column-text

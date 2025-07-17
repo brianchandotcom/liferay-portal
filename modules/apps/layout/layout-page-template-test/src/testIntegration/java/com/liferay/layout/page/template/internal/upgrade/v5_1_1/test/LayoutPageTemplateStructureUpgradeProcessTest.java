@@ -6,9 +6,10 @@
 package com.liferay.layout.page.template.internal.upgrade.v5_1_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -17,8 +18,8 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -63,25 +64,26 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 	public static void setUpClass() throws Exception {
 		_db = DBManagerUtil.getDB();
 
-		_addClassPKColumn();
+		_addLegacyColumns();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_dropClassPKColumn();
+		_dropLegacyColumns();
 	}
 
 	@Test
+	@TestInfo("LPD-60053")
 	public void testUpgradePortletTypeLayoutWithNullUser() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-				0, null, 0, 0, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				TestPropsValues.getGroupId());
 
-		_db.runSQLTemplate(
-			"update LayoutPageTemplateStructure set classPK = plid;", true);
+		String updateLayoutPageTemplateStructureSql = StringBundler.concat(
+			"update LayoutPageTemplateStructure set classPK = plid where plid ",
+			"= ", layoutPageTemplateEntry.getPlid());
+
+		_db.runSQL(updateLayoutPageTemplateStructureSql);
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -90,21 +92,21 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 		layout.setType(LayoutConstants.TYPE_PORTLET);
 
-		layout.setUserId(0);
+		layout.setUserId(RandomTestUtil.randomLong());
 
 		layout = _layoutLocalService.updateLayout(layout);
 
 		_runUpgrade();
 
-		layout = _layoutLocalService.fetchLayout(layout.getPlid());
+		layout = _layoutLocalService.getLayout(layout.getPlid());
 
 		Assert.assertEquals(
 			layout.getStatusByUserId(),
 			_userLocalService.getGuestUserId(layout.getCompanyId()));
 	}
 
-	private static void _addClassPKColumn() throws Exception {
-		_classPKColumnsAdded = false;
+	private static void _addLegacyColumns() throws Exception {
+		_legacyColumnsAdded = false;
 		_indexMetadataList = Collections.emptyList();
 
 		try (Connection connection = DataAccess.getConnection()) {
@@ -115,18 +117,15 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				!dbInspector.hasColumn(
 					"LayoutPageTemplateStructure", "classPK")) {
 
-				_db.runSQLTemplate(
-					"alter table LayoutPageTemplateStructure add classNameId " +
-						"LONG;",
-					true);
-				_db.runSQLTemplate(
-					"alter table LayoutPageTemplateStructure add classPK LONG;",
-					true);
-				_db.runSQLTemplate(
-					"update LayoutPageTemplateStructure set classPK = plid;",
-					true);
+				_db.alterTableAddColumn(
+					connection, "LayoutPageTemplateStructure", "classNameId",
+					"LONG");
 
-				_classPKColumnsAdded = true;
+				_db.alterTableAddColumn(
+					connection, "LayoutPageTemplateStructure", "classPK",
+					"LONG");
+
+				_legacyColumnsAdded = true;
 
 				_indexMetadataList = _db.dropIndexes(
 					connection, "LayoutPageTemplateStructure", "plid");
@@ -134,8 +133,8 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		}
 	}
 
-	private static void _dropClassPKColumn() throws Exception {
-		if (!_classPKColumnsAdded) {
+	private static void _dropLegacyColumns() throws Exception {
+		if (!_legacyColumnsAdded) {
 			return;
 		}
 
@@ -147,14 +146,11 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				dbInspector.hasColumn(
 					"LayoutPageTemplateStructure", "classPK")) {
 
-				_db.runSQLTemplate(
-					"alter table LayoutPageTemplateStructure drop column " +
-						"classNameId;",
-					true);
-				_db.runSQLTemplate(
-					"alter table LayoutPageTemplateStructure drop column " +
-						"classPK;",
-					true);
+				_db.alterTableDropColumn(
+					connection, "LayoutPageTemplateStructure", "classNameId");
+
+				_db.alterTableDropColumn(
+					connection, "LayoutPageTemplateStructure", "classPK");
 			}
 
 			if (ListUtil.isNotEmpty(_indexMetadataList)) {
@@ -178,9 +174,9 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		"com.liferay.layout.page.template.internal.upgrade.v5_1_1." +
 			"LayoutPageTemplateStructureUpgradeProcess";
 
-	private static boolean _classPKColumnsAdded;
 	private static DB _db;
 	private static List<IndexMetadata> _indexMetadataList;
+	private static boolean _legacyColumnsAdded;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"

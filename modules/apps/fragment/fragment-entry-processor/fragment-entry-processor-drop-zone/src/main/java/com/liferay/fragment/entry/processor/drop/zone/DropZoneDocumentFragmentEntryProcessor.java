@@ -56,6 +56,12 @@ public class DropZoneDocumentFragmentEntryProcessor
 			return;
 		}
 
+		String html = fragmentEntryLink.getHtml();
+
+		if (!html.contains("lfr-drop-zone")) {
+			return;
+		}
+
 		Elements elements = document.getElementsByTag("lfr-drop-zone");
 
 		if (elements.isEmpty()) {

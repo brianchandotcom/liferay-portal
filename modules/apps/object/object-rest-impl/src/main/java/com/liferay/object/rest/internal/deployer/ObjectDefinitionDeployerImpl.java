@@ -870,12 +870,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectDefinition objectDefinition) {
 
 		long companyId = objectDefinition.getCompanyId();
-
 		String restContextPath = objectDefinition.getRESTContextPath();
-
-		if (objectDefinition.getPreviousRESTContextPath() != null) {
-			restContextPath = objectDefinition.getPreviousRESTContextPath();
-		}
 
 		_undeployObjectDefinitions(companyId, restContextPath);
 		_undeployRestContextPathCompanyIds(companyId, restContextPath);

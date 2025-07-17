@@ -18,6 +18,7 @@ import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -131,11 +132,6 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
-	public String getPreviousRESTContextPath() {
-		return _previousRESTContextPath;
-	}
-
-	@Override
 	public String getResourceName() {
 		if (isUnmodifiableSystemObject()) {
 			throw new UnsupportedOperationException();
@@ -210,7 +206,22 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			return 0L;
 		}
 
-		return ObjectDefinitionTreeUtil.getRootObjectDefinitionId(
+		long[] rootObjectDefinitionIds = getRootObjectDefinitionIds();
+
+		if (ArrayUtil.isEmpty(rootObjectDefinitionIds)) {
+			return 0L;
+		}
+
+		return rootObjectDefinitionIds[0];
+	}
+
+	@Override
+	public long[] getRootObjectDefinitionIds() {
+		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-34594")) {
+			return new long[0];
+		}
+
+		return ObjectDefinitionTreeUtil.getRootObjectDefinitionIds(
 			getObjectDefinitionId(),
 			ObjectDefinitionSettingLocalServiceUtil.getService());
 	}
@@ -267,6 +278,16 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
+	public boolean isRootDescendantNode(long rootObjectDefinitionId) {
+		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-34594")) {
+			return false;
+		}
+
+		return ArrayUtil.contains(
+			getRootObjectDefinitionIds(), rootObjectDefinitionId);
+	}
+
+	@Override
 	public boolean isRootNode() {
 		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-34594")) {
 			return false;
@@ -295,12 +316,6 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		_objectDefinitionSettings = objectDefinitionSettings;
 	}
 
-	@Override
-	public void setPreviousRESTContextPath(String previousRESTContextPath) {
-		_previousRESTContextPath = previousRESTContextPath;
-	}
-
 	private List<ObjectDefinitionSetting> _objectDefinitionSettings;
-	private String _previousRESTContextPath;
 
 }

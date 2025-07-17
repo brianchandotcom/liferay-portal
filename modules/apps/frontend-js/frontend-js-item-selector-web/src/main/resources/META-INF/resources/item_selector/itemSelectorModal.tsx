@@ -70,66 +70,66 @@ function ItemSelectorModal({
 		}
 	};
 
-	return (
-		open && (
-			<ClayModal observer={observer} size="full-screen">
-				<ClayModal.Header>
-					{sub(Liferay.Language.get('select-x'), type)}
-				</ClayModal.Header>
+	return open ? (
+		<ClayModal observer={observer} size="full-screen">
+			<ClayModal.Header>
+				{sub(Liferay.Language.get('select-x'), type)}
+			</ClayModal.Header>
 
-				<ClayModal.Body className="p-0">
-					<FrontendDataSet
-						{...fdsProps}
-						onSelect={({
-							selectedItems,
-						}: {
-							selectedItems: Array<any>;
-						}) => {
-							fdsProps.selectionType === 'single'
-								? setSelectedItem(selectedItems[0])
-								: setSelectedItem(selectedItems);
-						}}
-					/>
-				</ClayModal.Body>
-
-				<ClayModal.Footer
-					first={
-						selectedItem ? (
-							<>
-								<strong>
-									{getSelectedItemValue(selectedItem)}
-								</strong>{' '}
-								{Liferay.Language.get('selected')}
-							</>
-						) : undefined
-					}
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								className="btn-cancel"
-								displayType="secondary"
-								onClick={() => {
-									setSelectedItem(null);
-									onOpenChange(false);
-								}}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-
-							<ClayButton
-								className="item-preview selector-button"
-								onClick={() => {
-									onSelection(selectedItem);
-									onOpenChange(false);
-								}}
-							>
-								{Liferay.Language.get('select')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
+			<ClayModal.Body className="p-0">
+				<FrontendDataSet
+					{...fdsProps}
+					onSelect={({
+						selectedItems,
+					}: {
+						selectedItems: Array<any>;
+					}) => {
+						fdsProps.selectionType === 'single'
+							? setSelectedItem(selectedItems[0])
+							: setSelectedItem(selectedItems);
+					}}
 				/>
-			</ClayModal>
-		)
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				first={
+					selectedItem ? (
+						<>
+							<strong>
+								{getSelectedItemValue(selectedItem)}
+							</strong>{' '}
+							{Liferay.Language.get('selected')}
+						</>
+					) : undefined
+				}
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							className="btn-cancel"
+							displayType="secondary"
+							onClick={() => {
+								setSelectedItem(null);
+								onOpenChange(false);
+							}}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							className="item-preview selector-button"
+							onClick={() => {
+								onSelection(selectedItem);
+								onOpenChange(false);
+							}}
+						>
+							{Liferay.Language.get('select')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</ClayModal>
+	) : (
+		<></>
 	);
 }
 

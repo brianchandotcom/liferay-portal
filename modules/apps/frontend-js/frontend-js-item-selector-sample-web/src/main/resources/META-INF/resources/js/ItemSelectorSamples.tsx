@@ -9,7 +9,7 @@ import {ClayInput} from '@clayui/form';
 import ClayList from '@clayui/list';
 import {useModal} from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
-import {TView} from '@liferay/frontend-data-set-web';
+import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 import {
 	EItemSelectorModalViewsConfig,
 	ItemSelector,
@@ -54,15 +54,7 @@ type Space = {
 	name: string;
 };
 
-export interface IItemSelectorConfiguration {
-	apiURL: string;
-	itemNameLocator: string | ((item: any) => any);
-	type: string;
-	views: TView[];
-}
-
-const FDS_DEFAULT_PROPS = {
-	id: getRandomId(),
+const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
 	pagination: {
 		deltas: [{label: 20}, {label: 40}, {label: 60}],
 		initialDelta: 20,
@@ -77,7 +69,7 @@ const assetsItemSelectorConfig = {
 	views: assetLibraryViews,
 };
 
-const docsAndMediaItemSelectorConfig: IItemSelectorConfiguration = {
+const docsAndMediaItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`,
 	itemNameLocator: 'fileName',
 	type: Liferay.Language.get('file'),
@@ -312,6 +304,7 @@ export default function ItemSelectorSamples() {
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
 							apiURL: docsAndMediaItemSelectorConfig.apiURL,
+							id: `itemSelectorModal-documents-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
 									EItemSelectorModalViewsConfig.DOCUMENTS_AND_MEDIA,
@@ -332,6 +325,7 @@ export default function ItemSelectorSamples() {
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
 							apiURL: assetsItemSelectorConfig.apiURL,
+							id: `itemSelectorModal-assets-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
 									EItemSelectorModalViewsConfig.ASSET_LIBRARY,
@@ -352,6 +346,7 @@ export default function ItemSelectorSamples() {
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
 							apiURL: usersItemSelectorConfig.apiURL,
+							id: `itemSelectorModal-users-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig: 'users',
 							}),

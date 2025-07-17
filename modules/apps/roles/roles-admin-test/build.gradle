@@ -4,5 +4,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:portal-search:portal-search-api")
 	testIntegrationImplementation project(":apps:portal-search:portal-search-test-util")
 	testIntegrationImplementation project(":apps:roles:roles-admin-api")
+	testIntegrationImplementation project(":apps:staging:staging-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

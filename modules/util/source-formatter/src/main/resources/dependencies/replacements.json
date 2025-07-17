@@ -5008,6 +5008,8 @@
 	},
 	{
 		"classNames": [
+			"CPDefinitionLocalServiceUtil",
+			"CPDefinitionServiceUtil",
 			"CPDefinitionLocalService",
 			"CPDefinitionService"
 		],

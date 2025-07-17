@@ -11,6 +11,7 @@ export class ItemSelectorSamplePage {
 	readonly fragmentWidgetSearchInput: Locator;
 	readonly page: Page;
 	readonly publishPageButton: Locator;
+	readonly samplePageHeader: Locator;
 	readonly selectFileButton: Locator;
 	readonly selectFileModalHeader: Locator;
 	readonly table: {
@@ -26,6 +27,10 @@ export class ItemSelectorSamplePage {
 		this.page = page;
 		this.publishPageButton = page.getByRole('button', {
 			name: 'Publish',
+		});
+		this.samplePageHeader = page.getByRole('heading', {
+			exact: true,
+			name: 'Item Selector Samples',
 		});
 		this.selectFileButton = page.getByRole('button', {
 			exact: true,
@@ -59,6 +64,10 @@ export class ItemSelectorSamplePage {
 		await itemSelectorMenuItem.dragTo(
 			this.page.getByText('Drag and drop fragments or widgets here.')
 		);
+		await this.page
+			.locator('header')
+			.filter({hasText: 'JS Item Selector Sample'})
+			.waitFor({state: 'visible'});
 	}
 
 	async changeVisualizationMode({

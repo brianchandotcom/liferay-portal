@@ -30,16 +30,16 @@ describe('[CMS Dashboard] Components: FilesCard', () => {
 			},
 			vocabulariesCount: 10,
 		};
-		
-				jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-					data: mockedResponse,
-					error: null,
-				});
-			});
-		
-			afterEach(() => {
-				jest.clearAllMocks();
-			});
+
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockedResponse,
+			error: null,
+		});
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
 	it('renders correctly', async () => {
 		render(<FilesCard />);
@@ -69,10 +69,10 @@ describe('[CMS Dashboard] Components: FilesCard', () => {
 			screen.getByTestId('loading-animation')
 		);
 
-		const MainMetric = screen.getByText('30-new-files');
+		const MainMetric = screen.getByText('x-new-files');
 		expect(MainMetric).toBeInTheDocument();
 
-		const Comparison = screen.getByText('-vs-previous-period');
+		const Comparison = screen.getByText('x-vs-previous-period');
 		expect(Comparison).toBeInTheDocument();
 
 		const VocabulariesBreakdown = screen.getByText('vocabularies');

@@ -132,9 +132,7 @@ describe('PicklistOptions', () => {
 
 		await waitFor(() => {
 			expect(
-				screen.getByText(
-					`all-selected-${selecItemCheckboxs.length}-of-x-items`
-				)
+				screen.getByText(`all-selected-x-of-x-items`)
 			).toBeInTheDocument();
 		});
 

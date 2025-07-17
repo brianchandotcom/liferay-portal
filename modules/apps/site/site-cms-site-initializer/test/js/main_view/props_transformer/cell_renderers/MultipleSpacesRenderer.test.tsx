@@ -11,7 +11,30 @@ import MultipleSpacesRenderer, {
 	MultipleSpacesRendererProps,
 } from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/cell_renderers/MultipleSpacesRenderer';
 
+jest.mock('frontend-js-web', () => ({
+	sub: (str: string, arg: string) => str.replace('{0}', arg),
+}));
+
+const mockLiferayLanguageGet = jest.fn((key: string) => {
+	if (key === 'available-in-spaces-x') {
+		return 'Available in spaces: {0}';
+	}
+
+	return key;
+});
+
+(global as any).Liferay = {
+	Language: {
+		get: mockLiferayLanguageGet,
+	},
+};
+
 describe('MultipleSpacesRenderer', () => {
+	afterEach(() => {
+		mockLiferayLanguageGet.mockClear();
+		jest.clearAllMocks();
+	});
+
 	it('renders "All Spaces" badge when assetLibraryIds includes -1', () => {
 		const itemData = {
 			assetLibraries: [{id: -1, name: ''}],
@@ -50,7 +73,7 @@ describe('MultipleSpacesRenderer', () => {
 
 		expect(spacesDisplay.parentElement).toHaveAttribute(
 			'title',
-			`available-in-spaces-${spaceNames}`
+			`Available in spaces: ${spaceNames}`
 		);
 	});
 });

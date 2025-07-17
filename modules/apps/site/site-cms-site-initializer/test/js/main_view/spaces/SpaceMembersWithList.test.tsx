@@ -21,6 +21,11 @@ import {
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersWithList';
 import {mockFetch} from '../../__mocks__/frontend-js-web';
 
+jest.mock('frontend-js-web', () => ({
+	...((jest.requireActual('frontend-js-web') ?? {}) as any),
+	sub: (str: string, arg: string) => str.replace('x', arg),
+}));
+
 describe('SpaceMembersWithList', () => {
 	const testSpace = {
 		id: '123',
@@ -170,6 +175,8 @@ describe('SpaceMembersWithList', () => {
 	});
 
 	it('loads more users when scrolling down', async () => {
+		jest.useFakeTimers();
+
 		const moreUsers = [
 			{
 				emailAddress: 'user3@example.com',
@@ -184,12 +191,21 @@ describe('SpaceMembersWithList', () => {
 			totalCount: 1,
 		};
 
-		getSpaceUsersSpy.mockResolvedValueOnce({
-			...testUsersResponse,
-			lastPage: 2,
-		});
+		getSpaceUsersSpy.mockImplementation(
+			jest
+				.fn()
+				.mockResolvedValueOnce({
+					...testUsersResponse,
+					lastPage: 2,
+				})
+				.mockResolvedValueOnce(moreUsersResponse)
+		);
 
 		render(<SpaceMembersWithList {...props} />);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 
 		await waitFor(() => {
 			expect(
@@ -199,12 +215,11 @@ describe('SpaceMembersWithList', () => {
 			).toHaveLength(testUsers.length);
 		});
 
-		getSpaceUsersSpy.mockResolvedValueOnce(moreUsersResponse);
-
-		act(() => {
+		await act(async () => {
 			(intersectionObserverMock as any).mockCallback([
 				{isIntersecting: true},
 			]);
+			jest.runAllTimers();
 		});
 
 		await waitFor(() => {
@@ -223,6 +238,8 @@ describe('SpaceMembersWithList', () => {
 		});
 
 		expect(screen.queryByRole('status')).not.toBeInTheDocument();
+
+		jest.useRealTimers();
 	});
 
 	it('loads more user groups when scrolling down', async () => {
@@ -234,10 +251,15 @@ describe('SpaceMembersWithList', () => {
 			totalCount: 1,
 		};
 
-		getSpaceUserGroupsSpy.mockResolvedValueOnce({
-			...testUserGroupsResponse,
-			lastPage: 3,
-		});
+		getSpaceUserGroupsSpy.mockImplementation(
+			jest
+				.fn()
+				.mockResolvedValueOnce({
+					...testUserGroupsResponse,
+					lastPage: 2,
+				})
+				.mockResolvedValueOnce(moreGroupsResponse)
+		);
 
 		render(<SpaceMembersWithList {...props} />);
 
@@ -245,8 +267,6 @@ describe('SpaceMembersWithList', () => {
 			screen.getByRole('combobox', {name: 'add-people-to-collaborate'}),
 			'groups'
 		);
-
-		getSpaceUserGroupsSpy.mockResolvedValueOnce(moreGroupsResponse);
 
 		act(() => {
 			(intersectionObserverMock as any).mockCallback([

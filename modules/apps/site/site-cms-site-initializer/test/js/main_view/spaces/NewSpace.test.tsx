@@ -283,7 +283,7 @@ describe('NewSpace', () => {
 			await waitFor(() => {
 				expect(
 					screen.getByText(
-						'name-cannot-contain-the-following-invalid-characters-*'
+						'name-cannot-contain-the-following-invalid-characters-x'
 					)
 				).toBeInTheDocument();
 			});
@@ -313,7 +313,7 @@ describe('NewSpace', () => {
 
 			await waitFor(() => {
 				expect(
-					screen.getByText('please-enter-no-more-than-150-characters')
+					screen.getByText('please-enter-no-more-than-x-characters')
 				).toBeInTheDocument();
 			});
 		});

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.service.permission;
 
-import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
@@ -23,11 +22,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -109,11 +106,12 @@ public class UserPermissionUtil {
 			}
 
 			if (!Arrays.equals(organizationIds, user.getOrganizationIds())) {
-				List<Long> organizationIdsList = ListUtil.fromArray(organizationIds);
+				List<Long> organizationIdsList = ListUtil.fromArray(
+					organizationIds);
 
-				organizationIdsList.addAll(
-					ListUtil.fromArray(
-						user.getOrganizationIds()));
+				Collections.addAll(
+					organizationIdsList,
+					ArrayUtil.toLongArray(user.getOrganizationIds()));
 
 				ListUtil.distinct(organizationIdsList);
 

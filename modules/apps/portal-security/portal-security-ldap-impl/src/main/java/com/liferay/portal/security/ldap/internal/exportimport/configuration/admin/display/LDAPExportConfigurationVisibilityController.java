@@ -7,6 +7,7 @@ package com.liferay.portal.security.ldap.internal.exportimport.configuration.adm
 
 import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.io.Serializable;
 
@@ -28,7 +29,13 @@ public class LDAPExportConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		return scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM);
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM) &&
+			!FeatureFlagManagerUtil.isEnabled("LPD-45613")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

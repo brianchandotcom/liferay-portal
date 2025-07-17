@@ -8,6 +8,7 @@ package com.liferay.portal.settings.authentication.ldap.web.internal.configurati
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
@@ -29,6 +30,11 @@ public class SystemImportLDAPPortalSettingsConfigurationScreenWrapper
 	@Override
 	public String getScope() {
 		return ExtendedObjectClassDefinition.Scope.SYSTEM.getValue();
+	}
+
+	@Override
+	public boolean isVisible() {
+		return FeatureFlagManagerUtil.isEnabled("LPD-45613");
 	}
 
 	@Override

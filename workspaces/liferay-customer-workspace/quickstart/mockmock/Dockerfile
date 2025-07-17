@@ -1,4 +1,4 @@
-FROM caddy:2-alpine
+FROM alpine:3
 
 COPY resources/ /
 

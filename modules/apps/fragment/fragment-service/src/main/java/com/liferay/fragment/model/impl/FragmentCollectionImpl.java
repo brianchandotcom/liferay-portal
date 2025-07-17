@@ -185,7 +185,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 				QueryUtil.ALL_POS);
 
 		for (FragmentEntry fragmentEntry : fragmentEntries) {
-			if (fragmentEntry.isTypeReact() || fragmentEntry.isMarketplace()) {
+			if (fragmentEntry.isMarketplace() || fragmentEntry.isTypeReact()) {
 				continue;
 			}
 

@@ -164,9 +164,9 @@ public class FragmentCollectionImplTest {
 		ZipReader zipReader = _zipReaderFactory.getZipReader(
 			zipWriter.getFile());
 
-		Assert.assertTrue(
-			zipReader.getEntries(
-			).isEmpty());
+		List<String> entries = zipReader.getEntries();
+
+		Assert.assertTrue(entries.isEmpty());
 
 		_fragmentCollection.populateZipWriter(
 			zipWriter, RandomTestUtil.randomString());

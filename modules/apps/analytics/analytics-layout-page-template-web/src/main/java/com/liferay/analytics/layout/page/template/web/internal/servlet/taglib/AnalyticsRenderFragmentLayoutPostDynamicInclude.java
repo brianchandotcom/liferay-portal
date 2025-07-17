@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.taglib.aui.ScriptTag;
 
@@ -123,7 +124,9 @@ public class AnalyticsRenderFragmentLayoutPostDynamicInclude
 			sb.append(
 				String.valueOf(layoutDisplayPageObjectProvider.getClassPK()));
 			sb.append(", 'title': '");
-			sb.append(layoutDisplayPageObjectProvider.getTitle(locale));
+			sb.append(
+				HtmlUtil.escapeJS(
+					layoutDisplayPageObjectProvider.getTitle(locale)));
 			sb.append("', 'type': '");
 			sb.append(label);
 			sb.append("'})};");

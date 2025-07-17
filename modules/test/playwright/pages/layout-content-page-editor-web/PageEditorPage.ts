@@ -486,8 +486,10 @@ export class PageEditorPage {
 		await collapseSection(this.experienceSelector);
 
 		await this.page
-			.getByText('Select Experience')
-			.waitFor({state: 'hidden'});
+			.getByRole('heading', {name: 'Select Experience'})
+			.waitFor({
+				state: 'hidden',
+			});
 	}
 
 	async copyFragment(fragmentId: string) {
@@ -1137,7 +1139,9 @@ export class PageEditorPage {
 	async openExperienceSelector() {
 		await expandSection(this.experienceSelector);
 
-		await this.page.getByText('Select Experience').waitFor();
+		await this.page
+			.getByRole('heading', {name: 'Select Experience'})
+			.waitFor();
 	}
 
 	async openMappingSelector() {
@@ -1552,8 +1556,6 @@ export class PageEditorPage {
 
 	async switchExperience(experience: string) {
 		await this.openExperienceSelector();
-
-		await this.page.getByText('Select Experience').waitFor();
 
 		await this.page
 			.locator('.dropdown-menu__experience', {

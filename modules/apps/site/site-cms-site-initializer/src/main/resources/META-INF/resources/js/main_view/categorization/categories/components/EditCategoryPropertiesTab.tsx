@@ -72,7 +72,7 @@ const EditCategoryPropertiesTab = ({
 					<label>{Liferay.Language.get('key')}</label>
 
 					<ClayInput
-						aria-label="Key"
+						aria-label={Liferay.Language.get('key')}
 						data-testid={`property-key-input-${index}`}
 						onBlur={(event) =>
 							handleInputChange(index, 'key', event.target.value)
@@ -91,7 +91,7 @@ const EditCategoryPropertiesTab = ({
 
 						<div className="category-property-row-buttons ml-auto">
 							<ClayButtonWithIcon
-								aria-label="Delete Row"
+								aria-label={Liferay.Language.get('delete-row')}
 								className="category-property-row-button"
 								data-testid={`delete-property-row-button-${index}`}
 								disabled={properties.length <= 1}
@@ -101,7 +101,7 @@ const EditCategoryPropertiesTab = ({
 							/>
 
 							<ClayButtonWithIcon
-								aria-label="Add Row"
+								aria-label={Liferay.Language.get('add-row')}
 								className="category-property-row-button"
 								data-testid={`add-property-row-button-${index}`}
 								onClick={() => addRow()}
@@ -112,7 +112,7 @@ const EditCategoryPropertiesTab = ({
 					</div>
 
 					<ClayInput
-						aria-label="Value"
+						aria-label={Liferay.Language.get('value')}
 						data-testid={`property-value-input-${index}`}
 						onBlur={(event) =>
 							handleInputChange(

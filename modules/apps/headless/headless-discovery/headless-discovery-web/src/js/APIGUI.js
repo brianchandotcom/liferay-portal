@@ -46,12 +46,7 @@ const APIGUI = () => {
 
 	useEffect(() => {
 		apiFetch(contextPath + '/o/openapi', 'get', {}).then((response) => {
-			setOrigin(
-				Object.values(response)[0][0].substring(
-					0,
-					Object.values(response)[0][0].indexOf('/o/')
-				)
-			);
+			setOrigin(new URL(Object.values(response)[0][0]).origin);
 			setEndpoints(
 				Object.keys(response)
 					.flatMap((key) => response[key])
@@ -315,7 +310,7 @@ const APIGUI = () => {
 
 				{!origin ? (
 					<LoadingSpinner />
-				) :showGraphQL ? (
+				) : showGraphQL ? (
 					<ClayLayout.Row className="vh-100">
 						<GraphiQL fetcher={graphQLFetcher} />
 					</ClayLayout.Row>

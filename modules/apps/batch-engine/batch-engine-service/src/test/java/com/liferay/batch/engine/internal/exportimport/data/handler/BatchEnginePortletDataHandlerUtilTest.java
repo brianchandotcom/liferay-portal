@@ -6,9 +6,11 @@
 package com.liferay.batch.engine.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
@@ -17,6 +19,8 @@ import java.text.DateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
@@ -65,7 +69,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, _mockPortletDataContext(endDate, null));
+				null, _mockPortletDataContext(endDate, null, null));
 
 		Assert.assertEquals(
 			"dateModified le " + _dateFormat.format(endDate),
@@ -79,7 +83,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, _mockPortletDataContext(endDate, startDate));
+				null, _mockPortletDataContext(endDate, null, startDate));
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -89,10 +93,34 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
+	public void testBuildExportParametersWithNestedFields() {
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				List.of("nestedField1", "nestedField2"),
+				_mockPortletDataContext(null, null, null));
+
+		Assert.assertEquals(
+			"nestedField1,nestedField2", parameters.get("batchNestedFields"));
+
+		parameters = BatchEnginePortletDataHandlerUtil.buildExportParameters(
+			List.of("nestedField1", "nestedField2"),
+			_mockPortletDataContext(
+				null,
+				HashMapBuilder.put(
+					PortletDataHandlerKeys.PERMISSIONS, new String[] {"true"}
+				).build(),
+				null));
+
+		Assert.assertEquals(
+			"permissions,nestedField1,nestedField2",
+			parameters.get("batchNestedFields"));
+	}
+
+	@Test
 	public void testBuildExportParametersWithNoDates() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, _mockPortletDataContext(null, null));
+				null, _mockPortletDataContext(null, null, null));
 
 		Assert.assertNull(parameters.get("filter"));
 	}
@@ -103,7 +131,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, _mockPortletDataContext(null, startDate));
+				null, _mockPortletDataContext(null, null, startDate));
 
 		Assert.assertEquals(
 			"dateModified ge " + _dateFormat.format(startDate),
@@ -119,7 +147,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	private PortletDataContext _mockPortletDataContext(
-		Date endDate, Date startDate) {
+		Date endDate, Map<String, String[]> parameterMap, Date startDate) {
 
 		PortletDataContext portletDataContext = Mockito.mock(
 			PortletDataContext.class);
@@ -128,6 +156,12 @@ public class BatchEnginePortletDataHandlerUtilTest {
 			portletDataContext.getEndDate()
 		).thenReturn(
 			endDate
+		);
+
+		Mockito.when(
+			portletDataContext.getParameterMap()
+		).thenReturn(
+			(parameterMap == null) ? new HashMap<>() : parameterMap
 		);
 
 		Mockito.when(

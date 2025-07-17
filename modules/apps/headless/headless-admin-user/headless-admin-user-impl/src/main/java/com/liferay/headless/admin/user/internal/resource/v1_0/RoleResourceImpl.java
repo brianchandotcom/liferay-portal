@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.dto.v1_0.RolePermission;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.RoleEntityModel;
@@ -14,6 +15,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -44,6 +46,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
@@ -65,7 +68,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/role.properties",
 	scope = ServiceScope.PROTOTYPE, service = RoleResource.class
 )
-public class RoleResourceImpl extends BaseRoleResourceImpl {
+public class RoleResourceImpl
+	extends BaseRoleResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<Role> {
 
 	@Override
 	public void
@@ -164,6 +169,17 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	}
 
 	@Override
+	public String getPortletId() {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyConstants.SYSTEM, "LPD-35914")) {
+
+			return RolesAdminPortletKeys.ROLES_ADMIN;
+		}
+
+		return null;
+	}
+
+	@Override
 	public Role getRole(Long roleId) throws Exception {
 		com.liferay.portal.kernel.model.Role role = _roleService.fetchRole(
 			roleId);
@@ -232,6 +248,11 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 						contextUriInfo, contextUser),
 					role);
 			});
+	}
+
+	@Override
+	public Scope getScope() {
+		return Scope.COMPANY;
 	}
 
 	@Override

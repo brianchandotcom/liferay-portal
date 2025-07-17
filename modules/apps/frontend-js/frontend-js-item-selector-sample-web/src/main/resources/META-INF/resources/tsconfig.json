@@ -1,5 +1,5 @@
 {
-	"@generated": "f379303f0317087c6bb7737f3937209b2c935972",
+	"@generated": "5d0081df3bea9ece4f3c1a525abd7e7fe608fb0c",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,8 +11,17 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/frontend-data-set-web": [
+				"../../../../../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.ts"
+			],
 			"frontend-js-item-selector-web": [
 				"../../../../../../frontend-js-item-selector-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"frontend-js-web": [
+				"../../../../../../frontend-js-web/src/main/resources/META-INF/resources/main/index.d.ts"
+			],
+			"frontend-js-web/legacy": [
+				"../../../../../../frontend-js-web/src/main/resources/META-INF/resources/legacy/index.ts"
 			]
 		},
 		"rootDir": "../../../../../../../..",
@@ -32,7 +41,13 @@
 	],
 	"references": [
 		{
+			"path": "../../../../../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
 			"path": "../../../../../../frontend-js-item-selector-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
 		}
 	]
 }

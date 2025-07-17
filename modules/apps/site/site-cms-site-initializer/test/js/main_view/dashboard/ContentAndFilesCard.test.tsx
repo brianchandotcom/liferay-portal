@@ -65,7 +65,7 @@ describe('[CMS Dashboard] Components: ContentAndFilesCard', () => {
 		const Title = screen.getByText('30 new content items');
 		expect(Title).toBeInTheDocument();
 
-		const Trend = screen.getByText('-vs-previous-period');
+		const Trend = screen.getByText('x-vs-previous-period');
 		expect(Trend).toBeInTheDocument();
 
 		const VocabulariesBreakdown = screen.getByText('vocabularies');

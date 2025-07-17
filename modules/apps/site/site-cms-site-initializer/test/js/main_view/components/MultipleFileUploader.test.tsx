@@ -13,6 +13,10 @@ import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__
 
 import MultipleFileUploader from '../../../../src/main/resources/META-INF/resources/js/main_view/multiple_file_uploader/MultipleFileUploader';
 
+jest.mock('frontend-js-web', () => ({
+	sub: (str: string, arg: string) => str.replace('x', arg),
+}));
+
 const mockCloseModal = jest.fn();
 const mockUploadComplete = jest.fn();
 const mockUploadRequest = jest.fn().mockResolvedValue({error: false});

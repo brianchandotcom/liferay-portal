@@ -5,6 +5,7 @@
 
 import Badge from '@clayui/badge';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {Space} from '../types/Space';
@@ -49,7 +50,7 @@ export default function SpacesDisplay(props: SpaceDisplayProps) {
 							data-tooltip-align="bottom"
 							displayType="secondary"
 							label={`+${otherSpaces.length}`}
-							title={Liferay.Util.sub(
+							title={sub(
 								Liferay.Language.get('available-in-spaces-x'),
 								spaces.map((space) => space.name).join(', ')
 							)}

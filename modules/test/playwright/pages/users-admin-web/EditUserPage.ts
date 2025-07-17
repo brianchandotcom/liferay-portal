@@ -53,6 +53,7 @@ export class EditUserPage {
 	readonly organizationRolesTable: DataTablePage;
 	readonly organizationsLink: Locator;
 	readonly organizationsTable: Locator;
+	readonly organizationsTableRemoveButton: (organizationName: string) => Locator;
 	readonly page: Page;
 	readonly passwordConfirmationFrame: FrameLocator;
 	readonly passwordInput: Locator;
@@ -266,6 +267,8 @@ export class EditUserPage {
 		this.organizationsTable = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_organizationsSearchContainer'
 		);
+		this.organizationsTableRemoveButton = (organizationName) =>
+			page.getByLabel(`Remove ${organizationName}`);
 		this.page = page;
 		this.passwordConfirmationFrame = page.frameLocator(
 			'iframe[title="Confirm Password"]'

@@ -30,6 +30,7 @@ import {
 
 interface PrimaryRecipientProps {
 	emailNotificationRoles: MultiSelectItem[];
+	emailNotificationUserGroups: MultiSelectItem[];
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
@@ -48,6 +49,7 @@ export function resetRecipientValue(value: React.Key) {
 
 export function PrimaryRecipient({
 	emailNotificationRoles,
+	emailNotificationUserGroups,
 	errors,
 	learnResources,
 	recipientOptions,
@@ -57,40 +59,69 @@ export function PrimaryRecipient({
 }: PrimaryRecipientProps) {
 	const [recipient] = values.recipients as EmailRecipients[];
 	const [toRolesList, setToRolesList] = useState<MultiSelectItem[]>([]);
+	const [toUserGroupsList, setToUserGroupsList] = useState<MultiSelectItem[]>(
+		[]
+	);
 
 	useEffect(() => {
 		if (emailNotificationRoles.length && !toRolesList.length) {
 			setToRolesList(emailNotificationRoles);
 		}
 
-		if (
-			recipient.toType === 'role' &&
-			Array.isArray(recipient.to) &&
-			!!recipient.to.length &&
-			(!!toRolesList.length || !!emailNotificationRoles.length)
-		) {
-			const baseRoleList = toRolesList.length
-				? toRolesList
-				: emailNotificationRoles;
+		if (emailNotificationUserGroups.length && !toUserGroupsList.length) {
+			setToUserGroupsList(emailNotificationUserGroups);
+		}
 
-			setToRolesList(
-				baseRoleList.map((baseRoleElement) => {
-					return {
-						...baseRoleElement,
-						children: getCheckedChildren(
-							recipient.to as EmailNotificationRecipients[],
-							baseRoleElement.children,
-							'roleName'
-						),
-					};
-				})
-			);
+		if (Array.isArray(recipient.to) && !!recipient.to.length) {
+			if (
+				recipient.toType === 'role' &&
+				(!!toRolesList.length || !!emailNotificationRoles.length)
+			) {
+				const baseRoleList = toRolesList.length
+					? toRolesList
+					: emailNotificationRoles;
+
+				setToRolesList(
+					baseRoleList.map((baseRoleElement) => {
+						return {
+							...baseRoleElement,
+							children: getCheckedChildren(
+								recipient.to as EmailNotificationRecipients[],
+								baseRoleElement.children,
+								'roleName'
+							),
+						};
+					})
+				);
+			}
+			else if (
+				recipient.toType === 'user-group' &&
+				(!!toUserGroupsList.length ||
+					!!emailNotificationUserGroups.length)
+			) {
+				const baseUserGroupList = toUserGroupsList.length
+					? toUserGroupsList
+					: emailNotificationUserGroups;
+
+				setToUserGroupsList(
+					baseUserGroupList.map((baseUserGroupElement) => {
+						return {
+							...baseUserGroupElement,
+							children: getCheckedChildren(
+								recipient.to as EmailNotificationRecipients[],
+								baseUserGroupElement.children,
+								'userGroupName'
+							),
+						};
+					})
+				);
+			}
 
 			return;
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [emailNotificationRoles, recipient.to]);
+	}, [emailNotificationRoles, emailNotificationUserGroups, recipient.to]);
 
 	return (
 		<>
@@ -104,6 +135,12 @@ export function PrimaryRecipient({
 						const newToRoleList =
 							uncheckMultiSelectItemChildrens(toRolesList);
 						setToRolesList(newToRoleList);
+					}
+
+					if (value !== 'user-group') {
+						const newToUserGroupList =
+							uncheckMultiSelectItemChildrens(toUserGroupsList);
+						setToUserGroupsList(newToUserGroupList);
 					}
 					setValues({
 						...values,
@@ -212,6 +249,43 @@ export function PrimaryRecipient({
 						name="recipients"
 						required
 						value={getSubscribersDefaultRole()}
+					/>
+				</div>
+			)}
+
+			{recipient.toType === 'user-group' && (
+				<div className="lfr__notification-template-email-notification-settings-multiple-select">
+					<MultipleSelect
+						disabled={values.system}
+						error={errors.to}
+						id="primaryRecipientUserGroups"
+						label={Liferay.Language.get('user-group')}
+						options={toUserGroupsList}
+						placeholder={Liferay.Language.get('select-user-group')}
+						required
+						search
+						searchPlaceholder={Liferay.Language.get(
+							'search-for-a-user-group'
+						)}
+						selectAllOption
+						setOptions={(items) => {
+							const newRecipients = handleMultiSelectItemsChange(
+								items,
+								'userGroupName'
+							);
+
+							setValues({
+								...values,
+								recipients: [
+									{
+										...recipient,
+										to: newRecipients,
+									},
+								],
+							});
+
+							setToUserGroupsList(items);
+						}}
 					/>
 				</div>
 			)}

@@ -32,7 +32,9 @@ test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, layout}) => {
 	await test.step('Upload sample documents', async () => {
 		imageFile = await apiHelpers.headlessDelivery.postDocument(
 			layout.groupId,
-			createReadStream(path.join(__dirname, '/dependencies/sample_image.png')),
+			createReadStream(
+				path.join(__dirname, '/dependencies/sample_image.png')
+			),
 			{
 				description: getRandomString(),
 				documentFolderId: 0,

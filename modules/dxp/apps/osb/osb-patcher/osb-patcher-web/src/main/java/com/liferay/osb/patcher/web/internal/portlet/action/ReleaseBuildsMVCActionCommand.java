@@ -6,11 +6,14 @@
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.util.PatcherBuildUtil;
+import com.liferay.osb.patcher.web.internal.validator.PatcherBuildValidator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -41,9 +44,16 @@ public class ReleaseBuildsMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "releaseToHelpCenter");
 		int status = ParamUtil.getInteger(actionRequest, "status");
 
+		PatcherBuildValidator patcherBuildValidator = new PatcherBuildValidator(
+			_portal.getHttpServletRequest(actionRequest));
+
+		PatcherBuild patcherBuild = _patcherBuildLocalService.fetchPatcherBuild(
+			patcherBuildId);
+
+		patcherBuildValidator.validateRelease(patcherBuild);
+
 		if (releaseToHelpCenter) {
-			PatcherBuildUtil.releasePatcherBuild(
-				_patcherBuildLocalService.getPatcherBuild(patcherBuildId));
+			PatcherBuildUtil.releasePatcherBuild(patcherBuild);
 		}
 
 		_patcherBuildLocalService.updateStatus(patcherBuildId, status);
@@ -51,5 +61,8 @@ public class ReleaseBuildsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PatcherBuildLocalService _patcherBuildLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

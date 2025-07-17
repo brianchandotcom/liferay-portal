@@ -73,8 +73,11 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public PatcherFix deletePatcherFix(long patcherFixId)
-		throws PortalException {
+	public PatcherFix deletePatcherFix(long patcherFixId) throws Exception {
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		PatcherFixUtil.validateDelete(patcherFix);
 
 		return patcherFixPersistence.remove(patcherFixId);
 	}

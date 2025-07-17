@@ -7,11 +7,14 @@ package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherFixConstants;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.model.PatcherFix;
 import com.liferay.osb.patcher.service.PatcherFixLocalService;
 import com.liferay.osb.patcher.util.PatcherFixUtil;
+import com.liferay.osb.patcher.web.internal.validator.PatcherFixValidator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -38,6 +41,14 @@ public class ExcludeFixesMVCActionCommand extends BaseMVCActionCommand {
 
 		long patcherFixId = ParamUtil.getLong(actionRequest, "patcherFixId");
 
+		PatcherFixValidator patcherFixValidator = new PatcherFixValidator(
+			_portal.getHttpServletRequest(actionRequest));
+
+		PatcherFix patcherFix = _patcherFixLocalService.fetchPatcherFix(
+			patcherFixId);
+
+		patcherFixValidator.validateExclude(patcherFix);
+
 		PatcherFixUtil.updateObsolete(patcherFixId, true);
 
 		_patcherFixLocalService.updateType(
@@ -46,5 +57,8 @@ public class ExcludeFixesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PatcherFixLocalService _patcherFixLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -9,14 +9,14 @@ import SSADashboardOutlet from './SSADashboardOutlet';
 
 import './index.scss';
 import withProviders from '../../hoc/withProviders';
-import SSATrials from './pages';
+import SaaSTrial from './pages';
 
 const SSADashboardRouter = () => {
 	return (
 		<HashRouter>
 			<Routes>
 				<Route element={<SSADashboardOutlet />}>
-					<Route element={<SSATrials />} index />
+					<Route element={<SaaSTrial />} index />
 				</Route>
 			</Routes>
 		</HashRouter>

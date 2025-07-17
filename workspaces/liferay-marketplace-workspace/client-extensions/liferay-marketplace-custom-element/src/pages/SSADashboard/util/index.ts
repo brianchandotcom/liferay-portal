@@ -7,6 +7,17 @@ import SearchBuilder from '../../../core/SearchBuilder';
 import {OrderTypes} from '../../../enums/Order';
 import {ExtendRequestStatus} from '../enums/SSATrials';
 
+export function getExtensionStatusFromTrialSettings(trialSettings: string) {
+	if (trialSettings === '') {
+		return ExtendRequestStatus.NOT_REQUESTED;
+	}
+
+	return (
+		JSON.parse(trialSettings)?.ssaSettings?.extendRequestStatus ??
+		ExtendRequestStatus.NOT_REQUESTED
+	);
+}
+
 export default function getSSATrialsResourceURL(
 	channelId: number,
 	accountId: string
@@ -23,11 +34,4 @@ export default function getSSATrialsResourceURL(
 	)}`;
 
 	return url;
-}
-
-export function getExtensionStatusFromTrialSettings(trialSettings: string) {
-	return (
-		JSON.parse(trialSettings)?.ssaSettings?.extendRequestStatus ??
-		ExtendRequestStatus.NOT_REQUESTED
-	);
 }

@@ -4,204 +4,179 @@
  */
 
 import ClayButton from '@clayui/button';
-import {addDays, format} from 'date-fns';
 
-import ListView, {ListViewProps} from '../../../components/ListView';
-import {ManagementToolbarProps} from '../../../components/ListView/components/ManagementToolbar';
 import Page from '../../../components/Page';
 import i18n from '../../../i18n';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {useOutletContext} from 'react-router-dom';
-import {OrderCustomFields} from '../../../enums/Order';
-import TrialStatus from '../components/TrialStatus/TrialStatus';
-import ExtensionStatus from '../components/ExtensionStatus/ExtensionStatus';
-import getSSATrialsResourceURL, {
-	getExtensionStatusFromTrialSettings,
-} from '../util';
+import getSSATrialsResourceURL from '../util';
 import {useModal} from '@clayui/modal';
 import Modal from '../../../components/Modal';
-import { useSSAForm } from '../components/SSAForm';
+import TrialListView from '../components/TrialListView/TrialListView';
+import {OrderStatus, OrderTypes} from '../../../enums/Order';
+import SearchBuilder from '../../../core/SearchBuilder';
+import useModalContext from '../../../hooks/useModalContext';
+import ClayAlert from '@clayui/alert';
+import ExtendSSATrialModal from './ExtendSSATrialModal';
+import {useSSATrials} from '../useSSATrials';
+import {Action} from '../../../utils/constants';
 
-type SSATrialsListViewProps = {
-	isSortable?: boolean;
-	listViewProps?: Partial<ListViewProps<PlacedOrder>>;
-	managementToolbarProps?: {
-		visible?: boolean;
-	} & Omit<
-		ManagementToolbarProps,
-		| 'actions'
-		| 'onSelectAllRows'
-		| 'rowSelectable'
-		| 'tableProps'
-		| 'totalItems'
-	>;
-};
-
-export function SSATrialsListView({
-	listViewProps,
-	managementToolbarProps,
-}: SSATrialsListViewProps) {
-	const {channel} = useMarketplaceContext();
+export default function SaaSTrial() {
+	const modalContext = useModalContext();
+	const modal = useModal();
+	const {channel, marketplaceUserAccount, myUserAccount} =
+		useMarketplaceContext();
 	const {selectedAccount} = useOutletContext<any>();
 	const resourceUrl = getSSATrialsResourceURL(
 		channel.channelId,
 		selectedAccount?.id
 	);
 
-	return (
-		<ListView<PlacedOrder>
-			emptyStateProps={{title: i18n.translate('no-orders-yet')}}
-			id="ssa-trials"
-			managementToolbarProps={{
-				filterSchema: 'administratorOrders',
-				...managementToolbarProps,
-			}}
-			resource={resourceUrl}
-			tableProps={{
-				actions: [
-					{
-						name: i18n.translate('view-details'),
-						onClick: () => console.log('go to trial'),
-					},
-					{
-						name: 'Expire',
-						onClick: () => console.log('Expire'),
-					},
-					{
-						name: 'Extend',
-						onClick: () => console.log('extend'),
-					},
-				],
-				columns: [
-					{
-						id: 'placedOrderItems',
-						name: 'Name',
-						render: ([placedOrderItem]) => (
-							<span className="font-weight-semi-bold ml-2">
-								{placedOrderItem.name}
-							</span>
-						),
-					},
-					{
-						id: 'author',
-						name: 'Created By',
-						render: (author, {createDate}) => {
-							return (
-								<div className="d-flex flex-column">
-									<span className="dashboard-table-row-text">
-										{author}
-									</span>
+	const onExpireTrial = (order: Order) => {
+		console.log('extending Order: ', order.id);
+		console.log(order);
+	};
 
-									<span className="dashboard-table-row-purchased-date">
-										{new Date(
-											createDate
-										).toLocaleDateString('en-US', {
-											day: 'numeric',
-											month: 'short',
-											year: 'numeric',
-										})}
-									</span>
-								</div>
-							);
-						},
-						sortable: true,
-					},
-					{
-						id: 'id',
-						name: 'Order ID',
-						sortable: true,
-					},
-					{
-						id: 'orderTypeExternalReferenceCode',
-						name: i18n.translate('type'),
-						render: (orderTypeExternalReferenceCode) => {
-							return (
-								<span className="label label-info">
-									{orderTypeExternalReferenceCode}
-								</span>
-							);
-						},
-						sortable: true,
-					},
-					{
-						id: 'createDate',
-						name: 'End Date',
-						render: (createDate, {customFields}) => {
+	const {
+		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
+	} = useSSATrials({
+		accountId: selectedAccount?.id,
+		channelId: channel.channelId,
+		filter: new SearchBuilder()
+			.eq('orderTypeExternalReferenceCode', OrderTypes.SSA_SAAS)
+			.and()
+			.eq('author', myUserAccount.name)
+			.and()
+			.eq('orderStatusInfo/code', 0, {
+				unquote: true,
+			})
+			.build(),
+		page: 1,
+		pageSize: -1,
+	});
 
-							// TODO - Create a help function to retrieve a field from the customfield object
-							// const duration = customFields[
-							// 	OrderCustomFields.TRIAL_SETTINGS
-							// ]
-							// 	? customFields[OrderCustomFields.TRIAL_SETTINGS].duration
-							// 	: 7;
+	const isUserSSAAdmin = marketplaceUserAccount.isSSAAdmin;
+	const canCreateTrial = isUserSSAAdmin
+		? true
+		: SSATrialsInProgress.totalCount <= 3;
 
-							const duration = 7;
+	const actions: Action[] = [
+		{
+			disabled: (order: Order) =>
+				order.orderStatusInfo.label === OrderStatus.APPROVED ||
+				order.orderStatusInfo.label === OrderStatus.COMPLETED,
+			name: i18n.translate('go-to-trial'),
+			onClick: (order: Order) =>
+				window.open(
+					`https://${
+						order?.customFields?.['trial-virtualhost'] as string
+					}`
+				),
+		},
+		{
+			disabled: (order: Order) =>
+				order.orderStatusInfo.label === OrderStatus.APPROVED ||
+				order.orderStatusInfo.label === OrderStatus.COMPLETED,
+			name: 'Extend',
+			onClick: (order: PlacedOrder) => {
+				modalContext.onOpenModal({
+					body: (
+						<ExtendSSATrialModal
+							onClose={modalContext.onClose}
+							order={order}
+						/>
+					),
+					header: `Extend ${order.id} Trial`,
+				});
+			},
+		},
+		{
+			disabled: (order: Order) =>
+				order.orderStatusInfo.label === OrderStatus.APPROVED ||
+				order.orderStatusInfo.label === OrderStatus.COMPLETED,
+			name: 'Expire',
+			onClick: (order: Order) => {
+				modalContext.onOpenModal({
+					body: (
+						<div>
+							<ClayAlert displayType="warning" role={null}>
+								This action cannot be undone.
+							</ClayAlert>
+							<p>
+								Are you sure you want to expire this trial? This
+								action imply the end of the test environemnt
+								permanently.
+							</p>
+						</div>
+					),
+					footer: [
+						<ClayButton
+							aria-label="cancel"
+							displayType="secondary"
+							onClick={modalContext.onClose}
+							size="sm"
+						>
+							{i18n.translate('cancel')}
+						</ClayButton>,
+						undefined,
+						<ClayButton
+							aria-label="close"
+							displayType="warning"
+							onClick={() => onExpireTrial(order)}
+							size="sm"
+						>
+							Got it
+						</ClayButton>,
+					],
+					header: `Expire ${order.id} Trial`,
+					status: undefined,
+				});
+			},
+		},
+	];
 
-							if (typeof duration === 'number') {
-								return format(
-									addDays(new Date(createDate), duration),
-									'dd MMM, yyyy'
-								).toString();
-							}
-
-							return 'DNE';
-						},
-						sortable: true,
-					},
-					{
-						id: 'orderStatusInfo',
-						name: 'Trial Status',
-						render: (orderStatusInfo) => (
-							<TrialStatus trialStatus={orderStatusInfo?.label} />
-						),
-						sortable: true,
-					},
-					{
-						id: 'customFields',
-						name: 'Extension Status',
-						render: (customFields) => (
-							<ExtensionStatus
-								extensionStatus={getExtensionStatusFromTrialSettings(
-									customFields[
-										OrderCustomFields.TRIAL_SETTINGS
-									]
-								)}
-							/>
-						),
-						sortable: true,
-					},
-				],
-			}}
-			{...listViewProps}
-		/>
-	);
-}
-
-export default function SSATrials() {
-	const modal = useModal();
-	const ssaForm = useSSAForm();
 	return (
 		<>
 			<Page
 				pageRendererProps={{className: 'border py-2'}}
 				rightButton={
-					<ClayButton onClick={() => ssaForm.openModal()}>
-						Add New Trials
+					<ClayButton onClick={() => modal.onOpenChange(true)}>
+						Add New Trial
 					</ClayButton>
 				}
-				description="Manage your SSA Trials"
-				title="SSA Trials"
+				description="Manage your current trials"
+				title="SaaS Demos"
 			>
-				<SSATrialsListView
+				<TrialListView
+					actions={actions}
 					isSortable
 					managementToolbarProps={{
-						searchVisible: false,
-						visible: true,
+						searchVisible: true,
+						visible: isUserSSAAdmin ? true : false,
 					}}
+					resourceUrl={resourceUrl}
 				/>
 			</Page>
 
-			{modal.open && (
+			{modal.open && canCreateTrial ? (
+				<Modal
+					last={
+						<ClayButton
+							className="btn"
+							displayType="secondary"
+							onClick={() => modal.onClose()}
+						>
+							{i18n.translate('cancel')}
+						</ClayButton>
+					}
+					observer={modal.observer}
+					title="Form creation"
+					size={'md' as any}
+					visible={modal.open}
+				>
+					<span>This will be the creation form</span>
+				</Modal>
+			) : (
 				<Modal
 					last={
 						<ClayButton

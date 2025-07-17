@@ -15,10 +15,10 @@ type TrialStatusProps = {
 };
 
 const trialStatusLabel = {
-	approved: 'Expired',
-	completed: 'Expired',
-	pending: 'Active',
-	processing: 'Processing',
+	'approved': 'Expired',
+	'completed': 'Expired',
+	'in-progress': 'Active',
+	'processing': 'Processing',
 };
 
 const TrialStatus = ({trialStatus}: TrialStatusProps) => (
@@ -29,7 +29,10 @@ const TrialStatus = ({trialStatus}: TrialStatusProps) => (
 					Status.COMPLETED,
 					Status.APPROVED,
 				].includes(trialStatus as Status),
-				'trial-status-icon-pending': trialStatus === Status.PENDING,
+				'trial-status-icon-pending': [
+					Status.IN_PROGRESS,
+					Status.PENDING,
+				].includes(trialStatus as Status),
 				'trial-status-icon-processing':
 					trialStatus === Status.PROCESSING,
 			})}

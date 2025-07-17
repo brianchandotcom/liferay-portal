@@ -45,6 +45,7 @@ export const DOCUMENT_OBJECT_ENTRY = {
 		dateCreated: '2025-06-27T14:27:40Z',
 		dateModified: '2025-06-27T14:27:40Z',
 		defaultLanguageId: 'en_US',
+		expirationDate: '2025-06-27T14:27:40Z',
 		externalReferenceCode: '97753061-a0cd-128c-2f29-02ab5eac6632',
 		file: {
 			externalReferenceCode: 'c3c0a482-7021-f28e-08b0-4ab38587ca57',
@@ -63,6 +64,7 @@ export const DOCUMENT_OBJECT_ENTRY = {
 		keywords: [],
 		objectEntryFolderExternalReferenceCode: 'L_FILES',
 		objectEntryFolderId: 34167,
+		reviewDate: '2025-06-27T14:27:40Z',
 		scopeId: 34164,
 		scopeKey: 'Default',
 		status: {code: 0, label: 'approved', label_i18n: 'Approved'},

@@ -626,6 +626,10 @@ public class OIDCUserInfoProcessor {
 		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
 			UserGroup.class.getName(), companyId);
 
+		if (userGroupIds == null) {
+			userGroupIds = new ArrayList<>();
+		}
+
 		for (UserGroup userGroup :
 				_userGroupLocalService.getUserUserGroups(user.getUserId())) {
 

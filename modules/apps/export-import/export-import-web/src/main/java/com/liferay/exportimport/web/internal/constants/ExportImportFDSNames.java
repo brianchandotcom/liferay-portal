@@ -5,12 +5,17 @@
 
 package com.liferay.exportimport.web.internal.constants;
 
+import com.liferay.exportimport.constants.ExportImportPortletKeys;
+
 /**
  * @author Jorge González
  */
 public class ExportImportFDSNames {
 
+	public static final String COMPANY_IMPORT_ERRORS =
+		ExportImportPortletKeys.COMPANY_IMPORT + "-importErrors";
+
 	public static final String IMPORT_ERRORS =
-		ExportImportConstants.BUNDLE_SYMBOLIC_NAME + "-importErrors";
+		ExportImportPortletKeys.IMPORT + "-importErrors";
 
 }

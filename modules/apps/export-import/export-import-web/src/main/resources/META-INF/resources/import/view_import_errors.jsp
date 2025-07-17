@@ -20,6 +20,8 @@ BackgroundTask backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(ba
 
 renderResponse.setTitle(backgroundTask.getName());
 
+GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
+
 ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayContext(request, renderResponse);
 %>
 
@@ -48,7 +50,7 @@ ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayC
 	<frontend-data-set:headless-display
 		apiURL="<%= importErrorsDisplayContext.getAPIURL() %>"
 		fdsActionDropdownItems="<%= importErrorsDisplayContext.getFDSActionDropdownItems() %>"
-		id="<%= ExportImportFDSNames.IMPORT_ERRORS %>"
+		id="<%= stagingGroupHelper.isCompanyGroup(groupDisplayContextHelper.getGroup()) ? ExportImportFDSNames.COMPANY_IMPORT_ERRORS : ExportImportFDSNames.IMPORT_ERRORS %>"
 		style="fluid"
 	/>
 </aui:form>

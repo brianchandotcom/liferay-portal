@@ -5,19 +5,13 @@
 
 package com.liferay.customer;
 
-import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.customer.exception.FileServerUnavailableException;
 import com.liferay.customer.exception.JiraIssueClosedException;
 import com.liferay.customer.exception.JiraIssueNotFoundException;
 import com.liferay.customer.exception.JiraOrganizationNotFoundException;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.customer.service.GoogleCloudStorageService;
-import com.liferay.customer.service.JiraService;
 import com.liferay.customer.service.TicketAttachmentService;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringUtil;
-
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 /**
  * @author Amos Fong
@@ -61,7 +54,7 @@ public class TicketAttachmentsInitiateUploadRestController
 
 			String ticketId = jsonObject.getString("ticketId");
 
-			String accountKey = _getAccountKey(ticketId);
+			String accountKey = getAccountKey(ticketId);
 
 			TicketAttachment ticketAttachment =
 				_ticketAttachmentService.fetchTicketAttachment(
@@ -150,51 +143,11 @@ public class TicketAttachmentsInitiateUploadRestController
 		}
 	}
 
-	private String _getAccountKey(String jiraIssueKey) throws Exception {
-		try {
-			JSONObject jsonObject = _jiraService.getIssueJSONObject(
-				jiraIssueKey);
-
-			if (jsonObject == null) {
-				throw new JiraIssueNotFoundException();
-			}
-
-			JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
-
-			String status = fieldsJSONObject.optString("status");
-
-			if (status.equals("Closed")) {
-				throw new JiraIssueClosedException();
-			}
-
-			List<String> organizationCompositeIdArray = StringUtil.split(
-				fieldsJSONObject.getString("organization"), CharPool.COLON);
-
-			JSONObject assetObjectJSONObject = _jiraService.getAssetObject(
-				organizationCompositeIdArray.get(0),
-				organizationCompositeIdArray.get(1));
-
-			if (assetObjectJSONObject == null) {
-				throw new JiraOrganizationNotFoundException();
-			}
-
-			return assetObjectJSONObject.getString("objectKey");
-		}
-		catch (WebClientResponseException.NotFound webClientResponseException) {
-			_log.error(webClientResponseException, webClientResponseException);
-
-			throw new JiraIssueNotFoundException();
-		}
-	}
-
 	private static final Log _log = LogFactory.getLog(
 		TicketAttachmentsInitiateUploadRestController.class);
 
 	@Autowired
 	private GoogleCloudStorageService _googleCloudStorageService;
-
-	@Autowired
-	private JiraService _jiraService;
 
 	@Autowired
 	private TicketAttachmentService _ticketAttachmentService;

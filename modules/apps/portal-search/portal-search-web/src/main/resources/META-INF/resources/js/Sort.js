@@ -25,7 +25,7 @@ export default function ({namespace: portletNamespace}) {
 			url.search = FacetUtil.updateQueryString(
 				key,
 				[sortSelect],
-				document.location.search
+				window.location.search
 			);
 
 			Liferay.Util.navigate(url.toString());

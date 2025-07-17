@@ -86,7 +86,7 @@ export default function ({formId, initialKeywords, retainFacetSelections}) {
 			const keywords = getKeywords();
 			const searchURL = form.action;
 
-			let queryString = updateQueryString(document.location.search);
+			let queryString = updateQueryString(window.location.search);
 
 			/*
 			 * Refer to LPD-19994 for acceptance criteria regarding

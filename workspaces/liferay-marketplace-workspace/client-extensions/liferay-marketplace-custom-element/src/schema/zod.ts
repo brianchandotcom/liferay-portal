@@ -190,6 +190,9 @@ const zodSchema = {
 		email: z.string().email(i18n.translate('please-fill-in-a-valid-email')),
 		name: z.string().min(3, i18n.sub('x-is-required', 'name')),
 	}),
+	extendSSATrial: z.object({
+		duration: z.number().int().max(60).min(1),
+	}),
 	generateLicenseKey: z.object({
 		description: z.string().max(100, {message: 'Invalid license name'}),
 		hostname: z.string(),

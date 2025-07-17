@@ -11,3 +11,7 @@ export enum ExtendRequestStatus {
 	PENDING = 'pending',
 	REJECTED = 'rejected',
 }
+
+export enum TrialSettings {
+	SSA_SETTINGS = 'ssaSettings',
+}

@@ -17,6 +17,7 @@ export enum OrderCustomFields {
 export enum OrderStatus {
 	APPROVED = 'approved',
 	COMPLETED = 'completed',
+	IN_PROGRESS = 'in-progress',
 	PENDING = 'pending',
 	PROCESSING = 'processing',
 }

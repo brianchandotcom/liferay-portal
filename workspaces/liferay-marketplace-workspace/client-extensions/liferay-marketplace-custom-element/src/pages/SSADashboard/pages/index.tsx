@@ -3,23 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-
-import Page from '../../../components/Page';
-import i18n from '../../../i18n';
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-import {useOutletContext} from 'react-router-dom';
-import getSSATrialsResourceURL from '../util';
-import {useModal} from '@clayui/modal';
-import Modal from '../../../components/Modal';
-import TrialListView from '../components/TrialListView/TrialListView';
-import {OrderStatus, OrderTypes} from '../../../enums/Order';
-import SearchBuilder from '../../../core/SearchBuilder';
-import useModalContext from '../../../hooks/useModalContext';
 import ClayAlert from '@clayui/alert';
-import ExtendSSATrialModal from './ExtendSSATrialModal';
-import {useSSATrials} from '../useSSATrials';
+import ClayButton from '@clayui/button';
+import {useModal} from '@clayui/modal';
+import {useOutletContext} from 'react-router-dom';
+
+import Modal from '../../../components/Modal';
+import Page from '../../../components/Page';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import SearchBuilder from '../../../core/SearchBuilder';
+import {OrderStatus, OrderTypes} from '../../../enums/Order';
+import useModalContext from '../../../hooks/useModalContext';
+import i18n from '../../../i18n';
 import {Action} from '../../../utils/constants';
+import TrialListView from '../components/TrialListView/TrialListView';
+import {useSSATrials} from '../useSSATrials';
+import getSSATrialsResourceURL from '../util';
+import ExtendSSATrialModal from './ExtendSSATrialModal';
 
 export default function SaaSTrial() {
 	const modalContext = useModalContext();
@@ -33,7 +33,6 @@ export default function SaaSTrial() {
 	);
 
 	const onExpireTrial = (order: Order) => {
-		console.log('extending Order: ', order.id);
 		console.log(order);
 	};
 
@@ -113,6 +112,7 @@ export default function SaaSTrial() {
 						<ClayButton
 							aria-label="cancel"
 							displayType="secondary"
+							key={0}
 							onClick={modalContext.onClose}
 							size="sm"
 						>
@@ -122,6 +122,7 @@ export default function SaaSTrial() {
 						<ClayButton
 							aria-label="close"
 							displayType="warning"
+							key={2}
 							onClick={() => onExpireTrial(order)}
 							size="sm"
 						>
@@ -138,13 +139,13 @@ export default function SaaSTrial() {
 	return (
 		<>
 			<Page
+				description="Manage your current trials"
 				pageRendererProps={{className: 'border py-2'}}
 				rightButton={
 					<ClayButton onClick={() => modal.onOpenChange(true)}>
 						Add New Trial
 					</ClayButton>
 				}
-				description="Manage your current trials"
 				title="SaaS Demos"
 			>
 				<TrialListView
@@ -170,8 +171,8 @@ export default function SaaSTrial() {
 						</ClayButton>
 					}
 					observer={modal.observer}
-					title="Form creation"
 					size={'md' as any}
+					title="Form creation"
 					visible={modal.open}
 				>
 					<span>This will be the creation form</span>
@@ -188,14 +189,14 @@ export default function SaaSTrial() {
 						</ClayButton>
 					}
 					observer={modal.observer}
-					title="SSA Trials Limit Reached"
 					size={'md' as any}
+					title="SSA Trials Limit Reached"
 					visible={modal.open}
 				>
 					<span>
-						You've reached the maximum number of active trials
+						{`You've reached the maximum number of active trials
 						allowed. To start a new trial, please end one of your
-						existing trials first.
+						existing trials first.`}
 					</span>
 				</Modal>
 			)}

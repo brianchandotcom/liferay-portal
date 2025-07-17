@@ -8,7 +8,7 @@
 		"en_US": "SSA"
 	},
 	"permissions": [
-        {
+		{
 			"actionIds": [
 			],
 			"roleName": "Guest",
@@ -29,7 +29,7 @@
 			"scope": 4
 		}
 	],
-    "private": false,
+	"private": false,
 	"system": false,
 	"type": "content"
 }

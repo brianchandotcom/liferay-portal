@@ -82,12 +82,14 @@
 		],
 		"name": "Solution Publisher",
 		"type": 6
-	},{
+	},
+	{
 		"actions": [
 		],
 		"name": "SSA",
 		"type": 6
-	},{
+	},
+	{
 		"actions": [
 		],
 		"name": "SSA Admin",

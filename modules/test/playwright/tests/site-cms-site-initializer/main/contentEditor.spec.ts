@@ -314,11 +314,19 @@ test(
 
 		await page.keyboard.type('New comment');
 
-		await page.getByRole('button', {name: 'Save'}).click();
+		const saveButton = page.getByRole('button', {name: 'Save'});
+
+		await expect(saveButton).toBeEnabled();
+
+		await saveButton.click();
+
+		await expect(saveButton).toBeDisabled();
 
 		await waitForAlert(page, 'Success:Your comment has been posted.', {
 			autoClose: true,
 		});
+
+		await expect(saveButton).toBeEnabled();
 
 		// Check that the text typed is removed when the comment is saved or when the button cancel is pressed
 

@@ -43,3 +43,15 @@ test(
 		});
 	}
 );
+
+test(
+	'Error mensaje is shown if the endpoint parameter is wrong',
+	{tag: '@LPD-59421'},
+	async ({page}) => {
+		await page.goto('/o/api?endpoint=http://attacker.com/openapi.json');
+
+		await expect(page.getByText(`Forbidden access.`)).toBeVisible({
+			timeout: 3000,
+		});
+	}
+);

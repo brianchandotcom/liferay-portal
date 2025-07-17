@@ -24,10 +24,13 @@ import com.liferay.notification.service.persistence.NotificationQueueEntryPersis
 import com.liferay.notification.service.persistence.NotificationTemplateAttachmentPersistence;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
+import com.liferay.notification.util.NotificationRecipientSettingUtil;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -325,18 +328,48 @@ public class NotificationTemplateLocalServiceImpl
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();
 
+		String name = notificationTemplate.getName();
+
 		notificationTemplate = notificationTemplatePersistence.findByPrimaryKey(
 			notificationTemplate.getNotificationTemplateId());
 
-		NotificationTemplateUtil.validateInvokerBundle(
-			"Only allowed bundles can update system notification templates",
-			notificationTemplate.isSystem());
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+			NotificationTemplateUtil.validateInvokerBundle(
+				"Only allowed bundles can update system notification templates",
+				notificationTemplate.isSystem());
+		}
 
 		_validate(notificationContext);
 
 		NotificationRecipient notificationRecipient =
 			_notificationRecipientLocalService.updateNotificationRecipient(
 				notificationContext.getNotificationRecipient());
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-42577") &&
+			notificationTemplate.isSystem() &&
+			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+
+			notificationTemplate.setName(name);
+
+			Map<String, Object> notificationRecipientSettings =
+				NotificationRecipientSettingUtil.toMap(
+					notificationContext.getNotificationRecipientSettings());
+
+			_notificationRecipientSettingLocalService.
+				updateNotificationRecipientSetting(
+					notificationRecipient.getNotificationRecipientId(),
+					NotificationRecipientSettingConstants.NAME_FROM,
+					notificationRecipientSettings.get(
+						NotificationRecipientSettingConstants.NAME_FROM));
+			_notificationRecipientSettingLocalService.
+				updateNotificationRecipientSetting(
+					notificationRecipient.getNotificationRecipientId(),
+					NotificationRecipientSettingConstants.NAME_FROM_NAME,
+					notificationRecipientSettings.get(
+						NotificationRecipientSettingConstants.NAME_FROM_NAME));
+
+			return notificationTemplatePersistence.update(notificationTemplate);
+		}
 
 		for (NotificationRecipientSetting notificationRecipientSetting :
 				notificationRecipient.getNotificationRecipientSettings()) {

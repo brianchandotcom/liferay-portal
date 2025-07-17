@@ -52,13 +52,7 @@ public class NotificationRecipientSettingLocalServiceImpl
 			notificationRecipientId);
 		notificationRecipientSetting.setName(name);
 
-		if (value instanceof String) {
-			notificationRecipientSetting.setValue(String.valueOf(value));
-		}
-		else {
-			notificationRecipientSetting.setValueMap(
-				(Map<Locale, String>)value);
-		}
+		_setValue(notificationRecipientSetting, value);
 
 		return notificationRecipientSettingPersistence.update(
 			notificationRecipientSetting);
@@ -78,6 +72,34 @@ public class NotificationRecipientSettingLocalServiceImpl
 
 		return notificationRecipientSettingPersistence.
 			findByNotificationRecipientId(notificationRecipientId);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public NotificationRecipientSetting updateNotificationRecipientSetting(
+		long notificationRecipientId, String name, Object value) {
+
+		NotificationRecipientSetting notificationRecipientSetting =
+			notificationRecipientSettingPersistence.fetchByNRI_N(
+				notificationRecipientId, name);
+
+		_setValue(notificationRecipientSetting, value);
+
+		return notificationRecipientSettingPersistence.update(
+			notificationRecipientSetting);
+	}
+
+	private void _setValue(
+		NotificationRecipientSetting notificationRecipientSetting,
+		Object value) {
+
+		if (value instanceof String) {
+			notificationRecipientSetting.setValue(String.valueOf(value));
+		}
+		else {
+			notificationRecipientSetting.setValueMap(
+				(Map<Locale, String>)value);
+		}
 	}
 
 	@Reference

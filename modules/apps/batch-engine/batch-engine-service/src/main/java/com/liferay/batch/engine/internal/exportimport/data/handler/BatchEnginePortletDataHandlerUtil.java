@@ -11,16 +11,21 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.Serializable;
 
 import java.text.Format;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,19 +36,29 @@ import java.util.Map;
 public class BatchEnginePortletDataHandlerUtil {
 
 	public static Map<String, Serializable> buildExportParameters(
-		PortletDataContext portletDataContext) {
+		List<String> nestedFields, PortletDataContext portletDataContext) {
 
 		return HashMapBuilder.<String, Serializable>put(
 			"batchNestedFields",
 			() -> {
+				List<String> batchNestedFields = new ArrayList<>();
+
 				if (MapUtil.getBoolean(
 						portletDataContext.getParameterMap(),
 						PortletDataHandlerKeys.PERMISSIONS)) {
 
-					return "permissions";
+					batchNestedFields.add("permissions");
 				}
 
-				return null;
+				if (ListUtil.isNotEmpty(nestedFields)) {
+					batchNestedFields.addAll(nestedFields);
+				}
+
+				if (batchNestedFields.isEmpty()) {
+					return null;
+				}
+
+				return StringUtil.merge(batchNestedFields, StringPool.COMMA);
 			}
 		).put(
 			"filter",

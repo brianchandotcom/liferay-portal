@@ -52,7 +52,6 @@ public class CPDefinitionInventoryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
 		_user = UserTestUtil.addUser();
 
 		_commerceCatalog = _commerceCatalogService.addCommerceCatalog(
@@ -67,9 +66,7 @@ public class CPDefinitionInventoryLocalServiceTest {
 	}
 
 	@Test
-	public void testCPDefinitionInventoryAllowedOrderQuantitiesValidation()
-		throws Exception {
-
+	public void testUpdateCPDefinitionInventory() throws Exception {
 		CPDefinitionInventory cpDefinitionInventory1 =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(

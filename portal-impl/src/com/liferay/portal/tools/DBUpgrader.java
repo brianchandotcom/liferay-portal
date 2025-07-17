@@ -212,9 +212,8 @@ public class DBUpgrader {
 		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
 
 		serviceLatch.<Appender>waitFor(
-			StringBundler.concat(
-				"(&(appender.name=UpgradeLogAppender)(objectClass=",
-				Appender.class.getName(), "))"),
+			"(&(appender.name=UpgradeLogAppender)(objectClass=" +
+				Appender.class.getName() + "))",
 			appender -> {
 				_appender = appender;
 

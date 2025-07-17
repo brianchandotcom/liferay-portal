@@ -155,7 +155,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 	@Override
 	public String getIssues() {
-		return _playwrightTestClassMethod.getAnnotations();
+		return _playwrightTestClassMethod.getIssues();
 	}
 
 	@Override

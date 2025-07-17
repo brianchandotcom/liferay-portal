@@ -288,11 +288,11 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	protected void addTestClassMethod(
-		boolean methodIgnored, String methodName, String annotations) {
+		boolean methodIgnored, String methodName, String issues) {
 
 		addTestClassMethod(
 			TestClassFactory.newTestClassMethod(
-				methodIgnored, methodName, annotations, this));
+				methodIgnored, methodName, issues, this));
 	}
 
 	protected void addTestClassMethod(String methodName) {

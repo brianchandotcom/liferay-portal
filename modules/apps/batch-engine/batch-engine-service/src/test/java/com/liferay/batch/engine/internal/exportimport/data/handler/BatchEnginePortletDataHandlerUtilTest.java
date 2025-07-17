@@ -65,7 +65,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				_mockPortletDataContext(endDate, null));
+				null, _mockPortletDataContext(endDate, null));
 
 		Assert.assertEquals(
 			"dateModified le " + _dateFormat.format(endDate),
@@ -79,7 +79,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				_mockPortletDataContext(endDate, startDate));
+				null, _mockPortletDataContext(endDate, startDate));
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -92,7 +92,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	public void testBuildExportParametersWithNoDates() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				_mockPortletDataContext(null, null));
+				null, _mockPortletDataContext(null, null));
 
 		Assert.assertNull(parameters.get("filter"));
 	}
@@ -103,7 +103,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				_mockPortletDataContext(null, startDate));
+				null, _mockPortletDataContext(null, startDate));
 
 		Assert.assertEquals(
 			"dateModified ge " + _dateFormat.format(startDate),

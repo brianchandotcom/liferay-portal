@@ -275,7 +275,7 @@ AUI.add(
 				const paramFrom = param + 'From';
 				const paramTo = param + 'To';
 
-				let parameterArray = document.location.search
+				let parameterArray = window.location.search
 					.substr(1)
 					.split('&');
 

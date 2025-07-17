@@ -292,13 +292,11 @@ export const FacetUtil = {
 	},
 
 	selectTerms(form, selections) {
-		const search = document.location.search;
-
 		const url = new URL(window.location.href);
 
 		url.search = this.queryParameterAndUpdateValue(
 			form,
-			search,
+			window.location.search,
 			selections
 		);
 

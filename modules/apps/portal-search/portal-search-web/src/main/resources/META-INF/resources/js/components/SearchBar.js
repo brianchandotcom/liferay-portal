@@ -176,7 +176,7 @@ export default function SearchBar({
 
 		if (!!inputValue.trim().length || emptySearchEnabled) {
 			const keywords = inputValue.trim();
-			let queryString = _updateQueryString(document.location.search);
+			let queryString = _updateQueryString(window.location.search);
 
 			/*
 			 * Refer to LPD-19994 for acceptance criteria regarding

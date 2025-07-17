@@ -76,7 +76,7 @@ public class ObjectEntrySharingWhenSystemSharingIsDisabledTest {
 	}
 
 	@Test
-	public void testUserWithViewSharingEntryActionCannotViewPrivateModel()
+	public void testUserWithViewSharingEntryActionCannotViewObjectEntry()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =

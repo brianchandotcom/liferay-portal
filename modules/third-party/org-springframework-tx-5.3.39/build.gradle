@@ -8,8 +8,7 @@ task jarPatched(type: Zip)
 task patch(type: PatchTask)
 
 dependencies {
-	api group: "org.hibernate", name: "hibernate-core", version: "5.6.7.Final"
-	api group: "org.springframework", name: "spring-orm", version: "5.3.39"
+	api group: "org.springframework", name: "spring-tx", version: "5.3.39"
 }
 
 deploy {
@@ -25,7 +24,7 @@ deployJar {
 	into "../../../lib/portal"
 
 	rename {
-		"spring-orm.jar"
+		"spring-tx.jar"
 	}
 }
 
@@ -63,7 +62,6 @@ patch {
 		autoClean = false
 	}
 
-	fileNames "org/springframework/orm/hibernate5/SessionFactoryUtils.java"
-	fileNames "org/springframework/orm/hibernate5/SpringSessionSynchronization.java"
-	originalLibModuleName = "spring-orm"
+	fileNames "org/springframework/transaction/support/TransactionSynchronizationManager.java"
+	originalLibModuleName = "spring-tx"
 }

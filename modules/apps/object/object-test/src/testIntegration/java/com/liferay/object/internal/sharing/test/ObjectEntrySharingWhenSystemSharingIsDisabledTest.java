@@ -94,9 +94,8 @@ public class ObjectEntrySharingWhenSystemSharingIsDisabledTest {
 					objectDefinition.getClassName());
 
 			ServiceTracker<SharingPermissionChecker, SharingPermissionChecker>
-				sharingPermissionCheckerServiceTracker =
-					_getSharingPermissionCheckerServiceTracker(
-						objectDefinition.getClassName());
+				serviceTracker = _getServiceTracker(
+					objectDefinition.getClassName());
 
 			try {
 				ObjectEntry objectEntry = _addObjectEntry(
@@ -119,7 +118,7 @@ public class ObjectEntrySharingWhenSystemSharingIsDisabledTest {
 				}
 			}
 			finally {
-				sharingPermissionCheckerServiceTracker.close();
+				serviceTracker.close();
 			}
 		}
 	}
@@ -165,7 +164,7 @@ public class ObjectEntrySharingWhenSystemSharingIsDisabledTest {
 	}
 
 	private ServiceTracker<SharingPermissionChecker, SharingPermissionChecker>
-		_getSharingPermissionCheckerServiceTracker(
+		_getServiceTracker(
 			String objectDefinitionClassName) {
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());

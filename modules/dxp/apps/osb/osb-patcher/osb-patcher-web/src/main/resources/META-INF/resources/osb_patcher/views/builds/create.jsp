@@ -191,7 +191,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 			? patcherProjectVersionId.value
 			: 0;
 
-		const formData = Liferay.Util.objectToFormData({
+		const data = Liferay.Util.ns('<portlet:namespace />', {
 			tickets: patcherBuildName.value,
 			productVersionId: patcherProductVersionId.value,
 			projectVersionId: projectVersionId,
@@ -200,7 +200,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 		Liferay.Util.fetch(
 			'<liferay-portlet:resourceURL id="/patcher/get_ticket_suggestion_fields" />',
 			{
-				body: formData,
+				body: Liferay.Util.objectToFormData(data),
 				method: 'POST',
 			}
 		)
@@ -217,7 +217,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 	}
 
 	function getUseExistingHotfixValue() {
-		const formData = Liferay.Util.objectToFormData({
+		const data = Liferay.Util.ns('<portlet:namespace />', {
 			projectVersionId: patcherProjectVersionId.value,
 			tickets: patcherBuildName.value,
 		});
@@ -225,7 +225,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 		Liferay.Util.fetch(
 			'<liferay-portlet:resourceURL id="/patcher/exists_hotfix" />',
 			{
-				body: formData,
+				body: Liferay.Util.objectToFormData(data),
 				method: 'POST',
 			}
 		)

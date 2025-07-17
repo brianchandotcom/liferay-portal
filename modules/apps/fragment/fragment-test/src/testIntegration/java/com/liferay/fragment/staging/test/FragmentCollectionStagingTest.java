@@ -113,7 +113,7 @@ public class FragmentCollectionStagingTest {
 
 	@Test
 	@TestInfo("LPD-57728")
-	public void testMarketplaceFragmentNotCopiedWhenLocalStagingActivated()
+	public void testMarketplaceFragmentEntriesNotCopiedWhenLocalStagingActivated()
 		throws Exception {
 
 		FragmentCollection fragmentCollection =

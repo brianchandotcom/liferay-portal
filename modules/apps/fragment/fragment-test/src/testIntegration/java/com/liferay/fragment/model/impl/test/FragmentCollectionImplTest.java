@@ -140,7 +140,9 @@ public class FragmentCollectionImplTest {
 
 	@Test
 	@TestInfo("LPD-57728")
-	public void testPopulateZipWriterForMarketplaceFragment() throws Exception {
+	public void testPopulateZipWriterMarketplaceFragmentEntries()
+		throws Exception {
+
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		FragmentEntryTestUtil.addFragmentEntry(

@@ -185,7 +185,7 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 
 	@Test
 	@TestInfo("LPD-57728")
-	public void testExportImportMarketplaceFragments() throws Exception {
+	public void testExportImportMarketplaceFragmentEntries() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group, TestPropsValues.getUserId());

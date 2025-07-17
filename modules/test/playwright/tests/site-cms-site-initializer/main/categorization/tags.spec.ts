@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {checkAccessibility} from '../../../utils/checkAccessibility';
-import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../../utils/getRandomInt';
-import {cmsPagesTest} from './fixtures/cmsPagesTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import {checkAccessibility} from '../../../../utils/checkAccessibility';
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../../utils/getRandomInt';
+import {cmsPagesTest} from '../fixtures/cmsPagesTest';
 
 const test = mergeTests(
 	cmsPagesTest,

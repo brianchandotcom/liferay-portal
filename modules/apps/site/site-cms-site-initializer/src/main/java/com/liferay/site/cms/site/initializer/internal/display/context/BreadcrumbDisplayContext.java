@@ -45,7 +45,7 @@ public class BreadcrumbDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"actionItems",
-			JSONUtil.put(
+			JSONUtil.putAll(
 				JSONUtil.put(
 					"href",
 					ActionUtil.getSpaceSettingsURL(
@@ -56,6 +56,17 @@ public class BreadcrumbDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "space-settings")
 				).put(
 					"symbolLeft", "cog"
+				),
+				JSONUtil.put(
+					"label",
+					LanguageUtil.get(_httpServletRequest, "permissions")
+				).put(
+					"symbolLeft", "password-policies"
+				),
+				JSONUtil.put(
+					"label", LanguageUtil.get(_httpServletRequest, "delete")
+				).put(
+					"symbolLeft", "trash"
 				))
 		).put(
 			"breadcrumbItems",

@@ -72,6 +72,16 @@ const APIGUI = () => {
 		[contextPath, headers]
 	);
 
+	const LoadingSpinner = () => (
+		<div className="swagger-ui">
+			<div className="loading-container">
+				<div className="info">
+					<div className="loading"></div>
+				</div>
+			</div>
+		</div>
+	);
+
 	const requestInterceptor = (req) => {
 		req.headers['x-csrf-token'] = document.querySelector(
 			'meta[name="csrf-token"]'
@@ -303,7 +313,9 @@ const APIGUI = () => {
 					</ClayModal>
 				)}
 
-				{showGraphQL ? (
+				{!origin ? (
+					<LoadingSpinner />
+				) :showGraphQL ? (
 					<ClayLayout.Row className="vh-100">
 						<GraphiQL fetcher={graphQLFetcher} />
 					</ClayLayout.Row>

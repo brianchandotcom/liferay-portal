@@ -184,6 +184,13 @@ public class ActionUtil {
 			GroupConstants.CMS_FRIENDLY_URL, "/add-space-members");
 	}
 
+	public static String getBaseSpaceSettingsURL(ThemeDisplay themeDisplay) {
+		return StringBundler.concat(
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/e/space-settings/",
+			PortalUtil.getClassNameId(DepotEntry.class), StringPool.SLASH);
+	}
+
 	public static String getBaseSpaceURL(ThemeDisplay themeDisplay) {
 		return StringBundler.concat(
 			themeDisplay.getPathFriendlyURLPublic(),
@@ -295,6 +302,18 @@ public class ActionUtil {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public static String getSpaceSettingsURL(
+		long classPK, String redirectURL, ThemeDisplay themeDisplay) {
+
+		String url = getBaseSpaceSettingsURL(themeDisplay) + classPK;
+
+		if (Validator.isNotNull(redirectURL)) {
+			return url + "?redirect=" + redirectURL;
+		}
+
+		return url;
 	}
 
 	public static String getSpaceURL(long classPK, ThemeDisplay themeDisplay) {

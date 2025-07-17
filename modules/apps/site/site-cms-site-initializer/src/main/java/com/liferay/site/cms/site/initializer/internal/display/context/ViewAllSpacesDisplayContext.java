@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.portlet.ActionRequest;
 
@@ -117,10 +118,8 @@ public class ViewAllSpacesDisplayContext {
 				"unpin", "unpin", "headless"),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
-					_themeDisplay.getPathFriendlyURLPublic(),
-					GroupConstants.CMS_FRIENDLY_URL, "/e/space-settings/",
-					_portal.getClassNameId(DepotEntry.class), "/{id}?redirect=",
-					_themeDisplay.getURLCurrent()),
+					ActionUtil.getBaseSpaceSettingsURL(_themeDisplay),
+					"{id}?redirect=", _themeDisplay.getURLCurrent()),
 				"cog", "edit",
 				LanguageUtil.get(_httpServletRequest, "space-settings"), "get",
 				"update", null),

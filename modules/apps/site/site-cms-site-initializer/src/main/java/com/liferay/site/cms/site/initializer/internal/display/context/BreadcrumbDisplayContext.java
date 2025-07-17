@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -31,6 +33,7 @@ public class BreadcrumbDisplayContext {
 
 		_groupId = groupId;
 		_groupLocalService = groupLocalService;
+		_httpServletRequest = httpServletRequest;
 		_size = GetterUtil.get(size, CMSSpaceConstants.SPACE_STICKER_LG);
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -41,6 +44,20 @@ public class BreadcrumbDisplayContext {
 		Group group = _groupLocalService.getGroup(_groupId);
 
 		return HashMapBuilder.<String, Object>put(
+			"actionItems",
+			JSONUtil.put(
+				JSONUtil.put(
+					"href",
+					ActionUtil.getSpaceSettingsURL(
+						group.getClassPK(), _themeDisplay.getURLCurrent(),
+						_themeDisplay)
+				).put(
+					"label",
+					LanguageUtil.get(_httpServletRequest, "space-settings")
+				).put(
+					"symbolLeft", "cog"
+				))
+		).put(
 			"breadcrumbItems",
 			JSONUtil.put(
 				JSONUtil.put(
@@ -66,6 +83,7 @@ public class BreadcrumbDisplayContext {
 
 	private final long _groupId;
 	private final GroupLocalService _groupLocalService;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _size;
 	private final ThemeDisplay _themeDisplay;
 

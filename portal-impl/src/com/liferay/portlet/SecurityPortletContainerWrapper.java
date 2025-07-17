@@ -413,6 +413,20 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		String portletContent = null;
 
 		if (portlet.isShowPortletAccessDenied()) {
+			String renderExceptionProcessedKey =
+				SecurityPortletContainerWrapper.class.getName() +
+					portlet.getPortletId();
+
+			if (Boolean.TRUE.equals(
+					httpServletRequest.getAttribute(
+						renderExceptionProcessedKey))) {
+
+				return;
+			}
+
+			httpServletRequest.setAttribute(
+				renderExceptionProcessedKey, Boolean.TRUE);
+
 			portletContent = "/html/portal/portlet_access_denied.jsp";
 		}
 

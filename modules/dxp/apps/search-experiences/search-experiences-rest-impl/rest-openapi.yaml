@@ -146,6 +146,8 @@ components:
                             type: boolean
                         languageId:
                             type: string
+                        legacyAssetCollectionProvider:
+                            type: boolean
                         queryString:
                             type: string
                         searchableAssetTypes:

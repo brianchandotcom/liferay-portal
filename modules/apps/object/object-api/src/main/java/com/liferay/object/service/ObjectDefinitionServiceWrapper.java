@@ -34,6 +34,7 @@ public class ObjectDefinitionServiceWrapper
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
 			boolean enableLocalization, boolean enableObjectEntryDraft,
 			boolean enableObjectEntrySchedule,
+			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
@@ -48,10 +49,10 @@ public class ObjectDefinitionServiceWrapper
 			objectFolderId, className, enableComments,
 			enableFriendlyURLCustomization, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
-			enableObjectEntrySchedule, enableObjectEntryVersioning,
-			friendlyURLSeparator, labelMap, name, panelAppOrder,
-			panelCategoryKey, pluralLabelMap, portlet, scope, storageType,
-			objectDefinitionSettings, objectFields);
+			enableObjectEntrySchedule, enableObjectEntrySubscription,
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
+			storageType, objectDefinitionSettings, objectFields);
 	}
 
 	@Override
@@ -71,6 +72,7 @@ public class ObjectDefinitionServiceWrapper
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
 			boolean enableLocalization, boolean enableObjectEntryDraft,
 			boolean enableObjectEntrySchedule,
+			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
@@ -85,9 +87,9 @@ public class ObjectDefinitionServiceWrapper
 			externalReferenceCode, userId, objectFolderId, className,
 			enableComments, enableFriendlyURLCustomization, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
-			enableObjectEntrySchedule, enableObjectEntryVersioning,
-			friendlyURLSeparator, labelMap, name, panelAppOrder,
-			panelCategoryKey, pluralLabelMap, portlet, scope,
+			enableObjectEntrySchedule, enableObjectEntrySubscription,
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
 			objectDefinitionSettings, objectFields);
 	}
 
@@ -209,6 +211,7 @@ public class ObjectDefinitionServiceWrapper
 				boolean enableObjectEntryDraft,
 				boolean enableObjectEntryHistory,
 				boolean enableObjectEntrySchedule,
+				boolean enableObjectEntrySubscription,
 				boolean enableObjectEntryVersioning,
 				String friendlyURLSeparator,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
@@ -227,9 +230,10 @@ public class ObjectDefinitionServiceWrapper
 			enableFriendlyURLCustomization, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
 			enableObjectEntryHistory, enableObjectEntrySchedule,
-			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
-			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope,
-			status, objectDefinitionSettings);
+			enableObjectEntrySubscription, enableObjectEntryVersioning,
+			friendlyURLSeparator, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, pluralLabelMap, scope, status,
+			objectDefinitionSettings);
 	}
 
 	@Override

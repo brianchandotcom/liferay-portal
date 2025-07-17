@@ -106,6 +106,10 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 			"enableObjectEntrySchedule", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Boolean>
+		enableObjectEntrySubscription = createColumn(
+			"enableObjectEntrySubscription", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Boolean>
 		enableObjectEntryVersioning = createColumn(
 			"enableObjectEntryVersioning", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);

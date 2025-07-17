@@ -771,6 +771,51 @@ public class ObjectDefinition implements Serializable {
 	private Supplier<Boolean> _enableObjectEntryScheduleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getEnableObjectEntrySubscription() {
+		if (_enableObjectEntrySubscriptionSupplier != null) {
+			enableObjectEntrySubscription =
+				_enableObjectEntrySubscriptionSupplier.get();
+
+			_enableObjectEntrySubscriptionSupplier = null;
+		}
+
+		return enableObjectEntrySubscription;
+	}
+
+	public void setEnableObjectEntrySubscription(
+		Boolean enableObjectEntrySubscription) {
+
+		this.enableObjectEntrySubscription = enableObjectEntrySubscription;
+
+		_enableObjectEntrySubscriptionSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEnableObjectEntrySubscription(
+		UnsafeSupplier<Boolean, Exception>
+			enableObjectEntrySubscriptionUnsafeSupplier) {
+
+		_enableObjectEntrySubscriptionSupplier = () -> {
+			try {
+				return enableObjectEntrySubscriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableObjectEntrySubscription;
+
+	@JsonIgnore
+	private Supplier<Boolean> _enableObjectEntrySubscriptionSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getEnableObjectEntryVersioning() {
 		if (_enableObjectEntryVersioningSupplier != null) {
 			enableObjectEntryVersioning =
@@ -2163,6 +2208,19 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"enableObjectEntrySchedule\": ");
 
 			sb.append(enableObjectEntrySchedule);
+		}
+
+		Boolean enableObjectEntrySubscription =
+			getEnableObjectEntrySubscription();
+
+		if (enableObjectEntrySubscription != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableObjectEntrySubscription\": ");
+
+			sb.append(enableObjectEntrySubscription);
 		}
 
 		Boolean enableObjectEntryVersioning = getEnableObjectEntryVersioning();

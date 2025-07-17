@@ -20,6 +20,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -267,6 +268,14 @@ public class ObjectDefinitionResourcePermissionUtil {
 			permissionsSupports = StringBundler.concat(
 				permissionsSupports, "<action-key>",
 				ObjectActionKeys.OBJECT_ENTRY_HISTORY, "</action-key>");
+		}
+
+		if (objectDefinition.isEnableObjectEntrySubscription() &&
+			FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+
+			permissionsSupports = StringBundler.concat(
+				permissionsSupports, "<action-key>", ActionKeys.SUBSCRIBE,
+				"</action-key>");
 		}
 
 		return permissionsSupports;

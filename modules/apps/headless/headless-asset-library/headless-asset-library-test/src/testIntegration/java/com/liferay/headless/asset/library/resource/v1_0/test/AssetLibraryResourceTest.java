@@ -73,13 +73,12 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	public void testPatchAssetLibrary() throws Exception {
 		super.testPatchAssetLibrary();
 
-		boolean initialAutoTaggingEnabled = true;
-		String[] initialAvailableLanguageIds = _getAvailableLanguageIds(
+		boolean autoTaggingEnabled = true;
+		String[] availableLanguageIds = _getAvailableLanguageIds(
 			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
-		String initialDefaultLanguageId = _language.getLanguageId(
-			LocaleUtil.US);
-		String initialLogoColor = RandomTestUtil.randomString();
-		MimeTypeLimit[] initialMimeTypeLimits = {
+		String defaultLanguageId = _language.getLanguageId(LocaleUtil.US);
+		String logoColor = RandomTestUtil.randomString();
+		MimeTypeLimit[] mimeTypeLimits = {
 			new MimeTypeLimit() {
 				{
 					setMaximumSize(1234);
@@ -87,13 +86,12 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 				}
 			}
 		};
-		boolean initialSharingEnabled = true;
-		boolean initialUseCustomLanguages = true;
+		boolean sharingEnabled = true;
+		boolean useCustomLanguages = true;
 
 		AssetLibrary assetLibrary = _postAssetLibraryWithSettings(
-			initialAutoTaggingEnabled, initialAvailableLanguageIds,
-			initialDefaultLanguageId, initialLogoColor, initialMimeTypeLimits,
-			initialSharingEnabled, initialUseCustomLanguages);
+			autoTaggingEnabled, availableLanguageIds, defaultLanguageId,
+			logoColor, mimeTypeLimits, sharingEnabled, useCustomLanguages);
 
 		boolean autoTaggingEnabledValue = false;
 
@@ -108,9 +106,9 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			assetLibrary.getId(), assetLibrary);
 
 		_assertSettings(
-			assetLibrary, autoTaggingEnabledValue, initialAvailableLanguageIds,
-			initialDefaultLanguageId, initialLogoColor, initialMimeTypeLimits,
-			initialSharingEnabled, initialUseCustomLanguages);
+			assetLibrary, autoTaggingEnabledValue, availableLanguageIds,
+			defaultLanguageId, logoColor, mimeTypeLimits, sharingEnabled,
+			useCustomLanguages);
 	}
 
 	@Override
@@ -416,28 +414,25 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		return assetLibraryResource.postAssetLibrary(assetLibrary);
 	}
 
-	private void _testPostAssetLibrary(MimeTypeLimit[] initialMimeTypeLimits)
+	private void _testPostAssetLibrary(MimeTypeLimit[] mimeTypeLimits)
 		throws Exception {
 
-		boolean initialAutoTaggingEnabled = true;
-		String[] initialAvailableLanguageIds = _getAvailableLanguageIds(
+		boolean autoTaggingEnabled = true;
+		String[] availableLanguageIds = _getAvailableLanguageIds(
 			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
-		String initialDefaultLanguageId = _language.getLanguageId(
-			LocaleUtil.US);
-		String initialLogoColor = RandomTestUtil.randomString();
-		boolean initialSharingEnabled = true;
-		boolean initialUseCustomLanguages = true;
+		String defaultLanguageId = _language.getLanguageId(LocaleUtil.US);
+		String logoColor = RandomTestUtil.randomString();
+		boolean sharingEnabled = true;
+		boolean useCustomLanguages = true;
 
 		AssetLibrary assetLibrary = _postAssetLibraryWithSettings(
-			initialAutoTaggingEnabled, initialAvailableLanguageIds,
-			initialDefaultLanguageId, initialLogoColor, initialMimeTypeLimits,
-			initialSharingEnabled, initialUseCustomLanguages);
+			autoTaggingEnabled, availableLanguageIds, defaultLanguageId,
+			logoColor, mimeTypeLimits, sharingEnabled, useCustomLanguages);
 
 		_assertSettings(
-			assetLibrary, initialAutoTaggingEnabled,
-			initialAvailableLanguageIds, initialDefaultLanguageId,
-			initialLogoColor, initialMimeTypeLimits, initialSharingEnabled,
-			initialUseCustomLanguages);
+			assetLibrary, autoTaggingEnabled, availableLanguageIds,
+			defaultLanguageId, logoColor, mimeTypeLimits, sharingEnabled,
+			useCustomLanguages);
 	}
 
 	private void _testPutAssetLibraryByExternalReferenceCode(

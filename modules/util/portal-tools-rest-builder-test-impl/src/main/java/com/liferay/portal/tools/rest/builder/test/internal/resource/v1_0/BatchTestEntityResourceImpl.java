@@ -51,19 +51,19 @@ public class BatchTestEntityResourceImpl
 	public Page<BatchTestEntity> getBatchTestEntitiesPage() {
 		List<BatchTestEntity> batchTestEntities = new ArrayList<>();
 
-		for (BatchTestEntity batchTestEntity : _batchTestEntities) {
-			BatchTestEntity getBatchTestEntity = new BatchTestEntity();
+		for (BatchTestEntity originalBatchTestEntity : _batchTestEntities) {
+			BatchTestEntity batchTestEntity = new BatchTestEntity();
 
-			getBatchTestEntity.setExternalReferenceCode(
-				batchTestEntity.getExternalReferenceCode());
-			getBatchTestEntity.setId(batchTestEntity.getId());
-			getBatchTestEntity.setName(batchTestEntity.getName());
-			getBatchTestEntity.setNestedField(
+			batchTestEntity.setExternalReferenceCode(
+				originalBatchTestEntity.getExternalReferenceCode());
+			batchTestEntity.setId(originalBatchTestEntity.getId());
+			batchTestEntity.setName(originalBatchTestEntity.getName());
+			batchTestEntity.setNestedField(
 				() -> NestedFieldsSupplier.supply(
 					"nestedField",
-					nestedField -> batchTestEntity.getNestedField()));
+					nestedField -> originalBatchTestEntity.getNestedField()));
 
-			batchTestEntities.add(getBatchTestEntity);
+			batchTestEntities.add(batchTestEntity);
 		}
 
 		return Page.of(batchTestEntities);
@@ -73,25 +73,25 @@ public class BatchTestEntityResourceImpl
 	public BatchTestEntity getBatchTestEntity(Long batchTestEntityId)
 		throws NoSuchModelException {
 
-		BatchTestEntity batchTestEntity = _fetchBatchTestEntity(
+		BatchTestEntity originalBatchTestEntity = _fetchBatchTestEntity(
 			batchTestEntityId);
 
-		if (batchTestEntity == null) {
+		if (originalBatchTestEntity == null) {
 			throw new NoSuchModelException();
 		}
 
-		BatchTestEntity getBatchTestEntity = new BatchTestEntity();
+		BatchTestEntity batchTestEntity = new BatchTestEntity();
 
-		getBatchTestEntity.setExternalReferenceCode(
-			batchTestEntity.getExternalReferenceCode());
-		getBatchTestEntity.setId(batchTestEntity.getId());
-		getBatchTestEntity.setName(batchTestEntity.getName());
-		getBatchTestEntity.setNestedField(
+		batchTestEntity.setExternalReferenceCode(
+			originalBatchTestEntity.getExternalReferenceCode());
+		batchTestEntity.setId(originalBatchTestEntity.getId());
+		batchTestEntity.setName(originalBatchTestEntity.getName());
+		batchTestEntity.setNestedField(
 			() -> NestedFieldsSupplier.supply(
 				"nestedField",
-				nestedField -> batchTestEntity.getNestedField()));
+				nestedField -> originalBatchTestEntity.getNestedField()));
 
-		return getBatchTestEntity;
+		return batchTestEntity;
 	}
 
 	@Override

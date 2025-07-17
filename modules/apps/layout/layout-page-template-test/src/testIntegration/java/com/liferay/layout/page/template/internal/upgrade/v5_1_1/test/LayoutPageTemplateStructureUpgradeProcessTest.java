@@ -72,7 +72,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradePortletLayoutWithoutUser() throws Exception {
+	public void testUpgradePortletTypeLayoutWithNullUser() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),

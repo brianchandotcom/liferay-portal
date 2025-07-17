@@ -29,7 +29,6 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -48,7 +46,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -205,28 +202,17 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					setPortletDataContextWithSafeCloseable(
 						portletDataContext)) {
 
-			Map<String, Serializable> parameters =
-				BatchEnginePortletDataHandlerUtil.buildExportParameters(
-					portletDataContext);
-
-			List<String> nestedFields =
-				_exportImportVulcanBatchEngineTaskItemDelegate.
-					getNestedFields();
-
-			if (ListUtil.isNotEmpty(nestedFields)) {
-				parameters.merge(
-					"batchNestedFields",
-					StringUtil.merge(nestedFields, StringPool.COMMA),
-					(oldValue, value) -> oldValue + "," + value);
-			}
-
 			BatchEngineExportTaskExecutor.Result result =
 				_batchEngineExportTaskExecutor.execute(
 					_batchEngineExportTaskService.addBatchEngineExportTask(
 						null, portletDataContext.getCompanyId(), _getUserId(),
 						null, _className, "JSON",
 						BatchEngineTaskExecuteStatus.INITIAL.name(),
-						Collections.emptyList(), parameters,
+						Collections.emptyList(),
+						BatchEnginePortletDataHandlerUtil.buildExportParameters(
+							_exportImportVulcanBatchEngineTaskItemDelegate.
+								getNestedFields(),
+							portletDataContext),
 						_taskItemDelegateName),
 					new BatchEngineExportTaskExecutor.Settings() {
 

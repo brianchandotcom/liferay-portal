@@ -762,7 +762,11 @@ public class EmailNotificationType extends BaseNotificationType {
 				FromNameMustNotBeNull();
 		}
 
-		if (Validator.isNull(
+		if (!Objects.equals(
+				notificationRecipientSettingsMap.get(
+					NotificationRecipientSettingConstants.NAME_TO_TYPE),
+				NotificationRecipientConstants.TYPE_SUBSCRIBERS) &&
+			Validator.isNull(
 				notificationRecipientSettingsMap.get(
 					NotificationRecipientSettingConstants.NAME_TO))) {
 

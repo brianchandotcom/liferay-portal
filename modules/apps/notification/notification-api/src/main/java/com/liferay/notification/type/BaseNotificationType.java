@@ -110,6 +110,15 @@ public abstract class BaseNotificationType implements NotificationType {
 			Map<String, Object> recipientMap = (Map<String, Object>)recipient;
 
 			for (Map.Entry<String, Object> entry : recipientMap.entrySet()) {
+				if (Objects.equals(
+						recipientMap.get(
+							NotificationRecipientSettingConstants.
+								getRecipientTypeName(entry.getKey())),
+						NotificationRecipientConstants.TYPE_SUBSCRIBERS)) {
+
+					continue;
+				}
+
 				if (!Objects.equals(
 						recipientMap.get(
 							NotificationRecipientSettingConstants.

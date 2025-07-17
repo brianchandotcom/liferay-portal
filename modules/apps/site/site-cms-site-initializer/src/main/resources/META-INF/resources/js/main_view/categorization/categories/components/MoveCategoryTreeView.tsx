@@ -151,6 +151,7 @@ function TreeViewLink({
 					>
 						{hasSubItems && (
 							<ClayButton
+								aria-label="Expand or collapse Vocabulary tree node"
 								className="component-expander"
 								disabled={disabled}
 								displayType={null}

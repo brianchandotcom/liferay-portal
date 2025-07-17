@@ -60,13 +60,38 @@ describe('ContentEditorSidePanel', () => {
 			expect(screen.getByText('comments')).toBeInTheDocument();
 		});
 
-		await userEvent.click(screen.getByLabelText('unsubscribe'));
+		const unsubscribeButton = screen.getByLabelText('unsubscribe');
+
+		expect(unsubscribeButton).toBeEnabled();
+
+		const clickPromise = userEvent.click(unsubscribeButton);
+
+		await waitFor(() => {
+			expect(unsubscribeButton).toBeDisabled();
+		});
+
+		await clickPromise;
+
+		await waitFor(() => {
+			expect(unsubscribeButton).toBeEnabled();
+		});
 
 		expect(mockFetch).toBeCalledWith('subscribeURL', {
 			body: {
 				cmd: 'subscribe',
 			},
 			method: 'POST',
+		});
+
+		const formData = (fetch as jest.Mock).mock.calls[0][1].body;
+		const formDataObject = Object.fromEntries(formData.entries());
+
+		expect(formDataObject).toEqual({cmd: 'subscribe'});
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('you-have-successfully-subscribed-to-comments')
+			).toBeInTheDocument();
 		});
 	});
 
@@ -79,13 +104,40 @@ describe('ContentEditorSidePanel', () => {
 			expect(screen.getByText('comments')).toBeInTheDocument();
 		});
 
-		await userEvent.click(screen.getByLabelText('subscribe'));
+		const subscribeButton = screen.getByLabelText('subscribe');
+
+		expect(subscribeButton).toBeEnabled();
+
+		const clickPromise = userEvent.click(subscribeButton);
+
+		await waitFor(() => {
+			expect(subscribeButton).toBeDisabled();
+		});
+
+		await clickPromise;
+
+		await waitFor(() => {
+			expect(subscribeButton).toBeEnabled();
+		});
 
 		expect(mockFetch).toBeCalledWith('subscribeURL', {
 			body: {
 				cmd: 'unsubscribe',
 			},
 			method: 'POST',
+		});
+
+		const formData = (fetch as jest.Mock).mock.calls[0][1].body;
+		const formDataObject = Object.fromEntries(formData.entries());
+
+		expect(formDataObject).toEqual({cmd: 'unsubscribe'});
+
+		await waitFor(() => {
+			expect(
+				screen.getByText(
+					'you-have-successfully-unsubscribed-from-comments'
+				)
+			).toBeInTheDocument();
 		});
 	});
 });

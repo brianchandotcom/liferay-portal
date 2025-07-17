@@ -27,11 +27,12 @@ const statuses = {
 	[Statuses.FAILED]: {
 		bodyMessage: (
 			<span>
-				Sorry, was not possible to install your app, you can try again.
-				If the problem persist, contact a{' '}
-				<a href={`mailto:${MARKETPLACE_ADMIN_EMAIL}`}>
+				We could not install your app. Please try again. If the problem
+				continues, contact
+				<a className="my-3" href={`mailto:${MARKETPLACE_ADMIN_EMAIL}`}>
 					{MARKETPLACE_ADMIN_EMAIL}
 				</a>
+				for assistance.
 			</span>
 		),
 		icon: (

@@ -1,16 +1,15 @@
 <#if entries?has_content>
 	<#assign
-		sortedTaxonomyCategories = []
-		taxonomyVocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getCompanyGroupId()}/taxonomy-vocabularies/by-external-reference-code/RESOURCE_TYPE").id
 		totalCount = 0
-		validTaxonomyCategoryIds = []
-
-		taxonomyCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories").items
+		orderedEntries = []
 	/>
 
-	<#list taxonomyCategories as taxonomyCategory>
-		<#if stringUtil.equals(taxonomyCategory.externalReferenceCode, "HOW_TO") || stringUtil.equals(taxonomyCategory.externalReferenceCode, "OFFICIAL_DOCUMENTATION")>
-			<#assign validTaxonomyCategoryIds += [taxonomyCategory.id] />
+	<#list entries as entry>
+		<#assign label = entry.getBucketText()?upper_case />
+		<#if label == "OFFICIAL DOCUMENTATION">
+			<#assign orderedEntries = [entry] + orderedEntries />
+		<#elseif label == "HOW TO">
+			<#assign orderedEntries += [entry] />
 		</#if>
 	</#list>
 
@@ -34,21 +33,7 @@
 			</@clay.button>
 		</li>
 
-		<#list entries as entry>
-			<#assign taxonomyCategoryId = entry.getFilterValue() />
-
-			<#list taxonomyCategories as taxonomyCategory>
-				<#if taxonomyCategory.id == taxonomyCategoryId>
-					<#if stringUtil.equals(taxonomyCategory.externalReferenceCode, "OFFICIAL_DOCUMENTATION")>
-						<#assign sortedTaxonomyCategories = [entry] + sortedTaxonomyCategories />
-					<#elseif stringUtil.equals(taxonomyCategory.externalReferenceCode, "HOW_TO")>
-						<#assign sortedTaxonomyCategories += [entry] />
-					</#if>
-				</#if>
-			</#list>
-		</#list>
-
-		<#list sortedTaxonomyCategories as entry>
+		<#list orderedEntries as entry>
 			<li class="facet-value">
 				<@clay.button
 					cssClass="btn-unstyled facet-term tab-btn term-name text-center ${(entry.isSelected())?then('selected-tab-btn', '')}"
@@ -118,7 +103,7 @@
 				</@clay.button>
 			</li>
 
-			<#list entries as entry>
+			<#list orderedEntries as entry>
 				<li class="align-items-center d-flex ${(entry.isSelected())?then('selected-item-mobile-tab', '')}">
 					<@clay.button
 						cssClass="dropdown-item facet-clear nav-link rounded"

@@ -113,10 +113,10 @@ ProcessListDisplayContext processListDisplayContext = new ProcessListDisplayCont
 				<liferay-staging:process-list-menu
 					backgroundTask="<%= backgroundTask %>"
 					deleteMenu="<%= deleteMenu %>"
+					detailsMenu="<%= detailsMenu %>"
 					localPublishing="<%= processListDisplayContext.isLocalPublishing() %>"
 					relaunchMenu="<%= relaunchMenu %>"
 					summaryMenu="<%= summaryMenu %>"
-					viewDetailsMenu="<%= viewDetailsMenu %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

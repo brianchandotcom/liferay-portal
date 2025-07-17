@@ -519,6 +519,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether to show the view details menu. The default value is false.</description>
+			<name>detailsMenu</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>The empty results message's language key.</description>
 			<name>emptyResultsMessage</name>
 			<required>true</required>
@@ -563,13 +570,6 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
-		<attribute>
-			<description>Whether to show the view details menu. The default value is false.</description>
-			<name>viewDetailsMenu</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
 	</tag>
 	<tag>
 		<description>Renders the kebab menu for a staging process list item.</description>
@@ -591,6 +591,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether to show the view details menu. The default value is false.</description>
+			<name>detailsMenu</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>Whether the publication is local.</description>
 			<name>localPublishing</name>
 			<required>true</required>
@@ -607,13 +614,6 @@
 		<attribute>
 			<description>Whether to show the summary menu. The default value is true.</description>
 			<name>summaryMenu</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description>Whether to show the view details menu. The default value is false.</description>
-			<name>viewDetailsMenu</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>

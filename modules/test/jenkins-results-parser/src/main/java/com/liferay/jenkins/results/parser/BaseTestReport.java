@@ -73,18 +73,6 @@ public class BaseTestReport implements TestReport {
 	public boolean isFailing() {
 		String status = getStatus();
 
-		DownstreamBuildReport downstreamBuildReport =
-			getDownstreamBuildReport();
-
-		if (status.equals("PASSED") && downstreamBuildReport.isFailing()) {
-			int failCount = downstreamBuildReport.getFailCount();
-			int passCount = downstreamBuildReport.getPassCount();
-
-			if ((failCount == 0) && (passCount == 1)) {
-				return true;
-			}
-		}
-
 		if (status.equals("FIXED") || status.equals("PASSED") ||
 			status.equals("SKIPPED")) {
 

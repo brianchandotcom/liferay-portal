@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.headless.site.client.dto.v1_0.Site;
 import com.liferay.headless.site.client.http.HttpInvoker;
 import com.liferay.headless.site.client.pagination.Page;
+import com.liferay.headless.site.client.pagination.Pagination;
 import com.liferay.headless.site.client.resource.v1_0.SiteResource;
 import com.liferay.headless.site.client.serdes.v1_0.SiteSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -250,6 +252,113 @@ public abstract class BaseSiteResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetSitesPage() throws Exception {
+		Page<Site> page = siteResource.getSitesPage(null, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		Site site1 = testGetSitesPage_addSite(randomSite());
+
+		Site site2 = testGetSitesPage_addSite(randomSite());
+
+		page = siteResource.getSitesPage(null, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(site1, (List<Site>)page.getItems());
+		assertContains(site2, (List<Site>)page.getItems());
+		assertValid(page, testGetSitesPage_getExpectedActions());
+
+		siteResource.deleteSite(site1.getId());
+
+		siteResource.deleteSite(site2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetSitesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetSitesPageWithPagination() throws Exception {
+		Page<Site> sitesPage = siteResource.getSitesPage(null, null);
+
+		int totalCount = GetterUtil.getInteger(sitesPage.getTotalCount());
+
+		Site site1 = testGetSitesPage_addSite(randomSite());
+
+		Site site2 = testGetSitesPage_addSite(randomSite());
+
+		Site site3 = testGetSitesPage_addSite(randomSite());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Site> page1 = siteResource.getSitesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(site1, (List<Site>)page1.getItems());
+
+			Page<Site> page2 = siteResource.getSitesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			assertContains(site2, (List<Site>)page2.getItems());
+
+			Page<Site> page3 = siteResource.getSitesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			assertContains(site3, (List<Site>)page3.getItems());
+		}
+		else {
+			Page<Site> page1 = siteResource.getSitesPage(
+				null, Pagination.of(1, totalCount + 2));
+
+			List<Site> sites1 = (List<Site>)page1.getItems();
+
+			Assert.assertEquals(
+				sites1.toString(), totalCount + 2, sites1.size());
+
+			Page<Site> page2 = siteResource.getSitesPage(
+				null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Site> sites2 = (List<Site>)page2.getItems();
+
+			Assert.assertEquals(sites2.toString(), 1, sites2.size());
+
+			Page<Site> page3 = siteResource.getSitesPage(
+				null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(site1, (List<Site>)page3.getItems());
+			assertContains(site2, (List<Site>)page3.getItems());
+			assertContains(site3, (List<Site>)page3.getItems());
+		}
+	}
+
+	protected Site testGetSitesPage_addSite(Site site) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

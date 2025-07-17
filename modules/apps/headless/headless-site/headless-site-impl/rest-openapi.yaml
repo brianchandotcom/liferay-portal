@@ -79,6 +79,7 @@ paths:
         get:
             description:
                 Retrieves the sites. Results can be paginated, filtered, searched, and sorted.
+            operationId: getSitesPage
             parameters:
                 -   in: query
                     name: page

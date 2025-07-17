@@ -15,6 +15,8 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.annotation.Generated;
 
@@ -53,6 +55,9 @@ public interface SiteResource {
 
 	public Response getSiteByExternalReferenceCodeSiteInitializer(
 			String externalReferenceCode)
+		throws Exception;
+
+	public Page<Site> getSitesPage(String search, Pagination pagination)
 		throws Exception;
 
 	public Site postSite(Site site) throws Exception;

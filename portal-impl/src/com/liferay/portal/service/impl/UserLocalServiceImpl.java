@@ -234,7 +234,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 /**
  * Provides the local service for accessing, adding, authenticating, deleting,
@@ -3154,11 +3154,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		try {
 			java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
-				UserModelImpl.class, "userGroupIdsUpdateEntityCacheConsumer");
+				UserModelImpl.class, "userGroupIdsUpdateEntityCacheBiConsumer");
 
-			Consumer<long[]> consumer = (Consumer<long[]>)field.get(user);
+			BiConsumer<User, long[]> biConsumer =
+				(BiConsumer<User, long[]>)field.get(null);
 
-			consumer.accept(userGroupIds);
+			biConsumer.accept(user, userGroupIds);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

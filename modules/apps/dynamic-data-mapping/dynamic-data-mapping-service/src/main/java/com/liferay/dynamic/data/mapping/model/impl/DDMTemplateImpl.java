@@ -71,8 +71,8 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 			_resourceClassName = PortalUtil.getClassName(
 				getResourceClassNameId());
 
-			resourceClassNameUpdateEntityCacheConsumer.accept(
-				_resourceClassName);
+			resourceClassNameUpdateEntityCacheBiConsumer.accept(
+				this, _resourceClassName);
 		}
 
 		return _resourceClassName;

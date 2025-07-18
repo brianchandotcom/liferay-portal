@@ -367,6 +367,12 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			}
 		}
 
+		Object infoItem = _getInfoItem(infoItemReference);
+
+		if (infoItem != null) {
+			return infoItem;
+		}
+
 		InfoItemServiceFilter infoItemServiceFilter = null;
 
 		if (classPK > 0) {
@@ -378,20 +384,12 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 				ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER;
 		}
 
-		if (infoItemReference != null) {
-			InfoItemIdentifier infoItemIdentifier =
-				infoItemReference.getInfoItemIdentifier();
-
-			infoItemServiceFilter =
-				infoItemIdentifier.getInfoItemServiceFilter();
-		}
-
 		InfoItemObjectProvider<?> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className, infoItemServiceFilter);
 
 		if (infoItemObjectProvider == null) {
-			return _getInfoItem(infoItemReference);
+			return null;
 		}
 
 		try {
@@ -405,14 +403,8 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 					externalReferenceCode);
 			}
 
-			Object infoItem = infoItemObjectProvider.getInfoItem(
+			return infoItemObjectProvider.getInfoItem(
 				infoItemIdentifier);
-
-			if (infoItem == null) {
-				return _getInfoItem(infoItemReference);
-			}
-
-			return infoItem;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -420,7 +412,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			}
 		}
 
-		return _getInfoItem(infoItemReference);
+		return null;
 	}
 
 	private JSONObject _getFieldValueJSONObject(

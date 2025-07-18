@@ -132,6 +132,12 @@ public class ViewAllSpacesDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "view-members"), "get",
 				"view-members", null),
 			new FDSActionDropdownItem(
+				null, "users", "view-sites",
+				LanguageUtil.format(
+					_httpServletRequest, "view-x",
+					LanguageUtil.get(_httpServletRequest, "sites")),
+				"get", null, null),
+			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					PortalUtil.getControlPanelPortletURL(
 						_httpServletRequest,

@@ -8,6 +8,7 @@ import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import manageMembersAction, {
 	ManageMembersData,
 } from './actions/manageMembersAction';
+import manageSitesAction from './actions/manageSitesAction';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 
@@ -77,6 +78,7 @@ export default function AllSpacesFDSPropsTransformer({
 			itemData: {
 				creatorUserId: string;
 				id: string;
+				siteId: string;
 			};
 			loadData: () => {};
 		}) => {
@@ -98,6 +100,9 @@ export default function AllSpacesFDSPropsTransformer({
 				};
 
 				manageMembersAction(data, loadData);
+			}
+			else if (action.data.id === 'view-sites') {
+				manageSitesAction({groupId: itemData.siteId});
 			}
 		},
 	};

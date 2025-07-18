@@ -36,7 +36,7 @@ public class AllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	}
 
 	@Override
-	protected UnsafeRunnable<Exception> getInsertDataRunnable() {
+	protected UnsafeRunnable<Exception> getInsertDataUnsafeRunnable() {
 		return () -> {
 			_insertEntry(_companyId1);
 			_insertEntry(_companyId1);
@@ -45,7 +45,9 @@ public class AllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	}
 
 	@Override
-	protected UnsafeConsumer<LogCapture, Exception> getLogAssertionConsumer() {
+	protected UnsafeConsumer<LogCapture, Exception>
+		getLogAssertionUnsafeConsumer() {
+
 		return logCapture -> {
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

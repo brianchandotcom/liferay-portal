@@ -56,11 +56,11 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 				OrphanReferencesDataCleanupUtil.class.getName(),
 				LoggerTestUtil.INFO)) {
 
-			getInsertDataRunnable().run();
+			getInsertDataUnsafeRunnable().run();
 
 			getUpgradeProcess().upgrade();
 
-			getLogAssertionConsumer().accept(logCapture);
+			getLogAssertionUnsafeConsumer().accept(logCapture);
 		}
 	}
 
@@ -78,10 +78,10 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 			dbInspector.normalizeName(targetColumn));
 	}
 
-	protected abstract UnsafeRunnable<Exception> getInsertDataRunnable();
+	protected abstract UnsafeRunnable<Exception> getInsertDataUnsafeRunnable();
 
 	protected abstract UnsafeConsumer<LogCapture, Exception>
-		getLogAssertionConsumer();
+		getLogAssertionUnsafeConsumer();
 
 	protected abstract UpgradeProcess getUpgradeProcess();
 

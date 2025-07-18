@@ -268,14 +268,15 @@ public class FragmentEntryProcessorHelperImpl
 			fieldName = editableValueJSONObject.getString("fieldId");
 
 			InfoItemIdentifier infoItemIdentifier = null;
+			InfoItemObjectProvider<Object> infoItemObjectProvider = null;
 
 			if (Validator.isNotNull(externalReferenceCode)) {
 				infoItemIdentifier = new ERCInfoItemIdentifier(
 					externalReferenceCode);
-			}
-			else {
-				infoItemIdentifier = new ClassPKInfoItemIdentifier(
-					editableValueJSONObject.getLong("classPK"));
+				infoItemObjectProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemObjectProvider.class, className,
+						ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 			}
 
 			if ((fragmentEntryProcessorContext.getPreviewClassPK() > 0) &&
@@ -291,19 +292,28 @@ public class FragmentEntryProcessorHelperImpl
 					infoItemIdentifier.setVersion(
 						fragmentEntryProcessorContext.getPreviewVersion());
 				}
+
+				infoItemObjectProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemObjectProvider.class, className,
+						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+			}
+			else if (infoItemObjectProvider == null) {
+				infoItemIdentifier = new ClassPKInfoItemIdentifier(
+					editableValueJSONObject.getLong("classPK"));
+				infoItemObjectProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemObjectProvider.class, className,
+						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 			}
 
 			infoItemReference = new InfoItemReference(
 				className, infoItemIdentifier);
 
-			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class, className,
-					infoItemIdentifier.getInfoItemServiceFilter());
-
 			if (infoItemObjectProvider != null) {
 				try {
-					object =  infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+					object = infoItemObjectProvider.getInfoItem(
+						infoItemIdentifier);
 				}
 				catch (NoSuchInfoItemException noSuchInfoItemException) {
 					if (_log.isDebugEnabled()) {

@@ -65,10 +65,12 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -196,6 +198,12 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			name = infoField.getName();
 			readOnly = infoField.isReadOnly();
 			localizable = infoField.isLocalizable();
+		}
+
+		String layoutMode = ParamUtil.getString(httpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (Objects.equals(layoutMode, Constants.READ)) {
+			readOnly = true;
 		}
 
 		boolean required = false;

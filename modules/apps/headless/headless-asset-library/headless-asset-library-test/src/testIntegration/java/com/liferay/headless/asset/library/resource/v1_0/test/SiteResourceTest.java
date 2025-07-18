@@ -168,12 +168,12 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		return new Site() {
 			{
-				setExternalReferenceCode(group.getExternalReferenceCode());
-				setId(group.getGroupId());
-				setName(group.getName());
-				setName_i18n(
-					LocalizedMapUtil.getI18nMap(true, group.getNameMap()));
-				setSearchable(false);
+				externalReferenceCode = group.getExternalReferenceCode();
+				id = group.getGroupId();
+				name = group.getName();
+				name_i18n = LocalizedMapUtil.getI18nMap(
+					true, group.getNameMap());
+				searchable = false;
 			}
 		};
 	}

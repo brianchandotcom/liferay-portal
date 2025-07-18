@@ -189,9 +189,9 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 		return new UserGroup() {
 			{
-				setExternalReferenceCode(userGroup::getExternalReferenceCode);
-				setId(userGroup::getUserGroupId);
-				setName(userGroup::getName);
+				externalReferenceCode = userGroup.getExternalReferenceCode();
+				id = userGroup.getUserGroupId();
+				name = userGroup.getName();
 			}
 		};
 	}

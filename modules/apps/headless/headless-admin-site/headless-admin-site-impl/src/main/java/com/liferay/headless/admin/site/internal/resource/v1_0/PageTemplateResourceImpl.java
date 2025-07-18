@@ -522,7 +522,9 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 		PageTemplateSet pageTemplateSet = pageTemplate.getPageTemplateSet();
 
-		if (pageTemplateSet == null) {
+		if ((pageTemplateSet == null) ||
+			Validator.isNull(pageTemplateSet.getExternalReferenceCode())) {
+
 			return LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
 		}
@@ -532,12 +534,8 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				fetchLayoutPageTemplateCollection(
 					pageTemplateSet.getExternalReferenceCode(), groupId);
 
-		if (layoutPageTemplateCollection == null) {
-			return LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
-		}
-
-		if (!Objects.equals(
+		if ((layoutPageTemplateCollection == null) ||
+			!Objects.equals(
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				layoutPageTemplateCollection.getType())) {
 

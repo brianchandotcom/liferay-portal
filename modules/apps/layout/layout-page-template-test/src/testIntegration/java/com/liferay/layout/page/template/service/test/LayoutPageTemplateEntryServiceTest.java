@@ -25,6 +25,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.Repository;
@@ -113,9 +115,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			name);
 	}
 
-	@Test(
-		expected = LayoutPageTemplateEntryNameException.MustNotBeDuplicate.class
-	)
+	@Test
 	public void testAddDuplicateDisplayPageLayoutPageTemplateEntries()
 		throws Exception {
 
@@ -158,11 +158,22 @@ public class LayoutPageTemplateEntryServiceTest {
 				_group.getGroupId(), name,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 
-		LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
-			targetLayoutPageTemplateCollection.
-				getLayoutPageTemplateCollectionId(),
-			name, LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
-			WorkflowConstants.STATUS_DRAFT);
+		try {
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				targetLayoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				name, LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				WorkflowConstants.STATUS_DRAFT);
+
+			Assert.fail();
+		}
+		catch (LayoutPageTemplateEntryNameException.MustNotBeDuplicate
+					layoutPageTemplateEntryNameException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(layoutPageTemplateEntryNameException);
+			}
+		}
 	}
 
 	@Test(expected = LayoutPageTemplateEntryNameException.class)
@@ -1240,6 +1251,9 @@ public class LayoutPageTemplateEntryServiceTest {
 			WorkflowConstants.STATUS_PENDING,
 			persistedLayoutPageTemplateEntry.getStatus());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPageTemplateEntryServiceTest.class);
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -42,15 +42,12 @@ public class ViewVersionHistoryDisplayContext {
 	}
 
 	public String getAPIURL() throws PortalException {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("/o");
-		sb.append(_objectDefinition.getRESTContextPath());
-		sb.append(StringPool.SLASH);
-		sb.append(_objectEntry.getObjectEntryId());
-		sb.append("/versions");
-
-		return sb.toString();
+		return StringBundler.concat(
+			"/o",
+			_objectDefinition.getRESTContextPath(),
+			StringPool.SLASH,
+			_objectEntry.getObjectEntryId(),
+			"/versions");
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {

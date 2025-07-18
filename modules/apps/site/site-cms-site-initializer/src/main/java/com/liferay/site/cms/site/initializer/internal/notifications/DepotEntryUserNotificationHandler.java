@@ -58,13 +58,10 @@ public class DepotEntryUserNotificationHandler
 			return null;
 		}
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("<div class=\"title\">");
-		sb.append(_getTitle(depotEntry.getGroup(), serviceContext));
-		sb.append("</div>");
-
-		return sb.toString();
+		return StringBundler.concat(
+			"<div class=\"title\">",
+			_getTitle(depotEntry.getGroup(), serviceContext),
+			"</div>");
 	}
 
 	@Override

@@ -28,14 +28,11 @@ public class ViewCategoryUsagesDisplayContext {
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("/o/search/v1.0/search?emptySearch=true&");
-		sb.append("filter=taxonomyCategoryIds in (");
-		sb.append(ParamUtil.getLong(_httpServletRequest, "categoryId"));
-		sb.append(")&nestedFields=embedded");
-
-		return sb.toString();
+		return StringBundler.concat(
+			"/o/search/v1.0/search?emptySearch=true&",
+			"filter=taxonomyCategoryIds in (",
+			ParamUtil.getLong(_httpServletRequest, "categoryId"),
+			")&nestedFields=embedded");
 	}
 
 	public Map<String, Object> getBreadcrumbReactData() throws Exception {

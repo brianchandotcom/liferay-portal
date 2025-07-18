@@ -46,17 +46,13 @@ public class ViewStructuresDisplayContext {
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("/o/object-admin/v1.0/object-definitions?filter=");
-		sb.append("(objectFolderExternalReferenceCode eq '");
-		sb.append(
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
-		sb.append("' or objectFolderExternalReferenceCode eq '");
-		sb.append(ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
-		sb.append("')");
-
-		return sb.toString();
+		return StringBundler.concat(
+			"/o/object-admin/v1.0/object-definitions?filter=",
+			"(objectFolderExternalReferenceCode eq '",
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+			"' or objectFolderExternalReferenceCode eq '",
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
+			"')");
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {

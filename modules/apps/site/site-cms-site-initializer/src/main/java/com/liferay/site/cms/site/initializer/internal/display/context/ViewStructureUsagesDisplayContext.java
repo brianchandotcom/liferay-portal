@@ -40,14 +40,11 @@ public class ViewStructureUsagesDisplayContext {
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("/o/search/v1.0/search?emptySearch=true&");
-		sb.append("filter=(objectDefinitionId eq ");
-		sb.append(ParamUtil.getLong(_httpServletRequest, "objectDefinitionId"));
-		sb.append(")&nestedFields=embedded");
-
-		return sb.toString();
+		return StringBundler.concat(
+			"/o/search/v1.0/search?emptySearch=true&",
+			"filter=(objectDefinitionId eq ",
+			ParamUtil.getLong(_httpServletRequest, "objectDefinitionId"),
+			")&nestedFields=embedded");
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {

@@ -623,9 +623,7 @@ public class GetCollectionFieldMVCResourceCommand
 						ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 		}
 
-		if ((infoItemObjectProvider == null) &&
-			Validator.isNotNull(className) && (classPK > 0)) {
-
+		if ((infoItemObjectProvider == null) && (classPK > 0)) {
 			infoItemIdentifier = new ClassPKInfoItemIdentifier(classPK);
 			infoItemObjectProvider =
 				(InfoItemObjectProvider<Object>)

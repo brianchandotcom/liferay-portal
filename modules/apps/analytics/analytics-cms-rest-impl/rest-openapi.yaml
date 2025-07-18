@@ -2,16 +2,12 @@ components:
     schemas:
         ConnectionInfo:
             properties:
-                analyticsSettingsPortletURL:
-                    type: string
                 connectedToAnalyticsCloud:
                     type: boolean
                 connectedToSpace:
                     type: boolean
                 isAdmin:
                     type: boolean
-                siteEditDepotEntryDepotAdminPortletURL:
-                    type: string
                 siteSyncedToAnalyticsCloud:
                     type: boolean
         InventoryAnalysis:

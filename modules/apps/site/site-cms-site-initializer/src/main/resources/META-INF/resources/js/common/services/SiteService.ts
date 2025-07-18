@@ -6,8 +6,21 @@
 import {Site} from '../types/Site';
 import ApiHelper from './ApiHelper';
 
-async function connectSiteToSpace(groupId: string, siteId: string) {
+async function connectSiteToSpace(
+	groupId: string,
+	siteId: string,
+	searchable?: string
+) {
 	return await ApiHelper.put<Site>(
+		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/sites/${siteId}`,
+		{
+			searchable: searchable ? searchable : 'true',
+		}
+	);
+}
+
+async function disconnectSiteFromSpace(groupId: string, siteId: string) {
+	return await ApiHelper.delete(
 		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/sites/${siteId}`
 	);
 }
@@ -22,4 +35,9 @@ async function getAllSites() {
 	return await ApiHelper.get<{items: Site[]}>(`/o/headless-site/v1.0/sites`);
 }
 
-export default {connectSiteToSpace, getAllSites, getConnectedSitesToSpace};
+export default {
+	connectSiteToSpace,
+	disconnectSiteFromSpace,
+	getAllSites,
+	getConnectedSitesToSpace,
+};

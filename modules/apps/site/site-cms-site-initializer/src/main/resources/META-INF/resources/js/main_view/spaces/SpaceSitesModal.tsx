@@ -15,22 +15,53 @@ import {FieldPicker} from '../../common/components/forms';
 import SiteService from '../../common/services/SiteService';
 import {Site} from '../../common/types/Site';
 
-const showError = (message: string) => {
+const showErrorMessage = (message: string) => {
 	openToast({
 		message,
 		type: 'danger',
 	});
 };
 
-const SiteActions = ({groupId, site}: {groupId: string; site: Site}) => {
+const SiteActions = ({
+	groupId,
+	onSiteChange,
+	onSiteDisconnected,
+	site,
+}: {
+	groupId: string;
+	onSiteChange?: Function;
+	onSiteDisconnected?: Function;
+	site: Site;
+}) => {
 	const {searchable} = site;
 
-	const disconnectSite = () => {
-		console.log('disconnnect: ' + site.id);
+	const disconnectSite = async () => {
+		const {error} = await SiteService.disconnectSiteFromSpace(
+			groupId,
+			site.id
+		);
+
+		if (error) {
+			showErrorMessage(error);
+		}
+		else {
+			onSiteDisconnected?.({site});
+		}
 	};
 
-	const changeSearchable = () => {
-		console.log('changeSearchable' + site.id);
+	const changeSearchable = async () => {
+		const {data, error} = await SiteService.connectSiteToSpace(
+			groupId,
+			site.id,
+			String(!searchable)
+		);
+
+		if (data) {
+			onSiteChange?.({site: data});
+		}
+		else if (error) {
+			showErrorMessage(error);
+		}
 	};
 
 	return (
@@ -92,7 +123,7 @@ const SitesSelector = ({
 				onSiteConnected?.({site: data});
 			}
 			else if (error) {
-				showError(
+				showErrorMessage(
 					error ||
 						Liferay.Language.get('unable-to-connect-site-to-space')
 				);
@@ -201,16 +232,33 @@ export default function SpaceSitesModal({
 	}, [groupId]);
 
 	const onSiteConnected = ({site}: {site: Site}) => {
-		console.log('onSiteConnected');
-		setConnectedSites((prevConnectedSites) => {
+		setConnectedSites((currentConnectedSites) => {
 			if (
-				prevConnectedSites.some((prevSite) => prevSite.id === site.id)
+				currentConnectedSites.some(
+					(prevSite) => prevSite.id === site.id
+				)
 			) {
-				return prevConnectedSites;
+				return currentConnectedSites;
 			}
 
-			return [...prevConnectedSites, site];
+			return [...currentConnectedSites, site];
 		});
+	};
+
+	const onSiteDisconnected = ({site}: {site: Site}) => {
+		setConnectedSites((currentConnectedSites) =>
+			currentConnectedSites.filter(
+				(currentSite) => currentSite.id !== site.id
+			)
+		);
+	};
+
+	const onSiteChange = ({site}: {site: Site}) => {
+		setConnectedSites((currentConnectedSites) =>
+			currentConnectedSites.map((currentSite) =>
+				currentSite.id === site.id ? site : currentSite
+			)
+		);
 	};
 
 	return (
@@ -266,7 +314,14 @@ export default function SpaceSitesModal({
 											</div>
 
 											{isAdmin && (
-												<SiteActions site={site} />
+												<SiteActions
+													groupId={groupId}
+													onSiteChange={onSiteChange}
+													onSiteDisconnected={
+														onSiteDisconnected
+													}
+													site={site}
+												/>
 											)}
 										</div>
 									</li>

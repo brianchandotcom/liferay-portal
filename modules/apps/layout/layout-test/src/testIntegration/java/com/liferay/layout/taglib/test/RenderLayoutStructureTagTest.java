@@ -1207,10 +1207,6 @@ public class RenderLayoutStructureTagTest {
 				).put(
 					"anyAssetType",
 					String.valueOf(_portal.getClassNameId(JournalArticle.class))
-				).put(
-					"orderByColumn1", "priority"
-				).put(
-					"orderByType1", "ASC"
 				).buildString(),
 				_serviceContext);
 
@@ -1283,10 +1279,6 @@ public class RenderLayoutStructureTagTest {
 				true
 			).put(
 				"anyAssetType", true
-			).put(
-				"orderByColumn1", "priority"
-			).put(
-				"orderByType1", "ASC"
 			).buildString());
 
 		content = _getContent(
@@ -1309,10 +1301,6 @@ public class RenderLayoutStructureTagTest {
 				"anyAssetType",
 				String.valueOf(
 					_portal.getClassNameId(MessageBoardMessage.class))
-			).put(
-				"orderByColumn1", "priority"
-			).put(
-				"orderByType1", "ASC"
 			).buildString());
 
 		content = _getContent(

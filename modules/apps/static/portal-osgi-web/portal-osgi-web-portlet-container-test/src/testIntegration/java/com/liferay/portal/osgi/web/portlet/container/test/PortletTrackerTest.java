@@ -37,7 +37,6 @@ import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerT
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.WebAppPool;
 
 import jakarta.portlet.PortletException;
@@ -98,9 +97,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 		_company1 = CompanyTestUtil.addCompany();
 		_company2 = CompanyTestUtil.addCompany();
-
-		PortalInstances.initCompany(_company1);
-		PortalInstances.initCompany(_company2);
 	}
 
 	@AfterClass
@@ -108,9 +104,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		CompanyLocalServiceUtil.deleteCompany(_company2);
 
 		CompanyLocalServiceUtil.deleteCompany(_company1);
-
-		PortalInstances.removeCompany(_company1.getCompanyId());
-		PortalInstances.removeCompany(_company2.getCompanyId());
 
 		if (_safeCloseable != null) {
 			_safeCloseable.close();
@@ -199,8 +192,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			company = CompanyTestUtil.addCompany();
 
-			PortalInstances.initCompany(company);
-
 			_assertPortletDeployed(_company1, portletName);
 			_assertPortletNotDeployed(company, portletName);
 		}
@@ -215,8 +206,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			if (company != null) {
 				_companyLocalService.deleteCompany(company);
-
-				PortalInstances.removeCompany(company.getCompanyId());
 			}
 		}
 	}
@@ -245,8 +234,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			Company company = CompanyTestUtil.addCompany();
 
-			PortalInstances.initCompany(company);
-
 			try {
 				PortletCategory portletCategory3 =
 					(PortletCategory)WebAppPool.get(
@@ -257,8 +244,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 			}
 			finally {
 				_companyLocalService.deleteCompany(company);
-
-				PortalInstances.removeCompany(company.getCompanyId());
 			}
 		}
 		finally {
@@ -298,8 +283,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			Company company = CompanyTestUtil.addCompany();
 
-			PortalInstances.initCompany(company);
-
 			try {
 				PortletCategory portletCategory3 =
 					(PortletCategory)WebAppPool.get(
@@ -310,8 +293,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 			}
 			finally {
 				_companyLocalService.deleteCompany(company);
-
-				PortalInstances.removeCompany(company.getCompanyId());
 			}
 		}
 		finally {

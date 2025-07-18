@@ -43,11 +43,8 @@ public class ViewVersionHistoryDisplayContext {
 
 	public String getAPIURL() throws PortalException {
 		return StringBundler.concat(
-			"/o",
-			_objectDefinition.getRESTContextPath(),
-			StringPool.SLASH,
-			_objectEntry.getObjectEntryId(),
-			"/versions");
+			"/o", _objectDefinition.getRESTContextPath(), StringPool.SLASH,
+			_objectEntry.getObjectEntryId(), "/versions");
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {

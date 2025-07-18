@@ -60,8 +60,7 @@ public class DepotEntryUserNotificationHandler
 
 		return StringBundler.concat(
 			"<div class=\"title\">",
-			_getTitle(depotEntry.getGroup(), serviceContext),
-			"</div>");
+			_getTitle(depotEntry.getGroup(), serviceContext), "</div>");
 	}
 
 	@Override

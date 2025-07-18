@@ -51,8 +51,7 @@ public class ViewStructuresDisplayContext {
 			"(objectFolderExternalReferenceCode eq '",
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 			"' or objectFolderExternalReferenceCode eq '",
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
-			"')");
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES, "')");
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {

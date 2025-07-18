@@ -11,9 +11,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -46,73 +43,50 @@ public class SubscribeContentItemStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				ParamUtil.getLong(httpServletRequest, "objectDefinitionId"));
+
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			_objectEntryService.getModelResourcePermission(
+				objectDefinition.getObjectDefinitionId());
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					ParamUtil.getLong(
-						httpServletRequest, "objectDefinitionId"));
+		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 
-			ModelResourcePermission<ObjectEntry> modelResourcePermission =
-				_objectEntryService.getModelResourcePermission(
-					objectDefinition.getObjectDefinitionId());
+		modelResourcePermission.check(
+			themeDisplay.getPermissionChecker(), classPK, ActionKeys.UPDATE);
 
-			long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+		String cmd = ParamUtil.getString(httpServletRequest, "cmd");
 
-			modelResourcePermission.check(
-				themeDisplay.getPermissionChecker(), classPK,
-				ActionKeys.UPDATE);
+		ClassName className = _classNameLocalService.getClassName(
+			ParamUtil.getLong(httpServletRequest, "classNameId"));
 
-			String cmd = ParamUtil.getString(httpServletRequest, "cmd");
-
-			ClassName className = _classNameLocalService.getClassName(
-				ParamUtil.getLong(httpServletRequest, "classNameId"));
-
-			if (cmd.equals(Constants.SUBSCRIBE)) {
-				_subscriptionLocalService.addSubscription(
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					className.getClassName(), classPK);
-			}
-			else {
-				_subscriptionLocalService.deleteSubscription(
-					themeDisplay.getUserId(), className.getClassName(),
-					classPK);
-			}
-
-			ServletResponseUtil.write(
-				httpServletResponse,
-				JSONUtil.toString(_jsonFactory.createJSONObject()));
+		if (cmd.equals(Constants.SUBSCRIBE)) {
+			_subscriptionLocalService.addSubscription(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				className.getClassName(), classPK);
 		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			ServletResponseUtil.write(
-				httpServletResponse,
-				JSONUtil.toString(
-					JSONUtil.put(
-						"error",
-						_language.get(
-							themeDisplay.getLocale(),
-							"an-unexpected-error-occurred"))));
+		else {
+			_subscriptionLocalService.deleteSubscription(
+				themeDisplay.getUserId(), className.getClassName(), classPK);
 		}
+
+		ServletResponseUtil.write(
+			httpServletResponse,
+			JSONUtil.toString(_jsonFactory.createJSONObject()));
 
 		return null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SubscribeContentItemStrutsAction.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

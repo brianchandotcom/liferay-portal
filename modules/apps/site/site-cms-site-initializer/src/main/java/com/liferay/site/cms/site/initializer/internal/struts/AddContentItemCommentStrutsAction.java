@@ -9,9 +9,6 @@ import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -51,66 +48,47 @@ public class AddContentItemCommentStrutsAction implements StrutsAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		try {
-			ClassName className = _classNameLocalService.getClassName(
-				ParamUtil.getLong(httpServletRequest, "classNameId"));
-			long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+		ClassName className = _classNameLocalService.getClassName(
+			ParamUtil.getLong(httpServletRequest, "classNameId"));
+		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 
-			_discussionPermission.checkAddPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				className.getClassName(), classPK);
+		_discussionPermission.checkAddPermission(
+			themeDisplay.getPermissionChecker(), themeDisplay.getCompanyId(),
+			themeDisplay.getScopeGroupId(), className.getClassName(), classPK);
 
-			User user = themeDisplay.getUser();
+		User user = themeDisplay.getUser();
 
-			Function<String, ServiceContext> serviceContextFunction =
-				new ServiceContextFunction(httpServletRequest);
+		Function<String, ServiceContext> serviceContextFunction =
+			new ServiceContextFunction(httpServletRequest);
 
-			String body = ParamUtil.getString(httpServletRequest, "body");
-			long parentCommentId = ParamUtil.getLong(
-				httpServletRequest, "parentCommentId");
+		String body = ParamUtil.getString(httpServletRequest, "body");
+		long parentCommentId = ParamUtil.getLong(
+			httpServletRequest, "parentCommentId");
 
-			long commentId = 0;
+		long commentId = 0;
 
-			if (parentCommentId == 0) {
-				commentId = _commentManager.addComment(
-					null, user.getUserId(), themeDisplay.getScopeGroupId(),
-					className.getClassName(), classPK, user.getFullName(), null,
-					body, serviceContextFunction);
-			}
-			else {
-				commentId = _commentManager.addComment(
-					null, user.getUserId(), className.getClassName(), classPK,
-					user.getFullName(), parentCommentId, null, body,
-					serviceContextFunction);
-			}
-
-			Comment comment = _commentManager.fetchComment(commentId);
-
-			ServletResponseUtil.write(
-				httpServletResponse,
-				JSONUtil.toString(
-					CommentUtil.getCommentJSONObject(
-						comment, httpServletRequest)));
+		if (parentCommentId == 0) {
+			commentId = _commentManager.addComment(
+				null, user.getUserId(), themeDisplay.getScopeGroupId(),
+				className.getClassName(), classPK, user.getFullName(), null,
+				body, serviceContextFunction);
 		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			ServletResponseUtil.write(
-				httpServletResponse,
-				JSONUtil.toString(
-					JSONUtil.put(
-						"error",
-						_language.get(
-							themeDisplay.getLocale(),
-							"an-unexpected-error-occurred"))));
+		else {
+			commentId = _commentManager.addComment(
+				null, user.getUserId(), className.getClassName(), classPK,
+				user.getFullName(), parentCommentId, null, body,
+				serviceContextFunction);
 		}
+
+		Comment comment = _commentManager.fetchComment(commentId);
+
+		ServletResponseUtil.write(
+			httpServletResponse,
+			JSONUtil.toString(
+				CommentUtil.getCommentJSONObject(comment, httpServletRequest)));
 
 		return null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddContentItemCommentStrutsAction.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
@@ -120,8 +98,5 @@ public class AddContentItemCommentStrutsAction implements StrutsAction {
 
 	@Reference
 	private DiscussionPermission _discussionPermission;
-
-	@Reference
-	private Language _language;
 
 }

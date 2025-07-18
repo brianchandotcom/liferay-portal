@@ -16,6 +16,16 @@ declare module Liferay {
 		): Promise<any>;
 	}
 
+	namespace Browser {
+		export function isChrome(): boolean;
+
+		export function isFirefox(): boolean;
+
+		export function isMobile(): boolean;
+
+		export function isMac(): boolean;
+	}
+
 	namespace CustomDialogs {
 		export const enabled: boolean;
 	}

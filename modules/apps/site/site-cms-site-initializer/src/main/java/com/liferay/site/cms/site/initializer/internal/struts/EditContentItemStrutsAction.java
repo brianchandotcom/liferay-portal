@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -20,6 +21,8 @@ import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,6 +56,18 @@ public class EditContentItemStrutsAction implements StrutsAction {
 		if (Validator.isNotNull(redirect)) {
 			editURL = HttpComponentsUtil.addParameter(
 				editURL, "redirect", redirect);
+		}
+
+		String layoutMode = ParamUtil.getString(httpServletRequest, "p_l_mode");
+
+		if (Validator.isNotNull(layoutMode) && Objects.equals(layoutMode, Constants.READ)) {
+			editURL = HttpComponentsUtil.addParameter(editURL, "p_l_mode", layoutMode);
+		}
+
+		String windowState = ParamUtil.getString(httpServletRequest, "p_p_state");
+
+		if (Validator.isNotNull(windowState)) {
+			editURL = HttpComponentsUtil.addParameter(editURL, "p_p_state", windowState);
 		}
 
 		httpServletResponse.sendRedirect(editURL);

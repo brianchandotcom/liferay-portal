@@ -84,6 +84,23 @@ export default function ContentFDSPropsTransformer({
 				};
 			}
 
+			if (action?.data?.id === 'viewContent') {
+				return {
+					...action,
+					data: {
+						...action.data,
+						disableHeader: false,
+						size: 'full-screen',
+						title: 'View',
+					},
+					isVisible: (item: any) =>
+						Boolean(
+							item?.entryClassName !==
+								OBJECT_ENTRY_FOLDER_CLASSNAME
+						),
+				};
+			}
+
 			return action;
 		}),
 		onActionDropdownItemClick: ({

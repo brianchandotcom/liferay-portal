@@ -10,13 +10,18 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -45,6 +50,9 @@ public class ViewContentsSectionDisplayContext
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);
+		
+		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -73,6 +81,19 @@ public class ViewContentsSectionDisplayContext
 				LanguageUtil.get(httpServletRequest, "show-details"), null,
 				null, "infoPanel"));
 
+		fdsActionDropdownItems.add(
+			4,
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					GroupConstants.CMS_FRIENDLY_URL,
+					"/edit_content_item?objectEntryId={embedded.id}&",
+					"redirect=", themeDisplay.getURLCurrent(),
+					"&p_l_mode=read&p_p_state=", LiferayWindowState.POP_UP),
+				"view", "viewContent",
+				LanguageUtil.get(httpServletRequest, "view"), "get", null,
+				"modal"));
+
 		return fdsActionDropdownItems;
 	}
 
@@ -86,4 +107,5 @@ public class ViewContentsSectionDisplayContext
 		return "click-new-to-create-your-first-piece-of-content";
 	}
 
+	protected final ThemeDisplay themeDisplay;
 }

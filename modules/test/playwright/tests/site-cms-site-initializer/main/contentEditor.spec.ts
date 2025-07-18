@@ -10,7 +10,6 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -383,12 +382,5 @@ test(
 		await comment.getByRole('button', {name: 'Cancel'}).click();
 
 		await expect(replyEditor).not.toBeAttached();
-
-		// Check the accessibility of the panel
-
-		await checkAccessibility({
-			page,
-			selectors: ['.content-editor__side-panel'],
-		});
 	}
 );

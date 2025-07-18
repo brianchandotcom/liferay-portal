@@ -247,6 +247,12 @@ test(
 
 		await structureBuilderPage.selectFields([{label: 'Text'}]);
 
+		// Assert correct label style
+
+		await expect(
+			page.locator('.label-info', {hasText: 'Text'})
+		).toBeVisible();
+
 		// Configure the field
 
 		await structureBuilderPage.changeFieldSettings({
@@ -860,6 +866,14 @@ test.describe('Referenced structures', () => {
 				label2,
 			]);
 
+			// Assert correct label style
+
+			await expect(
+				page.locator('.label-warning', {
+					hasText: 'Referenced Structure',
+				})
+			).toBeVisible();
+
 			// Check the one in draft can't be referenced
 
 			await expect(async () => {
@@ -1113,6 +1127,12 @@ test.describe('Repeatable groups', () => {
 				fields: [{label: 'Date'}],
 				label: 'Repeatable Group 2',
 			});
+
+			// Assert correct label style
+
+			await expect(
+				page.locator('.label-success', {hasText: 'Repeatable Group'})
+			).toBeVisible();
 
 			// Check groups are persisted
 

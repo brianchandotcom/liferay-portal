@@ -23,12 +23,12 @@ public class CompanyDataCleanupPreupgradeProcess
 				"companyId", "Company"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				"ownerId = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY, "ownerId",
-				"PortalPreferences", "companyId", "Company"));
+				"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+				"ownerId", "PortalPreferences", "companyId", "Company"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				"ownerId = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY, "ownerId",
-				"PortletPreferences", "companyId", "Company"));
+				"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+				"ownerId", "PortletPreferences", "companyId", "Company"));
 	}
 
 }

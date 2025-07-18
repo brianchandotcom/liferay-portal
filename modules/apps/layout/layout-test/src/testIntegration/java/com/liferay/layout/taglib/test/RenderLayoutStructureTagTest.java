@@ -1742,10 +1742,6 @@ public class RenderLayoutStructureTagTest {
 				).put(
 					"anyAssetType",
 					String.valueOf(_portal.getClassNameId(JournalArticle.class))
-				).put(
-					"orderByColumn1", "priority"
-				).put(
-					"orderByType1", "ASC"
 				).buildString(),
 				_serviceContext);
 

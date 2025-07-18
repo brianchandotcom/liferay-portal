@@ -46,7 +46,7 @@ public class TestrayCloudBucket {
 
 		try {
 			name = JenkinsResultsParserUtil.getBuildProperty(
-				"testray.s3.bucket");
+				"testray.cloud.bucket");
 		}
 		catch (IOException ioException) {
 			System.out.println(
@@ -136,7 +136,7 @@ public class TestrayCloudBucket {
 		return _hasGoogleApplicationCredentials;
 	}
 
-	public TestrayS3Object createTestrayS3Object(String key, File file) {
+	public TestrayCloudObject createTestrayCloudObject(String key, File file) {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		BlobId blobId = BlobId.of(getName(), key);
@@ -180,25 +180,27 @@ public class TestrayCloudBucket {
 			Blob blob = storage.create(
 				blobInfo, FileUtils.readFileToByteArray(file));
 
-			TestrayS3Object testrayS3Object =
-				TestrayS3ObjectFactory.newTestrayS3Object(this, blob);
+			TestrayCloudObject testrayCloudObject =
+				TestrayCloudObjectFactory.newTestrayCloudObject(this, blob);
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Created S3 Object ", testrayS3Object.getURLString(),
+					"Created Cloud Object ", testrayCloudObject.getURLString(),
 					" in ",
 					JenkinsResultsParserUtil.toDurationString(
 						JenkinsResultsParserUtil.getCurrentTimeMillis() -
 							start)));
 
-			return testrayS3Object;
+			return testrayCloudObject;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	public TestrayS3Object createTestrayS3Object(String key, String value) {
+	public TestrayCloudObject createTestrayCloudObject(
+		String key, String value) {
+
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		BlobId blobId = BlobId.of(getName(), key);
@@ -212,50 +214,55 @@ public class TestrayCloudBucket {
 		Blob blob = storage.create(
 			blobInfo, value.getBytes(StandardCharsets.UTF_8));
 
-		TestrayS3Object testrayS3Object =
-			TestrayS3ObjectFactory.newTestrayS3Object(this, blob);
+		TestrayCloudObject testrayCloudObject =
+			TestrayCloudObjectFactory.newTestrayCloudObject(this, blob);
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Created S3 Object ", testrayS3Object.getURLString(), " in ",
+				"Created Cloud Object ", testrayCloudObject.getURLString(),
+				" in ",
 				JenkinsResultsParserUtil.toDurationString(
 					JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 
-		return testrayS3Object;
+		return testrayCloudObject;
 	}
 
-	public List<TestrayS3Object> createTestrayS3Objects(File dir) {
-		List<TestrayS3Object> testrayS3Objects = new ArrayList<>();
+	public List<TestrayCloudObject> createTestrayCloudObjects(File dir) {
+		List<TestrayCloudObject> testrayCloudObjects = new ArrayList<>();
 
 		if ((dir == null) || !dir.isDirectory()) {
-			return testrayS3Objects;
+			return testrayCloudObjects;
 		}
 
 		for (File file : JenkinsResultsParserUtil.findFiles(dir, ".*")) {
-			TestrayS3Object testrayS3Object = createTestrayS3Object(
+			TestrayCloudObject testrayCloudObject = createTestrayCloudObject(
 				JenkinsResultsParserUtil.getPathRelativeTo(file, dir), file);
 
-			testrayS3Objects.add(testrayS3Object);
+			testrayCloudObjects.add(testrayCloudObject);
 		}
 
-		return testrayS3Objects;
+		return testrayCloudObjects;
 	}
 
-	public void deleteTestrayS3Object(String key) {
-		deleteTestrayS3Object(getTestrayS3Object(key));
+	public void deleteTestrayCloudObject(String key) {
+		deleteTestrayCloudObject(getTestrayCloudObject(key));
 	}
 
-	public void deleteTestrayS3Object(TestrayS3Object testrayS3Object) {
-		testrayS3Object.delete();
+	public void deleteTestrayCloudObject(
+		TestrayCloudObject testrayCloudObject) {
+
+		testrayCloudObject.delete();
 	}
 
-	public void deleteTestrayS3Objects(List<TestrayS3Object> testrayS3Objects) {
-		for (TestrayS3Object testrayS3Object : testrayS3Objects) {
-			deleteTestrayS3Object(testrayS3Object);
+	public void deleteTestrayCloudObjects(
+		List<TestrayCloudObject> testrayCloudObjects) {
+
+		for (TestrayCloudObject testrayCloudObject : testrayCloudObjects) {
+			deleteTestrayCloudObject(testrayCloudObject);
 		}
 	}
 
-	public void downloadTestrayS3Objects(File baseDir, List<String> keys)
+	public void downloadTestrayCloudObjects(File baseDir, List<String> keys)
 		throws TimeoutException {
 
 		List<Callable<File>> callables = new ArrayList<>();
@@ -272,23 +279,24 @@ public class TestrayCloudBucket {
 						return null;
 					}
 
-					TestrayS3Object testrayS3Object = getTestrayS3Object(key);
+					TestrayCloudObject testrayCloudObject =
+						getTestrayCloudObject(key);
 
-					if ((testrayS3Object == null) ||
-						!testrayS3Object.exists()) {
+					if ((testrayCloudObject == null) ||
+						!testrayCloudObject.exists()) {
 
 						return null;
 					}
 
 					try {
-						testrayS3Object.downloadTo(file);
+						testrayCloudObject.downloadTo(file);
 
 						return file;
 					}
 					catch (Exception exception) {
 						System.out.println(
 							"Unable to download: " +
-								testrayS3Object.getURLString());
+								testrayCloudObject.getURLString());
 					}
 
 					return null;
@@ -300,7 +308,7 @@ public class TestrayCloudBucket {
 		}
 
 		ParallelExecutor<File> parallelExecutor = new ParallelExecutor<>(
-			callables, _threadPoolExecutor, "downloadTestrayS3Objects");
+			callables, _threadPoolExecutor, "downloadTestrayCloudObjects");
 
 		parallelExecutor.execute();
 	}
@@ -314,7 +322,7 @@ public class TestrayCloudBucket {
 			"https://storage.cloud.google.com/", getName());
 	}
 
-	public TestrayS3Object getTestrayS3Object(String key) {
+	public TestrayCloudObject getTestrayCloudObject(String key) {
 		Bucket bucket = _getBucket();
 
 		Blob blob = bucket.get(key);
@@ -323,20 +331,22 @@ public class TestrayCloudBucket {
 			return null;
 		}
 
-		return TestrayS3ObjectFactory.newTestrayS3Object(this, blob);
+		return TestrayCloudObjectFactory.newTestrayCloudObject(this, blob);
 	}
 
-	public List<TestrayS3Object> getTestrayS3Objects() {
-		return _getTestrayS3Objects(new Storage.BlobListOption[0]);
+	public List<TestrayCloudObject> getTestrayCloudObjects() {
+		return _getTestrayCloudObjects(new Storage.BlobListOption[0]);
 	}
 
-	public List<TestrayS3Object> getTestrayS3Objects(String directoryPrefix) {
+	public List<TestrayCloudObject> getTestrayCloudObjects(
+		String directoryPrefix) {
+
 		Storage.BlobListOption[] blobListOptions = {
 			Storage.BlobListOption.prefix(directoryPrefix),
 			Storage.BlobListOption.currentDirectory()
 		};
 
-		return _getTestrayS3Objects(blobListOptions);
+		return _getTestrayCloudObjects(blobListOptions);
 	}
 
 	public URL getURL() {
@@ -369,21 +379,21 @@ public class TestrayCloudBucket {
 		return storageOptions.getService();
 	}
 
-	private List<TestrayS3Object> _getTestrayS3Objects(
+	private List<TestrayCloudObject> _getTestrayCloudObjects(
 		Storage.BlobListOption[] blobListOptions) {
 
-		List<TestrayS3Object> testrayS3Objects = new ArrayList<>();
+		List<TestrayCloudObject> testrayCloudObjects = new ArrayList<>();
 
 		Storage storage = _getStorage();
 
 		Page<Blob> blobPage = storage.list(getName(), blobListOptions);
 
 		for (Blob blob : blobPage.iterateAll()) {
-			testrayS3Objects.add(
-				TestrayS3ObjectFactory.newTestrayS3Object(this, blob));
+			testrayCloudObjects.add(
+				TestrayCloudObjectFactory.newTestrayCloudObject(this, blob));
 		}
 
-		return testrayS3Objects;
+		return testrayCloudObjects;
 	}
 
 	private static final Pattern _fileNamePattern = Pattern.compile(

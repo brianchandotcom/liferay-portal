@@ -28,7 +28,7 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.testray.TestrayCloudBucket;
-import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
+import com.liferay.jenkins.results.parser.testray.TestrayCloudObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -1163,14 +1163,14 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 			TestrayCloudBucket testrayCloudBucket =
 				TestrayCloudBucket.getInstance();
 
-			TestrayS3Object testrayS3Object =
-				testrayCloudBucket.createTestrayS3Object(
+			TestrayCloudObject testrayCloudObject =
+				testrayCloudBucket.createTestrayCloudObject(
 					JenkinsResultsParserUtil.combine(
 						_getTestrayAttachmentBaseKey(), "/",
 						jenkinsConsoleGzFile.getName()),
 					jenkinsConsoleGzFile);
 
-			addTestrayAttachmentURL(testrayS3Object.getURL());
+			addTestrayAttachmentURL(testrayCloudObject.getURL());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

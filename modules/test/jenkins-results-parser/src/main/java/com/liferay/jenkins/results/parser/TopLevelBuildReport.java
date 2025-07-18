@@ -5,7 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
+import com.liferay.jenkins.results.parser.testray.TestrayCloudObject;
 
 import java.net.URL;
 
@@ -33,7 +33,7 @@ public interface TopLevelBuildReport extends BuildReport {
 
 	public URL getBuildReportJSONUserContentURL();
 
-	public TestrayS3Object getBuildReportTestrayS3Object();
+	public TestrayCloudObject getBuildReportTestrayCloudObject();
 
 	public ControllerBuildReport getControllerBuildReport();
 

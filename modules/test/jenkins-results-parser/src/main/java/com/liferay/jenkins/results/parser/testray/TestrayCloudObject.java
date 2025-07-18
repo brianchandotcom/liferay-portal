@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author Michael Hashimoto
  */
-public class TestrayS3Object {
+public class TestrayCloudObject {
 
 	public void delete() {
 		_blob.delete();
@@ -91,7 +91,7 @@ public class TestrayS3Object {
 		return getURLString();
 	}
 
-	protected TestrayS3Object(
+	protected TestrayCloudObject(
 		TestrayCloudBucket testrayCloudBucket, Blob blob) {
 
 		_testrayCloudBucket = testrayCloudBucket;
@@ -100,7 +100,8 @@ public class TestrayS3Object {
 		try {
 			_url = new URL(
 				JenkinsResultsParserUtil.combine(
-					testrayCloudBucket.getTestrayCloudBaseURL(), "/", getKey()));
+					testrayCloudBucket.getTestrayCloudBaseURL(), "/",
+					getKey()));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

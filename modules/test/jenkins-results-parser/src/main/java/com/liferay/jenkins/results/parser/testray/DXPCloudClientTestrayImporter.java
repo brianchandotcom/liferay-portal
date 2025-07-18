@@ -96,7 +96,7 @@ public class DXPCloudClientTestrayImporter {
 					"ERROR: Testray 2 requires GCP to be configured");
 			}
 
-			_testrayCloudBucket.createTestrayS3Object(
+			_testrayCloudBucket.createTestrayCloudObject(
 				"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
 		}
 		catch (Exception exception) {
@@ -232,7 +232,7 @@ public class DXPCloudClientTestrayImporter {
 
 			JenkinsResultsParserUtil.gzip(poshiLogFile, poshiLogGzipFile);
 
-			_testrayCloudBucket.createTestrayS3Object(key, poshiLogGzipFile);
+			_testrayCloudBucket.createTestrayCloudObject(key, poshiLogGzipFile);
 		}
 		catch (DocumentException | IOException exception) {
 			exception.printStackTrace();
@@ -352,7 +352,7 @@ public class DXPCloudClientTestrayImporter {
 				JenkinsResultsParserUtil.getPathRelativeTo(
 					file, testDir.getParentFile()));
 
-			_testrayCloudBucket.createTestrayS3Object(key, file);
+			_testrayCloudBucket.createTestrayCloudObject(key, file);
 
 			String attachmentName;
 
@@ -531,7 +531,7 @@ public class DXPCloudClientTestrayImporter {
 							JenkinsResultsParserUtil.gzip(
 								childFile, xmlGzipFile);
 
-							_testrayCloudBucket.createTestrayS3Object(
+							_testrayCloudBucket.createTestrayCloudObject(
 								_getRelativeURLPath() + "/" +
 									xmlGzipFile.getName(),
 								xmlGzipFile);
@@ -560,7 +560,7 @@ public class DXPCloudClientTestrayImporter {
 
 				JenkinsResultsParserUtil.gzip(xmlFile, xmlGzipFile);
 
-				_testrayCloudBucket.createTestrayS3Object(
+				_testrayCloudBucket.createTestrayCloudObject(
 					_getRelativeURLPath() + "/" + xmlGzipFile.getName(),
 					xmlGzipFile);
 			}
@@ -772,9 +772,7 @@ public class DXPCloudClientTestrayImporter {
 			testrayCloudBucketName = _getEnvVarValue("testrayS3BucketName");
 		}
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(
-				testrayCloudBucketName)) {
-
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayCloudBucketName)) {
 			testrayCloudBucketName = TestrayCloudBucket.DEFAULT_BUCKET_NAME;
 		}
 

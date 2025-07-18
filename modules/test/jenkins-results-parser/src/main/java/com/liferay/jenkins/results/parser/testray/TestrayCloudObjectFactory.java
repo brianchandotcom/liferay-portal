@@ -15,9 +15,9 @@ import java.util.Map;
 /**
  * @author Michael Hashimoto
  */
-public class TestrayS3ObjectFactory {
+public class TestrayCloudObjectFactory {
 
-	public static TestrayS3Object newTestrayS3Object(
+	public static TestrayCloudObject newTestrayCloudObject(
 		TestrayCloudBucket testrayCloudBucket, Blob blob) {
 
 		if (blob == null) {
@@ -27,23 +27,24 @@ public class TestrayS3ObjectFactory {
 		String mapKey = JenkinsResultsParserUtil.combine(
 			testrayCloudBucket.getName(), "/", blob.getName());
 
-		if (_testrayS3Objects.containsKey(mapKey)) {
-			TestrayS3Object testrayS3Object = _testrayS3Objects.get(mapKey);
+		if (_testrayCloudObjects.containsKey(mapKey)) {
+			TestrayCloudObject testrayCloudObject = _testrayCloudObjects.get(
+				mapKey);
 
-			testrayS3Object.setBlob(blob);
+			testrayCloudObject.setBlob(blob);
 
-			return testrayS3Object;
+			return testrayCloudObject;
 		}
 
-		TestrayS3Object testrayS3Object = new TestrayS3Object(
+		TestrayCloudObject testrayCloudObject = new TestrayCloudObject(
 			testrayCloudBucket, blob);
 
-		_testrayS3Objects.put(mapKey, testrayS3Object);
+		_testrayCloudObjects.put(mapKey, testrayCloudObject);
 
-		return testrayS3Object;
+		return testrayCloudObject;
 	}
 
-	private static final Map<String, TestrayS3Object> _testrayS3Objects =
+	private static final Map<String, TestrayCloudObject> _testrayCloudObjects =
 		new HashMap<>();
 
 }

@@ -269,7 +269,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			TestrayCloudBucket testrayCloudBucket =
 				TestrayCloudBucket.getInstance();
 
-			testrayCloudBucket.createTestrayS3Object(key, file);
+			testrayCloudBucket.createTestrayCloudObject(key, file);
 
 			return new S3TestrayAttachment(this, name, key);
 		}

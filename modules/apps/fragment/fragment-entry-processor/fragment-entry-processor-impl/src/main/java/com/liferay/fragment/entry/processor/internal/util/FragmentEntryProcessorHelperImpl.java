@@ -296,7 +296,21 @@ public class FragmentEntryProcessorHelperImpl
 			infoItemReference = new InfoItemReference(
 				className, infoItemIdentifier);
 
-			object = _getInfoItem(infoItemReference);
+			InfoItemObjectProvider<Object> infoItemObjectProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemObjectProvider.class, className,
+					infoItemIdentifier.getInfoItemServiceFilter());
+
+			if (infoItemObjectProvider != null) {
+				try {
+					object =  infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+				}
+				catch (NoSuchInfoItemException noSuchInfoItemException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(noSuchInfoItemException);
+					}
+				}
+			}
 		}
 		else if (isMappedCollection(editableValueJSONObject)) {
 			infoItemReference =

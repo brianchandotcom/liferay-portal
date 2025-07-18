@@ -17,9 +17,10 @@ public class S3TestrayAttachment extends BaseTestrayAttachment {
 
 		super(testrayCaseResult, name, key);
 
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+		TestrayCloudBucket testrayCloudBucket =
+			TestrayCloudBucket.getInstance();
 
-		_testrayS3Object = testrayS3Bucket.getTestrayS3Object(key);
+		_testrayS3Object = testrayCloudBucket.getTestrayS3Object(key);
 	}
 
 	@Override

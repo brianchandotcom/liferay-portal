@@ -619,11 +619,12 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			return null;
 		}
 
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+		TestrayCloudBucket testrayCloudBucket =
+			TestrayCloudBucket.getInstance();
 
 		String testrayS3ObjectPath = getTopLevelBuildURLPath() + "/" + key;
 
-		TestrayS3Object testrayS3Object = testrayS3Bucket.getTestrayS3Object(
+		TestrayS3Object testrayS3Object = testrayCloudBucket.getTestrayS3Object(
 			testrayS3ObjectPath);
 
 		if (testrayS3Object != null) {

@@ -49,8 +49,8 @@ public class TestrayS3Object {
 		return _blob.getName();
 	}
 
-	public TestrayS3Bucket getTestrayS3Bucket() {
-		return _testrayS3Bucket;
+	public TestrayCloudBucket getTestrayCloudBucket() {
+		return _testrayCloudBucket;
 	}
 
 	public URL getURL() {
@@ -91,14 +91,16 @@ public class TestrayS3Object {
 		return getURLString();
 	}
 
-	protected TestrayS3Object(TestrayS3Bucket testrayS3Bucket, Blob blob) {
-		_testrayS3Bucket = testrayS3Bucket;
+	protected TestrayS3Object(
+		TestrayCloudBucket testrayCloudBucket, Blob blob) {
+
+		_testrayCloudBucket = testrayCloudBucket;
 		_blob = blob;
 
 		try {
 			_url = new URL(
 				JenkinsResultsParserUtil.combine(
-					testrayS3Bucket.getTestrayS3BaseURL(), "/", getKey()));
+					testrayCloudBucket.getTestrayCloudBaseURL(), "/", getKey()));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
@@ -106,7 +108,7 @@ public class TestrayS3Object {
 	}
 
 	private Blob _blob;
-	private final TestrayS3Bucket _testrayS3Bucket;
+	private final TestrayCloudBucket _testrayCloudBucket;
 	private final URL _url;
 
 }

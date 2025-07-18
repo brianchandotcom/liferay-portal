@@ -39,9 +39,9 @@ import org.apache.commons.io.FileUtils;
 /**
  * @author Michael Hashimoto
  */
-public class TestrayS3Bucket {
+public class TestrayCloudBucket {
 
-	public static TestrayS3Bucket getInstance() {
+	public static TestrayCloudBucket getInstance() {
 		String name = null;
 
 		try {
@@ -56,20 +56,20 @@ public class TestrayS3Bucket {
 		return getInstance(name);
 	}
 
-	public static TestrayS3Bucket getInstance(String name) {
+	public static TestrayCloudBucket getInstance(String name) {
 		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
 			name = DEFAULT_BUCKET_NAME;
 		}
 
-		TestrayS3Bucket testrayS3Bucket = _testrayS3Buckets.get(name);
+		TestrayCloudBucket testrayCloudBucket = _testrayCloudBuckets.get(name);
 
-		if (testrayS3Bucket == null) {
-			testrayS3Bucket = new TestrayS3Bucket(name);
+		if (testrayCloudBucket == null) {
+			testrayCloudBucket = new TestrayCloudBucket(name);
 
-			_testrayS3Buckets.put(name, testrayS3Bucket);
+			_testrayCloudBuckets.put(name, testrayCloudBucket);
 		}
 
-		return testrayS3Bucket;
+		return testrayCloudBucket;
 	}
 
 	public static boolean hasGoogleApplicationCredentials() {
@@ -110,9 +110,9 @@ public class TestrayS3Bucket {
 		}
 
 		try {
-			TestrayS3Bucket testrayS3Bucket = getInstance(name);
+			TestrayCloudBucket testrayCloudBucket = getInstance(name);
 
-			testrayS3Bucket._getBucket();
+			testrayCloudBucket._getBucket();
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
@@ -309,7 +309,7 @@ public class TestrayS3Bucket {
 		return _name;
 	}
 
-	public String getTestrayS3BaseURL() {
+	public String getTestrayCloudBaseURL() {
 		return JenkinsResultsParserUtil.combine(
 			"https://storage.cloud.google.com/", getName());
 	}
@@ -353,7 +353,7 @@ public class TestrayS3Bucket {
 
 	protected static final String DEFAULT_BUCKET_NAME = "testray-results";
 
-	private TestrayS3Bucket(String name) {
+	private TestrayCloudBucket(String name) {
 		_name = name;
 	}
 
@@ -389,7 +389,7 @@ public class TestrayS3Bucket {
 	private static final Pattern _fileNamePattern = Pattern.compile(
 		".*\\.(?!gz)(?<fileExtension>([^\\.]+))(?<gzipFileExtension>\\.gz)?");
 	private static Boolean _hasGoogleApplicationCredentials;
-	private static final Map<String, TestrayS3Bucket> _testrayS3Buckets =
+	private static final Map<String, TestrayCloudBucket> _testrayCloudBuckets =
 		new HashMap<>();
 	private static final ThreadPoolExecutor _threadPoolExecutor =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(16, true);

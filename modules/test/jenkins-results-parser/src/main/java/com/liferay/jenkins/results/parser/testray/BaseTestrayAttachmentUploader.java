@@ -124,7 +124,8 @@ public abstract class BaseTestrayAttachmentUploader
 	}
 
 	protected URL getBuildReportTestrayAttachmentURL() {
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+		TestrayCloudBucket testrayCloudBucket =
+			TestrayCloudBucket.getInstance();
 
 		TestrayAttachmentRecorder testrayAttachmentRecorder =
 			getTestrayAttachmentRecorder();
@@ -132,7 +133,7 @@ public abstract class BaseTestrayAttachmentUploader
 		try {
 			return new URL(
 				JenkinsResultsParserUtil.combine(
-					testrayS3Bucket.getTestrayS3BaseURL(), "/",
+					testrayCloudBucket.getTestrayCloudBaseURL(), "/",
 					testrayAttachmentRecorder.getRelativeBuildDirPath(), "/",
 					"build-report.json.gz"));
 		}
@@ -205,9 +206,10 @@ public abstract class BaseTestrayAttachmentUploader
 
 		File buildReportGzipFile = _convertToGzipFile(buildReportFile);
 
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+		TestrayCloudBucket testrayCloudBucket =
+			TestrayCloudBucket.getInstance();
 
-		testrayS3Bucket.createTestrayS3Object(
+		testrayCloudBucket.createTestrayS3Object(
 			relativeBuildDirPath + "/" + buildReportGzipFile.getName(),
 			buildReportGzipFile);
 	}
@@ -249,9 +251,10 @@ public abstract class BaseTestrayAttachmentUploader
 		sb.append(topLevelBuild.getBuildNumber());
 		sb.append("/build-report.json.gz");
 
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+		TestrayCloudBucket testrayCloudBucket =
+			TestrayCloudBucket.getInstance();
 
-		return testrayS3Bucket.getTestrayS3Object(sb.toString());
+		return testrayCloudBucket.getTestrayS3Object(sb.toString());
 	}
 
 	private final Build _build;

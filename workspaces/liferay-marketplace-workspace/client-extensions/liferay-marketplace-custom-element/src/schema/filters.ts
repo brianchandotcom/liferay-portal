@@ -274,6 +274,38 @@ const filterSchema = {
 		],
 		name: 'administratorPublishers',
 	},
+	administratorSSATrials: {
+		fields: [
+			{
+				label: i18n.translate('created-by'),
+				name: 'author',
+				operator: 'contains',
+				type: 'text',
+			},
+			overrides(baseFilters.status, {
+				label: 'Trial Status',
+				name: 'orderStatusInfo/code',
+				operator: 'eq',
+				options: [
+					{
+						label: i18n.translate('active'),
+						value: `${OrderWorkflowStatusCode.IN_PROGRESS}`,
+					},
+					{
+						label: i18n.translate('expired'),
+						value: `${OrderWorkflowStatusCode.COMPLETED}`,
+					},
+					{
+						label: i18n.translate('processing'),
+						value: `${OrderWorkflowStatusCode.PROCESSING}`,
+					},
+				],
+				removeQuoteMark: true,
+				type: 'multiselect',
+			}),
+		],
+		name: 'administratorSSATrials',
+	},
 	administratorSolutions: {
 		fields: [
 			baseFilters.dateCreated,

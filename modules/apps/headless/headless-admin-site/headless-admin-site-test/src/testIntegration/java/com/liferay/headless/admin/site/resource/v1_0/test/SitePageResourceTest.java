@@ -754,21 +754,17 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private SitePage _getRandomSitePage(
-			String curExternalReferenceCode,
-			String curParentSitePageExternalReferenceCode,
-			SitePage.Type curType, String curUuid)
+			String externalReferenceCode,
+			String parentSitePageExternalReferenceCode, SitePage.Type type,
+			String uuid)
 		throws Exception {
 
-		SitePage sitePage = new SitePage() {
-			{
-				externalReferenceCode = curExternalReferenceCode;
-				uuid = curUuid;
-			}
-		};
+		SitePage sitePage = new SitePage();
 
 		sitePage.setAvailableLanguages(
 			() -> LocaleUtil.toW3cLanguageIds(
 				new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN}));
+		sitePage.setExternalReferenceCode(externalReferenceCode);
 		sitePage.setFriendlyUrlPath_i18n(
 			() -> HashMapBuilder.put(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
@@ -787,22 +783,21 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
 				RandomTestUtil.randomString()
 			).build());
-		sitePage.setPageSettings(
-			() -> {
-				PageSettings pageSettings = _getPageSettings(curType);
 
-				pageSettings.setHiddenFromNavigation(
-					RandomTestUtil::randomBoolean);
-				pageSettings.setPriority(
-					_priorities.merge(
-						curParentSitePageExternalReferenceCode, 0,
-						(oldPriority, defaultPriority) -> oldPriority + 1));
+		PageSettings pageSettings = _getPageSettings(type);
 
-				return pageSettings;
-			});
+		pageSettings.setHiddenFromNavigation(RandomTestUtil::randomBoolean);
+		pageSettings.setPriority(
+			_priorities.merge(
+				parentSitePageExternalReferenceCode, 0,
+				(oldPriority, defaultPriority) -> oldPriority + 1));
+
+		sitePage.setPageSettings(pageSettings);
+
 		sitePage.setParentSitePageExternalReferenceCode(
-			() -> curParentSitePageExternalReferenceCode);
-		sitePage.setType(() -> curType);
+			parentSitePageExternalReferenceCode);
+		sitePage.setType(type);
+		sitePage.setUuid(uuid);
 
 		return sitePage;
 	}

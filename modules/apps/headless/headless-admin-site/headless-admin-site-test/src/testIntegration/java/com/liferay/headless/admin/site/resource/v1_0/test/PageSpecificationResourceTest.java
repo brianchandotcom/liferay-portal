@@ -704,14 +704,18 @@ public class PageSpecificationResourceTest
 	}
 
 	private ContentPageSpecification _getContentPageSpecification(
-		Settings curSettings) {
+		Settings settings) {
 
-		return new ContentPageSpecification() {
-			{
-				setSettings(() -> curSettings);
-				setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
-			}
-		};
+		ContentPageSpecification contentPageSpecification =
+			new ContentPageSpecification() {
+				{
+					setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+				}
+			};
+
+		contentPageSpecification.setSettings(settings);
+
+		return contentPageSpecification;
 	}
 
 	private long _getMasterLayoutPlid(ServiceContext serviceContext)
@@ -746,41 +750,40 @@ public class PageSpecificationResourceTest
 	}
 
 	private PageElement[] _getPageElements(
-		int count, String curParentExternalReferenceCode) {
+		int count, String parentExternalReferenceCode) {
 
 		PageElement[] pageElements = new PageElement[count];
 
 		for (int i = 0; i < count; i++) {
-			String curExternalReferenceCode = RandomTestUtil.randomString();
+			String externalReferenceCode = RandomTestUtil.randomString();
 
 			int curPosition = i;
 
-			pageElements[i] = new PageElement() {
+			PageElement pageElement = new PageElement() {
 				{
-					setExternalReferenceCode(curExternalReferenceCode);
 					setPageElementDefinition(
 						() -> new ContainerPageElementDefinition() {
 							{
 								setIndexed(() -> Boolean.FALSE);
-								setType(
-									() -> PageElementDefinition.Type.CONTAINER);
+								setType(() -> Type.CONTAINER);
 							}
 						});
-					setPageElements(
-						() -> {
-							if (!RandomTestUtil.randomBoolean()) {
-								return null;
-							}
-
-							return _getPageElements(
-								RandomTestUtil.randomInt(1, 2),
-								curExternalReferenceCode);
-						});
-					setParentExternalReferenceCode(
-						() -> curParentExternalReferenceCode);
 					setPosition(() -> curPosition);
 				}
 			};
+
+			pageElement.setExternalReferenceCode(externalReferenceCode);
+
+			if (RandomTestUtil.randomBoolean()) {
+				pageElement.setPageElements(
+					_getPageElements(
+						RandomTestUtil.randomInt(1, 2), externalReferenceCode));
+			}
+
+			pageElement.setParentExternalReferenceCode(
+				parentExternalReferenceCode);
+
+			pageElements[i] = pageElement;
 		}
 
 		return pageElements;

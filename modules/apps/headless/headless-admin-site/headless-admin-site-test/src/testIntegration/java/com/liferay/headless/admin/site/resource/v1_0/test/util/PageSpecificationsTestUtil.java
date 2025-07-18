@@ -254,21 +254,20 @@ public class PageSpecificationsTestUtil {
 	}
 
 	public static ContentPageSpecification getContentPageSpecification(
-		String curDraftContentPageSpecificationExternalReferenceCode,
-		PageSpecification.Status curStatus) {
+		String draftContentPageSpecificationExternalReferenceCode,
+		PageSpecification.Status status) {
 
 		ContentPageSpecification contentPageSpecification =
 			new ContentPageSpecification() {
 				{
-					setDraftContentPageSpecificationExternalReferenceCode(
-						() ->
-							curDraftContentPageSpecificationExternalReferenceCode);
 					setExternalReferenceCode(RandomTestUtil::randomString);
-					setStatus(() -> curStatus);
 					setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
 				}
 			};
 
+		contentPageSpecification.
+			setDraftContentPageSpecificationExternalReferenceCode(
+				draftContentPageSpecificationExternalReferenceCode);
 		contentPageSpecification.setPageExperiences(
 			() -> {
 				PageExperience pageExperience = new PageExperience();
@@ -285,22 +284,27 @@ public class PageSpecificationsTestUtil {
 
 				return new PageExperience[] {pageExperience};
 			});
+		contentPageSpecification.setStatus(status);
 
 		return contentPageSpecification;
 	}
 
 	public static WidgetPageSpecification getWidgetPageSpecification(
-		String curExternalReferenceCode, Settings curSettings,
-		PageSpecification.Status curStatus) {
+		String externalReferenceCode, Settings settings,
+		PageSpecification.Status status) {
 
-		return new WidgetPageSpecification() {
-			{
-				setExternalReferenceCode(() -> curExternalReferenceCode);
-				setSettings(() -> curSettings);
-				setStatus(() -> curStatus);
-				setType(() -> Type.WIDGET_PAGE_SPECIFICATION);
-			}
-		};
+		WidgetPageSpecification widgetPageSpecification =
+			new WidgetPageSpecification() {
+				{
+					setType(() -> Type.WIDGET_PAGE_SPECIFICATION);
+				}
+			};
+
+		widgetPageSpecification.setExternalReferenceCode(externalReferenceCode);
+		widgetPageSpecification.setSettings(settings);
+		widgetPageSpecification.setStatus(status);
+
+		return widgetPageSpecification;
 	}
 
 	public static void testPostSiteSiteByExternalReferenceCodePageSpecification(

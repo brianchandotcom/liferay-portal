@@ -79,11 +79,10 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				TestPropsValues.getGroupId());
 
-		String updateLayoutPageTemplateStructureSql = StringBundler.concat(
-			"update LayoutPageTemplateStructure set classPK = plid where plid ",
-			"= ", layoutPageTemplateEntry.getPlid());
-
-		_db.runSQL(updateLayoutPageTemplateStructureSql);
+		_db.runSQL(
+			StringBundler.concat(
+				"update LayoutPageTemplateStructure set classPK = plid where ",
+				"plid = ", layoutPageTemplateEntry.getPlid()));
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());

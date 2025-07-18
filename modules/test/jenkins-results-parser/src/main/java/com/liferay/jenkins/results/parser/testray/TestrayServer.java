@@ -613,7 +613,7 @@ public class TestrayServer {
 
 		JenkinsResultsParserUtil.tarGzip(gcpResultsDir, resultsTarGzFile);
 
-		testrayCloudBucket.createTestrayS3Object(
+		testrayCloudBucket.createTestrayCloudObject(
 			"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
 	}
 

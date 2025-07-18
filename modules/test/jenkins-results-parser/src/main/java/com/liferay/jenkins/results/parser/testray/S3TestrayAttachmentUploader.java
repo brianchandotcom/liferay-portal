@@ -56,15 +56,15 @@ public class S3TestrayAttachmentUploader extends BaseTestrayAttachmentUploader {
 			TestrayCloudBucket.getInstance();
 
 		for (File preparedFile : getPreparedFiles()) {
-			TestrayS3Object testrayS3Object =
-				testrayCloudBucket.createTestrayS3Object(
+			TestrayCloudObject testrayCloudObject =
+				testrayCloudBucket.createTestrayCloudObject(
 					JenkinsResultsParserUtil.getPathRelativeTo(
 						preparedFile, preparedFilesBaseDir),
 					preparedFile);
 
 			if (topLevelBuildReport != null) {
 				topLevelBuildReport.addTestrayAttachmentURL(
-					testrayS3Object.getURL());
+					testrayCloudObject.getURL());
 			}
 		}
 

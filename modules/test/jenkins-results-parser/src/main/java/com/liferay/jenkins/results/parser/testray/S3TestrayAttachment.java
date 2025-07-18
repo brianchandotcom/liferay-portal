@@ -20,27 +20,27 @@ public class S3TestrayAttachment extends BaseTestrayAttachment {
 		TestrayCloudBucket testrayCloudBucket =
 			TestrayCloudBucket.getInstance();
 
-		_testrayS3Object = testrayCloudBucket.getTestrayS3Object(key);
+		_testrayCloudObject = testrayCloudBucket.getTestrayCloudObject(key);
 	}
 
 	@Override
 	public URL getURL() {
-		if (_testrayS3Object == null) {
+		if (_testrayCloudObject == null) {
 			return null;
 		}
 
-		return _testrayS3Object.getURL();
+		return _testrayCloudObject.getURL();
 	}
 
 	@Override
 	public String getValue() {
-		if (_testrayS3Object == null) {
+		if (_testrayCloudObject == null) {
 			return null;
 		}
 
-		return _testrayS3Object.getValue();
+		return _testrayCloudObject.getValue();
 	}
 
-	private final TestrayS3Object _testrayS3Object;
+	private final TestrayCloudObject _testrayCloudObject;
 
 }

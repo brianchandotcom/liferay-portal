@@ -158,11 +158,12 @@ public abstract class BaseTestrayAttachmentUploader
 			return null;
 		}
 
-		TestrayS3Object testrayS3Object = _getBuildReportTestrayS3Object();
+		TestrayCloudObject testrayCloudObject =
+			_getBuildReportTestrayCloudObject();
 
-		if (testrayS3Object != null) {
+		if (testrayCloudObject != null) {
 			_topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(
-				new JSONObject(testrayS3Object.getValue()));
+				new JSONObject(testrayCloudObject.getValue()));
 
 			return _topLevelBuildReport;
 		}
@@ -209,7 +210,7 @@ public abstract class BaseTestrayAttachmentUploader
 		TestrayCloudBucket testrayCloudBucket =
 			TestrayCloudBucket.getInstance();
 
-		testrayCloudBucket.createTestrayS3Object(
+		testrayCloudBucket.createTestrayCloudObject(
 			relativeBuildDirPath + "/" + buildReportGzipFile.getName(),
 			buildReportGzipFile);
 	}
@@ -224,7 +225,7 @@ public abstract class BaseTestrayAttachmentUploader
 		return gzipFile;
 	}
 
-	private TestrayS3Object _getBuildReportTestrayS3Object() {
+	private TestrayCloudObject _getBuildReportTestrayCloudObject() {
 		Build build = getBuild();
 
 		if (!(build instanceof TopLevelBuild)) {
@@ -254,7 +255,7 @@ public abstract class BaseTestrayAttachmentUploader
 		TestrayCloudBucket testrayCloudBucket =
 			TestrayCloudBucket.getInstance();
 
-		return testrayCloudBucket.getTestrayS3Object(sb.toString());
+		return testrayCloudBucket.getTestrayCloudObject(sb.toString());
 	}
 
 	private final Build _build;

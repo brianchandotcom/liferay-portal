@@ -5,7 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
+import com.liferay.jenkins.results.parser.testray.TestrayCloudObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,12 +27,12 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 			return _buildReportJSONObject;
 		}
 
-		TestrayS3Object buildReportTestrayS3Object =
-			getBuildReportTestrayS3Object();
+		TestrayCloudObject buildReportTestrayCloudObject =
+			getBuildReportTestrayCloudObject();
 
-		if (buildReportTestrayS3Object != null) {
+		if (buildReportTestrayCloudObject != null) {
 			_buildReportJSONObject = new JSONObject(
-				buildReportTestrayS3Object.getValue());
+				buildReportTestrayCloudObject.getValue());
 		}
 
 		if (_buildReportJSONObject == null) {

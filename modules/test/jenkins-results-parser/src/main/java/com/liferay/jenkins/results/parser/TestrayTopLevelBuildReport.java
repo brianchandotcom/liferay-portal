@@ -6,7 +6,7 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
-import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
+import com.liferay.jenkins.results.parser.testray.TestrayCloudObject;
 
 import org.json.JSONObject;
 
@@ -25,14 +25,14 @@ public class TestrayTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 		_startYearMonth = testrayBuild.getStartYearMonth();
 
-		TestrayS3Object buildReportTestrayS3Object =
-			getBuildReportTestrayS3Object();
+		TestrayCloudObject buildReportTestrayCloudObject =
+			getBuildReportTestrayCloudObject();
 
-		if (buildReportTestrayS3Object == null) {
+		if (buildReportTestrayCloudObject == null) {
 			throw new RuntimeException("Unable to find build-report.json.gz");
 		}
 
-		String value = buildReportTestrayS3Object.getValue();
+		String value = buildReportTestrayCloudObject.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(value)) {
 			throw new RuntimeException("Invalid build-report.json.gz");

@@ -42,7 +42,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -2397,13 +2396,13 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	private long _columnBitmask;
 
-	protected final transient Consumer<Long> groupIdUpdateEntityCacheConsumer =
-		groupId -> {
+	protected static final BiConsumer<User, Long>
+		groupIdUpdateEntityCacheBiConsumer = (user, groupId) -> {
 			UserCacheModel userCacheModel = EntityCacheUtil.fetchCacheModel(
-				UserImpl.class, _userId, UserCacheModel.class);
+				UserImpl.class, user.getPrimaryKey(), UserCacheModel.class);
 
 			if ((userCacheModel != null) &&
-				(userCacheModel.getMvccVersion() == getMvccVersion())) {
+				(userCacheModel.getMvccVersion() == user.getMvccVersion())) {
 
 				userCacheModel.groupId = groupId;
 			}
@@ -2411,13 +2410,13 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	private static final MethodHandle _groupIdMethodHandle;
 
-	protected final transient Consumer<long[]>
-		userGroupIdsUpdateEntityCacheConsumer = userGroupIds -> {
+	protected static final BiConsumer<User, long[]>
+		userGroupIdsUpdateEntityCacheBiConsumer = (user, userGroupIds) -> {
 			UserCacheModel userCacheModel = EntityCacheUtil.fetchCacheModel(
-				UserImpl.class, _userId, UserCacheModel.class);
+				UserImpl.class, user.getPrimaryKey(), UserCacheModel.class);
 
 			if ((userCacheModel != null) &&
-				(userCacheModel.getMvccVersion() == getMvccVersion())) {
+				(userCacheModel.getMvccVersion() == user.getMvccVersion())) {
 
 				userCacheModel.userGroupIds = userGroupIds;
 			}

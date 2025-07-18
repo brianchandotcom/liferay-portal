@@ -9,8 +9,6 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.spring.aop.BaseServiceBeanAutoProxyCreator;
 import com.liferay.portal.util.PropsValues;
 
-import java.beans.PropertyDescriptor;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -134,25 +132,18 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 			 _postProcessPropertyValues) ||
 			needsDependencyCheck) {
 
-			PropertyDescriptor[] propertyDescriptors =
-				filterPropertyDescriptorsForDependencyCheck(beanWrapper, true);
-
 			if (hasInstantiationAwareBeanPostProcessors) {
 				for (BeanPostProcessor beanPostProcessor :
 						getBeanPostProcessors()) {
 
 					if (beanPostProcessor instanceof
-							InstantiationAwareBeanPostProcessor) {
-
-						InstantiationAwareBeanPostProcessor
-							instantiationAwareBeanPostProcessor =
-								(InstantiationAwareBeanPostProcessor)
-									beanPostProcessor;
+							InstantiationAwareBeanPostProcessor
+								instantiationAwareBeanPostProcessor) {
 
 						propertyValues =
 							instantiationAwareBeanPostProcessor.
-								postProcessPropertyValues(
-									propertyValues, propertyDescriptors,
+								postProcessProperties(
+									propertyValues,
 									beanWrapper.getWrappedInstance(), beanName);
 
 						if (propertyValues == null) {
@@ -164,7 +155,9 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 
 			if (needsDependencyCheck) {
 				checkDependencies(
-					beanName, rootBeanDefinition, propertyDescriptors,
+					beanName, rootBeanDefinition,
+					filterPropertyDescriptorsForDependencyCheck(
+						beanWrapper, true),
 					propertyValues);
 			}
 		}

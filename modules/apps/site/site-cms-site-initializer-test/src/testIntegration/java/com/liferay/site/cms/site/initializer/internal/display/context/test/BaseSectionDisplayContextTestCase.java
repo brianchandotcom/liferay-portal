@@ -17,6 +17,7 @@ import com.liferay.object.definition.setting.builder.ObjectDefinitionSettingBuil
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -55,6 +56,22 @@ import org.junit.Test;
  */
 public abstract class BaseSectionDisplayContextTestCase
 	extends BaseDisplayContextTestCase {
+
+	@Test
+	public void testGetAdditionalProps() throws Exception {
+		Assert.assertEquals(
+			HashMapBuilder.<String, Object>put(
+				"autocompleteURL",
+				() -> StringBundler.concat(
+					"/o/search/v1.0/search?emptySearch=",
+					"true&entryClassNames=com.liferay.portal.kernel.model.",
+					"User,com.liferay.portal.kernel.model.",
+					"UserGroup&nestedFields=embedded")
+			).put(
+				"collaboratorURLs", () -> _getCollaboratorURLs()
+			).build(),
+			_getAdditionalProps());
+	}
 
 	@Test
 	@TestInfo("LPD-50664")
@@ -378,6 +395,39 @@ public abstract class BaseSectionDisplayContextTestCase
 		Assert.assertNull(dropdownItemData);
 	}
 
+	private HashMap<String, Object> _getAdditionalProps() throws Exception {
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(getMockHttpServletRequest()),
+			"getAdditionalProps", new Class<?>[0]);
+	}
+
+	private Map<String, String> _getCollaboratorURLs() {
+		Map<String, String> collaboratorURL = new HashMap<>();
+
+		List<String> objectFolderExternalReferenceCodes =
+			getObjectFolderExternalReferenceCodes();
+
+		for (ObjectDefinition objectDefinition :
+				_objectDefinitionService.getCMSObjectDefinitions(
+					group.getCompanyId(),
+					objectFolderExternalReferenceCodes.toArray(
+						new String[0]))) {
+
+			collaboratorURL.put(
+				objectDefinition.getClassName(),
+				StringBundler.concat(
+					"/o", objectDefinition.getRESTContextPath(),
+					"/{objectEntryId}/collaborators"));
+		}
+
+		collaboratorURL.put(
+			ObjectEntryFolder.class.getName(),
+			"/o/headless-object/v1.0/object-entry-folders" +
+				"/{objectEntryFolderId}/collaborators");
+
+		return collaboratorURL;
+	}
+
 	private DropdownItem _getDropdownItem(
 		List<DropdownItem> dropdownItems, String label) {
 
@@ -507,6 +557,9 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private ObjectDefinitionService _objectDefinitionService;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

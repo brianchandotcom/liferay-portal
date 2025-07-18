@@ -1,0 +1,184 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.item.renderer.InfoItemRenderer;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
+import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.test.rule.SearchTestRule;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import jakarta.portlet.ResourceRequest;
+import jakarta.portlet.ResourceResponse;
+
+import java.io.ByteArrayOutputStream;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Georgel Pop
+ */
+@RunWith(Arquillian.class)
+public class GetAvailableTemplatesMVCResourceCommandTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(_group.getGroupId());
+		serviceContext.setUserId(user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testDoServeResourceWhereInfoItemObjectIsNull()
+		throws Exception {
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "doServeResource",
+			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
+			_getMockLiferayResourceRequest(), mockLiferayResourceResponse);
+
+		JSONArray responseJSONArray = _getResponseJSONArray(
+			mockLiferayResourceResponse);
+
+		int countInfoItemRenderers = 0;
+
+		for (InfoItemRenderer<?> infoItemRenderer :
+				_infoItemRendererRegistry.getInfoItemRenderers(
+					_CLASS_NAME_JOURNAL_ARTICLE)) {
+
+			if (!infoItemRenderer.isAvailable()) {
+				continue;
+			}
+
+			if (!(infoItemRenderer instanceof InfoItemTemplatedRenderer)) {
+				countInfoItemRenderers++;
+			}
+		}
+
+		Assert.assertEquals(countInfoItemRenderers, responseJSONArray.length());
+	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
+
+	private MockLiferayResourceRequest _getMockLiferayResourceRequest()
+		throws Exception {
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			new MockLiferayResourceRequest();
+
+		mockLiferayResourceRequest.setAttribute(
+			WebKeys.THEME_DISPLAY,
+			ContentLayoutTestUtil.getThemeDisplay(
+				_companyLocalService.fetchCompany(_group.getCompanyId()),
+				_group, _layout));
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_journalArticleLocalService.moveArticleToTrash(
+			TestPropsValues.getUserId(), journalArticle);
+
+		mockLiferayResourceRequest.setParameter(
+			"className", _CLASS_NAME_JOURNAL_ARTICLE);
+		mockLiferayResourceRequest.setParameter(
+			"classPK", String.valueOf(journalArticle.getResourcePrimKey()));
+		mockLiferayResourceRequest.setParameter(
+			"externalReferenceCode", RandomTestUtil.randomString());
+
+		return mockLiferayResourceRequest;
+	}
+
+	private JSONArray _getResponseJSONArray(
+			MockLiferayResourceResponse mockLiferayResourceResponse)
+		throws Exception {
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			(ByteArrayOutputStream)
+				mockLiferayResourceResponse.getPortletOutputStream();
+
+		return JSONFactoryUtil.createJSONArray(
+			byteArrayOutputStream.toString());
+	}
+
+	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
+		"com.liferay.journal.model.JournalArticle";
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@Inject
+	private InfoItemRendererRegistry _infoItemRendererRegistry;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	private Layout _layout;
+
+	@Inject(
+		filter = "mvc.command.name=/layout_content_page_editor/get_available_templates"
+	)
+	private MVCResourceCommand _mvcResourceCommand;
+
+}

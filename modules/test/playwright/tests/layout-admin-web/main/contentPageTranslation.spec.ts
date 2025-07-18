@@ -313,4 +313,293 @@ test.describe('Translation of editables with experiences', () => {
 		await expect(page.getByText('Manzana')).toBeVisible();
 	});
 });
+
+test.describe('Export and import of translations', () => {
+	test('Can export the translation for a page with experiences and then import it', async ({
+		apiHelpers,
+		contentPageTranslationPage,
+		page,
+		pageEditorPage,
+		pagesAdminPage,
+		site,
+	}) => {
+
+		// Create a page with a Heading fragment
+
+		const title = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title,
+		});
+
+		// Go to edit mode and create new experience
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.createExperience('Experience 1');
+
+		await expect(page.locator('.alert-success')).toBeHidden();
+
+		await pageEditorPage.publishPage();
+
+		// Translate the editable to spanish for default experience and publish
+
+		await contentPageTranslationPage.goto({
+			pageName: title,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.translateEditable({
+			editableId: 'element-text',
+			to: 'es-ES',
+			value: 'Manzana',
+		});
+
+		await contentPageTranslationPage.publish();
+
+		// Translate the editable to spanish for Experience 1 and publish
+
+		await contentPageTranslationPage.goto({
+			pageName: title,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.switchExperience('Experience 1');
+
+		await contentPageTranslationPage.translateEditable({
+			editableId: 'element-text',
+			to: 'es-ES',
+			value: 'Pera',
+		});
+
+		await contentPageTranslationPage.publish();
+
+		// Export the translation with single export
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		const file1 = await contentPageTranslationPage.exportTranslations({
+			languages: ['Spanish (Spain)'],
+			pageName: title,
+		});
+
+		// Export the translation with bulk
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		const file2 = await contentPageTranslationPage.bulkExportTranslations({
+			languages: ['Spanish (Spain)'],
+			pageNames: [title],
+		});
+
+		// Change the translations for both Default and Experience 1
+
+		await contentPageTranslationPage.goto({
+			pageName: title,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.translateEditable({
+			editableId: 'element-text',
+			to: 'es-ES',
+			value: 'Mango',
+		});
+
+		await contentPageTranslationPage.publish();
+
+		await contentPageTranslationPage.goto({
+			pageName: title,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.switchExperience('Experience 1');
+
+		await contentPageTranslationPage.translateEditable({
+			editableId: 'element-text',
+			to: 'es-ES',
+			value: 'Naranja',
+		});
+
+		await contentPageTranslationPage.publish();
+
+		// Now import the translations exported previously
+
+		// Import both files from the global Import Translations option
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await contentPageTranslationPage.importTranslations({filePath: file1});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await contentPageTranslationPage.importTranslations({filePath: file2});
+
+		// Import both files from the specific page Import Translation option
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await contentPageTranslationPage.importTranslations({
+			filePath: file1,
+			pageName: title,
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await contentPageTranslationPage.importTranslations({
+			filePath: file2,
+			pageName: title,
+		});
+
+		// Now check the import worked
+
+		await contentPageTranslationPage.goto({
+			pageName: title,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.switchLanguage({to: 'es-ES'});
+
+		await expect(page.getByLabel('element-text')).toHaveValue('Manzana');
+
+		await contentPageTranslationPage.switchExperience('Experience 1');
+
+		await expect(page.getByLabel('element-text')).toHaveValue('Pera');
+	});
+
+	test('Can export and import translations for several pages at once', async ({
+		apiHelpers,
+		contentPageTranslationPage,
+		page,
+		pagesAdminPage,
+		site,
+	}) => {
+
+		// Create a page with a Heading fragment
+
+		const title1 = getRandomString();
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: title1,
+		});
+
+		// Create another page with a Heading fragment
+
+		const title2 = getRandomString();
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: title2,
+		});
+
+		// Translate the editable to spanish for the first page
+
+		await contentPageTranslationPage.goto({
+			pageName: title1,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.translateEditable({
+			editableId: 'element-text',
+			to: 'es-ES',
+			value: 'Manzana',
+		});
+
+		await contentPageTranslationPage.publish();
+
+		// Translate the editable to spanish for the second page
+
+		await contentPageTranslationPage.goto({
+			pageName: title2,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.translateEditable({
+			editableId: 'element-text',
+			to: 'es-ES',
+			value: 'Pera',
+		});
+
+		await contentPageTranslationPage.publish();
+
+		// Export translations
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		const file = await contentPageTranslationPage.bulkExportTranslations({
+			languages: ['Spanish (Spain)'],
+			pageNames: [title1, title2],
+		});
+
+		// Now change translations
+
+		await contentPageTranslationPage.goto({
+			pageName: title1,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.translateEditable({
+			editableId: 'element-text',
+			to: 'es-ES',
+			value: 'Mango',
+		});
+
+		await contentPageTranslationPage.publish();
+
+		await contentPageTranslationPage.goto({
+			pageName: title2,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.translateEditable({
+			editableId: 'element-text',
+			to: 'es-ES',
+			value: 'Naranja',
+		});
+
+		await contentPageTranslationPage.publish();
+
+		// Now import translations and check they are applied
+
+		await contentPageTranslationPage.importTranslations({filePath: file});
+
+		// Now check the import worked
+
+		await contentPageTranslationPage.goto({
+			pageName: title1,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.switchLanguage({to: 'es-ES'});
+
+		await expect(page.getByLabel('element-text')).toHaveValue('Manzana');
+
+		await contentPageTranslationPage.goto({
+			pageName: title2,
+			siteUrl: site.friendlyUrlPath,
+		});
+
+		await contentPageTranslationPage.switchLanguage({to: 'es-ES'});
+
+		await expect(page.getByLabel('element-text')).toHaveValue('Pera');
+	});
 });

@@ -77,7 +77,15 @@ async function handleRequest<T>(
 			};
 		}
 
-		const data: T = await response.json();
+		const data: T | {error: string} = await response.json();
+
+		if (data && typeof data === 'object' && 'error' in data) {
+			return {
+				data: null,
+				error: data.error || UNEXPECTED_ERROR_MESSAGE,
+				status: null,
+			};
+		}
 
 		return {
 			data,

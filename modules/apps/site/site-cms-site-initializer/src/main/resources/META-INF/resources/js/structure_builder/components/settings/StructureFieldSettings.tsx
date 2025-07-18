@@ -82,7 +82,7 @@ function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 					{Liferay.Language.get('field-type')}
 				</p>
 
-				<ClayLabel displayType="warning">
+				<ClayLabel displayType="info">
 					{FIELD_TYPE_LABEL[field.type]}
 				</ClayLabel>
 			</div>

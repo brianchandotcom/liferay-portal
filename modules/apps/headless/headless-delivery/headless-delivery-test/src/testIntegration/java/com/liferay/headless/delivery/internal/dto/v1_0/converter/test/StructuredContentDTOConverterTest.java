@@ -21,6 +21,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -65,7 +66,33 @@ public class StructuredContentDTOConverterTest {
 
 	@Test
 	public void testToDTO() throws Exception {
-		String xml = _read("test-data-definition-select-from-list.json");
+		_testSelectedFromList(
+			Boolean.FALSE.toString(), "[\"one\",\"two\",\"three\"]");
+
+		_testSelectedFromList(
+			Boolean.TRUE.toString(), "[\"one\",\"three\",\"two\"]");
+	}
+
+	private String _read(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		return StringUtil.read(inputStream);
+	}
+
+	private void _testSelectedFromList(
+			String alphabeticalOrder, String expectedData)
+		throws Exception {
+
+		int nextInt = RandomUtil.nextInt(5);
+
+		String xml = StringUtil.replace(
+			StringUtil.replace(
+				_read("test-data-definition-select-from-list.json"),
+				"[$ALPHABETICAL_ORDER$]", alphabeticalOrder),
+			"[$RANDOM_INT$]", String.valueOf(nextInt));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(xml);
 
@@ -82,7 +109,9 @@ public class StructuredContentDTOConverterTest {
 			JournalTestUtil.addArticleWithXMLContent(
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
-				_read("test-journal-article-select-from-list.xml"),
+				StringUtil.replace(
+					_read("test-journal-article-select-from-list.xml"),
+					"[$RANDOM_INT$]", String.valueOf(nextInt)),
 				ddmStructure.getStructureKey(), null, LocaleUtil.US, null,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getCompanyId(), _group.getGroupId(),
@@ -100,17 +129,7 @@ public class StructuredContentDTOConverterTest {
 		ContentFieldValue contentFieldValue =
 			contentField.getContentFieldValue();
 
-		Assert.assertEquals(
-			"[\"one\",\"three\",\"two\"]", contentFieldValue.getData());
-	}
-
-	private String _read(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		return StringUtil.read(inputStream);
+		Assert.assertEquals(expectedData, contentFieldValue.getData());
 	}
 
 	private StructuredContent _toDTO(JournalArticle journalArticle)

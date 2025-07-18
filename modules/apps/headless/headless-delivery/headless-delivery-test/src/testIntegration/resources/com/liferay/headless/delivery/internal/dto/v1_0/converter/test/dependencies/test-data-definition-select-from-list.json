@@ -6,7 +6,7 @@
 	"dataDefinitionFields": [
 		{
 			"customProperties": {
-				"alphabeticalOrder": true,
+				"alphabeticalOrder": "[$ALPHABETICAL_ORDER$]",
 				"dataSourceType": [
 					"manual"
 				],
@@ -16,7 +16,7 @@
 				"ddmDataProviderInstanceOutput": [
 				],
 				"fieldNamespace": "",
-				"fieldReference": "Select49882440",
+				"fieldReference": "Select[$RANDOM_INT$]0",
 				"labelAtStructureLevel": true,
 				"multiple": true,
 				"nativeField": false,
@@ -25,18 +25,18 @@
 					"en_US": [
 						{
 							"label": "one",
-							"reference": "Option26076936",
-							"value": "Option26076936"
+							"reference": "Option[$RANDOM_INT$]1",
+							"value": "Option[$RANDOM_INT$]1"
 						},
 						{
 							"label": "two",
-							"reference": "Option91018188",
-							"value": "Option91018188"
+							"reference": "Option[$RANDOM_INT$]2",
+							"value": "Option[$RANDOM_INT$]2"
 						},
 						{
 							"label": "three",
-							"reference": "Option53387445",
-							"value": "Option53387445"
+							"reference": "Option[$RANDOM_INT$]3",
+							"value": "Option[$RANDOM_INT$]3"
 						}
 					]
 				},
@@ -56,7 +56,7 @@
 				"en_US": "Select from List"
 			},
 			"localizable": true,
-			"name": "Select49882440",
+			"name": "Select[$RANDOM_INT$]0",
 			"nestedDataDefinitionFields": [
 			],
 			"readOnly": false,
@@ -68,7 +68,7 @@
 			}
 		}
 	],
-	"dataDefinitionKey": "35731",
+	"dataDefinitionKey": "[$RANDOM_INT$]",
 	"defaultDataLayout": {
 		"dataLayoutFields": {
 		},
@@ -80,7 +80,7 @@
 							{
 								"columnSize": 12,
 								"fieldNames": [
-									"Select49882440"
+									"Select[$RANDOM_INT$]0"
 								]
 							}
 						]

@@ -74,7 +74,7 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 			dbInspector.normalizeName(sourceTableName),
 			" have been deleted because value ", targetValue,
 			" was not found in the origin table ",
-			dbInspector.normalizeName(targetTable), " column ",
+			dbInspector.normalizeName(targetTable), " and column ",
 			dbInspector.normalizeName(targetColumn));
 	}
 

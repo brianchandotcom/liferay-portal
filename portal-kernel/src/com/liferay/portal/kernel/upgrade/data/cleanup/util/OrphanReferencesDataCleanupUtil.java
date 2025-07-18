@@ -75,7 +75,7 @@ public class OrphanReferencesDataCleanupUtil {
 						" have been deleted because value ",
 						String.valueOf(resultSet.getLong(1)),
 						" was not found in the origin table ", targetTableName,
-						" column ", targetColumnName));
+						" and column ", targetColumnName));
 			}
 		}
 	}

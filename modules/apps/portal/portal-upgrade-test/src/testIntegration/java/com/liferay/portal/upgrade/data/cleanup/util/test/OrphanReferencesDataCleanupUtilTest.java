@@ -187,7 +187,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 			_dbInspector.normalizeName(sourceTableName),
 			" have been deleted because value ", targetValue,
 			" was not found in the origin table ",
-			_dbInspector.normalizeName(targetTable), " column ",
+			_dbInspector.normalizeName(targetTable), " and column ",
 			_dbInspector.normalizeName(targetColumn));
 	}
 

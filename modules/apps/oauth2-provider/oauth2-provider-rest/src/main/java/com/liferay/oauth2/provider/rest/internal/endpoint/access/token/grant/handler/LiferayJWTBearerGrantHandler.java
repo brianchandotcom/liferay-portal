@@ -15,6 +15,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -308,9 +309,26 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 
 				// Compatibility with existing design
 
-				userSubject.setId(subject);
+				User user = userLocalService.fetchUserById(
+					GetterUtil.getLong(subject));
 
-				return userSubject;
+				if (user == null) {
+					return null;
+				}
+
+				userSubject.setLogin(user.getScreenName());
+				userSubject.setId(subject);
+			}
+			else if (userAuthType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+				User user = userLocalService.fetchUserByEmailAddress(
+					companyId, subject);
+
+				if (user == null) {
+					return null;
+				}
+
+				userSubject.setLogin(user.getScreenName());
+				userSubject.setId(String.valueOf(user.getUserId()));
 			}
 
 			Map<String, String> properties = userSubject.getProperties();

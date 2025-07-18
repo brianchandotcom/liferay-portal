@@ -134,10 +134,10 @@ public class AccountGroupsAdminPortletDataHandlerTest {
 								new String[] {Boolean.TRUE.toString()}
 							).build())));
 
-		_accountGroupLocalService.deleteAccountGroup(
-			accountGroup.getAccountGroupId());
 		_accountEntryLocalService.deleteAccountEntry(
 			accountEntry.getAccountEntryId());
+		_accountGroupLocalService.deleteAccountGroup(
+			accountGroup.getAccountGroupId());
 
 		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.

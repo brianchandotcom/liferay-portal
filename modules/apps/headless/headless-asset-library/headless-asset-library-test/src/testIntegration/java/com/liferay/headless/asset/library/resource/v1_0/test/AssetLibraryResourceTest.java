@@ -73,7 +73,6 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	public void testPatchAssetLibrary() throws Exception {
 		super.testPatchAssetLibrary();
 
-		boolean autoTaggingEnabled = true;
 		String[] availableLanguageIds = _getAvailableLanguageIds(
 			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
 		String defaultLanguageId = _language.getLanguageId(LocaleUtil.US);
@@ -90,23 +89,22 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		boolean useCustomLanguages = true;
 
 		AssetLibrary assetLibrary = _postAssetLibraryWithSettings(
-			autoTaggingEnabled, availableLanguageIds, defaultLanguageId,
-			logoColor, mimeTypeLimits, sharingEnabled, useCustomLanguages);
+			true, availableLanguageIds, defaultLanguageId, logoColor,
+			mimeTypeLimits, sharingEnabled, useCustomLanguages);
 
-		boolean autoTaggingEnabledValue = false;
+		boolean autoTaggingEnabled = false;
 
-		assetLibrary.setSettings(
-			new Settings() {
-				{
-					setAutoTaggingEnabled(() -> autoTaggingEnabledValue);
-				}
-			});
+		Settings settings = new Settings();
+
+		settings.setAutoTaggingEnabled(autoTaggingEnabled);
+
+		assetLibrary.setSettings(settings);
 
 		assetLibrary = assetLibraryResource.patchAssetLibrary(
 			assetLibrary.getId(), assetLibrary);
 
 		_assertSettings(
-			assetLibrary, autoTaggingEnabledValue, availableLanguageIds,
+			assetLibrary, autoTaggingEnabled, availableLanguageIds,
 			defaultLanguageId, logoColor, mimeTypeLimits, sharingEnabled,
 			useCustomLanguages);
 	}
@@ -173,10 +171,10 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		assetLibrary.setSettings(
 			new Settings() {
 				{
-					setAutoTaggingEnabled(() -> false);
-					setLogoColor(() -> "color-1");
-					setSharingEnabled(() -> false);
-					setUseCustomLanguages(() -> false);
+					autoTaggingEnabled = false;
+					logoColor = "color-1";
+					sharingEnabled = false;
+					useCustomLanguages = false;
 				}
 			});
 
@@ -441,33 +439,32 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			_language.getLanguageId(LocaleUtil.US),
 			RandomTestUtil.randomString(), mimeTypeLimits, true, true);
 
-		boolean autoTaggingEnabledValue = true;
-		String[] availableLanguageIdsValue = _getAvailableLanguageIds(
+		boolean autoTaggingEnabled = true;
+		String[] availableLanguageIds = _getAvailableLanguageIds(
 			LocaleUtil.SPAIN);
-		String defaultLanguageIdValue = _language.getLanguageId(
-			LocaleUtil.SPAIN);
-		boolean useCustomLanguagesValue = true;
+		String defaultLanguageId = _language.getLanguageId(LocaleUtil.SPAIN);
+		boolean useCustomLanguages = true;
 
 		assetLibrary.setName_i18n(
 			Collections.singletonMap(
-				defaultLanguageIdValue, RandomTestUtil.randomString()));
-		assetLibrary.setSettings(
-			new Settings() {
-				{
-					setAutoTaggingEnabled(() -> autoTaggingEnabledValue);
-					setAvailableLanguageIds(() -> availableLanguageIdsValue);
-					setDefaultLanguageId(() -> defaultLanguageIdValue);
-					setUseCustomLanguages(() -> useCustomLanguagesValue);
-				}
-			});
+				defaultLanguageId, RandomTestUtil.randomString()));
+
+		Settings settings = new Settings();
+
+		settings.setAutoTaggingEnabled(autoTaggingEnabled);
+		settings.setAvailableLanguageIds(availableLanguageIds);
+		settings.setDefaultLanguageId(defaultLanguageId);
+		settings.setUseCustomLanguages(useCustomLanguages);
+
+		assetLibrary.setSettings(settings);
 
 		assetLibrary =
 			assetLibraryResource.putAssetLibraryByExternalReferenceCode(
 				assetLibrary.getExternalReferenceCode(), assetLibrary);
 
 		_assertSettings(
-			assetLibrary, autoTaggingEnabledValue, availableLanguageIdsValue,
-			defaultLanguageIdValue, "outline-0", null, false, true);
+			assetLibrary, autoTaggingEnabled, availableLanguageIds,
+			defaultLanguageId, "outline-0", null, false, true);
 	}
 
 	@Inject

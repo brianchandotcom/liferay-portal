@@ -66,6 +66,7 @@ export default function AllSpacesFDSPropsTransformer({
 		onActionDropdownItemClick: ({
 			action,
 			itemData,
+			loadData,
 		}: {
 			action: {
 				data: {
@@ -76,6 +77,7 @@ export default function AllSpacesFDSPropsTransformer({
 				creatorUserId: string;
 				id: string;
 			};
+			loadData: () => {};
 		}) => {
 			if (action.data.id === 'pin' || action.data.id === 'unpin') {
 				window.location.reload();
@@ -85,7 +87,6 @@ export default function AllSpacesFDSPropsTransformer({
 				const assetLibraryCreatorUserId = itemData.creatorUserId;
 				const assetLibraryId = itemData.id;
 
-				const loadData = () => window.location.reload();
 				const data: ManageMembersData = {
 					assetLibraryCreatorUserId,
 					assetLibraryId,

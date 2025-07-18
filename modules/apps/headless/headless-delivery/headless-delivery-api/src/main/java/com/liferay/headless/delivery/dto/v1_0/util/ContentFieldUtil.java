@@ -58,7 +58,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.SortedMap;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 /**
  * @author Javier Gamarra
@@ -415,6 +417,11 @@ public class ContentFieldUtil {
 
 				List<String> values = new ArrayList<>();
 
+				boolean alphabeticalOrder = GetterUtil.getBoolean(
+					ddmFormField.getProperty("alphabeticalOrder"));
+
+				SortedMap<String, String> sortedMap = new TreeMap<>();
+
 				List<String> list = TransformUtil.transform(
 					JSONUtil.toStringList(
 						JSONFactoryUtil.createJSONArray(valueString)),
@@ -422,10 +429,18 @@ public class ContentFieldUtil {
 						LocalizedValue localizedValue =
 							ddmFormFieldOptions.getOptionLabels(value);
 
-						values.add(
-							ddmFormFieldOptions.getOptionReference(value));
+						String optionReference =
+							ddmFormFieldOptions.getOptionReference(value);
 
-						return localizedValue.getString(locale);
+						values.add(optionReference);
+
+						String displayName = localizedValue.getString(locale);
+
+						if (alphabeticalOrder) {
+							sortedMap.put(displayName, optionReference);
+						}
+
+						return displayName;
 					});
 
 				return new ContentFieldValue() {
@@ -438,6 +453,12 @@ public class ContentFieldUtil {
 									return list.get(0);
 								}
 
+								if (alphabeticalOrder) {
+									return String.valueOf(
+										JSONFactoryUtil.createJSONArray(
+											sortedMap.keySet()));
+								}
+
 								return String.valueOf(
 									JSONFactoryUtil.createJSONArray(list));
 							});
@@ -447,6 +468,12 @@ public class ContentFieldUtil {
 									(values.size() == 1)) {
 
 									return values.get(0);
+								}
+
+								if (alphabeticalOrder) {
+									return String.valueOf(
+										JSONFactoryUtil.createJSONArray(
+											sortedMap.values()));
 								}
 
 								return String.valueOf(

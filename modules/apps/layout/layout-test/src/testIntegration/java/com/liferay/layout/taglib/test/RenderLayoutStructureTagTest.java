@@ -2482,6 +2482,64 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo("LPD-61012")
+	public void testRenderMappedItemWithERCInfoItemIdentifier()
+		throws Exception {
+
+		MockObject mockObject = new MockObject(
+			RandomTestUtil.randomLong(), false, true);
+
+		InfoField<TextInfoFieldType> infoField = _getInfoField(false);
+
+		String value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField, value);
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField)
+						).build(),
+						mockObject, _portal)) {
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			_addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"classNameId", _portal.getClassNameId(MockObject.class)
+					).put(
+						"classPK", mockObject.getClassPK()
+					).put(
+						"externalReferenceCode", RandomTestUtil.randomString()
+					).put(
+						"fieldId", infoField.getName()
+					)),
+				"BASIC_COMPONENT-heading", draftLayout,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+			String content = _getRenderLayoutHTML(layout);
+
+			Assert.assertFalse(
+				content,
+				StringUtil.contains(
+					content, ">Heading Example</h1>", StringPool.BLANK));
+			Assert.assertTrue(
+				content,
+				StringUtil.contains(
+					content, ">" + value + "</h1>", StringPool.BLANK));
+		}
+	}
+
+	@Test
 	@TestInfo("LPD-41653")
 	public void testViewAssertAnalyticsTargetableCollectionIdForCollectionStyledLayoutStructureItem()
 		throws Exception {

@@ -169,15 +169,27 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 				null, 0, 0, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext));
+
+		LayoutPageTemplateCollection displayPageLayoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					null, RandomTestUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					_serviceContext);
+
 		_assertLayoutPageTemplateEntry(
 			true,
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				_layoutPageTemplateCollection.
+				displayPageLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				null, 0, 0, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext));
+
 		_assertLayoutPageTemplateEntry(
 			false,
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(

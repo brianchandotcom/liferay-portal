@@ -313,8 +313,8 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 					return null;
 				}
 
-				userSubject.setLogin(user.getScreenName());
 				userSubject.setId(String.valueOf(user.getUserId()));
+				userSubject.setLogin(user.getScreenName());
 			}
 			else if (userAuthType.equals(CompanyConstants.AUTH_TYPE_ID)) {
 
@@ -327,8 +327,8 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 					return null;
 				}
 
-				userSubject.setLogin(user.getScreenName());
 				userSubject.setId(subject);
+				userSubject.setLogin(user.getScreenName());
 			}
 
 			Map<String, String> properties = userSubject.getProperties();

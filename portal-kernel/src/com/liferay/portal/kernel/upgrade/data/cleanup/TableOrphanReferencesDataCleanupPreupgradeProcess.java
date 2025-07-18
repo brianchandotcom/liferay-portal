@@ -18,15 +18,15 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcess
 	extends DataCleanupPreupgradeProcess {
 
 	public TableOrphanReferencesDataCleanupPreupgradeProcess(
-		String sourceAdditionalWhereClause, String sourceColumnName,
-		String sourceTableName, String targetColumnName,
-		String targetTableName) {
+		String sourceTableName, String sourceColumnName,
+		String sourceAdditionalWhereClause, String targetTableName,
+		String targetColumnName) {
 
-		_sourceAdditionalWhereClause = sourceAdditionalWhereClause;
-		_sourceColumnName = sourceColumnName;
 		_sourceTableName = sourceTableName;
-		_targetColumnName = targetColumnName;
+		_sourceColumnName = sourceColumnName;
+		_sourceAdditionalWhereClause = sourceAdditionalWhereClause;
 		_targetTableName = targetTableName;
+		_targetColumnName = targetColumnName;
 	}
 
 	@Override
@@ -80,8 +80,8 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcess
 		}
 
 		OrphanReferencesDataCleanupUtil.cleanUpTable(
-			connection, _sourceAdditionalWhereClause, sourceColumnName,
-			sourceTableName, targetColumnName, targetTableName);
+			connection, sourceTableName, sourceColumnName,
+			_sourceAdditionalWhereClause, targetTableName, targetColumnName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

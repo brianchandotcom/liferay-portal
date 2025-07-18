@@ -65,8 +65,8 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 	}
 
 	protected String getExpectedMessage(
-			long count, String sourceTableName, String targetColumn,
-			String targetTable, long targetValue)
+			long count, String sourceTableName, String targetTable,
+			String targetColumn, long targetValue)
 		throws Exception {
 
 		return StringBundler.concat(

@@ -63,13 +63,13 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcessTest
 			Assert.assertTrue(
 				logMessages.contains(
 					getExpectedMessage(
-						1, "PortletPreferences", "companyId", "Company",
+						1, "PortletPreferences", "Company", "companyId",
 						_companyId1)));
 
 			Assert.assertTrue(
 				logMessages.contains(
 					getExpectedMessage(
-						1, "PortletPreferences", "companyId", "Company",
+						1, "PortletPreferences", "Company", "companyId",
 						_companyId2)));
 		};
 	}
@@ -77,8 +77,9 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcessTest
 	@Override
 	protected UpgradeProcess getUpgradeProcess() {
 		return new TableOrphanReferencesDataCleanupPreupgradeProcess(
-			"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY, "ownerId",
-			"PortletPreferences", "companyId", "Company");
+			"PortletPreferences", "ownerId",
+			"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY, "Company",
+			"companyId");
 	}
 
 	private void _insertEntry(long companyId, int ownerType) throws Exception {

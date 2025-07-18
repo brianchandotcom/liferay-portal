@@ -25,9 +25,9 @@ import java.util.List;
 public class OrphanReferencesDataCleanupUtil {
 
 	public static void cleanUpTable(
-			Connection connection, String sourceAdditionalWhereClause,
-			String sourceColumnName, String sourceTableName,
-			String targetColumnName, String targetTableName)
+			Connection connection, String sourceTableName,
+			String sourceColumnName, String sourceAdditionalWhereClause,
+			String targetTableName, String targetColumnName)
 		throws Exception {
 
 		if (_normalizedExcludedTableNames.isEmpty()) {
@@ -48,15 +48,17 @@ public class OrphanReferencesDataCleanupUtil {
 					"select ", sourceColumnName, ", count(1) from ",
 					sourceTableName,
 					_getWhereClause(
-						sourceAdditionalWhereClause, sourceColumnName,
-						sourceTableName, targetColumnName, targetTableName),
+						sourceTableName, sourceColumnName,
+						sourceAdditionalWhereClause, targetTableName,
+						targetColumnName),
 					" group by ", sourceColumnName));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
 					"delete from ", sourceTableName,
 					_getWhereClause(
-						sourceAdditionalWhereClause, sourceColumnName,
-						sourceTableName, targetColumnName, targetTableName)));
+						sourceTableName, sourceColumnName,
+						sourceAdditionalWhereClause, targetTableName,
+						targetColumnName)));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			preparedStatement2.execute();
@@ -79,9 +81,9 @@ public class OrphanReferencesDataCleanupUtil {
 	}
 
 	private static String _getWhereClause(
-		String sourceAdditionalWhereClause, String sourceColumnName,
-		String sourceTableName, String targetColumnName,
-		String targetTableName) {
+		String sourceTableName, String sourceColumnName,
+		String sourceAdditionalWhereClause, String targetTableName,
+		String targetColumnName) {
 
 		return StringBundler.concat(
 			" where not exists (select 1 from ", targetTableName, " where ",

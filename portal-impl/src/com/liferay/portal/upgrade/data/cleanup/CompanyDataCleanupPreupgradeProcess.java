@@ -20,15 +20,17 @@ public class CompanyDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		upgrade(
 			new AllTablesOrphanReferencesDataCleanupPreupgradeProcess(
-				"companyId", "Company"));
+				"Company", "companyId"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				"PortalPreferences", "ownerId",
 				"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-				"ownerId", "PortalPreferences", "companyId", "Company"));
+				"Company", "companyId"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				"PortletPreferences", "ownerId",
 				"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-				"ownerId", "PortletPreferences", "companyId", "Company"));
+				"Company", "companyId"));
 	}
 
 }

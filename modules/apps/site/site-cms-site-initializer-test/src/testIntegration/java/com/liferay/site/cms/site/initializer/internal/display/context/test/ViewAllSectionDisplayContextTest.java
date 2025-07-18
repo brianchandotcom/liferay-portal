@@ -22,7 +22,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -93,10 +92,11 @@ public class ViewAllSectionDisplayContextTest
 	}
 
 	@Override
-	protected List<String> getObjectFolderExternalReferenceCodes() {
-		return List.of(
+	protected String[] getObjectFolderExternalReferenceCodes() {
+		return new String[] {
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
+		};
 	}
 
 	@Override

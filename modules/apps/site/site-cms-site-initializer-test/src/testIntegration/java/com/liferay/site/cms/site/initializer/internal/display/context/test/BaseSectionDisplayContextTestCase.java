@@ -264,8 +264,8 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	protected abstract String getObjectFolderExternalReferenceCode();
 
-	protected List<String> getObjectFolderExternalReferenceCodes() {
-		return List.of(getObjectFolderExternalReferenceCode());
+	protected String[] getObjectFolderExternalReferenceCodes() {
+		return new String[] {getObjectFolderExternalReferenceCode()};
 	}
 
 	protected String getRedirect(
@@ -404,14 +404,10 @@ public abstract class BaseSectionDisplayContextTestCase
 	private Map<String, String> _getCollaboratorURLs() {
 		Map<String, String> collaboratorURL = new HashMap<>();
 
-		List<String> objectFolderExternalReferenceCodes =
-			getObjectFolderExternalReferenceCodes();
-
 		for (ObjectDefinition objectDefinition :
 				_objectDefinitionService.getCMSObjectDefinitions(
 					group.getCompanyId(),
-					objectFolderExternalReferenceCodes.toArray(
-						new String[0]))) {
+					getObjectFolderExternalReferenceCodes())) {
 
 			collaboratorURL.put(
 				objectDefinition.getClassName(),

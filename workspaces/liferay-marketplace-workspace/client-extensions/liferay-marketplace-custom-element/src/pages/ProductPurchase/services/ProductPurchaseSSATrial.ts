@@ -13,7 +13,7 @@ export default class ProductPurchaseSSATrial extends ProductPurchase {
 	public async createOrder(cart?: Cart): Promise<Cart> {
 		const order = await super.createOrder(cart);
 
-		// await trialOAuth2.provisioningTrial(order.id);
+		await trialOAuth2.provisioningTrial(order.id);
 
 		return order;
 	}

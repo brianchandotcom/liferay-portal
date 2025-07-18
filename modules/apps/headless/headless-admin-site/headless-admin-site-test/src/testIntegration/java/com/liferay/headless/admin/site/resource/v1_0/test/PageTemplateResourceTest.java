@@ -389,6 +389,28 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		_testPostSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications();
 
+		WidgetPageTemplate widgetPageTemplate = _getWidgetPageTemplate(
+			testGroup);
+
+		widgetPageTemplate.setPageTemplateSet(() -> null);
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
+				widgetPageTemplate, testGroup.getExternalReferenceCode()));
+
+		widgetPageTemplate.setPageTemplateSet(
+			() -> new PageTemplateSet() {
+				{
+					setExternalReferenceCode(() -> StringPool.BLANK);
+				}
+			});
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
+				widgetPageTemplate, testGroup.getExternalReferenceCode()));
+
 		_enableLocalStaging();
 
 		_assertProblemException(
@@ -398,9 +420,10 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				testGroup.getExternalReferenceCode()));
 
 		_withCompanyGroupWidgetPageTemplate(
-			(group, widgetPageTemplate) -> {
+			(group, companyGroupWidgetPageTemplate) -> {
 				_postSiteSiteByExternalReferenceCodePageTemplate(
-					widgetPageTemplate, group.getExternalReferenceCode());
+					companyGroupWidgetPageTemplate,
+					group.getExternalReferenceCode());
 
 				_assertProblemException(
 					"BAD_REQUEST",

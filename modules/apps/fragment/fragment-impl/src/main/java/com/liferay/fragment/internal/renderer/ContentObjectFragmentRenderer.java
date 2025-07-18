@@ -23,7 +23,6 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemObjectVariationProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
-import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
@@ -373,38 +372,31 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			return infoItem;
 		}
 
-		InfoItemServiceFilter infoItemServiceFilter = null;
+		InfoItemIdentifier infoItemIdentifier = null;
+		InfoItemObjectProvider<?> infoItemObjectProvider = null;
 
 		if (classPK > 0) {
-			infoItemServiceFilter =
-				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER;
+			infoItemIdentifier = new ClassPKInfoItemIdentifier(classPK);
+			infoItemObjectProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemObjectProvider.class, className,
+					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 		}
 		else {
-			infoItemServiceFilter =
-				ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER;
+			infoItemIdentifier = new ERCInfoItemIdentifier(
+				externalReferenceCode);
+			infoItemObjectProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemObjectProvider.class, className,
+					ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 		}
-
-		InfoItemObjectProvider<?> infoItemObjectProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className, infoItemServiceFilter);
 
 		if (infoItemObjectProvider == null) {
 			return null;
 		}
 
 		try {
-			InfoItemIdentifier infoItemIdentifier = null;
-
-			if (classPK > 0) {
-				infoItemIdentifier = new ClassPKInfoItemIdentifier(classPK);
-			}
-			else {
-				infoItemIdentifier = new ERCInfoItemIdentifier(
-					externalReferenceCode);
-			}
-
-			return infoItemObjectProvider.getInfoItem(
-				infoItemIdentifier);
+			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

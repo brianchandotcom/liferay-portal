@@ -7,7 +7,7 @@ import {format} from 'date-fns';
 
 import ListView, {ListViewProps} from '../../../../components/ListView';
 import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
-import {OrderCustomFields} from '../../../../enums/Order';
+import {OrderCustomFields, OrderTypes} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Action} from '../../../../utils/constants';
 import {TrialSettings} from '../../enums/SSATrials';
@@ -15,6 +15,7 @@ import {SSASettings} from '../../types';
 import {getExtensionStatusFromTrialSettings} from '../../util';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
+import SearchBuilder from '../../../../core/SearchBuilder';
 
 type TrialsListViewProps = {
 	actions: Action[];
@@ -41,10 +42,16 @@ export default function TrialListView({
 }: TrialsListViewProps) {
 	return (
 		<ListView<PlacedOrder>
+			defaultFilters={{
+				filter: SearchBuilder.eq(
+					'orderTypeExternalReferenceCode',
+					OrderTypes.SSA_SAAS
+				),
+			}}
 			emptyStateProps={{title: i18n.translate('no-orders-yet')}}
 			id="ssa-trials"
 			managementToolbarProps={{
-				filterSchema: 'administratorOrders',
+				filterSchema: 'administratorSSATrials',
 				...managementToolbarProps,
 			}}
 			resource={resourceUrl}

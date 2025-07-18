@@ -448,6 +448,10 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 				InfoItemObjectProvider.class, infoItemReference.getClassName(),
 				infoItemIdentifier.getInfoItemServiceFilter());
 
+		if (infoItemObjectProvider == null) {
+			return null;
+		}
+
 		try {
 			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 		}

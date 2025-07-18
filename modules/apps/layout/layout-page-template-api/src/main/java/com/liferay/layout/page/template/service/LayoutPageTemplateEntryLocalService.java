@@ -464,6 +464,11 @@ public interface LayoutPageTemplateEntryLocalService
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int type);
 
+	public LayoutPageTemplateEntry moveLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId,
+			long targetLayoutPageTemplateCollectionId)
+		throws PortalException;
+
 	/**
 	 * Updates the layout page template entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

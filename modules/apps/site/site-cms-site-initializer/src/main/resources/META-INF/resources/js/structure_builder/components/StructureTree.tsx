@@ -295,12 +295,20 @@ export default function StructureTree({search}: {search: string}) {
 function useSelectionMode() {
 	const [multiple, setMultiple] = useState(false);
 
+	const isMultiSelectKey = (key: string) => {
+		if (Liferay.Browser.isMac()) {
+			return key === 'Meta';
+		}
+
+		return key === 'Control';
+	};
+
 	useEventListener(
 		'keydown',
 		(event) => {
 			const {key} = event as KeyboardEvent;
 
-			if (key === 'Control' || key === 'Meta') {
+			if (isMultiSelectKey(key) && !multiple) {
 				setMultiple(true);
 			}
 		},
@@ -316,10 +324,20 @@ function useSelectionMode() {
 		(event) => {
 			const {key} = event as KeyboardEvent;
 
-			if (key === 'Control' || key === 'Meta') {
+			if (isMultiSelectKey(key) && multiple) {
 				setMultiple(false);
 			}
 		},
+		false,
+
+		// @ts-ignore
+
+		window
+	);
+
+	useEventListener(
+		'blur',
+		() => setMultiple(false),
 		false,
 
 		// @ts-ignore

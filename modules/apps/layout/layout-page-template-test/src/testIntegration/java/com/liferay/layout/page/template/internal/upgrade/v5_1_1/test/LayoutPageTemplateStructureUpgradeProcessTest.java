@@ -76,7 +76,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	@Test
 	@TestInfo("LPD-60053")
-	public void testUpgradePortletTypeLayoutWithNullUser() throws Exception {
+	public void testUpgrade() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				TestPropsValues.getGroupId());

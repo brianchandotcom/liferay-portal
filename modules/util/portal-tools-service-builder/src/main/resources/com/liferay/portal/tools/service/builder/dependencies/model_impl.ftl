@@ -106,7 +106,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -2140,13 +2139,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			variableName = serviceBuilder.getVariableName(cacheField)
 		/>
 
-		protected transient final Consumer<${typeWrapperName}> ${variableName}UpdateEntityCacheConsumer = ${variableName} -> {
+		protected static final BiConsumer<${entity.name}, ${typeWrapperName}> ${variableName}UpdateEntityCacheBiConsumer = (${entity.variableName}, ${variableName}) -> {
 			${entity.name}CacheModel ${entity.variableName}CacheModel =
-				EntityCacheUtil.fetchCacheModel(${entity.name}Impl.class, _${entity.PKEntityColumns[0].name}, ${entity.name}CacheModel.class);
+				EntityCacheUtil.fetchCacheModel(${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey(), ${entity.name}CacheModel.class);
 
 			if ((${entity.variableName}CacheModel != null)
 				<#if entity.isMvccEnabled()>
-					&& (${entity.variableName}CacheModel.getMvccVersion() == getMvccVersion())
+					&& (${entity.variableName}CacheModel.getMvccVersion() == ${entity.variableName}.getMvccVersion())
 				</#if>
 			) {
 				${entity.variableName}CacheModel.${variableName} = ${variableName};

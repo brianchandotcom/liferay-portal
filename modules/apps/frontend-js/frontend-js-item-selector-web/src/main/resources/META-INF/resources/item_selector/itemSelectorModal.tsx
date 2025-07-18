@@ -89,6 +89,7 @@ function ItemSelectorModal({
 							? setSelectedItem(selectedItems[0])
 							: setSelectedItem(selectedItems);
 					}}
+					style='fluid'
 				/>
 			</ClayModal.Body>
 

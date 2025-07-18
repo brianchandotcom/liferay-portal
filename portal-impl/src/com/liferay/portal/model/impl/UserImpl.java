@@ -395,7 +395,7 @@ public class UserImpl extends UserBaseImpl {
 			if (_group != null) {
 				_groupId = _group.getGroupId();
 
-				groupIdUpdateEntityCacheConsumer.accept(_groupId);
+				groupIdUpdateEntityCacheBiConsumer.accept(this, _groupId);
 			}
 		}
 
@@ -765,7 +765,7 @@ public class UserImpl extends UserBaseImpl {
 				_log.error(portalException);
 			}
 
-			userGroupIdsUpdateEntityCacheConsumer.accept(_userGroupIds);
+			userGroupIdsUpdateEntityCacheBiConsumer.accept(this, _userGroupIds);
 		}
 
 		return _userGroupIds;

@@ -133,7 +133,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 			if (_group != null) {
 				_groupId = _group.getGroupId();
 
-				groupIdUpdateEntityCacheConsumer.accept(_groupId);
+				groupIdUpdateEntityCacheBiConsumer.accept(this, _groupId);
 			}
 		}
 
@@ -274,7 +274,8 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 		_virtualHostname = virtualHost.getHostname();
 
-		virtualHostnameUpdateEntityCacheConsumer.accept(_virtualHostname);
+		virtualHostnameUpdateEntityCacheBiConsumer.accept(
+			this, _virtualHostname);
 
 		return _virtualHostname;
 	}

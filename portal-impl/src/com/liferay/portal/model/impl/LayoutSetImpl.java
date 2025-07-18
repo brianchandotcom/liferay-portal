@@ -105,8 +105,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 			}
 		}
 
-		companyFallbackVirtualHostnameUpdateEntityCacheConsumer.accept(
-			_companyFallbackVirtualHostname);
+		companyFallbackVirtualHostnameUpdateEntityCacheBiConsumer.accept(
+			this, _companyFallbackVirtualHostname);
 
 		return _companyFallbackVirtualHostname;
 	}
@@ -356,7 +356,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 				virtualHostnames);
 		}
 
-		virtualHostnamesUpdateEntityCacheConsumer.accept(_virtualHostnames);
+		virtualHostnamesUpdateEntityCacheBiConsumer.accept(
+			this, _virtualHostnames);
 
 		return _virtualHostnames;
 	}

@@ -77,7 +77,9 @@ public class PoshiJUnitDownstreamBuild extends BaseDownstreamBuild {
 		return testResults;
 	}
 
-	protected PoshiJUnitDownstreamBuild(String url, TopLevelBuild topLevelBuild) {
+	protected PoshiJUnitDownstreamBuild(
+		String url, TopLevelBuild topLevelBuild) {
+
 		super(url, topLevelBuild);
 	}
 

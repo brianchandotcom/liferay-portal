@@ -305,6 +305,9 @@ export default function EditAssociatedAssetTypes({
 
 									<ClayTable.Cell>
 										<ClayToggle
+											aria-label={Liferay.Language.get(
+												'toggle-asset-type'
+											)}
 											onToggle={() => {
 												_handleChangeAssetTypeRequired(
 													assetType

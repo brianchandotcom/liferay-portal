@@ -52,11 +52,12 @@ public class S3TestrayAttachmentUploader extends BaseTestrayAttachmentUploader {
 
 		File preparedFilesBaseDir = getPreparedFilesBaseDir();
 
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+		TestrayCloudBucket testrayCloudBucket =
+			TestrayCloudBucket.getInstance();
 
 		for (File preparedFile : getPreparedFiles()) {
 			TestrayS3Object testrayS3Object =
-				testrayS3Bucket.createTestrayS3Object(
+				testrayCloudBucket.createTestrayS3Object(
 					JenkinsResultsParserUtil.getPathRelativeTo(
 						preparedFile, preparedFilesBaseDir),
 					preparedFile);

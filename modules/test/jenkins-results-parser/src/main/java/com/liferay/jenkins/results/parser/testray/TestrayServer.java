@@ -288,7 +288,7 @@ public class TestrayServer {
 	public void importCaseResults(TopLevelBuildReport topLevelBuildReport) {
 		TestrayResultsParserUtil.processTestrayResultFiles(getResultsDir());
 
-		if (TestrayS3Bucket.hasGoogleApplicationCredentials()) {
+		if (TestrayCloudBucket.hasGoogleApplicationCredentials()) {
 			_importCaseResultsToGCP(topLevelBuildReport);
 		}
 	}
@@ -522,7 +522,7 @@ public class TestrayServer {
 	private void _importCaseResultsToGCP(
 		TopLevelBuildReport topLevelBuildReport) {
 
-		if (!TestrayS3Bucket.hasGoogleApplicationCredentials()) {
+		if (!TestrayCloudBucket.hasGoogleApplicationCredentials()) {
 			return;
 		}
 
@@ -554,7 +554,8 @@ public class TestrayServer {
 			throw new RuntimeException(ioException);
 		}
 
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+		TestrayCloudBucket testrayCloudBucket =
+			TestrayCloudBucket.getInstance();
 
 		for (File gcpResultFile :
 				JenkinsResultsParserUtil.findFiles(gcpResultsDir, ".*.xml")) {
@@ -598,7 +599,7 @@ public class TestrayServer {
 					"$1/>");
 				gcpResultFileContent = gcpResultFileContent.replaceAll(
 					getURL() + "/?reports/production/logs",
-					testrayS3Bucket.getTestrayS3BaseURL());
+					testrayCloudBucket.getTestrayCloudBaseURL());
 
 				JenkinsResultsParserUtil.write(
 					gcpResultFile, gcpResultFileContent);
@@ -612,7 +613,7 @@ public class TestrayServer {
 
 		JenkinsResultsParserUtil.tarGzip(gcpResultsDir, resultsTarGzFile);
 
-		testrayS3Bucket.createTestrayS3Object(
+		testrayCloudBucket.createTestrayS3Object(
 			"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
 	}
 

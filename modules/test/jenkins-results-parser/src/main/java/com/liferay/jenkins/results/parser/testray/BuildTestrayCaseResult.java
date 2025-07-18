@@ -87,7 +87,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		if ((buildReport == null) ||
 			JenkinsResultsParserUtil.isNullOrEmpty(key) ||
 			JenkinsResultsParserUtil.isNullOrEmpty(name) ||
-			!TestrayS3Bucket.hasGoogleApplicationCredentials()) {
+			!TestrayCloudBucket.hasGoogleApplicationCredentials()) {
 
 			return null;
 		}
@@ -266,9 +266,10 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		}
 
 		try {
-			TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+			TestrayCloudBucket testrayCloudBucket =
+				TestrayCloudBucket.getInstance();
 
-			testrayS3Bucket.createTestrayS3Object(key, file);
+			testrayCloudBucket.createTestrayS3Object(key, file);
 
 			return new S3TestrayAttachment(this, name, key);
 		}

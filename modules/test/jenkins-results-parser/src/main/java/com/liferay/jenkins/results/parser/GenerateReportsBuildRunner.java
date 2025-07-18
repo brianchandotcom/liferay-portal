@@ -7,7 +7,7 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.metrics.BuildHistoryProcessor;
 import com.liferay.jenkins.results.parser.metrics.BuildHistoryReport;
-import com.liferay.jenkins.results.parser.testray.TestrayS3Bucket;
+import com.liferay.jenkins.results.parser.testray.TestrayCloudBucket;
 import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
 
 import java.io.File;
@@ -287,7 +287,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				DateTimeFormatter.ofPattern("yyyy-MM"));
 		}
 
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+		TestrayCloudBucket testrayCloudBucket =
+			TestrayCloudBucket.getInstance();
 
 		List<String> keys = new ArrayList<>();
 
@@ -311,7 +312,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			File testrayResultsBucketLocalDir = new File(
 				_getBuildProperty("google.cloud.bucket.local.dir[testray]"));
 
-			testrayS3Bucket.downloadTestrayS3Objects(
+			testrayCloudBucket.downloadTestrayS3Objects(
 				testrayResultsBucketLocalDir, keys);
 		}
 		catch (TimeoutException timeoutException) {
@@ -648,10 +649,11 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		sb.append(jobName);
 		sb.append("/");
 
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+		TestrayCloudBucket testrayCloudBucket =
+			TestrayCloudBucket.getInstance();
 
 		for (TestrayS3Object testrayS3Object :
-				testrayS3Bucket.getTestrayS3Objects(sb.toString())) {
+				testrayCloudBucket.getTestrayS3Objects(sb.toString())) {
 
 			String filePath = testrayS3Object.getKey() + "build-report.json.gz";
 

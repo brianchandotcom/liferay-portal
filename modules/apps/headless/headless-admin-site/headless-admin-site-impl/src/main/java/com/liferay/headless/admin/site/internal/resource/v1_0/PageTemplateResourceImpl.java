@@ -23,6 +23,7 @@ import com.liferay.headless.admin.site.resource.v1_0.PageTemplateResource;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
@@ -424,6 +425,14 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			long groupId, long layoutPageTemplateCollectionId,
 			WidgetPageTemplate widgetPageTemplate)
 		throws Exception {
+
+		if (!((layoutPageTemplateCollectionId ==
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) ^
+			  (groupId != contextCompany.getGroupId()))) {
+
+			throw new LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException();
+		}
 
 		ServiceContext serviceContext = _getServiceContext(
 			groupId, widgetPageTemplate);

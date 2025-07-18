@@ -174,6 +174,8 @@ test.afterEach(async ({browser}) => {
 			await identityProviderConnectionsPage.deleteIdentityProviderConnections();
 
 			await configureServiceProvider(newPage);
+
+			await samlAdminPage.applicationsMenuPage.goToSamlAdmin();
 		}
 
 		if ((await samlAdminPage.samlRoleField.inputValue()) !== 'sp') {
@@ -202,7 +204,7 @@ test.afterEach(async ({browser}) => {
 		await systemSettingsPage.goToSystemSetting('Login', 'Login');
 
 		await waitForLoading(systemSettingsPage.page);
-	
+
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: systemSettingsPage.page.getByRole('menuitem', {
@@ -212,7 +214,7 @@ test.afterEach(async ({browser}) => {
 				name: 'Actions',
 			}),
 		});
-	
+
 		await waitForAlert(systemSettingsPage.page);
 
 		resetSystemSettings = false;

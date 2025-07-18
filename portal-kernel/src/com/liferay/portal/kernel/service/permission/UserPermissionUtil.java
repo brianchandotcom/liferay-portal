@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -107,11 +106,8 @@ public class UserPermissionUtil {
 
 			if (!Arrays.equals(organizationIds, user.getOrganizationIds())) {
 				List<Long> organizationIdsList = ListUtil.fromArray(
-					organizationIds);
-
-				Collections.addAll(
-					organizationIdsList,
-					ArrayUtil.toLongArray(user.getOrganizationIds()));
+					ArrayUtil.append(
+						organizationIds, user.getOrganizationIds()));
 
 				ListUtil.distinct(organizationIdsList);
 

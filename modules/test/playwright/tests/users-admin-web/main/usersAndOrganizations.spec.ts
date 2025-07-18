@@ -1623,7 +1623,7 @@ test(
 		await editUserPage.organizationsLink.click();
 
 		await expect(
-			editUserPage.organizationsTable.getByText(`${organization.name}`)
+			editUserPage.organizationsTable.getByText(organization.name)
 		).toHaveCount(1);
 
 		await Promise.all([

@@ -934,21 +934,8 @@ public class LayoutPageTemplateEntryServiceImpl
 			getPermissionChecker(), layoutPageTemplateEntryId,
 			ActionKeys.UPDATE);
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId);
-
-		if (layoutPageTemplateEntry.getLayoutPageTemplateCollectionId() ==
-				targetLayoutPageTemplateCollectionId) {
-
-			return layoutPageTemplateEntry;
-		}
-
-		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
-			targetLayoutPageTemplateCollectionId);
-
-		return layoutPageTemplateEntryLocalService.
-			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
+		return layoutPageTemplateEntryLocalService.moveLayoutPageTemplateEntry(
+			layoutPageTemplateEntryId, targetLayoutPageTemplateCollectionId);
 	}
 
 	@Override

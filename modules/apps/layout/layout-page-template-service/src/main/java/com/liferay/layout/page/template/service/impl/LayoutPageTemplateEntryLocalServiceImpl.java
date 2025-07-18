@@ -13,6 +13,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryDefaultTemplateException;
@@ -21,8 +22,10 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutP
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
+import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
 import com.liferay.layout.validator.LayoutValidator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -1152,6 +1155,23 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if (Objects.equals(
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, type)) {
 
+			if (layoutPageTemplateCollectionId ==
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) {
+
+				return;
+			}
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionPersistence.findByPrimaryKey(
+					layoutPageTemplateCollectionId);
+
+			if (layoutPageTemplateCollection.getType() !=
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE) {
+
+				throw new LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException();
+			}
+
 			return;
 		}
 
@@ -1171,6 +1191,16 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if (layoutPageTemplateCollectionId ==
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) {
+
+			throw new LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException();
+		}
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionPersistence.findByPrimaryKey(
+				layoutPageTemplateCollectionId);
+
+		if (layoutPageTemplateCollection.getType() !=
+				LayoutPageTemplateCollectionTypeConstants.BASIC) {
 
 			throw new LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException();
 		}
@@ -1331,6 +1361,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateCollectionPersistence
+		_layoutPageTemplateCollectionPersistence;
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;

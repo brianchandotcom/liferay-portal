@@ -38,6 +38,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,6 +54,59 @@ public class OIDCUserInfoProcessorTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_customOIDCUserInfoMapperJSON = JSONUtil.put(
+			"address",
+			JSONUtil.put(
+				"addressType", ""
+			).put(
+				"city", "address->locality"
+			).put(
+				"country", "address->country"
+			).put(
+				"region", "address->region"
+			).put(
+				"street", "address->street_address"
+			).put(
+				"zip", "address->postal_code"
+			)
+		).put(
+			"contact",
+			JSONUtil.put(
+				"birthdate", "birthdate"
+			).put(
+				"gender", "gender"
+			)
+		).put(
+			"phone",
+			JSONUtil.put(
+				"phone", "phone_number"
+			).put(
+				"phoneType", ""
+			)
+		).put(
+			"user",
+			JSONUtil.put(
+				"emailAddress", "email"
+			).put(
+				"firstName", "given_name"
+			).put(
+				"jobTitle", ""
+			).put(
+				"languageId", "locale"
+			).put(
+				"lastName", "family_name"
+			).put(
+				"middleName", "middle_name"
+			).put(
+				"screenName", ""
+			)
+		).put(
+			"users_roles", JSONUtil.put("roles", "")
+		).toString();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -70,8 +124,14 @@ public class OIDCUserInfoProcessorTest {
 
 	@Test
 	public void testProcessUserInfo() throws Exception {
-		_testProcessUserInfo(new String[0], new String[0]);
-		_testProcessUserInfo(new String[] {"group1"}, new String[] {"group1"});
+		_testProcessUserInfo(
+			new String[0], new String[0], _customOIDCUserInfoMapperJSON);
+		_testProcessUserInfo(
+			new String[0], new String[0],
+			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+		_testProcessUserInfo(
+			new String[] {"group1"}, new String[] {"group1"},
+			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
 			StringPool.BLANK, TestPropsValues.getUserId(),
@@ -86,9 +146,26 @@ public class OIDCUserInfoProcessorTest {
 
 		_testProcessUserInfo(
 			new String[] {"group1", "group2", "group3"},
-			new String[] {"group1", "group3"});
+			new String[] {"group1", "group3"},
+			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 		_testProcessUserInfo(
-			new String[] {"group1", "group2"}, new String[] {"group1"});
+			new String[] {"group1", "group2"}, new String[] {"group1"},
+			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+		_testProcessUserInfo(
+			new String[] {"group2"}, new String[0],
+			_customOIDCUserInfoMapperJSON);
+
+		_userGroupLocalService.deleteUserUserGroup(
+			user.getUserId(), userGroup.getUserGroupId());
+
+		_testProcessUserInfo(
+			new String[0], new String[0], _customOIDCUserInfoMapperJSON);
+		_testProcessUserInfo(
+			new String[0], new String[0],
+			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+		_testProcessUserInfo(
+			new String[] {"group1"}, new String[] {"group1"},
+			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 	}
 
 	private void _assertExpandoValue(CTModel<?> ctModel) throws Exception {
@@ -108,7 +185,8 @@ public class OIDCUserInfoProcessorTest {
 	}
 
 	private void _testProcessUserInfo(
-			String[] expectedUserGroupNames, String[] userGroupNames)
+			String[] expectedUserGroupNames, String[] userGroupNames,
+			String userInfoMapperJSON)
 		throws Exception {
 
 		User existingUser = _userLocalService.fetchUserByEmailAddress(
@@ -156,7 +234,7 @@ public class OIDCUserInfoProcessorTest {
 			).put(
 				"sub", _uuid
 			).toString(),
-			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+			userInfoMapperJSON);
 
 		User user = _userLocalService.fetchUserByEmailAddress(
 			TestPropsValues.getCompanyId(), _emailAddress);
@@ -186,6 +264,8 @@ public class OIDCUserInfoProcessorTest {
 					TestPropsValues.getCompanyId(), userGroupName));
 		}
 	}
+
+	private static String _customOIDCUserInfoMapperJSON;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

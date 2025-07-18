@@ -33,6 +33,14 @@ const test = mergeTests(
 	pageViewModePagesTest
 );
 
+const testWithPrivatePages = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-38869': {enabled: true},
+		'LPS-178052': {enabled: true},
+	})
+);
+
 test.describe('Keyboard movement and navigation', () => {
 	test(
 		'Keyboard movement works as expected',
@@ -1388,5 +1396,53 @@ test(
 			'style',
 			'max-width: 652px; min-width: 652px; width: 652px;'
 		);
+	}
+);
+
+testWithPrivatePages(
+	'Restricted icon in show in private pages layout set',
+	{
+		tag: '@LPD-61197',
+	},
+	async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+		// Add on private and one public page
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await page
+			.locator('li')
+			.filter({hasText: 'New'})
+			.getByRole('button')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Private Page'}).click();
+
+		const layoutTitle = getRandomString();
+
+		await pagesAdminPage.addPage({
+			name: layoutTitle,
+		});
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Check that the icon is only displayed in private pages
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await expect(
+			page
+				.getByRole('menuitem', {name: 'Public Pages Add Child Page'})
+				.locator('.lexicon-icon-password-policies')
+		).not.toBeVisible();
+
+		await expect(
+			page
+				.getByRole('menuitem', {name: 'Private Pages Add Child Page'})
+				.locator('.lexicon-icon-password-policies')
+		).toBeVisible();
 	}
 );

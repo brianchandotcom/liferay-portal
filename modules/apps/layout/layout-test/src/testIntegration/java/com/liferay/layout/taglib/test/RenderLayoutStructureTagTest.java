@@ -2492,7 +2492,18 @@ public class RenderLayoutStructureTagTest {
 		MockObject mockObject = new MockObject(
 			RandomTestUtil.randomLong(), false, true);
 
-		InfoField<TextInfoFieldType> infoField = _getInfoField(false);
+		InfoField<TextInfoFieldType> infoField = InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).namespace(
+			RandomTestUtil.randomString()
+		).name(
+			"fieldName"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.singleValue(RandomTestUtil.randomString())
+		).localizable(
+			true
+		).build();
 
 		String value = RandomTestUtil.randomString();
 
@@ -2521,7 +2532,7 @@ public class RenderLayoutStructureTagTest {
 					).put(
 						"externalReferenceCode", RandomTestUtil.randomString()
 					).put(
-						"fieldId", infoField.getName()
+						"fieldId", "fieldName"
 					)),
 				"BASIC_COMPONENT-heading", draftLayout,
 				_segmentsExperienceLocalService.
@@ -2530,9 +2541,8 @@ public class RenderLayoutStructureTagTest {
 			TemplateEntry templateEntry = TemplateTestUtil.addTemplateEntry(
 				MockObject.class.getName(), "0", RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				StringBundler.concat(
-					"<#if (", infoField.getName(), ".getData())??><p>${",
-					infoField.getName(), ".getData()}</p></#if>"),
+				"<#if (fieldName.getData())??><p>${fieldName.getData()}</p>" +
+					"</#if>",
 				_serviceContext);
 
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(

@@ -28,3 +28,5 @@ const BASE_CONTEXT: IAssetTypeInfoPanelContext = {
 };
 
 export const AssetTypeInfoPanelContext = React.createContext(BASE_CONTEXT);
+
+AssetTypeInfoPanelContext.displayName = 'AssetTypeInfoPanelContext';

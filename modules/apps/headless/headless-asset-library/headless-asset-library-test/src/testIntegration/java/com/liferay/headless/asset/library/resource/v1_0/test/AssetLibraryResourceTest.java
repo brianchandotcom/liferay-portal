@@ -439,6 +439,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			_language.getLanguageId(LocaleUtil.US),
 			RandomTestUtil.randomString(), mimeTypeLimits, true, true);
 
+		String defaultLanguageId = _language.getLanguageId(LocaleUtil.SPAIN);
+
 		assetLibrary.setName_i18n(
 			Collections.singletonMap(
 				defaultLanguageId, RandomTestUtil.randomString()));
@@ -453,8 +455,6 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			LocaleUtil.SPAIN);
 
 		settings.setAvailableLanguageIds(availableLanguageIds);
-
-		String defaultLanguageId = _language.getLanguageId(LocaleUtil.SPAIN);
 
 		settings.setDefaultLanguageId(defaultLanguageId);
 

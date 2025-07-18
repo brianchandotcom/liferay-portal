@@ -349,146 +349,153 @@ public class LayoutStructureRenderer {
 			jspWriter.write(unsyncStringWriter.toString());
 		}
 		else {
-			InfoItemReference currentInfoItemReference =
-				(InfoItemReference)_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
-			LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider =
-				(LayoutDisplayPageProvider<?>)_httpServletRequest.getAttribute(
-					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
+			InfoItemServiceRegistry infoItemServiceRegistry =
+				ServletContextUtil.getInfoItemServiceRegistry();
 
-			try {
-				_httpServletRequest.setAttribute(
-					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
-					renderCollectionLayoutStructureItemDisplayContext.
-						getCollectionLayoutDisplayPageProvider());
+			InfoItemDetailsProvider infoItemDetailsProvider =
+				infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemDetailsProvider.class,
+					InfoSearchClassMapperRegistryUtil.getClassName(
+						renderCollectionLayoutStructureItemDisplayContext.
+							getCollectionItemType()));
 
-				ContainerTag containerTag = new ContainerTag();
+			if (infoItemDetailsProvider != null) {
+				InfoItemReference currentInfoItemReference =
+					(InfoItemReference)_httpServletRequest.getAttribute(
+						InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
+				LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider =
+					(LayoutDisplayPageProvider<?>)
+						_httpServletRequest.getAttribute(
+							LayoutDisplayPageWebKeys.
+								LAYOUT_DISPLAY_PAGE_PROVIDER);
 
-				StringBundler containerCSSClassSB = new StringBundler(
-					"overflow-hidden px-0");
+				try {
+					_httpServletRequest.setAttribute(
+						LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
+						renderCollectionLayoutStructureItemDisplayContext.
+							getCollectionLayoutDisplayPageProvider());
 
-				if (Objects.equals(
-						collectionStyledLayoutStructureItem.getListStyle(),
-						"flex-column")) {
+					ContainerTag containerTag = new ContainerTag();
 
-					containerCSSClassSB.append(" d-flex flex-column");
-				}
-				else if (Objects.equals(
+					StringBundler containerCSSClassSB = new StringBundler(
+						"overflow-hidden px-0");
+
+					if (Objects.equals(
 							collectionStyledLayoutStructureItem.getListStyle(),
-							"flex-row")) {
+							"flex-column")) {
 
-					containerCSSClassSB.append(" d-flex flex-row");
-				}
+						containerCSSClassSB.append(" d-flex flex-column");
+					}
+					else if (Objects.equals(
+								collectionStyledLayoutStructureItem.
+									getListStyle(),
+								"flex-row")) {
 
-				String align = collectionStyledLayoutStructureItem.getAlign();
-
-				if (Validator.isNotNull(align)) {
-					containerCSSClassSB.append(StringPool.SPACE);
-					containerCSSClassSB.append(align);
-				}
-
-				String flexWrap =
-					collectionStyledLayoutStructureItem.getFlexWrap();
-
-				if (Validator.isNotNull(flexWrap)) {
-					containerCSSClassSB.append(StringPool.SPACE);
-					containerCSSClassSB.append(flexWrap);
-				}
-
-				String justify =
-					collectionStyledLayoutStructureItem.getJustify();
-
-				if (Validator.isNotNull(justify)) {
-					containerCSSClassSB.append(StringPool.SPACE);
-					containerCSSClassSB.append(justify);
-				}
-
-				containerTag.setCssClass(containerCSSClassSB.toString());
-
-				containerTag.setFluid(true);
-				containerTag.setPageContext(_pageContext);
-
-				containerTag.doStartTag();
-
-				InfoItemServiceRegistry infoItemServiceRegistry =
-					ServletContextUtil.getInfoItemServiceRegistry();
-
-				InfoItemDetailsProvider infoItemDetailsProvider =
-					infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemDetailsProvider.class,
-						InfoSearchClassMapperRegistryUtil.getClassName(
-							renderCollectionLayoutStructureItemDisplayContext.
-								getCollectionItemType()));
-
-				RowTag rowTag = new RowTag();
-
-				StringBundler rowCSSClassSB = new StringBundler(3);
-
-				rowCSSClassSB.append("align-items-");
-				rowCSSClassSB.append(
-					collectionStyledLayoutStructureItem.getVerticalAlignment());
-
-				if (!collectionStyledLayoutStructureItem.isGutters()) {
-					rowCSSClassSB.append(" no-gutters");
-				}
-
-				rowTag.setCssClass(rowCSSClassSB.toString());
-
-				rowTag.setPageContext(_pageContext);
-
-				rowTag.doStartTag();
-
-				int numberOfItemsToDisplay =
-					renderCollectionLayoutStructureItemDisplayContext.
-						getNumberOfItemsToDisplay();
-
-				for (int i = 0; i < numberOfItemsToDisplay; i++) {
-					if (i >= collection.size()) {
-						break;
+						containerCSSClassSB.append(" d-flex flex-row");
 					}
 
-					InfoItemDetails infoItemDetails =
-						infoItemDetailsProvider.getInfoItemDetails(
-							collection.get(i));
+					String align =
+						collectionStyledLayoutStructureItem.getAlign();
 
+					if (Validator.isNotNull(align)) {
+						containerCSSClassSB.append(StringPool.SPACE);
+						containerCSSClassSB.append(align);
+					}
+
+					String flexWrap =
+						collectionStyledLayoutStructureItem.getFlexWrap();
+
+					if (Validator.isNotNull(flexWrap)) {
+						containerCSSClassSB.append(StringPool.SPACE);
+						containerCSSClassSB.append(flexWrap);
+					}
+
+					String justify =
+						collectionStyledLayoutStructureItem.getJustify();
+
+					if (Validator.isNotNull(justify)) {
+						containerCSSClassSB.append(StringPool.SPACE);
+						containerCSSClassSB.append(justify);
+					}
+
+					containerTag.setCssClass(containerCSSClassSB.toString());
+
+					containerTag.setFluid(true);
+					containerTag.setPageContext(_pageContext);
+
+					containerTag.doStartTag();
+
+					RowTag rowTag = new RowTag();
+
+					StringBundler rowCSSClassSB = new StringBundler(3);
+
+					rowCSSClassSB.append("align-items-");
+					rowCSSClassSB.append(
+						collectionStyledLayoutStructureItem.
+							getVerticalAlignment());
+
+					if (!collectionStyledLayoutStructureItem.isGutters()) {
+						rowCSSClassSB.append(" no-gutters");
+					}
+
+					rowTag.setCssClass(rowCSSClassSB.toString());
+
+					rowTag.setPageContext(_pageContext);
+
+					rowTag.doStartTag();
+
+					int numberOfItemsToDisplay =
+						renderCollectionLayoutStructureItemDisplayContext.
+							getNumberOfItemsToDisplay();
+
+					for (int i = 0; i < numberOfItemsToDisplay; i++) {
+						if (i >= collection.size()) {
+							break;
+						}
+
+						InfoItemDetails infoItemDetails =
+							infoItemDetailsProvider.getInfoItemDetails(
+								collection.get(i));
+
+						_httpServletRequest.setAttribute(
+							InfoDisplayWebKeys.INFO_ITEM_REFERENCE,
+							infoItemDetails.getInfoItemReference());
+
+						ColTag colTag = new ColTag();
+
+						int numberOfColumns =
+							collectionStyledLayoutStructureItem.
+								getNumberOfColumns();
+
+						colTag.setCssClass(
+							ResponsiveLayoutStructureUtil.getColumnCssClass(
+								collectionStyledLayoutStructureItem,
+								i % numberOfColumns));
+
+						colTag.setPageContext(_pageContext);
+
+						colTag.doStartTag();
+
+						_renderLayoutStructure(
+							collectionStyledLayoutStructureItem.
+								getChildrenItemIds(),
+							infoForm);
+
+						colTag.doEndTag();
+					}
+
+					rowTag.doEndTag();
+
+					containerTag.doEndTag();
+				}
+				finally {
 					_httpServletRequest.setAttribute(
 						InfoDisplayWebKeys.INFO_ITEM_REFERENCE,
-						infoItemDetails.getInfoItemReference());
-
-					ColTag colTag = new ColTag();
-
-					int numberOfColumns =
-						collectionStyledLayoutStructureItem.
-							getNumberOfColumns();
-
-					colTag.setCssClass(
-						ResponsiveLayoutStructureUtil.getColumnCssClass(
-							collectionStyledLayoutStructureItem,
-							i % numberOfColumns));
-
-					colTag.setPageContext(_pageContext);
-
-					colTag.doStartTag();
-
-					_renderLayoutStructure(
-						collectionStyledLayoutStructureItem.
-							getChildrenItemIds(),
-						infoForm);
-
-					colTag.doEndTag();
+						currentInfoItemReference);
+					_httpServletRequest.setAttribute(
+						LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
+						currentLayoutDisplayPageProvider);
 				}
-
-				rowTag.doEndTag();
-
-				containerTag.doEndTag();
-			}
-			finally {
-				_httpServletRequest.setAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_REFERENCE,
-					currentInfoItemReference);
-				_httpServletRequest.setAttribute(
-					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
-					currentLayoutDisplayPageProvider);
 			}
 		}
 

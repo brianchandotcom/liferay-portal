@@ -22,6 +22,7 @@ type Props = {
 	addCommentURL: string;
 	comments: Comment[];
 	deleteCommentURL: string;
+	editCommentURL: string;
 	editorConfig: LiferayEditorConfig;
 	id: string;
 	isSubscribed: boolean;

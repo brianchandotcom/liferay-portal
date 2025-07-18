@@ -165,10 +165,6 @@ public class SettingsTestUtil {
 		}
 
 		Assert.assertEquals(
-			MapUtil.toString(curThemeSettings), themeSettings.size(),
-			curThemeSettings.size());
-
-		Assert.assertEquals(
 			MapUtil.toString(curThemeSettings), themeSettings,
 			curThemeSettings);
 	}
@@ -206,13 +202,13 @@ public class SettingsTestUtil {
 			};
 		}
 
-		String curCss = RandomTestUtil.randomString();
+		String css = RandomTestUtil.randomString();
 
-		settings.setCss(() -> curCss);
+		settings.setCss(() -> css);
 
 		return new Settings() {
 			{
-				setCss(() -> curCss);
+				setCss(() -> css);
 			}
 		};
 	}
@@ -360,7 +356,7 @@ public class SettingsTestUtil {
 			};
 		}
 
-		Map<String, String> map = TreeMapBuilder.put(
+		Map<String, String> themSettings = TreeMapBuilder.put(
 			"lfr-theme:" + RandomTestUtil.randomString(),
 			RandomTestUtil.randomString()
 		).put(
@@ -368,11 +364,11 @@ public class SettingsTestUtil {
 			RandomTestUtil.randomString()
 		).build();
 
-		settings.setThemeSettings(() -> map);
+		settings.setThemeSettings(() -> themSettings);
 
 		return new Settings() {
 			{
-				setThemeSettings(() -> map);
+				setThemeSettings(() -> themSettings);
 			}
 		};
 	}

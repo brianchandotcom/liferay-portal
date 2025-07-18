@@ -62,7 +62,9 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
 		_db = DBManagerUtil.getDB();
+		_dbInspector = new DBInspector(DataAccess.getConnection());
 
 		_addLegacyColumns();
 	}
@@ -108,27 +110,21 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		_legacyColumnsAdded = false;
 		_indexMetadataList = Collections.emptyList();
 
-		try (Connection connection = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(connection);
+		if (!_dbInspector.hasColumn(
+				"LayoutPageTemplateStructure", "classNameId") &&
+			!_dbInspector.hasColumn("LayoutPageTemplateStructure", "classPK")) {
 
-			if (!dbInspector.hasColumn(
-					"LayoutPageTemplateStructure", "classNameId") &&
-				!dbInspector.hasColumn(
-					"LayoutPageTemplateStructure", "classPK")) {
+			_db.alterTableAddColumn(
+				_connection, "LayoutPageTemplateStructure", "classNameId",
+				"LONG");
 
-				_db.alterTableAddColumn(
-					connection, "LayoutPageTemplateStructure", "classNameId",
-					"LONG");
+			_db.alterTableAddColumn(
+				_connection, "LayoutPageTemplateStructure", "classPK", "LONG");
 
-				_db.alterTableAddColumn(
-					connection, "LayoutPageTemplateStructure", "classPK",
-					"LONG");
+			_legacyColumnsAdded = true;
 
-				_legacyColumnsAdded = true;
-
-				_indexMetadataList = _db.dropIndexes(
-					connection, "LayoutPageTemplateStructure", "plid");
-			}
+			_indexMetadataList = _db.dropIndexes(
+				_connection, "LayoutPageTemplateStructure", "plid");
 		}
 	}
 
@@ -137,24 +133,19 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 			return;
 		}
 
-		try (Connection connection = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(connection);
+		if (_dbInspector.hasColumn(
+				"LayoutPageTemplateStructure", "classNameId") &&
+			_dbInspector.hasColumn("LayoutPageTemplateStructure", "classPK")) {
 
-			if (dbInspector.hasColumn(
-					"LayoutPageTemplateStructure", "classNameId") &&
-				dbInspector.hasColumn(
-					"LayoutPageTemplateStructure", "classPK")) {
+			_db.alterTableDropColumn(
+				_connection, "LayoutPageTemplateStructure", "classNameId");
 
-				_db.alterTableDropColumn(
-					connection, "LayoutPageTemplateStructure", "classNameId");
+			_db.alterTableDropColumn(
+				_connection, "LayoutPageTemplateStructure", "classPK");
+		}
 
-				_db.alterTableDropColumn(
-					connection, "LayoutPageTemplateStructure", "classPK");
-			}
-
-			if (ListUtil.isNotEmpty(_indexMetadataList)) {
-				_db.addIndexes(connection, _indexMetadataList);
-			}
+		if (ListUtil.isNotEmpty(_indexMetadataList)) {
+			_db.addIndexes(_connection, _indexMetadataList);
 		}
 	}
 
@@ -173,7 +164,9 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		"com.liferay.layout.page.template.internal.upgrade.v5_1_1." +
 			"LayoutPageTemplateStructureUpgradeProcess";
 
+	private static Connection _connection;
 	private static DB _db;
+	private static DBInspector _dbInspector;
 	private static List<IndexMetadata> _indexMetadataList;
 	private static boolean _legacyColumnsAdded;
 

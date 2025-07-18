@@ -102,6 +102,8 @@ export const test = mergeTests(
 
 const resetAfterTestGeneralPage = new Set<string>();
 
+let resetSystemSettings = false;
+
 test.afterAll(async ({browser}) => {
 
 	// Remove virtual instances
@@ -189,6 +191,32 @@ test.afterEach(async ({browser}) => {
 	}
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	if (resetSystemSettings) {
+		const newPage = await browser.newPage();
+
+		await performLogin(newPage, 'test');
+
+		const systemSettingsPage = new SystemSettingsPage(newPage);
+
+		await systemSettingsPage.goToSystemSetting('Login', 'Login');
+
+		await waitForLoading(systemSettingsPage.page);
+	
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: systemSettingsPage.page.getByRole('menuitem', {
+				name: 'Reset Default Values',
+			}),
+			trigger: systemSettingsPage.page.getByRole('button', {
+				name: 'Actions',
+			}),
+		});
+	
+		await waitForAlert(systemSettingsPage.page);
+
+		resetSystemSettings = false;
+	}
 });
 
 test.beforeAll(async ({browser}) => {
@@ -3426,6 +3454,8 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 
 	await waitForAlert(systemSettingsPage.page);
 
+	resetSystemSettings = true;
+
 	const idpSpAdminPage =
 		await createIdentityAndServiceProviderVirtualInstance(
 			browser,
@@ -3541,18 +3571,4 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 	// Verify user is redirected back to restricted resource
 
 	expect(await spInstancePage.url()).toContain(spNewPageUrl);
-
-	await systemSettingsPage.goToSystemSetting('Login', 'Login');
-
-	await waitForLoading(systemSettingsPage.page);
-
-	await systemSettingsPage.page
-		.getByLabel('Prompt Enabled')
-		.setChecked(false);
-
-	await systemSettingsPage.page
-		.getByRole('button', {name: /save|update/i})
-		.click();
-
-	await waitForAlert(systemSettingsPage.page);
 });

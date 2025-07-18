@@ -395,6 +395,8 @@ public class LayoutSiteNavigationMenuItemType
 			UnicodePropertiesBuilder.fastLoad(
 				siteNavigationMenuItem.getTypeSettings()
 			).put(
+				"externalReferenceCode", layout.getExternalReferenceCode()
+			).put(
 				"groupId", String.valueOf(layout.getGroupId())
 			).put(
 				"layoutUuid", layout.getUuid()

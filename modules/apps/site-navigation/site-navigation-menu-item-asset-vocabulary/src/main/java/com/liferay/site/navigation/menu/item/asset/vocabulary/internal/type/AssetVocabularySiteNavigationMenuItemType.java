@@ -94,19 +94,22 @@ public class AssetVocabularySiteNavigationMenuItemType
 				siteNavigationMenuItem.getTypeSettings()
 			).build();
 
-		long assetVocabularyId = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.get("classPK"));
+		String assetVocabularyExternalReferenceCode = GetterUtil.getString(
+			typeSettingsUnicodeProperties.get("externalReferenceCode"));
 
 		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.fetchAssetVocabulary(
-				assetVocabularyId);
+			_assetVocabularyLocalService.
+				fetchAssetVocabularyByExternalReferenceCode(
+					assetVocabularyExternalReferenceCode,
+					siteNavigationMenuItem.getGroupId());
 
 		if (assetVocabulary == null) {
 			return false;
 		}
 
 		siteNavigationMenuItemElement.addAttribute(
-			"asset-vocabulary-id", String.valueOf(assetVocabularyId));
+			"asset-vocabulary-external-reference-code",
+			assetVocabularyExternalReferenceCode);
 
 		portletDataContext.addReferenceElement(
 			siteNavigationMenuItem, siteNavigationMenuItemElement,
@@ -375,20 +378,17 @@ public class AssetVocabularySiteNavigationMenuItemType
 		Element element = portletDataContext.getImportDataElement(
 			siteNavigationMenuItem);
 
-		long classPK = GetterUtil.getLong(
-			element.attributeValue("asset-vocabulary-id"));
+		String externalReferenceCode = GetterUtil.getString(
+			element.attributeValue("asset-vocabulary-external-reference-code"));
 
-		if (classPK <= 0) {
+		if (externalReferenceCode == null) {
 			return false;
 		}
 
-		long newClassPK = MapUtil.getLong(
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				AssetVocabulary.class.getName()),
-			classPK, classPK);
-
 		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.fetchAssetVocabulary(newClassPK);
+			_assetVocabularyLocalService.
+				fetchAssetVocabularyByExternalReferenceCode(
+					externalReferenceCode, siteNavigationMenuItem.getGroupId());
 
 		if (assetVocabulary == null) {
 			return false;
@@ -398,7 +398,16 @@ public class AssetVocabularySiteNavigationMenuItemType
 			UnicodePropertiesBuilder.fastLoad(
 				siteNavigationMenuItem.getTypeSettings()
 			).put(
-				"classPK", String.valueOf(newClassPK)
+				"classPK",
+				String.valueOf(
+					MapUtil.getLong(
+						(Map<Long, Long>)
+							portletDataContext.getNewPrimaryKeysMap(
+								AssetVocabulary.class.getName()),
+						assetVocabulary.getVocabularyId(),
+						assetVocabulary.getVocabularyId()))
+			).put(
+				"externalReferenceCode", externalReferenceCode
 			).put(
 				"groupId", String.valueOf(assetVocabulary.getGroupId())
 			).put(

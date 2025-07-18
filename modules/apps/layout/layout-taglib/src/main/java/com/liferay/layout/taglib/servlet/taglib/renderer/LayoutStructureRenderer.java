@@ -359,12 +359,24 @@ public class LayoutStructureRenderer {
 						renderCollectionLayoutStructureItemDisplayContext.
 							getCollectionItemType()));
 
-			if (infoItemDetailsProvider != null) {
-				_renderCollectionStyledLayoutStructureItem(
-					collection, collectionStyledLayoutStructureItem, infoForm,
-					infoItemDetailsProvider,
-					renderCollectionLayoutStructureItemDisplayContext);
+			if (infoItemDetailsProvider == null) {
+				_renderEmptyState(
+					collectionStyledLayoutStructureItem.
+						getEmptyCollectionOptions(),
+					jspWriter);
+
+				jspWriter.write("</div>");
+
+				collectionStyledLayoutStructureItemIds.remove(
+					collectionStyledLayoutStructureItemIds.size() - 1);
+
+				return;
 			}
+
+			_renderCollectionStyledLayoutStructureItem(
+				collection, collectionStyledLayoutStructureItem, infoForm,
+				infoItemDetailsProvider,
+				renderCollectionLayoutStructureItemDisplayContext);
 		}
 
 		if (Objects.equals(

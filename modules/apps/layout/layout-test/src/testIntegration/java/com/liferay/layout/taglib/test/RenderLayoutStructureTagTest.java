@@ -37,6 +37,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
@@ -112,6 +113,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -1191,6 +1193,7 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo("LPD-60936")
 	public void testRenderCollectionStyledLayoutStructureItemWithAssetListEntryItemClassChanged()
 		throws Exception {
 
@@ -1297,6 +1300,38 @@ public class RenderLayoutStructureTagTest {
 			content,
 			StringUtil.contains(
 				content, ">Heading Example</h1>", StringPool.BLANK));
+
+		_assetListEntryLocalService.updateAssetListEntryTypeSettings(
+			assetListEntry.getAssetListEntryId(), 0,
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"anyAssetType",
+				String.valueOf(
+					_portal.getClassNameId(MessageBoardMessage.class))
+			).put(
+				"orderByColumn1", "priority"
+			).put(
+				"orderByType1", "ASC"
+			).buildString());
+
+		content = _getContent(
+			layout, mockHttpServletRequest, segmentsExperienceId);
+
+		Assert.assertFalse(
+			content,
+			StringUtil.contains(
+				content, ">" + title + "</h1>", StringPool.BLANK));
+		Assert.assertFalse(
+			content,
+			StringUtil.contains(
+				content, ">Heading Example</h1>", StringPool.BLANK));
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content,
+				_language.get(mockHttpServletRequest, "no-results-found"),
+				StringPool.BLANK));
 	}
 
 	@Test
@@ -3583,6 +3618,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private LayoutDisplayPageProviderRegistry

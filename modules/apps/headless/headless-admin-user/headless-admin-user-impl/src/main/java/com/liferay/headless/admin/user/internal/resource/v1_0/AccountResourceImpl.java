@@ -315,6 +315,13 @@ public class AccountResourceImpl
 				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
+	@Override
+	public List<String> getNestedFields() {
+		return List.of(
+			"accountGroupBriefs", "accountRoles", "keywords", "logoBase64",
+			"taxonomyCategoryBriefs");
+	}
+
 	@NestedField(
 		parentClass = Organization.class, value = "organizationAccounts"
 	)

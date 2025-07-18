@@ -21,7 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 /**
  * @author Amos Fong
@@ -31,67 +30,71 @@ public class BaseRestController
 
 	protected String getAccountKey(String jiraIssueKey) throws Exception {
 		try {
-			JSONObject jsonObject = _jiraService.getIssueJSONObject(
-				jiraIssueKey);
-
-			if (jsonObject == null) {
-				throw new JiraIssueNotFoundException();
-			}
-
-			JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
-
-			String status = fieldsJSONObject.optString("status");
-
-			if (status.equals("Closed")) {
-				throw new JiraIssueClosedException();
-			}
-
-			List<String> organizationCompositeIdArray = StringUtil.split(
-				fieldsJSONObject.getString("organization"), CharPool.COLON);
-
-			JSONObject assetObjectJSONObject = _jiraService.getAssetObject(
-				organizationCompositeIdArray.get(0),
-				organizationCompositeIdArray.get(1));
-
-			if (assetObjectJSONObject == null) {
-				throw new JiraOrganizationNotFoundException();
-			}
-
-			JSONArray jsonArray = assetObjectJSONObject.getJSONArray(
-				"attributes");
-
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject attributeJSONObject = jsonArray.getJSONObject(i);
-
-				JSONObject objectTypeAttributeJSONObject =
-					attributeJSONObject.getJSONObject("objectTypeAttribute");
-
-				String name = objectTypeAttributeJSONObject.getString("name");
-
-				if (name.equals("External Key")) {
-					JSONArray objectAttributeValuesJSONArray =
-						attributeJSONObject.getJSONArray(
-							"objectAttributeValues");
-
-					for (int j = 0; j < objectAttributeValuesJSONArray.length();
-						 j++) {
-
-						JSONObject objectAttributeValuesJSONObject =
-							objectAttributeValuesJSONArray.getJSONObject(j);
-
-						return objectAttributeValuesJSONObject.getString(
-							"value");
-					}
-				}
-			}
-
-			throw new JiraOrganizationNotFoundException();
+			return _getAccountKey(jiraIssueKey);
 		}
-		catch (WebClientResponseException.NotFound webClientResponseException) {
-			_log.error(webClientResponseException, webClientResponseException);
+		catch (JiraOrganizationNotFoundException
+					jiraOrganizationNotFoundException) {
+
+			_log.error(
+				jiraOrganizationNotFoundException,
+				jiraOrganizationNotFoundException);
 
 			throw new JiraIssueNotFoundException();
 		}
+	}
+
+	private String _getAccountKey(String jiraIssueKey) throws Exception {
+		JSONObject jsonObject = _jiraService.getIssueJSONObject(jiraIssueKey);
+
+		if (jsonObject == null) {
+			throw new JiraIssueNotFoundException();
+		}
+
+		JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
+
+		String status = fieldsJSONObject.optString("status");
+
+		if (status.equals("Closed")) {
+			throw new JiraIssueClosedException();
+		}
+
+		List<String> organizationCompositeIdArray = StringUtil.split(
+			fieldsJSONObject.getString("organization"), CharPool.COLON);
+
+		JSONObject assetObjectJSONObject = _jiraService.getAssetObject(
+			organizationCompositeIdArray.get(0),
+			organizationCompositeIdArray.get(1));
+
+		if (assetObjectJSONObject == null) {
+			throw new JiraOrganizationNotFoundException();
+		}
+
+		JSONArray jsonArray = assetObjectJSONObject.getJSONArray("attributes");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject attributeJSONObject = jsonArray.getJSONObject(i);
+
+			JSONObject objectTypeAttributeJSONObject =
+				attributeJSONObject.getJSONObject("objectTypeAttribute");
+
+			String name = objectTypeAttributeJSONObject.getString("name");
+
+			if (name.equals("External Key")) {
+				JSONArray objectAttributeValuesJSONArray =
+					attributeJSONObject.getJSONArray("objectAttributeValues");
+
+				for (int j = 0; j < objectAttributeValuesJSONArray.length();
+					 j++) {
+
+					JSONObject objectAttributeValuesJSONObject =
+						objectAttributeValuesJSONArray.getJSONObject(j);
+
+					return objectAttributeValuesJSONObject.getString("value");
+				}
+			}
+		}
+
+		throw new JiraOrganizationNotFoundException();
 	}
 
 	private static final Log _log = LogFactory.getLog(

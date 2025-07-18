@@ -50,7 +50,7 @@ public class ViewContentsSectionDisplayContext
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);
-		
+
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -108,4 +108,5 @@ public class ViewContentsSectionDisplayContext
 	}
 
 	protected final ThemeDisplay themeDisplay;
+
 }

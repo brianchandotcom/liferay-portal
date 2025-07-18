@@ -43,28 +43,31 @@ public class ContentEditorManagementBarComponentSectionFragmentRenderer
 	}
 
 	@Override
-	protected String getLabelKey() {
-		return "content-editor-management-bar";
-	}
-
-	@Override
 	public void render(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			String layoutMode = ParamUtil.getString(httpServletRequest, "p_l_mode", Constants.VIEW);
+			String layoutMode = ParamUtil.getString(
+				httpServletRequest, "p_l_mode", Constants.VIEW);
 
 			if (Objects.equals(layoutMode, Constants.READ)) {
 				return;
 			}
 
-			super.render(fragmentRendererContext, httpServletRequest, httpServletResponse);
+			super.render(
+				fragmentRendererContext, httpServletRequest,
+				httpServletResponse);
 		}
 		catch (Exception exception) {
 			ReflectionUtil.throwException(exception);
 		}
+	}
+
+	@Override
+	protected String getLabelKey() {
+		return "content-editor-management-bar";
 	}
 
 	@Override

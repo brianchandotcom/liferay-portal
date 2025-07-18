@@ -7,6 +7,7 @@ import getViewComponent from './getViewComponent';
 
 export const VIEWS_ACTION_TYPES = {
 	ADD_OR_UPDATE_CUSTOM_VIEW: 'ADD_OR_UPDATE_CUSTOM_VIEW',
+	BATCH_UPDATE: 'BATCH_UPDATE',
 	DELETE_CUSTOM_VIEW: 'DELETE_CUSTOM_VIEW',
 	RENAME_ACTIVE_CUSTOM_VIEW: 'RENAME_ACTIVE_CUSTOM_VIEW',
 	RESET_TO_DEFAULT_VIEW: 'RESET_TO_DEFAULT_VIEW',
@@ -39,6 +40,21 @@ VIEWS_ACTIONS[VIEWS_ACTION_TYPES.ADD_OR_UPDATE_CUSTOM_VIEW] = (
 		},
 		viewUpdated: false,
 	};
+};
+
+VIEWS_ACTIONS[VIEWS_ACTION_TYPES.BATCH_UPDATE] = (state, stateUpdates) => {
+	if (!Array.isArray(stateUpdates) || !stateUpdates.length) {
+		return state;
+	}
+
+	return stateUpdates.reduce((acc, current) => {
+		const {type, value} = current;
+		if (!VIEWS_ACTIONS[type]) {
+			return acc;
+		}
+
+		return VIEWS_ACTIONS[type](acc, value);
+	}, state);
 };
 
 VIEWS_ACTIONS[VIEWS_ACTION_TYPES.DELETE_CUSTOM_VIEW] = (state, value) => {

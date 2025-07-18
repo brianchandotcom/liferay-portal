@@ -681,6 +681,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			return layoutPageTemplateEntry;
 		}
 
+		_validate(
+			layoutPageTemplateEntry.getGroupId(),
+			targetLayoutPageTemplateCollectionId,
+			layoutPageTemplateEntry.getType());
+
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
 			targetLayoutPageTemplateCollectionId);
 

@@ -49,6 +49,40 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
+	private void _addUserNotificationEvent(long groupId, User user)
+		throws PortalException {
+
+		if (!UserNotificationManagerUtil.isDeliver(
+				user.getUserId(), DepotPortletKeys.DEPOT_ADMIN, 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+
+			return;
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
+			groupId);
+
+		NotificationEvent notificationEvent = new NotificationEvent(
+			System.currentTimeMillis(), DepotPortletKeys.DEPOT_ADMIN,
+			JSONUtil.put(
+				"classPK", depotEntry.getDepotEntryId()
+			).put(
+				"notificationType",
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY
+			).put(
+				"userId", user.getUserId()
+			).put(
+				"userName", user.getFullName()
+			));
+
+		notificationEvent.setDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_WEBSITE);
+
+		_userNotificationEventLocalService.addUserNotificationEvent(
+			user.getUserId(), notificationEvent);
+	}
+
 	private void _onAfterAddAssociation(
 			Object classPK, String associationClassName,
 			Object associationClassPK)
@@ -88,40 +122,6 @@ public class UserModelListener extends BaseModelListener<User> {
 				_addUserNotificationEvent(group.getGroupId(), user);
 			}
 		}
-	}
-
-	private void _addUserNotificationEvent(long groupId, User user)
-		throws PortalException {
-
-		if (!UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), DepotPortletKeys.DEPOT_ADMIN, 0,
-				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
-
-			return;
-		}
-
-		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
-			groupId);
-
-		NotificationEvent notificationEvent = new NotificationEvent(
-			System.currentTimeMillis(), DepotPortletKeys.DEPOT_ADMIN,
-			JSONUtil.put(
-				"classPK", depotEntry.getDepotEntryId()
-			).put(
-				"notificationType",
-				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY
-			).put(
-				"userId", user.getUserId()
-			).put(
-				"userName", user.getFullName()
-			));
-
-		notificationEvent.setDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_WEBSITE);
-
-		_userNotificationEventLocalService.addUserNotificationEvent(
-			user.getUserId(), notificationEvent);
 	}
 
 	@Reference

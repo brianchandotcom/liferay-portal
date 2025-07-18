@@ -49,28 +49,6 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		}
 	}
 
-	private void _onAfterAddAssociation(
-			long userGroupId, String associationClassName, long groupId)
-		throws PortalException {
-
-		if (!associationClassName.equals(Group.class.getName())) {
-			return;
-		}
-
-		Group group = _groupLocalService.getGroup(groupId);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564") ||
-			!group.isDepot()) {
-
-			return;
-		}
-
-		for (User user : _userLocalService.getUserGroupUsers(userGroupId)) {
-			_addUserNotificationEvent(groupId, user);
-		}
-	}
-
 	private void _addUserNotificationEvent(long groupId, User user)
 		throws PortalException {
 
@@ -103,6 +81,28 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 
 		_userNotificationEventLocalService.addUserNotificationEvent(
 			user.getUserId(), notificationEvent);
+	}
+
+	private void _onAfterAddAssociation(
+			long userGroupId, String associationClassName, long groupId)
+		throws PortalException {
+
+		if (!associationClassName.equals(Group.class.getName())) {
+			return;
+		}
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564") ||
+			!group.isDepot()) {
+
+			return;
+		}
+
+		for (User user : _userLocalService.getUserGroupUsers(userGroupId)) {
+			_addUserNotificationEvent(groupId, user);
+		}
 	}
 
 	@Reference

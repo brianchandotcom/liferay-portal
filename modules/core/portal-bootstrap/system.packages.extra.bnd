@@ -290,6 +290,7 @@ Provide-Capability:\
 		osgi.extender="jsp.taglib";\
 		uri="http://java.sun.com/JSP/Page";\
 		version:Version="${Bundle-Version}"
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore
 -includeresource:\
 	-@lib/com.liferay.portal.app.license.api.jar,\
 	@../../../lib/development/activation.jar,\

@@ -32,7 +32,7 @@ public class ViewTagUsagesDisplayContext {
 
 	public String getAPIURL() {
 		return StringBundler.concat(
-			"/o/search/v1.0/search?emptySearch=true&", "filter=keywords in ('",
+			"/o/search/v1.0/search?emptySearch=true&filter=keywords in ('",
 			ParamUtil.getString(_httpServletRequest, "keywordName"),
 			"')&nestedFields=embedded");
 	}

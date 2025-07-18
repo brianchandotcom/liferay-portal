@@ -1129,10 +1129,23 @@ public class FreeMarkerTool {
 
 		if (MapUtil.isEmpty(propertySchemas) ||
 			!propertySchemas.containsKey("permissions") ||
-			!containsJavaMethodSignature(
+			((!containsJavaMethodSignature(
 				javaMethodSignatures, "get" + schemaName + "PermissionsPage") ||
-			!containsJavaMethodSignature(
-				javaMethodSignatures, "put" + schemaName + "PermissionsPage")) {
+			  !containsJavaMethodSignature(
+				  javaMethodSignatures,
+				  "put" + schemaName + "PermissionsPage")) &&
+			 (!containsJavaMethodSignature(
+				 javaMethodSignatures,
+				 "getSite" + schemaName + "PermissionsPage") ||
+			  !containsJavaMethodSignature(
+				  javaMethodSignatures,
+				  "putSite" + schemaName + "PermissionsPage")) &&
+			 (!containsJavaMethodSignature(
+				 javaMethodSignatures,
+				 "getAssetLibrary" + schemaName + "PermissionsPage") ||
+			  !containsJavaMethodSignature(
+				  javaMethodSignatures,
+				  "putAssetLibrary" + schemaName + "PermissionsPage")))) {
 
 			return false;
 		}

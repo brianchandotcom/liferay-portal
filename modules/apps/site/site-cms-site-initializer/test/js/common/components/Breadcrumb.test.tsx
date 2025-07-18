@@ -4,7 +4,8 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import Breadcrumb, {
@@ -128,5 +129,22 @@ describe('Breadcrumb', () => {
 		expect(container.getElementsByClassName('sticker')[0]).toHaveClass(
 			'sticker-lg'
 		);
+	});
+
+	it('renders the provided action item', async () => {
+		render(
+			<Breadcrumb
+				actionItems={[{label: 'Space Settings', symbolLeft: 'cog'}]}
+				breadcrumbItems={testBreadcrumbItemsSingle}
+			/>
+		);
+
+		userEvent.click(screen.getByLabelText('more-actions'));
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('menuitem', {name: 'Space Settings'})
+			).toBeInTheDocument();
+		});
 	});
 });

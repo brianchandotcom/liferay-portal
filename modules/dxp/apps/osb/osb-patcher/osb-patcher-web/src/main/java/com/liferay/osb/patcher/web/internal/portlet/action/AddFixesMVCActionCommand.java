@@ -10,6 +10,7 @@ import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.model.PatcherFix;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.service.PatcherFixLocalService;
 import com.liferay.osb.patcher.util.JenkinsUtil;
@@ -19,6 +20,7 @@ import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.osb.patcher.web.internal.validator.PatcherFixValidator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -53,6 +55,13 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(), "FIXES", "ADD")) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
 
 		long patcherProductVersionId = ParamUtil.getLong(
 			actionRequest, "patcherProductVersionId");

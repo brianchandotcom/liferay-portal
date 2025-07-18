@@ -5,12 +5,18 @@
 
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
+import com.liferay.osb.patcher.constants.PatcherActionKeys;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.exception.NoSuchPatcherProjectVersionException;
+import com.liferay.osb.patcher.model.PatcherProjectVersion;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherProjectVersionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
@@ -36,15 +42,30 @@ public class EditProjectVersionsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long patcherProjectVersionId = ParamUtil.getLong(
 			renderRequest, "patcherProjectVersionId");
 
 		try {
-			_patcherProjectVersionLocalService.getPatcherProjectVersion(
-				patcherProjectVersionId);
+			PatcherProjectVersion patcherProjectVersion =
+				_patcherProjectVersionLocalService.getPatcherProjectVersion(
+					patcherProjectVersionId);
+
+			if (!PatcherPermission.contains(
+					themeDisplay.getPermissionChecker(), patcherProjectVersion,
+					PatcherActionKeys.EDIT,
+					patcherProjectVersion.getUserId())) {
+
+				throw new PrincipalException.MustHavePermission(
+					themeDisplay.getUserId());
+			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchPatcherProjectVersionException) {
+			if (exception instanceof NoSuchPatcherProjectVersionException ||
+				exception instanceof PrincipalException) {
+
 				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/osb_patcher/views/error.jsp";

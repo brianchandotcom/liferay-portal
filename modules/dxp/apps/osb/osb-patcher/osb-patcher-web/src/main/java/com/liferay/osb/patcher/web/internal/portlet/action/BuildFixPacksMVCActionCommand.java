@@ -5,14 +5,17 @@
 
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
+import com.liferay.osb.patcher.constants.PatcherActionKeys;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.model.PatcherFixPack;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.service.PatcherFixPackLocalService;
 import com.liferay.osb.patcher.util.JenkinsUtil;
 import com.liferay.osb.patcher.web.internal.validator.PatcherFixPackValidator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -49,6 +52,14 @@ public class BuildFixPacksMVCActionCommand extends BaseMVCActionCommand {
 
 		PatcherFixPack patcherFixPack =
 			_patcherFixPackLocalService.getPatcherFixPack(patcherFixPackId);
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(), patcherFixPack,
+				PatcherActionKeys.BUILD, patcherFixPack.getUserId())) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
 
 		PatcherFixPackValidator patcherFixPackValidator =
 			new PatcherFixPackValidator(

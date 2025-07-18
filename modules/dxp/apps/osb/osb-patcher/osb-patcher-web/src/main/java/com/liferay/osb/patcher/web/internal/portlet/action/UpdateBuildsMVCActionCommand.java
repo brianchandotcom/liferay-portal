@@ -7,11 +7,14 @@ package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.model.PatcherBuild;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.util.PatcherBuildUtil;
 import com.liferay.osb.patcher.web.internal.validator.PatcherBuildValidator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -46,12 +49,21 @@ public class UpdateBuildsMVCActionCommand extends BaseMVCActionCommand {
 
 		long patcherBuildId = ParamUtil.getLong(
 			actionRequest, "patcherBuildId");
-		int type = ParamUtil.getInteger(actionRequest, "type");
-		String supportTicket = ParamUtil.getString(
-			actionRequest, "supportTicket");
 
 		PatcherBuild patcherBuild = _patcherBuildLocalService.getPatcherBuild(
 			patcherBuildId);
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(), patcherBuild,
+				ActionKeys.UPDATE, themeDisplay.getUserId())) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
+
+		int type = ParamUtil.getInteger(actionRequest, "type");
+		String supportTicket = ParamUtil.getString(
+			actionRequest, "supportTicket");
 
 		PatcherBuildValidator patcherBuildValidator = new PatcherBuildValidator(
 			_portal.getHttpServletRequest(actionRequest));

@@ -5,13 +5,19 @@
 
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
+import com.liferay.osb.patcher.constants.PatcherActionKeys;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.model.PatcherBuild;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.util.PatcherBuildRelUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
@@ -37,14 +43,25 @@ public class EditBuildsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long patcherBuildId = ParamUtil.getLong(
 			renderRequest, "patcherBuildId");
 
 		try {
-			if (PatcherBuildRelUtil.hasParentPatcherBuilds(
-					_patcherBuildLocalService.getPatcherBuild(
-						patcherBuildId))) {
+			PatcherBuild patcherBuild =
+				_patcherBuildLocalService.getPatcherBuild(patcherBuildId);
 
+			if (!PatcherPermission.contains(
+					themeDisplay.getPermissionChecker(), patcherBuild,
+					PatcherActionKeys.EDIT, patcherBuild.getUserId())) {
+
+				throw new PrincipalException.MustHavePermission(
+					themeDisplay.getUserId());
+			}
+
+			if (PatcherBuildRelUtil.hasParentPatcherBuilds(patcherBuild)) {
 				throw new PortalException(
 					"the-action-cannot-be-performed-on-child-builds");
 			}

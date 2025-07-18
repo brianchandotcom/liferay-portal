@@ -7,10 +7,15 @@ package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.exception.NoSuchPatcherFixComponentException;
+import com.liferay.osb.patcher.model.PatcherAccount;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherAccountLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
@@ -36,14 +41,28 @@ public class ViewAccountsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String accountEntryCode = ParamUtil.getString(
 			renderRequest, "accountEntryCode");
 
 		try {
-			_patcherAccountLocalService.getPatcherAccount(accountEntryCode);
+			PatcherAccount patcherAccount =
+				_patcherAccountLocalService.getPatcherAccount(accountEntryCode);
+
+			if (!PatcherPermission.contains(
+					themeDisplay.getPermissionChecker(), patcherAccount, "VIEW",
+					patcherAccount.getUserId())) {
+
+				throw new PrincipalException.MustHavePermission(
+					themeDisplay.getUserId());
+			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchPatcherFixComponentException) {
+			if (exception instanceof NoSuchPatcherFixComponentException ||
+				exception instanceof PrincipalException) {
+
 				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/osb_patcher/views/error.jsp";

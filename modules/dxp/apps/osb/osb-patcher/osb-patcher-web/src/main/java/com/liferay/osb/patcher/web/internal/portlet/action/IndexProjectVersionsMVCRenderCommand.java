@@ -5,9 +5,16 @@
 
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
+import com.liferay.osb.patcher.constants.PatcherActionKeys;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
@@ -27,7 +34,30 @@ public class IndexProjectVersionsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (!PatcherPermission.contains(
+					themeDisplay.getPermissionChecker(), "PROJECT_VERSIONS",
+					PatcherActionKeys.INDEX)) {
+
+				throw new PrincipalException.MustHavePermission(
+					themeDisplay.getUserId());
+			}
+		}
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(renderRequest, exception.getClass());
+
+				return "/osb_patcher/views/error.jsp";
+			}
+
+			throw new PortletException(exception);
+		}
 
 		return "/osb_patcher/views/project_versions/index.jsp";
 	}

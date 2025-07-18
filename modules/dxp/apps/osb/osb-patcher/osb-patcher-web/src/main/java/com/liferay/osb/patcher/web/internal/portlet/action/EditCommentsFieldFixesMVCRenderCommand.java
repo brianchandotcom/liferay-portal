@@ -5,12 +5,18 @@
 
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
+import com.liferay.osb.patcher.constants.PatcherActionKeys;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException;
+import com.liferay.osb.patcher.model.PatcherFix;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherFixLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
@@ -37,13 +43,28 @@ public class EditCommentsFieldFixesMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long patcherFixId = ParamUtil.getLong(renderRequest, "patcherFixId");
 
 		try {
-			_patcherFixLocalService.getPatcherFix(patcherFixId);
+			PatcherFix patcherFix = _patcherFixLocalService.getPatcherFix(
+				patcherFixId);
+
+			if (!PatcherPermission.contains(
+					themeDisplay.getPermissionChecker(), patcherFix,
+					PatcherActionKeys.EDIT_COMMENTS_FIELD,
+					patcherFix.getUserId())) {
+
+				throw new PrincipalException.MustHavePermission(
+					themeDisplay.getUserId());
+			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchPatcherFixPackException) {
+			if (exception instanceof NoSuchPatcherFixPackException ||
+				exception instanceof PrincipalException) {
+
 				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/osb_patcher/views/error.jsp";

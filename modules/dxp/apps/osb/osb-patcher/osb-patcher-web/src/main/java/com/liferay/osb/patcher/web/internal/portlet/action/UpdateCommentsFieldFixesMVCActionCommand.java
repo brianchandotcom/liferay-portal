@@ -5,11 +5,16 @@
 
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
+import com.liferay.osb.patcher.constants.PatcherActionKeys;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherFixLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -35,7 +40,21 @@ public class UpdateCommentsFieldFixesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long patcherFixId = ParamUtil.getLong(actionRequest, "patcherFixId");
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				_patcherFixLocalService.getPatcherFix(patcherFixId),
+				PatcherActionKeys.UPDATE_COMMENTS_FIELD,
+				themeDisplay.getUserId())) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
+
 		String comments = ParamUtil.getString(actionRequest, "comments");
 
 		_patcherFixLocalService.updateComments(patcherFixId, comments);

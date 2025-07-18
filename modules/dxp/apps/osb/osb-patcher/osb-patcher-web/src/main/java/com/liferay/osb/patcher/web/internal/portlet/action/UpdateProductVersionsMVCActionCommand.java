@@ -6,10 +6,15 @@
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherProductVersionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -35,8 +40,22 @@ public class UpdateProductVersionsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long patcherProductVersionId = ParamUtil.getLong(
 			actionRequest, "patcherProductVersionId");
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				_patcherProductVersionLocalService.getPatcherProductVersion(
+					patcherProductVersionId),
+				ActionKeys.UPDATE, themeDisplay.getUserId())) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
+
 		String name = ParamUtil.getString(actionRequest, "name");
 		int fixDeliveryMethod = ParamUtil.getInteger(
 			actionRequest, "fixDeliveryMethod");

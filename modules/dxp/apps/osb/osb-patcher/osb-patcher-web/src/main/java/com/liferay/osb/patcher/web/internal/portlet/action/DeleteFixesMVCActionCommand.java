@@ -6,10 +6,15 @@
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherFixLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -34,7 +39,19 @@ public class DeleteFixesMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long patcherFixId = ParamUtil.getLong(actionRequest, "patcherFixId");
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				_patcherFixLocalService.getPatcherFix(patcherFixId),
+				ActionKeys.DELETE, themeDisplay.getUserId())) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
 
 		_patcherFixLocalService.deletePatcherFix(patcherFixId);
 	}

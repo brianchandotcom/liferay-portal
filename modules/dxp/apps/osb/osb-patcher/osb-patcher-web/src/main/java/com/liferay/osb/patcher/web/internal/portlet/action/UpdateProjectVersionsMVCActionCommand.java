@@ -6,10 +6,15 @@
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherProjectVersionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -35,8 +40,22 @@ public class UpdateProjectVersionsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long patcherProjectVersionId = ParamUtil.getLong(
 			actionRequest, "patcherProjectVersionId");
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				_patcherProjectVersionLocalService.getPatcherProjectVersion(
+					patcherProjectVersionId),
+				ActionKeys.UPDATE, themeDisplay.getUserId())) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
+
 		long patcherProductVersionId = ParamUtil.getLong(
 			actionRequest, "patcherProductVersionId");
 		boolean combinedBranch = ParamUtil.getBoolean(

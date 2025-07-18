@@ -5,11 +5,17 @@
 
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
+import com.liferay.osb.patcher.constants.PatcherActionKeys;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
+import com.liferay.osb.patcher.model.PatcherBuild;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -34,8 +40,23 @@ public class UpdateQaFieldsBuildsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long patcherBuildId = ParamUtil.getLong(
 			actionRequest, "patcherBuildId");
+
+		PatcherBuild patcherBuild = _patcherBuildLocalService.getPatcherBuild(
+			patcherBuildId);
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(), patcherBuild,
+				PatcherActionKeys.UPDATE_QA_FIELDS, patcherBuild.getUserId())) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
+
 		String qaComments = ParamUtil.getString(actionRequest, "qaComments");
 		int qaStatus = ParamUtil.getInteger(actionRequest, "qaStatus");
 

@@ -10,6 +10,7 @@ import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.model.PatcherFix;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.service.PatcherFixLocalService;
 import com.liferay.osb.patcher.service.PatcherFixPackLocalService;
@@ -22,6 +23,8 @@ import com.liferay.osb.patcher.web.internal.validator.PatcherFixValidator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -59,13 +62,22 @@ public class UpdateFixesMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		long patcherFixId = ParamUtil.getLong(actionRequest, "patcherFixId");
+
+		PatcherFix patcherFix = _patcherFixLocalService.getPatcherFix(
+			patcherFixId);
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(), patcherFix,
+				ActionKeys.UPDATE, themeDisplay.getUserId())) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
+
 		String committish = ParamUtil.getString(actionRequest, "committish");
 		String gitRemoteURL = ParamUtil.getString(
 			actionRequest, "gitRemoteURL");
 		boolean workaround = ParamUtil.getBoolean(actionRequest, "workaround");
-
-		PatcherFix patcherFix = _patcherFixLocalService.getPatcherFix(
-			patcherFixId);
 
 		PatcherFixValidator patcherFixValidator = new PatcherFixValidator(
 			_portal.getHttpServletRequest(actionRequest));

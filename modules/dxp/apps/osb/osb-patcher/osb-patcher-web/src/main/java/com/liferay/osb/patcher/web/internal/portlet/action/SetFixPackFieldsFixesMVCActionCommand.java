@@ -5,16 +5,21 @@
 
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
+import com.liferay.osb.patcher.constants.PatcherActionKeys;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.model.PatcherFix;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherFixLocalService;
 import com.liferay.osb.patcher.service.PatcherFixPackLocalService;
 import com.liferay.osb.patcher.web.internal.validator.PatcherFixValidator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -42,7 +47,23 @@ public class SetFixPackFieldsFixesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long patcherFixId = ParamUtil.getLong(actionRequest, "patcherFixId");
+
+		PatcherFix patcherFix = _patcherFixLocalService.getPatcherFix(
+			patcherFixId);
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(), patcherFix,
+				PatcherActionKeys.SET_FIX_PACK_FIELDS,
+				patcherFix.getUserId())) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
+
 		String dependencies = ParamUtil.getString(
 			actionRequest, "dependencies");
 		int fixPackStatus = ParamUtil.getInteger(
@@ -51,9 +72,6 @@ public class SetFixPackFieldsFixesMVCActionCommand
 			actionRequest, "requirements");
 		Set<Long> patcherFixPackIds = SetUtil.fromArray(
 			ParamUtil.getLongValues(actionRequest, "patcherFixPackIds"));
-
-		PatcherFix patcherFix = _patcherFixLocalService.getPatcherFix(
-			patcherFixId);
 
 		PatcherFixValidator patcherFixValidator = new PatcherFixValidator(
 			_portal.getHttpServletRequest(actionRequest));

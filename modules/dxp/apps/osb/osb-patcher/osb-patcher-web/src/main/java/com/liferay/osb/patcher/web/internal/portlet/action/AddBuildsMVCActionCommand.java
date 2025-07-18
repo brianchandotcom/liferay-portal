@@ -10,6 +10,7 @@ import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.constants.PatcherProductVersionConstants;
 import com.liferay.osb.patcher.model.PatcherAccount;
 import com.liferay.osb.patcher.model.PatcherBuild;
+import com.liferay.osb.patcher.permission.resource.PatcherPermission;
 import com.liferay.osb.patcher.service.PatcherAccountLocalService;
 import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.util.PatcherBuildUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,6 +56,13 @@ public class AddBuildsMVCActionCommand extends BaseMVCActionCommand {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (!PatcherPermission.contains(
+				themeDisplay.getPermissionChecker(), "BUILDS", "ADD")) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId());
+		}
 
 		long patcherProductVersionId = ParamUtil.getLong(
 			actionRequest, "patcherProductVersionId");

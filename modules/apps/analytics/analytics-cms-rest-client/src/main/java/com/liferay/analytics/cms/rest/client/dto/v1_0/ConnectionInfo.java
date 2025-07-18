@@ -25,31 +25,6 @@ public class ConnectionInfo implements Cloneable, Serializable {
 		return ConnectionInfoSerDes.toDTO(json);
 	}
 
-	public String getAnalyticsSettingsPortletURL() {
-		return analyticsSettingsPortletURL;
-	}
-
-	public void setAnalyticsSettingsPortletURL(
-		String analyticsSettingsPortletURL) {
-
-		this.analyticsSettingsPortletURL = analyticsSettingsPortletURL;
-	}
-
-	public void setAnalyticsSettingsPortletURL(
-		UnsafeSupplier<String, Exception>
-			analyticsSettingsPortletURLUnsafeSupplier) {
-
-		try {
-			analyticsSettingsPortletURL =
-				analyticsSettingsPortletURLUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String analyticsSettingsPortletURL;
-
 	public Boolean getConnectedToAnalyticsCloud() {
 		return connectedToAnalyticsCloud;
 	}
@@ -116,32 +91,6 @@ public class ConnectionInfo implements Cloneable, Serializable {
 	}
 
 	protected Boolean isAdmin;
-
-	public String getSiteEditDepotEntryDepotAdminPortletURL() {
-		return siteEditDepotEntryDepotAdminPortletURL;
-	}
-
-	public void setSiteEditDepotEntryDepotAdminPortletURL(
-		String siteEditDepotEntryDepotAdminPortletURL) {
-
-		this.siteEditDepotEntryDepotAdminPortletURL =
-			siteEditDepotEntryDepotAdminPortletURL;
-	}
-
-	public void setSiteEditDepotEntryDepotAdminPortletURL(
-		UnsafeSupplier<String, Exception>
-			siteEditDepotEntryDepotAdminPortletURLUnsafeSupplier) {
-
-		try {
-			siteEditDepotEntryDepotAdminPortletURL =
-				siteEditDepotEntryDepotAdminPortletURLUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String siteEditDepotEntryDepotAdminPortletURL;
 
 	public Boolean getSiteSyncedToAnalyticsCloud() {
 		return siteSyncedToAnalyticsCloud;

@@ -46,20 +46,6 @@ public class ConnectionInfoSerDes {
 
 		sb.append("{");
 
-		if (connectionInfo.getAnalyticsSettingsPortletURL() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"analyticsSettingsPortletURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(connectionInfo.getAnalyticsSettingsPortletURL()));
-
-			sb.append("\"");
-		}
-
 		if (connectionInfo.getConnectedToAnalyticsCloud() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -88,25 +74,6 @@ public class ConnectionInfoSerDes {
 			sb.append("\"isAdmin\": ");
 
 			sb.append(connectionInfo.getIsAdmin());
-		}
-
-		if (connectionInfo.getSiteEditDepotEntryDepotAdminPortletURL() !=
-				null) {
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"siteEditDepotEntryDepotAdminPortletURL\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				_escape(
-					connectionInfo.
-						getSiteEditDepotEntryDepotAdminPortletURL()));
-
-			sb.append("\"");
 		}
 
 		if (connectionInfo.getSiteSyncedToAnalyticsCloud() != null) {
@@ -138,16 +105,6 @@ public class ConnectionInfoSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (connectionInfo.getAnalyticsSettingsPortletURL() == null) {
-			map.put("analyticsSettingsPortletURL", null);
-		}
-		else {
-			map.put(
-				"analyticsSettingsPortletURL",
-				String.valueOf(
-					connectionInfo.getAnalyticsSettingsPortletURL()));
-		}
-
 		if (connectionInfo.getConnectedToAnalyticsCloud() == null) {
 			map.put("connectedToAnalyticsCloud", null);
 		}
@@ -171,19 +128,6 @@ public class ConnectionInfoSerDes {
 		}
 		else {
 			map.put("isAdmin", String.valueOf(connectionInfo.getIsAdmin()));
-		}
-
-		if (connectionInfo.getSiteEditDepotEntryDepotAdminPortletURL() ==
-				null) {
-
-			map.put("siteEditDepotEntryDepotAdminPortletURL", null);
-		}
-		else {
-			map.put(
-				"siteEditDepotEntryDepotAdminPortletURL",
-				String.valueOf(
-					connectionInfo.
-						getSiteEditDepotEntryDepotAdminPortletURL()));
 		}
 
 		if (connectionInfo.getSiteSyncedToAnalyticsCloud() == null) {
@@ -214,12 +158,7 @@ public class ConnectionInfoSerDes {
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
 			if (Objects.equals(
-					jsonParserFieldName, "analyticsSettingsPortletURL")) {
-
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "connectedToAnalyticsCloud")) {
+					jsonParserFieldName, "connectedToAnalyticsCloud")) {
 
 				return false;
 			}
@@ -227,12 +166,6 @@ public class ConnectionInfoSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "isAdmin")) {
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"siteEditDepotEntryDepotAdminPortletURL")) {
-
 				return false;
 			}
 			else if (Objects.equals(
@@ -250,15 +183,7 @@ public class ConnectionInfoSerDes {
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(
-					jsonParserFieldName, "analyticsSettingsPortletURL")) {
-
-				if (jsonParserFieldValue != null) {
-					connectionInfo.setAnalyticsSettingsPortletURL(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "connectedToAnalyticsCloud")) {
+					jsonParserFieldName, "connectedToAnalyticsCloud")) {
 
 				if (jsonParserFieldValue != null) {
 					connectionInfo.setConnectedToAnalyticsCloud(
@@ -274,15 +199,6 @@ public class ConnectionInfoSerDes {
 			else if (Objects.equals(jsonParserFieldName, "isAdmin")) {
 				if (jsonParserFieldValue != null) {
 					connectionInfo.setIsAdmin((Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"siteEditDepotEntryDepotAdminPortletURL")) {
-
-				if (jsonParserFieldValue != null) {
-					connectionInfo.setSiteEditDepotEntryDepotAdminPortletURL(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

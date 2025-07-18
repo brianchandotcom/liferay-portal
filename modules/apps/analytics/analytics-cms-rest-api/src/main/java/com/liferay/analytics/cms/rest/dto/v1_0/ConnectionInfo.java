@@ -47,51 +47,6 @@ public class ConnectionInfo implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public String getAnalyticsSettingsPortletURL() {
-		if (_analyticsSettingsPortletURLSupplier != null) {
-			analyticsSettingsPortletURL =
-				_analyticsSettingsPortletURLSupplier.get();
-
-			_analyticsSettingsPortletURLSupplier = null;
-		}
-
-		return analyticsSettingsPortletURL;
-	}
-
-	public void setAnalyticsSettingsPortletURL(
-		String analyticsSettingsPortletURL) {
-
-		this.analyticsSettingsPortletURL = analyticsSettingsPortletURL;
-
-		_analyticsSettingsPortletURLSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setAnalyticsSettingsPortletURL(
-		UnsafeSupplier<String, Exception>
-			analyticsSettingsPortletURLUnsafeSupplier) {
-
-		_analyticsSettingsPortletURLSupplier = () -> {
-			try {
-				return analyticsSettingsPortletURLUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String analyticsSettingsPortletURL;
-
-	@JsonIgnore
-	private Supplier<String> _analyticsSettingsPortletURLSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getConnectedToAnalyticsCloud() {
 		if (_connectedToAnalyticsCloudSupplier != null) {
 			connectedToAnalyticsCloud =
@@ -219,53 +174,6 @@ public class ConnectionInfo implements Serializable {
 	private Supplier<Boolean> _isAdminSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public String getSiteEditDepotEntryDepotAdminPortletURL() {
-		if (_siteEditDepotEntryDepotAdminPortletURLSupplier != null) {
-			siteEditDepotEntryDepotAdminPortletURL =
-				_siteEditDepotEntryDepotAdminPortletURLSupplier.get();
-
-			_siteEditDepotEntryDepotAdminPortletURLSupplier = null;
-		}
-
-		return siteEditDepotEntryDepotAdminPortletURL;
-	}
-
-	public void setSiteEditDepotEntryDepotAdminPortletURL(
-		String siteEditDepotEntryDepotAdminPortletURL) {
-
-		this.siteEditDepotEntryDepotAdminPortletURL =
-			siteEditDepotEntryDepotAdminPortletURL;
-
-		_siteEditDepotEntryDepotAdminPortletURLSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setSiteEditDepotEntryDepotAdminPortletURL(
-		UnsafeSupplier<String, Exception>
-			siteEditDepotEntryDepotAdminPortletURLUnsafeSupplier) {
-
-		_siteEditDepotEntryDepotAdminPortletURLSupplier = () -> {
-			try {
-				return siteEditDepotEntryDepotAdminPortletURLUnsafeSupplier.
-					get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String siteEditDepotEntryDepotAdminPortletURL;
-
-	@JsonIgnore
-	private Supplier<String> _siteEditDepotEntryDepotAdminPortletURLSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSiteSyncedToAnalyticsCloud() {
 		if (_siteSyncedToAnalyticsCloudSupplier != null) {
 			siteSyncedToAnalyticsCloud =
@@ -337,22 +245,6 @@ public class ConnectionInfo implements Serializable {
 
 		sb.append("{");
 
-		String analyticsSettingsPortletURL = getAnalyticsSettingsPortletURL();
-
-		if (analyticsSettingsPortletURL != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"analyticsSettingsPortletURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(analyticsSettingsPortletURL));
-
-			sb.append("\"");
-		}
-
 		Boolean connectedToAnalyticsCloud = getConnectedToAnalyticsCloud();
 
 		if (connectedToAnalyticsCloud != null) {
@@ -387,23 +279,6 @@ public class ConnectionInfo implements Serializable {
 			sb.append("\"isAdmin\": ");
 
 			sb.append(isAdmin);
-		}
-
-		String siteEditDepotEntryDepotAdminPortletURL =
-			getSiteEditDepotEntryDepotAdminPortletURL();
-
-		if (siteEditDepotEntryDepotAdminPortletURL != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"siteEditDepotEntryDepotAdminPortletURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(siteEditDepotEntryDepotAdminPortletURL));
-
-			sb.append("\"");
 		}
 
 		Boolean siteSyncedToAnalyticsCloud = getSiteSyncedToAnalyticsCloud();

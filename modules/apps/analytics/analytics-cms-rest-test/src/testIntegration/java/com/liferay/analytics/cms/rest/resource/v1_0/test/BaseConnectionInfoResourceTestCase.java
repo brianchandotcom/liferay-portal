@@ -165,19 +165,11 @@ public abstract class BaseConnectionInfoResourceTestCase {
 
 		ConnectionInfo connectionInfo = randomConnectionInfo();
 
-		connectionInfo.setAnalyticsSettingsPortletURL(regex);
-		connectionInfo.setSiteEditDepotEntryDepotAdminPortletURL(regex);
-
 		String json = ConnectionInfoSerDes.toJSON(connectionInfo);
 
 		Assert.assertFalse(json.contains(regex));
 
 		connectionInfo = ConnectionInfoSerDes.toDTO(json);
-
-		Assert.assertEquals(
-			regex, connectionInfo.getAnalyticsSettingsPortletURL());
-		Assert.assertEquals(
-			regex, connectionInfo.getSiteEditDepotEntryDepotAdminPortletURL());
 	}
 
 	@Test
@@ -272,16 +264,6 @@ public abstract class BaseConnectionInfoResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals(
-					"analyticsSettingsPortletURL", additionalAssertFieldName)) {
-
-				if (connectionInfo.getAnalyticsSettingsPortletURL() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
 					"connectedToAnalyticsCloud", additionalAssertFieldName)) {
 
 				if (connectionInfo.getConnectedToAnalyticsCloud() == null) {
@@ -301,19 +283,6 @@ public abstract class BaseConnectionInfoResourceTestCase {
 
 			if (Objects.equals("isAdmin", additionalAssertFieldName)) {
 				if (connectionInfo.getIsAdmin() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"siteEditDepotEntryDepotAdminPortletURL",
-					additionalAssertFieldName)) {
-
-				if (connectionInfo.
-						getSiteEditDepotEntryDepotAdminPortletURL() == null) {
-
 					valid = false;
 				}
 
@@ -450,19 +419,6 @@ public abstract class BaseConnectionInfoResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals(
-					"analyticsSettingsPortletURL", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						connectionInfo1.getAnalyticsSettingsPortletURL(),
-						connectionInfo2.getAnalyticsSettingsPortletURL())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
 					"connectedToAnalyticsCloud", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
@@ -490,22 +446,6 @@ public abstract class BaseConnectionInfoResourceTestCase {
 				if (!Objects.deepEquals(
 						connectionInfo1.getIsAdmin(),
 						connectionInfo2.getIsAdmin())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"siteEditDepotEntryDepotAdminPortletURL",
-					additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						connectionInfo1.
-							getSiteEditDepotEntryDepotAdminPortletURL(),
-						connectionInfo2.
-							getSiteEditDepotEntryDepotAdminPortletURL())) {
 
 					return false;
 				}
@@ -634,52 +574,6 @@ public abstract class BaseConnectionInfoResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("analyticsSettingsPortletURL")) {
-			Object object = connectionInfo.getAnalyticsSettingsPortletURL();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("connectedToAnalyticsCloud")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -693,53 +587,6 @@ public abstract class BaseConnectionInfoResourceTestCase {
 		if (entityFieldName.equals("isAdmin")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("siteEditDepotEntryDepotAdminPortletURL")) {
-			Object object =
-				connectionInfo.getSiteEditDepotEntryDepotAdminPortletURL();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
 		}
 
 		if (entityFieldName.equals("siteSyncedToAnalyticsCloud")) {
@@ -792,13 +639,9 @@ public abstract class BaseConnectionInfoResourceTestCase {
 	protected ConnectionInfo randomConnectionInfo() throws Exception {
 		return new ConnectionInfo() {
 			{
-				analyticsSettingsPortletURL = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				connectedToAnalyticsCloud = RandomTestUtil.randomBoolean();
 				connectedToSpace = RandomTestUtil.randomBoolean();
 				isAdmin = RandomTestUtil.randomBoolean();
-				siteEditDepotEntryDepotAdminPortletURL = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				siteSyncedToAnalyticsCloud = RandomTestUtil.randomBoolean();
 			}
 		};

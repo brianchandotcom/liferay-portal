@@ -161,6 +161,17 @@ function SubscribeButton({
 				}
 				else {
 					setSubscribed((subscribed) => !subscribed);
+
+					openToast({
+						message: subscribed
+							? Liferay.Language.get(
+									'you-have-successfully-unsubscribed-from-comments'
+								)
+							: Liferay.Language.get(
+									'you-have-successfully-subscribed-to-comments'
+								),
+						type: 'success',
+					});
 				}
 			}}
 			size="sm"

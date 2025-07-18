@@ -38,9 +38,9 @@ public class AllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	@Override
 	protected UnsafeRunnable<Exception> getInsertDataUnsafeRunnable() {
 		return () -> {
-			_insertEntry(_companyId1);
-			_insertEntry(_companyId1);
-			_insertEntry(_companyId2);
+			_insert(_companyId1);
+			_insert(_companyId1);
+			_insert(_companyId2);
 		};
 	}
 
@@ -87,7 +87,7 @@ public class AllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			"Company", "companyId");
 	}
 
-	private void _insertEntry(long companyId) throws Exception {
+	private void _insert(long companyId) throws Exception {
 		db.runSQL(
 			connection,
 			StringBundler.concat(

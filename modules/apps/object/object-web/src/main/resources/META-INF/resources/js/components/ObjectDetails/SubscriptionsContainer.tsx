@@ -14,6 +14,8 @@ import React from 'react';
 import './SubscriptionsContainer.scss';
 
 interface SubscriptionsContainerProps {
+	hasUpdateObjectDefinitionPermission: boolean;
+	isLinkedObjectDefinition?: boolean;
 	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
@@ -29,14 +31,20 @@ const notificationsTemplatesURL = createPortletURL(
 );
 
 export function SubscriptionsContainer({
+	hasUpdateObjectDefinitionPermission,
+	isLinkedObjectDefinition,
 	onSubmit,
 	setValues,
 	values,
 }: SubscriptionsContainerProps) {
+	const disabled =
+		!hasUpdateObjectDefinitionPermission || isLinkedObjectDefinition;
+
 	return (
 		<div className="lfr-objects__subscriptions-container">
 			<ClayForm.Group>
 				<Toggle
+					disabled={disabled}
 					label={Liferay.Language.get('enable-entry-subscriptions')}
 					name="enableObjectEntrySubscription"
 					onBlur={(event) => {

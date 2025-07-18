@@ -23,6 +23,7 @@ import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {nonRelationshipObjectFieldsInfo} from '../types';
 
 import './RightSidebarObjectDefinitionDetails.scss';
+import {SubscriptionsContainer} from '../../ObjectDetails/SubscriptionsContainer';
 
 interface RightSidebarObjectDefinitionDetailsProps {
 	companies: Scope[];
@@ -208,6 +209,10 @@ export function RightSidebarObjectDefinitionDetails({
 			(!values.modifiable && values.system)
 		);
 
+	const showSubscriptionSection =
+		Liferay.FeatureFlags['LPD-42577'] &&
+		!(!values.modifiable && values.system);
+
 	return (
 		<>
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-details">
@@ -326,6 +331,23 @@ export function RightSidebarObjectDefinitionDetails({
 						}
 						onSubmit={onSubmit}
 						setErrors={setBackEndErrors}
+						setValues={setValues}
+						values={values}
+					/>
+				</div>
+			)}
+
+			{showSubscriptionSection && (
+				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
+					<SubscriptionsContainer
+						hasUpdateObjectDefinitionPermission={
+							!!values.actions?.update
+						}
+						isLinkedObjectDefinition={
+							selectedObjectDefinitionNode?.data
+								?.linkedObjectDefinition ?? false
+						}
+						onSubmit={onSubmit}
 						setValues={setValues}
 						values={values}
 					/>

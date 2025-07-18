@@ -33,7 +33,7 @@ public class JWTAssertAuthorizationGrantTest
 	extends BaseAuthorizationGrantTestCase {
 
 	@Test
-	public void testGrantWithCorrectAudience() throws Exception {
+	public void testGrantWithCorrectAudience1() throws Exception {
 		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
 
 		JWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
@@ -48,9 +48,7 @@ public class JWTAssertAuthorizationGrantTest
 	}
 
 	@Test
-	public void testGrantWithCorrectAudienceAndCheckSubsWithEmailAddressConfiguration()
-		throws Exception {
-
+	public void testGrantWithCorrectAudience2() throws Exception {
 		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
 
 		JWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
@@ -64,13 +62,12 @@ public class JWTAssertAuthorizationGrantTest
 
 		Assert.assertTrue(Validator.isNotNull(accessToken));
 
-		String[] chunks = accessToken.split("\\.");
+		String[] parts = accessToken.split("\\.");
 
 		Base64.Decoder decoder = Base64.getUrlDecoder();
 
-		String payload = new String(decoder.decode(chunks[1]));
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(payload);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			new String(decoder.decode(parts[1])));
 
 		Assert.assertEquals(user.getUserId(), jsonObject.getLong("sub"));
 		Assert.assertEquals(

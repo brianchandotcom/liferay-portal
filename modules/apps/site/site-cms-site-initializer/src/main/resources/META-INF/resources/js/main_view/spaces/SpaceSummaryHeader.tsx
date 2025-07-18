@@ -15,7 +15,7 @@ export enum SpaceSummaryHeaderActions {
 	OPEN_MEMBERS_MODAL = 'open-members-modal',
 }
 
-type SpaceMembersModalPropsType = {
+type SpaceModalPropsType = {
 	action: SpaceSummaryHeaderActions;
 	assetLibraryCreatorUserId: string;
 	assetLibraryId: string;
@@ -23,18 +23,18 @@ type SpaceMembersModalPropsType = {
 
 interface SpaceSummaryHeaderProps {
 	label: string;
-	spaceMembersModalProps?: SpaceMembersModalPropsType;
+	spaceModalProps?: SpaceModalPropsType;
 	title: string;
 	url: string;
 }
 
 export default function SpaceSummaryHeader({
 	label,
-	spaceMembersModalProps,
+	spaceModalProps,
 	title,
 	url,
 }: SpaceSummaryHeaderProps) {
-	const openMembersModal = (props: SpaceMembersModalPropsType) => {
+	const openMembersModal = (props: SpaceModalPropsType) => {
 		const {assetLibraryCreatorUserId, assetLibraryId} = props;
 
 		const loadData = () => window.location.reload();
@@ -49,10 +49,10 @@ export default function SpaceSummaryHeader({
 
 	const getActionCallback = () => {
 		if (
-			spaceMembersModalProps?.action ===
+			spaceModalProps?.action ===
 			SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL
 		) {
-			return openMembersModal(spaceMembersModalProps);
+			return openMembersModal(spaceModalProps);
 		}
 	};
 
@@ -60,7 +60,7 @@ export default function SpaceSummaryHeader({
 		<div className="align-items-center d-flex justify-content-between">
 			<h2 className="font-weight-semi-bold m-0 text-4">{title}</h2>
 
-			{spaceMembersModalProps ? (
+			{spaceModalProps ? (
 				<ClayButton
 					displayType="link"
 					onClick={getActionCallback}

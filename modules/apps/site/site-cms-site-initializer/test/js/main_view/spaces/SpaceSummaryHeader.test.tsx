@@ -45,7 +45,7 @@ describe('SpaceSummaryHeader', () => {
 	it('renders a button instead of a link when modal props are provided', () => {
 		const props = {
 			...defaultProps,
-			spaceMembersModalProps: {
+			spaceModalProps: {
 				action: SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL,
 				assetLibraryCreatorUserId: '1',
 				assetLibraryId: '2',
@@ -64,7 +64,7 @@ describe('SpaceSummaryHeader', () => {
 	});
 
 	it('calls manageMembersAction when the button is clicked', async () => {
-		const spaceMembersModalProps = {
+		const spaceModalProps = {
 			action: SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL,
 			assetLibraryCreatorUserId: '123',
 			assetLibraryId: '456',
@@ -72,7 +72,7 @@ describe('SpaceSummaryHeader', () => {
 
 		const props = {
 			...defaultProps,
-			spaceMembersModalProps,
+			spaceModalProps,
 		};
 
 		render(<SpaceSummaryHeader {...props} />);
@@ -85,8 +85,8 @@ describe('SpaceSummaryHeader', () => {
 		expect(manageMembersAction).toHaveBeenCalledWith(
 			{
 				assetLibraryCreatorUserId:
-					spaceMembersModalProps.assetLibraryCreatorUserId,
-				assetLibraryId: spaceMembersModalProps.assetLibraryId,
+					spaceModalProps.assetLibraryCreatorUserId,
+				assetLibraryId: spaceModalProps.assetLibraryId,
 				title: defaultProps.title,
 			},
 			expect.any(Function)
@@ -96,7 +96,7 @@ describe('SpaceSummaryHeader', () => {
 	it('does not call manageMembersAction if action is not "open-members-modal"', async () => {
 		const props = {
 			...defaultProps,
-			spaceMembersModalProps: {
+			spaceModalProps: {
 				action: 'some-other-action' as any,
 				assetLibraryCreatorUserId: '1',
 				assetLibraryId: '2',

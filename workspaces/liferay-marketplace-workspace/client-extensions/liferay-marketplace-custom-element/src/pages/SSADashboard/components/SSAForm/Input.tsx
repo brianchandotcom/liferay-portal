@@ -5,9 +5,10 @@
 
 import Select from '@clayui/form/lib/Select';
 import Form from '../../../../components/MarketplaceForm';
-import {SectionProps} from './Section';
+import {FieldProps} from './FormSection';
 
-const InputType = ({
+const Input = ({
+	className,
 	disabled = false,
 	error,
 	handleChange,
@@ -15,19 +16,17 @@ const InputType = ({
 	maxLength,
 	options,
 	placeholder,
-	required = false,
 	title,
 	type,
 	value,
-}: SectionProps) => {
+}: FieldProps) => {
 	if (type === 'select') {
 		return (
 			<>
 				<Select
-					className="marketplace-form-select bg-white"
+					className={`${className} marketplace-form-select`}
 					disabled={disabled}
 					name={title}
-					required={required}
 					onChange={(event) =>
 						handleChange({label, value: event.target.value})
 					}
@@ -56,9 +55,7 @@ const InputType = ({
 				placeholder={placeholder}
 				maxLength={maxLength || undefined}
 				value={value}
-
-				// required={required}
-
+				className={`${className} marketplace-form-select`}
 				onChange={(event) =>
 					handleChange({label, value: event.target.value})
 				}
@@ -68,4 +65,4 @@ const InputType = ({
 	);
 };
 
-export {InputType};
+export {Input};

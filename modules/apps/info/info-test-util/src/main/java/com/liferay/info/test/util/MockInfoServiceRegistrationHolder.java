@@ -14,6 +14,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
+import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.info.test.util.info.item.creator.MockInfoItemCreator;
 import com.liferay.info.test.util.info.item.provider.MockInfoItemCapabilitiesProvider;
@@ -23,6 +24,7 @@ import com.liferay.info.test.util.info.item.provider.MockInfoItemFormProvider;
 import com.liferay.info.test.util.info.item.provider.MockInfoItemObjectProvider;
 import com.liferay.info.test.util.info.item.provider.MockInfoItemPermissionProvider;
 import com.liferay.info.test.util.info.item.provider.MockInfoPermissionProvider;
+import com.liferay.info.test.util.info.item.renderer.MockInfoItemRenderer;
 import com.liferay.info.test.util.layout.display.page.MockObjectLayoutDisplayPageObjectProvider;
 import com.liferay.info.test.util.layout.display.page.MockObjectLayoutDisplayPageProvider;
 import com.liferay.info.test.util.model.MockObject;
@@ -60,6 +62,7 @@ public class MockInfoServiceRegistrationHolder implements AutoCloseable {
 			mockObject);
 		_mockInfoItemPermissionProvider = new MockInfoItemPermissionProvider(
 			mockObject);
+		_mockInfoItemRenderer = new MockInfoItemRenderer(mockObject);
 		_mockInfoPermissionProvider = new MockInfoPermissionProvider(
 			mockObject);
 
@@ -111,6 +114,11 @@ public class MockInfoServiceRegistrationHolder implements AutoCloseable {
 			bundleContext.registerService(
 				InfoItemPermissionProvider.class,
 				_mockInfoItemPermissionProvider,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"item.class.name", MockObject.class.getName()
+				).build()),
+			bundleContext.registerService(
+				InfoItemRenderer.class, _mockInfoItemRenderer,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.class.name", MockObject.class.getName()
 				).build()),
@@ -206,6 +214,7 @@ public class MockInfoServiceRegistrationHolder implements AutoCloseable {
 	private final MockInfoItemObjectProvider _mockInfoItemObjectProvider;
 	private final MockInfoItemPermissionProvider
 		_mockInfoItemPermissionProvider;
+	private final MockInfoItemRenderer _mockInfoItemRenderer;
 	private final MockInfoPermissionProvider _mockInfoPermissionProvider;
 	private final MockObjectLayoutDisplayPageObjectProvider
 		_mockObjectLayoutDisplayPageObjectProvider;

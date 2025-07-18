@@ -34,6 +34,7 @@ import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -187,6 +188,8 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.test.util.TemplateTestUtil;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -2524,6 +2527,52 @@ public class RenderLayoutStructureTagTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
 
+			TemplateEntry templateEntry = TemplateTestUtil.addTemplateEntry(
+				MockObject.class.getName(), "0", RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				StringBundler.concat(
+					"<#if (", infoField.getName(), ".getData())??><p>${",
+					infoField.getName(), ".getData()}</p></#if>"),
+				_serviceContext);
+
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"itemSelector",
+						JSONUtil.put(
+							"className", MockObject.class.getName()
+						).put(
+							"classNameId",
+							_portal.getClassNameId(MockObject.class)
+						).put(
+							"classPK", mockObject.getClassPK()
+						).put(
+							"classTypeId", "0"
+						).put(
+							"externalReferenceCode",
+							RandomTestUtil.randomString()
+						).put(
+							"template",
+							JSONUtil.put(
+								"infoItemRendererKey",
+								"com.liferay.template.internal.info.item." +
+									"renderer.TemplateInfoItemTemplatedRenderer"
+							).put(
+								"templateKey",
+								String.valueOf(
+									templateEntry.getTemplateEntryId())
+							)
+						))
+				).toString(),
+				_fragmentRendererRegistry.getFragmentRenderer(
+					"com.liferay.fragment.internal.renderer." +
+						"ContentObjectFragmentRenderer"),
+				draftLayout, null, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+
 			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 			String content = _getRenderLayoutHTML(layout);
@@ -2536,6 +2585,10 @@ public class RenderLayoutStructureTagTest {
 				content,
 				StringUtil.contains(
 					content, ">" + value + "</h1>", StringPool.BLANK));
+			Assert.assertTrue(
+				content,
+				StringUtil.contains(
+					content, "<p>" + value + "</p>", StringPool.BLANK));
 		}
 	}
 
@@ -3639,6 +3692,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private FragmentRendererRegistry _fragmentRendererRegistry;
 
 	@DeleteAfterTestRun
 	private Group _group;

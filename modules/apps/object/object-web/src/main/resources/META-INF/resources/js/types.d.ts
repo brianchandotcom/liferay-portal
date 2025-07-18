@@ -204,6 +204,7 @@ interface ObjectDefinition {
 	enableObjectEntryDraft: boolean;
 	enableObjectEntryHistory: boolean;
 	enableObjectEntrySchedule: boolean;
+	enableObjectEntrySubscription: boolean;
 	externalReferenceCode: string;
 	friendlyURLSeparator: string;
 	id: number;

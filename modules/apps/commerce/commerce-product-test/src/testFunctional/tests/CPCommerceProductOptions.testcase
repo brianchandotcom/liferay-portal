@@ -1967,10 +1967,10 @@ definition {
 
 			for (var valueName : list "Minimum,Maximum,Multiple") {
 				AssertTextEquals.assertPartialText(
-					key_alertMessage = "Please enter a value greater than 0.",
+					key_alertMessage = "Please enter a value greater than or equal to 0.000001.",
 					key_fieldLabel = ${valueName},
 					locator1 = "Message#ERROR_WITH_SPECIFIC_ENTRY",
-					value1 = "Please enter a value greater than 0.");
+					value1 = "Please enter a value greater than or equal to 0.000001.");
 			}
 		}
 	}

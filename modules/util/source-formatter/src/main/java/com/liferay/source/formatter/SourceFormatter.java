@@ -1368,7 +1368,7 @@ public class SourceFormatter {
 							"Found formatting issue in SHA ", parts[0], ":\n",
 							"The commit message contains the word \"", keyword,
 							"\", which could reveal potential security ",
-							"vulnerablities. Please see the vulnerability ",
+							"vulnerabilities. Please see the vulnerability ",
 							"keywords that are specified in source-formatter.",
 							"properties in the liferay-portal repository."));
 				}

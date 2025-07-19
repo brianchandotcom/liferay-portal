@@ -385,18 +385,17 @@ public class AutoCloseUtil {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<h1>The pull request tester is still running.</h1><p>");
-		sb.append("Please wait until you get the <i><b>final report</b>");
-		sb.append("</i> before running 'ci:retest'.</p><p>See this link ");
-		sb.append("to check on the status of your test:</p><ul><li><a ");
-		sb.append("href=\"");
+		sb.append("Please wait until you get the <i><b>final report</b></i> ");
+		sb.append("before running 'ci:retest'.</p><p>See this link to check ");
+		sb.append("on the status of your test:</p><ul><li><a href=\"");
 		sb.append(topLevelBuild.getBuildURL());
 		sb.append("\">");
 		sb.append(topLevelBuild.getJobName());
 		sb.append("</a></li></ul>@");
 		sb.append(gitHubSenderUsername);
-		sb.append("</p><hr /><h1>However, the pull request was closed.<");
-		sb.append("/h1><p>The pull request was closed due to the ");
-		sb.append("following integration/unit test failures:</p><ul>");
+		sb.append("</p><hr /><h1>However, the pull request was closed.</h1><p");
+		sb.append(">The pull request was closed due to the following ");
+		sb.append("integration/unit test failures:</p><ul>");
 
 		for (String jenkinsJobFailureURL : jenkinsJobFailureURLs) {
 			sb.append("<li>");
@@ -404,15 +403,14 @@ public class AutoCloseUtil {
 			sb.append("</li>");
 		}
 
-		sb.append("</ul><p>These test failures are a part of a 'module ");
-		sb.append("group'/'subrepository' that was changed in this pull ");
-		sb.append("request.</p><p auto-close=\"false\"><strong><em>*This ");
-		sb.append("pull will no longer automatically close if this ");
-		sb.append("comment is available. If you believe this is a ");
-		sb.append("mistake please reopen this pull by entering the ");
-		sb.append("following command as a comment.</em></strong></p><pre>");
-		sb.append("ci&#58;reopen</pre><hr /><h3>Critical Failure Details:");
-		sb.append("</h3>");
+		sb.append("</ul><p>These test failures are a part of a 'module group'");
+		sb.append("/'subrepository' that was changed in this pull request.</p");
+		sb.append("><p auto-close=\"false\"><strong><em>*This pull will no ");
+		sb.append("longer automatically close if this comment is available. ");
+		sb.append("If you believe this is a mistake please reopen this pull ");
+		sb.append("by entering the following command as a comment.</em><");
+		sb.append("/strong></p><pre>ci&#58;reopen</pre><hr /><h3>Critical ");
+		sb.append("Failure Details:</h3>");
 
 		try {
 			sb.append(

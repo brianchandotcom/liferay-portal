@@ -174,9 +174,8 @@ public class AutoCloseUtil {
 			sb.append("<h1>The pull request tester is still running.</h1><p>");
 			sb.append("Please wait until you get the <i><b>final report</b><");
 			sb.append("/i> before running 'ci:retest'.</p><p>See this link ");
-			sb.append(
-				"to check on the status of your test:</p><ul><li><a href");
-			sb.append("=\"");
+			sb.append("to check on the status of your test:</p><ul><li><a ");
+			sb.append("href=\"");
 			sb.append(topLevelBuild.getBuildURL());
 			sb.append("\">");
 			sb.append(topLevelBuild.getJobName());

@@ -440,8 +440,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			sb.append(buttonTag.doTagAsString(pageContext));
 
 			sb.append("</div><div class=\"sidebar-body\"><span aria-hidden=\"");
-			sb.append("true\" className=\"loading-animation ");
-			sb.append("loading-animation-sm\" />");
+			sb.append("true\" className=\"loading-animation loading-");
+			sb.append("animation-sm\" />");
 
 			jspWriter.write(sb.toString());
 

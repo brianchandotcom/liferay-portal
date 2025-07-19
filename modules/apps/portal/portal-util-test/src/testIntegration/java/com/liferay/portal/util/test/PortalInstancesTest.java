@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -175,6 +176,15 @@ public class PortalInstancesTest {
 		Assert.assertEquals(
 			_company.getCompanyId(),
 			PortalInstances.getCompanyId(mockHttpServletRequest));
+
+		Assert.assertEquals(
+			_company.getCompanyId(),
+			CompanyThreadLocal.getCompanyId(
+			).longValue());
+
+		Assert.assertEquals(
+			_company.getCompanyId(),
+			mockHttpServletRequest.getAttribute(WebKeys.COMPANY_ID));
 
 		Assert.assertEquals(
 			expectedLayoutSet,

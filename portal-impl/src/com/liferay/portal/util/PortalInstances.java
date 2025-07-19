@@ -96,7 +96,11 @@ public class PortalInstances {
 		}
 
 		if (companyIdObj != null) {
-			return companyIdObj.longValue();
+			long companyId = companyIdObj.longValue();
+
+			CompanyThreadLocal.setCompanyId(companyId);
+
+			return companyId;
 		}
 
 		long companyId = _getCompanyIdByVirtualHosts(

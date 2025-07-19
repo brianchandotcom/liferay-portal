@@ -444,8 +444,6 @@ public class AutoCloseUtil {
 	public static List<AutoCloseRule> getAutoCloseRules(PullRequest pullRequest)
 		throws Exception {
 
-		List<AutoCloseRule> list = new ArrayList<>();
-
 		String propertyNameTemplate = JenkinsResultsParserUtil.combine(
 			"test.batch.names.auto.close[",
 			pullRequest.getGitHubRemoteGitRepositoryName(), "?]");
@@ -470,41 +468,45 @@ public class AutoCloseUtil {
 				gitRepositoryAutoClosePropertyName);
 		}
 
-		if (testBatchNamesAutoClose != null) {
-			if (debug) {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Finding auto-close rules for ",
-						gitRepositoryBranchAutoClosePropertyName, "."));
+		if (testBatchNamesAutoClose == null) {
+			return Collections.emptyList();
+		}
+
+		if (debug) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Finding auto-close rules for ",
+					gitRepositoryBranchAutoClosePropertyName, "."));
+		}
+
+		List<AutoCloseRule> list = new ArrayList<>();
+
+		String[] autoCloseRuleDataArray = StringUtils.split(
+			testBatchNamesAutoClose, ",");
+
+		for (String autoCloseRuleData : autoCloseRuleDataArray) {
+			if (autoCloseRuleData.startsWith("#") ||
+				autoCloseRuleData.startsWith("static_")) {
+
+				continue;
 			}
 
-			String[] autoCloseRuleDataArray = StringUtils.split(
-				testBatchNamesAutoClose, ",");
-
-			for (String autoCloseRuleData : autoCloseRuleDataArray) {
-				if (autoCloseRuleData.startsWith("#") ||
-					autoCloseRuleData.startsWith("static_")) {
-
-					continue;
-				}
-
-				AutoCloseRule newAutoCloseRule = new AutoCloseRule(
-					autoCloseRuleData);
-
-				if (debug) {
-					System.out.println("\t" + newAutoCloseRule.toString());
-				}
-
-				list.add(newAutoCloseRule);
-			}
+			AutoCloseRule newAutoCloseRule = new AutoCloseRule(
+				autoCloseRuleData);
 
 			if (debug) {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Finished finding ",
-						gitRepositoryBranchAutoClosePropertyName,
-						" auto-close rules.\n"));
+				System.out.println("\t" + newAutoCloseRule.toString());
 			}
+
+			list.add(newAutoCloseRule);
+		}
+
+		if (debug) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Finished finding ",
+					gitRepositoryBranchAutoClosePropertyName,
+					" auto-close rules.\n"));
 		}
 
 		return list;

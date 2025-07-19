@@ -1007,6 +1007,12 @@ public class TestrayImporter {
 			issuesPropertyElement.addAttribute(
 				"value", testrayCaseResult.getMethodIssues(methodName));
 
+			Element namePropertyElement = detailElement.addElement("property");
+
+			namePropertyElement.addAttribute(
+				"name", "testray.testcase.detail.name");
+			namePropertyElement.addAttribute("value", methodName);
+
 			Element statusPropertyElement = detailElement.addElement(
 				"property");
 
@@ -1014,12 +1020,6 @@ public class TestrayImporter {
 				"name", "testray.testcase.detail.status");
 			statusPropertyElement.addAttribute(
 				"value", testrayCaseResult.getMethodStatus(methodName));
-
-			Element namePropertyElement = detailElement.addElement("property");
-
-			namePropertyElement.addAttribute(
-				"name", "testray.testcase.detail.name");
-			namePropertyElement.addAttribute("value", methodName);
 		}
 	}
 

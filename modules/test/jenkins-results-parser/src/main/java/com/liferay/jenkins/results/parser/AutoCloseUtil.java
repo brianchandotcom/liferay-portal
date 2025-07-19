@@ -376,72 +376,71 @@ public class AutoCloseUtil {
 			}
 		}
 
-		if (!jenkinsJobFailureURLs.isEmpty()) {
-			pullRequest.close();
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("<h1>The pull request tester is still running.</h1><p>");
-			sb.append("Please wait until you get the <i><b>final report</b>");
-			sb.append("</i> before running 'ci:retest'.</p><p>See this link ");
-			sb.append("to check on the status of your test:</p><ul><li><a ");
-			sb.append("href=\"");
-			sb.append(topLevelBuild.getBuildURL());
-			sb.append("\">");
-			sb.append(topLevelBuild.getJobName());
-			sb.append("</a></li></ul>@");
-			sb.append(gitHubSenderUsername);
-			sb.append("</p><hr /><h1>However, the pull request was closed.<");
-			sb.append("/h1><p>The pull request was closed due to the ");
-			sb.append("following integration/unit test failures:</p><ul>");
-
-			for (String jenkinsJobFailureURL : jenkinsJobFailureURLs) {
-				sb.append("<li>");
-				sb.append(jenkinsJobFailureURL);
-				sb.append("</li>");
-			}
-
-			sb.append("</ul><p>These test failures are a part of a 'module ");
-			sb.append("group'/'subrepository' that was changed in this pull ");
-			sb.append("request.</p><p auto-close=\"false\"><strong><em>*This ");
-			sb.append("pull will no longer automatically close if this ");
-			sb.append("comment is available. If you believe this is a ");
-			sb.append("mistake please reopen this pull by entering the ");
-			sb.append("following command as a comment.</em></strong></p><pre>");
-			sb.append("ci&#58;reopen</pre><hr /><h3>Critical Failure Details:");
-			sb.append("</h3>");
-
-			try {
-				sb.append(
-					Dom4JUtil.format(
-						failedDownstreamBuild.getGitHubMessageElement(),
-						false));
-			}
-			catch (Exception exception) {
-				exception.printStackTrace();
-
-				throw exception;
-			}
-
-			if (!_autoCloseGitHubCommentMentionUsernames.isEmpty()) {
-				sb.append("<div>cc");
-
-				for (String autoCloseGithubCommentMentionUsername :
-						_autoCloseGitHubCommentMentionUsernames) {
-
-					sb.append(" @");
-					sb.append(autoCloseGithubCommentMentionUsername);
-				}
-
-				sb.append("</div>");
-			}
-
-			pullRequest.addComment(sb.toString());
-
-			return true;
+		if (jenkinsJobFailureURLs.isEmpty()) {
+			return false;
 		}
 
-		return false;
+		pullRequest.close();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<h1>The pull request tester is still running.</h1><p>");
+		sb.append("Please wait until you get the <i><b>final report</b>");
+		sb.append("</i> before running 'ci:retest'.</p><p>See this link ");
+		sb.append("to check on the status of your test:</p><ul><li><a ");
+		sb.append("href=\"");
+		sb.append(topLevelBuild.getBuildURL());
+		sb.append("\">");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("</a></li></ul>@");
+		sb.append(gitHubSenderUsername);
+		sb.append("</p><hr /><h1>However, the pull request was closed.<");
+		sb.append("/h1><p>The pull request was closed due to the ");
+		sb.append("following integration/unit test failures:</p><ul>");
+
+		for (String jenkinsJobFailureURL : jenkinsJobFailureURLs) {
+			sb.append("<li>");
+			sb.append(jenkinsJobFailureURL);
+			sb.append("</li>");
+		}
+
+		sb.append("</ul><p>These test failures are a part of a 'module ");
+		sb.append("group'/'subrepository' that was changed in this pull ");
+		sb.append("request.</p><p auto-close=\"false\"><strong><em>*This ");
+		sb.append("pull will no longer automatically close if this ");
+		sb.append("comment is available. If you believe this is a ");
+		sb.append("mistake please reopen this pull by entering the ");
+		sb.append("following command as a comment.</em></strong></p><pre>");
+		sb.append("ci&#58;reopen</pre><hr /><h3>Critical Failure Details:");
+		sb.append("</h3>");
+
+		try {
+			sb.append(
+				Dom4JUtil.format(
+					failedDownstreamBuild.getGitHubMessageElement(), false));
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+
+			throw exception;
+		}
+
+		if (!_autoCloseGitHubCommentMentionUsernames.isEmpty()) {
+			sb.append("<div>cc");
+
+			for (String autoCloseGithubCommentMentionUsername :
+					_autoCloseGitHubCommentMentionUsernames) {
+
+				sb.append(" @");
+				sb.append(autoCloseGithubCommentMentionUsername);
+			}
+
+			sb.append("</div>");
+		}
+
+		pullRequest.addComment(sb.toString());
+
+		return true;
 	}
 
 	public static List<AutoCloseRule> getAutoCloseRules(PullRequest pullRequest)

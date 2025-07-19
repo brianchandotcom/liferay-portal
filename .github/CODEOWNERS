@@ -478,6 +478,7 @@ modules/test/playwright/tests/export-import-web    @liferay-headless
 modules/test/playwright/tests/headless-builder-impl    @liferay-headless
 modules/test/playwright/tests/headless-builder-web    @liferay-headless
 modules/test/playwright/tests/layout-set-prototype-web    @liferay-headless
+modules/test/playwright/tests/portal-impl/portlet    @liferay-frontend
 modules/test/playwright/tests/portal-tools-rest-builder-test-impl    @liferay-headless
 modules/test/playwright/tests/staging-configuration-web    @liferay-headless
 modules/third-party/

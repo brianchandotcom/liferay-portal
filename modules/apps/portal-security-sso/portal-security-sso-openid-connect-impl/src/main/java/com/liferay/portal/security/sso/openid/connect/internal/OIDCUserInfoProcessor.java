@@ -623,12 +623,12 @@ public class OIDCUserInfoProcessor {
 			List<Long> userGroupIds)
 		throws Exception {
 
-		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
-			UserGroup.class.getName(), companyId);
-
 		if (userGroupIds == null) {
 			userGroupIds = new ArrayList<>();
 		}
+
+		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
+			UserGroup.class.getName(), companyId);
 
 		for (UserGroup userGroup :
 				_userGroupLocalService.getUserUserGroups(user.getUserId())) {

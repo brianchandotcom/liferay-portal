@@ -72,8 +72,8 @@ public class AutoCloseUtil {
 
 		sb.append("</a></li></ul><p>For information as to why we ");
 		sb.append("automatically close out certain pull requests see this <a ");
-		sb.append("href=\"https://in.liferay.com/web/global.engineering");
-		sb.append("/wiki/-/wiki/Quality+Assurance+Main/Test+Batch+Automatic+");
+		sb.append("href=\"https://in.liferay.com/web/global.engineering/wiki");
+		sb.append("/-/wiki/Quality+Assurance+Main/Test+Batch+Automatic+");
 		sb.append("Close+List\">article</a>.</p><p");
 
 		boolean sourceFormatBuild = build instanceof SourceFormatBuild;

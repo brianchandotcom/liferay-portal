@@ -35,12 +35,10 @@ const CategorizationTabContent = () => {
 					`${update.href}?nestedFields=embeddedTaxonomyCategory`,
 					{
 						body: JSON.stringify({
-							...objectEntry,
-							actions: undefined,
 							keywords: keywords || objectEntry.keywords,
-							taxonomyCategoryIds:
-								taxonomyCategoryIds ||
-								objectEntry.taxonomyCategoryIds,
+							...(taxonomyCategoryIds
+								? {taxonomyCategoryIds}
+								: {}),
 						} as any),
 						headers: {
 							'Accept': 'application/json',

@@ -7,6 +7,8 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
+import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -699,6 +702,8 @@ public class LayoutUtil {
 			return;
 		}
 
+		CETManager cetManager = _cetManagerSnapshot.get();
+
 		for (ClientExtension clientExtension : clientExtensions) {
 			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
 				serviceContext.getUserId(), layout.getGroupId(),
@@ -708,6 +713,14 @@ public class LayoutUtil {
 					clientExtension.getClientExtensionConfig(), true
 				).buildString(),
 				serviceContext);
+
+			CET cet = cetManager.getCET(
+				layout.getCompanyId(),
+				clientExtension.getExternalReferenceCode());
+
+			if (cet == null) {
+				throw new UnsupportedOperationException();
+			}
 		}
 	}
 
@@ -868,5 +881,8 @@ public class LayoutUtil {
 				layout, pageExperience, segmentsExperience, serviceContext);
 		}
 	}
+
+	private static final Snapshot<CETManager> _cetManagerSnapshot =
+		new Snapshot<>(LayoutUtil.class, CETManager.class);
 
 }

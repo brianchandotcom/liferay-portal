@@ -4,33 +4,17 @@
  */
 
 import Autocomplete from '@clayui/autocomplete';
-import {Heading} from '@clayui/core';
 import {useResource} from '@clayui/data-provider';
 import Label from '@clayui/label';
-import Panel from '@clayui/panel';
+import ClayPanel from '@clayui/panel';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {IAssetObjectEntry} from '../../../structure_builder/types/AssetType';
-
-interface IGroupedTaxonomyCategory {
-	taxonomyCategoryIds: number[];
-	taxonomyVocabularies: {
-		[taxonomyVocabularyId: number]: ITaxonomyCategoryFacade[];
-	};
-}
-
-interface ITaxonomyCategoryFacade {
-	id: string;
-	name?: string;
-	parentTaxonomyVocabulary: ITaxonomyVocabulary;
-	taxonomyVocabularyId: number;
-}
-
-interface ITaxonomyVocabulary {
-	id: number;
-	name: string;
-}
+import {
+	IAssetObjectEntry,
+	IGroupedTaxonomies,
+	ITaxonomyCategoryFacade,
+} from '../../../structure_builder/types/AssetType';
 
 const AssetCategories = ({
 	objectEntry,
@@ -41,13 +25,11 @@ const AssetCategories = ({
 		object: Pick<IAssetObjectEntry, 'keywords' | 'taxonomyCategoryIds'>
 	) => Promise<any>;
 }) => {
-	const [groupedTaxonomyCategories, setGroupedTaxonomyCategories] = useState(
-		{} as IGroupedTaxonomyCategory
+	const [groupedTaxonomies, setGroupedTaxonomies] = useState(
+		{} as IGroupedTaxonomies
 	);
-
-	const [taxonomyCategoryInputValue, setTaxonomyCategoryInputValue] =
-		useState('');
 	const [networkStatus, setNetworkStatus] = useState(4);
+	const [value, setValue] = useState('');
 
 	const {resource} = useResource({
 		fetch,
@@ -55,196 +37,190 @@ const AssetCategories = ({
 		onNetworkStatusChange: setNetworkStatus,
 	});
 
-	const updateTaxonomyCategories = useCallback(
-		(taxonomyCategoryBriefs: any[] = []) => {
-			setTaxonomyCategoryInputValue('');
+	const addCategory = useCallback(
+		async (item: any) => {
+			const taxonomyCategoryId = parseInt(item.id, 10);
 
-			const taxonomyCategories = taxonomyCategoryBriefs.map(
-				({embeddedTaxonomyCategory}: any) => embeddedTaxonomyCategory
+			if (
+				groupedTaxonomies.taxonomyCategoryIds.includes(
+					taxonomyCategoryId
+				)
+			) {
+				return;
+			}
+
+			await updateObjectEntry({
+				taxonomyCategoryIds: [
+					...groupedTaxonomies.taxonomyCategoryIds,
+					taxonomyCategoryId,
+				],
+			});
+		},
+		[groupedTaxonomies.taxonomyCategoryIds, updateObjectEntry]
+	);
+
+	const removeCategory = useCallback(
+		async (category: ITaxonomyCategoryFacade) => {
+			const {taxonomyCategoryIds} = groupedTaxonomies;
+
+			const index = taxonomyCategoryIds.findIndex(
+				(id) => id === parseInt(category.id, 10)
 			);
 
-			if (!taxonomyCategories.length) {
-				setGroupedTaxonomyCategories({
+			if (index === -1) {
+				return;
+			}
+
+			taxonomyCategoryIds.splice(index, 1);
+
+			await updateObjectEntry({taxonomyCategoryIds});
+		},
+		[groupedTaxonomies, updateObjectEntry]
+	);
+
+	const updateCategories = useCallback(
+		(taxonomyCategoryBriefs: any[] = []) => {
+			setValue('');
+
+			if (!taxonomyCategoryBriefs.length) {
+				setGroupedTaxonomies({
 					taxonomyCategoryIds: [],
 					taxonomyVocabularies: {},
-				} as IGroupedTaxonomyCategory);
+				} as IGroupedTaxonomies);
 
 				return;
 			}
 
-			setGroupedTaxonomyCategories(
-				taxonomyCategories.reduce(
+			setGroupedTaxonomies(
+				taxonomyCategoryBriefs.reduce(
 					(
-						groupedTaxonomyCategories: any,
-						taxonomyCategory: ITaxonomyCategoryFacade
+						groupedTaxonomies,
+						{embeddedTaxonomyCategory: categoryBrief}
 					) => {
+						const {id, taxonomyVocabularyId} = categoryBrief;
+
 						const taxonomyCategories =
-							groupedTaxonomyCategories.taxonomyVocabularies[
-								taxonomyCategory.taxonomyVocabularyId
+							groupedTaxonomies.taxonomyVocabularies[
+								taxonomyVocabularyId
 							] || [];
 
-						taxonomyCategories.push(taxonomyCategory);
+						taxonomyCategories.push(categoryBrief);
 
 						return {
 							taxonomyCategoryIds: [
-								...groupedTaxonomyCategories.taxonomyCategoryIds,
-								parseInt(taxonomyCategory.id, 10),
+								...groupedTaxonomies.taxonomyCategoryIds,
+								parseInt(id, 10),
 							],
 							taxonomyVocabularies: {
-								...groupedTaxonomyCategories.taxonomyVocabularies,
-								[taxonomyCategory.taxonomyVocabularyId]:
-									taxonomyCategories,
+								...groupedTaxonomies.taxonomyVocabularies,
+								[taxonomyVocabularyId]: taxonomyCategories,
 							},
 						};
 					},
 					{
 						taxonomyCategoryIds: [],
 						taxonomyVocabularies: {},
-					} as IGroupedTaxonomyCategory
+					} as IGroupedTaxonomies
 				)
 			);
 		},
-		[]
+		[setGroupedTaxonomies]
 	);
 
 	useEffect(() => {
-		updateTaxonomyCategories(objectEntry.taxonomyCategoryBriefs);
-	}, [objectEntry, updateTaxonomyCategories]);
+		updateCategories(objectEntry.taxonomyCategoryBriefs);
+	}, [objectEntry, updateCategories]);
 
 	return (
-		<Panel
-			displayTitle={Liferay.Language.get('categories')}
+		<ClayPanel
+			collapsable
+			defaultExpanded={true}
+			displayTitle={
+				<ClayPanel.Title className="panel-title text-secondary">
+					{Liferay.Language.get('categories')}
+				</ClayPanel.Title>
+			}
 			displayType="unstyled"
-			expanded
 			showCollapseIcon={true}
 		>
-			<Panel.Body>
-				<>
-					{resource?.items ? (
-						<Autocomplete
-							defaultItems={resource?.items}
-							filterKey="name"
-							loadingState={networkStatus}
-							onChange={setTaxonomyCategoryInputValue}
-							placeholder={sub(
-								Liferay.Language.get('add-x'),
-								'category'
-							)}
-							value={taxonomyCategoryInputValue}
-						>
-							{(item: any) => (
-								<Autocomplete.Item
-									key={item.id}
-									onClick={async (event) => {
-										event.preventDefault();
+			<ClayPanel.Body>
+				{resource?.items ? (
+					<Autocomplete
+						defaultItems={resource?.items}
+						filterKey="name"
+						id="asset-categories-autocomplete"
+						loadingState={networkStatus}
+						menuTrigger="focus"
+						onChange={setValue}
+						placeholder={sub(
+							Liferay.Language.get('add-x'),
+							'category'
+						)}
+						value={value}
+					>
+						{(item: any) => (
+							<Autocomplete.Item
+								key={item.id}
+								onClick={async (event: any) => {
+									event.preventDefault();
 
-										const taxonomyCategoryId = parseInt(
-											item.id,
-											10
-										);
+									await addCategory(item);
+								}}
+							>
+								{item.name}
+							</Autocomplete.Item>
+						)}
+					</Autocomplete>
+				) : null}
 
-										if (
-											!groupedTaxonomyCategories.taxonomyCategoryIds.includes(
-												taxonomyCategoryId
-											)
-										) {
-											await updateObjectEntry({
-												taxonomyCategoryIds: [
-													...groupedTaxonomyCategories.taxonomyCategoryIds,
-													taxonomyCategoryId,
-												],
-											});
-										}
-									}}
-								>
-									{item.name}
-								</Autocomplete.Item>
-							)}
-						</Autocomplete>
-					) : null}
+				{groupedTaxonomies.taxonomyVocabularies &&
+					Object.entries(groupedTaxonomies?.taxonomyVocabularies).map(
+						([, vocabularyCategories], index) => {
+							const vocabularyName =
+								vocabularyCategories[0].parentTaxonomyVocabulary
+									.name;
 
-					{Object.entries(groupedTaxonomyCategories).map(
-						([id, curGroupedTaxonomyCategories]) => {
-							return curGroupedTaxonomyCategories.length ? (
-								<div
-									className="pt-3"
-									key="taxonomy-categories-container"
-								>
-									<Heading key={id} level={6} weight="bold">
-										{
-											curGroupedTaxonomyCategories[0]
-												.parentTaxonomyVocabulary.name
-										}
-									</Heading>
+							return vocabularyCategories.length ? (
+								<div className="pt-3" key={index}>
+									<p className="font-weight-semi-bold vocabulary-name">
+										{vocabularyName}
+									</p>
 
-									{curGroupedTaxonomyCategories.map(
-										(
-											groupedTaxonomyCategory: ITaxonomyCategoryFacade
-										) => {
-											return (
-												<Label
-													closeButtonProps={{
-														'aria-label':
-															Liferay.Language.get(
-																'close'
-															),
-														'onClick': async (
-															event
-														) => {
-															event.preventDefault();
+									{vocabularyCategories.map(
+										(category: ITaxonomyCategoryFacade) => (
+											<Label
+												closeButtonProps={{
+													'aria-label':
+														Liferay.Language.get(
+															'close'
+														),
+													'onClick': async (
+														event
+													) => {
+														event.preventDefault();
 
-															const {
-																taxonomyCategoryIds,
-															} =
-																groupedTaxonomyCategories;
-
-															const index =
-																taxonomyCategoryIds.findIndex(
-																	(
-																		taxonomyCategoryId: number
-																	) =>
-																		taxonomyCategoryId ===
-																		parseInt(
-																			groupedTaxonomyCategory.id,
-																			10
-																		)
-																);
-
-															if (index !== -1) {
-																taxonomyCategoryIds.splice(
-																	index,
-																	1
-																);
-
-																await updateObjectEntry(
-																	{
-																		taxonomyCategoryIds,
-																	}
-																);
-															}
-														},
-														'title':
-															Liferay.Language.get(
-																'close'
-															),
-													}}
-													displayType="secondary"
-													key={`${groupedTaxonomyCategory.taxonomyVocabularyId}_${groupedTaxonomyCategory.id}`}
-												>
-													{
-														groupedTaxonomyCategory.name
-													}
-												</Label>
-											);
-										}
+														await removeCategory(
+															category
+														);
+													},
+													'title':
+														Liferay.Language.get(
+															'close'
+														),
+												}}
+												displayType="secondary"
+												key={`${category.taxonomyVocabularyId}_${category.id}`}
+											>
+												{category.name}
+											</Label>
+										)
 									)}
 								</div>
 							) : null;
 						}
 					)}
-				</>
-			</Panel.Body>
-		</Panel>
+			</ClayPanel.Body>
+		</ClayPanel>
 	);
 };
 

@@ -53,123 +53,131 @@ const AssetMetadata = () => {
 		[objectEntry]
 	);
 
+	const assetLanguages = getAssetLanguages(title_i18n);
+
 	return (
-		<>
-			<ClayPanel
-				className="asset-metadata"
-				collapsable={false}
-				displayTitle={Liferay.Language.get('metadata').toUpperCase()}
-				displayType="unstyled"
-				showCollapseIcon={true}
-			>
-				<ClayPanel.Body>
-					{type === ASSET_TYPE.FILES && (
-						<>
-							<div className="asset-metadata-block mt-3">
-								<h3>{Liferay.Language.get('url')}</h3>
-
-								<ClayInput.Group className="mt-1">
-									<ClayInput.GroupItem prepend>
-										<ClayInput
-											disabled={true}
-											placeholder={
-												objectEntry.file?.link?.href
-											}
-											type="text"
-										/>
-									</ClayInput.GroupItem>
-
-									<ClayInput.GroupItem append shrink>
-										<ClayButtonWithIcon
-											data-clipboard-text={
-												objectEntry.file?.link?.href
-											}
-											displayType="secondary"
-											onClick={copyText}
-											symbol="copy"
-										></ClayButtonWithIcon>
-									</ClayInput.GroupItem>
-								</ClayInput.Group>
-							</div>
-						</>
-					)}
-
-					<div className="asset-metadata-block mt-3">
-						<h3>{Liferay.Language.get('author')}</h3>
-
-						<p className="mt-1">{objectEntry?.creator?.name}</p>
-					</div>
-
-					<div className="asset-metadata-block mt-3">
-						<h3>{Liferay.Language.get('created')}</h3>
-
-						<p className="mt-1">
-							{sub(Liferay.Language.get('x-by-x'), [
-								formatDate(objectEntry.dateCreated as string),
-								objectEntry.creator?.name,
-							])}
+		<ClayPanel
+			className="asset-metadata"
+			collapsable={false}
+			displayTitle={
+				<ClayPanel.Header className="border-bottom">
+					<ClayPanel.Title className="panel-title text-secondary">
+						{Liferay.Language.get('metadata')}
+					</ClayPanel.Title>
+				</ClayPanel.Header>
+			}
+			displayType="unstyled"
+			showCollapseIcon={false}
+		>
+			<ClayPanel.Body>
+				{type === ASSET_TYPE.FILES && (
+					<div className="asset-metadata-section mt-0">
+						<p className="asset-metadata-section-title">
+							{Liferay.Language.get('url')}
 						</p>
+
+						<ClayInput.Group className="mt-1">
+							<ClayInput.GroupItem prepend>
+								<ClayInput
+									disabled={true}
+									placeholder={objectEntry.file?.link?.href}
+									type="text"
+								/>
+							</ClayInput.GroupItem>
+
+							<ClayInput.GroupItem append shrink>
+								<ClayButtonWithIcon
+									data-clipboard-text={
+										objectEntry.file?.link?.href
+									}
+									displayType="secondary"
+									onClick={copyText}
+									symbol="copy"
+								></ClayButtonWithIcon>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
 					</div>
+				)}
 
-					<div className="asset-metadata-block mt-3">
-						<h3>{Liferay.Language.get('modified')}</h3>
+				<div className="asset-metadata-section">
+					<p className="asset-metadata-section-title">
+						{Liferay.Language.get('author')}
+					</p>
 
-						<p className="mt-1">
-							{formatDate(objectEntry.dateModified as string)}
-						</p>
-					</div>
+					<p>{objectEntry?.creator?.name}</p>
+				</div>
 
-					{type !== ASSET_TYPE.FOLDER && (
-						<>
-							<div className="asset-metadata-block mt-3">
-								<h3>
-									{Liferay.Language.get('expiration-date')}
-								</h3>
+				<div className="asset-metadata-section">
+					<p className="asset-metadata-section-title">
+						{Liferay.Language.get('created')}
+					</p>
 
-								<p className="mt-1">
-									{objectEntry?.expirationDate
-										? formatDate(
-												objectEntry?.expirationDate
-											)
-										: Liferay.Language.get('never-expire')}
-								</p>
-							</div>
-							<div className="asset-metadata-block mt-3">
-								<h3>{Liferay.Language.get('review-date')}</h3>
+					<p>
+						{sub(Liferay.Language.get('x-by-x'), [
+							formatDate(objectEntry.dateCreated as string),
+							objectEntry.creator?.name,
+						])}
+					</p>
+				</div>
 
-								<p className="mt-1">
-									{objectEntry?.reviewDate
-										? formatDate(objectEntry?.reviewDate)
-										: Liferay.Language.get('never-review')}
-								</p>
-							</div>
-							<div className="asset-metadata-block mt-3">
-								<h3>
+				<div className="asset-metadata-section">
+					<p className="asset-metadata-section-title">
+						{Liferay.Language.get('modified')}
+					</p>
+
+					<p>{formatDate(objectEntry.dateModified as string)}</p>
+				</div>
+
+				{type !== ASSET_TYPE.FOLDER && (
+					<>
+						<div className="asset-metadata-section">
+							<p className="asset-metadata-section-title">
+								{Liferay.Language.get('expiration-date')}
+							</p>
+
+							<p>
+								{objectEntry?.expirationDate
+									? formatDate(objectEntry?.expirationDate)
+									: Liferay.Language.get('never-expire')}
+							</p>
+						</div>
+
+						<div className="asset-metadata-section">
+							<p className="asset-metadata-section-title">
+								{Liferay.Language.get('review-date')}
+							</p>
+
+							<p>
+								{objectEntry?.reviewDate
+									? formatDate(objectEntry?.reviewDate)
+									: Liferay.Language.get('never-review')}
+							</p>
+						</div>
+
+						{assetLanguages.length ? (
+							<div className="asset-metadata-section">
+								<p className="asset-metadata-section-title">
 									{Liferay.Language.get(
 										'languages-translated-into'
 									)}
-								</h3>
+								</p>
 
-								{getAssetLanguages(title_i18n)?.map(
-									(locale) => (
-										<>
-											<div className="d-flex mt-1">
-												<ClayIcon
-													className="mr-2 mt-1"
-													symbol={locale.toLowerCase()}
-												/>
+								{assetLanguages.map((locale, index) => (
+									<div className="d-flex mt-1" key={index}>
+										<ClayIcon
+											className="mr-2 mt-1"
+											symbol={locale.toLowerCase()}
+										/>
 
-												<p>{locale}</p>
-											</div>
-										</>
-									)
-								)}
+										<span>{locale}</span>
+									</div>
+								))}
 							</div>
-						</>
-					)}
-				</ClayPanel.Body>
-			</ClayPanel>
-		</>
+						) : null}
+					</>
+				)}
+			</ClayPanel.Body>
+		</ClayPanel>
 	);
 };
 

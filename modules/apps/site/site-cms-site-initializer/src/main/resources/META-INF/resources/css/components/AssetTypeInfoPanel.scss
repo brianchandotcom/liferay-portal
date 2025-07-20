@@ -7,18 +7,17 @@
 .c-slideout .sidebar {
 	background-color: $white !important;
 
-	.asset-metadata {
-		color: $gray-600;
-	}
+	.asset-metadata-section {
+		margin-top: 1rem;
 
-	.asset-metadata-block {
-		h3 {
-			font-size: 14px;
+		&-title {
+			font-weight: 600;
 			margin-bottom: 0;
 		}
 
 		p {
-			font-size: 14px;
+			display: block;
+			font-size: 0.875rem;
 			margin-bottom: 0;
 		}
 	}
@@ -57,9 +56,12 @@
 		padding-right: 1rem;
 	}
 
+	.panel-unstyled .panel-header.panel-header-link {
+		border-radius: 0;
+	}
+
 	.sidebar-header {
 		border-bottom-width: 0;
-		padding-top: 1.75rem;
 
 		.asset-icon {
 			font-size: 20px;
@@ -72,9 +74,21 @@
 		.asset-title {
 			margin-bottom: 0;
 		}
+
+		.component-title {
+			margin-right: 0.5rem;
+		}
 	}
 
 	.tab-content {
 		overflow-y: auto;
 	}
+
+	.vocabulary-name {
+		font-size: 0.875rem;
+	}
+}
+
+.dropdown-menu.show ul {
+	max-height: 15rem;
 }

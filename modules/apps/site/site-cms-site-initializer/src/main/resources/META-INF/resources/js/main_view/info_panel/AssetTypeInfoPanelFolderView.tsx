@@ -33,11 +33,11 @@ const AssetTypeInfoPanelFilesView = () => {
 				</Tabs.Item>
 			</Tabs>
 			<Tabs.Content active={active} fade>
-				<Tabs.TabPane key={TABS.DETAILS.id}>
+				<Tabs.TabPane className="p-4" key={TABS.DETAILS.id}>
 					<DetailsTabContent />
 				</Tabs.TabPane>
 
-				<Tabs.TabPane key={TABS.PERFORMANCE.id}>
+				<Tabs.TabPane className="p-4" key={TABS.PERFORMANCE.id}>
 					<PerformanceTabContent />
 				</Tabs.TabPane>
 			</Tabs.Content>

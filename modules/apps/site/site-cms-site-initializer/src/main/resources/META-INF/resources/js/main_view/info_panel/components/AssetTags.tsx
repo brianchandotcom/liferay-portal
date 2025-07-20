@@ -6,7 +6,7 @@
 import Autocomplete from '@clayui/autocomplete';
 import {useResource} from '@clayui/data-provider';
 import Label from '@clayui/label';
-import Panel from '@clayui/panel';
+import ClayPanel from '@clayui/panel';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -22,11 +22,10 @@ const AssetTags = ({
 	) => Promise<any>;
 }) => {
 	const [keywords, setKeywords] = useState([] as string[]);
-	const [keywordInputValue, setKeywordInputValue] = useState('');
-
 	const [networkStatus, setNetworkStatus] = useState(4);
+	const [value, setValue] = useState('');
 
-	const {resource} = useResource({
+	const {refetch, resource} = useResource({
 		fetch,
 		link: `${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/keywords`,
 		onNetworkStatusChange: setNetworkStatus,
@@ -34,151 +33,174 @@ const AssetTags = ({
 
 	const [items, setItems] = useState([] as {[key: string]: any}[]);
 
+	const addKeyword = useCallback(
+		async (keyword: any) => {
+			if (keywords.includes(keyword.name)) {
+				return;
+			}
+
+			try {
+				await updateObjectEntry({
+					keywords: [...keywords, keyword.name],
+				});
+			}
+			catch (error) {
+				console.error('Failed to update asset tags.', error);
+			}
+		},
+		[keywords, updateObjectEntry]
+	);
+
+	const createAndAddKeyword = useCallback(
+		async (event: any) => {
+			event.preventDefault();
+
+			let keyword = {};
+
+			try {
+				const response = await fetch(
+					`/o/headless-admin-taxonomy/v1.0/keywords`,
+					{
+						body: JSON.stringify({
+							assetLibraries: [
+								{
+									id: Liferay.ThemeDisplay.getSiteGroupId(),
+								},
+							],
+							name: value,
+						} as any),
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json',
+							'x-csrf-token': Liferay.authToken,
+						},
+						method: 'POST',
+					}
+				);
+
+				keyword = await response.json();
+
+				if (!response.ok) {
+					throw new Error();
+				}
+
+				await refetch();
+
+				await addKeyword(keyword);
+			}
+			catch (error) {
+				console.error('Failed to create new keyword.', error);
+			}
+		},
+		[addKeyword, refetch, value]
+	);
+
+	const removeKeyword = useCallback(
+		async (keyword: string) => {
+			const index = keywords.findIndex((value) => value === keyword);
+
+			if (index === -1) {
+				return;
+			}
+
+			const curKeywords = [...keywords];
+
+			curKeywords.splice(index, 1);
+
+			await updateObjectEntry({
+				keywords: curKeywords,
+			});
+		},
+		[keywords, updateObjectEntry]
+	);
+
 	const updateKeywords = useCallback(
 		(keywords: string[] = []) => {
-			setKeywordInputValue('');
+			setValue('');
 
 			setKeywords(keywords);
 		},
-		[setKeywordInputValue, setKeywords]
+		[setValue, setKeywords]
 	);
 
 	useEffect(() => {
-		setItems(() => {
-			if (keywordInputValue.length) {
+		setItems((currentItems) => {
+			if (value.length) {
 				return [
-					...items.filter(({name}) =>
-						name.includes(keywordInputValue)
-					),
+					...currentItems.filter(({name}) => name.includes(value)),
 				];
 			}
 
-			return [...(resource?.items ?? [])];
+			return [...(resource?.items || [])];
 		});
-	}, [items, keywordInputValue, resource]);
-
-	useEffect(() => {
-		setItems(resource?.items ?? []);
-	}, [resource, setItems]);
+	}, [value, resource, setItems]);
 
 	useEffect(() => {
 		updateKeywords(objectEntry.keywords);
 	}, [objectEntry, updateKeywords]);
 
 	return (
-		<Panel
-			displayTitle={Liferay.Language.get('tags')}
+		<ClayPanel
+			collapsable
+			defaultExpanded={true}
+			displayTitle={
+				<ClayPanel.Title className="panel-title text-secondary">
+					{Liferay.Language.get('tags')}
+				</ClayPanel.Title>
+			}
 			displayType="unstyled"
-			expanded
 			showCollapseIcon={true}
 		>
-			<Panel.Body>
-				<>
-					<Autocomplete
-						filterKey="name"
-						items={items}
-						loadingState={networkStatus}
-						onChange={setKeywordInputValue}
-						placeholder={sub(Liferay.Language.get('add-x'), 'tag')}
-						value={keywordInputValue}
-					>
-						{!items.length ? (
-							<Autocomplete.Item
-								key="createNewKeyword"
-								onClick={async (event) => {
-									event.preventDefault();
+			<ClayPanel.Body>
+				<Autocomplete
+					filterKey="name"
+					id="asset-tags-autocomplete"
+					items={items}
+					loadingState={networkStatus}
+					menuTrigger="focus"
+					onChange={setValue}
+					placeholder={sub(Liferay.Language.get('add-x'), 'tag')}
+					value={value}
+				>
+					{!items.length ? (
+						<Autocomplete.Item
+							className="text-info"
+							key="createNewKeyword"
+							onClick={createAndAddKeyword}
+							textValue={sub(
+								Liferay.Language.get('create-new-tag-x'),
+								value
+							)}
+						/>
+					) : (
+						items.map((item) => {
+							return (
+								<Autocomplete.Item
+									key={item.id}
+									onClick={async (event) => {
+										event.preventDefault();
 
-									try {
-										const response = await fetch(
-											`${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/keywords`,
-											{
-												body: JSON.stringify({
-													name: keywordInputValue,
-												} as any),
-												headers: {
-													'Accept':
-														'application/json',
-													'Content-Type':
-														'application/json',
-													'x-csrf-token':
-														Liferay.authToken,
-												},
-												method: 'POST',
-											}
-										);
+										await addKeyword(item);
+									}}
+								>
+									{item.name}
+								</Autocomplete.Item>
+							);
+						})
+					)}
+				</Autocomplete>
 
-										const json = await response.json();
-
-										if (!response.ok) {
-											throw new Error(json);
-										}
-
-										await updateObjectEntry({
-											keywords: [
-												...keywords,
-												keywordInputValue,
-											],
-										});
-									}
-									catch (error) {
-										console.error(error);
-									}
-								}}
-								textValue={sub(
-									Liferay.Language.get('create-new-tag-x'),
-									keywordInputValue
-								)}
-							/>
-						) : (
-							items.map((item) => {
-								return (
-									<Autocomplete.Item
-										key={item.id}
-										onClick={async (event) => {
-											event.preventDefault();
-
-											if (
-												!keywords.includes(
-													keywordInputValue
-												)
-											) {
-												await updateObjectEntry({
-													keywords: [
-														...keywords,
-														keywordInputValue,
-													],
-												});
-											}
-										}}
-									>
-										{item.name}
-									</Autocomplete.Item>
-								);
-							})
-						)}
-					</Autocomplete>
-
+				<div className="asset-tags mt-3">
 					{keywords.map((keyword: string, index: number) => {
 						return (
 							<Label
+								className="mr-2 mt-2"
 								closeButtonProps={{
 									'aria-label': Liferay.Language.get('close'),
 									'onClick': async (event) => {
 										event.preventDefault();
 
-										const curKeywords = [...keywords];
-
-										const index = curKeywords.findIndex(
-											(value: string) => value === keyword
-										);
-
-										if (index !== -1) {
-											curKeywords.splice(index, 1);
-
-											await updateObjectEntry({
-												keywords: curKeywords,
-											});
-										}
+										await removeKeyword(keyword);
 									},
 									'title': Liferay.Language.get('close'),
 								}}
@@ -189,9 +211,9 @@ const AssetTags = ({
 							</Label>
 						);
 					})}
-				</>
-			</Panel.Body>
-		</Panel>
+				</div>
+			</ClayPanel.Body>
+		</ClayPanel>
 	);
 };
 

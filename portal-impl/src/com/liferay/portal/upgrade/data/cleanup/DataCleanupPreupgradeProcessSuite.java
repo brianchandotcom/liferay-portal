@@ -59,6 +59,7 @@ public class DataCleanupPreupgradeProcessSuite {
 	private final List<DataCleanupPreupgradeProcess>
 		_dataCleanupPreupgradeProcesses = ListUtil.fromArray(
 			new CompanyDataCleanupPreupgradeProcess(),
+			new DDMStructureDataCleanupPreupgradeProcess(),
 			new GroupDataCleanupPreupgradeProcess());
 
 }

@@ -106,6 +106,10 @@ const Table = <T extends Record<string, any>>({
 								typeof action.disabled === 'boolean'
 									? action.disabled
 									: action?.disabled?.(item),
+							hidden:
+								typeof action.hidden === 'boolean'
+									? action.hidden
+									: action?.hidden?.(item),
 							onClick: () => {
 								if (action.onClick) {
 									return action?.onClick(item, mutate);
@@ -117,6 +121,7 @@ const Table = <T extends Record<string, any>>({
 						{(item) => (
 							<ClayDropDown.Item
 								disabled={item.disabled}
+								hidden={!!item.hidden}
 								onClick={() => item.onClick()}
 							>
 								{item.icon && (

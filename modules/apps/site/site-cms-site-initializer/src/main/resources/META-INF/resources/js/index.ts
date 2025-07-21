@@ -24,7 +24,8 @@ export {default as EditFolder} from './main_view/folders/EditFolder';
 // Main
 
 export {default as QuickActions} from './main_view/home/QuickActions';
-export {default as SearchBar} from './main_view/home/SearchBar';
+export { default as SearchBar } from './main_view/home/SearchBar';
+export {default as ViewWorkflowTasks} from './main_view/home/ViewWorkflowTasks';
 export {default as AssetTypeInfoPanelContent} from './main_view/info_panel/AssetTypeInfoPanelContent';
 export {default as AllFDSPropsTransformer} from './main_view/props_transformer/AllFDSPropsTransformer';
 export {default as AllSpacesFDSPropsTransformer} from './main_view/props_transformer/AllSpacesFDSPropsTransformer';

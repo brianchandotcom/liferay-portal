@@ -276,13 +276,10 @@ public class PatcherUtil {
 		return true;
 	}
 
-	public static void notifyUsersInactivePatcherBaseModels(
-			ThemeDisplay themeDisplay)
-		throws Exception {
+	public static void notifyUsersInactivePatcherBaseModels() throws Exception {
+		PatcherBuildUtil.notifyUsersInactivePatcherBuilds();
 
-		PatcherBuildUtil.notifyUsersInactivePatcherBuilds(themeDisplay);
-
-		PatcherFixUtil.notifyUsersInactivePatcherFixes(themeDisplay);
+		PatcherFixUtil.notifyUsersInactivePatcherFixes();
 	}
 
 	public static String prepareKeywords(String keywords) {

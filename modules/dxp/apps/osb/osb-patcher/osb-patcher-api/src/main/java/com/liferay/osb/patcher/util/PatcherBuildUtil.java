@@ -907,10 +907,7 @@ public class PatcherBuildUtil {
 		return false;
 	}
 
-	public static void notifyUsersInactivePatcherBuilds(
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
+	public static void notifyUsersInactivePatcherBuilds() throws Exception {
 		Calendar calendar = new GregorianCalendar();
 
 		calendar.add(Calendar.HOUR, -3);
@@ -929,11 +926,9 @@ public class PatcherBuildUtil {
 		}
 
 		for (PatcherBuild patcherBuild : patcherBuilds) {
-			User user = UserLocalServiceUtil.getUser(patcherBuild.getUserId());
-
 			EmailUtil.sendPatcherTimeoutEmail(
-				patcherBuild, user.getEmailAddress(), themeDisplay,
-				patcherBuild.getUserId());
+				patcherBuild,
+				UserLocalServiceUtil.getUser(patcherBuild.getUserId()));
 
 			PatcherBuildLocalServiceUtil.updateNotified(
 				patcherBuild.getPatcherBuildId(), true);

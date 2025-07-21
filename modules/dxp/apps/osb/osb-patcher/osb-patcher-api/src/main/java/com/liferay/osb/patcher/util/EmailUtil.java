@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
@@ -51,8 +54,8 @@ import java.util.Map;
 public class EmailUtil {
 
 	public static void sendEmail(
-			ThemeDisplay themeDisplay, String emailAddress, String message,
-			String subject, Map<String, String> contextAttributes)
+			long companyId, String emailAddress, String message, String subject,
+			Map<String, String> contextAttributes)
 		throws Exception {
 
 		if (Validator.isNull(emailAddress) ||
@@ -65,7 +68,7 @@ public class EmailUtil {
 
 		subscriptionSender.setBody(message);
 
-		subscriptionSender.setCompanyId(themeDisplay.getCompanyId());
+		subscriptionSender.setCompanyId(companyId);
 
 		if ((contextAttributes != null) && !contextAttributes.isEmpty()) {
 			for (Map.Entry<String, String> entry :
@@ -83,13 +86,13 @@ public class EmailUtil {
 		}
 
 		String fromAddress = PrefsPropsUtil.getString(
-			themeDisplay.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+			companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 		String fromName = PrefsPropsUtil.getString(
-			themeDisplay.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
+			companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
 		subscriptionSender.setFrom(fromAddress, fromName);
 
-		subscriptionSender.setGroupId(themeDisplay.getScopeGroupId());
+		subscriptionSender.setGroupId(GroupThreadLocal.getGroupId());
 		subscriptionSender.setHtmlFormat(true);
 
 		DateFormat mailIdDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
@@ -106,7 +109,8 @@ public class EmailUtil {
 			subscriptionSender.setSubject(message);
 		}
 
-		subscriptionSender.setCurrentUserId(themeDisplay.getDefaultUserId());
+		subscriptionSender.setCurrentUserId(
+			UserLocalServiceUtil.getDefaultUserId(companyId));
 
 		subscriptionSender.addRuntimeSubscribers(emailAddress, emailAddress);
 
@@ -114,21 +118,18 @@ public class EmailUtil {
 	}
 
 	public static void sendPatcherEmail(
-			BaseModel<?> baseModel, String emailAddress, int status,
-			ThemeDisplay themeDisplay, long userId)
+			BaseModel<?> baseModel, int status, User user)
 		throws Exception {
-
-		User user = UserLocalServiceUtil.getUser(userId);
 
 		PatcherEmailConfiguration patcherEmailConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherEmailConfiguration.class, themeDisplay.getCompanyId());
+				PatcherEmailConfiguration.class, user.getCompanyId());
 
 		Map<String, String> contextAttributes = getPatcherContextAttributes(
-			baseModel, themeDisplay);
+			baseModel, user.getCompanyId(), user.getLocale());
 
 		sendEmail(
-			themeDisplay, emailAddress,
+			user.getCompanyId(), user.getEmailAddress(),
 			_getBodyEmailTemplate(
 				user.getLocale(), patcherEmailConfiguration, status),
 			_getSubjectEmailTemplate(
@@ -136,13 +137,13 @@ public class EmailUtil {
 			contextAttributes);
 
 		if ((baseModel instanceof WorkflowedModel workflowedModel) &&
-			(workflowedModel.getStatusByUserId() != userId)) {
+			(workflowedModel.getStatusByUserId() != user.getUserId())) {
 
 			user = UserLocalServiceUtil.getUser(
 				workflowedModel.getStatusByUserId());
 
 			sendEmail(
-				themeDisplay, user.getEmailAddress(),
+				user.getCompanyId(), user.getEmailAddress(),
 				_getBodyEmailTemplate(
 					user.getLocale(), patcherEmailConfiguration, status),
 				_getSubjectEmailTemplate(
@@ -152,19 +153,16 @@ public class EmailUtil {
 	}
 
 	public static void sendPatcherTimeoutEmail(
-			BaseModel<?> baseModel, String emailAddress,
-			ThemeDisplay themeDisplay, long userId)
+			BaseModel<?> baseModel, User user)
 		throws Exception {
 
 		if (baseModel instanceof PatcherBuild) {
 			sendPatcherEmail(
-				baseModel, emailAddress, WorkflowConstants.STATUS_BUILD_TIMEOUT,
-				themeDisplay, userId);
+				baseModel, WorkflowConstants.STATUS_BUILD_TIMEOUT, user);
 		}
 		else {
 			sendPatcherEmail(
-				baseModel, emailAddress, WorkflowConstants.STATUS_FIX_TIMEOUT,
-				themeDisplay, userId);
+				baseModel, WorkflowConstants.STATUS_FIX_TIMEOUT, user);
 		}
 	}
 
@@ -200,7 +198,7 @@ public class EmailUtil {
 	}
 
 	protected static Map<String, String> getPatcherContextAttributes(
-			BaseModel<?> baseModel, ThemeDisplay themeDisplay)
+			BaseModel<?> baseModel, long companyId, Locale locale)
 		throws Exception {
 
 		Map<String, String> contextAttributes = new HashMap<>();
@@ -223,8 +221,7 @@ public class EmailUtil {
 			if (Validator.isNotNull(patcherBuild.getQaComments())) {
 				PatcherEmailConfiguration patcherEmailConfiguration =
 					ConfigurationProviderUtil.getCompanyConfiguration(
-						PatcherEmailConfiguration.class,
-						themeDisplay.getCompanyId());
+						PatcherEmailConfiguration.class, companyId);
 
 				LocalizedValuesMap emailQACommentsMap =
 					patcherEmailConfiguration.emailQAComments();
@@ -235,8 +232,8 @@ public class EmailUtil {
 				contextAttributes.put(
 					"[$QA_COMMENTS_TEMPLATE$]",
 					StringUtil.replace(
-						emailQACommentsMap.get(themeDisplay.getLocale()),
-						"[$QA_COMMENTS$]", qaComments));
+						emailQACommentsMap.get(locale), "[$QA_COMMENTS$]",
+						qaComments));
 			}
 			else {
 				contextAttributes.put(
@@ -265,23 +262,20 @@ public class EmailUtil {
 			contextAttributes.put(
 				"[$VIEW_BUILD_URL$]",
 				_getDisplayURL(
-					_BUILDS_CONTROLLER_PATH, patcherBuild.getPatcherBuildId(),
-					themeDisplay));
+					_BUILDS_CONTROLLER_PATH, patcherBuild.getPatcherBuildId()));
 			contextAttributes.put(
 				"[$VIEW_CONFLICT_FIX_URL$]",
 				getPatcherFixesURLsByBuildStatus(
-					patcherBuild, WorkflowConstants.STATUS_BUILD_CONFLICT,
-					themeDisplay));
+					patcherBuild, WorkflowConstants.STATUS_BUILD_CONFLICT));
 			contextAttributes.put(
 				"[$VIEW_REBASE_CONFLICT_FIX_URL$]",
 				getPatcherFixesURLsByBuildStatus(
 					patcherBuild,
-					WorkflowConstants.STATUS_BUILD_REBASE_CONFLICT,
-					themeDisplay));
+					WorkflowConstants.STATUS_BUILD_REBASE_CONFLICT));
 
 			PatcherConfiguration patcherConfiguration =
 				ConfigurationProviderUtil.getCompanyConfiguration(
-					PatcherConfiguration.class, themeDisplay.getCompanyId());
+					PatcherConfiguration.class, companyId);
 
 			contextAttributes.put(
 				"[$VIEW_TROUBLESHOOTING_URL$]",
@@ -312,16 +306,14 @@ public class EmailUtil {
 			contextAttributes.put(
 				"[$VIEW_FIX_URL$]",
 				_getDisplayURL(
-					_FIXES_CONTROLLER_PATH, patcherFix.getPatcherFixId(),
-					themeDisplay));
+					_FIXES_CONTROLLER_PATH, patcherFix.getPatcherFixId()));
 		}
 
 		return contextAttributes;
 	}
 
 	protected static String getPatcherFixesURLsByBuildStatus(
-			PatcherBuild patcherBuild, long patcherBuildStatus,
-			ThemeDisplay themeDisplay)
+			PatcherBuild patcherBuild, long patcherBuildStatus)
 		throws Exception {
 
 		if (patcherBuild.getStatus() != patcherBuildStatus) {
@@ -349,9 +341,7 @@ public class EmailUtil {
 					sb.append(", ");
 				}
 
-				sb.append(
-					_getDisplayURL(
-						_FIXES_CONTROLLER_PATH, patcherFixId, themeDisplay));
+				sb.append(_getDisplayURL(_FIXES_CONTROLLER_PATH, patcherFixId));
 			}
 
 			return sb.toString();
@@ -440,9 +430,21 @@ public class EmailUtil {
 		return StringPool.BLANK;
 	}
 
-	private static String _getDisplayURL(
-			String controllerPath, long classPK, ThemeDisplay themeDisplay)
+	private static String _getDisplayURL(String controllerPath, long classPK)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = null;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			themeDisplay = serviceContext.getThemeDisplay();
+		}
+
+		if (themeDisplay == null) {
+			return StringPool.BLANK;
+		}
 
 		String layoutFriendlyURL = StringPool.BLANK;
 

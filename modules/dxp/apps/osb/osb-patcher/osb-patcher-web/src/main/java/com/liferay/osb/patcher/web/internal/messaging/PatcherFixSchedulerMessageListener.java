@@ -39,7 +39,7 @@ public class PatcherFixSchedulerMessageListener extends BaseMessageListener {
 		PatcherUtil.processOSBPatcherStatusFiles(
 			patcherConfiguration.patcherStatusFixPath(), _themeDisplay);
 
-		PatcherUtil.notifyUsersInactivePatcherBaseModels(_themeDisplay);
+		PatcherUtil.notifyUsersInactivePatcherBaseModels();
 	}
 
 	private static final PatcherFixSchedulerMessageListener

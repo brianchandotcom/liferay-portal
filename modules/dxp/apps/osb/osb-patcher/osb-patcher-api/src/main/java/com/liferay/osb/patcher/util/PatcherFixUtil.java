@@ -707,10 +707,7 @@ public class PatcherFixUtil {
 		return PatcherBuildLocalServiceUtil.hasPatcherFixes(patcherFixId);
 	}
 
-	public static void notifyUsersInactivePatcherFixes(
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
+	public static void notifyUsersInactivePatcherFixes() throws Exception {
 		Calendar calendar = new GregorianCalendar();
 
 		calendar.add(Calendar.HOUR, -1);
@@ -729,11 +726,9 @@ public class PatcherFixUtil {
 		}
 
 		for (PatcherFix patcherFix : patcherFixes) {
-			User user = UserLocalServiceUtil.getUser(patcherFix.getUserId());
-
 			EmailUtil.sendPatcherTimeoutEmail(
-				patcherFix, user.getEmailAddress(), themeDisplay,
-				patcherFix.getUserId());
+				patcherFix,
+				UserLocalServiceUtil.getUser(patcherFix.getUserId()));
 
 			PatcherFixLocalServiceUtil.updateNotified(
 				patcherFix.getPatcherFixId(), true);

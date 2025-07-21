@@ -12,14 +12,17 @@ import com.liferay.osb.patcher.util.comparator.PatcherBuildSupportTicketVersionC
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -206,7 +209,8 @@ public class PatcherBuildLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public PatcherBuild updatePatcherBuild(
-			long patcherBuildId, int qaStatus, String supportTicket, int type)
+			long userId, long patcherBuildId, int qaStatus,
+			String supportTicket, int type)
 		throws PortalException {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
@@ -217,13 +221,18 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setSupportTicket(supportTicket);
 		patcherBuild.setType(type);
 
+		User user = _userLocalService.getUser(userId);
+
+		patcherBuild.setStatusByUserId(user.getUserId());
+		patcherBuild.setStatusByUserName(user.getFullName());
+
 		return patcherBuildPersistence.update(patcherBuild);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public PatcherBuild updatePatcherBuild(
-			long patcherBuildId, String fileName, int qaStatus,
+			long userId, long patcherBuildId, String fileName, int qaStatus,
 			String sourceName, int status)
 		throws PortalException {
 
@@ -235,6 +244,11 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setQaStatus(qaStatus);
 		patcherBuild.setSourceName(sourceName);
 		patcherBuild.setStatus(status);
+
+		User user = _userLocalService.getUser(userId);
+
+		patcherBuild.setStatusByUserId(user.getUserId());
+		patcherBuild.setStatusByUserName(user.getFullName());
 
 		return patcherBuildPersistence.update(patcherBuild);
 	}
@@ -263,7 +277,7 @@ public class PatcherBuildLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public PatcherBuild updateQaFields(
-			long patcherBuildId, String qaComments, int qaStatus)
+			long userId, long patcherBuildId, String qaComments, int qaStatus)
 		throws PortalException {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
@@ -273,12 +287,18 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setQaComments(qaComments);
 		patcherBuild.setQaStatus(qaStatus);
 
+		User user = _userLocalService.getUser(userId);
+
+		patcherBuild.setStatusByUserId(user.getUserId());
+		patcherBuild.setStatusByUserName(user.getFullName());
+
 		return patcherBuildPersistence.update(patcherBuild);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public PatcherBuild updateQaStatus(long patcherBuildId, int qaStatus)
+	public PatcherBuild updateQaStatus(
+			long userId, long patcherBuildId, int qaStatus)
 		throws PortalException {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
@@ -286,6 +306,11 @@ public class PatcherBuildLocalServiceImpl
 
 		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setQaStatus(qaStatus);
+
+		User user = _userLocalService.getUser(userId);
+
+		patcherBuild.setStatusByUserId(user.getUserId());
+		patcherBuild.setStatusByUserName(user.getFullName());
 
 		return patcherBuildPersistence.update(patcherBuild);
 	}
@@ -306,7 +331,8 @@ public class PatcherBuildLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public PatcherBuild updateStatus(long patcherBuildId, int status)
+	public PatcherBuild updateStatus(
+			long userId, long patcherBuildId, int status)
 		throws PortalException {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
@@ -315,7 +341,15 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setStatus(status);
 
+		User user = _userLocalService.getUser(userId);
+
+		patcherBuild.setStatusByUserId(user.getUserId());
+		patcherBuild.setStatusByUserName(user.getFullName());
+
 		return patcherBuildPersistence.update(patcherBuild);
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -1149,16 +1149,13 @@ public class CompanyLocalServiceTest {
 	public void testUpdateCompanyLocalesWithLayoutSetPrototype()
 		throws Exception {
 
+		LayoutSetPrototype layoutSetPrototype = null;
+		String originalLanguageId = LocaleUtil.toLanguageId(
+			_company.getLocale());
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
-
-		String originalLanguageId = LocaleUtil.toLanguageId(
-			_company.getLocale());
-
 		TimeZone timeZone = _company.getTimeZone();
-
-		LayoutSetPrototype layoutSetPrototype = null;
 
 		try {
 			long userId = _userLocalService.getGuestUserId(

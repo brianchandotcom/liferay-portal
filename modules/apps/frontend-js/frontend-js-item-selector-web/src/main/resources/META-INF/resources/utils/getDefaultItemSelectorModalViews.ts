@@ -5,16 +5,12 @@
 
 import {IView} from '@liferay/frontend-data-set-web';
 
-import {
-	assetLibraryViews,
-	documentsAndMediaViews,
-	userViews,
-} from './defaultViews';
+import {assetLibraryViews, documentViews, userViews} from './defaultViews';
 
 export enum EItemSelectorModalViewsConfig {
-	ASSET_LIBRARY = 'assets',
-	DOCUMENTS_AND_MEDIA = 'documents',
-	USERS = 'users',
+	ASSET_LIBRARIES = 'assetLibraries',
+	DOCUMENTS = 'documents',
+	USER_ACCOUNTS = 'userAccounts',
 }
 
 export const getDefaultItemSelectorModalViews = function ({
@@ -25,15 +21,13 @@ export const getDefaultItemSelectorModalViews = function ({
 	if (typeof viewsConfig === 'object') {
 		return viewsConfig;
 	}
-	else if (viewsConfig === EItemSelectorModalViewsConfig.ASSET_LIBRARY) {
+	else if (viewsConfig === EItemSelectorModalViewsConfig.ASSET_LIBRARIES) {
 		return assetLibraryViews;
 	}
-	else if (
-		viewsConfig === EItemSelectorModalViewsConfig.DOCUMENTS_AND_MEDIA
-	) {
-		return documentsAndMediaViews;
+	else if (viewsConfig === EItemSelectorModalViewsConfig.DOCUMENTS) {
+		return documentViews;
 	}
-	else if (viewsConfig === EItemSelectorModalViewsConfig.USERS) {
+	else if (viewsConfig === EItemSelectorModalViewsConfig.USER_ACCOUNTS) {
 		return userViews;
 	}
 };

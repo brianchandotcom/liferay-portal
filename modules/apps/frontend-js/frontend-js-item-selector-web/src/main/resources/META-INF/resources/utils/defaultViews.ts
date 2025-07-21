@@ -36,7 +36,7 @@ export const assetLibraryViews = [
 	},
 ];
 
-export const documentsAndMediaViews = [
+export const documentViews = [
 	{
 		contentRenderer: 'cards',
 		label: Liferay.Language.get('cards'),

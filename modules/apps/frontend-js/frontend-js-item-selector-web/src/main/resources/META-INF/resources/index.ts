@@ -7,7 +7,7 @@ export {default as ItemSelector} from './item_selector/ItemSelector';
 export {default as ItemSelectorModal} from './item_selector/itemSelectorModal';
 
 export {
-	documentsAndMediaViews,
+	documentViews,
 	assetLibraryViews,
 	userViews,
 } from './utils/defaultViews';

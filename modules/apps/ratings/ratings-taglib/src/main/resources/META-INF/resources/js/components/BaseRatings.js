@@ -7,13 +7,15 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
-import TYPES from './RATINGS_TYPES';
-import RatingsLike from './components/RatingsLike';
-import RatingsStars from './components/RatingsStars';
-import RatingsThumbs from './components/RatingsThumbs';
-import {errorToast} from './utils/toast';
+import TYPES from '../RATINGS_TYPES';
+import {errorToast} from '../utils/toast';
+import RatingsLike from './RatingsLike';
+import RatingsStars from './RatingsStars';
+import RatingsThumbs from './RatingsThumbs';
 
-const Ratings = ({
+const RATE_ENTRY_URL = '/c/portal/rate_entry';
+
+const BaseRatings = ({
 	className,
 	classPK,
 	contentTitle,
@@ -21,7 +23,7 @@ const Ratings = ({
 	inTrash = false,
 	signedIn,
 	type,
-	url,
+	url = RATE_ENTRY_URL,
 	...restProps
 }) => {
 	const getDefaultTitle = () => {
@@ -97,7 +99,7 @@ const Ratings = ({
 	);
 };
 
-Ratings.propTypes = {
+BaseRatings.propTypes = {
 	className: PropTypes.string.isRequired,
 	classPK: PropTypes.string.isRequired,
 	enabled: PropTypes.bool,
@@ -107,4 +109,4 @@ Ratings.propTypes = {
 	url: PropTypes.string.isRequired,
 };
 
-export {Ratings};
+export default BaseRatings;

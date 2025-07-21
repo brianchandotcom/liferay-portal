@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -51,7 +52,10 @@ public class DepotEntryUserNotificationHandler
 		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
 			classPK);
 
-		if ((depotEntry == null) || (depotEntry.getGroup() == null)) {
+		if ((depotEntry == null) || (depotEntry.getGroup() == null) ||
+			!_groupLocalService.hasUserGroup(
+				serviceContext.getUserId(), depotEntry.getGroupId())) {
+
 			_userNotificationEventLocalService.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
@@ -107,6 +111,9 @@ public class DepotEntryUserNotificationHandler
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

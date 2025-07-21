@@ -12,6 +12,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -32,6 +33,7 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	@TestInfo("LPD-59838")
 	public void testGetAssetCategoryTreeNodeTitleNonexisting()
 		throws Exception {
 

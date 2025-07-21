@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -74,6 +75,7 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPD-59838")
 	public void testDoServeResourceWhereInfoItemObjectIsNull()
 		throws Exception {
 

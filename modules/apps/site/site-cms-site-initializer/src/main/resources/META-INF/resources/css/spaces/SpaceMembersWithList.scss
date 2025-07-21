@@ -2,10 +2,12 @@
 	padding: 24px;
 
 	.members-list {
-		margin-top: 16px !important;
-		max-height: 200px !important;
 		overflow-y: auto;
-		padding: 0 !important;
+		max-height: 200px;
+
+		html:not(#__):not(#___) .cadmin & {
+			max-height: 200px;
+		}
 
 		li {
 			list-style: none;

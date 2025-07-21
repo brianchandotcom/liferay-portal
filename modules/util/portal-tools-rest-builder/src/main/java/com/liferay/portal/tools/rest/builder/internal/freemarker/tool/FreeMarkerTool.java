@@ -747,6 +747,49 @@ public class FreeMarkerTool {
 		return parentJavaMethodSignatures;
 	}
 
+	public JavaMethodSignature getParentPermissionsPageJavaMethodSignature(
+		String httpMethod, List<JavaMethodSignature> javaMethodSignatures,
+		String parentSchemaName, String schemaName) {
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			if ((parentSchemaName != null) &&
+				Objects.equals(
+					javaMethodSignature.getMethodName(),
+					StringBundler.concat(
+						httpMethod, parentSchemaName, schemaName,
+						"PermissionsPage")) &&
+				hasPathParameter(
+					javaMethodSignature,
+					TextFormatter.format(parentSchemaName, TextFormatter.I) +
+						"ExternalReferenceCode") &&
+				hasPathParameter(
+					javaMethodSignature,
+					TextFormatter.format(schemaName, TextFormatter.I) +
+						"ExternalReferenceCode")) {
+
+				return javaMethodSignature;
+			}
+		}
+
+		return null;
+	}
+
+	public JavaMethodSignature getPermissionsPageJavaMethodSignature(
+		String httpMethod, List<JavaMethodSignature> javaMethodSignatures,
+		String schemaName) {
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			if (Objects.equals(
+					javaMethodSignature.getMethodName(),
+					httpMethod + schemaName + "PermissionsPage")) {
+
+				return javaMethodSignature;
+			}
+		}
+
+		return null;
+	}
+
 	public JavaMethodSignature getPostSchemaJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String parameterName,
 		String schemaName) {
@@ -1004,6 +1047,21 @@ public class FreeMarkerTool {
 		return false;
 	}
 
+	public boolean hasPathParameter(
+		JavaMethodSignature javaMethodSignature, String parameterName) {
+
+		List<JavaMethodParameter> javaMethodParameters =
+			javaMethodSignature.getPathJavaMethodParameters();
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			if (parameterName.equals(javaMethodParameter.getParameterName())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean hasPostSchemaJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String parameterName,
 		String schemaName) {
@@ -1127,32 +1185,36 @@ public class FreeMarkerTool {
 
 		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
 
+		JavaMethodSignature getPermissionsPageJavaMethodSignature =
+			getPermissionsPageJavaMethodSignature(
+				"get", javaMethodSignatures, schemaName);
+
+		JavaMethodSignature putPermissionsPageJavaMethodSignature =
+			getPermissionsPageJavaMethodSignature(
+				"put", javaMethodSignatures, schemaName);
+
+		String parentSchemaName = GetterUtil.getString(
+			javaMethodSignature.getParentSchemaName());
+
+		JavaMethodSignature getParentPermissionsPageJavaMethodSignature =
+			getParentPermissionsPageJavaMethodSignature(
+				"get", javaMethodSignatures, parentSchemaName, schemaName);
+
+		JavaMethodSignature putParentPermissionsPageJavaMethodSignature =
+			getParentPermissionsPageJavaMethodSignature(
+				"put", javaMethodSignatures, parentSchemaName, schemaName);
+
 		if (MapUtil.isEmpty(propertySchemas) ||
 			!propertySchemas.containsKey("permissions") ||
-			((!containsJavaMethodSignature(
-				javaMethodSignatures, "get" + schemaName + "PermissionsPage") ||
-			  !containsJavaMethodSignature(
-				  javaMethodSignatures,
-				  "put" + schemaName + "PermissionsPage")) &&
-			 (!containsJavaMethodSignature(
-				 javaMethodSignatures,
-				 "getSite" + schemaName + "PermissionsPage") ||
-			  !containsJavaMethodSignature(
-				  javaMethodSignatures,
-				  "putSite" + schemaName + "PermissionsPage")) &&
-			 (!containsJavaMethodSignature(
-				 javaMethodSignatures,
-				 "getAssetLibrary" + schemaName + "PermissionsPage") ||
-			  !containsJavaMethodSignature(
-				  javaMethodSignatures,
-				  "putAssetLibrary" + schemaName + "PermissionsPage")))) {
+			(((getPermissionsPageJavaMethodSignature == null) ||
+			  (putPermissionsPageJavaMethodSignature == null)) &&
+			 ((getParentPermissionsPageJavaMethodSignature == null) ||
+			  (putParentPermissionsPageJavaMethodSignature == null)))) {
 
 			return false;
 		}
 
 		String methodName = javaMethodSignature.getMethodName();
-		String parentSchemaName = GetterUtil.getString(
-			javaMethodSignature.getParentSchemaName());
 		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
 
 		if (!(methodName.equals(

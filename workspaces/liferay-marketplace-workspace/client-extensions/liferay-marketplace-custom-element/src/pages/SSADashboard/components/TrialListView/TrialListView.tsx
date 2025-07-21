@@ -10,12 +10,11 @@ import {ManagementToolbarProps} from '../../../../components/ListView/components
 import {OrderCustomFields, OrderTypes} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Action} from '../../../../utils/constants';
-import {TrialSettings} from '../../enums/SSATrials';
-import {SSASettings} from '../../types';
-import {getExtensionStatusFromTrialSettings} from '../../util';
+import {getSSASettingsOrDefaultFromCustomFields} from '../../util';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
 import SearchBuilder from '../../../../core/SearchBuilder';
+import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
 
 type TrialsListViewProps = {
 	actions: Action[];
@@ -62,14 +61,10 @@ export default function TrialListView({
 						id: 'placedOrderItems',
 						name: 'Project ID',
 						render: (_, {customFields, id}) => {
-							const trialSettings =
-								customFields[OrderCustomFields.TRIAL_SETTINGS];
 							const SSASettings =
-								trialSettings === ''
-									? {projectId: 'none'}
-									: (JSON.parse(trialSettings)[
-											TrialSettings.SSA_SETTINGS
-										] as SSASettings);
+								getSSASettingsOrDefaultFromCustomFields(
+									customFields
+								);
 
 							return (
 								<span className="font-weight-semi-bold ml-2">
@@ -146,15 +141,20 @@ export default function TrialListView({
 					{
 						id: 'customFields',
 						name: 'Extension Status',
-						render: (customFields) => (
-							<ExtensionStatus
-								extensionStatus={getExtensionStatusFromTrialSettings(
-									customFields[
-										OrderCustomFields.TRIAL_SETTINGS
-									]
-								)}
-							/>
-						),
+						render: (customFields) => {
+							const SSASettings =
+								getSSASettingsOrDefaultFromCustomFields(
+									customFields
+								);
+							console.log(SSASettings);
+							return (
+								<ExtensionStatus
+									extensionStatus={
+										SSASettings.extendRequestStatus as keyof typeof EXTEND_TRIAL_STATUS_LABEL
+									}
+								/>
+							);
+						},
 					},
 				],
 			}}

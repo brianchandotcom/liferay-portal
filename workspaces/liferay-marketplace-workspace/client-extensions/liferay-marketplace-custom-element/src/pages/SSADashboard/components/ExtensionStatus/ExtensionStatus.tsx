@@ -6,20 +6,12 @@
 import classNames from 'classnames';
 
 import {ExtendRequestStatus} from '../../enums/SSATrials';
+import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
 
 import './ExtensionStatus.scss';
 
 type ExtensionStatusProps = {
-	extensionStatus: keyof typeof extensionStatusLabel;
-};
-
-const extensionStatusLabel = {
-	approved: 'Approved',
-	autoapproved: 'Auto  Approved',
-	extensionexpired: 'Extension Expired',
-	notrequested: 'Not Requested',
-	pending: 'Pending',
-	rejected: 'Rejected',
+	extensionStatus: keyof typeof EXTEND_TRIAL_STATUS_LABEL;
 };
 
 const ExtensionStatus = ({extensionStatus}: ExtensionStatusProps) => (
@@ -39,7 +31,7 @@ const ExtensionStatus = ({extensionStatus}: ExtensionStatusProps) => (
 				extensionStatus === ExtendRequestStatus.PENDING,
 		})}
 	>
-		{extensionStatusLabel[extensionStatus]}
+		{EXTEND_TRIAL_STATUS_LABEL[extensionStatus]}
 	</span>
 );
 export default ExtensionStatus;

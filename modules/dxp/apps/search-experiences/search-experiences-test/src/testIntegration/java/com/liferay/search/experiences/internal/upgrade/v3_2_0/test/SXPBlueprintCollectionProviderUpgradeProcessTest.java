@@ -30,6 +30,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
@@ -84,7 +85,7 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 				null, TestPropsValues.getUserId(), originalConfiguration,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				StringPool.BLANK, "1.1",
+				StringPool.BLANK, SXPConstants.SXP_BLUEPRINT_SCHEMA_VERSION,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				ServiceContextTestUtil.getServiceContext(
@@ -141,7 +142,7 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 				null, TestPropsValues.getUserId(), originalConfiguration,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				StringPool.BLANK, "1.1",
+				StringPool.BLANK, SXPConstants.SXP_BLUEPRINT_SCHEMA_VERSION,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				ServiceContextTestUtil.getServiceContext(

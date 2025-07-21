@@ -366,10 +366,8 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			}
 		}
 
-		Object infoItem = _getInfoItem(infoItemReference);
-
-		if (infoItem != null) {
-			return infoItem;
+		if ((classPK <= 0) && Validator.isNull(externalReferenceCode)) {
+			return _getInfoItem(infoItemReference);
 		}
 
 		InfoItemIdentifier infoItemIdentifier = null;

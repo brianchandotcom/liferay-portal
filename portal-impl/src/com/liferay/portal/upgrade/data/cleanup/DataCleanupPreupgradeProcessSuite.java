@@ -11,12 +11,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 
 import java.sql.Connection;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -58,9 +57,8 @@ public class DataCleanupPreupgradeProcessSuite {
 		DataCleanupPreupgradeProcessSuite.class);
 
 	private final List<DataCleanupPreupgradeProcess>
-		_dataCleanupPreupgradeProcesses = new ArrayList<>(
-			Arrays.asList(
-				new CompanyDataCleanupPreupgradeProcess(),
-				new GroupDataCleanupPreupgradeProcess()));
+		_dataCleanupPreupgradeProcesses = ListUtil.fromArray(
+			new CompanyDataCleanupPreupgradeProcess(),
+			new GroupDataCleanupPreupgradeProcess());
 
 }

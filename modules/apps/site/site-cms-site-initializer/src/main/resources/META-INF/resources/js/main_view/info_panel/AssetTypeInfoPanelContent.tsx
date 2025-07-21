@@ -8,13 +8,13 @@ import React, {useEffect, useState} from 'react';
 import {
 	ISearchAssetObjectEntry,
 	ISearchAssetTypeInformation,
-	getBaseAssetInformation,
 } from '../../structure_builder/types/AssetType';
 import AssetTypeInfoPanelBody from './AssetTypeInfoPanelBody';
 import AssetTypeInfoPanelHeader from './AssetTypeInfoPanelHeader';
 import {AssetTypeInfoPanelContext, IAssetTypeInfoPanelContext} from './context';
 
 import '../../../css/components/AssetTypeInfoPanel.scss';
+import {getBaseAssetInformation} from './util';
 import {EVENTS} from './util/constants';
 
 const AssetTypeInfoPanelContent = () => {

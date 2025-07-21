@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ASSET_TYPE} from '../../main_view/info_panel/util/constants';
-
 export interface IAssetFile {
 	externalReferenceCode: string;
 	id: number;
@@ -39,6 +37,8 @@ export interface IAssetObjectEntry {
 		label_i18n: string;
 	};
 	systemProperties: IAssetVersion;
+	taxonomyCategoryBriefs?: any[];
+	taxonomyCategoryIds?: number[];
 	title: string;
 	title_i18n: any;
 }
@@ -58,6 +58,13 @@ export interface ISearchAssetObjectEntry {
 	score: number;
 }
 
+export interface IGroupedTaxonomies {
+	taxonomyCategoryIds: number[];
+	taxonomyVocabularies: {
+		[taxonomyVocabularyId: number]: ITaxonomyCategoryFacade[];
+	};
+}
+
 export interface ISearchAssetTypeInformation {
 	externalReferenceCode?: string | null;
 	icon?: string | null;
@@ -71,38 +78,14 @@ export interface ISearchAssetTypeInformation {
 	type?: string | null;
 }
 
-export function getBaseAssetInformation({
-	actions: {
-		get: {href},
-	},
-	embedded: {externalReferenceCode, id, title, title_i18n},
-}: ISearchAssetObjectEntry): ISearchAssetTypeInformation {
-	const baseAssetInfo: ISearchAssetTypeInformation = {
-		externalReferenceCode,
-		id,
-		title,
-		title_i18n,
-	};
+export interface ITaxonomyCategoryFacade {
+	id: string;
+	name?: string;
+	parentTaxonomyVocabulary: ITaxonomyVocabulary;
+	taxonomyVocabularyId: number;
+}
 
-	if (href.includes('object-entry-folders')) {
-		baseAssetInfo.icon = 'folder';
-		baseAssetInfo.type = ASSET_TYPE.FOLDER;
-	}
-	else if (
-		href.includes('basic-documents') ||
-		href.includes('external-videos')
-	) {
-		baseAssetInfo.icon = 'document-image';
-		baseAssetInfo.type = ASSET_TYPE.FILES;
-	}
-	else if (
-		href.includes('basic-web-contents') ||
-		href.includes('blogs') ||
-		href.includes('knowledge-bases')
-	) {
-		baseAssetInfo.icon = 'forms';
-		baseAssetInfo.type = ASSET_TYPE.CONTENTS;
-	}
-
-	return baseAssetInfo;
+export interface ITaxonomyVocabulary {
+	id: number;
+	name: string;
 }

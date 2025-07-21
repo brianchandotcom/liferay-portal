@@ -1905,10 +1905,6 @@ public class RenderLayoutStructureTagTest {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid());
-
 		ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
 				"styles",
@@ -1925,7 +1921,9 @@ public class RenderLayoutStructureTagTest {
 					))
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
-			_layoutStructureProvider, segmentsExperienceId);
+			_layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 

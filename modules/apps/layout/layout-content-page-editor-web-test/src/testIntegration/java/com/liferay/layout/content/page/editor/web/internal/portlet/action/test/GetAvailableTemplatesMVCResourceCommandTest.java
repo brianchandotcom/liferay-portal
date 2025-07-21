@@ -99,7 +99,7 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 		JSONArray responseJSONArray = JSONFactoryUtil.createJSONArray(
 			byteArrayOutputStream.toString());
 
-		int countInfoItemRenderers = 0;
+		int noninfoItemTemplatedRendererCount = 0;
 
 		for (InfoItemRenderer<?> infoItemRenderer :
 				_infoItemRendererRegistry.getInfoItemRenderers(
@@ -110,11 +110,12 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 			}
 
 			if (!(infoItemRenderer instanceof InfoItemTemplatedRenderer)) {
-				countInfoItemRenderers++;
+				noninfoItemTemplatedRendererCount++;
 			}
 		}
 
-		Assert.assertEquals(countInfoItemRenderers, responseJSONArray.length());
+		Assert.assertEquals(
+			noninfoItemTemplatedRendererCount, responseJSONArray.length());
 	}
 
 	@Rule

@@ -6,6 +6,7 @@
 package com.liferay.osb.patcher.util;
 
 import com.liferay.osb.patcher.configuration.PatcherConfiguration;
+import com.liferay.osb.patcher.configuration.PatcherEmailConfiguration;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.model.PatcherBuild;
@@ -13,8 +14,6 @@ import com.liferay.osb.patcher.model.PatcherFix;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,16 +36,13 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.IOException;
-
-import java.net.URL;
-
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -117,47 +114,39 @@ public class EmailUtil {
 	}
 
 	public static void sendPatcherEmail(
-			BaseModel<?> baseModel, String emailAddress,
-			String templateNameSuffix, ThemeDisplay themeDisplay, long userId)
+			BaseModel<?> baseModel, String emailAddress, int status,
+			ThemeDisplay themeDisplay, long userId)
 		throws Exception {
 
-		if (Validator.isNull(templateNameSuffix)) {
-			return;
-		}
+		User user = UserLocalServiceUtil.getUser(userId);
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("email_");
-
-		Class<?> modelClass = baseModel.getModelClass();
-
-		sb.append(
-			applyTextFormatterFormats(
-				modelClass.getSimpleName(), TextFormatter.L, TextFormatter.K,
-				TextFormatter.N));
-
-		sb.append(StringPool.UNDERLINE);
-		sb.append(
-			applyTextFormatterFormats(
-				templateNameSuffix, TextFormatter.B, TextFormatter.N));
-
-		String body = getBodyEmailTemplate(sb.toString());
-
-		String subject = getSubjectEmailTemplate(sb.toString());
+		PatcherEmailConfiguration patcherEmailConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				PatcherEmailConfiguration.class, themeDisplay.getCompanyId());
 
 		Map<String, String> contextAttributes = getPatcherContextAttributes(
 			baseModel, themeDisplay);
 
-		sendEmail(themeDisplay, emailAddress, body, subject, contextAttributes);
+		sendEmail(
+			themeDisplay, emailAddress,
+			_getBodyEmailTemplate(
+				user.getLocale(), patcherEmailConfiguration, status),
+			_getSubjectEmailTemplate(
+				user.getLocale(), patcherEmailConfiguration, status),
+			contextAttributes);
 
 		if ((baseModel instanceof WorkflowedModel workflowedModel) &&
 			(workflowedModel.getStatusByUserId() != userId)) {
 
-			User user = UserLocalServiceUtil.getUser(
+			user = UserLocalServiceUtil.getUser(
 				workflowedModel.getStatusByUserId());
 
 			sendEmail(
-				themeDisplay, user.getEmailAddress(), body, subject,
+				themeDisplay, user.getEmailAddress(),
+				_getBodyEmailTemplate(
+					user.getLocale(), patcherEmailConfiguration, status),
+				_getSubjectEmailTemplate(
+					user.getLocale(), patcherEmailConfiguration, status),
 				contextAttributes);
 		}
 	}
@@ -167,22 +156,16 @@ public class EmailUtil {
 			ThemeDisplay themeDisplay, long userId)
 		throws Exception {
 
-		sendPatcherEmail(
-			baseModel, emailAddress, "timeout", themeDisplay, userId);
-	}
-
-	protected static String applyTextFormatterFormats(
-		String string, int... formats) {
-
-		for (int format : formats) {
-			string = TextFormatter.format(string, format);
+		if (baseModel instanceof PatcherBuild) {
+			sendPatcherEmail(
+				baseModel, emailAddress, WorkflowConstants.STATUS_BUILD_TIMEOUT,
+				themeDisplay, userId);
 		}
-
-		return string;
-	}
-
-	protected static String getBodyEmailTemplate(String templateName) {
-		return getEmailTemplate(templateName + "_body.tmpl");
+		else {
+			sendPatcherEmail(
+				baseModel, emailAddress, WorkflowConstants.STATUS_FIX_TIMEOUT,
+				themeDisplay, userId);
+		}
 	}
 
 	protected static String getDownloadHotfixURL(PatcherBuild patcherBuild)
@@ -216,30 +199,6 @@ public class EmailUtil {
 		return StringPool.BLANK;
 	}
 
-	protected static String getEmailTemplate(String templateName) {
-		ClassLoader portletClassLoader = EmailUtil.class.getClassLoader();
-
-		URL url = portletClassLoader.getResource(
-			_TEMPLATE_DIRECTORY + templateName);
-
-		if (url == null) {
-			return StringPool.BLANK;
-		}
-
-		try {
-			return com.liferay.petra.string.StringUtil.read(
-				portletClassLoader, _TEMPLATE_DIRECTORY + templateName);
-		}
-		catch (IOException ioException) {
-			_log.error(
-				"Unable to read the content for: " + _TEMPLATE_DIRECTORY +
-					templateName,
-				ioException);
-		}
-
-		return StringPool.BLANK;
-	}
-
 	protected static Map<String, String> getPatcherContextAttributes(
 			BaseModel<?> baseModel, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -262,8 +221,13 @@ public class EmailUtil {
 				String.valueOf(patcherBuild.getPatcherBuildId()));
 
 			if (Validator.isNotNull(patcherBuild.getQaComments())) {
-				String qaCommentsParagraphTemplate = getEmailTemplate(
-					"email_qa_comments.tmpl");
+				PatcherEmailConfiguration patcherEmailConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						PatcherEmailConfiguration.class,
+						themeDisplay.getCompanyId());
+
+				LocalizedValuesMap emailQACommentsMap =
+					patcherEmailConfiguration.emailQAComments();
 
 				String qaComments = HtmlUtil.escape(
 					patcherBuild.getQaComments());
@@ -271,8 +235,8 @@ public class EmailUtil {
 				contextAttributes.put(
 					"[$QA_COMMENTS_TEMPLATE$]",
 					StringUtil.replace(
-						qaCommentsParagraphTemplate, "[$QA_COMMENTS$]",
-						qaComments));
+						emailQACommentsMap.get(themeDisplay.getLocale()),
+						"[$QA_COMMENTS$]", qaComments));
 			}
 			else {
 				contextAttributes.put(
@@ -396,8 +360,84 @@ public class EmailUtil {
 		return StringPool.BLANK;
 	}
 
-	protected static String getSubjectEmailTemplate(String templateName) {
-		return getEmailTemplate(templateName + "_subject.tmpl");
+	private static String _getBodyEmailTemplate(
+		Locale locale, PatcherEmailConfiguration patcherEmailConfiguration,
+		int status) {
+
+		if (status == WorkflowConstants.STATUS_BUILD_COMPLETE) {
+			LocalizedValuesMap emailPatcherBuildCompleteBodyMap =
+				patcherEmailConfiguration.emailPatcherBuildCompleteBody();
+
+			return emailPatcherBuildCompleteBodyMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_CONFLICT) {
+			LocalizedValuesMap emailPatcherBuildConflictBodyMap =
+				patcherEmailConfiguration.emailPatcherBuildConflictBody();
+
+			return emailPatcherBuildConflictBodyMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_FAILED) {
+			LocalizedValuesMap emailPatcherBuildFailedBodyMap =
+				patcherEmailConfiguration.emailPatcherBuildFailedBody();
+
+			return emailPatcherBuildFailedBodyMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_QA_ANALYSIS_NEEDED) {
+			LocalizedValuesMap emailPatcherBuildQAAnalysisNeededBodyMap =
+				patcherEmailConfiguration.
+					emailPatcherBuildQAAnalysisNeededBody();
+
+			return emailPatcherBuildQAAnalysisNeededBodyMap.get(locale);
+		}
+		else if (status ==
+					WorkflowConstants.STATUS_BUILD_QA_AUTOMATION_PASSED) {
+
+			LocalizedValuesMap emailPatcherBuildQAAutomationPassedBodyMap =
+				patcherEmailConfiguration.
+					emailPatcherBuildQAAutomationPassedBody();
+
+			return emailPatcherBuildQAAutomationPassedBodyMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_QA_FAILED_MANUALLY) {
+			LocalizedValuesMap emailPatcherBuildQAFailedManuallyBodyMap =
+				patcherEmailConfiguration.
+					emailPatcherBuildQAFailedManuallyBody();
+
+			return emailPatcherBuildQAFailedManuallyBodyMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_QA_PASSED_MANUALLY) {
+			LocalizedValuesMap emailPatcherBuildQAPassedManuallyBodyMap =
+				patcherEmailConfiguration.
+					emailPatcherBuildQAPassedManuallyBody();
+
+			return emailPatcherBuildQAPassedManuallyBodyMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_TIMEOUT) {
+			LocalizedValuesMap emailPatcherBuildTimeoutBodyMap =
+				patcherEmailConfiguration.emailPatcherBuildTimeoutBody();
+
+			return emailPatcherBuildTimeoutBodyMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_FIX_COMPLETE) {
+			LocalizedValuesMap emailPatcherFixCompleteBodyMap =
+				patcherEmailConfiguration.emailPatcherFixCompleteBody();
+
+			return emailPatcherFixCompleteBodyMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_FIX_FAILED) {
+			LocalizedValuesMap emailPatcherFixFailedBodyMap =
+				patcherEmailConfiguration.emailPatcherFixFailedBody();
+
+			return emailPatcherFixFailedBodyMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_FIX_TIMEOUT) {
+			LocalizedValuesMap emailPatcherFixTimeoutBodyMap =
+				patcherEmailConfiguration.emailPatcherFixTimeoutBody();
+
+			return emailPatcherFixTimeoutBodyMap.get(locale);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private static String _getDisplayURL(
@@ -439,13 +479,88 @@ public class EmailUtil {
 		return sb.toString();
 	}
 
+	private static String _getSubjectEmailTemplate(
+		Locale locale, PatcherEmailConfiguration patcherEmailConfiguration,
+		int status) {
+
+		if (status == WorkflowConstants.STATUS_BUILD_COMPLETE) {
+			LocalizedValuesMap emailPatcherBuildCompleteSubjectMap =
+				patcherEmailConfiguration.emailPatcherBuildCompleteSubject();
+
+			return emailPatcherBuildCompleteSubjectMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_CONFLICT) {
+			LocalizedValuesMap emailPatcherBuildConflictSubjectMap =
+				patcherEmailConfiguration.emailPatcherBuildConflictSubject();
+
+			return emailPatcherBuildConflictSubjectMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_FAILED) {
+			LocalizedValuesMap emailPatcherBuildFailedSubjectMap =
+				patcherEmailConfiguration.emailPatcherBuildFailedSubject();
+
+			return emailPatcherBuildFailedSubjectMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_QA_ANALYSIS_NEEDED) {
+			LocalizedValuesMap emailPatcherBuildQAAnalysisNeededSubjectMap =
+				patcherEmailConfiguration.
+					emailPatcherBuildQAAnalysisNeededSubject();
+
+			return emailPatcherBuildQAAnalysisNeededSubjectMap.get(locale);
+		}
+		else if (status ==
+					WorkflowConstants.STATUS_BUILD_QA_AUTOMATION_PASSED) {
+
+			LocalizedValuesMap emailPatcherBuildQAAutomationPassedSubjectMap =
+				patcherEmailConfiguration.
+					emailPatcherBuildQAAutomationPassedSubject();
+
+			return emailPatcherBuildQAAutomationPassedSubjectMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_QA_FAILED_MANUALLY) {
+			LocalizedValuesMap emailPatcherBuildQAFailedManuallySubjectMap =
+				patcherEmailConfiguration.
+					emailPatcherBuildQAFailedManuallySubject();
+
+			return emailPatcherBuildQAFailedManuallySubjectMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_QA_PASSED_MANUALLY) {
+			LocalizedValuesMap emailPatcherBuildQAPassedManuallySubjectMap =
+				patcherEmailConfiguration.
+					emailPatcherBuildQAPassedManuallySubject();
+
+			return emailPatcherBuildQAPassedManuallySubjectMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_BUILD_TIMEOUT) {
+			LocalizedValuesMap emailPatcherBuildTimeoutSubjectMap =
+				patcherEmailConfiguration.emailPatcherBuildTimeoutSubject();
+
+			return emailPatcherBuildTimeoutSubjectMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_FIX_COMPLETE) {
+			LocalizedValuesMap emailPatcherFixCompleteSubjectMap =
+				patcherEmailConfiguration.emailPatcherFixCompleteSubject();
+
+			return emailPatcherFixCompleteSubjectMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_FIX_FAILED) {
+			LocalizedValuesMap emailPatcherFixFailedSubjectMap =
+				patcherEmailConfiguration.emailPatcherFixFailedSubject();
+
+			return emailPatcherFixFailedSubjectMap.get(locale);
+		}
+		else if (status == WorkflowConstants.STATUS_FIX_TIMEOUT) {
+			LocalizedValuesMap emailPatcherFixTimeoutSubjectMap =
+				patcherEmailConfiguration.emailPatcherFixTimeoutSubject();
+
+			return emailPatcherFixTimeoutSubjectMap.get(locale);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private static final String _BUILDS_CONTROLLER_PATH = "builds";
 
 	private static final String _FIXES_CONTROLLER_PATH = "fixes";
-
-	private static final String _TEMPLATE_DIRECTORY =
-		"com/liferay/osb/patcher/dependencies/";
-
-	private static final Log _log = LogFactoryUtil.getLog(EmailUtil.class);
 
 }

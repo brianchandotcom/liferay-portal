@@ -92,8 +92,12 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 			_getMockLiferayResourceRequest(journalArticle.getResourcePrimKey()),
 			mockLiferayResourceResponse);
 
-		JSONArray responseJSONArray = _getResponseJSONArray(
-			mockLiferayResourceResponse);
+		ByteArrayOutputStream byteArrayOutputStream =
+			(ByteArrayOutputStream)
+				mockLiferayResourceResponse.getPortletOutputStream();
+
+		JSONArray responseJSONArray = JSONFactoryUtil.createJSONArray(
+			byteArrayOutputStream.toString());
 
 		int countInfoItemRenderers = 0;
 
@@ -138,18 +142,6 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 			"externalReferenceCode", RandomTestUtil.randomString());
 
 		return mockLiferayResourceRequest;
-	}
-
-	private JSONArray _getResponseJSONArray(
-			MockLiferayResourceResponse mockLiferayResourceResponse)
-		throws Exception {
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
-
-		return JSONFactoryUtil.createJSONArray(
-			byteArrayOutputStream.toString());
 	}
 
 	private static final String _CLASS_NAME_JOURNAL_ARTICLE =

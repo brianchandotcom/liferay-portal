@@ -41,6 +41,10 @@ export function loadClientExtensions() {
 	return Promise.resolve();
 }
 
+export function objectToFormData(object: object) {
+	return object;
+}
+
 export function sub(str: string) {
 	return str;
 }

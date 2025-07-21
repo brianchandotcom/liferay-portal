@@ -103,7 +103,6 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.sites.kernel.util.Sites;
 
@@ -1279,13 +1278,9 @@ public class CompanyLocalServiceTest {
 	}
 
 	private static Company _addCompany(String webId) throws Exception {
-		Company company = _companyLocalService.addCompany(
+		return _companyLocalService.addCompany(
 			null, webId, webId, "test.com", 0, true, true, null, null, null,
 			null, null, null);
-
-		PortalInstances.initCompany(company);
-
-		return company;
 	}
 
 	private static void _addCompanyUserGroupRole(Company company)

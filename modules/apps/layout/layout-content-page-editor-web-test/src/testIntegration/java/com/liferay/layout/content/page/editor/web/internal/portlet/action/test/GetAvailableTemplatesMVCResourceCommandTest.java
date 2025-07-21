@@ -155,7 +155,7 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 	}
 
 	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
-		"com.liferay.journal.model.JournalArticle";
+		JournalArticle.class.getName();
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

@@ -39,6 +39,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.setting.util.ObjectDefinitionSettingUtil;
 import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
@@ -5680,6 +5681,21 @@ public class ObjectEntryLocalServiceImpl
 					_log.warn(portalException);
 				}
 			}
+		}
+
+		if (Objects.equals(
+				objectDefinition.getObjectFolderExternalReferenceCode(),
+				ObjectFolderConstants.
+					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES) ||
+			Objects.equals(
+				objectDefinition.getObjectFolderExternalReferenceCode(),
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
+
+			Group group = _groupLocalService.getGroup(
+				objectEntry.getCompanyId(), GroupConstants.CMS);
+
+			serviceContext.setAttribute(
+				"assetTagScopeGroupId", group.getGroupId());
 		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(

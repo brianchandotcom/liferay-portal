@@ -15,15 +15,16 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 
 	public JournalArticleDisplayImpl(
-		long companyId, long id, long resourcePrimKey, long groupId,
-		long userId, String articleId, double version, String title,
-		String urlTitle, String description, String[] availableLocales,
-		String content, long ddmStructureId, String ddmTemplateKey,
-		boolean smallImage, long smallImageId, String smallImageURL,
-		String articleDisplayImageURL, int numberOfPages, int currentPage,
-		boolean paginate, boolean cacheable) {
+		long companyId, String externalReferenceCode, long id,
+		long resourcePrimKey, long groupId, long userId, String articleId,
+		double version, String title, String urlTitle, String description,
+		String[] availableLocales, String content, long ddmStructureId,
+		String ddmTemplateKey, boolean smallImage, long smallImageId,
+		String smallImageURL, String articleDisplayImageURL, int numberOfPages,
+		int currentPage, boolean paginate, boolean cacheable) {
 
 		_companyId = companyId;
+		_externalReferenceCode = externalReferenceCode;
 		_id = id;
 		_resourcePrimKey = resourcePrimKey;
 		_groupId = groupId;
@@ -90,6 +91,11 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 	@Override
 	public String getDescription() {
 		return _description;
+	}
+
+	@Override
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
 	}
 
 	@Override
@@ -217,6 +223,7 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 	private long _ddmStructureId;
 	private String _ddmTemplateKey;
 	private final String _description;
+	private final String _externalReferenceCode;
 	private final long _groupId;
 	private final long _id;
 	private int _numberOfPages;

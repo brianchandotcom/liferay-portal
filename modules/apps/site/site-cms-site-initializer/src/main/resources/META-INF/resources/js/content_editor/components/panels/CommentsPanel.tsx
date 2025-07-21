@@ -14,6 +14,7 @@ import {
 	TEditor,
 } from 'frontend-editor-ckeditor-web';
 import {openToast} from 'frontend-js-components-web';
+import {Ratings} from 'ratings-taglib';
 import React, {useRef, useState} from 'react';
 
 import CommentService, {Comment} from '../services/CommentService';
@@ -341,16 +342,37 @@ function CommentNode({
 							parentCommentId={comment.commentId}
 							status={status}
 						/>
-					) : comment.rootComment ? (
-						<ClayButton
-							borderless
-							displayType="secondary"
-							onClick={() => setStatus('reply')}
-							size="xs"
+					) : (
+						<div
+							className={classNames('d-flex ratings', {
+								'mt-3': comment.children,
+								'pb-2': !comment.rootComment,
+							})}
 						>
-							{Liferay.Language.get('reply')}
-						</ClayButton>
-					) : null}
+							{comment.rootComment ? (
+								<ClayButton
+									borderless
+									displayType="secondary"
+									onClick={() => setStatus('reply')}
+									size="xs"
+								>
+									{Liferay.Language.get('reply')}
+								</ClayButton>
+							) : null}
+
+							<Ratings
+								className={comment.className}
+								classPK={comment.commentId}
+								enabled
+								initialNegativeVotes={comment.negativeVotes}
+								initialPositiveVotes={comment.positiveVotes}
+								signedIn
+								thumbDown={comment.negativeVotes > 0}
+								thumbUp={comment.positiveVotes > 0}
+								type="thumbs"
+							/>
+						</div>
+					)}
 				</article>
 			</li>
 		</>

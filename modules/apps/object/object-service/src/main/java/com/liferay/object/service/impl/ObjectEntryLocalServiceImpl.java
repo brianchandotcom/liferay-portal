@@ -444,6 +444,10 @@ public class ObjectEntryLocalServiceImpl
 		_updateResourcePermissions(
 			objectDefinition, objectEntry, serviceContext);
 
+		_deleteTempFileEntries(dlFileEntriesMap);
+
+		objectEntry = _addObjectEntryVersion(objectDefinition, objectEntry);
+
 		boolean clearObjectEntryIdsMap =
 			ObjectActionThreadLocal.isClearObjectEntryIdsMap();
 
@@ -464,9 +468,7 @@ public class ObjectEntryLocalServiceImpl
 				clearObjectEntryIdsMap);
 		}
 
-		_deleteTempFileEntries(dlFileEntriesMap);
-
-		return _addObjectEntryVersion(objectDefinition, objectEntry);
+		return objectEntry;
 	}
 
 	@Override
@@ -2015,14 +2017,6 @@ public class ObjectEntryLocalServiceImpl
 
 		_reindex(objectEntry);
 
-		if (!ObjectActionThreadLocal.isSkipObjectActionExecution()) {
-			_executeObjectActions(
-				objectEntry.getCompanyId(),
-				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-				objectDefinition, objectEntry, originalObjectEntry,
-				serviceContext.getLanguageId(), user);
-		}
-
 		if ((status == WorkflowConstants.STATUS_EXPIRED) ||
 			originalObjectEntry.isDraft() || originalObjectEntry.isPending()) {
 
@@ -2041,6 +2035,14 @@ public class ObjectEntryLocalServiceImpl
 		if (objectDefinition.isRootNode()) {
 			_updateRootDescendantNodeObjectEntryStatus(
 				userId, objectEntry, serviceContext);
+		}
+
+		if (!ObjectActionThreadLocal.isSkipObjectActionExecution()) {
+			_executeObjectActions(
+				objectEntry.getCompanyId(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				objectDefinition, objectEntry, originalObjectEntry,
+				serviceContext.getLanguageId(), user);
 		}
 
 		return objectEntry;
@@ -5771,29 +5773,29 @@ public class ObjectEntryLocalServiceImpl
 				transientValues);
 		}
 
+		_deleteTempFileEntries(dlFileEntriesMap);
+
+		if (!(objectEntry.isApproved() && originalObjectEntry.isScheduled()) &&
+			!objectEntry.isScheduled()) {
+
+			if (objectEntry.isPending() || originalObjectEntry.isDraft() ||
+				originalObjectEntry.isExpired()) {
+
+				_updateLatestObjectEntryVersion(objectDefinition, objectEntry);
+			}
+			else {
+				objectEntry = _addObjectEntryVersion(
+					objectDefinition, objectEntry);
+			}
+		}
+
 		_executeObjectActions(
 			objectEntry.getCompanyId(),
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, objectDefinition,
 			objectEntry, originalObjectEntry, serviceContext.getLanguageId(),
 			user);
 
-		_deleteTempFileEntries(dlFileEntriesMap);
-
-		if ((objectEntry.isApproved() && originalObjectEntry.isScheduled()) ||
-			objectEntry.isScheduled()) {
-
-			return objectEntry;
-		}
-
-		if (objectEntry.isPending() || originalObjectEntry.isDraft() ||
-			originalObjectEntry.isExpired()) {
-
-			_updateLatestObjectEntryVersion(objectDefinition, objectEntry);
-
-			return objectEntry;
-		}
-
-		return _addObjectEntryVersion(objectDefinition, objectEntry);
+		return objectEntry;
 	}
 
 	private void _updateResourcePermissions(

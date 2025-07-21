@@ -1897,6 +1897,64 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo("LPD-59838")
+	public void testRenderContainerWithBackgroundImageWhereMappedFileEntryIsNull()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		FileEntry fileEntry = _addFileEntry();
+
+		_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
+
+		ContentLayoutTestUtil.addItemToLayout(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"backgroundImage",
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"classNameId", _portal.getClassNameId(FileEntry.class)
+					).put(
+						"classPK", fileEntry.getFileEntryId()
+					).put(
+						"fieldId", "FileEntry_authorProfileImage"
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
+			_layoutStructureProvider, segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		String content = _getRenderLayoutHTML(layout);
+
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content, "lfr-layout-structure-item-container",
+				StringPool.BLANK));
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content, "data-layout-structure-item-id=", StringPool.BLANK));
+		Assert.assertFalse(
+			content, StringUtil.contains(content, "style=", StringPool.BLANK));
+		Assert.assertFalse(
+			content,
+			StringUtil.contains(
+				content, "--lfr-background-image", StringPool.BLANK));
+		Assert.assertFalse(
+			content, StringUtil.contains(content, ": url(", StringPool.BLANK));
+	}
+
+	@Test
 	@TestInfo("LPS-119817")
 	public void testRenderContainerWithLinkToURL() throws Exception {
 		String languageId = LocaleUtil.toLanguageId(

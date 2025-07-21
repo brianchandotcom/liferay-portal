@@ -802,13 +802,18 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(objectEntryId);
 
-		dtoConverterContext.setAttribute(
-			"objectEntryVersion",
+		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionService.getObjectEntryVersion(
-				objectEntryId, version));
+				objectEntryId, version);
+
+		dtoConverterContext.setAttribute(
+			"objectEntryVersion", objectEntryVersion);
 
 		return _objectEntryDTOConverter.toDTO(
-			dtoConverterContext, serviceBuilderObjectEntry);
+			_getObjectEntryVersionDTOConverterContext(
+				dtoConverterContext, objectEntryVersion,
+				serviceBuilderObjectEntry),
+			serviceBuilderObjectEntry);
 	}
 
 	@Override
@@ -1134,7 +1139,8 @@ public class DefaultObjectEntryManagerImpl
 		return _restoreVersionedObjectEntry(
 			dtoConverterContext, objectDefinition,
 			getObjectEntryByVersion(
-				dtoConverterContext, objectEntryId, version));
+				dtoConverterContext, objectEntryId, version),
+			version);
 	}
 
 	@Override
@@ -1148,7 +1154,8 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext, objectDefinition,
 			getObjectEntryByVersion(
 				dtoConverterContext, externalReferenceCode, objectDefinition,
-				scopeKey, version));
+				scopeKey, version),
+			version);
 	}
 
 	@Override
@@ -1913,13 +1920,18 @@ public class DefaultObjectEntryManagerImpl
 				serviceBuilderObjectEntry.getObjectEntryId()),
 			dtoConverterContext.getUserId(), version);
 
-		dtoConverterContext.setAttribute(
-			"objectEntryVersion",
+		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionService.getObjectEntryVersion(
-				serviceBuilderObjectEntry.getObjectEntryId(), version));
+				serviceBuilderObjectEntry.getObjectEntryId(), version);
+
+		dtoConverterContext.setAttribute(
+			"objectEntryVersion", objectEntryVersion);
 
 		return _objectEntryDTOConverter.toDTO(
-			dtoConverterContext, serviceBuilderObjectEntry);
+			_getObjectEntryVersionDTOConverterContext(
+				dtoConverterContext, objectEntryVersion,
+				serviceBuilderObjectEntry),
+			serviceBuilderObjectEntry);
 	}
 
 	private String _getDateString(Date date) {
@@ -2837,14 +2849,19 @@ public class DefaultObjectEntryManagerImpl
 
 	private ObjectEntry _restoreVersionedObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			int version)
 		throws Exception {
 
 		_removeReadOnlyProperties(objectDefinition, objectEntry);
 
 		return updateObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry.getId(),
-			objectEntry);
+			_getObjectEntryVersionDTOConverterContext(
+				dtoConverterContext,
+				_objectEntryVersionService.getObjectEntryVersion(
+					objectEntry.getId(), version),
+				_objectEntryService.getObjectEntry(objectEntry.getId())),
+			objectDefinition, objectEntry.getId(), objectEntry);
 	}
 
 	private Date _toDate(Locale locale, String valueString) {

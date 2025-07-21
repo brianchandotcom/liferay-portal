@@ -89,9 +89,7 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 			TestPropsValues.getUserId(), journalArticle);
 
 		_mvcResourceCommand.serveResource(
-			_getMockLiferayResourceRequest(
-				journalArticle.getResourcePrimKey(),
-				RandomTestUtil.randomString()),
+			_getMockLiferayResourceRequest(journalArticle.getResourcePrimKey()),
 			mockLiferayResourceResponse);
 
 		JSONArray responseJSONArray = _getResponseJSONArray(
@@ -119,7 +117,7 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
-			long classPK, String externalReferenceCode)
+			long classPK)
 		throws Exception {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
@@ -137,7 +135,7 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 		mockLiferayResourceRequest.setParameter(
 			"classPK", String.valueOf(classPK));
 		mockLiferayResourceRequest.setParameter(
-			"externalReferenceCode", externalReferenceCode);
+			"externalReferenceCode", RandomTestUtil.randomString());
 
 		return mockLiferayResourceRequest;
 	}

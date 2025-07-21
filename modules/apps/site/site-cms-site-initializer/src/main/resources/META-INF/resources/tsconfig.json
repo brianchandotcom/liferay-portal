@@ -1,5 +1,5 @@
 {
-	"@generated": "6e7b0f9ebfb7e04630b670f64ee1a3a7342b48bb",
+	"@generated": "0f362178cd1cd6d0d02beecb6372eeff34aa51c1",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -34,6 +34,9 @@
 			],
 			"frontend-js-web/legacy": [
 				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/legacy/index.ts"
+			],
+			"ratings-taglib": [
+				"../../../../../../../ratings/ratings-taglib/src/main/resources/META-INF/resources/js/index.ts"
 			]
 		},
 		"rootDir": "../../../../../../../..",
@@ -72,6 +75,9 @@
 		},
 		{
 			"path": "../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../ratings/ratings-taglib/src/main/resources/META-INF/resources/tsconfig.json"
 		}
 	]
 }

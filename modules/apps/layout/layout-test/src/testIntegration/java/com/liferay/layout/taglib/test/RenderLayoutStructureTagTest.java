@@ -1909,10 +1909,6 @@ public class RenderLayoutStructureTagTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				draftLayout.getPlid());
 
-		FileEntry fileEntry = _addFileEntry();
-
-		_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
-
 		ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
 				"styles",
@@ -1923,7 +1919,7 @@ public class RenderLayoutStructureTagTest {
 					).put(
 						"classNameId", _portal.getClassNameId(FileEntry.class)
 					).put(
-						"classPK", fileEntry.getFileEntryId()
+						"classPK", RandomTestUtil.nextLong()
 					).put(
 						"fieldId", "FileEntry_authorProfileImage"
 					))

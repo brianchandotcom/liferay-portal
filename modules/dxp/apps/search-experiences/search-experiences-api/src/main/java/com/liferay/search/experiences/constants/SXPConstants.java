@@ -12,6 +12,6 @@ public class SXPConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.search.experiences";
 
-	public static final String SXP_BLUEPRINT_SCHEMA_VERSION = "1.1";
+	public static final String SXP_BLUEPRINT_SCHEMA_VERSION = "1.2";
 
 }

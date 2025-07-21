@@ -103,18 +103,6 @@ export default function TrialListView({
 						sortable: true,
 					},
 					{
-						id: 'orderTypeExternalReferenceCode',
-						name: i18n.translate('type'),
-						render: (orderTypeExternalReferenceCode) => {
-							return (
-								<span className="label label-info">
-									{orderTypeExternalReferenceCode}
-								</span>
-							);
-						},
-						sortable: true,
-					},
-					{
 						id: 'createDate',
 						name: 'End Date',
 						render: (_, {customFields}) => {

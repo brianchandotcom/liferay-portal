@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
+import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
@@ -316,7 +317,8 @@ public class SXPBlueprintLocalServiceImpl
 			return sxpBlueprint;
 		}
 
-		sxpBlueprint.setSchemaVersion("1.1");
+		sxpBlueprint.setSchemaVersion(
+			SXPConstants.SXP_BLUEPRINT_SCHEMA_VERSION);
 
 		Configuration configuration = ConfigurationUtil.toConfiguration(
 			sxpBlueprint.getConfigurationJSON());

@@ -71,6 +71,7 @@ function buildObjectDefinitionNodeMock({
 			enableObjectEntryDraft: false,
 			enableObjectEntryHistory: false,
 			enableObjectEntrySchedule: false,
+			enableObjectEntrySubscription: false,
 			externalReferenceCode: objectDefinitionExternalReferenceCode,
 			friendlyURLSeparator: objectDefinitionName,
 			hasObjectDefinitionDeleteResourcePermission: false,

@@ -19,8 +19,7 @@ public class SpaceSummaryHeaderUtil {
 
 	public static Map<String, Object> getSpaceSummaryHeaderProps(
 			HttpServletRequest httpServletRequest, String labelKey,
-			String titleKey, String url,
-			Map<String, Object> spaceModalProps)
+			String titleKey, String url, Map<String, Object> spaceModalProps)
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(

@@ -5,9 +5,9 @@
 
 export enum ExtendRequestStatus {
 	APPROVED = 'approved',
-	AUTO_APPROVED = 'autoapproved',
-	EXTENSION_EXPIRED = 'extensionexpired',
-	NOT_REQUESTED = 'notrequested',
+	AUTO_APPROVED = 'auto-approved',
+	EXTENSION_EXPIRED = 'extension-expired',
+	NOT_REQUESTED = 'not-requested',
 	PENDING = 'pending',
 	REJECTED = 'rejected',
 }

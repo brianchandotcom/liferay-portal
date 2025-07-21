@@ -15,10 +15,11 @@ import BaseWrapper from '../../../components/Form/BaseWrapper';
 import {OrderCustomFields} from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
-import zodSchema from '../../../schema/zod';
+import zodSchema, {z} from '../../../schema/zod';
 import {EXTEND_OPTIONS} from '../constants';
 import {TrialSettings} from '../enums/SSATrials';
 import {SSASettings} from '../types';
+import trialOAuth2 from '../../../services/oauth/Trial';
 
 type ExtendSSATrialModalProps = {
 	onClose: () => void;
@@ -54,10 +55,14 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 
 	const [duration, setDuration] = useState<number | undefined>(undefined);
 
-	// const onSubmit = async (form: z.infer<typeof zodSchema.extendSSATrial>) => {
-
-	const onSubmit = async () => {
+	const onSubmit = async (form: z.infer<typeof zodSchema.extendSSATrial>) => {
 		try {
+			if (extendType === 'auto-extend') {
+				trialOAuth2.extendTrial(order.id, form.duration);
+			}
+			else {
+				trialOAuth2.extendTrialRequest(order.id, form.duration);
+			}
 			onClose();
 		}
 		catch (error) {

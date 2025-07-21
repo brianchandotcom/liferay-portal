@@ -19,3 +19,12 @@ export const EXTEND_OPTIONS = [
 		extendType: 'admin-request',
 	},
 ] as const;
+
+export const EXTEND_TRIAL_STATUS_LABEL = {
+	'approved': 'Approved',
+	'auto-approved': 'Auto  Approved',
+	'extension-expired': 'Extension Expired',
+	'not-requested': 'Not Requested',
+	'pending': 'Request Pending',
+	'rejected': 'Rejected',
+};

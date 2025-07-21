@@ -12,15 +12,21 @@ import Modal from '../../../components/Modal';
 import Page from '../../../components/Page';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
-import {OrderStatus, OrderTypes} from '../../../enums/Order';
+import {OrderCustomFields, OrderStatus, OrderTypes} from '../../../enums/Order';
 import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
 import {Action} from '../../../utils/constants';
 import TrialListView from '../components/TrialListView/TrialListView';
 import {useSSATrials} from '../useSSATrials';
-import getSSATrialsResourceURL from '../util';
+import {
+	getSSASettingsOrDefaultFromCustomFields,
+	getSSATrialsResourceURL,
+} from '../util';
 import ExtendSSATrialModal from './ExtendSSATrialModal';
 import {useSSAForm} from '../components/SSAForm';
+import trialOAuth2 from '../../../services/oauth/Trial';
+import {ExtendRequestStatus, TrialSettings} from '../enums/SSATrials';
+import {SSASettings} from '../types';
 
 export default function SaaSTrial() {
 	const modalContext = useModalContext();
@@ -35,7 +41,7 @@ export default function SaaSTrial() {
 	);
 
 	const onExpireTrial = (order: Order) => {
-		console.log(order);
+		trialOAuth2.deleteTrial(order.id);
 	};
 
 	const {
@@ -75,9 +81,45 @@ export default function SaaSTrial() {
 				),
 		},
 		{
-			disabled: (order: Order) =>
-				order.orderStatusInfo.label === OrderStatus.APPROVED ||
-				order.orderStatusInfo.label === OrderStatus.COMPLETED,
+			hidden: (order: Order) => {
+				const SSASettings = getSSASettingsOrDefaultFromCustomFields(
+					order.customFields
+				);
+
+				if (isUserSSAAdmin) {
+					return !SSASettings?.adminRequestExtend;
+				}
+
+				return true;
+			},
+			name: i18n.translate('view-request'),
+			onClick: (order: PlacedOrder) => {
+				modalContext.onOpenModal({
+					body: (
+						<ExtendSSATrialModal
+							onClose={modalContext.onClose}
+							order={order}
+						/>
+					),
+					header: `Extend ${order.id} Trial`,
+				});
+			},
+		},
+		{
+			disabled: (order: Order) => {
+				const SSASettings = getSSASettingsOrDefaultFromCustomFields(
+					order.customFields
+				);
+
+				return (
+					order.orderStatusInfo.label === OrderStatus.APPROVED ||
+					order.orderStatusInfo.label === OrderStatus.COMPLETED ||
+					SSASettings.extendRequestStatus ===
+						ExtendRequestStatus.PENDING ||
+					SSASettings.extendRequestStatus ===
+						ExtendRequestStatus.REJECTED
+				);
+			},
 			name: 'Extend',
 			onClick: (order: PlacedOrder) => {
 				modalContext.onOpenModal({

@@ -2,8 +2,8 @@
 	padding: 24px;
 
 	.members-list {
-		overflow-y: auto;
 		max-height: 200px;
+		overflow-y: auto;
 
 		html:not(#__):not(#___) .cadmin & {
 			max-height: 200px;

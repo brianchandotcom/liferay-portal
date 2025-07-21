@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class FieldsUtil {
 
-	public static List<String> toPaths(String string) {
+	public static List<String> expand(String string) {
 		if (!string.contains(".")) {
 			return Collections.singletonList(string);
 		}

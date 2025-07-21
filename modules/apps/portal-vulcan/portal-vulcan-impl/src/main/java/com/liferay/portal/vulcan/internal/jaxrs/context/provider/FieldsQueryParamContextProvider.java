@@ -41,13 +41,13 @@ public class FieldsQueryParamContextProvider
 			return Collections::emptySet;
 		}
 
-		Set<String> paths = new HashSet<>();
+		Set<String> expandedFieldNames = new HashSet<>();
 
 		for (String fieldName : fieldNamesString.split(",")) {
-			paths.addAll(FieldsUtil.toPaths(fieldName));
+			expandedFieldNames.addAll(FieldsUtil.expand(fieldName));
 		}
 
-		return () -> paths;
+		return () -> expandedFieldNames;
 	}
 
 }

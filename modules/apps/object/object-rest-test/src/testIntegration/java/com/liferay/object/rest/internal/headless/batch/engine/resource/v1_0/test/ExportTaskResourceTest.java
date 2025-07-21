@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -151,6 +152,32 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertNull(
 			JSONUtil.getValueAsJSONArray(
 				contentJSONArray2, "JSONObject/0", "JSONArray/permissions"));
+	}
+
+	@Test
+	@TestInfo("LPD-60157")
+	public void testPostExportTaskWithFieldNames() throws Exception {
+		ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
+
+		JSONObject jsonObject = _testPostExportTask(
+			"COMPLETED", "fieldNames=status.code," + OBJECT_FIELD_NAME_TEXT,
+			objectDefinition);
+
+		Assert.assertEquals(1, jsonObject.getInt("processedItemsCount"));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					OBJECT_FIELD_NAME_TEXT, "TestObject"
+				).put(
+					"status", JSONUtil.put("code", 0)
+				)
+			).toString(),
+			_getExportTaskContentJSONArray(
+				jsonObject.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.STRICT);
 	}
 
 	@Test

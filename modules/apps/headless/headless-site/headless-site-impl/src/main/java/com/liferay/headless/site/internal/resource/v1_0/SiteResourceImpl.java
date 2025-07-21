@@ -13,6 +13,7 @@ import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -33,12 +34,17 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerFactory;
 import com.liferay.site.initializer.SiteInitializerRegistry;
@@ -50,6 +56,7 @@ import jakarta.ws.rs.core.Response;
 import java.io.File;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -135,6 +142,43 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 			//file.delete();
 		}
+	}
+
+	@Override
+	public Page<Site> getSitesPage(String search, Pagination pagination)
+		throws Exception {
+
+		long[] classNameIds = {
+			_portal.getClassNameId(Company.class.getName()),
+			_portal.getClassNameId(Group.class.getName())
+		};
+
+		LinkedHashMap<String, Object> params =
+			LinkedHashMapBuilder.<String, Object>put(
+				"active", true
+			).put(
+				"site", true
+			).build();
+
+		return Page.of(
+			transform(
+				_groupService.search(
+					contextCompany.getCompanyId(), classNameIds, search, null,
+					params, true, pagination.getStartPosition(),
+					pagination.getEndPosition(), new GroupNameComparator()),
+				group -> new Site() {
+					{
+						setExternalReferenceCode(
+							group::getExternalReferenceCode);
+						setFriendlyUrlPath(group::getFriendlyURL);
+						setId(group::getGroupId);
+						setKey(group::getGroupKey);
+						setName(() -> group.getName(LocaleUtil.getDefault()));
+					}
+				}),
+			pagination,
+			_groupService.searchCount(
+				contextCompany.getCompanyId(), classNameIds, search, params));
 	}
 
 	@Override
@@ -442,6 +486,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SiteInitializerFactory _siteInitializerFactory;

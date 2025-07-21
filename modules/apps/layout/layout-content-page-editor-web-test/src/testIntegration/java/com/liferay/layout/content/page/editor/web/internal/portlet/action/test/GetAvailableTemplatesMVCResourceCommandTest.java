@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -34,9 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import jakarta.portlet.ResourceRequest;
-import jakarta.portlet.ResourceResponse;
 
 import java.io.ByteArrayOutputStream;
 
@@ -92,9 +88,7 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 		_journalArticleLocalService.moveArticleToTrash(
 			TestPropsValues.getUserId(), journalArticle);
 
-		ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "doServeResource",
-			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
+		_mvcResourceCommand.serveResource(
 			_getMockLiferayResourceRequest(
 				journalArticle.getResourcePrimKey(),
 				RandomTestUtil.randomString()),

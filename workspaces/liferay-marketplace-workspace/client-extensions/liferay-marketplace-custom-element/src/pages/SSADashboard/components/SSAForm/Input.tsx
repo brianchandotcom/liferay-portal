@@ -4,6 +4,7 @@
  */
 
 import Select from '@clayui/form/lib/Select';
+
 import Form from '../../../../components/MarketplaceForm';
 import {FieldProps} from './FormSection';
 
@@ -35,13 +36,13 @@ const Input = ({
 					{options?.map((opt) => (
 						<Select.Option
 							key={opt}
-							value={opt || value}
 							label={opt}
+							value={opt || value}
 						/>
 					))}
 				</Select>
 
-				{error && <p className="text-danger mt-1 mb-0">{error}</p>}
+				{error && <p className="mb-0 mt-1 text-danger">{error}</p>}
 			</>
 		);
 	}
@@ -49,18 +50,18 @@ const Input = ({
 	return (
 		<>
 			<Form.Input
-				disabled={disabled}
-				name={title}
-				type={type}
-				placeholder={placeholder}
-				maxLength={maxLength || undefined}
-				value={value}
 				className={`${className} marketplace-form-select`}
+				disabled={disabled}
+				maxLength={maxLength || undefined}
+				name={title}
 				onChange={(event) =>
 					handleChange({label, value: event.target.value})
 				}
+				placeholder={placeholder}
+				type={type}
+				value={value}
 			/>
-			{error && <p className="text-danger mt-1 mb-0">{error}</p>}
+			{error && <p className="mb-0 mt-1 text-danger">{error}</p>}
 		</>
 	);
 };

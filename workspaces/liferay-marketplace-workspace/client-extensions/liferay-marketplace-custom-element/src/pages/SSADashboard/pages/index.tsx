@@ -12,21 +12,20 @@ import Modal from '../../../components/Modal';
 import Page from '../../../components/Page';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
-import {OrderCustomFields, OrderStatus, OrderTypes} from '../../../enums/Order';
+import {OrderStatus, OrderTypes} from '../../../enums/Order';
 import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
+import trialOAuth2 from '../../../services/oauth/Trial';
 import {Action} from '../../../utils/constants';
+import {useSSAForm} from '../components/SSAForm';
 import TrialListView from '../components/TrialListView/TrialListView';
+import {ExtendRequestStatus} from '../enums/SSATrials';
 import {useSSATrials} from '../useSSATrials';
 import {
 	getSSASettingsOrDefaultFromCustomFields,
 	getSSATrialsResourceURL,
 } from '../util';
 import ExtendSSATrialModal from './ExtendSSATrialModal';
-import {useSSAForm} from '../components/SSAForm';
-import trialOAuth2 from '../../../services/oauth/Trial';
-import {ExtendRequestStatus, TrialSettings} from '../enums/SSATrials';
-import {SSASettings} from '../types';
 
 export default function SaaSTrial() {
 	const modalContext = useModalContext();

@@ -5,12 +5,12 @@
 
 import Form from '../../../../components/MarketplaceForm';
 import {Input} from './Input';
-import { FormFields } from './ModalFormBody';
+import {FormFields} from './ModalFormBody';
 
 type FormSectionProps = {
-	title?: string;
 	leftSection: FieldProps;
 	rightSection: FieldProps;
+	title?: string;
 };
 
 export type FieldProps = {
@@ -42,11 +42,7 @@ const FormField = ({section}: {section: FieldProps}) => (
 	</div>
 );
 
-const FormSection = ({
-	title,
-	leftSection,
-	rightSection,
-}: FormSectionProps) => {
+const FormSection = ({leftSection, rightSection, title}: FormSectionProps) => {
 	return (
 		<div className="mb-5">
 			<Form.FormControl>

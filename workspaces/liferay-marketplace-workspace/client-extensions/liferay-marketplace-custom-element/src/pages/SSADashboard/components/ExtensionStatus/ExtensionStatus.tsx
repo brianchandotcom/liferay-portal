@@ -5,8 +5,8 @@
 
 import classNames from 'classnames';
 
-import {ExtendRequestStatus} from '../../enums/SSATrials';
 import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
+import {ExtendRequestStatus} from '../../enums/SSATrials';
 
 import './ExtensionStatus.scss';
 

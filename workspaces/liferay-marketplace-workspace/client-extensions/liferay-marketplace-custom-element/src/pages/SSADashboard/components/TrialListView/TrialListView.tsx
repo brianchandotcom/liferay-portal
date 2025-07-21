@@ -7,14 +7,14 @@ import {format} from 'date-fns';
 
 import ListView, {ListViewProps} from '../../../../components/ListView';
 import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
+import SearchBuilder from '../../../../core/SearchBuilder';
 import {OrderCustomFields, OrderTypes} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Action} from '../../../../utils/constants';
+import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
 import {getSSASettingsOrDefaultFromCustomFields} from '../../util';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
-import SearchBuilder from '../../../../core/SearchBuilder';
-import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
 
 type TrialsListViewProps = {
 	actions: Action[];
@@ -134,7 +134,7 @@ export default function TrialListView({
 								getSSASettingsOrDefaultFromCustomFields(
 									customFields
 								);
-							console.log(SSASettings);
+
 							return (
 								<ExtensionStatus
 									extensionStatus={

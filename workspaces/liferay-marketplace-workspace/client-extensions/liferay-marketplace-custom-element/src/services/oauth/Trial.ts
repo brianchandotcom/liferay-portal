@@ -41,11 +41,11 @@ class TrialOAuth2 extends MarketplaceSpringBootOAuth2 {
 	}
 
 	async extendTrial(orderId: number | string, duration: number = 7) {
-		return this.post(`/extend/${orderId}`, {duration});	
+		return this.post(`/extend/${orderId}`, {duration});
 	}
 
 	async extendTrialRequest(orderId: number | string, duration: number = 7) {
-		return this.post(`/extend-admin-request/${orderId}`, {duration});	
+		return this.post(`/extend-admin-request/${orderId}`, {duration});
 	}
 
 	async provisioningTrial(orderId: number): Promise<any> {

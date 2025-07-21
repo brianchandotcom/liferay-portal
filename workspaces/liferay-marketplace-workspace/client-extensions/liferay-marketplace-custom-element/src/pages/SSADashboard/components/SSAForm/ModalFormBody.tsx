@@ -1,16 +1,22 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayForm from '@clayui/form';
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import {useAccount} from '../../../../hooks/data/useAccounts';
-import ProductPurchaseSSATrial from '../../../ProductPurchase/services/ProductPurchaseSSATrial';
-import zodSchema from '../../../../schema/zod';
-import {OrderCustomFields} from '../../../../enums/Order';
-import {Liferay} from '../../../../liferay/liferay';
-import i18n from '../../../../i18n';
-import ClayForm, {ClayInput} from '@clayui/form';
-import {FormSection} from './FormSection';
+
 import {Label} from '../../../../components/MarketplaceForm/Label';
-import {Input} from './Input';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
+import {OrderCustomFields} from '../../../../enums/Order';
+import {useAccount} from '../../../../hooks/data/useAccounts';
+import i18n from '../../../../i18n';
+import {Liferay} from '../../../../liferay/liferay';
+import zodSchema from '../../../../schema/zod';
+import ProductPurchaseSSATrial from '../../../ProductPurchase/services/ProductPurchaseSSATrial';
 import useSSAProduct from '../../hooks/useSSAProduct';
+import {FormSection} from './FormSection';
+import {Input} from './Input';
 
 type ValidationErrors = Partial<Record<keyof FormFields, string>>;
 
@@ -32,7 +38,9 @@ const SSAFormBody = ({
 	const product = useSSAProduct(channel?.id);
 
 	const productPurchase = useMemo(() => {
-		if (!account || !channel || !product) return null;
+		if (!account || !channel || !product) {
+			return null;
+		}
 
 		return new ProductPurchaseSSATrial(account, channel, product);
 	}, [account, channel, product]);
@@ -59,27 +67,32 @@ const SSAFormBody = ({
 		}
 	}, [isTestTrial]);
 
-	const validateProjectId = async (projectId: string) => {
-		try {
-			const data = await productPurchase?.getDemoAvailability(projectId);
+	const validateProjectId = useCallback(
+		async (projectId: string) => {
+			try {
+				const data =
+					await productPurchase?.getDemoAvailability(projectId);
 
-			return data;
-		}
-		catch (error: any) {
-			if (error.status === 409) {
-				setErrors((prevErrors) => ({
-					...prevErrors,
-					projectId: 'Project ID already exists',
-				}));
+				return data;
+			}
+			catch (error: any) {
+				if (error.status === 409) {
+					setErrors((prevErrors) => ({
+						...prevErrors,
+						projectId: 'Project ID already exists',
+					}));
 
-				return false;
+					return false;
+				}
+				else {
+					console.error(error.message);
+
+					return false;
+				}
 			}
-			else {
-				console.error(error.message);
-				return false;
-			}
-		}
-	};
+		},
+		[productPurchase]
+	);
 
 	const onChange = ({label, value}: {label: string; value: string}) => {
 		setFormData((prevData) => ({
@@ -95,10 +108,10 @@ const SSAFormBody = ({
 
 		if (!result.success) {
 			const fieldErrors: ValidationErrors = {};
-			for (const err of result.error.errors) {
-				if (err.path.length > 0) {
-					const fieldName = err.path[0] as keyof FormFields;
-					fieldErrors[fieldName] = err.message;
+			for (const error of result.error.errors) {
+				if (error.path.length) {
+					const fieldName = error.path[0] as keyof FormFields;
+					fieldErrors[fieldName] = error.message;
 				}
 			}
 			setErrors(fieldErrors);
@@ -132,16 +145,16 @@ const SSAFormBody = ({
 
 		Liferay.Util.openToast({
 			message: 'Trial is being provisioned.',
-			type: 'success',
 			title: i18n.translate('success'),
+			type: 'success',
 		});
 
 		return true;
-	}, [productPurchase, formData]);
+	}, [productPurchase, formData, validateProjectId]);
 
 	useEffect(() => {
 		submitRef.current = onSubmit;
-	}, [onSubmit]);
+	}, [onSubmit, submitRef]);
 
 	return (
 		<>
@@ -149,30 +162,30 @@ const SSAFormBody = ({
 			<ClayForm.Group>
 				<FormSection
 					leftSection={{
-						handleChange: onChange,
 						error: errors.projectId || '',
-						tooltip: 'placeholder',
+						handleChange: onChange,
 						label: 'projectId',
+						maxLength: 9,
 						required: true,
 						title: 'Project ID',
-						maxLength: 9,
+						tooltip: 'placeholder',
 						value: formData.projectId,
 					}}
 					rightSection={{
 						disabled: true,
 						handleChange: onChange,
 						label: 'site',
-						tooltip: 'placeholder',
 						placeholder: 'Blank Site',
 						title: 'Solution',
+						tooltip: 'placeholder',
 					}}
 					title="Main"
 				/>
 
 				<FormSection
 					leftSection={{
-						handleChange: onChange,
 						error: errors.objective || '',
+						handleChange: onChange,
 						label: 'objective',
 						options: ['Test', 'Trial'],
 						placeholder: 'Select an Option',
@@ -206,8 +219,8 @@ const SSAFormBody = ({
 						error={errors.emailAddress || ''}
 						handleChange={onChange}
 						label="emailAddress"
-						tooltip="placeholder"
 						title="Email Address"
+						tooltip="placeholder"
 						value={formData.emailAddress}
 					/>
 				</div>

@@ -27,6 +27,12 @@
 			],
 			"roleName": "Guest",
 			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
 		}
 	],
 	"private": false,

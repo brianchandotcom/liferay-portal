@@ -16,10 +16,10 @@ import {OrderCustomFields} from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema, {z} from '../../../schema/zod';
+import trialOAuth2 from '../../../services/oauth/Trial';
 import {EXTEND_OPTIONS} from '../constants';
 import {TrialSettings} from '../enums/SSATrials';
 import {SSASettings} from '../types';
-import trialOAuth2 from '../../../services/oauth/Trial';
 
 type ExtendSSATrialModalProps = {
 	onClose: () => void;

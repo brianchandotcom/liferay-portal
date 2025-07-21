@@ -338,7 +338,10 @@ export function SpaceMembersWithList({
 				{Liferay.Language.get('who-has-access')}
 			</label>
 
-			<ul aria-labelledby={listLabelId} className="members-list">
+			<ul
+				aria-labelledby={listLabelId}
+				className="c-mt-3 c-p-0 members-list"
+			>
 				{selectedOption === SelectOptions.USERS ? (
 					<MembersListItem
 						assetLibraryCreatorUserId={assetLibraryCreatorUserId}

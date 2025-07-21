@@ -19,20 +19,17 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -64,15 +61,14 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
-		User user = UserTestUtil.addUser(_group.getGroupId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(_group.getGroupId());
-		serviceContext.setUserId(user.getUserId());
+		serviceContext.setUserId(TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
@@ -138,7 +134,8 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
 			ContentLayoutTestUtil.getThemeDisplay(
-				_companyLocalService.fetchCompany(_group.getCompanyId()),
+				_companyLocalService.fetchCompany(
+					TestPropsValues.getCompanyId()),
 				_group, _layout));
 
 		mockLiferayResourceRequest.setParameter(
@@ -169,8 +166,10 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private InfoItemRendererRegistry _infoItemRendererRegistry;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.internal.upgrade.v3_0_0;
+package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -11,16 +11,13 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
  * @author Javier Moral
  */
-public class LayoutUpgradeProcess extends UpgradeProcess {
-
-	public LayoutUpgradeProcess(Portal portal) {
-		_portal = portal;
-	}
+public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcess
+	extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -35,7 +32,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 				"LayoutSetPrototype.companyId inner join Group_ on ",
 				"Group_.classPK = LayoutSetPrototype.layoutSetPrototypeId and ",
 				"Group_.classNameId = ",
-				_portal.getClassNameId(LayoutSetPrototype.class),
+				PortalUtil.getClassNameId(LayoutSetPrototype.class),
 				" inner join Layout layout2 on layout2.uuid_ = ",
 				"layout1.layoutSetPrototypeLayoutERC and layout2.groupId = ",
 				"Group_.groupId and layout2.companyId = Group_.companyId ",
@@ -67,7 +64,5 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 				"layoutSetPrototypeLayoutERC VARCHAR(75) null")
 		};
 	}
-
-	private final Portal _portal;
 
 }

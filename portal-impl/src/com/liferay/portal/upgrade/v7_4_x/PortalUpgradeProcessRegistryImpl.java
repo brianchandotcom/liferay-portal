@@ -665,6 +665,10 @@ public class PortalUpgradeProcessRegistryImpl
 					ReleaseInfo.getVersionDisplayName(),
 					"' where servletContextName = '",
 					ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME, "'")));
+
+		upgradeVersionTreeMap.put(
+			new Version(34, 0, 0),
+			new LayoutLayoutSetPrototypeLayoutERCUpgradeProcess());
 	}
 
 }

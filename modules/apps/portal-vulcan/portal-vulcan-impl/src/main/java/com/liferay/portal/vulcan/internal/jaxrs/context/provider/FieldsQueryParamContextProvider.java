@@ -6,15 +6,14 @@
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
+import com.liferay.portal.vulcan.util.FieldsUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.ws.rs.ext.Provider;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
@@ -45,33 +44,10 @@ public class FieldsQueryParamContextProvider
 		Set<String> paths = new HashSet<>();
 
 		for (String fieldName : fieldNamesString.split(",")) {
-			paths.addAll(_toPaths(fieldName));
+			paths.addAll(FieldsUtil.toPaths(fieldName));
 		}
 
 		return () -> paths;
-	}
-
-	private List<String> _toPaths(String string) {
-		if (!string.contains(".")) {
-			return Collections.singletonList(string);
-		}
-
-		List<String> list = new ArrayList<>();
-
-		String pending = string;
-
-		while (!pending.equals("")) {
-			list.add(pending);
-
-			if (pending.contains(".")) {
-				pending = pending.substring(0, pending.lastIndexOf("."));
-			}
-			else {
-				pending = "";
-			}
-		}
-
-		return list;
 	}
 
 }

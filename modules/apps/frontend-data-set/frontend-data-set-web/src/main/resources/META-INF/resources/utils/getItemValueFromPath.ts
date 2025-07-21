@@ -9,19 +9,14 @@
  * the object hierarchy
  *
  * @param item : object
- * @param selectedItemsKey : string ('id', 'embedded.id')
+ * @param path : string ('id', 'embedded.id'). Defaults to 'id'
  * @returns value of the selected property
  */
 
-const getItemValueFromSelectedItemsKey = function (
-	item: any,
-	selectedItemsKey: string
-): any {
-	return selectedItemsKey
-		.split('.')
-		.reduce((acc: any, currentPath: string) => {
-			return acc?.[currentPath] ?? null;
-		}, item);
+const getItemValueFromPath = function (item: any, path = 'id'): any {
+	return path.split('.').reduce((acc: any, currentPath: string) => {
+		return acc?.[currentPath] ?? null;
+	}, item);
 };
 
-export default getItemValueFromSelectedItemsKey;
+export default getItemValueFromPath;

@@ -7,7 +7,7 @@ import {openModal} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {TOnFileDrop} from '../DnDContext';
-import getItemValueFromSelectedItemsKey from '../utils/getItemValueFromSelectedItemsKey';
+import getItemValueFromPath from '../utils/getItemValueFromPath';
 import isFileDropEnabled from '../utils/isFileDropEnabled';
 import {IFileDropSettings} from '../utils/types';
 
@@ -20,7 +20,7 @@ const useFileUploader = ({
 	selectedItemsKey,
 }: {
 	fileDropSettings: IFileDropSettings;
-	selectedItemsKey: string | undefined;
+	selectedItemsKey: string;
 }): {
 	onFileDrop: TOnFileDrop;
 } => {
@@ -63,10 +63,7 @@ const useFileUploader = ({
 						<span>
 							Dropped on item{' '}
 
-							{getItemValueFromSelectedItemsKey(
-								dropTarget,
-								selectedItemsKey || 'id'
-							)}
+							{getItemValueFromPath(dropTarget, selectedItemsKey)}
 						</span>
 					) : (
 						<span>Dropped on the FDS, no specific drop target</span>

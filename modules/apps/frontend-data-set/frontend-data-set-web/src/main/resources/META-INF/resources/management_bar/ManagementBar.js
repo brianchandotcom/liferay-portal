@@ -6,7 +6,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import getItemValueFromSelectedItemsKey from '../utils/getItemValueFromSelectedItemsKey';
+import getItemValueFromPath from '../utils/getItemValueFromPath';
 import BulkActions from './controls/BulkActions';
 import NavBar from './controls/NavBar';
 import ActiveFiltersBar from './controls/filters/ActiveFiltersBar';
@@ -30,14 +30,13 @@ function ManagementBar({
 }) {
 	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
 		items.some(
-			(item) =>
-				getItemValueFromSelectedItemsKey(item, selectedItemsKey) === id
+			(item) => getItemValueFromPath(item, selectedItemsKey) === id
 		)
 	);
 
 	function handleCheckboxClick() {
 		const itemKeys = items.map((item) =>
-			getItemValueFromSelectedItemsKey(item, selectedItemsKey)
+			getItemValueFromPath(item, selectedItemsKey)
 		);
 
 		if (pageSelectedItemsValue.length === items.length) {

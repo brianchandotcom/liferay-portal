@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import getItemValueFromSelectedItemsKey from '../getItemValueFromSelectedItemsKey';
+import getItemValueFromPath from '../getItemValueFromPath';
 import {getLocalizedValue} from '../getLocalizedValue';
 import {IItemActionsDataFilter, IItemsActions} from '../types';
 import {ACTION_ITEM_TARGETS} from './constants';
@@ -133,7 +133,7 @@ const filterItemActions = ({
 	const selectedItem =
 		selectedItemsValue?.length === 1 &&
 		!!selectedItemsValue?.includes(
-			getItemValueFromSelectedItemsKey(itemData, selectedItemsKey)
+			getItemValueFromPath(itemData, selectedItemsKey)
 		);
 
 	return actions

@@ -57,7 +57,7 @@ import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';
 import EVENTS from './utils/eventsDefinitions';
-import getItemValueFromSelectedItemsKey from './utils/getItemValueFromSelectedItemsKey';
+import getItemValueFromPath from './utils/getItemValueFromPath';
 import getRandomId from './utils/getRandomId';
 
 // @ts-ignore
@@ -579,10 +579,7 @@ const FrontendDataSetContent = ({
 
 						const itemKeys = new Set(
 							data.items.map((item: any) =>
-								getItemValueFromSelectedItemsKey(
-									item,
-									selectedItemsKey
-								)
+								getItemValueFromPath(item, selectedItemsKey)
 							)
 						);
 
@@ -615,19 +612,14 @@ const FrontendDataSetContent = ({
 			selectedItemsValue.forEach((value) => {
 				let selectedItem = items.find(
 					(item) =>
-						getItemValueFromSelectedItemsKey(
-							item,
-							selectedItemsKey
-						) === value
+						getItemValueFromPath(item, selectedItemsKey) === value
 				);
 
 				if (!selectedItem) {
 					selectedItem = selectedItems.find(
 						(item) =>
-							getItemValueFromSelectedItemsKey(
-								item,
-								selectedItemsKey
-							) === value
+							getItemValueFromPath(item, selectedItemsKey) ===
+							value
 					);
 				}
 
@@ -839,17 +831,17 @@ const FrontendDataSetContent = ({
 									items
 										.filter(
 											(item) =>
-												getItemValueFromSelectedItemsKey(
+												getItemValueFromPath(
 													item,
 													selectedItemsKey
 												) !==
-												getItemValueFromSelectedItemsKey(
+												getItemValueFromPath(
 													selectedItem,
 													selectedItemsKey
 												)
 										)
 										.map((item) =>
-											getItemValueFromSelectedItemsKey(
+											getItemValueFromPath(
 												item,
 												selectedItemsKey
 											)
@@ -861,7 +853,7 @@ const FrontendDataSetContent = ({
 							else {
 								selectItems({
 									trigger,
-									value: getItemValueFromSelectedItemsKey(
+									value: getItemValueFromPath(
 										selectedItem,
 										selectedItemsKey
 									),
@@ -1118,9 +1110,7 @@ const FrontendDataSetContent = ({
 
 	function applyItemInlineUpdates(itemKey: any) {
 		const itemToBeUpdated = items.find(
-			(item) =>
-				getItemValueFromSelectedItemsKey(item, selectedItemsKey) ===
-				itemKey
+			(item) => getItemValueFromPath(item, selectedItemsKey) === itemKey
 		);
 
 		const defaultBody = inlineEditingSettings?.defaultBodyContent || {};

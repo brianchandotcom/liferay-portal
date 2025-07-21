@@ -15,7 +15,7 @@ import useFDSDrop from '../../dnd/useFDSDrop';
 import filterItemActions from '../../utils/actionItems/filterItemActions';
 import formatActionURL from '../../utils/actionItems/formatActionURL';
 import handleActionClick from '../../utils/actionItems/handleActionClick';
-import getItemValueFromSelectedItemsKey from '../../utils/getItemValueFromSelectedItemsKey';
+import getItemValueFromPath from '../../utils/getItemValueFromPath';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import getRandomId from '../../utils/getRandomId';
 import isLink from '../../utils/isLink';
@@ -76,8 +76,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 			}) as any);
 
 		const selectedItemKey =
-			selectedItemsKey &&
-			getItemValueFromSelectedItemsKey(item, selectedItemsKey);
+			selectedItemsKey && getItemValueFromPath(item, selectedItemsKey);
 
 		const getLabels = (
 			item: any
@@ -184,11 +183,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 				!!selectedItemsValue?.find(
 					(element) =>
 						selectedItemsKey &&
-						element ===
-							getItemValueFromSelectedItemsKey(
-								item,
-								selectedItemsKey
-							)
+						element === getItemValueFromPath(item, selectedItemsKey)
 				),
 			stickerProps: (schema.sticker && item[schema.sticker]) || null,
 			symbol: schema.symbol && item[schema.symbol],
@@ -269,7 +264,7 @@ const Cards = ({
 								item={item}
 								key={
 									selectedItemsKey
-										? getItemValueFromSelectedItemsKey(
+										? getItemValueFromPath(
 												item,
 												selectedItemsKey
 											)

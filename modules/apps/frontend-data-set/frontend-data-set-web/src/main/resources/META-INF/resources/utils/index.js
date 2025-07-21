@@ -6,7 +6,7 @@
 import {fetch} from 'frontend-js-web';
 
 import {DEFAULT_FETCH_HEADERS} from '../constants';
-import getItemValueFromSelectedItemsKey from './getItemValueFromSelectedItemsKey';
+import getItemValueFromPath from './getItemValueFromPath';
 import getValueFromItem from './getValueFromItem';
 
 export function getData(apiURL, query) {
@@ -73,8 +73,7 @@ export function getCurrentItemUpdates(
 	valuePath
 ) {
 	const itemChanged = items.find(
-		(item) =>
-			getItemValueFromSelectedItemsKey(item, selectedItemsKey) === itemKey
+		(item) => getItemValueFromPath(item, selectedItemsKey) === itemKey
 	);
 
 	const itemChanges = itemsChanges[itemKey];

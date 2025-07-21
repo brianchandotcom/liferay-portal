@@ -577,6 +577,33 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				putWidgetPageTemplate.getExternalReferenceCode(),
 				putWidgetPageTemplate));
 
+		putWidgetPageTemplate.setPageTemplateSet(() -> null);
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageTemplateResource.
+					putSiteSiteByExternalReferenceCodePageTemplate(
+						testGroup.getExternalReferenceCode(),
+						putWidgetPageTemplate.getExternalReferenceCode(),
+						putWidgetPageTemplate));
+
+		putWidgetPageTemplate.setPageTemplateSet(
+			() -> new PageTemplateSet() {
+				{
+					setExternalReferenceCode(() -> StringPool.BLANK);
+				}
+			});
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageTemplateResource.
+					putSiteSiteByExternalReferenceCodePageTemplate(
+						testGroup.getExternalReferenceCode(),
+						putWidgetPageTemplate.getExternalReferenceCode(),
+						putWidgetPageTemplate));
+
 		_testPutSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications();
 
 		_enableLocalStaging();

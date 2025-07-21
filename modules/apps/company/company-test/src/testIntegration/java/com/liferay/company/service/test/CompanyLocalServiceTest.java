@@ -1471,6 +1471,36 @@ public class CompanyLocalServiceTest {
 		return viewNames.size();
 	}
 
+	private void _resetCompanyLocales(long companyId) throws Exception {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_portalPreferenceValueLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.eq("companyId", companyId));
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.eq("key", PropsKeys.LOCALES));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(PortalPreferenceValue portalPreferenceValue) ->
+				_portalPreferenceValueLocalService.deletePortalPreferenceValue(
+					portalPreferenceValue));
+
+		actionableDynamicQuery.performActions();
+
+		PortalPreferences portalPreferences =
+			_portalPreferenceValueLocalService.getPortalPreferences(
+				_portalPreferencesLocalService.fetchPortalPreferences(
+					companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY),
+				false);
+
+		portalPreferences.resetValues(null);
+
+		LanguageUtil.resetAvailableLocales(companyId);
+	}
+
 	private void _testUpdateCompanyNames(
 			Company company, String[] companyNames, boolean expectFailure)
 		throws Exception {
@@ -1666,6 +1696,10 @@ public class CompanyLocalServiceTest {
 
 	@Inject
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
+
+	@Inject
+	private PortalPreferenceValueLocalService
+		_portalPreferenceValueLocalService;
 
 	@Inject
 	private PortletLocalService _portletLocalService;

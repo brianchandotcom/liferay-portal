@@ -4814,6 +4814,14 @@
 		"to": "getHelperUtilities(param#1#)"
 	},
 	{
+		"classNames": [
+			"SitemapManager"
+		],
+		"from": "getSiteMapManager(long paramName, boolean paramName, ThemeDisplay paramName)",
+		"issueKey": "LPD-59820",
+		"to": "getSitemap(param#0#, param#1#, param#2#)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

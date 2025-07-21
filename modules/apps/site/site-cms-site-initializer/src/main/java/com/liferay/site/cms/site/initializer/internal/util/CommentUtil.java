@@ -42,7 +42,7 @@ public class CommentUtil {
 				System.currentTimeMillis() - modifiedDate.getTime(), true));
 
 		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
-			comment.getClassName(), comment.getClassPK());
+			comment.getClassName(), comment.getCommentId());
 
 		return JSONUtil.put(
 			"author", _getAuthorJSONObject(comment, httpServletRequest)

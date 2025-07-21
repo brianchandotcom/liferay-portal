@@ -6515,8 +6515,8 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return new JournalArticleDisplayImpl(
-			article.getCompanyId(), article.getId(),
-			article.getResourcePrimKey(), article.getGroupId(),
+			article.getCompanyId(), article.getExternalReferenceCode(),
+			article.getId(), article.getResourcePrimKey(), article.getGroupId(),
 			article.getUserId(), article.getArticleId(), article.getVersion(),
 			article.getTitle(languageId), article.getUrlTitle(),
 			article.getDescription(languageId),

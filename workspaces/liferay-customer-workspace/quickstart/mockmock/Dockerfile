@@ -13,5 +13,5 @@ EXPOSE 80 2525 8282
 
 RUN apk add --no-cache bash curl openjdk11 tini && \
 	\
-	curl -fSL "${MOCKMOCK_URL}" -o MockMock.jar && \
+	curl --fail --location "${MOCKMOCK_URL}" --output MockMock.jar --silent && \
 	chmod +x /usr/local/bin/entrypoint.sh

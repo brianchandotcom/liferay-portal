@@ -49,24 +49,24 @@ public class BatchTestEntityResourceImpl
 
 	@Override
 	public Page<BatchTestEntity> getBatchTestEntitiesPage() {
-		List<BatchTestEntity> batchTestEntities = new ArrayList<>();
+		return Page.of(
+			transform(
+				_batchTestEntities,
+				originalBatchTestEntity -> {
+					BatchTestEntity batchTestEntity = new BatchTestEntity();
 
-		for (BatchTestEntity originalBatchTestEntity : _batchTestEntities) {
-			BatchTestEntity batchTestEntity = new BatchTestEntity();
+					batchTestEntity.setExternalReferenceCode(
+						originalBatchTestEntity.getExternalReferenceCode());
+					batchTestEntity.setId(originalBatchTestEntity.getId());
+					batchTestEntity.setName(originalBatchTestEntity.getName());
+					batchTestEntity.setNestedField(
+						() -> NestedFieldsSupplier.supply(
+							"nestedField",
+							nestedField ->
+								originalBatchTestEntity.getNestedField()));
 
-			batchTestEntity.setExternalReferenceCode(
-				originalBatchTestEntity.getExternalReferenceCode());
-			batchTestEntity.setId(originalBatchTestEntity.getId());
-			batchTestEntity.setName(originalBatchTestEntity.getName());
-			batchTestEntity.setNestedField(
-				() -> NestedFieldsSupplier.supply(
-					"nestedField",
-					nestedField -> originalBatchTestEntity.getNestedField()));
-
-			batchTestEntities.add(batchTestEntity);
-		}
-
-		return Page.of(batchTestEntities);
+					return batchTestEntity;
+				}));
 	}
 
 	@Override

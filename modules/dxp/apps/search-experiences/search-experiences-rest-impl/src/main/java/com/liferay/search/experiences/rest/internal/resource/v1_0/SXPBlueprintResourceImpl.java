@@ -340,7 +340,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 			return sxpBlueprint.getSchemaVersion();
 		}
 
-		return "1.1";
+		return SXPConstants.SXP_BLUEPRINT_SCHEMA_VERSION;
 	}
 
 	private SXPBlueprint _updateSXPBlueprint(

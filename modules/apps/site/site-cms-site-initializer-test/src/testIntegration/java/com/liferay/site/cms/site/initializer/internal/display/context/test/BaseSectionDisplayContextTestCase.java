@@ -68,7 +68,29 @@ public abstract class BaseSectionDisplayContextTestCase
 					"User,com.liferay.portal.kernel.model.",
 					"UserGroup&nestedFields=embedded")
 			).put(
-				"collaboratorURLs", () -> _getCollaboratorURLs()
+				"collaboratorURLs",
+				() -> {
+					Map<String, String> collaboratorURL = new HashMap<>();
+
+					for (ObjectDefinition objectDefinition :
+							_objectDefinitionService.getCMSObjectDefinitions(
+								group.getCompanyId(),
+								getObjectFolderExternalReferenceCodes())) {
+
+						collaboratorURL.put(
+							objectDefinition.getClassName(),
+							StringBundler.concat(
+								"/o", objectDefinition.getRESTContextPath(),
+								"/{objectEntryId}/collaborators"));
+					}
+
+					collaboratorURL.put(
+						ObjectEntryFolder.class.getName(),
+						"/o/headless-object/v1.0/object-entry-folders" +
+							"/{objectEntryFolderId}/collaborators");
+
+					return collaboratorURL;
+				}
 			).build(),
 			_getAdditionalProps());
 	}
@@ -399,29 +421,6 @@ public abstract class BaseSectionDisplayContextTestCase
 		return ReflectionTestUtil.invoke(
 			getSectionDisplayContext(getMockHttpServletRequest()),
 			"getAdditionalProps", new Class<?>[0]);
-	}
-
-	private Map<String, String> _getCollaboratorURLs() {
-		Map<String, String> collaboratorURL = new HashMap<>();
-
-		for (ObjectDefinition objectDefinition :
-				_objectDefinitionService.getCMSObjectDefinitions(
-					group.getCompanyId(),
-					getObjectFolderExternalReferenceCodes())) {
-
-			collaboratorURL.put(
-				objectDefinition.getClassName(),
-				StringBundler.concat(
-					"/o", objectDefinition.getRESTContextPath(),
-					"/{objectEntryId}/collaborators"));
-		}
-
-		collaboratorURL.put(
-			ObjectEntryFolder.class.getName(),
-			"/o/headless-object/v1.0/object-entry-folders" +
-				"/{objectEntryFolderId}/collaborators");
-
-		return collaboratorURL;
 	}
 
 	private DropdownItem _getDropdownItem(

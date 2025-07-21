@@ -104,7 +104,29 @@ public abstract class BaseSectionDisplayContext {
 				"com.liferay.portal.kernel.model.UserGroup&nestedFields=",
 				"embedded")
 		).put(
-			"collaboratorURLs", () -> _getCollaboratorURLs()
+			"collaboratorURLs",
+			() -> {
+				Map<String, String> collaboratorURLs = new HashMap<>();
+
+				for (ObjectDefinition objectDefinition :
+						_objectDefinitionService.getCMSObjectDefinitions(
+							themeDisplay.getCompanyId(),
+							getObjectFolderExternalReferenceCodes())) {
+
+					collaboratorURLs.put(
+						objectDefinition.getClassName(),
+						StringBundler.concat(
+							"/o", objectDefinition.getRESTContextPath(),
+							"/{objectEntryId}/collaborators"));
+				}
+
+				collaboratorURLs.put(
+					ObjectEntryFolder.class.getName(),
+					"/o/headless-object/v1.0/object-entry-folders" +
+						"/{objectEntryFolderId}/collaborators");
+
+				return collaboratorURLs;
+			}
 		).build();
 	}
 
@@ -345,29 +367,6 @@ public abstract class BaseSectionDisplayContext {
 		}
 
 		return acceptedGroupIds;
-	}
-
-	private Map<String, String> _getCollaboratorURLs() {
-		Map<String, String> collaboratorURLs = new HashMap<>();
-
-		for (ObjectDefinition objectDefinition :
-				_objectDefinitionService.getCMSObjectDefinitions(
-					themeDisplay.getCompanyId(),
-					getObjectFolderExternalReferenceCodes())) {
-
-			collaboratorURLs.put(
-				objectDefinition.getClassName(),
-				StringBundler.concat(
-					"/o", objectDefinition.getRESTContextPath(),
-					"/{objectEntryId}/collaborators"));
-		}
-
-		collaboratorURLs.put(
-			ObjectEntryFolder.class.getName(),
-			"/o/headless-object/v1.0/object-entry-folders" +
-				"/{objectEntryFolderId}/collaborators");
-
-		return collaboratorURLs;
 	}
 
 	private JSONArray _getDepotEntriesJSONArray() {

@@ -31,9 +31,17 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcessTest
 	extends BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		_companyId1 = RandomTestUtil.nextLong();
 		_companyId2 = RandomTestUtil.nextLong();
+
+		db.runSQL(
+			connection,
+			StringBundler.concat(
+				"delete from PortletPreferences where not exists (select 1 ",
+				"from Company where Company.companyID = PortletPreferences.",
+				"ownerId) and ownerId is not null and ownerId != 0 and ",
+				"ownerType = ", PortletKeys.PREFS_OWNER_TYPE_COMPANY));
 	}
 
 	@Override

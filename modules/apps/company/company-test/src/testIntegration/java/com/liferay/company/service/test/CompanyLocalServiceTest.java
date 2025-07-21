@@ -1034,7 +1034,6 @@ public class CompanyLocalServiceTest {
 
 		String originalLanguageId = LocaleUtil.toLanguageId(
 			_company.getLocale());
-
 		TimeZone timeZone = _company.getTimeZone();
 
 		try {
@@ -1069,10 +1068,6 @@ public class CompanyLocalServiceTest {
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
 
-		String[] companyLanguageIds = _prefsProps.getStringArray(
-			_company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA,
-			PropsValues.LOCALES_ENABLED);
-
 		Group group = null;
 
 		try {
@@ -1081,6 +1076,10 @@ public class CompanyLocalServiceTest {
 			group = GroupTestUtil.addGroup(
 				_company.getCompanyId(), user.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+			String[] companyLanguageIds = _prefsProps.getStringArray(
+				_company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA,
+				PropsValues.LOCALES_ENABLED);
 
 			group = GroupTestUtil.updateDisplaySettings(
 				group.getGroupId(),
@@ -1154,8 +1153,6 @@ public class CompanyLocalServiceTest {
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
 
-		long companyId = _company.getCompanyId();
-
 		String originalLanguageId = LocaleUtil.toLanguageId(
 			_company.getLocale());
 
@@ -1164,10 +1161,11 @@ public class CompanyLocalServiceTest {
 		LayoutSetPrototype layoutSetPrototype = null;
 
 		try {
-			long userId = _userLocalService.getGuestUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(
+				_company.getCompanyId());
 
 			layoutSetPrototype = _addLayoutSetPrototype(
-				companyId, userId, RandomTestUtil.randomString());
+				_company.getCompanyId(), userId, RandomTestUtil.randomString());
 
 			String languageId = "ca_ES";
 

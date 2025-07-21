@@ -1,3 +1,3 @@
 #!/bin/bash
 
-exec java -jar MockMock.jar -p ${MOCKMOCK_SMPT_PORT} -h ${MOCKMOCK_HTTP_PORT} -m ${MOCKMOCK_MAX_QUEUE_SIZE}
+exec java -jar MockMock.jar -h "${MOCKMOCK_HTTP_PORT}" -m "${MOCKMOCK_MAX_QUEUE_SIZE}" -p "${MOCKMOCK_SMPT_PORT}"

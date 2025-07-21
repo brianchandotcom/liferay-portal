@@ -34,7 +34,7 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 
 	@Test
 	@TestInfo("LPD-59838")
-	public void testGetAssetCategoryTreeNodeTitleNonexisting()
+	public void testGetAssetCategoryTreeNodeTitleWhereAssetIsNull()
 		throws Exception {
 
 		AssetCategoryService assetCategoryService = Mockito.mock(

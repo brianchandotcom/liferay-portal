@@ -1898,7 +1898,7 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	@TestInfo("LPD-59838")
-	public void testRenderContainerWithBackgroundImageWhereMappedFileEntryIsNull()
+	public void testRenderContainerWithBackgroundImageWhereInfoItemObjectIsNull()
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);

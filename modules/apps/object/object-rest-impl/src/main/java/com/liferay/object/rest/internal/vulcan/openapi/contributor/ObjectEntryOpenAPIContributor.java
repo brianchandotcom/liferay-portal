@@ -398,6 +398,13 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					schemaName));
 		}
 
+		if (operations.containsKey(PathItem.HttpMethod.POST)) {
+			pathItem.post(
+				_getObjectRelationshipOperation(
+					objectRelationship, existingPathItem.getPost(), schemaName,
+					schemaName));
+		}
+
 		if (operations.containsKey(PathItem.HttpMethod.PUT)) {
 			pathItem.put(
 				_getObjectRelationshipOperation(
@@ -576,6 +583,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 							schemaName, schemaName
 						}));
 				parameters(_getParameters(operation, schemaName));
+				requestBody(operation.getRequestBody());
 				responses(
 					_getObjectRelationshipApiResponses(
 						operation, responseSchemaName));

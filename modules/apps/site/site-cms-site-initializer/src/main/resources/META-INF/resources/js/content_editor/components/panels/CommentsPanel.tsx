@@ -367,6 +367,7 @@ function CommentNode({
 								initialNegativeVotes={comment.negativeVotes}
 								initialPositiveVotes={comment.positiveVotes}
 								signedIn
+								size="xs"
 								thumbDown={comment.negativeVotes > 0}
 								thumbUp={comment.positiveVotes > 0}
 								type="thumbs"

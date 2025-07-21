@@ -65,6 +65,7 @@ const RatingsThumbs = ({
 	initialPositiveVotes = 0,
 	inititalTitle,
 	sendVoteRequest,
+	size = 'sm',
 	thumbDown = false,
 	thumbUp = false,
 }) => {
@@ -166,7 +167,7 @@ const RatingsThumbs = ({
 				disabled={disabled}
 				displayType="secondary"
 				onClick={voteUp}
-				small
+				size={size}
 				title={getTitleThumbsUp()}
 				value={positiveVotes}
 			>
@@ -194,7 +195,7 @@ const RatingsThumbs = ({
 				disabled={disabled}
 				displayType="secondary"
 				onClick={voteDown}
-				small
+				size={size}
 				title={getTitleThumbsDown()}
 				value={negativeVotes}
 			>

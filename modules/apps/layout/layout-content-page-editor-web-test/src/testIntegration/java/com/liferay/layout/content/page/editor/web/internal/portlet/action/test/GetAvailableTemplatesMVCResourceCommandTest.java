@@ -77,15 +77,15 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 	public void testDoServeResourceWhereInfoItemObjectIsNull()
 		throws Exception {
 
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_journalArticleLocalService.moveArticleToTrash(
 			TestPropsValues.getUserId(), journalArticle);
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
 
 		_mvcResourceCommand.serveResource(
 			_getMockLiferayResourceRequest(journalArticle.getResourcePrimKey()),

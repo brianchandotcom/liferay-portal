@@ -305,7 +305,18 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 
 			UserSubject userSubject = new UserSubject(StringPool.BLANK);
 
-			if (userAuthType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			if (userAuthType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+				User user = userLocalService.fetchUserByEmailAddress(
+					companyId, subject);
+
+				if (user == null) {
+					return null;
+				}
+
+				userSubject.setLogin(user.getScreenName());
+				userSubject.setId(String.valueOf(user.getUserId()));
+			}
+			else if (userAuthType.equals(CompanyConstants.AUTH_TYPE_ID)) {
 
 				// Compatibility with existing design
 
@@ -318,17 +329,6 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 
 				userSubject.setLogin(user.getScreenName());
 				userSubject.setId(subject);
-			}
-			else if (userAuthType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-				User user = userLocalService.fetchUserByEmailAddress(
-					companyId, subject);
-
-				if (user == null) {
-					return null;
-				}
-
-				userSubject.setLogin(user.getScreenName());
-				userSubject.setId(String.valueOf(user.getUserId()));
 			}
 
 			Map<String, String> properties = userSubject.getProperties();

@@ -14,10 +14,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Base64;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -66,9 +65,7 @@ public class JWTAssertAuthorizationGrantTest
 
 		String[] chunks = accessToken.split("\\.");
 
-		Base64.Decoder decoder = Base64.getUrlDecoder();
-
-		String payload = new String(decoder.decode(chunks[1]));
+		String payload = new String(Base64.decode(chunks[1]));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(payload);
 

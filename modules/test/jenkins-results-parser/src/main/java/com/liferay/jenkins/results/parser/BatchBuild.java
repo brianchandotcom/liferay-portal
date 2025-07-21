@@ -146,11 +146,8 @@ public class BatchBuild extends BaseParentBuild {
 		}
 
 		if (!upstreamJobFailureElements.isEmpty()) {
-			upstreamJobFailureMessageElement = getGitHubMessageElement(true);
-
 			Dom4JUtil.getOrderedListElement(
-				upstreamJobFailureElements, upstreamJobFailureMessageElement,
-				4);
+				upstreamJobFailureElements, getGitHubMessageElement(true), 4);
 		}
 
 		Dom4JUtil.getOrderedListElement(failureElements, messageElement, 4);

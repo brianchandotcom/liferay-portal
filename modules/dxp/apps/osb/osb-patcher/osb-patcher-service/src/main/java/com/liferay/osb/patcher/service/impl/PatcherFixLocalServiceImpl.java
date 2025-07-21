@@ -240,7 +240,7 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public PatcherFix updatePatcherFix(
-			long patcherFixId, String gitHash, int status)
+			long userId, long patcherFixId, String gitHash, int status)
 		throws PortalException {
 
 		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
@@ -249,6 +249,34 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		patcherFix.setModifiedDate(new Date());
 		patcherFix.setGitHash(gitHash);
 		patcherFix.setStatus(status);
+
+		User user = _userLocalService.getUser(userId);
+
+		patcherFix.setStatusByUserId(user.getUserId());
+		patcherFix.setStatusByUserName(user.getFullName());
+
+		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public PatcherFix updatePatcherFix(
+			long userId, long patcherFixId, String gitHash,
+			String jenkinsResults, int status)
+		throws PortalException {
+
+		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
+			patcherFixId);
+
+		patcherFix.setModifiedDate(new Date());
+		patcherFix.setGitHash(gitHash);
+		patcherFix.setJenkinsResults(jenkinsResults);
+		patcherFix.setStatus(status);
+
+		User user = _userLocalService.getUser(userId);
+
+		patcherFix.setStatusByUserId(user.getUserId());
+		patcherFix.setStatusByUserName(user.getFullName());
 
 		return patcherFixPersistence.update(patcherFix);
 	}
@@ -267,24 +295,6 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		patcherFix.setDependencies(dependencies);
 		patcherFix.setFixPackStatus(fixPackStatus);
 		patcherFix.setRequirements(requirements);
-
-		return patcherFixPersistence.update(patcherFix);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public PatcherFix updatePatcherFix(
-			long patcherFixId, String gitHash, String jenkinsResults,
-			int status)
-		throws PortalException {
-
-		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
-			patcherFixId);
-
-		patcherFix.setModifiedDate(new Date());
-		patcherFix.setGitHash(gitHash);
-		patcherFix.setJenkinsResults(jenkinsResults);
-		patcherFix.setStatus(status);
 
 		return patcherFixPersistence.update(patcherFix);
 	}
@@ -311,7 +321,7 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public PatcherFix updateStatus(long patcherFixId, int status)
+	public PatcherFix updateStatus(long userId, long patcherFixId, int status)
 		throws PortalException {
 
 		PatcherFix patcherFix = patcherFixPersistence.findByPrimaryKey(
@@ -319,6 +329,11 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 		patcherFix.setModifiedDate(new Date());
 		patcherFix.setStatus(status);
+
+		User user = _userLocalService.getUser(userId);
+
+		patcherFix.setStatusByUserId(user.getUserId());
+		patcherFix.setStatusByUserName(user.getFullName());
 
 		return patcherFixPersistence.update(patcherFix);
 	}

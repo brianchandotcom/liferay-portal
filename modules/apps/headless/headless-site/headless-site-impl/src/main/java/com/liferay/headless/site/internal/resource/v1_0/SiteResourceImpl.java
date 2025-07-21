@@ -148,6 +148,10 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	public Page<Site> getSitesPage(String search, Pagination pagination)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
 		long[] classNameIds = {
 			_portal.getClassNameId(Company.class.getName()),
 			_portal.getClassNameId(Group.class.getName())

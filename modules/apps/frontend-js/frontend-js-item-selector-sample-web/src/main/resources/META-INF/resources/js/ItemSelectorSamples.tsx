@@ -15,7 +15,7 @@ import {
 	ItemSelector,
 	ItemSelectorModal,
 	assetLibraryViews,
-	documentsAndMediaViews,
+	documentViews,
 	getDefaultItemSelectorModalViews,
 	userViews,
 } from 'frontend-js-item-selector-web';
@@ -62,21 +62,21 @@ const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
 	selectionType: 'single',
 };
 
-const assetsItemSelectorConfig = {
+const assetLibrariesItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
 	itemNameLocator: 'name',
 	type: Liferay.Language.get('asset'),
 	views: assetLibraryViews,
 };
 
-const docsAndMediaItemSelectorConfig = {
+const documentsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`,
 	itemNameLocator: 'fileName',
 	type: Liferay.Language.get('file'),
-	views: documentsAndMediaViews,
+	views: documentViews,
 };
 
-const usersItemSelectorConfig = {
+const userAccountsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
 	itemNameLocator: (item: any) => {
 		return (
@@ -303,7 +303,7 @@ export default function ItemSelectorSamples() {
 					{...{
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
-							apiURL: docsAndMediaItemSelectorConfig.apiURL,
+							apiURL: documentsItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-documents-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -311,12 +311,12 @@ export default function ItemSelectorSamples() {
 							}),
 						},
 						itemNameLocator:
-							docsAndMediaItemSelectorConfig.itemNameLocator,
+							documentsItemSelectorConfig.itemNameLocator,
 						observer: fileItemSelectorObserver,
 						onOpenChange: fileItemSelectorOpenChange,
 						onSelection: onFileSelection,
 						open: fileItemSelectorOpen,
-						type: docsAndMediaItemSelectorConfig.type,
+						type: documentsItemSelectorConfig.type,
 					}}
 				/>
 
@@ -324,20 +324,20 @@ export default function ItemSelectorSamples() {
 					{...{
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
-							apiURL: assetsItemSelectorConfig.apiURL,
+							apiURL: assetLibrariesItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-assets-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
-									EItemSelectorModalViewsConfig.ASSET_LIBRARY,
+									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
 							}),
 						},
 						itemNameLocator:
-							assetsItemSelectorConfig.itemNameLocator,
+							assetLibrariesItemSelectorConfig.itemNameLocator,
 						observer: spaceItemSelectorObserver,
 						onOpenChange: assetItemSelectorOpenChange,
 						onSelection: onAssetSelection,
 						open: spaceItemSelectorOpen,
-						type: assetsItemSelectorConfig.type,
+						type: assetLibrariesItemSelectorConfig.type,
 					}}
 				/>
 
@@ -345,23 +345,24 @@ export default function ItemSelectorSamples() {
 					{...{
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
-							apiURL: usersItemSelectorConfig.apiURL,
+							apiURL: userAccountsItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-users-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
-								viewsConfig: 'users',
+								viewsConfig:
+									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
 							}),
 						},
 						itemNameLocator:
-							usersItemSelectorConfig.itemNameLocator,
+							userAccountsItemSelectorConfig.itemNameLocator,
 						observer: userItemSelectorObserver,
 						onOpenChange: userItemSelectorOpenChange,
 						onSelection: onUserSelection,
 						open: userItemSelectorOpen,
-						type: usersItemSelectorConfig.type,
+						type: userAccountsItemSelectorConfig.type,
 					}}
 				/>
 
-				<ClayButton.Group spaced>
+				<ClayButton.Group className="mb-3" spaced>
 					<ClayButton
 						displayType="primary"
 						onClick={() => {
@@ -407,7 +408,7 @@ export default function ItemSelectorSamples() {
 				)}
 
 				{user && (
-					<ClayAlert displayType="info" symbol="user" title={user} />
+					<ClayAlert displayType="info" symbol="user" title={user['name']} />
 				)}
 			</SampleContainer>
 		</>

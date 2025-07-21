@@ -136,6 +136,46 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	}
 
 	@Override
+	public Object postByExternalReferenceCodeObjectEntryObjectRelationshipName(
+			String currentExternalReferenceCode, ObjectEntry objectEntry,
+			String objectRelationshipName)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry currentObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				currentExternalReferenceCode,
+				_objectDefinition.getObjectDefinitionId());
+
+		return postObjectEntryObjectRelationshipName(
+			currentObjectEntry.getObjectEntryId(), objectEntry,
+			objectRelationshipName);
+	}
+
+	@Override
+	public Object postObjectEntryObjectRelationshipName(
+			Long currentObjectEntryId, ObjectEntry objectEntry,
+			String objectRelationshipName)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.addRelatedObjectEntry(
+			_getDTOConverterContext(currentObjectEntryId),
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				_objectDefinition, objectRelationship),
+			objectEntry, objectRelationship, currentObjectEntryId,
+			objectEntry.getScopeKey());
+	}
+
+	@Override
 	public Object
 			putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
 				String currentExternalReferenceCode,

@@ -5780,7 +5780,6 @@ public class ObjectEntryLocalServiceImpl
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 
-		_setRootObjectEntryId(objectDefinition, objectEntry, values);
 		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
 		_setExpirationDate(
 			objectDefinition.getCompanyId(), objectEntry, values);

@@ -30,6 +30,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.model.ObjectRelationshipModel;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
@@ -185,7 +186,7 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 
 		Map<String, Serializable> values = _toObjectValues(
-			dtoConverterContext.getLocale(), objectDefinition, objectEntry,
+			0L, dtoConverterContext.getLocale(), objectDefinition, objectEntry,
 			scopeKey, serviceContext);
 
 		return _addObjectEntry(
@@ -209,6 +210,49 @@ public class DefaultObjectEntryManagerImpl
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2()),
 			primaryKey2);
+	}
+
+	@Override
+	public ObjectEntry addRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			ObjectRelationship objectRelationship, long parentObjectEntryId,
+			String scopeKey)
+		throws Exception {
+
+		if (!objectRelationship.isEdge()) {
+			throw new UnsupportedOperationException();
+		}
+
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		properties.put(objectField.getName(), parentObjectEntryId);
+
+		long groupId = getGroupId(objectDefinition, scopeKey);
+
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition,
+			_addOrUpdateNestedObjectEntries(
+				dtoConverterContext, objectDefinition, objectEntry,
+				_getObjectRelationships(objectDefinition, objectEntry),
+				_objectEntryService.addObjectEntry(
+					groupId, objectDefinition.getObjectDefinitionId(),
+					_getObjectEntryFolderId(
+						objectDefinition.getCompanyId(), groupId, objectEntry,
+						serviceContext),
+					objectEntry.getDefaultLanguageId(),
+					_toObjectValues(
+						objectField.getObjectFieldId(),
+						dtoConverterContext.getLocale(), objectDefinition,
+						objectEntry, scopeKey, serviceContext),
+					serviceContext),
+				scopeKey));
 	}
 
 	@Override
@@ -1061,7 +1105,7 @@ public class DefaultObjectEntryManagerImpl
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				_toObjectValues(
-					dtoConverterContext.getLocale(), objectDefinition,
+					0L, dtoConverterContext.getLocale(), objectDefinition,
 					objectEntry, scopeKey, serviceContext),
 				serviceContext);
 
@@ -1092,8 +1136,8 @@ public class DefaultObjectEntryManagerImpl
 		serviceBuilderObjectEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
 		serviceBuilderObjectEntry.setValues(
 			_toObjectValues(
-				dtoConverterContext.getLocale(), objectDefinition, objectEntry,
-				scopeKey,
+				0L, dtoConverterContext.getLocale(), objectDefinition,
+				objectEntry, scopeKey,
 				_createServiceContext(
 					dtoConverterContext, objectDefinition, objectEntry,
 					scopeKey)));
@@ -1369,7 +1413,7 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		Map<String, Serializable> values = _toObjectValues(
-			dtoConverterContext.getLocale(), objectDefinition, objectEntry,
+			0L, dtoConverterContext.getLocale(), objectDefinition, objectEntry,
 			scopeKey, serviceContext);
 
 		ObjectField titleObjectField =
@@ -2561,9 +2605,9 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private Map<String, Serializable> _toObjectValues(
-			Locale locale, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry, String scopeKey,
-			ServiceContext serviceContext)
+			long allowedRelationshipObjectFieldId, Locale locale,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String scopeKey, ServiceContext serviceContext)
 		throws Exception {
 
 		Map<String, Serializable> values = new HashMap<>();
@@ -2578,9 +2622,23 @@ public class DefaultObjectEntryManagerImpl
 			"reviewDate", _getDateString(objectEntry.getReviewDate())
 		).build();
 
+		List<Long> relationshipObjectFieldIds = TransformUtil.transform(
+			_objectRelationshipLocalService.
+				getObjectRelationshipsByObjectDefinitionId2(
+					objectDefinition.getObjectDefinitionId(), true),
+			ObjectRelationshipModel::getObjectFieldId2);
+
+		relationshipObjectFieldIds.remove(allowedRelationshipObjectFieldId);
+
 		for (ObjectField objectField :
 				objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId())) {
+
+			if (relationshipObjectFieldIds.contains(
+					objectField.getObjectFieldId())) {
+
+				continue;
+			}
 
 			if (Objects.equals(
 					objectField.getBusinessType(),
@@ -2688,7 +2746,7 @@ public class DefaultObjectEntryManagerImpl
 				_objectEntryService.partialUpdateObjectEntry(
 					objectEntryId,
 					_toObjectValues(
-						dtoConverterContext.getLocale(), objectDefinition,
+						0L, dtoConverterContext.getLocale(), objectDefinition,
 						objectEntry, scopeKey, serviceContext),
 					serviceContext);
 		}
@@ -2696,7 +2754,7 @@ public class DefaultObjectEntryManagerImpl
 			serviceBuilderObjectEntry = _objectEntryService.updateObjectEntry(
 				objectEntryId,
 				_toObjectValues(
-					dtoConverterContext.getLocale(), objectDefinition,
+					0L, dtoConverterContext.getLocale(), objectDefinition,
 					objectEntry, scopeKey, serviceContext),
 				serviceContext);
 		}

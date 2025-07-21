@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -117,9 +116,6 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 		Assert.assertEquals(
 			noninfoItemTemplatedRendererCount, responseJSONArray.length());
 	}
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
 			long classPK)

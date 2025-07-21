@@ -103,15 +103,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
 
-		return new Site() {
-			{
-				setExternalReferenceCode(group::getExternalReferenceCode);
-				setFriendlyUrlPath(group::getFriendlyURL);
-				setId(group::getGroupId);
-				setKey(group::getGroupKey);
-				setName(() -> group.getName(LocaleUtil.getDefault()));
-			}
-		};
+		return _toSite(group);
 	}
 
 	@Override
@@ -170,16 +162,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					contextCompany.getCompanyId(), classNameIds, search, null,
 					params, true, pagination.getStartPosition(),
 					pagination.getEndPosition(), new GroupNameComparator()),
-				group -> new Site() {
-					{
-						setExternalReferenceCode(
-							group::getExternalReferenceCode);
-						setFriendlyUrlPath(group::getFriendlyURL);
-						setId(group::getGroupId);
-						setKey(group::getGroupKey);
-						setName(() -> group.getName(LocaleUtil.getDefault()));
-					}
-				}),
+				group -> _toSite(group)),
 			pagination,
 			_groupService.searchCount(
 				contextCompany.getCompanyId(), classNameIds, search, params));
@@ -199,15 +182,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		try {
 			Group group = _addGroup(site.getExternalReferenceCode(), site);
 
-			return new Site() {
-				{
-					setExternalReferenceCode(group::getExternalReferenceCode);
-					setFriendlyUrlPath(group::getFriendlyURL);
-					setId(group::getGroupId);
-					setKey(group::getGroupKey);
-					setName(() -> group.getName(LocaleUtil.getDefault()));
-				}
-			};
+			return _toSite(group);
 		}
 		catch (Throwable throwable) {
 			throw new Exception(throwable);
@@ -287,15 +262,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		Group finalGroup = group;
 
-		return new Site() {
-			{
-				setExternalReferenceCode(finalGroup::getExternalReferenceCode);
-				setFriendlyUrlPath(finalGroup::getFriendlyURL);
-				setId(finalGroup::getGroupId);
-				setKey(finalGroup::getGroupKey);
-				setName(() -> finalGroup.getName(LocaleUtil.getDefault()));
-			}
-		};
+		return _toSite(finalGroup);
 	}
 
 	private Group _addGroup(String externalReferenceCode, Site site)
@@ -480,6 +447,18 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setResponse(new DummyHttpServletResponse());
+	}
+
+	private Site _toSite(Group group) {
+		return new Site() {
+			{
+				setExternalReferenceCode(group::getExternalReferenceCode);
+				setFriendlyUrlPath(group::getFriendlyURL);
+				setId(group::getGroupId);
+				setKey(group::getGroupKey);
+				setName(() -> group.getName(LocaleUtil.getDefault()));
+			}
+		};
 	}
 
 	@Reference

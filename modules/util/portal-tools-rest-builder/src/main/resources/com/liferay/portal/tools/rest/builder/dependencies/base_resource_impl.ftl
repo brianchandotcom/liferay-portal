@@ -230,15 +230,20 @@ public abstract class Base${schemaName}ResourceImpl
 							for (${schemaName} ${schemaVarName} : ${schemaVarNames}Page.getItems()) {
 								${schemaVarName}.setPermissions(
 									() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
-										Page<Permission> permissionsPage = get${schemaName}PermissionsPage(
-											<#if properties?keys?seq_contains("id")>
-												${schemaVarName}.getId()
-											<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-												${schemaVarName}.get${schemaVarName}Id()
-											<#else>
-												${schemaVarName}Id
-											</#if>
-
+										Page<Permission> permissionsPage =
+										<#if freeMarkerTool.getPermissionsPageJavaMethodSignature("get", javaMethodSignatures, schemaName)??>
+											get${schemaName}PermissionsPage(
+												<#if properties?keys?seq_contains("id")>
+													${schemaVarName}.getId()
+												<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
+													${schemaVarName}.get${schemaVarName}Id()
+												<#else>
+													${schemaVarName}Id
+												</#if>
+										<#elseif freeMarkerTool.getParentPermissionsPageJavaMethodSignature("get", javaMethodSignatures, parentSchemaName, schemaName)??>
+											get${parentSchemaName}${schemaName}PermissionsPage(
+												${parentSchemaName?uncap_first}ExternalReferenceCode, ${schemaVarName}.getExternalReferenceCode()
+										</#if>
 											, null);
 
 										Collection<Permission> permissions = permissionsPage.getItems();
@@ -253,15 +258,20 @@ public abstract class Base${schemaName}ResourceImpl
 						<#if properties?keys?seq_contains("permissions")>
 							${httpMethod}${schemaName}.setPermissions(
 								() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
-										Page<Permission> permissionsPage = get${schemaName}PermissionsPage(
-											<#if properties?keys?seq_contains("id")>
-												${httpMethod}${schemaName}.getId()
-											<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-												${httpMethod}${schemaName}.get${schemaVarName}Id()
-											<#else>
-												${schemaVarName}Id
-											</#if>
-
+									Page<Permission> permissionsPage =
+									<#if freeMarkerTool.getPermissionsPageJavaMethodSignature("get", javaMethodSignatures, schemaName)??>
+										get${schemaName}PermissionsPage(
+										<#if properties?keys?seq_contains("id")>
+											${httpMethod}${schemaName}.getId()
+										<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
+											${httpMethod}${schemaName}.get${schemaVarName}Id()
+										<#else>
+											${schemaVarName}Id
+										</#if>
+									<#elseif freeMarkerTool.getParentPermissionsPageJavaMethodSignature("get", javaMethodSignatures, parentSchemaName, schemaName)??>
+										get${parentSchemaName}${schemaName}PermissionsPage(
+											${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
+									</#if>
 											, null);
 
 										Collection<Permission> permissions = permissionsPage.getItems();
@@ -287,7 +297,9 @@ public abstract class Base${schemaName}ResourceImpl
 						);
 
 					if (permissions != null) {
-						Page<Permission> permissionsPage = put${schemaName}PermissionsPage(
+						Page<Permission> permissionsPage =
+						<#if freeMarkerTool.getPermissionsPageJavaMethodSignature("put", javaMethodSignatures, schemaName)??>
+							put${schemaName}PermissionsPage(
 							<#if properties?keys?seq_contains("id")>
 								${httpMethod}${schemaName}.getId()
 							<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -295,7 +307,10 @@ public abstract class Base${schemaName}ResourceImpl
 							<#else>
 								${schemaVarName}Id
 							</#if>
-
+						<#elseif freeMarkerTool.getParentPermissionsPageJavaMethodSignature("put", javaMethodSignatures, parentSchemaName, schemaName)??>
+							put${parentSchemaName}${schemaName}PermissionsPage(
+								${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
+						</#if>
 							, permissions);
 
 						${httpMethod}${schemaName}.setPermissions(

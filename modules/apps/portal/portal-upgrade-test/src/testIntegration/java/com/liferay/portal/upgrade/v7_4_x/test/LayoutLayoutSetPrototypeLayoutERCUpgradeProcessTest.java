@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.internal.upgrade.v3_0_0.test;
+package com.liferay.portal.upgrade.v7_4_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
@@ -30,8 +30,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+import com.liferay.portal.upgrade.v7_4_x.LayoutLayoutSetPrototypeLayoutERCUpgradeProcess;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.util.Date;
@@ -47,7 +46,8 @@ import org.junit.runner.RunWith;
  * @author Javier Moral
  */
 @RunWith(Arquillian.class)
-public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
+public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcessTest
+	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -124,8 +124,8 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 	@Override
 	protected void runUpgrade() throws Exception {
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator, _CLASS_NAME);
+		UpgradeProcess upgradeProcess =
+			new LayoutLayoutSetPrototypeLayoutERCUpgradeProcess();
 
 		upgradeProcess.upgrade();
 
@@ -179,14 +179,6 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 		_sites.mergeLayoutSetPrototypeLayouts(_group, layoutSet);
 	}
-
-	private static final String _CLASS_NAME =
-		"com.liferay.layout.internal.upgrade.v3_0_0.LayoutUpgradeProcess";
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private EntityCache _entityCache;

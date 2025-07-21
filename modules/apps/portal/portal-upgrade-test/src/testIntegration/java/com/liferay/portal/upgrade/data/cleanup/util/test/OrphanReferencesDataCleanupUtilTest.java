@@ -73,7 +73,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 					"insert into Audit_AuditEvent (auditEventId, companyId, ",
 					"className) values (", auditEventId, ", ", companyId, ", '",
 					OrphanReferencesDataCleanupUtilTest.class.getName(), "')")),
-			"Audit_AuditEvent", "companyId", null, "Company", "companyId");
+			null, "companyId", "Audit_AuditEvent", "companyId", "Company");
 	}
 
 	@Test
@@ -92,8 +92,8 @@ public class OrphanReferencesDataCleanupUtilTest {
 				Assert.assertEquals(
 					_getExpectedMessage(
 						2, _dbInspector.normalizeName("Portlet"),
-						_dbInspector.normalizeName("Company"),
-						_dbInspector.normalizeName("companyId"), companyId),
+						_dbInspector.normalizeName("companyId"),
+						_dbInspector.normalizeName("Company"), companyId),
 					logEntry.getMessage());
 			},
 			() -> _db.runSQL(
@@ -115,7 +115,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 						RandomTestUtil.nextLong(), ", ", companyId, ", '",
 						RandomTestUtil.randomString(), "', [$FALSE$])"));
 			},
-			"Portlet", "companyId", null, "Company", "companyId");
+			null, "companyId", "Portlet", "companyId", "Company");
 	}
 
 	@Test
@@ -136,8 +136,8 @@ public class OrphanReferencesDataCleanupUtilTest {
 				Assert.assertEquals(
 					_getExpectedMessage(
 						2, _dbInspector.normalizeName("PortletPreferences"),
-						_dbInspector.normalizeName("Company"),
-						_dbInspector.normalizeName("companyId"), companyId),
+						_dbInspector.normalizeName("companyId"),
+						_dbInspector.normalizeName("Company"), companyId),
 					logEntry.getMessage());
 			},
 			() -> _db.runSQL(
@@ -173,13 +173,13 @@ public class OrphanReferencesDataCleanupUtilTest {
 						ownerType2, ", ", companyId, ", '",
 						RandomTestUtil.randomString(), "')"));
 			},
-			"PortletPreferences", "ownerId", "ownerType = " + ownerType1,
-			"Company", "companyId");
+			"ownerType = " + ownerType1, "ownerId", "PortletPreferences",
+			"companyId", "Company");
 	}
 
 	private String _getExpectedMessage(
-			long count, String sourceTableName, String targetTable,
-			String targetColumn, long targetValue)
+			long count, String sourceTableName, String targetColumn,
+			String targetTable, long targetValue)
 		throws Exception {
 
 		return StringBundler.concat(
@@ -195,9 +195,9 @@ public class OrphanReferencesDataCleanupUtilTest {
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
 			UnsafeRunnable<Exception> initializeDataUnsafeRunnable,
-			String sourceTableName, String sourceColumnName,
-			String sourceAdditionalWhereClause, String targetTableName,
-			String targetColumnName)
+			String sourceAdditionalWhereClause, String sourceColumnName,
+			String sourceTableName, String targetColumnName,
+			String targetTableName)
 		throws Exception {
 
 		initializeDataUnsafeRunnable.run();
@@ -207,11 +207,11 @@ public class OrphanReferencesDataCleanupUtilTest {
 				LoggerTestUtil.INFO)) {
 
 			OrphanReferencesDataCleanupUtil.cleanUpTable(
-				_connection, _dbInspector.normalizeName(sourceTableName),
+				_connection, sourceAdditionalWhereClause,
 				_dbInspector.normalizeName(sourceColumnName),
-				sourceAdditionalWhereClause,
-				_dbInspector.normalizeName(targetTableName),
-				_dbInspector.normalizeName(targetColumnName));
+				_dbInspector.normalizeName(sourceTableName),
+				_dbInspector.normalizeName(targetColumnName),
+				_dbInspector.normalizeName(targetTableName));
 
 			assertUnsafeConsumer.accept(logCapture);
 		}

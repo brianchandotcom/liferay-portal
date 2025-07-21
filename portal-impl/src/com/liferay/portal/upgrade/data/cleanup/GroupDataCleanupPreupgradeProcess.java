@@ -23,29 +23,25 @@ public class GroupDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		upgrade(
 			new AllTablesOrphanReferencesDataCleanupPreupgradeProcess(
-				"Group_", "groupId"));
+				"groupId", "Group_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				"PortalPreferences", "ownerId",
-				"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_GROUP, "Group_",
-				"groupId"));
+				"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_GROUP, "ownerId",
+				"PortalPreferences", "groupId", "Group_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				"PortletPreferences", "ownerId",
-				"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_GROUP, "Group_",
-				"groupId"));
+				"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_GROUP, "ownerId",
+				"PortletPreferences", "groupId", "Group_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				"ResourcePermission", "primKeyId",
-				"scope = " + ResourceConstants.SCOPE_GROUP, "Group_",
-				"groupId"));
+				"scope = " + ResourceConstants.SCOPE_GROUP, "primKeyId",
+				"ResourcePermission", "groupId", "Group_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				"ResourcePermission", "primKeyId",
 				StringBundler.concat(
 					"scope = ", ResourceConstants.SCOPE_INDIVIDUAL,
 					" and name = '", Group.class.getName(), "'"),
-				"Group_", "groupId"));
+				"primKeyId", "ResourcePermission", "groupId", "Group_"));
 	}
 
 }

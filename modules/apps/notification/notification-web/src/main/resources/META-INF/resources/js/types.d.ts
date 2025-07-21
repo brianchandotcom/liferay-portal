@@ -25,7 +25,7 @@ type EmailRecipients = {
 	from: string;
 	fromName: LocalizedValue<string>;
 	singleRecipient: boolean;
-	to: LocalizedValue<string> | EmailNotificationRecipients[];
+	to: LocalizedValue<string> | EmailNotificationRecipients[] | string;
 	toType: string;
 };
 

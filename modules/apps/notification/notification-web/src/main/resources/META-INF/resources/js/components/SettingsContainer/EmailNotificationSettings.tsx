@@ -35,6 +35,11 @@ const RECIPIENT_OPTIONS = [
 	},
 ] as LabelValueObject[];
 
+const SUBSCRIBERS_OPTION = {
+	label: Liferay.Language.get('subscribers'),
+	value: 'subscribers',
+} as LabelValueObject;
+
 export function EmailNotificationSettings({
 	emailNotificationRoles,
 	errors,
@@ -68,7 +73,11 @@ export function EmailNotificationSettings({
 						emailNotificationRoles={emailNotificationRoles}
 						errors={errors}
 						learnResources={learnResources}
-						recipientOptions={RECIPIENT_OPTIONS}
+						recipientOptions={
+							Liferay.FeatureFlags['LPD-42577']
+								? [...RECIPIENT_OPTIONS, SUBSCRIBERS_OPTION]
+								: RECIPIENT_OPTIONS
+						}
 						selectedLocale={selectedLocale}
 						setValues={setValues}
 						values={values}

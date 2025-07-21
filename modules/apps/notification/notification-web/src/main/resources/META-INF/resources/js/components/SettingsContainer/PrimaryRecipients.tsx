@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {
 	FormError,
+	Input,
 	MultiSelectItem,
 	MultipleSelect,
 	SingleSelect,
@@ -35,6 +36,14 @@ interface PrimaryRecipientProps {
 	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
+}
+
+export function getSubscribersDefaultRole() {
+	return '[%EMAIL_RECIPIENT_ADDRESS%]';
+}
+
+export function resetRecipientValue(value: React.Key) {
+	return value === 'subscribers' ? getSubscribersDefaultRole() : [];
 }
 
 export function PrimaryRecipient({
@@ -90,7 +99,7 @@ export function PrimaryRecipient({
 				items={recipientOptions}
 				label={Liferay.Language.get('type')}
 				onSelectionChange={(value) => {
-					if (value === 'email') {
+					if (value !== 'role') {
 						const newToRoleList =
 							uncheckMultiSelectItemChildrens(toRolesList);
 						setToRolesList(newToRoleList);
@@ -100,7 +109,7 @@ export function PrimaryRecipient({
 						recipients: [
 							{
 								...recipient,
-								to: [],
+								to: resetRecipientValue(value),
 								toType: value as string,
 							},
 						],
@@ -188,6 +197,19 @@ export function PrimaryRecipient({
 							/>
 						</div>
 					</LearnResourcesContext.Provider>
+				</div>
+			)}
+
+			{recipient.toType === 'subscribers' && (
+				<div className="lfr__notification-template-email-notification-settings-primary-recipient-input-not-localized">
+					<Input
+						disabled
+						id="subscribersRecipients"
+						label={Liferay.Language.get('recipients')}
+						name="recipients"
+						required
+						value={getSubscribersDefaultRole()}
+					/>
 				</div>
 			)}
 

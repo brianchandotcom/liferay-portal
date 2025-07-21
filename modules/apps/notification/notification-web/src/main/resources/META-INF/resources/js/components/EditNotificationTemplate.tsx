@@ -78,7 +78,10 @@ export function validate(values: NotificationTemplate) {
 			errors.fromName = constantsUtils.REQUIRED_MSG;
 		}
 
-		if (!Array.isArray(recipient.to) && !recipient.to[defaultLanguageId]) {
+		if (
+			!Array.isArray(recipient.to) &&
+			!(recipient.to as LocalizedValue<string>)[defaultLanguageId]
+		) {
 			errors.to = constantsUtils.REQUIRED_MSG;
 		}
 

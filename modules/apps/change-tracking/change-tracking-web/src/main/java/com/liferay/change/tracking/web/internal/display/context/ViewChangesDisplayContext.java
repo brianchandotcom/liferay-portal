@@ -272,6 +272,9 @@ public class ViewChangesDisplayContext {
 			}
 		}
 
+		bulkActionDropdownItems.forEach(
+			item -> item.putData("highlighted", "true"));
+
 		return bulkActionDropdownItems;
 	}
 

@@ -89,10 +89,20 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_journalArticleLocalService.moveArticleToTrash(
+			TestPropsValues.getUserId(), journalArticle);
+
 		ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "doServeResource",
 			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
-			_getMockLiferayResourceRequest(), mockLiferayResourceResponse);
+			_getMockLiferayResourceRequest(
+				journalArticle.getResourcePrimKey(),
+				RandomTestUtil.randomString()),
+			mockLiferayResourceResponse);
 
 		JSONArray responseJSONArray = _getResponseJSONArray(
 			mockLiferayResourceResponse);
@@ -118,7 +128,8 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	private MockLiferayResourceRequest _getMockLiferayResourceRequest()
+	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
+			long classPK, String externalReferenceCode)
 		throws Exception {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
@@ -130,19 +141,12 @@ public class GetAvailableTemplatesMVCResourceCommandTest {
 				_companyLocalService.fetchCompany(_group.getCompanyId()),
 				_group, _layout));
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		_journalArticleLocalService.moveArticleToTrash(
-			TestPropsValues.getUserId(), journalArticle);
-
 		mockLiferayResourceRequest.setParameter(
 			"className", _CLASS_NAME_JOURNAL_ARTICLE);
 		mockLiferayResourceRequest.setParameter(
-			"classPK", String.valueOf(journalArticle.getResourcePrimKey()));
+			"classPK", String.valueOf(classPK));
 		mockLiferayResourceRequest.setParameter(
-			"externalReferenceCode", RandomTestUtil.randomString());
+			"externalReferenceCode", externalReferenceCode);
 
 		return mockLiferayResourceRequest;
 	}

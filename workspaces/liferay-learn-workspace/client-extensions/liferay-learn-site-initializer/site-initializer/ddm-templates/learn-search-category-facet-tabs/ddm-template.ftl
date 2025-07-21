@@ -1,15 +1,15 @@
 <#if entries?has_content>
 	<#assign
+		sortedTaxonomyCategories = []
 		totalCount = 0
-		orderedEntries = []
 	/>
 
 	<#list entries as entry>
-		<#assign label = entry.getBucketText()?upper_case />
+		<#assign label = entry.bucketText?upper_case />
 		<#if label == "OFFICIAL DOCUMENTATION">
-			<#assign orderedEntries = [entry] + orderedEntries />
+			<#assign sortedTaxonomyCategories = [entry] + sortedTaxonomyCategories />
 		<#elseif label == "HOW TO">
-			<#assign orderedEntries += [entry] />
+			<#assign sortedTaxonomyCategories += [entry] />
 		</#if>
 	</#list>
 
@@ -33,7 +33,7 @@
 			</@clay.button>
 		</li>
 
-		<#list orderedEntries as entry>
+		<#list sortedTaxonomyCategories as entry>
 			<li class="facet-value">
 				<@clay.button
 					cssClass="btn-unstyled facet-term tab-btn term-name text-center ${(entry.isSelected())?then('selected-tab-btn', '')}"
@@ -103,7 +103,7 @@
 				</@clay.button>
 			</li>
 
-			<#list orderedEntries as entry>
+			<#list sortedTaxonomyCategories as entry>
 				<li class="align-items-center d-flex ${(entry.isSelected())?then('selected-item-mobile-tab', '')}">
 					<@clay.button
 						cssClass="dropdown-item facet-clear nav-link rounded"

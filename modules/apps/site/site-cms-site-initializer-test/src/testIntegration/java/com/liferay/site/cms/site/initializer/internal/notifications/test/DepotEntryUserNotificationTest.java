@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.cms.site.initializer.internal.model.listener.test;
+package com.liferay.site.cms.site.initializer.internal.notifications.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotPortletKeys;
@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
-public class UserModelListenerTest {
+public class DepotEntryUserNotificationTest {
 
 	@ClassRule
 	@Rule
@@ -63,7 +63,7 @@ public class UserModelListenerTest {
 
 	@FeatureFlag("LPD-17564")
 	@Test
-	public void testOnAfterAddAssociationGroup() throws Exception {
+	public void testGroupUserAssociation() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		_userLocalService.addGroupUser(
@@ -74,7 +74,25 @@ public class UserModelListenerTest {
 
 	@FeatureFlag("LPD-17564")
 	@Test
-	public void testOnAfterAddAssociationUserGroup() throws Exception {
+	public void testGroupUserGroupAssociation() throws Exception {
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		User user1 = UserTestUtil.addUser();
+		User user2 = UserTestUtil.addUser();
+
+		_userGroupLocalService.addUserUserGroup(user1.getUserId(), userGroup);
+		_userGroupLocalService.addUserUserGroup(user2.getUserId(), userGroup);
+
+		_userGroupLocalService.addGroupUserGroup(
+			_depotEntry.getGroupId(), userGroup);
+
+		_assertUserNotificationEvent(user1);
+		_assertUserNotificationEvent(user2);
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testGroupUserGroupAssociation2() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		_userGroupLocalService.addGroupUserGroup(

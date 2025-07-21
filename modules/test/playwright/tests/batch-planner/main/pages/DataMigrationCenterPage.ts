@@ -4,9 +4,9 @@
  */
 
 import {Locator, Page} from '@playwright/test';
-import {readFileSync} from 'fs';
 
 import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {readCSVFile} from '../../../../utils/fileReader';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {getTempDir} from '../../../../utils/temp';
 import {unzipFile} from '../../../../utils/zip';
@@ -89,7 +89,7 @@ export class DataMigrationCenterPage {
 		await this.exportFileMenuItem.click();
 	}
 
-	async downloadTempFile(entitType: string) {
+	async downloadSampleFile(entitType: string) {
 		await this.selectEntityType(entitType);
 
 		const downloadPromise = this.page.waitForEvent('download');
@@ -98,10 +98,7 @@ export class DataMigrationCenterPage {
 		const filePath = getTempDir() + download.suggestedFilename();
 		await download.saveAs(filePath);
 
-		return readFileSync(filePath)
-			.toString()
-			.split('\n')
-			.map((event) => event.trim());
+		return readCSVFile(filePath);
 	}
 
 	async importFile(

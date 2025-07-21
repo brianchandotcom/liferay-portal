@@ -8,7 +8,6 @@ import {
 	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
-import {readFileSync} from 'fs';
 import * as path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -16,6 +15,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import createTempFile from '../../../utils/createTempFile';
+import {readCSVFile} from '../../../utils/fileReader';
 import getRandomString from '../../../utils/getRandomString';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 import {OBJECT_ENTRY_ENTITY_TYPE} from './utils/constants';
@@ -496,37 +496,33 @@ const siteObjectDefinition: ObjectDefinition = {
 	status: {code: 0},
 };
 
-test('Can download custom object csv temp', async ({
+test('Can download custom object sample file', async ({
 	apiHelpers,
 	dataMigrationCenterPage,
 }) => {
-	try {
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-		const {body: objectDefinition} =
-			await objectDefinitionAPIClient.postObjectDefinition(
-				companyObjectDefinition
-			);
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-	}
-	catch (error) {}
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			companyObjectDefinition
+		);
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
 
 	await dataMigrationCenterPage.gotoPage();
 	await dataMigrationCenterPage.goToImportFile();
 
-	const file = await dataMigrationCenterPage.downloadTempFile(
+	const file = await dataMigrationCenterPage.downloadSampleFile(
 		OBJECT_ENTRY_ENTITY_TYPE
 	);
 
 	expect(file).toEqual(
-		readFileSync(path.join(__dirname, '/dependencies/object_sample.csv'))
-			.toString()
-			.split('\n')
-			.map((event) => event.trim())
+		await readCSVFile(
+			path.join(__dirname, '/dependencies/object_sample.csv')
+		)
 	);
 });
 

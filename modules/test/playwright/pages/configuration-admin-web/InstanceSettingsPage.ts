@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {waitForAlert} from '../../utils/waitForAlert';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
@@ -25,6 +25,11 @@ export class InstanceSettingsPage {
 
 	async goto(forceReload = true) {
 		await this.applicationsMenuPage.goToInstanceSettings(forceReload);
+	}
+
+	async checkSetting(label: string, text: string) {
+		await expect(await this.page.getByLabel(label).first()).toBeVisible();
+		await expect(await this.page.getByText(text).first()).toBeVisible();
 	}
 
 	async exportInstanceSetting() {

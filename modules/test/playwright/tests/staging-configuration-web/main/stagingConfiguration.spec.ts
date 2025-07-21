@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
@@ -27,6 +28,7 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	loginTest(),
+	instanceSettingsPagesTest,
 	pageViewModePagesTest,
 	pagesAdminPagesTest,
 	productMenuPageTest,
@@ -136,6 +138,38 @@ test(
 		);
 
 		await stagingConfigurationPage.enableLocalStaging({});
+	}
+);
+
+test(
+	'Verify if information about staging system settings are present.',
+	{tag: ['@LPS-123156']},
+	async ({instanceSettingsPage}) => {
+		await instanceSettingsPage.goToInstanceSetting(
+			'Web Content',
+			'Web Content',
+			true,
+			'Virtual Instance Scope'
+		);
+		await instanceSettingsPage.checkSetting(
+			'Single Asset Publish Process Includes Version History',
+			'Specify characters that are not allowed in web content folder names.'
+		);
+
+		await instanceSettingsPage.goToInstanceSetting(
+			'Infrastructure',
+			'Staging',
+			true,
+			'Virtual Instance Scope'
+		);
+		await instanceSettingsPage.checkSetting(
+			'Delete temporary LAR during a failed staging publish process.',
+			'Uncheck to avoid deleting the temporary LAR during a failed staging publish process. In remote staging contexts, this only applies for the staging environment.'
+		);
+		await instanceSettingsPage.checkSetting(
+			'Delete temporary LAR during a successful staging publish process.',
+			'Uncheck to avoid deleting the temporary LAR during a successful staging publish process. In remote staging contexts, this only applies for the staging environment.'
+		);
 	}
 );
 

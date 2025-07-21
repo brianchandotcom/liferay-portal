@@ -12,7 +12,11 @@ import React, {ComponentProps} from 'react';
 
 import SpaceSticker from './SpaceSticker';
 
-interface Props {
+interface Props
+	extends Pick<
+		React.ComponentProps<typeof ClaySticker>,
+		'displayType' | 'size'
+	> {
 	actionItems?: ComponentProps<typeof ClayDropDownWithItems>['items'];
 	breadcrumbItems: BreadcrumbItem[];
 	hideSpace?: boolean;
@@ -31,8 +35,7 @@ export default function Breadcrumb({
 	displayType,
 	hideSpace,
 	size,
-}: Props &
-	Pick<React.ComponentProps<typeof ClaySticker>, 'displayType' | 'size'>) {
+}: Props) {
 	return (
 		<Nav
 			aria-label={Liferay.Language.get('breadcrumb')}

@@ -98,38 +98,7 @@ public class SXPBlueprintInfoCollectionProviderTest {
 	}
 
 	@Test
-	public void testSXPBlueprintInfoCollectionProviderAvailabilityIsCompanyScoped()
-		throws Exception {
-
-		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_readJSON("configurationJSON"), null, null, StringPool.BLANK,
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			_serviceContext);
-
-		InfoCollectionProvider<JournalArticle> infoCollectionProvider =
-			_infoItemServiceRegistry.getInfoItemService(
-				InfoCollectionProvider.class,
-				StringBundler.concat(
-					SXPBlueprint.class.getName(), StringPool.UNDERLINE,
-					sxpBlueprint.getCompanyId(), StringPool.UNDERLINE,
-					sxpBlueprint.getExternalReferenceCode()));
-
-		Assert.assertTrue(infoCollectionProvider.isAvailable());
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					RandomTestUtil.randomLong())) {
-
-			Assert.assertFalse(infoCollectionProvider.isAvailable());
-		}
-	}
-
-	@Test
-	public void testSXPBlueprintInfoCollectionProviderReturnsResults()
-		throws Exception {
-
+	public void testGetCollectionInfoPage() throws Exception {
 		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_readJSON("configurationJSON"), null, null, StringPool.BLANK,
@@ -160,6 +129,33 @@ public class SXPBlueprintInfoCollectionProviderTest {
 
 		Assert.assertEquals(
 			_journalArticle.getPrimaryKey(), journalArticle.getPrimaryKey());
+	}
+
+	@Test
+	public void testIsAvailable() throws Exception {
+		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_readJSON("configurationJSON"), null, null, StringPool.BLANK,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			_serviceContext);
+
+		InfoCollectionProvider<JournalArticle> infoCollectionProvider =
+			_infoItemServiceRegistry.getInfoItemService(
+				InfoCollectionProvider.class,
+				StringBundler.concat(
+					SXPBlueprint.class.getName(), StringPool.UNDERLINE,
+					sxpBlueprint.getCompanyId(), StringPool.UNDERLINE,
+					sxpBlueprint.getExternalReferenceCode()));
+
+		Assert.assertTrue(infoCollectionProvider.isAvailable());
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					RandomTestUtil.randomLong())) {
+
+			Assert.assertFalse(infoCollectionProvider.isAvailable());
+		}
 	}
 
 	private String _readJSON(String name) {

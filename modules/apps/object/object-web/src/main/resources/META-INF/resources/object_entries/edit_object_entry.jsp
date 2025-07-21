@@ -13,27 +13,39 @@ String externalReferenceCode = ParamUtil.getString(request, "externalReferenceCo
 ObjectEntryDisplayContext objectEntryDisplayContext = (ObjectEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 ObjectDefinition objectDefinition = objectEntryDisplayContext.getObjectDefinition1();
+ObjectEntry objectEntry = objectEntryDisplayContext.getObjectEntry();
 ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab();
 ObjectRelationship objectRelationship = objectEntryDisplayContext.getObjectRelationship();
 %>
 
-<c:if test="<%= (objectEntryDisplayContext.getObjectEntry() != null) && ((objectLayoutTab != null) || (objectDefinition.getRootObjectDefinitionId() > 0)) %>">
-	<liferay-frontend:screen-navigation
-		key="<%= objectDefinition.getClassName() %>"
-		navBarCssClass="container-fluid-max-xxxl"
-		portletURL="<%= currentURLObj %>"
-	/>
-</c:if>
-
 <c:choose>
-	<c:when test="<%= objectRelationship != null %>">
-		<liferay-util:include page="/object_entries/object_entry/relationship.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="externalReferenceCode" value="<%= externalReferenceCode %>" />
-		</liferay-util:include>
+	<c:when test='<%= (externalReferenceCode != "") && (objectEntry == null) %>'>
+		<clay:alert
+			displayType="danger"
+			message="the-object-entry-could-not-be-found"
+			title="Error"
+		/>
 	</c:when>
-	<c:when test="<%= objectEntryDisplayContext.isShowObjectEntryForm() %>">
-		<liferay-util:include page="/object_entries/object_entry/form.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="externalReferenceCode" value="<%= externalReferenceCode %>" />
-		</liferay-util:include>
-	</c:when>
+	<c:otherwise>
+		<c:if test="<%= (objectEntry != null) && ((objectLayoutTab != null) || (objectDefinition.getRootObjectDefinitionId() > 0)) %>">
+			<liferay-frontend:screen-navigation
+				key="<%= objectDefinition.getClassName() %>"
+				navBarCssClass="container-fluid-max-xxxl"
+				portletURL="<%= currentURLObj %>"
+			/>
+		</c:if>
+
+		<c:choose>
+			<c:when test="<%= objectRelationship != null %>">
+				<liferay-util:include page="/object_entries/object_entry/relationship.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="externalReferenceCode" value="<%= externalReferenceCode %>" />
+				</liferay-util:include>
+			</c:when>
+			<c:when test="<%= objectEntryDisplayContext.isShowObjectEntryForm() %>">
+				<liferay-util:include page="/object_entries/object_entry/form.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="externalReferenceCode" value="<%= externalReferenceCode %>" />
+				</liferay-util:include>
+			</c:when>
+		</c:choose>
+	</c:otherwise>
 </c:choose>

@@ -593,10 +593,20 @@ public class PatcherFixLocalServiceUtil {
 	}
 
 	public static PatcherFix updatePatcherFix(
-			long patcherFixId, String gitHash, int status)
-		throws PortalException {
+			long userId, long patcherFixId, String gitHash, int status)
+		throws Exception {
 
-		return getService().updatePatcherFix(patcherFixId, gitHash, status);
+		return getService().updatePatcherFix(
+			userId, patcherFixId, gitHash, status);
+	}
+
+	public static PatcherFix updatePatcherFix(
+			long userId, long patcherFixId, String gitHash,
+			String jenkinsResults, int status)
+		throws Exception {
+
+		return getService().updatePatcherFix(
+			userId, patcherFixId, gitHash, jenkinsResults, status);
 	}
 
 	public static PatcherFix updatePatcherFix(
@@ -606,15 +616,6 @@ public class PatcherFixLocalServiceUtil {
 
 		return getService().updatePatcherFix(
 			patcherFixId, dependencies, fixPackStatus, requirements);
-	}
-
-	public static PatcherFix updatePatcherFix(
-			long patcherFixId, String gitHash, String jenkinsResults,
-			int status)
-		throws PortalException {
-
-		return getService().updatePatcherFix(
-			patcherFixId, gitHash, jenkinsResults, status);
 	}
 
 	/**
@@ -638,10 +639,11 @@ public class PatcherFixLocalServiceUtil {
 		return getService().updateRequestKey(patcherFixId, requestKey);
 	}
 
-	public static PatcherFix updateStatus(long patcherFixId, int status)
-		throws PortalException {
+	public static PatcherFix updateStatus(
+			long userId, long patcherFixId, int status)
+		throws Exception {
 
-		return getService().updateStatus(patcherFixId, status);
+		return getService().updateStatus(userId, patcherFixId, status);
 	}
 
 	public static PatcherFix updateType(long patcherFixId, int type)

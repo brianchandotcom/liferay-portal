@@ -713,11 +713,21 @@ public class PatcherFixLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.patcher.model.PatcherFix updatePatcherFix(
-			long patcherFixId, String gitHash, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			long userId, long patcherFixId, String gitHash, int status)
+		throws Exception {
 
 		return _patcherFixLocalService.updatePatcherFix(
-			patcherFixId, gitHash, status);
+			userId, patcherFixId, gitHash, status);
+	}
+
+	@Override
+	public com.liferay.osb.patcher.model.PatcherFix updatePatcherFix(
+			long userId, long patcherFixId, String gitHash,
+			String jenkinsResults, int status)
+		throws Exception {
+
+		return _patcherFixLocalService.updatePatcherFix(
+			userId, patcherFixId, gitHash, jenkinsResults, status);
 	}
 
 	@Override
@@ -728,16 +738,6 @@ public class PatcherFixLocalServiceWrapper
 
 		return _patcherFixLocalService.updatePatcherFix(
 			patcherFixId, dependencies, fixPackStatus, requirements);
-	}
-
-	@Override
-	public com.liferay.osb.patcher.model.PatcherFix updatePatcherFix(
-			long patcherFixId, String gitHash, String jenkinsResults,
-			int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _patcherFixLocalService.updatePatcherFix(
-			patcherFixId, gitHash, jenkinsResults, status);
 	}
 
 	/**
@@ -768,10 +768,11 @@ public class PatcherFixLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.patcher.model.PatcherFix updateStatus(
-			long patcherFixId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			long userId, long patcherFixId, int status)
+		throws Exception {
 
-		return _patcherFixLocalService.updateStatus(patcherFixId, status);
+		return _patcherFixLocalService.updateStatus(
+			userId, patcherFixId, status);
 	}
 
 	@Override

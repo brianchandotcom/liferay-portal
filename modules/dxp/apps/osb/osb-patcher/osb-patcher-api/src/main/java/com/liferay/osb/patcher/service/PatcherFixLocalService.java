@@ -428,19 +428,19 @@ public interface PatcherFixLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public PatcherFix updatePatcherFix(
-			long patcherFixId, String gitHash, int status)
-		throws PortalException;
+			long userId, long patcherFixId, String gitHash, int status)
+		throws Exception;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public PatcherFix updatePatcherFix(
+			long userId, long patcherFixId, String gitHash,
+			String jenkinsResults, int status)
+		throws Exception;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public PatcherFix updatePatcherFix(
 			long patcherFixId, String dependencies, int fixPackStatus,
 			String requirements)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public PatcherFix updatePatcherFix(
-			long patcherFixId, String gitHash, String jenkinsResults,
-			int status)
 		throws PortalException;
 
 	/**
@@ -461,8 +461,8 @@ public interface PatcherFixLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public PatcherFix updateStatus(long patcherFixId, int status)
-		throws PortalException;
+	public PatcherFix updateStatus(long userId, long patcherFixId, int status)
+		throws Exception;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public PatcherFix updateType(long patcherFixId, int type)

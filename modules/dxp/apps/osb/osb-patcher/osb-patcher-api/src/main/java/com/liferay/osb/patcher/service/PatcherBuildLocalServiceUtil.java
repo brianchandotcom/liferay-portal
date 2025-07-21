@@ -614,20 +614,21 @@ public class PatcherBuildLocalServiceUtil {
 	}
 
 	public static PatcherBuild updatePatcherBuild(
-			long patcherBuildId, int qaStatus, String supportTicket, int type)
-		throws PortalException {
+			long userId, long patcherBuildId, int qaStatus,
+			String supportTicket, int type)
+		throws Exception {
 
 		return getService().updatePatcherBuild(
-			patcherBuildId, qaStatus, supportTicket, type);
+			userId, patcherBuildId, qaStatus, supportTicket, type);
 	}
 
 	public static PatcherBuild updatePatcherBuild(
-			long patcherBuildId, String fileName, int qaStatus,
+			long userId, long patcherBuildId, String fileName, int qaStatus,
 			String sourceName, int status)
-		throws PortalException {
+		throws Exception {
 
 		return getService().updatePatcherBuild(
-			patcherBuildId, fileName, qaStatus, sourceName, status);
+			userId, patcherBuildId, fileName, qaStatus, sourceName, status);
 	}
 
 	/**
@@ -652,17 +653,18 @@ public class PatcherBuildLocalServiceUtil {
 	}
 
 	public static PatcherBuild updateQaFields(
-			long patcherBuildId, String qaComments, int qaStatus)
-		throws PortalException {
+			long userId, long patcherBuildId, String qaComments, int qaStatus)
+		throws Exception {
 
 		return getService().updateQaFields(
-			patcherBuildId, qaComments, qaStatus);
+			userId, patcherBuildId, qaComments, qaStatus);
 	}
 
-	public static PatcherBuild updateQaStatus(long patcherBuildId, int qaStatus)
-		throws PortalException {
+	public static PatcherBuild updateQaStatus(
+			long userId, long patcherBuildId, int qaStatus)
+		throws Exception {
 
-		return getService().updateQaStatus(patcherBuildId, qaStatus);
+		return getService().updateQaStatus(userId, patcherBuildId, qaStatus);
 	}
 
 	public static PatcherBuild updateRequestKey(
@@ -672,10 +674,11 @@ public class PatcherBuildLocalServiceUtil {
 		return getService().updateRequestKey(patcherBuildId, requestKey);
 	}
 
-	public static PatcherBuild updateStatus(long patcherBuildId, int status)
-		throws PortalException {
+	public static PatcherBuild updateStatus(
+			long userId, long patcherBuildId, int status)
+		throws Exception {
 
-		return getService().updateStatus(patcherBuildId, status);
+		return getService().updateStatus(userId, patcherBuildId, status);
 	}
 
 	public static PatcherBuildLocalService getService() {

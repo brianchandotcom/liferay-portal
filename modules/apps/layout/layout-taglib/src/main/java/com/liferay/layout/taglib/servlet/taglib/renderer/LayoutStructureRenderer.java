@@ -502,44 +502,43 @@ public class LayoutStructureRenderer {
 
 			ContainerTag containerTag = new ContainerTag();
 
-			StringBundler containerCSSClassSB = new StringBundler(
-				"overflow-hidden px-0");
+			StringBundler sb = new StringBundler("overflow-hidden px-0");
 
 			if (Objects.equals(
 					collectionStyledLayoutStructureItem.getListStyle(),
 					"flex-column")) {
 
-				containerCSSClassSB.append(" d-flex flex-column");
+				sb.append(" d-flex flex-column");
 			}
 			else if (Objects.equals(
 						collectionStyledLayoutStructureItem.getListStyle(),
 						"flex-row")) {
 
-				containerCSSClassSB.append(" d-flex flex-row");
+				sb.append(" d-flex flex-row");
 			}
 
 			String align = collectionStyledLayoutStructureItem.getAlign();
 
 			if (Validator.isNotNull(align)) {
-				containerCSSClassSB.append(StringPool.SPACE);
-				containerCSSClassSB.append(align);
+				sb.append(StringPool.SPACE);
+				sb.append(align);
 			}
 
 			String flexWrap = collectionStyledLayoutStructureItem.getFlexWrap();
 
 			if (Validator.isNotNull(flexWrap)) {
-				containerCSSClassSB.append(StringPool.SPACE);
-				containerCSSClassSB.append(flexWrap);
+				sb.append(StringPool.SPACE);
+				sb.append(flexWrap);
 			}
 
 			String justify = collectionStyledLayoutStructureItem.getJustify();
 
 			if (Validator.isNotNull(justify)) {
-				containerCSSClassSB.append(StringPool.SPACE);
-				containerCSSClassSB.append(justify);
+				sb.append(StringPool.SPACE);
+				sb.append(justify);
 			}
 
-			containerTag.setCssClass(containerCSSClassSB.toString());
+			containerTag.setCssClass(sb.toString());
 
 			containerTag.setFluid(true);
 			containerTag.setPageContext(_pageContext);
@@ -548,17 +547,17 @@ public class LayoutStructureRenderer {
 
 			RowTag rowTag = new RowTag();
 
-			StringBundler rowCSSClassSB = new StringBundler(3);
+			sb.setIndex(0);
 
-			rowCSSClassSB.append("align-items-");
-			rowCSSClassSB.append(
+			sb.append("align-items-");
+			sb.append(
 				collectionStyledLayoutStructureItem.getVerticalAlignment());
 
 			if (!collectionStyledLayoutStructureItem.isGutters()) {
-				rowCSSClassSB.append(" no-gutters");
+				sb.append(" no-gutters");
 			}
 
-			rowTag.setCssClass(rowCSSClassSB.toString());
+			rowTag.setCssClass(sb.toString());
 
 			rowTag.setPageContext(_pageContext);
 

@@ -191,13 +191,13 @@ public class ObjectDefinitionTestUtil {
 
 	public static ObjectDefinition publishObjectDefinition(
 			boolean localized, String name, List<ObjectField> objectFields,
-			String scope, long userId)
+			long objectFolderId, String scope, long userId)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				userId, 0, null, false, false, true, localized, false, false,
-				false, false, null,
+				userId, objectFolderId, null, false, false, true, localized,
+				false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				name, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -206,6 +206,15 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
 			userId, objectDefinition.getObjectDefinitionId());
+	}
+
+	public static ObjectDefinition publishObjectDefinition(
+			boolean localized, String name, List<ObjectField> objectFields,
+			String scope, long userId)
+		throws Exception {
+
+		return publishObjectDefinition(
+			localized, name, objectFields, 0, scope, userId);
 	}
 
 	public static ObjectDefinition publishObjectDefinition(

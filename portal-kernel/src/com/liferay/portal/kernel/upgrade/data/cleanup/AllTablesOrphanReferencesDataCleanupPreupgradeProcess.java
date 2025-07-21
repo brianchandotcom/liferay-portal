@@ -20,10 +20,10 @@ public class AllTablesOrphanReferencesDataCleanupPreupgradeProcess
 	extends DataCleanupPreupgradeProcess {
 
 	public AllTablesOrphanReferencesDataCleanupPreupgradeProcess(
-		String targetTableName, String targetColumnName) {
+		String targetColumnName, String targetTableName) {
 
-		_targetTableName = targetTableName;
 		_targetColumnName = targetColumnName;
+		_targetTableName = targetTableName;
 	}
 
 	@Override
@@ -63,8 +63,8 @@ public class AllTablesOrphanReferencesDataCleanupPreupgradeProcess
 			}
 
 			OrphanReferencesDataCleanupUtil.cleanUpTable(
-				connection, sourceTableName, targetColumnName, null,
-				targetTableName, targetColumnName);
+				connection, null, targetColumnName, sourceTableName,
+				targetColumnName, targetTableName);
 		}
 	}
 

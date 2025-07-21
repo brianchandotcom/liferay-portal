@@ -61,7 +61,7 @@ public class UpdateQaFieldsBuildsMVCActionCommand extends BaseMVCActionCommand {
 		int qaStatus = ParamUtil.getInteger(actionRequest, "qaStatus");
 
 		_patcherBuildLocalService.updateQaFields(
-			patcherBuildId, qaComments, qaStatus);
+			themeDisplay.getUserId(), patcherBuildId, qaComments, qaStatus);
 	}
 
 	@Reference

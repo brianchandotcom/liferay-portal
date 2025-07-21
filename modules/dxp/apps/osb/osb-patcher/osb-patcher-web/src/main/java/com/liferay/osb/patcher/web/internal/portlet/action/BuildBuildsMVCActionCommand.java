@@ -89,7 +89,7 @@ public class BuildBuildsMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getUser(), patcherBuild);
 
 			patcherBuild = _patcherBuildLocalService.updateStatus(
-				patcherBuild.getPatcherBuildId(),
+				themeDisplay.getUserId(), patcherBuild.getPatcherBuildId(),
 				WorkflowConstants.STATUS_BUILD_COMPILING);
 
 			PatcherBuildUtil.workflowParentPatcherBuild(

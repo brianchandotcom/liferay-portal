@@ -128,7 +128,7 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			patcherBuild = _patcherBuildLocalService.updateStatus(
-				patcherBuild.getPatcherBuildId(),
+				themeDisplay.getUserId(), patcherBuild.getPatcherBuildId(),
 				PatcherBuildUtil.getNextPatcherBuildWorkflowStatus(
 					patcherBuild, PatcherBuildUtil.isMergeOnly(patcherBuild)));
 

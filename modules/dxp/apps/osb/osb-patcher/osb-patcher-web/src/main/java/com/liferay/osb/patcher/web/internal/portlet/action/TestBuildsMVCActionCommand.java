@@ -76,7 +76,8 @@ public class TestBuildsMVCActionCommand extends BaseMVCActionCommand {
 		JenkinsUtil.sendTestJenkinsRequest(
 			themeDisplay.getUser(), patcherBuild);
 
-		_patcherBuildLocalService.updateQaStatus(patcherBuildId, status);
+		_patcherBuildLocalService.updateQaStatus(
+			themeDisplay.getUserId(), patcherBuildId, status);
 	}
 
 	@Reference

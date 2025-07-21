@@ -12,8 +12,10 @@ import com.liferay.osb.patcher.util.PatcherBuildUtil;
 import com.liferay.osb.patcher.web.internal.validator.PatcherBuildValidator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -38,6 +40,9 @@ public class ReleaseBuildsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long patcherBuildId = ParamUtil.getLong(
 			actionRequest, "patcherBuildId");
 		boolean releaseToHelpCenter = ParamUtil.getBoolean(
@@ -56,7 +61,8 @@ public class ReleaseBuildsMVCActionCommand extends BaseMVCActionCommand {
 			PatcherBuildUtil.releasePatcherBuild(patcherBuild);
 		}
 
-		_patcherBuildLocalService.updateStatus(patcherBuildId, status);
+		_patcherBuildLocalService.updateStatus(
+			themeDisplay.getUserId(), patcherBuildId, status);
 	}
 
 	@Reference

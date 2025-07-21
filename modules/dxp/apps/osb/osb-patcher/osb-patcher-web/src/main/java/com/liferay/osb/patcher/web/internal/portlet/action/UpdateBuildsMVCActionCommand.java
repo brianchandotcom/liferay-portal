@@ -72,7 +72,7 @@ public class UpdateBuildsMVCActionCommand extends BaseMVCActionCommand {
 
 		if (type != patcherBuild.getType()) {
 			_patcherBuildLocalService.updatePatcherBuild(
-				patcherBuildId,
+				themeDisplay.getUserId(), patcherBuildId,
 				PatcherBuildUtil.workflowCompletedPatcherBuildQAStatus(
 					patcherBuild),
 				supportTicket, type);

@@ -114,7 +114,7 @@ public class AnalyticsAttributesUtil {
 
 		element.attr("data-analytics-asset-action", ACTION_IMPRESSION);
 		element.attr(
-			"data-analytics-asset-external-reference-code",
+			"data-analytics-external-reference-code",
 			_getAnalyticsExternalReferenceCode(
 				infoDisplaysFieldValues, infoItemFieldMapped,
 				fragmentEntryProcessorContext.getLocale()));

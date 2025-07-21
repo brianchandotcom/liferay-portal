@@ -910,7 +910,7 @@ public class EditableFragmentEntryProcessorTest {
 			element.attr("data-analytics-asset-action"));
 		Assert.assertEquals(
 			objectEntry.getExternalReferenceCode(),
-			element.attr("data-analytics-asset-external-reference-code"));
+			element.attr("data-analytics-external-reference-code"));
 		Assert.assertEquals(
 			"title", element.attr("data-analytics-asset-field"));
 		Assert.assertEquals(

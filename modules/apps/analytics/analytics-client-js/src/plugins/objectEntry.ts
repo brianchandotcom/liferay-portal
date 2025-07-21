@@ -12,7 +12,7 @@ import {isPartiallyInViewport} from '../utils/scroll';
 
 const customDatasetList = [
 	AnalyticsType.DataSetList.AnalyticsAssetAction,
-	AnalyticsType.DataSetList.AnalyticsAssetExternalReferenceCode,
+	AnalyticsType.DataSetList.AnalyticsExternalReferenceCode,
 	AnalyticsType.DataSetList.AnalyticsAssetType,
 	AnalyticsType.DataSetList.AnalyticsObjectDefinitionName,
 ];
@@ -25,7 +25,7 @@ function getObjectEntryPayload({
 }: AnalyticsType.ObjectEntryHTMLElement) {
 	const payload = {
 		externalReferenceCode:
-			dataset.analyticsAssetExternalReferenceCode.trim(),
+			dataset.analyticsExternalReferenceCode.trim(),
 		objectDefinitionName: dataset.analyticsObjectDefinitionName.trim(),
 	};
 

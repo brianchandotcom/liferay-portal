@@ -309,7 +309,7 @@ export interface IFrontendDataSetProps {
 	};
 	portletId?: string;
 	selectedItems?: any[];
-	selectedItemsKey?: string;
+	selectedItemsKey: string;
 	selectionType?: 'single' | 'multiple';
 	showBulkActionsManagementBar?: boolean;
 	showBulkActionsManagementBarActions?: boolean;

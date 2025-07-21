@@ -126,7 +126,7 @@ const FrontendDataSetContent = ({
 	pagination,
 	portletId,
 	selectedItems: initialSelectedItemsValues,
-	selectedItemsKey = 'id',
+	selectedItemsKey,
 	selectionType = 'multiple',
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
@@ -1320,7 +1320,7 @@ const FrontendDataSetContent = ({
 
 const FrontendDataSet = ({
 	fileDropSettings,
-	selectedItemsKey,
+	selectedItemsKey = 'id',
 	...otherProps
 }: IFrontendDataSetProps) => {
 	fileDropSettings = fileDropSettings

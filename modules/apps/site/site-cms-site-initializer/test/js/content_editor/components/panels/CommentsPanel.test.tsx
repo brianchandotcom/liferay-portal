@@ -171,4 +171,40 @@ describe('CommentsPanel', () => {
 
 		await closeToast();
 	});
+
+	it('Votes when the thumb up button is pressed', async () => {
+		renderComponent();
+
+		const thumbUpButton = screen.getAllByTitle('rate-this-as-good')[0];
+
+		await userEvent.click(thumbUpButton);
+
+		expect(fetch).toBeCalledWith('/c/portal/rate_entry', {
+			body: expect.any(FormData),
+			method: 'POST',
+		});
+
+		const formData = (fetch as jest.Mock).mock.calls[0][1].body;
+		const formDataObject = Object.fromEntries(formData.entries());
+
+		expect(formDataObject).toEqual(expect.objectContaining({score: '1'}));
+	});
+
+	it('Votes when the thumb down button is pressed', async () => {
+		renderComponent();
+
+		const thumbDownButton = screen.getAllByTitle('rate-this-as-bad')[0];
+
+		await userEvent.click(thumbDownButton);
+
+		expect(fetch).toBeCalledWith('/c/portal/rate_entry', {
+			body: expect.any(FormData),
+			method: 'POST',
+		});
+
+		const formData = (fetch as jest.Mock).mock.calls[0][1].body;
+		const formDataObject = Object.fromEntries(formData.entries());
+
+		expect(formDataObject).toEqual(expect.objectContaining({score: '0'}));
+	});
 });

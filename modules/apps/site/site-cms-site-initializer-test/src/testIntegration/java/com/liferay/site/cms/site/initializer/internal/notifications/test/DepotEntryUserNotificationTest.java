@@ -12,6 +12,8 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
@@ -88,6 +90,53 @@ public class DepotEntryUserNotificationTest {
 
 		_assertUserNotificationEvent(user1);
 		_assertUserNotificationEvent(user2);
+
+		_userLocalService.deleteUserGroupUser(
+			userGroup.getUserGroupId(), user1.getUserId());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setLanguageId("en_US");
+		serviceContext.setUserId(user1.getUserId());
+
+		List<UserNotificationEvent> userNotificationEvents =
+			_userNotificationEventLocalService.getUserNotificationEvents(
+				user1.getUserId());
+
+		_userNotificationHandler.interpret(
+			userNotificationEvents.get(0), serviceContext);
+
+		userNotificationEvents =
+			_userNotificationEventLocalService.getUserNotificationEvents(
+				user1.getUserId());
+
+		Assert.assertEquals(
+			userNotificationEvents.toString(), 0,
+			userNotificationEvents.size());
+
+		userNotificationEvents =
+			_userNotificationEventLocalService.getUserNotificationEvents(
+				user2.getUserId());
+
+		Assert.assertEquals(
+			userNotificationEvents.toString(), 1,
+			userNotificationEvents.size());
+
+		_userGroupLocalService.deleteGroupUserGroup(
+			_depotEntry.getGroupId(), userGroup.getUserGroupId());
+
+		serviceContext.setUserId(user2.getUserId());
+
+		_userNotificationHandler.interpret(
+			userNotificationEvents.get(0), serviceContext);
+
+		userNotificationEvents =
+			_userNotificationEventLocalService.getUserNotificationEvents(
+				user2.getUserId());
+
+		Assert.assertEquals(
+			userNotificationEvents.toString(), 0,
+			userNotificationEvents.size());
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -141,5 +190,8 @@ public class DepotEntryUserNotificationTest {
 	@Inject
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
+
+	@Inject(filter = "jakarta.portlet.name=" + DepotPortletKeys.DEPOT_ADMIN)
+	private UserNotificationHandler _userNotificationHandler;
 
 }

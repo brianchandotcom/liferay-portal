@@ -255,7 +255,7 @@ function ConfigurationTab({
 											_handleLegacyAssetCollectionProviderChange
 										}
 										toggled={
-											frameworkConfig.legacyAssetCollectionProvider ||
+											frameworkConfig.legacyAssetCollectionProvider ??
 											false
 										}
 									/>

@@ -30,6 +30,14 @@ describe('getItemValueFromPath', () => {
 		expect(getItemValueFromPath(item)).toEqual(123);
 	});
 
+	it('retrieves an item value using "id" if selectedItemsKye is undefined', () => {
+		expect(getItemValueFromPath(item, undefined)).toEqual(123);
+	});
+
+	it('retrieves an item value using "id" if selectedItemsKye is null', () => {
+		expect(getItemValueFromPath(item, null)).toEqual(123);
+	});
+
 	it('retrieves an item value when the selectedItemsKey is a path to a nested object property (2 levels)', () => {
 		expect(getItemValueFromPath(item, 'embedded.id')).toEqual(456);
 	});

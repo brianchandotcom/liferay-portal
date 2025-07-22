@@ -36,11 +36,12 @@ public class SXPBlueprintCollectionProviderUpgradeProcess
 				}
 			}
 		}
+
+		_upgradeSXPBlueprintSchemaVersion();
 	}
 
 	private String _updateConfigurationStorage(
-			String configurationJSON, long blueprintId)
-		throws Exception {
+		String configurationJSON, long blueprintId) {
 
 		if (Validator.isBlank(configurationJSON)) {
 			return configurationJSON;
@@ -79,25 +80,27 @@ public class SXPBlueprintCollectionProviderUpgradeProcess
 
 	private void _upgradeSXPBlueprints(long companyId) throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-			StringBundler.concat(
-				"select configurationJSON, sxpBlueprintId from SXPBlueprint ",
-				"where companyId = ", companyId));
-
+				StringBundler.concat(
+					"select configurationJSON, sxpBlueprintId from ",
+					"SXPBlueprint where companyId = ", companyId));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update SXPBlueprint set configurationJSON = ? where " +
-						"sxpBlueprintId = ?")) {
+					"update SXPBlueprint set configurationJSON = ?, " +
+						"schemaVersion = ? where sxpBlueprintId = ?")) {
 
 			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 				while (resultSet1.next()) {
+					long blueprintId = resultSet1.getLong("sxpBlueprintId");
+
 					preparedStatement2.setString(
 						1,
 						_updateConfigurationStorage(
 							resultSet1.getString("configurationJSON"),
-							resultSet1.getLong("sxpBlueprintId")));
-					preparedStatement2.setLong(
-						2, resultSet1.getLong("sxpBlueprintId"));
+							blueprintId));
+
+					preparedStatement2.setString(2, _SCHEMA_VERSION);
+					preparedStatement2.setLong(3, blueprintId);
 
 					preparedStatement2.addBatch();
 				}
@@ -106,6 +109,20 @@ public class SXPBlueprintCollectionProviderUpgradeProcess
 			}
 		}
 	}
+
+	private void _upgradeSXPBlueprintSchemaVersion() throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"UPDATE SXPBlueprint SET schemaVersion = ? WHERE " +
+					"schemaVersion <> ?")) {
+
+			preparedStatement.setString(1, _SCHEMA_VERSION);
+			preparedStatement.setString(2, _SCHEMA_VERSION);
+
+			preparedStatement.executeUpdate();
+		}
+	}
+
+	private static final String _SCHEMA_VERSION = "1.2";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintCollectionProviderUpgradeProcess.class);

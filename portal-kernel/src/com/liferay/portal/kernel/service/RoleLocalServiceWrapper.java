@@ -560,12 +560,12 @@ public class RoleLocalServiceWrapper
 	}
 
 	@Override
-	public Role getOrAddIncompleteRole(
+	public Role getOrAddEmptyRole(
 			String externalReferenceCode, long companyId, long userId,
 			String className, long classPK, String name, int type)
 		throws Exception {
 
-		return _roleLocalService.getOrAddIncompleteRole(
+		return _roleLocalService.getOrAddEmptyRole(
 			externalReferenceCode, companyId, userId, className, classPK, name,
 			type);
 	}

@@ -583,15 +583,15 @@ public class OrganizationServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Organization
-			getOrAddIncompleteOrganization(
+			getOrAddEmptyOrganization(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				String name)
 		throws Exception {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				OrganizationServiceUtil.class, "getOrAddIncompleteOrganization",
-				_getOrAddIncompleteOrganizationParameterTypes13);
+				OrganizationServiceUtil.class, "getOrAddEmptyOrganization",
+				_getOrAddEmptyOrganizationParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, name);
@@ -1352,10 +1352,8 @@ public class OrganizationServiceHttp {
 			new Class[] {String.class, long.class};
 	private static final Class<?>[] _getGtOrganizationsParameterTypes12 =
 		new Class[] {long.class, long.class, long.class, int.class};
-	private static final Class<?>[]
-		_getOrAddIncompleteOrganizationParameterTypes13 = new Class[] {
-			String.class, String.class
-		};
+	private static final Class<?>[] _getOrAddEmptyOrganizationParameterTypes13 =
+		new Class[] {String.class, String.class};
 	private static final Class<?>[] _getOrganizationParameterTypes14 =
 		new Class[] {long.class};
 	private static final Class<?>[]

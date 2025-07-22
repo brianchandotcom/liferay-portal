@@ -124,12 +124,12 @@ public class RoleServiceUtil {
 			excludedTeamRoleId, teamGroupId);
 	}
 
-	public static Role getOrAddIncompleteRole(
+	public static Role getOrAddEmptyRole(
 			String externalReferenceCode, String className, long classPK,
 			String name, int type)
 		throws Exception {
 
-		return getService().getOrAddIncompleteRole(
+		return getService().getOrAddEmptyRole(
 			externalReferenceCode, className, classPK, name, type);
 	}
 

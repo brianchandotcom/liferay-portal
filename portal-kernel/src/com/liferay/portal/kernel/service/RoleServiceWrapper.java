@@ -133,12 +133,12 @@ public class RoleServiceWrapper
 	}
 
 	@Override
-	public Role getOrAddIncompleteRole(
+	public Role getOrAddEmptyRole(
 			String externalReferenceCode, String className, long classPK,
 			String name, int type)
 		throws Exception {
 
-		return _roleService.getOrAddIncompleteRole(
+		return _roleService.getOrAddEmptyRole(
 			externalReferenceCode, className, classPK, name, type);
 	}
 

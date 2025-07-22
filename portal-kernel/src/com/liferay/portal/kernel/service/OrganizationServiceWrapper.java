@@ -248,11 +248,11 @@ public class OrganizationServiceWrapper
 	}
 
 	@Override
-	public Organization getOrAddIncompleteOrganization(
+	public Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, String name)
 		throws Exception {
 
-		return _organizationService.getOrAddIncompleteOrganization(
+		return _organizationService.getOrAddEmptyOrganization(
 			externalReferenceCode, name);
 	}
 

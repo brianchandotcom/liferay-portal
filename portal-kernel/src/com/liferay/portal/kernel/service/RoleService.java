@@ -110,7 +110,7 @@ public interface RoleService extends BaseService {
 		long teamGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Role getOrAddIncompleteRole(
+	public Role getOrAddEmptyRole(
 			String externalReferenceCode, String className, long classPK,
 			String name, int type)
 		throws Exception;

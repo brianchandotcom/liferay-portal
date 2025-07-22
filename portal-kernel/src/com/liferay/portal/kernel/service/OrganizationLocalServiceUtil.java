@@ -549,12 +549,12 @@ public class OrganizationLocalServiceUtil {
 		return getService().getNoAssetOrganizations();
 	}
 
-	public static Organization getOrAddIncompleteOrganization(
+	public static Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, long companyId, long userId,
 			String name)
 		throws Exception {
 
-		return getService().getOrAddIncompleteOrganization(
+		return getService().getOrAddEmptyOrganization(
 			externalReferenceCode, companyId, userId, name);
 	}
 

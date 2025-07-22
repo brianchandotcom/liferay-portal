@@ -126,7 +126,7 @@ const FrontendDataSetContent = ({
 	pagination,
 	portletId,
 	selectedItems: initialSelectedItemsValues,
-	selectedItemsKey,
+	selectedItemsKey = 'id',
 	selectionType = 'multiple',
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,

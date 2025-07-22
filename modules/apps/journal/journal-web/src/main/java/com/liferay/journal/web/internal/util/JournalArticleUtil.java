@@ -6,7 +6,6 @@
 package com.liferay.journal.web.internal.util;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -54,10 +53,7 @@ import java.util.Objects;
 public class JournalArticleUtil {
 
 	public static JournalArticle addOrUpdateArticle(
-			String actionName,
-			AssetDisplayPageEntryFormProcessor
-				assetDisplayPageEntryFormProcessor,
-			DDMFormValuesFactory ddmFormValuesFactory,
+			String actionName, DDMFormValuesFactory ddmFormValuesFactory,
 			DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter,
 			DDMStructureLocalService ddmStructureLocalService,
 			JournalArticleService journalArticleService,
@@ -349,10 +345,6 @@ public class JournalArticleUtil {
 					smallFile, null, articleURL, serviceContext);
 			}
 		}
-
-		assetDisplayPageEntryFormProcessor.process(
-			JournalArticle.class.getName(), article.getResourcePrimKey(),
-			portletRequest);
 
 		return article;
 	}

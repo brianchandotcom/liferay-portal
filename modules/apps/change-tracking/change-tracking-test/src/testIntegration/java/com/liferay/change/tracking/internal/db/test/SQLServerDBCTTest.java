@@ -7,11 +7,15 @@ package com.liferay.change.tracking.internal.db.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.sample.model.CTSChild;
 import com.liferay.change.tracking.sample.service.CTSChildLocalService;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.test.util.CTSampleTestUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -31,6 +35,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -81,7 +87,7 @@ public class SQLServerDBCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
-			CTSampleTestUtil.addCTSChild(_BATCH_SIZE);
+			CTSampleTestUtil.addCTSChild(_QUERY_PROCESSOR_BATCH_SIZE);
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -89,14 +95,47 @@ public class SQLServerDBCTTest {
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			 Connection connection = DataAccess.getConnection();
+			Connection connection = DataAccess.getConnection();
 
-			 PreparedStatement preparedStatement = connection.prepareStatement(
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from CTSChild where ctCollectionId = " +
 					_ctCollection.getCtCollectionId());
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertFalse(resultSet.next());
+		}
+	}
+
+	@Test
+	public void testPublishCTCollectionWithOver2000CTEntries()
+		throws Exception {
+
+		long parentCTSChildId = 0;
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			parentCTSChildId = CTSampleTestUtil.addCTSChild();
+
+			CTSampleTestUtil.addCTSChild(
+				0, parentCTSChildId, null, _HIBERNATE_BATCH_SIZE);
+		}
+
+		List<CTSChild> ctsChildren =
+			_ctsChildLocalService.getCTSChildrenByParentCTSChildId(
+				parentCTSChildId);
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			for (CTSChild ctsChild : ctsChildren) {
+				_ctsChildLocalService.updateCTSChild(ctsChild);
+			}
+		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_ctCollectionService.publishCTCollection(
+				TestPropsValues.getUserId(), _ctCollection.getCtCollectionId());
 		}
 	}
 
@@ -109,7 +148,7 @@ public class SQLServerDBCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
-			CTSampleTestUtil.addCTSChild(_BATCH_SIZE);
+			CTSampleTestUtil.addCTSChild(_QUERY_PROCESSOR_BATCH_SIZE);
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -124,7 +163,9 @@ public class SQLServerDBCTTest {
 			WorkflowConstants.STATUS_APPROVED, _ctCollection.getStatus());
 	}
 
-	private static final int _BATCH_SIZE = 50001;
+	private static final int _HIBERNATE_BATCH_SIZE = 2001;
+
+	private static final int _QUERY_PROCESSOR_BATCH_SIZE = 50001;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
@@ -144,5 +185,14 @@ public class SQLServerDBCTTest {
 	private CTSChildLocalService _ctsChildLocalService;
 
 	private DB _db;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFolderLocalService _dlFolderLocalService;
 
 }

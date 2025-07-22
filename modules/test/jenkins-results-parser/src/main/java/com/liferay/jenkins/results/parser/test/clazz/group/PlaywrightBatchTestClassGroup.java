@@ -613,17 +613,14 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			JSONArray tagsJSONArray = specJSONObject.getJSONArray("tags");
 
 			if (!tagsJSONArray.isEmpty()) {
-				StringBuilder sb = new StringBuilder();
+				List<String> tags = new ArrayList<>(tagsJSONArray.length());
 
 				for (int i = 0; i < tagsJSONArray.length(); i++) {
-					sb.append(tagsJSONArray.get(i));
-
-					if (i < (tagsJSONArray.length() - 1)) {
-						sb.append(",");
-					}
+					tags.add(tagsJSONArray.optString(i));
 				}
 
-				specTagsMap.put("tags", sb.toString());
+				specTagsMap.put(
+					"tags", JenkinsResultsParserUtil.join(",", tags));
 			}
 
 			specTitlesMap.put(specFile, specTitles);

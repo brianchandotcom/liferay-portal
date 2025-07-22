@@ -5,8 +5,13 @@
 
 package com.liferay.sharing.internal.search.spi.model.index.contributor;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
@@ -33,6 +38,7 @@ public class SharingEntryModelDocumentContributor
 		document.addKeyword(Field.CLASS_NAME_ID, sharingEntry.getClassNameId());
 		document.addKeyword(
 			Field.CLASS_PK, String.valueOf(sharingEntry.getClassPK()));
+		document.addKeyword("cms", _isCms(sharingEntry.getGroupId()));
 		document.addDate(Field.CREATE_DATE, sharingEntry.getCreateDate());
 		document.addDate(Field.MODIFIED_DATE, sharingEntry.getModifiedDate());
 		document.addLocalizedText(Field.TITLE, _getTitleMap(sharingEntry));
@@ -58,6 +64,30 @@ public class SharingEntryModelDocumentContributor
 
 		return sharingEntryInterpreter.getTitleMap(sharingEntry);
 	}
+
+	private boolean _isCms(long groupId) {
+		try {
+			Group group = _groupLocalService.getGroup(groupId);
+
+			return group.isDepot();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get group " + groupId +
+						" while indexing document",
+					portalException);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SharingEntryModelDocumentContributor.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;

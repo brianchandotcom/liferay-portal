@@ -1185,36 +1185,15 @@ public class FreeMarkerTool {
 
 		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
 
-		JavaMethodSignature getPermissionsPageJavaMethodSignature =
-			getPermissionsPageJavaMethodSignature(
-				"get", javaMethodSignatures, schemaName);
-
-		JavaMethodSignature putPermissionsPageJavaMethodSignature =
-			getPermissionsPageJavaMethodSignature(
-				"put", javaMethodSignatures, schemaName);
-
-		String parentSchemaName = GetterUtil.getString(
-			javaMethodSignature.getParentSchemaName());
-
-		JavaMethodSignature getParentPermissionsPageJavaMethodSignature =
-			getParentPermissionsPageJavaMethodSignature(
-				"get", javaMethodSignatures, parentSchemaName, schemaName);
-
-		JavaMethodSignature putParentPermissionsPageJavaMethodSignature =
-			getParentPermissionsPageJavaMethodSignature(
-				"put", javaMethodSignatures, parentSchemaName, schemaName);
-
 		if (MapUtil.isEmpty(propertySchemas) ||
-			!propertySchemas.containsKey("permissions") ||
-			(((getPermissionsPageJavaMethodSignature == null) ||
-			  (putPermissionsPageJavaMethodSignature == null)) &&
-			 ((getParentPermissionsPageJavaMethodSignature == null) ||
-			  (putParentPermissionsPageJavaMethodSignature == null)))) {
+			!propertySchemas.containsKey("permissions")) {
 
 			return false;
 		}
 
 		String methodName = javaMethodSignature.getMethodName();
+		String parentSchemaName = GetterUtil.getString(
+			javaMethodSignature.getParentSchemaName());
 		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
 
 		if (!(methodName.equals(

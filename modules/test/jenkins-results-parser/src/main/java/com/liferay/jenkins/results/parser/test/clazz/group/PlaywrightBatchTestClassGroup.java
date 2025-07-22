@@ -550,22 +550,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			for (int j = 0; j < specsJSONArray.length(); j++) {
 				JSONObject specJSONObject = specsJSONArray.getJSONObject(j);
 
-				JSONArray tagsJSONArray = specJSONObject.getJSONArray("tags");
-
-				if (!tagsJSONArray.isEmpty()) {
-					StringBuilder sb = new StringBuilder();
-
-					for (int k = 0; k < tagsJSONArray.length(); k++) {
-						sb.append(tagsJSONArray.get(k));
-
-						if (k < (tagsJSONArray.length() - 1)) {
-							sb.append(",");
-						}
-					}
-
-					specJSONObject.put("tags", sb.toString());
-				}
-
 				if (!title.equals(file)) {
 					specJSONObject.put("subSuite", title);
 				}
@@ -626,8 +610,20 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 			specTitles.add(title);
 
-			if (specJSONObject.has("tags")) {
-				specTagsMap.put(title, specJSONObject.getString("tags"));
+			JSONArray tagsJSONArray = specJSONObject.getJSONArray("tags");
+
+			if (!tagsJSONArray.isEmpty()) {
+				StringBuilder sb = new StringBuilder();
+
+				for (int i = 0; i < tagsJSONArray.length(); i++) {
+					sb.append(tagsJSONArray.get(i));
+
+					if (i < (tagsJSONArray.length() - 1)) {
+						sb.append(",");
+					}
+				}
+
+				specTagsMap.put("tags", sb.toString());
 			}
 
 			specTitlesMap.put(specFile, specTitles);

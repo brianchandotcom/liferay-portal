@@ -16,8 +16,8 @@ export class ItemSelectorSamplePage {
 	readonly page: Page;
 	readonly publishPageButton: Locator;
 	readonly samplePageHeader: Locator;
-	readonly selectFileButton: Locator;
-	readonly selectFileModalHeader: Locator;
+	readonly selectDocumentButton: Locator;
+	readonly selectDocumentModalHeader: Locator;
 	readonly table: {
 		bodyRows: Locator;
 		container: Locator;
@@ -46,13 +46,13 @@ export class ItemSelectorSamplePage {
 			exact: true,
 			name: 'Item Selector Samples',
 		});
-		this.selectFileButton = page.getByRole('button', {
+		this.selectDocumentButton = page.getByRole('button', {
 			exact: true,
-			name: 'Select File',
+			name: 'Select Document',
 		});
-		this.selectFileModalHeader = page.getByRole('heading', {
+		this.selectDocumentModalHeader = page.getByRole('heading', {
 			exact: true,
-			name: 'Select File',
+			name: 'Select Document',
 		});
 
 		const tableContainer = page.locator('.fds table');

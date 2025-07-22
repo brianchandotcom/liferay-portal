@@ -1929,11 +1929,11 @@ public class RenderLayoutStructureTagTest {
 
 		String content = _getRenderLayoutHTML(layout);
 
-		Assert.assertTrue(content, StringUtil.contains(content, "lfr-layout-structure-item-container", StringPool.BLANK));
-		Assert.assertTrue(content, StringUtil.contains(content, "data-layout-structure-item-id=", StringPool.BLANK));
-		Assert.assertFalse(content, StringUtil.contains(content, "style=", StringPool.BLANK));
 		Assert.assertFalse(content, StringUtil.contains(content, "--lfr-background-image", StringPool.BLANK));
 		Assert.assertFalse(content, StringUtil.contains(content, ": url(", StringPool.BLANK));
+		Assert.assertFalse(content, StringUtil.contains(content, "style=", StringPool.BLANK));
+		Assert.assertTrue(content, StringUtil.contains(content, "data-layout-structure-item-id=", StringPool.BLANK));
+		Assert.assertTrue(content, StringUtil.contains(content, "lfr-layout-structure-item-container", StringPool.BLANK));
 	}
 
 	@Test

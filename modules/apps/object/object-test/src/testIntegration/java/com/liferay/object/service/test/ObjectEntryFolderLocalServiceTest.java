@@ -321,7 +321,7 @@ public class ObjectEntryFolderLocalServiceTest {
 
 	@Test
 	@TestInfo("LPD-56833")
-	public void testGetOrAddIncompleteObjectEntryFolder() throws Exception {
+	public void testGetOrAddEmptyObjectEntryFolder() throws Exception {
 
 		// Lazy referencing disabled
 
@@ -329,13 +329,10 @@ public class ObjectEntryFolderLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryFolderException.class, null,
-			() ->
-				_objectEntryFolderLocalService.
-					getOrAddIncompleteObjectEntryFolder(
-						externalReferenceCode, TestPropsValues.getGroupId(),
-						TestPropsValues.getCompanyId(),
-						TestPropsValues.getUserId(),
-						ServiceContextTestUtil.getServiceContext()));
+			() -> _objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
+				externalReferenceCode, TestPropsValues.getGroupId(),
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				ServiceContextTestUtil.getServiceContext()));
 
 		// Lazy referencing enabled
 
@@ -343,16 +340,13 @@ public class ObjectEntryFolderLocalServiceTest {
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			ObjectEntryFolder objectEntryFolder =
-				_objectEntryFolderLocalService.
-					getOrAddIncompleteObjectEntryFolder(
-						externalReferenceCode, TestPropsValues.getGroupId(),
-						TestPropsValues.getCompanyId(),
-						TestPropsValues.getUserId(),
-						ServiceContextTestUtil.getServiceContext());
+				_objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
+					externalReferenceCode, TestPropsValues.getGroupId(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					ServiceContextTestUtil.getServiceContext());
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE,
-				objectEntryFolder.getStatus());
+				WorkflowConstants.STATUS_EMPTY, objectEntryFolder.getStatus());
 
 			objectEntryFolder =
 				_objectEntryFolderLocalService.updateObjectEntryFolder(

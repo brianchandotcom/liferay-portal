@@ -2220,7 +2220,7 @@ public class DefaultObjectEntryManagerImplTest
 					externalReferenceCode, 0, TestPropsValues.getCompanyId());
 
 		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, objectEntryFolder.getStatus());
+			WorkflowConstants.STATUS_EMPTY, objectEntryFolder.getStatus());
 
 		_objectEntryFolderLocalService.deleteObjectEntryFolder(
 			objectEntryFolder);
@@ -2379,7 +2379,7 @@ public class DefaultObjectEntryManagerImplTest
 			Assert.assertEquals(Role.class.getName(), role.getClassName());
 			Assert.assertEquals(permission.getRoleName(), role.getName());
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE, role.getStatus());
+				WorkflowConstants.STATUS_EMPTY, role.getStatus());
 
 			Assert.assertTrue(
 				_resourcePermissionLocalService.hasResourcePermission(
@@ -2456,8 +2456,7 @@ public class DefaultObjectEntryManagerImplTest
 						_group.getGroupId());
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE,
-				assetCategory1.getStatus());
+				WorkflowConstants.STATUS_EMPTY, assetCategory1.getStatus());
 
 			AssetCategory assetCategory2 =
 				_assetCategoryLocalService.
@@ -2466,8 +2465,7 @@ public class DefaultObjectEntryManagerImplTest
 						_group.getGroupId());
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE,
-				assetCategory2.getStatus());
+				WorkflowConstants.STATUS_EMPTY, assetCategory2.getStatus());
 
 			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 				_objectDefinition1.getClassName(), objectEntry.getId());
@@ -8810,8 +8808,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		AssertUtils.assertEquals(groupId, objectEntry.getScopeId());
 
-		_assertObjectEntryStatus(
-			WorkflowConstants.STATUS_INCOMPLETE, objectEntry);
+		_assertObjectEntryStatus(WorkflowConstants.STATUS_EMPTY, objectEntry);
 
 		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
 			parentObjectDefinition.getCompanyId(), _simpleDTOConverterContext,

@@ -266,8 +266,7 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public ObjectEntryFolder getOrAddIncompleteObjectEntryFolder(
+	public ObjectEntryFolder getOrAddEmptyObjectEntryFolder(
 			String externalReferenceCode, long groupId, long companyId,
 			long userId, ServiceContext serviceContext)
 		throws PortalException {
@@ -295,7 +294,7 @@ public class ObjectEntryFolderLocalServiceImpl
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 		objectEntryFolder.setName(externalReferenceCode);
 		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
-		objectEntryFolder.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		objectEntryFolder.setStatus(WorkflowConstants.STATUS_EMPTY);
 
 		objectEntryFolder = objectEntryFolderPersistence.update(
 			objectEntryFolder);
@@ -330,9 +329,7 @@ public class ObjectEntryFolderLocalServiceImpl
 		objectEntryFolder.setName(name);
 		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
 
-		if (objectEntryFolder.getStatus() ==
-				WorkflowConstants.STATUS_INCOMPLETE) {
-
+		if (objectEntryFolder.getStatus() == WorkflowConstants.STATUS_EMPTY) {
 			objectEntryFolder.setStatus(WorkflowConstants.STATUS_APPROVED);
 		}
 

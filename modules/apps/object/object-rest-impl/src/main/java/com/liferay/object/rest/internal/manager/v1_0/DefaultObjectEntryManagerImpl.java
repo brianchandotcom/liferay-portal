@@ -1275,13 +1275,11 @@ public class DefaultObjectEntryManagerImpl
 
 						nestedObjectEntry = _toObjectEntry(
 							dtoConverterContext, relatedObjectDefinition,
-							objectEntryLocalService.
-								getOrAddIncompleteObjectEntry(
-									nestedObjectEntry.
-										getExternalReferenceCode(),
-									groupId, dtoConverterContext.getUserId(),
-									relatedObjectDefinition.
-										getObjectDefinitionId()));
+							objectEntryLocalService.getOrAddEmptyObjectEntry(
+								nestedObjectEntry.getExternalReferenceCode(),
+								groupId, dtoConverterContext.getUserId(),
+								relatedObjectDefinition.
+									getObjectDefinitionId()));
 					}
 
 					if (!manyToOneObjectRelationship) {
@@ -1417,7 +1415,7 @@ public class DefaultObjectEntryManagerImpl
 					className = roleTypeContributor.getClassName();
 				}
 
-				_roleLocalService.getOrAddIncompleteRole(
+				_roleLocalService.getOrAddEmptyRole(
 					permission.getRoleExternalReferenceCode(),
 					objectDefinition.getCompanyId(),
 					dtoConverterContext.getUserId(), className, 0,
@@ -1701,11 +1699,9 @@ public class DefaultObjectEntryManagerImpl
 
 		try {
 			ObjectEntryFolder objectEntryFolder =
-				_objectEntryFolderLocalService.
-					getOrAddIncompleteObjectEntryFolder(
-						objectEntryFolderExternalReferenceCode, groupId,
-						companyId, serviceContext.getGuestOrUserId(),
-						serviceContext);
+				_objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
+					objectEntryFolderExternalReferenceCode, groupId, companyId,
+					serviceContext.getGuestOrUserId(), serviceContext);
 
 			return objectEntryFolder.getObjectEntryFolderId();
 		}

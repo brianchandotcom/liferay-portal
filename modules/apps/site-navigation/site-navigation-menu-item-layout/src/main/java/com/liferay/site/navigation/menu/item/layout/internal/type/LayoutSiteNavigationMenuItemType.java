@@ -305,6 +305,8 @@ public class LayoutSiteNavigationMenuItemType
 	@Override
 	public String getTypeSettingsFromLayout(Layout layout) {
 		return UnicodePropertiesBuilder.put(
+			"externalReferenceCode", layout.getExternalReferenceCode()
+		).put(
 			"groupId", String.valueOf(layout.getGroupId())
 		).put(
 			"layoutUuid", layout.getUuid()

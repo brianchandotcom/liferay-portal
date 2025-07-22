@@ -45,6 +45,7 @@ type Document = {
 		name: string;
 	};
 	encodingFormat: string;
+	fileName: string;
 	id: string;
 	title: string;
 };
@@ -52,6 +53,15 @@ type Document = {
 type Space = {
 	id: number;
 	name: string;
+};
+
+type User = {
+	givenName: string;
+	id: number;
+	name: string;
+	roleBriefs?: {
+		name: string;
+	}[];
 };
 
 const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
@@ -78,14 +88,11 @@ const documentsItemSelectorConfig = {
 
 const userAccountsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
-	itemNameLocator: (item: any) => {
-		return (
-			item.givenName +
-			' (' +
-			item.roleBriefs?.map((role: any) => role.name).join(',') +
-			')'
-		);
-	},
+	itemNameLocator: (item: User) =>
+		item.givenName +
+		' (' +
+		item.roleBriefs?.map((role) => role.name).join(', ') +
+		')',
 	type: Liferay.Language.get('user'),
 	views: userViews,
 };
@@ -98,9 +105,9 @@ export default function ItemSelectorSamples() {
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const [space, setSpace] = useState<Space>();
 
-	const [space2, setSpace2] = useState(null);
-	const [document, setDocument] = useState(null);
-	const [user, setUser] = useState(null);
+	const [space2, setSpace2] = useState<Space | null>();
+	const [document, setDocument] = useState<Document | null>();
+	const [user, setUser] = useState<User | null>();
 
 	const {
 		observer: fileItemSelectorObserver,
@@ -117,18 +124,6 @@ export default function ItemSelectorSamples() {
 		onOpenChange: userItemSelectorOpenChange,
 		open: userItemSelectorOpen,
 	} = useModal();
-
-	function onAssetSelection(asset: any) {
-		setAsset(asset);
-	}
-
-	function onFileSelection(file: any) {
-		setFile(file);
-	}
-
-	function onUserSelection(user: any) {
-		setUser(user);
-	}
 
 	return (
 		<>
@@ -299,7 +294,7 @@ export default function ItemSelectorSamples() {
 			</SampleContainer>
 
 			<SampleContainer label="Item Selector Modal">
-				<ItemSelectorModal
+				<ItemSelectorModal<Document>
 					{...{
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
@@ -307,20 +302,20 @@ export default function ItemSelectorSamples() {
 							id: `itemSelectorModal-documents-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
-									EItemSelectorModalViewsConfig.DOCUMENTS_AND_MEDIA,
+									EItemSelectorModalViewsConfig.DOCUMENTS,
 							}),
 						},
 						itemNameLocator:
 							documentsItemSelectorConfig.itemNameLocator,
 						observer: fileItemSelectorObserver,
 						onOpenChange: fileItemSelectorOpenChange,
-						onSelection: onFileSelection,
+						onSelection: setDocument,
 						open: fileItemSelectorOpen,
 						type: documentsItemSelectorConfig.type,
 					}}
 				/>
 
-				<ItemSelectorModal
+				<ItemSelectorModal<Space>
 					{...{
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
@@ -335,13 +330,13 @@ export default function ItemSelectorSamples() {
 							assetLibrariesItemSelectorConfig.itemNameLocator,
 						observer: spaceItemSelectorObserver,
 						onOpenChange: spaceItemSelectorOpenChange,
-						onSelection: onAssetSelection,
+						onSelection: setSpace2,
 						open: spaceItemSelectorOpen,
 						type: assetLibrariesItemSelectorConfig.type,
 					}}
 				/>
 
-				<ItemSelectorModal
+				<ItemSelectorModal<User>
 					{...{
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
@@ -356,7 +351,7 @@ export default function ItemSelectorSamples() {
 							userAccountsItemSelectorConfig.itemNameLocator,
 						observer: userItemSelectorObserver,
 						onOpenChange: userItemSelectorOpenChange,
-						onSelection: onUserSelection,
+						onSelection: setUser,
 						open: userItemSelectorOpen,
 						type: userAccountsItemSelectorConfig.type,
 					}}

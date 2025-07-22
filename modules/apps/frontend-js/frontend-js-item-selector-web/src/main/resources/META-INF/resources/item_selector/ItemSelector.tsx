@@ -27,7 +27,7 @@ type ChildrenFunction<T, P> =
 		? (item: T, ...args: P) => React.ReactElement
 		: (item: T, index?: number) => React.ReactElement;
 
-export interface IProps<T>
+export interface IItemSelectorProps<T>
 	extends Omit<
 		React.HTMLAttributes<HTMLInputElement>,
 		'onChange' | 'children'
@@ -121,7 +121,7 @@ function ItemSelector<T extends Record<string, any>>({
 	defaultItems,
 	displaySelectedItems = true,
 	...otherProps
-}: IProps<T>) {
+}: IItemSelectorProps<T>) {
 	useEffect(() => {
 		if (!displaySelectedItems && !multiSelect) {
 			console.warn(

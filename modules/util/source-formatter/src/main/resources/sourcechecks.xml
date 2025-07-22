@@ -438,10 +438,6 @@
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="PoshiJakartaTransformCheck">
-			<category name="JakartaTransform" />
-			<description name="Performs replacements for use of Jakarta." />
-		</check>
 		<check name="PropertiesJakartaTransformCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />

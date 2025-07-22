@@ -56,8 +56,8 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -76,15 +76,19 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
 		_objectDefinition = _getObjectDefinition();
 
 		_user = UserTestUtil.addUser();
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+
 		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
 
 		_userLocalService.deleteUser(_user);
@@ -165,7 +169,26 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext));
 	}
 
-	private static ObjectFieldSetting _createObjectFieldSetting(
+	private DLFileEntry _addDLFileEntry(long groupId, long userId)
+		throws Exception {
+
+		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
+
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+
+		return _dlFileEntryLocalService.addFileEntry(
+			null, userId, groupId, groupId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".txt",
+			MimeTypesUtil.getExtensionContentType("txt"),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			null, inputStream, bytes.length, null, null, null,
+			ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
+	private ObjectFieldSetting _createObjectFieldSetting(
 		String name, String value) {
 
 		ObjectFieldSetting objectFieldSetting =
@@ -177,7 +200,7 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 		return objectFieldSetting;
 	}
 
-	private static ObjectDefinition _getObjectDefinition() throws Exception {
+	private ObjectDefinition _getObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				true, ObjectDefinitionTestUtil.getRandomName(),
@@ -219,25 +242,6 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 		return _objectDefinitionLocalService.updateObjectDefinition(
 			objectDefinition);
-	}
-
-	private DLFileEntry _addDLFileEntry(long groupId, long userId)
-		throws Exception {
-
-		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
-
-		InputStream inputStream = new ByteArrayInputStream(bytes);
-
-		return _dlFileEntryLocalService.addFileEntry(
-			null, userId, groupId, groupId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt",
-			MimeTypesUtil.getExtensionContentType("txt"),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, inputStream, bytes.length, null, null, null,
-			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	private SharedAsset _toObjectEntryFolderSharedAsset(

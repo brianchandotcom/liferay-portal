@@ -189,7 +189,7 @@ public class AccountEntriesAdminPortletDataHandlerTest {
 				TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, accountGroup.getStatus());
+			WorkflowConstants.STATUS_EMPTY, accountGroup.getStatus());
 
 		String accountGroupExternalReferenceCode =
 			accountGroup.getExternalReferenceCode();
@@ -202,7 +202,7 @@ public class AccountEntriesAdminPortletDataHandlerTest {
 						exportImportReportEntry.getClassExternalReferenceCode(),
 						accountGroupExternalReferenceCode) &&
 					(exportImportReportEntry.getType() ==
-						ExportImportReportEntryConstants.TYPE_INCOMPLETE)));
+						ExportImportReportEntryConstants.TYPE_EMPTY)));
 
 		organization =
 			_organizationLocalService.fetchOrganizationByExternalReferenceCode(
@@ -210,7 +210,7 @@ public class AccountEntriesAdminPortletDataHandlerTest {
 				TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, organization.getStatus());
+			WorkflowConstants.STATUS_EMPTY, organization.getStatus());
 
 		String organizationExternalReferenceCode =
 			organization.getExternalReferenceCode();
@@ -223,7 +223,7 @@ public class AccountEntriesAdminPortletDataHandlerTest {
 						exportImportReportEntry.getClassExternalReferenceCode(),
 						organizationExternalReferenceCode) &&
 					(exportImportReportEntry.getType() ==
-						ExportImportReportEntryConstants.TYPE_INCOMPLETE)));
+						ExportImportReportEntryConstants.TYPE_EMPTY)));
 	}
 
 	@Test

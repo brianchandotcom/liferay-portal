@@ -138,6 +138,12 @@ export class JournalEditArticlePage {
 		}
 	}
 
+	async changeDefaultLanguage(languageId: string) {
+		await this.page.getByRole('button', {name: 'Change'}).click();
+
+		await this.page.getByRole('menuitem', {name: languageId}).click();
+	}
+
 	async changeLanguage(languageId: string) {
 		await this.page
 			.getByRole('combobox', {
@@ -146,12 +152,6 @@ export class JournalEditArticlePage {
 			.click();
 
 		await this.page.locator(`button[id="${languageId}"]`).click();
-	}
-
-	async changeDefaultLanguage(languageId: string) {
-		await this.page.getByRole('button', {name: 'Change'}).click();
-
-		await this.page.getByRole('menuitem', {name: languageId}).click();
 	}
 
 	async changeViewInRelatedAssetPopUp(assetType: string, viewType: string) {

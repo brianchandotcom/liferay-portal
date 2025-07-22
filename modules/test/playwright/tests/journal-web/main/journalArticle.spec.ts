@@ -152,6 +152,38 @@ baseTest(
 );
 
 baseTest(
+	'Check if Web Content can be saved as draft after changing default language',
+	{
+		tag: '@LPD-60603',
+	},
+	async ({journalEditArticlePage, page, site, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Web Content',
+			'Administration'
+		);
+
+		await page.getByLabel('Changeable Default Language').check();
+
+		await page.getByRole('button', {name: /save|update/i}).click();
+
+		await waitForAlert(page);
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.changeDefaultLanguage('pt_BR');
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.saveAsDraftWithPermissions(title);
+
+		await waitForAlert(
+			page,
+			`Success:${title} was successfully saved as a draft.`
+		);
+	}
+);
+
+baseTest(
 	'Check success message on save as draft',
 	{
 		tag: '@LPD-50230',
@@ -1692,38 +1724,6 @@ ckeditor4Test(
 		await expect(
 			editableFrame.locator('img[src="/documents/d/guest/satellite-png"]')
 		).toBeVisible();
-	}
-);
-
-baseTest(
-	'Check if Web Content can be saved as draft after changing default language',
-	{
-		tag: '@LPD-60603',
-	},
-	async ({journalEditArticlePage, page, site, systemSettingsPage}) => {
-		await systemSettingsPage.goToSystemSetting(
-			'Web Content',
-			'Administration'
-		);
-
-		await page.getByLabel('Changeable Default Language').check();
-
-		await page.getByRole('button', {name: /save|update/i}).click();
-
-		await waitForAlert(page);
-
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
-
-		await journalEditArticlePage.changeDefaultLanguage('pt_BR');
-
-		const title = getRandomString();
-
-		await journalEditArticlePage.saveAsDraftWithPermissions(title);
-
-		await waitForAlert(
-			page,
-			`Success:${title} was successfully saved as a draft.`
-		);
 	}
 );
 

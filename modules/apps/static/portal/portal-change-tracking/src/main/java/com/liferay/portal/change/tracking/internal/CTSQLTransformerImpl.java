@@ -1468,11 +1468,12 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 					equalsTo(
 						new Column(table, "ctCollectionId"),
 						new LongValue(ctCollectionId)),
-					new AndExpression(
-						equalsTo(
-							new Column(table, "ctCollectionId"),
-							new LongValue("0")),
-						inExpression)));
+					new Parenthesis(
+						new AndExpression(
+							equalsTo(
+								new Column(table, "ctCollectionId"),
+								new LongValue("0")),
+							inExpression))));
 		}
 
 		private final CTSQLModeThreadLocal.CTSQLMode _ctSQLMode;

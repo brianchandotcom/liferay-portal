@@ -103,7 +103,9 @@ public class APIPropertiesToAPIPropertiesUpgradeProcessTest
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByExternalReferenceCode(
 					"L_API_PROPERTIES_TO_API_PROPERTIES",
-					objectDefinition.getObjectDefinitionId()));
+					objectDefinition.getObjectDefinitionId()),
+			"Object relationship exists with external reference code" +
+				"L_API_PROPERTIES_TO_API_PROPERTIES");
 	}
 
 	private static StopWatch _originalStopWatch;

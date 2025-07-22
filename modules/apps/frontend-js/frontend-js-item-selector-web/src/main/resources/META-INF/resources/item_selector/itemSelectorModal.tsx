@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-export interface IItemSelectorModalProps {
+export interface IItemSelectorModalProps<T> {
 
 	/**
 	 * Configuration properties of the Frontend Data Set used to display data.
@@ -23,7 +23,7 @@ export interface IItemSelectorModalProps {
 	/**
 	 * Fieldname from apiURL response used to display selection value in the modal.
 	 */
-	itemNameLocator: string | ((item: any) => any);
+	itemNameLocator: string | ((item: T) => any);
 
 	/**
 	 * Expects the 'observer' property from the Clay useModal hook.
@@ -38,7 +38,7 @@ export interface IItemSelectorModalProps {
 	/**
 	 * Callback function called when item selection is confirmed.
 	 */
-	onSelection: Function;
+	onSelection: (item?: T | null) => void;
 
 	/**
 	 * Expects the 'open' property from the Clay useModal hook.
@@ -51,7 +51,7 @@ export interface IItemSelectorModalProps {
 	type: string;
 }
 
-function ItemSelectorModal({
+function ItemSelectorModal<T extends Record<string, any>>({
 	fdsProps,
 	itemNameLocator,
 	observer,
@@ -59,10 +59,10 @@ function ItemSelectorModal({
 	onSelection,
 	open,
 	type,
-}: IItemSelectorModalProps) {
-	const [selectedItem, setSelectedItem] = useState<any | null>(null);
+}: IItemSelectorModalProps<T>) {
+	const [selectedItem, setSelectedItem] = useState<T | null>();
 
-	const getSelectedItemName = function (selectedItem: any) {
+	const getSelectedItemName = function (selectedItem: T) {
 		if (typeof itemNameLocator === 'string') {
 			return selectedItem[itemNameLocator];
 		}
@@ -83,11 +83,11 @@ function ItemSelectorModal({
 					onSelect={({
 						selectedItems,
 					}: {
-						selectedItems: Array<any>;
+						selectedItems: Array<T> | T;
 					}) => {
 						fdsProps.selectionType === 'single'
-							? setSelectedItem(selectedItems[0])
-							: setSelectedItem(selectedItems);
+							? setSelectedItem((selectedItems as Array<T>)[0])
+							: setSelectedItem(selectedItems as T);
 					}}
 					style="fluid"
 				/>

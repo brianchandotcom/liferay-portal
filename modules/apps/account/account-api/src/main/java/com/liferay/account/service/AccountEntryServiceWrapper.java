@@ -148,12 +148,11 @@ public class AccountEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.account.model.AccountEntry
-			getOrAddIncompleteAccountEntry(
-				String externalReferenceCode, String name, String type)
+	public com.liferay.account.model.AccountEntry getOrAddEmptyAccountEntry(
+			String externalReferenceCode, String name, String type)
 		throws Exception {
 
-		return _accountEntryService.getOrAddIncompleteAccountEntry(
+		return _accountEntryService.getOrAddEmptyAccountEntry(
 			externalReferenceCode, name, type);
 	}
 

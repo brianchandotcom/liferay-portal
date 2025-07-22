@@ -434,13 +434,12 @@ public class AccountGroupLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.account.model.AccountGroup
-			getOrAddIncompleteAccountGroup(
-				String externalReferenceCode, long companyId, long userId,
-				String name)
+	public com.liferay.account.model.AccountGroup getOrAddEmptyAccountGroup(
+			String externalReferenceCode, long companyId, long userId,
+			String name)
 		throws Exception {
 
-		return _accountGroupLocalService.getOrAddIncompleteAccountGroup(
+		return _accountGroupLocalService.getOrAddEmptyAccountGroup(
 			externalReferenceCode, companyId, userId, name);
 	}
 

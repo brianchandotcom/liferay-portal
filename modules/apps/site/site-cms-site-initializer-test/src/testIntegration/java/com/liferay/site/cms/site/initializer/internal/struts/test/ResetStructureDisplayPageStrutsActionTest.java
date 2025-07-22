@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -78,6 +80,8 @@ public class ResetStructureDisplayPageStrutsActionTest {
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
+		_user = UserTestUtil.addCompanyAdminUser(_company);
+
 		_groupLocalService.checkSystemGroups(_company.getCompanyId());
 	}
 
@@ -103,12 +107,13 @@ public class ResetStructureDisplayPageStrutsActionTest {
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+			"A" + RandomTestUtil.randomString(),
 			ListUtil.fromArray(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
 					RandomTestUtil.randomString(), "text")),
-			ObjectDefinitionConstants.SCOPE_DEPOT);
+			ObjectDefinitionConstants.SCOPE_DEPOT, _user.getUserId());
 
 		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
 			_objectDefinition.getUserId(),
@@ -199,6 +204,8 @@ public class ResetStructureDisplayPageStrutsActionTest {
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
+
+	private static User _user;
 
 	private DepotEntry _depotEntry;
 

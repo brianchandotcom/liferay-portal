@@ -30,10 +30,16 @@ const OBJECT_ENTRY_FOLDER_CLASSNAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
 export default function FilesFDSPropsTransformer({
+	additionalProps,
 	creationMenu,
 	itemsActions = [],
 	...otherProps
 }: {
+	additionalProps: {
+		autocompleteURL: string;
+		collaboratorByTypeURLs: Record<string, string>;
+		collaboratorURLs: Record<string, string>;
+	};
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;
@@ -133,9 +139,13 @@ export default function FilesFDSPropsTransformer({
 			else if (action?.data?.id === 'share') {
 				event?.preventDefault();
 
+				const {autocompleteURL, collaboratorURLs} = additionalProps;
+
 				shareAction({
-					autocompleteUserURL: `/o/search/v1.0/search?emptySearch=true&entryClassNames=com.liferay.portal.kernel.model.User%2Ccom.liferay.portal.kernel.model.UserGroup&nestedFields=embedded`,
-					shareActionURL: `/o/cms/basic-documents/${itemData.embedded.id}/collaborators`,
+					autocompleteURL,
+					collaboratorURL: collaboratorURLs[itemData.entryClassName],
+					creator: itemData.embedded.creator,
+					itemId: itemData.embedded.id,
 					title: itemData.embedded?.title,
 				});
 			}

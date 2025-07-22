@@ -12,22 +12,28 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
+import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import {openToast} from 'frontend-js-components-web';
 import {dateUtils, fetch, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import '../../../css/components/ShareModalContent.scss';
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 
 export interface collaborator {
 	allowResharing?: boolean;
 	expirationDate?: string;
-	isOwner?: boolean;
 	permission?: string;
 	toBeShared?: boolean;
 	type: string;
 	user: UserAccount | UserGroup;
 }
+
+const TYPES = {
+	USER: 'User',
+	USER_GROUP: 'UserGroup',
+};
 
 const formatDateToISO = (date: string): string => {
 	const formattedDate = new Date(date);
@@ -35,20 +41,18 @@ const formatDateToISO = (date: string): string => {
 	return formattedDate.toISOString();
 };
 
-function ListItem({
+function CollaboratorListItem({
 	allowResharing,
 	expirationDate,
-	isOwner,
 	onChangeUser,
 	onRemoveUser,
 	permission,
 	toBeShared,
-	type = 'User',
+	type = TYPES.USER,
 	user,
 }: {
 	allowResharing?: boolean;
 	expirationDate?: string;
-	isOwner?: boolean;
 	onChangeUser: (user: UserAccount | UserGroup, property: object) => void;
 	onRemoveUser: (user: UserAccount | UserGroup) => void;
 	permission?: string;
@@ -58,191 +62,203 @@ function ListItem({
 }) {
 	return (
 		<li
-			className="align-items-center d-flex justify-content-between"
-			key={user.id}
+			className="border-0 c-px-0 c-py-1 list-group-item list-group-item-flex"
+			key={`collaborator-${user.id}`}
 		>
-			<div className="align-items-center d-flex">
-				<ClaySticker displayType="primary" shape="circle" size="sm">
-					{type === 'User' ? (
-						<img
-							alt={user.name}
-							className="sticker-img"
-							src={
-								(user as UserAccount).image ||
-								'/image/user_portrait'
-							}
-						/>
+			<div className="autofit-col">
+				<ClaySticker displayType="secondary" shape="circle" size="sm">
+					{type === TYPES.USER ? (
+						'image' in user && user.image ? (
+							<img
+								alt={user.name}
+								className="sticker-img"
+								src={(user as UserAccount).image}
+							/>
+						) : (
+							<ClayIcon symbol="user" />
+						)
 					) : (
-						<ClayIcon
-							className="text-secondary"
-							fontSize="24px"
-							symbol="users"
-						/>
+						<ClayIcon symbol="users" />
 					)}
 				</ClaySticker>
-
-				<div className="c-ml-2 list-group-title text-truncate">
-					{user.name}
-				</div>
-
-				{toBeShared && (
-					<div className="c-ml-2 label label-inverse-light">
-						<span className="label-item label-item-expand">
-							{Liferay.Language.get('to-be-shared')}
-						</span>
-					</div>
-				)}
 			</div>
 
-			<div className="align-items-center d-flex">
-				{isOwner ? (
-					<span className="text-2 text-secondary text-weight-semi-bold">
-						{Liferay.Language.get('owner')}
+			<div className="autofit-col autofit-col-expand">
+				<div className="align-items-center d-flex h-100">
+					<span className="text-3 text-truncate text-weight-semi-bold">
+						{user.name}
 					</span>
-				) : (
-					<>
-						<Picker
-							aria-labelledby={Liferay.Language.get(
-								'edit-permissions'
-							)}
-							className="border-0 text-2 text-secondary text-weight-semi-bold"
-							items={[
-								{
-									label: Liferay.Language.get('view'),
-									value: 'VIEW',
-								},
-								{
-									label: Liferay.Language.get(
-										'view-and-download'
-									),
-									value: 'VIEW-AND-DOWNLOAD',
-								},
-							]}
-							onSelectionChange={(value: React.Key) =>
-								onChangeUser(user, {permission: value})
-							}
-							placeholder=""
-							selectedKey={permission}
-						>
-							{(item: {label: string; value: string}) => (
-								<Option key={item.value}>{item.label}</Option>
-							)}
-						</Picker>
 
-						<ClayDropDown
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'set-expiration-date'
-									)}
-									borderless
-									className="c-m-1"
-									displayType="secondary"
-									monospaced
-									size="xs"
-									symbol="date-time"
-								/>
-							}
-						>
-							<ClayDropDown.ItemList>
-								<ClayDropDown.Section>
-									<ClayDatePicker
-										firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
-										months={[
-											`${Liferay.Language.get('january')}`,
-											`${Liferay.Language.get('february')}`,
-											`${Liferay.Language.get('march')}`,
-											`${Liferay.Language.get('april')}`,
-											`${Liferay.Language.get('may')}`,
-											`${Liferay.Language.get('june')}`,
-											`${Liferay.Language.get('july')}`,
-											`${Liferay.Language.get('august')}`,
-											`${Liferay.Language.get('september')}`,
-											`${Liferay.Language.get('october')}`,
-											`${Liferay.Language.get('november')}`,
-											`${Liferay.Language.get('december')}`,
-										]}
-										onChange={(value: string) =>
-											onChangeUser(user, {
-												expirationDate: value,
-											})
-										}
-										placeholder={Liferay.Language.get(
-											'yyyy-mm-dd'
-										)}
-										value={expirationDate}
-										years={{
-											end: new Date().getFullYear(),
-											start: 1998,
-										}}
-									/>
-								</ClayDropDown.Section>
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
+					{toBeShared && (
+						<span className="inline-item inline-item-after label label-inverse-light">
+							<span className="label-item label-item-expand">
+								{Liferay.Language.get('to-be-shared')}
+							</span>
+						</span>
+					)}
+				</div>
+			</div>
 
-						<ClayDropDown
-							hasLeftSymbols={true}
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'more-options'
-									)}
-									borderless
-									className="c-m-1"
-									displayType="secondary"
-									monospaced
-									size="xs"
-									symbol="ellipsis-v"
-								/>
-							}
-						>
-							<ClayDropDown.ItemList>
-								<ClayDropDown.Item
-									key={user.id}
-									onClick={() =>
+			<div className="autofit-col">
+				<Picker
+					aria-label={Liferay.Language.get('edit-permissions')}
+					className="border-0 c-py-0 permissions-picker text-2 text-secondary text-weight-semi-bold"
+					items={[
+						{
+							label: Liferay.Language.get('view-and-download'),
+							value: 'VIEW',
+						},
+						{
+							label: Liferay.Language.get(
+								'view-download-and-comment'
+							),
+							value: 'ADD_DISCUSSION,VIEW',
+						},
+						{
+							label: Liferay.Language.get(
+								'view-download-comment-and-update'
+							),
+							value: 'UPDATE,ADD_DISCUSSION,VIEW',
+						},
+					]}
+					onSelectionChange={(value: React.Key) =>
+						onChangeUser(user, {permission: value})
+					}
+					placeholder=""
+					selectedKey={permission}
+				>
+					{(item: {label: string; value: string}) => (
+						<Option key={item.value}>{item.label}</Option>
+					)}
+				</Picker>
+			</div>
+
+			<div className="autofit-col">
+				<div className="d-flex">
+					<ClayDropDown
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'set-expiration-date'
+								)}
+								borderless
+								className="inline-item inline-item-before"
+								displayType="secondary"
+								monospaced
+								size="xs"
+								symbol="date-time"
+							/>
+						}
+					>
+						<ClayDropDown.ItemList>
+							<ClayDropDown.Section>
+								<ClayDatePicker
+									firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
+									months={[
+										`${Liferay.Language.get('january')}`,
+										`${Liferay.Language.get('february')}`,
+										`${Liferay.Language.get('march')}`,
+										`${Liferay.Language.get('april')}`,
+										`${Liferay.Language.get('may')}`,
+										`${Liferay.Language.get('june')}`,
+										`${Liferay.Language.get('july')}`,
+										`${Liferay.Language.get('august')}`,
+										`${Liferay.Language.get('september')}`,
+										`${Liferay.Language.get('october')}`,
+										`${Liferay.Language.get('november')}`,
+										`${Liferay.Language.get('december')}`,
+									]}
+									onChange={(value: string) =>
 										onChangeUser(user, {
-											allowResharing: !allowResharing,
+											expirationDate: value,
 										})
 									}
-									symbolLeft={
-										allowResharing ? 'check-small' : ''
-									}
-								>
-									{Liferay.Language.get('allow-resharing')}
-								</ClayDropDown.Item>
+									placeholder={Liferay.Language.get(
+										'yyyy-mm-dd'
+									)}
+									value={expirationDate}
+									years={{
+										end: new Date().getFullYear(),
+										start: 1998,
+									}}
+								/>
+							</ClayDropDown.Section>
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
 
-								<ClayDropDown.Item
-									key={user.id}
-									onClick={() => onRemoveUser(user)}
-								>
-									{Liferay.Language.get('remove-access')}
-								</ClayDropDown.Item>
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					</>
-				)}
+					<ClayDropDown
+						hasLeftSymbols={true}
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'more-options'
+								)}
+								borderless
+								displayType="secondary"
+								monospaced
+								size="xs"
+								symbol="ellipsis-v"
+							/>
+						}
+					>
+						<ClayDropDown.ItemList>
+							<ClayDropDown.Item
+								aria-label={Liferay.Language.get(
+									'allow-resharing'
+								)}
+								key={`share-${user.id}`}
+								onClick={() =>
+									onChangeUser(user, {
+										allowResharing: !allowResharing,
+									})
+								}
+								symbolLeft={allowResharing ? 'check-small' : ''}
+							>
+								{Liferay.Language.get('allow-resharing')}
+							</ClayDropDown.Item>
+
+							<ClayDropDown.Item
+								aria-label={Liferay.Language.get(
+									'remove-access'
+								)}
+								key={`remove-${user.id}`}
+								onClick={() => onRemoveUser(user)}
+							>
+								{Liferay.Language.get('remove-access')}
+							</ClayDropDown.Item>
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				</div>
 			</div>
 		</li>
 	);
 }
 
 export default function ShareModalContent({
-	autocompleteUserURL = '/o/search/v1.0/search?emptySearch=true&entryClassNames=com.liferay.portal.kernel.model.User%2Ccom.liferay.portal.kernel.model.UserGroup&nestedFields=embedded', // added for testing
+	autocompleteURL = '',
 	closeModal,
-	shareActionURL = '',
+	collaboratorURL = '',
+	creator,
 	initialCollaborators = [],
 	title = '',
 }: {
-	autocompleteUserURL: string;
+	autocompleteURL: string;
 	closeModal: () => void;
-	initialCollaborators?: collaborator[];
-	shareActionURL: string;
+	collaboratorURL: string;
+	creator: {
+		contentType: string;
+		id: string;
+		image?: string;
+		name: string;
+	};
+	initialCollaborators: collaborator[];
 	title: string;
 }) {
+	const [autocompleteValue, setAutocompleteValue] = useState('');
+	const [autocompleteNetworkStatus, setAutocompleteNetworkStatus] =
+		useState(4);
 	const [collaborators, setCollaborators] =
 		useState<collaborator[]>(initialCollaborators);
-	const [multiSelectValue, setMultiSelectValue] = useState('');
-	const [networkStatus, setNetworkStatus] = useState(4);
 
 	const {resource: users} = useResource({
 		fetchOptions: {
@@ -253,29 +269,30 @@ export default function ShareModalContent({
 		fetchRetry: {
 			attempts: 0,
 		},
-		link: `${window.location.origin}${autocompleteUserURL}`,
-		onNetworkStatusChange: setNetworkStatus,
-		variables: {search: multiSelectValue},
+		link: `${window.location.origin}${autocompleteURL}`,
+		onNetworkStatusChange: setAutocompleteNetworkStatus,
+		variables: {search: autocompleteValue},
 	});
 
 	const _handleAddUser = (user: UserAccount | UserGroup, type: string) => {
-		if (
-			!collaborators.some(
-				({user: collabUser}) => collabUser.id === user.id
-			)
-		) {
-			setCollaborators([
-				...collaborators,
-				{
-					isOwner: false,
-					permission: 'VIEW-AND-DOWNLOAD',
-					toBeShared: true,
-					type,
-					user,
-				},
-			]);
-		}
-		setMultiSelectValue('');
+		setCollaborators((collaborators) => {
+			return collaborators.every(
+				(collaborator) => collaborator.user.id !== user.id
+			) && creator.id !== user.id
+				? [
+						{
+							allowResharing: false,
+							permission: 'VIEW',
+							toBeShared: true,
+							type,
+							user,
+						},
+						...collaborators,
+					]
+				: collaborators;
+		});
+
+		setAutocompleteValue('');
 	};
 
 	const _handleRemoveUser = async (
@@ -310,19 +327,18 @@ export default function ShareModalContent({
 		event.preventDefault();
 
 		const data = collaborators.map(
-			({allowResharing, expirationDate, permission, user}) => ({
-				actionIds:
-					permission === 'VIEW-AND-DOWNLOAD'
-						? ['VIEW', 'DOWNLOAD']
-						: ['VIEW'],
-				dateExpired: formatDateToISO(expirationDate || ''),
+			({allowResharing, expirationDate, permission, type, user}) => ({
+				actionIds: permission?.split(','),
+				...(!!expirationDate && {
+					dateExpired: formatDateToISO(expirationDate),
+				}),
 				id: user.id,
 				share: allowResharing,
-				type: 'User',
+				type,
 			})
 		);
 
-		fetch(shareActionURL, {
+		fetch(collaboratorURL, {
 			body: JSON.stringify(data),
 			headers: {
 				'Accept': 'application/json',
@@ -364,7 +380,7 @@ export default function ShareModalContent({
 	};
 
 	return (
-		<form onSubmit={_handleSubmit}>
+		<form className="share-modal-content" onSubmit={_handleSubmit}>
 			<ClayModal.Header>
 				{sub(Liferay.Language.get('share-x'), `"${title}"`)}
 			</ClayModal.Header>
@@ -373,46 +389,55 @@ export default function ShareModalContent({
 				<ClayForm.Group>
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
-							<label htmlFor="userEmailAddress">
+							<label htmlFor="collaboratorAutocomplete">
 								{Liferay.Language.get(
 									'add-people-to-collaborate'
 								)}
 							</label>
 
 							<ClayMultiSelect
-								id="userEmailAddress"
+								id="collaboratorAutocomplete"
 								items={[]}
-								loadingState={networkStatus}
-								locator={{
-									id: 'id',
-									label: 'name',
-									value: 'name',
-								}}
-								onChange={setMultiSelectValue}
+								loadingState={autocompleteNetworkStatus}
+								onChange={setAutocompleteValue}
 								placeholder={Liferay.Language.get(
 									'enter-name-email-or-groups'
 								)}
 								sourceItems={
-									multiSelectValue && !!users?.items?.length
+									autocompleteValue && !!users?.items?.length
 										? users.items?.map((item: any) => {
-												return {
-													type: item.entryClassName?.includes(
+												if (
+													item.entryClassName?.includes(
 														'UserGroup'
 													)
-														? 'UserGroup'
-														: 'User',
+												) {
+													return {
+														type: TYPES.USER_GROUP,
+														user: {
+															id: item.embedded.id.toString(),
+															name: item.embedded
+																.name,
+														},
+													};
+												}
+
+												return {
+													type: TYPES.USER,
 													user: {
 														emailAddress:
-															item.emailAddress, // not available
-														id: item.title, // not available so use title
-														image: item.image, // not available
-														name: item.title,
+															item.embedded
+																.emailAddress,
+														id: item.embedded.id.toString(),
+														image: item.embedded
+															.image,
+														name: item.embedded
+															.name,
 													},
 												};
 											})
 										: []
 								}
-								value={multiSelectValue}
+								value={autocompleteValue}
 							>
 								{({
 									type,
@@ -422,19 +447,20 @@ export default function ShareModalContent({
 									user: UserAccount | UserGroup;
 								}) => (
 									<ClayMultiSelect.Item
-										key={user.id}
+										key={`autocomplete-${type}-${user.id}`}
 										onClick={() =>
 											_handleAddUser(user, type)
 										}
 										textValue={user.name}
 									>
 										<div className="autofit-row autofit-row-center">
-											<div className="autofit-col mr-3">
+											<div className="autofit-col c-mr-1">
 												<ClaySticker
 													className="sticker-user-icon"
-													size="lg"
+													size="sm"
 												>
-													{'image' in user ? (
+													{type === TYPES.USER ? (
+														'image' in user &&
 														user.image ? (
 															<div className="sticker-overlay">
 																<img
@@ -454,13 +480,14 @@ export default function ShareModalContent({
 											</div>
 
 											<div className="autofit-col">
-												<strong>{user.name}</strong>
-
-												{'emailAddress' in user && (
-													<span>
-														{user.emailAddress}
+												<span className="text-weight-semibold">
+													<span className="c-mr-1">
+														{user.name}
 													</span>
-												)}
+
+													{'emailAddress' in user &&
+														`(${user.emailAddress})`}
+												</span>
 											</div>
 										</div>
 									</ClayMultiSelect.Item>
@@ -471,28 +498,79 @@ export default function ShareModalContent({
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<div className="c-mb-2 panel panel-unstyled">
-						<div className="panel-header">
-							<span className="panel-title text-secondary">
+					<ClayPanel
+						className="border-0"
+						collapsable
+						defaultExpanded={true}
+						displayTitle={
+							<div className="panel-title text-secondary">
 								{Liferay.Language.get('who-has-access') +
 									` (` +
 									sub(
 										Liferay.Language.get('x-users'),
-										collaborators.length
+										collaborators.length + 1
 									) +
 									`)`}
-							</span>
-						</div>
-					</div>
+							</div>
+						}
+						displayType="unstyled"
+					>
+						<ClayPanel.Body>
+							<ul className="c-mb-0 list-group">
+								{collaborators.map((item) => (
+									<CollaboratorListItem
+										key={`listItem-${item.type}-${item.user.id}`}
+										onChangeUser={_handleChangeUser}
+										onRemoveUser={_handleRemoveUser}
+										{...item}
+									/>
+								))}
 
-					{collaborators.map((item) => (
-						<ListItem
-							key={item.user.id}
-							onChangeUser={_handleChangeUser}
-							onRemoveUser={_handleRemoveUser}
-							{...item}
-						/>
-					))}
+								{creator.id && (
+									<li
+										className="border-0 c-px-0 c-py-1 list-group-item list-group-item-flex"
+										key={`listItem-creator-${creator.id}`}
+									>
+										<div className="autofit-col">
+											<ClaySticker
+												displayType="secondary"
+												shape="circle"
+												size="sm"
+											>
+												{creator.contentType ===
+												'UserAccount' ? (
+													'image' in creator &&
+													creator.image ? (
+														<img
+															alt={creator.name}
+															className="sticker-img"
+															src={creator.image}
+														/>
+													) : (
+														<ClayIcon symbol="user" />
+													)
+												) : (
+													<ClayIcon symbol="users" />
+												)}
+											</ClaySticker>
+										</div>
+
+										<div className="autofit-col autofit-col-expand">
+											<span className="text-3 text-truncate text-weight-semi-bold">
+												{creator.name}
+											</span>
+										</div>
+
+										<div className="autofit-col">
+											<span className="text-2 text-secondary text-weight-semi-bold">
+												{Liferay.Language.get('owner')}
+											</span>
+										</div>
+									</li>
+								)}
+							</ul>
+						</ClayPanel.Body>
+					</ClayPanel>
 				</ClayForm.Group>
 			</ClayModal.Body>
 
@@ -507,11 +585,7 @@ export default function ShareModalContent({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton
-							disabled={false} // TO-DO: Determine factors for when to disable
-							displayType="primary"
-							type="submit"
-						>
+						<ClayButton displayType="primary" type="submit">
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>

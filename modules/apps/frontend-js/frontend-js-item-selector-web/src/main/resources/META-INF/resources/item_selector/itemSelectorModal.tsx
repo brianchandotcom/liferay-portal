@@ -62,7 +62,7 @@ function ItemSelectorModal({
 }: IItemSelectorModalProps) {
 	const [selectedItem, setSelectedItem] = useState<any | null>(null);
 
-	const getSelectedItemValue = function (selectedItem: any) {
+	const getSelectedItemName = function (selectedItem: any) {
 		if (typeof itemNameLocator === 'string') {
 			return selectedItem[itemNameLocator];
 		}
@@ -100,10 +100,12 @@ function ItemSelectorModal({
 				first={
 					selectedItem ? (
 						<>
-							<strong>
-								{getSelectedItemValue(selectedItem)}
-							</strong>{' '}
-							{Liferay.Language.get('selected')}
+							{sub(
+								Liferay.Language.get('x-selected'),
+								<strong>
+									{getSelectedItemName(selectedItem)}
+								</strong>
+							)}
 						</>
 					) : undefined
 				}

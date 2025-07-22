@@ -762,7 +762,15 @@ export class RenderState {
 
 export function sub(
 	string: string,
-	data: string | number | string[] | number[] | Array<string> | Array<number>,
+	data:
+		| string
+		| number
+		| ReactNode
+		| string[]
+		| number[]
+		| Array<string>
+		| Array<number>
+		| Array<ReactNode>,
 	...args: string[] | number[]
 ): string;
 

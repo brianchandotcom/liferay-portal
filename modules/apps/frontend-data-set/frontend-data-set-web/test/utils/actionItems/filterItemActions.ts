@@ -141,15 +141,31 @@ describe('filterItemActions', () => {
 			const filteredActions = filterItemActions({
 				actions: customItemActions,
 				itemData: availableItemData,
+				selectable: true,
 				selectedItemsKey: 'id',
 			});
 
 			expect(filteredActions).toMatchObject(customItemActions);
+			expect(filteredActions.length).toEqual(3);
+		});
+
+		it('returns all the actions but those with target "infoPanel" if selectable is "false"', () => {
+			const customItemActions = generateCustomItemActions();
+
+			const filteredActions = filterItemActions({
+				actions: customItemActions,
+				itemData: availableItemData,
+				selectable: false,
+				selectedItemsKey: 'id',
+			});
+
+			expect(filteredActions).not.toMatchObject(customItemActions);
+			expect(filteredActions.length).toEqual(2);
 		});
 	});
 
 	describe('when permissionKey and action visibility filters are defined for an action item', () => {
-		it('returns only the action that matches the permissionKey and the action  visibility filter criteria', () => {
+		it('returns only the action that matches the permissionKey and the action visibility filter criteria', () => {
 			const customItemActions = generateCustomItemActions([
 				{
 					permissionKey: 'UPDATE',
@@ -300,6 +316,7 @@ describe('filterItemActions', () => {
 			const filteredActions = filterItemActions({
 				actions: testActionsWithIsVisibleCallback,
 				itemData: availableItemData,
+				selectable: true,
 				selectedItemsKey: 'id',
 			});
 
@@ -331,6 +348,7 @@ describe('filterItemActions', () => {
 				actions: customItemActions,
 				infoPanelOpen: true,
 				itemData: availableItemData,
+				selectable: true,
 				selectedItemsKey: 'id',
 				selectedItemsValue: [38212],
 			});

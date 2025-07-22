@@ -65,25 +65,6 @@ export class ItemSelectorSamplePage {
 		this.visualizationModeSelector = page.getByLabel('Show View Options');
 	}
 
-	async addItemSelectorSample({layout}: {layout: Layout}) {
-		await this.editPage({layout});
-
-		await this.searchFragmentOrWidget('JS Item Selector Sample');
-
-		const itemSelectorMenuItem = this.page.getByRole('menuitem', {
-			exact: true,
-			name: 'JS Item Selector Sample Add JS Item Selector Sample Mark JS Item Selector Sample as Favorite',
-		});
-
-		await itemSelectorMenuItem.dragTo(
-			this.page.getByText('Drag and drop fragments or widgets here.')
-		);
-		await this.page
-			.locator('header')
-			.filter({hasText: 'JS Item Selector Sample'})
-			.waitFor({state: 'visible'});
-	}
-
 	async changeVisualizationMode({
 		page,
 		visualizationMode,
@@ -105,30 +86,16 @@ export class ItemSelectorSamplePage {
 		await waitForFDS({page, visualizationMode});
 	}
 
-	async configureItemSelector({layout}: {layout: Layout}) {
-		await this.addItemSelectorSample({layout});
-
-		await this.publishPage();
-
-		await this.goToPage({layout});
-	}
-
-	async editPage({layout}: {layout: Layout}) {
-		await this.page.goto(`/web/guest${layout.friendlyURL}?p_l_mode=edit`);
-	}
-
-	async goToPage({layout}: {layout: Layout}) {
-		await this.page.goto(`/web/guest${layout.friendlyURL}`);
+	async goToPage({layout, site}: {layout: Layout; site: Site}) {
+		await this.page.goto(
+			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath || layout.friendlyURL}`
+		);
 	}
 
 	async publishPage() {
 		await this.publishPageButton.click();
 
 		await this.publishPageButton.isEnabled();
-	}
-
-	async searchFragmentOrWidget(itemName: string) {
-		await this.fragmentWidgetSearchInput.fill(itemName);
 	}
 
 	async selectByRowAndRole({

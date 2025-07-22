@@ -9,29 +9,33 @@ import path from 'path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import {EFDSVisualizationMode, waitForFDS} from '../../../utils/waitFor';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {itemSelectorSamplePageTest} from './fixtures/itemSelectorSamplePageTest';
 
 const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	}),
 	itemSelectorSamplePageTest,
-	isolatedLayoutTest({publish: false}),
+	isolatedSiteTest,
 	loginTest()
 );
 
 let imageFile: any;
 let jsonFile: any;
 
-test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, layout}) => {
-	await itemSelectorSamplePage.configureItemSelector({layout});
-
+test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 	await test.step('Upload sample documents', async () => {
 		imageFile = await apiHelpers.headlessDelivery.postDocument(
-			layout.groupId,
+			site.id,
 			createReadStream(
 				path.join(__dirname, '/dependencies/sample_image.png')
 			),
@@ -44,7 +48,7 @@ test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, layout}) => {
 		);
 
 		jsonFile = await apiHelpers.headlessDelivery.postDocument(
-			layout.groupId,
+			site.id,
 			createReadStream(path.join(__dirname, '/dependencies/file.json')),
 			{
 				description: getRandomString(),
@@ -54,6 +58,20 @@ test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, layout}) => {
 			}
 		);
 	});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_frontend_js_item_selector_sample_web_portlet_FrontendJSItemSelectorSampleWebPortlet',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await itemSelectorSamplePage.goToPage({layout, site});
 });
 
 test.afterEach(async ({apiHelpers}) => {

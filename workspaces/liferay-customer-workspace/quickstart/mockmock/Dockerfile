@@ -1,17 +1,8 @@
-FROM alpine:3
+FROM liferay/jar-runner:latest
 
-COPY resources/ /
+COPY --chown=liferay:liferay *.jar /opt/liferay/jar-runner.jar
 
-ENTRYPOINT ["tini", "-v", "--", "/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["tini", "-v", "--", "/usr/local/bin/liferay_jar_runner_entrypoint.sh", "-h", "8282", "-p", "2525"]
 
-ENV MOCKMOCK_HTTP_PORT=8282
-ENV MOCKMOCK_MAX_QUEUE_SIZE=1000
-ENV MOCKMOCK_SMPT_PORT=2525
-ENV MOCKMOCK_URL=https://github.com/tweakers-dev/MockMock/blob/master/release/MockMock.jar?raw=true
-
-EXPOSE 80 2525 8282
-
-RUN apk add --no-cache bash curl openjdk11 tini && \
-	\
-	curl --fail --location "${MOCKMOCK_URL}" --output MockMock.jar --silent && \
-	chmod +x /usr/local/bin/entrypoint.sh
+#ENV JAVA_VERSION="zulu21"
+#ENV LIFERAY_JAR_RUNNER_JAVA_OPTS="-Xmx512m"

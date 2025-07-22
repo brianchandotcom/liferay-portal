@@ -644,12 +644,12 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.object.model.ObjectEntry getOrAddIncompleteObjectEntry(
+	public com.liferay.object.model.ObjectEntry getOrAddEmptyObjectEntry(
 			String externalReferenceCode, long groupId, long userId,
 			long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _objectEntryLocalService.getOrAddIncompleteObjectEntry(
+		return _objectEntryLocalService.getOrAddEmptyObjectEntry(
 			externalReferenceCode, groupId, userId, objectDefinitionId);
 	}
 

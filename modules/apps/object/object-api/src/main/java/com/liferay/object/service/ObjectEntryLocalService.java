@@ -431,7 +431,7 @@ public interface ObjectEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Transactional(propagation = Propagation.REQUIRED)
-	public ObjectEntry getOrAddIncompleteObjectEntry(
+	public ObjectEntry getOrAddEmptyObjectEntry(
 			String externalReferenceCode, long groupId, long userId,
 			long objectDefinitionId)
 		throws PortalException;

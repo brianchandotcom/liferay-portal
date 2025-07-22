@@ -388,13 +388,13 @@ public class ObjectEntryFolderLocalServiceUtil {
 			groupId, companyId, parentObjectEntryFolderId);
 	}
 
-	public static ObjectEntryFolder getOrAddIncompleteObjectEntryFolder(
+	public static ObjectEntryFolder getOrAddEmptyObjectEntryFolder(
 			String externalReferenceCode, long groupId, long companyId,
 			long userId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().getOrAddIncompleteObjectEntryFolder(
+		return getService().getOrAddEmptyObjectEntryFolder(
 			externalReferenceCode, groupId, companyId, userId, serviceContext);
 	}
 

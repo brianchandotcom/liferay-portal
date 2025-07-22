@@ -198,6 +198,20 @@ public abstract class Base${schemaName}ResourceImpl
 		</#if>
 
 		<#if generatePermissions>
+			<#assign
+				getPermissionsPageJavaMethodSignature = freeMarkerTool.getPermissionsPageJavaMethodSignature("get", javaMethodSignatures, schemaName)!""
+				putPermissionsPageJavaMethodSignature = freeMarkerTool.getPermissionsPageJavaMethodSignature("put", javaMethodSignatures, schemaName)!""
+			/>
+
+			<#if !(getPermissionsPageJavaMethodSignature?has_content || putPermissionsPageJavaMethodSignature?has_content)>
+				<#assign
+					getParentPermissionsPageJavaMethodSignature = freeMarkerTool.getParentPermissionsPageJavaMethodSignature("get", javaMethodSignatures, parentSchemaName, schemaName)!""
+					putParentPermissionsPageJavaMethodSignature = freeMarkerTool.getParentPermissionsPageJavaMethodSignature("put", javaMethodSignatures, parentSchemaName, schemaName)!""
+				/>
+			</#if>
+		</#if>
+
+		<#if generatePermissions && ((getPermissionsPageJavaMethodSignature?has_content && putPermissionsPageJavaMethodSignature?has_content) || (getParentPermissionsPageJavaMethodSignature?has_content && putParentPermissionsPageJavaMethodSignature?has_content))>
 			protected abstract ${javaMethodSignature.returnType} do${stringUtil.upperCaseFirstLetter(javaMethodSignature.methodName)}(${freeMarkerTool.getResourceParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false)}) throws Exception;
 
 			<#if configYAML.application??>
@@ -231,7 +245,7 @@ public abstract class Base${schemaName}ResourceImpl
 								${schemaVarName}.setPermissions(
 									() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
 										Page<Permission> permissionsPage =
-										<#if freeMarkerTool.getPermissionsPageJavaMethodSignature("get", javaMethodSignatures, schemaName)??>
+										<#if getPermissionsPageJavaMethodSignature?has_content>
 											get${schemaName}PermissionsPage(
 												<#if properties?keys?seq_contains("id")>
 													${schemaVarName}.getId()
@@ -240,7 +254,7 @@ public abstract class Base${schemaName}ResourceImpl
 												<#else>
 													${schemaVarName}Id
 												</#if>
-										<#elseif freeMarkerTool.getParentPermissionsPageJavaMethodSignature("get", javaMethodSignatures, parentSchemaName, schemaName)??>
+										<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
 											get${parentSchemaName}${schemaName}PermissionsPage(
 												${parentSchemaName?uncap_first}ExternalReferenceCode, ${schemaVarName}.getExternalReferenceCode()
 										</#if>
@@ -259,7 +273,7 @@ public abstract class Base${schemaName}ResourceImpl
 							${httpMethod}${schemaName}.setPermissions(
 								() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
 									Page<Permission> permissionsPage =
-									<#if freeMarkerTool.getPermissionsPageJavaMethodSignature("get", javaMethodSignatures, schemaName)??>
+									<#if getPermissionsPageJavaMethodSignature?has_content>
 										get${schemaName}PermissionsPage(
 										<#if properties?keys?seq_contains("id")>
 											${httpMethod}${schemaName}.getId()
@@ -268,7 +282,7 @@ public abstract class Base${schemaName}ResourceImpl
 										<#else>
 											${schemaVarName}Id
 										</#if>
-									<#elseif freeMarkerTool.getParentPermissionsPageJavaMethodSignature("get", javaMethodSignatures, parentSchemaName, schemaName)??>
+									<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
 										get${parentSchemaName}${schemaName}PermissionsPage(
 											${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 									</#if>
@@ -298,7 +312,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					if (permissions != null) {
 						Page<Permission> permissionsPage =
-						<#if freeMarkerTool.getPermissionsPageJavaMethodSignature("put", javaMethodSignatures, schemaName)??>
+						<#if putPermissionsPageJavaMethodSignature?has_content>
 							put${schemaName}PermissionsPage(
 							<#if properties?keys?seq_contains("id")>
 								${httpMethod}${schemaName}.getId()
@@ -307,7 +321,7 @@ public abstract class Base${schemaName}ResourceImpl
 							<#else>
 								${schemaVarName}Id
 							</#if>
-						<#elseif freeMarkerTool.getParentPermissionsPageJavaMethodSignature("put", javaMethodSignatures, parentSchemaName, schemaName)??>
+						<#elseif putParentPermissionsPageJavaMethodSignature?has_content>
 							put${parentSchemaName}${schemaName}PermissionsPage(
 								${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 						</#if>

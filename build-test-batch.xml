@@ -1456,6 +1456,72 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-db-migration-container-test">
+		<attribute name="database.type" />
+		<attribute name="database.version" />
+
+		<sequential>
+			<run-batch-test tomcat.gc.log="true">
+				<test-action>
+					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
+						<test-action>
+							<antcall inheritAll="false" target="prepare-log4j-ext-xml">
+								<param name="database.type" value="@{database.type}" />
+							</antcall>
+
+							<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="prepare-portal-ext-properties">
+								<param name="database.type" value="@{database.type}" />
+							</antcall>
+
+							<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
+
+							<trycatch>
+								<try>
+									<antcall inheritall="false" target="start-docker-database">
+										<param name="database.type" value="postgresql" />
+									</antcall>
+
+									<antcall inheritall="false" target="rebuild-database">
+										<param name="database.type" value="postgresql" />
+										<param name="sql.dir" value="sql/create-bare/" />
+										<param name="sql.file" value="create-bare-postgresql.sql" />
+									</antcall>
+
+									<echo file="${app.server.classes.portal.dir}/system-ext.properties">
+										database.postgresql.driver=${database.postgresql.driver}
+										database.postgresql.password=${database.postgresql.password}
+										database.postgresql.url=${database.postgresql.url}
+										database.postgresql.username=${database.postgresql.username}
+									</echo>
+
+									<antcall inheritall="false" target="start-app-server" />
+
+									<gradle-execute dir="modules/util/portal-tools-db-migration-importer-test" task="testIntegration">
+										<arg value="testIntegration" />
+									</gradle-execute>
+								</try>
+
+								<finally>
+									<antcall inheritall="false" target="stop-docker-database">
+										<param name="database.type" value="postgresql" />
+									</antcall>
+
+									<ant dir="portal-kernel" inheritAll="false" target="test-class">
+										<property name="test.class" value="PortalLogAssertorTest" />
+									</ant>
+								</finally>
+							</trycatch>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<setup-test-environment />
+				</test-set-up>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-empty-osgi-core-dir-test">
 		<attribute name="database.type" />
 
@@ -3705,6 +3771,30 @@ information. Make sure to commit in all build-lib-versions results.
 				<prepare-database-upgrade-properties />
 			</test-set-up>
 		</run-batch-test>
+	</target>
+
+	<target name="db-migration-container-db2111">
+		<run-db-migration-container-test database.type="db2" database.version="11.1.3" />
+	</target>
+
+	<target name="db-migration-container-mariadb102">
+		<run-db-migration-container-test database.type="mariadb" database.version="10.2" />
+	</target>
+
+	<target name="db-migration-container-mysql57">
+		<run-db-migration-container-test database.type="mysql" database.version="5.7" />
+	</target>
+
+	<target name="db-migration-container-mysql80">
+		<run-db-migration-container-test database.type="mysql" database.version="8.0" />
+	</target>
+
+	<target name="db-migration-container-oracle193">
+		<run-db-migration-container-test database.type="oracle" database.version="19.3.0.0.0" />
+	</target>
+
+	<target name="db-migration-container-sqlserver2019">
+		<run-db-migration-container-test database.type="sqlserver" database.version="2019" />
 	</target>
 
 	<target name="dist-jdk7">

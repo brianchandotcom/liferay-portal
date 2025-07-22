@@ -282,7 +282,7 @@ public interface AccountRoleLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AccountRole getOrAddIncompleteAccountRole(
+	public AccountRole getOrAddEmptyAccountRole(
 			String externalReferenceCode, long companyId, long userId,
 			long accountEntryId, String name)
 		throws Exception;

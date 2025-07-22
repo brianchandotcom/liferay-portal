@@ -131,7 +131,7 @@ const CustomRangeView: React.FC<IView> = ({
 
 				<div data-testid="range-end">
 					<label className="mt-2" htmlFor="rangeEndId">
-						{Liferay.Language.get('to')}
+						{Liferay.Language.get('to[datetime]')}
 					</label>
 
 					<ClayDatePicker

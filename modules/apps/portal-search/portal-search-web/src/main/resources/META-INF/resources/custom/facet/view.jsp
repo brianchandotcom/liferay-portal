@@ -232,7 +232,7 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 											id='<%= liferayPortletResponse.getNamespace() + "customRangeTo" %>'
 											md="6"
 										>
-											<aui:field-wrapper label="to" name="toInput">
+											<aui:field-wrapper label="to[datetime]" name="toInput">
 												<liferay-ui:input-date
 													cssClass="custom-range-input-date-to"
 													dayParam="toDay"
@@ -270,7 +270,7 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 
 										<div class="col-md-6" id="<portlet:namespace />customRangeTo">
 											<aui:field-wrapper>
-												<aui:input id="toInput" label="to" name="toInput" type="number" value="<%= customFacetDisplayContext.getToParameterValue() %>" />
+												<aui:input id="toInput" label="to[datetime]" name="toInput" type="number" value="<%= customFacetDisplayContext.getToParameterValue() %>" />
 											</aui:field-wrapper>
 										</div>
 

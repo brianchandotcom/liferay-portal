@@ -193,7 +193,7 @@ export function UserNotificationSettings({
 			{values.recipientType === 'term' && (
 				<Input
 					component="textarea"
-					label={Liferay.Language.get('to')}
+					label={Liferay.Language.get('to[recipient]')}
 					onChange={({target}) => {
 						setToTerms(target.value);
 					}}

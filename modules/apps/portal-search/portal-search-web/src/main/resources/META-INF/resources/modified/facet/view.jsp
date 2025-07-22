@@ -169,7 +169,7 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 								id='<%= liferayPortletResponse.getNamespace() + "customRangeTo" %>'
 								md="6"
 							>
-								<aui:field-wrapper label="to" name="toInput">
+								<aui:field-wrapper label="to[datetime]" name="toInput">
 									<liferay-ui:input-date
 										cssClass="modified-facet-custom-range-input-date-to"
 										dayParam="toDay"

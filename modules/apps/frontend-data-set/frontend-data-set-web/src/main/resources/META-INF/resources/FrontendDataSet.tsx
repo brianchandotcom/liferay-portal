@@ -1320,7 +1320,7 @@ const FrontendDataSetContent = ({
 
 const FrontendDataSet = ({
 	fileDropSettings,
-	selectedItemsKey = 'id',
+	selectedItemsKey,
 	...otherProps
 }: IFrontendDataSetProps) => {
 	fileDropSettings = fileDropSettings

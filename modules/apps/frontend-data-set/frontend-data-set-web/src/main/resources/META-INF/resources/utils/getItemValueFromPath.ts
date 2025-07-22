@@ -13,7 +13,11 @@
  * @returns value of the selected property
  */
 
-const getItemValueFromPath = function (item: any, path = 'id'): any {
+const getItemValueFromPath = function (item: any, path?: string | null): any {
+	if (!path) {
+		path = 'id';
+	}
+
 	return path.split('.').reduce((acc: any, currentPath: string) => {
 		return acc?.[currentPath] ?? null;
 	}, item);

@@ -5,73 +5,29 @@
 
 package com.liferay.portal.kernel.upgrade.data.cleanup;
 
-import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-
-import java.util.List;
 
 /**
  * @author Luis Ortiz
  */
 public class AllTablesOrphanReferencesDataCleanupPreupgradeProcess
-	extends DataCleanupPreupgradeProcess {
+	extends BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess {
 
 	public AllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 		String targetColumnName, String targetTableName) {
 
-		_targetColumnName = targetColumnName;
-		_targetTableName = targetTableName;
+		super(targetColumnName, targetTableName);
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		DBInspector dbInspector = new DBInspector(connection);
+	protected void executeLogic(
+			String sourceColumnName, String sourceTableName,
+			String targetColumnName, String targetTableName)
+		throws Exception {
 
-		String targetTableName = dbInspector.normalizeName(_targetTableName);
-
-		if (!dbInspector.hasTable(targetTableName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Table " + targetTableName + " does not exist");
-			}
-
-			return;
-		}
-
-		String targetColumnName = dbInspector.normalizeName(_targetColumnName);
-
-		if (!dbInspector.hasColumn(targetTableName, targetColumnName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Table ", targetTableName, " does not have column ",
-						targetColumnName));
-			}
-
-			return;
-		}
-
-		List<String> tableNames = dbInspector.getTableNames(null);
-
-		tableNames.remove(targetTableName);
-
-		for (String sourceTableName : tableNames) {
-			if (!dbInspector.hasColumn(sourceTableName, targetColumnName)) {
-				continue;
-			}
-
-			OrphanReferencesDataCleanupUtil.cleanUpTable(
-				connection, null, targetColumnName, sourceTableName,
-				targetColumnName, targetTableName);
-		}
+		OrphanReferencesDataCleanupUtil.cleanUpTable(
+			connection, null, sourceColumnName, sourceTableName,
+			targetColumnName, targetTableName);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AllTablesOrphanReferencesDataCleanupPreupgradeProcess.class);
-
-	private final String _targetColumnName;
-	private final String _targetTableName;
 
 }

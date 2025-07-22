@@ -55,6 +55,11 @@ public class ObjectEntryTableInfoListRenderer
 	}
 
 	@Override
+	public String getCollectionItemClassName() {
+		return _objectDefinition.getClassName();
+	}
+
+	@Override
 	public String getKey() {
 		return _getCompanyScopedKey(
 			ObjectEntryTableInfoListRenderer.class.getName());

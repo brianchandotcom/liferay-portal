@@ -10,7 +10,7 @@ export class MarketplaceUserAccount {
 	constructor(protected userAccount: UserAccount) {}
 
 	get accountBriefs() {
-		return this.userAccount.accountBriefs;
+		return this.userAccount?.accountBriefs ?? [];
 	}
 
 	get accountName() {
@@ -22,42 +22,35 @@ export class MarketplaceUserAccount {
 	}
 
 	get isAdmin() {
+		return this.hasRegularRole(AccountRoleType.ADMINISTRATOR);
+	}
+
+	private hasRegularRole(roleName: AccountRoleType) {
 		return this.userAccount?.roleBriefs.some(
-			(role) => role?.name === 'Administrator'
+			(role) => role?.name === roleName
+		);
+	}
+
+	private hasAccountRole(roleName: AccountRoleType) {
+		return this.accountBriefs.some(
+			(accountBrief) =>
+				accountBrief.id ===
+					Liferay.CommerceContext.account?.accountId &&
+				accountBrief.roleBriefs.some(
+					(roleBrief) => roleBrief.name === roleName
+				)
 		);
 	}
 
 	get isSolutionPublisher() {
-		return this.userAccount.accountBriefs.some(
-			(accountBrief) =>
-				accountBrief.id ===
-					Liferay.CommerceContext.account?.accountId &&
-				accountBrief.roleBriefs.some(
-					(roleBrief) =>
-						roleBrief.name === AccountRoleType.SOLUTION_PUBLISHER
-				)
-		);
+		return this.hasAccountRole(AccountRoleType.SOLUTION_PUBLISHER);
 	}
 
 	get isSSAAdmin() {
-		return this.userAccount?.accountBriefs.some(
-			(accountBrief) =>
-				accountBrief.id ===
-					Liferay.CommerceContext.account?.accountId &&
-				accountBrief.roleBriefs.some(
-					(roleBrief) => roleBrief.name === AccountRoleType.SSA_ADMIN
-				)
-		);
+		return this.hasAccountRole(AccountRoleType.SSA_ADMIN);
 	}
 
 	get isSSAUser() {
-		return this.userAccount?.accountBriefs.some(
-			(accountBrief) =>
-				accountBrief.id ===
-					Liferay.CommerceContext.account?.accountId &&
-				accountBrief.roleBriefs.some(
-					(roleBrief) => roleBrief.name === AccountRoleType.SSA
-				)
-		);
+		return this.hasAccountRole(AccountRoleType.SSA);
 	}
 }

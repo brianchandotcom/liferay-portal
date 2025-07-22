@@ -11,16 +11,14 @@ import SaaSTrials from './pages';
 
 import './index.scss';
 
-const SSADashboardRouter = () => {
-	return (
-		<HashRouter>
-			<Routes>
-				<Route element={<SSADashboardOutlet />}>
-					<Route element={<SaaSTrials />} index />
-				</Route>
-			</Routes>
-		</HashRouter>
-	);
-};
+const SSADashboardRouter = () => (
+	<HashRouter>
+		<Routes>
+			<Route element={<SSADashboardOutlet />}>
+				<Route element={<SaaSTrials />} index />
+			</Route>
+		</Routes>
+	</HashRouter>
+);
 
 export default withProviders(SSADashboardRouter);

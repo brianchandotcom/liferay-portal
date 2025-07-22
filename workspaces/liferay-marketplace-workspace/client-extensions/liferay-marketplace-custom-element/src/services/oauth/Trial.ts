@@ -27,9 +27,9 @@ class TrialOAuth2 extends MarketplaceSpringBootOAuth2 {
 		}
 	}
 
-	async getDemoAvailability(projectId: string) {
+	async checkDomainAvailability(projectId: string) {
 		try {
-			return this.get(`/demo-availability/${projectId}`);
+			return this.get(`/check-availability/${projectId}`);
 		}
 		catch (error) {
 			console.error(error);

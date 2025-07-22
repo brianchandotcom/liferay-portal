@@ -32,9 +32,9 @@ const useSSAForm = () => {
 						<Button
 							displayType="primary"
 							onClick={async () => {
-								const succesful = await submitRef.current();
+								const successful = await submitRef.current();
 
-								if (succesful) {
+								if (successful) {
 									modalContext.onClose();
 								}
 							}}

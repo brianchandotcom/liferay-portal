@@ -40,9 +40,7 @@ export default function SaaSTrials() {
 		selectedAccount?.id
 	);
 
-	const onExpireTrial = (order: Order) => {
-		trialOAuth2.expireTrial(order.id);
-	};
+	const onExpireTrial = (order: Order) => trialOAuth2.expireTrial(order.id);
 
 	const {
 		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
@@ -83,12 +81,12 @@ export default function SaaSTrials() {
 		},
 		{
 			hidden: (order: Order) => {
-				const SSASettings = getSSASettingsOrDefaultFromCustomFields(
+				const ssaSettings = getSSASettingsOrDefaultFromCustomFields(
 					order.customFields
 				);
 
 				if (isUserSSAAdmin) {
-					return !SSASettings?.adminRequestExtend;
+					return !ssaSettings?.adminRequestExtend;
 				}
 
 				return true;
@@ -102,7 +100,7 @@ export default function SaaSTrials() {
 							order={order}
 						/>
 					),
-					header: `Extension Request`,
+					header: 'Extension Request',
 				});
 			},
 		},

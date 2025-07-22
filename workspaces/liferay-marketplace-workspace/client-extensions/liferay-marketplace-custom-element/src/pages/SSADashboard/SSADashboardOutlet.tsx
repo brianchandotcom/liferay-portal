@@ -9,7 +9,7 @@ import {DashboardNavigation} from '../../components/DashboardNavigation/Dashboar
 import {PageRenderer} from '../../components/Page';
 import {useAccount} from '../../hooks/data/useAccounts';
 
-const SSADashboardOutlet: React.FC = () => {
+const SSADashboardOutlet = () => {
 	const {data: selectedAccount, error, isLoading} = useAccount();
 
 	return (

@@ -524,13 +524,13 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithPredictableCompanyIdsEnabled()
 		throws Exception {
 
+		Company company1 = null;
+		Company company2 = null;
+
 		boolean originalCompanyPredictableCompanyIdsEnabled =
 			ReflectionTestUtil.getAndSetFieldValue(
 				PropsValues.class, "COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED",
 				true);
-
-		Company company1 = null;
-		Company company2 = null;
 
 		try {
 			StartupHelperUtil.setDBNew(true);
@@ -1139,11 +1139,14 @@ public class CompanyLocalServiceTest {
 	public void testUpdateCompanyLocalesWithLayoutSetPrototype()
 		throws Exception {
 
-		LayoutSetPrototype layoutSetPrototype = null;
-		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
+
+		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
+
+		LayoutSetPrototype layoutSetPrototype = null;
+
 		TimeZone timeZone = _company.getTimeZone();
 
 		try {
@@ -1422,11 +1425,11 @@ public class CompanyLocalServiceTest {
 	}
 
 	private static List<String> _registerModelListeners() {
-		List<String> modelListeners = new CopyOnWriteArrayList<>();
-
 		Bundle bundle = FrameworkUtil.getBundle(CompanyLocalServiceTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
+
+		List<String> modelListeners = new CopyOnWriteArrayList<>();
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(
@@ -1489,9 +1492,10 @@ public class CompanyLocalServiceTest {
 	private List<String> _getTableNames(String type, long companyId)
 		throws Exception {
 
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
 		List<String> objectNames = new ArrayList<>();
 
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 		String partitionName = CompanyLocalServiceTestUtil.getPartitionName(
 			companyId);
 
@@ -1654,11 +1658,11 @@ public class CompanyLocalServiceTest {
 			}
 		}
 		finally {
+			String originalVirtualHostname = originalVirtualHost.getHostname();
+
 			VirtualHost virtualHost =
 				_virtualHostLocalService.fetchCompanyDefaultVirtualHost(
 					_company.getCompanyId());
-
-			String originalVirtualHostname = originalVirtualHost.getHostname();
 
 			if (!originalVirtualHostname.equals(virtualHost.getHostname())) {
 				_virtualHostLocalService.deleteVirtualHost(virtualHost);

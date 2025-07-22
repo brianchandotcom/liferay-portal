@@ -30,7 +30,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
-import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
@@ -85,7 +84,7 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 				null, TestPropsValues.getUserId(), originalConfiguration,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				StringPool.BLANK, SXPConstants.SXP_BLUEPRINT_SCHEMA_VERSION,
+				StringPool.BLANK, _OLD_SCHEMA_VERSION,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				ServiceContextTestUtil.getServiceContext(
@@ -122,6 +121,9 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 			Assert.assertTrue(
 				generalConfigurationJSONObject.getBoolean(
 					"legacyAssetCollectionProvider"));
+
+			Assert.assertEquals(
+				_NEW_SCHEMA_VERSION, _sxpBlueprint.getSchemaVersion());
 		}
 		finally {
 			_unsetFeatureFlag(true);
@@ -142,7 +144,7 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 				null, TestPropsValues.getUserId(), originalConfiguration,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				StringPool.BLANK, SXPConstants.SXP_BLUEPRINT_SCHEMA_VERSION,
+				StringPool.BLANK, _OLD_SCHEMA_VERSION,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				ServiceContextTestUtil.getServiceContext(
@@ -163,6 +165,9 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 			JSONAssert.assertEquals(
 				originalConfiguration, _sxpBlueprint.getConfigurationJSON(),
 				JSONCompareMode.STRICT);
+
+			Assert.assertEquals(
+				_NEW_SCHEMA_VERSION, _sxpBlueprint.getSchemaVersion());
 		}
 		finally {
 			_unsetFeatureFlag(false);
@@ -282,6 +287,10 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 	}
 
 	private static final String _FEATURE_FLAG_KEY = "LPS-129412";
+
+	private static final String _NEW_SCHEMA_VERSION = "1.2";
+
+	private static final String _OLD_SCHEMA_VERSION = "1.1";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"

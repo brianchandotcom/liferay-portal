@@ -5,18 +5,18 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import withProviders from '../../hoc/withProviders';
 import SSADashboardOutlet from './SSADashboardOutlet';
+import SaaSTrials from './pages';
 
 import './index.scss';
-import withProviders from '../../hoc/withProviders';
-import SaaSTrial from './pages';
 
 const SSADashboardRouter = () => {
 	return (
 		<HashRouter>
 			<Routes>
 				<Route element={<SSADashboardOutlet />}>
-					<Route element={<SaaSTrial />} index />
+					<Route element={<SaaSTrials />} index />
 				</Route>
 			</Routes>
 		</HashRouter>

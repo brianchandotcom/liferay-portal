@@ -24,6 +24,7 @@ export default {
 	'active': 'Active',
 	'add-currency': 'Add Currency',
 	'add-developer-licenses': 'Add Developer Licenses',
+	'add-new-trial': 'Add New Trial',
 	'add-new-version': 'Add New Version',
 	'add-packages': 'Add Package(s)',
 	'add-up-to-x-images': 'Add up to {0} images',
@@ -71,8 +72,11 @@ export default {
 	'apply-to-your-use-of-this-service-the-name-on-your-liferay-account-will-be-used-in-this-liferay-marketplace-publisher-profile-it-may-appear-where-you-contribute-and-be-changed-at-any-time':
 		'apply to your use of this service. The name on your Liferay account will be used in this Liferay Marketplace Publisher Profile. It may appear where you contribute and be changed at any time',
 	'approve': 'Approve',
+	'approve-request': 'Approve Request',
 	'approved': 'Approved',
 	'apps': 'Apps',
+	'are-you-sure-you-want-to-expire-this-trial-this-action-imply-the-end-of-the-test-environment-permanently':
+		'Are you sure you want to expire this Trial? This action imply the end of the test environment permanently.',
 	'area': 'Area',
 	'areas': 'Areas',
 	'available': 'Available',
@@ -199,6 +203,7 @@ export default {
 	'download-key': 'Download Key',
 	'draft': 'Draft',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
+	'duration-of-the-extension': 'Duratin of the extension',
 	'dxp-app': 'DXP App',
 	'dxp-connections': 'DXP Connections',
 	'dxp-license-usage-type': 'DXP License Usage Type',
@@ -240,6 +245,7 @@ export default {
 	'explore-over-800-apps-available-in-the-liferay-marketplace-from-a-variety-of-publishers-apps-allow-you-to-accelerate-your-liferay-development-get-to-market-faster':
 		'Explore over 800 apps available in the Liferay Marketplace from a variety of publishers. Apps allow you to accelerate your Liferay development get to market faster.',
 	'export-csv': 'Export CSV',
+	'extension': 'Extension',
 	'extension-optional': 'Extension (optional)',
 	'file-not-available-for-download': 'File not available for download',
 	'filter': 'Filter',
@@ -259,6 +265,7 @@ export default {
 	'go-to-marketplace': 'Go to Marketplace',
 	'go-to-my-apps': 'Go to My Apps',
 	'go-to-trial': 'Go to Trial',
+	'got-it': 'Got it',
 	'header': 'Header',
 	'host-name': 'Host Name',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
@@ -329,6 +336,8 @@ export default {
 		'Manage and publish apps on the Marketplace',
 	'manage-app': 'Manage App',
 	'manage-license-keys': 'Manage License Key(s)',
+	'manage-your-current-trials': 'Manage your current trials',
+	'manage-your-teams-trial': "Manage your team's trial",
 	'maximum-number-of-upload-reached': 'Maximum Number of Upload Reached',
 	'modified-date': 'Modifed Date',
 	'modular-components-built-with-html-css-and-javascript-offer-extensible-and-reusable-elements-or-collections-of-elements-for-constructing-content-pages-and-templates':
@@ -348,6 +357,7 @@ export default {
 	'name': 'Name',
 	'never-expires': 'Never Expires',
 	'new-app': 'New App',
+	'new-potential-expiration-date': 'New Potential Expiration Date',
 	'new-trial': 'New Trial',
 	'no': 'No',
 	'no-apps-yet': 'No Apps Yet',
@@ -404,6 +414,7 @@ export default {
 	'product-unavailable': 'Product Unavailable',
 	'profile': 'Profile',
 	'project': 'Project',
+	'project-id': 'Project ID',
 	'project-selected': 'Project Selected',
 	'project-selection': 'Project Selection',
 	'projects': 'Projects',
@@ -440,6 +451,7 @@ export default {
 	'recent-orders': 'Recent Orders',
 	'recent-published-apps': 'Recent Published Apps',
 	'recent-trials': 'Recent Trials',
+	'reject-request': 'Reject Request',
 	'remove': 'Remove',
 	'remove-a-version': 'Remove a Version',
 	'request-a-marketplace-publisher-account':
@@ -491,6 +503,7 @@ export default {
 	'specify-your-apps-version-this-will-help-the-user-to-understand-the-latest-version-of-your-app-offered-on-the-marketplace':
 		'Specify your app’s version. This will help the user to understand the latest version of your app offered on the Marketplace.',
 	'ssa-trials': 'SSA Trials',
+	'ssa-trials-limit-reached': 'SSA Trials Limit Reached',
 	'standard-license-prices': 'Standard License prices',
 	'standard-licenses-cover-the-following-dxp-environments-production-non-production-uat-and-backup-dr-for-both-standalone-and-virtual-cluster-servers':
 		'Standard licenses cover the following DXP environments: production, non-production (UAT) and backup (DR) for both standalone and virtual cluster servers.',
@@ -550,6 +563,7 @@ export default {
 		'The selected project does not meet the necessary resource requirements for this app. Please contact sales to request additional resources.',
 	'there-was-an-unexpected-error-while-attempting-to-deactivate-key-please-try-again-in-a-few-moments':
 		'There was an unexpected error while attempting to deactivate key. Please try again in a few moments.',
+	'this-action-cannot-be-undone': 'This action cannot be undone.',
 	'this-app-is-already-installed-in-this-environment':
 		'This app is already installed in this environment.',
 	'this-field-is-required': 'This field is required',
@@ -565,6 +579,7 @@ export default {
 		'This product is no longer available.',
 	'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-it-will-be-published-on-the-marketplace-in-the-meantime-no-information-or-data-from-this-app-submission-can-be-updated':
 		'This submission is currently under review by Liferay. Once the process is complete, it will be published on the Marketplace. In the meantime, no information or data from this app submission can be updated.',
+	'times-already-extended': 'Times Already Extended',
 	'timezone': 'Timezone',
 	'title': 'Title',
 	'total': 'Total',
@@ -642,6 +657,8 @@ export default {
 		'You cannot upload more than {0} files.',
 	'you-do-not-have-access-to-cloud-project':
 		'You do not have access to a cloud project.',
+	'you-have-reached-the-maximum-number-of-active-trials-allowed-to-start-a-new-trial-please-end-one-of-your-existing-trials-first':
+		'You have reached the maximum number of active trials allowed. To start a new trial, please end one of your existing trials first.',
 	'your-request-completed-successfully':
 		'Your request completed successfully',
 	'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see':

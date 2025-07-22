@@ -29,7 +29,7 @@ public class ViewSharedWithMeSectionDisplayContext {
 
 	public String getAPIURL() {
 		return "/o/headless-admin-user/v1.0/my-user-account/shared-assets" +
-			"/shared-with-me";
+			"/shared-with-me?filter=space eq true";
 	}
 
 	public Map<String, Object> getEmptyState() {

@@ -209,9 +209,9 @@ describe('ObjectEntry Plugin', () => {
 
 			setDataset(objectEntryElement, {
 				analyticsAssetAction: action,
+				analyticsAssetType: AnalyticsTypes.ElementType.ObjectEntry,
 				analyticsExternalReferenceCode:
 					'a66d047e-3203-401a-890c-b881a9c54648',
-				analyticsAssetType: AnalyticsTypes.ElementType.ObjectEntry,
 				analyticsObjectDefinitionName:
 					'my-custom-object-definition-name',
 			});

@@ -24,8 +24,7 @@ function getObjectEntryPayload({
 	dataset,
 }: AnalyticsType.ObjectEntryHTMLElement) {
 	const payload = {
-		externalReferenceCode:
-			dataset.analyticsExternalReferenceCode.trim(),
+		externalReferenceCode: dataset.analyticsExternalReferenceCode.trim(),
 		objectDefinitionName: dataset.analyticsObjectDefinitionName.trim(),
 	};
 

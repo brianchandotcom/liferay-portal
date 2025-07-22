@@ -81,14 +81,13 @@ export namespace Analytics {
 		dataset: {
 			[Analytics.DataSetList
 				.AnalyticsAssetAction]?: Analytics.ElementAction;
-			[Analytics.DataSetList
-				.AnalyticsExternalReferenceCode]?: string;
 			[Analytics.DataSetList.AnalyticsAssetCategory]?: string;
 			[Analytics.DataSetList.AnalyticsAssetId]: string;
 			[Analytics.DataSetList.AnalyticsAssetSubtype]?: string;
 			[Analytics.DataSetList.AnalyticsAssetTitle]?: string;
 			[Analytics.DataSetList.AnalyticsAssetType]?: Analytics.ElementType;
 			[Analytics.DataSetList.AnalyticsAssetVersion]?: string;
+			[Analytics.DataSetList.AnalyticsExternalReferenceCode]?: string;
 			[Analytics.DataSetList.AnalyticsWebContentResourcePk]?: string;
 		};
 		innerText: string;
@@ -98,8 +97,8 @@ export namespace Analytics {
 		dataset: {
 			[Analytics.DataSetList
 				.AnalyticsAssetAction]: Analytics.ElementAction;
-			[Analytics.DataSetList.AnalyticsExternalReferenceCode]: string;
 			[Analytics.DataSetList.AnalyticsAssetType]: Analytics.ElementType;
+			[Analytics.DataSetList.AnalyticsExternalReferenceCode]: string;
 			[Analytics.DataSetList.AnalyticsObjectDefinitionName]: string;
 		};
 		innerText: string;

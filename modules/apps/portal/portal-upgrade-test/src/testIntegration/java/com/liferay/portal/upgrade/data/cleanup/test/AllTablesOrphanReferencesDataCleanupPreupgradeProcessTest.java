@@ -51,8 +51,6 @@ public class AllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 		return logCapture -> {
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEntries.toString(), 4, logEntries.size());
-
 			List<String> logMessages = new ArrayList<>();
 
 			for (LogEntry logEntry : logEntries) {

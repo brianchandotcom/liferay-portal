@@ -500,12 +500,12 @@ public class RoleLocalServiceTest {
 	}
 
 	@Test
-	public void testGetOrAddIncompleteRole() throws Exception {
+	public void testGetOrAddEmptyRole() throws Exception {
 
 		// Lazy referencing disabled
 
 		try {
-			_roleLocalService.getOrAddIncompleteRole(
+			_roleLocalService.getOrAddEmptyRole(
 				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
 				TestPropsValues.getUserId(), Role.class.getName(), 0,
 				RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
@@ -521,13 +521,13 @@ public class RoleLocalServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			Role role = _roleLocalService.getOrAddIncompleteRole(
+			Role role = _roleLocalService.getOrAddEmptyRole(
 				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
 				TestPropsValues.getUserId(), Role.class.getName(), 0,
 				RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE, role.getStatus());
+				WorkflowConstants.STATUS_EMPTY, role.getStatus());
 		}
 	}
 
@@ -783,13 +783,13 @@ public class RoleLocalServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			Role role = _roleLocalService.getOrAddIncompleteRole(
+			Role role = _roleLocalService.getOrAddEmptyRole(
 				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
 				TestPropsValues.getUserId(), Role.class.getName(), 0,
 				RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE, role.getStatus());
+				WorkflowConstants.STATUS_EMPTY, role.getStatus());
 
 			role = _roleLocalService.updateRole(
 				role.getExternalReferenceCode(), role.getRoleId(),

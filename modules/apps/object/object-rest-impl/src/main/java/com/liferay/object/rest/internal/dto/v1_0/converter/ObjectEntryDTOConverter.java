@@ -718,6 +718,7 @@ public class ObjectEntryDTOConverter
 				_dlAppService, dlFileEntry, _dlURLHelper,
 				objectDefinition.getExternalReferenceCode(),
 				objectEntry.getExternalReferenceCode(), _portal));
+		fileEntry.setMimeType(dlFileEntry::getMimeType);
 		fileEntry.setName(dlFileEntry::getFileName);
 		fileEntry.setPreviewURL(
 			() -> NestedFieldsSupplier.supply(

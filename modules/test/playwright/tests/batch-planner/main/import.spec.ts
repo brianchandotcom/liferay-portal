@@ -521,7 +521,7 @@ test('Can download custom object sample file', async ({
 
 	expect(file).toEqual(
 		await readCSVFile(
-			path.join(__dirname, '/dependencies/object_sample.csv')
+			path.join(__dirname, '/dependencies/object_entry_import_sample.csv')
 		)
 	);
 });

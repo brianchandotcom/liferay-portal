@@ -46,6 +46,7 @@ export interface IFrontendDataSetContext {
 		defaultBodyContent?: object;
 	};
 	inlineEditingSettings?: IInlineEditingSettings;
+	isSearching: boolean;
 	itemsActions?: Array<IItemsActions>;
 	itemsChanges?: {[key: string]: any};
 	loadData: Function;
@@ -69,6 +70,7 @@ export interface IFrontendDataSetContext {
 	selectedItemsKey: string;
 	selectedItemsValue?: Array<any>;
 	selectionType?: string;
+	setIsSearching: (value: boolean) => void;
 	showBulkActionsManagementBar: boolean;
 	showBulkActionsManagementBarActions: boolean;
 	showInfoPanel: boolean;
@@ -138,6 +140,7 @@ const FrontendDataSetContext = React.createContext({
 	selectItems: () => {},
 	selectable: false,
 	selectedItemsValue: [],
+	setIsSearching: () => {},
 	toggleItemInlineEdit: () => {},
 	updateDataSetItems: () => {},
 	updateItem: () => {},

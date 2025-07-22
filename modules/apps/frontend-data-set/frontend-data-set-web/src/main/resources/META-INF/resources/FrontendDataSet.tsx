@@ -155,6 +155,7 @@ const FrontendDataSetContent = ({
 
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
 	const [infoPanelOpen, setInfoPanelOpen] = useState<boolean>(false);
+	const [isSearching, setIsSearching] = useState(!!apiURL);
 	const [items, setItems] = useState(itemsProp || []);
 	const [itemsChanges, setItemsChanges] = useState<{[key: string]: any}>({});
 	const [pageNumber, setPageNumber] = useState(
@@ -738,10 +739,19 @@ const FrontendDataSetContent = ({
 
 					updateDataSetItems(data);
 				}
+
 				setDataLoading(false);
+				setIsSearching(false);
 			}
 		});
-	}, [apiURL, filters, isMounted, requestData, setDataLoading]);
+	}, [
+		apiURL,
+		filters,
+		isMounted,
+		requestData,
+		setDataLoading,
+		setIsSearching,
+	]);
 
 	useEffect(() => {
 		function handleRefreshFromTheOutside(event: any) {
@@ -1169,6 +1179,7 @@ const FrontendDataSetContent = ({
 
 	const onSearch = ({query}: {query: string}) => {
 		if (apiURL || appURL) {
+			setIsSearching(true);
 			setSearchParam(query);
 		}
 		else {
@@ -1213,6 +1224,7 @@ const FrontendDataSetContent = ({
 				infoPanelOpen,
 				inlineAddingSettings,
 				inlineEditingSettings,
+				isSearching,
 				itemsActions,
 				itemsChanges,
 				loadData: refreshData,
@@ -1238,6 +1250,7 @@ const FrontendDataSetContent = ({
 				selectedItemsKey,
 				selectedItemsValue,
 				selectionType,
+				setIsSearching,
 				showBulkActionsManagementBar,
 				showBulkActionsManagementBarActions,
 				showInfoPanel: infoPanelComponent ? true : false,

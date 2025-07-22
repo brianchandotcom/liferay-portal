@@ -14,13 +14,17 @@ import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
 import FilterResume from './FilterResume';
 import SearchResume from './SearchResume';
 
-function ActiveFiltersBar({dataLoading, disabled, total}) {
-	const {onSearch, searchParam} = useContext(FrontendDataSetContext);
+function ActiveFiltersBar({disabled, total}) {
+	const {isSearching, onSearch, searchParam, setIsSearching} = useContext(
+		FrontendDataSetContext
+	);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const searchActive = Boolean(searchParam?.trim());
 
 	const resetFiltersValue = () => {
+		setIsSearching(true);
+
 		viewsDispatch({
 			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
 			value: filters.map((filter) => ({
@@ -50,7 +54,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 						<li className="p-0 tbar-item tbar-item-expand">
 							<div className="tbar-section">
 								{Liferay.FeatureFlags['LPD-52212'] &&
-									(dataLoading ? (
+									(isSearching ? (
 										<span>
 											{Liferay.Language.get(
 												'requesting-results-for-colon'
@@ -109,6 +113,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 
 ActiveFiltersBar.propTypes = {
 	disabled: PropTypes.bool,
+	total: PropTypes.number,
 };
 
 export default ActiveFiltersBar;

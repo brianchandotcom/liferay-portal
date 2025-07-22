@@ -7,6 +7,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {loadModule} from 'frontend-js-web';
 import React, {ReactElement, useContext, useEffect, useState} from 'react';
 
+import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import ViewsContext from '../../../views/ViewsContext';
 
 // @ts-ignore
@@ -62,6 +63,7 @@ const Filter = ({
 	type,
 	...otherProps
 }: FilterComponentArgs) => {
+	const {setIsSearching} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const filterImplementation = FILTER_IMPLEMENTATIONS[type];
@@ -103,6 +105,8 @@ const Filter = ({
 			filterImplementation.getOdataString(newFilter);
 		newFilter.selectedItemsLabel =
 			filterImplementation.getSelectedItemsLabel(newFilter);
+
+		setIsSearching(true);
 
 		viewsDispatch({
 			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,

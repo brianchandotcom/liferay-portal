@@ -10,11 +10,13 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
+import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import ViewsContext from '../../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
 import Filter from './Filter';
 
 function FilterResume(props) {
+	const {setIsSearching} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const [open, setOpen] = useState(false);
@@ -61,7 +63,9 @@ function FilterResume(props) {
 				disabled={props.disabled}
 				displayType="secondary"
 				monospaced
-				onClick={() =>
+				onClick={() => {
+					setIsSearching(true);
+
 					viewsDispatch({
 						type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
 						value: filters.map((filter) => ({
@@ -74,8 +78,8 @@ function FilterResume(props) {
 									}
 								: {}),
 						})),
-					})
-				}
+					});
+				}}
 				size="sm"
 				title={Liferay.Language.get('remove-filter')}
 			>

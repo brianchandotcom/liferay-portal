@@ -54,17 +54,6 @@ public class ObjectActionConstants {
 	private static final Map<String, Map<String, String>>
 		_subscriptionObjectActions =
 			LinkedHashMapBuilder.<String, Map<String, String>>put(
-				"SubscriptionAdded",
-				HashMapBuilder.put(
-					"label", "Subscription Added"
-				).put(
-					"notificationTemplateExternalReferenceCode",
-					"L_SUBSCRIPTION_ADDED_NOTIFICATION_TEMPLATE"
-				).put(
-					"objectActionTriggerKey",
-					ObjectActionTriggerConstants.KEY_ON_AFTER_ADD
-				).build()
-			).put(
 				"SubscriptionExpired",
 				HashMapBuilder.put(
 					"conditionExpression",
@@ -74,36 +63,6 @@ public class ObjectActionConstants {
 				).put(
 					"notificationTemplateExternalReferenceCode",
 					"L_SUBSCRIPTION_EXPIRED_NOTIFICATION_TEMPLATE"
-				).put(
-					"objectActionTriggerKey",
-					ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE
-				).build()
-			).put(
-				"SubscriptionMovedFromFolder",
-				HashMapBuilder.put(
-					"conditionExpression",
-					"not(oldValue(\"objectEntryFolderId\") == " +
-						"objectEntryFolderId)"
-				).put(
-					"label", "Subscription Moved from Folder"
-				).put(
-					"notificationTemplateExternalReferenceCode",
-					"L_SUBSCRIPTION_MOVED_FROM_FOLDER_NOTIFICATION_TEMPLATE"
-				).put(
-					"objectActionTriggerKey",
-					ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE
-				).build()
-			).put(
-				"SubscriptionMovedToFolder",
-				HashMapBuilder.put(
-					"conditionExpression",
-					"not(oldValue(\"objectEntryFolderId\") == " +
-						"objectEntryFolderId)"
-				).put(
-					"label", "Subscription Moved to Folder"
-				).put(
-					"notificationTemplateExternalReferenceCode",
-					"L_SUBSCRIPTION_MOVED_TO_FOLDER_NOTIFICATION_TEMPLATE"
 				).put(
 					"objectActionTriggerKey",
 					ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE

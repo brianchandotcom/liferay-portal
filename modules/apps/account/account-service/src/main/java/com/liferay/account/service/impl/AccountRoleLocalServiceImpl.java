@@ -230,7 +230,7 @@ public class AccountRoleLocalServiceImpl
 		return _emptyModelManager.getOrAddEmptyModel(
 			AccountRole.class, companyId,
 			() -> {
-				Role role = _roleLocalService.getOrAddIncompleteRole(
+				Role role = _roleLocalService.getOrAddEmptyRole(
 					externalReferenceCode, companyId, userId,
 					AccountRole.class.getName(),
 					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name,

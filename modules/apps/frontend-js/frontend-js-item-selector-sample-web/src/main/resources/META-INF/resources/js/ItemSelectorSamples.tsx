@@ -65,7 +65,7 @@ const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
 const assetLibrariesItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
 	itemNameLocator: 'name',
-	type: Liferay.Language.get('asset'),
+	type: Liferay.Language.get('space'),
 	views: assetLibraryViews,
 };
 
@@ -98,8 +98,8 @@ export default function ItemSelectorSamples() {
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const [space, setSpace] = useState<Space>();
 
-	const [asset, setAsset] = useState(null);
-	const [file, setFile] = useState(null);
+	const [space2, setSpace2] = useState(null);
+	const [document, setDocument] = useState(null);
 	const [user, setUser] = useState(null);
 
 	const {
@@ -109,7 +109,7 @@ export default function ItemSelectorSamples() {
 	} = useModal();
 	const {
 		observer: spaceItemSelectorObserver,
-		onOpenChange: assetItemSelectorOpenChange,
+		onOpenChange: spaceItemSelectorOpenChange,
 		open: spaceItemSelectorOpen,
 	} = useModal();
 	const {
@@ -334,7 +334,7 @@ export default function ItemSelectorSamples() {
 						itemNameLocator:
 							assetLibrariesItemSelectorConfig.itemNameLocator,
 						observer: spaceItemSelectorObserver,
-						onOpenChange: assetItemSelectorOpenChange,
+						onOpenChange: spaceItemSelectorOpenChange,
 						onSelection: onAssetSelection,
 						open: spaceItemSelectorOpen,
 						type: assetLibrariesItemSelectorConfig.type,
@@ -369,16 +369,16 @@ export default function ItemSelectorSamples() {
 							fileItemSelectorOpenChange(true);
 						}}
 					>
-						Select File
+						Select Document
 					</ClayButton>
 
 					<ClayButton
 						displayType="primary"
 						onClick={() => {
-							assetItemSelectorOpenChange(true);
+							spaceItemSelectorOpenChange(true);
 						}}
 					>
-						Select Asset
+						Select Space
 					</ClayButton>
 
 					<ClayButton
@@ -391,24 +391,28 @@ export default function ItemSelectorSamples() {
 					</ClayButton>
 				</ClayButton.Group>
 
-				{asset && (
+				{space2 && (
 					<ClayAlert
 						displayType="info"
 						symbol="nodes"
-						title={asset['name']}
+						title={space2.name}
 					/>
 				)}
 
-				{file && (
+				{document && (
 					<ClayAlert
 						displayType="info"
 						symbol="document"
-						title={file['fileName']}
+						title={document.fileName}
 					/>
 				)}
 
 				{user && (
-					<ClayAlert displayType="info" symbol="user" title={user['name']} />
+					<ClayAlert
+						displayType="info"
+						symbol="user"
+						title={user.name}
+					/>
 				)}
 			</SampleContainer>
 		</>

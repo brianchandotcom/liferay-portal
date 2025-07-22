@@ -14,7 +14,8 @@ import org.junit.Test;
 /**
  * @author Alan Huang
  */
-public class JakartaTransformCheckTest extends BaseSourceProcessorTestCase {
+public class JakartaTransformSourceProcessorTest
+	extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testBNDJakartaTransform() throws Exception {

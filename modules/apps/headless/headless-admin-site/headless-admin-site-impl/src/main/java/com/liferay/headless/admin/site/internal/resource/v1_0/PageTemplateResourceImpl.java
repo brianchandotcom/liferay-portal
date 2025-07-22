@@ -318,8 +318,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		long layoutPageTemplateCollectionId =
 			_getLayoutPageTemplateCollectionId(groupId, pageTemplate);
 
-		if (Validator.isNotNull(pageTemplate.getPageTemplateSet()) &&
-			!Objects.equals(
+		if (!Objects.equals(
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateCollectionId)) {
 

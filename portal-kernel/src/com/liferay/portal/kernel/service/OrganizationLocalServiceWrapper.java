@@ -612,12 +612,12 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	@Override
-	public Organization getOrAddIncompleteOrganization(
+	public Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, long companyId, long userId,
 			String name)
 		throws Exception {
 
-		return _organizationLocalService.getOrAddIncompleteOrganization(
+		return _organizationLocalService.getOrAddEmptyOrganization(
 			externalReferenceCode, companyId, userId, name);
 	}
 

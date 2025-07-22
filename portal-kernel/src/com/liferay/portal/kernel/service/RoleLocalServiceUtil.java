@@ -492,12 +492,12 @@ public class RoleLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static Role getOrAddIncompleteRole(
+	public static Role getOrAddEmptyRole(
 			String externalReferenceCode, long companyId, long userId,
 			String className, long classPK, String name, int type)
 		throws Exception {
 
-		return getService().getOrAddIncompleteRole(
+		return getService().getOrAddEmptyRole(
 			externalReferenceCode, companyId, userId, className, classPK, name,
 			type);
 	}

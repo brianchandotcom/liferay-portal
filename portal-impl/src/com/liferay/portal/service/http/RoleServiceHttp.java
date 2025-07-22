@@ -429,15 +429,15 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.Role getOrAddIncompleteRole(
+	public static com.liferay.portal.kernel.model.Role getOrAddEmptyRole(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			String className, long classPK, String name, int type)
 		throws Exception {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				RoleServiceUtil.class, "getOrAddIncompleteRole",
-				_getOrAddIncompleteRoleParameterTypes10);
+				RoleServiceUtil.class, "getOrAddEmptyRole",
+				_getOrAddEmptyRoleParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, className, classPK, name,
@@ -1193,7 +1193,7 @@ public class RoleServiceHttp {
 			long.class, String.class, java.util.List.class, String.class,
 			String.class, int[].class, long.class, long.class
 		};
-	private static final Class<?>[] _getOrAddIncompleteRoleParameterTypes10 =
+	private static final Class<?>[] _getOrAddEmptyRoleParameterTypes10 =
 		new Class[] {
 			String.class, String.class, long.class, String.class, int.class
 		};

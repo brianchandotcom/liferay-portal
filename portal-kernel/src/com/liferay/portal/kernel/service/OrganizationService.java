@@ -199,7 +199,7 @@ public interface OrganizationService extends BaseService {
 		int size);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Organization getOrAddIncompleteOrganization(
+	public Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, String name)
 		throws Exception;
 

@@ -67,9 +67,9 @@ public class StructuredContentDTOConverterTest {
 	@Test
 	public void testToDTO() throws Exception {
 		_testSelectedFromList(
-			Boolean.FALSE.toString(), "[\"one\", \"two\", \"three\"]");
+			Boolean.FALSE.toString(), "[\"one\",\"two\",\"three\"]");
 		_testSelectedFromList(
-			Boolean.TRUE.toString(), "[\"one\", \"three\", \"two\"]");
+			Boolean.TRUE.toString(), "[\"one\",\"three\",\"two\"]");
 	}
 
 	private String _read(String fileName) throws Exception {

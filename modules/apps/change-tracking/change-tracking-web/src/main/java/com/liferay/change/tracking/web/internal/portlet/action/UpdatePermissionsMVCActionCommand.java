@@ -58,23 +58,23 @@ public class UpdatePermissionsMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_ctSettingsConfigurationHelper.save(
-			themeDisplay.getCompanyId(),
-			HashMapBuilder.<String, Object>put(
-				"defaultOwnerActionIds",
-				() -> {
-					Role role = _roleLocalService.getRole(
-						themeDisplay.getCompanyId(), RoleConstants.OWNER);
-
-					List<String> ownerActionIds = permissions.remove(
-						String.valueOf(role.getRoleId()));
-
-					return ArrayUtil.toStringArray(ownerActionIds);
-				}
-			).build());
-
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			_ctSettingsConfigurationHelper.save(
+				themeDisplay.getCompanyId(),
+				HashMapBuilder.<String, Object>put(
+					"defaultOwnerActionIds",
+					() -> {
+						Role role = _roleLocalService.getRole(
+							themeDisplay.getCompanyId(), RoleConstants.OWNER);
+
+						List<String> ownerActionIds = permissions.remove(
+							String.valueOf(role.getRoleId()));
+
+						return ArrayUtil.toStringArray(ownerActionIds);
+					}
+				).build());
 
 			for (Map.Entry<String, List<String>> entry :
 					permissions.entrySet()) {

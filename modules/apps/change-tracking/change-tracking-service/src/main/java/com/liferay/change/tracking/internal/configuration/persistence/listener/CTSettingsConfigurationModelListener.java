@@ -8,8 +8,10 @@ package com.liferay.change.tracking.internal.configuration.persistence.listener;
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -67,19 +69,24 @@ public class CTSettingsConfigurationModelListener
 			return;
 		}
 
-		Role role = _roleLocalService.getRole(companyId, RoleConstants.OWNER);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
-		List<CTCollection> ctCollections =
-			_ctCollectionLocalService.getCTCollections(
-				companyId, WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			Role role = _roleLocalService.getRole(
+				companyId, RoleConstants.OWNER);
 
-		for (CTCollection ctCollection : ctCollections) {
-			_resourcePermissionLocalService.setResourcePermissions(
-				companyId, CTCollection.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(ctCollection.getCtCollectionId()),
-				role.getRoleId(), defaultOwnerActionIds);
+			List<CTCollection> ctCollections =
+				_ctCollectionLocalService.getCTCollections(
+					companyId, WorkflowConstants.STATUS_DRAFT,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (CTCollection ctCollection : ctCollections) {
+				_resourcePermissionLocalService.setResourcePermissions(
+					companyId, CTCollection.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(ctCollection.getCtCollectionId()),
+					role.getRoleId(), defaultOwnerActionIds);
+			}
 		}
 	}
 

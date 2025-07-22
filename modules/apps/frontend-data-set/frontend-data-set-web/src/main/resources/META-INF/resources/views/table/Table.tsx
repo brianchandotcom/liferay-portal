@@ -397,10 +397,9 @@ function ClayTableRowOptionalDropTarget({
 	onItemSelectionChange: Function;
 }) {
 	const [viewsContext] = useContext(ViewsContext);
-	const {selectable} = useContext(FrontendDataSetContext);
+	const {onSelect, selectable} = useContext(FrontendDataSetContext);
 
 	const {className: dropClassName, dropRef} = useFDSDrop({item});
-	const {onSelect} = useContext(FrontendDataSetContext);
 
 	const activeView: IView = viewsContext.activeView;
 

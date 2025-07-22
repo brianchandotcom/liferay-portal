@@ -89,7 +89,7 @@ function ItemSelectorModal({
 							? setSelectedItem(selectedItems[0])
 							: setSelectedItem(selectedItems);
 					}}
-					style='fluid'
+					style="fluid"
 				/>
 			</ClayModal.Body>
 
@@ -116,6 +116,7 @@ function ItemSelectorModal({
 							displayType="secondary"
 							onClick={() => {
 								setSelectedItem(null);
+
 								onOpenChange(false);
 							}}
 						>
@@ -127,6 +128,7 @@ function ItemSelectorModal({
 							disabled={!selectedItem}
 							onClick={() => {
 								onSelection(selectedItem);
+
 								onOpenChange(false);
 							}}
 						>

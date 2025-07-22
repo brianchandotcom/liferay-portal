@@ -634,12 +634,12 @@ public class AssetCategoryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetOrAddIncompleteCategory() throws Exception {
+	public void testGetOrAddEmptyCategory() throws Exception {
 
 		// Lazy referencing disabled
 
 		try {
-			_assetCategoryLocalService.getOrAddIncompleteCategory(
+			_assetCategoryLocalService.getOrAddEmptyCategory(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId());
 
@@ -655,12 +655,12 @@ public class AssetCategoryLocalServiceTest {
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			AssetCategory assetCategory =
-				_assetCategoryLocalService.getOrAddIncompleteCategory(
+				_assetCategoryLocalService.getOrAddEmptyCategory(
 					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 					_group.getGroupId());
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE, assetCategory.getStatus());
+				WorkflowConstants.STATUS_EMPTY, assetCategory.getStatus());
 		}
 	}
 
@@ -894,12 +894,12 @@ public class AssetCategoryLocalServiceTest {
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			AssetCategory assetCategory =
-				_assetCategoryLocalService.getOrAddIncompleteCategory(
+				_assetCategoryLocalService.getOrAddEmptyCategory(
 					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 					_group.getGroupId());
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE, assetCategory.getStatus());
+				WorkflowConstants.STATUS_EMPTY, assetCategory.getStatus());
 
 			String name = RandomTestUtil.randomString();
 

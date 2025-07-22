@@ -503,12 +503,12 @@ public class AssetVocabularyServiceTest {
 	}
 
 	@Test
-	public void testGetOrAddIncompleteVocabulary() throws Exception {
+	public void testGetOrAddEmptyVocabulary() throws Exception {
 
 		// Lazy referencing disabled
 
 		try {
-			_assetVocabularyService.getOrAddIncompleteVocabulary(
+			_assetVocabularyService.getOrAddEmptyVocabulary(
 				RandomTestUtil.randomString(), _group.getGroupId());
 
 			Assert.fail();
@@ -525,7 +525,7 @@ public class AssetVocabularyServiceTest {
 			// With permissions
 
 			AssetVocabulary vocabulary =
-				_assetVocabularyService.getOrAddIncompleteVocabulary(
+				_assetVocabularyService.getOrAddEmptyVocabulary(
 					RandomTestUtil.randomString(), _group.getGroupId());
 
 			Assert.assertNotNull(vocabulary);
@@ -541,7 +541,7 @@ public class AssetVocabularyServiceTest {
 			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 					user, permissionChecker)) {
 
-				_assetVocabularyService.getOrAddIncompleteVocabulary(
+				_assetVocabularyService.getOrAddEmptyVocabulary(
 					RandomTestUtil.randomString(), user.getGroupId());
 
 				Assert.fail();
@@ -565,7 +565,7 @@ public class AssetVocabularyServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
-			vocabulary = _assetVocabularyService.getOrAddIncompleteVocabulary(
+			vocabulary = _assetVocabularyService.getOrAddEmptyVocabulary(
 				externalReferenceCode, _group.getGroupId());
 
 			Assert.assertNotNull(vocabulary);

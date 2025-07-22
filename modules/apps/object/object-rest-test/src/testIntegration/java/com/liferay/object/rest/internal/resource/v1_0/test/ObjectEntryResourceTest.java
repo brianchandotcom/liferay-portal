@@ -13613,16 +13613,6 @@ public class ObjectEntryResourceTest {
 			// Sort by several fields
 
 			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2,
-				String.format("%s/dateCreated", _objectRelationship1.getName()),
-				String.format("%s/id", _objectRelationship1.getName()),
-				String.format(
-					"%s/%s/dateCreated", _objectRelationship1.getName(),
-					_objectRelationship2.getName()),
-				String.format(
-					"%s/%s/id", _objectRelationship1.getName(),
-					_objectRelationship2.getName()));
-			_testSortByFieldName(
 				endpoint1, jsonObject2, jsonObject1,
 				String.format("%s/creator", _objectRelationship1.getName()),
 				String.format("%s/creatorId", _objectRelationship1.getName()),
@@ -13646,6 +13636,16 @@ public class ObjectEntryResourceTest {
 					_objectRelationship2.getName()),
 				String.format(
 					"%s/%s/userId", _objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2,
+				String.format("%s/dateCreated", _objectRelationship1.getName()),
+				String.format("%s/id", _objectRelationship1.getName()),
+				String.format(
+					"%s/%s/dateCreated", _objectRelationship1.getName(),
+					_objectRelationship2.getName()),
+				String.format(
+					"%s/%s/id", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
 		}
 		finally {
@@ -14066,6 +14066,8 @@ public class ObjectEntryResourceTest {
 				jsonObject.getString("externalReferenceCode"));
 			Assert.assertEquals(
 				dlFileEntry.getFileEntryId(), jsonObject.getLong("id"));
+			Assert.assertEquals(
+				dlFileEntry.getMimeType(), jsonObject.getString("mimeType"));
 			Assert.assertEquals(
 				dlFileEntry.getFileName(), jsonObject.getString("name"));
 		}

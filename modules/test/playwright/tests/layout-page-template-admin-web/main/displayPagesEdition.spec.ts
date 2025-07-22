@@ -12,6 +12,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -34,10 +35,13 @@ const test = mergeTests(
 	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
-	pageEditorPagesTest,
-	loginTest(),
-	pageManagementSiteTest,
+	featureFlagsTest({
+		'LPD-60546': {enabled: true},
+	}),
 	isolatedSiteTest,
+	loginTest(),
+	pageEditorPagesTest,
+	pageManagementSiteTest,
 	pagesPagesTest
 );
 

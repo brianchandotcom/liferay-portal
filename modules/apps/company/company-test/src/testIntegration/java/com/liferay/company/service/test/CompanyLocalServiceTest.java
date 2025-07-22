@@ -249,8 +249,6 @@ public class CompanyLocalServiceTest {
 
 		Company company = _addCompany();
 
-		long companyId = company.getCompanyId();
-
 		Organization companyOrganization = null;
 		Group companyOrganizationGroup = null;
 		Group group = null;
@@ -259,7 +257,8 @@ public class CompanyLocalServiceTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			long userId = _userLocalService.getGuestUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(
+				company.getCompanyId());
 
 			companyOrganization = _organizationLocalService.addOrganization(
 				userId, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
@@ -268,7 +267,8 @@ public class CompanyLocalServiceTest {
 			companyOrganizationGroup = companyOrganization.getGroup();
 
 			group = GroupTestUtil.addGroup(
-				companyId, userId, companyOrganizationGroup.getGroupId());
+				company.getCompanyId(), userId,
+				companyOrganizationGroup.getGroupId());
 		}
 		finally {
 			_companyLocalService.deleteCompany(company);
@@ -327,8 +327,6 @@ public class CompanyLocalServiceTest {
 
 		Company company = _addCompany();
 
-		long companyId = company.getCompanyId();
-
 		DDMStructure ddmStructure = null;
 		DLFileEntryType dlFileEntryType = null;
 
@@ -336,12 +334,14 @@ public class CompanyLocalServiceTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			long userId = _userLocalService.getGuestUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(
+				company.getCompanyId());
 
 			Group guestGroup = _groupLocalService.getGroup(
-				companyId, GroupConstants.GUEST);
+				company.getCompanyId(), GroupConstants.GUEST);
 
-			ServiceContext serviceContext = _getServiceContext(companyId);
+			ServiceContext serviceContext = _getServiceContext(
+				company.getCompanyId());
 
 			serviceContext.setScopeGroupId(guestGroup.getGroupId());
 			serviceContext.setUserId(userId);
@@ -379,7 +379,7 @@ public class CompanyLocalServiceTest {
 				null, null, serviceContext);
 		}
 		finally {
-			_companyLocalService.deleteCompany(companyId);
+			_companyLocalService.deleteCompany(company.getCompanyId());
 		}
 
 		Assert.assertNull(
@@ -398,21 +398,21 @@ public class CompanyLocalServiceTest {
 
 		Company company = _addCompany();
 
-		long companyId = company.getCompanyId();
-
 		LayoutSetPrototype layoutSetPrototype = null;
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			long userId = _userLocalService.getGuestUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(
+				company.getCompanyId());
 
 			Group group = GroupTestUtil.addGroup(
-				companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+				company.getCompanyId(), userId,
+				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			layoutSetPrototype = _addLayoutSetPrototype(
-				companyId, userId, RandomTestUtil.randomString());
+				company.getCompanyId(), userId, RandomTestUtil.randomString());
 
 			long layoutSetPrototypeId =
 				layoutSetPrototype.getLayoutSetPrototypeId();
@@ -427,7 +427,7 @@ public class CompanyLocalServiceTest {
 				});
 		}
 		finally {
-			_companyLocalService.deleteCompany(companyId);
+			_companyLocalService.deleteCompany(company.getCompanyId());
 		}
 
 		Assert.assertNull(
@@ -443,8 +443,6 @@ public class CompanyLocalServiceTest {
 
 		Company company = _addCompany();
 
-		long companyId = company.getCompanyId();
-
 		long layoutSetPrototypeId = 0;
 		long userGroupId = 0;
 
@@ -452,16 +450,18 @@ public class CompanyLocalServiceTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			long userId = _userLocalService.getGuestUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(
+				company.getCompanyId());
 
 			Group group = GroupTestUtil.addGroup(
-				companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+				company.getCompanyId(), userId,
+				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			UserGroup userGroup = UserGroupTestUtil.addUserGroup(
 				group.getGroupId());
 
 			LayoutSetPrototype layoutSetPrototype = _addLayoutSetPrototype(
-				companyId, userId, RandomTestUtil.randomString());
+				company.getCompanyId(), userId, RandomTestUtil.randomString());
 
 			layoutSetPrototypeId = layoutSetPrototype.getLayoutSetPrototypeId();
 
@@ -479,7 +479,7 @@ public class CompanyLocalServiceTest {
 				});
 		}
 		finally {
-			_companyLocalService.deleteCompany(companyId);
+			_companyLocalService.deleteCompany(company.getCompanyId());
 		}
 
 		Assert.assertNull(
@@ -494,8 +494,6 @@ public class CompanyLocalServiceTest {
 
 		Company company = _addCompany();
 
-		long companyId = company.getCompanyId();
-
 		Group group = null;
 		Group parentGroup = null;
 
@@ -503,13 +501,15 @@ public class CompanyLocalServiceTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			long userId = _userLocalService.getGuestUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(
+				company.getCompanyId());
 
 			parentGroup = GroupTestUtil.addGroup(
-				companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+				company.getCompanyId(), userId,
+				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			group = GroupTestUtil.addGroup(
-				companyId, userId, parentGroup.getGroupId());
+				company.getCompanyId(), userId, parentGroup.getGroupId());
 		}
 		finally {
 			_companyLocalService.deleteCompany(company.getCompanyId());
@@ -638,8 +638,6 @@ public class CompanyLocalServiceTest {
 
 		Company company = _addCompany();
 
-		long companyId = company.getCompanyId();
-
 		User user = null;
 		UserGroup userGroup = null;
 
@@ -647,16 +645,18 @@ public class CompanyLocalServiceTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			long userId = _userLocalService.getGuestUserId(companyId);
+			long userId = _userLocalService.getGuestUserId(
+				company.getCompanyId());
 
 			Group group = GroupTestUtil.addGroup(
-				companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+				company.getCompanyId(), userId,
+				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			userGroup = UserGroupTestUtil.addUserGroup(group.getGroupId());
 
 			user = _addUser(
-				companyId, userId, group.getGroupId(),
-				_getServiceContext(companyId));
+				company.getCompanyId(), userId, group.getGroupId(),
+				_getServiceContext(company.getCompanyId()));
 
 			_userGroupLocalService.addUserUserGroup(
 				user.getUserId(), userGroup);
@@ -863,9 +863,8 @@ public class CompanyLocalServiceTest {
 
 	@Test(expected = RequiredCompanyException.class)
 	public void testDeleteDefaultCompany() throws Exception {
-		long companyId = PortalInstancePool.getDefaultCompanyId();
-
-		_companyLocalService.deleteCompany(companyId);
+		_companyLocalService.deleteCompany(
+			PortalInstancePool.getDefaultCompanyId());
 	}
 
 	@FeatureFlag("LPD-11342")
@@ -1005,17 +1004,14 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testGetCompanyByVirtualHost() throws Exception {
-		String virtualHostName = "::1";
-
-		Company company = _addCompany(virtualHostName);
+		Company company = _addCompany("::1");
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
 			Assert.assertEquals(
-				company,
-				_companyLocalService.getCompanyByVirtualHost(virtualHostName));
+				company, _companyLocalService.getCompanyByVirtualHost("::1"));
 			Assert.assertEquals(
 				company,
 				_companyLocalService.getCompanyByVirtualHost(
@@ -1032,29 +1028,27 @@ public class CompanyLocalServiceTest {
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
 
-		String originalLanguageId = LocaleUtil.toLanguageId(
-			_company.getLocale());
+		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
+
 		TimeZone timeZone = _company.getTimeZone();
 
 		try {
-			String languageId = "ca_ES";
-
 			_companyLocalService.updateDisplay(
-				_company.getCompanyId(), languageId, timeZone.getID());
+				_company.getCompanyId(), "ca_ES", timeZone.getID());
 
 			_companyLocalService.updatePreferences(
 				_company.getCompanyId(),
 				UnicodePropertiesBuilder.put(
-					PropsKeys.LOCALES, languageId
+					PropsKeys.LOCALES, "ca_ES"
 				).build());
 
 			Assert.assertEquals(
-				Collections.singleton(LocaleUtil.fromLanguageId(languageId)),
+				Collections.singleton(LocaleUtil.fromLanguageId("ca_ES")),
 				_language.getAvailableLocales());
 		}
 		finally {
 			_companyLocalService.updateDisplay(
-				_company.getCompanyId(), originalLanguageId, timeZone.getID());
+				_company.getCompanyId(), languageId, timeZone.getID());
 
 			_resetCompanyLocales(_company.getCompanyId());
 
@@ -1095,16 +1089,14 @@ public class CompanyLocalServiceTest {
 				groupTypeSettingsUnicodeProperties.getProperty(
 					PropsKeys.LOCALES));
 
-			String languageIds = "en_US";
-
 			_companyLocalService.updatePreferences(
 				_company.getCompanyId(),
 				UnicodePropertiesBuilder.put(
-					PropsKeys.LOCALES, languageIds
+					PropsKeys.LOCALES, "en_US"
 				).build());
 
 			Assert.assertEquals(
-				languageIds,
+				"en_US",
 				_prefsProps.getString(
 					_company.getCompanyId(), PropsKeys.LOCALES));
 
@@ -1114,16 +1106,14 @@ public class CompanyLocalServiceTest {
 				group.getTypeSettingsProperties();
 
 			Assert.assertEquals(
-				languageIds,
+				"en_US",
 				groupTypeSettingsUnicodeProperties.getProperty(
 					PropsKeys.LOCALES));
-
-			languageIds = "ca_ES,en_US";
 
 			_companyLocalService.updatePreferences(
 				_company.getCompanyId(),
 				UnicodePropertiesBuilder.put(
-					PropsKeys.LOCALES, languageIds
+					PropsKeys.LOCALES, "ca_ES,en_US"
 				).build());
 
 			group = _groupLocalService.getGroup(group.getGroupId());
@@ -1150,8 +1140,7 @@ public class CompanyLocalServiceTest {
 		throws Exception {
 
 		LayoutSetPrototype layoutSetPrototype = null;
-		String originalLanguageId = LocaleUtil.toLanguageId(
-			_company.getLocale());
+		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
@@ -1164,19 +1153,17 @@ public class CompanyLocalServiceTest {
 			layoutSetPrototype = _addLayoutSetPrototype(
 				_company.getCompanyId(), userId, RandomTestUtil.randomString());
 
-			String languageId = "ca_ES";
-
 			_companyLocalService.updateDisplay(
-				_company.getCompanyId(), languageId, timeZone.getID());
+				_company.getCompanyId(), "ca_ES", timeZone.getID());
 
 			_companyLocalService.updatePreferences(
 				_company.getCompanyId(),
 				UnicodePropertiesBuilder.put(
-					PropsKeys.LOCALES, languageId
+					PropsKeys.LOCALES, "ca_ES"
 				).build());
 
 			Assert.assertEquals(
-				Collections.singleton(LocaleUtil.fromLanguageId(languageId)),
+				Collections.singleton(LocaleUtil.fromLanguageId("ca_ES")),
 				_language.getAvailableLocales());
 		}
 		finally {
@@ -1184,7 +1171,7 @@ public class CompanyLocalServiceTest {
 				layoutSetPrototype);
 
 			_companyLocalService.updateDisplay(
-				_company.getCompanyId(), originalLanguageId, timeZone.getID());
+				_company.getCompanyId(), languageId, timeZone.getID());
 
 			ActionableDynamicQuery actionableDynamicQuery =
 				_systemEventLocalService.getActionableDynamicQuery();
@@ -1209,8 +1196,7 @@ public class CompanyLocalServiceTest {
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
 
-		String originalLanguageId = LocaleUtil.toLanguageId(
-			_company.getLocale());
+		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 
 		TimeZone timeZone = _company.getTimeZone();
 
@@ -1219,19 +1205,20 @@ public class CompanyLocalServiceTest {
 
 			_userLocalService.updateUser(user);
 
-			String languageId = LocaleUtil.toLanguageId(LocaleUtil.HUNGARY);
-
 			_companyLocalService.updateDisplay(
-				_company.getCompanyId(), languageId, "CET");
+				_company.getCompanyId(),
+				LocaleUtil.toLanguageId(LocaleUtil.HUNGARY), "CET");
 
 			user = _userLocalService.getGuestUser(_company.getCompanyId());
 
-			Assert.assertEquals(languageId, user.getLanguageId());
+			Assert.assertEquals(
+				LocaleUtil.toLanguageId(LocaleUtil.HUNGARY),
+				user.getLanguageId());
 			Assert.assertEquals("CET", user.getTimeZoneId());
 		}
 		finally {
 			_companyLocalService.updateDisplay(
-				_company.getCompanyId(), originalLanguageId, timeZone.getID());
+				_company.getCompanyId(), languageId, timeZone.getID());
 
 			safeCloseable.close();
 		}
@@ -1248,10 +1235,9 @@ public class CompanyLocalServiceTest {
 		Group group = null;
 
 		try {
-			long companyId = _company.getCompanyId();
-
 			group = GroupTestUtil.addGroup(
-				companyId, _userLocalService.getGuestUserId(companyId),
+				_company.getCompanyId(),
+				_userLocalService.getGuestUserId(_company.getCompanyId()),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			_testUpdateCompanyNames(
@@ -1475,11 +1461,8 @@ public class CompanyLocalServiceTest {
 	}
 
 	private static void _resetBackgroundTaskThreadLocal() throws Exception {
-		Class<?> backgroundTaskThreadLocalClass =
-			BackgroundTaskThreadLocal.class;
-
 		Field backgroundTaskIdField =
-			backgroundTaskThreadLocalClass.getDeclaredField(
+			BackgroundTaskThreadLocal.class.getDeclaredField(
 				"_backgroundTaskId");
 
 		backgroundTaskIdField.setAccessible(true);
@@ -1526,15 +1509,15 @@ public class CompanyLocalServiceTest {
 	}
 
 	private int _getTablesCount(long companyId) throws Exception {
-		List<String> tableNames = _getTableNames("TABLE", companyId);
-
-		return tableNames.size();
+		return _getTableNames(
+			"TABLE", companyId
+		).size();
 	}
 
 	private int _getViewsCount(long companyId) throws Exception {
-		List<String> viewNames = _getTableNames("VIEW", companyId);
-
-		return viewNames.size();
+		return _getTableNames(
+			"VIEW", companyId
+		).size();
 	}
 
 	private void _resetCompanyLocales(long companyId) throws Exception {
@@ -1614,13 +1597,11 @@ public class CompanyLocalServiceTest {
 
 			_company = _companyLocalService.getCompany(_company.getCompanyId());
 
-			String updatedMx = _company.getMx();
-
 			if (valid && mailMxUpdate) {
-				Assert.assertNotEquals(originalMx, updatedMx);
+				Assert.assertNotEquals(originalMx, _company.getMx());
 			}
 			else {
-				Assert.assertEquals(originalMx, updatedMx);
+				Assert.assertEquals(originalMx, _company.getMx());
 			}
 		}
 		catch (CompanyMxException companyMxException) {
@@ -1673,16 +1654,14 @@ public class CompanyLocalServiceTest {
 			}
 		}
 		finally {
-			VirtualHost currentVirtualHost =
+			VirtualHost virtualHost =
 				_virtualHostLocalService.fetchCompanyDefaultVirtualHost(
 					_company.getCompanyId());
 
 			String originalVirtualHostname = originalVirtualHost.getHostname();
 
-			if (!originalVirtualHostname.equals(
-					currentVirtualHost.getHostname())) {
-
-				_virtualHostLocalService.deleteVirtualHost(currentVirtualHost);
+			if (!originalVirtualHostname.equals(virtualHost.getHostname())) {
+				_virtualHostLocalService.deleteVirtualHost(virtualHost);
 			}
 
 			_virtualHostLocalService.updateVirtualHost(originalVirtualHost);

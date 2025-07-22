@@ -10,16 +10,18 @@ import ClayList from '@clayui/list';
 import {useModal} from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+import {ItemSelector, ItemSelectorModal} from 'frontend-js-item-selector-web';
+import React, {useState} from 'react';
+
 import {
-	EItemSelectorModalViewsConfig,
-	ItemSelector,
-	ItemSelectorModal,
 	assetLibraryViews,
 	documentViews,
-	getDefaultItemSelectorModalViews,
 	userViews,
-} from 'frontend-js-item-selector-web';
-import React, {useState} from 'react';
+} from './utils/defaultViews';
+import {
+	EItemSelectorModalViewsConfig,
+	getDefaultItemSelectorModalViews,
+} from './utils/getDefaultItemSelectorModalViews';
 
 import type {DisplayType} from '@clayui/sticker';
 

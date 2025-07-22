@@ -184,6 +184,14 @@ const renderComponent = ({
 };
 
 describe('FormInputGeneralPanel', () => {
+	beforeAll(() => {
+		Liferay.FeatureFlags['LPD-60546'] = true;
+	});
+
+	afterAll(() => {
+		Liferay.FeatureFlags['LPD-60546'] = false;
+	});
+
 	it('shows an alert instead of field selector when there are no suitable fields for fragment allowed types', () => {
 		renderComponent({fragmentEntryKey: 'dateFragment'});
 

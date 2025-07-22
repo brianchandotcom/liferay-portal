@@ -392,7 +392,11 @@ function MappingSelector({
 			});
 		}
 
-		if (relationships?.length && fieldType !== EDITABLE_TYPES.action) {
+		if (
+			Liferay.FeatureFlags['LPD-60546'] &&
+			relationships?.length &&
+			fieldType !== EDITABLE_TYPES.action
+		) {
 			types.push({
 				label: Liferay.Language.get('relationship'),
 				value: MAPPING_SOURCE_TYPES.relationship,

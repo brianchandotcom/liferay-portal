@@ -36,8 +36,9 @@ export default function MappingFieldSelector({
 
 	return (
 		<ClayForm.Group
-			className={classNames('mb-0 mt-3', className, {
+			className={classNames('mb-0', className, {
 				'has-warning': hasWarnings,
+				'mt-3': Liferay.FeatureFlags['LPD-60546'],
 			})}
 			small
 		>

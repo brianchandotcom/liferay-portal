@@ -201,7 +201,11 @@ public class ObjectEntryInfoItemFormProviderUtil {
 							objectDefinitionLocalService.fetchObjectDefinition(
 								objectRelationship.getObjectDefinitionId2());
 					}
-					else {
+					else if (FeatureFlagManagerUtil.isEnabled("LPD-60546") &&
+							 !Objects.equals(
+								 objectDefinitionId,
+								 objectRelationship.getObjectDefinitionId1())) {
+
 						relatedObjectDefinition =
 							objectDefinitionLocalService.fetchObjectDefinition(
 								objectRelationship.getObjectDefinitionId1());

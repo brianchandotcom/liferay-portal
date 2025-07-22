@@ -586,9 +586,11 @@ function FormInputMappingOptions({
 	);
 
 	const [sourceType, setSourceType] = useState(
-		selectedRelationship
-			? SOURCE_TYPES.relationship
-			: SOURCE_TYPES.mainObject
+		!Liferay.FeatureFlags['LPD-60546']
+			? SOURCE_TYPES.mainObject
+			: selectedRelationship
+				? SOURCE_TYPES.relationship
+				: SOURCE_TYPES.mainObject
 	);
 
 	useEffect(() => {
@@ -620,35 +622,42 @@ function FormInputMappingOptions({
 		<>
 			{relationships?.length ? (
 				<>
-					<ClayForm.Group small>
-						<label htmlFor={sourceSelectId}>
-							{Liferay.Language.get('source')}
-						</label>
+					{Liferay.FeatureFlags['LPD-60546'] ? (
+						<ClayForm.Group small>
+							<label htmlFor={sourceSelectId}>
+								{Liferay.Language.get('source')}
+							</label>
 
-						<ClaySelectWithOption
-							className="pr-4 text-truncate"
-							id={sourceSelectId}
-							onChange={(event) => {
-								setSourceType(event.target.value);
-								setSelectedRelationship(null);
-								onValueSelect(FIELD_ID_CONFIGURATION_KEY, null);
-							}}
-							options={[
-								{
-									label: sub(
-										Liferay.Language.get('x-default'),
-										type
-									),
-									value: SOURCE_TYPES.mainObject,
-								},
-								{
-									label: Liferay.Language.get('relationship'),
-									value: SOURCE_TYPES.relationship,
-								},
-							]}
-							value={sourceType}
-						/>
-					</ClayForm.Group>
+							<ClaySelectWithOption
+								className="pr-4 text-truncate"
+								id={sourceSelectId}
+								onChange={(event) => {
+									setSourceType(event.target.value);
+									setSelectedRelationship(null);
+									onValueSelect(
+										FIELD_ID_CONFIGURATION_KEY,
+										null
+									);
+								}}
+								options={[
+									{
+										label: sub(
+											Liferay.Language.get('x-default'),
+											type
+										),
+										value: SOURCE_TYPES.mainObject,
+									},
+									{
+										label: Liferay.Language.get(
+											'relationship'
+										),
+										value: SOURCE_TYPES.relationship,
+									},
+								]}
+								value={sourceType}
+							/>
+						</ClayForm.Group>
+					) : null}
 
 					{sourceType === SOURCE_TYPES.relationship ? (
 						<ClayForm.Group small>

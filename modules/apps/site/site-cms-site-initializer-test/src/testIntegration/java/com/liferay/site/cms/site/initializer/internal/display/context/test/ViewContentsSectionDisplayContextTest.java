@@ -72,7 +72,7 @@ public class ViewContentsSectionDisplayContextTest
 			fdsActionDropdownItems.get(3), "pencil", "actionLink", "edit",
 			"get", "item");
 		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(4), null, "version-history",
+			fdsActionDropdownItems.get(4), "date-time", "version-history",
 			"view-history", "get", "item");
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(5), "password-policies", "permissions",

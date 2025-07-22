@@ -207,7 +207,8 @@ public class SafeLdapFilterTest {
 
 		test(
 			new SafeLdapFilterTemplate(
-				"(&(name=@name@)(|(email=@email@)(email2=@email@)))",
+				new StringBundler(
+					"(&(name=@name@)(|(email=@email@)(email2=@email@)))"),
 				Collections.emptyList(), new String[] {"@name@", "@email@"},
 				filter -> true
 			).replace(

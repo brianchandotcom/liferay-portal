@@ -34,6 +34,7 @@ import com.liferay.object.internal.search.spi.model.result.contributor.ObjectEnt
 import com.liferay.object.internal.security.permission.ObjectEntrySharingPermissionChecker;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryModelResourcePermission;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryPortletResourcePermissionLogic;
+import com.liferay.object.internal.trash.ObjectEntryTrashHandler;
 import com.liferay.object.internal.uad.anonymizer.ObjectEntryUADAnonymizer;
 import com.liferay.object.internal.uad.display.ObjectEntryUADDisplay;
 import com.liferay.object.internal.uad.exporter.ObjectEntryUADExporter;
@@ -84,6 +85,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -503,6 +505,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						objectDefinition, _objectDefinitionLocalService,
 						_objectEntryLocalService,
 						_workflowDefinitionLinkLocalService),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"model.class.name", objectDefinition.getClassName()
+					).build()));
+
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					TrashHandler.class,
+					new ObjectEntryTrashHandler(
+						objectDefinition, _objectDefinitionLocalService,
+						_objectEntryLocalService),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"model.class.name", objectDefinition.getClassName()
 					).build()));

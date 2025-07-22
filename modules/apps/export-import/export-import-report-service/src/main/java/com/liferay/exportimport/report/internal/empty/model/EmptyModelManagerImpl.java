@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.exportimport.report.internal.incomplete.model;
+package com.liferay.exportimport.report.internal.empty.model;
 
-import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManager;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
@@ -25,16 +25,17 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Correa
  */
-@Component(service = IncompleteModelManager.class)
-public class IncompleteModelManagerImpl implements IncompleteModelManager {
+@Component(service = EmptyModelManager.class)
+public class EmptyModelManagerImpl implements EmptyModelManager {
 
 	@Override
-	public <T, E extends Exception> T getOrAddIncompleteModel(
-			Class<T> clazz, long companyId, String externalReferenceCode,
+	public <T, E extends Exception> T getOrAddEmptyModel(
+			Class<T> clazz, long companyId,
+			UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
+			String externalReferenceCode,
 			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
 			UnsafeBiFunction<String, Long, T, E>
-				getByExternalReferenceCodeUnsafeBiFunction,
-			UnsafeSupplier<T, E> incompleteModelUnsafeSupplier)
+				getByExternalReferenceCodeUnsafeBiFunction)
 		throws E {
 
 		if (!LazyReferencingThreadLocal.isEnabled()) {
@@ -50,28 +51,28 @@ public class IncompleteModelManagerImpl implements IncompleteModelManager {
 		}
 
 		try (SafeCloseable safeCloseable =
-				IncompleteModelThreadLocal.setIncompleteModelWithSafeCloseable(
-					true)) {
+				EmptyModelThreadLocal.setEmptyModelWithSafeCloseable(true)) {
 
 			_exportImportReportEntryLocalService.
-				addIncompleteExportImportReportEntry(
+				addEmptyExportImportReportEntry(
 					0L, companyId, externalReferenceCode,
 					_classNameLocalService.getClassNameId(clazz.getName()),
 					GetterUtil.getLong(
 						ExportImportThreadLocal.
 							getExportImportConfigurationId()));
 
-			return incompleteModelUnsafeSupplier.get();
+			return emptyModelUnsafeSupplier.get();
 		}
 	}
 
 	@Override
-	public <T, E extends Exception> T getOrAddIncompleteModel(
-			Class<T> clazz, String externalReferenceCode,
+	public <T, E extends Exception> T getOrAddEmptyModel(
+			Class<T> clazz, UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
+			String externalReferenceCode,
 			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
 			UnsafeBiFunction<String, Long, T, E>
 				getByExternalReferenceCodeUnsafeBiFunction,
-			long groupId, UnsafeSupplier<T, E> incompleteModelUnsafeSupplier)
+			long groupId)
 		throws E {
 
 		if (!LazyReferencingThreadLocal.isEnabled()) {
@@ -89,24 +90,23 @@ public class IncompleteModelManagerImpl implements IncompleteModelManager {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
 		try (SafeCloseable safeCloseable =
-				IncompleteModelThreadLocal.setIncompleteModelWithSafeCloseable(
-					true)) {
+				EmptyModelThreadLocal.setEmptyModelWithSafeCloseable(true)) {
 
 			_exportImportReportEntryLocalService.
-				addIncompleteExportImportReportEntry(
+				addEmptyExportImportReportEntry(
 					groupId, group.getCompanyId(), externalReferenceCode,
 					_classNameLocalService.getClassNameId(clazz.getName()),
 					GetterUtil.getLong(
 						ExportImportThreadLocal.
 							getExportImportConfigurationId()));
 
-			return incompleteModelUnsafeSupplier.get();
+			return emptyModelUnsafeSupplier.get();
 		}
 	}
 
 	@Override
-	public boolean isIncompleteModel() {
-		return IncompleteModelThreadLocal.isIncompleteModel();
+	public boolean isEmptyModel() {
+		return EmptyModelThreadLocal.isEmptyModel();
 	}
 
 	@Reference

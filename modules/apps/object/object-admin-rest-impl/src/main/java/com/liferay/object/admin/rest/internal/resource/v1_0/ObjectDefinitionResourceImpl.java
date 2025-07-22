@@ -28,6 +28,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
+import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -678,7 +679,14 @@ public class ObjectDefinitionResourceImpl
 				objectValidationRule -> GetterUtil.getBoolean(
 					objectValidationRule.getSystem()));
 
-			serviceBuilderObjectActions.removeIf(ObjectActionModel::isSystem);
+			serviceBuilderObjectActions.removeIf(
+				objectAction ->
+					objectAction.isSystem() ||
+					(FeatureFlagManagerUtil.isEnabled("LPD-42577") &&
+					 ArrayUtil.contains(
+						 ObjectActionConstants.
+							 getSubscriptionObjectActionNames(),
+						 objectAction.getName())));
 			serviceBuilderObjectFields.removeIf(ObjectFieldModel::isSystem);
 			serviceBuilderObjectRelationships.removeIf(
 				ObjectRelationshipModel::isSystem);

@@ -16,7 +16,7 @@ import React, {useState} from 'react';
 export interface IItemSelectorModalProps {
 
 	/**
-	 * Configuration properties of the FDS used to display data.
+	 * Configuration properties of the Frontend Data Set used to display data.
 	 */
 	fdsProps: IFrontendDataSetProps;
 
@@ -26,12 +26,12 @@ export interface IItemSelectorModalProps {
 	itemNameLocator: string | ((item: any) => any);
 
 	/**
-	 *
+	 * Expects the 'observer' property from the Clay useModal hook.
 	 */
 	observer: any;
 
 	/**
-	 * Callback to change open state.
+	 * Expects the 'onOpenChange' property from the Clay useModal hook.
 	 */
 	onOpenChange: (value: boolean) => void;
 
@@ -41,12 +41,12 @@ export interface IItemSelectorModalProps {
 	onSelection: Function;
 
 	/**
-	 * Flag that controls if modal is open.
+	 * Expects the 'open' property from the Clay useModal hook.
 	 */
 	open: boolean;
 
 	/**
-	 * Type of asset to be selected. Used to display modal title.
+	 * Type of item to be selected. Used to display modal title.
 	 */
 	type: string;
 }

@@ -430,8 +430,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			OrganizationIdComparator.getInstance(true));
 	}
 
-	@Override
-	public Organization getOrAddIncompleteOrganization(
+	public Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, String name)
 		throws Exception {
 
@@ -447,7 +446,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		PortalPermissionUtil.check(
 			getPermissionChecker(), ActionKeys.ADD_ORGANIZATION);
 
-		return organizationLocalService.getOrAddIncompleteOrganization(
+		return organizationLocalService.getOrAddEmptyOrganization(
 			externalReferenceCode, permissionChecker.getCompanyId(),
 			permissionChecker.getUserId(), name);
 	}

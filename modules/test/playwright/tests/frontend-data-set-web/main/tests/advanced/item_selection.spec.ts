@@ -421,7 +421,7 @@ test('InfoPanel behavior', async ({fdsSamplePage, page}) => {
 	});
 
 	await test.step('Can open Info Panel when using an infoPanel type item action', async () => {
-		await page.getByText('Clear').click();
+		await fdsSamplePage.selectionToolbar.clearButton.click();
 
 		await fdsSamplePage.clickItemAction('View Details');
 
@@ -463,7 +463,7 @@ test(
 		});
 
 		await test.step('Change visualization mode to Cards', async () => {
-			await page.getByText('Clear').click();
+			await fdsSamplePage.selectionToolbar.clearButton.click();
 
 			await fdsSamplePage.changeVisualizationMode({
 				page,
@@ -488,7 +488,7 @@ test(
 		});
 
 		await test.step('Change visualization mode to Table', async () => {
-			await page.getByText('Clear').click();
+			await fdsSamplePage.selectionToolbar.clearButton.click();
 
 			await fdsSamplePage.changeVisualizationMode({
 				page,
@@ -531,7 +531,7 @@ test(
 		});
 
 		await test.step('Can select only one items when clicking in a simple table cell', async () => {
-			await page.getByText('Clear').click();
+			await fdsSamplePage.selectionToolbar.clearButton.click();
 
 			fdsSamplePage.selectByRowAndCell({
 				filter: 'This is a description',
@@ -552,7 +552,7 @@ test(
 		});
 
 		await test.step('Can deselect an item when clicking in a simple table cell', async () => {
-			await page.getByText('Clear').click();
+			await fdsSamplePage.selectionToolbar.clearButton.click();
 
 			fdsSamplePage.selectByRowAndCell({
 				filter: 'This is a description',

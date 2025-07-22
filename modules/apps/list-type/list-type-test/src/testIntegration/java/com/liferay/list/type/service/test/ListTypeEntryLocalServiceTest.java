@@ -224,12 +224,12 @@ public class ListTypeEntryLocalServiceTest {
 
 	@Test
 	@TestInfo("LPD-55656")
-	public void testGetOrAddIncompleteListTypeEntry() throws Exception {
+	public void testGetOrAddEmptyListTypeEntry() throws Exception {
 
 		// Lazy referencing disabled
 
 		try {
-			_listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
+			_listTypeEntryLocalService.getOrAddEmptyListTypeEntry(
 				TestPropsValues.getUserId(),
 				_listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString());
@@ -245,8 +245,8 @@ public class ListTypeEntryLocalServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			_testGetOrAddIncompleteListTypeEntry(_listTypeDefinition);
-			_testGetOrAddIncompleteListTypeEntry(_systemListTypeDefinition);
+			_testGetOrAddEmptyListTypeEntry(_listTypeDefinition);
+			_testGetOrAddEmptyListTypeEntry(_systemListTypeDefinition);
 		}
 	}
 
@@ -348,14 +348,14 @@ public class ListTypeEntryLocalServiceTest {
 		}
 	}
 
-	private void _testGetOrAddIncompleteListTypeEntry(
+	private void _testGetOrAddEmptyListTypeEntry(
 			ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
 		String key = RandomTestUtil.randomString();
 
 		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
+			_listTypeEntryLocalService.getOrAddEmptyListTypeEntry(
 				TestPropsValues.getUserId(),
 				listTypeDefinition.getListTypeDefinitionId(), key);
 
@@ -363,7 +363,7 @@ public class ListTypeEntryLocalServiceTest {
 		Assert.assertEquals(key, listTypeEntry.getName(LocaleUtil.US));
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, listTypeEntry.getStatus());
+			WorkflowConstants.STATUS_EMPTY, listTypeEntry.getStatus());
 
 		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
 

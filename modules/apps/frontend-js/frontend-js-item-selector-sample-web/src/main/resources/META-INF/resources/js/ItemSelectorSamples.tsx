@@ -84,7 +84,7 @@ const assetLibrariesItemSelectorConfig = {
 const documentsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`,
 	itemNameLocator: 'fileName',
-	type: Liferay.Language.get('file'),
+	type: Liferay.Language.get('document'),
 	views: documentViews,
 };
 

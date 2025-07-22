@@ -71,10 +71,10 @@ test('Item Selector Modal with single selection', async ({
 	});
 
 	await test.step('Click in the Select File button opens the Item Selector Modal with a FDS component', async () => {
-		await itemSelectorSamplePage.selectFileButton.click();
+		await itemSelectorSamplePage.selectDocumentButton.click();
 
 		await expect(
-			itemSelectorSamplePage.selectFileModalHeader
+			itemSelectorSamplePage.selectDocumentModalHeader
 		).toBeVisible();
 
 		waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});

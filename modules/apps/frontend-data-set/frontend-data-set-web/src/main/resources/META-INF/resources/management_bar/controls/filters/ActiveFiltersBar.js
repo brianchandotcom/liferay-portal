@@ -18,7 +18,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 	const {onSearch, searchParam} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
-	const isSearchActive = () => searchParam?.trim();
+	const searchActive = Boolean(searchParam?.trim());
 
 	const resetFiltersValue = () => {
 		viewsDispatch({
@@ -39,7 +39,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 	const activeFilters = filters.filter((filter) => filter.active);
 
 	return activeFilters.length ||
-		(Liferay.FeatureFlags['LPD-52212'] && isSearchActive()) ? (
+		(Liferay.FeatureFlags['LPD-52212'] && searchActive) ? (
 		<div
 			className="management-bar management-bar-light navbar navbar-expand-md"
 			data-qa-id="activeFiltersToolbar"
@@ -72,7 +72,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 									))}
 
 								{Liferay.FeatureFlags['LPD-52212'] &&
-									isSearchActive() && <SearchResume />}
+									searchActive && <SearchResume />}
 
 								{activeFilters.map((filter) => {
 									return (

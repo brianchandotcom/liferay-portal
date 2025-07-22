@@ -36,6 +36,15 @@ public class ExportImportReportEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.exportimport.report.service.impl.ExportImportReportEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ExportImportReportEntry addEmptyExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long exportImportConfigurationId) {
+
+		return getService().addEmptyExportImportReportEntry(
+			groupId, companyId, classExternalReferenceCode, classNameId,
+			exportImportConfigurationId);
+	}
+
 	public static ExportImportReportEntry addErrorExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long exportImportConfigurationId, String error,
@@ -60,15 +69,6 @@ public class ExportImportReportEntryLocalServiceUtil {
 		ExportImportReportEntry exportImportReportEntry) {
 
 		return getService().addExportImportReportEntry(exportImportReportEntry);
-	}
-
-	public static ExportImportReportEntry addIncompleteExportImportReportEntry(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId) {
-
-		return getService().addIncompleteExportImportReportEntry(
-			groupId, companyId, classExternalReferenceCode, classNameId,
-			exportImportConfigurationId);
 	}
 
 	/**

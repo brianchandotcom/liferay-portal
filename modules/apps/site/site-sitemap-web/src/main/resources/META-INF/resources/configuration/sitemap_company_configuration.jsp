@@ -191,7 +191,7 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 		</clay:content-col>
 	</clay:content-row>
 
-	<p class="c-mb-0 c-mt-2 small text-secondary"><liferay-ui:message key="when-an-object-or-a-cms-structure-is-added-to-this-list,-search-engines-will-be-notified-that-its-related-entry-urls-are-available-for-crawling" /></p>
+	<p class="c-mb-0 c-mt-2 small text-secondary"><liferay-ui:message key="when-an-object-or-a-cms-structure-is-added-to-this-list,-search-engines-will-be-notified-that-it-is-available-for-crawling" /></p>
 
 	<clay:content-row>
 		<clay:content-col

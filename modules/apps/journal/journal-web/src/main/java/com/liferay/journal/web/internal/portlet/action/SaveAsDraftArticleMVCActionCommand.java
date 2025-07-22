@@ -6,7 +6,6 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -400,21 +399,11 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		// Asset display page
-
-		_assetDisplayPageEntryFormProcessor.process(
-			JournalArticle.class.getName(), article.getResourcePrimKey(),
-			actionRequest);
-
 		return article;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SaveAsDraftArticleMVCActionCommand.class);
-
-	@Reference
-	private AssetDisplayPageEntryFormProcessor
-		_assetDisplayPageEntryFormProcessor;
 
 	@Reference
 	private DDMFormValuesFactory _ddmFormValuesFactory;

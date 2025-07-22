@@ -1933,7 +1933,8 @@ public class RenderLayoutStructureTagTest {
 		Assert.assertFalse(content.contains(": url("));
 		Assert.assertFalse(content.contains("style="));
 		Assert.assertTrue(content.contains("data-layout-structure-item-id="));
-		Assert.assertTrue(content.contains("lfr-layout-structure-item-container"));
+		Assert.assertTrue(
+			content.contains("lfr-layout-structure-item-container"));
 	}
 
 	@Test

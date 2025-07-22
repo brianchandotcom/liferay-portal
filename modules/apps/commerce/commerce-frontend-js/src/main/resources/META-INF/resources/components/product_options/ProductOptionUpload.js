@@ -96,7 +96,7 @@ const ProductOptionUpload = ({
 
 		setHasErrors(required);
 
-		setSkuOptionsAtomState({
+		setSkuOptionsAtomState((skuOptionsAtomState) => ({
 			...skuOptionsAtomState,
 			errors: getSkuOptionsErrors(
 				required,
@@ -114,7 +114,7 @@ const ProductOptionUpload = ({
 					value: ['{}'],
 				},
 			],
-		});
+		}));
 
 		Liferay.componentReady('ProductOptions' + cpDefinitionId).then(
 			(DDMFormInstance) => {
@@ -136,7 +136,6 @@ const ProductOptionUpload = ({
 		namespace,
 		productOption,
 		setSkuOptionsAtomState,
-		skuOptionsAtomState,
 	]);
 
 	useEffect(() => {

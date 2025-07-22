@@ -5,7 +5,7 @@
 
 package com.liferay.list.type.service.impl;
 
-import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManager;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.list.type.exception.DuplicateListTypeEntryException;
 import com.liferay.list.type.exception.DuplicateListTypeEntryExternalReferenceCodeException;
 import com.liferay.list.type.exception.ListTypeEntryKeyException;
@@ -217,25 +217,25 @@ public class ListTypeEntryLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public ListTypeEntry getOrAddIncompleteListTypeEntry(
+	public ListTypeEntry getOrAddEmptyListTypeEntry(
 			long userId, long listTypeDefinitionId, String key)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
 
-		return _incompleteModelManager.getOrAddIncompleteModel(
-			ListTypeEntry.class, user.getCompanyId(), key,
-			(externalReferenceCode, companyId) -> fetchListTypeEntry(
-				listTypeDefinitionId, key),
-			(externalReferenceCode, companyId) -> getListTypeEntry(
-				listTypeDefinitionId, key),
+		return _emptyModelManager.getOrAddEmptyModel(
+			ListTypeEntry.class, user.getCompanyId(),
 			() -> _addListTypeEntry(
 				null, user, listTypeDefinitionId, key,
 				HashMapBuilder.put(
 					LocaleUtil.getSiteDefault(), key
 				).build(),
-				WorkflowConstants.STATUS_INCOMPLETE, false));
+				WorkflowConstants.STATUS_EMPTY, false),
+			key,
+			(externalReferenceCode, companyId) -> fetchListTypeEntry(
+				listTypeDefinitionId, key),
+			(externalReferenceCode, companyId) -> getListTypeEntry(
+				listTypeDefinitionId, key));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -252,7 +252,7 @@ public class ListTypeEntryLocalServiceImpl
 
 		listTypeEntry.setNameMap(nameMap);
 
-		if (listTypeEntry.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+		if (listTypeEntry.getStatus() == WorkflowConstants.STATUS_EMPTY) {
 			listTypeEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
 		}
 
@@ -375,7 +375,7 @@ public class ListTypeEntryLocalServiceImpl
 	}
 
 	@Reference
-	private IncompleteModelManager _incompleteModelManager;
+	private EmptyModelManager _emptyModelManager;
 
 	@Reference
 	private ListTypeDefinitionPersistence _listTypeDefinitionPersistence;

@@ -10,7 +10,7 @@ import path from 'path';
 import {getFDSDateFormat} from '../../../tests/object-web/main/utils/dateFormat';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
-import type {ObjectFieldBusinessTypes} from '../..//../tests/object-web/main/utils/mockObjectFields';
+import type {SupportedBusinessType} from '../../../tests/object-web/main/utils/generateObjectEntry';
 
 export class ViewObjectEntriesPage {
 	readonly addObjectEntryButton: Locator;
@@ -302,7 +302,6 @@ export class ViewObjectEntriesPage {
 		);
 	}
 
-
 	getMaximumFileSizeErrorMessage({
 		maximumFileSizeAllowed,
 	}: {
@@ -316,7 +315,7 @@ export class ViewObjectEntriesPage {
 
 	async fillObjectFields({attachmentFileName, objectEntry, objectFields}) {
 		const objectEntries: {
-			businessType: ObjectFieldBusinessTypes;
+			businessType: SupportedBusinessType;
 			entry: string;
 			name: string;
 		}[] = [];
@@ -418,107 +417,6 @@ export class ViewObjectEntriesPage {
 							name: objectField.name,
 						});
 					}
-				}
-			}
-		}
-
-		return objectEntries;
-	}
-
-	async fillObjectFields({attachmentFileName, objectEntry, objectFields}) {
-		const objectEntries: {
-			businessType: ObjectFieldBusinessTypes;
-			entry: string;
-			name: string;
-		}[] = [];
-
-		for (const objectField of objectFields) {
-			switch (objectField.businessType) {
-				case 'Attachment': {
-					await this.selectFileButton.click();
-
-					await this.selectFileFromDocumentsAndMedia(
-						attachmentFileName
-							? attachmentFileName
-							: 'astronaut.png'
-					);
-
-					objectEntries.push({
-						businessType: objectField.businessType,
-						entry: attachmentFileName,
-						name: objectField.name,
-					});
-
-					break;
-				}
-				case 'Boolean': {
-					objectEntry[objectField.name]
-						? await this.page
-								.getByLabel(objectField.label['en_US'])
-								.check()
-						: await this.page
-								.getByLabel(objectField.label['en_US'])
-								.uncheck();
-
-					objectEntries.push({
-						businessType: objectField.businessType,
-						entry: objectEntry[objectField.name] ? 'Yes' : 'No',
-						name: objectField.name,
-					});
-
-					break;
-				}
-
-				case 'Picklist': {
-					await this.selectDropdownItem(
-						objectField.label['en_US'],
-						objectEntry[objectField.name].key.toString()
-					);
-
-					objectEntries.push({
-						businessType: objectField.businessType,
-						entry: objectEntry[objectField.name].key.toString(),
-						name: objectField.name,
-					});
-
-					break;
-				}
-				case 'RichText': {
-					await this.fillObjectEntry({
-						objectFieldBusinessType: objectField.businessType,
-						objectFieldLabel: objectField.label['en_US'],
-						objectFieldValue: objectEntry[objectField.name]
-							.toString()
-							.substring(0, 35),
-					});
-
-					objectEntries.push({
-						businessType: objectField.businessType,
-						entry: objectEntry[objectField.name]
-							.toString()
-							.substring(0, 34),
-						name: objectField.name,
-					});
-
-					break;
-				}
-				default: {
-					await this.fillObjectEntry({
-						objectFieldBusinessType: objectField.businessType,
-						objectFieldLabel: objectField.label['en_US'],
-						objectFieldValue:
-							objectEntry[objectField.name].toString(),
-					});
-
-					objectEntries.push({
-						businessType: objectField.businessType,
-						entry: objectField.businessType.includes('Date')
-							? getFDSDateFormat(
-									new Date(objectEntry[objectField.name])
-								)
-							: objectEntry[objectField.name].toString(),
-						name: objectField.name,
-					});
 				}
 			}
 		}

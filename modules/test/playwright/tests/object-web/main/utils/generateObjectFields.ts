@@ -5,12 +5,28 @@
 
 import {ObjectField} from '@liferay/object-admin-rest-client-js';
 
-import {ObjectFieldBusinessTypes} from './mockObjectFields';
+import {getRandomInt} from '../../../../utils/getRandomInt';
 
-function getObjectFieldBaseProperties() {
+type objectFieldBaseProperties = {
+	indexedAsKeyword: boolean;
+	indexedLanguageId: string;
+	label: LocalizedValue<string>;
+	localized: boolean;
+	name?: string;
+	objectFieldSettings?: any;
+	readOnly: ObjectField['readOnly'];
+	readOnlyConditionExpression: string;
+	required: boolean;
+	state: boolean;
+	system: boolean;
+	unique: boolean;
+};
+
+function getObjectFieldBaseProperties(): objectFieldBaseProperties {
 	return {
 		indexedAsKeyword: false,
 		indexedLanguageId: '',
+		label: {en_US: ''},
 		localized: false,
 		readOnly: 'false' as ObjectField['readOnly'],
 		readOnlyConditionExpression: '',
@@ -21,8 +37,14 @@ function getObjectFieldBaseProperties() {
 	};
 }
 
+type SupportedObjectFieldBusinessType = Exclude<
+	ObjectField['businessType'],
+	'Aggregation' | 'Formula'
+>;
+
 function getObjectFieldSpecificProperties(
-	businessType: ObjectFieldBusinessTypes
+	objectFieldBusinessType: SupportedObjectFieldBusinessType,
+	listTypeDefinitionExternalReferenceCode: string
 ): {
 	['DBType']: ObjectField['DBType'];
 	['businessType']: ObjectField['businessType'];
@@ -30,7 +52,7 @@ function getObjectFieldSpecificProperties(
 	['objectFieldSettings']?: any;
 	['type']: ObjectField['type'];
 } {
-	switch (businessType) {
+	switch (objectFieldBusinessType) {
 		case 'Attachment':
 			return {
 				DBType: 'Long',
@@ -46,30 +68,22 @@ function getObjectFieldSpecificProperties(
 					},
 					{
 						name: 'maximumFileSize',
-						value: '100',
+						value: '0',
 					},
 				],
 				type: 'Long',
 			};
 		case 'AutoIncrement':
 			return {
-				DBType: 'Long',
-				businessType: 'Attachment',
+				DBType: 'String',
+				businessType: 'AutoIncrement',
 				objectFieldSettings: [
 					{
-						name: 'acceptedFileExtensions',
-						value: 'jpeg, jpg, pdf, png',
-					},
-					{
-						name: 'fileSource',
-						value: 'documentsAndMedia',
-					},
-					{
-						name: 'maximumFileSize',
-						value: '100',
+						name: 'initialValue',
+						value: '1',
 					},
 				],
-				type: 'Long',
+				type: 'String',
 			};
 		case 'Boolean':
 			return {
@@ -135,14 +149,14 @@ function getObjectFieldSpecificProperties(
 			return {
 				DBType: 'String',
 				businessType: 'MultiselectPicklist',
-				listTypeDefinitionExternalReferenceCode: '',
+				listTypeDefinitionExternalReferenceCode,
 				type: 'String',
 			};
 		case 'Picklist':
 			return {
 				DBType: 'String',
 				businessType: 'Picklist',
-				listTypeDefinitionExternalReferenceCode: '',
+				listTypeDefinitionExternalReferenceCode,
 				type: 'String',
 			};
 		case 'PrecisionDecimal':
@@ -163,22 +177,66 @@ function getObjectFieldSpecificProperties(
 				businessType: 'Text',
 				type: 'String',
 			};
+		default:
+			throw new Error(
+				`Unsupported object field business type: ${objectFieldBusinessType}`
+			);
 	}
 }
 
-export function generateObjectFieldStructure(
-	businessType: ObjectFieldBusinessTypes,
-	label: string,
-	name: string
-): Partial<ObjectField> {
+function generateObjectFieldProperties({
+	additionalSettings = {},
+	listTypeDefinitionExternalReferenceCode,
+	objectFieldBusinessType,
+}: {
+	additionalSettings?: Partial<ObjectField>;
+	listTypeDefinitionExternalReferenceCode?: string;
+	objectFieldBusinessType: SupportedObjectFieldBusinessType;
+}): Partial<ObjectField> {
 	const objectFieldBaseProperties = getObjectFieldBaseProperties();
-	const objectFieldSpecificProperties =
-		getObjectFieldSpecificProperties(businessType);
+	const objectFieldLabel = `${objectFieldBusinessType}${getRandomInt()}`;
+	const objectFieldSpecificProperties = getObjectFieldSpecificProperties(
+		objectFieldBusinessType,
+		listTypeDefinitionExternalReferenceCode
+	);
 
 	return {
 		...objectFieldBaseProperties,
 		...objectFieldSpecificProperties,
-		label: {en_US: label},
-		name,
+		label: {en_US: objectFieldLabel},
+		name: objectFieldLabel.toLocaleLowerCase(),
+		...additionalSettings,
 	};
+}
+
+export function generateObjectFields({
+	listTypeDefinitionExternalReferenceCode,
+	objectFieldBusinessTypes,
+}: {
+	listTypeDefinitionExternalReferenceCode?: string;
+	objectFieldBusinessTypes: (
+		| SupportedObjectFieldBusinessType
+		| (Partial<objectFieldBaseProperties> & {
+				businessType: SupportedObjectFieldBusinessType;
+		  })
+	)[];
+}) {
+	const objectFields: Partial<ObjectField>[] = [];
+
+	for (const objectField of objectFieldBusinessTypes) {
+		const objectFieldProperties =
+			typeof objectField === 'string'
+				? generateObjectFieldProperties({
+						listTypeDefinitionExternalReferenceCode,
+						objectFieldBusinessType: objectField,
+					})
+				: generateObjectFieldProperties({
+						additionalSettings: objectField,
+						listTypeDefinitionExternalReferenceCode,
+						objectFieldBusinessType: objectField.businessType,
+					});
+		objectFields.push(objectFieldProperties);
+	}
+
+	return objectFields;
 }

@@ -10,7 +10,10 @@ import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -57,6 +60,8 @@ public class CTSettingsConfigurationModelListenerTest {
 
 	@Test
 	public void testOnAfterSave() throws Exception {
+		String pid = null;
+
 		try {
 			UserTestUtil.setUser(_user);
 
@@ -72,7 +77,7 @@ public class CTSettingsConfigurationModelListenerTest {
 				_ctCollectionModelResourcePermission.contains(
 					permissionChecker, ctCollection, CTActionKeys.PUBLISH));
 
-			String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			pid = ConfigurationTestUtil.createFactoryConfiguration(
 				CTSettingsConfiguration.class.getName(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"companyId", TestPropsValues.getCompanyId()
@@ -89,8 +94,39 @@ public class CTSettingsConfigurationModelListenerTest {
 					permissionChecker, ctCollection, CTActionKeys.PUBLISH));
 
 			ConfigurationTestUtil.deleteConfiguration(pid);
+
+			int initialCTEntriesCount =
+				_ctEntryLocalService.getCTCollectionCTEntriesCount(
+					ctCollection.getCtCollectionId());
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollection.getCtCollectionId())) {
+
+				pid = ConfigurationTestUtil.createFactoryConfiguration(
+					CTSettingsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"companyId", TestPropsValues.getCompanyId()
+					).put(
+						"defaultOwnerActionIds",
+						new String[] {
+							ActionKeys.DELETE, ActionKeys.UPDATE,
+							ActionKeys.VIEW, CTActionKeys.INVITE_USERS
+						}
+					).build());
+			}
+
+			int finalCTEntriesCount =
+				_ctEntryLocalService.getCTCollectionCTEntriesCount(
+					ctCollection.getCtCollectionId());
+
+			Assert.assertEquals(0, finalCTEntriesCount - initialCTEntriesCount);
 		}
 		finally {
+			if (pid != null) {
+				ConfigurationTestUtil.deleteConfiguration(pid);
+			}
+
 			UserTestUtil.setUser(TestPropsValues.getUser());
 		}
 	}
@@ -103,6 +139,9 @@ public class CTSettingsConfigurationModelListenerTest {
 	)
 	private volatile ModelResourcePermission<CTCollection>
 		_ctCollectionModelResourcePermission;
+
+	@Inject
+	private CTEntryLocalService _ctEntryLocalService;
 
 	private Group _group;
 	private User _user;

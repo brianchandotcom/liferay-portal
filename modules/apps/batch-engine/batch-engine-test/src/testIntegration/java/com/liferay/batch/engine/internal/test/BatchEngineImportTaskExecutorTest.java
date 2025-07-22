@@ -110,9 +110,7 @@ public class BatchEngineImportTaskExecutorTest
 	@FeatureFlag("LPD-47858")
 	@Test
 	@TestInfo("LPD-49899")
-	public void testCreateAccountGroupWithIncompleteAccountEntry()
-		throws Exception {
-
+	public void testCreateAccountGroupWithEmptyAccountEntry() throws Exception {
 		String accountEntryExternalReferenceCode =
 			RandomTestUtil.randomString();
 
@@ -191,7 +189,7 @@ public class BatchEngineImportTaskExecutorTest
 			accountEntryExternalReferenceCode,
 			exportImportReportEntry.getClassExternalReferenceCode());
 		Assert.assertEquals(
-			ExportImportReportEntryConstants.TYPE_INCOMPLETE,
+			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntry.getType());
 
 		Assert.assertNull(

@@ -7,18 +7,12 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
 import {OrderStatus as Status} from '../../../../enums/Order';
+import {TRIAL_STATUS_LABEL} from '../../constants';
 
 import './TrialStatus.scss';
 
 type TrialStatusProps = {
 	trialStatus: string;
-};
-
-const trialStatusLabel = {
-	'approved': 'Expired',
-	'completed': 'Expired',
-	'in-progress': 'Active',
-	'processing': 'Processing',
 };
 
 const TrialStatus = ({trialStatus}: TrialStatusProps) => (
@@ -40,7 +34,7 @@ const TrialStatus = ({trialStatus}: TrialStatusProps) => (
 		/>
 
 		<span className="trial-status-text">
-			{trialStatusLabel[trialStatus as keyof typeof trialStatusLabel]}
+			{TRIAL_STATUS_LABEL[trialStatus as keyof typeof TRIAL_STATUS_LABEL]}
 		</span>
 	</>
 );

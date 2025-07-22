@@ -25,9 +25,10 @@ import {
 	getSSASettingsOrDefaultFromCustomFields,
 	getSSATrialsResourceURL,
 } from '../util';
+import ExtendRequestModal from './ExtendRequestModal';
 import ExtendSSATrialModal from './ExtendSSATrialModal';
 
-export default function SaaSTrial() {
+export default function SaaSTrials() {
 	const modalContext = useModalContext();
 	const modal = useModal();
 	const ssaForm = useSSAForm();
@@ -40,7 +41,7 @@ export default function SaaSTrial() {
 	);
 
 	const onExpireTrial = (order: Order) => {
-		trialOAuth2.deleteTrial(order.id);
+		trialOAuth2.expireTrial(order.id);
 	};
 
 	const {
@@ -70,7 +71,8 @@ export default function SaaSTrial() {
 		{
 			disabled: (order: Order) =>
 				order.orderStatusInfo.label === OrderStatus.APPROVED ||
-				order.orderStatusInfo.label === OrderStatus.COMPLETED,
+				order.orderStatusInfo.label === OrderStatus.COMPLETED ||
+				order.orderStatusInfo.label === OrderStatus.PROCESSING,
 			name: i18n.translate('go-to-trial'),
 			onClick: (order: Order) =>
 				window.open(
@@ -95,12 +97,12 @@ export default function SaaSTrial() {
 			onClick: (order: PlacedOrder) => {
 				modalContext.onOpenModal({
 					body: (
-						<ExtendSSATrialModal
+						<ExtendRequestModal
 							onClose={modalContext.onClose}
 							order={order}
 						/>
 					),
-					header: `Extend ${order.id} Trial`,
+					header: `Extension Request`,
 				});
 			},
 		},
@@ -113,6 +115,7 @@ export default function SaaSTrial() {
 				return (
 					order.orderStatusInfo.label === OrderStatus.APPROVED ||
 					order.orderStatusInfo.label === OrderStatus.COMPLETED ||
+					order.orderStatusInfo.label === OrderStatus.PROCESSING ||
 					SSASettings.extendRequestStatus ===
 						ExtendRequestStatus.PENDING ||
 					SSASettings.extendRequestStatus ===
@@ -135,19 +138,20 @@ export default function SaaSTrial() {
 		{
 			disabled: (order: Order) =>
 				order.orderStatusInfo.label === OrderStatus.APPROVED ||
-				order.orderStatusInfo.label === OrderStatus.COMPLETED,
+				order.orderStatusInfo.label === OrderStatus.COMPLETED ||
+				order.orderStatusInfo.label === OrderStatus.PROCESSING,
 			name: 'Expire',
 			onClick: (order: Order) => {
 				modalContext.onOpenModal({
 					body: (
 						<div>
 							<ClayAlert displayType="warning" role={null}>
-								This action cannot be undone.
+								{i18n.translate('this-action-cannot-be-undone')}
 							</ClayAlert>
 							<p>
-								Are you sure you want to expire this trial? This
-								action imply the end of the test environemnt
-								permanently.
+								{i18n.translate(
+									'are-you-sure-you-want-to-expire-this-trial-this-action-imply-the-end-of-the-test-environment-permanently'
+								)}
 							</p>
 						</div>
 					),
@@ -166,7 +170,10 @@ export default function SaaSTrial() {
 							aria-label="close"
 							displayType="warning"
 							key={2}
-							onClick={() => onExpireTrial(order)}
+							onClick={() => {
+								onExpireTrial(order);
+								modalContext.onClose;
+							}}
 							size="sm"
 						>
 							Got it
@@ -184,8 +191,8 @@ export default function SaaSTrial() {
 			<Page
 				description={
 					isUserSSAAdmin
-						? "Manage your team's trial"
-						: 'Manage your current trials'
+						? i18n.translate('manage-your-teams-trial')
+						: i18n.translate('manage-your-current-trials')
 				}
 				pageRendererProps={{className: 'border py-2'}}
 				rightButton={
@@ -196,7 +203,7 @@ export default function SaaSTrial() {
 								: modal.onOpenChange(true)
 						}
 					>
-						Add New Trial
+						{i18n.translate('add-new-trial')}
 					</ClayButton>
 				}
 				title={isUserSSAAdmin ? 'SaaS Demos' : 'My SaaS Demos'}
@@ -225,13 +232,13 @@ export default function SaaSTrial() {
 					}
 					observer={modal.observer}
 					size={'md' as any}
-					title="SSA Trials Limit Reached"
+					title={i18n.translate('ssa-trials-limit-reached')}
 					visible={modal.open}
 				>
 					<span>
-						{`You've reached the maximum number of active trials
-						allowed. To start a new trial, please end one of your
-						existing trials first.`}
+						{i18n.translate(
+							'you-have-reached-the-maximum-number-of-active-trials-allowed-to-start-a-new-trial-please-end-one-of-your-existing-trials-first'
+						)}
 					</span>
 				</Modal>
 			)}

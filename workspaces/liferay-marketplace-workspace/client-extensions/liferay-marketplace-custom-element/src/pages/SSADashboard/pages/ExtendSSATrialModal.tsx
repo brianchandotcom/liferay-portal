@@ -12,14 +12,12 @@ import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 import BaseWrapper from '../../../components/Form/BaseWrapper';
-import {OrderCustomFields} from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema, {z} from '../../../schema/zod';
 import trialOAuth2 from '../../../services/oauth/Trial';
-import {EXTEND_OPTIONS} from '../constants';
-import {TrialSettings} from '../enums/SSATrials';
-import {SSASettings} from '../types';
+import {EXTEND_OPTIONS, EXTEND_TYPES} from '../constants';
+import {getSSASettingsOrDefaultFromCustomFields} from '../util';
 
 type ExtendSSATrialModalProps = {
 	onClose: () => void;
@@ -41,13 +39,13 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 
 	const {isValid} = formState;
 
-	const trialSettings = JSON.parse(
-		order?.customFields[OrderCustomFields.TRIAL_SETTINGS]
-	)[TrialSettings.SSA_SETTINGS] as SSASettings;
+	const ssaSettings = getSSASettingsOrDefaultFromCustomFields(
+		order.customFields
+	);
 
-	const extendType = trialSettings?.autoExtended
-		? 'admin-request'
-		: 'auto-extend';
+	const extendType = ssaSettings?.autoExtended
+		? EXTEND_TYPES.ADMIN_REQUEST
+		: EXTEND_TYPES.AUTO_EXTEND;
 
 	const extendOptions = EXTEND_OPTIONS.find(
 		(option) => option.extendType === extendType
@@ -57,7 +55,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 
 	const onSubmit = async (form: z.infer<typeof zodSchema.extendSSATrial>) => {
 		try {
-			if (extendType === 'auto-extend') {
+			if (extendType === EXTEND_TYPES.AUTO_EXTEND) {
 				trialOAuth2.extendTrial(order.id, form.duration);
 			}
 			else {
@@ -110,7 +108,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 					displayType="secondary"
 					onClick={onClose}
 				>
-					Cancel
+					{i18n.translate('cancel')}
 				</ClayButton>
 				<ClayButton
 					disabled={!isValid}

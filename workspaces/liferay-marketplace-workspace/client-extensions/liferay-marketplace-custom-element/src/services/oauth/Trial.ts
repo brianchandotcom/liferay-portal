@@ -40,6 +40,10 @@ class TrialOAuth2 extends MarketplaceSpringBootOAuth2 {
 		await this.delete(`/${orderId}`);
 	}
 
+	async expireTrial(orderId: number | string) {
+		await this.post(`/expire/${orderId}`);
+	}
+
 	async extendTrial(orderId: number | string, duration: number = 7) {
 		return this.post(`/extend/${orderId}`, {duration});
 	}

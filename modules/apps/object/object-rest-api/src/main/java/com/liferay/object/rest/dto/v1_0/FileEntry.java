@@ -301,6 +301,47 @@ public class FileEntry implements Serializable {
 	private Supplier<Link> _linkSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getMimeType() {
+		if (_mimeTypeSupplier != null) {
+			mimeType = _mimeTypeSupplier.get();
+
+			_mimeTypeSupplier = null;
+		}
+
+		return mimeType;
+	}
+
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
+
+		_mimeTypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setMimeType(
+		UnsafeSupplier<String, Exception> mimeTypeUnsafeSupplier) {
+
+		_mimeTypeSupplier = () -> {
+			try {
+				return mimeTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String mimeType;
+
+	@JsonIgnore
+	private Supplier<String> _mimeTypeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -578,6 +619,22 @@ public class FileEntry implements Serializable {
 			sb.append("\"link\": ");
 
 			sb.append(String.valueOf(link));
+		}
+
+		String mimeType = getMimeType();
+
+		if (mimeType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"mimeType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(mimeType));
+
+			sb.append("\"");
 		}
 
 		String name = getName();

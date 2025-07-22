@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.exportimport.kernel.incomplete.model;
+package com.liferay.exportimport.kernel.empty.model;
 
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -16,24 +16,26 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Carlos Correa
  */
 @ProviderType
-public interface IncompleteModelManager {
+public interface EmptyModelManager {
 
-	public <T, E extends Exception> T getOrAddIncompleteModel(
-			Class<T> clazz, long companyId, String externalReferenceCode,
+	public <T, E extends Exception> T getOrAddEmptyModel(
+			Class<T> clazz, long companyId,
+			UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
+			String externalReferenceCode,
+			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
+			UnsafeBiFunction<String, Long, T, E>
+				getByExternalReferenceCodeUnsafeBiFunction)
+		throws E;
+
+	public <T, E extends Exception> T getOrAddEmptyModel(
+			Class<T> clazz, UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
+			String externalReferenceCode,
 			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
 			UnsafeBiFunction<String, Long, T, E>
 				getByExternalReferenceCodeUnsafeBiFunction,
-			UnsafeSupplier<T, E> incompleteModelUnsafeSupplier)
+			long groupId)
 		throws E;
 
-	public <T, E extends Exception> T getOrAddIncompleteModel(
-			Class<T> clazz, String externalReferenceCode,
-			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
-			UnsafeBiFunction<String, Long, T, E>
-				getByExternalReferenceCodeUnsafeBiFunction,
-			long groupId, UnsafeSupplier<T, E> incompleteModelUnsafeSupplier)
-		throws E;
-
-	public boolean isIncompleteModel();
+	public boolean isEmptyModel();
 
 }

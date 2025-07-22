@@ -92,6 +92,9 @@ public class CompanyDataCleanupPreupgradeProcessTest
 				"delete from Company where companyId = " +
 					company.getCompanyId());
 		}
+		finally {
+			PortalInstancePool.remove(company.getCompanyId());
+		}
 
 		upgrade();
 	}

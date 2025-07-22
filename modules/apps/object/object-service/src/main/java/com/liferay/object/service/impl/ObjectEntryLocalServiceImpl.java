@@ -1250,9 +1250,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public ObjectEntry getOrAddIncompleteObjectEntry(
+	public ObjectEntry getOrAddEmptyObjectEntry(
 			String externalReferenceCode, long groupId, long userId,
 			long objectDefinitionId)
 		throws PortalException {
@@ -1279,7 +1278,7 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry = _addObjectEntry(
 			externalReferenceCode, groupId, userId, objectDefinitionId,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			WorkflowConstants.STATUS_INCOMPLETE);
+			WorkflowConstants.STATUS_EMPTY);
 
 		_addResourcePermissions(objectDefinition, objectEntry);
 
@@ -6212,7 +6211,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		try {
-			_listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
+			_listTypeEntryLocalService.getOrAddEmptyListTypeEntry(
 				objectField.getUserId(), objectField.getListTypeDefinitionId(),
 				listTypeEntryKey);
 		}

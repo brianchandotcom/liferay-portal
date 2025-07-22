@@ -2424,7 +2424,7 @@ public class ObjectEntryLocalServiceTest {
 				listTypeEntryKey);
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE, listTypeEntry.getStatus());
+				WorkflowConstants.STATUS_EMPTY, listTypeEntry.getStatus());
 
 			Assert.assertNull(
 				_listTypeEntryLocalService.fetchListTypeEntry(
@@ -4541,7 +4541,7 @@ public class ObjectEntryLocalServiceTest {
 
 	@Test
 	@TestInfo("LPD-55658")
-	public void testGetOrAddIncompleteObjectEntry() throws Throwable {
+	public void testGetOrAddEmptyObjectEntry() throws Throwable {
 
 		// Lazy referencing disabled
 
@@ -4555,7 +4555,7 @@ public class ObjectEntryLocalServiceTest {
 					"Code=%s, companyId=%s, objectDefinitionId=%s}",
 				externalReferenceCode, _siteObjectDefinition.getCompanyId(),
 				_siteObjectDefinition.getObjectDefinitionId()),
-			() -> _objectEntryLocalService.getOrAddIncompleteObjectEntry(
+			() -> _objectEntryLocalService.getOrAddEmptyObjectEntry(
 				externalReferenceCode, groupId, TestPropsValues.getUserId(),
 				_siteObjectDefinition.getObjectDefinitionId()));
 
@@ -4565,14 +4565,14 @@ public class ObjectEntryLocalServiceTest {
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			ObjectEntry objectEntry =
-				_objectEntryLocalService.getOrAddIncompleteObjectEntry(
+				_objectEntryLocalService.getOrAddEmptyObjectEntry(
 					RandomTestUtil.randomString(), groupId,
 					TestPropsValues.getUserId(),
 					_siteObjectDefinition.getObjectDefinitionId());
 
 			Assert.assertEquals(groupId, objectEntry.getGroupId());
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE, objectEntry.getStatus());
+				WorkflowConstants.STATUS_EMPTY, objectEntry.getStatus());
 
 			objectEntry = _objectEntryLocalService.updateObjectEntry(
 				objectEntry.getUserId(), objectEntry.getObjectEntryId(),

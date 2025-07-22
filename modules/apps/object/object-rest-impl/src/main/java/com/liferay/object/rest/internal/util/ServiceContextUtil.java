@@ -190,7 +190,7 @@ public class ServiceContextUtil {
 
 			try {
 				AssetCategory assetCategory =
-					AssetCategoryLocalServiceUtil.getOrAddIncompleteCategory(
+					AssetCategoryLocalServiceUtil.getOrAddEmptyCategory(
 						externalReferenceCode, userId, groupId);
 
 				assetCategoryIds.add(assetCategory.getCategoryId());

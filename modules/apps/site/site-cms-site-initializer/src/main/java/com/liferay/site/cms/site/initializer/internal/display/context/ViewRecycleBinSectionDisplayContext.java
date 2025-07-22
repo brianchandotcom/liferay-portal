@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -19,6 +20,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,6 +56,18 @@ public class ViewRecycleBinSectionDisplayContext
 		).put(
 			"title", LanguageUtil.get(httpServletRequest, "no-assets-yet")
 		).build();
+	}
+
+	@Override
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		return Collections.singletonList(
+			new FDSActionDropdownItem(
+				language.get(
+					httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-entry"),
+				null, "trash", "delete",
+				language.get(httpServletRequest, "delete"), "delete", "delete",
+				"headless"));
 	}
 
 	@Override

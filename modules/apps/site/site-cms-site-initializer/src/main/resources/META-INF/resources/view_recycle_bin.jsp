@@ -15,6 +15,7 @@ ViewRecycleBinSectionDisplayContext viewRecycleBinSectionDisplayContext = (ViewR
 	<frontend-data-set:headless-display
 		apiURL="<%= viewRecycleBinSectionDisplayContext.getAPIURL() %>"
 		emptyState="<%= viewRecycleBinSectionDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewRecycleBinSectionDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.RECYCLE_BIN_SECTION %>"
 		itemsPerPage="<%= 20 %>"

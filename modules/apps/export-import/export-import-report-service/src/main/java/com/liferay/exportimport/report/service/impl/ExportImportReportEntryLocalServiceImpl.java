@@ -25,6 +25,28 @@ import org.osgi.service.component.annotations.Component;
 public class ExportImportReportEntryLocalServiceImpl
 	extends ExportImportReportEntryLocalServiceBaseImpl {
 
+	public ExportImportReportEntry addEmptyExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long exportImportConfigurationId) {
+
+		ExportImportReportEntry exportImportReportEntry =
+			exportImportReportEntryPersistence.create(
+				counterLocalService.increment());
+
+		exportImportReportEntry.setGroupId(groupId);
+		exportImportReportEntry.setCompanyId(companyId);
+		exportImportReportEntry.setClassExternalReferenceCode(
+			classExternalReferenceCode);
+		exportImportReportEntry.setClassNameId(classNameId);
+		exportImportReportEntry.setExportImportConfigurationId(
+			exportImportConfigurationId);
+		exportImportReportEntry.setType(
+			ExportImportReportEntryConstants.TYPE_EMPTY);
+
+		return exportImportReportEntryPersistence.update(
+			exportImportReportEntry);
+	}
+
 	@Override
 	public ExportImportReportEntry addErrorExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
@@ -46,29 +68,6 @@ public class ExportImportReportEntryLocalServiceImpl
 		exportImportReportEntry.setErrorStacktrace(errorStacktrace);
 		exportImportReportEntry.setType(
 			ExportImportReportEntryConstants.TYPE_ERROR);
-
-		return exportImportReportEntryPersistence.update(
-			exportImportReportEntry);
-	}
-
-	@Override
-	public ExportImportReportEntry addIncompleteExportImportReportEntry(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId) {
-
-		ExportImportReportEntry exportImportReportEntry =
-			exportImportReportEntryPersistence.create(
-				counterLocalService.increment());
-
-		exportImportReportEntry.setGroupId(groupId);
-		exportImportReportEntry.setCompanyId(companyId);
-		exportImportReportEntry.setClassExternalReferenceCode(
-			classExternalReferenceCode);
-		exportImportReportEntry.setClassNameId(classNameId);
-		exportImportReportEntry.setExportImportConfigurationId(
-			exportImportConfigurationId);
-		exportImportReportEntry.setType(
-			ExportImportReportEntryConstants.TYPE_INCOMPLETE);
 
 		return exportImportReportEntryPersistence.update(
 			exportImportReportEntry);

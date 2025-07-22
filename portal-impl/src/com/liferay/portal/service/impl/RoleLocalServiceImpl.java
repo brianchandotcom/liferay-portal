@@ -7,7 +7,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
-import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManagerUtil;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -175,8 +175,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setType(type);
 		role.setSubtype(subtype);
 
-		if (IncompleteModelManagerUtil.isIncompleteModel()) {
-			role.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		if (EmptyModelManagerUtil.isEmptyModel()) {
+			role.setStatus(WorkflowConstants.STATUS_EMPTY);
 		}
 		else {
 			role.setStatus(WorkflowConstants.STATUS_APPROVED);
@@ -848,12 +848,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Role getOrAddIncompleteRole(
+	public Role getOrAddEmptyRole(
 			String externalReferenceCode, long companyId, long userId,
 			String className, long classPK, String name, int type)
 		throws Exception {
 
-		return IncompleteModelManagerUtil.getOrAddIncompleteModel(
+		return EmptyModelManagerUtil.getOrAddEmptyModel(
 			Role.class, companyId, externalReferenceCode,
 			this::fetchRoleByExternalReferenceCode,
 			this::getRoleByExternalReferenceCode,
@@ -2000,7 +2000,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setDescriptionMap(descriptionMap);
 		role.setSubtype(subtype);
 
-		if (role.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+		if (role.getStatus() == WorkflowConstants.STATUS_EMPTY) {
 			role.setStatus(WorkflowConstants.STATUS_APPROVED);
 		}
 

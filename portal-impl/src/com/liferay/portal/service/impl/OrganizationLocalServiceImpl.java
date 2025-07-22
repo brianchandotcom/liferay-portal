@@ -7,7 +7,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
-import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManagerUtil;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -322,8 +322,8 @@ public class OrganizationLocalServiceImpl
 		organization.setStatusListTypeId(statusListTypeId);
 		organization.setComments(comments);
 
-		if (IncompleteModelManagerUtil.isIncompleteModel()) {
-			organization.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		if (EmptyModelManagerUtil.isEmptyModel()) {
+			organization.setStatus(WorkflowConstants.STATUS_EMPTY);
 		}
 		else {
 			organization.setStatus(WorkflowConstants.STATUS_APPROVED);
@@ -714,12 +714,12 @@ public class OrganizationLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Organization getOrAddIncompleteOrganization(
+	public Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, long companyId, long userId,
 			String name)
 		throws Exception {
 
-		return IncompleteModelManagerUtil.getOrAddIncompleteModel(
+		return EmptyModelManagerUtil.getOrAddEmptyModel(
 			Organization.class, companyId, externalReferenceCode,
 			this::fetchOrganizationByExternalReferenceCode,
 			this::getOrganizationByExternalReferenceCode,
@@ -2171,7 +2171,7 @@ public class OrganizationLocalServiceImpl
 			userFileUploadsSettings.getImageMaxHeight(),
 			userFileUploadsSettings.getImageMaxWidth());
 
-		if (organization.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+		if (organization.getStatus() == WorkflowConstants.STATUS_EMPTY) {
 			organization.setStatus(WorkflowConstants.STATUS_APPROVED);
 		}
 
@@ -2689,8 +2689,7 @@ public class OrganizationLocalServiceImpl
 		boolean countryRequired = organizationTypesSettings.isCountryRequired(
 			type);
 
-		if ((countryRequired &&
-			 !IncompleteModelManagerUtil.isIncompleteModel()) ||
+		if ((countryRequired && !EmptyModelManagerUtil.isEmptyModel()) ||
 			(countryId > 0)) {
 
 			_countryPersistence.findByPrimaryKey(countryId);

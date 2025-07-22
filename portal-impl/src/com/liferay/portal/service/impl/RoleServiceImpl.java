@@ -194,8 +194,7 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 			excludedTeamRoleId, teamGroupId);
 	}
 
-	@Override
-	public Role getOrAddIncompleteRole(
+	public Role getOrAddEmptyRole(
 			String externalReferenceCode, String className, long classPK,
 			String name, int type)
 		throws Exception {
@@ -211,7 +210,7 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 
 		PortalPermissionUtil.check(getPermissionChecker(), ActionKeys.ADD_ROLE);
 
-		return roleLocalService.getOrAddIncompleteRole(
+		return roleLocalService.getOrAddEmptyRole(
 			externalReferenceCode, permissionChecker.getCompanyId(),
 			permissionChecker.getUserId(), className, classPK, name, type);
 	}

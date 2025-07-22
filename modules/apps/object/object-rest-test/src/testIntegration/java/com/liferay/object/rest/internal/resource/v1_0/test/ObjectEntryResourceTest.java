@@ -14056,9 +14056,8 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _assertAttachmentJSONObject(
-			DLFileEntry dlFileEntry, String fileBase64, JSONObject jsonObject,
-			JSONObject scopeJSONObject)
-		throws Exception {
+		DLFileEntry dlFileEntry, String fileBase64, JSONObject jsonObject,
+		JSONObject scopeJSONObject) {
 
 		if (dlFileEntry != null) {
 			Assert.assertEquals(
@@ -14088,8 +14087,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _assertCustomObjectEntryWithPermissions(
-			JSONArray expectedPermissionsJSONArray, JSONObject jsonObject)
-		throws Exception {
+		JSONArray expectedPermissionsJSONArray, JSONObject jsonObject) {
 
 		JSONArray actualPermissionsJSONArray = jsonObject.getJSONArray(
 			"permissions");
@@ -14104,9 +14102,7 @@ public class ObjectEntryResourceTest {
 			JSONCompareMode.LENIENT);
 	}
 
-	private void _assertEquals(JSONArray nestedObjectEntriesJSONArray)
-		throws Exception {
-
+	private void _assertEquals(JSONArray nestedObjectEntriesJSONArray) {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(

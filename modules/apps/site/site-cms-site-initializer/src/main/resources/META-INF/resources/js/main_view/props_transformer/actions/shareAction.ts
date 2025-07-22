@@ -9,18 +9,39 @@ import {fetch} from 'frontend-js-web';
 import ShareModalContent, {collaborator} from '../../modal/ShareModalContent';
 
 export default function shareAction({
-	autocompleteUserURL,
-	shareActionURL,
+	autocompleteURL,
+	collaboratorURL,
+	creator,
+	itemId,
 	title,
 }: {
-	autocompleteUserURL: string;
-	shareActionURL: string;
+	autocompleteURL: string;
+	collaboratorURL: string;
+	creator: {
+		contentType: string;
+		id: number;
+		image?: string;
+		name: string;
+	};
+	itemId: number;
 	title: string;
 }) {
-	fetch(shareActionURL, {method: 'GET'})
+	const collaboratorURLWithId = collaboratorURL.replace(
+		'{objectEntryId}',
+		itemId.toString()
+	);
+
+	fetch(collaboratorURLWithId, {
+		headers: {
+			'Accept': 'application/json',
+			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+			'Content-Type': 'application/json',
+		},
+		method: 'GET',
+	})
 		.then((response) => response.json())
 		.then(({items}) => {
-			const initialCollaborators: collaborator[] = items.map(
+			const initialCollaborators: collaborator[] = items.reverse().map(
 				(collaboratorItem: any) =>
 					({
 						allowResharing: collaboratorItem.share,
@@ -29,13 +50,18 @@ export default function shareAction({
 						isOwner:
 							collaboratorItem.creator.id === collaboratorItem.id,
 						permission: collaboratorItem.actionIds.includes(
-							'DOWNLOAD'
+							'UPDATE'
 						)
-							? 'VIEW-AND-DOWNLOAD'
-							: 'VIEW',
+							? 'UPDATE,ADD_DISCUSSION,VIEW'
+							: collaboratorItem.actionIds.includes(
+										'ADD_DISCUSSION'
+								  )
+								? 'ADD_DISCUSSION,VIEW'
+								: 'VIEW',
 						type: collaboratorItem.type,
 						user: {
-							id: collaboratorItem.id,
+							id: collaboratorItem.id.toString(),
+							image: collaboratorItem.portrait || '',
 							name: collaboratorItem.name,
 						},
 					}) as collaborator
@@ -45,10 +71,11 @@ export default function shareAction({
 				className: 'share-modal',
 				contentComponent: ({closeModal}: {closeModal: () => void}) =>
 					ShareModalContent({
-						autocompleteUserURL,
+						autocompleteURL,
 						closeModal,
+						collaboratorURL: collaboratorURLWithId,
+						creator: {...creator, id: creator.id.toString()},
 						initialCollaborators,
-						shareActionURL,
 						title,
 					}),
 				size: 'md',

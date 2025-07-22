@@ -10,11 +10,10 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -22,6 +21,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -34,12 +34,12 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
- * @author Mikel Lorza
+ * @author Pedro Leite
  */
 @FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 @Sync
-public class ViewContentsSectionDisplayContextTest
+public class ViewRecycleBinSectionDisplayContextTest
 	extends BaseSectionDisplayContextTestCase {
 
 	@ClassRule
@@ -55,32 +55,11 @@ public class ViewContentsSectionDisplayContextTest
 			getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 8,
+			fdsActionDropdownItems.toString(), 1,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(0), "view", "actionLinkFolder",
-			"view-folder", "get", "item");
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(1), "info-circle-open", "show-details",
-			"show-details", null, "item");
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(2), "pencil", "editFolder", "edit",
-			"get", "item");
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(3), "pencil", "actionLink", "edit",
-			"get", "item");
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(4), "view", "viewContent", "view", "get",
-			"item");
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(5), "date-time", "version-history",
-			"view-history", "get", "item");
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(6), "password-policies", "permissions",
-			"permissions", "get", "item");
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(7), "trash", "delete", "delete",
+			fdsActionDropdownItems.get(0), "trash", "delete", "delete",
 			"delete", "item");
 	}
 
@@ -88,25 +67,30 @@ public class ViewContentsSectionDisplayContextTest
 	protected Map<String, String> getExpectedCreationMenuItems()
 		throws PortalException {
 
-		return HashMapBuilder.put(
-			"Basic Web Content", getRedirect("L_BASIC_WEB_CONTENT")
-		).put(
-			"Blog", getRedirect("L_BLOG")
-		).put(
-			"folder", StringPool.BLANK
-		).put(
-			"Knowledge Base", getRedirect("L_KNOWLEDGE_BASE")
-		).build();
+		return Collections.emptyMap();
 	}
 
 	@Override
 	protected String getObjectFolderExternalReferenceCode() {
-		return ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES;
+		if (RandomTestUtil.randomBoolean()) {
+			return ObjectFolderConstants.
+				EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES;
+		}
+
+		return ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES;
+	}
+
+	@Override
+	protected String[] getObjectFolderExternalReferenceCodes() {
+		return new String[] {
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
+		};
 	}
 
 	@Override
 	protected String getRootObjectEntryFolderExternalReferenceCode() {
-		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
+		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
 	}
 
 	@Override
@@ -117,17 +101,18 @@ public class ViewContentsSectionDisplayContextTest
 		_fragmentRenderer.render(
 			null, httpServletRequest, new MockHttpServletResponse());
 
-		Object contentsSectionDisplayContext = httpServletRequest.getAttribute(
-			"com.liferay.site.cms.site.initializer.internal.display.context." +
-				"ViewContentsSectionDisplayContext");
+		Object viewRecycleBinSectionDisplayContext =
+			httpServletRequest.getAttribute(
+				"com.liferay.site.cms.site.initializer.internal.display." +
+					"context.ViewRecycleBinSectionDisplayContext");
 
-		Assert.assertNotNull(contentsSectionDisplayContext);
+		Assert.assertNotNull(viewRecycleBinSectionDisplayContext);
 
-		return contentsSectionDisplayContext;
+		return viewRecycleBinSectionDisplayContext;
 	}
 
 	@Inject(
-		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewContentsJSPSectionFragmentRenderer"
+		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewRecycleBinJSPSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
 

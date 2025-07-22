@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -100,6 +101,10 @@ public abstract class BaseSectionDisplayContextTestCase
 	public void testGetCreationMenu() throws Exception {
 		Map<String, String> expectedCreationMenuItems =
 			getExpectedCreationMenuItems();
+
+		if (expectedCreationMenuItems.isEmpty()) {
+			return;
+		}
 
 		_testGetCreationMenu(getCreationMenu(), expectedCreationMenuItems);
 
@@ -268,6 +273,23 @@ public abstract class BaseSectionDisplayContextTestCase
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
+	protected void assertFDSActionDropdownItem(
+		FDSActionDropdownItem fdsActionDropdownItem, String icon, String id,
+		String label, String method, String type) {
+
+		Assert.assertNotNull(fdsActionDropdownItem);
+
+		Map<String, String> data =
+			(Map<String, String>)fdsActionDropdownItem.get("data");
+
+		Assert.assertEquals(id, data.get("id"));
+		Assert.assertEquals(method, data.get("method"));
+
+		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
+		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
+		Assert.assertEquals(type, fdsActionDropdownItem.get("type"));
+	}
+
 	protected CreationMenu getCreationMenu() throws Exception {
 		return getCreationMenu(null);
 	}
@@ -283,6 +305,14 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	protected abstract Map<String, String> getExpectedCreationMenuItems()
 		throws PortalException;
+
+	protected List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(getMockHttpServletRequest()),
+			"getFDSActionDropdownItems", new Class<?>[0]);
+	}
 
 	protected abstract String getObjectFolderExternalReferenceCode();
 

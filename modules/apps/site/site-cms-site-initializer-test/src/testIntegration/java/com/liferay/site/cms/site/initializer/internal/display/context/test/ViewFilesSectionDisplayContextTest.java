@@ -96,7 +96,7 @@ public class ViewFilesSectionDisplayContextTest
 				(List<DropdownItem>)creationMenu.get("primaryItems");
 
 			Assert.assertEquals(
-				primaryItems.toString(), 1, primaryItems.size());
+				primaryItems.toString(), 0, primaryItems.size());
 
 			Role role = _roleLocalService.getRole(
 				TestPropsValues.getCompanyId(), RoleConstants.USER);
@@ -112,7 +112,8 @@ public class ViewFilesSectionDisplayContextTest
 
 			primaryItems = (List<DropdownItem>)creationMenu.get("primaryItems");
 
-			Assert.assertTrue(primaryItems.size() > 1);
+			Assert.assertEquals(
+				primaryItems.toString(), 2, primaryItems.size());
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(

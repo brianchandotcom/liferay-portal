@@ -14,19 +14,34 @@
 						"",
 						"#" + element.getAttribute("id").replace("toc-", "")
 					);
-
-					window.scrollTo({
-						behavior: "smooth",
-						top: anchorElement.getBoundingClientRect().top + window.scrollY - 190,
-					});
+					scrollToElement(anchorElement);
 				}
 			});
 		});
 	}
 
+	const scrollToElement = (element) => {
+		if (!element) return;
+
+		window.scrollTo({
+			behavior: "smooth",
+			top: element.getBoundingClientRect().top + window.scrollY - 190,
+		});
+	};
+
 	window.addEventListener('load', function() {
 		_addEventListener("h1 a, h2 a, h3 a");
 		_addEventListener(".toc li a");
+
+		if (window.location.hash) {
+			const hashLocation = document.getElementById(window.location.hash.substring(1));
+
+			if (hashLocation) {
+				setTimeout(() => {
+					scrollToElement(hashLocation);
+				}, 100);
+			}
+		}
 	});
 </script>
 

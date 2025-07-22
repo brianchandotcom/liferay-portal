@@ -131,17 +131,15 @@ public class BatchBuild extends BaseParentBuild {
 			Element gitHubMessageElement =
 				failedDownstreamBuild.getGitHubMessageElement();
 
-			if (gitHubMessageElement != null) {
-				failureElements.add(gitHubMessageElement);
+			if (gitHubMessageElement == null) {
+				continue;
 			}
 
-			Element gitHubMessageUpstreamJobFailureElement =
-				failedDownstreamBuild.
-					getGitHubMessageUpstreamJobFailureElement();
-
-			if (gitHubMessageUpstreamJobFailureElement != null) {
-				upstreamJobFailureElements.add(
-					gitHubMessageUpstreamJobFailureElement);
+			if (failedDownstreamBuild.isUniqueFailure()) {
+				failureElements.add(gitHubMessageElement);
+			}
+			else {
+				upstreamJobFailureElements.add(gitHubMessageElement);
 			}
 		}
 

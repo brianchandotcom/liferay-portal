@@ -440,16 +440,14 @@ public class ObjectEntryFolderLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntryFolder
-			getOrAddIncompleteObjectEntryFolder(
+			getOrAddEmptyObjectEntryFolder(
 				String externalReferenceCode, long groupId, long companyId,
 				long userId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _objectEntryFolderLocalService.
-			getOrAddIncompleteObjectEntryFolder(
-				externalReferenceCode, groupId, companyId, userId,
-				serviceContext);
+		return _objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
+			externalReferenceCode, groupId, companyId, userId, serviceContext);
 	}
 
 	/**

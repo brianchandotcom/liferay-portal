@@ -563,12 +563,12 @@ public class ObjectEntryLocalServiceUtil {
 			groupId, objectRelationshipId, primaryKey, related, search);
 	}
 
-	public static ObjectEntry getOrAddIncompleteObjectEntry(
+	public static ObjectEntry getOrAddEmptyObjectEntry(
 			String externalReferenceCode, long groupId, long userId,
 			long objectDefinitionId)
 		throws PortalException {
 
-		return getService().getOrAddIncompleteObjectEntry(
+		return getService().getOrAddEmptyObjectEntry(
 			externalReferenceCode, groupId, userId, objectDefinitionId);
 	}
 

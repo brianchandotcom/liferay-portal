@@ -326,7 +326,7 @@ public interface ObjectEntryFolderLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ObjectEntryFolder getOrAddIncompleteObjectEntryFolder(
+	public ObjectEntryFolder getOrAddEmptyObjectEntryFolder(
 			String externalReferenceCode, long groupId, long companyId,
 			long userId, ServiceContext serviceContext)
 		throws PortalException;

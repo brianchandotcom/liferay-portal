@@ -39,6 +39,7 @@ dependencies {
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testImplementation project(":apps:blogs:blogs-api")
 	testImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testImplementation project(":apps:static:portal-file-install:portal-file-install-api")
 	testImplementation project(":core:petra:petra-memory")
 	testImplementation project(":core:petra:petra-process")
 	testImplementation project(":core:petra:petra-sql-dsl-api")

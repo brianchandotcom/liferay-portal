@@ -1561,6 +1561,13 @@ public class ObjectDefinitionLocalServiceImpl
 		_addOrUpdateObjectDefinitionSettings(
 			objectDefinition, objectDefinitionSettings);
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-42577") &&
+			objectDefinition.isEnableObjectEntrySubscription()) {
+
+			_objectActionLocalService.addOrUpdateSubscriptionObjectActions(
+				objectDefinition);
+		}
+
 		_addSystemObjectFields(
 			dbTableName, objectDefinition, pkObjectFieldName, userId);
 
@@ -2421,6 +2428,8 @@ public class ObjectDefinitionLocalServiceImpl
 		long oldObjectFolderId = objectDefinition.getObjectFolderId();
 		boolean oldActive = objectDefinition.isActive();
 		String oldClassName = objectDefinition.getClassName();
+		boolean oldEnableObjectEntrySubscription =
+			objectDefinition.isEnableObjectEntrySubscription();
 
 		_validateExternalReferenceCode(
 			externalReferenceCode, objectDefinition.isSystem());
@@ -2537,6 +2546,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (!objectDefinition.isUnmodifiableSystemObject()) {
 			_addOrUpdateObjectDefinitionPLOEntries(objectDefinition);
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-42577") &&
+			(objectDefinition.isEnableObjectEntrySubscription() !=
+				oldEnableObjectEntrySubscription)) {
+
+			_objectActionLocalService.addOrUpdateSubscriptionObjectActions(
+				objectDefinition);
 		}
 
 		if (objectDefinition.isApproved()) {

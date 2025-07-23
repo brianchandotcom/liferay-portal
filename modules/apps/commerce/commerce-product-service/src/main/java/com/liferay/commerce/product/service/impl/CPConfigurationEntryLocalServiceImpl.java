@@ -6,7 +6,6 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
-import com.liferay.commerce.product.exception.CPConfigurationEntryAllowedOrderQuantitiesException;
 import com.liferay.commerce.product.exception.RequiredCPConfigurationEntryException;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
@@ -37,8 +36,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.math.BigDecimal;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,9 +82,6 @@ public class CPConfigurationEntryLocalServiceImpl
 		cpConfigurationEntry.setClassPK(classPK);
 		cpConfigurationEntry.setCPConfigurationListId(cpConfigurationListId);
 		cpConfigurationEntry.setCPTaxCategoryId(cpTaxCategoryId);
-
-		_validateAllowedOrderQuantities(allowedOrderQuantities);
-
 		cpConfigurationEntry.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpConfigurationEntry.setBackOrders(backOrders);
 		cpConfigurationEntry.setCommerceAvailabilityEstimateId(
@@ -360,9 +354,6 @@ public class CPConfigurationEntryLocalServiceImpl
 
 		cpConfigurationEntry.setExternalReferenceCode(externalReferenceCode);
 		cpConfigurationEntry.setCPTaxCategoryId(cpTaxCategoryId);
-
-		_validateAllowedOrderQuantities(allowedOrderQuantities);
-
 		cpConfigurationEntry.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpConfigurationEntry.setBackOrders(backOrders);
 		cpConfigurationEntry.setCommerceAvailabilityEstimateId(
@@ -465,23 +456,6 @@ public class CPConfigurationEntryLocalServiceImpl
 
 		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
-
-	private void _validateAllowedOrderQuantities(String allowedOrderQuantities)
-		throws PortalException {
-
-		if (Validator.isNull(allowedOrderQuantities)) {
-			return;
-		}
-
-		Matcher matcher = _pattern.matcher(allowedOrderQuantities);
-
-		if (!matcher.matches()) {
-			throw new CPConfigurationEntryAllowedOrderQuantitiesException();
-		}
-	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"^(\\d{1,3}(,\\d{3})*\\.\\d{2})(\\s\\d{1,3}(,\\d{3})*\\.\\d{2})*$");
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

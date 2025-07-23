@@ -248,7 +248,6 @@ public class CompanyLocalServiceTest {
 		throws Exception {
 
 		Company company = _addCompany();
-
 		Organization companyOrganization = null;
 		Group companyOrganizationGroup = null;
 		Group group = null;
@@ -295,7 +294,6 @@ public class CompanyLocalServiceTest {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = _addCompany();
-
 		Group companyGroup = null;
 		Group companyStagingGroup = null;
 
@@ -326,7 +324,6 @@ public class CompanyLocalServiceTest {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = _addCompany();
-
 		DDMStructure ddmStructure = null;
 		DLFileEntryType dlFileEntryType = null;
 
@@ -397,7 +394,6 @@ public class CompanyLocalServiceTest {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = _addCompany();
-
 		LayoutSetPrototype layoutSetPrototype = null;
 
 		try (SafeCloseable safeCloseable =
@@ -442,7 +438,6 @@ public class CompanyLocalServiceTest {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = _addCompany();
-
 		long layoutSetPrototypeId = 0;
 		long userGroupId = 0;
 
@@ -493,7 +488,6 @@ public class CompanyLocalServiceTest {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = _addCompany();
-
 		Group group = null;
 		Group parentGroup = null;
 
@@ -526,7 +520,6 @@ public class CompanyLocalServiceTest {
 
 		Company company1 = null;
 		Company company2 = null;
-
 		boolean originalCompanyPredictableCompanyIdsEnabled =
 			ReflectionTestUtil.getAndSetFieldValue(
 				PropsValues.class, "COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED",
@@ -600,7 +593,6 @@ public class CompanyLocalServiceTest {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = _addCompany();
-
 		Organization companyOrganization = null;
 		Group companyOrganizationGroup = null;
 
@@ -637,7 +629,6 @@ public class CompanyLocalServiceTest {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = _addCompany();
-
 		User user = null;
 		UserGroup userGroup = null;
 
@@ -677,7 +668,6 @@ public class CompanyLocalServiceTest {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = _addCompany();
-
 		Group group = null;
 		Role role = null;
 		User user = null;
@@ -1024,12 +1014,10 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateCompanyLocales() throws Exception {
+		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
-
-		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
-
 		TimeZone timeZone = _company.getTimeZone();
 
 		try {
@@ -1058,11 +1046,10 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateCompanyLocalesUpdateGroupLocales() throws Exception {
+		Group group = null;
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
-
-		Group group = null;
 
 		try {
 			User user = UserTestUtil.getAdminUser(_company.getCompanyId());
@@ -1139,14 +1126,11 @@ public class CompanyLocalServiceTest {
 	public void testUpdateCompanyLocalesWithLayoutSetPrototype()
 		throws Exception {
 
+		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
+		LayoutSetPrototype layoutSetPrototype = null;
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
-
-		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
-
-		LayoutSetPrototype layoutSetPrototype = null;
-
 		TimeZone timeZone = _company.getTimeZone();
 
 		try {
@@ -1195,12 +1179,10 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateDisplay() throws Exception {
+		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
-
-		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
-
 		TimeZone timeZone = _company.getTimeZone();
 
 		try {
@@ -1229,13 +1211,11 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateInvalidCompanyNames() throws Exception {
+		String companyName = _company.getName();
+		Group group = null;
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
-
-		String companyName = _company.getName();
-
-		Group group = null;
 
 		try {
 			group = GroupTestUtil.addGroup(

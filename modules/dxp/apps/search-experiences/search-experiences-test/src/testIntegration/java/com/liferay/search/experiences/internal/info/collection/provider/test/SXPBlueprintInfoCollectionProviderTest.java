@@ -119,6 +119,8 @@ public class SXPBlueprintInfoCollectionProviderTest {
 		InfoPage<JournalArticle> infoPage =
 			infoCollectionProvider.getCollectionInfoPage(new CollectionQuery());
 
+		ServiceContextThreadLocal.popServiceContext();
+
 		List<? extends JournalArticle> journalArticles =
 			infoPage.getPageItems();
 

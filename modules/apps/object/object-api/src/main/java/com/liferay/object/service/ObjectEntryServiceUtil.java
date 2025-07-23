@@ -219,6 +219,19 @@ public class ObjectEntryServiceUtil {
 			objectEntryId, values, serviceContext);
 	}
 
+	public static void subscribeObjectEntry(
+			long userId, long groupId, long objectEntryId)
+		throws PortalException {
+
+		getService().subscribeObjectEntry(userId, groupId, objectEntryId);
+	}
+
+	public static void unsubscribeObjectEntry(long userId, long objectEntryId)
+		throws PortalException {
+
+		getService().unsubscribeObjectEntry(userId, objectEntryId);
+	}
+
 	public static ObjectEntry updateObjectEntry(
 			long objectEntryId, Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

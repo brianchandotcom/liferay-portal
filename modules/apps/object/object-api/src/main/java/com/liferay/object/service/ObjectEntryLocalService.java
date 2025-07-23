@@ -508,6 +508,13 @@ public interface ObjectEntryLocalService
 			int delta)
 		throws PortalException;
 
+	public void subscribeObjectEntry(
+			long userId, long groupId, long objectEntryId)
+		throws PortalException;
+
+	public void unsubscribeObjectEntry(long userId, long objectEntryId)
+		throws PortalException;
+
 	public void updateAsset(
 			long userId, ObjectEntry objectEntry, long[] assetCategoryIds,
 			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)

@@ -688,6 +688,19 @@ public class ObjectEntryLocalServiceUtil {
 			groupId, objectDefinitionId, keywords, cur, delta);
 	}
 
+	public static void subscribeObjectEntry(
+			long userId, long groupId, long objectEntryId)
+		throws PortalException {
+
+		getService().subscribeObjectEntry(userId, groupId, objectEntryId);
+	}
+
+	public static void unsubscribeObjectEntry(long userId, long objectEntryId)
+		throws PortalException {
+
+		getService().unsubscribeObjectEntry(userId, objectEntryId);
+	}
+
 	public static void updateAsset(
 			long userId, ObjectEntry objectEntry, long[] assetCategoryIds,
 			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)

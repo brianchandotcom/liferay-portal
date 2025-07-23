@@ -72,8 +72,8 @@ public class ViewContentsSectionDisplayContextTest
 			fdsActionDropdownItems.get(3), "pencil", "actionLink", "edit",
 			"get", "item");
 		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(4), "view", "viewContent", "view",
-			"get", "item");
+			fdsActionDropdownItems.get(4), "view", "viewContent", "view", "get",
+			"item");
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(5), "date-time", "version-history",
 			"view-history", "get", "item");

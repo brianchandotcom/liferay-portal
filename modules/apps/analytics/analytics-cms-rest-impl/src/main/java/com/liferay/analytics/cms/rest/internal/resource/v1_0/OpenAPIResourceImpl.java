@@ -87,6 +87,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(InventoryAnalysisResourceImpl.class);
 
+			add(ObjectEntryMetricResourceImpl.class);
+
 			add(OverviewResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

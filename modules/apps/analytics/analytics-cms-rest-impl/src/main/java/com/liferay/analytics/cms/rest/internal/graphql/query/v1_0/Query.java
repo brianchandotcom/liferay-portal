@@ -6,8 +6,10 @@
 package com.liferay.analytics.cms.rest.internal.graphql.query.v1_0;
 
 import com.liferay.analytics.cms.rest.dto.v1_0.InventoryAnalysis;
+import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryMetric;
 import com.liferay.analytics.cms.rest.dto.v1_0.Overview;
 import com.liferay.analytics.cms.rest.resource.v1_0.InventoryAnalysisResource;
+import com.liferay.analytics.cms.rest.resource.v1_0.ObjectEntryMetricResource;
 import com.liferay.analytics.cms.rest.resource.v1_0.OverviewResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -44,6 +46,14 @@ public class Query {
 
 		_inventoryAnalysisResourceComponentServiceObjects =
 			inventoryAnalysisResourceComponentServiceObjects;
+	}
+
+	public static void setObjectEntryMetricResourceComponentServiceObjects(
+		ComponentServiceObjects<ObjectEntryMetricResource>
+			objectEntryMetricResourceComponentServiceObjects) {
+
+		_objectEntryMetricResourceComponentServiceObjects =
+			objectEntryMetricResourceComponentServiceObjects;
 	}
 
 	public static void setOverviewResourceComponentServiceObjects(
@@ -83,6 +93,27 @@ public class Query {
 					categoryId, groupBy, languageId, rangeEnd, rangeKey,
 					rangeStart, spaceId, structureId, tagId, vocabularyId,
 					Pagination.of(page, pageSize)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryMetric(externalReferenceCode: ___, groupId: ___, rangeKey: ___, selectedMetrics: ___){dataSourceId, defaultMetric, externalReferenceCode, selectedMetrics}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectEntryMetric objectEntryMetric(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("rangeKey") Integer rangeKey,
+			@GraphQLName("selectedMetrics") String[] selectedMetrics)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryMetricResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryMetricResource ->
+				objectEntryMetricResource.getObjectEntryMetric(
+					externalReferenceCode, groupId, rangeKey, selectedMetrics));
 	}
 
 	/**
@@ -145,6 +176,39 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<InventoryAnalysis> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ObjectEntryMetricPage")
+	public class ObjectEntryMetricPage {
+
+		public ObjectEntryMetricPage(Page objectEntryMetricPage) {
+			actions = objectEntryMetricPage.getActions();
+
+			items = objectEntryMetricPage.getItems();
+			lastPage = objectEntryMetricPage.getLastPage();
+			page = objectEntryMetricPage.getPage();
+			pageSize = objectEntryMetricPage.getPageSize();
+			totalCount = objectEntryMetricPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<ObjectEntryMetric> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -228,6 +292,22 @@ public class Query {
 		inventoryAnalysisResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			ObjectEntryMetricResource objectEntryMetricResource)
+		throws Exception {
+
+		objectEntryMetricResource.setContextAcceptLanguage(_acceptLanguage);
+		objectEntryMetricResource.setContextCompany(_company);
+		objectEntryMetricResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		objectEntryMetricResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		objectEntryMetricResource.setContextUriInfo(_uriInfo);
+		objectEntryMetricResource.setContextUser(_user);
+		objectEntryMetricResource.setGroupLocalService(_groupLocalService);
+		objectEntryMetricResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(OverviewResource overviewResource)
 		throws Exception {
 
@@ -243,6 +323,8 @@ public class Query {
 
 	private static ComponentServiceObjects<InventoryAnalysisResource>
 		_inventoryAnalysisResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ObjectEntryMetricResource>
+		_objectEntryMetricResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OverviewResource>
 		_overviewResourceComponentServiceObjects;
 

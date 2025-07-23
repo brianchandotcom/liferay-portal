@@ -9,7 +9,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -169,105 +167,6 @@ public class SettingsTestUtil {
 			curThemeSettings);
 	}
 
-	public static Settings getColorSchemeNameSettings(Settings settings) {
-		if (settings.getColorSchemeName() != null) {
-			settings.setColorSchemeName(() -> null);
-
-			return new Settings() {
-				{
-					setColorSchemeName(() -> StringPool.BLANK);
-				}
-			};
-		}
-
-		settings.setColorSchemeName(() -> "01");
-		settings.setThemeName(() -> "classic_WAR_classictheme");
-
-		return new Settings() {
-			{
-				setColorSchemeName(() -> "01");
-				setThemeName(() -> "classic_WAR_classictheme");
-			}
-		};
-	}
-
-	public static Settings getCssSettings(Settings settings) {
-		if (settings.getCss() != null) {
-			settings.setCss(() -> null);
-
-			return new Settings() {
-				{
-					setCss(() -> StringPool.BLANK);
-				}
-			};
-		}
-
-		String css = RandomTestUtil.randomString();
-
-		settings.setCss(() -> css);
-
-		return new Settings() {
-			{
-				setCss(() -> css);
-			}
-		};
-	}
-
-	public static Settings getJavaScriptSettings(Settings settings) {
-		if (settings.getJavascript() != null) {
-			settings.setJavascript(() -> null);
-
-			return new Settings() {
-				{
-					setJavascript(() -> StringPool.BLANK);
-				}
-			};
-		}
-
-		String javaScript = RandomTestUtil.randomString();
-
-		settings.setJavascript(() -> javaScript);
-
-		return new Settings() {
-			{
-				setJavascript(() -> javaScript);
-			}
-		};
-	}
-
-	public static Settings getMasterPageItemExternalReferenceSettings(
-			ServiceContext serviceContext, Settings settings)
-		throws Exception {
-
-		if (settings.getMasterPageItemExternalReference() != null) {
-			settings.setMasterPageItemExternalReference(() -> null);
-
-			return new Settings() {
-				{
-					setMasterPageItemExternalReference(
-						() -> new ItemExternalReference() {
-							{
-								setExternalReferenceCode(
-									() -> StringPool.BLANK);
-							}
-						});
-				}
-			};
-		}
-
-		ItemExternalReference itemExternalReference =
-			_getMasterPageItemExternalReference(serviceContext);
-
-		settings.setMasterPageItemExternalReference(
-			() -> itemExternalReference);
-
-		return new Settings() {
-			{
-				setMasterPageItemExternalReference(() -> itemExternalReference);
-			}
-		};
-	}
-
 	public static Settings getModifiedSettings(
 			ServiceContext serviceContext, Settings settings)
 		throws Exception {
@@ -363,88 +262,6 @@ public class SettingsTestUtil {
 						"lfr-theme:" + RandomTestUtil.randomString(),
 						RandomTestUtil.randomString()
 					).build());
-			}
-		};
-	}
-
-	public static Settings getStyleBookItemExternalReferenceSettings(
-			ServiceContext serviceContext, Settings settings)
-		throws Exception {
-
-		if (settings.getStyleBookItemExternalReference() != null) {
-			settings.setStyleBookItemExternalReference(() -> null);
-
-			return new Settings() {
-				{
-					setStyleBookItemExternalReference(
-						() -> new ItemExternalReference() {
-							{
-								setExternalReferenceCode(
-									() -> StringPool.BLANK);
-							}
-						});
-				}
-			};
-		}
-
-		ItemExternalReference itemExternalReference =
-			_getStyleBookItemExternalReference(serviceContext);
-
-		settings.setStyleBookItemExternalReference(() -> itemExternalReference);
-
-		return new Settings() {
-			{
-				setStyleBookItemExternalReference(() -> itemExternalReference);
-			}
-		};
-	}
-
-	public static Settings getThemeNameSettings(Settings settings) {
-		if (settings.getThemeName() != null) {
-			settings.setColorSchemeName(() -> null);
-			settings.setThemeName(() -> null);
-
-			return new Settings() {
-				{
-					setColorSchemeName(() -> StringPool.BLANK);
-					setThemeName(() -> StringPool.BLANK);
-				}
-			};
-		}
-
-		settings.setThemeName(() -> "classic_WAR_classictheme");
-
-		return new Settings() {
-			{
-				setThemeName(() -> "classic_WAR_classictheme");
-			}
-		};
-	}
-
-	public static Settings getThemeSettingsSettings(Settings settings) {
-		if (settings.getThemeSettings() != null) {
-			settings.setThemeSettings(() -> null);
-
-			return new Settings() {
-				{
-					setThemeSettings(() -> new HashMap<>());
-				}
-			};
-		}
-
-		Map<String, String> themSettings = TreeMapBuilder.put(
-			"lfr-theme:" + RandomTestUtil.randomString(),
-			RandomTestUtil.randomString()
-		).put(
-			"lfr-theme:" + RandomTestUtil.randomString(),
-			RandomTestUtil.randomString()
-		).build();
-
-		settings.setThemeSettings(() -> themSettings);
-
-		return new Settings() {
-			{
-				setThemeSettings(() -> themSettings);
 			}
 		};
 	}

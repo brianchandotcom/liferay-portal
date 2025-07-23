@@ -20,6 +20,7 @@ const BaseRatings = ({
 	classPK,
 	contentTitle,
 	enabled = false,
+	externalReferenceCode = '',
 	inTrash = false,
 	signedIn,
 	type,
@@ -55,6 +56,7 @@ const BaseRatings = ({
 				className,
 				classPK,
 				contentTitle: contentTitle || '',
+				externalReferenceCode,
 				ratingType: type,
 				score,
 			});
@@ -76,7 +78,7 @@ const BaseRatings = ({
 					errorToast();
 				});
 		},
-		[className, classPK, contentTitle, type, url]
+		[className, classPK, contentTitle, externalReferenceCode, type, url]
 	);
 
 	const RatingsTypes = {
@@ -103,6 +105,7 @@ BaseRatings.propTypes = {
 	className: PropTypes.string.isRequired,
 	classPK: PropTypes.string.isRequired,
 	enabled: PropTypes.bool,
+	externalReferenceCode: PropTypes.string,
 	inTrash: PropTypes.bool,
 	signedIn: PropTypes.bool.isRequired,
 	type: PropTypes.string.isRequired,

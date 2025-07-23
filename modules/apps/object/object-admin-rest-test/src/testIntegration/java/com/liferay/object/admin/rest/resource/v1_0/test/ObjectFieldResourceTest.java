@@ -6,6 +6,7 @@
 package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.feature.flag.test.util.FeatureFlagTestHelper;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.client.pagination.Page;
@@ -15,13 +16,16 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -237,6 +241,36 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 		objectFieldResource.deleteObjectField(objectField1.getId());
 
 		objectFieldResource.deleteObjectField(objectField2.getId());
+
+		FeatureFlagTestHelper featureFlagTestHelper =
+			new FeatureFlagTestHelper();
+
+		boolean originalFeatureFlagValue =
+			featureFlagTestHelper.getFeatureFlagValue(
+				TestPropsValues.getCompanyId(), "LPD-17564");
+
+		featureFlagTestHelper.setFeatureFlagValue(
+			TestPropsValues.getCompanyId(), "LPD-17564", false);
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		try {
+			SystemProperties.clear("liferay.mode");
+
+			page = objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, null, null, null, null);
+
+			Collection<ObjectField> items = page.getItems();
+
+			Assert.assertEquals(items.size(), page.getTotalCount());
+		}
+		finally {
+			featureFlagTestHelper.setFeatureFlagValue(
+				TestPropsValues.getCompanyId(), "LPD-17564",
+				originalFeatureFlagValue);
+
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
 	}
 
 	@Override

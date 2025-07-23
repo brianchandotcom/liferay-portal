@@ -373,7 +373,7 @@ public class SettingsTestUtil {
 		};
 	}
 
-	public static void modifySettings(
+	public static Settings getModifiedSettings(
 			ServiceContext serviceContext, Settings settings)
 		throws Exception {
 
@@ -445,6 +445,8 @@ public class SettingsTestUtil {
 					"true"
 				).build());
 		}
+
+		return settings;
 	}
 
 	private static ItemExternalReference _getMasterPageItemExternalReference(

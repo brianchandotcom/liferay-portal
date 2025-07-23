@@ -678,8 +678,10 @@ public class PageSpecificationResourceTest
 						layout.getExternalReferenceCode());
 
 		_modifyPageExperiences(contentPageSpecification.getPageExperiences());
-		SettingsTestUtil.modifySettings(
-			serviceContext, contentPageSpecification.getSettings());
+
+		contentPageSpecification.setSettings(
+			SettingsTestUtil.getModifiedSettings(
+				serviceContext, contentPageSpecification.getSettings()));
 
 		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
@@ -1209,8 +1211,9 @@ public class PageSpecificationResourceTest
 					testGroup.getExternalReferenceCode(),
 					pageSpecificationExternalReferenceCode);
 
-		SettingsTestUtil.modifySettings(
-			serviceContext, pageSpecification.getSettings());
+		pageSpecification.setSettings(
+			SettingsTestUtil.getModifiedSettings(
+				serviceContext, pageSpecification.getSettings()));
 
 		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
 

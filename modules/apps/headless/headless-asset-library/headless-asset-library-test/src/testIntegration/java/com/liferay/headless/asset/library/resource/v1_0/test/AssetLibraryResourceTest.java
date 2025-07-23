@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -107,6 +108,22 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			assetLibrary, autoTaggingEnabled, availableLanguageIds,
 			defaultLanguageId, logoColor, mimeTypeLimits, sharingEnabled,
 			useCustomLanguages);
+
+		// remove the MimeTypeLimits
+
+		settings = new Settings();
+
+		settings.setMimeTypeLimits(new MimeTypeLimit[0]);
+
+		assetLibrary.setSettings(settings);
+
+		assetLibrary = assetLibraryResource.patchAssetLibrary(
+			assetLibrary.getId(), assetLibrary);
+
+		_assertSettings(
+			assetLibrary, autoTaggingEnabled, availableLanguageIds,
+			defaultLanguageId, logoColor, new MimeTypeLimit[0], sharingEnabled,
+			useCustomLanguages);
 	}
 
 	@Override
@@ -123,7 +140,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 					}
 				}
 			});
-		_testPostAssetLibrary(null);
+		_testPostAssetLibrary(new MimeTypeLimit[0]);
 	}
 
 	@Override
@@ -360,13 +377,13 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 		MimeTypeLimit[] mimeTypeLimits = settings.getMimeTypeLimits();
 
-		if (expectedMimeTypeLimits == null) {
+		if (ArrayUtil.isEmpty(expectedMimeTypeLimits)) {
 			Assert.assertEquals(
 				Arrays.toString(mimeTypeLimits), 0, mimeTypeLimits.length);
 		}
 		else {
 			Assert.assertEquals(
-				Arrays.toString(mimeTypeLimits), mimeTypeLimits.length,
+				Arrays.toString(mimeTypeLimits), expectedMimeTypeLimits.length,
 				mimeTypeLimits.length);
 			Assert.assertEquals(expectedMimeTypeLimits[0], mimeTypeLimits[0]);
 		}
@@ -470,7 +487,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 		_assertSettings(
 			assetLibrary, autoTaggingEnabled, availableLanguageIds,
-			defaultLanguageId, "outline-0", null, false, true);
+			defaultLanguageId, "outline-0", new MimeTypeLimit[0], false, true);
 	}
 
 	@Inject

@@ -73,12 +73,12 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 		<clay:content-col
 			expand="<%= true %>"
 		>
-			<span class="heading-text text-secondary" id="<portlet:namespace />sitesIncludedTitle"><liferay-ui:message key="sites-included-in-the-xml-sitemap" /></span>
+			<span class="heading-text text-secondary" id="<portlet:namespace />sitesIncludedTitle"><liferay-ui:message key="company-sitemap-group-ids" /></span>
 		</clay:content-col>
 
 		<clay:content-col>
 			<clay:button
-				aria-label='<%= LanguageUtil.format(request, "select-x", "sites-included-in-the-xml-sitemap") %>'
+				aria-label='<%= LanguageUtil.format(request, "select-x", "company-sitemap-group-ids") %>'
 				displayType="secondary"
 				id='<%= liferayPortletResponse.getNamespace() + "selectSiteLink" %>'
 				label="select"
@@ -176,12 +176,12 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 		<clay:content-col
 			expand="<%= true %>"
 		>
-			<span class="heading-text text-secondary" id="<portlet:namespace />objectsIncludedTitle"><liferay-ui:message key="objects-and-cms-structures" /></span>
+			<span class="heading-text text-secondary" id="<portlet:namespace />objectsIncludedTitle"><liferay-ui:message key="company-sitemap-object-definition-ids" /></span>
 		</clay:content-col>
 
 		<clay:content-col>
 			<clay:button
-				aria-label='<%= LanguageUtil.format(request, "select-x", "object-definitions-included-in-the-xml-sitemap") %>'
+				aria-label='<%= LanguageUtil.format(request, "select-x", "company-sitemap-object-definition-ids") %>'
 				displayType="secondary"
 				id='<%= liferayPortletResponse.getNamespace() + "selectObjectDefinitionLink" %>'
 				label="select"

@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -110,10 +109,10 @@ public class CaptchaConfigurationModelListenerTest {
 					configurationModelListenerException) {
 
 			Assert.assertTrue(
-				StringUtil.contains(
-					configurationModelListenerException.getMessage(),
-					_language.get(LocaleUtil.US, exceptionMessageKey),
-					StringPool.BLANK));
+				configurationModelListenerException.getMessage(
+				).contains(
+					_language.get(LocaleUtil.US, exceptionMessageKey)
+				));
 		}
 	}
 

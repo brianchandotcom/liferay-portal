@@ -1158,44 +1158,12 @@ public class PageSpecificationResourceTest
 					unsafeFunction)
 		throws Exception {
 
-		Settings settings = pageSpecification.getSettings();
+		pageSpecification.setSettings(
+			SettingsTestUtil.getSettings(serviceContext));
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			pageSpecification,
-			() -> unsafeFunction.apply(
-				SettingsTestUtil.getColorSchemeNameSettings(settings)));
-
-		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
-			pageSpecification,
-			() -> unsafeFunction.apply(
-				SettingsTestUtil.getCssSettings(settings)));
-
-		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
-			pageSpecification,
-			() -> unsafeFunction.apply(
-				SettingsTestUtil.getJavaScriptSettings(settings)));
-
-		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
-			pageSpecification,
-			() -> unsafeFunction.apply(
-				SettingsTestUtil.getMasterPageItemExternalReferenceSettings(
-					serviceContext, settings)));
-
-		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
-			pageSpecification,
-			() -> unsafeFunction.apply(
-				SettingsTestUtil.getStyleBookItemExternalReferenceSettings(
-					serviceContext, settings)));
-
-		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
-			pageSpecification,
-			() -> unsafeFunction.apply(
-				SettingsTestUtil.getThemeNameSettings(settings)));
-
-		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
-			pageSpecification,
-			() -> unsafeFunction.apply(
-				SettingsTestUtil.getThemeSettingsSettings(settings)));
+			() -> unsafeFunction.apply(pageSpecification.getSettings()));
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodePageSpecification(

@@ -82,9 +82,9 @@ public class ViewContentsSectionDisplayContext
 				StringBundler.concat(
 					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 					GroupConstants.CMS_FRIENDLY_URL,
-					"/edit_content_item?objectEntryId={embedded.id}&",
-					"redirect=", themeDisplay.getURLCurrent(),
-					"&p_l_mode=read&p_p_state=", LiferayWindowState.POP_UP),
+					"/edit_content_item?objectEntryId={embedded.id}",
+					"&p_l_mode=read&p_p_state=", LiferayWindowState.POP_UP,
+					"&redirect=", themeDisplay.getURLCurrent()),
 				"view", "viewContent",
 				LanguageUtil.get(httpServletRequest, "view"), "get", null,
 				"modal"));

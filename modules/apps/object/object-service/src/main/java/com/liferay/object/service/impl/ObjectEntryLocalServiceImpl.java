@@ -2139,9 +2139,16 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (!ObjectActionThreadLocal.isSkipObjectActionExecution()) {
+			String objectActionTrigger =
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE;
+
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				objectActionTrigger =
+					ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE;
+			}
+
 			_executeObjectActions(
-				objectEntry.getCompanyId(),
-				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				objectEntry.getCompanyId(), objectActionTrigger,
 				objectDefinition, objectEntry, originalObjectEntry,
 				serviceContext.getLanguageId(), user);
 		}

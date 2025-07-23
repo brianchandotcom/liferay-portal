@@ -83,6 +83,14 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				relatedObjectEntryId);
 		}
 
+		if (objectRelationship.isEdge()) {
+			defaultObjectEntryManager.deleteRelatedObjectEntry(
+				relatedObjectDefinition, relatedObjectEntryId,
+				objectRelationship, currentObjectEntryId);
+
+			return;
+		}
+
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				relatedObjectDefinition.getClassName(),

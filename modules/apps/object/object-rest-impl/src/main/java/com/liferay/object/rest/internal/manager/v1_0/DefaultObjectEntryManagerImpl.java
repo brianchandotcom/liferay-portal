@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -386,6 +387,37 @@ public class DefaultObjectEntryManagerImpl
 
 		_objectEntryVersionService.deleteObjectEntryVersion(
 			serviceBuilderObjectEntry.getObjectEntryId(), version);
+	}
+
+	@Override
+	public void deleteRelatedObjectEntry(
+			ObjectDefinition objectDefinition, long objectEntryId,
+			ObjectRelationship objectRelationship, long parentObjectEntryId)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(objectEntryId);
+
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition, serviceBuilderObjectEntry);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		if (!Objects.equals(
+				MapUtil.getLong(
+					serviceBuilderObjectEntry.getValues(),
+					objectField.getName()),
+				parentObjectEntryId)) {
+
+			throw new NoSuchObjectEntryException(
+				StringBundler.concat(
+					"No ObjectEntry exists with the key {",
+					objectField.getName(), "=", parentObjectEntryId,
+					", objectEntryId=", objectEntryId, "}"));
+		}
+
+		_objectEntryService.deleteObjectEntry(objectEntryId);
 	}
 
 	@Override
@@ -1508,6 +1540,17 @@ public class DefaultObjectEntryManagerImpl
 
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
+
+		if ((serviceBuilderObjectEntry.getRootObjectEntryId() != 0) &&
+			(serviceBuilderObjectEntry.getRootObjectEntryId() !=
+				serviceBuilderObjectEntry.getObjectEntryId())) {
+
+			throw new NoSuchObjectEntryException(
+				StringBundler.concat(
+					"No ObjectEntry exists with the key {",
+					"rootObjectEntryId=0, objectEntryId=",
+					serviceBuilderObjectEntry.getObjectEntryId(), "}"));
+		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
 			(serviceBuilderObjectEntry.getStatus() ==

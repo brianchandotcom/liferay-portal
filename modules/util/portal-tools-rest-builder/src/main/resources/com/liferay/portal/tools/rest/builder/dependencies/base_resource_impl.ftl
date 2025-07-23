@@ -146,8 +146,12 @@ public abstract class Base${schemaName}ResourceImpl
 		</#if>
 
 		<#assign
-			generatePermissions = freeMarkerTool.isGeneratePermissions(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName)
+			generatePermissions = false
+			getParentPermissionsPageJavaMethodSignature = ""
+			getPermissionsPageJavaMethodSignature = ""
 			httpMethod = freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)
+			putParentPermissionsPageJavaMethodSignature = ""
+			putPermissionsPageJavaMethodSignature = ""
 			parentSchemaName = javaMethodSignature.parentSchemaName!
 		/>
 
@@ -197,7 +201,7 @@ public abstract class Base${schemaName}ResourceImpl
 			</#if>
 		</#if>
 
-		<#if generatePermissions>
+		<#if freeMarkerTool.isGeneratePermissions(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName)>
 			<#assign
 				getPermissionsPageJavaMethodSignature = freeMarkerTool.getPermissionsPageJavaMethodSignature("get", javaMethodSignatures, schemaName)!""
 				putPermissionsPageJavaMethodSignature = freeMarkerTool.getPermissionsPageJavaMethodSignature("put", javaMethodSignatures, schemaName)!""
@@ -211,7 +215,9 @@ public abstract class Base${schemaName}ResourceImpl
 			</#if>
 		</#if>
 
-		<#if generatePermissions && ((getPermissionsPageJavaMethodSignature?has_content && putPermissionsPageJavaMethodSignature?has_content) || (getParentPermissionsPageJavaMethodSignature?has_content && putParentPermissionsPageJavaMethodSignature?has_content))>
+		<#if ((getPermissionsPageJavaMethodSignature?has_content && putPermissionsPageJavaMethodSignature?has_content) || (getParentPermissionsPageJavaMethodSignature?has_content && putParentPermissionsPageJavaMethodSignature?has_content))>
+			<#assign generatePermissions = true />
+
 			protected abstract ${javaMethodSignature.returnType} do${stringUtil.upperCaseFirstLetter(javaMethodSignature.methodName)}(${freeMarkerTool.getResourceParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false)}) throws Exception;
 
 			<#if configYAML.application??>

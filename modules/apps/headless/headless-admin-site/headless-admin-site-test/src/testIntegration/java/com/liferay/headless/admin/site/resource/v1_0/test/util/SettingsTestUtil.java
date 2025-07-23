@@ -167,7 +167,7 @@ public class SettingsTestUtil {
 			curThemeSettings);
 	}
 
-	public static void getModifiedSettings(
+	public static void modifySettings(
 			ServiceContext serviceContext, Settings settings)
 		throws Exception {
 

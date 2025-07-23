@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Definition;
 import com.liferay.portal.struts.TilesUtil;
@@ -198,12 +197,12 @@ public class ContentObjectFragmentRendererTest {
 		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
 
 		Assert.assertTrue(
-			StringUtil.contains(
-				ContentLayoutTestUtil.getRenderLayoutHTML(
-					_layout, _layoutServiceContextHelper,
-					_layoutStructureProvider, segmentsExperienceId),
-				_journalArticle.getTitle(LocaleUtil.getSiteDefault()),
-				StringPool.BLANK));
+			ContentLayoutTestUtil.getRenderLayoutHTML(
+				_layout, _layoutServiceContextHelper, _layoutStructureProvider,
+				segmentsExperienceId
+			).contains(
+				_journalArticle.getTitle(LocaleUtil.getSiteDefault())
+			));
 	}
 
 	@Test

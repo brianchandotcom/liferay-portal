@@ -34,11 +34,17 @@ public class ViewVersionHistoryTableFDSView extends BaseTableFDSView {
 		return fdsTableSchemaBuilder.add(
 			"title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"title")
+				"title"
+			).setSortable(
+				true
+			)
 		).add(
 			"systemProperties.version.number", "version",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"version")
+				"version"
+			).setSortable(
+				true
+			)
 		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
@@ -50,7 +56,10 @@ public class ViewVersionHistoryTableFDSView extends BaseTableFDSView {
 		).add(
 			"dateModified", "modified",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime")
+				"dateTime"
+			).setSortable(
+				true
+			)
 		).build();
 	}
 

@@ -48,7 +48,34 @@ export default function TranslationOptions({
 	});
 
 	const markAsTranslatedHandler = () => {
+		const hiddenInputValues: Record<string, string> = {};
+
+		Object.keys(initialFields)
+			.flatMap((fieldName) => {
+			const hiddenInput = document.querySelector<HTMLInputElement>(
+				`[type="hidden"][data-field-name="${fieldName}"][data-languageid="${selectedLanguageId}"]`
+			);
+
+			if (hiddenInput) {
+				hiddenInputValues[fieldName] = hiddenInput.value;
+			}
+		});
+
 		Liferay.fire('inputLocalized:markAsTranslated', {selectedLanguageId});
+
+		Object.keys(initialFields)
+			.flatMap((fieldName) => {
+			const hiddenInput = document.querySelector<HTMLInputElement>(
+				`[type="hidden"][data-field-name="${fieldName}"][data-languageid="${selectedLanguageId}"]`
+			);
+
+			if (hiddenInput && hiddenInputValues[fieldName] !== undefined) {
+				hiddenInput.value = hiddenInputValues[fieldName];
+			}
+		});
+
+		Liferay.fire('inputLocalized:updateTranslationStatus');
+
 		Liferay.fire('journal:storeState', {
 			fieldName: Liferay.Language.get('mark-as-translated'),
 		});

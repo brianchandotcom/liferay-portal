@@ -143,6 +143,14 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, Integer version)
 		throws Exception;
 
+	public void postByExternalReferenceCodeSubscribe(
+			String externalReferenceCode)
+		throws Exception;
+
+	public void postByExternalReferenceCodeUnsubscribe(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Response postObjectEntriesPageExportBatch(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -177,6 +185,14 @@ public interface ObjectEntryResource {
 
 	public ObjectEntry postScopeScopeKeyByExternalReferenceCodeByVersionExpire(
 			String scopeKey, String externalReferenceCode, Integer version)
+		throws Exception;
+
+	public void postScopeScopeKeyByExternalReferenceCodeSubscribe(
+			String scopeKey, String externalReferenceCode)
+		throws Exception;
+
+	public void postScopeScopeKeyByExternalReferenceCodeUnsubscribe(
+			String scopeKey, String externalReferenceCode)
 		throws Exception;
 
 	public ValidationResponse postScopeScopeKeyValidate(

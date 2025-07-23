@@ -14,6 +14,7 @@ import {
 import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -48,6 +49,7 @@ import {createObjectFields, mockObjectFields} from './utils/mockObjectFields';
 const test = mergeTests(
 	accountSettingsPagesTest,
 	applicationsMenuPageTest,
+	apiHelpersTest,
 	collectionsPagesTest,
 	dataApiHelpersTest,
 	isolatedSiteTest,
@@ -1745,6 +1747,116 @@ test.describe('Manage object entries through View Object Entries', () => {
 			);
 		});
 	});
+
+	test(
+		'error message is displayed when trying to view a deleted object entry with a user with view-only permissions',
+		{tag: ['@LPD-61276']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			let entryUrl: string;
+
+			const objectName = 'ObjectName' + getRandomInt();
+			const fieldName = 'textField' + getRandomInt();
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: customObject} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					label: {
+						en_US: objectName,
+					},
+					name: objectName,
+					objectFields: createObjectFields('text', [
+						{
+							label: fieldName,
+							name: fieldName,
+						},
+					]),
+					pluralLabel: {
+						en_US: objectName + 's',
+					},
+					scope: 'company',
+					status: {code: 0},
+					titleObjectFieldName: fieldName,
+				});
+
+			apiHelpers.data.push({
+				id: customObject.id,
+				type: 'objectDefinition',
+			});
+
+			const company =
+				await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+					'liferay.com'
+				);
+
+			const user = await createUserWithPermissions({
+				apiHelpers,
+				rolePermissions: [
+					{
+						actionIds: ['VIEW_CONTROL_PANEL'],
+						primaryKey: company.companyId,
+						resourceName: '90',
+						scope: 1,
+					},
+					{
+						actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+						primaryKey: company.companyId,
+						resourceName:
+							'com_liferay_users_admin_web_portlet_UsersAdminPortlet',
+						scope: 1,
+					},
+					{
+						actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+						primaryKey: company.companyId,
+						resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${customObject.className.split('#')[1]}`,
+						scope: 1,
+					},
+					{
+						actionIds: ['VIEW'],
+						primaryKey: company.companyId,
+						resourceName: `${customObject.className}`,
+						scope: 1,
+					},
+				],
+			});
+
+			await test.step('Create object entry and get its URL', async () => {
+				await viewObjectEntriesPage.goto(customObject.className);
+
+				await viewObjectEntriesPage.addObjectEntryButton.click();
+
+				await page.getByLabel(fieldName).fill(getRandomString());
+
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+				await page.waitForURL(/externalReferenceCode=/);
+
+				entryUrl = page.url();
+			});
+
+			await test.step('Delete the object entry', async () => {
+				await viewObjectEntriesPage.backButton.click();
+
+				await viewObjectEntriesPage.frontendDatasetActions.click();
+
+				await viewObjectEntriesPage.frontendDatasetDeleteAction.click();
+
+				await page.getByRole('button', {name: 'Delete'}).click();
+			});
+
+			await test.step('Switch user and assert that the error message is displayed', async () => {
+				await performUserSwitch(page, user.alternateName);
+
+				await page.goto(entryUrl);
+
+				await expect(
+					page.getByText('Error:The object entry could not be found.')
+				).toBeVisible();
+			});
+		}
+	);
 
 	test('loading element count is one even when pressing save button multiple times', async ({
 		apiHelpers,

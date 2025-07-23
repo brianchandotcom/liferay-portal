@@ -1201,7 +1201,7 @@ public class PageSpecificationResourceTest
 			ServiceContext serviceContext)
 		throws Exception {
 
-		layout = _updateLayout(layout, serviceContext);
+		_updateLayout(layout, serviceContext);
 
 		PageSpecification pageSpecification =
 			pageSpecificationResource.

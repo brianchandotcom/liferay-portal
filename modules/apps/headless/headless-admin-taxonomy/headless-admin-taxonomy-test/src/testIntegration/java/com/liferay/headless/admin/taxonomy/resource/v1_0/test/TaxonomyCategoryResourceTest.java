@@ -1050,10 +1050,10 @@ public class TaxonomyCategoryResourceTest
 		_testPostTaxonomyCategoryBatchFullLazyReferences(
 			createStrategy, testDepotEntry.getGroupId(), "assetLibraryId",
 			testDepotEntry.getDepotEntryId());
-		_testPostTaxonomyCategoryBatchIncompleteParentTaxonomyCategory(
+		_testPostTaxonomyCategoryBatchEmptyParentTaxonomyCategory(
 			_depotAssetVocabulary, createStrategy, testDepotEntry.getGroupId(),
 			"assetLibraryId", testDepotEntry.getDepotEntryId());
-		_testPostTaxonomyCategoryBatchIncompleteParentTaxonomyVocabulary(
+		_testPostTaxonomyCategoryBatchEmptyParentTaxonomyVocabulary(
 			createStrategy, testDepotEntry.getGroupId(), "assetLibraryId",
 			testDepotEntry.getDepotEntryId());
 	}
@@ -1067,10 +1067,10 @@ public class TaxonomyCategoryResourceTest
 		_testPostTaxonomyCategoryBatchFullLazyReferences(
 			createStrategy, testGroup.getGroupId(), "siteId",
 			testGroup.getGroupId());
-		_testPostTaxonomyCategoryBatchIncompleteParentTaxonomyCategory(
+		_testPostTaxonomyCategoryBatchEmptyParentTaxonomyCategory(
 			_assetVocabulary, createStrategy, testGroup.getGroupId(), "siteId",
 			testGroup.getGroupId());
-		_testPostTaxonomyCategoryBatchIncompleteParentTaxonomyVocabulary(
+		_testPostTaxonomyCategoryBatchEmptyParentTaxonomyVocabulary(
 			createStrategy, testGroup.getGroupId(), "siteId",
 			testGroup.getGroupId());
 	}
@@ -1213,38 +1213,7 @@ public class TaxonomyCategoryResourceTest
 			parentTaxonomyVocabulary, taxonomyCategory);
 	}
 
-	private void _testPostTaxonomyCategoryBatchFullLazyReferences(
-			String createStrategy, long groupId, String parameter,
-			long parameterValue)
-		throws Exception {
-
-		ParentTaxonomyCategory parentTaxonomyCategory =
-			new ParentTaxonomyCategory() {
-				{
-					externalReferenceCode = RandomTestUtil.randomString();
-					id = RandomTestUtil.randomLong();
-				}
-			};
-
-		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
-			new ParentTaxonomyVocabulary() {
-				{
-					externalReferenceCode = RandomTestUtil.randomString();
-					id = RandomTestUtil.randomLong();
-				}
-			};
-
-		TaxonomyCategory taxonomyCategory = super.randomTaxonomyCategory();
-
-		taxonomyCategory.setTaxonomyVocabularyId(() -> null);
-		taxonomyCategory.setSiteId(groupId);
-
-		_testPostTaxonomyCategoryBatch(
-			createStrategy, parameter, parameterValue, parentTaxonomyCategory,
-			parentTaxonomyVocabulary, taxonomyCategory);
-	}
-
-	private void _testPostTaxonomyCategoryBatchIncompleteParentTaxonomyCategory(
+	private void _testPostTaxonomyCategoryBatchEmptyParentTaxonomyCategory(
 			AssetVocabulary assetVocabulary, String createStrategy,
 			long groupId, String parameter, long parameterValue)
 		throws Exception {
@@ -1276,10 +1245,9 @@ public class TaxonomyCategoryResourceTest
 			parentTaxonomyVocabulary, taxonomyCategory);
 	}
 
-	private void
-			_testPostTaxonomyCategoryBatchIncompleteParentTaxonomyVocabulary(
-				String createStrategy, long groupId, String parameter,
-				long parameterValue)
+	private void _testPostTaxonomyCategoryBatchEmptyParentTaxonomyVocabulary(
+			String createStrategy, long groupId, String parameter,
+			long parameterValue)
 		throws Exception {
 
 		TaxonomyCategory postParentTaxonomyCategory =
@@ -1293,6 +1261,37 @@ public class TaxonomyCategoryResourceTest
 					externalReferenceCode =
 						postParentTaxonomyCategory.getExternalReferenceCode();
 					id = Long.valueOf(postParentTaxonomyCategory.getId());
+				}
+			};
+
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+			new ParentTaxonomyVocabulary() {
+				{
+					externalReferenceCode = RandomTestUtil.randomString();
+					id = RandomTestUtil.randomLong();
+				}
+			};
+
+		TaxonomyCategory taxonomyCategory = super.randomTaxonomyCategory();
+
+		taxonomyCategory.setTaxonomyVocabularyId(() -> null);
+		taxonomyCategory.setSiteId(groupId);
+
+		_testPostTaxonomyCategoryBatch(
+			createStrategy, parameter, parameterValue, parentTaxonomyCategory,
+			parentTaxonomyVocabulary, taxonomyCategory);
+	}
+
+	private void _testPostTaxonomyCategoryBatchFullLazyReferences(
+			String createStrategy, long groupId, String parameter,
+			long parameterValue)
+		throws Exception {
+
+		ParentTaxonomyCategory parentTaxonomyCategory =
+			new ParentTaxonomyCategory() {
+				{
+					externalReferenceCode = RandomTestUtil.randomString();
+					id = RandomTestUtil.randomLong();
 				}
 			};
 

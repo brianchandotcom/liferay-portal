@@ -1999,7 +1999,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 					accountGroupRel.getAccountGroupId() ==
 						accountGroup3.getAccountGroupId()));
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, accountGroup3.getStatus());
+			WorkflowConstants.STATUS_EMPTY, accountGroup3.getStatus());
 
 		AccountRole serviceBuilderAccountRole =
 			_accountRoleLocalService.fetchAccountRoleByExternalReferenceCode(
@@ -2017,7 +2017,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Assert.assertEquals(
 			accountEntry.getDefaultBillingAddressId(), address1.getAddressId());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, address1.getStatus());
+			WorkflowConstants.STATUS_EMPTY, address1.getStatus());
 
 		Address address2 =
 			_addressLocalService.fetchAddressByExternalReferenceCode(
@@ -2028,7 +2028,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			accountEntry.getDefaultShippingAddressId(),
 			address2.getAddressId());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, address2.getStatus());
+			WorkflowConstants.STATUS_EMPTY, address2.getStatus());
 
 		Assert.assertNotEquals(0, accountEntry.getLogoId());
 
@@ -2065,7 +2065,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 					accountEntryOrganizationRel.getOrganizationId() ==
 						organization3.getOrganizationId()));
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, organization3.getStatus());
+			WorkflowConstants.STATUS_EMPTY, organization3.getStatus());
 
 		AccountEntry parentAccountEntry =
 			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
@@ -2073,8 +2073,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
-			parentAccountEntry.getStatus());
+			WorkflowConstants.STATUS_EMPTY, parentAccountEntry.getStatus());
 
 		Role serviceBuilderRole2 =
 			_roleLocalService.fetchRoleByExternalReferenceCode(
@@ -2130,8 +2129,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			RoleConstants.getLabelType(permission2.getRoleType()),
 			serviceBuilderRole3.getType());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
-			serviceBuilderRole3.getStatus());
+			WorkflowConstants.STATUS_EMPTY, serviceBuilderRole3.getStatus());
 
 		AssetCategory assetCategory2 =
 			_assetCategoryLocalService.
@@ -2166,7 +2164,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 					assetCategory.getCategoryId() ==
 						assetCategory3.getCategoryId()));
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, assetCategory3.getStatus());
+			WorkflowConstants.STATUS_EMPTY, assetCategory3.getStatus());
 	}
 
 	private void _testPostAccountDuplicateExternalReferenceCode()

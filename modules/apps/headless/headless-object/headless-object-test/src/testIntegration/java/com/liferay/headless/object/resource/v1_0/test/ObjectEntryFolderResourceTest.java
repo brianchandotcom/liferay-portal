@@ -619,7 +619,7 @@ public class ObjectEntryFolderResourceTest
 						_testDepotEntry.getCompanyId());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
+			WorkflowConstants.STATUS_EMPTY,
 			serviceBuilderParentObjectEntryFolder.getStatus());
 
 		_objectEntryFolderLocalService.deleteObjectEntryFolder(
@@ -807,7 +807,7 @@ public class ObjectEntryFolderResourceTest
 							_testDepotEntry.getCompanyId());
 
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE,
+				WorkflowConstants.STATUS_EMPTY,
 				serviceBuilderParentObjectEntryFolder.getStatus());
 
 			_objectEntryFolderResource.

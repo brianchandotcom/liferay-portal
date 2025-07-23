@@ -1367,7 +1367,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 					accountEntryOrganizationRel.getAccountEntryId() ==
 						accountEntry3.getAccountEntryId()));
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, accountEntry3.getStatus());
+			WorkflowConstants.STATUS_EMPTY, accountEntry3.getStatus());
 
 		Assert.assertNotEquals(0, serviceBuilderOrganization.getLogoId());
 
@@ -1386,7 +1386,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				serviceBuilderOrganization.getParentOrganizationId());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
+			WorkflowConstants.STATUS_EMPTY,
 			serviceBuilderParentOrganization.getStatus());
 
 		Role role3 = _roleLocalService.fetchRoleByExternalReferenceCode(
@@ -1441,8 +1441,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		Assert.assertEquals(
 			RoleConstants.getLabelType(permission2.getRoleType()),
 			role4.getType());
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, role4.getStatus());
+		Assert.assertEquals(WorkflowConstants.STATUS_EMPTY, role4.getStatus());
 
 		Role role5 = _roleLocalService.fetchRoleByExternalReferenceCode(
 			roleBrief1.getExternalReferenceCode(),
@@ -1467,8 +1466,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				roleBrief -> Objects.equals(
 					roleBrief.getExternalReferenceCode(),
 					role6.getExternalReferenceCode())));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, role6.getStatus());
+		Assert.assertEquals(WorkflowConstants.STATUS_EMPTY, role6.getStatus());
 
 		AssetCategory assetCategory2 =
 			_assetCategoryLocalService.
@@ -1504,7 +1502,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 					assetCategory.getCategoryId() ==
 						assetCategory3.getCategoryId()));
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, assetCategory3.getStatus());
+			WorkflowConstants.STATUS_EMPTY, assetCategory3.getStatus());
 	}
 
 	private void _testPostOrganizationWithCustomFields() throws Exception {

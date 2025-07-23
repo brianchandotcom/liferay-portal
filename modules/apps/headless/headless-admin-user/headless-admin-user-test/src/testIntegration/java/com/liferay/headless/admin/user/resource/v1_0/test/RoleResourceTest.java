@@ -966,8 +966,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			RoleConstants.getLabelType(permission2.getRoleType()),
 			serviceBuilderRole3.getType());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
-			serviceBuilderRole3.getStatus());
+			WorkflowConstants.STATUS_EMPTY, serviceBuilderRole3.getStatus());
 	}
 
 	private Role _toRole(com.liferay.portal.kernel.model.Role role) {

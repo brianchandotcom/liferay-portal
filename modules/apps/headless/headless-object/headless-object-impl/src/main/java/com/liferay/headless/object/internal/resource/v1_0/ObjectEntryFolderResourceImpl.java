@@ -407,7 +407,7 @@ public class ObjectEntryFolderResourceImpl
 			if (!addObjectEntryFolder) {
 				serviceBuilderObjectEntryFolder =
 					_objectEntryFolderLocalService.
-						getOrAddIncompleteObjectEntryFolder(
+						getOrAddEmptyObjectEntryFolder(
 							parentObjectEntryFolderExternalReferenceCode,
 							groupId, contextUser.getCompanyId(),
 							contextUser.getUserId(),

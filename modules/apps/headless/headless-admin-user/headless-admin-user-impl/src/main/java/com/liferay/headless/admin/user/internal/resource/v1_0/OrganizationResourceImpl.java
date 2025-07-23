@@ -736,7 +736,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		try {
 			AccountEntry accountEntry =
-				_accountEntryService.getOrAddIncompleteAccountEntry(
+				_accountEntryService.getOrAddEmptyAccountEntry(
 					externalReferenceCode, accountBrief.getName(),
 					accountBrief.getType());
 
@@ -766,7 +766,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			return organization;
 		}
 
-		Role role = _roleService.getOrAddIncompleteRole(
+		Role role = _roleService.getOrAddEmptyRole(
 			externalReferenceCode, Role.class.getName(), 0, roleBrief.getName(),
 			roleBrief.getRoleType());
 
@@ -866,7 +866,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 					}
 
 					AssetCategory assetCategory =
-						_assetCategoryService.getOrAddIncompleteCategory(
+						_assetCategoryService.getOrAddEmptyCategory(
 							externalReferenceCode, group.getGroupId());
 
 					return assetCategory.getCategoryId();
@@ -1111,7 +1111,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization =
-				_organizationLocalService.getOrAddIncompleteOrganization(
+				_organizationLocalService.getOrAddEmptyOrganization(
 					externalReferenceCode, contextUser.getCompanyId(),
 					contextUser.getUserId(), parentOrganization.getName());
 

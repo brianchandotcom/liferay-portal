@@ -713,7 +713,7 @@ public class TaxonomyCategoryResourceImpl
 				}
 
 				AssetVocabulary assetVocabulary =
-					_assetVocabularyService.getOrAddIncompleteVocabulary(
+					_assetVocabularyService.getOrAddEmptyVocabulary(
 						taxonomyVocabularyExternalReferenceCode, groupId);
 
 				return assetVocabulary.getVocabularyId();
@@ -795,7 +795,7 @@ public class TaxonomyCategoryResourceImpl
 		}
 
 		AssetCategory parentAssetCategory =
-			_assetCategoryService.getOrAddIncompleteCategory(
+			_assetCategoryService.getOrAddEmptyCategory(
 				parentTaxonomyCategoryExternalReferenceCode, groupId);
 
 		return parentAssetCategory.getCategoryId();
@@ -828,7 +828,7 @@ public class TaxonomyCategoryResourceImpl
 		}
 
 		AssetCategory parentAssetCategory =
-			_assetCategoryService.getOrAddIncompleteCategory(
+			_assetCategoryService.getOrAddEmptyCategory(
 				parentTaxonomyCategoryExternalReferenceCode, groupId);
 
 		return parentAssetCategory.getCategoryId();
@@ -891,7 +891,7 @@ public class TaxonomyCategoryResourceImpl
 				}
 				else {
 					AssetVocabulary assetVocabulary =
-						_assetVocabularyService.getOrAddIncompleteVocabulary(
+						_assetVocabularyService.getOrAddEmptyVocabulary(
 							taxonomyVocabularyExternalReferenceCode, groupId);
 
 					taxonomyVocabularyId = assetVocabulary.getVocabularyId();

@@ -689,7 +689,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		Assert.assertEquals(
 			accountBrief2.getType(), serviceBuilderAccountEntry3.getType());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
+			WorkflowConstants.STATUS_EMPTY,
 			serviceBuilderAccountEntry3.getStatus());
 
 		Role serviceBuilderRole2 =
@@ -746,8 +746,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 			RoleConstants.getLabelType(permission2.getRoleType()),
 			serviceBuilderRole3.getType());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
-			serviceBuilderRole3.getStatus());
+			WorkflowConstants.STATUS_EMPTY, serviceBuilderRole3.getStatus());
 	}
 
 	private void _testPutAccountGroupByExternalReferenceWithoutName()

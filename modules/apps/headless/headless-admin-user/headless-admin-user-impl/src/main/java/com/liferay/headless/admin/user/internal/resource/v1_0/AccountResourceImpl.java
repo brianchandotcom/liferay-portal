@@ -596,7 +596,7 @@ public class AccountResourceImpl
 
 		try {
 			AccountGroup accountGroup =
-				_accountGroupService.getOrAddIncompleteAccountGroup(
+				_accountGroupService.getOrAddEmptyAccountGroup(
 					externalReferenceCode, accountGroupBrief.getName());
 
 			_accountGroupRelService.addAccountGroupRel(
@@ -624,7 +624,7 @@ public class AccountResourceImpl
 			return accountEntry;
 		}
 
-		_accountRoleLocalService.getOrAddIncompleteAccountRole(
+		_accountRoleLocalService.getOrAddEmptyAccountRole(
 			externalReferenceCode, contextCompany.getCompanyId(),
 			contextUser.getUserId(), accountEntry.getAccountEntryId(),
 			accountRole.getName());
@@ -744,7 +744,7 @@ public class AccountResourceImpl
 				}
 
 				AssetCategory assetCategory =
-					_assetCategoryService.getOrAddIncompleteCategory(
+					_assetCategoryService.getOrAddEmptyCategory(
 						externalReferenceCode, group.getGroupId());
 
 				return assetCategory.getCategoryId();
@@ -790,7 +790,7 @@ public class AccountResourceImpl
 			Validator.isNotNull(
 				account.getDefaultBillingAddressExternalReferenceCode())) {
 
-			Address address = _addressLocalService.getOrAddIncompleteAddress(
+			Address address = _addressLocalService.getOrAddEmptyAddress(
 				account.getDefaultBillingAddressExternalReferenceCode(),
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				AccountEntry.class.getName(), accountEntryId);
@@ -825,7 +825,7 @@ public class AccountResourceImpl
 			Validator.isNotNull(
 				account.getDefaultShippingAddressExternalReferenceCode())) {
 
-			Address address = _addressLocalService.getOrAddIncompleteAddress(
+			Address address = _addressLocalService.getOrAddEmptyAddress(
 				account.getDefaultShippingAddressExternalReferenceCode(),
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				AccountEntry.class.getName(), accountEntryId);
@@ -1055,10 +1055,8 @@ public class AccountResourceImpl
 					if (FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
 						com.liferay.portal.kernel.model.Organization
 							organization =
-								_organizationService.
-									getOrAddIncompleteOrganization(
-										externalReferenceCode,
-										StringPool.BLANK);
+								_organizationService.getOrAddEmptyOrganization(
+									externalReferenceCode, StringPool.BLANK);
 
 						return organization.getOrganizationId();
 					}
@@ -1096,7 +1094,7 @@ public class AccountResourceImpl
 				account.getParentAccountExternalReferenceCode())) {
 
 			AccountEntry accountEntry =
-				_accountEntryService.getOrAddIncompleteAccountEntry(
+				_accountEntryService.getOrAddEmptyAccountEntry(
 					account.getParentAccountExternalReferenceCode(),
 					account.getParentAccountExternalReferenceCode(),
 					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);

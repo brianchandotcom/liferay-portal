@@ -61,7 +61,12 @@ test(
 
 			expect(
 				await fdsSamplePage.table.headerCells.allInnerTexts()
-			).toEqual(['Nombre', 'Apellido', 'Dirección de correo', '']);
+			).toEqual([
+				'Nombre',
+				'Apellido',
+				'Dirección de correo',
+				'Administrar la visibilidad de las columnas',
+			]);
 		});
 	}
 );

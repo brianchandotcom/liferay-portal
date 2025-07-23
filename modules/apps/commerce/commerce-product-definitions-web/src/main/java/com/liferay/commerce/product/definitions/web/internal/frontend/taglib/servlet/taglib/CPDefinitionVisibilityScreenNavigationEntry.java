@@ -61,7 +61,8 @@ public class CPDefinitionVisibilityScreenNavigationEntry
 	@Override
 	public boolean isVisible(User user, CPDefinition cpDefinition) {
 		if ((cpDefinition == null) ||
-			FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+			FeatureFlagManagerUtil.isEnabled(
+				user.getCompanyId(), "LPD-10889")) {
 
 			return false;
 		}

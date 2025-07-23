@@ -306,7 +306,9 @@ public class BaseCommerceContextHttp implements CommerceContext {
 
 	@Override
 	public long getCPConfigurationListId(long groupId) throws PortalException {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(_httpServletRequest), "LPD-10889")) {
+
 			return 0;
 		}
 

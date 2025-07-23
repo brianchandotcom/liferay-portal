@@ -93,7 +93,9 @@ public class CommerceProductViewPermissionImpl
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				cpDefinition.getCompanyId(), "LPD-10889")) {
+
 			CPConfigurationList cpConfigurationList =
 				_cpConfigurationListDiscovery.getCPConfigurationList(
 					cpDefinition.getCompanyId(), cpDefinition.getGroupId(),

@@ -112,7 +112,8 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		CommerceContext commerceContext = CommerceContextThreadLocal.get();
 
 		if (!cpDefinition.isApproved() || !cpDefinition.isPublished() ||
-			(FeatureFlagManagerUtil.isEnabled("LPD-10889") &&
+			(FeatureFlagManagerUtil.isEnabled(
+				cpDefinition.getCompanyId(), "LPD-10889") &&
 			 !cpDefinition.isVisible(
 				 commerceContext.getCPConfigurationListId(
 					 cpDefinition.getGroupId())))) {

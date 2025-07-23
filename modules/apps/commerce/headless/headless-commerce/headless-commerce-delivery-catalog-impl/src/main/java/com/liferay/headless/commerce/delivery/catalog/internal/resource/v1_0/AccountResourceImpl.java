@@ -303,7 +303,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	private final EntityModel _entityModel = new AccountEntityModel();
+	private static final EntityModel _entityModel = new AccountEntityModel();
 
 	@Reference
 	private File _file;

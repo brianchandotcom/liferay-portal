@@ -270,7 +270,7 @@ public class AdminAccountGroupResourceImpl
 	private DTOConverter<AccountGroup, AdminAccountGroup>
 		_adminAccountGroupDTOConverter;
 
-	private final EntityModel _entityModel = new AccountGroupEntityModel();
+	private static final EntityModel _entityModel = new AccountGroupEntityModel();
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

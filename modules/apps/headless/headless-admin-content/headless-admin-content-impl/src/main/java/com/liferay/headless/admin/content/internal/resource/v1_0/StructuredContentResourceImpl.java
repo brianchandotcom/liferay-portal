@@ -430,7 +430,7 @@ public class StructuredContentResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	private final EntityModel _entityModel = new StructuredContentEntityModel();
+	private static final EntityModel _entityModel = new StructuredContentEntityModel();
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

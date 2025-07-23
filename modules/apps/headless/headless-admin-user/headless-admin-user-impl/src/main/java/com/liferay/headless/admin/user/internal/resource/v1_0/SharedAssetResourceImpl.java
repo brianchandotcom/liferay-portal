@@ -147,7 +147,7 @@ public class SharedAssetResourceImpl extends BaseSharedAssetResourceImpl {
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	private final EntityModel _entityModel = new SharedAssetEntityModel();
+	private static final EntityModel _entityModel = new SharedAssetEntityModel();
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.user.internal.dto.v1_0.converter.SharedAssetDTOConverter)"

@@ -598,7 +598,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	private final EntityModel _entityModel = new RoleEntityModel();
+	private static final EntityModel _entityModel = new RoleEntityModel();
 
 	@Reference
 	private OrganizationService _organizationService;

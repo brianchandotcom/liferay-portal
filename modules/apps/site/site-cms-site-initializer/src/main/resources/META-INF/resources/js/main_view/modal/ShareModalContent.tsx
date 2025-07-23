@@ -312,6 +312,7 @@ export default function ShareModalContent({
 		useState(4);
 	const [collaborators, setCollaborators] =
 		useState<collaborator[]>(initialCollaborators);
+	const [loading, setLoading] = useState(false);
 
 	const {resource: users} = useResource({
 		fetchOptions: {
@@ -379,6 +380,8 @@ export default function ShareModalContent({
 	const _handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 
+		setLoading(true);
+
 		const data = collaborators.map(
 			({actionIds, dateExpired, share, type, user}) => ({
 				actionIds: actionIds?.split(','),
@@ -401,6 +404,8 @@ export default function ShareModalContent({
 			method: 'POST',
 		})
 			.then((response) => {
+				setLoading(false);
+
 				const jsonResponse = response.json();
 
 				return response.ok
@@ -440,7 +445,7 @@ export default function ShareModalContent({
 		JSON.stringify(collaborators) !== JSON.stringify(initialCollaborators);
 
 	return (
-		<form className="share-modal-content" onSubmit={_handleSubmit}>
+		<div className="share-modal-content">
 			<ClayModal.Header>
 				{sub(Liferay.Language.get('share-x'), `"${title}"`)}
 			</ClayModal.Header>
@@ -647,17 +652,28 @@ export default function ShareModalContent({
 
 						<ClayButton
 							disabled={
+								loading ||
 								!collaborators.some(({error}) => !error) ||
 								!_isCollaboratorsUpdated()
 							}
 							displayType="primary"
+							onClick={_handleSubmit}
 							type="submit"
 						>
+							{loading && (
+								<span className="inline-item inline-item-before">
+									<span
+										aria-hidden="true"
+										className="loading-animation"
+									></span>
+								</span>
+							)}
+
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>
 				}
 			/>
-		</form>
+		</div>
 	);
 }

@@ -296,6 +296,9 @@ export function RightSidebarObjectDefinitionDetails({
 					hasUpdateObjectDefinitionPermission={
 						!!values.actions?.update
 					}
+					isEnableObjectEntrySchedule={
+						!!values.enableObjectEntrySchedule
+					}
 					isLinkedObjectDefinition={
 						selectedObjectDefinitionNode?.data
 							?.linkedObjectDefinition ?? false

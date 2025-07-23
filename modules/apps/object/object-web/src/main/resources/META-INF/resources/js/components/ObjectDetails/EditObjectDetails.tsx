@@ -34,6 +34,7 @@ interface EditObjectDetailsProps {
 	hasPublishObjectPermission: boolean;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
+	isEnableObjectEntrySchedule: boolean;
 	isRootDescendantNode: boolean;
 	isRootNode: boolean;
 	label: LocalizedValue<string>;
@@ -79,6 +80,7 @@ export default function EditObjectDetails({
 	hasPublishObjectPermission,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
+	isEnableObjectEntrySchedule,
 	isRootDescendantNode,
 	isRootNode,
 	label,
@@ -358,6 +360,9 @@ export default function EditObjectDetails({
 							<ConfigurationContainer
 								hasUpdateObjectDefinitionPermission={
 									hasUpdateObjectDefinitionPermission
+								}
+								isEnableObjectEntrySchedule={
+									isEnableObjectEntrySchedule
 								}
 								isRootDescendantNode={isRootDescendantNode}
 								setValues={setValues}

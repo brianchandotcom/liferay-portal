@@ -42,6 +42,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			).put(
 				"isApproved", objectDefinition.isApproved()
 			).put(
+				"isEnableObjectEntrySchedule", objectDefinition.isEnableObjectEntrySchedule()
+			).put(
 				"isRootDescendantNode", objectDefinition.isRootDescendantNode()
 			).put(
 				"isRootNode", objectDefinition.isRootNode()

@@ -10,6 +10,7 @@ import React from 'react';
 
 interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
+	isEnableObjectEntrySchedule: boolean;
 	isLinkedObjectDefinition?: boolean;
 	isRootDescendantNode: boolean;
 	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
@@ -19,6 +20,7 @@ interface ConfigurationContainerProps {
 
 export function ConfigurationContainer({
 	hasUpdateObjectDefinitionPermission,
+	isEnableObjectEntrySchedule,
 	isLinkedObjectDefinition,
 	isRootDescendantNode,
 	onSubmit,
@@ -178,7 +180,10 @@ export function ConfigurationContainer({
 			{Liferay.FeatureFlags['LPD-17564'] && (
 				<ClayForm.Group>
 					<Toggle
-						disabled={disabled || values.active}
+						disabled={
+							disabled ||
+							(isEnableObjectEntrySchedule && values.active)
+						}
 						label={Liferay.Language.get(
 							'allow-users-to-schedule-a-display-expiration-and-review-date-for-entries'
 						)}

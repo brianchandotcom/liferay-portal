@@ -65,7 +65,7 @@ public class DepotEntryUserNotificationTest {
 
 	@FeatureFlag("LPD-17564")
 	@Test
-	public void testGroupUserAssociation() throws Exception {
+	public void testAddGroupUser() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		_userLocalService.addGroupUser(
@@ -76,7 +76,22 @@ public class DepotEntryUserNotificationTest {
 
 	@FeatureFlag("LPD-17564")
 	@Test
-	public void testGroupUserGroupAssociation() throws Exception {
+	public void testAddUserUserGroup() throws Exception {
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroupLocalService.addGroupUserGroup(
+			_depotEntry.getGroupId(), userGroup);
+
+		User user = UserTestUtil.addUser();
+
+		_userGroupLocalService.addUserUserGroup(user.getUserId(), userGroup);
+
+		_assertUserNotificationEvent(user);
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testInterpret() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		User user1 = UserTestUtil.addUser();
@@ -137,21 +152,6 @@ public class DepotEntryUserNotificationTest {
 		Assert.assertEquals(
 			userNotificationEvents.toString(), 0,
 			userNotificationEvents.size());
-	}
-
-	@FeatureFlag("LPD-17564")
-	@Test
-	public void testGroupUserGroupAssociation2() throws Exception {
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-		_userGroupLocalService.addGroupUserGroup(
-			_depotEntry.getGroupId(), userGroup);
-
-		User user = UserTestUtil.addUser();
-
-		_userGroupLocalService.addUserUserGroup(user.getUserId(), userGroup);
-
-		_assertUserNotificationEvent(user);
 	}
 
 	private void _assertUserNotificationEvent(User user) {

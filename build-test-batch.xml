@@ -1495,7 +1495,7 @@ app.server.type=@{app.server.type}]]></echo>
 										database.postgresql.username=${database.postgresql.username}
 									</echo>
 
-									<antcall inheritall="false" target="start-app-server" />
+									<antcall inheritall="false" target="start-app-server-preserve-liferay-home" />
 
 									<gradle-execute dir="modules/util/portal-tools-db-migration-importer-test" task="testIntegration">
 										<arg value="testIntegration" />

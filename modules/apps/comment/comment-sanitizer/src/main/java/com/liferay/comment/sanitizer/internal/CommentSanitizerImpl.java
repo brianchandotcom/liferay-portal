@@ -21,7 +21,7 @@ import org.owasp.html.PolicyFactory;
 /**
  * @author Sergio González
  */
-@Component(service = Sanitizer.class)
+@Component(property = "sanitizer.order:Integer=1", service = Sanitizer.class)
 public class CommentSanitizerImpl implements Sanitizer {
 
 	public CommentSanitizerImpl() {

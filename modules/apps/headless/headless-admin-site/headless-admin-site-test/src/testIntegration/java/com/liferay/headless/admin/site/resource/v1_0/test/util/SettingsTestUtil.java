@@ -268,6 +268,82 @@ public class SettingsTestUtil {
 		};
 	}
 
+	public static Settings getModifiedSettings(
+			ServiceContext serviceContext, Settings settings)
+		throws Exception {
+
+		if (Validator.isNotNull(settings.getJavascript())) {
+			settings.setJavascript(() -> null);
+		}
+		else {
+			settings.setJavascript(RandomTestUtil::randomString);
+		}
+
+		if (settings.getMasterPageItemExternalReference() != null) {
+			settings.setMasterPageItemExternalReference(() -> null);
+		}
+		else {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntryTestUtil.
+					getMasterLayoutPageTemplateEntry(
+						serviceContext, WorkflowConstants.STATUS_APPROVED);
+
+			settings.setMasterPageItemExternalReference(
+				() -> new ItemExternalReference() {
+					{
+						setExternalReferenceCode(
+							layoutPageTemplateEntry::getExternalReferenceCode);
+					}
+				});
+		}
+
+		if (settings.getStyleBookItemExternalReference() != null) {
+			settings.setStyleBookItemExternalReference(() -> null);
+		}
+		else {
+			StyleBookEntry styleBookEntry =
+				StyleBookEntryLocalServiceUtil.addStyleBookEntry(
+					null, TestPropsValues.getUserId(),
+					serviceContext.getScopeGroupId(), false, null,
+					RandomTestUtil.randomString(), null,
+					RandomTestUtil.randomString(), serviceContext);
+
+			settings.setStyleBookItemExternalReference(
+				() -> new ItemExternalReference() {
+					{
+						setExternalReferenceCode(
+							styleBookEntry::getExternalReferenceCode);
+					}
+				});
+		}
+
+		if (Validator.isNotNull(settings.getThemeName())) {
+			settings.setColorSchemeName(() -> null);
+			settings.setThemeName(() -> null);
+		}
+		else {
+			if (RandomTestUtil.randomBoolean()) {
+				settings.setColorSchemeName("01");
+			}
+
+			settings.setThemeName("classic_WAR_classictheme");
+		}
+
+		if (Validator.isNotNull(settings.getThemeSettings())) {
+			settings.setThemeSettings(() -> null);
+		}
+		else {
+			settings.setThemeSettings(
+				() -> HashMapBuilder.put(
+					"lfr-theme:regular:show-maximize-minimize-application-" +
+						"links",
+					"true"
+				).build());
+		}
+
+		return settings;
+	}
+
 	public static Settings getSettings(ServiceContext serviceContext) {
 		return new Settings() {
 			{
@@ -371,82 +447,6 @@ public class SettingsTestUtil {
 				setThemeSettings(() -> themSettings);
 			}
 		};
-	}
-
-	public static Settings getModifiedSettings(
-			ServiceContext serviceContext, Settings settings)
-		throws Exception {
-
-		if (Validator.isNotNull(settings.getJavascript())) {
-			settings.setJavascript(() -> null);
-		}
-		else {
-			settings.setJavascript(RandomTestUtil::randomString);
-		}
-
-		if (settings.getMasterPageItemExternalReference() != null) {
-			settings.setMasterPageItemExternalReference(() -> null);
-		}
-		else {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				LayoutPageTemplateEntryTestUtil.
-					getMasterLayoutPageTemplateEntry(
-						serviceContext, WorkflowConstants.STATUS_APPROVED);
-
-			settings.setMasterPageItemExternalReference(
-				() -> new ItemExternalReference() {
-					{
-						setExternalReferenceCode(
-							layoutPageTemplateEntry::getExternalReferenceCode);
-					}
-				});
-		}
-
-		if (settings.getStyleBookItemExternalReference() != null) {
-			settings.setStyleBookItemExternalReference(() -> null);
-		}
-		else {
-			StyleBookEntry styleBookEntry =
-				StyleBookEntryLocalServiceUtil.addStyleBookEntry(
-					null, TestPropsValues.getUserId(),
-					serviceContext.getScopeGroupId(), false, null,
-					RandomTestUtil.randomString(), null,
-					RandomTestUtil.randomString(), serviceContext);
-
-			settings.setStyleBookItemExternalReference(
-				() -> new ItemExternalReference() {
-					{
-						setExternalReferenceCode(
-							styleBookEntry::getExternalReferenceCode);
-					}
-				});
-		}
-
-		if (Validator.isNotNull(settings.getThemeName())) {
-			settings.setColorSchemeName(() -> null);
-			settings.setThemeName(() -> null);
-		}
-		else {
-			if (RandomTestUtil.randomBoolean()) {
-				settings.setColorSchemeName("01");
-			}
-
-			settings.setThemeName("classic_WAR_classictheme");
-		}
-
-		if (Validator.isNotNull(settings.getThemeSettings())) {
-			settings.setThemeSettings(() -> null);
-		}
-		else {
-			settings.setThemeSettings(
-				() -> HashMapBuilder.put(
-					"lfr-theme:regular:show-maximize-minimize-application-" +
-						"links",
-					"true"
-				).build());
-		}
-
-		return settings;
 	}
 
 	private static ItemExternalReference _getMasterPageItemExternalReference(

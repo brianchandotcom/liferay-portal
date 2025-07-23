@@ -78,7 +78,11 @@ public class ViewVersionHistoryDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(_httpServletRequest, "backURL")
 		).put(
-			"title", _objectEntry.getTitleValue(_themeDisplay.getLanguageId())
+			"title",
+			StringBundler.concat(
+				StringPool.QUOTE,
+				_objectEntry.getTitleValue(_themeDisplay.getLanguageId()),
+				"\" ", _language.get(_themeDisplay.getLocale(), "history"))
 		).build();
 	}
 

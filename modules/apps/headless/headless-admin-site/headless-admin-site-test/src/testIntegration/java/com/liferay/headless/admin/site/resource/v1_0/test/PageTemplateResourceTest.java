@@ -1311,55 +1311,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			(WidgetPageSpecification)pageSpecifications[0];
 
 		widgetPageSpecification.setSettings(
-			SettingsTestUtil.getSettings(serviceContext));
-
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
-			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
-			widgetPageSpecification);
-
-		SettingsTestUtil.getColorSchemeNameSettings(
-			widgetPageSpecification.getSettings());
-
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
-			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
-			widgetPageSpecification);
-
-		SettingsTestUtil.getCssSettings(widgetPageSpecification.getSettings());
-
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
-			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
-			widgetPageSpecification);
-
-		SettingsTestUtil.getJavaScriptSettings(
-			widgetPageSpecification.getSettings());
-
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
-			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
-			widgetPageSpecification);
-
-		SettingsTestUtil.getMasterPageItemExternalReferenceSettings(
-			serviceContext, widgetPageSpecification.getSettings());
-
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
-			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
-			widgetPageSpecification);
-
-		SettingsTestUtil.getStyleBookItemExternalReferenceSettings(
-			serviceContext, widgetPageSpecification.getSettings());
-
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
-			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
-			widgetPageSpecification);
-
-		SettingsTestUtil.getThemeNameSettings(
-			widgetPageSpecification.getSettings());
-
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
-			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
-			widgetPageSpecification);
-
-		SettingsTestUtil.getThemeSettingsSettings(
-			widgetPageSpecification.getSettings());
+			SettingsTestUtil.getModifiedSettings(
+				serviceContext, widgetPageSpecification.getSettings()));
 
 		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
 			pageTemplate.getExternalReferenceCode(), pageTemplateResource,

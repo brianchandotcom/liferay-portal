@@ -21,7 +21,7 @@ import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUti
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -90,7 +90,7 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 	public Map<String, Object> getHeaderProps() throws Exception {
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			_httpServletRequest, "view-all-sites", _getSpaceSitesHeaderTitle(),
-			StringPool.BLANK, new LinkedHashMap<>());
+			StringPool.BLANK, Collections.emptyMap());
 	}
 
 	private FDSActionDropdownItem _getSearchableFDSActionDropdownItem(

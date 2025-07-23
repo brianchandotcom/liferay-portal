@@ -1159,7 +1159,8 @@ public class PageSpecificationResourceTest
 		throws Exception {
 
 		pageSpecification.setSettings(
-			SettingsTestUtil.getSettings(serviceContext));
+			SettingsTestUtil.getModifiedSettings(
+				serviceContext, pageSpecification.getSettings()));
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			pageSpecification,

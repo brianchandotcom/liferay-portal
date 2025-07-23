@@ -83,6 +83,7 @@ import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -133,6 +134,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -988,6 +990,41 @@ public class DefaultObjectEntryManagerImpl
 			getObjectEntryByVersion(
 				dtoConverterContext, externalReferenceCode, objectDefinition,
 				scopeKey, version));
+	}
+
+	@Override
+	public void subscribeObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			String scopeKey)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode,
+				objectDefinition.getObjectDefinitionId());
+
+		_objectEntryService.subscribeObjectEntry(
+			dtoConverterContext.getUserId(),
+			getGroupId(objectDefinition, scopeKey),
+			serviceBuilderObjectEntry.getObjectEntryId());
+	}
+
+	@Override
+	public void unsubscribeObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			String scopeKey)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode,
+				objectDefinition.getObjectDefinitionId());
+
+		_objectEntryService.unsubscribeObjectEntry(
+			dtoConverterContext.getUserId(),
+			serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	@Override
@@ -1971,6 +2008,16 @@ public class DefaultObjectEntryManagerImpl
 		return false;
 	}
 
+	private boolean _isSubscribed(
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+		User user) {
+
+		return _subscriptionLocalService.isSubscribed(
+			serviceBuilderObjectEntry.getCompanyId(), user.getUserId(),
+			serviceBuilderObjectEntry.getModelClassName(),
+			serviceBuilderObjectEntry.getObjectEntryId());
+	}
+
 	private long _processAttachment(
 			ObjectDefinition objectDefinition, ObjectField objectField,
 			Object propertyValue, String scopeKey,
@@ -2398,10 +2445,70 @@ public class DefaultObjectEntryManagerImpl
 				methodName =
 					"putScopeScopeKeyByExternalReferenceCodeObjectAction" +
 						"ObjectActionName";
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+					if (!_isSubscribed(
+							serviceBuilderObjectEntry,
+							dtoConverterContext.getUser())) {
+
+						actions.put(
+							"subscribe",
+							_addAction(
+								ActionKeys.SUBSCRIBE,
+								"postScopeScopeKeyByExternalReferenceCode" +
+									"Subscribe",
+								serviceBuilderObjectEntry,
+								HashMapBuilder.put(
+									"externalReferenceCode",
+									serviceBuilderObjectEntry.
+										getExternalReferenceCode()
+								).build(),
+								dtoConverterContext.getUriInfo()));
+					}
+					else {
+						actions.put(
+							"unsubscribe",
+							_addAction(
+								ActionKeys.SUBSCRIBE,
+								"postScopeScopeKeyByExternalReferenceCode" +
+									"Unsubscribe",
+								serviceBuilderObjectEntry,
+								HashMapBuilder.put(
+									"externalReferenceCode",
+									serviceBuilderObjectEntry.
+										getExternalReferenceCode()
+								).build(),
+								dtoConverterContext.getUriInfo()));
+					}
+				}
 			}
 			else {
 				methodName =
 					"putByExternalReferenceCodeObjectActionObjectActionName";
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+					if (!_isSubscribed(
+							serviceBuilderObjectEntry,
+							dtoConverterContext.getUser())) {
+
+						actions.put(
+							"subscribe",
+							_addAction(
+								ActionKeys.SUBSCRIBE,
+								"postByExternalReferenceCodeSubscribe",
+								serviceBuilderObjectEntry,
+								dtoConverterContext.getUriInfo()));
+					}
+					else {
+						actions.put(
+							"unsubscribe",
+							_addAction(
+								ActionKeys.SUBSCRIBE,
+								"postByExternalReferenceCodeUnsubscribe",
+								serviceBuilderObjectEntry,
+								dtoConverterContext.getUriInfo()));
+					}
+				}
 			}
 
 			for (ObjectAction objectAction :
@@ -2714,6 +2821,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

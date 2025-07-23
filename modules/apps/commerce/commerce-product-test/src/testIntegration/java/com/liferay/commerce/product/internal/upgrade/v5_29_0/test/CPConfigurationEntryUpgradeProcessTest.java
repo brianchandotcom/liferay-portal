@@ -49,7 +49,9 @@ public class CPConfigurationEntryUpgradeProcessTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testUpgrade() throws Exception {
+	public void testUpdateCPConfigurationEntryAllowedOrderQuantities()
+		throws Exception {
+
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),

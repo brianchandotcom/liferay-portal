@@ -409,6 +409,9 @@ public class StructuredContentResourceImpl
 		}
 	}
 
+	private static final EntityModel _entityModel =
+		new StructuredContentEntityModel();
+
 	@Reference
 	private Aggregations _aggregations;
 
@@ -429,8 +432,6 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	private static final EntityModel _entityModel = new StructuredContentEntityModel();
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

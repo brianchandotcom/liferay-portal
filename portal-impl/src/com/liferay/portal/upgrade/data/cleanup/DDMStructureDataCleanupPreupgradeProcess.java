@@ -28,7 +28,7 @@ public class DDMStructureDataCleanupPreupgradeProcess
 				null, "DDMStructureId", "JournalFeed", "structureId",
 				"DDMStructure"));
 
-		// Upgrade from 7.0 - 7.3
+		// Upgrade from 7.0 to 7.3
 
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(

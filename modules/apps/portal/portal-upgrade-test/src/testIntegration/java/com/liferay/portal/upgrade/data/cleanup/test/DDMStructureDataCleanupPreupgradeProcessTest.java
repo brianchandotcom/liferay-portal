@@ -98,7 +98,7 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
-	public void testUpgradeFrom70To73() throws Exception {
+	public void testUpgradeFrom70to73() throws Exception {
 		connection = _connection;
 
 		try {

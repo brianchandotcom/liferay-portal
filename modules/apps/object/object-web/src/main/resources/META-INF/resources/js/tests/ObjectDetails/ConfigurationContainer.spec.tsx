@@ -11,7 +11,7 @@ import React from 'react';
 import {ConfigurationContainer} from '../../components/ObjectDetails/ConfigurationContainer';
 import {useObjectDetailsForm} from '../../components/ObjectDetails/useObjectDetailsForm';
 
-describe('The ConfigurationContainer component should', () => {
+describe('The ConfigurationContainer component', () => {
 	beforeEach(() => {
 		global.Liferay = {
 			FeatureFlags: {'LPD-17564': true},
@@ -22,6 +22,7 @@ describe('The ConfigurationContainer component should', () => {
 	});
 
 	const initialValues: Partial<ObjectDefinition> = {
+		active: true,
 		defaultLanguageId: 'en_US',
 		externalReferenceCode: 'erc',
 		id: 1,
@@ -30,7 +31,7 @@ describe('The ConfigurationContainer component should', () => {
 		pluralLabel: {en_US: 'pluralLabel'},
 	};
 
-	describe('render object entry schedule toggle', () => {
+	describe('renders object entry schedule toggle', () => {
 		const scheduleToggleLabel =
 			'allow-users-to-schedule-a-display-expiration-and-review-date-for-entries';
 
@@ -38,10 +39,11 @@ describe('The ConfigurationContainer component should', () => {
 			initialProps: {initialValues, onSubmit: () => {}},
 		});
 
-		const configurationContainer = () =>
+		const configurationContainer = (isEnableObjectEntrySchedule: boolean) =>
 			render(
 				<ConfigurationContainer
 					hasUpdateObjectDefinitionPermission
+					isEnableObjectEntrySchedule={isEnableObjectEntrySchedule}
 					isRootDescendantNode={false}
 					setValues={result.current.setValues}
 					values={result.current.values}
@@ -49,19 +51,27 @@ describe('The ConfigurationContainer component should', () => {
 			);
 
 		it('checked or uncheked according to interactions', () => {
-			configurationContainer();
+			configurationContainer(false);
 
-			screen.getByRole('switch', {name: scheduleToggleLabel}).click();
+			const scheduleToggle = screen.getByRole('switch', {
+				name: scheduleToggleLabel,
+			});
+
+			scheduleToggle.click();
+
+			expect(scheduleToggle).toBeChecked();
+
+			scheduleToggle.click();
+
+			expect(scheduleToggle).not.toBeChecked();
+		});
+
+		it('disabled when isEnableObjectEntrySchedule is true', () => {
+			configurationContainer(true);
 
 			expect(
 				screen.getByRole('switch', {name: scheduleToggleLabel})
-			).toBeChecked();
-
-			screen.getByRole('switch', {name: scheduleToggleLabel}).click();
-
-			expect(
-				screen.getByRole('switch', {name: scheduleToggleLabel})
-			).not.toBeChecked();
+			).toBeDisabled();
 		});
 	});
 });

@@ -475,10 +475,7 @@ public class RenderLayoutStructureTagTest {
 			}
 
 			Assert.assertTrue(
-				content,
-				StringUtil.contains(
-					content, expectedContent + StringPool.QUOTE,
-					StringPool.BLANK));
+				content, content.contains(expectedContent + StringPool.QUOTE));
 		}
 
 		_serviceContext.setAttribute(
@@ -568,8 +565,7 @@ public class RenderLayoutStructureTagTest {
 		}
 
 		for (String value : expectedList) {
-			Assert.assertTrue(
-				content, StringUtil.contains(content, value, StringPool.BLANK));
+			Assert.assertTrue(content, content.contains(value));
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
@@ -590,9 +586,7 @@ public class RenderLayoutStructureTagTest {
 			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 			false, false);
 
-		Assert.assertTrue(
-			StringUtil.contains(
-				url, _group.getFriendlyURL(), StringPool.BLANK));
+		Assert.assertTrue(url.contains(_group.getFriendlyURL()));
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -628,14 +622,9 @@ public class RenderLayoutStructureTagTest {
 
 		String content = _getRenderLayoutHTML(layout);
 
-		Assert.assertTrue(
-			content, StringUtil.contains(content, url, StringPool.BLANK));
-		Assert.assertFalse(
-			content,
-			StringUtil.contains(content, "style=\"\"", StringPool.BLANK));
-		Assert.assertTrue(
-			content,
-			StringUtil.contains(content, "style=\"", StringPool.BLANK));
+		Assert.assertTrue(content, content.contains(url));
+		Assert.assertFalse(content, content.contains("style=\"\""));
+		Assert.assertTrue(content, content.contains("style=\""));
 
 		_groupLocalService.updateFriendlyURL(
 			_group.getGroupId(), "/new-friendly-url");
@@ -644,13 +633,11 @@ public class RenderLayoutStructureTagTest {
 			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 			false, false);
 
-		Assert.assertTrue(
-			StringUtil.contains(url, "/new-friendly-url", StringPool.BLANK));
+		Assert.assertTrue(url.contains("/new-friendly-url"));
 
 		content = _getRenderLayoutHTML(layout);
 
-		Assert.assertTrue(
-			content, StringUtil.contains(content, url, StringPool.BLANK));
+		Assert.assertTrue(content, content.contains(url));
 	}
 
 	@Test
@@ -704,10 +691,7 @@ public class RenderLayoutStructureTagTest {
 				"-submit-button\"";
 
 		Assert.assertTrue(
-			content,
-			StringUtil.contains(
-				content, "disabled " + submitButtonIdAttribute,
-				StringPool.BLANK));
+			content, content.contains("disabled " + submitButtonIdAttribute));
 
 		FragmentStyledLayoutStructureItem
 			textInputFragmentStyledLayoutStructureItem =
@@ -725,29 +709,17 @@ public class RenderLayoutStructureTagTest {
 			"id=\"" + textInputFragmentEntryLink.getNamespace() +
 				"-text-input\"";
 
-		Assert.assertFalse(
-			content,
-			StringUtil.contains(
-				content, textInputIdAttribute, StringPool.BLANK));
+		Assert.assertFalse(content, content.contains(textInputIdAttribute));
 
 		content = _getRenderLayoutHTML(
 			layout, Collections.emptyMap(),
 			UserTestUtil.addCompanyAdminUser(
 				_companyLocalService.getCompany(_group.getCompanyId())));
 
-		Assert.assertTrue(
-			content,
-			StringUtil.contains(
-				content, submitButtonIdAttribute, StringPool.BLANK));
+		Assert.assertTrue(content, content.contains(submitButtonIdAttribute));
 		Assert.assertFalse(
-			content,
-			StringUtil.contains(
-				content, "disabled " + submitButtonIdAttribute,
-				StringPool.BLANK));
-		Assert.assertTrue(
-			content,
-			StringUtil.contains(
-				content, textInputIdAttribute, StringPool.BLANK));
+			content, content.contains("disabled " + submitButtonIdAttribute));
+		Assert.assertTrue(content, content.contains(textInputIdAttribute));
 	}
 
 	@Test
@@ -1252,10 +1224,7 @@ public class RenderLayoutStructureTagTest {
 		String content = _getContent(
 			layout, mockHttpServletRequest, segmentsExperienceId);
 
-		Assert.assertFalse(
-			content,
-			StringUtil.contains(
-				content, ">Heading Example</h1>", StringPool.BLANK));
+		Assert.assertFalse(content, content.contains(">Heading Example</h1>"));
 
 		String title = RandomTestUtil.randomString();
 
@@ -1269,14 +1238,8 @@ public class RenderLayoutStructureTagTest {
 		content = _getContent(
 			layout, mockHttpServletRequest, segmentsExperienceId);
 
-		Assert.assertFalse(
-			content,
-			StringUtil.contains(
-				content, ">Heading Example</h1>", StringPool.BLANK));
-		Assert.assertTrue(
-			content,
-			StringUtil.contains(
-				content, ">" + title + "</h1>", StringPool.BLANK));
+		Assert.assertFalse(content, content.contains(">Heading Example</h1>"));
+		Assert.assertTrue(content, content.contains(">" + title + "</h1>"));
 
 		_assetListEntryLocalService.updateAssetListEntryTypeSettings(
 			assetListEntry.getAssetListEntryId(), 0,
@@ -1289,14 +1252,8 @@ public class RenderLayoutStructureTagTest {
 		content = _getContent(
 			layout, mockHttpServletRequest, segmentsExperienceId);
 
-		Assert.assertFalse(
-			content,
-			StringUtil.contains(
-				content, ">" + title + "</h1>", StringPool.BLANK));
-		Assert.assertTrue(
-			content,
-			StringUtil.contains(
-				content, ">Heading Example</h1>", StringPool.BLANK));
+		Assert.assertFalse(content, content.contains(">" + title + "</h1>"));
+		Assert.assertTrue(content, content.contains(">Heading Example</h1>"));
 
 		_assetListEntryLocalService.updateAssetListEntryTypeSettings(
 			assetListEntry.getAssetListEntryId(), 0,
@@ -1311,20 +1268,12 @@ public class RenderLayoutStructureTagTest {
 		content = _getContent(
 			layout, mockHttpServletRequest, segmentsExperienceId);
 
-		Assert.assertFalse(
-			content,
-			StringUtil.contains(
-				content, ">" + title + "</h1>", StringPool.BLANK));
-		Assert.assertFalse(
-			content,
-			StringUtil.contains(
-				content, ">Heading Example</h1>", StringPool.BLANK));
+		Assert.assertFalse(content, content.contains(">" + title + "</h1>"));
+		Assert.assertFalse(content, content.contains(">Heading Example</h1>"));
 		Assert.assertTrue(
 			content,
-			StringUtil.contains(
-				content,
-				_language.get(mockHttpServletRequest, "no-results-found"),
-				StringPool.BLANK));
+			content.contains(
+				_language.get(mockHttpServletRequest, "no-results-found")));
 	}
 
 	@Test
@@ -1405,9 +1354,7 @@ public class RenderLayoutStructureTagTest {
 				layout, mockHttpServletRequest, segmentsExperienceId);
 
 			Assert.assertFalse(
-				content,
-				StringUtil.contains(
-					content, ">Heading Example</h1>", StringPool.BLANK));
+				content, content.contains(">Heading Example</h1>"));
 
 			String title = RandomTestUtil.randomString();
 
@@ -1426,13 +1373,8 @@ public class RenderLayoutStructureTagTest {
 				layout, mockHttpServletRequest, segmentsExperienceId);
 
 			Assert.assertFalse(
-				content,
-				StringUtil.contains(
-					content, ">Heading Example</h1>", StringPool.BLANK));
-			Assert.assertTrue(
-				content,
-				StringUtil.contains(
-					content, ">" + title + "</h1>", StringPool.BLANK));
+				content, content.contains(">Heading Example</h1>"));
+			Assert.assertTrue(content, content.contains(">" + title + "</h1>"));
 
 			serviceRegistration.unregister();
 
@@ -1448,13 +1390,9 @@ public class RenderLayoutStructureTagTest {
 				layout, mockHttpServletRequest, segmentsExperienceId);
 
 			Assert.assertFalse(
-				content,
-				StringUtil.contains(
-					content, ">Heading Example</h1>", StringPool.BLANK));
+				content, content.contains(">Heading Example</h1>"));
 			Assert.assertFalse(
-				content,
-				StringUtil.contains(
-					content, ">" + title + "</h1>", StringPool.BLANK));
+				content, content.contains(">" + title + "</h1>"));
 
 			assetEntryInfoCollectionProvider.addAssetEntry(
 				_assetEntryLocalService.getEntry(
@@ -1465,13 +1403,9 @@ public class RenderLayoutStructureTagTest {
 				layout, mockHttpServletRequest, segmentsExperienceId);
 
 			Assert.assertFalse(
-				content,
-				StringUtil.contains(
-					content, ">" + title + "</h1>", StringPool.BLANK));
+				content, content.contains(">" + title + "</h1>"));
 			Assert.assertTrue(
-				content,
-				StringUtil.contains(
-					content, ">Heading Example</h1>", StringPool.BLANK));
+				content, content.contains(">Heading Example</h1>"));
 		}
 		finally {
 			if (serviceRegistration != null) {
@@ -2049,19 +1983,14 @@ public class RenderLayoutStructureTagTest {
 			content,
 			StringUtil.startsWith(
 				content, "<a href=\"https://www.liferay.com/\""));
+		Assert.assertTrue(content, content.contains("target=\"_blank\"><div"));
 		Assert.assertTrue(
 			content,
-			StringUtil.contains(
-				content, "target=\"_blank\"><div", StringPool.BLANK));
-		Assert.assertTrue(
-			content,
-			StringUtil.contains(
-				content,
+			content.contains(
 				StringBundler.concat(
 					"<h1 data-lfr-editable-id=\"element-text\" ",
 					"data-lfr-editable-type=\"text\">", expectedContent,
-					"</h1>"),
-				StringPool.BLANK));
+					"</h1>")));
 		Assert.assertTrue(content, StringUtil.endsWith(content, "</div></a>"));
 	}
 
@@ -2527,8 +2456,7 @@ public class RenderLayoutStructureTagTest {
 
 		Assert.assertTrue(
 			content,
-			StringUtil.contains(
-				content,
+			content.contains(
 				StringBundler.concat(
 					"<a href=\"https://www.liferay.com/\"><img alt=\"\" ",
 					"class=\"w-100\" data-lfr-editable-id=\"image-square\" ",
@@ -2538,8 +2466,7 @@ public class RenderLayoutStructureTagTest {
 							fileEntry, fileEntry.getFileVersion(), null,
 							StringPool.BLANK)),
 					"\" data-fileentryid=\"", fileEntry.getFileEntryId(),
-					"\"></a>"),
-				StringPool.BLANK));
+					"\"></a>")));
 	}
 
 	@Test
@@ -2646,17 +2573,10 @@ public class RenderLayoutStructureTagTest {
 			String content = _getRenderLayoutHTML(layout);
 
 			Assert.assertFalse(
-				content,
-				StringUtil.contains(
-					content, ">Heading Example</h1>", StringPool.BLANK));
+				content, content.contains(">Heading Example</h1>"));
+			Assert.assertTrue(content, content.contains(">" + value + "</h1>"));
 			Assert.assertTrue(
-				content,
-				StringUtil.contains(
-					content, ">" + value + "</h1>", StringPool.BLANK));
-			Assert.assertTrue(
-				content,
-				StringUtil.contains(
-					content, "<p>" + value + "</p>", StringPool.BLANK));
+				content, content.contains("<p>" + value + "</p>"));
 		}
 	}
 
@@ -2700,14 +2620,12 @@ public class RenderLayoutStructureTagTest {
 
 		Assert.assertTrue(
 			content,
-			StringUtil.contains(
-				content,
+			content.contains(
 				StringBundler.concat(
 					"data-lfr-editable-id=\"element-text\" ",
 					"data-lfr-editable-type=\"text\"><a target=\"_blank\" ",
 					"href=\"https://www.liferay.com/\">", expectedContent,
-					"</a></h1></div>"),
-				StringPool.BLANK));
+					"</a></h1></div>")));
 	}
 
 	@Test

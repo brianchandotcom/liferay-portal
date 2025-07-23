@@ -1314,22 +1314,11 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			SettingsTestUtil.getModifiedSettings(
 				serviceContext, widgetPageSpecification.getSettings()));
 
-		_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
-			pageTemplate.getExternalReferenceCode(), pageTemplateResource,
-			widgetPageSpecification);
-	}
-
-	private void
-			_testPatchSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications(
-				String externalReferenceCode,
-				PageTemplateResource pageTemplateResource,
-				WidgetPageSpecification widgetPageSpecification)
-		throws Exception {
-
-		PageTemplate pageTemplate =
+		pageTemplate =
 			pageTemplateResource.
 				patchSiteSiteByExternalReferenceCodePageTemplate(
-					testGroup.getExternalReferenceCode(), externalReferenceCode,
+					testGroup.getExternalReferenceCode(),
+					pageTemplate.getExternalReferenceCode(),
 					new WidgetPageTemplate() {
 						{
 							setPageSpecifications(
@@ -1345,7 +1334,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 						}
 					});
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
+		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				getLayoutPageTemplateEntryByExternalReferenceCode(
 					pageTemplate.getExternalReferenceCode(),

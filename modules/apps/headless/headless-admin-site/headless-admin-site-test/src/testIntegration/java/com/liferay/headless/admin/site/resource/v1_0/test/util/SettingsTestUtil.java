@@ -167,7 +167,7 @@ public class SettingsTestUtil {
 			curThemeSettings);
 	}
 
-	public static Settings getModifiedSettings(
+	public static void getModifiedSettings(
 			ServiceContext serviceContext, Settings settings)
 		throws Exception {
 
@@ -239,8 +239,6 @@ public class SettingsTestUtil {
 					"true"
 				).build());
 		}
-
-		return settings;
 	}
 
 	public static Settings getSettings(ServiceContext serviceContext) {

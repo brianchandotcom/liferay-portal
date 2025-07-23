@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -343,8 +342,7 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 
 	private void _assertContains(String text, String... strings) {
 		for (String string : strings) {
-			Assert.assertTrue(
-				string, StringUtil.contains(string, text, StringPool.BLANK));
+			Assert.assertTrue(string, string.contains(text));
 		}
 	}
 

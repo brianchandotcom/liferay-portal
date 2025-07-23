@@ -14,9 +14,11 @@ import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
 import ProductPurchaseSSATrial from '../../../ProductPurchase/services/ProductPurchaseSSATrial';
-import useSSAProduct from '../../hooks/useSSAProduct';
 import {FormSection} from './FormSection';
 import {Input} from './Input';
+import trialOAuth2 from '../../../../services/oauth/Trial';
+import HeadlessDelivery from '../../../../services/rest/HeadlessDelivery';
+import HeadlessCommerceDeliveryCatalog from '../../../../services/rest/HeadlessCommerceDeliveryCatalog';
 
 type ValidationErrors = Partial<Record<keyof FormFields, string>>;
 
@@ -33,9 +35,23 @@ const SSAFormBody = ({
 }: {
 	submitRef: React.MutableRefObject<() => void>;
 }) => {
-	const {channel} = useMarketplaceContext();
+	const {channel, properties} = useMarketplaceContext();
+	const [product, setProduct] = useState<DeliveryProduct | null>(null);
 	const {data: account} = useAccount();
-	const product = useSSAProduct(channel?.id);
+
+	useEffect(() => {
+		const fetchProduct = async () => {
+			const product = await HeadlessCommerceDeliveryCatalog.getProduct(
+				channel.channelId,
+				properties.productId
+			);
+
+			setProduct(product);
+		};
+
+		fetchProduct();
+		setProduct(product);
+	}, [properties, channel]);
 
 	const productPurchase = useMemo(() => {
 		if (!account || !channel || !product) {
@@ -71,7 +87,7 @@ const SSAFormBody = ({
 		async (projectId: string) => {
 			try {
 				const data =
-					await productPurchase?.getDemoAvailability(projectId);
+					await trialOAuth2.checkDomainAvailability(projectId);
 
 				return data;
 			}

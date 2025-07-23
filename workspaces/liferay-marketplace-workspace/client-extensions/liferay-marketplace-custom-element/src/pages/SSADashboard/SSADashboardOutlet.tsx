@@ -8,9 +8,13 @@ import {Outlet} from 'react-router-dom';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {PageRenderer} from '../../components/Page';
 import {useAccount} from '../../hooks/data/useAccounts';
+import {useSSATRialsExtend} from './useSSATrialsExtend';
 
 const SSADashboardOutlet = () => {
 	const {data: selectedAccount, error, isLoading} = useAccount();
+	const ssaTrialExtend = useSSATRialsExtend({
+		accountId: selectedAccount?.id ?? 0,
+	});
 
 	return (
 		<PageRenderer error={error} isLoading={isLoading}>
@@ -28,6 +32,7 @@ const SSADashboardOutlet = () => {
 					<Outlet
 						context={{
 							selectedAccount,
+							ssaTrialExtend,
 						}}
 					/>
 				</span>

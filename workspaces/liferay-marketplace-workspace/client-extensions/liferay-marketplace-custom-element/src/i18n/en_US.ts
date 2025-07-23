@@ -203,7 +203,7 @@ export default {
 	'download-key': 'Download Key',
 	'draft': 'Draft',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
-	'duration-of-the-extension': 'Duratin of the extension',
+	'duration-of-the-extension': 'Duration of the extension',
 	'dxp-app': 'DXP App',
 	'dxp-connections': 'DXP Connections',
 	'dxp-license-usage-type': 'DXP License Usage Type',

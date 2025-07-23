@@ -34,7 +34,7 @@ export default function SaaSTrials() {
 	const ssaForm = useSSAForm();
 	const {channel, marketplaceUserAccount, myUserAccount} =
 		useMarketplaceContext();
-	const {selectedAccount} = useOutletContext<any>();
+	const {selectedAccount, ssaTrialExtend} = useOutletContext<any>();
 	const resourceUrl = getSSATrialsResourceURL(
 		channel.channelId,
 		selectedAccount?.id

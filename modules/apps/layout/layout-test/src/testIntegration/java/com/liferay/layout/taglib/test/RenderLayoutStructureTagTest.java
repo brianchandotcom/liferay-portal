@@ -622,8 +622,8 @@ public class RenderLayoutStructureTagTest {
 
 		String content = _getRenderLayoutHTML(layout);
 
-		Assert.assertTrue(content, content.contains(url));
 		Assert.assertFalse(content, content.contains("style=\"\""));
+		Assert.assertTrue(content, content.contains(url));
 		Assert.assertTrue(content, content.contains("style=\""));
 
 		_groupLocalService.updateFriendlyURL(
@@ -716,9 +716,9 @@ public class RenderLayoutStructureTagTest {
 			UserTestUtil.addCompanyAdminUser(
 				_companyLocalService.getCompany(_group.getCompanyId())));
 
-		Assert.assertTrue(content, content.contains(submitButtonIdAttribute));
 		Assert.assertFalse(
 			content, content.contains("disabled " + submitButtonIdAttribute));
+		Assert.assertTrue(content, content.contains(submitButtonIdAttribute));
 		Assert.assertTrue(content, content.contains(textInputIdAttribute));
 	}
 
@@ -1390,9 +1390,9 @@ public class RenderLayoutStructureTagTest {
 				layout, mockHttpServletRequest, segmentsExperienceId);
 
 			Assert.assertFalse(
-				content, content.contains(">Heading Example</h1>"));
-			Assert.assertFalse(
 				content, content.contains(">" + title + "</h1>"));
+			Assert.assertFalse(
+				content, content.contains(">Heading Example</h1>"));
 
 			assetEntryInfoCollectionProvider.addAssetEntry(
 				_assetEntryLocalService.getEntry(
@@ -1988,9 +1988,8 @@ public class RenderLayoutStructureTagTest {
 			content,
 			content.contains(
 				StringBundler.concat(
-					"<h1 data-lfr-editable-id=\"element-text\" ",
-					"data-lfr-editable-type=\"text\">", expectedContent,
-					"</h1>")));
+					"<h1 data-lfr-editable-id=\"element-text\" data-lfr-",
+					"editable-type=\"text\">", expectedContent, "</h1>")));
 		Assert.assertTrue(content, StringUtil.endsWith(content, "</div></a>"));
 	}
 
@@ -2458,9 +2457,9 @@ public class RenderLayoutStructureTagTest {
 			content,
 			content.contains(
 				StringBundler.concat(
-					"<a href=\"https://www.liferay.com/\"><img alt=\"\" ",
-					"class=\"w-100\" data-lfr-editable-id=\"image-square\" ",
-					"data-lfr-editable-type=\"image\" src=\"",
+					"<a href=\"https://www.liferay.com/\"><img alt=\"\" class=",
+					"\"w-100\" data-lfr-editable-id=\"image-square\" data-lfr-",
+					"editable-type=\"image\" src=\"",
 					HtmlUtil.escape(
 						_dlURLHelper.getPreviewURL(
 							fileEntry, fileEntry.getFileVersion(), null,
@@ -2622,10 +2621,9 @@ public class RenderLayoutStructureTagTest {
 			content,
 			content.contains(
 				StringBundler.concat(
-					"data-lfr-editable-id=\"element-text\" ",
-					"data-lfr-editable-type=\"text\"><a target=\"_blank\" ",
-					"href=\"https://www.liferay.com/\">", expectedContent,
-					"</a></h1></div>")));
+					"data-lfr-editable-id=\"element-text\" data-lfr-editable-",
+					"type=\"text\"><a target=\"_blank\" href=\"https://www.",
+					"liferay.com/\">", expectedContent, "</a></h1></div>")));
 	}
 
 	@Test

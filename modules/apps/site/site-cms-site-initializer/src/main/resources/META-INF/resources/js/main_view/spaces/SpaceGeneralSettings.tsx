@@ -50,6 +50,13 @@ export default function SpaceGeneralSettings({
 	space: Space;
 }) {
 	const id = useId();
+	const mimeTypeLimits = space.settings?.mimeTypeLimits;
+	const mimeTypeLimitsWithIds = mimeTypeLimits?.length
+		? mimeTypeLimits.map((limit) => ({
+				...limit,
+				id: limit.id ?? getRandomId(),
+			}))
+		: [getInitialMimeTypeLimit()];
 
 	const {
 		errors,
@@ -67,9 +74,7 @@ export default function SpaceGeneralSettings({
 			description: space.description,
 			erc: space.externalReferenceCode,
 			logoColor: space.settings?.logoColor as LogoColor,
-			mimeTypeLimits: space.settings?.mimeTypeLimits?.length
-				? space.settings?.mimeTypeLimits
-				: [getInitialMimeTypeLimit()],
+			mimeTypeLimits: mimeTypeLimitsWithIds,
 			name: space.name,
 			sharingEnabled: space.settings?.sharingEnabled ?? false,
 		},
@@ -90,7 +95,7 @@ export default function SpaceGeneralSettings({
 				settings: {
 					logoColor,
 					mimeTypeLimits: mimeTypeLimits
-						.map(({id: _id, ...rest}) => rest)
+						?.map(({id: _id, ...rest}) => rest)
 						.filter((mimeTypeLimit) =>
 							Object.values(mimeTypeLimit).some((value) => value)
 						),

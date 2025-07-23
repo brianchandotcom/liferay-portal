@@ -137,8 +137,9 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		_assertSaveCompanyConfiguration(
-			new long[] {group.getGroupId()}, new long[] {group.getGroupId()},
-			new long[0], new long[0], true, true, false, true, _adminUser);
+			new long[] {group.getGroupId()}, new long[0],
+			new long[] {group.getGroupId()}, new long[0], true, true, false,
+			true, _adminUser);
 	}
 
 	@Test
@@ -153,9 +154,9 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 			_company.getCompanyId(), GroupConstants.GUEST);
 
 		_assertSaveCompanyConfiguration(
-			new long[] {group.getGroupId()},
+			new long[] {group.getGroupId()}, new long[0],
 			new long[] {guestGroup.getGroupId(), group.getGroupId()},
-			new long[0], new long[0], true, true, false, true, _adminUser);
+			new long[0], true, true, false, true, _adminUser);
 	}
 
 	@Test
@@ -167,9 +168,9 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		_assertSaveCompanyConfiguration(
-			new long[] {group.getGroupId()},
+			new long[] {group.getGroupId()}, new long[0],
 			new long[] {RandomTestUtil.randomLong(), group.getGroupId()},
-			new long[0], new long[0], true, true, false, true, _adminUser);
+			new long[0], true, true, false, true, _adminUser);
 	}
 
 	@Test
@@ -180,10 +181,9 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 
 		_assertSaveCompanyConfiguration(
-			new long[0], new long[0],
-			new long[] {objectDefinition.getObjectDefinitionId()},
-			new long[] {objectDefinition.getObjectDefinitionId()}, true, true,
-			false, true, _adminUser);
+			new long[0], new long[] {objectDefinition.getObjectDefinitionId()},
+			new long[0], new long[] {objectDefinition.getObjectDefinitionId()},
+			true, true, false, true, _adminUser);
 	}
 
 	@Test
@@ -332,8 +332,8 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	}
 
 	private void _assertSaveCompanyConfiguration(
-			long[] expectedGroupIds, long[] groupIds,
-			long[] expectedObjectDefinitionIds, long[] objectDefinitionIds,
+			long[] expectedGroupIds, long[] expectedObjectDefinitionIds,
+			long[] groupIds, long[] objectDefinitionIds,
 			boolean includeCategories, boolean includePages,
 			boolean includeWebContent, boolean xmlSitemapIndexEnabled,
 			User user)

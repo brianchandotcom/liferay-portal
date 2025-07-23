@@ -2476,56 +2476,6 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
-	@TestInfo("LPS-120348")
-	public void testRenderFragmentEntryLinkWithLinkToURL() throws Exception {
-		String languageId = LocaleUtil.toLanguageId(
-			_portal.getSiteDefaultLocale(_group));
-
-		String expectedContent = RandomTestUtil.randomString();
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		_addFragmentEntryLinkToLayout(
-			JSONUtil.put(
-				"element-text",
-				JSONUtil.put(
-					languageId, expectedContent
-				).put(
-					"config",
-					JSONUtil.put(
-						"href",
-						JSONUtil.put(languageId, "https://www.liferay.com/")
-					).put(
-						"mapperType", "link"
-					).put(
-						"target", "_blank"
-					)
-				).put(
-					"defaultValue", "Heading Example"
-				)),
-			"BASIC_COMPONENT-heading", layout.fetchDraftLayout(),
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid()));
-
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
-
-		String content = _getRenderLayoutHTML(layout);
-
-		Assert.assertTrue(
-			content,
-			StringUtil.contains(
-				content,
-				StringBundler.concat(
-					"data-lfr-editable-id=\"element-text\" ",
-					"data-lfr-editable-type=\"text\"><a target=\"_blank\" ",
-					"href=\"https://www.liferay.com/\">", expectedContent,
-					"</a></h1></div>"),
-				StringPool.BLANK));
-	}
-
-	@Test
 	@TestInfo("LPD-61012")
 	public void testRenderFragmentEntryLinkWithItemSelectorWithERCInfoItemIdentifier()
 		throws Exception {
@@ -2641,6 +2591,56 @@ public class RenderLayoutStructureTagTest {
 				StringUtil.contains(
 					content, "<p>" + value + "</p>", StringPool.BLANK));
 		}
+	}
+
+	@Test
+	@TestInfo("LPS-120348")
+	public void testRenderFragmentEntryLinkWithLinkToURL() throws Exception {
+		String languageId = LocaleUtil.toLanguageId(
+			_portal.getSiteDefaultLocale(_group));
+
+		String expectedContent = RandomTestUtil.randomString();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				"element-text",
+				JSONUtil.put(
+					languageId, expectedContent
+				).put(
+					"config",
+					JSONUtil.put(
+						"href",
+						JSONUtil.put(languageId, "https://www.liferay.com/")
+					).put(
+						"mapperType", "link"
+					).put(
+						"target", "_blank"
+					)
+				).put(
+					"defaultValue", "Heading Example"
+				)),
+			"BASIC_COMPONENT-heading", layout.fetchDraftLayout(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		String content = _getRenderLayoutHTML(layout);
+
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content,
+				StringBundler.concat(
+					"data-lfr-editable-id=\"element-text\" ",
+					"data-lfr-editable-type=\"text\"><a target=\"_blank\" ",
+					"href=\"https://www.liferay.com/\">", expectedContent,
+					"</a></h1></div>"),
+				StringPool.BLANK));
 	}
 
 	@Test

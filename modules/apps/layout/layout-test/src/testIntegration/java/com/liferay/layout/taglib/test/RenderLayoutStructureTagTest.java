@@ -2527,7 +2527,7 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	@TestInfo("LPD-61012")
-	public void testRenderMappedItemWithERCInfoItemIdentifier()
+	public void testRenderFragmentEntryLinkWithItemSelectorWithERCInfoItemIdentifier()
 		throws Exception {
 
 		MockObject mockObject = new MockObject(

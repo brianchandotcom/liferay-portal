@@ -678,9 +678,8 @@ public class PageSpecificationResourceTest
 
 		_modifyPageExperiences(contentPageSpecification.getPageExperiences());
 
-		contentPageSpecification.setSettings(
-			SettingsTestUtil.getModifiedSettings(
-				serviceContext, contentPageSpecification.getSettings()));
+		SettingsTestUtil.modifySettings(
+			serviceContext, contentPageSpecification.getSettings());
 
 		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
@@ -1054,9 +1053,8 @@ public class PageSpecificationResourceTest
 					testGroup.getExternalReferenceCode(),
 					layout.getExternalReferenceCode());
 
-		pageSpecification.setSettings(
-			SettingsTestUtil.getModifiedSettings(
-				serviceContext, pageSpecification.getSettings()));
+		SettingsTestUtil.modifySettings(
+			serviceContext, pageSpecification.getSettings());
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			pageSpecification,
@@ -1137,9 +1135,8 @@ public class PageSpecificationResourceTest
 							}
 						}));
 
-		contentPageSpecification.setSettings(
-			SettingsTestUtil.getModifiedSettings(
-				serviceContext, contentPageSpecification.getSettings()));
+		SettingsTestUtil.modifySettings(
+			serviceContext, contentPageSpecification.getSettings());
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			contentPageSpecification,
@@ -1171,9 +1168,8 @@ public class PageSpecificationResourceTest
 					testGroup.getExternalReferenceCode(),
 					pageSpecificationExternalReferenceCode);
 
-		pageSpecification.setSettings(
-			SettingsTestUtil.getModifiedSettings(
-				serviceContext, pageSpecification.getSettings()));
+		SettingsTestUtil.modifySettings(
+			serviceContext, pageSpecification.getSettings());
 
 		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
 

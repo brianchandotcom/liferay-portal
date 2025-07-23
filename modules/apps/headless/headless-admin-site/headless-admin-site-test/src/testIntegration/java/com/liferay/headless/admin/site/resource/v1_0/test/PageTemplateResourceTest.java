@@ -1310,9 +1310,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		WidgetPageSpecification widgetPageSpecification =
 			(WidgetPageSpecification)pageSpecifications[0];
 
-		widgetPageSpecification.setSettings(
-			SettingsTestUtil.getModifiedSettings(
-				serviceContext, widgetPageSpecification.getSettings()));
+		SettingsTestUtil.modifySettings(
+			serviceContext, widgetPageSpecification.getSettings());
 
 		pageTemplate =
 			pageTemplateResource.

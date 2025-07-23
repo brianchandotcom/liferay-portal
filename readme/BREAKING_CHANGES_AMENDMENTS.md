@@ -1,3 +1,23 @@
+# cb2501a618b8b2cfc7e045cc610f8bc872231fb0
+
+The commit message is not marked as a breaking change. The correct message is:
+
+```
+LPS-16086: Prevent to compute values for item selector and URL fields. This commit resolves a bug where pages containing item selector or URL fields could not be imported after being exported. Previously, the full value of these fields was computed and stored, leading to data inconsistencies during import/export. For a complete and correct response format, this change should be considered in conjunction with regressions LPD-33951 and LPD-57833.
+
+# breaking
+
+## What modules/apps/headless/headless-delivery/headless-delivery-impl/src/main/java/com/liferay/headless/delivery/internal/dto/v1_0/mapper/PageFragmentInstanceDefinitionMapper.java
+
+Consumers of the PageFragmentInstanceDefinitionMapper (specifically for item selector and URL fields) will no longer receive the fully computed values directly in the response. Instead, consumers must now use the classPK (or externalReferenceCode if applicable) from the response to retrieve all necessary information for the referenced resource via the appropriate Liferay services.
+
+## Why
+
+This change is required to fix the current bug (LPS-16086).
+```
+
+----
+
 # 3aa30f7e03264d3798731f301853ec4f952c3637
 
 The commit message does not have the complete file path. The correct message is:

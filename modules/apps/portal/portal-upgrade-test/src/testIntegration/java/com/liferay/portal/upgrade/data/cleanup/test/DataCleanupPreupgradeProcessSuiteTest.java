@@ -8,15 +8,20 @@ package com.liferay.portal.upgrade.data.cleanup.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeException;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.DataCleanupPreupgradeProcessSuite;
@@ -90,6 +95,68 @@ public class DataCleanupPreupgradeProcessSuiteTest
 		ReflectionTestUtil.setFieldValue(
 			this, "_dataCleanupPreupgradeProcesses",
 			_originalDataCleanupPreupgradeProcesses);
+	}
+
+	@Test
+	public void testDataCleanupPreupgradeProcessesSuiteWithBlacklistedProcess()
+		throws Exception {
+
+		String blacklistedDataCleanupPreupgradeTestProcessClassName =
+			BlacklistedDataCleanupPreupgradeTestProcess.class.getName();
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_BLACKLIST",
+					new String[] {
+						blacklistedDataCleanupPreupgradeTestProcessClassName
+					})) {
+
+			ReflectionTestUtil.setFieldValue(
+				this, "_dataCleanupPreupgradeProcesses",
+				Arrays.asList(
+					new BlacklistedDataCleanupPreupgradeTestProcess(
+						() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1)),
+					new DataCleanupPreupgradeTestProcess(
+						() -> _cleanupMessages.add(_SUCCESS_MESSAGE_2))));
+
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				DataCleanupPreupgradeProcessSuite.class.getName(),
+				LoggerTestUtil.INFO);
+
+			cleanUp();
+
+			Assert.assertEquals(
+				_cleanupMessages.toString(), _companiesCount,
+				_cleanupMessages.size());
+
+			Assert.assertFalse(_cleanupMessages.contains(_SUCCESS_MESSAGE_1));
+
+			Assert.assertTrue(_cleanupMessages.contains(_SUCCESS_MESSAGE_2));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			List<LogEntry> blacklistLogEntries = new ArrayList<>();
+
+			for (LogEntry logEntry : logEntries) {
+				if (logEntry.getMessage(
+					).contains(
+						"Skipping blacklisted"
+					)) {
+
+					blacklistLogEntries.add(logEntry);
+				}
+			}
+
+			Assert.assertEquals(
+				blacklistLogEntries.toString(), 1, blacklistLogEntries.size());
+
+			LogEntry blacklistLogEntry = blacklistLogEntries.get(0);
+
+			Assert.assertEquals(
+				"Skipping blacklisted data cleanup process: " +
+					blacklistedDataCleanupPreupgradeTestProcessClassName,
+				blacklistLogEntry.getMessage());
+		}
 	}
 
 	@Test
@@ -197,5 +264,34 @@ public class DataCleanupPreupgradeProcessSuiteTest
 	private final List<String> _cleanupMessages = new ArrayList<>();
 	private List<DataCleanupPreupgradeProcess>
 		_originalDataCleanupPreupgradeProcesses;
+
+	private static class BlacklistedDataCleanupPreupgradeTestProcess
+		extends DataCleanupPreupgradeTestProcess {
+
+		public BlacklistedDataCleanupPreupgradeTestProcess(
+			UnsafeRunnable<Exception> unsafeRunnable) {
+
+			super(unsafeRunnable);
+		}
+
+	}
+
+	private static class DataCleanupPreupgradeTestProcess
+		extends DataCleanupPreupgradeProcess {
+
+		public DataCleanupPreupgradeTestProcess(
+			UnsafeRunnable<Exception> unsafeRunnable) {
+
+			_unsafeRunnable = unsafeRunnable;
+		}
+
+		@Override
+		protected void doUpgrade() throws Exception {
+			_unsafeRunnable.run();
+		}
+
+		private final UnsafeRunnable<Exception> _unsafeRunnable;
+
+	}
 
 }

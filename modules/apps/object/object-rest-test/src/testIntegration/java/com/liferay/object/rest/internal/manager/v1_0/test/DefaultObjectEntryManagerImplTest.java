@@ -1827,7 +1827,8 @@ public class DefaultObjectEntryManagerImplTest
 			});
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition2, childObjectEntry1.getId());
+			_simpleDTOConverterContext, _objectDefinition2,
+			childObjectEntry1.getId());
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntry(
@@ -1856,7 +1857,8 @@ public class DefaultObjectEntryManagerImplTest
 			});
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition2, childObjectEntry2.getId());
+			_simpleDTOConverterContext, _objectDefinition2,
+			childObjectEntry2.getId());
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntry(
@@ -1956,7 +1958,8 @@ public class DefaultObjectEntryManagerImplTest
 			});
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition1, childObjectEntry4.getId());
+			_simpleDTOConverterContext, _objectDefinition1,
+			childObjectEntry4.getId());
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntry(
@@ -1971,7 +1974,8 @@ public class DefaultObjectEntryManagerImplTest
 			});
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition1, childObjectEntry5.getId());
+			_simpleDTOConverterContext, _objectDefinition1,
+			childObjectEntry5.getId());
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntry(
@@ -3426,7 +3430,7 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition3, _user);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition3, objectEntry1.getId());
+			dtoConverterContext, _objectDefinition3, objectEntry1.getId());
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			companyId, _objectDefinition3.getClassName(),
@@ -3435,7 +3439,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		try {
 			_defaultObjectEntryManager.deleteObjectEntry(
-				_objectDefinition3, objectEntry2.getId());
+				dtoConverterContext, _objectDefinition3, objectEntry2.getId());
 
 			Assert.fail();
 		}
@@ -3471,7 +3475,7 @@ public class DefaultObjectEntryManagerImplTest
 			new String[] {ActionKeys.DELETE});
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition3, objectEntry1.getId());
+			dtoConverterContext, _objectDefinition3, objectEntry1.getId());
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(adminUser));
@@ -3503,11 +3507,11 @@ public class DefaultObjectEntryManagerImplTest
 			_buyerRole.getRoleId());
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition3, objectEntry1.getId());
+			dtoConverterContext, _objectDefinition3, objectEntry1.getId());
 
 		try {
 			_defaultObjectEntryManager.deleteObjectEntry(
-				_objectDefinition3, objectEntry2.getId());
+				dtoConverterContext, _objectDefinition3, objectEntry2.getId());
 
 			Assert.fail();
 		}
@@ -3516,7 +3520,7 @@ public class DefaultObjectEntryManagerImplTest
 				exception.getMessage(),
 				StringBundler.concat(
 					"User ", _user.getUserId(),
-					" must have DELETE permission for ",
+					" must have DELETE permission for ", dtoConverterContext,
 					_objectDefinition3.getClassName(), StringPool.SPACE,
 					objectEntry2.getId()));
 		}
@@ -3548,7 +3552,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		try {
 			_defaultObjectEntryManager.deleteObjectEntry(
-				_objectDefinition3, objectEntry1.getId());
+				dtoConverterContext, _objectDefinition3, objectEntry1.getId());
 
 			Assert.fail();
 		}
@@ -3566,7 +3570,7 @@ public class DefaultObjectEntryManagerImplTest
 		_addResourcePermission(ActionKeys.DELETE, _accountManagerRole);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition3, objectEntry1.getId());
+			dtoConverterContext, _objectDefinition3, objectEntry1.getId());
 
 		_assertObjectEntriesSize1(0);
 
@@ -3604,7 +3608,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		try {
 			_defaultObjectEntryManager.deleteObjectEntry(
-				_objectDefinition3, objectEntry1.getId());
+				dtoConverterContext, _objectDefinition3, objectEntry1.getId());
 
 			Assert.fail();
 		}
@@ -3622,7 +3626,7 @@ public class DefaultObjectEntryManagerImplTest
 		_addResourcePermission(ActionKeys.DELETE, _accountManagerRole);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition3, objectEntry1.getId());
+			dtoConverterContext, _objectDefinition3, objectEntry1.getId());
 
 		_assertObjectEntriesSize1(0);
 	}
@@ -3659,7 +3663,8 @@ public class DefaultObjectEntryManagerImplTest
 						objectEntry.getObjectDefinitionId());
 
 				_defaultObjectEntryManager.deleteObjectEntry(
-					objectDefinition, objectEntry.getObjectEntryId());
+					dtoConverterContext, objectDefinition,
+					objectEntry.getObjectEntryId());
 			});
 
 		// Users cannot delete object entries from accounts that they do not
@@ -5101,7 +5106,8 @@ public class DefaultObjectEntryManagerImplTest
 			1, String.valueOf(parentObjectEntry2.getId()), page);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition2, childObjectEntry.getId());
+			_simpleDTOConverterContext, _objectDefinition2,
+			childObjectEntry.getId());
 
 		page = _getPage(
 			Collections.singletonMap(
@@ -5618,7 +5624,8 @@ public class DefaultObjectEntryManagerImplTest
 		PrincipalThreadLocal.setName(adminUser.getUserId());
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition3, objectEntry1.getId());
+			_simpleDTOConverterContext, _objectDefinition3,
+			objectEntry1.getId());
 
 		// Organization scope
 
@@ -6217,7 +6224,7 @@ public class DefaultObjectEntryManagerImplTest
 			_dlAppLocalService.getFileEntry(fileEntry2.getId()));
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			objectDefinition, objectEntry.getId());
+			_simpleDTOConverterContext, objectDefinition, objectEntry.getId());
 
 		AssertUtils.assertFailure(
 			NoSuchFileEntryException.class,
@@ -8942,7 +8949,8 @@ public class DefaultObjectEntryManagerImplTest
 						_rootObjectDefinition.getClassName(), StringPool.SPACE,
 						rootNode.getPrimaryKey()),
 					() -> _defaultObjectEntryManager.deleteObjectEntry(
-						objectDefinition, objectEntry.getObjectEntryId()));
+						dtoConverterContext, objectDefinition,
+						objectEntry.getObjectEntryId()));
 			});
 	}
 

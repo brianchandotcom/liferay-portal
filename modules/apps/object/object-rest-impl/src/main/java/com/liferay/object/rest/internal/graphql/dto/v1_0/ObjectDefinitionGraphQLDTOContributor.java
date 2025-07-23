@@ -226,11 +226,14 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
-	public boolean deleteDTO(long id) throws Exception {
+	public boolean deleteDTO(DTOConverterContext dtoConverterContext, long id)
+		throws Exception {
+
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(_objectEntryManager);
 
-		defaultObjectEntryManager.deleteObjectEntry(_objectDefinition, id);
+		defaultObjectEntryManager.deleteObjectEntry(
+			dtoConverterContext, _objectDefinition, id);
 
 		return true;
 	}

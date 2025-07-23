@@ -231,7 +231,7 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition, objectEntryId);
+			_getDTOConverterContext(null), _objectDefinition, objectEntryId);
 	}
 
 	@Override

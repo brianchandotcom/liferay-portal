@@ -102,6 +102,8 @@ test('Add and apply content template', async ({
 		template: contentPageTemplateName,
 	});
 
+	await pageEditorPage.publishPage();
+
 	// Review publication changes and publish
 
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);

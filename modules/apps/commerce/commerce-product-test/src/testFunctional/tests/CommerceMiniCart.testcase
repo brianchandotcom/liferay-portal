@@ -1957,7 +1957,7 @@ definition {
 
 		Type(
 			key_title = "Entries",
-			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD_SEARCH",
 			value1 = "ABS Sensor");
 
 		Button.clickSubmitButton();
@@ -1978,7 +1978,7 @@ definition {
 
 		Type(
 			key_title = "Entries",
-			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD_SEARCH",
 			value1 = "ABS Sensor");
 
 		Button.clickSubmitButton();

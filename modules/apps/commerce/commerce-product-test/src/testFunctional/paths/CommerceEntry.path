@@ -1118,6 +1118,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_RELATION_FIELD_SEARCH</td>
+	<td>//div[div[contains(@class,'h4') and contains(.,'${key_title}')]]//input[@type='search']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTION_FIELD</td>
 	<td>//fieldset//div[contains(.,'Option')]/a</td>
 	<td></td>

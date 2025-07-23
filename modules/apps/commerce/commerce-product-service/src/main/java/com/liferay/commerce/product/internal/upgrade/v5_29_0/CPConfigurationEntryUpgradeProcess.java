@@ -25,14 +25,16 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		String updateAllowedOrderQuantitiesSQL =
+			"update CPConfigurationEntry set allowedOrderQuantities = ? " +
+				"where CPConfigurationEntryId = ?";
+
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update CPConfigurationEntry set allowedOrderQuantities " +
-						"= ? where CPConfigurationEntryId = ?");
-			Statement statement = connection.createStatement(
+					connection, updateAllowedOrderQuantitiesSQL);
+			Statement s = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet resultSet = statement.executeQuery(
+			ResultSet resultSet = s.executeQuery(
 				"select distinct CPConfigurationEntryId, " +
 					"allowedOrderQuantities from CPConfigurationEntry")) {
 
@@ -54,13 +56,9 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 					StringBundler sb = new StringBundler(
 						allowedOrderQuantitiesItems.length * 2);
 
-					for (String allowedOrderQuantitiesItem :
-							allowedOrderQuantitiesItems) {
+					for (String item : allowedOrderQuantitiesItems) {
 						sb.append(
-							String.format(
-								"%,.2f",
-								GetterUtil.getDouble(
-									allowedOrderQuantitiesItem)));
+							String.format("%,.2f", GetterUtil.getDouble(item)));
 						sb.append(StringPool.SPACE);
 					}
 

@@ -22,10 +22,10 @@ import '../../../css/components/ShareModalContent.scss';
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 
 export interface collaborator {
-	allowResharing?: boolean;
+	actionIds?: string;
+	dateExpired?: string;
 	error?: string;
-	expirationDate?: string;
-	permission?: string;
+	share?: boolean;
 	toBeShared?: boolean;
 	type: string;
 	user: UserAccount | UserGroup;
@@ -66,22 +66,22 @@ const formatDateToISO = (date: string): string => {
 };
 
 function CollaboratorListItem({
-	allowResharing,
-	expirationDate,
+	actionIds,
+	dateExpired,
 	error,
 	onChangeUser,
 	onRemoveUser,
-	permission,
+	share,
 	toBeShared,
 	type = TYPES.USER,
 	user,
 }: {
-	allowResharing?: boolean;
+	actionIds?: string;
+	dateExpired?: string;
 	error?: string;
-	expirationDate?: string;
 	onChangeUser: (user: UserAccount | UserGroup, property: object) => void;
 	onRemoveUser: (user: UserAccount | UserGroup) => void;
-	permission?: string;
+	share?: boolean;
 	toBeShared?: boolean;
 	type: string;
 	user: UserAccount | UserGroup;
@@ -90,6 +90,7 @@ function CollaboratorListItem({
 		const formattedDate = formatDateForView(value);
 
 		onChangeUser(user, {
+			dateExpired: value,
 			error:
 				formattedDate === 'NaN'
 					? Liferay.Language.get(
@@ -100,7 +101,6 @@ function CollaboratorListItem({
 								'please-enter-an-expiration-date-that-comes-after-today'
 							)
 						: '',
-			expirationDate: value,
 		});
 	};
 
@@ -145,10 +145,10 @@ function CollaboratorListItem({
 				{error ? (
 					<div className="text-2 text-danger">{error}</div>
 				) : (
-					expirationDate && (
+					dateExpired && (
 						<div className="text-2">
 							{sub(Liferay.Language.get('access-expires-x'), [
-								formatDateForView(expirationDate),
+								formatDateForView(dateExpired),
 							])}
 						</div>
 					)
@@ -178,10 +178,10 @@ function CollaboratorListItem({
 						},
 					]}
 					onSelectionChange={(value: React.Key) =>
-						onChangeUser(user, {permission: value})
+						onChangeUser(user, {actionIds: value})
 					}
 					placeholder=""
-					selectedKey={permission}
+					selectedKey={actionIds}
 				>
 					{(item: {label: string; value: string}) => (
 						<Option key={item.value}>{item.label}</Option>
@@ -229,7 +229,7 @@ function CollaboratorListItem({
 										'yyyy-mm-dd hh:mm'
 									)}
 									time={true}
-									value={expirationDate}
+									value={dateExpired}
 									years={{
 										end: new Date().getFullYear(),
 										start: 1998,
@@ -262,10 +262,10 @@ function CollaboratorListItem({
 								key={`share-${user.id}`}
 								onClick={() =>
 									onChangeUser(user, {
-										allowResharing: !allowResharing,
+										share: !share,
 									})
 								}
-								symbolLeft={allowResharing ? 'check-small' : ''}
+								symbolLeft={share ? 'check-small' : ''}
 							>
 								{Liferay.Language.get('allow-resharing')}
 							</ClayDropDown.Item>
@@ -334,8 +334,8 @@ export default function ShareModalContent({
 			) && creator.id !== user.id
 				? [
 						{
-							allowResharing: false,
-							permission: 'VIEW',
+							actionIds: 'VIEW',
+							share: false,
 							toBeShared: true,
 							type,
 							user,
@@ -380,13 +380,13 @@ export default function ShareModalContent({
 		event.preventDefault();
 
 		const data = collaborators.map(
-			({allowResharing, expirationDate, permission, type, user}) => ({
-				actionIds: permission?.split(','),
-				...(!!expirationDate && {
-					dateExpired: formatDateToISO(expirationDate),
+			({actionIds, dateExpired, share, type, user}) => ({
+				actionIds: actionIds?.split(','),
+				...(!!dateExpired && {
+					dateExpired: formatDateToISO(dateExpired),
 				}),
 				id: user.id,
-				share: allowResharing,
+				share,
 				type,
 			})
 		);
@@ -414,7 +414,11 @@ export default function ShareModalContent({
 			.then(() => {
 				openToast({
 					message: sub(
-						Liferay.Language.get('x-was-shared-successfully'),
+						collaborators.some(({toBeShared}) => !!toBeShared)
+							? Liferay.Language.get('x-was-shared-successfully')
+							: Liferay.Language.get(
+									'x-was-updated-successfully'
+								),
 						title
 					),
 					type: 'success',

@@ -2982,7 +2982,9 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
-	public void testCopyObjectEntryByVersionWithTextField() throws Exception {
+	public void testCopyObjectEntryByVersionWithTextObjectField()
+		throws Exception {
+
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition5,
 			new ObjectEntry() {
@@ -3012,8 +3014,52 @@ public class DefaultObjectEntryManagerImplTest
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		_testCopyObjectEntryByVersionWithLocalizedTextField(objectEntry);
-		_testCopyObjectEntryByVersionWithNonlocalizedTextField(objectEntry);
+		ObjectField objectField = objectFieldLocalService.fetchObjectField(
+			_objectDefinition5.getObjectDefinitionId(),
+			"localizedTextObjectFieldName");
+
+		_objectDefinition5.setTitleObjectFieldId(
+			objectField.getObjectFieldId());
+
+		_objectDefinition5 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition5);
+
+		_assertLocalizedTextObjectFieldValueCopy(
+			"en_US localizedTextObjectFieldValue1 (Copy)",
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
+				1),
+			objectField);
+
+		_assertLocalizedTextObjectFieldValueCopy(
+			"en_US localizedTextObjectFieldValue1 (Copy 1)",
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
+				1),
+			objectField);
+
+		objectField = objectFieldLocalService.fetchObjectField(
+			_objectDefinition5.getObjectDefinitionId(), "textObjectFieldName");
+
+		_objectDefinition5.setTitleObjectFieldId(
+			objectField.getObjectFieldId());
+
+		_objectDefinition5 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition5);
+
+		_assertTextObjectFieldValueCopy(
+			"textObjectFieldValue (Copy)",
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
+				1));
+
+		_assertTextObjectFieldValueCopy(
+			"textObjectFieldValue (Copy 1)",
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
+				1));
 	}
 
 	@Test
@@ -8317,63 +8363,6 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_APPROVED, objectEntry);
-	}
-
-	private void _testCopyObjectEntryByVersionWithLocalizedTextField(
-			ObjectEntry objectEntry)
-		throws Exception {
-
-		ObjectField objectField = objectFieldLocalService.fetchObjectField(
-			_objectDefinition5.getObjectDefinitionId(),
-			"localizedTextObjectFieldName");
-
-		_objectDefinition5.setTitleObjectFieldId(
-			objectField.getObjectFieldId());
-
-		_objectDefinition5 =
-			objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition5);
-
-		_assertLocalizedTextObjectFieldValueCopy(
-			"en_US localizedTextObjectFieldValue1 (Copy)",
-			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
-				1),
-			objectField);
-
-		_assertLocalizedTextObjectFieldValueCopy(
-			"en_US localizedTextObjectFieldValue1 (Copy 1)",
-			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
-				1),
-			objectField);
-	}
-
-	private void _testCopyObjectEntryByVersionWithNonlocalizedTextField(
-			ObjectEntry objectEntry)
-		throws Exception {
-
-		ObjectField objectField = objectFieldLocalService.fetchObjectField(
-			_objectDefinition5.getObjectDefinitionId(), "textObjectFieldName");
-
-		_objectDefinition5.setTitleObjectFieldId(
-			objectField.getObjectFieldId());
-
-		_objectDefinition5 =
-			objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition5);
-
-		_assertTextObjectFieldValueCopy(
-			"textObjectFieldValue (Copy)",
-			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
-				1));
-
-		_assertTextObjectFieldValueCopy(
-			"textObjectFieldValue (Copy 1)",
-			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
-				1));
 	}
 
 	private void _testDeleteObjectEntryWithAccountEntryRestricted2(

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -54,8 +53,29 @@ public class DepotEntryLocalServiceTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddDepotEntry() throws Exception {
-		_testAddDepotEntry();
-		_testAddDepotEntryEnablingStaging();
+		_assertObjectEntryFolders(
+			_depotEntryLocalService.addDepotEntry(
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), StringUtil.randomString()
+				).build(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), StringUtil.randomString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext()));
+
+		Group group = GroupTestUtil.addGroup();
+
+		group.setType(GroupConstants.TYPE_DEPOT);
+
+		group = _groupLocalService.updateGroup(group);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute("staging", Boolean.TRUE);
+
+		_assertObjectEntryFolders(
+			_depotEntryLocalService.addDepotEntry(group, serviceContext));
 	}
 
 	private void _assertObjectEntryFolders(DepotEntry depotEntry) {
@@ -78,43 +98,8 @@ public class DepotEntryLocalServiceTest {
 					ObjectEntryFolder::getName)));
 	}
 
-	private Group _getGroup() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		group.setType(GroupConstants.TYPE_DEPOT);
-
-		return _groupLocalService.updateGroup(group);
-	}
-
-	private void _testAddDepotEntry() throws Exception {
-		_assertObjectEntryFolders(
-			_depotEntryLocalService.addDepotEntry(
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), StringUtil.randomString()
-				).build(),
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), StringUtil.randomString()
-				).build(),
-				ServiceContextTestUtil.getServiceContext()));
-	}
-
-	private void _testAddDepotEntryEnablingStaging() throws Exception {
-		_group = _getGroup();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setAttribute("staging", Boolean.TRUE);
-
-		_assertObjectEntryFolders(
-			_depotEntryLocalService.addDepotEntry(_group, serviceContext));
-	}
-
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

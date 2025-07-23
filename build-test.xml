@@ -5931,17 +5931,26 @@ ${custom.upgrade.properties}</echo>
 	</macrodef>
 
 	<macrodef name="rebuild-database">
+		<attribute default="false" name="skip.delete.liferay.home" />
+
 		<sequential>
 			<if>
 				<not>
 					<isset property="skip.rebuild.database" />
 				</not>
 				<then>
-					<get-testcase-property property.name="database.hypersonic.embedded" />
+					<if>
+						<not>
+							<equals arg1="@{skip.delete.liferay.home}" arg2="true" />
+						</not>
+						<then>
+							<get-testcase-property property.name="database.hypersonic.embedded" />
 
-					<antcall target="delete-liferay-home">
-						<param name="keep.hypersonicdb" value="${database.hypersonic.embedded}" />
-					</antcall>
+							<antcall target="delete-liferay-home">
+								<param name="keep.hypersonicdb" value="${database.hypersonic.embedded}" />
+							</antcall>
+						</then>
+					</if>
 
 					<get-database-property property.name="database.docker.image" />
 
@@ -14947,7 +14956,15 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<try>
 				<retry retrycount="2">
 					<sequential>
-						<rebuild-database />
+						<if>
+							<equals arg1="${skip.delete.liferay.home}" arg2="true" />
+							<then>
+								<rebuild-database skip.delete.liferay.home="true" />
+							</then>
+							<else>
+								<rebuild-database />
+							</else>
+						</if>
 					</sequential>
 				</retry>
 			</try>

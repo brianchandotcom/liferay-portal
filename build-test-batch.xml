@@ -1483,6 +1483,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 									<antcall inheritall="false" target="rebuild-database">
 										<param name="database.type" value="postgresql" />
+										<param name="skip.delete.liferay.home" value="true" />
 										<param name="sql.dir" value="sql/create-bare/" />
 										<param name="sql.file" value="create-bare-postgresql.sql" />
 									</antcall>

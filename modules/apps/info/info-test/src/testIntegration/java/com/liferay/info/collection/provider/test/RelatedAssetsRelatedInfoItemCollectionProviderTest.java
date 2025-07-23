@@ -207,10 +207,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 					_journalArticle.getResourcePrimKey(), _journalArticle),
 				layout, segmentsExperienceId);
 
-			Assert.assertTrue(
-				html,
-				StringUtil.contains(
-					html, journalArticle.getTitle(), StringPool.BLANK));
+			Assert.assertTrue(html, html.contains(journalArticle.getTitle()));
 		}
 		finally {
 			_journalArticleLocalService.deleteArticle(journalArticle);
@@ -245,10 +242,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 				assetCategory),
 			2, layout, segmentsExperienceId);
 
-		Assert.assertTrue(
-			html,
-			StringUtil.contains(
-				html, assetCategory.getName(), StringPool.BLANK));
+		Assert.assertTrue(html, html.contains(assetCategory.getName()));
 	}
 
 	@Test

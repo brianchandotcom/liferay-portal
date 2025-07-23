@@ -285,9 +285,7 @@ public class SiteActionDropdownItemsProviderTest {
 			}
 
 			Assert.assertEquals(entry.getKey(), dropdownItem.get("label"));
-			Assert.assertTrue(
-				href,
-				StringUtil.contains(href, entry.getValue(), StringPool.BLANK));
+			Assert.assertTrue(href, href.contains(entry.getValue()));
 		}
 	}
 

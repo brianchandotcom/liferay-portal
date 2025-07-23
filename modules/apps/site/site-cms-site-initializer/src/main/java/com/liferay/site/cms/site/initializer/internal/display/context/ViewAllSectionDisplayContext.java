@@ -11,7 +11,6 @@ import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -19,7 +18,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -84,18 +82,9 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	protected String getCMSSectionFilterString() {
-		String filterString =
+		return appendStatus(
 			"(cmsSection eq 'contents' or cmsSection eq 'files') and cmsKind " +
-				"eq 'object'";
-
-		String statusFilterString = getStatusFilterString();
-
-		if (Validator.isNotNull(statusFilterString)) {
-			filterString = StringBundler.concat(
-				filterString, " and ", statusFilterString);
-		}
-
-		return filterString;
+				"eq 'object'");
 	}
 
 	@Override

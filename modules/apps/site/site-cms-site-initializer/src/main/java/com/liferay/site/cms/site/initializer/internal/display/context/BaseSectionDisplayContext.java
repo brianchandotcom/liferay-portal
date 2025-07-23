@@ -335,16 +335,17 @@ public abstract class BaseSectionDisplayContext {
 		}
 	}
 
+	protected String appendStatus(String filterString) {
+		return StringBundler.concat(
+			filterString, " and status in (", StringUtil.merge(_statuses, ","),
+			")");
+	}
+
 	protected abstract String getCMSSectionFilterString();
 
 	protected abstract String[] getObjectFolderExternalReferenceCodes();
 
 	protected abstract String getRootObjectEntryFolderExternalReferenceCode();
-
-	protected String getStatusFilterString() {
-		return StringBundler.concat(
-			"status in (", StringUtil.merge(_statuses, ","), ")");
-	}
 
 	protected final DepotEntryLocalService depotEntryLocalService;
 	protected final GroupLocalService groupLocalService;

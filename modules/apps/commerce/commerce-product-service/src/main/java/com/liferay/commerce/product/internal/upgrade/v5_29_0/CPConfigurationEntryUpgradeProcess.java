@@ -56,10 +56,12 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 
 					for (String allowedOrderQuantitiesItem :
 							allowedOrderQuantitiesItems) {
-
 						sb.append(
-							GetterUtil.getDouble(allowedOrderQuantitiesItem));
-						sb.append(",.2f ");
+							String.format(
+								"%,.2f",
+								GetterUtil.getDouble(
+									allowedOrderQuantitiesItem)));
+						sb.append(StringPool.SPACE);
 					}
 
 					allowedOrderQuantities = sb.toString();

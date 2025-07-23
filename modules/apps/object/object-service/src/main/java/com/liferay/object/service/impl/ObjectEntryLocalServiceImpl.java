@@ -685,7 +685,7 @@ public class ObjectEntryLocalServiceImpl
 				PrincipalThreadLocal.getUserId(), objectEntry,
 				new ServiceContext(), false);
 		}
-		else {
+		else if (objectEntry.getStatus() != WorkflowConstants.STATUS_IN_TRASH) {
 			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 				objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
 				objectDefinition.getClassName(),
@@ -1777,7 +1777,7 @@ public class ObjectEntryLocalServiceImpl
 		_trashEntryLocalService.addTrashEntry(
 			userId, objectEntry.getGroupId(), objectDefinition.getClassName(),
 			objectEntry.getObjectEntryId(), objectEntry.getUuid(), null,
-			oldStatus, statusOVPs,
+			_getStatus(oldStatus), statusOVPs,
 			UnicodePropertiesBuilder.put(
 				"title", objectEntry.getObjectEntryId()
 			).build());
@@ -1787,6 +1787,13 @@ public class ObjectEntryLocalServiceImpl
 
 			_objectEntryVersionLocalService.updateObjectEntryVersion(
 				objectEntryVersion);
+		}
+
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+				objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
+				objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId());
 		}
 
 		return objectEntry;
@@ -4526,21 +4533,22 @@ public class ObjectEntryLocalServiceImpl
 		return selectExpressions.toArray(new Expression<?>[0]);
 	}
 
+	private int _getStatus(int status) {
+		if (status == WorkflowConstants.STATUS_PENDING) {
+			return WorkflowConstants.STATUS_DRAFT;
+		}
+
+		return status;
+	}
+
 	private List<ObjectValuePair<Long, Integer>> _getStatusOVPs(
 		List<ObjectEntryVersion> objectEntryVersions) {
 
 		return TransformUtil.transform(
 			objectEntryVersions,
-			objectEntryVersion -> {
-				int status = objectEntryVersion.getStatus();
-
-				if (status == WorkflowConstants.STATUS_PENDING) {
-					status = WorkflowConstants.STATUS_DRAFT;
-				}
-
-				return new ObjectValuePair<>(
-					objectEntryVersion.getObjectEntryId(), status);
-			});
+			objectEntryVersion -> new ObjectValuePair<>(
+				objectEntryVersion.getObjectEntryId(),
+				_getStatus(objectEntryVersion.getStatus())));
 	}
 
 	private String _getUrlTitle(

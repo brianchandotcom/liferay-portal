@@ -45,8 +45,7 @@ export default function shareAction({
 				(collaboratorItem: any) =>
 					({
 						allowResharing: collaboratorItem.share,
-						expirationDate:
-							collaboratorItem.dateExpired?.split('T')?.[0] || '',
+						expirationDate: collaboratorItem.dateExpired,
 						isOwner:
 							collaboratorItem.creator.id === collaboratorItem.id,
 						permission: collaboratorItem.actionIds.includes(

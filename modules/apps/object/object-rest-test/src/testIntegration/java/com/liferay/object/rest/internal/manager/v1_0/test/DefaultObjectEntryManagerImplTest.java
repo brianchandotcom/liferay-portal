@@ -201,6 +201,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -6297,6 +6298,190 @@ public class DefaultObjectEntryManagerImplTest
 		_assertObjectEntriesSize1(_objectDefinition3, "Delta", 1);
 	}
 
+	@FeatureFlag("LPD-42577")
+	@Test
+	public void testSubscribeAndUnsubscribeObjectEntry() throws Exception {
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			true,
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					"textObjectFieldName"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			objectDefinition, Collections.emptyMap());
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			objectDefinition, Collections.emptyMap());
+
+		_assertActions(
+			"subscribe", "unsubscribe", objectDefinition, objectEntry1.getId());
+		_assertActions(
+			"subscribe", "unsubscribe", objectDefinition, objectEntry2.getId());
+
+		_defaultObjectEntryManager.subscribeObjectEntry(
+			dtoConverterContext, objectEntry1.getExternalReferenceCode(),
+			objectDefinition, objectEntry1.getScopeKey());
+		_defaultObjectEntryManager.subscribeObjectEntry(
+			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
+			objectDefinition, objectEntry2.getScopeKey());
+
+		_assertActions(
+			"unsubscribe", "subscribe", objectDefinition, objectEntry1.getId());
+		_assertActions(
+			"unsubscribe", "subscribe", objectDefinition, objectEntry2.getId());
+
+		Assert.assertTrue(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinition.getCompanyId(), adminUser.getUserId(),
+				objectDefinition.getClassName(), objectEntry1.getId()));
+		Assert.assertTrue(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinition.getCompanyId(), adminUser.getUserId(),
+				objectDefinition.getClassName(), objectEntry2.getId()));
+
+		_user = _addUser();
+
+		Role role = _addRoleUser(
+			new String[] {ActionKeys.VIEW}, objectDefinition, _user);
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, _user);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(),
+				" must have SUBSCRIBE permission for ",
+				objectDefinition.getClassName(), StringPool.SPACE,
+				objectEntry1.getId()),
+			() -> _defaultObjectEntryManager.subscribeObjectEntry(
+				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
+				objectDefinition, objectEntry1.getScopeKey()));
+
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), ActionKeys.SUBSCRIBE);
+
+		_defaultObjectEntryManager.subscribeObjectEntry(
+			dtoConverterContext, objectEntry1.getExternalReferenceCode(),
+			objectDefinition, objectEntry1.getScopeKey());
+		_defaultObjectEntryManager.subscribeObjectEntry(
+			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
+			objectDefinition, objectEntry2.getScopeKey());
+
+		Assert.assertTrue(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinition.getCompanyId(), _user.getUserId(),
+				objectDefinition.getClassName(), objectEntry1.getId()));
+		Assert.assertTrue(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinition.getCompanyId(), _user.getUserId(),
+				objectDefinition.getClassName(), objectEntry2.getId()));
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry1.getId());
+
+		Assert.assertFalse(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinition.getCompanyId(), adminUser.getUserId(),
+				objectDefinition.getClassName(), objectEntry1.getId()));
+		Assert.assertFalse(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinition.getCompanyId(), _user.getUserId(),
+				objectDefinition.getClassName(), objectEntry1.getId()));
+		Assert.assertTrue(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinition.getCompanyId(), adminUser.getUserId(),
+				objectDefinition.getClassName(), objectEntry2.getId()));
+		Assert.assertTrue(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinition.getCompanyId(), _user.getUserId(),
+				objectDefinition.getClassName(), objectEntry2.getId()));
+
+		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		Assert.assertFalse(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinition.getCompanyId(), adminUser.getUserId(),
+				objectDefinition.getClassName(), objectEntry2.getId()));
+		Assert.assertFalse(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinition.getCompanyId(), _user.getUserId(),
+				objectDefinition.getClassName(), objectEntry2.getId()));
+	}
+
+	@FeatureFlag("LPD-42577")
+	@Test
+	public void testSubscribeAndUnsubscribeObjectEntryWithHierarchy()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, adminUser.getUserId(),
+				objectDefinitionA.getObjectDefinitionId(),
+				objectDefinitionAA.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		ObjectEntry rootObjectEntry = _addObjectEntry(
+			objectDefinitionA, Collections.emptyMap());
+
+		_defaultObjectEntryManager.subscribeObjectEntry(
+			_simpleDTOConverterContext,
+			rootObjectEntry.getExternalReferenceCode(), objectDefinitionA,
+			rootObjectEntry.getScopeKey());
+
+		Assert.assertTrue(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinitionA.getCompanyId(), adminUser.getUserId(),
+				objectDefinitionA.getClassName(), rootObjectEntry.getId()));
+
+		_defaultObjectEntryManager.unsubscribeObjectEntry(
+			_simpleDTOConverterContext,
+			rootObjectEntry.getExternalReferenceCode(), objectDefinitionA,
+			rootObjectEntry.getScopeKey());
+
+		Assert.assertFalse(
+			_subscriptionLocalService.isSubscribed(
+				objectDefinitionA.getCompanyId(), adminUser.getUserId(),
+				objectDefinitionA.getClassName(), rootObjectEntry.getId()));
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		ObjectEntry childObjectEntry = _addObjectEntry(
+			objectDefinitionAA,
+			Collections.singletonMap(
+				objectField.getName(), rootObjectEntry.getId()));
+
+		AssertUtils.assertFailure(
+			UnsupportedOperationException.class, null,
+			() -> _defaultObjectEntryManager.subscribeObjectEntry(
+				_simpleDTOConverterContext,
+				childObjectEntry.getExternalReferenceCode(), objectDefinitionAA,
+				childObjectEntry.getScopeKey()));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			objectDefinitionLocalService,
+			new String[] {
+				objectDefinitionA.getName(), objectDefinitionAA.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
+	}
+
 	@Test
 	public void testToObjectEntry() throws Exception {
 
@@ -7741,6 +7926,21 @@ public class DefaultObjectEntryManagerImplTest
 		return user;
 	}
 
+	private void _assertActions(
+			String action1, String action2, ObjectDefinition objectDefinition,
+			long objectEntryId)
+		throws Exception {
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntryId);
+
+		Map<String, Map<String, String>> objectEntryActions =
+			objectEntry.getActions();
+
+		Assert.assertTrue(objectEntryActions.containsKey(action1));
+		Assert.assertFalse(objectEntryActions.containsKey(action2));
+	}
+
 	private void _assertAggregationFacetValue(
 		Integer expectedNumberOfOccurrences, String facetValueTerm,
 		Page<ObjectEntry> page) {
@@ -8081,6 +8281,25 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private ObjectDefinition _createObjectDefinition(
+			boolean enableObjectEntrySubscription,
+			List<ObjectField> objectFields, String scope)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				adminUser.getUserId(), 0, null, false, false, true, true, false,
+				false, enableObjectEntrySubscription, false, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(), objectFields);
+
+		return objectDefinitionLocalService.publishCustomObjectDefinition(
+			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
+	}
+
+	private ObjectDefinition _createObjectDefinition(
 			List<ObjectField> objectFields)
 		throws Exception {
 
@@ -8092,18 +8311,7 @@ public class DefaultObjectEntryManagerImplTest
 			List<ObjectField> objectFields, String scope)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.addCustomObjectDefinition(
-				adminUser.getUserId(), 0, null, false, false, true, true, false,
-				false, false, false, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionTestUtil.getRandomName(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList(), objectFields);
-
-		return objectDefinitionLocalService.publishCustomObjectDefinition(
-			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
+		return _createObjectDefinition(false, objectFields, scope);
 	}
 
 	private Tree _createObjectEntryTree(
@@ -8957,6 +9165,9 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Inject
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Inject
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	private Tree _tree;
 

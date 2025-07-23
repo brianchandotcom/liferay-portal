@@ -333,7 +333,7 @@ public class AccountGroupResourceImpl
 
 		try {
 			AccountEntry accountEntry =
-				_accountEntryService.getOrAddIncompleteAccountEntry(
+				_accountEntryService.getOrAddEmptyAccountEntry(
 					externalReferenceCode, accountBrief.getName(), type);
 
 			_accountGroupRelService.addAccountGroupRel(

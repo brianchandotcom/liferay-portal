@@ -11,8 +11,6 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -58,46 +56,36 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 		return depotEntry;
 	}
 
-	private void _addObjectEntryFolders(DepotEntry depotEntry) {
+	private void _addObjectEntryFolders(DepotEntry depotEntry)
+		throws PortalException {
+
 		if (!FeatureFlagManagerUtil.isEnabled(
 				depotEntry.getCompanyId(), "LPD-17564")) {
 
 			return;
 		}
 
-		try {
-			Group group = depotEntry.getGroup();
+		Group group = depotEntry.getGroup();
 
-			_objectEntryFolderLocalService.addObjectEntryFolder(
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-				group.getGroupId(), group.getCreatorUserId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				"",
-				HashMapBuilder.put(
-					LocaleUtil.ENGLISH, "Contents"
-				).build(),
-				"Contents", ServiceContextThreadLocal.getServiceContext());
-			_objectEntryFolderLocalService.addObjectEntryFolder(
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
-				group.getGroupId(), group.getCreatorUserId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				"",
-				HashMapBuilder.put(
-					LocaleUtil.ENGLISH, "Files"
-				).build(),
-				"Files", ServiceContextThreadLocal.getServiceContext());
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		_objectEntryFolderLocalService.addObjectEntryFolder(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+			group.getGroupId(), group.getCreatorUserId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			"",
+			HashMapBuilder.put(
+				LocaleUtil.ENGLISH, "Contents"
+			).build(),
+			"Contents", ServiceContextThreadLocal.getServiceContext());
+		_objectEntryFolderLocalService.addObjectEntryFolder(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+			group.getGroupId(), group.getCreatorUserId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			"",
+			HashMapBuilder.put(
+				LocaleUtil.ENGLISH, "Files"
+			).build(),
+			"Files", ServiceContextThreadLocal.getServiceContext());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CMSObjectEntryFolderDepotEntryLocalServiceWrapper.class);
 
 	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

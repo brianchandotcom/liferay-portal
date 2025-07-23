@@ -23,6 +23,7 @@ import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 
 export interface collaborator {
 	allowResharing?: boolean;
+	error?: string;
 	expirationDate?: string;
 	permission?: string;
 	toBeShared?: boolean;
@@ -35,8 +36,31 @@ const TYPES = {
 	USER_GROUP: 'UserGroup',
 };
 
+const formatDateForView = (date: string): string => {
+	const formattedDate = new Date(date.replace('--:--', '00:00'));
+
+	if (isNaN(formattedDate.getTime())) {
+		return 'NaN';
+	}
+
+	if (formattedDate < new Date()) {
+		return 'EXPIRED';
+	}
+
+	return formattedDate.toLocaleString(
+		Liferay.ThemeDisplay.getBCP47LanguageId(),
+		{
+			day: 'numeric',
+			hour: 'numeric',
+			minute: 'numeric',
+			month: 'long',
+			year: 'numeric',
+		}
+	);
+};
+
 const formatDateToISO = (date: string): string => {
-	const formattedDate = new Date(date);
+	const formattedDate = new Date(date.replace('--:--', '00:00'));
 
 	return formattedDate.toISOString();
 };
@@ -44,6 +68,7 @@ const formatDateToISO = (date: string): string => {
 function CollaboratorListItem({
 	allowResharing,
 	expirationDate,
+	error,
 	onChangeUser,
 	onRemoveUser,
 	permission,
@@ -52,6 +77,7 @@ function CollaboratorListItem({
 	user,
 }: {
 	allowResharing?: boolean;
+	error?: string;
 	expirationDate?: string;
 	onChangeUser: (user: UserAccount | UserGroup, property: object) => void;
 	onRemoveUser: (user: UserAccount | UserGroup) => void;
@@ -60,6 +86,24 @@ function CollaboratorListItem({
 	type: string;
 	user: UserAccount | UserGroup;
 }) {
+	const _handleDatePickerChange = (value: string) => {
+		const formattedDate = formatDateForView(value);
+
+		onChangeUser(user, {
+			error:
+				formattedDate === 'NaN'
+					? Liferay.Language.get(
+							'please-select-a-valid-expiration-date'
+						)
+					: formattedDate === 'EXPIRED'
+						? Liferay.Language.get(
+								'please-enter-an-expiration-date-that-comes-after-today'
+							)
+						: '',
+			expirationDate: value,
+		});
+	};
+
 	return (
 		<li
 			className="border-0 c-px-0 c-py-1 list-group-item list-group-item-flex"
@@ -84,7 +128,7 @@ function CollaboratorListItem({
 			</div>
 
 			<div className="autofit-col autofit-col-expand">
-				<div className="align-items-center d-flex h-100">
+				<div className="align-items-center d-flex">
 					<span className="text-3 text-truncate text-weight-semi-bold">
 						{user.name}
 					</span>
@@ -97,6 +141,18 @@ function CollaboratorListItem({
 						</span>
 					)}
 				</div>
+
+				{error ? (
+					<div className="text-2 text-danger">{error}</div>
+				) : (
+					expirationDate && (
+						<div className="text-2">
+							{sub(Liferay.Language.get('access-expires-x'), [
+								formatDateForView(expirationDate),
+							])}
+						</div>
+					)
+				)}
 			</div>
 
 			<div className="autofit-col">
@@ -168,14 +224,11 @@ function CollaboratorListItem({
 										`${Liferay.Language.get('november')}`,
 										`${Liferay.Language.get('december')}`,
 									]}
-									onChange={(value: string) =>
-										onChangeUser(user, {
-											expirationDate: value,
-										})
-									}
+									onChange={_handleDatePickerChange}
 									placeholder={Liferay.Language.get(
-										'yyyy-mm-dd'
+										'yyyy-mm-dd hh:mm'
 									)}
+									time={true}
 									value={expirationDate}
 									years={{
 										end: new Date().getFullYear(),
@@ -378,6 +431,9 @@ export default function ShareModalContent({
 				});
 			});
 	};
+
+	const _isCollaboratorsUpdated = () =>
+		JSON.stringify(collaborators) !== JSON.stringify(initialCollaborators);
 
 	return (
 		<form className="share-modal-content" onSubmit={_handleSubmit}>
@@ -585,7 +641,14 @@ export default function ShareModalContent({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="primary" type="submit">
+						<ClayButton
+							disabled={
+								!collaborators.some(({error}) => !error) ||
+								!_isCollaboratorsUpdated()
+							}
+							displayType="primary"
+							type="submit"
+						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>

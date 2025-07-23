@@ -55,11 +55,11 @@ public class ContentSecurityPolicyNonceManager {
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);
 
+		HttpSession httpSession = httpServletRequest.getSession();
+
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			ContentSecurityPolicyConfigurationUtil.
 				getContentSecurityPolicyConfiguration(httpServletRequest);
-
-		HttpSession httpSession = httpServletRequest.getSession();
 
 		if (!contentSecurityPolicyConfiguration.enabled()) {
 			nonce = StringPool.BLANK;

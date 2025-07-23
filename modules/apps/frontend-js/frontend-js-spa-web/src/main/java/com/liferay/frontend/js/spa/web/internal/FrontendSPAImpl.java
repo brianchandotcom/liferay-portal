@@ -44,16 +44,16 @@ public class FrontendSPAImpl implements FrontendSPA {
 				_log.debug(configurationException);
 			}
 
-			return _SPA_CONFIGURATION;
+			return _spaConfiguration;
 		}
 	}
 
-	private static final SPAConfiguration _SPA_CONFIGURATION =
-		ConfigurableUtil.createConfigurable(
-			SPAConfiguration.class, Collections.emptyMap());
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendSPAImpl.class);
+
+	private static final SPAConfiguration _spaConfiguration =
+		ConfigurableUtil.createConfigurable(
+			SPAConfiguration.class, Collections.emptyMap());
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

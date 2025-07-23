@@ -63,7 +63,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -173,7 +172,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) throws Exception {
 		String portletNamespace = _portal.getPortletNamespace(
 			PropsUtil.get(PropsKeys.AUTH_LOGIN_PORTLET_NAME));
 
@@ -290,18 +289,12 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private ServiceTracker<Object, Object>
-		_getNavigationExceptionSelectorTracker(BundleContext bundleContext) {
+			_getNavigationExceptionSelectorTracker(BundleContext bundleContext)
+		throws Exception {
 
-		Filter filter;
-
-		try {
-			filter = bundleContext.createFilter(
-				"(&(objectClass=java.lang.Object)(" +
-					_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY + "=*))");
-		}
-		catch (InvalidSyntaxException invalidSyntaxException) {
-			throw new RuntimeException(invalidSyntaxException);
-		}
+		Filter filter = bundleContext.createFilter(
+			"(&(objectClass=java.lang.Object)(" +
+				_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY + "=*))");
 
 		return new ServiceTracker<>(
 			bundleContext, filter,
@@ -376,7 +369,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);
 
-			spaConfiguration = _DEFAULT_SPA_CONFIGURATION;
+			spaConfiguration = _defaultSPAConfiguration;
 		}
 
 		return spaConfiguration;
@@ -412,10 +405,6 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return false;
 	}
 
-	private static final SPAConfiguration _DEFAULT_SPA_CONFIGURATION =
-		ConfigurableUtil.createConfigurable(
-			SPAConfiguration.class, Collections.emptyMap());
-
 	private static final String[] _SPA_DEFAULT_EXCLUDED_PATHS = {
 		"/c/document_library", "/documents", "/image", "/o/cms/download-folder"
 	};
@@ -425,6 +414,10 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SPATopHeadJSPDynamicInclude.class);
+
+	private static final SPAConfiguration _defaultSPAConfiguration =
+		ConfigurableUtil.createConfigurable(
+			SPAConfiguration.class, Collections.emptyMap());
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;

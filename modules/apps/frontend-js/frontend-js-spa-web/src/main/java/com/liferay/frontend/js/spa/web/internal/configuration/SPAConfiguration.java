@@ -24,16 +24,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SPAConfiguration {
 
 	@Meta.AD(
-		deflt = "true", description = "enable-spa-description",
-		name = "enable-spa-name", required = false
-	)
-	public boolean enabled();
-
-	@Meta.AD(
 		deflt = "-1", description = "cache-expiration-time-description",
 		name = "cache-expiration-time-name", required = false
 	)
 	public long cacheExpirationTime();
+
+	@Meta.AD(
+		deflt = "true", description = "enable-spa-description",
+		name = "enable-spa-name", required = false
+	)
+	public boolean enabled();
 
 	@Meta.AD(
 		deflt = ":not([target=\"_blank\"])|:not([data-senna-off])|:not([data-resource-href])",

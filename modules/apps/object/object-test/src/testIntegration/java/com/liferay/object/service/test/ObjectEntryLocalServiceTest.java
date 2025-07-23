@@ -214,6 +214,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
@@ -3304,7 +3305,8 @@ public class ObjectEntryLocalServiceTest {
 		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
 		UnsafeRunnable<Exception> unsafeRunnable =
-			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
+			_tempFileEntriesSchedulerJobConfiguration.
+				getJobExecutorUnsafeRunnable();
 
 		unsafeRunnable.run();
 
@@ -6951,6 +6953,18 @@ public class ObjectEntryLocalServiceTest {
 		return BigDecimalUtil.stripTrailingZeros(BigDecimal.valueOf(value));
 	}
 
+	private byte[] _getContentBytes(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		String content = StringUtil.read(
+			classLoader.getResourceAsStream(
+				"com/liferay/object/service/test/dependencies/" + fileName));
+
+		return content.getBytes();
+	}
+
 	private String _getMultiselectPicklistObjectFieldValue(
 		String prefixKey, int size) {
 
@@ -7443,7 +7457,7 @@ public class ObjectEntryLocalServiceTest {
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build();
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
@@ -7455,12 +7469,195 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			serviceContext);
 
-		Assert.assertEquals(status, objectEntry.getStatus());
+		Assert.assertEquals(status, objectEntry1.getStatus());
+
+		// Approve pending object entry workflow instance after display date
+		// time
+
+		_workflowDefinitionManager.deployWorkflowDefinition(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), "workflow-definition-1",
+			_getContentBytes("workflow-definition-1.json"));
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_updateWorkflowDefinitionLink(
+				_objectDefinition, "workflow-definition-1");
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new java.sql.Date(
+					System.currentTimeMillis() +
+						TimeUnit.MILLISECOND.toMillis(100))
+			).putAll(
+				requiredValues
+			).build(),
+			serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, objectEntry2.getStatus());
+
+		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+			_checkObjectEntrySchedulerJobConfiguration.
+				getJobExecutorUnsafeRunnable();
+
+		jobExecutorUnsafeRunnable.run();
+
+		objectEntry2 = _objectEntryLocalService.getObjectEntry(
+			objectEntry2.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, objectEntry2.getStatus());
+
+		_completeWorkflowTask(Constants.APPROVE);
+
+		objectEntry2 = _objectEntryLocalService.getObjectEntry(
+			objectEntry2.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, objectEntry2.getStatus());
+
+		// Approve pending object entry workflow instance before display date
+		// time
+
+		ObjectEntry objectEntry3 = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new java.sql.Date(
+					System.currentTimeMillis() +
+						TimeUnit.MILLISECOND.toMillis(1000))
+			).putAll(
+				requiredValues
+			).build(),
+			serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, objectEntry3.getStatus());
+
+		_completeWorkflowTask(Constants.APPROVE);
+
+		objectEntry3 = _objectEntryLocalService.getObjectEntry(
+			objectEntry3.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, objectEntry3.getStatus());
+
+		Thread.sleep(1000);
+
+		jobExecutorUnsafeRunnable.run();
+
+		objectEntry3 = _objectEntryLocalService.getObjectEntry(
+			objectEntry3.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, objectEntry3.getStatus());
+
+		// Reject pending object entry workflow instance after display date time
+
+		ObjectEntry objectEntry4 = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new java.sql.Date(
+					System.currentTimeMillis() +
+						TimeUnit.MILLISECOND.toMillis(100))
+			).putAll(
+				requiredValues
+			).build(),
+			serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, objectEntry4.getStatus());
+
+		jobExecutorUnsafeRunnable.run();
+
+		objectEntry4 = _objectEntryLocalService.getObjectEntry(
+			objectEntry4.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, objectEntry4.getStatus());
+
+		_completeWorkflowTask(Constants.REJECT);
+
+		objectEntry4 = _objectEntryLocalService.getObjectEntry(
+			objectEntry4.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DENIED, objectEntry4.getStatus());
+
+		// Reject pending object entry workflow instance before display date
+		// time
+
+		ObjectEntry objectEntry5 = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate",
+				new java.sql.Date(
+					System.currentTimeMillis() +
+						TimeUnit.MILLISECOND.toMillis(1000))
+			).putAll(
+				requiredValues
+			).build(),
+			serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, objectEntry5.getStatus());
+
+		_completeWorkflowTask(Constants.REJECT);
+
+		objectEntry5 = _objectEntryLocalService.getObjectEntry(
+			objectEntry5.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DENIED, objectEntry5.getStatus());
+
+		Thread.sleep(1000);
+
+		jobExecutorUnsafeRunnable.run();
+
+		objectEntry5 = _objectEntryLocalService.getObjectEntry(
+			objectEntry5.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DENIED, objectEntry5.getStatus());
+
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			workflowDefinitionLink);
 
 		// Update object entry with display date in the future
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+		serviceContext.setWorkflowAction(workflowAction);
+
+		ObjectEntry objectEntry6 = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", "textObjectFieldValue1"
+			).putAll(
+				requiredValues
+			).build(),
+			serviceContext);
+
+		objectEntry6 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"displayDate",
 				new java.sql.Date(
@@ -7474,16 +7671,16 @@ public class ObjectEntryLocalServiceTest {
 
 		if (workflowAction == WorkflowConstants.ACTION_PUBLISH) {
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_SCHEDULED, objectEntry.getStatus());
+				WorkflowConstants.STATUS_SCHEDULED, objectEntry6.getStatus());
 		}
 		else {
-			Assert.assertEquals(status, objectEntry.getStatus());
+			Assert.assertEquals(status, objectEntry6.getStatus());
 		}
 
 		// Update object entry with display date in the past
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+		objectEntry6 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"displayDate",
 				new java.sql.Date(
@@ -7495,7 +7692,7 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			serviceContext);
 
-		Assert.assertEquals(status, objectEntry.getStatus());
+		Assert.assertEquals(status, objectEntry6.getStatus());
 
 		_objectDefinition.setEnableObjectEntryDraft(false);
 		_objectDefinition.setEnableObjectEntrySchedule(false);
@@ -8367,6 +8564,12 @@ public class ObjectEntryLocalServiceTest {
 		ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
 			RandomTestUtil.randomString();
 
+	@Inject(
+		filter = "component.name=com.liferay.object.web.internal.scheduler.CheckObjectEntrySchedulerJobConfiguration"
+	)
+	private static SchedulerJobConfiguration
+		_checkObjectEntrySchedulerJobConfiguration;
+
 	private static ServiceRegistration<?> _serviceRegistration;
 	private static final TestDLFileEntryModelListener
 		_testDLFileEntryModelListener = new TestDLFileEntryModelListener();
@@ -8476,16 +8679,16 @@ public class ObjectEntryLocalServiceTest {
 	@Inject
 	private RoleLocalService _roleLocalService;
 
-	@Inject(
-		filter = "component.name=com.liferay.document.library.web.internal.scheduler.TempFileEntriesSchedulerJobConfiguration"
-	)
-	private SchedulerJobConfiguration _schedulerJobConfiguration;
-
 	@DeleteAfterTestRun
 	private ObjectDefinition _siteObjectDefinition;
 
 	@Inject
 	private SystemEventLocalService _systemEventLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.document.library.web.internal.scheduler.TempFileEntriesSchedulerJobConfiguration"
+	)
+	private SchedulerJobConfiguration _tempFileEntriesSchedulerJobConfiguration;
 
 	@Inject
 	private UserLocalService _userLocalService;
@@ -8493,6 +8696,9 @@ public class ObjectEntryLocalServiceTest {
 	@Inject
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
+
+	@Inject
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 	@Inject
 	private WorkflowTaskManager _workflowTaskManager;

@@ -6049,7 +6049,7 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_PENDING, objectEntry.getStatus());
 
-			_completeWorkflowTask();
+			_completeWorkflowTask(Constants.APPROVE);
 
 			_assertObjectEntryStatus(
 				WorkflowConstants.STATUS_APPROVED, objectEntry);
@@ -6139,7 +6139,7 @@ public class ObjectEntryLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, objectEntryAA);
 
 		WorkflowDefinitionLink workflowDefinitionLink =
-			_updateWorkflowDefinitionLink(objectDefinitionA);
+			_updateWorkflowDefinitionLink(objectDefinitionA, "Single Approver");
 
 		ObjectEntry objectEntryAAA = _addObjectEntry(
 			0, objectDefinitionAAA.getObjectDefinitionId(),
@@ -6158,7 +6158,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_PENDING, objectEntryAAA);
 
-		_completeWorkflowTask();
+		_completeWorkflowTask(Constants.APPROVE);
 
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_APPROVED, objectEntryA);
@@ -6175,7 +6175,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_PENDING, objectEntryAA);
 
-		_completeWorkflowTask();
+		_completeWorkflowTask(Constants.APPROVE);
 
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_APPROVED, objectEntryA);
@@ -6232,7 +6232,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_PENDING, objectEntryAAA);
 
-		_completeWorkflowTask();
+		_completeWorkflowTask(Constants.APPROVE);
 
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_APPROVED, objectEntryA);
@@ -6262,7 +6262,7 @@ public class ObjectEntryLocalServiceTest {
 		_updateEnableObjectEntryDraft(objectDefinitionA);
 		_updateEnableObjectEntryDraft(objectDefinitionAA);
 
-		_updateWorkflowDefinitionLink(objectDefinitionA);
+		_updateWorkflowDefinitionLink(objectDefinitionA, "Single Approver");
 
 		TreeTestUtil.bind(
 			_objectRelationshipLocalService,
@@ -6355,7 +6355,7 @@ public class ObjectEntryLocalServiceTest {
 				).build(),
 				serviceContext));
 
-		_completeWorkflowTask();
+		_completeWorkflowTask(Constants.APPROVE);
 
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_APPROVED, objectEntryA);
@@ -6884,7 +6884,7 @@ public class ObjectEntryLocalServiceTest {
 		threadLocal.set(new HashSet<>());
 	}
 
-	private void _completeWorkflowTask() throws Exception {
+	private void _completeWorkflowTask(String transitionName) throws Exception {
 		List<WorkflowTask> workflowTasks =
 			_workflowTaskManager.getWorkflowTasksBySubmittingUser(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -6899,8 +6899,8 @@ public class ObjectEntryLocalServiceTest {
 
 		_workflowTaskManager.completeWorkflowTask(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask.getWorkflowTaskId(), Constants.APPROVE,
-			StringPool.BLANK, null);
+			workflowTask.getWorkflowTaskId(), transitionName, StringPool.BLANK,
+			null);
 	}
 
 	private boolean _containsObjectEntryValuesSQLQuery(LogCapture logCapture) {
@@ -8355,12 +8355,12 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private WorkflowDefinitionLink _updateWorkflowDefinitionLink(
-			ObjectDefinition objectDefinition)
+			ObjectDefinition objectDefinition, String workflowDefinitionName)
 		throws Exception {
 
 		return _workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
-			objectDefinition.getClassName(), 0, 0, "Single Approver", 1);
+			objectDefinition.getClassName(), 0, 0, workflowDefinitionName, 1);
 	}
 
 	private static final String _OBJECT_VALIDATION_RULE_KEY =

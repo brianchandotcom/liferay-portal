@@ -20,7 +20,6 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.entry.folder.subscription.util.ObjectEntryFolderSubscriptionUtil;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.exception.NoSuchObjectEntryException;
-import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
@@ -1418,32 +1417,17 @@ public class DefaultObjectEntryManagerImpl
 							serviceBuilderObjectEntry.getPrimaryKey());
 					}
 
-					try {
-						nestedObjectEntry =
-							objectEntryManager.updateObjectEntry(
-								objectDefinition.getCompanyId(),
-								dtoConverterContext,
-								nestedObjectEntry.getExternalReferenceCode(),
-								relatedObjectDefinition, nestedObjectEntry,
-								scopeKey);
+					long groupId = 0;
+
+					if ((serviceBuilderObjectEntry.getGroupId() > 0) &&
+						Objects.equals(
+							relatedObjectDefinition.getScope(),
+							ObjectDefinitionConstants.SCOPE_SITE)) {
+
+						groupId = serviceBuilderObjectEntry.getGroupId();
 					}
-					catch (ObjectEntryValuesException.Required
-								objectEntryValuesException) {
 
-						if (!LazyReferencingThreadLocal.isEnabled()) {
-							throw objectEntryValuesException;
-						}
-
-						long groupId = 0;
-
-						if ((serviceBuilderObjectEntry.getGroupId() > 0) &&
-							Objects.equals(
-								relatedObjectDefinition.getScope(),
-								ObjectDefinitionConstants.SCOPE_SITE)) {
-
-							groupId = serviceBuilderObjectEntry.getGroupId();
-						}
-
+					if (LazyReferencingThreadLocal.isEnabled()) {
 						nestedObjectEntry = _toObjectEntry(
 							dtoConverterContext, relatedObjectDefinition,
 							_objectEntryService.getOrAddEmptyObjectEntry(
@@ -1451,6 +1435,15 @@ public class DefaultObjectEntryManagerImpl
 								groupId, dtoConverterContext.getUserId(),
 								relatedObjectDefinition.
 									getObjectDefinitionId()));
+					}
+					else {
+						nestedObjectEntry =
+							objectEntryManager.updateObjectEntry(
+								objectDefinition.getCompanyId(),
+								dtoConverterContext,
+								nestedObjectEntry.getExternalReferenceCode(),
+								relatedObjectDefinition, nestedObjectEntry,
+								scopeKey);
 					}
 
 					if (!manyToOneObjectRelationship) {

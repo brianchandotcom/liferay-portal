@@ -18,6 +18,34 @@ components:
                     type: string
                 title:
                     type: string
+        Metric:
+            properties:
+                metricType:
+                    type: string
+                previousValue:
+                    format: double
+                    type: number
+                previousValueKey:
+                    type: string
+                trend:
+                    $ref: "#/components/schemas/Trend"
+                value:
+                    format: double
+                    type: number
+                valueKey:
+                    type: string
+        ObjectEntryMetric:
+            properties:
+                dataSourceId:
+                    type: string
+                defaultMetric:
+                    $ref: "#/components/schemas/Metric"
+                externalReferenceCode:
+                    type: string
+                selectedMetrics:
+                    items:
+                        $ref: "#/components/schemas/Metric"
+                    type: array
         Overview:
             properties:
                 categoriesCount:
@@ -187,3 +215,37 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/InventoryAnalysis"
             tags: ["InventoryAnalysis"]
+    "/object-entry-metric":
+        get:
+            operationId: getObjectEntryMetric
+            parameters:
+                -   in: query
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: groupId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+                -   in: query
+                    name: selectedMetrics
+                    schema:
+                        items:
+                            type: string
+                        type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryMetric"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryMetric"
+            tags: ["ObjectEntryMetric"]

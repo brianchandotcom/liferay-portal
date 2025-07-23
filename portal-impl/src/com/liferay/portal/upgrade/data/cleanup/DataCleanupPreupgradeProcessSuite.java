@@ -11,8 +11,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 
@@ -42,6 +44,24 @@ public class DataCleanupPreupgradeProcessSuite {
 
 		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
 				_dataCleanupPreupgradeProcesses) {
+
+			String dataCleanupPreupgradeProcessClassName =
+				dataCleanupPreupgradeProcess.getClass(
+				).getName();
+
+			if (ArrayUtil.contains(
+					PropsValues.
+						UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_BLACKLIST,
+					dataCleanupPreupgradeProcessClassName)) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipping blacklisted data cleanup process: " +
+							dataCleanupPreupgradeProcessClassName);
+				}
+
+				continue;
+			}
 
 			dataCleanupPreupgradeProcess.upgrade();
 		}

@@ -1,0 +1,80 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"dataType": "string",
+				"editorConfig": null,
+				"fieldNamespace": "",
+				"fieldReference": "content",
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "rich_text",
+			"indexType": "text",
+			"indexable": true,
+			"label": {
+				"en_US": "Content"
+			},
+			"localizable": true,
+			"name": "content",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		}
+	],
+	"dataDefinitionKey": "ARTICLE",
+	"defaultDataLayout": {
+		"dataLayoutFields": {
+		},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"content"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+		},
+		"name": {
+			"en_US": "Article"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+	},
+	"externalReferenceCode": "b05af329-1ac7-bc3e-b251-490bae54d769",
+	"name": {
+		"en_US": "Article"
+	},
+	"storageType": "default"
+}

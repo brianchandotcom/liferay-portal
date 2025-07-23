@@ -320,6 +320,19 @@ public class DefaultObjectEntryManagerImpl
 
 	@Override
 	public void deleteObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId)
+		throws Exception {
+
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition,
+			_objectEntryService.getObjectEntry(objectEntryId));
+
+		_objectEntryService.deleteObjectEntry(objectEntryId);
+	}
+
+	@Override
+	public void deleteObjectEntry(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey)
@@ -335,18 +348,6 @@ public class DefaultObjectEntryManagerImpl
 
 		_objectEntryService.deleteObjectEntry(
 			serviceBuilderObjectEntry.getObjectEntryId());
-	}
-
-	@Override
-	public void deleteObjectEntry(
-			ObjectDefinition objectDefinition, long objectEntryId)
-		throws Exception {
-
-		_checkObjectEntryObjectDefinitionId(
-			objectDefinition,
-			_objectEntryService.getObjectEntry(objectEntryId));
-
-		_objectEntryService.deleteObjectEntry(objectEntryId);
 	}
 
 	@Override

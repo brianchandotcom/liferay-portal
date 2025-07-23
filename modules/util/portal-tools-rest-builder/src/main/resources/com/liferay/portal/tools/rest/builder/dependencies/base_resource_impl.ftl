@@ -246,7 +246,7 @@ public abstract class Base${schemaName}ResourceImpl
 									() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
 										Page<Permission> permissionsPage =
 										<#if getPermissionsPageJavaMethodSignature?has_content>
-											get${schemaName}PermissionsPage(
+											${getPermissionsPageJavaMethodSignature.methodName}(
 												<#if properties?keys?seq_contains("id")>
 													${schemaVarName}.getId()
 												<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -255,7 +255,7 @@ public abstract class Base${schemaName}ResourceImpl
 													${schemaVarName}Id
 												</#if>
 										<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
-											get${parentSchemaName}${schemaName}PermissionsPage(
+											${getParentPermissionsPageJavaMethodSignature.methodName}(
 												${parentSchemaName?uncap_first}ExternalReferenceCode, ${schemaVarName}.getExternalReferenceCode()
 										</#if>
 											, null);
@@ -274,7 +274,7 @@ public abstract class Base${schemaName}ResourceImpl
 								() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
 									Page<Permission> permissionsPage =
 									<#if getPermissionsPageJavaMethodSignature?has_content>
-										get${schemaName}PermissionsPage(
+										${getPermissionsPageJavaMethodSignature.methodName}(
 										<#if properties?keys?seq_contains("id")>
 											${httpMethod}${schemaName}.getId()
 										<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -283,7 +283,7 @@ public abstract class Base${schemaName}ResourceImpl
 											${schemaVarName}Id
 										</#if>
 									<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
-										get${parentSchemaName}${schemaName}PermissionsPage(
+										${getParentPermissionsPageJavaMethodSignature.methodName}(
 											${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 									</#if>
 											, null);
@@ -313,7 +313,7 @@ public abstract class Base${schemaName}ResourceImpl
 					if (permissions != null) {
 						Page<Permission> permissionsPage =
 						<#if putPermissionsPageJavaMethodSignature?has_content>
-							put${schemaName}PermissionsPage(
+							${putPermissionsPageJavaMethodSignature.methodName}(
 							<#if properties?keys?seq_contains("id")>
 								${httpMethod}${schemaName}.getId()
 							<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -322,7 +322,7 @@ public abstract class Base${schemaName}ResourceImpl
 								${schemaVarName}Id
 							</#if>
 						<#elseif putParentPermissionsPageJavaMethodSignature?has_content>
-							put${parentSchemaName}${schemaName}PermissionsPage(
+							${putParentPermissionsPageJavaMethodSignature.methodName}(
 								${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 						</#if>
 							, permissions);

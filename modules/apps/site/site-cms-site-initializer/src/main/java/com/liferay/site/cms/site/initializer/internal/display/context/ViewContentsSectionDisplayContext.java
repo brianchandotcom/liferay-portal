@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -50,9 +49,6 @@ public class ViewContentsSectionDisplayContext
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);
-
-		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -106,7 +102,5 @@ public class ViewContentsSectionDisplayContext
 	protected String getEmptyStateDescriptionKey() {
 		return "click-new-to-create-your-first-piece-of-content";
 	}
-
-	protected final ThemeDisplay themeDisplay;
 
 }

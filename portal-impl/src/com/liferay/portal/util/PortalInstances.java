@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
@@ -98,7 +99,9 @@ public class PortalInstances {
 		if (companyIdObj != null) {
 			long companyId = companyIdObj.longValue();
 
-			CompanyThreadLocal.setCompanyId(companyId);
+			if (CompanyThreadLocal.getCompanyId() == CompanyConstants.SYSTEM) {
+				CompanyThreadLocal.setCompanyId(companyId);
+			}
 
 			return companyId;
 		}

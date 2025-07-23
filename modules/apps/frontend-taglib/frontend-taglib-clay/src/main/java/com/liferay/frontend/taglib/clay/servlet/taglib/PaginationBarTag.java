@@ -220,6 +220,8 @@ public class PaginationBarTag extends BaseContainerTag {
 			jspWriter.write("</button></div>");
 		}
 
+		jspWriter.write("<div class=\"pagination-results\">");
+
 		Integer from = ((_activePage - 1) * _activeDelta) + 1;
 
 		Integer to = _activePage * _activeDelta;
@@ -228,7 +230,6 @@ public class PaginationBarTag extends BaseContainerTag {
 			to = _totalItems;
 		}
 
-		jspWriter.write("<div class=\"pagination-results\">");
 		jspWriter.write(
 			LanguageUtil.format(
 				PortalUtil.getLocale(getRequest()),
@@ -236,6 +237,7 @@ public class PaginationBarTag extends BaseContainerTag {
 				new String[] {
 					from.toString(), to.toString(), _totalItems.toString()
 				}));
+
 		jspWriter.write("</div><ul class=\"pagination pagination-root\">");
 		jspWriter.write("<li class=\"");
 

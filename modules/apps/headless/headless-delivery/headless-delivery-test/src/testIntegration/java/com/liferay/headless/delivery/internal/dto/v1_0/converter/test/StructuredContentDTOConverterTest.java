@@ -66,10 +66,8 @@ public class StructuredContentDTOConverterTest {
 
 	@Test
 	public void testToDTO() throws Exception {
-		_testSelectedFromList(
-			Boolean.FALSE.toString(), "[\"one\",\"two\",\"three\"]");
-		_testSelectedFromList(
-			Boolean.TRUE.toString(), "[\"one\",\"three\",\"two\"]");
+		_testSelectedFromList(false, "[\"one\",\"two\",\"three\"]");
+		_testSelectedFromList(true, "[\"one\",\"three\",\"two\"]");
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -82,7 +80,7 @@ public class StructuredContentDTOConverterTest {
 	}
 
 	private void _testSelectedFromList(
-			String alphabeticalOrder, String expectedData)
+			boolean alphabeticalOrder, String expectedData)
 		throws Exception {
 
 		int nextInt = RandomUtil.nextInt(5);
@@ -90,7 +88,7 @@ public class StructuredContentDTOConverterTest {
 		String json = StringUtil.replace(
 			StringUtil.replace(
 				_read("test-data-definition-select-from-list.json"),
-				"[$ALPHABETICAL_ORDER$]", alphabeticalOrder),
+				"[$ALPHABETICAL_ORDER$]", String.valueOf(alphabeticalOrder)),
 			"[$RANDOM_INT$]", String.valueOf(nextInt));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);

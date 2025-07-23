@@ -46,7 +46,8 @@ public class CPConfigurationListPanelApp extends BasePanelApp {
 
 		boolean show = super.isShow(permissionChecker, group);
 
-		show &= FeatureFlagManagerUtil.isEnabled("LPD-10889");
+		show &= FeatureFlagManagerUtil.isEnabled(
+			group.getCompanyId(), "LPD-10889");
 
 		return show;
 	}

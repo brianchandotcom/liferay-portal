@@ -120,7 +120,9 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 		long cpConfigurationListId = 0;
 		CPDefinitionInventoryEngine cpDefinitionInventoryEngine = null;
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				cpInstance.getCompanyId(), "LPD-10889")) {
+
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 			CommerceChannel commerceChannel =

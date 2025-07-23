@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -118,7 +119,8 @@ public class CPConfigurationListEligibilityCommerceHealthStatus
 
 	@Override
 	public boolean isActive() {
-		return FeatureFlagManagerUtil.isEnabled("LPD-10889");
+		return FeatureFlagManagerUtil.isEnabled(
+			CompanyThreadLocal.getCompanyId(), "LPD-10889");
 	}
 
 	@Override

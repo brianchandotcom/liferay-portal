@@ -225,7 +225,9 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 
 			long cpConfigurationListId = 0;
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+			if (FeatureFlagManagerUtil.isEnabled(
+					cpInstance.getCompanyId(), "LPD-10889")) {
+
 				CommerceChannel commerceChannel =
 					_commerceChannelLocalService.getCommerceChannelByGroupId(
 						commerceOrder.getGroupId());

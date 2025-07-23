@@ -475,7 +475,7 @@ public class CommerceSearchResource {
 			accountEntryId = accountEntry.getAccountEntryId();
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-10889")) {
 			attributes.put(
 				CPField.CP_CONFIGURATION_LIST_IDS,
 				commerceContext.getCPConfigurationListIds());

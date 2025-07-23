@@ -34,6 +34,7 @@ import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -144,7 +145,9 @@ public class ProductHelperImpl implements ProductHelper {
 		BigDecimal multipleQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-10889")) {
+
 			CPDefinition cpDefinition =
 				_cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
 

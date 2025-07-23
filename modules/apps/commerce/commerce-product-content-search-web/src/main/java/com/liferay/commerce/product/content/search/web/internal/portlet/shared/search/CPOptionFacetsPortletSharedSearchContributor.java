@@ -140,7 +140,12 @@ public class CPOptionFacetsPortletSharedSearchContributor
 				portletSharedSearchSettings.addFacet(serializableFacet);
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			if (FeatureFlagManagerUtil.isEnabled(
+					themeDisplay.getCompanyId(), "LPD-10889")) {
+
 				CommerceContext commerceContext =
 					(CommerceContext)renderRequest.getAttribute(
 						CommerceWebKeys.COMMERCE_CONTEXT);
@@ -151,10 +156,6 @@ public class CPOptionFacetsPortletSharedSearchContributor
 			}
 			else {
 				long commerceChannelGroupId = 0;
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
 
 				CommerceChannel commerceChannel =
 					_commerceChannelLocalService.

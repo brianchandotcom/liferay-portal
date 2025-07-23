@@ -47,7 +47,8 @@ public class ProductConfigurationDTOConverter
 
 		if ((dtoConverterContext instanceof
 				ProductConfigurationDTOConverterContext) &&
-			FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+			FeatureFlagManagerUtil.isEnabled(
+				cpDefinition.getCompanyId(), "LPD-10889")) {
 
 			ProductConfigurationDTOConverterContext
 				productConfigurationDTOConverterContext =

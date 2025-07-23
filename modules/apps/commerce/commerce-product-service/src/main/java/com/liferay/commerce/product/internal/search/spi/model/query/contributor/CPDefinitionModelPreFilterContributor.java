@@ -62,7 +62,9 @@ public class CPDefinitionModelPreFilterContributor
 		_filterByStatuses(booleanFilter, searchContext);
 		_filterBySubscriptionEnabled(booleanFilter, searchContext);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				searchContext.getCompanyId(), "LPD-10889")) {
+
 			_filterByCPConfigurationListIds(booleanFilter, searchContext);
 		}
 		else if (GetterUtil.getBoolean(searchContext.getAttribute("secure"))) {

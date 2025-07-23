@@ -931,13 +931,15 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			long commerceOrderTypeId, CPInstance cpInstance)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
-			return 0;
-		}
-
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(
 				commerceChannelGroupId);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				commerceChannel.getCompanyId(), "LPD-10889")) {
+
+			return 0;
+		}
 
 		CPConfigurationList cpConfigurationList =
 			_cpConfigurationListDiscovery.getCPConfigurationList(

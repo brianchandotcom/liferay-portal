@@ -116,7 +116,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			commerceAccountId, commerceChannel.getGroupId(), null, 0,
 			contextCompany.getCompanyId());
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				cpDefinition.getCompanyId(), "LPD-10889") &&
 			!cpDefinition.isVisible(
 				commerceContext.getCPConfigurationListId(
 					cpDefinition.getGroupId()))) {
@@ -193,7 +194,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			commerceAccountId, commerceChannel.getGroupId(), null, 0,
 			contextCompany.getCompanyId());
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-10889")) {
+
 			searchContext.setAttribute(
 				CPField.CP_CONFIGURATION_LIST_IDS,
 				commerceContext.getCPConfigurationListIds());

@@ -165,7 +165,9 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 
 		searchContext.setAttribute(CPField.PUBLISHED, Boolean.TRUE);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-10889")) {
+
 			CommerceContext commerceContext =
 				(CommerceContext)renderRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);

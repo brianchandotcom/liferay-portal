@@ -27,9 +27,26 @@ export class InstanceSettingsPage {
 		await this.applicationsMenuPage.goToInstanceSettings(forceReload);
 	}
 
-	async checkSetting(label: string, text: string) {
-		await expect(await this.page.getByLabel(label).first()).toBeVisible();
-		await expect(await this.page.getByText(text).first()).toBeVisible();
+	async checkSetting(options: {
+		customLocator?: Locator;
+		description?: string;
+		label?: string;
+	}) {
+		const {customLocator, description, label} = options;
+
+		if (label) {
+			await expect(this.page.getByLabel(label).first()).toBeVisible();
+		}
+
+		if (description) {
+			await expect(
+				this.page.getByText(description).first()
+			).toBeVisible();
+		}
+
+		if (customLocator) {
+			await expect(customLocator).toBeVisible();
+		}
 	}
 
 	async exportInstanceSetting() {

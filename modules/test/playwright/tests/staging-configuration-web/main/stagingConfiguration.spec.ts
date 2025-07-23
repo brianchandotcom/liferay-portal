@@ -142,7 +142,7 @@ test(
 );
 
 test(
-	'Verify if information about staging system settings are present.',
+	'Verify if information about staging system settings are present',
 	{tag: ['@LPS-123156']},
 	async ({instanceSettingsPage}) => {
 		await instanceSettingsPage.goToInstanceSetting(
@@ -151,10 +151,11 @@ test(
 			true,
 			'Virtual Instance Scope'
 		);
-		await instanceSettingsPage.checkSetting(
-			'Single Asset Publish Process Includes Version History',
-			'Specify characters that are not allowed in web content folder names.'
-		);
+		await instanceSettingsPage.checkSetting({
+			description:
+				'Specify characters that are not allowed in web content folder names.',
+			label: 'Single Asset Publish Process Includes Version History',
+		});
 
 		await instanceSettingsPage.goToInstanceSetting(
 			'Infrastructure',
@@ -162,14 +163,16 @@ test(
 			true,
 			'Virtual Instance Scope'
 		);
-		await instanceSettingsPage.checkSetting(
-			'Delete temporary LAR during a failed staging publish process.',
-			'Uncheck to avoid deleting the temporary LAR during a failed staging publish process. In remote staging contexts, this only applies for the staging environment.'
-		);
-		await instanceSettingsPage.checkSetting(
-			'Delete temporary LAR during a successful staging publish process.',
-			'Uncheck to avoid deleting the temporary LAR during a successful staging publish process. In remote staging contexts, this only applies for the staging environment.'
-		);
+		await instanceSettingsPage.checkSetting({
+			description:
+				'Uncheck to avoid deleting the temporary LAR during a failed staging publish process. In remote staging contexts, this only applies for the staging environment.',
+			label: 'Delete temporary LAR during a failed staging publish process.',
+		});
+		await instanceSettingsPage.checkSetting({
+			description:
+				'Uncheck to avoid deleting the temporary LAR during a successful staging publish process. In remote staging contexts, this only applies for the staging environment.',
+			label: 'Delete temporary LAR during a successful staging publish process.',
+		});
 	}
 );
 

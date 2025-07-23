@@ -6,12 +6,17 @@
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.headless.admin.user.client.dto.v1_0.SharedAsset;
+import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -21,6 +26,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -41,6 +47,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -55,11 +62,15 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -92,6 +103,73 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
 
 		_userLocalService.deleteUser(_user);
+	}
+
+	@Override
+	@Test
+	public void testGetMyUserAccountSharedAssetsSharedWithMePage()
+		throws Exception {
+
+		super.testGetMyUserAccountSharedAssetsSharedWithMePage();
+
+		Page<SharedAsset> page =
+			sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
+				null, null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+			randomSharedAsset());
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			new HashMap<>(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), _user.getUserId()));
+
+		ObjectDefinition depotScopedObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						StringUtil.randomId()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			depotScopedObjectDefinition.getUserId(),
+			depotScopedObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
+
+		_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+			depotEntry.getGroupId(), depotScopedObjectDefinition,
+			randomSharedAsset());
+		_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+			depotEntry.getGroupId(), depotScopedObjectDefinition,
+			randomSharedAsset());
+
+		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
+			null, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 3, page.getTotalCount());
+
+		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
+			null, null, "(cms eq false)", Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
+			null, null, "(cms eq true)", Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			depotScopedObjectDefinition);
 	}
 
 	@Override
@@ -141,32 +219,8 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 				SharedAsset sharedAsset)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				testGroup.getGroupId(), _user.getUserId());
-
-		DLFileEntry dlFileEntry = _addDLFileEntry(
-			testGroup.getGroupId(), TestPropsValues.getUserId());
-
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			testGroup.getGroupId(), _user.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), 0, null,
-			HashMapBuilder.<String, Serializable>put(
-				"file", dlFileEntry.getFileEntryId()
-			).put(
-				"title", sharedAsset.getTitle()
-			).build(),
-			serviceContext);
-
-		return _toObjectEntrySharedAsset(
-			objectEntry, sharedAsset,
-			_sharingEntryLocalService.addSharingEntry(
-				sharedAsset.getExternalReferenceCode(), _user.getUserId(), 0,
-				TestPropsValues.getUserId(),
-				_classNameLocalService.getClassNameId(
-					_objectDefinition.getClassName()),
-				objectEntry.getObjectEntryId(), testGroup.getGroupId(), true,
-				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext));
+		return _testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+			testGroup.getGroupId(), _objectDefinition, sharedAsset);
 	}
 
 	private DLFileEntry _addDLFileEntry(long groupId, long userId)
@@ -244,6 +298,40 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 			objectDefinition);
 	}
 
+	private SharedAsset
+			_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+				long groupId, ObjectDefinition objectDefinition,
+				SharedAsset sharedAsset)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, _user.getUserId());
+
+		DLFileEntry dlFileEntry = _addDLFileEntry(
+			groupId, TestPropsValues.getUserId());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			groupId, _user.getUserId(),
+			objectDefinition.getObjectDefinitionId(), 0, null,
+			HashMapBuilder.<String, Serializable>put(
+				"file", dlFileEntry.getFileEntryId()
+			).put(
+				"title", sharedAsset.getTitle()
+			).build(),
+			serviceContext);
+
+		return _toObjectEntrySharedAsset(
+			objectEntry, sharedAsset,
+			_sharingEntryLocalService.addSharingEntry(
+				sharedAsset.getExternalReferenceCode(), _user.getUserId(), 0,
+				TestPropsValues.getUserId(),
+				_classNameLocalService.getClassNameId(
+					objectDefinition.getClassName()),
+				objectEntry.getObjectEntryId(), groupId, true,
+				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext));
+	}
+
 	private SharedAsset _toObjectEntryFolderSharedAsset(
 			SharedAsset sharedAsset, SharingEntry sharingEntry)
 		throws Exception {
@@ -310,7 +398,14 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

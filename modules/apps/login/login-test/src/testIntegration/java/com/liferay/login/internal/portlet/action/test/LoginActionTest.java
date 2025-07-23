@@ -118,7 +118,6 @@ public class LoginActionTest {
 			httpURLConnection.setInstanceFollowRedirects(false);
 
 			Assert.assertEquals(302, httpURLConnection.getResponseCode());
-
 			Assert.assertTrue(
 				httpURLConnection.getHeaderField(
 					"Location"

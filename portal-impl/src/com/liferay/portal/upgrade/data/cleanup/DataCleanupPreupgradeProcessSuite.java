@@ -58,8 +58,11 @@ public class DataCleanupPreupgradeProcessSuite {
 
 	private final List<DataCleanupPreupgradeProcess>
 		_dataCleanupPreupgradeProcesses = ListUtil.fromArray(
+
+			// The order of the upgrades matters to achieve better results
+
 			new CompanyDataCleanupPreupgradeProcess(),
-			new DDMStructureDataCleanupPreupgradeProcess(),
-			new GroupDataCleanupPreupgradeProcess());
+			new GroupDataCleanupPreupgradeProcess(),
+			new DDMStructureDataCleanupPreupgradeProcess());
 
 }

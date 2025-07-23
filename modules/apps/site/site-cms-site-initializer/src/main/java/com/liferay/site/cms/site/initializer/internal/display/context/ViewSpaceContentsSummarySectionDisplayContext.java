@@ -21,7 +21,7 @@ import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUti
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -70,7 +70,7 @@ public class ViewSpaceContentsSummarySectionDisplayContext
 			httpServletRequest, "view-all-content", "content",
 			ActionUtil.getBaseViewFolderURL(themeDisplay) +
 				objectEntryFolder.getObjectEntryFolderId(),
-			Collections.emptyMap());
+			new LinkedHashMap<>());
 	}
 
 	@Override

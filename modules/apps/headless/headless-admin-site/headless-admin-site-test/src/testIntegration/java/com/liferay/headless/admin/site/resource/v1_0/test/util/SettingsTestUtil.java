@@ -167,6 +167,29 @@ public class SettingsTestUtil {
 			curThemeSettings);
 	}
 
+	public static Settings getSettings(ServiceContext serviceContext) {
+		return new Settings() {
+			{
+				setColorSchemeName(() -> "01");
+				setCss(RandomTestUtil::randomString);
+				setJavascript(RandomTestUtil::randomString);
+				setMasterPageItemExternalReference(
+					() -> _getMasterPageItemExternalReference(serviceContext));
+				setStyleBookItemExternalReference(
+					() -> _getStyleBookItemExternalReference(serviceContext));
+				setThemeName(() -> "classic_WAR_classictheme");
+				setThemeSettings(
+					() -> TreeMapBuilder.put(
+						"lfr-theme:" + RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					).put(
+						"lfr-theme:" + RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					).build());
+			}
+		};
+	}
+
 	public static void modifySettings(
 			ServiceContext serviceContext, Settings settings)
 		throws Exception {
@@ -239,29 +262,6 @@ public class SettingsTestUtil {
 					"true"
 				).build());
 		}
-	}
-
-	public static Settings getSettings(ServiceContext serviceContext) {
-		return new Settings() {
-			{
-				setColorSchemeName(() -> "01");
-				setCss(RandomTestUtil::randomString);
-				setJavascript(RandomTestUtil::randomString);
-				setMasterPageItemExternalReference(
-					() -> _getMasterPageItemExternalReference(serviceContext));
-				setStyleBookItemExternalReference(
-					() -> _getStyleBookItemExternalReference(serviceContext));
-				setThemeName(() -> "classic_WAR_classictheme");
-				setThemeSettings(
-					() -> TreeMapBuilder.put(
-						"lfr-theme:" + RandomTestUtil.randomString(),
-						RandomTestUtil.randomString()
-					).put(
-						"lfr-theme:" + RandomTestUtil.randomString(),
-						RandomTestUtil.randomString()
-					).build());
-			}
-		};
 	}
 
 	private static ItemExternalReference _getMasterPageItemExternalReference(

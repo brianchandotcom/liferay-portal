@@ -7462,9 +7462,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", "textObjectFieldValue1"
-			).putAll(
+			HashMapBuilder.<String, Serializable>putAll(
 				requiredValues
 			).build(),
 			serviceContext);
@@ -7649,9 +7647,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", "textObjectFieldValue1"
-			).putAll(
+			HashMapBuilder.<String, Serializable>putAll(
 				requiredValues
 			).build(),
 			serviceContext);
@@ -7662,8 +7658,6 @@ public class ObjectEntryLocalServiceTest {
 				"displayDate",
 				new java.sql.Date(
 					System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
-			).put(
-				"textObjectFieldName", "textObjectFieldValue2"
 			).putAll(
 				requiredValues
 			).build(),
@@ -7685,8 +7679,6 @@ public class ObjectEntryLocalServiceTest {
 				"displayDate",
 				new java.sql.Date(
 					System.currentTimeMillis() - TimeUnit.DAY.toMillis(1))
-			).put(
-				"textObjectFieldName", "textObjectFieldValue3"
 			).putAll(
 				requiredValues
 			).build(),

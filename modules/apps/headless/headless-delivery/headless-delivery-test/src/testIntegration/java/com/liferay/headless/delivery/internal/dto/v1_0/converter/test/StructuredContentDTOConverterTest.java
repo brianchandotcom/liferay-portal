@@ -18,8 +18,10 @@ import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -66,8 +68,8 @@ public class StructuredContentDTOConverterTest {
 
 	@Test
 	public void testToDTO() throws Exception {
-		_testSelectedFromList(false, "[\"one\",\"two\",\"three\"]");
-		_testSelectedFromList(true, "[\"one\",\"three\",\"two\"]");
+		_testSelectedFromList(false, JSONUtil.putAll("one", "two", "three"));
+		_testSelectedFromList(true, JSONUtil.putAll("one", "three", "two"));
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -80,7 +82,7 @@ public class StructuredContentDTOConverterTest {
 	}
 
 	private void _testSelectedFromList(
-			boolean alphabeticalOrder, String expectedData)
+			boolean alphabeticalOrder, JSONArray expectedDataJSONArray)
 		throws Exception {
 
 		int nextInt = RandomUtil.nextInt(5);
@@ -126,7 +128,10 @@ public class StructuredContentDTOConverterTest {
 		ContentFieldValue contentFieldValue =
 			contentField.getContentFieldValue();
 
-		Assert.assertEquals(expectedData, contentFieldValue.getData());
+		Assert.assertTrue(
+			JSONUtil.equals(
+				expectedDataJSONArray,
+				JSONFactoryUtil.createJSONArray(contentFieldValue.getData())));
 	}
 
 	private StructuredContent _toDTO(JournalArticle journalArticle)

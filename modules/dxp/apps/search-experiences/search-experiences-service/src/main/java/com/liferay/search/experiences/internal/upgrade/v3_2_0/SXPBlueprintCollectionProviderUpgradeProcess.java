@@ -27,8 +27,8 @@ public class SXPBlueprintCollectionProviderUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select companyId from PortalPreferenceValue where key_ = " +
-					"'LPS-129412' and smallValue = 'true'")) {
+				"select distinct companyId from PortalPreferenceValue where " +
+					"key_ = 'LPS-129412' and smallValue = 'true'")) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {

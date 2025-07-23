@@ -44,19 +44,15 @@ export default function shareAction({
 			const initialCollaborators: collaborator[] = items.reverse().map(
 				(collaboratorItem: any) =>
 					({
-						allowResharing: collaboratorItem.share,
-						expirationDate: collaboratorItem.dateExpired,
-						isOwner:
-							collaboratorItem.creator.id === collaboratorItem.id,
-						permission: collaboratorItem.actionIds.includes(
-							'UPDATE'
-						)
+						actionIds: collaboratorItem.actionIds.includes('UPDATE')
 							? 'UPDATE,ADD_DISCUSSION,VIEW'
 							: collaboratorItem.actionIds.includes(
 										'ADD_DISCUSSION'
 								  )
 								? 'ADD_DISCUSSION,VIEW'
 								: 'VIEW',
+						dateExpired: collaboratorItem.dateExpired,
+						share: collaboratorItem.share,
 						type: collaboratorItem.type,
 						user: {
 							id: collaboratorItem.id.toString(),

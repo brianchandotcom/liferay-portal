@@ -84,15 +84,15 @@ public class SXPBlueprintInfoCollectionProviderTest {
 			TestPropsValues.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
+		_serviceContext = ServiceContextTestUtil.getServiceContext();
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
-
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext();
 
 		_serviceContext.setRequest(httpServletRequest);
 	}

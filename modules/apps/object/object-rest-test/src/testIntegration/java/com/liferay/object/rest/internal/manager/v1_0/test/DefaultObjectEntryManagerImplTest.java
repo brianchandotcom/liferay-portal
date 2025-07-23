@@ -2961,48 +2961,18 @@ public class DefaultObjectEntryManagerImplTest
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition4, _group.getGroupKey(), 2));
-	}
 
-	@Test
-	public void testCopyObjectEntryByVersionAsDraft() throws Exception {
-		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition5,
-			new ObjectEntry() {
-				{
-					externalReferenceCode = RandomTestUtil.randomString();
-					keywords = new String[] {RandomTestUtil.randomString()};
-					properties = HashMapBuilder.<String, Object>put(
-						"localizedTextObjectFieldName_i18n",
-						HashMapBuilder.put(
-							"en_US", "en_US localizedTextObjectFieldValue1"
-						).put(
-							"pt_BR", "pt_BR localizedTextObjectFieldValue1"
-						).build()
-					).put(
-						"textObjectFieldName", "textObjectFieldValue"
-					).build();
-					systemProperties = new SystemProperties() {
-						{
-							version = new Version() {
-								{
-									number = 1;
-								}
-							};
-						}
-					};
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		// Status
 
-		_objectDefinition5.setEnableObjectEntryDraft(true);
+		_objectDefinition4.setEnableObjectEntryDraft(true);
 
-		_objectDefinition5 =
+		_objectDefinition4 =
 			objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition5);
+				_objectDefinition4);
 
 		ObjectEntry copyObjectEntry =
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition5, objectEntry.getId(),
+				dtoConverterContext, _objectDefinition4, objectEntry.getId(),
 				1);
 
 		Status status = copyObjectEntry.getStatus();

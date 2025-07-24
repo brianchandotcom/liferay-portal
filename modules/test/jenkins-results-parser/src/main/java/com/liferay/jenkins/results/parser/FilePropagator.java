@@ -301,24 +301,16 @@ public class FilePropagator {
 					Process process = _executeBashCommands(
 						commands, targetSlave);
 
-					int result = process.exitValue();
+					if (process.exitValue() != 0) {
+						throw new Exception(
+							JenkinsResultsParserUtil.readInputStream(
+								process.getErrorStream()));
+					}
 
 					_busySlaves.remove(targetSlave);
+					_mirrorSlaves.add(targetSlave);
 
-					if (result != 0) {
-						_errorSlaves.add(targetSlave);
-
-						log(
-							JenkinsResultsParserUtil.readInputStream(
-								process.getErrorStream(), true));
-
-						continue;
-					}
-					else {
-						_mirrorSlaves.add(targetSlave);
-
-						break;
-					}
+					break;
 				}
 				catch (Exception exception) {
 					_busySlaves.remove(targetSlave);

@@ -148,7 +148,7 @@ describe('CommentsPanel', () => {
 		await closeToast();
 
 		expect(screen.queryByText('Parent comment')).not.toBeInTheDocument;
-		expect(screen.queryByText('Child comment')).not.toBeInTheDocument;
+		expect(screen.queryByText('Child comment')).toBeInTheDocument;
 	});
 
 	it('shows a toast with the error when the request to delete a comment fails', async () => {

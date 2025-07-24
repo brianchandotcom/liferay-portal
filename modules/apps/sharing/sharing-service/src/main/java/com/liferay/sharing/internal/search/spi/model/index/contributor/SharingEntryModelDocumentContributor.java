@@ -5,7 +5,6 @@
 
 package com.liferay.sharing.internal.search.spi.model.index.contributor;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -66,21 +65,19 @@ public class SharingEntryModelDocumentContributor
 	}
 
 	private boolean _isCms(long groupId) {
-		try {
-			Group group = _groupLocalService.getGroup(groupId);
+		Group group = _groupLocalService.fetchGroup(groupId);
 
-			return group.isDepot();
-		}
-		catch (PortalException portalException) {
+		if (group == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get group " + groupId +
-						" while indexing document",
-					portalException);
+						" while indexing document");
 			}
+
+			return false;
 		}
 
-		return false;
+		return group.isDepot();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

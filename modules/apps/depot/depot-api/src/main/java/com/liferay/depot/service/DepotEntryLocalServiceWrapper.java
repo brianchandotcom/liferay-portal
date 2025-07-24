@@ -58,12 +58,12 @@ public class DepotEntryLocalServiceWrapper
 	@Override
 	public DepotEntry addDepotEntry(
 			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
+			java.util.Map<java.util.Locale, String> descriptionMap, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _depotEntryLocalService.addDepotEntry(
-			nameMap, descriptionMap, serviceContext);
+			nameMap, descriptionMap, type, serviceContext);
 	}
 
 	/**
@@ -393,17 +393,17 @@ public class DepotEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<DepotEntry> getGroupConnectedDepotEntries(
-			long groupId, int start, int end)
+			long groupId, int type, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _depotEntryLocalService.getGroupConnectedDepotEntries(
-			groupId, start, end);
+			groupId, type, start, end);
 	}
 
 	@Override
-	public int getGroupConnectedDepotEntriesCount(long groupId) {
+	public int getGroupConnectedDepotEntriesCount(long groupId, int type) {
 		return _depotEntryLocalService.getGroupConnectedDepotEntriesCount(
-			groupId);
+			groupId, type);
 	}
 
 	@Override

@@ -62,7 +62,7 @@ public class AttachmentManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition = _createObjectDefinition("txt, png");
+		_objectDefinition = _addObjectDefinition("txt, png");
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -126,7 +126,7 @@ public class AttachmentManagerTest {
 			Assert.assertNotNull(fileExtensionException);
 		}
 
-		ObjectDefinition objectDefinition = _createObjectDefinition("*");
+		ObjectDefinition objectDefinition = _addObjectDefinition("*");
 
 		tempFileEntry = _addTempFileEntry(
 			RandomTestUtil.randomString(), ".bmp",
@@ -247,7 +247,7 @@ public class AttachmentManagerTest {
 			FileUtil.createTempFile(content.getBytes()), mimeType);
 	}
 
-	private ObjectDefinition _createObjectDefinition(
+	private ObjectDefinition _addObjectDefinition(
 			String acceptedFileExtensions)
 		throws Exception {
 

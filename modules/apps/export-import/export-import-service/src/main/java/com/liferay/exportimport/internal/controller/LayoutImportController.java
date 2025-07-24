@@ -199,7 +199,6 @@ public class LayoutImportController implements ImportController {
 		try {
 			ExportImportThreadLocal.setExportImportConfigurationId(
 				exportImportConfiguration.getExportImportConfigurationId());
-
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
 
 			portletDataContext = getPortletDataContext(

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
 import {searchTableRowByValue} from '../commerceDNDTablePage';
@@ -52,6 +52,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 		colposition: number,
 		value: string
 	) => Promise<Locator>;
+	readonly shipmentItemFrame: FrameLocator;
 	readonly shipmentStatusLink: (shipmentStatus: string) => Locator;
 	readonly shippingMethodSelect: Locator;
 
@@ -173,6 +174,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 
 			throw new Error(`Cannot locate shipment row with value ${value}`);
 		};
+		this.shipmentItemFrame = page.frameLocator('iframe >> nth=1');
 		this.shipmentStatusLink = (shipmentStatus: string) =>
 			page.getByRole('link', {exact: true, name: shipmentStatus});
 		this.shippingMethodSelect = page

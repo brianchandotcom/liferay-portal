@@ -45,6 +45,8 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		paymentMethod: string
 	) => Promise<Locator>;
 	readonly reorderButton: Locator;
+	readonly acceptOrderButton: Locator;
+	readonly createShipmentButton: Locator;
 	readonly saveButton: Locator;
 	readonly selectDeliveryTerms: Locator;
 	readonly selectPaymentTerms: Locator;
@@ -143,6 +145,14 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		this.reorderButton = page.getByRole('button', {
 			exact: true,
 			name: 'Reorder',
+		});
+		this.acceptOrderButton = page.getByRole('link', {
+			exact: true,
+			name: 'Accept Order',
+		});
+		this.createShipmentButton = page.getByRole('link', {
+			exact: true,
+			name: 'Create Shipment',
 		});
 		this.saveButton = this.page.getByRole('button', {name: 'Save'});
 		this.selectPaymentTerms = this.page

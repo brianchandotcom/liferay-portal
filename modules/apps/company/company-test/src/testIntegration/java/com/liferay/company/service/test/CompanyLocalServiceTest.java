@@ -1014,10 +1014,11 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateCompanyLocales() throws Exception {
-		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
+
+		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 		TimeZone timeZone = _company.getTimeZone();
 
 		try {
@@ -1126,11 +1127,12 @@ public class CompanyLocalServiceTest {
 	public void testUpdateCompanyLocalesWithLayoutSetPrototype()
 		throws Exception {
 
-		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 		LayoutSetPrototype layoutSetPrototype = null;
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
+
+		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 		TimeZone timeZone = _company.getTimeZone();
 
 		try {
@@ -1179,10 +1181,11 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testUpdateDisplay() throws Exception {
-		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				_company.getCompanyId());
+
+		String languageId = LocaleUtil.toLanguageId(_company.getLocale());
 		TimeZone timeZone = _company.getTimeZone();
 
 		try {

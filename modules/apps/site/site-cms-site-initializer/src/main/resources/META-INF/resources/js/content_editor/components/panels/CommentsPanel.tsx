@@ -57,18 +57,28 @@ export default function CommentsPanel({
 		const filterComments = (comments: Comment[]) =>
 			comments.filter((comment) => comment.commentId !== commentId);
 
-		setComments((comments) =>
-			parentCommentId
-				? comments.map((comment) =>
-						comment.commentId === parentCommentId
-							? {
-									...comment,
-									children: filterComments(comment.children),
-								}
-							: comment
-					)
-				: filterComments(comments)
-		);
+		setComments((comments) => {
+			if (parentCommentId) {
+				return comments.map((comment) =>
+					comment.commentId === parentCommentId
+						? {
+								...comment,
+								children: filterComments(comment.children),
+							}
+						: comment
+				);
+			}
+			else {
+				const deletedComment = comments.find(
+					(comment) => comment.commentId === commentId
+				)!;
+
+				return [
+					...filterComments(comments),
+					...deletedComment.children,
+				];
+			}
+		});
 
 		openToast({
 			message: Liferay.Language.get('your-comment-has-been-deleted'),

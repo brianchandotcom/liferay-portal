@@ -18,6 +18,8 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.captcha.rest.client.dto.v1_0.Captcha;
+import com.liferay.captcha.rest.client.resource.v1_0.CaptchaResource;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
@@ -58,9 +60,10 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -163,11 +166,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -1031,17 +1029,17 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_testPostUserAccountBatch();
 		_testPostUserAccountWithApprovalWorkflow();
+		_testPostUserAccountWithCaptcha();
 		_testPostUserAccountWithGender();
 		_testPostUserAccountWithImageExternalReferenceCode();
 		_testPostUserAccountWithObjectValidationRule();
-		_testPostUserAccountWithSAPEntry();
 	}
 
 	@Override
 	@Test
 	public void testPostUserAccountImage() throws Exception {
 		UserAccount postUserAccount = userAccountResource.postUserAccount(
-			randomUserAccount());
+			null, null, randomUserAccount());
 
 		Assert.assertNull(postUserAccount.getImage());
 
@@ -1486,7 +1484,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	protected UserAccount testGetUserAccountByEmailAddress_addUserAccount()
 		throws Exception {
 
-		return userAccountResource.postUserAccount(randomUserAccount());
+		return userAccountResource.postUserAccount(
+			null, null, randomUserAccount());
 	}
 
 	@Override
@@ -1759,7 +1758,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private UserAccount _addUserAccount(long siteId, UserAccount userAccount)
 		throws Exception {
 
-		userAccount = userAccountResource.postUserAccount(userAccount);
+		userAccount = userAccountResource.postUserAccount(
+			null, null, userAccount);
 
 		_userLocalService.addGroupUser(siteId, userAccount.getId());
 
@@ -2419,54 +2419,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 	}
 
-	private void _testPostUserAccount(Captcha captcha, boolean enableCaptcha)
-		throws Exception {
-
-		Bundle bundle = FrameworkUtil.getBundle(UserAccountResourceTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		ServiceRegistration<?> serviceRegistration =
-			bundleContext.registerService(
-				Captcha.class, captcha,
-				HashMapDictionaryBuilder.put(
-					"captcha.engine.impl", TestSimpleCaptchaImpl.class.getName()
-				).build());
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.captcha.configuration.CaptchaConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"captchaEngine", TestSimpleCaptchaImpl.class.getName()
-					).put(
-						"createAccountCaptchaEnabled", enableCaptcha
-					).build())) {
-
-			UserAccount userAccount = randomUserAccount();
-
-			Assert.assertNull(
-				_userLocalService.fetchUserByEmailAddress(
-					TestPropsValues.getCompanyId(),
-					userAccount.getEmailAddress()));
-
-			UserAccountResource.Builder builder = UserAccountResource.builder();
-
-			userAccountResource = builder.locale(
-				LocaleUtil.getDefault()
-			).build();
-
-			userAccountResource.postUserAccount(userAccount);
-
-			Assert.assertNotNull(
-				_userLocalService.fetchUserByEmailAddress(
-					TestPropsValues.getCompanyId(),
-					userAccount.getEmailAddress()));
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
-	}
-
 	private void _testPostUserAccountBatch() throws Exception {
 		UserAccount randomUserAccount = _randomUserAccount(
 			userAccount -> userAccount.setPassword(StringPool.BLANK));
@@ -2500,7 +2452,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	private void _testPostUserAccountWithApprovalWorkflow() throws Exception {
 		UserAccount postUserAccount = userAccountResource.postUserAccount(
-			randomUserAccount());
+			null, null, randomUserAccount());
 
 		User user = _userLocalService.getUser(postUserAccount.getId());
 
@@ -2515,7 +2467,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				0, "Single Approver", 1);
 
 		postUserAccount = userAccountResource.postUserAccount(
-			randomUserAccount());
+			null, null, randomUserAccount());
 
 		user = _userLocalService.getUser(postUserAccount.getId());
 
@@ -2523,6 +2475,73 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 			workflowDefinitionLink);
+	}
+
+	private void _testPostUserAccountWithCaptcha() throws Exception {
+		SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
+			TestPropsValues.getUserId(),
+			"com.liferay.headless.admin.user.internal.resource.v1_0." +
+				"UserAccountResourceImpl#postUserAccount",
+			true, true, "Guest",
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "Guest"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.captcha.configuration.CaptchaConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"createAccountCaptchaEnabled", true
+					).build())) {
+
+			CaptchaResource captchaResource = CaptchaResource.builder(
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).build();
+
+			Captcha captcha = captchaResource.getCaptchaChallenge();
+
+			UserAccountResource.Builder builder = UserAccountResource.builder();
+
+			UserAccountResource userAccountResourceGuestUser = builder.locale(
+				LocaleUtil.getDefault()
+			).build();
+
+			UserAccount userAccount = randomUserAccount();
+
+			try {
+				userAccountResourceGuestUser.postUserAccount(
+					RandomTestUtil.randomString(), captcha.getToken(),
+					userAccount);
+
+				Assert.fail();
+			}
+			catch (Problem.ProblemException problemException) {
+				Problem problem = problemException.getProblem();
+
+				Assert.assertEquals(
+					"The captcha value is invalid", problem.getTitle());
+			}
+
+			captcha = captchaResource.getCaptchaChallenge();
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				EncryptorUtil.decrypt(
+					testCompany.getKeyObj(), captcha.getToken()));
+
+			userAccountResourceGuestUser.postUserAccount(
+				jsonObject.getString("answer"), captcha.getToken(),
+				userAccount);
+
+			Assert.assertNotNull(
+				_userLocalService.fetchUserByEmailAddress(
+					TestPropsValues.getCompanyId(),
+					userAccount.getEmailAddress()));
+		}
+		finally {
+			_sapEntryLocalService.deleteSAPEntry(sapEntry);
+		}
 	}
 
 	private void _testPostUserAccountWithGender() throws Exception {
@@ -2589,7 +2608,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		randomUserAccount.setImageId(0L);
 
 		UserAccount postUserAccount = userAccountResource.postUserAccount(
-			randomUserAccount);
+			null, null, randomUserAccount);
 
 		Assert.assertTrue(postUserAccount.getImageId() > 0);
 	}
@@ -2613,6 +2632,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				"NOT(isEmpty(alternateName))", true, Collections.emptyList());
 
 		UserAccount postUserAccount = userAccountResource.postUserAccount(
+			null, null,
 			_randomUserAccount(
 				userAccount -> userAccount.setUserAccountContactInformation(
 					() -> null)));
@@ -2621,59 +2641,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_objectValidationRuleLocalService.deleteObjectValidationRule(
 			objectValidationRule);
-	}
-
-	private void _testPostUserAccountWithSAPEntry() throws Exception {
-		UserAccount userAccount = randomUserAccount();
-
-		String password = RandomTestUtil.randomString();
-
-		userAccount.setPassword(password);
-
-		UserAccount postUserAccount = userAccountResource.postUserAccount(
-			userAccount);
-
-		assertEquals(userAccount, postUserAccount);
-		assertValid(postUserAccount);
-
-		_assertAuthenticationResult(
-			Authenticator.SUCCESS, postUserAccount.getEmailAddress(), password);
-
-		SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
-			TestPropsValues.getUserId(),
-			"com.liferay.headless.admin.user.internal.resource.v1_0." +
-				"UserAccountResourceImpl#postUserAccount",
-			true, true, "Guest",
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), "Guest"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_testPostUserAccount(new TestSimpleCaptchaImpl(Assert::fail), false);
-		_testPostUserAccount(
-			new TestSimpleCaptchaImpl(
-				() -> {
-				}),
-			true);
-
-		try {
-			_testPostUserAccount(
-				new TestSimpleCaptchaImpl(
-					() -> {
-						throw new CaptchaException();
-					}),
-				true);
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals(
-				"The captcha value is invalid", problem.getTitle());
-		}
-
-		_sapEntryLocalService.deleteSAPEntry(sapEntry);
 	}
 
 	private void _testPutUserAccountByExternalReferenceCodeWithImageExternalReferenceCode()

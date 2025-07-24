@@ -94,14 +94,16 @@ public class DepotEntryUserNotificationTest {
 	public void testInterpret() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
-		User user1 = UserTestUtil.addUser();
-		User user2 = UserTestUtil.addUser();
-
-		_userGroupLocalService.addUserUserGroup(user1.getUserId(), userGroup);
-		_userGroupLocalService.addUserUserGroup(user2.getUserId(), userGroup);
-
 		_userGroupLocalService.addGroupUserGroup(
 			_depotEntry.getGroupId(), userGroup);
+
+		User user1 = UserTestUtil.addUser();
+
+		_userGroupLocalService.addUserUserGroup(user1.getUserId(), userGroup);
+
+		User user2 = UserTestUtil.addUser();
+
+		_userGroupLocalService.addUserUserGroup(user2.getUserId(), userGroup);
 
 		_assertUserNotificationEvent(user1);
 		_assertUserNotificationEvent(user2);

@@ -92,6 +92,8 @@ modules/apps/frontend-data-set/    @liferay-frontend
 modules/apps/frontend-editor/    @liferay-frontend
 modules/apps/frontend-icons/    @liferay-frontend
 modules/apps/frontend-js/    @liferay-frontend
+modules/apps/frontend-js/frontend-js-item-selector-sample-web/    @liferay-platform-experience
+modules/apps/frontend-js/frontend-js-item-selector-web/    @liferay-platform-experience
 modules/apps/frontend-taglib/    @liferay-frontend
 modules/apps/frontend-theme/    @liferay-platform-experience
 modules/apps/frontend-theme/frontend-theme-favicon-servlet/

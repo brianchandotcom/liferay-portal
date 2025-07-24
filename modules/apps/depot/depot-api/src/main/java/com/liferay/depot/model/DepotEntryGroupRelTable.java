@@ -64,6 +64,8 @@ public class DepotEntryGroupRelTable
 			"searchable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<DepotEntryGroupRelTable, Long> toGroupId = createColumn(
 		"toGroupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<DepotEntryGroupRelTable, Long> type = createColumn(
+		"type_", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<DepotEntryGroupRelTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

@@ -72,7 +72,8 @@ public class DepotEntryGroupRelModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"ddmStructuresAvailable", Types.BOOLEAN},
 		{"depotEntryId", Types.BIGINT}, {"searchable", Types.BOOLEAN},
-		{"toGroupId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
+		{"toGroupId", Types.BIGINT}, {"type_", Types.BIGINT},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -93,11 +94,12 @@ public class DepotEntryGroupRelModelImpl
 		TABLE_COLUMNS_MAP.put("depotEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("searchable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("toGroupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("type_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryGroupRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmStructuresAvailable BOOLEAN,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG,lastPublishDate DATE null,primary key (depotEntryGroupRelId, ctCollectionId))";
+		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryGroupRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmStructuresAvailable BOOLEAN,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG,type_ LONG,lastPublishDate DATE null,primary key (depotEntryGroupRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntryGroupRel";
 
@@ -153,14 +155,20 @@ public class DepotEntryGroupRelModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long TYPE_COLUMN_BITMASK = 64L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long DEPOTENTRYGROUPRELID_COLUMN_BITMASK = 128L;
+	public static final long DEPOTENTRYGROUPRELID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -301,6 +309,7 @@ public class DepotEntryGroupRelModelImpl
 				"searchable", DepotEntryGroupRel::getSearchable);
 			attributeGetterFunctions.put(
 				"toGroupId", DepotEntryGroupRel::getToGroupId);
+			attributeGetterFunctions.put("type", DepotEntryGroupRel::getType);
 			attributeGetterFunctions.put(
 				"lastPublishDate", DepotEntryGroupRel::getLastPublishDate);
 
@@ -377,6 +386,10 @@ public class DepotEntryGroupRelModelImpl
 				"toGroupId",
 				(BiConsumer<DepotEntryGroupRel, Long>)
 					DepotEntryGroupRel::setToGroupId);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<DepotEntryGroupRel, Long>)
+					DepotEntryGroupRel::setType);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<DepotEntryGroupRel, Date>)
@@ -712,6 +725,30 @@ public class DepotEntryGroupRelModelImpl
 
 	@JSON
 	@Override
+	public long getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(long type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalType() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("type_"));
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -805,6 +842,7 @@ public class DepotEntryGroupRelModelImpl
 		depotEntryGroupRelImpl.setDepotEntryId(getDepotEntryId());
 		depotEntryGroupRelImpl.setSearchable(isSearchable());
 		depotEntryGroupRelImpl.setToGroupId(getToGroupId());
+		depotEntryGroupRelImpl.setType(getType());
 		depotEntryGroupRelImpl.setLastPublishDate(getLastPublishDate());
 
 		depotEntryGroupRelImpl.resetOriginalValues();
@@ -845,6 +883,8 @@ public class DepotEntryGroupRelModelImpl
 			this.<Boolean>getColumnOriginalValue("searchable"));
 		depotEntryGroupRelImpl.setToGroupId(
 			this.<Long>getColumnOriginalValue("toGroupId"));
+		depotEntryGroupRelImpl.setType(
+			this.<Long>getColumnOriginalValue("type_"));
 		depotEntryGroupRelImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 
@@ -981,6 +1021,8 @@ public class DepotEntryGroupRelModelImpl
 
 		depotEntryGroupRelCacheModel.toGroupId = getToGroupId();
 
+		depotEntryGroupRelCacheModel.type = getType();
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1068,6 +1110,7 @@ public class DepotEntryGroupRelModelImpl
 	private long _depotEntryId;
 	private boolean _searchable;
 	private long _toGroupId;
+	private long _type;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1116,6 +1159,7 @@ public class DepotEntryGroupRelModelImpl
 		_columnOriginalValues.put("depotEntryId", _depotEntryId);
 		_columnOriginalValues.put("searchable", _searchable);
 		_columnOriginalValues.put("toGroupId", _toGroupId);
+		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
@@ -1125,6 +1169,7 @@ public class DepotEntryGroupRelModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1168,7 +1213,9 @@ public class DepotEntryGroupRelModelImpl
 
 		columnBitmasks.put("toGroupId", 8192L);
 
-		columnBitmasks.put("lastPublishDate", 16384L);
+		columnBitmasks.put("type_", 16384L);
+
+		columnBitmasks.put("lastPublishDate", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

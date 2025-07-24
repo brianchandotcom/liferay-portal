@@ -124,6 +124,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -165,6 +166,7 @@ import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -4887,6 +4889,47 @@ public class ObjectEntryLocalServiceTest {
 			24, values2, valuesList.get(1), selectedObjectFieldNames);
 		_assertObjectEntryValues(
 			24, values3, valuesList.get(2), selectedObjectFieldNames);
+	}
+
+	@FeatureFlag("LPD-53981")
+	@Test
+	public void testMoveObjectEntryToTrashWithComments() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			group.getGroupId(), _siteObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build());
+
+		_siteObjectDefinition.setEnableComments(true);
+
+		_siteObjectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_siteObjectDefinition);
+
+		CommentManagerUtil.addComment(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			_siteObjectDefinition.getClassName(),
+			objectEntry.getObjectEntryId(), StringUtil.randomString(),
+			new IdentityServiceContextFunction(
+				ServiceContextTestUtil.getServiceContext()));
+
+		Assert.assertEquals(
+			1,
+			CommentManagerUtil.getCommentsCount(
+				_siteObjectDefinition.getClassName(),
+				objectEntry.getObjectEntryId()));
+
+		_objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), objectEntry,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			0,
+			CommentManagerUtil.getCommentsCount(
+				_siteObjectDefinition.getClassName(),
+				objectEntry.getObjectEntryId()));
 	}
 
 	@FeatureFlag("LPD-53981")

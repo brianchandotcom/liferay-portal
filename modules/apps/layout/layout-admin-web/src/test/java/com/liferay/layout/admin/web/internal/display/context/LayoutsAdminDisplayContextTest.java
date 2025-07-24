@@ -87,7 +87,7 @@ public class LayoutsAdminDisplayContextTest {
 
 	@Test
 	public void testGetEditOrViewLayoutURLEditURL() throws Exception {
-		Layout layout = _getContentLayout(true);
+		Layout layout = _getContentLayout(true, false);
 
 		Mockito.when(
 			_layoutActionsHelper.isShowConfigureAction(layout)
@@ -100,7 +100,7 @@ public class LayoutsAdminDisplayContextTest {
 
 	@Test
 	public void testGetEditOrViewLayoutURLViewURL() throws Exception {
-		Layout layout = _getContentLayout(true);
+		Layout layout = _getContentLayout(true, false);
 
 		Mockito.when(
 			_layoutActionsHelper.isShowViewLayoutAction(layout)
@@ -115,7 +115,7 @@ public class LayoutsAdminDisplayContextTest {
 	public void testGetEditOrViewLayoutURLViewURLWithLayoutUpdateableFalse()
 		throws Exception {
 
-		Layout layout = _getContentLayout(false);
+		Layout layout = _getContentLayout(false, false);
 
 		Mockito.when(
 			_layoutActionsHelper.isShowConfigureAction(layout)
@@ -134,7 +134,7 @@ public class LayoutsAdminDisplayContextTest {
 
 	@Test
 	public void testGetLayoutScreenNavigationPortletURLWithPrivateLayout() {
-		Layout layout = _getContentLayout(true);
+		Layout layout = _getContentLayout(true, true);
 
 		_setUpThemeDisplay(layout);
 
@@ -197,7 +197,9 @@ public class LayoutsAdminDisplayContextTest {
 			HttpComponentsUtil.getParameter(url, "p_l_back_url_title", false));
 	}
 
-	private Layout _getContentLayout(boolean layoutUpdateable) {
+	private Layout _getContentLayout(
+		boolean layoutUpdateable, boolean isPrivateLayout) {
+
 		Layout layout = Mockito.mock(Layout.class);
 
 		Layout draftLayout = Mockito.mock(Layout.class);
@@ -217,7 +219,7 @@ public class LayoutsAdminDisplayContextTest {
 		Mockito.when(
 			layout.isPrivateLayout()
 		).thenReturn(
-			true
+			isPrivateLayout
 		);
 
 		Mockito.when(

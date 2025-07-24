@@ -15,13 +15,13 @@ import java.util.List;
 public class FieldsUtil {
 
 	public static List<String> expand(String fieldName) {
-		if (!string.contains(".")) {
-			return Collections.singletonList(string);
+		if (!fieldName.contains(".")) {
+			return Collections.singletonList(fieldName);
 		}
 
 		List<String> list = new ArrayList<>();
 
-		String pending = string;
+		String pending = fieldName;
 
 		while (!pending.equals("")) {
 			list.add(pending);

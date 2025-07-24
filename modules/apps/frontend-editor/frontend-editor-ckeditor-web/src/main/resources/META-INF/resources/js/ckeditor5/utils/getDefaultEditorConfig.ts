@@ -27,6 +27,7 @@ import {
 	List,
 	MediaEmbed,
 	Paragraph,
+	PasteFromOffice,
 	RemoveFormat,
 	SourceEditing,
 	Strikethrough,
@@ -59,6 +60,7 @@ const getDefaultEditorConfig = ({
 		Link,
 		List,
 		Paragraph,
+		PasteFromOffice,
 		Underline,
 	];
 

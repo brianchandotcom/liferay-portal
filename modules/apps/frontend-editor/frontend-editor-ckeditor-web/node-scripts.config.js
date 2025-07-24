@@ -40,6 +40,7 @@ module.exports = {
 			'List',
 			'MediaEmbed',
 			'Paragraph',
+			'PasteFromOffice',
 			'Plugin',
 			'RemoveFormat',
 			'SourceEditing',

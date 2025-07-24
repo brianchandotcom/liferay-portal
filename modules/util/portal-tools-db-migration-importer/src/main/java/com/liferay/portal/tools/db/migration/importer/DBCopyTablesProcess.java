@@ -243,12 +243,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			if (targetType == Types.BLOB) {
-				preparedStatement.setBlob(index, value);
-
-				return;
-			}
-			else if (targetType == Types.BIGINT) {
+			if (targetType == Types.BIGINT) {
 				PostgreSQLJDBCUtil.setLargeObject(
 					preparedStatement, index,
 					value.getBytes(1, (int)value.length()));
@@ -290,12 +285,6 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			if (targetType == Types.CLOB) {
-				preparedStatement.setClob(index, value);
-
-				return;
-			}
-
 			try (Reader reader = value.getCharacterStream();
 				UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(reader)) {
@@ -324,9 +313,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			if ((targetType == Types.DECIMAL) ||
-				(targetType == Types.NUMERIC)) {
-
+			if (targetType == Types.NUMERIC) {
 				preparedStatement.setBigDecimal(index, value);
 
 				return;
@@ -358,12 +345,6 @@ public class DBCopyTablesProcess {
 
 			if ((value == 0.0F) && resultSet.wasNull()) {
 				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if (targetType == Types.FLOAT) {
-				preparedStatement.setFloat(index, value);
 
 				return;
 			}
@@ -433,14 +414,6 @@ public class DBCopyTablesProcess {
 
 			if ((value == 0) && resultSet.wasNull()) {
 				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if ((targetType == Types.TINYINT) ||
-				(targetType == Types.SMALLINT)) {
-
-				preparedStatement.setShort(index, value);
 
 				return;
 			}
@@ -531,46 +504,25 @@ public class DBCopyTablesProcess {
 		else if ((targetType == Types.BIT) || (targetType == Types.BOOLEAN)) {
 			preparedStatement.setBoolean(index, GetterUtil.getBoolean(value));
 		}
-		else if ((targetType == Types.BLOB) ||
-				 (targetType == Types.LONGVARBINARY) ||
+		else if ((targetType == Types.LONGVARBINARY) ||
 				 (targetType == Types.BINARY)) {
 
 			preparedStatement.setBytes(index, Base64.decode(value));
 		}
-		else if ((targetType == Types.CLOB) ||
-				 (targetType == Types.LONGVARCHAR) ||
+		else if ((targetType == Types.LONGVARCHAR) ||
 				 (targetType == Types.VARCHAR)) {
 
 			preparedStatement.setString(index, value);
 		}
-		else if (targetType == Types.DECIMAL) {
-			preparedStatement.setBigDecimal(
-				index, (BigDecimal)GetterUtil.get(value, BigDecimal.ZERO));
-		}
 		else if (targetType == Types.DOUBLE) {
 			preparedStatement.setDouble(index, GetterUtil.getDouble(value));
-		}
-		else if (targetType == Types.FLOAT) {
-			preparedStatement.setFloat(index, GetterUtil.getFloat(value));
 		}
 		else if (targetType == Types.INTEGER) {
 			preparedStatement.setInt(index, GetterUtil.getInteger(value));
 		}
 		else if (targetType == Types.NUMERIC) {
-			Number number = GetterUtil.getNumber(value);
-
-			if (number instanceof Long) {
-				preparedStatement.setLong(index, (Long)number);
-			}
-			else {
-				preparedStatement.setBigDecimal(
-					index, (BigDecimal)GetterUtil.get(value, BigDecimal.ZERO));
-			}
-		}
-		else if ((targetType == Types.SMALLINT) ||
-				 (targetType == Types.TINYINT)) {
-
-			preparedStatement.setShort(index, GetterUtil.getShort(value));
+			preparedStatement.setBigDecimal(
+				index, (BigDecimal)GetterUtil.get(value, BigDecimal.ZERO));
 		}
 		else if (targetType == Types.TIMESTAMP) {
 			DateFormat dateFormat = DateUtil.getISOFormat();

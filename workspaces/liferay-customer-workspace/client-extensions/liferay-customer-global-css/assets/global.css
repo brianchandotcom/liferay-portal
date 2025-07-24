@@ -25,6 +25,14 @@ a, .card-actionable {
 	}
 }
 
+input[type="radio"] {
+	accent-color: var(--color-action-primary-default);
+
+	&:active, &:focus, &:hover {
+		accent-color: var(--color-action-primary-active);
+	}
+}
+
 .btn-ghost {
 	background-color: rgba(255, 255, 255, .12);
 	border: none;

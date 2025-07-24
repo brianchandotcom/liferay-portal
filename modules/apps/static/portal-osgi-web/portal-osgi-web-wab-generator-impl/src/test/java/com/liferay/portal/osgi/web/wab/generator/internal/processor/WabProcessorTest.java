@@ -372,6 +372,33 @@ public class WabProcessorTest {
 
 				Assert.assertFalse(filter.matchMap(arguments));
 			}
+
+			// Make sure other CDI requirements were not added
+
+			// The bean portlet extension
+
+			Assert.assertNull(
+				_findRequirement(
+					requirements, "osgi.cdi.extension",
+					Collections.singletonMap(
+						"osgi.cdi.extension",
+						"com.liferay.bean.portlet.cdi.extension")));
+
+			// The http extension
+
+			Assert.assertNull(
+				_findRequirement(
+					requirements, "osgi.cdi.extension",
+					Collections.singletonMap(
+						"osgi.cdi.extension", "aries.cdi.http")));
+
+			// The EL extension
+
+			Assert.assertNull(
+				_findRequirement(
+					requirements, "osgi.cdi.extension",
+					Collections.singletonMap(
+						"osgi.cdi.extension", "aries.cdi.el.jsp")));
 		}
 	}
 

@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
@@ -138,13 +137,10 @@ public class LayoutsAdminDisplayContextTest {
 		_liferayPortletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, new ThemeDisplay());
 
-		LiferayPortletResponse liferayPortletResponse =
-			new MockLiferayPortletActionResponse();
-
 		LayoutsAdminDisplayContext spyLayoutsAdminDisplayContext = Mockito.spy(
 			new LayoutsAdminDisplayContext(
 				null, _layoutActionsHelper, null, null, _liferayPortletRequest,
-				liferayPortletResponse));
+				new MockLiferayPortletActionResponse()));
 
 		Mockito.doReturn(
 			true

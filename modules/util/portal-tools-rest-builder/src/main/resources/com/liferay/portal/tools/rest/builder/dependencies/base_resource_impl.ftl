@@ -428,19 +428,23 @@ public abstract class Base${schemaName}ResourceImpl
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getAssetLibrary" + schemaName + "PermissionsPage")>
-				<#assign generateGetPermissionCheckerMethods = true />
+				<#if freeMarkerTool.hasParameter(javaMethodSignature, "assetLibraryId")>
+					<#assign generateGetPermissionCheckerMethods = true />
 
-				String portletName = getPermissionCheckerPortletName(assetLibraryId);
+					String portletName = getPermissionCheckerPortletName(assetLibraryId);
 
-				PermissionServiceUtil.checkPermission(assetLibraryId, portletName, assetLibraryId);
+					PermissionServiceUtil.checkPermission(assetLibraryId, portletName, assetLibraryId);
 
-				return toPermissionPage(
-					<@getActions
-						resourceId="assetLibraryId"
-						resourceName="portletName"
-						source="AssetLibrary" + schemaName
-					/>,
-					assetLibraryId, portletName, roleNames);
+					return toPermissionPage(
+						<@getActions
+							resourceId="assetLibraryId"
+							resourceName="portletName"
+							source="AssetLibrary" + schemaName
+						/>,
+						assetLibraryId, portletName, roleNames);
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaName + "PermissionsPage")>
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, "siteId")>
 					<#assign generateGetPermissionCheckerMethods = true />
@@ -481,21 +485,25 @@ public abstract class Base${schemaName}ResourceImpl
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putAssetLibrary" + schemaName + "PermissionsPage")>
-				<#assign generateGetPermissionCheckerMethods = true />
+				<#if freeMarkerTool.hasParameter(javaMethodSignature, "assetLibraryId")>
+					<#assign generateGetPermissionCheckerMethods = true />
 
-				String portletName = getPermissionCheckerPortletName(assetLibraryId);
+					String portletName = getPermissionCheckerPortletName(assetLibraryId);
 
-				<@updateResourcePermissions
-					groupId = "assetLibraryId"
-					resourceId = "assetLibraryId"
-					resourceName = "portletName"
-				>
-					<@getActions
-						resourceId="assetLibraryId"
-						resourceName="portletName"
-						source="AssetLibrary" + schemaName
-					/>
-				</@updateResourcePermissions>
+					<@updateResourcePermissions
+						groupId = "assetLibraryId"
+						resourceId = "assetLibraryId"
+						resourceName = "portletName"
+					>
+						<@getActions
+							resourceId="assetLibraryId"
+							resourceName="portletName"
+							source="AssetLibrary" + schemaName
+						/>
+					</@updateResourcePermissions>
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putSite" + schemaName + "PermissionsPage")>
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, "siteId")>
 					<#assign generateGetPermissionCheckerMethods = true />

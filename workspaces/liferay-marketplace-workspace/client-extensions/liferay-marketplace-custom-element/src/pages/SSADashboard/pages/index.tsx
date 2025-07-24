@@ -5,40 +5,40 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {useModal} from '@clayui/modal';
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import { useModal } from '@clayui/modal';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 import Modal from '../../../components/Modal';
 import Page from '../../../components/Page';
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import { useMarketplaceContext } from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {
 	OrderStatus,
 	OrderTypes,
 	OrderWorkflowStatusCode,
 } from '../../../enums/Order';
-import {usePlacedOrders} from '../../../hooks/data/usePlacedOrder';
+import { usePlacedOrders } from '../../../hooks/data/usePlacedOrder';
 import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
 import trialOAuth2 from '../../../services/oauth/Trial';
-import {Action} from '../../../utils/constants';
-import {useSSAForm} from '../components/SSAForm';
+import { Action } from '../../../utils/constants';
+import { useSSAForm } from '../components/SSAForm';
 import TrialListView from '../components/TrialListView/TrialListView';
-import {ExtendRequestStatus} from '../enums/SSATrials';
+import { ExtendRequestStatus } from '../enums/SSATrials';
 import ExtendRequestModal from './ExtendRequestModal';
 import ExtendSSATrialModal from './ExtendSSATrialModal';
 
 export default function SaaSTrials() {
-	const {marketplaceUserAccount, myUserAccount} = useMarketplaceContext();
+	const { marketplaceUserAccount, myUserAccount } = useMarketplaceContext();
 	const modal = useModal();
 	const modalContext = useModalContext();
 	const navigate = useNavigate();
 	const ssaForm = useSSAForm();
-	const {selectedAccount, ssaTrialExtend, ssaTrialExtendMutate} =
+	const { selectedAccount, ssaTrialExtend, ssaTrialExtendMutate } =
 		useOutletContext<any>();
 
 	const {
-		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
+		data: SSATrialsInProgress = { items: [], pageSize: 1, totalCount: 0 },
 	} = usePlacedOrders({
 		filter: new SearchBuilder()
 			.eq('author', myUserAccount?.name)
@@ -72,8 +72,7 @@ export default function SaaSTrials() {
 			name: i18n.translate('go-to-trial'),
 			onClick: (order: Order) =>
 				window.open(
-					`https://${
-						order?.customFields?.['trial-virtualhost'] as string
+					`https://${order?.customFields?.['trial-virtualhost'] as string
 					}`
 				),
 		},
@@ -152,7 +151,7 @@ export default function SaaSTrials() {
 						OrderWorkflowStatusCode.PENDING,
 					].includes(order.orderStatus) ||
 					extendRequests[0]?.dueStatus.key ===
-						ExtendRequestStatus.PENDING
+					ExtendRequestStatus.PENDING
 				);
 			},
 			name: 'Extend',
@@ -257,7 +256,7 @@ export default function SaaSTrials() {
 						? i18n.translate('manage-your-teams-trial')
 						: i18n.translate('manage-your-current-trials')
 				}
-				pageRendererProps={{className: 'border py-2'}}
+				pageRendererProps={{ className: 'border py-2' }}
 				rightButton={
 					<ClayButton
 						onClick={() =>

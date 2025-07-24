@@ -500,6 +500,14 @@ public class ObjectRelationshipLocalServiceUtil {
 
 	public static List<ObjectRelationship>
 		getObjectRelationshipsByObjectDefinitionId2(
+			long objectDefinitionId2, boolean edge) {
+
+		return getService().getObjectRelationshipsByObjectDefinitionId2(
+			objectDefinitionId2, edge);
+	}
+
+	public static List<ObjectRelationship>
+		getObjectRelationshipsByObjectDefinitionId2(
 			long objectDefinitionId2, String type) {
 
 		return getService().getObjectRelationshipsByObjectDefinitionId2(

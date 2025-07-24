@@ -50,6 +50,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Keven Leone
@@ -95,6 +96,63 @@ public class TrialRestController extends BaseRestController {
 		if (_log.isInfoEnabled()) {
 			_log.info("Expired trial " + orderId);
 		}
+	}
+
+	@PostMapping("extend/{id}")
+	public void postExtend(@PathVariable long id) throws Exception {
+		JSONObject trialExtensionRequestJSONObject = new JSONObject(
+			get(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-marketplace-etc-spring-boot-oauth-application-" +
+						"headless-server"),
+				UriComponentsBuilder.fromPath(
+					"/o/c/trialextensionrequests/" + id
+				).build(
+				).toUri()));
+
+		JSONObject dueStatusJSONObject =
+			trialExtensionRequestJSONObject.getJSONObject("dueStatus");
+
+		if (!(Objects.equals(
+				dueStatusJSONObject.getString("key"), "Approved") ||
+			  Objects.equals(
+				  dueStatusJSONObject.getString("key"), "AutoApproved"))) {
+
+			return;
+		}
+
+		Order order = _marketplaceService.getOrder(
+			trialExtensionRequestJSONObject.getLong(
+				"r_orderTrialExtensionRequest_commerceOrderId"));
+
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		ZonedDateTime trialEndDateZonedDateTime = ZonedDateTime.parse(
+			customFields.get("trial-end-date")
+		).plusDays(
+			trialExtensionRequestJSONObject.getInt("duration")
+		);
+
+		customFields.put(
+			"trial-end-date",
+			trialEndDateZonedDateTime.format(DateTimeFormatter.ISO_INSTANT));
+
+		patch(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oauth-application-" +
+					"headless-server"),
+			new JSONObject(
+			).put(
+				"dueStatus", "approved"
+			).toString(),
+			UriComponentsBuilder.fromPath(
+				"/o/c/trialextensionrequests/" + id
+			).build(
+			).toUri());
+
+		_marketplaceService.updateOrder(
+			customFields, order.getId(), order.getOrderStatus());
 	}
 
 	@PostMapping("notify-end/{orderId}")

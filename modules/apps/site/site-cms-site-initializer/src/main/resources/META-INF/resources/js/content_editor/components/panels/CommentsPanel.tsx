@@ -40,41 +40,40 @@ export default function CommentsPanel({
 		commentId: string,
 		parentCommentId?: string
 	) => {
-		try {
-			await CommentService.deleteComment({
-				commentId,
-				url: deleteCommentURL,
-			});
+		const {error} = await CommentService.deleteComment({
+			commentId,
+			url: deleteCommentURL,
+		});
 
-			const filterComments = (comments: Comment[]) =>
-				comments.filter((comment) => comment.commentId !== commentId);
-
-			setComments((comments) =>
-				parentCommentId
-					? comments.map((comment) =>
-							comment.commentId === parentCommentId
-								? {
-										...comment,
-										children: filterComments(
-											comment.children
-										),
-									}
-								: comment
-						)
-					: filterComments(comments)
-			);
-
+		if (error) {
 			openToast({
-				message: Liferay.Language.get('your-comment-has-been-deleted'),
-				type: 'success',
-			});
-		}
-		catch (error) {
-			openToast({
-				message: (error as Error).message,
+				message: error,
 				type: 'danger',
 			});
+
+			return;
 		}
+
+		const filterComments = (comments: Comment[]) =>
+			comments.filter((comment) => comment.commentId !== commentId);
+
+		setComments((comments) =>
+			parentCommentId
+				? comments.map((comment) =>
+						comment.commentId === parentCommentId
+							? {
+									...comment,
+									children: filterComments(comment.children),
+								}
+							: comment
+					)
+				: filterComments(comments)
+		);
+
+		openToast({
+			message: Liferay.Language.get('your-comment-has-been-deleted'),
+			type: 'success',
+		});
 	};
 
 	const saveComment = async ({
@@ -90,16 +89,19 @@ export default function CommentsPanel({
 		parentCommentId?: string | null;
 		status?: Status;
 	}) => {
-		try {
-			let message = Liferay.Language.get('your-comment-has-been-posted');
+		let errorMessage = null;
+		let sucessMessage = Liferay.Language.get(
+			'your-comment-has-been-posted'
+		);
 
-			if (status !== 'edit') {
-				const newComment = await CommentService.addComment({
-					content,
-					parentCommentId,
-					url: addCommentURL,
-				});
+		if (status !== 'edit') {
+			const {data, error} = await CommentService.addComment({
+				content,
+				parentCommentId,
+				url: addCommentURL,
+			});
 
+			if (data) {
 				setComments((comments) =>
 					parentCommentId
 						? comments.map((comment) =>
@@ -108,26 +110,31 @@ export default function CommentsPanel({
 											...comment,
 											children: [
 												...(comment?.children || []),
-												newComment,
+												data,
 											],
 										}
 									: comment
 							)
-						: [...comments, newComment]
+						: [...comments, data]
 				);
 			}
-			else if (commentId) {
-				const newComment = await CommentService.editComment({
-					commentId,
-					content,
-					url: editCommentURL,
-				});
+			else if (error) {
+				errorMessage = error;
+			}
+		}
+		else if (commentId) {
+			const {data, error} = await CommentService.editComment({
+				commentId,
+				content,
+				url: editCommentURL,
+			});
 
+			if (data) {
 				const updateComments = (comments: Comment[]) =>
 					comments.map((comment) =>
 						comment.commentId === commentId
 							? {
-									...newComment,
+									...data,
 									children: comment.children,
 								}
 							: comment
@@ -148,18 +155,25 @@ export default function CommentsPanel({
 						: updateComments(comments)
 				);
 
-				message = Liferay.Language.get('your-comment-has-been-edited');
+				sucessMessage = Liferay.Language.get(
+					'your-comment-has-been-edited'
+				);
 			}
-
-			openToast({message, type: 'success'});
-
-			editor.setData('');
+			else if (error) {
+				errorMessage = error;
+			}
 		}
-		catch (error) {
+
+		if (errorMessage) {
 			openToast({
-				message: (error as Error).message,
+				message: errorMessage,
 				type: 'danger',
 			});
+		}
+		else {
+			openToast({message: sucessMessage, type: 'success'});
+
+			editor.setData('');
 		}
 	};
 

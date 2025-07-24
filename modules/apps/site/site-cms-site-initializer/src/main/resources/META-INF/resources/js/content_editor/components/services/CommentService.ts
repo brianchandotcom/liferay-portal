@@ -5,7 +5,7 @@
 
 import {objectToFormData} from 'frontend-js-web';
 
-import ApiHelper from '../../../common/services/ApiHelper';
+import ApiHelper, {RequestResult} from '../../../common/services/ApiHelper';
 
 export type Comment = {
 	author: {
@@ -32,20 +32,14 @@ async function addComment({
 	content: string;
 	parentCommentId?: string | null;
 	url: string;
-}): Promise<Comment> {
-	const {data, error} = await ApiHelper.postFormData(
+}): Promise<RequestResult<Comment>> {
+	return await ApiHelper.postFormData(
 		objectToFormData({
 			body: content,
 			parentCommentId,
 		}),
 		url
 	);
-
-	if (error) {
-		throw new Error(error);
-	}
-
-	return data as Comment;
 }
 
 async function deleteComment({
@@ -55,14 +49,7 @@ async function deleteComment({
 	commentId: string;
 	url: string;
 }) {
-	const {error} = await ApiHelper.postFormData(
-		objectToFormData({commentId}),
-		url
-	);
-
-	if (error) {
-		throw new Error(error);
-	}
+	return await ApiHelper.postFormData(objectToFormData({commentId}), url);
 }
 
 async function editComment({
@@ -73,17 +60,11 @@ async function editComment({
 	commentId: string;
 	content: string;
 	url: string;
-}): Promise<Comment> {
-	const {data, error} = await ApiHelper.postFormData(
+}): Promise<RequestResult<Comment>> {
+	return await ApiHelper.postFormData(
 		objectToFormData({body: content, commentId}),
 		url
 	);
-
-	if (error) {
-		throw new Error(error);
-	}
-
-	return data as Comment;
 }
 
 export default {

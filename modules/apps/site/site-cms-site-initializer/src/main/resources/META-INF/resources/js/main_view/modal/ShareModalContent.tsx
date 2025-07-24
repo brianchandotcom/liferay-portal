@@ -53,7 +53,7 @@ const formatDateForView = (date: string): string => {
 			day: 'numeric',
 			hour: 'numeric',
 			minute: 'numeric',
-			month: 'long',
+			month: 'short',
 			year: 'numeric',
 		}
 	);
@@ -87,21 +87,26 @@ function CollaboratorListItem({
 	user: UserAccount | UserGroup;
 }) {
 	const _handleDatePickerChange = (value: string) => {
-		const formattedDate = formatDateForView(value);
+		if (value === '') {
+			onChangeUser(user, {dateExpired: '', error: ''});
+		}
+		else {
+			const formattedDate = formatDateForView(value);
 
-		onChangeUser(user, {
-			dateExpired: value,
-			error:
-				formattedDate === 'NaN'
-					? Liferay.Language.get(
-							'please-select-a-valid-expiration-date'
-						)
-					: formattedDate === 'EXPIRED'
+			onChangeUser(user, {
+				dateExpired: value,
+				error:
+					formattedDate === 'NaN'
 						? Liferay.Language.get(
-								'please-enter-an-expiration-date-that-comes-after-today'
+								'please-select-a-valid-expiration-date'
 							)
-						: '',
-		});
+						: formattedDate === 'EXPIRED'
+							? Liferay.Language.get(
+									'please-enter-an-expiration-date-that-comes-after-today'
+								)
+							: '',
+			});
+		}
 	};
 
 	return (
@@ -150,6 +155,20 @@ function CollaboratorListItem({
 							{sub(Liferay.Language.get('access-expires-x'), [
 								formatDateForView(dateExpired),
 							])}
+
+							<ClayButtonWithIcon
+								aria-label={sub(
+									Liferay.Language.get('clear-x'),
+									[Liferay.Language.get('expiration-date')]
+								)}
+								borderless
+								className="c-ml-1 inline-item"
+								displayType="secondary"
+								monospaced
+								onClick={() => _handleDatePickerChange('')}
+								size="xs"
+								symbol="trash"
+							/>
 						</div>
 					)
 				)}

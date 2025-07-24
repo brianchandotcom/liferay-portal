@@ -27,6 +27,24 @@
 		}
 	},
 	{
+		"key": "alphabetical-a-z",
+		"value": {
+			"en-US": "Alphabetical (A-Z)",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
+		"key": "alphabetical-z-a",
+		"value": {
+			"en-US": "Alphabetical (Z-A)",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
 		"key": "business-events",
 		"value": {
 			"en-US": "Business Events",

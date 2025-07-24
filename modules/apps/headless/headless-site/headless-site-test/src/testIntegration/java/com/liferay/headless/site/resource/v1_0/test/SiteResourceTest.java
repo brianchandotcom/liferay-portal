@@ -75,7 +75,11 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Collections.reverse(_sites);
 
 		for (Site site : _sites) {
-			_groupLocalService.deleteGroup(site.getId());
+			Group group = _groupLocalService.fetchGroup(site.getId());
+
+			if (group != null) {
+				_groupLocalService.deleteGroup(site.getId());
+			}
 		}
 
 		PrincipalThreadLocal.setName(_originalName);

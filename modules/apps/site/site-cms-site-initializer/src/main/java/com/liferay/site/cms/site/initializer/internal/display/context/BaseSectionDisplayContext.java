@@ -335,9 +335,16 @@ public abstract class BaseSectionDisplayContext {
 
 	protected abstract String getCMSSectionFilterString();
 
-	protected abstract String[] getObjectFolderExternalReferenceCodes();
+	protected String[] getObjectFolderExternalReferenceCodes() {
+		return new String[] {
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
+		};
+	}
 
-	protected abstract String getRootObjectEntryFolderExternalReferenceCode();
+	protected String getRootObjectEntryFolderExternalReferenceCode() {
+		return null;
+	}
 
 	protected final DepotEntryLocalService depotEntryLocalService;
 	protected final GroupLocalService groupLocalService;

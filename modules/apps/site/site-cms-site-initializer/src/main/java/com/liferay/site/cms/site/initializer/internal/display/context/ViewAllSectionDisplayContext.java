@@ -7,7 +7,6 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -84,19 +83,6 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 	protected String getCMSSectionFilterString() {
 		return "(cmsSection eq 'contents' or cmsSection eq 'files') and " +
 			"cmsKind eq 'object'";
-	}
-
-	@Override
-	protected String[] getObjectFolderExternalReferenceCodes() {
-		return new String[] {
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
-		};
-	}
-
-	@Override
-	protected String getRootObjectEntryFolderExternalReferenceCode() {
-		return null;
 	}
 
 }

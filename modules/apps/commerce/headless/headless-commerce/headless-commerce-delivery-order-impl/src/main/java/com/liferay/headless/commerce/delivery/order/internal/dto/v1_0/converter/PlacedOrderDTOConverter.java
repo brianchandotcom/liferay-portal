@@ -396,6 +396,9 @@ public class PlacedOrderDTOConverter
 		Summary summary = new Summary() {
 			{
 				setCurrency(() -> commerceCurrency.getName(locale));
+				setItemsCount(
+					() -> _commerceOrderItemService.getCommerceOrderItemsCount(
+						commerceOrder.getCommerceOrderId()));
 				setItemsQuantity(
 					() -> BigDecimalUtil.stripTrailingZeros(
 						_commerceOrderItemService.getCommerceOrderItemsQuantity(

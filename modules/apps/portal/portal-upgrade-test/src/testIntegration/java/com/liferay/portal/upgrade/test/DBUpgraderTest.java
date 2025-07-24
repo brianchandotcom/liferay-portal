@@ -9,6 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -183,6 +186,43 @@ public class DBUpgraderTest {
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+		}
+	}
+
+	@Test
+	public void testSetUpgradingWithThreadLocalCache() throws Exception {
+		try {
+			ThreadLocalCache<Object> threadLocalCache =
+				ThreadLocalCacheManager.getThreadLocalCache(
+					Lifecycle.REQUEST, Object.class.getName());
+
+			Assert.assertEquals(
+				"ThreadLocalCache",
+				threadLocalCache.getClass(
+				).getSimpleName());
+
+			StartupHelperUtil.setUpgrading(true);
+
+			threadLocalCache = ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, Object.class.getName());
+
+			Assert.assertEquals(
+				"EmptyThreadLocalCache",
+				threadLocalCache.getClass(
+				).getSimpleName());
+
+			StartupHelperUtil.setUpgrading(false);
+
+			threadLocalCache = ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, Object.class.getName());
+
+			Assert.assertEquals(
+				"ThreadLocalCache",
+				threadLocalCache.getClass(
+				).getSimpleName());
+		}
+		finally {
+			StartupHelperUtil.setUpgrading(false);
 		}
 	}
 

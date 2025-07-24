@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.I18nServlet;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Set;
@@ -64,12 +65,9 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
 			host);
 
-		long companyId = 0;
+		long companyId = PortalInstances.getCompanyId(dynamicServletRequest);
 
-		if (virtualHost != null) {
-			companyId = virtualHost.getCompanyId();
-		}
-		else {
+		if (companyId == 0) {
 			companyId = PortalInstancePool.getDefaultCompanyId();
 		}
 

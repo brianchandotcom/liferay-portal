@@ -16,6 +16,7 @@ import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
 import {systemSettingsPageTest} from '../../../../fixtures/systemSettingsPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../../fixtures/usersAndOrganizationsPagesTest';
+import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {
 	performLoginViaApi,
@@ -288,6 +289,351 @@ test(
 		await expect(placedOrderPage.reorderButton).toBeVisible();
 
 		await expect(placedOrderPage.retryPaymentButton).toBeHidden();
+	}
+);
+
+test(
+	'Bundled product are shown with option values in the placed order details',
+	{tag: ['@COMMERCE-12610', '@LPD-39379']},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		commerceAdminChannelsPage,
+		commerceAdminProductPage,
+		page,
+		placedOrderPage,
+		placedOrdersPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: getRandomString(),
+				siteGroupId: site.id,
+			});
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2C'
+		);
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const productSkus1 = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product1.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku1 = productSkus1[0];
+
+		const product2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const productSkus2 = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product2.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku2 = productSkus2[0];
+
+		const option1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'select',
+				'color',
+				'Color',
+				1
+			);
+		const option2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'checkbox',
+				'checkbox',
+				'Checkbox',
+				2
+			);
+		const option3 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'date',
+				'date',
+				'Date',
+				3
+			);
+		const option4 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'numeric',
+				'numeric',
+				'Numeric',
+				4
+			);
+		const option5 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'text',
+				'text',
+				'Text',
+				5
+			);
+		const option6 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'checkbox_multiple',
+				'checkbox_multiple',
+				'checkbox_multiple',
+				6
+			);
+		const option7 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'radio',
+				'radio',
+				'Radio',
+				7
+			);
+
+		let product = await apiHelpers.headlessCommerceAdminCatalog.postProduct(
+			{
+				catalogId: catalog.id,
+				name: {en_US: 'ProductBundle'},
+				productOptions: [
+					{
+						fieldType: 'select',
+						key: 'color',
+						name: {
+							en_US: 'Color',
+						},
+						optionId: option1.id,
+						priceType: 'static',
+						priority: 1,
+						productOptionValues: [
+							{
+								deltaPrice: 20.0,
+								key: 'blue',
+								name: {
+									en_US: 'Blue',
+								},
+								priority: 1,
+								quantity: 1,
+								skuId: sku1.id,
+							},
+							{
+								deltaPrice: 30.0,
+								key: 'white',
+								name: {
+									en_US: 'White',
+								},
+								priority: 2,
+								quantity: 1,
+								skuId: sku2.id,
+							},
+						],
+						skuContributor: true,
+					},
+					{
+						fieldType: 'checkbox',
+						key: 'checkbox',
+						name: {
+							en_US: 'Checkbox',
+						},
+						optionId: option2.id,
+						priceType: 'static',
+						priority: 2,
+						skuContributor: false,
+					},
+					{
+						fieldType: 'date',
+						key: 'date',
+						name: {
+							en_US: 'Date',
+						},
+						optionId: option3.id,
+						priceType: 'static',
+						priority: 3,
+						skuContributor: false,
+					},
+					{
+						fieldType: 'numeric',
+						key: 'numeric',
+						name: {
+							en_US: 'Numeric',
+						},
+						optionId: option4.id,
+						priceType: 'static',
+						priority: 4,
+						skuContributor: false,
+					},
+					{
+						fieldType: 'text',
+						key: 'text',
+						name: {
+							en_US: 'Text',
+						},
+						optionId: option5.id,
+						priceType: 'static',
+						priority: 5,
+						skuContributor: false,
+					},
+					{
+						fieldType: 'checkbox_multiple',
+						key: 'checkbox_multiple',
+						name: {
+							en_US: 'Checkbox Multiple',
+						},
+						optionId: option6.id,
+						priceType: 'static',
+						priority: 6,
+						productOptionValues: [
+							{
+								key: 'value1',
+								name: {
+									en_US: 'value1',
+								},
+								priority: 1,
+							},
+							{
+								key: 'value2',
+								name: {
+									en_US: 'value2',
+								},
+								priority: 2,
+							},
+						],
+						skuContributor: false,
+					},
+					{
+						fieldType: 'radio',
+						key: 'radio',
+						name: {
+							en_US: 'Radio',
+						},
+						optionId: option7.id,
+						priceType: 'static',
+						priority: 7,
+						productOptionValues: [
+							{
+								key: 'value1',
+								name: {
+									en_US: 'value1',
+								},
+								priority: 1,
+							},
+							{
+								key: 'value2',
+								name: {
+									en_US: 'value2',
+								},
+								priority: 2,
+							},
+						],
+						skuContributor: false,
+					},
+				],
+			}
+		);
+
+		await applicationsMenuPage.goToProducts();
+
+		await commerceAdminProductPage.managementToolbarSearchInput.fill(
+			'ProductBundle'
+		);
+		await commerceAdminProductPage.managementToolbarSearchInput.press(
+			'Enter'
+		);
+		await commerceAdminProductPage
+			.productsTableRowLink('ProductBundle')
+			.click();
+		await commerceAdminProductPage.generateSkus();
+
+		product = (
+			await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+				new URLSearchParams({
+					filter: `name eq '${product.name['en_US']}'`,
+					nestedFields: `skus`,
+				})
+			)
+		).items[0];
+
+		const productSkus = product.skus.filter((sku) => {
+			return ['BLUE'].includes(sku.sku);
+		});
+
+		const sku = productSkus[0];
+
+		const warehouse =
+			await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehouses(
+				{
+					active: true,
+					latitude: getRandomInt(),
+					longitude: getRandomInt(),
+					warehouseItems: [
+						{
+							quantity: 100,
+							sku: sku.sku,
+						},
+					],
+				}
+			);
+
+		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
+			warehouse.id,
+			channel.id
+		);
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['test@liferay.com']
+		);
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '12345', regionISOCode: 'AL'}
+			);
+
+		const postCart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				billingAddressId: address.id,
+				cartItems: [
+					{
+						options: `[{key: ${option2.key}, value: 'checkbox'}, {key: ${option3.key}, value: '10-23-2023'}, {key: ${option4.key}, value: '10'}, {key: ${option5.key}, value: 'Text Content'}, {key: ${option6.key}, value: ['value1', 'value2']}, {key: ${option7.key}, value: 'value2'}]`,
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+				currencyCode: 'USD',
+				shippingAddressId: address.id,
+			},
+			channel.id
+		);
+
+		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(postCart.id);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Placed Orders');
+
+		await placedOrdersPage.viewButton.click();
+
+		await expect(
+			placedOrderPage.page.getByText(
+				'Blue,\ncheckbox,\n10-23-2023, 10, Text Content, value1,\nvalue2,\nvalue2'
+			)
+		).toBeVisible();
 	}
 );
 

@@ -7,9 +7,9 @@ import Form from '../../../../components/MarketplaceForm';
 import {Input} from './Input';
 import {FormFields} from './ModalFormBody';
 
-type FormSectionProps = {
-	leftSection: FieldProps;
-	rightSection: FieldProps;
+type FieldGroupProps = {
+	primaryField: FieldProps;
+	secondaryField?: FieldProps;
 	title?: string;
 };
 
@@ -30,9 +30,9 @@ export type FieldProps = {
 };
 
 const FormField = ({section}: {section: FieldProps}) => (
-	<div className="mb-3 pr-2 w-50">
+	<div className="mb-3 pr-2 w-100">
 		<Form.Label
-			className="mt-5"
+			className="mb-2"
 			info={section.tooltip || ''}
 			required={section.required}
 		>
@@ -42,23 +42,34 @@ const FormField = ({section}: {section: FieldProps}) => (
 	</div>
 );
 
-const FormSection = ({leftSection, rightSection, title}: FormSectionProps) => {
+const FieldGroup = ({primaryField, secondaryField, title}: FieldGroupProps) => {
+	const hasSecondaryField = !!secondaryField;
+
 	return (
 		<div className="mb-5">
 			<Form.FormControl>
 				{title && (
 					<>
 						<h4>{title}</h4>
-						<hr className="mb-1" />
+						<hr className="mb-5" />
 					</>
 				)}
-				<div className="d-flex justify-content-between">
-					<FormField section={leftSection} />
-					<FormField section={rightSection} />
+
+				<div
+					className={
+						hasSecondaryField
+							? 'd-flex justify-content-between mb-5'
+							: ''
+					}
+				>
+					<FormField section={primaryField} />
+					{hasSecondaryField && (
+						<FormField section={secondaryField} />
+					)}
 				</div>
 			</Form.FormControl>
 		</div>
 	);
 };
 
-export {FormSection};
+export {FieldGroup};

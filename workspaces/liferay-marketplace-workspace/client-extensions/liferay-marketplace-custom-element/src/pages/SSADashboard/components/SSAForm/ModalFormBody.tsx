@@ -3,21 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm from '@clayui/form';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import ClayForm, { ClayInput } from '@clayui/form';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import {Label} from '../../../../components/MarketplaceForm/Label';
-import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import {OrderCustomFields} from '../../../../enums/Order';
-import {useAccount} from '../../../../hooks/data/useAccounts';
-import {useDeliveryProduct} from '../../../../hooks/data/useProduct';
+import { Label } from '../../../../components/MarketplaceForm/Label';
+import { useMarketplaceContext } from '../../../../context/MarketplaceContext';
+import { OrderCustomFields } from '../../../../enums/Order';
+import { useAccount } from '../../../../hooks/data/useAccounts';
+import { useDeliveryProduct } from '../../../../hooks/data/useProduct';
 import i18n from '../../../../i18n';
-import {Liferay} from '../../../../liferay/liferay';
+import { Liferay } from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
 import trialOAuth2 from '../../../../services/oauth/Trial';
 import ProductPurchaseSSATrial from '../../../ProductPurchase/services/ProductPurchaseSSATrial';
-import {FormSection} from './FormSection';
-import {Input} from './Input';
+import { FieldGroup } from './FieldGroup';
+import HeadlessCommerceDeliveryCatalog from '../../../../services/rest/HeadlessCommerceDeliveryCatalog';
 
 type ValidationErrors = Partial<Record<keyof FormFields, string>>;
 
@@ -35,9 +35,9 @@ const SSAFormBody = ({
 	submitRef: React.MutableRefObject<() => void>;
 }) => {
 	const [errors, setErrors] = useState<ValidationErrors>({});
-	const {channel, properties} = useMarketplaceContext();
-	const {data: account} = useAccount();
-	const {data: product} = useDeliveryProduct(properties.productId);
+	const { channel, properties } = useMarketplaceContext();
+	const { data: account } = useAccount();
+	const { data: product } = useDeliveryProduct(properties.productId);
 	const [formData, setFormData] = useState<FormFields>({
 		demoDuration: '',
 		emailAddress: '',
@@ -61,6 +61,11 @@ const SSAFormBody = ({
 			setFormData((prevData) => ({
 				...prevData,
 				demoDuration: '1',
+			}));
+
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				demoDuration: undefined,
 			}));
 		}
 	}, [isTestTrial]);
@@ -86,13 +91,13 @@ const SSAFormBody = ({
 		[setErrors]
 	);
 
-	const onChange = ({label, value}: {label: string; value: string}) => {
+	const onChange = ({ label, value }: { label: string; value: string }) => {
 		setFormData((prevData) => ({
 			...prevData,
 			[label]: value,
 		}));
 
-		setErrors((prevErrors) => ({...prevErrors, [label]: undefined}));
+		setErrors((prevErrors) => ({ ...prevErrors, [label]: undefined }));
 	};
 
 	const onSubmit = useCallback(async () => {
@@ -117,17 +122,18 @@ const SSAFormBody = ({
 			return;
 		}
 
+		const trialSettings = {
+			...(formData.emailAddress
+				? { consoleInviteEmailAddresses: [formData.emailAddress] }
+				: {}),
+			duration: formData.demoDuration,
+			projectId: formData.projectId,
+		};
+
 		await productPurchase?.createOrder({
 			customFields: {
-				[OrderCustomFields.TRIAL_SETTINGS]: JSON.stringify({
-					...(formData.emailAddress
-						? {consoleInviteEmailAddresses: [formData.emailAddress]}
-						: {}),
-					duration: formData.demoDuration,
-					objective: formData.objective,
-					projectId: formData.projectId,
-					sendNotificationEmail: true,
-				}),
+				[OrderCustomFields.TRIAL_SETTINGS]:
+					JSON.stringify(trialSettings),
 			},
 		} as Cart);
 
@@ -148,72 +154,86 @@ const SSAFormBody = ({
 
 	return (
 		<>
-			<h2 className="mb-6">Add New Trial</h2>
+			<h2 className="mb-6">{i18n.translate('add-new-trial')}</h2>
+
 			<ClayForm.Group>
-				<FormSection
-					leftSection={{
-						error: errors.projectId || '',
-						handleChange: onChange,
-						label: 'projectId',
-						maxLength: 9,
-						required: true,
-						title: 'Project ID',
-						tooltip: 'placeholder',
-						value: formData.projectId,
-					}}
-					rightSection={{
+				<div className="mb-5 pr-2 w-100">
+					<h4>{i18n.translate('main')}</h4>
+
+					<hr className="mb-5" />
+
+					<Label className="mb-2" info="placeholder" required>
+						{i18n.translate('project-id')}
+					</Label>
+
+					<ClayInput.Group>
+						<ClayInput
+							className="bg-white marketplace-form-input input-group-inset input-group-inset-after"
+							maxLength={9}
+							onChange={({ target: { value } }) =>
+								onChange({ label: 'projectId', value })
+							}
+						/>
+						<ClayInput.GroupInsetItem after tag="span">
+							{`.saas.demo.lxc.liferay.com`}
+						</ClayInput.GroupInsetItem>
+					</ClayInput.Group>
+
+					{errors.projectId && (
+						<p className="mb-0 mt-1 text-danger">
+							{errors.projectId}
+						</p>
+					)}
+				</div>
+				<FieldGroup
+					primaryField={{
 						disabled: true,
 						handleChange: onChange,
 						label: 'site',
-						placeholder: 'Blank Site',
-						title: 'Solution',
-						tooltip: 'placeholder',
+						placeholder: i18n.translate('blank-site'),
+						title: i18n.translate('solution'),
+						tooltip: i18n.translate('blank-site'),
 					}}
-					title="Main"
 				/>
 
-				<FormSection
-					leftSection={{
+				<FieldGroup
+					primaryField={{
 						error: errors.objective || '',
 						handleChange: onChange,
 						label: 'objective',
 						options: ['Test', 'Trial'],
-						placeholder: 'Select an Option',
+						placeholder: i18n.translate('select-an-option'),
 						required: true,
-						title: 'Objective',
-						tooltip: 'placeholder',
+						title: i18n.translate('objective'),
+						tooltip: i18n.translate('select-an-option'),
 						type: 'select',
 						value: formData.objective,
 					}}
-					rightSection={{
+					secondaryField={{
 						disabled: isTestTrial,
 						error: errors.demoDuration || '',
 						handleChange: onChange,
 						label: 'demoDuration',
-						placeholder: 'Value between 1 and 60',
+						placeholder: i18n.translate('value-between-1-and-60'),
 						required: true,
-						title: 'Duration (days)',
-						tooltip: 'placeholder',
+						title: i18n.translate('duration-days'),
+						tooltip: i18n.translate('value-between-1-and-60'),
 						type: 'number',
 						value: isTestTrial ? '1' : formData.demoDuration,
 					}}
 					title="Usage"
 				/>
-
-				<div>
-					<h4>Additional Admin</h4>
-					<hr className="mb-4" />
-					<Label info="placeholder">Email Address</Label>
-
-					<Input
-						error={errors.emailAddress || ''}
-						handleChange={onChange}
-						label="emailAddress"
-						title="Email Address"
-						tooltip="placeholder"
-						value={formData.emailAddress}
-					/>
-				</div>
+				<FieldGroup
+					primaryField={{
+						error: errors.emailAddress || '',
+						handleChange: onChange,
+						label: 'emailAddress',
+						title: 'Email Address',
+						tooltip: i18n.translate('email-address'),
+						value: formData.emailAddress,
+					}}
+					title={i18n.translate('additional-admin')}
+				/>
 			</ClayForm.Group>
 		</>
 	);

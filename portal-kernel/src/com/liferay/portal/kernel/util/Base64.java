@@ -76,11 +76,15 @@ public class Base64 {
 			return new byte[0];
 		}
 
+		char padChar = CharPool.EQUAL;
+
+		if (url) {
+			padChar = CharPool.STAR;
+		}
+
 		int pad = 0;
 
-		for (int i = base64.length() - 1; base64.charAt(i) == CharPool.EQUAL;
-			 i--) {
-
+		for (int i = base64.length() - 1; base64.charAt(i) == padChar; i--) {
 			pad++;
 		}
 

@@ -18,7 +18,10 @@ function Wrapper() {
 		requestQuoteEnabled,
 	} = useContext(MiniCartContext);
 
-	const {cartItems = []} = cartState;
+	const {
+		cartItems = [],
+		summary: {itemsCount = 0},
+	} = cartState;
 	const cartHasPriceOnApplicationItems = hasPriceOnApplication(cartItems);
 
 	return (
@@ -45,14 +48,14 @@ function Wrapper() {
 
 					<CartViews.OrderButton
 						disabled={
-							!cartItems.length ||
+							!itemsCount ||
 							cartHasPriceOnApplicationItems ||
 							isUpdating
 						}
 					/>
 
 					{(requestQuoteEnabled || cartHasPriceOnApplicationItems) &&
-						!!cartItems.length && (
+						!!itemsCount && (
 							<CartViews.RequestQuoteButton
 								disabled={isUpdating}
 							/>

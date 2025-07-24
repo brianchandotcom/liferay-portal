@@ -51,6 +51,10 @@
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
+		<!-- Other fields -->
+
+		<column name="type" type="int" />
+
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="DepotEntry" unique="true">

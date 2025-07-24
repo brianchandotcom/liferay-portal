@@ -19,7 +19,7 @@ import React, {useRef, useState} from 'react';
 
 import CommentService, {Comment} from '../services/CommentService';
 
-type Status = 'edit' | 'reply' | null;
+type Status = 'default' | 'edit' | 'reply';
 
 export default function CommentsPanel({
 	addCommentURL,
@@ -81,7 +81,7 @@ export default function CommentsPanel({
 		content,
 		editor,
 		parentCommentId = null,
-		status = null,
+		status = 'default',
 	}: {
 		commentId?: string | null;
 		content: string;
@@ -233,7 +233,7 @@ function CommentNode({
 	}) => Promise<void>;
 	parentCommentId?: string;
 }) {
-	const [status, setStatus] = useState<Status>(null);
+	const [status, setStatus] = useState<Status>('default');
 
 	return (
 		<>
@@ -302,7 +302,7 @@ function CommentNode({
 						<CommentEditor
 							editorConfig={editorConfig!}
 							initialData={comment.body}
-							onCancel={() => setStatus(null)}
+							onCancel={() => setStatus('default')}
 							onSave={async (content, editor) => {
 								await onSaveComment({
 									commentId: comment.commentId,
@@ -312,7 +312,7 @@ function CommentNode({
 									status,
 								});
 
-								setStatus(null);
+								setStatus('default');
 							}}
 							status={status}
 						/>
@@ -341,7 +341,7 @@ function CommentNode({
 					{status === 'reply' ? (
 						<CommentEditor
 							editorConfig={editorConfig}
-							onCancel={() => setStatus(null)}
+							onCancel={() => setStatus('default')}
 							onSave={async (content, editor) => {
 								await onSaveComment({
 									commentId: comment.commentId,
@@ -351,7 +351,7 @@ function CommentNode({
 									status,
 								});
 
-								setStatus(null);
+								setStatus('default');
 							}}
 							parentCommentId={comment.commentId}
 							status={status}
@@ -400,7 +400,7 @@ function CommentEditor({
 	onCancel,
 	onSave,
 	parentCommentId = null,
-	status = null,
+	status = 'default',
 }: {
 	editorConfig: LiferayEditorConfig;
 	initialData?: string;

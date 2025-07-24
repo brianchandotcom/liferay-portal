@@ -5812,6 +5812,35 @@ public class DefaultObjectEntryManagerImplTest
 			ListUtil.fromArray(objectEntry1, objectEntry2));
 	}
 
+	@FeatureFlag("LPD-53981")
+	@Test
+	public void testMoveObjectEntryToTrash() throws Exception {
+		ObjectEntry objectEntry = _addObjectEntry(_objectDefinition1, null, 1);
+
+		_defaultObjectEntryManager.deleteObjectEntry(
+			dtoConverterContext, _objectDefinition1, objectEntry.getId());
+
+		objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			dtoConverterContext, _objectDefinition1, objectEntry.getId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_IN_TRASH,
+			(long)objectEntry.getStatus(
+			).getCode());
+
+		_defaultObjectEntryManager.deleteObjectEntry(
+			dtoConverterContext, _objectDefinition1, objectEntry.getId());
+
+		Long objectEntryId = objectEntry.getId();
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			"No ObjectEntry exists with the primary key " +
+				objectEntryId.toString(),
+			() -> _defaultObjectEntryManager.getObjectEntry(
+				dtoConverterContext, _objectDefinition1, objectEntryId));
+	}
+
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
 		LocalDateTime nowLocalDateTime = LocalDateTime.now();

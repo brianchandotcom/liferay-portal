@@ -6,7 +6,11 @@
 package com.liferay.headless.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.site.client.dto.v1_0.Site;
+import com.liferay.headless.site.client.pagination.Page;
+import com.liferay.headless.site.client.pagination.Pagination;
 import com.liferay.headless.site.client.problem.Problem;
 import com.liferay.headless.site.client.resource.v1_0.SiteResource;
 import com.liferay.petra.string.StringPool;
@@ -19,7 +23,9 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -28,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -145,6 +152,19 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		throws Exception {
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetSitesPage() throws Exception {
+		super.testGetSitesPage();
+
+		_testGetSitesPageWithActiveOrSiteGroups(false, true);
+		_testGetSitesPageWithActiveOrSiteGroups(true, false);
+		_testGetSitesPageWithDepotEntry();
+		_testGetSitesPageWithSearch();
+		_testGetSitesPageWithoutAuthentication();
+	}
+
 	@Override
 	@Test
 	public void testPostSite() throws Exception {
@@ -211,6 +231,15 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	@Override
+	protected Site testGetSitesPage_addSite(Site site) throws Exception {
+		Site postSite = siteResource.postSite(site);
+
+		_sites.add(postSite);
+
+		return postSite;
+	}
+
+	@Override
 	protected Site testPostFormDataSite_addSite(
 			Site site, Map<String, File> multipartFiles)
 		throws Exception {
@@ -250,6 +279,85 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		assertEquals(postSite, getSite);
 		assertValid(getSite);
+	}
+
+	private void _testGetSitesPageWithActiveOrSiteGroups(
+			boolean active, boolean site)
+		throws Exception {
+
+		Page<Site> sitesPage = siteResource.getSitesPage(
+			null, Pagination.of(1, 100));
+
+		List<Site> originalItems = (List<Site>)sitesPage.getItems();
+
+		Site postSite = testGetSitesPage_addSite(randomSite());
+
+		Group group = _groupLocalService.getGroup(postSite.getId());
+
+		group.setSite(site);
+		group.setActive(active);
+
+		_groupLocalService.updateGroup(group);
+
+		sitesPage = siteResource.getSitesPage(null, Pagination.of(1, 100));
+
+		List<Site> existingItems = (List<Site>)sitesPage.getItems();
+
+		Assert.assertEquals(originalItems, existingItems);
+	}
+
+	private void _testGetSitesPageWithDepotEntry() throws Exception {
+		Page<Site> sitesPage = siteResource.getSitesPage(
+			null, Pagination.of(1, 100));
+
+		List<Site> originalItems = (List<Site>)sitesPage.getItems();
+
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, ServiceContextTestUtil.getServiceContext());
+
+		sitesPage = siteResource.getSitesPage(null, Pagination.of(1, 100));
+
+		List<Site> existingItems = (List<Site>)sitesPage.getItems();
+
+		Assert.assertEquals(originalItems, existingItems);
+	}
+
+	private void _testGetSitesPageWithoutAuthentication() throws Exception {
+		SiteResource.Builder builder = SiteResource.builder();
+
+		SiteResource siteResource = builder.build();
+
+		try {
+			siteResource.getSitesPage(null, Pagination.of(1, 1));
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("403", problem.getStatus());
+		}
+	}
+
+	private void _testGetSitesPageWithSearch() throws Exception {
+		String name = RandomTestUtil.randomString();
+
+		Site randomSite = new Site();
+
+		randomSite.setName(name);
+
+		Site postSite = _testPostSite_addSite(randomSite);
+
+		Page<Site> sitesPage = siteResource.getSitesPage(
+			name, Pagination.of(1, 10));
+
+		List<Site> items = (List<Site>)sitesPage.getItems();
+
+		Assert.assertEquals(items.toString(), 1, items.size());
+
+		assertEquals(postSite, items.get(0));
 	}
 
 	private Site _testPostSite_addSite(Site site) throws Exception {
@@ -605,6 +713,12 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =
 		"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 			"ExceptionMapper";
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

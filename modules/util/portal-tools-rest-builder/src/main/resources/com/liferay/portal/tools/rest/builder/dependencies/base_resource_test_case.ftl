@@ -54,7 +54,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 />
 
 <#list javaMethodSignatures as javaMethodSignature>
-	<#if freeMarkerTool.isGeneratePermissions(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName)>
+	<#if freeMarkerTool.isGeneratePermissions(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName) && ((freeMarkerTool.getPermissionsPageJavaMethodSignature("get", javaMethodSignatures, schemaName)?? && freeMarkerTool.getPermissionsPageJavaMethodSignature("put", javaMethodSignatures, schemaName)??) || (freeMarkerTool.getParentPermissionsPageJavaMethodSignature("get", javaMethodSignatures, javaMethodSignature.parentSchemaName, schemaName)?? && freeMarkerTool.getParentPermissionsPageJavaMethodSignature("put", javaMethodSignatures, javaMethodSignature.parentSchemaName, schemaName)??))>
 		<#assign generatePermissionsJavaMethodSignatures = generatePermissionsJavaMethodSignatures + [javaMethodSignature] />
 	</#if>
 </#list>

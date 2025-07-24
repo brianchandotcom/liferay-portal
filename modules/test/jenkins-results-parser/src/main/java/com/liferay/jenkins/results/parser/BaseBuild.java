@@ -300,13 +300,22 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getBuildDirPath() {
+		Properties buildProperties = null;
+		
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		if (JenkinsResultsParserUtil.isWindows()) {
 			sb.append("C:");
 		}
 
-		sb.append("/opt/dev/projects/github/.tmp/jenkins/");
+		sb.append(buildProperties.getProperty("jenkins.tmp.dir"));
 
 		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 

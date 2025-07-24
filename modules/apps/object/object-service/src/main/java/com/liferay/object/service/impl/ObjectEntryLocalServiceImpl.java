@@ -695,8 +695,10 @@ public class ObjectEntryLocalServiceImpl
 			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
 			objectEntry::getValues);
 
-		_trashEntryLocalService.deleteEntry(
-			objectDefinition.getClassName(), objectEntry.getPrimaryKey());
+		if (FeatureFlagManagerUtil.isEnabled("LPD-53981")) {
+			_trashEntryLocalService.deleteEntry(
+				objectDefinition.getClassName(), objectEntry.getPrimaryKey());
+		}
 
 		if (!ObjectDefinitionThreadLocal.isDeleteObjectDefinitionId(
 				objectDefinition.getObjectDefinitionId())) {

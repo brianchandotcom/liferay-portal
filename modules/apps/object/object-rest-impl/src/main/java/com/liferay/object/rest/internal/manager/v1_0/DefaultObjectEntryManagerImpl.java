@@ -330,8 +330,9 @@ public class DefaultObjectEntryManagerImpl
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 
-		if (serviceBuilderObjectEntry.getStatus() ==
-				WorkflowConstants.STATUS_IN_TRASH) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
+			(serviceBuilderObjectEntry.getStatus() ==
+				WorkflowConstants.STATUS_IN_TRASH)) {
 
 			_objectEntryService.deleteObjectEntry(objectEntryId);
 
@@ -361,8 +362,9 @@ public class DefaultObjectEntryManagerImpl
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 
-		if (serviceBuilderObjectEntry.getStatus() ==
-				WorkflowConstants.STATUS_IN_TRASH) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
+			(serviceBuilderObjectEntry.getStatus() ==
+				WorkflowConstants.STATUS_IN_TRASH)) {
 
 			_objectEntryService.deleteObjectEntry(
 				serviceBuilderObjectEntry.getObjectEntryId());

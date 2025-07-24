@@ -4,6 +4,8 @@
  */
 
 import AxeBuilder from '@axe-core/playwright';
+
+// eslint-disable-next-line
 import {formatAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 import {Page, expect} from '@playwright/test';
 

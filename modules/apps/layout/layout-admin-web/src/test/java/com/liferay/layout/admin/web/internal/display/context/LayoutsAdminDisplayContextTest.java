@@ -136,17 +136,25 @@ public class LayoutsAdminDisplayContextTest {
 	public void testGetLayoutScreenNavigationPortletURLWithPrivateLayout() {
 		Layout layout = _getContentLayout(true, true);
 
-		_setUpThemeDisplay(layout);
+		_liferayPortletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, new ThemeDisplay());
 
 		LiferayPortletResponse liferayPortletResponse =
 			new MockLiferayPortletActionResponse();
 
-		_layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(
-			null, _layoutActionsHelper, null, null, _liferayPortletRequest,
-			liferayPortletResponse);
+		LayoutsAdminDisplayContext spyLayoutsAdminDisplayContext = Mockito.spy(
+			new LayoutsAdminDisplayContext(
+				null, _layoutActionsHelper, null, null, _liferayPortletRequest,
+				liferayPortletResponse));
+
+		Mockito.doReturn(
+			true
+		).when(
+			spyLayoutsAdminDisplayContext
+		).isPrivateLayout();
 
 		String portletURL = String.valueOf(
-			_layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(
+			spyLayoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(
 				layout.getPlid()));
 
 		Assert.assertTrue(
@@ -288,29 +296,6 @@ public class LayoutsAdminDisplayContextTest {
 		);
 
 		portalUtil.setPortal(_portal);
-	}
-
-	private void _setUpThemeDisplay(Layout layout) {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		PortletDisplay portletDisplay = new PortletDisplay();
-
-		portletDisplay.setURLBackTitle(RandomTestUtil.randomString());
-
-		Mockito.when(
-			themeDisplay.getPortletDisplay()
-		).thenReturn(
-			portletDisplay
-		);
-
-		Mockito.when(
-			themeDisplay.getLayout()
-		).thenReturn(
-			layout
-		);
-
-		_liferayPortletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
 	private static final Group _group = Mockito.mock(Group.class);

@@ -621,7 +621,7 @@ public class CommerceChannelDisplayContext
 		return commerceOrderConfiguration.slowConnectionOrderFlowEnabled();
 	}
 
-	public boolean undoCartItemDeletionDisabled() throws PortalException {
+	public boolean isUndoCartItemDeletionDisabled() throws PortalException {
 		CommerceChannel commerceChannel = getCommerceChannel();
 
 		CommerceOrderConfiguration commerceOrderConfiguration =

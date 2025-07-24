@@ -185,7 +185,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 					</div>
 
 					<div class="col-lg-6">
-						<aui:input checked="<%= commerceChannelDisplayContext.undoCartItemDeletionDisabled() %>" helpMessage="configures-whether-a-buyer-can-undo-the-deletion-of-an-item-from-the-mini-cart" label="undo-cart-item-deletion-disabled" labelOff="disabled" labelOn="enabled" name="settings--undoCartItemDeletionDisabled--" type="toggle-switch" />
+						<aui:input checked="<%= commerceChannelDisplayContext.isUndoCartItemDeletionDisabled() %>" helpMessage="configures-whether-a-buyer-can-undo-the-deletion-of-an-item-from-the-mini-cart" label="undo-cart-item-deletion-disabled" labelOff="disabled" labelOn="enabled" name="settings--undoCartItemDeletionDisabled--" type="toggle-switch" />
 					</div>
 				</div>
 

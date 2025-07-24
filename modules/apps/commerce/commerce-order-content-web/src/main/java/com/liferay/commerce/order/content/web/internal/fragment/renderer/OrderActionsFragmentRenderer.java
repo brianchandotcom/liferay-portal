@@ -218,7 +218,8 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 					_friendlyURLSeparatorProviderSnapshot.get(),
 					httpServletRequest));
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-10562") &&
+			if (FeatureFlagManagerUtil.isEnabled(
+					_portal.getCompanyId(httpServletRequest), "LPD-10562") &&
 				(commerceOrder.getOrderStatus() ==
 					CommerceOrderConstants.ORDER_STATUS_COMPLETED)) {
 

@@ -838,6 +838,11 @@ components:
                 currency:
                     readOnly: true
                     type: string
+                itemsCount:
+                    example: 1
+                    format: int32
+                    readOnly: true
+                    type: integer
                 itemsQuantity:
                     example: 10.1
                     format: bigdecimal

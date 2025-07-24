@@ -655,6 +655,11 @@ components:
             properties:
                 currency:
                     type: string
+                itemsCount:
+                    example: 1
+                    format: int32
+                    readOnly: true
+                    type: integer
                 itemsQuantity:
                     example: 1.1
                     format: bigdecimal

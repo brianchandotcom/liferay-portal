@@ -2216,6 +2216,18 @@ public abstract class BaseUserAccountResourceImpl
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a new user account"
 	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "captchaAnswer"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "captchaToken"
+			)
+		}
+	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserAccount")}
 	)
@@ -2224,7 +2236,14 @@ public abstract class BaseUserAccountResourceImpl
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public UserAccount postUserAccount(UserAccount userAccount)
+	public UserAccount postUserAccount(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("captchaAnswer")
+			String captchaAnswer,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("captchaToken")
+			String captchaToken,
+			UserAccount userAccount)
 		throws Exception {
 
 		return new UserAccount();
@@ -2237,6 +2256,14 @@ public abstract class BaseUserAccountResourceImpl
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "captchaAnswer"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "captchaToken"
+			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "callbackURL"
@@ -2252,6 +2279,12 @@ public abstract class BaseUserAccountResourceImpl
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
 	public Response postUserAccountBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("captchaAnswer")
+			String captchaAnswer,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("captchaToken")
+			String captchaToken,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -2529,7 +2562,8 @@ public abstract class BaseUserAccountResourceImpl
 			}
 			else {
 				userAccountUnsafeFunction = userAccount -> postUserAccount(
-					userAccount);
+					(String)parameters.get("captchaAnswer"),
+					(String)parameters.get("captchaToken"), userAccount);
 			}
 		}
 
@@ -2565,7 +2599,10 @@ public abstract class BaseUserAccountResourceImpl
 									userAccount);
 						}
 						else {
-							persistedUserAccount = postUserAccount(userAccount);
+							persistedUserAccount = postUserAccount(
+								(String)parameters.get("captchaAnswer"),
+								(String)parameters.get("captchaToken"),
+								userAccount);
 						}
 					}
 

@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
-import getItemValueFromPath from '../../utils/getItemValueFromPath';
+import getSelectedItemValue from '../../utils/getSelectedItemValue';
 
 function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 	const {namespace, selectedItemsKey} = useContext(FrontendDataSetContext);
@@ -24,7 +24,10 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 
 	function handleCheckboxChange(itemField, itemId, value) {
 		const updatedItems = items.map((item) => {
-			const currentItemId = getItemValueFromPath(item, selectedItemsKey);
+			const currentItemId = getSelectedItemValue({
+				item,
+				path: selectedItemsKey,
+			});
 			if (!itemId || currentItemId === itemId) {
 				return {
 					...item,
@@ -119,10 +122,10 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 
 				<ClayTable.Body>
 					{items.map((item, i) => {
-						const itemId = getItemValueFromPath(
+						const itemId = getSelectedItemValue({
 							item,
-							selectedItemsKey
-						);
+							path: selectedItemsKey,
+						});
 
 						return (
 							<ClayTable.Row key={i}>

@@ -13,7 +13,13 @@
  * @returns value of the selected property
  */
 
-const getItemValueFromPath = function (item: any, path?: string | null): any {
+const getSelectedItemValue = function ({
+	item,
+	path = 'id',
+}: {
+	item: any;
+	path?: string | null;
+}): any {
 	if (!path) {
 		path = 'id';
 	}
@@ -23,4 +29,4 @@ const getItemValueFromPath = function (item: any, path?: string | null): any {
 	}, item);
 };
 
-export default getItemValueFromPath;
+export default getSelectedItemValue;

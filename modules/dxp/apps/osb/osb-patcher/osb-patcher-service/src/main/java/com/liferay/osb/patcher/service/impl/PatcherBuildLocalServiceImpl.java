@@ -5,13 +5,17 @@
 
 package com.liferay.osb.patcher.service.impl;
 
+import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.service.base.PatcherBuildLocalServiceBaseImpl;
+import com.liferay.osb.patcher.util.EmailUtil;
 import com.liferay.osb.patcher.util.comparator.PatcherBuildKeyVersionComparator;
 import com.liferay.osb.patcher.util.comparator.PatcherBuildSupportTicketVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -211,10 +215,13 @@ public class PatcherBuildLocalServiceImpl
 	public PatcherBuild updatePatcherBuild(
 			long userId, long patcherBuildId, int qaStatus,
 			String supportTicket, int type)
-		throws PortalException {
+		throws Exception {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
 			patcherBuildId);
+
+		int oldQaStatus = patcherBuild.getQaStatus();
+		int oldStatus = patcherBuild.getStatus();
 
 		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setQaStatus(qaStatus);
@@ -226,7 +233,11 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setStatusByUserId(user.getUserId());
 		patcherBuild.setStatusByUserName(user.getFullName());
 
-		return patcherBuildPersistence.update(patcherBuild);
+		patcherBuild = patcherBuildPersistence.update(patcherBuild);
+
+		_sendEmail(patcherBuild, oldQaStatus, oldStatus, userId);
+
+		return patcherBuild;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -234,10 +245,13 @@ public class PatcherBuildLocalServiceImpl
 	public PatcherBuild updatePatcherBuild(
 			long userId, long patcherBuildId, String fileName, int qaStatus,
 			String sourceName, int status)
-		throws PortalException {
+		throws Exception {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
 			patcherBuildId);
+
+		int oldQaStatus = patcherBuild.getQaStatus();
+		int oldStatus = patcherBuild.getStatus();
 
 		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setFileName(fileName);
@@ -250,13 +264,38 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setStatusByUserId(user.getUserId());
 		patcherBuild.setStatusByUserName(user.getFullName());
 
-		return patcherBuildPersistence.update(patcherBuild);
+		patcherBuild = patcherBuildPersistence.update(patcherBuild);
+
+		_sendEmail(patcherBuild, oldQaStatus, oldStatus, userId);
+
+		return patcherBuild;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public PatcherBuild updatePatcherBuild(PatcherBuild patcherBuild) {
-		return super.updatePatcherBuild(patcherBuild);
+		PatcherBuild oldPatcherBuild =
+			patcherBuildPersistence.fetchByPrimaryKey(
+				patcherBuild.getPatcherBuildId());
+
+		patcherBuild = super.updatePatcherBuild(patcherBuild);
+
+		if (oldPatcherBuild == null) {
+			return patcherBuild;
+		}
+
+		try {
+			_sendEmail(
+				patcherBuild, oldPatcherBuild.getQaStatus(),
+				oldPatcherBuild.getStatus(), patcherBuild.getUserId());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return patcherBuild;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -278,10 +317,13 @@ public class PatcherBuildLocalServiceImpl
 	@Override
 	public PatcherBuild updateQaFields(
 			long userId, long patcherBuildId, String qaComments, int qaStatus)
-		throws PortalException {
+		throws Exception {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
 			patcherBuildId);
+
+		int oldQaStatus = patcherBuild.getQaStatus();
+		int oldStatus = patcherBuild.getStatus();
 
 		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setQaComments(qaComments);
@@ -292,17 +334,24 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setStatusByUserId(user.getUserId());
 		patcherBuild.setStatusByUserName(user.getFullName());
 
-		return patcherBuildPersistence.update(patcherBuild);
+		patcherBuild = patcherBuildPersistence.update(patcherBuild);
+
+		_sendEmail(patcherBuild, oldQaStatus, oldStatus, userId);
+
+		return patcherBuild;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public PatcherBuild updateQaStatus(
 			long userId, long patcherBuildId, int qaStatus)
-		throws PortalException {
+		throws Exception {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
 			patcherBuildId);
+
+		int oldQaStatus = patcherBuild.getQaStatus();
+		int oldStatus = patcherBuild.getStatus();
 
 		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setQaStatus(qaStatus);
@@ -312,7 +361,11 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setStatusByUserId(user.getUserId());
 		patcherBuild.setStatusByUserName(user.getFullName());
 
-		return patcherBuildPersistence.update(patcherBuild);
+		patcherBuild = patcherBuildPersistence.update(patcherBuild);
+
+		_sendEmail(patcherBuild, oldQaStatus, oldStatus, userId);
+
+		return patcherBuild;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -333,10 +386,13 @@ public class PatcherBuildLocalServiceImpl
 	@Override
 	public PatcherBuild updateStatus(
 			long userId, long patcherBuildId, int status)
-		throws PortalException {
+		throws Exception {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.findByPrimaryKey(
 			patcherBuildId);
+
+		int oldQaStatus = patcherBuild.getQaStatus();
+		int oldStatus = patcherBuild.getStatus();
 
 		patcherBuild.setModifiedDate(new Date());
 		patcherBuild.setStatus(status);
@@ -346,8 +402,56 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setStatusByUserId(user.getUserId());
 		patcherBuild.setStatusByUserName(user.getFullName());
 
-		return patcherBuildPersistence.update(patcherBuild);
+		patcherBuild = patcherBuildPersistence.update(patcherBuild);
+
+		_sendEmail(patcherBuild, oldQaStatus, oldStatus, userId);
+
+		return patcherBuild;
 	}
+
+	private void _sendEmail(
+			PatcherBuild patcherBuild, int oldQaStatus, int oldStatus,
+			long userId)
+		throws Exception {
+
+		User user = _userLocalService.getUser(userId);
+
+		if (oldStatus != patcherBuild.getStatus()) {
+			EmailUtil.sendPatcherEmail(
+				patcherBuild, patcherBuild.getStatus(), user);
+		}
+
+		if (oldQaStatus != patcherBuild.getQaStatus()) {
+			if ((patcherBuild.getQaStatus() ==
+					WorkflowConstants.STATUS_BUILD_QA_ANALYSIS_STARTED) ||
+				(patcherBuild.getQaStatus() ==
+					WorkflowConstants.
+						STATUS_BUILD_QA_ANALYSIS_STARTED_SMOKE_ONLY) ||
+				(patcherBuild.getQaStatus() ==
+					WorkflowConstants.STATUS_BUILD_QA_AUTOMATION_STARTED) ||
+				(patcherBuild.getQaStatus() ==
+					WorkflowConstants.
+						STATUS_BUILD_QA_AUTOMATION_STARTED_SMOKE_ONLY) ||
+				(patcherBuild.getQaStatus() ==
+					WorkflowConstants.STATUS_BUILD_QA_PENDING_SMOKE_ONLY) ||
+				(patcherBuild.getQaStatus() ==
+					WorkflowConstants.STATUS_BUILD_QA_TESTING_SKIPPED) ||
+				(patcherBuild.getQaStatus() ==
+					WorkflowConstants.
+						STATUS_BUILD_QA_TESTING_SKIPPED_SMOKE_ONLY) ||
+				(patcherBuild.getQaStatus() ==
+					WorkflowConstants.STATUS_PENDING)) {
+
+				return;
+			}
+
+			EmailUtil.sendPatcherEmail(
+				patcherBuild, patcherBuild.getQaStatus(), user);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PatcherBuildLocalServiceImpl.class);
 
 	@Reference
 	private UserLocalService _userLocalService;

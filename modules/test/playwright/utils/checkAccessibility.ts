@@ -4,6 +4,7 @@
  */
 
 import AxeBuilder from '@axe-core/playwright';
+import {formatAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 import {Page, expect} from '@playwright/test';
 
 interface Params {
@@ -12,65 +13,6 @@ interface Params {
 	selectors?: string[];
 	selectorsToExclude?: string[];
 	soft?: boolean;
-}
-
-function indentMultiline(text: string, spaces = 4): string {
-	return text
-		.split('\n')
-		.map((line) => ' '.repeat(spaces) + line)
-		.join('\n');
-}
-
-function formatAccessibility(violations: any[]): string {
-	const USE_COLORS = process.stdout.isTTY;
-
-	const RED = USE_COLORS ? '\x1b[31m' : '';
-	const YELLOW = USE_COLORS ? '\x1b[33m' : '';
-	const CYAN = USE_COLORS ? '\x1b[36m' : '';
-	const WHITE = USE_COLORS ? '\x1b[37m' : '';
-	const BOLD = USE_COLORS ? '\x1b[1m' : '';
-	const RESET = USE_COLORS ? '\x1b[0m' : '';
-
-	const output = [];
-
-	output.push('\n');
-	output.push(
-		`${RED}${BOLD}Accessibility issues found: ${RESET}${WHITE}${
-			violations.length
-		} rules affecting ${violations.reduce(
-			(acc, {nodes}) => acc + nodes.length,
-			0
-		)} node(s)${RESET}`
-	);
-	output.push(`${CYAN}${'='.repeat(80)}${RESET}`);
-
-	for (const violation of violations) {
-		output.push('');
-		output.push(
-			`${YELLOW}${BOLD}• RULE: ${RESET}${YELLOW}${violation.description}${RESET}`
-		);
-		output.push(`  Help   : ${violation.help}`);
-		output.push(`  Docs   : ${violation.helpUrl}`);
-		output.push(`  Impact : ${violation.impact}`);
-		output.push('');
-
-		for (let i = 0; i < violation.nodes.length; i++) {
-			const node = violation.nodes[i];
-
-			i > 0 && output.push(`${CYAN}    ${'-'.repeat(40)}${RESET}`);
-			output.push(`${CYAN}  - Affected element:${RESET}`);
-			output.push(`    ${node.html}`);
-			output.push(`${CYAN}  - Target selector(s):${RESET}`);
-			output.push(`    ${node.target.join(', ')}`);
-			output.push(`${CYAN}  - Summary:${RESET}`);
-			output.push(indentMultiline(node.failureSummary.trim()));
-			output.push('');
-		}
-
-		output.push(`${CYAN}${'-'.repeat(80)}${RESET}`);
-	}
-
-	return output.join('\n');
 }
 
 /**
@@ -115,7 +57,7 @@ export async function checkAccessibility({
 
 	const {violations} = await axeBuilder.withTags(tags).analyze();
 
-	if (!violations.length) {
+	if (violations.length) {
 		(soft ? expect.soft : expect)(
 			false,
 			formatAccessibility(violations)

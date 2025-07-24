@@ -112,15 +112,6 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 		super.testGetMyUserAccountSharedAssetsSharedWithMePage();
 
-		Page<SharedAsset> page =
-			sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-				null, null, null, Pagination.of(1, 10), null);
-
-		long totalCount = page.getTotalCount();
-
-		testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
-			randomSharedAsset());
-
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -140,36 +131,59 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 					).build()),
 				ObjectDefinitionConstants.SCOPE_DEPOT);
 
-		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
-			depotScopedObjectDefinition.getUserId(),
-			depotScopedObjectDefinition.getObjectDefinitionId(),
-			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
-			StringPool.TRUE);
+		try {
+			Page<SharedAsset> page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, null, Pagination.of(1, 10), null);
 
-		_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
-			depotEntry.getGroupId(), depotScopedObjectDefinition,
-			randomSharedAsset());
-		_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
-			depotEntry.getGroupId(), depotScopedObjectDefinition,
-			randomSharedAsset());
+			long totalCount = page.getTotalCount();
 
-		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-			null, null, null, Pagination.of(1, 10), null);
+			testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+				randomSharedAsset());
 
-		Assert.assertEquals(totalCount + 3, page.getTotalCount());
+			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+				depotScopedObjectDefinition.getUserId(),
+				depotScopedObjectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+				StringPool.TRUE);
 
-		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-			null, null, "(cms eq false)", Pagination.of(1, 10), null);
+			_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+				depotEntry.getGroupId(), depotScopedObjectDefinition,
+				randomSharedAsset());
+			_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+				depotEntry.getGroupId(), depotScopedObjectDefinition,
+				randomSharedAsset());
 
-		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+			page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, null, Pagination.of(1, 10), null);
 
-		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
-			null, null, "(cms eq true)", Pagination.of(1, 10), null);
+			Assert.assertEquals(totalCount + 3, page.getTotalCount());
 
-		Assert.assertEquals(2, page.getTotalCount());
+			page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, "(cms eq false)", Pagination.of(1, 10),
+						null);
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			depotScopedObjectDefinition);
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			page =
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						null, null, "(cms eq true)", Pagination.of(1, 10),
+						null);
+
+			Assert.assertEquals(2, page.getTotalCount());
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				depotScopedObjectDefinition);
+
+			_depotEntryLocalService.deleteDepotEntry(depotEntry);
+		}
 	}
 
 	@Override

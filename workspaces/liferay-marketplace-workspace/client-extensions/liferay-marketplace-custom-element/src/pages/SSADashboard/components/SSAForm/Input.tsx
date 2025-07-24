@@ -6,7 +6,7 @@
 import Select from '@clayui/form/lib/Select';
 
 import Form from '../../../../components/MarketplaceForm';
-import {FieldProps} from './FormSection';
+import {FieldProps} from './FieldGroup';
 
 const Input = ({
 	className,
@@ -50,7 +50,7 @@ const Input = ({
 	return (
 		<>
 			<Form.Input
-				className={`${className} marketplace-form-select`}
+				className={`${className} marketplace-form-input`}
 				disabled={disabled}
 				maxLength={maxLength || undefined}
 				name={title}

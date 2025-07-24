@@ -28,6 +28,7 @@ export default {
 	'add-new-version': 'Add New Version',
 	'add-packages': 'Add Package(s)',
 	'add-up-to-x-images': 'Add up to {0} images',
+	'additional-admin': 'Additional Admin',
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
 	'admin-dashboard': 'Admin Dashboard',
@@ -94,6 +95,7 @@ export default {
 	'becoming-a-liferay-marketplace-publisher':
 		'Becoming a Liferay Marketplace publisher',
 	'billing-address': 'Billing Address',
+	'blank-site': 'Blank Site',
 	'build': 'Build',
 	'business-address': 'Business Address',
 	'by-requesting-a-publisher-account-you-agree-to-the':
@@ -206,6 +208,7 @@ export default {
 	'download-key': 'Download Key',
 	'draft': 'Draft',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
+	'duration-days': 'Duration (days)',
 	'duration-of-the-extension': 'Duration of the extension',
 	'dxp-app': 'DXP App',
 	'dxp-connections': 'DXP Connections',
@@ -337,6 +340,7 @@ export default {
 		'Login as a user that has access to a project or contact your project administrator to add you to a project.',
 	'low-code-configuration': 'Low-Code Configuration',
 	'mac-addresses': 'Mac Addresses',
+	'main': 'Main',
 	'manage': 'Manage',
 	'manage-all-your-app-purchases-and-subscriptions-in-one-place-read-other-users-reviews-get-notifications-when-updates-are-available-and-get-the-most-out-of-our-apps-catalog':
 		'Manage all your app purchases and subscriptions in one place, read other users reviews, get notifications when updates are available and get the most out of our Apps catalog.',
@@ -385,6 +389,7 @@ export default {
 		'Notes pertaining to the release of the project. These will be displayed when the customer goes to purchase and/or update the app.',
 	'number-of-cpus': 'Number of CPUs',
 	'object-action': 'Object Action',
+	'objective': 'Objective',
 	'of-target': 'of target',
 	'on-hold': 'On Hold',
 	'only-gif-jpg-jpeg-png-are-allowed-max-file-size-is-5mb':
@@ -492,6 +497,7 @@ export default {
 	'search': 'Search',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',
+	'select-an-option': 'Select an Option',
 	'select-areas': 'Select areas',
 	'select-categories': 'Select categories',
 	'select-category': 'Select category',
@@ -508,6 +514,7 @@ export default {
 	'showing-x-to-x-of-x': 'Showing {0} to {1} of {2}',
 	'sign-in-with-a-different-account': 'Sign in with a different Account',
 	'site-initializer': 'Site Intializer',
+	'solution': 'Solution',
 	'solution-details': 'Solution Details',
 	'solution-header': 'Solution Header',
 	'solution-submission': 'Solution Submission',
@@ -631,6 +638,7 @@ export default {
 	'user-account': 'User Account',
 	'users-requests-to-become-a-publisher':
 		'Users requests to become a publisher',
+	'value-between-1-and-60': 'Value between 1 and 60',
 	'version': 'Version',
 	'via-github-repo': 'Via GitHub Repo',
 	'via-liferay-experience-cloud-integration': 'Via Liferay SaaS Integration',

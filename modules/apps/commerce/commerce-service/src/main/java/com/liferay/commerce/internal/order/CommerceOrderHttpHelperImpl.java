@@ -604,7 +604,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	public boolean hasCommerceOrderReturns(
 		HttpServletRequest httpServletRequest) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10562")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(httpServletRequest), "LPD-10562")) {
+
 			return false;
 		}
 

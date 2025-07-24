@@ -301,6 +301,20 @@ public interface DepotEntryGroupRelModel
 	public void setToGroupId(long toGroupId);
 
 	/**
+	 * Returns the type of this depot entry group rel.
+	 *
+	 * @return the type of this depot entry group rel
+	 */
+	public long getType();
+
+	/**
+	 * Sets the type of this depot entry group rel.
+	 *
+	 * @param type the type of this depot entry group rel
+	 */
+	public void setType(long type);
+
+	/**
 	 * Returns the last publish date of this depot entry group rel.
 	 *
 	 * @return the last publish date of this depot entry group rel

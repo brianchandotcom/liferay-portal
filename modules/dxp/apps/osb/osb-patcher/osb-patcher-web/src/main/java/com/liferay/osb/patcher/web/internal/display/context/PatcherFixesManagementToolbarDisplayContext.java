@@ -88,7 +88,8 @@ public class PatcherFixesManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
 					"mvcRenderCommandName", "/patcher/add_fixes",
-					"patcherProductVersionId", _getPatcherProductVersionId());
+					"patcherProductVersionId", _getPatcherProductVersionId(),
+					"redirect", themeDisplay.getURLCurrent());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "create-fix"));
 			}

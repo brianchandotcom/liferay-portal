@@ -1067,6 +1067,45 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchByKeywords() throws Exception {
+		User user1 = UserTestUtil.addUser();
+
+		List<User> users = _userLocalService.search(
+			TestPropsValues.getCompanyId(), user1.getScreenName(),
+			WorkflowConstants.STATUS_APPROVED, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, (OrderByComparator<User>)null);
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+
+		User user2 = users.get(0);
+
+		Assert.assertEquals(user1.getUserId(), user2.getUserId());
+
+		users = _userLocalService.search(
+			TestPropsValues.getCompanyId(), user1.getFullName(),
+			WorkflowConstants.STATUS_APPROVED, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, (OrderByComparator<User>)null);
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+
+		user2 = users.get(0);
+
+		Assert.assertEquals(user1.getUserId(), user2.getUserId());
+
+		users = _userLocalService.search(
+			TestPropsValues.getCompanyId(),
+			StringPool.QUOTE + user1.getFirstName() + StringPool.QUOTE,
+			WorkflowConstants.STATUS_APPROVED, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, (OrderByComparator<User>)null);
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+
+		user2 = users.get(0);
+
+		Assert.assertEquals(user1.getUserId(), user2.getUserId());
+	}
+
+	@Test
 	public void testSearchCounts() throws Exception {
 
 		// LPS-119805

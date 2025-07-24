@@ -523,13 +523,6 @@ public class StagedGroupStagedModelDataHandler
 		for (Element portletElement : orderedPortletElements) {
 			String portletId = portletElement.attributeValue("portlet-id");
 
-			Portlet portlet = _portletLocalService.getPortletById(
-				portletDataContext.getCompanyId(), portletId);
-
-			if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
-				continue;
-			}
-
 			long layoutId = GetterUtil.getLong(
 				portletElement.attributeValue("layout-id"));
 

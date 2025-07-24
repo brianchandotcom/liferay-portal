@@ -930,6 +930,17 @@ public class ObjectDefinitionResourceImpl
 							objectDefinitionId);
 
 				if (serviceBuilderObjectAction != null) {
+					if (FeatureFlagManagerUtil.isEnabled(
+							contextCompany.getCompanyId(), "LPD-42577") &&
+						ArrayUtil.contains(
+							ObjectActionConstants.
+								getSubscriptionObjectActionNames(),
+							objectAction.getName())) {
+
+						objectAction.setActive(
+							serviceBuilderObjectAction::isActive);
+					}
+
 					objectActionResource.putObjectAction(
 						serviceBuilderObjectAction.getObjectActionId(),
 						objectAction);

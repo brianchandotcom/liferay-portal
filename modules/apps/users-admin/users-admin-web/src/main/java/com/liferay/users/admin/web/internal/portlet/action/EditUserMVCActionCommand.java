@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.Website;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.portlet.DynamicActionRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -51,6 +52,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -68,6 +71,8 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portlet.InvokerPortletUtil;
 import com.liferay.portlet.admin.util.AdminUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
@@ -84,6 +89,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -128,9 +134,17 @@ public class EditUserMVCActionCommand
 
 			_userLocalService.validateMaxUsers(themeDisplay.getCompanyId());
 
-			_updateUsers(
-				actionRequest, deleteUserIds,
-				WorkflowConstants.STATUS_APPROVED);
+			if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+					portal.getCompanyId(actionRequest),
+					themeDisplay.getScopeGroupId(), User.class.getName())) {
+
+				_activateUserWithWorkflow(deleteUserIds, actionRequest);
+			}
+			else {
+				_updateUsers(
+					actionRequest, deleteUserIds,
+					WorkflowConstants.STATUS_APPROVED);
+			}
 		}
 	}
 
@@ -480,6 +494,38 @@ public class EditUserMVCActionCommand
 	@Reference
 	protected UserLocalService userLocalService;
 
+	private void _activateUserWithWorkflow(
+			long[] accountUserIds, ActionRequest actionRequest)
+		throws Exception {
+
+		long companyId = _portal.getCompanyId(actionRequest);
+
+		long userId = _portal.getUserId(actionRequest);
+
+		for (long accountUserId : accountUserIds) {
+			WorkflowTask workflowTask = _getWorkflowTask(
+				_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+					companyId, WorkflowConstants.DEFAULT_GROUP_ID,
+					User.class.getName(), accountUserId));
+
+			if (workflowTask == null) {
+				_userService.updateStatus(
+					accountUserId, WorkflowConstants.STATUS_APPROVED,
+					ServiceContextFactory.getInstance(
+						User.class.getName(), actionRequest));
+			}
+			else if (!workflowTask.isAssignedToSingleUser()) {
+				workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
+					companyId, userId, workflowTask.getWorkflowTaskId(), userId,
+					StringPool.BLANK, null, null);
+
+				_workflowTaskManager.completeWorkflowTask(
+					companyId, userId, workflowTask.getWorkflowTaskId(),
+					"approve", StringPool.BLANK, null, true);
+			}
+		}
+	}
+
 	private User _addUser(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -573,6 +619,27 @@ public class EditUserMVCActionCommand
 		return listType.getListTypeId();
 	}
 
+	private WorkflowTask _getWorkflowTask(
+			WorkflowInstanceLink workflowInstanceLink)
+		throws Exception {
+
+		if (workflowInstanceLink == null) {
+			return null;
+		}
+
+		List<WorkflowTask> workflowTasks =
+			_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
+				workflowInstanceLink.getCompanyId(), null,
+				workflowInstanceLink.getWorkflowInstanceId(), false, 0, 1,
+				null);
+
+		if (workflowTasks.isEmpty()) {
+			return null;
+		}
+
+		return workflowTasks.get(0);
+	}
+
 	private User _updateLockout(ActionRequest actionRequest) throws Exception {
 		User user = portal.getSelectedUser(actionRequest);
 
@@ -635,5 +702,15 @@ public class EditUserMVCActionCommand
 
 	@Reference
 	private UserService _userService;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
+
+	@Reference
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

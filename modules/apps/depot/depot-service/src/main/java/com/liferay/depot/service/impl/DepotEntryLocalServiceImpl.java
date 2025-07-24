@@ -5,6 +5,7 @@
 
 package com.liferay.depot.service.impl;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.exception.DepotEntryGroupException;
 import com.liferay.depot.exception.DepotEntryNameException;
@@ -79,6 +80,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		depotEntry.setGroupId(group.getGroupId());
 		depotEntry.setCompanyId(serviceContext.getCompanyId());
 		depotEntry.setUserId(serviceContext.getUserId());
+		depotEntry.setType(DepotConstants.TYPE_ASSET_LIBRARY);
 
 		depotEntry = depotEntryPersistence.update(depotEntry);
 
@@ -132,6 +134,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		depotEntry.setGroupId(group.getGroupId());
 		depotEntry.setCompanyId(serviceContext.getCompanyId());
 		depotEntry.setUserId(serviceContext.getUserId());
+		depotEntry.setType(DepotConstants.TYPE_ASSET_LIBRARY);
 
 		depotEntry = depotEntryPersistence.update(depotEntry);
 

@@ -69,6 +69,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:staging:staging-api")
 	testIntegrationImplementation project(":apps:static:osgi:osgi-util")
 	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
+	testIntegrationImplementation project(":apps:trash:trash-api")
 	testIntegrationImplementation project(":apps:upload:upload-api")
 	testIntegrationImplementation project(":apps:users-admin:users-admin-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")

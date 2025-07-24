@@ -209,6 +209,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
@@ -222,6 +224,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.service.TrashEntryLocalService;
 
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
@@ -4936,6 +4940,43 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(1);
 	}
 
+	@FeatureFlag("LPD-53981")
+	@Test
+	public void testMoveObjectEntryToTrashWithOngoingWorkflowInstances()
+		throws Exception {
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+			_siteObjectDefinition.getClassName(), 0, 0, "Single Approver", 1);
+
+		Group group = GroupTestUtil.addGroup();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			group.getGroupId(), _siteObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build());
+
+		_assertGetWorkflowInstancesSize(
+			_siteObjectDefinition.getClassName(),
+			objectEntry.getObjectEntryId(), 1);
+
+		_objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), objectEntry,
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertGetWorkflowInstancesSize(
+			_siteObjectDefinition.getClassName(),
+			objectEntry.getObjectEntryId(), 0);
+
+		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
+			_siteObjectDefinition.getClassName(),
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, trashEntry.getStatus());
+	}
+
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
 		_assertCount(0);
@@ -6948,6 +6989,21 @@ public class ObjectEntryLocalServiceTest {
 			friendlyURLEntries.toString(), 0, friendlyURLEntries.size());
 	}
 
+	private void _assertGetWorkflowInstancesSize(
+			String assetClassName, long assetClassPK, int expectedSize)
+		throws Exception {
+
+		List<WorkflowInstance> workflowInstances =
+			_workflowInstanceManager.getWorkflowInstances(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				assetClassName, assetClassPK, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			workflowInstances.toString(), expectedSize,
+			workflowInstances.size());
+	}
+
 	private void _assertKeywords(String keywords, int count) throws Exception {
 		BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
 			_objectEntryLocalService.searchObjectEntries(
@@ -8847,6 +8903,9 @@ public class ObjectEntryLocalServiceTest {
 	private SchedulerJobConfiguration _tempFileEntriesSchedulerJobConfiguration;
 
 	@Inject
+	private TrashEntryLocalService _trashEntryLocalService;
+
+	@Inject
 	private UserLocalService _userLocalService;
 
 	@Inject
@@ -8855,6 +8914,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;
+
+	@Inject
+	private WorkflowInstanceManager _workflowInstanceManager;
 
 	@Inject
 	private WorkflowTaskManager _workflowTaskManager;

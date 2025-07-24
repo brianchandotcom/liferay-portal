@@ -29,7 +29,7 @@ definition {
 	macro startPostgreSQLDB() {
 		AntCommands.runCommand("build-test.xml", "start-docker-database -Ddatabase.type=postgresql");
 
-		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=postgresql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-postgresql.sql");
+		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=postgresql -Dskip.delete.liferay.home=true -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-postgresql.sql");
 	}
 
 	@summary = "Switch JDBC to use PostgreSQL"

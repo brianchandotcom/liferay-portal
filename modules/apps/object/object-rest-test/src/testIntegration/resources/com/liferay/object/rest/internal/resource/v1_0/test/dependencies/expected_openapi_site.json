@@ -265,6 +265,11 @@
 						"readOnly": true,
 						"type": "string"
 					},
+					"dateDeleted": {
+						"format": "date-time",
+						"readOnly": true,
+						"type": "string"
+					},
 					"dateModified": {
 						"format": "date-time",
 						"readOnly": true,
@@ -272,6 +277,9 @@
 					},
 					"defaultLanguageId": {
 						"type": "string"
+					},
+					"deletedBy": {
+						"$ref": "#/components/schemas/Creator"
 					},
 					"displayDate": {
 						"format": "date-time",

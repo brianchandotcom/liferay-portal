@@ -196,13 +196,13 @@ public class ContentObjectFragmentRendererTest {
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
 
+		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			segmentsExperienceId);
+
 		Assert.assertTrue(
-			ContentLayoutTestUtil.getRenderLayoutHTML(
-				_layout, _layoutServiceContextHelper, _layoutStructureProvider,
-				segmentsExperienceId
-			).contains(
-				_journalArticle.getTitle(LocaleUtil.getSiteDefault())
-			));
+			html.contains(
+				_journalArticle.getTitle(LocaleUtil.getSiteDefault())));
 	}
 
 	@Test

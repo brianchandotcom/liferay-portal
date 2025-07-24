@@ -382,6 +382,10 @@ public interface ObjectRelationshipLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectRelationship> getObjectRelationshipsByObjectDefinitionId2(
+		long objectDefinitionId2, boolean edge);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectRelationship> getObjectRelationshipsByObjectDefinitionId2(
 		long objectDefinitionId2, String type);
 
 	/**

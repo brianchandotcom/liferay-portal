@@ -5691,11 +5691,13 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinition.getObjectFolderExternalReferenceCode(),
 				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
 
-			Group group = _groupLocalService.getGroup(
+			Group group = _groupLocalService.fetchGroup(
 				objectEntry.getCompanyId(), GroupConstants.CMS);
 
-			serviceContext.setAttribute(
-				"assetTagScopeGroupId", group.getGroupId());
+			if (group != null) {
+				serviceContext.setAttribute(
+					"assetTagScopeGroupId", group.getGroupId());
+			}
 		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(

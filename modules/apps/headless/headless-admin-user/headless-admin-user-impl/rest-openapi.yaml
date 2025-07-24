@@ -7005,6 +7005,17 @@ paths:
             description:
                 Creates a new user account
             operationId: postUserAccount
+            parameters:
+                -   in: query
+                    name: captchaAnswer
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: captchaToken
+                    required: false
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:

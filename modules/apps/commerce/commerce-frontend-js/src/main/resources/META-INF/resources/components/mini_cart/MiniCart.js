@@ -23,6 +23,7 @@ import MiniCartContext from './MiniCartContext';
 import {
 	ADD_PRODUCT,
 	CART,
+	CART_ITEMS_PAGINATION_DEFAULT,
 	HEADER,
 	ITEM,
 	ITEMS_LIST,
@@ -68,11 +69,14 @@ function MiniCart({
 	toggleable,
 	undoCartItemDeletionDisabled,
 }) {
-	const [CartViews, setCartViews] = useState({});
 	const [actionURLs, setActionURLs] = useState(cartActionURLs);
-	const [cartAtomState] = useLiferayState(cartAtom);
+	const [CartViews, setCartViews] = useState({});
+	const [cartItemsPagination, setCartItemsPagination] = useState(
+		CART_ITEMS_PAGINATION_DEFAULT
+	);
 	const [cartState, setCartState] = useState({
 		accountId,
+		cartItems: [],
 		channel: {channel},
 		id: orderId,
 		summary: {itemsQuantity},
@@ -80,6 +84,7 @@ function MiniCart({
 	const [editedItem, setEditedItem] = useState(null);
 	const [isOpen, setIsOpen] = useState(!toggleable);
 	const [isUpdating, setIsUpdating] = useState(false);
+	const [cartAtomState] = useLiferayState(cartAtom);
 	const [replacementSKUList, setReplacementSKUList] = useState([]);
 
 	const manageSlowConnections =
@@ -111,6 +116,50 @@ function MiniCart({
 		setIsOpen(true);
 	};
 
+	const getCartItems = useCallback(async () => {
+		const {items, lastPage} = await CartResource.getCartItemsByCartId(
+			cartState.id,
+			{
+				page: cartItemsPagination.page,
+				pageSize: cartItemsPagination.pageSize,
+			}
+		);
+
+		const remainder = cartItemsPagination.pageSize - items.length;
+
+		let nextPage = cartItemsPagination.page;
+
+		if (!remainder) {
+			nextPage += 1;
+		}
+
+		setCartState((currentState) => {
+			return {
+				...currentState,
+				cartItems: [
+					...currentState.cartItems,
+					...items.reduce((appended, item) => {
+						const found = currentState.cartItems.find(
+							(currentItem) => currentItem.id === item.id
+						);
+
+						if (!found) {
+							appended.push(item);
+						}
+
+						return appended;
+					}, []),
+				],
+			};
+		});
+
+		setCartItemsPagination({
+			lastPage,
+			page: nextPage,
+			pageSize: cartItemsPagination.pageSize,
+		});
+	}, [cartItemsPagination, cartState, setCartItemsPagination, setCartState]);
+
 	const resetCartState = useCallback(
 		({accountId = 0, id = 0}) => {
 			const isAccountChanged = cartState.accountId !== accountId;
@@ -131,11 +180,9 @@ function MiniCart({
 	);
 
 	const updateCartModel = useCallback(
-		async ({order, updatedFromCart = true}) => {
+		async ({order, refreshItems = false, updatedFromCart = true}) => {
 			try {
-				const updatedCart = order.orderUUID
-					? order
-					: await CartResource.getCartByIdWithItems(order.id);
+				const updatedCart = await CartResource.getCartById(order.id);
 
 				let latestActionURLs;
 				let latestCartState;
@@ -157,8 +204,16 @@ function MiniCart({
 					return latestActionURLs;
 				});
 
+				if (refreshItems) {
+					setCartItemsPagination(CART_ITEMS_PAGINATION_DEFAULT);
+				}
+
 				setCartState((currentState) => {
-					latestCartState = {...currentState, ...updatedCart};
+					latestCartState = {
+						...currentState,
+						...updatedCart,
+						...(refreshItems ? {cartItems: []} : {}),
+					};
 
 					return latestCartState;
 				});
@@ -232,11 +287,13 @@ function MiniCart({
 			value={{
 				CartViews,
 				actionURLs,
+				cartItemsPagination,
 				cartState,
 				closeCart,
 				displayDiscountLevels,
 				displayTotalItemsQuantity,
 				editedItem,
+				getCartItems,
 				guestOrderEnabled,
 				isOpen,
 				isUpdating,

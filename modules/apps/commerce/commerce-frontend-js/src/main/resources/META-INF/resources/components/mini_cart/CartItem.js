@@ -156,7 +156,10 @@ function CartItem({
 					return;
 				}
 
-				updateCartModel({order: {id: cartState.id}});
+				updateCartModel({
+					order: {id: cartState.id},
+					refreshItems: true,
+				});
 
 				Liferay.fire(CART_PRODUCT_QUANTITY_CHANGED, {
 					quantity: 0,

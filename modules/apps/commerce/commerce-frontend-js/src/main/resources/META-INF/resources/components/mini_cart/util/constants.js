@@ -6,6 +6,11 @@
 /**
  * Cart implementation constants
  */
+export const CART_ITEMS_PAGINATION_DEFAULT = {
+	lastPage: 1,
+	page: 1,
+	pageSize: 20,
+};
 export const DEFAULT_ORDER_DETAILS_PORTLET_ID =
 	'com_liferay_commerce_order_content_web_internal_portlet_' +
 	'CommerceOpenOrderContentPortlet';

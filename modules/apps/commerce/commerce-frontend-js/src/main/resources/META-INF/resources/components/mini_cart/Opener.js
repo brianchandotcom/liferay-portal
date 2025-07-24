@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 
 import {
 	OPEN_MINICART_FOR_EDITING,
@@ -20,21 +20,11 @@ function Opener({disabled = false}) {
 		useContext(MiniCartContext);
 
 	const {cartItems = [], summary = {}} = cartState;
-	const {itemsQuantity: initialItemsQuantity} = summary;
+	const {itemsCount = 0, itemsQuantity = 0} = summary;
 
-	const [numberOfItems, setNumberOfItems] = useState(0);
-
-	useEffect(() => {
-		setNumberOfItems(initialItemsQuantity);
-	}, [initialItemsQuantity, setNumberOfItems]);
-
-	useEffect(() => {
-		setNumberOfItems(
-			displayTotalItemsQuantity && 'itemsQuantity' in summary
-				? summary.itemsQuantity
-				: cartItems.length
-		);
-	}, [cartItems, displayTotalItemsQuantity, summary, setNumberOfItems]);
+	const numberOfItems = displayTotalItemsQuantity
+		? itemsQuantity
+		: itemsCount;
 
 	const openMiniCartForEditing = useCallback(
 		({dataSetId, orderItemId}) => {

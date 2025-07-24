@@ -68,15 +68,19 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 					runSQL(
 						StringBundler.concat(
 							"insert into JournalArticle (",
-							"mvccVersion, ctCollectionId, id_, structureId) ",
-							"values (0, 0, ", RandomTestUtil.nextLong(), ", '",
-							structureId, "')"));
+							"mvccVersion, ctCollectionId, id_, groupId, ",
+							"structureId) values (0, 0, ",
+							RandomTestUtil.nextLong(), ", ",
+							RandomTestUtil.nextLong(), ", '", structureId,
+							"')"));
 					runSQL(
 						StringBundler.concat(
 							"insert into JournalFeed (",
-							"mvccVersion, ctCollectionId, id_, structureId) ",
-							"values (0, 0, ", RandomTestUtil.nextLong(), ", '",
-							structureId, "')"));
+							"mvccVersion, ctCollectionId, id_, groupId, ",
+							"structureId) values (0, 0, ",
+							RandomTestUtil.nextLong(), ", ",
+							RandomTestUtil.nextLong(), ", '", structureId,
+							"')"));
 				},
 				logMessages -> {
 					Assert.assertTrue(
@@ -114,15 +118,19 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 					runSQL(
 						StringBundler.concat(
 							"insert into JournalArticle (",
-							"mvccVersion, ctCollectionId, id_, DDMStructureKey",
-							") values (0, 0, ", RandomTestUtil.nextLong(),
-							", '", structureId, "')"));
+							"mvccVersion, ctCollectionId, id_, groupId, ",
+							"DDMStructureKey) values (0, 0, ",
+							RandomTestUtil.nextLong(), ", ",
+							RandomTestUtil.nextLong(), ", '", structureId,
+							"')"));
 					runSQL(
 						StringBundler.concat(
 							"insert into JournalFeed (",
-							"mvccVersion, ctCollectionId, id_, DDMStructureKey",
-							") values (0, 0, ", RandomTestUtil.nextLong(),
-							", '", structureId, "')"));
+							"mvccVersion, ctCollectionId, id_, groupId, ",
+							"DDMStructureKey) values (0, 0, ",
+							RandomTestUtil.nextLong(), ", ",
+							RandomTestUtil.nextLong(), ", '", structureId,
+							"')"));
 				},
 				logMessages -> {
 					Assert.assertTrue(
@@ -152,15 +160,17 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 				runSQL(
 					StringBundler.concat(
 						"insert into JournalArticle (",
-						"mvccVersion, ctCollectionId, id_, DDMStructureId) ",
-						"values (0, 0, ", RandomTestUtil.nextLong(), ", ",
-						structureId, ")"));
+						"mvccVersion, ctCollectionId, id_, groupId, ",
+						"DDMStructureId) values (0, 0, ",
+						RandomTestUtil.nextLong(), ", ",
+						RandomTestUtil.nextLong(), ", ", structureId, ")"));
 				runSQL(
 					StringBundler.concat(
 						"insert into JournalFeed (",
-						"mvccVersion, ctCollectionId, id_, DDMStructureId) ",
-						"values (0, 0, ", RandomTestUtil.nextLong(), ", ",
-						structureId, ")"));
+						"mvccVersion, ctCollectionId, id_, groupId, ",
+						"DDMStructureId) values (0, 0, ",
+						RandomTestUtil.nextLong(), ", ",
+						RandomTestUtil.nextLong(), ", ", structureId, ")"));
 			},
 			logMessages -> {
 				Assert.assertTrue(

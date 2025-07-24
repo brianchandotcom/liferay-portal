@@ -108,11 +108,11 @@ public class CaptchaConfigurationModelListenerTest {
 		catch (ConfigurationModelListenerException
 					configurationModelListenerException) {
 
+			String message = configurationModelListenerException.getMessage();
+
 			Assert.assertTrue(
-				configurationModelListenerException.getMessage(
-				).contains(
-					_language.get(LocaleUtil.US, exceptionMessageKey)
-				));
+				message.contains(
+					_language.get(LocaleUtil.US, exceptionMessageKey)));
 		}
 	}
 

@@ -105,7 +105,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 
 		for (String currentLanguageId : languageIds) {
 			if (StringUtil.startsWith(
-				currentURL, currentLanguageId + StringPool.FORWARD_SLASH)) {
+					currentURL, currentLanguageId + StringPool.FORWARD_SLASH)) {
 
 				currentURL = currentURL.substring(currentLanguageId.length());
 

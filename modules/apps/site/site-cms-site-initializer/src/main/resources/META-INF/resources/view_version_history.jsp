@@ -23,6 +23,7 @@ ViewVersionHistoryDisplayContext viewVersionHistoryDisplayContext = (ViewVersion
 		additionalProps="<%= viewVersionHistoryDisplayContext.getProps() %>"
 		apiURL="<%= viewVersionHistoryDisplayContext.getAPIURL() %>"
 		fdsActionDropdownItems="<%= viewVersionHistoryDisplayContext.getFDSActionDropdownItems() %>"
+		fdsSortItemList="<%= viewVersionHistoryDisplayContext.getFDSSortItemList() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.VIEW_HISTORY %>"
 		itemsPerPage="<%= 20 %>"

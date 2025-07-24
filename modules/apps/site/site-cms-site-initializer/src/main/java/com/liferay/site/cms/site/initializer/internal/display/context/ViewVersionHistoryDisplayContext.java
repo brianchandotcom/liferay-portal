@@ -6,6 +6,10 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItem;
+import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
+import com.liferay.frontend.data.set.model.FDSSortItemList;
+import com.liferay.frontend.data.set.model.FDSSortItemListBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
@@ -71,6 +75,16 @@ public class ViewVersionHistoryDisplayContext {
 				"delete", null));
 	}
 
+	public FDSSortItemList getFDSSortItemList() {
+		return FDSSortItemListBuilder.add(
+			_getFDSSortItem(false, "asc", "dateModified", "modified")
+		).add(
+			_getFDSSortItem(false, "asc", "title", "title")
+		).add(
+			_getFDSSortItem(true, "desc", "version", "version")
+		).build();
+	}
+
 	public Map<String, Object> getProps() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(_httpServletRequest, "backURL")
@@ -83,6 +97,20 @@ public class ViewVersionHistoryDisplayContext {
 				StringPool.QUOTE,
 				_objectEntry.getTitleValue(_themeDisplay.getLanguageId(), true),
 				"\" ", _language.get(_themeDisplay.getLocale(), "history"))
+		).build();
+	}
+
+	private FDSSortItem _getFDSSortItem(
+		boolean active, String direction, String key, String labelKey) {
+
+		return FDSSortItemBuilder.setActive(
+			active
+		).setDirection(
+			direction
+		).setKey(
+			key
+		).setLabel(
+			_language.get(_themeDisplay.getLocale(), labelKey)
 		).build();
 	}
 

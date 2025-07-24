@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -573,7 +574,11 @@ public class ObjectDefinitionResourceTest
 		_testPostObjectDefinitionBatch();
 	}
 
-	@FeatureFlag("LPD-32050")
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "LPD-32050"), @FeatureFlag(value = "LPD-42577")
+		}
+	)
 	@Override
 	@Test
 	public void testPutObjectDefinition() throws Exception {
@@ -857,6 +862,42 @@ public class ObjectDefinitionResourceTest
 		Assert.assertEquals(
 			Arrays.toString(localizedObjectFields), 1,
 			localizedObjectFields.length);
+
+		// Enable object entry subscription
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setEnableObjectEntrySubscription(true);
+
+		postObjectDefinition = objectDefinitionResource.postObjectDefinition(
+			randomObjectDefinition);
+
+		ObjectAction[] objectActions = postObjectDefinition.getObjectActions();
+
+		Assert.assertEquals(objectActions.toString(), 2, objectActions.length);
+
+		ObjectAction objectAction1 = objectActions[0];
+
+		Assert.assertTrue(objectAction1.getActive());
+
+		ObjectAction objectAction2 = objectActions[1];
+
+		Assert.assertTrue(objectAction2.getActive());
+
+		postObjectDefinition.setEnableObjectEntrySubscription(false);
+
+		postObjectDefinition = objectDefinitionResource.putObjectDefinition(
+			postObjectDefinition.getId(), postObjectDefinition);
+
+		objectActions = postObjectDefinition.getObjectActions();
+
+		objectAction1 = objectActions[0];
+
+		Assert.assertFalse(objectAction1.getActive());
+
+		objectAction2 = objectActions[1];
+
+		Assert.assertFalse(objectAction2.getActive());
 
 		// Modifiable system object definition
 

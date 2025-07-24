@@ -843,7 +843,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		throws Exception {
 
 		UserAccount userAccount = _userAccountResource.postUserAccount(
-			_randomUserAccount());
+			null, null, _randomUserAccount());
 
 		return userAccount.getEmailAddress();
 	}

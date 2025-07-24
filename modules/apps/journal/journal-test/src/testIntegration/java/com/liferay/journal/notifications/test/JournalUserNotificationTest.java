@@ -17,6 +17,7 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -24,22 +25,37 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.notifications.test.util.BaseUserNotificationTestCase;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
+import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.Date;
 import java.util.List;
@@ -164,6 +180,45 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY, user, 2);
 	}
 
+	@Test
+	public void testUserNotificationWhenWorkflowHasUrlConstant()
+		throws Exception {
+
+		_adminUser = UserTestUtil.addCompanyAdminUser(
+			CompanyLocalServiceUtil.getCompany(group.getCompanyId()));
+		_setUpPermissionThreadLocal();
+		_createUrlConstantWorkflow();
+
+		_activateWorkflow(
+			JournalFolder.class.getName(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
+			_URL_CONSTANT_SINGLE_APPROVER, 1);
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, article.getStatus());
+
+		_assertJournalArticleNotificationsCount(1, _adminUser, 1);
+
+		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+
+		String mailMessageBody = mailMessage.getBody();
+
+		Assert.assertTrue(
+			mailMessageBody.contains(_getArticlePreviewURL(article)));
+
+		_deactivateWorkflow(
+			JournalFolder.class.getName(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+
+		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+	}
+
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
 		return JournalTestUtil.addArticleWithWorkflow(
@@ -206,9 +261,40 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL, "Single Approver", 1);
 	}
 
+	private void _activateWorkflow(
+			String className, long classPK, long typePK,
+			String workflowDefinitionName, int workflowDefinitionVersion)
+		throws Exception {
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			_adminUser.getUserId(), group.getCompanyId(), group.getGroupId(),
+			className, classPK, typePK, workflowDefinitionName,
+			workflowDefinitionVersion);
+	}
+
 	private void _assertJournalArticleNotifications(
 			JournalArticle article, int emailNotificationCount,
 			int notificationType, User subscribedUser,
+			int userNotificationCount)
+		throws Exception {
+
+		_assertJournalArticleNotificationsCount(
+			emailNotificationCount, subscribedUser, userNotificationCount);
+
+		List<JSONObject> userNotificationEventsJSONObjects =
+			getUserNotificationEventsJSONObjects(subscribedUser.getUserId());
+
+		for (int i = 0; i < userNotificationCount; i++) {
+			JSONObject jsonObject = userNotificationEventsJSONObjects.get(i);
+
+			Assert.assertEquals(article.getId(), jsonObject.getLong("classPK"));
+			Assert.assertEquals(
+				notificationType, jsonObject.getInt("notificationType"));
+		}
+	}
+
+	private void _assertJournalArticleNotificationsCount(
+			int emailNotificationCount, User subscribedUser,
 			int userNotificationCount)
 		throws Exception {
 
@@ -221,13 +307,21 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), userNotificationCount,
 			userNotificationEventsJSONObjects.size());
+	}
 
-		for (int i = 0; i < userNotificationCount; i++) {
-			JSONObject jsonObject = userNotificationEventsJSONObjects.get(i);
+	private void _createUrlConstantWorkflow() throws Exception {
+		try {
+			_workflowDefinitionManager.getWorkflowDefinition(
+				_adminUser.getCompanyId(), _URL_CONSTANT_SINGLE_APPROVER, 1);
+		}
+		catch (NoSuchModelException noSuchModelException) {
+			String content = _getJsonFromFile(
+				"url-constant-workflow-definition.xml");
 
-			Assert.assertEquals(article.getId(), jsonObject.getLong("classPK"));
-			Assert.assertEquals(
-				notificationType, jsonObject.getInt("notificationType"));
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				null, _adminUser.getCompanyId(), _adminUser.getUserId(),
+				_URL_CONSTANT_SINGLE_APPROVER, _URL_CONSTANT_SINGLE_APPROVER,
+				content.getBytes());
 		}
 	}
 
@@ -239,6 +333,73 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL, null);
 	}
 
+	private void _deactivateWorkflow(
+			String className, long classPK, long typePK)
+		throws Exception {
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			_adminUser.getUserId(), group.getCompanyId(), group.getGroupId(),
+			className, classPK, typePK, null);
+	}
+
+	private String _getArticlePreviewURL(JournalArticle article)
+		throws Exception {
+
+		String portletId = PortletProviderUtil.getPortletId(
+			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+
+		String previewURL = _portal.getControlPanelFullURL(
+			article.getGroupId(), portletId, null);
+
+		String namespace = _portal.getPortletNamespace(portletId);
+
+		previewURL = HttpComponentsUtil.addParameter(
+			previewURL, namespace + "mvcPath", "/preview_article_content.jsp");
+		previewURL = HttpComponentsUtil.addParameter(
+			previewURL, namespace + "groupId", article.getGroupId());
+		previewURL = HttpComponentsUtil.addParameter(
+			previewURL, namespace + "articleId", article.getArticleId());
+		previewURL = HttpComponentsUtil.addParameter(
+			previewURL, namespace + "version", article.getVersion());
+
+		return previewURL;
+	}
+
+	private String _getJsonFromFile(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return WorkflowDefinitionContentUtil.toJSON(
+			StringUtil.read(
+				clazz.getClassLoader(),
+				"com/liferay/journal/dependencies/" + fileName));
+	}
+
+	private void _setUpPermissionThreadLocal() throws Exception {
+		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+				{
+					init(_adminUser);
+				}
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+			});
+	}
+
+	private static final String _URL_CONSTANT_SINGLE_APPROVER =
+		"Url Constant Single Approver";
+
+	@DeleteAfterTestRun
+	private User _adminUser;
+
 	private JournalFolder _folder;
 
 	@Inject
@@ -247,6 +408,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	@Inject
 	private JournalFolderLocalService _journalFolderLocalService;
 
+	private PermissionChecker _permissionChecker;
+
 	@Inject
 	private Portal _portal;
 
@@ -254,7 +417,16 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	private RoleLocalService _roleLocalService;
 
 	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+	@Inject
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
+
+	@Inject
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

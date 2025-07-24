@@ -20,7 +20,7 @@ const useFileUploader = ({
 	selectedItemsKey,
 }: {
 	fileDropSettings: IFileDropSettings;
-	selectedItemsKey: string;
+	selectedItemsKey: string | undefined;
 }): {
 	onFileDrop: TOnFileDrop;
 } => {

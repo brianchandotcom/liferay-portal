@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.sharing.service.SharingEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,6 +62,21 @@ public class ObjectEntryFolderModelListener
 		}
 	}
 
+	@Override
+	public void onAfterRemove(ObjectEntryFolder objectEntryFolder)
+		throws ModelListenerException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectEntryFolder.getCompanyId(), "LPD-17564")) {
+
+			return;
+		}
+
+		_sharingEntryLocalService.deleteSharingEntries(
+			_portal.getClassNameId(ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId());
+	}
+
 	private Role _getOrAddCMSAdministratorRoleAndPermissions(
 			long companyId, long userId)
 		throws Exception {
@@ -78,6 +95,9 @@ public class ObjectEntryFolderModelListener
 	}
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
@@ -85,5 +105,8 @@ public class ObjectEntryFolderModelListener
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SharingEntryLocalService _sharingEntryLocalService;
 
 }

@@ -5,3 +5,6 @@
 
 export const OBJECT_ENTRY_ENTITY_TYPE =
 	'com.liferay.object.rest.dto.v1_0.ObjectEntry#C_Test';
+
+export const OBJECT_DEFINITION_TYPE =
+	'com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition';

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -206,7 +205,7 @@ public class LayoutsAdminDisplayContextTest {
 	}
 
 	private Layout _getContentLayout(
-		boolean layoutUpdateable, boolean isPrivateLayout) {
+		boolean layoutUpdateable, boolean privateLayout) {
 
 		Layout layout = Mockito.mock(Layout.class);
 
@@ -227,7 +226,7 @@ public class LayoutsAdminDisplayContextTest {
 		Mockito.when(
 			layout.isPrivateLayout()
 		).thenReturn(
-			isPrivateLayout
+			privateLayout
 		);
 
 		Mockito.when(

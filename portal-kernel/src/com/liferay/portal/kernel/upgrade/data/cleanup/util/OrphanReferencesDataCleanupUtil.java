@@ -92,9 +92,9 @@ public class OrphanReferencesDataCleanupUtil {
 			" where not exists (select 1 from ", targetTableName, " where ",
 			targetTableName, StringPool.PERIOD, targetColumnName, " = ",
 			sourceTableName, StringPool.PERIOD, sourceColumnName, ") and ",
-			sourceColumnName, " is not null ",
-			dbInspector.isNumeric(sourceTableName, sourceColumnName) ?
-				"and " + sourceColumnName + " != 0" : "",
+			sourceColumnName, " is not null and ", sourceColumnName, " != ",
+			dbInspector.isNumeric(sourceTableName, sourceColumnName) ? "0" :
+				"''",
 			(sourceAdditionalWhereClause != null) ?
 				" and " + sourceAdditionalWhereClause : "");
 	}

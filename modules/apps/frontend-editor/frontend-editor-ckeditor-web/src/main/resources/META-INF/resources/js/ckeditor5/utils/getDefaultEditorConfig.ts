@@ -12,6 +12,7 @@ import {
 	Essentials,
 	Font,
 	GeneralHtmlSupport,
+	GeneralHtmlSupportConfig,
 	Heading,
 	HorizontalLine,
 	Image,
@@ -70,8 +71,22 @@ const getDefaultEditorConfig = ({
 		},
 	};
 
+	const htmlSupport: GeneralHtmlSupportConfig = {
+		allow: [
+			{
+				attributes: true,
+				classes: true,
+				name: /.*/,
+				styles: true,
+			},
+		],
+		allowEmpty: ['img'],
+		disallow: [{name: 'script'}, {attributes: /on.*/}],
+	};
+
 	if (preset === EEditorConfigPreset.BASIC) {
 		const basicEditorConfig: EditorConfig = {
+			htmlSupport,
 			plugins: basicPlugins,
 			toolbar: {
 				items: [
@@ -198,17 +213,7 @@ const getDefaultEditorConfig = ({
 				},
 			],
 		},
-		htmlSupport: {
-			allow: [
-				{
-					attributes: true,
-					classes: true,
-					name: /.*/,
-					styles: true,
-				},
-			],
-			allowEmpty: ['img'],
-		},
+		htmlSupport,
 		image: {
 			toolbar: [
 				'imageStyle:inline',

@@ -141,6 +141,7 @@ public class NotificationTemplateResourceImpl
 			NotificationUtil.toNotificationContext(
 				notificationTemplate, _objectFieldLocalService);
 
+		notificationContext.setCompanyId(contextCompany.getCompanyId());
 		notificationContext.setNotificationRecipient(
 			NotificationUtil.toNotificationRecipient(contextUser, 0L));
 		notificationContext.setNotificationRecipientSettings(
@@ -165,6 +166,8 @@ public class NotificationTemplateResourceImpl
 		throws Exception {
 
 		NotificationContext notificationContext = new NotificationContext();
+
+		notificationContext.setCompanyId(contextCompany.getCompanyId());
 
 		com.liferay.notification.model.NotificationTemplate
 			notificationTemplate =
@@ -232,6 +235,8 @@ public class NotificationTemplateResourceImpl
 		NotificationContext notificationContext =
 			NotificationUtil.toNotificationContext(
 				notificationTemplate, _objectFieldLocalService);
+
+		notificationContext.setCompanyId(contextCompany.getCompanyId());
 
 		NotificationRecipient notificationRecipient =
 			NotificationUtil.toNotificationRecipient(

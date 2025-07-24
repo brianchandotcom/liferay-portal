@@ -194,7 +194,8 @@ public class ObjectEntryVariablesUtil {
 
 			Object objectEntryFolderId = variables.get("objectEntryFolderId");
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-42577") &&
+			if (FeatureFlagManagerUtil.isEnabled(
+					objectDefinition.getCompanyId(), "LPD-42577") &&
 				(objectEntryFolderId != null)) {
 
 				allowedVariables.put(

@@ -1519,7 +1519,9 @@ public class ObjectDefinitionLocalServiceImpl
 				enableObjectEntryVersioning);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-42577")) {
+
 			objectDefinition.setEnableObjectEntrySubscription(
 				enableObjectEntrySubscription);
 		}
@@ -1561,7 +1563,8 @@ public class ObjectDefinitionLocalServiceImpl
 		_addOrUpdateObjectDefinitionSettings(
 			objectDefinition, objectDefinitionSettings);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-42577") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-42577") &&
 			objectDefinition.isEnableObjectEntrySubscription()) {
 
 			_objectActionLocalService.addOrUpdateSubscriptionObjectActions(
@@ -2528,7 +2531,9 @@ public class ObjectDefinitionLocalServiceImpl
 				enableObjectEntryVersioning);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-42577")) {
+
 			objectDefinition.setEnableObjectEntrySubscription(
 				enableObjectEntrySubscription);
 		}
@@ -2548,7 +2553,8 @@ public class ObjectDefinitionLocalServiceImpl
 			_addOrUpdateObjectDefinitionPLOEntries(objectDefinition);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-42577") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-42577") &&
 			(objectDefinition.isEnableObjectEntrySubscription() !=
 				oldEnableObjectEntrySubscription)) {
 

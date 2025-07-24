@@ -682,7 +682,8 @@ public class ObjectDefinitionResourceImpl
 			serviceBuilderObjectActions.removeIf(
 				objectAction ->
 					objectAction.isSystem() ||
-					(FeatureFlagManagerUtil.isEnabled("LPD-42577") &&
+					(FeatureFlagManagerUtil.isEnabled(
+						contextCompany.getCompanyId(), "LPD-42577") &&
 					 ArrayUtil.contains(
 						 ObjectActionConstants.
 							 getSubscriptionObjectActionNames(),

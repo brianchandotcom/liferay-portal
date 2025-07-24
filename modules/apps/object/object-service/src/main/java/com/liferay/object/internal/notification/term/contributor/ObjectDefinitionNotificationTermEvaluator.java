@@ -189,7 +189,8 @@ public class ObjectDefinitionNotificationTermEvaluator
 	private String _evaluateObjectDefinition(
 		Context context, String termName, Map<String, Object> termValues) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-42577") ||
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-42577") ||
 			!termName.equals("[%OBJECT_DEFINITION_NAME%]")) {
 
 			return null;
@@ -201,7 +202,9 @@ public class ObjectDefinitionNotificationTermEvaluator
 	private String _evaluateObjectEntry(
 		Context context, String termName, Map<String, Object> termValues) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-42577")) {
+
 			return null;
 		}
 

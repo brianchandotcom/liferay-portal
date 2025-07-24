@@ -171,7 +171,10 @@ public class ObjectDefinitionUtil {
 					});
 				setEnableObjectEntrySubscription(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderObjectDefinition.getCompanyId(),
+								"LPD-42577")) {
+
 							return null;
 						}
 

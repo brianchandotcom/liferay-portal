@@ -333,7 +333,9 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate = notificationTemplatePersistence.findByPrimaryKey(
 			notificationTemplate.getNotificationTemplateId());
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				notificationTemplate.getCompanyId(), "LPD-42577")) {
+
 			NotificationTemplateUtil.validateInvokerBundle(
 				"Only allowed bundles can update system notification templates",
 				notificationTemplate.isSystem());
@@ -345,7 +347,8 @@ public class NotificationTemplateLocalServiceImpl
 			_notificationRecipientLocalService.updateNotificationRecipient(
 				notificationContext.getNotificationRecipient());
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-42577") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				notificationTemplate.getCompanyId(), "LPD-42577") &&
 			notificationTemplate.isSystem() &&
 			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 

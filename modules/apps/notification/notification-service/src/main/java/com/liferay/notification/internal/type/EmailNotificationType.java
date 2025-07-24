@@ -353,7 +353,9 @@ public class EmailNotificationType extends BaseNotificationType {
 					CompanyThreadLocal.getCompanyId());
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+			if (FeatureFlagManagerUtil.isEnabled(
+					notificationTemplate.getCompanyId(), "LPD-42577")) {
+
 				body = StringUtil.replace(
 					body, "[%EMAIL_RECIPIENT_ADDRESS%]",
 					emailAddressUser.getDisplayEmailAddress());

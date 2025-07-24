@@ -120,6 +120,8 @@ public class NotificationQueueEntryResourceImpl
 
 		NotificationContext notificationContext = new NotificationContext();
 
+		notificationContext.setCompanyId(contextCompany.getCompanyId());
+
 		NotificationType notificationType =
 			_notificationTypeServiceTracker.getNotificationType(
 				NotificationConstants.TYPE_EMAIL);

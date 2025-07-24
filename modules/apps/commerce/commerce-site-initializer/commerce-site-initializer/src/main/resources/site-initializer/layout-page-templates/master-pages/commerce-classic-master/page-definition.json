@@ -14,7 +14,7 @@
 				"pageElements": [
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: sticky;\n  top: var(--control-menu-container-height);\n  z-index: 900;\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: sticky;\n  top: var(--control-menu-container-height);\n  z-index: 988;\n}\n\n.has-edit-mode-menu .[$FRAGMENT_CLASS$] {\ntop: 0px;\n}",
 							"htmlProperties": {
 								"htmlTag": "Header"
 							},

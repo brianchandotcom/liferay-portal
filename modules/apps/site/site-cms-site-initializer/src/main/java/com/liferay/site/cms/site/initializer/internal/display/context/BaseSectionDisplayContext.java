@@ -337,7 +337,7 @@ public abstract class BaseSectionDisplayContext {
 
 	protected String appendStatus(String filterString) {
 		return StringBundler.concat(
-			filterString, " and status in (", StringUtil.merge(_statuses, ","),
+			filterString, " and status in (", StringUtil.merge(_statuses, ", "),
 			")");
 	}
 

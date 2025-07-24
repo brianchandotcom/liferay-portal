@@ -263,18 +263,20 @@ public class BatchEnginePortletDataHandlerTest {
 			getClass()
 		).getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
-			StagedModelDataHandler.class,
-			new FailingLayoutStagedModelDataHandler(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"model.class.name", Layout.class.getName()
-			).put(
-				"service.ranking", Integer.MAX_VALUE
-			).build());
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				StagedModelDataHandler.class,
+				new FailingLayoutStagedModelDataHandler(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"model.class.name", Layout.class.getName()
+				).put(
+					"service.ranking", Integer.MAX_VALUE
+				).build());
 
 		try {
 			_importLayouts(
 				false, larFile, group2.getGroupId(), true, objectDefinition);
+			Assert.fail();
 		}
 		catch (PortletDataException portletDataException) {
 			List<ObjectEntry> objectEntriesList =
@@ -284,12 +286,12 @@ public class BatchEnginePortletDataHandlerTest {
 					QueryUtil.ALL_POS);
 
 			Assert.assertEquals(
-				Arrays.toString(objectEntries), objectEntriesList.size(),
-				objectEntries.length);
+				Arrays.toString(objectEntries), objectEntries.length,
+				objectEntriesList.size());
 		}
 		finally {
-			if (_serviceRegistration != null) {
-				_serviceRegistration.unregister();
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
 			}
 		}
 	}
@@ -987,8 +989,6 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private SAXReader _saxReader;
-
-	private ServiceRegistration<?> _serviceRegistration;
 
 	@Inject
 	private StagingGroupHelper _stagingGroupHelper;

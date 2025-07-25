@@ -141,22 +141,24 @@ public class PortalInstancesTest {
 
 			Assert.assertEquals(
 				_company.getCompanyId(),
-				(long)CompanyThreadLocal.getCompanyId());
+				PortalInstances.getCompanyId(mockHttpServletRequest));
+
 			Assert.assertEquals(
 				_company.getCompanyId(),
-				PortalInstances.getCompanyId(mockHttpServletRequest));
+				(long)CompanyThreadLocal.getCompanyId());
 		}
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					RandomTestUtil.randomLong())) {
 
-			Assert.assertNotEquals(
-				_company.getCompanyId(),
-				(long)CompanyThreadLocal.getCompanyId());
 			Assert.assertEquals(
 				_company.getCompanyId(),
 				PortalInstances.getCompanyId(mockHttpServletRequest));
+
+			Assert.assertNotEquals(
+				_company.getCompanyId(),
+				(long)CompanyThreadLocal.getCompanyId());
 		}
 	}
 

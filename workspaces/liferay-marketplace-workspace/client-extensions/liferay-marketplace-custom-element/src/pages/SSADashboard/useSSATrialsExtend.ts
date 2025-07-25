@@ -14,7 +14,7 @@ type Props = {
 	swrConfig?: SWRConfiguration;
 };
 
-const useSSATRialsExtend = ({accountId}: Props) => {
+const useSSATrialsExtend = ({accountId}: Props) => {
 	return useSWR(
 		accountId ? '/o/c/trialextensionrequests' : null,
 		async () =>
@@ -32,4 +32,4 @@ const useSSATRialsExtend = ({accountId}: Props) => {
 	);
 };
 
-export {useSSATRialsExtend};
+export {useSSATrialsExtend};

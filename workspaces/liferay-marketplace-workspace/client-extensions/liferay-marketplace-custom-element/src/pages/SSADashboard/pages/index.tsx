@@ -12,7 +12,12 @@ import Modal from '../../../components/Modal';
 import Page from '../../../components/Page';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
-import {OrderStatus, OrderTypes} from '../../../enums/Order';
+import {
+	OrderStatus,
+	OrderTypes,
+	OrderWorkflowStatusCode,
+} from '../../../enums/Order';
+import {usePlacedOrders} from '../../../hooks/data/usePlacedOrder';
 import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
 import trialOAuth2 from '../../../services/oauth/Trial';
@@ -20,37 +25,25 @@ import {Action} from '../../../utils/constants';
 import {useSSAForm} from '../components/SSAForm';
 import TrialListView from '../components/TrialListView/TrialListView';
 import {ExtendRequestStatus} from '../enums/SSATrials';
-import {useSSATrials} from '../useSSATrials';
-import {getSSATrialsResourceURL} from '../util';
 import ExtendRequestModal from './ExtendRequestModal';
 import ExtendSSATrialModal from './ExtendSSATrialModal';
 
 export default function SaaSTrials() {
-	const modalContext = useModalContext();
+	const {marketplaceUserAccount, myUserAccount} = useMarketplaceContext();
 	const modal = useModal();
+	const modalContext = useModalContext();
+	const navigate = useNavigate();
 	const ssaForm = useSSAForm();
-	const {channel, marketplaceUserAccount, myUserAccount} =
-		useMarketplaceContext();
 	const {selectedAccount, ssaTrialExtend, ssaTrialExtendMutate} =
 		useOutletContext<any>();
-	const resourceUrl = getSSATrialsResourceURL(
-		channel.channelId,
-		selectedAccount?.id
-	);
-
-	const navigate = useNavigate();
-
-	const onExpireTrial = (order: Order) => trialOAuth2.expireTrial(order.id);
 
 	const {
 		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
-	} = useSSATrials({
-		accountId: selectedAccount?.id,
-		channelId: channel.channelId,
+	} = usePlacedOrders({
 		filter: new SearchBuilder()
-			.eq('orderTypeExternalReferenceCode', OrderTypes.SSA_SAAS)
-			.and()
 			.eq('author', myUserAccount?.name)
+			.and()
+			.eq('orderTypeExternalReferenceCode', OrderTypes.SSA_SAAS)
 			.and()
 			.eq('orderStatusInfo/code', 0, {
 				unquote: true,
@@ -60,8 +53,9 @@ export default function SaaSTrials() {
 		pageSize: -1,
 	});
 
-	const isUserSSAAdmin = marketplaceUserAccount.isSSAAdmin;
-	const canCreateTrial = isUserSSAAdmin
+	const isSSAAdmin = marketplaceUserAccount.isSSAAdmin;
+
+	const canCreateTrial = isSSAAdmin
 		? true
 		: SSATrialsInProgress.totalCount <= 3;
 
@@ -85,7 +79,7 @@ export default function SaaSTrials() {
 		},
 		{
 			hidden: (order: Order) => {
-				if (isUserSSAAdmin) {
+				if (isSSAAdmin) {
 					const ssaTrialsExtendRequests = ssaTrialExtend.items;
 					const extendRequests = ssaTrialsExtendRequests?.filter(
 						(extend: TrialExtend) => {
@@ -153,9 +147,10 @@ export default function SaaSTrials() {
 				}
 
 				return (
-					order.orderStatusInfo.label === OrderStatus.APPROVED ||
-					order.orderStatusInfo.label === OrderStatus.COMPLETED ||
-					order.orderStatusInfo.label === OrderStatus.PENDING ||
+					[
+						OrderWorkflowStatusCode.COMPLETED,
+						OrderWorkflowStatusCode.PENDING,
+					].includes(order.orderStatus) ||
 					extendRequests[0]?.dueStatus.key ===
 						ExtendRequestStatus.PENDING
 				);
@@ -224,8 +219,8 @@ export default function SaaSTrials() {
 								className="ml-4"
 								displayType="warning"
 								key={2}
-								onClick={() => {
-									onExpireTrial(order);
+								onClick={async () => {
+									await trialOAuth2.expireTrial(order.id);
 
 									mutate(
 										{
@@ -258,7 +253,7 @@ export default function SaaSTrials() {
 		<>
 			<Page
 				description={
-					isUserSSAAdmin
+					isSSAAdmin
 						? i18n.translate('manage-your-teams-trial')
 						: i18n.translate('manage-your-current-trials')
 				}
@@ -274,16 +269,15 @@ export default function SaaSTrials() {
 						{i18n.translate('add-new-trial')}
 					</ClayButton>
 				}
-				title={isUserSSAAdmin ? 'SaaS Demos' : 'My SaaS Demos'}
+				title={isSSAAdmin ? 'SaaS Demos' : 'My SaaS Demos'}
 			>
 				<TrialListView
 					actions={actions}
 					isSortable
 					managementToolbarProps={{
 						searchVisible: true,
-						visible: isUserSSAAdmin ? true : false,
+						visible: isSSAAdmin ? true : false,
 					}}
-					resourceUrl={resourceUrl}
 				/>
 			</Page>
 

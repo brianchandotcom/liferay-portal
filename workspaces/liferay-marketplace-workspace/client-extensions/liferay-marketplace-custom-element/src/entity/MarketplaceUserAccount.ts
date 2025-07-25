@@ -25,10 +25,16 @@ export class MarketplaceUserAccount {
 		return this.hasRegularRole(AccountRoleType.ADMINISTRATOR);
 	}
 
-	private hasRegularRole(roleName: AccountRoleType) {
-		return this.userAccount?.roleBriefs.some(
-			(role) => role?.name === roleName
-		);
+	get isSolutionPublisher() {
+		return this.hasAccountRole(AccountRoleType.SOLUTION_PUBLISHER);
+	}
+
+	get isSSAAdmin() {
+		return this.hasAccountRole(AccountRoleType.SSA_ADMIN);
+	}
+
+	get isSSAUser() {
+		return this.hasAccountRole(AccountRoleType.SSA);
 	}
 
 	private hasAccountRole(roleName: AccountRoleType) {
@@ -42,15 +48,9 @@ export class MarketplaceUserAccount {
 		);
 	}
 
-	get isSolutionPublisher() {
-		return this.hasAccountRole(AccountRoleType.SOLUTION_PUBLISHER);
-	}
-
-	get isSSAAdmin() {
-		return this.hasAccountRole(AccountRoleType.SSA_ADMIN);
-	}
-
-	get isSSAUser() {
-		return this.hasAccountRole(AccountRoleType.SSA);
+	private hasRegularRole(roleName: AccountRoleType) {
+		return this.userAccount?.roleBriefs.some(
+			(role) => role?.name === roleName
+		);
 	}
 }

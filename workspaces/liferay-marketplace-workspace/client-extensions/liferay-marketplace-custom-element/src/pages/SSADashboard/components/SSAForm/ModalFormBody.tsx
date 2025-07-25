@@ -10,11 +10,11 @@ import {Label} from '../../../../components/MarketplaceForm/Label';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {OrderCustomFields} from '../../../../enums/Order';
 import {useAccount} from '../../../../hooks/data/useAccounts';
+import {useDeliveryProduct} from '../../../../hooks/data/useProduct';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
 import trialOAuth2 from '../../../../services/oauth/Trial';
-import HeadlessCommerceDeliveryCatalog from '../../../../services/rest/HeadlessCommerceDeliveryCatalog';
 import ProductPurchaseSSATrial from '../../../ProductPurchase/services/ProductPurchaseSSATrial';
 import {FormSection} from './FormSection';
 import {Input} from './Input';
@@ -34,23 +34,17 @@ const SSAFormBody = ({
 }: {
 	submitRef: React.MutableRefObject<() => void>;
 }) => {
+	const [errors, setErrors] = useState<ValidationErrors>({});
 	const {channel, properties} = useMarketplaceContext();
-	const [product, setProduct] = useState<DeliveryProduct | null>(null);
 	const {data: account} = useAccount();
-
-	useEffect(() => {
-		const fetchProduct = async () => {
-			const product = await HeadlessCommerceDeliveryCatalog.getProduct(
-				channel.channelId,
-				properties.productId
-			);
-
-			setProduct(product);
-		};
-
-		fetchProduct();
-		setProduct(product);
-	}, [channel, product, properties]);
+	const {data: product} = useDeliveryProduct(properties.productId);
+	const [formData, setFormData] = useState<FormFields>({
+		demoDuration: '',
+		emailAddress: '',
+		objective: '',
+		projectId: '',
+		site: '',
+	});
 
 	const productPurchase = useMemo(() => {
 		if (!account || !channel || !product) {
@@ -59,17 +53,6 @@ const SSAFormBody = ({
 
 		return new ProductPurchaseSSATrial(account, channel, product);
 	}, [account, channel, product]);
-
-	const initialFormData: FormFields = {
-		demoDuration: '',
-		emailAddress: '',
-		objective: '',
-		projectId: '',
-		site: '',
-	};
-
-	const [errors, setErrors] = useState<ValidationErrors>({});
-	const [formData, setFormData] = useState<FormFields>(initialFormData);
 
 	const isTestTrial = formData.objective === 'Test';
 
@@ -82,28 +65,26 @@ const SSAFormBody = ({
 		}
 	}, [isTestTrial]);
 
-	const validateProjectId = useCallback(async (projectId: string) => {
-		try {
-			const data = await trialOAuth2.checkDomainAvailability(projectId);
-
-			return data;
-		}
-		catch (error: any) {
-			if (error.status === 409) {
-				setErrors((prevErrors) => ({
-					...prevErrors,
-					projectId: 'Project ID already exists',
-				}));
-
-				return false;
+	const validateProjectId = useCallback(
+		async (projectId: string) => {
+			try {
+				return trialOAuth2.checkDomainAvailability(projectId);
 			}
-			else {
+			catch (error: any) {
 				console.error(error.message);
 
+				if (error.status === 409) {
+					setErrors((prevErrors) => ({
+						...prevErrors,
+						projectId: 'Project ID already exists',
+					}));
+				}
+
 				return false;
 			}
-		}
-	}, []);
+		},
+		[setErrors]
+	);
 
 	const onChange = ({label, value}: {label: string; value: string}) => {
 		setFormData((prevData) => ({
@@ -142,12 +123,10 @@ const SSAFormBody = ({
 					...(formData.emailAddress
 						? {consoleInviteEmailAddresses: [formData.emailAddress]}
 						: {}),
-					ssaSettings: {
-						duration: formData.demoDuration,
-						objective: formData.objective,
-						projectId: formData.projectId,
-						sendNotificationEmail: true,
-					},
+					duration: formData.demoDuration,
+					objective: formData.objective,
+					projectId: formData.projectId,
+					sendNotificationEmail: true,
 				}),
 			},
 		} as Cart);

@@ -9,7 +9,7 @@ import {DashboardNavigation} from '../../components/DashboardNavigation/Dashboar
 import {PageRenderer} from '../../components/Page';
 import useAccounts, {useAccount} from '../../hooks/data/useAccounts';
 import {getAccountImage} from '../../utils/util';
-import {useSSATRialsExtend} from './useSSATrialsExtend';
+import {useSSATrialsExtend} from './useSSATrialsExtend';
 
 const SSADashboardOutlet = () => {
 	const accountsSearch = useAccounts();
@@ -24,7 +24,7 @@ const SSADashboardOutlet = () => {
 		error: errorTrialsExtend,
 		isLoading: isLoadingTrialsExtend,
 		mutate: ssaTrialExtendMutate,
-	} = useSSATRialsExtend({
+	} = useSSATrialsExtend({
 		accountId: selectedAccount?.id,
 	});
 

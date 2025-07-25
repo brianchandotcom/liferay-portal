@@ -10,12 +10,10 @@ import useSWR from 'swr';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {AccountType} from '../../../enums/Account';
+import {MarketplaceCategory} from '../../../enums/Categories';
 import {orderTypeLabel} from '../../../enums/Order';
-import {
-	PartnershipType,
-	ProductCategories,
-	ProductType,
-} from '../../../enums/Product';
+import {PartnershipType, ProductType} from '../../../enums/Product';
+import useListTypeDefinition from '../../../hooks/useListTypeDefinition';
 import useModalContext from '../../../hooks/useModalContext';
 import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
 import HeadlessCommerceAdminCatalog from '../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -32,7 +30,7 @@ const baseSearchBuilder = new SearchBuilder()
 const connectorQuartelyReleaseFilter = baseSearchBuilder
 	.clone()
 	.and()
-	.lambda('categoryNames', ProductCategories.PAYMENT_METHODS)
+	.lambda('categoryNames', MarketplaceCategory.PAYMENT_METHODS)
 	.build();
 
 const lowCodeConfigurationsPublishedFilter = new SearchBuilder()
@@ -154,6 +152,25 @@ function ProjectsUsingMarketplaceModalBody({
 }
 
 const useKPI = () => {
+	const {data: liferayVersionsPicklist} =
+		useListTypeDefinition('LIFERAY-VERSIONS');
+
+	const liferayQuarterlyVersionEntries =
+		liferayVersionsPicklist?.listTypeEntries.filter((entry) =>
+			entry.externalReferenceCode.includes('Q')
+		);
+
+	const liferayQuarterlyVersions = JSON.stringify({
+		'specificationValues|liferayVersion':
+			liferayQuarterlyVersionEntries?.map((entry) => entry.name),
+	});
+
+	const liferayQuarterlyVersionsAndConnectors = JSON.stringify({
+		'categoryNames': MarketplaceCategory.PAYMENT_METHODS,
+		'specificationValues|liferayVersion':
+			liferayQuarterlyVersionEntries?.map((entry) => entry.name),
+	});
+
 	const modal = useModalContext();
 	const navigate = useNavigate();
 
@@ -236,7 +253,7 @@ const useKPI = () => {
 				{
 					onClick: () =>
 						navigate(
-							`/apps?filter=${supportingQuartelyReleaseFilter}`
+							`/apps?filter=${liferayQuarterlyVersions}&filterSchema=administratorApps`
 						),
 					...getAnnualTargetValues(
 						kpiQuartelyReleaseApps,
@@ -253,7 +270,7 @@ const useKPI = () => {
 					colors: ['#FF73C3', '#FFE1F0'],
 					onClick: () =>
 						navigate(
-							`/apps?filter=${connectorQuartelyReleaseFilter}`
+							`/apps?filter=${liferayQuarterlyVersionsAndConnectors}&filterSchema=administratorApps`
 						),
 					title: 'Apps & Connectors Supporting Quarterly Release',
 				},
@@ -265,7 +282,7 @@ const useKPI = () => {
 					colors: ['#FFD76E', '#FFF3D4'],
 					onClick: () =>
 						navigate(
-							`/apps?filter=${lowCodeConfigurationsPublishedFilter}`
+							`/apps?filter={"specificationValues|appType":"${ProductType.LOW_CODE_CONFIGURATION}"}&filterSchema=administratorApps`
 						),
 					title: 'Low Code Configurations Published',
 				},

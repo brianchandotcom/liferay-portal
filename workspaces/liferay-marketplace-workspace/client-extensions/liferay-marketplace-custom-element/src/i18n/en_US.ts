@@ -83,6 +83,7 @@ export default {
 	'back-to-solutions': 'Back to Solutions',
 	'backend-client-extensions-delivered-as-deployed-services-only-available-to-saas-and-paas-clients':
 		'Backend client extensions delivered as deployed services (only available to SaaS and PaaS clients).',
+	'batch': 'Batch',
 	'becoming-a-liferay-marketplace-customer':
 		'Becoming a Liferay Marketplace Customer',
 	'becoming-a-liferay-marketplace-publisher':
@@ -97,6 +98,7 @@ export default {
 	'cash': 'Cash',
 	'categories': 'Categories',
 	'category': 'Category',
+	'checkout': 'Checkout',
 	'choose-an-option': 'Choose an option',
 	'choose-currency': 'Choose Currency',
 	'choose-the-marketplace-category-that-most-accurately-describes-what-your-solution-does-users-looking-for-specific-types-of-solutions-will-often-browse-categories-by-searching-on-a-specific-category-name-in-the-main-marketplace-home-page-having-your-solution-listed-under-the-appropriate-category-will-help-them-find-your-solution':
@@ -245,6 +247,7 @@ export default {
 	'filter': 'Filter',
 	'first-name': 'First Name',
 	'form': 'form',
+	'fragment': 'Fragment',
 	'fragment-collection-of-fragments': 'Fragment/Collection of Fragments',
 	'free': 'Free',
 	'fully-managed': 'Fully-Managed',
@@ -363,6 +366,7 @@ export default {
 	'notes-pertaining-to-the-release-of-the-project-these-will-be-displayed-when-the-customer-goes-to-purchase-and-or-update-the-app':
 		'Notes pertaining to the release of the project. These will be displayed when the customer goes to purchase and/or update the app.',
 	'number-of-cpus': 'Number of CPUs',
+	'object-action': 'Object Action',
 	'of-target': 'of target',
 	'on-hold': 'On Hold',
 	'only-gif-jpg-jpeg-png-are-allowed-max-file-size-is-5mb':
@@ -408,6 +412,7 @@ export default {
 	'project-selection': 'Project Selection',
 	'projects': 'Projects',
 	'projects-and-resources': 'Projects and resources',
+	'prompt': 'Prompt',
 	'provide-app-build': 'Provide app build',
 	'provide-company-profile-details': 'Provide company profile details',
 	'provide-contact-us-details': 'Provide contact us details',
@@ -480,6 +485,7 @@ export default {
 	'send-request': 'Send Request',
 	'showing-x-to-x-of-x': 'Showing {0} to {1} of {2}',
 	'sign-in-with-a-different-account': 'Sign in with a different Account',
+	'site-initializer': 'Site Intializer',
 	'solution-details': 'Solution Details',
 	'solution-header': 'Solution Header',
 	'solution-submission': 'Solution Submission',
@@ -547,6 +553,7 @@ export default {
 		'The order must be completed before licensing this app.',
 	'the-selected-project-does-not-meet-the-necessary-resource-requirements-for-this-app-Please-contact-sales-to-request-additional-resources':
 		'The selected project does not meet the necessary resource requirements for this app. Please contact sales to request additional resources.',
+	'theme': 'Theme',
 	'there-was-an-unexpected-error-while-attempting-to-deactivate-key-please-try-again-in-a-few-moments':
 		'There was an unexpected error while attempting to deactivate key. Please try again in a few moments.',
 	'this-app-is-already-installed-in-this-environment':
@@ -613,6 +620,7 @@ export default {
 	'website': 'Website',
 	'when-adding-app-versions-you-can-use-your-own-numbering-system-but-be-sure-it-is-consistent-and-understandable-by-the-customer':
 		'When adding app versions, you can use your own numbering system, but be sure it is consistent and understandable by the customer.',
+	'workflow-action': 'Workflow Action',
 	'workspace-friendly-url': 'Workspace Friendly URL',
 	'workspace-info': 'Workspace Info',
 	'workspace-name': 'Workspace Name',

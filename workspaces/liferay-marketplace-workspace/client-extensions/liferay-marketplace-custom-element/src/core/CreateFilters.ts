@@ -58,22 +58,20 @@ export default class CreateFilters {
 				const [filterKey] = key.split('|');
 				const formattedKey = filterKey.replace('$', '');
 
-				if (customOperator === 'lambda') {
-					if (Array.isArray(value)) {
-						const lambdas = value
-							.map((filter) =>
-								SearchBuilder.lambda(filterKey, filter)
-							)
-							.join(' or ');
+				if (
+					customOperator === 'lambda' ||
+					customOperator === 'lambdaContains'
+				) {
+					const builderFn =
+						customOperator === 'lambda'
+							? SearchBuilder.lambda
+							: SearchBuilder.lambdaContains;
 
-						searchCondition = lambdas;
-					}
-					else {
-						searchCondition = SearchBuilder.lambda(
-							filterKey,
-							value
-						);
-					}
+					searchCondition = Array.isArray(value)
+						? `(${value
+								.map((filter) => builderFn(filterKey, filter))
+								.join(' or ')})`
+						: builderFn(filterKey, value);
 				}
 				else {
 					const getOptionalSearchCondition = () => {

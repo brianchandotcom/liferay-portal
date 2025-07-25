@@ -9,6 +9,7 @@ import React, {
 	ReactNode,
 	useCallback,
 	useContext,
+	useEffect,
 	useMemo,
 } from 'react';
 import {useSearchParams} from 'react-router-dom';
@@ -22,7 +23,9 @@ import {
 	filterSchema as filterSchemas,
 } from '../../schema/filters';
 import {PAGINATION, SortDirection} from '../../utils/constants';
+import {safeJSONParse} from '../../utils/util';
 import EmptyState from '../EmptyState';
+import {RendererFields} from '../Form/Renderer';
 import Loading from '../Loading';
 import ManagementToolbar, {
 	ManagementToolbarProps,
@@ -100,6 +103,18 @@ export type ListViewProps<T extends Record<string, any>> = {
 	transformData?: (response: APIResponse<T>) => APIResponse<T>;
 };
 
+function getMatchedOption(rawValue: string, field?: RendererFields) {
+	const matchedOption = field?.options?.find((opt) => {
+		if (typeof opt === 'object') {
+			return opt.value === rawValue;
+		}
+	});
+
+	return typeof matchedOption === 'object'
+		? matchedOption
+		: {label: rawValue, value: rawValue};
+}
+
 const ListView = <T extends Record<string, any>>({
 	children,
 	defaultFilters,
@@ -117,13 +132,58 @@ const ListView = <T extends Record<string, any>>({
 
 	const updateUrlParams = useUpdateUrlParams();
 	const [searchParams] = useSearchParams();
-
 	const {filters, keywords, sort} = listViewContext;
-	const filterSchemaName = managementToolbarProps?.filterSchema ?? '';
 
 	const filterSchema = (filterSchemas as any)[
-		filterSchemaName
+		managementToolbarProps?.filterSchema ?? ''
 	] as FilterSchemaType;
+
+	const encodedFilter = searchParams.get('filter');
+
+	const setFilters = useCallback(() => {
+		const fields = filterSchema?.fields ?? ([] as RendererFields[]);
+		const parsedFilter = safeJSONParse(encodedFilter, {});
+
+		if (!Object.keys(parsedFilter).length) {
+			return;
+		}
+
+		const normalizedFilter = Object.fromEntries(
+			Object.entries(parsedFilter).map(([key, value]) => {
+				const fieldSchema = fields.find((field) => field.name === key);
+				const rawValues = Array.isArray(value)
+					? value
+					: [String(value)];
+
+				return [
+					key,
+					rawValues.map((value) =>
+						getMatchedOption(value, fieldSchema)
+					),
+				];
+			})
+		);
+
+		const entries = Object.entries(normalizedFilter).map(
+			([key, selectedOptions]) => ({
+				label: fields.find(({name}) => name === key)?.label ?? key,
+				name: key,
+				value: selectedOptions.map((opt) => opt.label).join(', '),
+			})
+		);
+
+		dispatch({
+			payload: {
+				filters: {
+					entries,
+					filter: normalizedFilter,
+				},
+			},
+			type: ListViewTypes.SET_FILTERS,
+		});
+	}, [dispatch, encodedFilter, filterSchema?.fields]);
+
+	useEffect(() => setFilters(), [encodedFilter, setFilters]);
 
 	const currentPage = searchParams.get('page');
 	const currentPageSize = searchParams.get('pageSize');

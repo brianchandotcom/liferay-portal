@@ -7,6 +7,7 @@ import {Params} from 'react-router-dom';
 
 import SearchBuilder, {Operators} from '../core/SearchBuilder';
 import {AccountType} from '../enums/Account';
+import {MarketplaceCategory} from '../enums/Categories';
 import {OrderTypes, OrderWorkflowStatusCode} from '../enums/Order';
 import {ProductType, ProductWorkflowStatusCode} from '../enums/Product';
 import i18n from '../i18n';
@@ -19,7 +20,7 @@ type AutoCompleteProps = {
 	transformData?: (item: any) => any;
 };
 
-type AppliedFilters = {
+export type AppliedFilters = {
 	label: string;
 	value: string;
 };
@@ -78,6 +79,12 @@ export type FilterSchemas = {
 export type FilterSchemaOption = keyof typeof filterSchema;
 
 const baseFilters: Filter = {
+	categories: {
+		label: i18n.translate('category'),
+		name: 'categoryNames',
+		operator: 'lambda',
+		type: 'select',
+	},
 	dateCreated: {
 		label: i18n.translate('date-created'),
 		name: 'createDate',
@@ -147,6 +154,51 @@ const filterSchema = {
 					},
 				],
 				type: 'checkbox',
+			}),
+			overrides(baseFilters.categories, {
+				options: [
+					{
+						label: i18n.translate('batch'),
+						value: `${MarketplaceCategory.BATCH}`,
+					},
+					{
+						label: i18n.translate('checkout'),
+						value: `${MarketplaceCategory.CHECKOUT}`,
+					},
+					{
+						label: i18n.translate('fragment'),
+						value: `${MarketplaceCategory.FRAGMENTS}`,
+					},
+					{
+						label: i18n.translate('object-action'),
+						value: `${MarketplaceCategory.OBJECT_ACTION}`,
+					},
+					{
+						label: i18n.translate('other'),
+						value: `${MarketplaceCategory.OTHER}`,
+					},
+					{
+						label: i18n.translate('payment-method'),
+						value: `${MarketplaceCategory.PAYMENT_METHODS}`,
+					},
+					{
+						label: i18n.translate('prompt'),
+						value: `${MarketplaceCategory.PROMPT}`,
+					},
+					{
+						label: i18n.translate('site-initializer'),
+						value: `${MarketplaceCategory.SITE_INITIALIZER}`,
+					},
+					{
+						label: i18n.translate('theme'),
+						value: `${MarketplaceCategory.THEME}`,
+					},
+					{
+						label: i18n.translate('workflow-action'),
+						value: `${MarketplaceCategory.WORKFLOW_ACTION}`,
+					},
+				],
+				type: 'select',
 			}),
 			baseFilters.dateCreated,
 			overrides(baseFilters.version, {

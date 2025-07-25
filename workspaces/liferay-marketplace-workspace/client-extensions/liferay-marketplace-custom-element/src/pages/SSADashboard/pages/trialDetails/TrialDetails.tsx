@@ -19,20 +19,18 @@ import {formatDate} from '../../../../utils/date';
 import OrderDetailsHeader from '../../../CustomerDashboard/components/OrderDetailsHeader';
 import ExtensionStatus from '../../components/ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../../components/TrialStatus/TrialStatus';
-import usePlacedOrder from '../../hooks/usePlacedOrder';
 import TrialActions from './TrialActions';
 
 const TrialDetails = () => {
-	const navigate = useNavigate();
 	const {orderId} = useParams();
 	const {ssaTrialExtend} = useOutletContext<any>();
+	const navigate = useNavigate();
 	const {data, error, isLoading} = useGetProductByOrderId(orderId as string);
 
-	const placedOrderItems = data?.placedOrder.placedOrderItems ?? [];
-	const productCreatorAccountName = data?.product?.catalogName || '';
+	const placedOrder = (data?.placedOrder ?? {}) as PlacedOrder;
 	const description = data?.product.description || '';
-
-	const {placedOrder} = usePlacedOrder(orderId as string);
+	const placedOrderItems = placedOrder.placedOrderItems ?? [];
+	const productCreatorAccountName = data?.product?.catalogName || '';
 
 	return (
 		<>

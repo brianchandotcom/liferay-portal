@@ -11,6 +11,7 @@ import {ManagementToolbarProps} from '../../../../components/ListView/components
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {OrderCustomFields, OrderTypes} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
+import {Liferay} from '../../../../liferay/liferay';
 import {Action} from '../../../../utils/constants';
 import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
@@ -30,14 +31,19 @@ type TrialsListViewProps = {
 		| 'tableProps'
 		| 'totalItems'
 	>;
-	resourceUrl: string;
 };
+
+const resource = `/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${Liferay.CommerceContext.account?.accountId}/placed-orders?${new URLSearchParams(
+	{
+		nestedFields: 'placedOrderItems',
+		sort: 'createDate:desc',
+	}
+)}`;
 
 export default function TrialListView({
 	actions,
 	listViewProps,
 	managementToolbarProps,
-	resourceUrl,
 }: TrialsListViewProps) {
 	const {ssaTrialExtend} = useOutletContext<any>();
 
@@ -55,7 +61,7 @@ export default function TrialListView({
 				filterSchema: 'administratorSSATrials',
 				...managementToolbarProps,
 			}}
-			resource={resourceUrl}
+			resource={resource}
 			tableProps={{
 				actions,
 				columns: [

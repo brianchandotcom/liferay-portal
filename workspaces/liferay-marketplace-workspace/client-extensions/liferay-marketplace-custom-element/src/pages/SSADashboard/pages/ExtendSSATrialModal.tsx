@@ -36,6 +36,9 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 	order,
 	ssaTrialExtendMutate,
 }) => {
+	const [duration, setDuration] = useState<number | undefined>(undefined);
+	const [reason, setReason] = useState<string>('');
+
 	const {formState, handleSubmit, setValue, trigger} = useForm({
 		defaultValues: {
 			duration: 0,
@@ -55,9 +58,6 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 	const extendOptions = EXTEND_OPTIONS.find(
 		(option) => option.extendType === extendType
 	);
-
-	const [duration, setDuration] = useState<number | undefined>(undefined);
-	const [reason, setReason] = useState<string>('');
 
 	const onSubmit = async (form: z.infer<typeof zodSchema.extendSSATrial>) => {
 		try {

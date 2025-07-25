@@ -194,22 +194,21 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 							trialExtend.id,
 							{dueStatus: {key: ExtendRequestStatus.REJECTED}}
 						);
+
 						ssaTrialExtendMutate(
 							(data: any) => {
 								const updatedItems = data.items.map(
-									(x: TrialExtend) => {
-										if (x.id === trialExtend.id) {
-											const newObject = {
-												...x,
+									(item: TrialExtend) => {
+										if (item.id === trialExtend.id) {
+											return {
+												...item,
 												statusRequest: {
 													key: ExtendRequestStatus.REJECTED,
 												},
 											};
-
-											return newObject;
 										}
 
-										return {...x};
+										return item;
 									}
 								);
 
@@ -225,6 +224,7 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 				>
 					{i18n.translate('reject-request')}
 				</ClayButton>
+
 				<ClayButton
 					onClick={async () => {
 						await HeadlessTrialExtensionRequest.updateTrialExtensionRequest(
@@ -235,19 +235,17 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 						ssaTrialExtendMutate(
 							(data: any) => {
 								const updatedItems = data.items.map(
-									(x: TrialExtend) => {
-										if (x.id === trialExtend.id) {
-											const newObject = {
-												...x,
+									(item: TrialExtend) => {
+										if (item.id === trialExtend.id) {
+											return {
+												...item,
 												statusRequest: {
 													key: ExtendRequestStatus.APPROVED,
 												},
 											};
-
-											return newObject;
 										}
 
-										return {...x};
+										return item;
 									}
 								);
 

@@ -468,10 +468,8 @@ public class ComboServlet extends HttpServlet {
 
 					baseURL = PortalUtil.getPathProxy() + baseURL;
 
-					if (stringFileContent.contains(_CSS_CHARSET_UTF_8)) {
-						stringFileContent = StringUtil.removeSubstring(
-							stringFileContent, _CSS_CHARSET_UTF_8);
-					}
+					stringFileContent = StringUtil.removeSubstring(
+						stringFileContent, _CSS_CHARSET_UTF_8);
 
 					stringFileContent = AggregateUtil.updateRelativeURLs(
 						stringFileContent, baseURL);

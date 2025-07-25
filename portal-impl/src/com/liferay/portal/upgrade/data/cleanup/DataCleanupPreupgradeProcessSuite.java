@@ -45,19 +45,17 @@ public class DataCleanupPreupgradeProcessSuite {
 		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
 				_dataCleanupPreupgradeProcesses) {
 
-			String dataCleanupPreupgradeProcessClassName =
-				dataCleanupPreupgradeProcess.getClass(
-				).getName();
+			Class<?> clazz = dataCleanupPreupgradeProcess.getClass();
 
 			if (ArrayUtil.contains(
 					PropsValues.
 						UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_BLACKLIST,
-					dataCleanupPreupgradeProcessClassName)) {
+					clazz.getName())) {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Skipping blacklisted data cleanup process: " +
-							dataCleanupPreupgradeProcessClassName);
+							clazz.getName());
 				}
 
 				continue;

@@ -98,18 +98,16 @@ public class DataCleanupPreupgradeProcessSuiteTest
 	}
 
 	@Test
-	public void testDataCleanupPreupgradeProcessesSuiteWithBlacklistedProcess()
+	public void testDataCleanupPreupgradeProcessesSuiteWithBlacklist()
 		throws Exception {
 
-		String blacklistedDataCleanupPreupgradeTestProcessClassName =
+		String className =
 			BlacklistedDataCleanupPreupgradeTestProcess.class.getName();
 
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_BLACKLIST",
-					new String[] {
-						blacklistedDataCleanupPreupgradeTestProcessClassName
-					})) {
+					new String[] {className})) {
 
 			ReflectionTestUtil.setFieldValue(
 				this, "_dataCleanupPreupgradeProcesses",
@@ -130,32 +128,25 @@ public class DataCleanupPreupgradeProcessSuiteTest
 				_cleanupMessages.size());
 
 			Assert.assertFalse(_cleanupMessages.contains(_SUCCESS_MESSAGE_1));
-
 			Assert.assertTrue(_cleanupMessages.contains(_SUCCESS_MESSAGE_2));
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
+			List<LogEntry> logEntries = new ArrayList<>();
 
-			List<LogEntry> blacklistLogEntries = new ArrayList<>();
+			for (LogEntry logEntry : logCapture.getLogEntries()) {
+				String message = logEntry.getMessage();
 
-			for (LogEntry logEntry : logEntries) {
-				if (logEntry.getMessage(
-					).contains(
-						"Skipping blacklisted"
-					)) {
-
-					blacklistLogEntries.add(logEntry);
+				if (message.contains("Skipping blacklisted")) {
+					logEntries.add(logEntry);
 				}
 			}
 
-			Assert.assertEquals(
-				blacklistLogEntries.toString(), 1, blacklistLogEntries.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEntry blacklistLogEntry = blacklistLogEntries.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"Skipping blacklisted data cleanup process: " +
-					blacklistedDataCleanupPreupgradeTestProcessClassName,
-				blacklistLogEntry.getMessage());
+				"Skipping blacklisted data cleanup process: " + className,
+				logEntry.getMessage());
 		}
 	}
 

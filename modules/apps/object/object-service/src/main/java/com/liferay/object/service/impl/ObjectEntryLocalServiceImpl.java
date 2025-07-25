@@ -1740,6 +1740,10 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectEntryId());
 		}
 
+		moveRelatedObjectEntriesToTrash(
+			objectEntry.getGroupId(), objectEntry.getObjectDefinitionId(),
+			objectEntry.getObjectEntryId());
+
 		return objectEntry;
 	}
 

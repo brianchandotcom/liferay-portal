@@ -1,0 +1,17 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "dynamic-layout-content",
+					"description": "Input the class name.",
+					"label": "Class Name",
+					"localizable": true,
+					"name": "className",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

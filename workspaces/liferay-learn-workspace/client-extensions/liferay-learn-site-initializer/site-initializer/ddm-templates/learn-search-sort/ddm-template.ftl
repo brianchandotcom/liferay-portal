@@ -74,6 +74,13 @@
 </div>
 
 <script>
+	function handleChangeSort(event) {
+		const urlParams = new URLSearchParams(window.location.search);
+
+		urlParams.set('sort', event.currentTarget.value);
+		window.location.search = urlParams;
+	}
+
 	function toggleCollapse(dataTargetId) {
 		const dataTargetElements = document.querySelectorAll(
 			'[data-target="#' + dataTargetId + '"]'
@@ -89,13 +96,6 @@
 		if (targetElement) {
 			targetElement.classList.toggle('show');
 		}
-	}
-
-	function handleChangeSort(event) {
-		const urlParams = new URLSearchParams(window.location.search);
-
-		urlParams.set('sort', event.currentTarget.value);
-		window.location.search = urlParams;
 	}
 </script>
 

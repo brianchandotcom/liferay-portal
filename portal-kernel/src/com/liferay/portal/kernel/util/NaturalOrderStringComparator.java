@@ -100,6 +100,23 @@ public class NaturalOrderStringComparator
 				}
 			}
 
+			if (_caseSensitive) {
+				if (Character.isUpperCase(c1) ^ Character.isUpperCase(c2)) {
+					if (Character.isUpperCase(c1)) {
+						value = -1;
+					}
+					else {
+						value = 1;
+					}
+
+					break;
+				}
+			}
+			else {
+				c1 = Character.toUpperCase(c1);
+				c2 = Character.toUpperCase(c2);
+			}
+
 			if (c1 == c2) {
 				i1++;
 				i2++;
@@ -107,29 +124,13 @@ public class NaturalOrderStringComparator
 				continue;
 			}
 
-			char c1ToCompare = c1;
-			char c2ToCompare = c2;
-
-			if (!_caseSensitive) {
-				c1ToCompare = Character.toUpperCase(c1);
-				c2ToCompare = Character.toUpperCase(c2);
-
-				if (c1ToCompare == c2ToCompare) {
-					i1++;
-					i2++;
-
-					continue;
-				}
-			}
-
 			if (_collator != null) {
-				value = _collator.compare(
-					String.valueOf(c1ToCompare), String.valueOf(c2ToCompare));
+				value = _collator.compare(s1.substring(i1), s2.substring(i2));
 
 				break;
 			}
 
-			value = c1ToCompare - c2ToCompare;
+			value = c1 - c2;
 
 			break;
 		}

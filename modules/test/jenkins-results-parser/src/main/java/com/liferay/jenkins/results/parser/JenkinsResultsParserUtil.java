@@ -1293,17 +1293,17 @@ public class JenkinsResultsParserUtil {
 	public static String getBuildDirPath(
 		String buildNumber, String jobName, String masterHostname) {
 
-		StringBuilder sb = new StringBuilder();
-
 		Properties buildProperties = null;
 
 		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			buildProperties = getBuildProperties();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-		
+
+		StringBuilder sb = new StringBuilder();
+
 		sb.append(buildProperties.getProperty("jenkins.tmp.dir"));
 
 		if (!isCINode() || isNullOrEmpty(buildNumber) ||

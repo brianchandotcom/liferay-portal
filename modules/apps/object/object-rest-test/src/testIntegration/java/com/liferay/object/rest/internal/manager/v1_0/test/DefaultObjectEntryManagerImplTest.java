@@ -2936,6 +2936,118 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testAddRelatedObjectEntry() throws Exception {
+
+		// Add related object entry
+
+		ObjectDefinition objectDefinitionA = _createObjectDefinition();
+		ObjectDefinition objectDefinitionAA = _createObjectDefinition();
+
+		ObjectRelationship objectRelationshipA_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinitionA, objectDefinitionAA,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectDefinition objectDefinitionB = _createObjectDefinition();
+
+		ObjectRelationship objectRelationshipB_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinitionB, objectDefinitionAA,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			List.of(objectRelationshipA_AA, objectRelationshipB_AA));
+
+		com.liferay.object.model.ObjectEntry objectEntryA =
+			ObjectEntryTestUtil.addObjectEntry(
+				0, objectDefinitionA, Collections.emptyMap());
+
+		ObjectField objectRelationshipA_AAObjectField2 =
+			_objectFieldLocalService.getObjectField(
+				objectRelationshipA_AA.getObjectFieldId2());
+		ObjectField objectRelationshipB_AAObjectField2 =
+			_objectFieldLocalService.getObjectField(
+				objectRelationshipB_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_createDTOConverterContext(), objectDefinitionAA,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							objectRelationshipA_AAObjectField2::getName,
+							RandomTestUtil.randomInt()
+						).put(
+							objectRelationshipB_AAObjectField2::getName,
+							RandomTestUtil.randomInt()
+						).build();
+					}
+				},
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectRelationshipA_AA.getObjectRelationshipId()),
+				objectEntryA.getObjectEntryId(),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertEquals(
+			objectEntryA.getObjectEntryId(),
+			GetterUtil.getLong(
+				objectEntryAA.getPropertyValue(
+					objectRelationshipA_AAObjectField2.getName())));
+		Assert.assertEquals(
+			0L,
+			objectEntryAA.getPropertyValue(
+				objectRelationshipB_AAObjectField2.getName()));
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntryAA.getId());
+
+		Assert.assertEquals(
+			objectEntryA.getObjectEntryId(),
+			serviceBuilderObjectEntry.getRootObjectEntryId());
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAA.getId());
+
+		// Add object entry
+
+		objectEntryAA = _defaultObjectEntryManager.addObjectEntry(
+			_createDTOConverterContext(), objectDefinitionAA,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectRelationshipA_AAObjectField2::getName,
+						RandomTestUtil.randomInt()
+					).put(
+						objectRelationshipB_AAObjectField2::getName,
+						RandomTestUtil.randomInt()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertEquals(
+			0L,
+			objectEntryAA.getPropertyValue(
+				objectRelationshipA_AAObjectField2.getName()));
+		Assert.assertEquals(
+			0L,
+			objectEntryAA.getPropertyValue(
+				objectRelationshipB_AAObjectField2.getName()));
+
+		serviceBuilderObjectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntryAA.getId());
+
+		Assert.assertEquals(
+			0L, serviceBuilderObjectEntry.getRootObjectEntryId());
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAA.getId());
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntryA.getObjectEntryId());
+	}
+
+	@Test
 	public void testCopyObjectEntryByVersion() throws Exception {
 
 		// Company scope
@@ -5038,49 +5150,37 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectEntryTestUtil.addObjectEntry(
 				0, objectDefinitionA, Collections.emptyMap());
 
-		ObjectEntry objectEntryA_AA = _defaultObjectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, objectDefinitionAA,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						() -> {
-							ObjectField objectField =
-								_objectFieldLocalService.getObjectField(
-									objectRelationshipA_AA.getObjectFieldId2());
-
-							return objectField.getName();
-						},
-						objectEntryA.getObjectEntryId()
-					).put(
-						"textObjectFieldName", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			null);
+		ObjectEntry objectEntryA_AA =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext, objectDefinitionAA,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectRelationshipA_AA.getObjectRelationshipId()),
+				objectEntryA.getObjectEntryId(), null);
 
 		com.liferay.object.model.ObjectEntry objectEntryB =
 			ObjectEntryTestUtil.addObjectEntry(
 				0, objectDefinitionB, Collections.emptyMap());
 
-		ObjectEntry objectEntryB_AA = _defaultObjectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, objectDefinitionAA,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						() -> {
-							ObjectField objectField =
-								_objectFieldLocalService.getObjectField(
-									objectRelationshipB_AA.getObjectFieldId2());
-
-							return objectField.getName();
-						},
-						objectEntryB.getObjectEntryId()
-					).put(
-						"textObjectFieldName", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			null);
+		ObjectEntry objectEntryB_AA =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext, objectDefinitionAA,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectRelationshipB_AA.getObjectRelationshipId()),
+				objectEntryB.getObjectEntryId(), null);
 
 		ObjectEntry objectEntryAA = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinitionAA,

@@ -2277,6 +2277,64 @@
 				]
 			}
 		},
+		"/by-external-reference-code/{externalReferenceCode}/subscribe": {
+			"post": {
+				"operationId": "postByExternalReferenceCodeSubscribe",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+							},
+							"application/xml": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
+		"/by-external-reference-code/{externalReferenceCode}/unsubscribe": {
+			"post": {
+				"operationId": "postByExternalReferenceCodeUnsubscribe",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+							},
+							"application/xml": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
 		"/by-external-reference-code/{externalReferenceCode}/versions": {
 			"get": {
 				"operationId": "getByExternalReferenceCodeVersionsPage",

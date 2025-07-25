@@ -88,6 +88,13 @@ public class ViewContentsSectionDisplayContext
 				LanguageUtil.get(httpServletRequest, "view"), "get", null,
 				"modal"));
 
+		fdsActionDropdownItems.add(
+			3,
+			new FDSActionDropdownItem(
+				"#", "share", "share",
+				LanguageUtil.get(httpServletRequest, "share"), "get", null,
+				"link"));
+
 		return fdsActionDropdownItems;
 	}
 

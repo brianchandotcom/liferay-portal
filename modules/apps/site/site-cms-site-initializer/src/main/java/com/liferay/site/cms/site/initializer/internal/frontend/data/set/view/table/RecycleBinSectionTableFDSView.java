@@ -40,11 +40,11 @@ public class RecycleBinSectionTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"spaceTableCellRenderer")
 		).add(
-			"embedded.dateDeleted", "removed-date",
+			"embedded.removedDate", "removed-date",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"dateTime")
 		).add(
-			"embedded.deletedBy.name", "removed-by",
+			"embedded.removedBy.name", "removed-by",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"authorTableCellRenderer")
 		).build();

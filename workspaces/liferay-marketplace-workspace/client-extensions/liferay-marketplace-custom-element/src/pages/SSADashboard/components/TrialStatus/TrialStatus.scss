@@ -6,12 +6,16 @@
 		color: #da1414;
 	}
 
-	&-pending {
+	&-in_progress {
 		color: #4aab3b;
 	}
 
+	&-pending {
+		color: #ccc;
+	}
+
 	&-processing {
-		color: #2e5aac;
+		color: #4aab3b;
 	}
 }
 

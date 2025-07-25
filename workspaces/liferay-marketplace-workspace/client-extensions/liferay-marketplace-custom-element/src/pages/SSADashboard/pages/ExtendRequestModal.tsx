@@ -11,10 +11,10 @@ import {KeyedMutator} from 'swr';
 
 import {OrderCustomFields, OrderStatus as Status} from '../../../enums/Order';
 import i18n from '../../../i18n';
+import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
 import {TRIAL_STATUS_LABEL} from '../constants';
 import {ExtendRequestStatus} from '../enums/SSATrials';
-import trialOAuth2 from '../../../services/oauth/Trial';
 
 type ExtendSSATrialModalProps = {
 	onClose: () => void;
@@ -111,7 +111,7 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 								className={classNames('extension-status', {
 									'extension-status-approved': [
 										Status.IN_PROGRESS,
-										Status.PENDING,
+										Status.PROCESSING,
 									].includes(
 										order.orderStatusInfo.label as Status
 									),
@@ -123,7 +123,7 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 									),
 									'extension-status-pending':
 										order.orderStatusInfo.label ===
-										Status.PROCESSING,
+										Status.PENDING,
 								})}
 							>
 								{

@@ -26,6 +26,7 @@ const ExtensionStatus = ({extensionStatus}: ExtensionStatusProps) => (
 				ExtendRequestStatus.REJECTED,
 			].includes(extensionStatus as ExtendRequestStatus),
 			'extension-status-not-requested':
+				!extensionStatus ||
 				extensionStatus === ExtendRequestStatus.NOT_REQUESTED,
 			'extension-status-pending':
 				extensionStatus === ExtendRequestStatus.PENDING,

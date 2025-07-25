@@ -8,8 +8,8 @@ import {Outlet} from 'react-router-dom';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {PageRenderer} from '../../components/Page';
 import useAccounts, {useAccount} from '../../hooks/data/useAccounts';
-import {useSSATRialsExtend} from './useSSATrialsExtend';
 import {getAccountImage} from '../../utils/util';
+import {useSSATRialsExtend} from './useSSATrialsExtend';
 
 const SSADashboardOutlet = () => {
 	const accountsSearch = useAccounts();

@@ -192,7 +192,7 @@ const zodSchema = {
 	}),
 	extendSSATrial: z.object({
 		duration: z.number().int().max(60).min(1),
-		reason: z.string(),
+		reason: z.string().min(3),
 	}),
 	generateLicenseKey: z.object({
 		description: z.string().max(100, {message: 'Invalid license name'}),

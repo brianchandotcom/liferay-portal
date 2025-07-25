@@ -16,10 +16,10 @@ import BaseWrapper from '../../../components/Form/BaseWrapper';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema, {z} from '../../../schema/zod';
+import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
 import {EXTEND_OPTIONS, EXTEND_TYPES} from '../constants';
 import {ExtendRequestStatus} from '../enums/SSATrials';
-import trialOAuth2 from '../../../services/oauth/Trial';
 
 type ExtendSSATrialModalProps = {
 	accountId: number;
@@ -62,16 +62,16 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 	const onSubmit = async (form: z.infer<typeof zodSchema.extendSSATrial>) => {
 		try {
 			const extendTrial = {
-				duration: form.duration,
-				r_accountToTrialExtensionRequest_accountEntryId: accountId,
-				r_orderToTrialExtensionRequest_commerceOrderId: order.id,
-				reason: form.reason,
 				dueStatus: {
 					key:
 						extendType === EXTEND_TYPES.AUTO_EXTEND
 							? ExtendRequestStatus.AUTO_APPROVED
 							: ExtendRequestStatus.PENDING,
 				},
+				duration: form.duration,
+				r_accountToTrialExtensionRequest_accountEntryId: accountId,
+				r_orderToTrialExtensionRequest_commerceOrderId: order.id,
+				reason: form.reason,
 			};
 
 			const newExtensionRequest: TrialExtend =
@@ -80,12 +80,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 				);
 
 			if (extendType === EXTEND_TYPES.AUTO_EXTEND) {
-				try {
-					await trialOAuth2.extendTrial(newExtensionRequest.id);
-				}
-				catch (e) {
-					console.log(e);
-				}
+				await trialOAuth2.extendTrial(newExtensionRequest.id);
 			}
 
 			ssaTrialExtendMutate(

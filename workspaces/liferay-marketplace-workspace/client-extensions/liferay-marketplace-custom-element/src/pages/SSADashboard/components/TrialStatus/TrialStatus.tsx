@@ -23,10 +23,9 @@ const TrialStatus = ({trialStatus}: TrialStatusProps) => (
 					Status.COMPLETED,
 					Status.APPROVED,
 				].includes(trialStatus as Status),
-				'trial-status-icon-pending': [
-					Status.IN_PROGRESS,
-					Status.PENDING,
-				].includes(trialStatus as Status),
+				'trial-status-icon-in_progress':
+					Status.IN_PROGRESS === trialStatus,
+				'trial-status-icon-pending': Status.PENDING === trialStatus,
 				'trial-status-icon-processing':
 					trialStatus === Status.PROCESSING,
 			})}

@@ -6,7 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
-import {useOutletContext} from 'react-router-dom';
+import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import Modal from '../../../components/Modal';
 import Page from '../../../components/Page';
@@ -38,6 +38,8 @@ export default function SaaSTrials() {
 		selectedAccount?.id
 	);
 
+	const navigate = useNavigate();
+
 	const onExpireTrial = (order: Order) => trialOAuth2.expireTrial(order.id);
 
 	const {
@@ -65,10 +67,14 @@ export default function SaaSTrials() {
 
 	const actions: Action[] = [
 		{
+			name: i18n.translate('details'),
+			onClick: (order: Order) => navigate(`details/${order.id}`),
+		},
+		{
 			disabled: (order: Order) =>
 				order.orderStatusInfo.label === OrderStatus.APPROVED ||
 				order.orderStatusInfo.label === OrderStatus.COMPLETED ||
-				order.orderStatusInfo.label === OrderStatus.PROCESSING,
+				order.orderStatusInfo.label === OrderStatus.PENDING,
 			name: i18n.translate('go-to-trial'),
 			onClick: (order: Order) =>
 				window.open(
@@ -149,7 +155,7 @@ export default function SaaSTrials() {
 				return (
 					order.orderStatusInfo.label === OrderStatus.APPROVED ||
 					order.orderStatusInfo.label === OrderStatus.COMPLETED ||
-					order.orderStatusInfo.label === OrderStatus.PROCESSING ||
+					order.orderStatusInfo.label === OrderStatus.PENDING ||
 					extendRequests[0]?.dueStatus.key ===
 						ExtendRequestStatus.PENDING
 				);
@@ -184,9 +190,9 @@ export default function SaaSTrials() {
 			disabled: (order: Order) =>
 				order.orderStatusInfo.label === OrderStatus.APPROVED ||
 				order.orderStatusInfo.label === OrderStatus.COMPLETED ||
-				order.orderStatusInfo.label === OrderStatus.PROCESSING,
+				order.orderStatusInfo.label === OrderStatus.PENDING,
 			name: 'Expire',
-			onClick: (order: Order) => {
+			onClick: (order: Order, mutate) => {
 				modalContext.onOpenModal({
 					body: (
 						<div>
@@ -220,10 +226,24 @@ export default function SaaSTrials() {
 								key={2}
 								onClick={() => {
 									onExpireTrial(order);
-									modalContext.onClose;
+
+									mutate(
+										{
+											...order,
+											orderStatusInfo: {
+												...order.orderStatusInfo,
+												label: OrderStatus.COMPLETED,
+											},
+										},
+										{
+											revalidate: false,
+										}
+									);
+
+									modalContext.onClose();
 								}}
 							>
-								Got it
+								{i18n.translate('got-it')}
 							</ClayButton>
 						</div>,
 					],

@@ -104,7 +104,10 @@ public class DataCleanupPreupgradeProcessSuiteTest
 		String className =
 			BlacklistedDataCleanupPreupgradeTestProcess.class.getName();
 
-		try (SafeCloseable safeCloseable =
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				DataCleanupPreupgradeProcessSuite.class.getName(),
+				LoggerTestUtil.INFO);
+			SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_BLACKLIST",
 					new String[] {className})) {
@@ -116,10 +119,6 @@ public class DataCleanupPreupgradeProcessSuiteTest
 						() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1)),
 					new DataCleanupPreupgradeTestProcess(
 						() -> _cleanupMessages.add(_SUCCESS_MESSAGE_2))));
-
-			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				DataCleanupPreupgradeProcessSuite.class.getName(),
-				LoggerTestUtil.INFO);
 
 			cleanUp();
 

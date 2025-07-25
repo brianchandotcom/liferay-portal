@@ -452,6 +452,10 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				content = getCssContent(
 					httpServletRequest, httpServletResponse, resourcePath);
 
+				if (content.startsWith(_BOM_CHAR)) {
+					content = content.substring(1);
+				}
+
 				httpServletResponse.setContentType(ContentTypes.TEXT_CSS_UTF8);
 
 				FileUtil.write(
@@ -723,6 +727,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	}
 
 	private static final String _BASE_URL = "@base_url@";
+
+	private static final String _BOM_CHAR = "\uFEFF";
 
 	private static final String _CSS_COMMENT_BEGIN = "/*";
 

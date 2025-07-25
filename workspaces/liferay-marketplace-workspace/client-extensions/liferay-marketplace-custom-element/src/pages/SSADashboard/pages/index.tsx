@@ -126,7 +126,7 @@ export default function SaaSTrials() {
 							trialExtendCount={extendRequests?.length}
 						/>
 					),
-					header: 'Extension Request',
+					center: true,
 				});
 			},
 		},
@@ -201,28 +201,31 @@ export default function SaaSTrials() {
 						</div>
 					),
 					footer: [
-						<ClayButton
-							aria-label="cancel"
-							displayType="secondary"
-							key={0}
-							onClick={modalContext.onClose}
-							size="sm"
-						>
-							{i18n.translate('cancel')}
-						</ClayButton>,
 						undefined,
-						<ClayButton
-							aria-label="close"
-							displayType="warning"
-							key={2}
-							onClick={() => {
-								onExpireTrial(order);
-								modalContext.onClose;
-							}}
-							size="sm"
-						>
-							Got it
-						</ClayButton>,
+						undefined,
+						<div key="footer-buttons">
+							<ClayButton
+								aria-label="cancel"
+								displayType="secondary"
+								key={0}
+								onClick={modalContext.onClose}
+							>
+								{i18n.translate('cancel')}
+							</ClayButton>
+
+							<ClayButton
+								aria-label="close"
+								className="ml-4"
+								displayType="warning"
+								key={2}
+								onClick={() => {
+									onExpireTrial(order);
+									modalContext.onClose;
+								}}
+							>
+								Got it
+							</ClayButton>
+						</div>,
 					],
 					header: `Expire ${order.id} Trial`,
 					status: undefined,

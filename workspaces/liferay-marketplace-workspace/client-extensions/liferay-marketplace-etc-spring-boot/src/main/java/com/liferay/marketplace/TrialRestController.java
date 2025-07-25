@@ -16,12 +16,11 @@ import com.liferay.headless.portal.instances.client.resource.v1_0.PortalInstance
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.ConsoleService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.util.TrialProvisioningContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-
-import java.net.URL;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -39,7 +38,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,6 +48,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -61,14 +62,32 @@ public class TrialRestController extends BaseRestController {
 
 	@DeleteMapping("{orderId}")
 	public void delete(@PathVariable long orderId) throws Exception {
-		_consoleService.deleteProject(String.valueOf(orderId));
+		Order order = _marketplaceService.getOrder(orderId);
 
-		_deletePortalInstance(orderId);
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		TrialProvisioningContext trialProvisioningContext =
+			_trialProvisioningContextFactory.create(
+				order.getOrderTypeExternalReferenceCode());
+
+		_consoleService.deleteProject(
+			orderId, trialProvisioningContext.getConsoleProjectPrefix());
+
+		_deletePortalInstance(
+			orderId, trialProvisioningContext,
+			customFields.get("trial-virtualhost"));
 	}
 
 	@GetMapping("availability")
-	public String getAvailability() throws Exception {
-		Page<PortalInstance> page = _getPortalInstancesPage();
+	public String getAvailability(
+			@RequestParam(defaultValue = "SOLUTIONS7", required = false) String
+				orderTypeExternalReferenceCode)
+		throws Exception {
+
+		Page<PortalInstance> page = _getPortalInstancesPage(
+			_trialProvisioningContextFactory.create(
+				orderTypeExternalReferenceCode));
 
 		return new JSONObject(
 		).put(
@@ -78,6 +97,32 @@ public class TrialRestController extends BaseRestController {
 		).put(
 			"max", _TRIAL_MAX_INSTANCES
 		).toString();
+	}
+
+	@GetMapping("domain-availability/{domain}")
+	public ResponseEntity<Void> getProjectAvailability(
+			@PathVariable String projectPrefix,
+			@RequestParam(defaultValue = "SSA_SAAS", required = false) String
+				orderTypeExternalReferenceCode)
+		throws Exception {
+
+		Page<PortalInstance> portalInstancePage = _getPortalInstancesPage(
+			_trialProvisioningContextFactory.create(
+				orderTypeExternalReferenceCode));
+
+		for (PortalInstance portalInstance : portalInstancePage.getItems()) {
+			String virtualHost = portalInstance.getVirtualHost();
+
+			if (virtualHost.startsWith(projectPrefix)) {
+				return ResponseEntity.status(
+					HttpStatus.CONFLICT
+				).build();
+			}
+		}
+
+		return ResponseEntity.status(
+			HttpStatus.OK
+		).build();
 	}
 
 	@PostMapping("expire/{orderId}")
@@ -202,7 +247,14 @@ public class TrialRestController extends BaseRestController {
 			_log.info("Provisioning order " + orderId);
 		}
 
-		Page<PortalInstance> portalInstancesPage = _getPortalInstancesPage();
+		Order order = _marketplaceService.getOrder(orderId);
+
+		TrialProvisioningContext trialProvisioningContext =
+			_trialProvisioningContextFactory.create(
+				order.getOrderTypeExternalReferenceCode());
+
+		Page<PortalInstance> portalInstancesPage = _getPortalInstancesPage(
+			trialProvisioningContext);
 
 		if (portalInstancesPage.getTotalCount() == _TRIAL_MAX_INSTANCES) {
 			_log.error("Order is on hold");
@@ -225,8 +277,6 @@ public class TrialRestController extends BaseRestController {
 
 		_marketplaceService.updateOrder(
 			null, orderId, MarketplaceConstants.ORDER_STATUS_PROCESSING);
-
-		Order order = _marketplaceService.getOrder(orderId);
 
 		UserAccount userAccount = _marketplaceService.getUserAccount(
 			order.getCreatorEmailAddress());
@@ -254,21 +304,27 @@ public class TrialRestController extends BaseRestController {
 
 		PortalInstance portalInstance = _postPortalInstance(
 			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-			orderId);
+			trialSettingsJSONObject.optString(
+				"projectId", String.valueOf(orderId)),
+			trialProvisioningContext);
 
 		try {
 			_consoleService.setUpProject(
+				trialProvisioningContext.getConsoleCluster(),
+				trialProvisioningContext.deployable(),
+				trialProvisioningContext.getConsoleProjectUid(),
+				portalInstance.getVirtualHost(),
 				_toStringArray(
 					trialSettingsJSONObject.optJSONArray(
 						"consoleInviteEmailAddresses", new JSONArray())),
-				portalInstance.getVirtualHost(), orderId);
+				orderId, trialProvisioningContext.getConsoleProjectPrefix());
 
 			_marketplaceService.updateOrder(
 				HashMapBuilder.put(
 					"trial-end-date",
 					ZonedDateTime.now(
 					).plusDays(
-						7
+						trialSettingsJSONObject.optInt("duration", 7)
 					).format(
 						DateTimeFormatter.ISO_INSTANT
 					)
@@ -300,10 +356,12 @@ public class TrialRestController extends BaseRestController {
 		catch (WebClientResponseException webClientResponseException) {
 			_rollBackTrial(
 				webClientResponseException.getResponseBodyAsString(), orderId,
-				portalInstance);
+				portalInstance, trialProvisioningContext);
 		}
 		catch (Exception exception) {
-			_rollBackTrial(exception.getMessage(), orderId, portalInstance);
+			_rollBackTrial(
+				exception.getMessage(), orderId, portalInstance,
+				trialProvisioningContext);
 		}
 	}
 
@@ -332,18 +390,19 @@ public class TrialRestController extends BaseRestController {
 			).toString());
 	}
 
-	private void _deletePortalInstance(long orderId) throws Exception {
+	private void _deletePortalInstance(
+			long orderId, TrialProvisioningContext trialProvisioningContext,
+			String virtualHost)
+		throws Exception {
+
 		PortalInstanceResource portalInstanceResource =
-			_getPortalInstanceResource();
+			_getPortalInstanceResource(trialProvisioningContext);
 
 		Page<PortalInstance> page =
 			portalInstanceResource.getPortalInstancesPage(true);
 
 		for (PortalInstance portalInstance : page.getItems()) {
-			if (Objects.equals(
-					portalInstance.getVirtualHost(),
-					orderId + "." + _trialDXPDomain)) {
-
+			if (Objects.equals(portalInstance.getVirtualHost(), virtualHost)) {
 				portalInstanceResource.deletePortalInstance(
 					portalInstance.getPortalInstanceId());
 
@@ -356,31 +415,37 @@ public class TrialRestController extends BaseRestController {
 		}
 	}
 
-	private PortalInstanceResource _getPortalInstanceResource()
+	private PortalInstanceResource _getPortalInstanceResource(
+			TrialProvisioningContext trialProvisioningContext)
 		throws Exception {
 
 		return PortalInstanceResource.builder(
 		).endpoint(
-			_externalTrialHomePageURL
+			trialProvisioningContext.getTrialHomePageURL()
 		).header(
 			HttpHeaders.AUTHORIZATION,
-			_liferayOAuth2AccessTokenManager.getAuthorization("external-trial")
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				trialProvisioningContext.getTrialAuthorizationERC())
 		).build();
 	}
 
-	private Page<PortalInstance> _getPortalInstancesPage() throws Exception {
+	private Page<PortalInstance> _getPortalInstancesPage(
+			TrialProvisioningContext trialProvisioningContext)
+		throws Exception {
+
 		PortalInstanceResource portalInstanceResource =
-			_getPortalInstanceResource();
+			_getPortalInstanceResource(trialProvisioningContext);
 
 		return portalInstanceResource.getPortalInstancesPage(true);
 	}
 
 	private PortalInstance _postPortalInstance(
-			Jwt jwt, String emailAddress, long orderId)
+			Jwt jwt, String emailAddress, String projectId,
+			TrialProvisioningContext trialProvisioningContext)
 		throws Exception {
 
 		PortalInstanceResource portalInstanceResource =
-			_getPortalInstanceResource();
+			_getPortalInstanceResource(trialProvisioningContext);
 
 		PortalInstance portalInstance = new PortalInstance();
 
@@ -400,7 +465,7 @@ public class TrialRestController extends BaseRestController {
 
 		portalInstance.setDomain(() -> "lxc.app");
 
-		String domain = orderId + "." + _trialDXPDomain;
+		String domain = projectId + "." + trialProvisioningContext.getDomain();
 
 		portalInstance.setPortalInstanceId(() -> domain);
 		portalInstance.setVirtualHost(() -> domain);
@@ -416,7 +481,8 @@ public class TrialRestController extends BaseRestController {
 	}
 
 	private void _rollBackTrial(
-			String errorMessage, long orderId, PortalInstance portalInstance)
+			String errorMessage, long orderId, PortalInstance portalInstance,
+			TrialProvisioningContext trialProvisioningContext)
 		throws Exception {
 
 		_log.error(
@@ -424,7 +490,8 @@ public class TrialRestController extends BaseRestController {
 				"Unable to set up project for order ", orderId, ": \n",
 				errorMessage));
 
-		_deletePortalInstance(orderId);
+		_deletePortalInstance(
+			orderId, trialProvisioningContext, portalInstance.getVirtualHost());
 
 		_marketplaceService.updateOrder(
 			HashMapBuilder.put(
@@ -462,16 +529,13 @@ public class TrialRestController extends BaseRestController {
 	@Autowired
 	private ConsoleService _consoleService;
 
-	@Value("${external.trial.oauth2.headless.server.home.page.url}")
-	private URL _externalTrialHomePageURL;
-
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 	@Autowired
 	private MarketplaceService _marketplaceService;
 
-	@Value("${liferay.marketplace.trial.dxp.domain}")
-	private String _trialDXPDomain;
+	@Autowired
+	private TrialProvisioningContext.Factory _trialProvisioningContextFactory;
 
 }

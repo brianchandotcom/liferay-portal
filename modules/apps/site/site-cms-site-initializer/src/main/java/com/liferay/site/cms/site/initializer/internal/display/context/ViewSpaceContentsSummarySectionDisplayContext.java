@@ -67,10 +67,10 @@ public class ViewSpaceContentsSummarySectionDisplayContext
 					themeDisplay.getCompanyId());
 
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
-			httpServletRequest, "view-all-content", "content",
+			httpServletRequest, "view-all-content", Collections.emptyMap(),
+			"content",
 			ActionUtil.getBaseViewFolderURL(themeDisplay) +
-				objectEntryFolder.getObjectEntryFolderId(),
-			Collections.emptyMap());
+				objectEntryFolder.getObjectEntryFolderId());
 	}
 
 	@Override

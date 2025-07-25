@@ -21,10 +21,7 @@ import {useSSAForm} from '../components/SSAForm';
 import TrialListView from '../components/TrialListView/TrialListView';
 import {ExtendRequestStatus} from '../enums/SSATrials';
 import {useSSATrials} from '../useSSATrials';
-import {
-	getSSASettingsOrDefaultFromCustomFields,
-	getSSATrialsResourceURL,
-} from '../util';
+import {getSSATrialsResourceURL} from '../util';
 import ExtendRequestModal from './ExtendRequestModal';
 import ExtendSSATrialModal from './ExtendSSATrialModal';
 
@@ -34,7 +31,8 @@ export default function SaaSTrials() {
 	const ssaForm = useSSAForm();
 	const {channel, marketplaceUserAccount, myUserAccount} =
 		useMarketplaceContext();
-	const {selectedAccount, ssaTrialExtend} = useOutletContext<any>();
+	const {selectedAccount, ssaTrialExtend, ssaTrialExtendMutate} =
+		useOutletContext<any>();
 	const resourceUrl = getSSATrialsResourceURL(
 		channel.channelId,
 		selectedAccount?.id
@@ -81,23 +79,51 @@ export default function SaaSTrials() {
 		},
 		{
 			hidden: (order: Order) => {
-				const ssaSettings = getSSASettingsOrDefaultFromCustomFields(
-					order.customFields
-				);
-
 				if (isUserSSAAdmin) {
-					return !ssaSettings?.adminRequestExtend;
+					const ssaTrialsExtendRequests = ssaTrialExtend.items;
+					const extendRequests = ssaTrialsExtendRequests?.filter(
+						(extend: TrialExtend) => {
+							return (
+								extend.r_orderToSSATrialExtend_commerceOrderId ===
+								Number(order.id)
+							);
+						}
+					) as TrialExtend[];
+
+					if (extendRequests && extendRequests?.length > 0) {
+						return (
+							extendRequests[0]?.statusRequest.key !==
+							ExtendRequestStatus.PENDING
+						);
+					}
 				}
 
 				return true;
 			},
 			name: i18n.translate('view-request'),
 			onClick: (order: PlacedOrder) => {
+				const ssaTrialsExtendRequests = ssaTrialExtend.items;
+				const extendRequests = ssaTrialsExtendRequests?.filter(
+					(extend: TrialExtend) => {
+						return (
+							extend.r_orderToSSATrialExtend_commerceOrderId ===
+							Number(order.id)
+						);
+					}
+				) as TrialExtend[];
+
+				if (!extendRequests) {
+					return;
+				}
+
 				modalContext.onOpenModal({
 					body: (
 						<ExtendRequestModal
 							onClose={modalContext.onClose}
 							order={order}
+							ssaTrialExtendMutate={ssaTrialExtendMutate}
+							trialExtend={extendRequests[0]}
+							trialExtendCount={extendRequests?.length}
 						/>
 					),
 					header: 'Extension Request',
@@ -106,27 +132,48 @@ export default function SaaSTrials() {
 		},
 		{
 			disabled: (order: Order) => {
-				const SSASettings = getSSASettingsOrDefaultFromCustomFields(
-					order.customFields
-				);
+				const ssaTrialsExtendRequests = ssaTrialExtend.items;
+				const extendRequests = ssaTrialsExtendRequests?.filter(
+					(extend: TrialExtend) => {
+						return (
+							extend.r_orderToSSATrialExtend_commerceOrderId ===
+							Number(order.id)
+						);
+					}
+				) as TrialExtend[];
+
+				if (!extendRequests) {
+					return true;
+				}
 
 				return (
 					order.orderStatusInfo.label === OrderStatus.APPROVED ||
 					order.orderStatusInfo.label === OrderStatus.COMPLETED ||
 					order.orderStatusInfo.label === OrderStatus.PROCESSING ||
-					SSASettings.extendRequestStatus ===
-						ExtendRequestStatus.PENDING ||
-					SSASettings.extendRequestStatus ===
-						ExtendRequestStatus.REJECTED
+					extendRequests[0]?.statusRequest.key ===
+						ExtendRequestStatus.PENDING
 				);
 			},
 			name: 'Extend',
 			onClick: (order: PlacedOrder) => {
+				const ssaTrialsExtendRequests = ssaTrialExtend.items;
+				const extendRequests = ssaTrialsExtendRequests?.filter(
+					(extend: TrialExtend) => {
+						return (
+							extend.r_orderToSSATrialExtend_commerceOrderId ===
+							Number(order.id)
+						);
+					}
+				) as TrialExtend[];
+
 				modalContext.onOpenModal({
 					body: (
 						<ExtendSSATrialModal
+							accountId={selectedAccount.id}
+							firstExtendRequest={extendRequests?.length === 0}
 							onClose={modalContext.onClose}
 							order={order}
+							ssaTrialExtendMutate={ssaTrialExtendMutate}
 						/>
 					),
 					header: `Extend ${order.id} Trial`,

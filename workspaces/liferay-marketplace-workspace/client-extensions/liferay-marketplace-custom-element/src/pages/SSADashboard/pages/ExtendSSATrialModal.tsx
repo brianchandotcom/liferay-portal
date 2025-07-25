@@ -5,62 +5,90 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import {ClayInput} from '@clayui/form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
+import {KeyedMutator} from 'swr';
 
 import BaseWrapper from '../../../components/Form/BaseWrapper';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema, {z} from '../../../schema/zod';
-import trialOAuth2 from '../../../services/oauth/Trial';
+import HeadlessSSATrialsExtend from '../../../services/rest/HeadlessSSATrialsExtend';
 import {EXTEND_OPTIONS, EXTEND_TYPES} from '../constants';
-import {getSSASettingsOrDefaultFromCustomFields} from '../util';
+import {ExtendRequestStatus} from '../enums/SSATrials';
 
 type ExtendSSATrialModalProps = {
+	accountId: number;
+	firstExtendRequest: boolean;
 	onClose: () => void;
 	order: PlacedOrder;
+	ssaTrialExtendMutate: KeyedMutator<any>;
 };
 
 const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
+	accountId,
+	firstExtendRequest,
 	onClose,
 	order,
+	ssaTrialExtendMutate,
 }) => {
 	const {formState, handleSubmit, setValue, trigger} = useForm({
 		defaultValues: {
 			duration: 0,
+			reason: '',
 		},
 		mode: 'all',
 		reValidateMode: 'onChange',
 		resolver: zodResolver(zodSchema.extendSSATrial),
 	});
 
-	const {isValid} = formState;
+	const {isLoading, isValid} = formState;
 
-	const ssaSettings = getSSASettingsOrDefaultFromCustomFields(
-		order.customFields
-	);
-
-	const extendType = ssaSettings?.autoExtended
-		? EXTEND_TYPES.ADMIN_REQUEST
-		: EXTEND_TYPES.AUTO_EXTEND;
+	const extendType = firstExtendRequest
+		? EXTEND_TYPES.AUTO_EXTEND
+		: EXTEND_TYPES.ADMIN_REQUEST;
 
 	const extendOptions = EXTEND_OPTIONS.find(
 		(option) => option.extendType === extendType
 	);
 
 	const [duration, setDuration] = useState<number | undefined>(undefined);
+	const [reason, setReason] = useState<string>('');
 
 	const onSubmit = async (form: z.infer<typeof zodSchema.extendSSATrial>) => {
 		try {
+			let extendTrialStatusKey = ExtendRequestStatus.PENDING;
+
 			if (extendType === EXTEND_TYPES.AUTO_EXTEND) {
-				trialOAuth2.extendTrial(order.id, form.duration);
+				extendTrialStatusKey = ExtendRequestStatus.AUTO_APPROVED;
 			}
-			else {
-				trialOAuth2.extendTrialRequest(order.id, form.duration);
-			}
+
+			const extendTrial = {
+				duration: form.duration,
+				r_accountToSSATrialExtend_accountEntryId: accountId,
+				r_orderToSSATrialExtend_commerceOrderId: order.id,
+				reason: form.reason,
+				statusRequest: {key: extendTrialStatusKey ?? 'pending'},
+			};
+
+			const newItem =
+				await HeadlessSSATrialsExtend.createSSATrialsExtend(
+					extendTrial
+				);
+
+			ssaTrialExtendMutate(
+				(data: any) => {
+					return {
+						...data,
+						items: [newItem, ...data.items],
+					};
+				},
+				{revalidate: false}
+			);
+
 			onClose();
 		}
 		catch (error) {
@@ -98,9 +126,20 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 					type="number"
 					value={duration}
 				></ClayInput>
-				<ClayForm.FeedbackItem>
-					{formState.errors.duration?.message}
-				</ClayForm.FeedbackItem>
+			</BaseWrapper>
+			<BaseWrapper label="Reason" required>
+				<ClayInput
+					className={classNames('my-4', {
+						'has-error': formState.errors.reason,
+					})}
+					onChange={(event) => {
+						setReason(event.target.value);
+						setValue('reason', event.target.value);
+						trigger();
+					}}
+					type="text"
+					value={reason}
+				></ClayInput>
 			</BaseWrapper>
 			<div className="d-flex justify-content-end">
 				<ClayButton
@@ -111,7 +150,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 					{i18n.translate('cancel')}
 				</ClayButton>
 				<ClayButton
-					disabled={!isValid}
+					disabled={!isValid || isLoading}
 					onClick={handleSubmit(onSubmit)}
 				>
 					{extendOptions?.actionText}

@@ -5,13 +5,9 @@
 
 export enum ExtendRequestStatus {
 	APPROVED = 'approved',
-	AUTO_APPROVED = 'auto-approved',
+	AUTO_APPROVED = 'autoApproved',
 	EXTENSION_EXPIRED = 'extension-expired',
 	NOT_REQUESTED = 'not-requested',
 	PENDING = 'pending',
 	REJECTED = 'rejected',
-}
-
-export enum TrialSettings {
-	SSA_SETTINGS = 'ssaSettings',
 }

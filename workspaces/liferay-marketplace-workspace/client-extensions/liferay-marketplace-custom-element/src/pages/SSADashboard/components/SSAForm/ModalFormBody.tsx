@@ -13,12 +13,11 @@ import {useAccount} from '../../../../hooks/data/useAccounts';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
+import trialOAuth2 from '../../../../services/oauth/Trial';
+import HeadlessCommerceDeliveryCatalog from '../../../../services/rest/HeadlessCommerceDeliveryCatalog';
 import ProductPurchaseSSATrial from '../../../ProductPurchase/services/ProductPurchaseSSATrial';
 import {FormSection} from './FormSection';
 import {Input} from './Input';
-import trialOAuth2 from '../../../../services/oauth/Trial';
-import HeadlessDelivery from '../../../../services/rest/HeadlessDelivery';
-import HeadlessCommerceDeliveryCatalog from '../../../../services/rest/HeadlessCommerceDeliveryCatalog';
 
 type ValidationErrors = Partial<Record<keyof FormFields, string>>;
 
@@ -51,7 +50,7 @@ const SSAFormBody = ({
 
 		fetchProduct();
 		setProduct(product);
-	}, [properties, channel]);
+	}, [channel, product, properties]);
 
 	const productPurchase = useMemo(() => {
 		if (!account || !channel || !product) {
@@ -83,32 +82,28 @@ const SSAFormBody = ({
 		}
 	}, [isTestTrial]);
 
-	const validateProjectId = useCallback(
-		async (projectId: string) => {
-			try {
-				const data =
-					await trialOAuth2.checkDomainAvailability(projectId);
+	const validateProjectId = useCallback(async (projectId: string) => {
+		try {
+			const data = await trialOAuth2.checkDomainAvailability(projectId);
 
-				return data;
+			return data;
+		}
+		catch (error: any) {
+			if (error.status === 409) {
+				setErrors((prevErrors) => ({
+					...prevErrors,
+					projectId: 'Project ID already exists',
+				}));
+
+				return false;
 			}
-			catch (error: any) {
-				if (error.status === 409) {
-					setErrors((prevErrors) => ({
-						...prevErrors,
-						projectId: 'Project ID already exists',
-					}));
+			else {
+				console.error(error.message);
 
-					return false;
-				}
-				else {
-					console.error(error.message);
-
-					return false;
-				}
+				return false;
 			}
-		},
-		[productPurchase]
-	);
+		}
+	}, []);
 
 	const onChange = ({label, value}: {label: string; value: string}) => {
 		setFormData((prevData) => ({

@@ -270,26 +270,6 @@ public class ObjectEntryDTOConverter
 						ObjectEntryVersionModel::getCreateDate,
 						serviceBuilderObjectEntry,
 						ObjectEntryModel::getCreateDate));
-				setDateDeleted(
-					() -> {
-						if (serviceBuilderObjectEntry.getStatus() ==
-								WorkflowConstants.STATUS_IN_TRASH) {
-
-							TrashEntry trashEntry =
-								_trashEntryLocalService.fetchEntry(
-									ObjectDefinition.class.getName(),
-									serviceBuilderObjectEntry.
-										getObjectEntryId());
-
-							if (trashEntry == null) {
-								return null;
-							}
-
-							return trashEntry.getCreateDate();
-						}
-
-						return null;
-					});
 				setDateModified(
 					() -> _getAttribute(
 						objectEntryVersion,
@@ -303,29 +283,6 @@ public class ObjectEntryDTOConverter
 
 							return serviceBuilderObjectEntry.
 								getDefaultLanguageId();
-						}
-
-						return null;
-					});
-				setDeletedBy(
-					() -> {
-						if (serviceBuilderObjectEntry.getStatus() ==
-								WorkflowConstants.STATUS_IN_TRASH) {
-
-							TrashEntry trashEntry =
-								_trashEntryLocalService.fetchEntry(
-									ObjectDefinition.class.getName(),
-									serviceBuilderObjectEntry.
-										getObjectEntryId());
-
-							if (trashEntry == null) {
-								return null;
-							}
-
-							return CreatorUtil.toCreator(
-								_portal, dtoConverterContext.getUriInfo(),
-								_userLocalService.fetchUser(
-									trashEntry.getUserId()));
 						}
 
 						return null;
@@ -418,6 +375,45 @@ public class ObjectEntryDTOConverter
 								clonedServiceBuilderObjectEntry.
 									getObjectDefinitionId()),
 							clonedServiceBuilderObjectEntry);
+					});
+				setRemovedBy(
+					() -> {
+						if (serviceBuilderObjectEntry.getStatus() ==
+								WorkflowConstants.STATUS_IN_TRASH) {
+
+							TrashEntry trashEntry =
+								_trashEntryLocalService.fetchEntry(
+									objectDefinition.getClassName(),
+									serviceBuilderObjectEntry.
+										getObjectEntryId());
+
+							if (trashEntry != null) {
+								return CreatorUtil.toCreator(
+									_portal, dtoConverterContext.getUriInfo(),
+									_userLocalService.fetchUser(
+										trashEntry.getUserId()));
+							}
+						}
+
+						return null;
+					});
+				setRemovedDate(
+					() -> {
+						if (serviceBuilderObjectEntry.getStatus() ==
+								WorkflowConstants.STATUS_IN_TRASH) {
+
+							TrashEntry trashEntry =
+								_trashEntryLocalService.fetchEntry(
+									objectDefinition.getClassName(),
+									serviceBuilderObjectEntry.
+										getObjectEntryId());
+
+							if (trashEntry != null) {
+								return trashEntry.getCreateDate();
+							}
+						}
+
+						return null;
 					});
 				setReviewDate(
 					() -> _getAttribute(

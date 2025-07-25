@@ -49,7 +49,7 @@ export default function TrialListView({
 					OrderTypes.SSA_SAAS
 				),
 			}}
-			emptyStateProps={{title: i18n.translate('no-orders-yet')}}
+			emptyStateProps={{title: i18n.translate('no-trials-yet')}}
 			id="ssa-trials"
 			managementToolbarProps={{
 				filterSchema: 'administratorSSATrials',

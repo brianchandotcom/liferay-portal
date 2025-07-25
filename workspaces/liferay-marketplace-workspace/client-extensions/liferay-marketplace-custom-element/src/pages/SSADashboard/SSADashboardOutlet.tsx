@@ -7,10 +7,12 @@ import {Outlet} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {PageRenderer} from '../../components/Page';
-import {useAccount} from '../../hooks/data/useAccounts';
+import useAccounts, {useAccount} from '../../hooks/data/useAccounts';
 import {useSSATRialsExtend} from './useSSATrialsExtend';
+import {getAccountImage} from '../../utils/util';
 
 const SSADashboardOutlet = () => {
+	const accountsSearch = useAccounts();
 	const {
 		data: selectedAccount,
 		error: errorAccount,
@@ -33,6 +35,9 @@ const SSADashboardOutlet = () => {
 		<PageRenderer error={error} isLoading={isLoading}>
 			<div className="published-apps-dashboard-page-container">
 				<DashboardNavigation
+					accountIcon={getAccountImage(selectedAccount?.logoURL)}
+					accountsSearch={accountsSearch}
+					currentAccount={selectedAccount as any}
 					dashboardNavigationItems={[
 						{
 							itemTitle: 'SaaS Demos',

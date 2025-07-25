@@ -367,6 +367,7 @@ export default {
 	'no-licenses-yet': 'No Licenses yet',
 	'no-orders-yet': 'No Orders Yet',
 	'no-results-found': 'No results found',
+	'no-trials-yet': 'No Trials Yet',
 	'no-x': 'No {0}',
 	'not-installed': 'Not Installed',
 	'not-seeing-a-specific-project': 'Not seeing a specific Project?',

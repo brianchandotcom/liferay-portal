@@ -189,6 +189,41 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			groupId, objectRelationshipId, objectEntryId, false, search);
 	}
 
+	@Override
+	public void moveRelatedModelToTrash(
+			long userId, long groupId, long objectRelationshipId,
+			long primaryKey, String deletionType)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		List<ObjectEntry> relatedModels = getRelatedModels(
+			groupId, objectRelationshipId, primaryKey, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		if (relatedModels.isEmpty()) {
+			return;
+		}
+
+		if (Objects.equals(
+				deletionType,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
+
+			for (ObjectEntry objectEntry : relatedModels) {
+				_objectEntryService.moveObjectEntryToTrash(
+					userId, objectEntry, new ServiceContext());
+			}
+		}
+		else if (Objects.equals(
+					deletionType,
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)) {
+
+			throw new RequiredObjectRelationshipException(objectRelationship);
+		}
+	}
+
 	private final String _className;
 	private final long _companyId;
 	private final ObjectEntryService _objectEntryService;

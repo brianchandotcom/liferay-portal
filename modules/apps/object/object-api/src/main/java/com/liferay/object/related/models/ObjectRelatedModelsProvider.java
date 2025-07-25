@@ -68,4 +68,12 @@ public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 		return 0;
 	}
 
+	public default void moveRelatedModelToTrash(
+			long userId, long groupId, long objectRelationshipId,
+			long primaryKey, String deletionType)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
 }

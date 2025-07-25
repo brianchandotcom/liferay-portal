@@ -230,47 +230,6 @@ public class ObjectEntry implements Serializable {
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Date getDateDeleted() {
-		if (_dateDeletedSupplier != null) {
-			dateDeleted = _dateDeletedSupplier.get();
-
-			_dateDeletedSupplier = null;
-		}
-
-		return dateDeleted;
-	}
-
-	public void setDateDeleted(Date dateDeleted) {
-		this.dateDeleted = dateDeleted;
-
-		_dateDeletedSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setDateDeleted(
-		UnsafeSupplier<Date, Exception> dateDeletedUnsafeSupplier) {
-
-		_dateDeletedSupplier = () -> {
-			try {
-				return dateDeletedUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Date dateDeleted;
-
-	@JsonIgnore
-	private Supplier<Date> _dateDeletedSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -351,48 +310,6 @@ public class ObjectEntry implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _defaultLanguageIdSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public Creator getDeletedBy() {
-		if (_deletedBySupplier != null) {
-			deletedBy = _deletedBySupplier.get();
-
-			_deletedBySupplier = null;
-		}
-
-		return deletedBy;
-	}
-
-	public void setDeletedBy(Creator deletedBy) {
-		this.deletedBy = deletedBy;
-
-		_deletedBySupplier = null;
-	}
-
-	@JsonIgnore
-	public void setDeletedBy(
-		UnsafeSupplier<Creator, Exception> deletedByUnsafeSupplier) {
-
-		_deletedBySupplier = () -> {
-			try {
-				return deletedByUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Creator deletedBy;
-
-	@JsonIgnore
-	private Supplier<Creator> _deletedBySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDisplayDate() {
@@ -908,6 +825,89 @@ public class ObjectEntry implements Serializable {
 		new LinkedHashMap<>());
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Creator getRemovedBy() {
+		if (_removedBySupplier != null) {
+			removedBy = _removedBySupplier.get();
+
+			_removedBySupplier = null;
+		}
+
+		return removedBy;
+	}
+
+	public void setRemovedBy(Creator removedBy) {
+		this.removedBy = removedBy;
+
+		_removedBySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRemovedBy(
+		UnsafeSupplier<Creator, Exception> removedByUnsafeSupplier) {
+
+		_removedBySupplier = () -> {
+			try {
+				return removedByUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Creator removedBy;
+
+	@JsonIgnore
+	private Supplier<Creator> _removedBySupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Date getRemovedDate() {
+		if (_removedDateSupplier != null) {
+			removedDate = _removedDateSupplier.get();
+
+			_removedDateSupplier = null;
+		}
+
+		return removedDate;
+	}
+
+	public void setRemovedDate(Date removedDate) {
+		this.removedDate = removedDate;
+
+		_removedDateSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRemovedDate(
+		UnsafeSupplier<Date, Exception> removedDateUnsafeSupplier) {
+
+		_removedDateSupplier = () -> {
+			try {
+				return removedDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date removedDate;
+
+	@JsonIgnore
+	private Supplier<Date> _removedDateSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getReviewDate() {
 		if (_reviewDateSupplier != null) {
 			reviewDate = _reviewDateSupplier.get();
@@ -1237,17 +1237,11 @@ public class ObjectEntry implements Serializable {
 		else if (Objects.equals(propertyName, "dateCreated")) {
 			return getDateCreated();
 		}
-		else if (Objects.equals(propertyName, "dateDeleted")) {
-			return getDateDeleted();
-		}
 		else if (Objects.equals(propertyName, "dateModified")) {
 			return getDateModified();
 		}
 		else if (Objects.equals(propertyName, "defaultLanguageId")) {
 			return getDefaultLanguageId();
-		}
-		else if (Objects.equals(propertyName, "deletedBy")) {
-			return getDeletedBy();
 		}
 		else if (Objects.equals(propertyName, "displayDate")) {
 			return getDisplayDate();
@@ -1280,6 +1274,12 @@ public class ObjectEntry implements Serializable {
 		}
 		else if (Objects.equals(propertyName, "permissions")) {
 			return getPermissions();
+		}
+		else if (Objects.equals(propertyName, "removedBy")) {
+			return getRemovedBy();
+		}
+		else if (Objects.equals(propertyName, "removedDate")) {
+			return getRemovedDate();
 		}
 		else if (Objects.equals(propertyName, "reviewDate")) {
 			return getReviewDate();
@@ -1429,22 +1429,6 @@ public class ObjectEntry implements Serializable {
 			sb.append("\"");
 		}
 
-		Date dateDeleted = getDateDeleted();
-
-		if (dateDeleted != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateDeleted\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(dateDeleted));
-
-			sb.append("\"");
-		}
-
 		Date dateModified = getDateModified();
 
 		if (dateModified != null) {
@@ -1475,18 +1459,6 @@ public class ObjectEntry implements Serializable {
 			sb.append(_escape(defaultLanguageId));
 
 			sb.append("\"");
-		}
-
-		Creator deletedBy = getDeletedBy();
-
-		if (deletedBy != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"deletedBy\": ");
-
-			sb.append(deletedBy);
 		}
 
 		Date displayDate = getDisplayDate();
@@ -1665,6 +1637,34 @@ public class ObjectEntry implements Serializable {
 			sb.append("\"properties\": ");
 
 			sb.append(_toJSON(properties));
+		}
+
+		Creator removedBy = getRemovedBy();
+
+		if (removedBy != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"removedBy\": ");
+
+			sb.append(removedBy);
+		}
+
+		Date removedDate = getRemovedDate();
+
+		if (removedDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"removedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(removedDate));
+
+			sb.append("\"");
 		}
 
 		Date reviewDate = getReviewDate();

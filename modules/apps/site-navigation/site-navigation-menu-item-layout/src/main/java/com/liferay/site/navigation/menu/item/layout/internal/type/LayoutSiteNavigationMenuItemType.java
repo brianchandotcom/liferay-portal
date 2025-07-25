@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -110,12 +109,6 @@ public class LayoutSiteNavigationMenuItemType
 						privateLayout ? "private" : "public",
 						" layout is exported."));
 			}
-
-			return false;
-		}
-
-		if (!ArrayUtil.contains(
-				portletDataContext.getLayoutIds(), layout.getLayoutId())) {
 
 			return false;
 		}

@@ -1739,13 +1739,26 @@ ckeditor5Test(
 
 		const articleContentAR = getRandomString();
 		const articleContentEN = getRandomString();
-		const articleContentSource = getRandomString();
 		const articleTitleAR = getRandomString();
 		const articleTitleEN = getRandomString();
 
 		const editable = journalEditArticlePage.page.locator(
 			'.edit-article-panel .ck-content'
 		);
+
+		await ckeditor5Test.step('Expand fields if collapsed', async () => {
+			const fieldsToggle = journalEditArticlePage.page.locator(
+				'.edit-article-panel .collapse-icon.sheet-subtitle'
+			);
+
+			const classList = await fieldsToggle.getAttribute('class');
+
+			if (classList.match(/collapsed/)) {
+				fieldsToggle.click();
+			}
+
+			await expect(editable).toBeVisible();
+		});
 
 		await ckeditor5Test.step(
 			'Add sample English title and content',
@@ -1805,19 +1818,23 @@ ckeditor5Test(
 			await journalEditArticlePage.changeLanguage('en_US');
 		});
 
+		const toolbar =
+			journalEditArticlePage.page.getByLabel('Editor toolbar');
+
+		const sourceButton = toolbar.getByRole('button', {name: 'Source'});
+
+		const sourceTextarea = journalEditArticlePage.page.getByLabel(
+			'Source code editing area'
+		);
+
 		await ckeditor5Test.step(
 			'Change article in source editing',
 			async () => {
-				const toolbar =
-					journalEditArticlePage.page.getByLabel('Editor toolbar');
+				await sourceButton.click();
 
-				await toolbar.getByRole('button', {name: 'Source'}).click();
-
-				const textarea = journalEditArticlePage.page.getByLabel(
-					'Source code editing area'
+				await sourceTextarea.fill(
+					'<a href="#" onclick="alert()">foo</a><script>alert()</script>'
 				);
-
-				await textarea.fill(articleContentSource);
 			}
 		);
 
@@ -1832,9 +1849,11 @@ ckeditor5Test(
 			async () => {
 				await page.getByTitle(articleTitleEN).click();
 
-				await expect(
-					editable.getByText(articleContentSource)
-				).toBeVisible();
+				await sourceButton.click();
+
+				await expect(sourceTextarea).toHaveValue(
+					/<a href="#">foo<\/a>alert\(\)/
+				);
 			}
 		);
 	}

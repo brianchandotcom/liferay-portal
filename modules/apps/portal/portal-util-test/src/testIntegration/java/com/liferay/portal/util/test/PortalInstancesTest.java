@@ -207,10 +207,11 @@ public class PortalInstancesTest {
 
 		Assert.assertEquals(
 			_company.getCompanyId(),
-			(long)CompanyThreadLocal.getCompanyId());
+			PortalInstances.getCompanyId(mockHttpServletRequest));
+
 		Assert.assertEquals(
 			_company.getCompanyId(),
-			PortalInstances.getCompanyId(mockHttpServletRequest));
+			(long)CompanyThreadLocal.getCompanyId());
 		Assert.assertEquals(
 			_company.getCompanyId(),
 			mockHttpServletRequest.getAttribute(WebKeys.COMPANY_ID));

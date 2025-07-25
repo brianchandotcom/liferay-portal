@@ -124,7 +124,7 @@ public class ObjectEntryAssetRenderer
 
 	@Override
 	public String getType() {
-		return _objectDefinition.getClassName();
+		return _objectDefinition.getName();
 	}
 
 	@Override

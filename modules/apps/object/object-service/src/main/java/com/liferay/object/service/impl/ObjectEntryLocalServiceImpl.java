@@ -1749,10 +1749,6 @@ public class ObjectEntryLocalServiceImpl
 			throw new TrashEntryException();
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
-
 		List<ObjectEntryVersion> objectEntryVersions =
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId());
@@ -1765,7 +1761,7 @@ public class ObjectEntryLocalServiceImpl
 			new ArrayList<>();
 
 		if ((objectEntryVersions != null) && !objectEntryVersions.isEmpty()) {
-			objectEntryVersionStatusOVPs = _getEntryVersionStatuses(
+			objectEntryVersionStatusOVPs = _getObjectEntryVersionStatuses(
 				objectEntryVersions);
 		}
 
@@ -1774,6 +1770,10 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry = updateStatus(
 			userId, objectEntry, WorkflowConstants.STATUS_IN_TRASH,
 			serviceContext);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
 
 		_trashEntryLocalService.addTrashEntry(
 			userId, objectEntry.getGroupId(), objectDefinition.getClassName(),
@@ -3581,22 +3581,6 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getDBTableName());
 	}
 
-	private List<ObjectValuePair<Long, Integer>> _getEntryVersionStatuses(
-		List<ObjectEntryVersion> entries) {
-
-		return TransformUtil.transform(
-			entries,
-			entry -> {
-				int status = entry.getStatus();
-
-				if (status == WorkflowConstants.STATUS_PENDING) {
-					status = WorkflowConstants.STATUS_DRAFT;
-				}
-
-				return new ObjectValuePair<>(entry.getObjectEntryId(), status);
-			});
-	}
-
 	private DynamicObjectDefinitionTable
 			_getExtensionDynamicObjectDefinitionTable(long objectDefinitionId)
 		throws PortalException {
@@ -3929,6 +3913,23 @@ public class ObjectEntryLocalServiceImpl
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
+	}
+
+	private List<ObjectValuePair<Long, Integer>> _getObjectEntryVersionStatuses(
+		List<ObjectEntryVersion> objectEntryVersions) {
+
+		return TransformUtil.transform(
+			objectEntryVersions,
+			objectEntryVersion -> {
+				int status = objectEntryVersion.getStatus();
+
+				if (status == WorkflowConstants.STATUS_PENDING) {
+					status = WorkflowConstants.STATUS_DRAFT;
+				}
+
+				return new ObjectValuePair<>(
+					objectEntryVersion.getObjectEntryId(), status);
+			});
 	}
 
 	private GroupByStep _getOneToManyObjectEntriesGroupByStep(

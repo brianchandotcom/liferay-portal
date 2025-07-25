@@ -330,21 +330,7 @@ public class DefaultObjectEntryManagerImpl
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
-			(serviceBuilderObjectEntry.getStatus() ==
-				WorkflowConstants.STATUS_IN_TRASH)) {
-
-			_objectEntryService.deleteObjectEntry(objectEntryId);
-
-			return;
-		}
-
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			serviceBuilderObjectEntry.getObjectEntryId());
-
-		_objectEntryService.moveObjectEntryToTrash(
-			dtoConverterContext.getUserId(), serviceBuilderObjectEntry,
-			serviceContext);
+		_deleteObjectEntry(dtoConverterContext, serviceBuilderObjectEntry);
 	}
 
 	@Override
@@ -362,20 +348,7 @@ public class DefaultObjectEntryManagerImpl
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
-			(serviceBuilderObjectEntry.getStatus() ==
-				WorkflowConstants.STATUS_IN_TRASH)) {
-
-			_objectEntryService.deleteObjectEntry(
-				serviceBuilderObjectEntry.getObjectEntryId());
-
-			return;
-		}
-
-		_objectEntryService.moveObjectEntryToTrash(
-			dtoConverterContext.getUserId(), serviceBuilderObjectEntry,
-			ServiceContextUtil.createServiceContext(
-				serviceBuilderObjectEntry.getObjectEntryId()));
+		_deleteObjectEntry(dtoConverterContext, serviceBuilderObjectEntry);
 	}
 
 	@Override
@@ -1523,6 +1496,26 @@ public class DefaultObjectEntryManagerImpl
 			throw new IllegalArgumentException(
 				"Unable to decode Base64 file", exception);
 		}
+	}
+
+	private void _deleteObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
+			(objectEntry.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
+
+			_objectEntryService.deleteObjectEntry(
+				objectEntry.getObjectEntryId());
+
+			return;
+		}
+
+		_objectEntryService.moveObjectEntryToTrash(
+			dtoConverterContext.getUserId(), objectEntry,
+			ServiceContextUtil.createServiceContext(
+				objectEntry.getObjectEntryId()));
 	}
 
 	private void _disassociateRelatedModels(

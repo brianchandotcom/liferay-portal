@@ -6,17 +6,17 @@
 package com.liferay.object.internal.trash;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.trash.BaseTrashHandler;
 
 import jakarta.portlet.PortletRequest;
 
 /**
- * Implements trash handling for the object entry entity.
- *
  * @author Yuri Monteiro
  */
 public class ObjectEntryTrashHandler extends BaseTrashHandler {
@@ -24,11 +24,11 @@ public class ObjectEntryTrashHandler extends BaseTrashHandler {
 	public ObjectEntryTrashHandler(
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
-		ObjectEntryLocalService objectEntryLocalService) {
+		ObjectEntryService objectEntryService) {
 
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
-		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryService = objectEntryService;
 	}
 
 	@Override
@@ -38,22 +38,6 @@ public class ObjectEntryTrashHandler extends BaseTrashHandler {
 	@Override
 	public String getClassName() {
 		return _objectDefinition.getClassName();
-	}
-
-	@Override
-	public String getRestoreContainedModelLink(
-			PortletRequest portletRequest, long classPK)
-		throws PortalException {
-
-		return null;
-	}
-
-	@Override
-	public String getRestoreContainerModelLink(
-			PortletRequest portletRequest, long classPK)
-		throws PortalException {
-
-		return null;
 	}
 
 	@Override
@@ -73,11 +57,16 @@ public class ObjectEntryTrashHandler extends BaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return true;
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			_objectEntryService.getModelResourcePermission(
+				_objectDefinition.getObjectDefinitionId());
+
+		return modelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
-	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryService _objectEntryService;
 
 }

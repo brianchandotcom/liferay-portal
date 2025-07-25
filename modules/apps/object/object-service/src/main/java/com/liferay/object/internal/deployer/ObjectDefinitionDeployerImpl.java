@@ -500,21 +500,21 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 			serviceRegistrations.add(
 				_bundleContext.registerService(
-					WorkflowHandler.class,
-					new ObjectEntryWorkflowHandler(
+					TrashHandler.class,
+					new ObjectEntryTrashHandler(
 						objectDefinition, _objectDefinitionLocalService,
-						_objectEntryLocalService,
-						_workflowDefinitionLinkLocalService),
+						_objectEntryService),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"model.class.name", objectDefinition.getClassName()
 					).build()));
 
 			serviceRegistrations.add(
 				_bundleContext.registerService(
-					TrashHandler.class,
-					new ObjectEntryTrashHandler(
+					WorkflowHandler.class,
+					new ObjectEntryWorkflowHandler(
 						objectDefinition, _objectDefinitionLocalService,
-						_objectEntryLocalService),
+						_objectEntryLocalService,
+						_workflowDefinitionLinkLocalService),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"model.class.name", objectDefinition.getClassName()
 					).build()));

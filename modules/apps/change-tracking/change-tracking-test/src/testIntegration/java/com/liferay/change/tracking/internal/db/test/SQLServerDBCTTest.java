@@ -79,7 +79,7 @@ public class SQLServerDBCTTest {
 	}
 
 	@Test
-	public void testDeleteCTCollectionWithOver50000CTEntries()
+	public void testDeleteCTCollectionWithOver50000AddedCTEntries()
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -107,7 +107,7 @@ public class SQLServerDBCTTest {
 	}
 
 	@Test
-	public void testPublishCTCollectionWithOver2000CTEntries()
+	public void testPublishCTCollectionWithOver2000ModifiedCTSEntries()
 		throws Exception {
 
 		long parentCTSChildId = 0;
@@ -140,7 +140,7 @@ public class SQLServerDBCTTest {
 	}
 
 	@Test
-	public void testPublishCTCollectionWithOver50000CTEntries()
+	public void testPublishCTCollectionWithOver50000AddedCTEntries()
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();

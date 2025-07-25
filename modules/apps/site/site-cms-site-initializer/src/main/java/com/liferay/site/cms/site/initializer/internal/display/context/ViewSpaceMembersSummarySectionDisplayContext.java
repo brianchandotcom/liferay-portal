@@ -99,14 +99,14 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 	public Map<String, Object> getHeaderProps() throws Exception {
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			_httpServletRequest, "view-all-members",
-			_getSpaceMembersHeaderTitle(), StringPool.BLANK,
 			HashMapBuilder.<String, Object>put(
 				"action", "open-members-modal"
 			).put(
 				"assetLibraryCreatorUserId", _getAssetLibraryCreatorUserId()
 			).put(
 				"assetLibraryId", String.valueOf(_groupId)
-			).build());
+			).build(),
+			_getSpaceMembersHeaderTitle(), StringPool.BLANK);
 	}
 
 	public List<TabsItem> getTabsItems() {

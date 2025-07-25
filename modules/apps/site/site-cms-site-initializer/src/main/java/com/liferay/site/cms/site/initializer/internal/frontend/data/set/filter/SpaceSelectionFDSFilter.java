@@ -37,7 +37,7 @@ public class SpaceSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getItemLabel() {
-		return "description";
+		return "assetLibraryKey";
 	}
 
 	@Override

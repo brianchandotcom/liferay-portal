@@ -835,7 +835,8 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 					(DDMFormFieldValidation)propertyValue);
 			}
 
-			return new UnlocalizedValue(String.valueOf(propertyValue));
+			return new UnlocalizedValue(
+				Objects.toString(propertyValue, StringPool.BLANK));
 		}
 
 		private Value _createDDMFormFieldValue(

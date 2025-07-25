@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const cardConfigurations = {
+const salesCardConfigurations = {
 	nonTrainer: {
 		class: 'sales-resources-card-icon',
 		description:
@@ -22,24 +22,21 @@ const cardConfigurations = {
 	},
 };
 
-const domElements = Object.fromEntries(
-	Object.entries(elementClassMap).map(([key, className]) => [
-		key,
-		getElementByClass(className),
-	])
-);
-
-const elementClassMap = {
-	containerEnablementHubCard: 'container-enablement-hub-card',
-	salesEnablementHubCardLink: 'sales-enablement-hub-card-link',
+const salesClasses = {
+	salesHubCard: 'sales-hub-card',
+	salesHubCardLink: 'sales-hub-card-link',
 	salesPageCard: 'sales-page-card',
+	salesPageCardCTA: 'sales-page-card-cta',
 	salesPageCardDescription: 'sales-page-card-description',
-	salesPageCardGoToText: 'sales-page-card-go-to-text',
 	salesPageCardTitle: 'sales-page-card-title',
 };
 
-const getElementByClass = (className) =>
-	document.querySelector(`.${className}`);
+const salesElements = Object.fromEntries(
+	Object.entries(salesClasses).map(([key, className]) => [
+		key,
+		document.querySelector(`.${className}`)
+	])
+);
 
 const getUserAccount = async () => {
 	const response = await Liferay.Util.fetch(
@@ -60,32 +57,33 @@ const hasUserGroup = (userAccount, targetGroups = []) => {
 };
 
 const renderCardByRole = (isTrainer) => {
-	const {salesPageCard} = domElements;
+	const {salesPageCard} = salesElements;
 
 	salesPageCard.classList.remove(
-		cardConfigurations.nonTrainer.class,
-		cardConfigurations.trainer.class
+		salesCardConfigurations.nonTrainer.class,
+		salesCardConfigurations.trainer.class
 	);
 
 	const config = isTrainer
-		? cardConfigurations.trainer
-		: cardConfigurations.nonTrainer;
+		? salesCardConfigurations.trainer
+		: salesCardConfigurations.nonTrainer;
 
 	salesPageCard.classList.add(config.class);
+
 	setCardInfo(config);
 };
 
 const setCardInfo = ({description, goToText, href, title}) => {
 	const {
-		salesEnablementHubCardLink,
+		salesHubCardLink,
 		salesPageCardDescription,
-		salesPageCardGoToText,
+		salesPageCardCTA,
 		salesPageCardTitle,
-	} = domElements;
+	} = salesElements;
 
-	salesEnablementHubCardLink.href = href;
+	salesHubCardLink.href = href;
 	salesPageCardDescription.textContent = description;
-	salesPageCardGoToText.textContent = goToText;
+	salesPageCardCTA.textContent = goToText;
 	salesPageCardTitle.textContent = title;
 };
 
@@ -93,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const userAccount = await getUserAccount();
 
 	if (hasUserGroup(userAccount, ['Employees', 'Partners'])) {
-		domElements.containerEnablementHubCard.classList.remove('hide');
+		salesElements.salesHubCard.classList.remove('hide');
 
 		renderCardByRole(
 			userAccount.roleBriefs?.some((role) =>

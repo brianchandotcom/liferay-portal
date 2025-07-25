@@ -771,53 +771,8 @@ public class ObjectEntryLocalServiceImpl
 			long groupId, long objectDefinitionId, long primaryKey)
 		throws PortalException {
 
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipPersistence.findByObjectDefinitionId1(
-				objectDefinitionId);
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			ObjectDefinition objectDefinition2 =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectRelationship.getObjectDefinitionId2());
-
-			if (WorkflowConstants.STATUS_DRAFT ==
-					objectDefinition2.getStatus()) {
-
-				continue;
-			}
-
-			ObjectRelatedModelsProvider objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						objectDefinition2.getClassName(),
-						objectDefinition2.getCompanyId(),
-						objectRelationship.getType());
-
-			try {
-				ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
-					true);
-
-				String deletionType = objectRelationship.getDeletionType();
-
-				if (ObjectEntryThreadLocal.isDisassociateRelatedModels()) {
-					deletionType =
-						ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE;
-				}
-
-				objectRelatedModelsProvider.deleteRelatedModel(
-					PrincipalThreadLocal.getUserId(), groupId,
-					objectRelationship.getObjectRelationshipId(), primaryKey,
-					deletionType);
-			}
-			catch (PrincipalException principalException) {
-				throw new ObjectRelationshipDeletionTypeException(
-					principalException.getMessage());
-			}
-			finally {
-				ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
-					false);
-			}
-		}
+		_deleteRelatedObjectEntries(
+			groupId, false, objectDefinitionId, primaryKey);
 	}
 
 	@Override
@@ -1786,6 +1741,15 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return objectEntry;
+	}
+
+	@Override
+	public void moveRelatedObjectEntriesToTrash(
+			long groupId, long objectDefinitionId, long primaryKey)
+		throws PortalException {
+
+		_deleteRelatedObjectEntries(
+			groupId, true, objectDefinitionId, primaryKey);
 	}
 
 	@Override
@@ -2959,6 +2923,68 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		FinderCacheUtil.clearDSLQueryCache(dbTableName);
+	}
+
+	private void _deleteRelatedObjectEntries(
+			long groupId, boolean moveToTrash, long objectDefinitionId,
+			long primaryKey)
+		throws PortalException {
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipPersistence.findByObjectDefinitionId1(
+				objectDefinitionId);
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectDefinition objectDefinition2 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId2());
+
+			if (WorkflowConstants.STATUS_DRAFT ==
+					objectDefinition2.getStatus()) {
+
+				continue;
+			}
+
+			ObjectRelatedModelsProvider objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						objectDefinition2.getClassName(),
+						objectDefinition2.getCompanyId(),
+						objectRelationship.getType());
+
+			try {
+				ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
+					true);
+
+				String deletionType = objectRelationship.getDeletionType();
+
+				if (ObjectEntryThreadLocal.isDisassociateRelatedModels()) {
+					deletionType =
+						ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE;
+				}
+
+				if (moveToTrash) {
+					objectRelatedModelsProvider.moveRelatedModelToTrash(
+						PrincipalThreadLocal.getUserId(), groupId,
+						objectRelationship.getObjectRelationshipId(),
+						primaryKey, deletionType);
+				}
+				else {
+					objectRelatedModelsProvider.deleteRelatedModel(
+						PrincipalThreadLocal.getUserId(), groupId,
+						objectRelationship.getObjectRelationshipId(),
+						primaryKey, deletionType);
+				}
+			}
+			catch (PrincipalException principalException) {
+				throw new ObjectRelationshipDeletionTypeException(
+					principalException.getMessage());
+			}
+			finally {
+				ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
+					false);
+			}
+		}
 	}
 
 	private void _deleteTempFileEntries(

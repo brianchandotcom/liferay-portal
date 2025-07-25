@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {render, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {fetch} from 'frontend-js-web';
 import React from 'react';
@@ -72,7 +72,7 @@ describe('ItemSelector component', () => {
 	});
 
 	it('renders an item selector', async () => {
-		render(
+		const {findByRole, queryByRole} = render(
 			<ItemSelector<TestItem>
 				apiURL={`${location.origin}/o/headless-delivery/v1.0/test-api-url`}
 			>
@@ -86,13 +86,15 @@ describe('ItemSelector component', () => {
 
 		expect(mockedFetch).toHaveBeenCalledTimes(1);
 
-		await userEvent.click(screen.getByRole('combobox'));
+		const input = await findByRole('combobox');
 
-		const menu = screen.getByRole('listbox');
+		await userEvent.click(input);
+
+		const menu = await findByRole('listbox');
 
 		expect(menu).toBeVisible();
 
-		const listItem = await screen.findByRole('option', {
+		const listItem = await findByRole('option', {
 			name: mockFirstItemName,
 		});
 
@@ -100,15 +102,15 @@ describe('ItemSelector component', () => {
 
 		await userEvent.click(listItem);
 
-		const hiddenMenu = screen.queryByRole('listbox');
-
-		expect(hiddenMenu).toBeNull();
+		await waitFor(() => {
+			expect(queryByRole('listbox')).not.toBeInTheDocument();
+		});
 	});
 
 	it('renders a controlled item selector', async () => {
 		const mockSetItem = jest.fn();
 
-		render(
+		const {findByRole} = render(
 			<ItemSelector<TestItem>
 				apiURL={`${location.origin}/o/headless-delivery/v1.0/test-api-url`}
 				items={[]}
@@ -129,13 +131,15 @@ describe('ItemSelector component', () => {
 			</ItemSelector>
 		);
 
-		await userEvent.click(screen.getByRole('combobox'));
+		const input = await findByRole('combobox');
 
-		const menu = await screen.findByRole('listbox');
+		await userEvent.click(input);
+
+		const menu = await findByRole('listbox');
 
 		expect(menu).toBeVisible();
 
-		const listItem = await screen.findByRole('option', {
+		const listItem = await findByRole('option', {
 			name: mockSecondItemName,
 		});
 

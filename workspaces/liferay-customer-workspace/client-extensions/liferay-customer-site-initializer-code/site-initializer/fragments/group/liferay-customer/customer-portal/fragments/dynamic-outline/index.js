@@ -4,81 +4,81 @@
  */
 
 window.addEventListener('load', () => {
-	const headers = document.querySelectorAll(
-		`.${configuration.className} h1, .${configuration.className} h2, .${configuration.className} h3`
+	const dynamicOutline = fragmentElement.querySelector(
+		`#dynamicOutline${fragmentNamespace}`
 	);
-
-	const tocContainer = fragmentElement.querySelector('#dynamic-outline-list');
-	const tocLinksMap = new Map();
+	const headers = document.querySelectorAll(
+		`.${configuration.targetWrapper} h1, .${configuration.targetWrapper} h2, .${configuration.targetWrapper} h3`
+	);
+	const outlineMap = new Map();
 
 	const scrollToHeader = (header) => {
 		header.scrollIntoView({behavior: 'smooth', block: 'start'});
 	};
 
 	const setActiveLink = (link) => {
-		fragmentElement
-			.querySelectorAll('.dynamic-toc li a')
-			.forEach((element) => {
-				element.classList.remove('active');
-			});
+		fragmentElement.querySelectorAll('.active').forEach((element) => {
+			element.classList.remove('active');
+		});
 
 		if (link) {
 			link.classList.add('active');
 		}
 	};
 
-	const configurationElements = document.querySelectorAll(
-		`.${configuration.className}`
-	);
-	configurationElements.forEach((element) =>
-		element.classList.add('dynamic-outline-article')
-	);
-
 	headers.forEach((header, index) => {
 		if (!header.id) {
 			header.id = 'section-' + index;
 		}
 
+		header.style.scrollMarginTop = '200px';
+
 		const a = document.createElement('a');
 		const li = document.createElement('li');
 
 		a.href = '#' + header.id;
-		a.id = 'dynamic-toc-' + header.id;
+		a.id = `dynamicOutline${fragmentNamespace}-${header.id}`;
 		a.textContent = header.textContent;
 
 		a.addEventListener('click', (event) => {
 			event.preventDefault();
+
 			scrollToHeader(header);
 		});
 
 		li.appendChild(a);
-		tocContainer.appendChild(li);
 
-		tocLinksMap.set(header.id, a);
+		dynamicOutline.appendChild(li);
 
-		header.addEventListener('click', (event) => {
-			event.preventDefault();
-			scrollToHeader(header);
-		});
+		outlineMap.set(header.id, a);
 	});
 
-	window.addEventListener('scroll', () => {
-		let currentSection = null;
+	const intersectingHeaders = new Set();
 
-		for (const header of headers) {
-			const offset = header.getBoundingClientRect().top;
-
-			if (offset <= 200) {
-				currentSection = header;
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				intersectingHeaders.add(entry.target);
 			}
 			else {
-				break;
+				intersectingHeaders.delete(entry.target);
+			}
+		});
+
+		let lastIntersectingHeader = null;
+
+		for (const header of headers) {
+			if (intersectingHeaders.has(header)) {
+				lastIntersectingHeader = header;
 			}
 		}
 
-		if (currentSection) {
-			const link = tocLinksMap.get(currentSection.id);
-			setActiveLink(link);
+		if (lastIntersectingHeader) {
+			setActiveLink(outlineMap.get(lastIntersectingHeader.id));
 		}
 	});
+
+	for (const header of headers) {
+		observer.observe(header);
+	}
 });

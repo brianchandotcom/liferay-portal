@@ -4,11 +4,11 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "dynamic-layout-content",
-					"description": "Input the class name.",
-					"label": "Class Name",
+					"defaultValue": "dynamic-outline-target-wrapper",
+					"description": "CSS class name of target wrapper.",
+					"label": "Target Wrapper",
 					"localizable": true,
-					"name": "className",
+					"name": "targetWrapper",
 					"type": "text"
 				}
 			]

@@ -3951,9 +3951,6 @@ public class BundleSiteInitializerTest {
 		String typeSettings = siteNavigationMenuItem1.getTypeSettings();
 
 		Assert.assertTrue(typeSettings.contains("Test Layout"));
-
-		typeSettings = siteNavigationMenuItem1.getTypeSettings();
-
 		Assert.assertTrue(typeSettings.contains("useCustomName"));
 
 		SiteNavigationMenuItem siteNavigationMenuItem2 =

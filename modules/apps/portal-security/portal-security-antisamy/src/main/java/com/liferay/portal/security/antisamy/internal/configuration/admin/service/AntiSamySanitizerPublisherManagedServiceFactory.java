@@ -115,7 +115,7 @@ public class AntiSamySanitizerPublisherManagedServiceFactory
 			HashMapDictionaryBuilder.<String, Object>put(
 				"component.name", AntiSamySanitizerImpl.class.getCanonicalName()
 			).put(
-				"sanitizer.order", 2
+				"sanitizer.order", 30
 			).build());
 	}
 

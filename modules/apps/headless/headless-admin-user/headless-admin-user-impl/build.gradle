@@ -26,6 +26,7 @@ dependencies {
 	compileOnly project(":apps:sharing:sharing-api")
 	compileOnly project(":apps:subscription:subscription-api")
 	compileOnly project(":apps:user-associated-data:user-associated-data-api")
+	compileOnly project(":apps:users-admin:users-admin-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")

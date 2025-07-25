@@ -139,6 +139,8 @@ public class PortalInstancesTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					CompanyConstants.SYSTEM)) {
 
+			// PortalInstances.getCompanyId code sets the CompanyThreadLocal
+
 			Assert.assertEquals(
 				_company.getCompanyId(),
 				PortalInstances.getCompanyId(mockHttpServletRequest));
@@ -151,6 +153,8 @@ public class PortalInstancesTest {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					RandomTestUtil.randomLong())) {
+
+			// PortalInstances.getCompanyId code sets the CompanyThreadLocal
 
 			Assert.assertEquals(
 				_company.getCompanyId(),
@@ -204,6 +208,8 @@ public class PortalInstancesTest {
 
 		mockHttpServletRequest.addHeader("Host", hostname);
 		mockHttpServletRequest.setServerName(hostname);
+
+		// PortalInstances.getCompanyId code sets the CompanyThreadLocal
 
 		Assert.assertEquals(
 			_company.getCompanyId(),

@@ -134,8 +134,9 @@ public class MiniCartTag extends IncludeTag {
 
 			_requestQuoteEnabled = _isRequestQuoteEnabled();
 			_siteDefaultURL = _getSiteDefaultURL(themeDisplay);
-			_slowConnectionOrderFlowEnabled = _slowConnectionOrderFlowEnabled();
-			_undoCartItemDeletionDisabled = _undoCartItemDeletionDisabled();
+			_slowConnectionOrderFlowEnabled =
+				_isSlowConnectionOrderFlowEnabled();
+			_undoCartItemDeletionDisabled = _isUndoCartItemDeletionDisabled();
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -376,7 +377,7 @@ public class MiniCartTag extends IncludeTag {
 		return commerceOrderFieldsConfiguration.requestQuoteEnabled();
 	}
 
-	private boolean _slowConnectionOrderFlowEnabled() throws PortalException {
+	private boolean _isSlowConnectionOrderFlowEnabled() throws PortalException {
 		CommerceOrderConfiguration commerceOrderConfiguration =
 			_configurationProvider.getConfiguration(
 				CommerceOrderConfiguration.class,
@@ -387,7 +388,7 @@ public class MiniCartTag extends IncludeTag {
 		return commerceOrderConfiguration.slowConnectionOrderFlowEnabled();
 	}
 
-	private boolean _undoCartItemDeletionDisabled() throws PortalException {
+	private boolean _isUndoCartItemDeletionDisabled() throws PortalException {
 		CommerceOrderConfiguration commerceOrderConfiguration =
 			_configurationProvider.getConfiguration(
 				CommerceOrderConfiguration.class,

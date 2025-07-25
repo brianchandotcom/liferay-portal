@@ -238,7 +238,7 @@ public class Base64 {
 
 			if (c != CharPool.STAR) {
 				throw new IllegalArgumentException(
-					String.format("Found illegal character '%c'", c));
+					String.format("Found illegal character: %c", c));
 			}
 		}
 		else {
@@ -252,7 +252,7 @@ public class Base64 {
 
 			if (c != CharPool.EQUAL) {
 				throw new IllegalArgumentException(
-					String.format("Found illegal character '%c'", c));
+					String.format("Found illegal character: %c", c));
 			}
 		}
 

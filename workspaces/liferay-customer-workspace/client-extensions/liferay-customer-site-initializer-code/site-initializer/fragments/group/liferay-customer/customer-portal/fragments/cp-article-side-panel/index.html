@@ -1,0 +1,48 @@
+[#assign displayObject = (request.getAttribute("LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER").getDisplayObject())!{} /]
+
+[#if displayObject?has_content]
+	[#assign
+		articleId = displayObject.articleId!""
+		categoryId = displayObject.categoryId!""
+		parentTaxonomyCategoryId = displayObject.parentCategoryId!""
+	/]
+
+	[#if articleId?has_content]
+		[#assign
+			currentItemId = articleId
+			restArticle = (restClient.get("/headless-delivery/v1.0/structured-contents/${displayObject.resourcePrimKey}?nestedFields=embeddedTaxonomyCategory"))!{}
+		/]
+
+		[#if restArticle?has_content]
+			[#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief]
+				[#if taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name == "Article Categories"]
+					[#if taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyCategory??]
+						[#assign parentTaxonomyCategoryId = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyCategory.id!"" /]
+					[#else]
+						[#assign parentTaxonomyCategoryId = taxonomyCategoryBrief.embeddedTaxonomyCategory.id!"" /]
+					[/#if]
+
+					[#break/]
+				[/#if]
+			[/#list]
+		[/#if]
+	[#elseif categoryId?has_content]
+		[#assign currentItemId = categoryId /]
+	[/#if]
+[/#if]
+
+[#if parentTaxonomyCategoryId?has_content]
+	<script>
+		const prefix = `${fragmentElementId}`.replaceAll('-', '');
+
+		const currentItemIdVarName = prefix + "CurrentItemId";
+
+		window[currentItemIdVarName] = "${currentItemId}";
+
+		const parentTaxonomyCategoryIdVarName = prefix + "ParentTaxonomyCategoryId";
+
+		window[parentTaxonomyCategoryIdVarName] = "${parentTaxonomyCategoryId}";
+	</script>
+[/#if]
+
+<div aria-hidden="true" class="loading-animation"></div>

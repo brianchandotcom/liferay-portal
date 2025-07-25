@@ -103,7 +103,7 @@ describe('[CMS Dashboard] Components: RangeSelectorsDropdown', () => {
 
 		expect(screen.getByText('create-date-range')).toBeInTheDocument();
 		expect(screen.getByText('from')).toBeInTheDocument();
-		expect(screen.getByText('to')).toBeInTheDocument();
+		expect(screen.getByText('to[date-time]')).toBeInTheDocument();
 
 		const rangeStartElement = screen.getByTestId('range-start');
 		const rangeEndElement = screen.getByTestId('range-end');
@@ -147,13 +147,13 @@ describe('[CMS Dashboard] Components: RangeSelectorsDropdown', () => {
 
 		expect(screen.getByText('create-date-range')).toBeInTheDocument();
 		expect(screen.getByText('from')).toBeInTheDocument();
-		expect(screen.getByText('to')).toBeInTheDocument();
+		expect(screen.getByText('to[date-time]')).toBeInTheDocument();
 
 		fireEvent.click(cancelButton);
 
 		expect(screen.queryByText('create-date-range')).not.toBeInTheDocument();
 		expect(screen.queryByText('from')).not.toBeInTheDocument();
-		expect(screen.queryByText('to')).not.toBeInTheDocument();
+		expect(screen.queryByText('to[date-time]')).not.toBeInTheDocument();
 	});
 
 	it('renders correctly with given classname', () => {

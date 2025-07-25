@@ -195,6 +195,15 @@
 		}
 	},
 	{
+		"key": "on-this-page",
+		"value": {
+			"en-US": "On this page",
+			"es-ES": "",
+			"ja-JP": "",
+			"pt-BR": ""
+		}
+	},
+	{
 		"key": "sign-in",
 		"value": {
 			"en-US": "Sign in",

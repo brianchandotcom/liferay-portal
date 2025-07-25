@@ -37,7 +37,10 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.List;
+
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -69,11 +72,11 @@ public class JournalFolderServicePerformanceTest {
 		_journalFolder = JournalTestUtil.addFolder(
 			_group.getGroupId(), RandomTestUtil.randomString());
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		_ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), ddmStructure.getStructureId(),
+		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), _ddmStructure.getStructureId(),
 			_portal.getClassNameId(JournalArticle.class));
 
 		for (int i = 0; i < _BATCH_SIZE; i++) {
@@ -81,7 +84,7 @@ public class JournalFolderServicePerformanceTest {
 				_group.getGroupId(), _journalFolder.getFolderId(),
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
 				DDMStructureTestUtil.getSampleStructuredContent(),
-				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
+				_ddmStructure.getStructureKey(), _ddmTemplate.getTemplateKey());
 		}
 
 		for (int i = 0; i < _BATCH_SIZE; i++) {
@@ -90,7 +93,7 @@ public class JournalFolderServicePerformanceTest {
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
 				DDMStructureTestUtil.getSampleStructuredContent(),
-				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
+				_ddmStructure.getStructureKey(), _ddmTemplate.getTemplateKey());
 		}
 
 		_user = UserTestUtil.addUser(_group.getGroupId());
@@ -139,14 +142,18 @@ public class JournalFolderServicePerformanceTest {
 
 	@Test
 	public void testGetFoldersAndArticles() throws Exception {
+		int count = 0;
+
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
 				5000, "Production")) {
 
-			_journalFolderService.getFoldersAndArticles(
+			List<Object> objects = _journalFolderService.getFoldersAndArticles(
 				_group.getGroupId(), TestPropsValues.getUserId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
+
+			count = objects.size();
 
 			_journalFolderService.getFoldersAndArticles(
 				_group.getGroupId(), TestPropsValues.getUserId(),
@@ -160,7 +167,16 @@ public class JournalFolderServicePerformanceTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
-			_journalFolderService.getFoldersAndArticles(
+			JournalFolder journalFolder = JournalTestUtil.addFolder(
+				_group.getGroupId(), RandomTestUtil.randomString());
+
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(), journalFolder.getFolderId(),
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+				DDMStructureTestUtil.getSampleStructuredContent(),
+				_ddmStructure.getStructureKey(), _ddmTemplate.getTemplateKey());
+
+			List<Object> objects = _journalFolderService.getFoldersAndArticles(
 				_group.getGroupId(), TestPropsValues.getUserId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
@@ -170,6 +186,8 @@ public class JournalFolderServicePerformanceTest {
 				_group.getGroupId(), TestPropsValues.getUserId(),
 				_journalFolder.getFolderId(), WorkflowConstants.STATUS_ANY,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Assert.assertEquals(objects.toString(), count + 1, objects.size());
 		}
 	}
 
@@ -180,6 +198,8 @@ public class JournalFolderServicePerformanceTest {
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
 
+	private DDMStructure _ddmStructure;
+	private DDMTemplate _ddmTemplate;
 	private Group _group;
 	private JournalFolder _journalFolder;
 

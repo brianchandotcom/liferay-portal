@@ -5,14 +5,11 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
-
 import java.text.Collator;
 
 import java.util.Arrays;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -20,9 +17,32 @@ import org.junit.Test;
  */
 public class NaturalOrderStringComparatorTest {
 
-	@Before
-	public void setUp() {
-		PropsTestUtil.setProps("collator.rules", "");
+	@Test
+	public void testSortAccentuation() {
+		testSort(
+			new String[] {
+				"joão", "Útil", "uva", "Amor", "único", "água", "Urso",
+				"abelha", "Ámor", "José", "Ânimo", "Árvore"
+			},
+			new String[] {
+				"abelha", "água", "Amor", "Ámor", "Ânimo", "Árvore", "joão",
+				"José", "único", "Urso", "Útil", "uva"
+			},
+			false, CollatorUtil.getInstance(LocaleUtil.getDefault()));
+	}
+
+	@Test
+	public void testSortAccentuationCaseSensitive() {
+		testSort(
+			new String[] {
+				"joão", "Útil", "uva", "Amor", "único", "água", "Urso",
+				"abelha", "Ámor", "José", "Ânimo", "Árvore"
+			},
+			new String[] {
+				"Amor", "Ámor", "Ânimo", "Árvore", "José", "Urso", "Útil",
+				"abelha", "água", "joão", "único", "uva"
+			},
+			true, CollatorUtil.getInstance(LocaleUtil.getDefault()));
 	}
 
 	@Test
@@ -45,34 +65,6 @@ public class NaturalOrderStringComparatorTest {
 				"com.liferay.module-2.0.11.jar"
 			},
 			false);
-	}
-
-	@Test
-	public void testSortLocalizedWithAccentuation() {
-		testSort(
-			new String[] {
-				"joão", "Útil", "uva", "Amor", "único", "água", "Urso",
-				"abelha", "José", "Ânimo", "Árvore"
-			},
-			new String[] {
-				"abelha", "Amor", "água", "Árvore", "Ânimo", "joão", "José",
-				"Urso", "uva", "único", "Útil"
-			},
-			false, CollatorUtil.getInstance(LocaleUtil.getDefault()));
-	}
-
-	@Test
-	public void testSortLocalizedWithAccentuationCaseSensitive() {
-		testSort(
-			new String[] {
-				"joão", "Útil", "uva", "Amor", "único", "água", "Urso",
-				"abelha", "José", "Ânimo", "Árvore"
-			},
-			new String[] {
-				"abelha", "Amor", "água", "Árvore", "Ânimo", "joão", "José",
-				"uva", "Urso", "único", "Útil"
-			},
-			true, CollatorUtil.getInstance(LocaleUtil.getDefault()));
 	}
 
 	@Test
@@ -126,7 +118,7 @@ public class NaturalOrderStringComparatorTest {
 			Arrays.toString(sortedArray), array.length, sortedArray.length);
 
 		for (int i = 0; i < array.length; i++) {
-			Assert.assertEquals(array[i], sortedArray[i]);
+			Assert.assertEquals(sortedArray[i], array[i]);
 		}
 
 		Arrays.sort(
@@ -135,7 +127,7 @@ public class NaturalOrderStringComparatorTest {
 
 		for (int i = 0; i < array.length; i++) {
 			Assert.assertEquals(
-				array[i], sortedArray[sortedArray.length - (i + 1)]);
+				sortedArray[sortedArray.length - (i + 1)], array[i]);
 		}
 	}
 

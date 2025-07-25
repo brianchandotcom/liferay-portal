@@ -11,10 +11,23 @@ import {useAccount} from '../../hooks/data/useAccounts';
 import {useSSATRialsExtend} from './useSSATrialsExtend';
 
 const SSADashboardOutlet = () => {
-	const {data: selectedAccount, error, isLoading} = useAccount();
-	const ssaTrialExtend = useSSATRialsExtend({
-		accountId: selectedAccount?.id ?? 0,
+	const {
+		data: selectedAccount,
+		error: errorAccount,
+		isLoading: isLoadingAccount,
+	} = useAccount();
+
+	const {
+		data: ssaTrialExtend,
+		error: errorTrialsExtend,
+		isLoading: isLoadingTrialsExtend,
+		mutate: ssaTrialExtendMutate,
+	} = useSSATRialsExtend({
+		accountId: selectedAccount?.id,
 	});
+
+	const error = errorAccount || errorTrialsExtend;
+	const isLoading = isLoadingAccount || isLoadingTrialsExtend;
 
 	return (
 		<PageRenderer error={error} isLoading={isLoading}>
@@ -33,6 +46,7 @@ const SSADashboardOutlet = () => {
 						context={{
 							selectedAccount,
 							ssaTrialExtend,
+							ssaTrialExtendMutate,
 						}}
 					/>
 				</span>

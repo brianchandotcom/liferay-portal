@@ -7,7 +7,7 @@ import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
 
 export default class HeadlessSSATrialsExtend {
-	static async createSSATrialsExtend(body: unknown) {
+	static async createSSATrialsExtend(body: Omit<TrialExtend, 'id'>) {
 		const response = await axios.post('o/c/ssatrialextends', body);
 
 		return response.data;

@@ -11,7 +11,7 @@ import {ExtendRequestStatus} from '../../enums/SSATrials';
 import './ExtensionStatus.scss';
 
 type ExtensionStatusProps = {
-	extensionStatus: keyof typeof EXTEND_TRIAL_STATUS_LABEL;
+	extensionStatus?: keyof typeof EXTEND_TRIAL_STATUS_LABEL;
 };
 
 const ExtensionStatus = ({extensionStatus}: ExtensionStatusProps) => (
@@ -31,7 +31,7 @@ const ExtensionStatus = ({extensionStatus}: ExtensionStatusProps) => (
 				extensionStatus === ExtendRequestStatus.PENDING,
 		})}
 	>
-		{EXTEND_TRIAL_STATUS_LABEL[extensionStatus]}
+		{EXTEND_TRIAL_STATUS_LABEL[extensionStatus ?? 'not-requested']}
 	</span>
 );
 export default ExtensionStatus;

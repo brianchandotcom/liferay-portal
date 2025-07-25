@@ -4,6 +4,7 @@
  */
 
 import {format} from 'date-fns';
+import {useOutletContext} from 'react-router-dom';
 
 import ListView, {ListViewProps} from '../../../../components/ListView';
 import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
@@ -12,7 +13,6 @@ import {OrderCustomFields, OrderTypes} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Action} from '../../../../utils/constants';
 import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
-import {getSSASettingsOrDefaultFromCustomFields} from '../../util';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
 
@@ -39,6 +39,8 @@ export default function TrialListView({
 	managementToolbarProps,
 	resourceUrl,
 }: TrialsListViewProps) {
+	const {ssaTrialExtend} = useOutletContext<any>();
+
 	return (
 		<ListView<PlacedOrder>
 			defaultFilters={{
@@ -61,14 +63,13 @@ export default function TrialListView({
 						id: 'placedOrderItems',
 						name: 'Project ID',
 						render: (_, {customFields, id}) => {
-							const SSASettings =
-								getSSASettingsOrDefaultFromCustomFields(
-									customFields
-								);
-
 							return (
 								<span className="font-weight-semi-bold ml-2">
-									{SSASettings?.projectId ?? id}
+									{JSON.parse(
+										customFields[
+											OrderCustomFields.TRIAL_SETTINGS
+										]
+									)?.projectId ?? id}
 								</span>
 							);
 						},
@@ -127,18 +128,35 @@ export default function TrialListView({
 						),
 					},
 					{
-						id: 'customFields',
+						id: 'id',
 						name: 'Extension Status',
-						render: (customFields) => {
-							const SSASettings =
-								getSSASettingsOrDefaultFromCustomFields(
-									customFields
+						render: (orderId) => {
+							const ssaTrialsExtendRequests =
+								ssaTrialExtend.items;
+							const extendRequests =
+								ssaTrialsExtendRequests?.filter(
+									(extend: TrialExtend) => {
+										return (
+											extend.r_orderToSSATrialExtend_commerceOrderId ===
+											Number(orderId)
+										);
+									}
+								) as TrialExtend[];
+
+							if (
+								!extendRequests ||
+								extendRequests?.length === 0
+							) {
+								return (
+									<ExtensionStatus extensionStatus="not-requested" />
 								);
+							}
 
 							return (
 								<ExtensionStatus
 									extensionStatus={
-										SSASettings.extendRequestStatus as keyof typeof EXTEND_TRIAL_STATUS_LABEL
+										extendRequests[0]?.statusRequest
+											.key as keyof typeof EXTEND_TRIAL_STATUS_LABEL
 									}
 								/>
 							);

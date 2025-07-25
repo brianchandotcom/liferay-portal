@@ -6,28 +6,31 @@
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import {addDays, format} from 'date-fns';
+import {KeyedMutator} from 'swr';
 
 import BaseWrapper from '../../../components/Form/BaseWrapper';
 import {OrderCustomFields} from '../../../enums/Order';
 import i18n from '../../../i18n';
-import trialOAuth2 from '../../../services/oauth/Trial';
-import {getSSASettingsOrDefaultFromCustomFields} from '../util';
+import HeadlessSSATrialsExtend from '../../../services/rest/HeadlessSSATrialsExtend';
+import {ExtendRequestStatus} from '../enums/SSATrials';
 
 type ExtendSSATrialModalProps = {
 	onClose: () => void;
 	order: PlacedOrder;
+	ssaTrialExtendMutate: KeyedMutator<any>;
+	trialExtend: TrialExtend;
+	trialExtendCount: number;
 };
 
 const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 	onClose,
 	order,
+	ssaTrialExtendMutate,
+	trialExtend,
+	trialExtendCount,
 }) => {
 	const trialSettings = JSON.parse(
 		order?.customFields[OrderCustomFields.TRIAL_SETTINGS]
-	);
-
-	const ssaSettings = getSSASettingsOrDefaultFromCustomFields(
-		order.customFields
 	);
 
 	return (
@@ -36,7 +39,10 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 				<div>
 					<h3>{i18n.translate('details')}</h3>
 					<BaseWrapper label={i18n.translate('project-id')} required>
-						<ClayInput disabled value={ssaSettings.projectId} />
+						<ClayInput
+							disabled
+							value={trialSettings.projectId ?? 'PLACEHOLDER'}
+						/>
 					</BaseWrapper>
 					<BaseWrapper label={i18n.translate('start-date')} required>
 						<ClayInput
@@ -74,13 +80,13 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 						label={i18n.translate('times-already-extended')}
 						required
 					>
-						<ClayInput disabled value={ssaSettings.extendCount} />
+						<ClayInput disabled value={trialExtendCount} />
 					</BaseWrapper>
 					<BaseWrapper
 						label={i18n.translate('duration-of-the-extension')}
 						required
 					>
-						<ClayInput disabled value={ssaSettings.duration} />
+						<ClayInput disabled value={trialExtend.duration} />
 					</BaseWrapper>
 					<BaseWrapper
 						label={i18n.translate('new-potential-expiration-date')}
@@ -91,7 +97,7 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 							value={format(
 								addDays(
 									new Date(order.createDate),
-									ssaSettings.duration
+									trialExtend.duration
 								),
 								'dd MMM, yyyy'
 							).toString()}
@@ -104,7 +110,36 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 					className="mr-4"
 					displayType="secondary"
 					onClick={() => {
-						trialOAuth2.extendTrial(order.id, -1);
+						HeadlessSSATrialsExtend.updateSSATrialsExtend(
+							trialExtend.id,
+							{statusRequest: {key: ExtendRequestStatus.REJECTED}}
+						);
+						ssaTrialExtendMutate(
+							(data: any) => {
+								const updatedItems = data.items.map(
+									(x: TrialExtend) => {
+										if (x.id === trialExtend.id) {
+											const newObject = {
+												...x,
+												statusRequest: {
+													key: ExtendRequestStatus.REJECTED,
+												},
+											};
+
+											return newObject;
+										}
+
+										return {...x};
+									}
+								);
+
+								return {
+									...data,
+									items: updatedItems,
+								};
+							},
+							{revalidate: false}
+						);
 						onClose();
 					}}
 				>
@@ -112,7 +147,38 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 				</ClayButton>
 				<ClayButton
 					onClick={() => {
-						trialOAuth2.extendTrial(order.id, ssaSettings.duration);
+						HeadlessSSATrialsExtend.updateSSATrialsExtend(
+							trialExtend.id,
+							{statusRequest: {key: ExtendRequestStatus.APPROVED}}
+						);
+
+						ssaTrialExtendMutate(
+							(data: any) => {
+								const updatedItems = data.items.map(
+									(x: TrialExtend) => {
+										if (x.id === trialExtend.id) {
+											const newObject = {
+												...x,
+												statusRequest: {
+													key: ExtendRequestStatus.APPROVED,
+												},
+											};
+
+											return newObject;
+										}
+
+										return {...x};
+									}
+								);
+
+								return {
+									...data,
+									items: updatedItems,
+								};
+							},
+							{revalidate: false}
+						);
+
 						onClose();
 					}}
 				>

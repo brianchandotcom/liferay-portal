@@ -23,6 +23,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -950,29 +952,50 @@ public class DLReferencesExportImportContentProcessor
 			if ((fileEntry == null) &&
 				!_isExternalURL(groupId, content, beginPos, endPos)) {
 
-				ExportImportContentValidationException
-					exportImportContentValidationException =
-						new ExportImportContentValidationException(
-							DLReferencesExportImportContentProcessor.class.
-								getName(),
-							new NoSuchFileEntryException());
+				int jsonBeginPos = StringUtil.lastIndexOfAny(
+					content, new String[] {"<![CDATA["}, beginPos);
+				jsonBeginPos = StringUtil.indexOfAny(
+					content, new char[] {'{'}, jsonBeginPos);
 
-				exportImportContentValidationException.setDLReferenceParameters(
-					dlReferenceParameters);
+				int jsonEndPos = StringUtil.indexOfAny(
+					content, new String[] {"]]>"}, jsonBeginPos);
 
-				ObjectValuePair<String, Integer>
-					dlReferenceEndPosObjectValuePair =
-						_getDLReferenceEndPosObjectValuePair(
-							content, beginPos, endPos);
+				jsonEndPos = StringUtil.lastIndexOfAny(
+					content, new char[] {'}'}, jsonEndPos);
 
-				exportImportContentValidationException.setDLReference(
-					dlReferenceEndPosObjectValuePair.getKey());
+				try {
+					JSONObject jsonObject = _jsonFactory.createJSONObject(
+						content.substring(jsonBeginPos, jsonEndPos + 1));
 
-				exportImportContentValidationException.setType(
-					ExportImportContentValidationException.
-						FILE_ENTRY_NOT_FOUND);
+					_dlAppLocalService.getFileEntryByUuidAndGroupId(
+						jsonObject.getString("uuid"),
+						jsonObject.getLong("groupId"));
+				}
+				catch (PortalException portalException) {
+					ExportImportContentValidationException
+						exportImportContentValidationException =
+							new ExportImportContentValidationException(
+								DLReferencesExportImportContentProcessor.class.
+									getName(),
+								portalException);
 
-				throw exportImportContentValidationException;
+					exportImportContentValidationException.
+						setDLReferenceParameters(dlReferenceParameters);
+
+					ObjectValuePair<String, Integer>
+						dlReferenceEndPosObjectValuePair =
+							_getDLReferenceEndPosObjectValuePair(
+								content, beginPos, endPos);
+
+					exportImportContentValidationException.setDLReference(
+						dlReferenceEndPosObjectValuePair.getKey());
+
+					exportImportContentValidationException.setType(
+						ExportImportContentValidationException.
+							FILE_ENTRY_NOT_FOUND);
+
+					throw exportImportContentValidationException;
+				}
 			}
 
 			endPos = beginPos - 1;
@@ -1030,6 +1053,9 @@ public class DLReferencesExportImportContentProcessor
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

@@ -87,7 +87,7 @@ public class SQLServerDBCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
-			CTSampleTestUtil.addCTSChild(_QUERY_PROCESSOR_BATCH_SIZE);
+			CTSampleTestUtil.addCTSChild(_BATCH_SIZE_QUERY_PROCESSOR);
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -116,7 +116,7 @@ public class SQLServerDBCTTest {
 			parentCTSChildId = CTSampleTestUtil.addCTSChild();
 
 			CTSampleTestUtil.addCTSChild(
-				0, parentCTSChildId, null, _HIBERNATE_BATCH_SIZE);
+				0, parentCTSChildId, null, _BATCH_SIZE_HIBERNATE);
 		}
 
 		List<CTSChild> ctsChildren =
@@ -148,7 +148,7 @@ public class SQLServerDBCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
-			CTSampleTestUtil.addCTSChild(_QUERY_PROCESSOR_BATCH_SIZE);
+			CTSampleTestUtil.addCTSChild(_BATCH_SIZE_QUERY_PROCESSOR);
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -163,9 +163,9 @@ public class SQLServerDBCTTest {
 			WorkflowConstants.STATUS_APPROVED, _ctCollection.getStatus());
 	}
 
-	private static final int _HIBERNATE_BATCH_SIZE = 2001;
+	private static final int _BATCH_SIZE_HIBERNATE = 2001;
 
-	private static final int _QUERY_PROCESSOR_BATCH_SIZE = 50001;
+	private static final int _BATCH_SIZE_QUERY_PROCESSOR = 50001;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

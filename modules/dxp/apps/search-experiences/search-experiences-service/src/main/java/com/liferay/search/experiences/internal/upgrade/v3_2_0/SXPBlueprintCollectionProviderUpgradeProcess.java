@@ -112,7 +112,7 @@ public class SXPBlueprintCollectionProviderUpgradeProcess
 
 	private void _upgradeSXPBlueprintSchemaVersion() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"UPDATE SXPBlueprint SET schemaVersion = ? WHERE " +
+				"update SXPBlueprint set schemaVersion = ? where " +
 					"schemaVersion <> ?")) {
 
 			preparedStatement.setString(1, _SCHEMA_VERSION);

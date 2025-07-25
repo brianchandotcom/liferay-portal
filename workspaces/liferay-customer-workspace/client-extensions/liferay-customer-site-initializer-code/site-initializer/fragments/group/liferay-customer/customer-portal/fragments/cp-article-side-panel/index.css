@@ -1,0 +1,25 @@
+.cp-category-side-panel-container {
+    background-color: var(--color-neutral-1, #F7F7F8);
+    gap: var(--spacer-2, 0.5rem);
+
+    .cp-category-side-panel-item {
+
+        &:hover,
+        &.active {
+            background-color: var(--color-action-primary-active-lighten, #E6EDFB);
+
+            a,
+            button {
+                color: var(--color-brand-primary-darken-2, #004AD7) !important;
+            }
+        }
+    }
+
+    .hide-content {
+        display: none !important;
+    }
+
+    .rotate-90 {
+        transform: rotate(90deg);
+    }
+}

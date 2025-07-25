@@ -205,9 +205,6 @@ public class BuildArchiverUtil {
 		}
 	}
 
-	private static final String _DEFAULT_OUTPUT_DIR_PATH =
-		buildProperties.getProperty("jenkins.tmp.dir");
-
 	private static final Properties _buildProperties;
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(8, true);

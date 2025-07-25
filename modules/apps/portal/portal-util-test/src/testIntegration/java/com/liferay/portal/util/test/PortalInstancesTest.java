@@ -196,9 +196,7 @@ public class PortalInstancesTest {
 		_testGetVirtualHostLanguageId(languageId, hostname);
 	}
 
-	private void _testGetCompanyId(
-		String hostname, LayoutSet layoutSet) {
-
+	private void _testGetCompanyId(String hostname, LayoutSet layoutSet) {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -206,8 +204,7 @@ public class PortalInstancesTest {
 		mockHttpServletRequest.setServerName(hostname);
 
 		Assert.assertEquals(
-			_company.getCompanyId(),
-			(long)CompanyThreadLocal.getCompanyId());
+			_company.getCompanyId(), (long)CompanyThreadLocal.getCompanyId());
 		Assert.assertEquals(
 			_company.getCompanyId(),
 			PortalInstances.getCompanyId(mockHttpServletRequest));

@@ -22,8 +22,12 @@ const cardConfigurations = {
 	},
 };
 
-const getElementByClass = (className) =>
-	document.querySelector(`.${className}`);
+const domElements = Object.fromEntries(
+	Object.entries(elementClassMap).map(([key, className]) => [
+		key,
+		getElementByClass(className),
+	])
+);
 
 const elementClassMap = {
 	containerEnablementHubCard: 'container-enablement-hub-card',
@@ -34,12 +38,8 @@ const elementClassMap = {
 	salesPageCardTitle: 'sales-page-card-title',
 };
 
-const domElements = Object.fromEntries(
-	Object.entries(elementClassMap).map(([key, className]) => [
-		key,
-		getElementByClass(className),
-	])
-);
+const getElementByClass = (className) =>
+	document.querySelector(`.${className}`);
 
 const getUserAccount = async () => {
 	const response = await Liferay.Util.fetch(

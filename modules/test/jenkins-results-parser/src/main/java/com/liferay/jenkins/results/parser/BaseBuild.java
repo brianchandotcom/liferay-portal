@@ -301,7 +301,7 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getBuildDirPath() {
 		Properties buildProperties = null;
-		
+
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}

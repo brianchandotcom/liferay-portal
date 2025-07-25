@@ -73,7 +73,7 @@ public class BuildArchiverUtil {
 		}
 
 		Properties buildProperties = null;
-		
+
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}

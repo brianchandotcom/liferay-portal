@@ -471,7 +471,7 @@ describe('Field Text', () => {
 		expect(queryByText('4/10 characters')).not.toBeInTheDocument();
 	});
 
-	it('renders a counter when show counter is true, there is a maxLength and value length is greater than the maximum lenght', () => {
+	it('renders a counter when show counter is true, there is a maxLength and value length is greater than the maximum length', () => {
 		render(
 			<TextWithProvider
 				{...defaultTextConfig}

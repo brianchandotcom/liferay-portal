@@ -12,6 +12,7 @@ export type Operators =
 	| 'ge'
 	| 'gt'
 	| 'lambda'
+	| 'lambdaContains'
 	| 'le'
 	| 'lt'
 	| 'ne'

@@ -33,7 +33,7 @@ type ManagementToolbarFilterProps = {
 	filterSchema?: FilterSchema;
 };
 
-type Option = {label: string; value: string};
+export type Option = {label: string; value: string};
 
 type FilterBodyProps = {
 	filterSchema: FilterSchema | undefined;
@@ -91,13 +91,21 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 				},
 			];
 		}
-		else if (type === 'select-one') {
+		if (type === 'select-one') {
 			value = [
 				{
 					label: options.item(options.selectedIndex).label,
 					value: Number(value) || value,
 				},
 			];
+		}
+		if (Array.isArray(value)) {
+			if (typeof value[0] === 'object') {
+				value = !value[0].label ? '' : value;
+			}
+			if (!value[0]) {
+				value = '';
+			}
 		}
 
 		setForm({
@@ -172,9 +180,9 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			name: key,
 			value: Array.isArray(filterCleaned[key])
 				? (filterCleaned as any)[key].map((options: Option) =>
-						options?.label
-							? options?.label
-							: options?.value || options
+						options?.value
+							? options?.value
+							: options?.label || options
 					)
 				: filterCleaned[key],
 		}));

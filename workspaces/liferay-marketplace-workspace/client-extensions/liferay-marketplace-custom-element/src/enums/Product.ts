@@ -10,20 +10,6 @@ export enum LicenseType {
 	SUBSCRIPTION = 'subscription',
 }
 
-export enum ProductCategories {
-	MARKETPLACE_APP_CATEGORY = 'marketplace-app-category',
-	MARKETPLACE_APP_TAGS = 'marketplace-app-tags',
-	MARKETPLACE_LIFERAY_VERSION = 'marketplace-liferay-version',
-	MARKETPLACE_PRODUCT_TYPE = 'marketplace-product-type',
-	MARKETPLACE_SOLUTION_CATEGORY = 'marketplace-solution-category',
-	MARKETPLACE_SOLUTION_TAGS = 'marketplace-solution-tags',
-}
-
-export enum ProductCategories {
-	FRAGMENTS = 'Fragments',
-	PAYMENT_METHODS = 'Payment methods',
-}
-
 export enum ProductEditionOption {
 	EE = 'EE',
 }

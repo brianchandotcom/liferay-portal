@@ -6,8 +6,8 @@
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {MarketplaceCategories} from '../../enums/Categories';
 import {
-	ProductCategories,
 	ProductSpecificationKey,
 	ProductTypeVocabulary,
 	SolutionTypes,
@@ -97,7 +97,7 @@ const ProductPurchaseRouter = () => {
 
 	const productTypes = getProductCategoriesByVocabularyName(
 		product?.categories || [],
-		ProductCategories.MARKETPLACE_PRODUCT_TYPE
+		MarketplaceCategories.MARKETPLACE_PRODUCT_TYPE
 	);
 
 	const productTypeCategory = productTypes[0] as ProductTypeVocabulary;

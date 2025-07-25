@@ -191,7 +191,7 @@ public class AccountGroupsAdminPortletDataHandlerTest {
 						exportImportReportEntry.getClassExternalReferenceCode(),
 						externalReferenceCode) &&
 					(exportImportReportEntry.getType() ==
-						ExportImportReportEntryConstants.TYPE_INCOMPLETE)));
+						ExportImportReportEntryConstants.TYPE_EMPTY)));
 	}
 
 	@Test

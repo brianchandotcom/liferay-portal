@@ -194,14 +194,14 @@ public class SecureXMLFactoryProviderImplTest {
 						public void characters(
 							char[] ch, int start, int length) {
 
-							_contentLenght += length;
+							_contentLength += length;
 
-							if (_contentLenght > (1024 * 1024 * 10)) {
+							if (_contentLength > (1024 * 1024 * 10)) {
 								throw new OutOfMemoryError();
 							}
 						}
 
-						private int _contentLenght;
+						private int _contentLength;
 
 					});
 

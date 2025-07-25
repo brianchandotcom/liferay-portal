@@ -11,9 +11,10 @@ import {KeyedMutator} from 'swr';
 
 import {OrderCustomFields, OrderStatus as Status} from '../../../enums/Order';
 import i18n from '../../../i18n';
-import HeadlessSSATrialsExtend from '../../../services/rest/HeadlessSSATrialsExtend';
+import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
 import {TRIAL_STATUS_LABEL} from '../constants';
 import {ExtendRequestStatus} from '../enums/SSATrials';
+import trialOAuth2 from '../../../services/oauth/Trial';
 
 type ExtendSSATrialModalProps = {
 	onClose: () => void;
@@ -188,10 +189,10 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 				<ClayButton
 					className="mr-4"
 					displayType="secondary"
-					onClick={() => {
-						HeadlessSSATrialsExtend.updateSSATrialsExtend(
+					onClick={async () => {
+						await HeadlessTrialExtensionRequest.updateTrialExtensionRequest(
 							trialExtend.id,
-							{statusRequest: {key: ExtendRequestStatus.REJECTED}}
+							{dueStatus: {key: ExtendRequestStatus.REJECTED}}
 						);
 						ssaTrialExtendMutate(
 							(data: any) => {
@@ -225,10 +226,10 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 					{i18n.translate('reject-request')}
 				</ClayButton>
 				<ClayButton
-					onClick={() => {
-						HeadlessSSATrialsExtend.updateSSATrialsExtend(
+					onClick={async () => {
+						await HeadlessTrialExtensionRequest.updateTrialExtensionRequest(
 							trialExtend.id,
-							{statusRequest: {key: ExtendRequestStatus.APPROVED}}
+							{dueStatus: {key: ExtendRequestStatus.APPROVED}}
 						);
 
 						ssaTrialExtendMutate(
@@ -257,6 +258,8 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 							},
 							{revalidate: false}
 						);
+
+						await trialOAuth2.extendTrial(trialExtend.id);
 
 						onClose();
 					}}

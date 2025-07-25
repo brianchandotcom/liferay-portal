@@ -16,9 +16,10 @@ import BaseWrapper from '../../../components/Form/BaseWrapper';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema, {z} from '../../../schema/zod';
-import HeadlessSSATrialsExtend from '../../../services/rest/HeadlessSSATrialsExtend';
+import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
 import {EXTEND_OPTIONS, EXTEND_TYPES} from '../constants';
 import {ExtendRequestStatus} from '../enums/SSATrials';
+import trialOAuth2 from '../../../services/oauth/Trial';
 
 type ExtendSSATrialModalProps = {
 	accountId: number;
@@ -60,30 +61,38 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 
 	const onSubmit = async (form: z.infer<typeof zodSchema.extendSSATrial>) => {
 		try {
-			let extendTrialStatusKey = ExtendRequestStatus.PENDING;
-
-			if (extendType === EXTEND_TYPES.AUTO_EXTEND) {
-				extendTrialStatusKey = ExtendRequestStatus.AUTO_APPROVED;
-			}
-
 			const extendTrial = {
 				duration: form.duration,
-				r_accountToSSATrialExtend_accountEntryId: accountId,
-				r_orderToSSATrialExtend_commerceOrderId: order.id,
+				r_accountToTrialExtensionRequest_accountEntryId: accountId,
+				r_orderToTrialExtensionRequest_commerceOrderId: order.id,
 				reason: form.reason,
-				statusRequest: {key: extendTrialStatusKey ?? 'pending'},
+				dueStatus: {
+					key:
+						extendType === EXTEND_TYPES.AUTO_EXTEND
+							? ExtendRequestStatus.AUTO_APPROVED
+							: ExtendRequestStatus.PENDING,
+				},
 			};
 
-			const newItem =
-				await HeadlessSSATrialsExtend.createSSATrialsExtend(
+			const newExtensionRequest: TrialExtend =
+				await HeadlessTrialExtensionRequest.createTrialExtensionRequest(
 					extendTrial
 				);
+
+			if (extendType === EXTEND_TYPES.AUTO_EXTEND) {
+				try {
+					await trialOAuth2.extendTrial(newExtensionRequest.id);
+				}
+				catch (e) {
+					console.log(e);
+				}
+			}
 
 			ssaTrialExtendMutate(
 				(data: any) => {
 					return {
 						...data,
-						items: [newItem, ...data.items],
+						items: [newExtensionRequest, ...data.items],
 					};
 				},
 				{revalidate: false}

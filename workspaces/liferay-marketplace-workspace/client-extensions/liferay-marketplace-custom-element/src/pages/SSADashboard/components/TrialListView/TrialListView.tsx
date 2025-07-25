@@ -137,7 +137,7 @@ export default function TrialListView({
 								ssaTrialsExtendRequests?.filter(
 									(extend: TrialExtend) => {
 										return (
-											extend.r_orderToSSATrialExtend_commerceOrderId ===
+											extend.r_orderToTrialExtensionRequest_commerceOrderId ===
 											Number(orderId)
 										);
 									}
@@ -155,7 +155,7 @@ export default function TrialListView({
 							return (
 								<ExtensionStatus
 									extensionStatus={
-										extendRequests[0]?.statusRequest
+										extendRequests[0]?.dueStatus
 											.key as keyof typeof EXTEND_TRIAL_STATUS_LABEL
 									}
 								/>

@@ -84,7 +84,7 @@ export default function SaaSTrials() {
 					const extendRequests = ssaTrialsExtendRequests?.filter(
 						(extend: TrialExtend) => {
 							return (
-								extend.r_orderToSSATrialExtend_commerceOrderId ===
+								extend.r_orderToTrialExtensionRequest_commerceOrderId ===
 								Number(order.id)
 							);
 						}
@@ -92,7 +92,7 @@ export default function SaaSTrials() {
 
 					if (extendRequests && extendRequests?.length > 0) {
 						return (
-							extendRequests[0]?.statusRequest.key !==
+							extendRequests[0]?.dueStatus.key !==
 							ExtendRequestStatus.PENDING
 						);
 					}
@@ -106,7 +106,7 @@ export default function SaaSTrials() {
 				const extendRequests = ssaTrialsExtendRequests?.filter(
 					(extend: TrialExtend) => {
 						return (
-							extend.r_orderToSSATrialExtend_commerceOrderId ===
+							extend.r_orderToTrialExtensionRequest_commerceOrderId ===
 							Number(order.id)
 						);
 					}
@@ -136,7 +136,7 @@ export default function SaaSTrials() {
 				const extendRequests = ssaTrialsExtendRequests?.filter(
 					(extend: TrialExtend) => {
 						return (
-							extend.r_orderToSSATrialExtend_commerceOrderId ===
+							extend.r_orderToTrialExtensionRequest_commerceOrderId ===
 							Number(order.id)
 						);
 					}
@@ -150,7 +150,7 @@ export default function SaaSTrials() {
 					order.orderStatusInfo.label === OrderStatus.APPROVED ||
 					order.orderStatusInfo.label === OrderStatus.COMPLETED ||
 					order.orderStatusInfo.label === OrderStatus.PROCESSING ||
-					extendRequests[0]?.statusRequest.key ===
+					extendRequests[0]?.dueStatus.key ===
 						ExtendRequestStatus.PENDING
 				);
 			},
@@ -160,7 +160,7 @@ export default function SaaSTrials() {
 				const extendRequests = ssaTrialsExtendRequests?.filter(
 					(extend: TrialExtend) => {
 						return (
-							extend.r_orderToSSATrialExtend_commerceOrderId ===
+							extend.r_orderToTrialExtensionRequest_commerceOrderId ===
 							Number(order.id)
 						);
 					}

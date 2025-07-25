@@ -6,7 +6,7 @@
 import useSWR, {SWRConfiguration} from 'swr';
 
 import SearchBuilder from '../../core/SearchBuilder';
-import HeadlessSSATrialsExtend from '../../services/rest/HeadlessSSATrialsExtend';
+import HeadlessTrialExtensionRequest from '../../services/rest/HeadlessTrialExtensionRequest';
 
 type Props = {
 	accountId?: number;
@@ -16,12 +16,12 @@ type Props = {
 
 const useSSATRialsExtend = ({accountId}: Props) => {
 	return useSWR(
-		accountId ? '/o/c/ssatrialextends' : null,
+		accountId ? '/o/c/trialextensionrequests' : null,
 		async () =>
-			await HeadlessSSATrialsExtend.getSSATrialsExtend(
+			await HeadlessTrialExtensionRequest.getTrialExtensionRequest(
 				new URLSearchParams({
 					filter: SearchBuilder.eq(
-						'r_accountToSSATrialExtend_accountEntryId',
+						'r_accountToTrialExtensionRequest_accountEntryId',
 						accountId ?? 0
 					),
 					page: '1',

@@ -16,35 +16,35 @@ public class Base64Test {
 	@Test
 	public void testDecodeFromURLWithOptionalPadding() {
 
-		// Single padding
-
-		Assert.assertArrayEquals(
-			"liferay".getBytes(), Base64.decodeFromURL("bGlmZXJheQ*"));
-		Assert.assertArrayEquals(
-			"liferay".getBytes(), Base64.decodeFromURL("bGlmZXJheQ"));
-
 		// Double padding
 
 		Assert.assertArrayEquals(
-			"life".getBytes(), Base64.decodeFromURL("bGlmZQ**"));
-		Assert.assertArrayEquals(
 			"life".getBytes(), Base64.decodeFromURL("bGlmZQ"));
+		Assert.assertArrayEquals(
+			"life".getBytes(), Base64.decodeFromURL("bGlmZQ**"));
+
+		// Single padding
+
+		Assert.assertArrayEquals(
+			"liferay".getBytes(), Base64.decodeFromURL("bGlmZXJheQ"));
+		Assert.assertArrayEquals(
+			"liferay".getBytes(), Base64.decodeFromURL("bGlmZXJheQ*"));
 	}
 
 	@Test
 	public void testDecodeWithOptionalPadding() {
 
+		// Double padding
+
+		Assert.assertArrayEquals("life".getBytes(), Base64.decode("bGlmZQ"));
+		Assert.assertArrayEquals("life".getBytes(), Base64.decode("bGlmZQ=="));
+
 		// Single padding
 
 		Assert.assertArrayEquals(
-			"liferay".getBytes(), Base64.decode("bGlmZXJheQ="));
-		Assert.assertArrayEquals(
 			"liferay".getBytes(), Base64.decode("bGlmZXJheQ"));
-
-		// Double padding
-
-		Assert.assertArrayEquals("life".getBytes(), Base64.decode("bGlmZQ=="));
-		Assert.assertArrayEquals("life".getBytes(), Base64.decode("bGlmZQ"));
+		Assert.assertArrayEquals(
+			"liferay".getBytes(), Base64.decode("bGlmZXJheQ="));
 	}
 
 }

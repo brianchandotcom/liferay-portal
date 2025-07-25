@@ -82,7 +82,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							objectDefinitionId: newObjectDefinition.id,
 							objectDefinitionName: newObjectDefinition.name,
 							objectDefinitionPermissionsURL,
-							objectFoldersLenght: objectFolders.length,
+							objectFoldersLength: objectFolders.length,
 							status: newObjectDefinition.status,
 						});
 
@@ -1075,7 +1075,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							objectDefinitionId: objectDefinition.id,
 							objectDefinitionName: objectDefinition.name,
 							objectDefinitionPermissionsURL,
-							objectFoldersLenght: objectFolders.length,
+							objectFoldersLength: objectFolders.length,
 							status: objectDefinition.status,
 						});
 

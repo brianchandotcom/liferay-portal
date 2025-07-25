@@ -135,7 +135,7 @@ export function ObjectDefinitionNode({
 						objectDefinitionId: id,
 						objectDefinitionName: name,
 						objectDefinitionPermissionsURL,
-						objectFoldersLenght: objectFolders.length,
+						objectFoldersLength: objectFolders.length,
 						status,
 					})}
 					handleSelectObjectDefinitionNode={

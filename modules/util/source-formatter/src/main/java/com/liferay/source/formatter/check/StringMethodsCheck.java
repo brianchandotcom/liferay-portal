@@ -108,8 +108,8 @@ public class StringMethodsCheck extends BaseFileCheck {
 				content.substring(matcher.start()));
 
 			if ((parameterList.size() != 2) ||
-				!_isSingleLenghtString(parameterList.get(0)) ||
-				!_isSingleLenghtString(parameterList.get(1))) {
+				!_isSingleLengthString(parameterList.get(0)) ||
+				!_isSingleLengthString(parameterList.get(1))) {
 
 				continue;
 			}
@@ -165,7 +165,7 @@ public class StringMethodsCheck extends BaseFileCheck {
 				}
 			}
 
-			if (!_isSingleLenghtString(parameterList.get(1))) {
+			if (!_isSingleLengthString(parameterList.get(1))) {
 				continue;
 			}
 
@@ -209,7 +209,7 @@ public class StringMethodsCheck extends BaseFileCheck {
 		}
 	}
 
-	private boolean _isSingleLenghtString(String s)
+	private boolean _isSingleLengthString(String s)
 		throws ReflectiveOperationException {
 
 		Matcher singleLengthMatcher = _singleLengthStringPattern.matcher(s);

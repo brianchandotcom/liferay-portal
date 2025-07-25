@@ -15,6 +15,7 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -165,6 +166,44 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 		return _objectEntryService.getManyToManyObjectEntriesCount(
 			groupId, objectRelationship.getObjectRelationshipId(),
 			objectEntryId, false, objectRelationship.isReverse(), search);
+	}
+
+	@Override
+	public void moveRelatedModelToTrash(
+			long userId, long groupId, long objectRelationshipId,
+			long primaryKey, String deletionType)
+		throws PortalException {
+
+		List<ObjectEntry> relatedModels = getRelatedModels(
+			groupId, objectRelationshipId, primaryKey, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		if (relatedModels.isEmpty()) {
+			return;
+		}
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		if (Objects.equals(
+				deletionType,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT) &&
+			!objectRelationship.isReverse()) {
+
+			throw new RequiredObjectRelationshipException(objectRelationship);
+		}
+
+		if (Objects.equals(
+				deletionType,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) &&
+			!objectRelationship.isReverse()) {
+
+			for (ObjectEntry objectEntry : relatedModels) {
+				_objectEntryService.moveObjectEntryToTrash(
+					userId, objectEntry, new ServiceContext());
+			}
+		}
 	}
 
 	private final String _className;

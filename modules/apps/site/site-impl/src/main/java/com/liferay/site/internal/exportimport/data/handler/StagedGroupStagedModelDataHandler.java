@@ -491,8 +491,8 @@ public class StagedGroupStagedModelDataHandler
 
 		_permissionImporter.clearCache();
 
-		List<Element> batchElements = new ArrayList<>();
-		List<Element> nonbatchElements = new ArrayList<>();
+		List<Element> batchPortletElements = new ArrayList<>();
+		List<Element> nonbatchPortletElements = new ArrayList<>();
 
 		for (Element portletElement : sitePortletElements) {
 			String portletId = portletElement.attributeValue("portlet-id");
@@ -508,21 +508,19 @@ public class StagedGroupStagedModelDataHandler
 				portlet.getPortletDataHandlerInstance();
 
 			if (portletDataHandler.isBatch()) {
-				batchElements.add(portletElement);
+				batchPortletElements.add(portletElement);
 			}
 			else {
-				nonbatchElements.add(portletElement);
+				nonbatchPortletElements.add(portletElement);
 			}
 		}
 
 		List<Element> orderedPortletElements = new ArrayList<>();
 
-		orderedPortletElements.addAll(batchElements);
-		orderedPortletElements.addAll(nonbatchElements);
+		orderedPortletElements.addAll(batchPortletElements);
+		orderedPortletElements.addAll(nonbatchPortletElements);
 
 		for (Element portletElement : orderedPortletElements) {
-			String portletId = portletElement.attributeValue("portlet-id");
-
 			long layoutId = GetterUtil.getLong(
 				portletElement.attributeValue("layout-id"));
 
@@ -539,6 +537,8 @@ public class StagedGroupStagedModelDataHandler
 			}
 
 			portletDataContext.setPlid(plid);
+
+			String portletId = portletElement.attributeValue("portlet-id");
 
 			portletDataContext.setPortletId(portletId);
 

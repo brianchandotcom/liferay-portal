@@ -123,6 +123,11 @@ public class ViewRelatedEntriesDisplayContext {
 				_ctCollectionId, ctSQLMode, ctEntry.getModelClassNameId(),
 				ctEntry.getModelClassPK());
 
+			if (ctModel == null) {
+				ctModel = _ctDisplayRendererRegistry.fetchCTModel(
+					ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+			}
+
 			if (!isShowHideable() &&
 				_ctDisplayRendererRegistry.isHideable(
 					ctModel, ctEntry.getModelClassNameId())) {

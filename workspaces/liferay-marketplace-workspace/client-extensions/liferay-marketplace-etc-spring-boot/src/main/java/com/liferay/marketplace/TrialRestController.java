@@ -475,7 +475,7 @@ public class TrialRestController extends BaseRestController {
 			).put(
 				"deployable", false
 			).put(
-				"domain", _ssaTrialDXPDomain
+				"domain", _trialSSADXPDomain
 			).put(
 				"projectPrefix", _consoleSSAProjectPrefix
 			).put(
@@ -614,8 +614,8 @@ public class TrialRestController extends BaseRestController {
 	@Autowired
 	private MarketplaceService _marketplaceService;
 
-	@Value("${liferay.marketplace.ssa.dxp.domain}")
-	private String _ssaTrialDXPDomain;
+	@Value("${liferay.marketplace.trial.ssa.dxp.domain}")
+	private String _trialSSADXPDomain;
 
 	@Value("${liferay.marketplace.trial.dxp.domain}")
 	private String _trialDXPDomain;

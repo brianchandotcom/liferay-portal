@@ -16,11 +16,12 @@ import com.liferay.headless.portal.instances.client.resource.v1_0.PortalInstance
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.ConsoleService;
 import com.liferay.marketplace.service.MarketplaceService;
-import com.liferay.marketplace.util.TrialProvisioningContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.net.URI;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -67,15 +69,16 @@ public class TrialRestController extends BaseRestController {
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
 
-		TrialProvisioningContext trialProvisioningContext =
-			_trialProvisioningContextFactory.create(
+		JSONObject trialProvisioningContextJSONObject =
+			_getTrialProvisioningContextJSONObject(
 				order.getOrderTypeExternalReferenceCode());
 
 		_consoleService.deleteProject(
-			orderId, trialProvisioningContext.getConsoleProjectPrefix());
+			orderId,
+			trialProvisioningContextJSONObject.getString("projectPrefix"));
 
 		_deletePortalInstance(
-			orderId, trialProvisioningContext,
+			orderId, trialProvisioningContextJSONObject,
 			customFields.get("trial-virtualhost"));
 	}
 
@@ -86,7 +89,7 @@ public class TrialRestController extends BaseRestController {
 		throws Exception {
 
 		Page<PortalInstance> page = _getPortalInstancesPage(
-			_trialProvisioningContextFactory.create(
+			_getTrialProvisioningContextJSONObject(
 				orderTypeExternalReferenceCode));
 
 		return new JSONObject(
@@ -107,7 +110,7 @@ public class TrialRestController extends BaseRestController {
 		throws Exception {
 
 		Page<PortalInstance> portalInstancePage = _getPortalInstancesPage(
-			_trialProvisioningContextFactory.create(
+			_getTrialProvisioningContextJSONObject(
 				orderTypeExternalReferenceCode));
 
 		for (PortalInstance portalInstance : portalInstancePage.getItems()) {
@@ -189,7 +192,7 @@ public class TrialRestController extends BaseRestController {
 					"headless-server"),
 			new JSONObject(
 			).put(
-				"dueStatus", "approved"
+				"dueStatus", "Approved"
 			).toString(),
 			UriComponentsBuilder.fromPath(
 				"/o/c/trialextensionrequests/" + id
@@ -249,12 +252,12 @@ public class TrialRestController extends BaseRestController {
 
 		Order order = _marketplaceService.getOrder(orderId);
 
-		TrialProvisioningContext trialProvisioningContext =
-			_trialProvisioningContextFactory.create(
+		JSONObject trialProvisioningContextJSONObject =
+			_getTrialProvisioningContextJSONObject(
 				order.getOrderTypeExternalReferenceCode());
 
 		Page<PortalInstance> portalInstancesPage = _getPortalInstancesPage(
-			trialProvisioningContext);
+			trialProvisioningContextJSONObject);
 
 		if (portalInstancesPage.getTotalCount() == _TRIAL_MAX_INSTANCES) {
 			_log.error("Order is on hold");
@@ -306,18 +309,19 @@ public class TrialRestController extends BaseRestController {
 			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
 			trialSettingsJSONObject.optString(
 				"projectId", String.valueOf(orderId)),
-			trialProvisioningContext);
+			trialProvisioningContextJSONObject);
 
 		try {
 			_consoleService.setUpProject(
-				trialProvisioningContext.getConsoleCluster(),
-				trialProvisioningContext.deployable(),
-				trialProvisioningContext.getConsoleProjectUid(),
+				trialProvisioningContextJSONObject.getString("cluster"),
+				trialProvisioningContextJSONObject.getBoolean("deployable"),
+				trialProvisioningContextJSONObject.getString("projectUid"),
 				portalInstance.getVirtualHost(),
 				_toStringArray(
 					trialSettingsJSONObject.optJSONArray(
 						"consoleInviteEmailAddresses", new JSONArray())),
-				orderId, trialProvisioningContext.getConsoleProjectPrefix());
+				orderId,
+				trialProvisioningContextJSONObject.getString("projectPrefix"));
 
 			_marketplaceService.updateOrder(
 				HashMapBuilder.put(
@@ -356,12 +360,12 @@ public class TrialRestController extends BaseRestController {
 		catch (WebClientResponseException webClientResponseException) {
 			_rollBackTrial(
 				webClientResponseException.getResponseBodyAsString(), orderId,
-				portalInstance, trialProvisioningContext);
+				portalInstance, trialProvisioningContextJSONObject);
 		}
 		catch (Exception exception) {
 			_rollBackTrial(
 				exception.getMessage(), orderId, portalInstance,
-				trialProvisioningContext);
+				trialProvisioningContextJSONObject);
 		}
 	}
 
@@ -391,12 +395,12 @@ public class TrialRestController extends BaseRestController {
 	}
 
 	private void _deletePortalInstance(
-			long orderId, TrialProvisioningContext trialProvisioningContext,
+			long orderId, JSONObject trialProvisioningContextJSONObject,
 			String virtualHost)
 		throws Exception {
 
 		PortalInstanceResource portalInstanceResource =
-			_getPortalInstanceResource(trialProvisioningContext);
+			_getPortalInstanceResource(trialProvisioningContextJSONObject);
 
 		Page<PortalInstance> page =
 			portalInstanceResource.getPortalInstancesPage(true);
@@ -416,36 +420,84 @@ public class TrialRestController extends BaseRestController {
 	}
 
 	private PortalInstanceResource _getPortalInstanceResource(
-			TrialProvisioningContext trialProvisioningContext)
+			JSONObject trialProvisioningContextJSONObject)
 		throws Exception {
 
 		return PortalInstanceResource.builder(
 		).endpoint(
-			trialProvisioningContext.getTrialHomePageURL()
+			new URI(
+				trialProvisioningContextJSONObject.getString("trialHomePageURL")
+			).toURL()
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				trialProvisioningContext.getTrialAuthorizationERC())
+				trialProvisioningContextJSONObject.getString(
+					"trialAuthorizationERC"))
 		).build();
 	}
 
 	private Page<PortalInstance> _getPortalInstancesPage(
-			TrialProvisioningContext trialProvisioningContext)
+			JSONObject trialProvisioningContextJSONObject)
 		throws Exception {
 
 		PortalInstanceResource portalInstanceResource =
-			_getPortalInstanceResource(trialProvisioningContext);
+			_getPortalInstanceResource(trialProvisioningContextJSONObject);
 
 		return portalInstanceResource.getPortalInstancesPage(true);
 	}
 
+	private JSONObject _getTrialProvisioningContextJSONObject(
+		String orderTypeExternalReferenceCode) {
+
+		if (Objects.equals(orderTypeExternalReferenceCode, "SOLUTIONS7")) {
+			return new JSONObject(
+			).put(
+				"cluster", _consoleTrialCluster
+			).put(
+				"deployable", true
+			).put(
+				"domain", _trialDXPDomain
+			).put(
+				"projectPrefix", _consoleTrialProjectPrefix
+			).put(
+				"projectUid", _consoleTrialProjectUid
+			).put(
+				"trialAuthorizationERC", "external-trial"
+			).put(
+				"trialHomePageURL", _externalTrialHomePageURL
+			);
+		}
+
+		if (Objects.equals(orderTypeExternalReferenceCode, "SSA_SAAS")) {
+			return new JSONObject(
+			).put(
+				"cluster", _consoleSSACluster
+			).put(
+				"deployable", false
+			).put(
+				"domain", _ssaTrialDXPDomain
+			).put(
+				"projectPrefix", _consoleSSAProjectPrefix
+			).put(
+				"projectUid", _consoleSSAProjectUid
+			).put(
+				"trialAuthorizationERC", "external-ssa"
+			).put(
+				"trialHomePageURL", _externalSSAHomePageURL
+			);
+		}
+
+		throw new IllegalArgumentException(
+			"Unsupported orderType: " + orderTypeExternalReferenceCode);
+	}
+
 	private PortalInstance _postPortalInstance(
 			Jwt jwt, String emailAddress, String projectId,
-			TrialProvisioningContext trialProvisioningContext)
+			JSONObject trialProvisioningContextJSONObject)
 		throws Exception {
 
 		PortalInstanceResource portalInstanceResource =
-			_getPortalInstanceResource(trialProvisioningContext);
+			_getPortalInstanceResource(trialProvisioningContextJSONObject);
 
 		PortalInstance portalInstance = new PortalInstance();
 
@@ -465,7 +517,9 @@ public class TrialRestController extends BaseRestController {
 
 		portalInstance.setDomain(() -> "lxc.app");
 
-		String domain = projectId + "." + trialProvisioningContext.getDomain();
+		String domain =
+			projectId + "." +
+				trialProvisioningContextJSONObject.getString("domain");
 
 		portalInstance.setPortalInstanceId(() -> domain);
 		portalInstance.setVirtualHost(() -> domain);
@@ -482,7 +536,7 @@ public class TrialRestController extends BaseRestController {
 
 	private void _rollBackTrial(
 			String errorMessage, long orderId, PortalInstance portalInstance,
-			TrialProvisioningContext trialProvisioningContext)
+			JSONObject trialProvisioningContextJSONObject)
 		throws Exception {
 
 		_log.error(
@@ -491,7 +545,8 @@ public class TrialRestController extends BaseRestController {
 				errorMessage));
 
 		_deletePortalInstance(
-			orderId, trialProvisioningContext, portalInstance.getVirtualHost());
+			orderId, trialProvisioningContextJSONObject,
+			portalInstance.getVirtualHost());
 
 		_marketplaceService.updateOrder(
 			HashMapBuilder.put(
@@ -529,13 +584,40 @@ public class TrialRestController extends BaseRestController {
 	@Autowired
 	private ConsoleService _consoleService;
 
+	@Value("${liferay.marketplace.console.ssa.cluster}")
+	private String _consoleSSACluster;
+
+	@Value("${liferay.marketplace.console.ssa.project.prefix}")
+	private String _consoleSSAProjectPrefix;
+
+	@Value("${liferay.marketplace.console.ssa.project.uid}")
+	private String _consoleSSAProjectUid;
+
+	@Value("${liferay.marketplace.console.cluster}")
+	private String _consoleTrialCluster;
+
+	@Value("${liferay.marketplace.console.project.prefix}")
+	private String _consoleTrialProjectPrefix;
+
+	@Value("${liferay.marketplace.console.project.uid}")
+	private String _consoleTrialProjectUid;
+
+	@Value("${external.ssa.oauth2.headless.server.home.page.url}")
+	private String _externalSSAHomePageURL;
+
+	@Value("${external.trial.oauth2.headless.server.home.page.url}")
+	private String _externalTrialHomePageURL;
+
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 	@Autowired
 	private MarketplaceService _marketplaceService;
 
-	@Autowired
-	private TrialProvisioningContext.Factory _trialProvisioningContextFactory;
+	@Value("${liferay.marketplace.ssa.dxp.domain}")
+	private String _ssaTrialDXPDomain;
+
+	@Value("${liferay.marketplace.trial.dxp.domain}")
+	private String _trialDXPDomain;
 
 }

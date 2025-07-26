@@ -32,17 +32,17 @@ import java.util.Map;
 public class ViewSpaceMembersSummarySectionDisplayContext {
 
 	public ViewSpaceMembersSummarySectionDisplayContext(
-		long groupId, HttpServletRequest httpServletRequest, Language language,
-		DepotEntryLocalService depotEntryLocalService,
+		DepotEntryLocalService depotEntryLocalService, long groupId,
 		GroupLocalService groupLocalService,
+		HttpServletRequest httpServletRequest, Language language,
 		UserGroupLocalService userGroupLocalService,
 		UserLocalService userLocalService) {
 
+		_depotEntryLocalService = depotEntryLocalService;
 		_groupId = groupId;
+		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
-		_depotEntryLocalService = depotEntryLocalService;
-		_groupLocalService = groupLocalService;
 		_userGroupLocalService = userGroupLocalService;
 		_userLocalService = userLocalService;
 	}

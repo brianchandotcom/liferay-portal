@@ -34,9 +34,10 @@ public class ViewSpaceMembersSummaryJSPSectionFragmentRenderer
 	@Override
 	protected Object getDisplayContext(HttpServletRequest httpServletRequest) {
 		return new ViewSpaceMembersSummarySectionDisplayContext(
-			InfoItemUtil.getGroupId(httpServletRequest), httpServletRequest,
-			_language, _depotEntryLocalService, _groupLocalService,
-			_userGroupLocalService, _userLocalService);
+			_depotEntryLocalService,
+			InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
+			httpServletRequest, _language, _userGroupLocalService,
+			_userLocalService);
 	}
 
 	@Override

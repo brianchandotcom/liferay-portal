@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -37,7 +38,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -68,13 +68,6 @@ public class UpdatePermissionsMVCActionCommandTest {
 
 		_ownerRole = _roleLocalService.getRole(
 			_company.getCompanyId(), RoleConstants.OWNER);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
-
-		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Test
@@ -225,6 +218,7 @@ public class UpdatePermissionsMVCActionCommandTest {
 		}
 	}
 
+	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject

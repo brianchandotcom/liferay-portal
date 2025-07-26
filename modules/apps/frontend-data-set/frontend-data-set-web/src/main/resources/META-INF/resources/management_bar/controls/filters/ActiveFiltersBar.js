@@ -15,7 +15,7 @@ import FilterResume from './FilterResume';
 import SearchResume from './SearchResume';
 
 function ActiveFiltersBar({disabled, total}) {
-	const {isSearching, onSearch, searchParam, setIsSearching} = useContext(
+	const {onSearch, searchParam, searching, setSearching} = useContext(
 		FrontendDataSetContext
 	);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
@@ -23,7 +23,7 @@ function ActiveFiltersBar({disabled, total}) {
 	const searchActive = Boolean(searchParam?.trim());
 
 	const resetFiltersValue = () => {
-		setIsSearching(true);
+		setSearching(true);
 
 		viewsDispatch({
 			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
@@ -54,7 +54,7 @@ function ActiveFiltersBar({disabled, total}) {
 						<li className="p-0 tbar-item tbar-item-expand">
 							<div className="tbar-section">
 								{Liferay.FeatureFlags['LPD-52212'] &&
-									(isSearching ? (
+									(searching ? (
 										<span>
 											{Liferay.Language.get(
 												'requesting-results-for-colon'

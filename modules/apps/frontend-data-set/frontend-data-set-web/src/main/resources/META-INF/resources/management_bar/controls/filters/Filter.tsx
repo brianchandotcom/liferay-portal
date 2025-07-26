@@ -63,7 +63,7 @@ const Filter = ({
 	type,
 	...otherProps
 }: FilterComponentArgs) => {
-	const {setIsSearching} = useContext(FrontendDataSetContext);
+	const {setSearching} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const filterImplementation = FILTER_IMPLEMENTATIONS[type];
@@ -106,7 +106,7 @@ const Filter = ({
 		newFilter.selectedItemsLabel =
 			filterImplementation.getSelectedItemsLabel(newFilter);
 
-		setIsSearching(true);
+		setSearching(true);
 
 		viewsDispatch({
 			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,

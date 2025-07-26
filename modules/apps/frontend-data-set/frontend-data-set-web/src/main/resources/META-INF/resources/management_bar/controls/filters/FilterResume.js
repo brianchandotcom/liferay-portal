@@ -16,7 +16,7 @@ import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
 import Filter from './Filter';
 
 function FilterResume(props) {
-	const {setIsSearching} = useContext(FrontendDataSetContext);
+	const {setSearching} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const [open, setOpen] = useState(false);
@@ -64,7 +64,7 @@ function FilterResume(props) {
 				displayType="secondary"
 				monospaced
 				onClick={() => {
-					setIsSearching(true);
+					setSearching(true);
 
 					viewsDispatch({
 						type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,

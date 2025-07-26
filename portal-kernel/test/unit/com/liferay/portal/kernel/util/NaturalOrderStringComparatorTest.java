@@ -21,12 +21,14 @@ public class NaturalOrderStringComparatorTest {
 	public void testSortAccentuation() {
 		testSort(
 			new String[] {
-				"joão", "Útil", "uva", "Amor", "único", "água", "Urso",
-				"abelha", "Ámor", "José", "Ânimo", "Árvore"
+				"jo\u00E3o", "\u00DAtil", "uva", "Amor", "\u00FAnico",
+				"\u00E1gua", "Urso", "abelha", "\u00C1mor", "Jos\u00E9",
+				"\u00C2nimo", "\u00C1rvore"
 			},
 			new String[] {
-				"abelha", "água", "Amor", "Ámor", "Ânimo", "Árvore", "joão",
-				"José", "único", "Urso", "Útil", "uva"
+				"abelha", "\u00E1gua", "Amor", "\u00C1mor", "\u00C2nimo",
+				"\u00C1rvore", "jo\u00E3o", "Jos\u00E9", "\u00FAnico", "Urso",
+				"\u00DAtil", "uva"
 			},
 			false, CollatorUtil.getInstance(LocaleUtil.getDefault()));
 	}
@@ -35,12 +37,14 @@ public class NaturalOrderStringComparatorTest {
 	public void testSortAccentuationCaseSensitive() {
 		testSort(
 			new String[] {
-				"joão", "Útil", "uva", "Amor", "único", "água", "Urso",
-				"abelha", "Ámor", "José", "Ânimo", "Árvore"
+				"jo\u00E3o", "\u00DAtil", "uva", "Amor", "\u00FAnico",
+				"\u00E1gua", "Urso", "abelha", "\u00C1mor", "Jos\u00E9",
+				"\u00C2nimo", "\u00C1rvore"
 			},
 			new String[] {
-				"Amor", "Ámor", "Ânimo", "Árvore", "José", "Urso", "Útil",
-				"abelha", "água", "joão", "único", "uva"
+				"Amor", "\u00C1mor", "\u00C2nimo", "\u00C1rvore", "Jos\u00E9",
+				"Urso", "\u00DAtil", "abelha", "\u00E1gua", "jo\u00E3o",
+				"\u00FAnico", "uva"
 			},
 			true, CollatorUtil.getInstance(LocaleUtil.getDefault()));
 	}

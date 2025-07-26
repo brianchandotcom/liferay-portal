@@ -1917,6 +1917,67 @@
 			]
 		},
 		{
+			"description": "For changes made here to take effect, you must reload the browser page after saving.",
+			"properties": {
+				"cacheExpirationTime": {
+					"default": -1,
+					"description": "Define the time, in minutes, in which the SPA cache is cleared. Use a zero value if the cache should never expire during SPA navigation. Use a negative value if the cache should be disabled.",
+					"title": "Cache Expiration Time",
+					"type": "number"
+				},
+				"customExcludedPaths": {
+					"description": "Define the custom paths that SPA should ignore.",
+					"items": {
+						"type": "string"
+					},
+					"title": "Custom Excluded Paths",
+					"type": "array"
+				},
+				"enabled": {
+					"default": true,
+					"description": "If this is checked, the single page application framework will allow for faster navigation between pages.",
+					"title": "Enable Single Page Application",
+					"type": "boolean"
+				},
+				"navigationExceptionSelectors": {
+					"default": ":not([target=\\",
+					"description": "Define the CSS selectors that SPA should ignore.",
+					"items": {
+						"type": "string"
+					},
+					"title": "Navigation Exception Selectors",
+					"type": "array"
+				},
+				"pid": {
+					"const": "com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration",
+					"description": "For changes made here to take effect, you must reload the browser page after saving.",
+					"title": "Frontend SPA Infrastructure"
+				},
+				"preloadCSS": {
+					"default": false,
+					"description": "Preload CSS resources before applying UI changes. This will prevent FOUC (flash of unstyled content) at the expense of making UI updates slower.",
+					"title": "Preload CSS",
+					"type": "boolean"
+				},
+				"requestTimeout": {
+					"default": 0,
+					"description": "Define the time, in milliseconds, in which a SPA request times out. Use a zero value if the request should never timeout.",
+					"title": "Request Timeout Time",
+					"type": "number"
+				},
+				"userNotificationTimeout": {
+					"default": 30000,
+					"description": "Define the time, in milliseconds, in which a notification is shown to the user stating that the request is taking longer than expected. Set to 0 if no notification should be shown.",
+					"title": "User Notification Timeout",
+					"type": "number"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "Frontend SPA Infrastructure"
+		},
+		{
 			"properties": {
 				"enabled": {
 					"default": false,
@@ -4163,7 +4224,7 @@
 					"items": {
 						"type": "string"
 					},
-					"title": "Objects and CMS Structures",
+					"title": "Objects and CMS Structures Included in the XML Sitemap",
 					"type": "array"
 				},
 				"includeCategories": {
@@ -4493,6 +4554,7 @@
 				"com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration",
 				"com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration",
 				"com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration",
+				"com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration",
 				"com.liferay.frontend.js.web.internal.configuration.CustomDialogsSettingsConfiguration",
 				"com.liferay.journal.configuration.JournalServiceConfiguration",
 				"com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration",

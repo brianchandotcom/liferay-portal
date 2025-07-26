@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Blogs Web
 Bundle-SymbolicName: com.liferay.blogs.web
-Bundle-Version: 6.0.146
+Bundle-Version: 6.0.147
 Web-ContextPath: /blogs-web
 -dsannotations-options: inherit

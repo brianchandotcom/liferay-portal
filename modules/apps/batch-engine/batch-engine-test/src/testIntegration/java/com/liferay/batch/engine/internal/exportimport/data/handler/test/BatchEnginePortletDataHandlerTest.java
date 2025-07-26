@@ -11,8 +11,10 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -20,7 +22,6 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
-import com.liferay.exportimport.test.util.exportimport.data.handler.FailingLayoutStagedModelDataHandler;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -266,7 +267,30 @@ public class BatchEnginePortletDataHandlerTest {
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(
 				StagedModelDataHandler.class,
-				new FailingLayoutStagedModelDataHandler(),
+				new BaseStagedModelDataHandler<Layout>() {
+
+					@Override
+					public String[] getClassNames() {
+						return new String[] {Layout.class.getName()};
+					}
+
+					@Override
+					protected void doExportStagedModel(
+							PortletDataContext portletDataContext,
+							Layout layout)
+						throws Exception {
+					}
+
+					@Override
+					protected void doImportStagedModel(
+							PortletDataContext portletDataContext,
+							Layout layout)
+						throws Exception {
+
+						throw new PortletDataException();
+					}
+
+				},
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", Layout.class.getName()
 				).put(

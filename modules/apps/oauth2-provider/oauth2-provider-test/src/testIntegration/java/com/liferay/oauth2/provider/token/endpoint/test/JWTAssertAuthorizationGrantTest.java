@@ -123,7 +123,6 @@ public class JWTAssertAuthorizationGrantTest
 				).put(
 					"oauth2.in.assertion.user.auth.type", "UUID"
 				).build());
-
 			createFactoryConfiguration(
 				"com.liferay.oauth2.provider.rest.internal.configuration." +
 					"OAuth2InAssertionConfiguration",

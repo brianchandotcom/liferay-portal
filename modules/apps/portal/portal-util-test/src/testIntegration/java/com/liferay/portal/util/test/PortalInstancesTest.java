@@ -139,30 +139,14 @@ public class PortalInstancesTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					CompanyConstants.SYSTEM)) {
 
-			// PortalInstances.getCompanyId code sets the CompanyThreadLocal
-
-			Assert.assertEquals(
-				_company.getCompanyId(),
-				PortalInstances.getCompanyId(mockHttpServletRequest));
-
-			Assert.assertEquals(
-				_company.getCompanyId(),
-				(long)CompanyThreadLocal.getCompanyId());
+			_assertGetCompanyId(mockHttpServletRequest);
 		}
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					RandomTestUtil.randomLong())) {
 
-			// PortalInstances.getCompanyId code sets the CompanyThreadLocal
-
-			Assert.assertEquals(
-				_company.getCompanyId(),
-				PortalInstances.getCompanyId(mockHttpServletRequest));
-
-			Assert.assertNotEquals(
-				_company.getCompanyId(),
-				(long)CompanyThreadLocal.getCompanyId());
+			_assertGetCompanyId(mockHttpServletRequest);
 		}
 	}
 
@@ -202,14 +186,11 @@ public class PortalInstancesTest {
 		_testGetVirtualHostLanguageId(languageId, hostname);
 	}
 
-	private void _testGetCompanyId(String hostname, LayoutSet layoutSet) {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+	private void _assertGetCompanyId(
+		MockHttpServletRequest mockHttpServletRequest) {
 
-		mockHttpServletRequest.addHeader("Host", hostname);
-		mockHttpServletRequest.setServerName(hostname);
-
-		// PortalInstances.getCompanyId code sets the CompanyThreadLocal
+		// PortalInstances#getCompanyId must be invoked before
+		// CompanyThreadLocal#getCompanyId
 
 		Assert.assertEquals(
 			_company.getCompanyId(),
@@ -217,6 +198,17 @@ public class PortalInstancesTest {
 
 		Assert.assertEquals(
 			_company.getCompanyId(), (long)CompanyThreadLocal.getCompanyId());
+	}
+
+	private void _testGetCompanyId(String hostname, LayoutSet layoutSet) {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addHeader("Host", hostname);
+		mockHttpServletRequest.setServerName(hostname);
+
+		_assertGetCompanyId(mockHttpServletRequest);
+
 		Assert.assertEquals(
 			_company.getCompanyId(),
 			mockHttpServletRequest.getAttribute(WebKeys.COMPANY_ID));

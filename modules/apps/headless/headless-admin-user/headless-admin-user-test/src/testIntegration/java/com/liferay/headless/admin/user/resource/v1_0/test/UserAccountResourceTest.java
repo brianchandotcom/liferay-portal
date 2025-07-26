@@ -190,12 +190,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_accountEntry = _addAccountEntry();
 		_organization = OrganizationTestUtil.addOrganization();
+
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), User.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), _role.getRoleId(),
+			ActionKeys.VIEW);
 
 		_testUser = _userLocalService.getUserByEmailAddress(
 			testGroup.getCompanyId(), "test@liferay.com");
-
-		_userGroup = UserGroupTestUtil.addUserGroup();
 
 		_userLocalService.deleteGroupUser(
 			testGroup.getGroupId(), _testUser.getUserId());
@@ -205,30 +212,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		indexer.reindex(_testUser);
 
-		_accountEntry = _addAccountEntry();
-
-		User otherUser = UserTestUtil.addUser(false);
-
-		otherUser = _userLocalService.updatePassword(
-			otherUser.getUserId(), "test", "test", false, true);
-
-		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_userLocalService.addRoleUser(_role.getRoleId(), otherUser);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), User.class.getName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), _role.getRoleId(),
-			ActionKeys.VIEW);
-
-		UserAccountResource.Builder builder = UserAccountResource.builder();
-
-		_otherUserAccountResource = builder.authentication(
-			otherUser.getEmailAddress(), "test"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
+		_userGroup = UserGroupTestUtil.addUserGroup();
 	}
 
 	@Override
@@ -1332,7 +1316,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				UserAccount userAccount)
 		throws Exception {
 
-		return userAccount.getExternalReferenceCode();
+		return _accountEntry.getExternalReferenceCode();
 	}
 
 	@Override
@@ -1719,18 +1703,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private AccountEntry _addAccountEntry() throws Exception {
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			StringPool.BLANK, TestPropsValues.getUserId(),
+		return _accountEntryLocalService.addAccountEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(20), RandomTestUtil.randomString(20),
 			null, null, null, null,
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
-
-		accountEntry.setExternalReferenceCode(RandomTestUtil.randomString());
-
-		return _accountEntryLocalService.updateAccountEntry(accountEntry);
 	}
 
 	private UserAccount _addAccountUserAccount(
@@ -2302,8 +2282,23 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			User user, Role... roles)
 		throws Exception {
 
+		User otherUser = UserTestUtil.addUser(false);
+
+		otherUser = _userLocalService.updatePassword(
+			otherUser.getUserId(), "test", "test", false, true);
+
+		_userLocalService.addRoleUser(_role.getRoleId(), otherUser);
+
+		UserAccountResource.Builder builder = UserAccountResource.builder();
+
+		UserAccountResource otherUserAccountResource = builder.authentication(
+			otherUser.getEmailAddress(), "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
 		RoleBrief[] roleBriefs = _getUserAccountRoleBriefs(
-			_otherUserAccountResource.getUserAccount(user.getUserId()));
+			otherUserAccountResource.getUserAccount(user.getUserId()));
 
 		for (Role role : roles) {
 			Assert.assertFalse(_hasRole(role, roleBriefs));
@@ -2813,7 +2808,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
 
-	private UserAccountResource _otherUserAccountResource;
 	private UserAccount _regularUserAccount;
 	private String _regularUserAccountCurrentPassword;
 	private UserAccountResource _regularUserAccountResource;

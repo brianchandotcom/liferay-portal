@@ -62,7 +62,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1511,8 +1510,7 @@ public class JournalDisplayContext {
 		if (!hasAssetFilter() && !isHighlightedDDMStructure() &&
 			!isNavigationMine() && !isNavigationRecent() && !isSearch() &&
 			!isTypeVersions() && (getDDMStructureId() <= 0) &&
-			(getStatus() == WorkflowConstants.STATUS_ANY) &&
-			CTCollectionThreadLocal.isProductionMode()) {
+			(getStatus() == WorkflowConstants.STATUS_ANY)) {
 
 			SearchContainer<Object> articleAndFolderSearchContainer =
 				_getArticleAndFolderSearchContainer();

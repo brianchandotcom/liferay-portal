@@ -37,7 +37,7 @@ const TYPES = {
 };
 
 const formatDateForView = (date: string): string => {
-	const formattedDate = new Date(date.replace('--:--', '00:00'));
+	const formattedDate = new Date(date.replace('--:--', '23:59'));
 
 	if (isNaN(formattedDate.getTime())) {
 		return 'NaN';
@@ -60,7 +60,7 @@ const formatDateForView = (date: string): string => {
 };
 
 const formatDateToISO = (date: string): string => {
-	const formattedDate = new Date(date.replace('--:--', '00:00'));
+	const formattedDate = new Date(date.replace('--:--', '23:59'));
 
 	return formattedDate.toISOString();
 };
@@ -217,11 +217,14 @@ function CollaboratorListItem({
 									'set-expiration-date'
 								)}
 								borderless
-								className="inline-item inline-item-before"
+								className="inline-item inline-item-before lfr-portal-tooltip"
 								displayType="secondary"
 								monospaced
 								size="xs"
 								symbol="date-time"
+								title={Liferay.Language.get(
+									'set-expiration-date'
+								)}
 							/>
 						}
 					>
@@ -398,6 +401,10 @@ export default function ShareModalContent({
 
 	const _handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
+
+		if (collaborators.some(({error}) => !!error)) {
+			return;
+		}
 
 		setLoading(true);
 
@@ -670,11 +677,7 @@ export default function ShareModalContent({
 						</ClayButton>
 
 						<ClayButton
-							disabled={
-								loading ||
-								!collaborators.some(({error}) => !error) ||
-								!_isCollaboratorsUpdated()
-							}
+							disabled={loading || !_isCollaboratorsUpdated()}
 							displayType="primary"
 							onClick={_handleSubmit}
 							type="submit"

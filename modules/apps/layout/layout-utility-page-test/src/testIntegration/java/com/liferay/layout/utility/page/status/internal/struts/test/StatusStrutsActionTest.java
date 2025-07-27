@@ -127,17 +127,13 @@ public class StatusStrutsActionTest {
 
 		Assert.assertTrue(
 			content,
-			StringUtil.contains(
-				content,
+			content.contains(
 				_language.format(
 					LocaleUtil.US, "powered-by-x",
 					"<a class=\"text-decoration-underline text-white\" " +
 						"href=\"http://www.liferay.com\" rel=\"external\">" +
-							"Liferay</a>"),
-				StringPool.BLANK));
-		Assert.assertTrue(
-			content,
-			StringUtil.contains(content, expectedContent, StringPool.BLANK));
+							"Liferay</a>")));
+		Assert.assertTrue(content, content.contains(expectedContent));
 	}
 
 	@Inject

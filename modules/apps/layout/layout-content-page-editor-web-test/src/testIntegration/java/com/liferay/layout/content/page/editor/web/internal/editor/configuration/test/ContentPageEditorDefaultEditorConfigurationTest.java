@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -102,11 +101,9 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 	private void _assertItemSelectorURL(String eventName, String url) {
 		Assert.assertTrue(
 			url,
-			StringUtil.contains(
-				url,
+			url.contains(
 				"_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_" +
-					"itemSelectedEventName=_EDITOR_NAME_" + eventName,
-				StringPool.BLANK));
+					"itemSelectedEventName=_EDITOR_NAME_" + eventName));
 	}
 
 	private void _assertTextEditorConfigJSONObject(

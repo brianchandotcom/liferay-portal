@@ -412,8 +412,7 @@ public class PublishLayoutMVCActionCommandTest {
 		String content = document.get(
 			Field.getLocalizedName(locale, Field.CONTENT));
 
-		Assert.assertTrue(
-			content, StringUtil.contains(content, keywords, StringPool.BLANK));
+		Assert.assertTrue(content, content.contains(keywords));
 
 		Assert.assertEquals(
 			document.get(Field.ENTRY_CLASS_PK),

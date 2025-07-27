@@ -614,10 +614,10 @@ public class TrialRestController extends BaseRestController {
 	@Autowired
 	private MarketplaceService _marketplaceService;
 
-	@Value("${liferay.marketplace.trial.ssa.dxp.domain}")
-	private String _trialSSADXPDomain;
-
 	@Value("${liferay.marketplace.trial.dxp.domain}")
 	private String _trialDXPDomain;
+
+	@Value("${liferay.marketplace.trial.ssa.dxp.domain}")
+	private String _trialSSADXPDomain;
 
 }

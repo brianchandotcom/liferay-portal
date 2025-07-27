@@ -1070,8 +1070,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			String content = _getLayoutContent(layout, locale);
 
 			for (String text : list) {
-				Assert.assertTrue(
-					StringUtil.contains(content, text, StringPool.BLANK));
+				Assert.assertTrue(content.contains(text));
 			}
 
 			map.put(layout.getPlid(), content);

@@ -104,7 +104,7 @@ public class PortletAutoDeployer
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(13);
 
 		Document document = UnsecureSAXReaderUtil.read(portletXML);
 

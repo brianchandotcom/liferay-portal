@@ -616,30 +616,25 @@ public class LayoutStagedModelDataHandlerTest
 			importedLayout, _layoutServiceContextHelper,
 			_layoutStructureProvider, importedLayoutSegmentsExperienceId);
 
+		Assert.assertFalse(
+			html,
+			html.contains(
+				"style=\"--background-image-file-entry-id:" +
+					importedFileEntry.getFileEntryId()));
 		Assert.assertTrue(
 			html,
-			StringUtil.contains(
-				html,
+			html.contains(
 				StringBundler.concat(
-					"<a href=\"https://www.liferay.com/\"><img alt=\"\" ",
-					"class=\"w-100\" data-lfr-editable-id=\"image-square\" ",
-					"data-lfr-editable-type=\"image\" src=\"",
+					"<a href=\"https://www.liferay.com/\"><img alt=\"\" class=",
+					"\"w-100\" data-lfr-editable-id=\"image-square\" data-lfr-",
+					"editable-type=\"image\" src=\"",
 					HtmlUtil.escape(
 						_dlURLHelper.getPreviewURL(
 							importedFileEntry,
 							importedFileEntry.getFileVersion(), null,
 							StringPool.BLANK)),
 					"\" data-fileentryid=\"",
-					importedFileEntry.getFileEntryId(), "\"></a>"),
-				StringPool.BLANK));
-
-		Assert.assertFalse(
-			html,
-			StringUtil.contains(
-				html,
-				"style=\"--background-image-file-entry-id:" +
-					importedFileEntry.getFileEntryId(),
-				StringPool.BLANK));
+					importedFileEntry.getFileEntryId(), "\"></a>")));
 
 		_stagingLocalService.disableStaging(liveGroup, serviceContext);
 
@@ -662,8 +657,7 @@ public class LayoutStagedModelDataHandlerTest
 
 		Assert.assertTrue(
 			html,
-			StringUtil.contains(
-				html,
+			html.contains(
 				StringBundler.concat(
 					"<a href=\"https://learn.liferay.com/\"><img alt=\"\" ",
 					"class=\"w-100\" data-lfr-editable-id=\"image-square\" ",
@@ -674,16 +668,12 @@ public class LayoutStagedModelDataHandlerTest
 							importedFileEntry.getFileVersion(), null,
 							StringPool.BLANK)),
 					"\" data-fileentryid=\"",
-					importedFileEntry.getFileEntryId(), "\"></a>"),
-				StringPool.BLANK));
-
+					importedFileEntry.getFileEntryId(), "\"></a>")));
 		Assert.assertTrue(
 			html,
-			StringUtil.contains(
-				html,
+			html.contains(
 				"style=\"--background-image-file-entry-id:" +
-					importedFileEntry.getFileEntryId(),
-				StringPool.BLANK));
+					importedFileEntry.getFileEntryId()));
 	}
 
 	@Test
@@ -2004,8 +1994,7 @@ public class LayoutStagedModelDataHandlerTest
 			segmentsExperienceId);
 
 		Assert.assertTrue(
-			html + " not contains " + content,
-			StringUtil.contains(html, content, StringPool.BLANK));
+			html + " not contains " + content, html.contains(content));
 	}
 
 	private Layout _getExportImportLayout(Layout layout) throws Exception {

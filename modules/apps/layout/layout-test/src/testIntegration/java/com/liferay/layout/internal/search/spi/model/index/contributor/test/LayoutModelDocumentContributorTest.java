@@ -29,7 +29,6 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -58,7 +57,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.IndexerFixture;
@@ -681,8 +679,7 @@ public class LayoutModelDocumentContributorTest {
 		String content = document.get(
 			Field.getLocalizedName(locale, Field.CONTENT));
 
-		Assert.assertTrue(
-			content, StringUtil.contains(content, keywords, StringPool.BLANK));
+		Assert.assertTrue(content, content.contains(keywords));
 
 		Assert.assertEquals(
 			document.get(Field.ENTRY_CLASS_PK),

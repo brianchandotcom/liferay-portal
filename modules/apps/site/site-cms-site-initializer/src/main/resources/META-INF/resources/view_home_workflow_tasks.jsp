@@ -11,7 +11,7 @@
 ViewWorkflowTasksDisplayContext viewWorkflowTasksDisplayContext = (ViewWorkflowTasksDisplayContext)request.getAttribute(ViewWorkflowTasksDisplayContext.class.getName());
 %>
 
-<div class="cms-section">
+<div class="cms-section rounded-lg workflow-tasks-view">
     <div>
 		<react:component
 			module="{ViewWorkflowTasks} from site-cms-site-initializer"

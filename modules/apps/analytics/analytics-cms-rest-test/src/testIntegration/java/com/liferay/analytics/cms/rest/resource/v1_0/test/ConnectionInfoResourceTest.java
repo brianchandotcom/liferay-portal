@@ -84,9 +84,9 @@ public class ConnectionInfoResourceTest
 		Assert.assertEquals(
 			new ConnectionInfo() {
 				{
+					admin = true;
 					connectedToAnalyticsCloud = false;
 					connectedToSpace = false;
-					isAdmin = true;
 					siteSyncedToAnalyticsCloud = false;
 				}
 			},
@@ -121,9 +121,9 @@ public class ConnectionInfoResourceTest
 			Assert.assertEquals(
 				new ConnectionInfo() {
 					{
+						admin = true;
 						connectedToAnalyticsCloud = true;
 						connectedToSpace = false;
-						isAdmin = true;
 						siteSyncedToAnalyticsCloud = false;
 					}
 				},
@@ -137,9 +137,9 @@ public class ConnectionInfoResourceTest
 		Assert.assertEquals(
 			new ConnectionInfo() {
 				{
+					admin = true;
 					connectedToAnalyticsCloud = false;
 					connectedToSpace = true;
-					isAdmin = true;
 					siteSyncedToAnalyticsCloud = false;
 				}
 			},
@@ -177,9 +177,9 @@ public class ConnectionInfoResourceTest
 			Assert.assertEquals(
 				new ConnectionInfo() {
 					{
+						admin = true;
 						connectedToAnalyticsCloud = true;
 						connectedToSpace = true;
-						isAdmin = true;
 						siteSyncedToAnalyticsCloud = true;
 					}
 				},

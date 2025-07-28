@@ -78,7 +78,7 @@ public class ConnectionInfoResourceImpl extends BaseConnectionInfoResourceImpl {
 
 		ConnectionInfo connectionInfo = new ConnectionInfo();
 
-		connectionInfo.setIsAdmin(() -> admin);
+		connectionInfo.setAdmin(() -> admin);
 		connectionInfo.setConnectedToAnalyticsCloud(
 			() -> connectedToAnalyticsCloud);
 		connectionInfo.setConnectedToSpace(() -> connectedToSpace);

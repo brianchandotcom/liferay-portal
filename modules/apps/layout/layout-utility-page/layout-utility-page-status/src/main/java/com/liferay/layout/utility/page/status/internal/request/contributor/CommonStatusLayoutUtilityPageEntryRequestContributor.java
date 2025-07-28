@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.I18nServlet;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Set;
@@ -54,7 +54,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 	public void addAttributesAndParameters(
 		DynamicServletRequest dynamicServletRequest) {
 
-		long companyId = PortalInstances.getCompanyId(dynamicServletRequest);
+		long companyId = CompanyThreadLocal.getCompanyId();
 
 		if (companyId == 0) {
 			companyId = PortalInstancePool.getDefaultCompanyId();

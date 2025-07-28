@@ -89,6 +89,38 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			   VulcanBatchEngineTaskItemDelegate<CompanyTestEntity>,
 			   VulcanCRUDItemDelegate<CompanyTestEntity> {
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
+		}
+	)
+	@jakarta.ws.rs.DELETE
+	@jakarta.ws.rs.Path(
+		"/company-test-entities/by-external-reference-code/{externalReferenceCode}"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteCompanyTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
 	protected abstract Page<CompanyTestEntity> doGetCompanyTestEntitiesPage()
 		throws Exception;
 
@@ -883,8 +915,32 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<CompanyTestEntity, CompanyTestEntity, Exception>
+			companyTestEntityUnsafeFunction = companyTestEntity -> {
+				if (companyTestEntity.getExternalReferenceCode() != null) {
+					deleteCompanyTestEntityByExternalReferenceCode(
+						companyTestEntity.getExternalReferenceCode());
+
+					return companyTestEntity;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				companyTestEntities, companyTestEntityUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				companyTestEntities, companyTestEntityUnsafeFunction::apply);
+		}
+		else {
+			for (CompanyTestEntity companyTestEntity : companyTestEntities) {
+				companyTestEntityUnsafeFunction.apply(companyTestEntity);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

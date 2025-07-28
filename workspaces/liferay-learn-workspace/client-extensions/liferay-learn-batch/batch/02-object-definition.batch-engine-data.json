@@ -14,6 +14,205 @@
 			"active": true,
 			"enableLocalization": true,
 			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "P2S3_ANNOUNCEMENT",
+			"label": {
+				"en_US": "P2S3 Announcement"
+			},
+			"modifiable": true,
+			"name": "P2S3Announcement",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"localized": false,
+					"name": "title",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"localized": false,
+					"name": "description",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"externalReferenceCode": "CONTENT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Content"
+					},
+					"localized": false,
+					"name": "content",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"externalReferenceCode": "IMAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Image"
+					},
+					"localized": false,
+					"name": "image",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "jpeg, jpg, pdf, png"
+						},
+						{
+							"name": "fileSource",
+							"value": "documentsAndMedia"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Long",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Announcement Create / Edit"
+					},
+					"objectDefinitionExternalReferenceCode": "P2S3_ANNOUNCEMENT",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Announcement Information"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Main"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "title",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "description",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "content",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "image",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Categorization"
+									},
+									"priority": 0,
+									"type": "categorization"
+								}
+							],
+							"priority": 0
+						}
+					]
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "P2S3 Announcements"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/p2s3announcements",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "title"
+		},
+		{
+			"active": true,
+			"enableLocalization": true,
+			"enableObjectEntryHistory": false,
 			"externalReferenceCode": "P2S3_ASSESSMENT",
 			"label": {
 				"en_US": "P2S3 Assessment"

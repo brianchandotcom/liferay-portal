@@ -20,6 +20,7 @@ ViewVersionHistoryDisplayContext viewVersionHistoryDisplayContext = (ViewVersion
 	</div>
 
 	<frontend-data-set:headless-display
+		additionalProps="<%= viewVersionHistoryDisplayContext.getProps() %>"
 		apiURL="<%= viewVersionHistoryDisplayContext.getAPIURL() %>"
 		fdsActionDropdownItems="<%= viewVersionHistoryDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"

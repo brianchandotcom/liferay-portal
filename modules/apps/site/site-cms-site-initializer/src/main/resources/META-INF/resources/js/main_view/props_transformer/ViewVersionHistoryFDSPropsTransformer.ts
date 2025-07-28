@@ -4,16 +4,19 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {navigate, sessionStorage} from 'frontend-js-web';
 
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
+import {executeAsyncItemAction} from './utils/executeAsyncItemAction';
 
 export default function ViewVersionHistoryFDSPropsTransformer({
+	additionalProps,
 	itemsActions = [],
 	...otherProps
 }: {
+	additionalProps: any;
 	itemsActions?: any[];
-	otherProps: any;
 }) {
 	return {
 		...otherProps,
@@ -41,5 +44,38 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 
 			return action;
 		}),
+		onActionDropdownItemClick({
+			action,
+			event,
+			itemData,
+		}: {
+			action: {data: {id: string}};
+			event: Event;
+			itemData: {
+				actions: {
+					copy: {href: string; method: string};
+				};
+			};
+		}) {
+			if (action.data.id === 'copy') {
+				event?.preventDefault();
+
+				executeAsyncItemAction({
+					method: itemData.actions.copy.method,
+					refreshData: () => {
+						sessionStorage.setItem(
+							'com.liferay.site.cms.site.initializer.successMessage',
+							Liferay.Language.get(
+								'your-request-completed-successfully'
+							),
+							sessionStorage.TYPES.NECESSARY
+						);
+
+						navigate(additionalProps.backURL);
+					},
+					url: itemData.actions.copy.href,
+				});
+			}
+		},
 	};
 }

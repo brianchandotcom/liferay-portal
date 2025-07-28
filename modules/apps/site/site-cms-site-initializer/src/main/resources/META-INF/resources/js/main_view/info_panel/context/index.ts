@@ -12,10 +12,12 @@ import {
 
 export interface IAssetTypeInfoPanelContext
 	extends ISearchAssetTypeInformation {
+	cmsGroupId?: string | null;
 	objectEntries?: ISearchAssetObjectEntry[];
 }
 
 const BASE_CONTEXT: IAssetTypeInfoPanelContext = {
+	cmsGroupId: null,
 	externalReferenceCode: null,
 	icon: null,
 	id: null,

@@ -12,7 +12,9 @@ import AssetTags from '../components/AssetTags';
 import {AssetTypeInfoPanelContext} from '../context';
 
 const CategorizationTabContent = () => {
-	const {objectEntries = []} = useContext(AssetTypeInfoPanelContext);
+	const {cmsGroupId, objectEntries = []} = useContext(
+		AssetTypeInfoPanelContext
+	);
 
 	const [
 		{
@@ -98,11 +100,13 @@ const CategorizationTabContent = () => {
 	return (
 		<>
 			<AssetCategories
+				cmsGroupId={cmsGroupId}
 				objectEntry={objectEntry}
 				updateObjectEntry={updateObjectEntry}
 			/>
 
 			<AssetTags
+				cmsGroupId={cmsGroupId}
 				objectEntry={objectEntry}
 				updateObjectEntry={updateObjectEntry}
 			/>

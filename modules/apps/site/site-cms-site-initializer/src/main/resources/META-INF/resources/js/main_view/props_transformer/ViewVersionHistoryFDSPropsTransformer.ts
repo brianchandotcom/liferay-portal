@@ -73,6 +73,7 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 
 						navigate(additionalProps.backURL);
 					},
+					showToast: false,
 					url: itemData.actions.copy.href,
 				});
 			}

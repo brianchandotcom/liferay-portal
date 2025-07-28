@@ -100,6 +100,30 @@ test(
 );
 
 test(
+	'Link with relative URL does not trigger SPA navigation',
+	{tag: '@LPD-60975'},
+	async ({classicPage, page}) => {
+		let requestWasMade = false;
+
+		page.on('request', (request) => {
+			if (request.url().includes('/sample-relative-url')) {
+				requestWasMade = true;
+			}
+		});
+
+		const link = classicPage.editable.getByRole('link', {
+			name: 'Diam quis',
+		});
+
+		await link.click();
+
+		await page.waitForTimeout(100);
+
+		expect(requestWasMade).toBe(false);
+	}
+);
+
+test(
 	'Select image from document library',
 	{tag: '@LPD-11235'},
 	async ({classicPage}) => {

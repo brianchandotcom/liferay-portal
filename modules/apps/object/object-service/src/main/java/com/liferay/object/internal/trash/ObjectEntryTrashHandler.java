@@ -33,6 +33,7 @@ public class ObjectEntryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
+		_objectEntryService.deleteObjectEntry(classPK);
 	}
 
 	@Override

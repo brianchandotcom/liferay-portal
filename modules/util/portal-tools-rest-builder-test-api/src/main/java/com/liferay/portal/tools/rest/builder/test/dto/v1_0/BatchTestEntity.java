@@ -18,6 +18,8 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
+import jakarta.validation.Valid;
+
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -208,6 +210,51 @@ public class BatchTestEntity implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nestedFieldSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public CompanyTestEntity getRelatedCompanyTestEntity() {
+		if (_relatedCompanyTestEntitySupplier != null) {
+			relatedCompanyTestEntity = _relatedCompanyTestEntitySupplier.get();
+
+			_relatedCompanyTestEntitySupplier = null;
+		}
+
+		return relatedCompanyTestEntity;
+	}
+
+	public void setRelatedCompanyTestEntity(
+		CompanyTestEntity relatedCompanyTestEntity) {
+
+		this.relatedCompanyTestEntity = relatedCompanyTestEntity;
+
+		_relatedCompanyTestEntitySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRelatedCompanyTestEntity(
+		UnsafeSupplier<CompanyTestEntity, Exception>
+			relatedCompanyTestEntityUnsafeSupplier) {
+
+		_relatedCompanyTestEntitySupplier = () -> {
+			try {
+				return relatedCompanyTestEntityUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected CompanyTestEntity relatedCompanyTestEntity;
+
+	@JsonIgnore
+	private Supplier<CompanyTestEntity> _relatedCompanyTestEntitySupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -293,6 +340,19 @@ public class BatchTestEntity implements Serializable {
 			sb.append(_escape(nestedField));
 
 			sb.append("\"");
+		}
+
+		CompanyTestEntity relatedCompanyTestEntity =
+			getRelatedCompanyTestEntity();
+
+		if (relatedCompanyTestEntity != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relatedCompanyTestEntity\": ");
+
+			sb.append(String.valueOf(relatedCompanyTestEntity));
 		}
 
 		sb.append("}");

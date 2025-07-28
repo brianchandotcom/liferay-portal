@@ -275,6 +275,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteCompanyTestEntityByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_companyTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			companyTestEntityResource ->
+				companyTestEntityResource.
+					deleteCompanyTestEntityByExternalReferenceCode(
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
 	public CompanyTestEntity patchCompanyTestEntity(
 			@GraphQLName("companyTestEntityId") Long companyTestEntityId,
 			@GraphQLName("companyTestEntity") CompanyTestEntity

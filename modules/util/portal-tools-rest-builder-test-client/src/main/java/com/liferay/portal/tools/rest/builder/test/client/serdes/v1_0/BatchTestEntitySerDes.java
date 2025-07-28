@@ -98,6 +98,17 @@ public class BatchTestEntitySerDes {
 			sb.append("\"");
 		}
 
+		if (batchTestEntity.getRelatedCompanyTestEntity() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relatedCompanyTestEntity\": ");
+
+			sb.append(
+				String.valueOf(batchTestEntity.getRelatedCompanyTestEntity()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -149,6 +160,15 @@ public class BatchTestEntitySerDes {
 				String.valueOf(batchTestEntity.getNestedField()));
 		}
 
+		if (batchTestEntity.getRelatedCompanyTestEntity() == null) {
+			map.put("relatedCompanyTestEntity", null);
+		}
+		else {
+			map.put(
+				"relatedCompanyTestEntity",
+				String.valueOf(batchTestEntity.getRelatedCompanyTestEntity()));
+		}
+
 		return map;
 	}
 
@@ -177,6 +197,11 @@ public class BatchTestEntitySerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "nestedField")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "relatedCompanyTestEntity")) {
+
 				return false;
 			}
 
@@ -209,6 +234,15 @@ public class BatchTestEntitySerDes {
 				if (jsonParserFieldValue != null) {
 					batchTestEntity.setNestedField(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "relatedCompanyTestEntity")) {
+
+				if (jsonParserFieldValue != null) {
+					batchTestEntity.setRelatedCompanyTestEntity(
+						CompanyTestEntitySerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

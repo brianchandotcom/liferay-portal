@@ -28,7 +28,7 @@ public class CloudObjectTestrayAttachmentUploader
 			throw new RuntimeException("Please set WORKSPACE");
 		}
 
-		return new File(workspace, "testray/prepared_s3_logs");
+		return new File(workspace, "testray/prepared_cloud_logs");
 	}
 
 	@Override

@@ -1457,9 +1457,9 @@ public class TestrayImporter {
 			Element propertiesElement = testcaseElement.addElement(
 				"properties");
 
-			String jobName = _topLevelBuildReport.getJobName();
+			String testSuiteName = _topLevelBuildReport.getTestSuiteName();
 
-			if (jobName.contains("upstream-dxp")) {
+			if (testSuiteName.equals("upstream-dxp")) {
 				if (testrayCaseResult instanceof
 						JUnitBatchBuildTestrayCaseResult) {
 

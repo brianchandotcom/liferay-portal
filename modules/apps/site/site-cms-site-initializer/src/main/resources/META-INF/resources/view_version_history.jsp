@@ -15,7 +15,7 @@ ViewVersionHistoryDisplayContext viewVersionHistoryDisplayContext = (ViewVersion
 	<div>
 		<react:component
 			module="{Toolbar} from site-cms-site-initializer"
-			props="<%= viewVersionHistoryDisplayContext.getToolbarReactData() %>"
+			props="<%= viewVersionHistoryDisplayContext.getProps() %>"
 		/>
 	</div>
 

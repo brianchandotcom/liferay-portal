@@ -74,7 +74,7 @@ public class ViewVersionHistoryDisplayContext {
 				"delete", "headless"));
 	}
 
-	public Map<String, Object> getToolbarReactData() throws PortalException {
+	public Map<String, Object> getProps() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(_httpServletRequest, "backURL")
 		).put(

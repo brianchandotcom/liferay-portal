@@ -11,7 +11,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.admin.web.internal.info.item.LayoutInfoItemFields;
-import com.liferay.layout.admin.web.internal.util.InfoFieldUtil;
+import com.liferay.layout.util.InfoFieldUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;

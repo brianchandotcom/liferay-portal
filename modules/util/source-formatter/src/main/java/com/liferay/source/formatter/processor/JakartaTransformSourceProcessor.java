@@ -26,7 +26,7 @@ public class JakartaTransformSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = {
 		"**/*.bnd", "**/*.ftl", "**/*.gradle", "**/*.html", "**/*.java",
-		"**/*.jsp", "**/*.jspf", "**/*.jspx", "**/*.js", "**/*.jsx",
+		"**/*.js", "**/*.jsp", "**/*.jspf", "**/*.jspx", "**/*.jsx",
 		"**/*.properties", "**/*.tld", "**/*.ts", "**/*.tsx", "**/*.xml"
 	};
 

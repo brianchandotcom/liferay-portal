@@ -366,33 +366,9 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		InputTemplateNode inputTemplateNode, String value,
 		Map<Locale, String> valueI18n) {
 
-		String allowedFileExtensions = (String)infoField.getAttribute(
-			FileInfoFieldType.ALLOWED_FILE_EXTENSIONS);
-
-		if (allowedFileExtensions == null) {
-			allowedFileExtensions = StringPool.BLANK;
-		}
-
-		if (Validator.isNotNull(allowedFileExtensions)) {
-			if(allowedFileExtensions.contains(StringPool.STAR)){
-				allowedFileExtensions = StringPool.STAR;
-			}else{
-				StringBundler sb = new StringBundler();
-
-				String[] allowedFileExtensionsArray = StringUtil.split(
-					allowedFileExtensions);
-
-				for (String allowedFileExtension : allowedFileExtensionsArray) {
-					sb.append(StringPool.PERIOD);
-					sb.append(allowedFileExtension.trim());
-					sb.append(StringPool.COMMA);
-				}
-
-				sb.setIndex(sb.index() - 1);
-
-				allowedFileExtensions = sb.toString();
-			}
-		}
+		String allowedFileExtensions = _getAllowedFileExtensions(
+			(String)infoField.getAttribute(
+				FileInfoFieldType.ALLOWED_FILE_EXTENSIONS));
 
 		inputTemplateNode.addAttribute(
 			"allowedFileExtensions", allowedFileExtensions);
@@ -757,6 +733,32 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 			return null;
 		}
+	}
+
+	private String _getAllowedFileExtensions(String allowedFileExtensions) {
+		if (Validator.isNull(allowedFileExtensions)) {
+			return StringPool.BLANK;
+		}
+
+		if (allowedFileExtensions.contains(StringPool.STAR)) {
+			return StringPool.STAR;
+		}
+
+		String[] allowedFileExtensionsArray = StringUtil.split(
+			allowedFileExtensions);
+
+		StringBundler sb = new StringBundler(
+			(allowedFileExtensionsArray.length * 3) - 1);
+
+		for (String allowedFileExtension : allowedFileExtensionsArray) {
+			sb.append(StringPool.PERIOD);
+			sb.append(allowedFileExtension.trim());
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	private String _getFileName(

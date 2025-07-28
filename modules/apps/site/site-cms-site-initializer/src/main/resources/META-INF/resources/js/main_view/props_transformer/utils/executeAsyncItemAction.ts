@@ -15,6 +15,7 @@ export function executeAsyncItemAction({
 	refreshData,
 	requestBody,
 	setActionItemLoading,
+	showToast = true,
 	successMessage,
 	url,
 }: {
@@ -23,6 +24,7 @@ export function executeAsyncItemAction({
 	refreshData?: () => void;
 	requestBody?: string;
 	setActionItemLoading?: (loading: boolean) => void;
+	showToast?: boolean;
 	successMessage?: string;
 	url: string;
 }): Promise<void> {
@@ -42,14 +44,16 @@ export function executeAsyncItemAction({
 	return fetch(url, requestOptions)
 		.then((response) => {
 			if (response.ok) {
-				openToast({
-					message:
-						successMessage ||
-						Liferay.Language.get(
-							'your-request-completed-successfully'
-						),
-					type: 'success',
-				});
+				if (showToast) {
+					openToast({
+						message:
+							successMessage ||
+							Liferay.Language.get(
+								'your-request-completed-successfully'
+							),
+						type: 'success',
+					});
+				}
 
 				refreshData?.();
 			}

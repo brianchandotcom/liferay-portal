@@ -5815,6 +5815,8 @@ public class DefaultObjectEntryManagerImplTest
 	@FeatureFlag("LPD-53981")
 	@Test
 	public void testMoveObjectEntryToTrash() throws Exception {
+		_enableObjectEntryVersioning();
+
 		ObjectEntry objectEntry = _addObjectEntry(_objectDefinition1, null, 1);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
@@ -5823,20 +5825,30 @@ public class DefaultObjectEntryManagerImplTest
 		objectEntry = _defaultObjectEntryManager.getObjectEntry(
 			dtoConverterContext, _objectDefinition1, objectEntry.getId());
 
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_IN_TRASH,
-			(long)objectEntry.getStatus(
-			).getCode());
+		Status status = objectEntry.getStatus();
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_IN_TRASH, status.getCode());
+
+		Assert.assertNotNull(objectEntry.getRemovedBy());
+
+		Assert.assertNotNull(objectEntry.getRemovedDate());
+
+		Long objectEntryId = objectEntry.getId();
+
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntryId, 1);
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_IN_TRASH, objectEntryVersion.getStatus());
 
 		_defaultObjectEntryManager.deleteObjectEntry(
 			dtoConverterContext, _objectDefinition1, objectEntry.getId());
 
-		Long objectEntryId = objectEntry.getId();
-
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
-			"No ObjectEntry exists with the primary key " +
-				objectEntryId.toString(),
+			"No ObjectEntry exists with the primary key " + objectEntryId,
 			() -> _defaultObjectEntryManager.getObjectEntry(
 				dtoConverterContext, _objectDefinition1, objectEntryId));
 	}

@@ -917,6 +917,55 @@ test.describe('Manage object entries through View Object Entries', () => {
 		).toBeVisible();
 	});
 
+	test('can add entry for site scoped definition with versioning enabled', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				scope: 'site',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			objectDefinition.id,
+			{
+				enableObjectEntryVersioning: true,
+			}
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'Text',
+			objectFieldLabel: 'textField',
+			objectFieldValue: 'test',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.locator('td').getByText('test', {exact: true})
+		).toBeVisible();
+	});
+
 	test(
 		'can attach files after changing the overall maximum upload request size setting',
 		{tag: ['@LPD-56964']},
@@ -2282,7 +2331,7 @@ scheduleTest.describe('Manage object entries schedule properties', () => {
 	scheduleTest.beforeEach(async ({accountSettingsPage, apiHelpers, page}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 2},
+				status: {code: 0},
 			});
 
 		_objectDefinition = objectDefinition;
@@ -2300,10 +2349,6 @@ scheduleTest.describe('Manage object entries schedule properties', () => {
 				{
 					enableObjectEntrySchedule: true,
 				}
-			);
-
-			await objectDefinitionAPIClient.postObjectDefinitionPublish(
-				_objectDefinition.id
 			);
 		}
 
@@ -2680,14 +2725,7 @@ scheduleTest.describe('Manage object entries schedule properties', () => {
 	scheduleTest(
 		'schedule container is not visible when enableObjectEntrySchedule is disabled',
 		{tag: '@enableObjectEntryScheduleFalse'},
-		async ({apiHelpers, viewObjectEntriesPage}) => {
-			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-			await objectDefinitionAPIClient.postObjectDefinitionPublish(
-				_objectDefinition.id
-			);
-
+		async ({viewObjectEntriesPage}) => {
 			await viewObjectEntriesPage.goto(_objectDefinition.className);
 
 			await viewObjectEntriesPage.clickAddObjectEntry(

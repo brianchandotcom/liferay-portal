@@ -297,32 +297,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				testGroup, widgetPageTemplate.getExternalReferenceCode()),
 			testGroup.getExternalReferenceCode());
 
-		_assertProblemException(
-			"BAD_REQUEST",
-			() ->
-				pageTemplateResource.
-					patchSiteSiteByExternalReferenceCodePageTemplate(
-						testGroup.getExternalReferenceCode(),
-						widgetPageTemplate.getExternalReferenceCode(),
-						new WidgetPageTemplate() {
-							{
-								setExternalReferenceCode(
-									widgetPageTemplate::
-										getExternalReferenceCode);
-								setPageTemplateSet(
-									() -> new PageTemplateSet() {
-										{
-											setExternalReferenceCode(
-												() -> StringPool.BLANK);
-										}
-									});
-								setType(
-									() ->
-										PageTemplate.Type.WIDGET_PAGE_TEMPLATE);
-							}
-						}));
-
 		_testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications();
+		_testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageTemplateSet(
+			widgetPageTemplate.getExternalReferenceCode());
 
 		_enableLocalStaging();
 
@@ -414,28 +391,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testGroup.getExternalReferenceCode());
 
 		_testPostSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications();
-
-		WidgetPageTemplate widgetPageTemplate = _getWidgetPageTemplate(
-			testGroup);
-
-		widgetPageTemplate.setPageTemplateSet(() -> null);
-
-		_assertProblemException(
-			"BAD_REQUEST",
-			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
-				widgetPageTemplate, testGroup.getExternalReferenceCode()));
-
-		widgetPageTemplate.setPageTemplateSet(
-			() -> new PageTemplateSet() {
-				{
-					setExternalReferenceCode(() -> StringPool.BLANK);
-				}
-			});
-
-		_assertProblemException(
-			"BAD_REQUEST",
-			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
-				widgetPageTemplate, testGroup.getExternalReferenceCode()));
+		_testPostSiteSiteByExternalReferenceCodePageTemplateWithPageTemplateSet();
 
 		_enableLocalStaging();
 
@@ -603,34 +559,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				putWidgetPageTemplate.getExternalReferenceCode(),
 				putWidgetPageTemplate));
 
-		putWidgetPageTemplate.setPageTemplateSet(() -> null);
-
-		_assertProblemException(
-			"BAD_REQUEST",
-			() ->
-				pageTemplateResource.
-					putSiteSiteByExternalReferenceCodePageTemplate(
-						testGroup.getExternalReferenceCode(),
-						putWidgetPageTemplate.getExternalReferenceCode(),
-						putWidgetPageTemplate));
-
-		putWidgetPageTemplate.setPageTemplateSet(
-			() -> new PageTemplateSet() {
-				{
-					setExternalReferenceCode(() -> StringPool.BLANK);
-				}
-			});
-
-		_assertProblemException(
-			"BAD_REQUEST",
-			() ->
-				pageTemplateResource.
-					putSiteSiteByExternalReferenceCodePageTemplate(
-						testGroup.getExternalReferenceCode(),
-						putWidgetPageTemplate.getExternalReferenceCode(),
-						putWidgetPageTemplate));
-
 		_testPutSiteSiteByExternalReferenceCodePageTemplateWithPageSpecifications();
+		_testPutSiteSiteByExternalReferenceCodePageTemplateWithPageTemplateSet(
+			putWidgetPageTemplate);
 
 		_enableLocalStaging();
 
@@ -1374,6 +1305,32 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	}
 
 	private void
+			_testPatchSiteSiteByExternalReferenceCodePageTemplateWithPageTemplateSet(
+				String externalReferenceCode)
+		throws Exception {
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageTemplateResource.
+					patchSiteSiteByExternalReferenceCodePageTemplate(
+						testGroup.getExternalReferenceCode(),
+						externalReferenceCode,
+						new WidgetPageTemplate() {
+							{
+								setPageTemplateSet(
+									() -> new PageTemplateSet() {
+										{
+											setExternalReferenceCode(
+												() -> StringPool.BLANK);
+										}
+									});
+								setType(() -> Type.WIDGET_PAGE_TEMPLATE);
+							}
+						}));
+	}
+
+	private void
 			_testPostSiteSiteByExternalReferenceCodePageTemplateContentPageTemplateWithPageSpecifications(
 				PageSpecification.Status draftLayoutStatus,
 				PageSpecification.Status publishedLayoutStatus)
@@ -1513,6 +1470,32 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		_testPostSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications();
 	}
 
+	private void _testPostSiteSiteByExternalReferenceCodePageTemplateWithPageTemplateSet()
+		throws Exception {
+
+		WidgetPageTemplate widgetPageTemplate = _getWidgetPageTemplate(
+			testGroup);
+
+		widgetPageTemplate.setPageTemplateSet(() -> null);
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
+				widgetPageTemplate, testGroup.getExternalReferenceCode()));
+
+		widgetPageTemplate.setPageTemplateSet(
+			() -> new PageTemplateSet() {
+				{
+					setExternalReferenceCode(() -> StringPool.BLANK);
+				}
+			});
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
+				widgetPageTemplate, testGroup.getExternalReferenceCode()));
+	}
+
 	private void
 			_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
 				PageSpecification.Status newDraftLayoutStatus,
@@ -1629,6 +1612,37 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 		_testPutSiteSiteByExternalReferenceCodePageTemplateWidgetPageTemplateWithPageSpecifications();
+	}
+
+	private void
+			_testPutSiteSiteByExternalReferenceCodePageTemplateWithPageTemplateSet(
+				PageTemplate pageTemplate)
+		throws Exception {
+
+		pageTemplate.setPageTemplateSet(() -> null);
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageTemplateResource.
+					putSiteSiteByExternalReferenceCodePageTemplate(
+						testGroup.getExternalReferenceCode(),
+						pageTemplate.getExternalReferenceCode(), pageTemplate));
+
+		pageTemplate.setPageTemplateSet(
+			() -> new PageTemplateSet() {
+				{
+					setExternalReferenceCode(() -> StringPool.BLANK);
+				}
+			});
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageTemplateResource.
+					putSiteSiteByExternalReferenceCodePageTemplate(
+						testGroup.getExternalReferenceCode(),
+						pageTemplate.getExternalReferenceCode(), pageTemplate));
 	}
 
 	private void _withCompanyGroupWidgetPageTemplate(

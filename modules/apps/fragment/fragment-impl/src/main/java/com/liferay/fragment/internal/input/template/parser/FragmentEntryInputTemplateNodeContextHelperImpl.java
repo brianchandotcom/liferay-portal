@@ -374,20 +374,24 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		if (Validator.isNotNull(allowedFileExtensions)) {
-			StringBundler sb = new StringBundler();
+			if(allowedFileExtensions.contains(StringPool.STAR)){
+				allowedFileExtensions = StringPool.STAR;
+			}else{
+				StringBundler sb = new StringBundler();
 
-			String[] allowedFileExtensionsArray = StringUtil.split(
-				allowedFileExtensions);
+				String[] allowedFileExtensionsArray = StringUtil.split(
+					allowedFileExtensions);
 
-			for (String allowedFileExtension : allowedFileExtensionsArray) {
-				sb.append(StringPool.PERIOD);
-				sb.append(allowedFileExtension.trim());
-				sb.append(StringPool.COMMA);
+				for (String allowedFileExtension : allowedFileExtensionsArray) {
+					sb.append(StringPool.PERIOD);
+					sb.append(allowedFileExtension.trim());
+					sb.append(StringPool.COMMA);
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				allowedFileExtensions = sb.toString();
 			}
-
-			sb.setIndex(sb.index() - 1);
-
-			allowedFileExtensions = sb.toString();
 		}
 
 		inputTemplateNode.addAttribute(

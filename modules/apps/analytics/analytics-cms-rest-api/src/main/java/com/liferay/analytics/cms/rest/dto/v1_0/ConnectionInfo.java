@@ -47,6 +47,47 @@ public class ConnectionInfo implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getAdmin() {
+		if (_adminSupplier != null) {
+			admin = _adminSupplier.get();
+
+			_adminSupplier = null;
+		}
+
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+
+		_adminSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAdmin(
+		UnsafeSupplier<Boolean, Exception> adminUnsafeSupplier) {
+
+		_adminSupplier = () -> {
+			try {
+				return adminUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean admin;
+
+	@JsonIgnore
+	private Supplier<Boolean> _adminSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getConnectedToAnalyticsCloud() {
 		if (_connectedToAnalyticsCloudSupplier != null) {
 			connectedToAnalyticsCloud =
@@ -133,47 +174,6 @@ public class ConnectionInfo implements Serializable {
 	private Supplier<Boolean> _connectedToSpaceSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Boolean getIsAdmin() {
-		if (_isAdminSupplier != null) {
-			isAdmin = _isAdminSupplier.get();
-
-			_isAdminSupplier = null;
-		}
-
-		return isAdmin;
-	}
-
-	public void setIsAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
-
-		_isAdminSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setIsAdmin(
-		UnsafeSupplier<Boolean, Exception> isAdminUnsafeSupplier) {
-
-		_isAdminSupplier = () -> {
-			try {
-				return isAdminUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean isAdmin;
-
-	@JsonIgnore
-	private Supplier<Boolean> _isAdminSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSiteSyncedToAnalyticsCloud() {
 		if (_siteSyncedToAnalyticsCloudSupplier != null) {
 			siteSyncedToAnalyticsCloud =
@@ -245,6 +245,18 @@ public class ConnectionInfo implements Serializable {
 
 		sb.append("{");
 
+		Boolean admin = getAdmin();
+
+		if (admin != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"admin\": ");
+
+			sb.append(admin);
+		}
+
 		Boolean connectedToAnalyticsCloud = getConnectedToAnalyticsCloud();
 
 		if (connectedToAnalyticsCloud != null) {
@@ -267,18 +279,6 @@ public class ConnectionInfo implements Serializable {
 			sb.append("\"connectedToSpace\": ");
 
 			sb.append(connectedToSpace);
-		}
-
-		Boolean isAdmin = getIsAdmin();
-
-		if (isAdmin != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"isAdmin\": ");
-
-			sb.append(isAdmin);
 		}
 
 		Boolean siteSyncedToAnalyticsCloud = getSiteSyncedToAnalyticsCloud();

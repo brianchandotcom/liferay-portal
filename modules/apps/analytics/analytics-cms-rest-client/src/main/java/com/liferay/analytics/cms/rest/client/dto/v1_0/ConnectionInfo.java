@@ -25,6 +25,27 @@ public class ConnectionInfo implements Cloneable, Serializable {
 		return ConnectionInfoSerDes.toDTO(json);
 	}
 
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+
+	public void setAdmin(
+		UnsafeSupplier<Boolean, Exception> adminUnsafeSupplier) {
+
+		try {
+			admin = adminUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean admin;
+
 	public Boolean getConnectedToAnalyticsCloud() {
 		return connectedToAnalyticsCloud;
 	}
@@ -70,27 +91,6 @@ public class ConnectionInfo implements Cloneable, Serializable {
 	}
 
 	protected Boolean connectedToSpace;
-
-	public Boolean getIsAdmin() {
-		return isAdmin;
-	}
-
-	public void setIsAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
-	public void setIsAdmin(
-		UnsafeSupplier<Boolean, Exception> isAdminUnsafeSupplier) {
-
-		try {
-			isAdmin = isAdminUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Boolean isAdmin;
 
 	public Boolean getSiteSyncedToAnalyticsCloud() {
 		return siteSyncedToAnalyticsCloud;

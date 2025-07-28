@@ -263,6 +263,14 @@ public abstract class BaseConnectionInfoResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("admin", additionalAssertFieldName)) {
+				if (connectionInfo.getAdmin() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"connectedToAnalyticsCloud", additionalAssertFieldName)) {
 
@@ -275,14 +283,6 @@ public abstract class BaseConnectionInfoResourceTestCase {
 
 			if (Objects.equals("connectedToSpace", additionalAssertFieldName)) {
 				if (connectionInfo.getConnectedToSpace() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("isAdmin", additionalAssertFieldName)) {
-				if (connectionInfo.getIsAdmin() == null) {
 					valid = false;
 				}
 
@@ -418,6 +418,17 @@ public abstract class BaseConnectionInfoResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("admin", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						connectionInfo1.getAdmin(),
+						connectionInfo2.getAdmin())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"connectedToAnalyticsCloud", additionalAssertFieldName)) {
 
@@ -435,17 +446,6 @@ public abstract class BaseConnectionInfoResourceTestCase {
 				if (!Objects.deepEquals(
 						connectionInfo1.getConnectedToSpace(),
 						connectionInfo2.getConnectedToSpace())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("isAdmin", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						connectionInfo1.getIsAdmin(),
-						connectionInfo2.getIsAdmin())) {
 
 					return false;
 				}
@@ -574,17 +574,17 @@ public abstract class BaseConnectionInfoResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("admin")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("connectedToAnalyticsCloud")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("connectedToSpace")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("isAdmin")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -639,9 +639,9 @@ public abstract class BaseConnectionInfoResourceTestCase {
 	protected ConnectionInfo randomConnectionInfo() throws Exception {
 		return new ConnectionInfo() {
 			{
+				admin = RandomTestUtil.randomBoolean();
 				connectedToAnalyticsCloud = RandomTestUtil.randomBoolean();
 				connectedToSpace = RandomTestUtil.randomBoolean();
-				isAdmin = RandomTestUtil.randomBoolean();
 				siteSyncedToAnalyticsCloud = RandomTestUtil.randomBoolean();
 			}
 		};

@@ -46,6 +46,16 @@ public class ConnectionInfoSerDes {
 
 		sb.append("{");
 
+		if (connectionInfo.getAdmin() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"admin\": ");
+
+			sb.append(connectionInfo.getAdmin());
+		}
+
 		if (connectionInfo.getConnectedToAnalyticsCloud() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -64,16 +74,6 @@ public class ConnectionInfoSerDes {
 			sb.append("\"connectedToSpace\": ");
 
 			sb.append(connectionInfo.getConnectedToSpace());
-		}
-
-		if (connectionInfo.getIsAdmin() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"isAdmin\": ");
-
-			sb.append(connectionInfo.getIsAdmin());
 		}
 
 		if (connectionInfo.getSiteSyncedToAnalyticsCloud() != null) {
@@ -105,6 +105,13 @@ public class ConnectionInfoSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (connectionInfo.getAdmin() == null) {
+			map.put("admin", null);
+		}
+		else {
+			map.put("admin", String.valueOf(connectionInfo.getAdmin()));
+		}
+
 		if (connectionInfo.getConnectedToAnalyticsCloud() == null) {
 			map.put("connectedToAnalyticsCloud", null);
 		}
@@ -121,13 +128,6 @@ public class ConnectionInfoSerDes {
 			map.put(
 				"connectedToSpace",
 				String.valueOf(connectionInfo.getConnectedToSpace()));
-		}
-
-		if (connectionInfo.getIsAdmin() == null) {
-			map.put("isAdmin", null);
-		}
-		else {
-			map.put("isAdmin", String.valueOf(connectionInfo.getIsAdmin()));
 		}
 
 		if (connectionInfo.getSiteSyncedToAnalyticsCloud() == null) {
@@ -157,15 +157,15 @@ public class ConnectionInfoSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "connectedToAnalyticsCloud")) {
+			if (Objects.equals(jsonParserFieldName, "admin")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "connectedToAnalyticsCloud")) {
 
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "connectedToSpace")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "isAdmin")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -182,8 +182,13 @@ public class ConnectionInfoSerDes {
 			ConnectionInfo connectionInfo, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "connectedToAnalyticsCloud")) {
+			if (Objects.equals(jsonParserFieldName, "admin")) {
+				if (jsonParserFieldValue != null) {
+					connectionInfo.setAdmin((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "connectedToAnalyticsCloud")) {
 
 				if (jsonParserFieldValue != null) {
 					connectionInfo.setConnectedToAnalyticsCloud(
@@ -194,11 +199,6 @@ public class ConnectionInfoSerDes {
 				if (jsonParserFieldValue != null) {
 					connectionInfo.setConnectedToSpace(
 						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "isAdmin")) {
-				if (jsonParserFieldValue != null) {
-					connectionInfo.setIsAdmin((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

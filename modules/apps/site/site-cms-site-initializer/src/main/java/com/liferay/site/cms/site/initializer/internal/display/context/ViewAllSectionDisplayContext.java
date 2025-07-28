@@ -82,8 +82,8 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 	@Override
 	protected String getCMSSectionFilterString() {
 		return appendStatus(
-			"cmsKind eq 'object' (cmsSection eq 'contents' or cmsSection eq " +
-				"'files')");
+			"cmsKind eq 'object' and (cmsSection eq 'contents' or cmsSection " +
+				"eq 'files')");
 	}
 
 }

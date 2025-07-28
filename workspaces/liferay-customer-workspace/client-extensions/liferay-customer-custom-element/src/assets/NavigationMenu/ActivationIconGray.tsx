@@ -6,7 +6,7 @@
 import {SVGProps} from 'react';
 import {JSX} from 'react/jsx-runtime';
 
-const ProductActivationIconGray = (
+const ActivationIconGray = (
 	props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
 ) => (
 	<svg
@@ -43,4 +43,4 @@ const ProductActivationIconGray = (
 	</svg>
 );
 
-export {ProductActivationIconGray};
+export {ActivationIconGray};

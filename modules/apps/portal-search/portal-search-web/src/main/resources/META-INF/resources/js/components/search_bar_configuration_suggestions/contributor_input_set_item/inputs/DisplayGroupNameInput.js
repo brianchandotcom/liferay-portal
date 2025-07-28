@@ -9,18 +9,20 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import React from 'react';
 
-function DisplayGroupNameInput({onBlur, onChange, touched, value}) {
+function DisplayGroupNameInput({index, onBlur, onChange, touched, value}) {
 	return (
 		<ClayInput.GroupItem
 			className={getCN({
 				'has-error': !value && touched,
 			})}
 		>
-			<label>
-				{Liferay.Language.get('display-group-name')}
+			<label htmlFor={`display-group-name-${index}`}>
+				<span>
+					{Liferay.Language.get('display-group-name')}
 
-				<span className="reference-mark">
-					<ClayIcon symbol="asterisk" />
+					<span className="reference-mark">
+						<ClayIcon symbol="asterisk" />
+					</span>
 				</span>
 
 				<ClayTooltipProvider>
@@ -36,6 +38,8 @@ function DisplayGroupNameInput({onBlur, onChange, touched, value}) {
 			</label>
 
 			<ClayInput
+				aria-label={Liferay.Language.get('display-group-name')}
+				id={`display-group-name-${index}`}
 				onBlur={onBlur}
 				onChange={onChange}
 				required

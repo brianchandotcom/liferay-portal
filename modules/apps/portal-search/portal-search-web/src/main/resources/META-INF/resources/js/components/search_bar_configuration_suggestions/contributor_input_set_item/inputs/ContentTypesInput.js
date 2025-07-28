@@ -203,7 +203,7 @@ function ContentTypesModal({
 	);
 }
 
-export default function ContentTypesInput({onBlur, onChange, value}) {
+export default function ContentTypesInput({index, onBlur, onChange, value}) {
 	const {observer, onOpenChange, open} = useModal();
 
 	const _getSelectedTypes = (items) => {
@@ -234,7 +234,7 @@ export default function ContentTypesInput({onBlur, onChange, value}) {
 			)}
 
 			<ClayInput.GroupItem>
-				<label>
+				<label htmlFor={`content-types-${index}`}>
 					{Liferay.Language.get('content-types')}
 
 					<ClayTooltipProvider>
@@ -251,7 +251,9 @@ export default function ContentTypesInput({onBlur, onChange, value}) {
 
 				<ClayInput.Group>
 					<ClayButton
+						aria-label={Liferay.Language.get('content-types')}
 						displayType="secondary"
+						id={`content-types-${index}`}
 						onClick={_handleOpen}
 						size="sm"
 					>

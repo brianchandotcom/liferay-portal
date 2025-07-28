@@ -10,18 +10,20 @@ import getCN from 'classnames';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-function MinimumSearchesInput({onBlur, onChange, touched, value}) {
+function MinimumSearchesInput({index, onBlur, onChange, touched, value}) {
 	return (
 		<ClayInput.GroupItem
 			className={getCN({
 				'has-error': (!value || value < 0) && touched,
 			})}
 		>
-			<label>
-				{Liferay.Language.get('minimum-searches')}
+			<label htmlFor={`minimum-searches-${index}`}>
+				<span>
+					{Liferay.Language.get('minimum-searches')}
 
-				<span className="reference-mark">
-					<ClayIcon symbol="asterisk" />
+					<span className="reference-mark">
+						<ClayIcon symbol="asterisk" />
+					</span>
 				</span>
 
 				<ClayTooltipProvider>
@@ -38,6 +40,7 @@ function MinimumSearchesInput({onBlur, onChange, touched, value}) {
 
 			<ClayInput
 				aria-label={Liferay.Language.get('minimum-searches')}
+				id={`minimum-searches-${index}`}
 				min="0"
 				onBlur={onBlur}
 				onChange={onChange}

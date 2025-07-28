@@ -63,6 +63,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 
 			<div className="c-mb-3 form-group-autofit">
 				<DisplayGroupNameInput
+					index={index}
 					onBlur={onBlur('displayGroupName')}
 					onChange={onInputSetItemChange(index, 'displayGroupName')}
 					touched={touched.displayGroupName}
@@ -70,6 +71,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 				/>
 
 				<SizeInput
+					index={index}
 					onBlur={onBlur('size')}
 					onChange={onInputSetItemChange(index, 'size')}
 					touched={touched.size}
@@ -79,6 +81,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 
 			<div className="c-mb-3 form-group-autofit">
 				<SXPBlueprintSelectorInput
+					index={index}
 					onBlur={onBlur(
 						'attributes.sxpBlueprintExternalReferenceCode'
 					)}
@@ -94,6 +97,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 
 			<div className="c-mb-3 form-group-autofit">
 				<CharacterThresholdInput
+					index={index}
 					onBlur={onBlur('attributes.characterThreshold')}
 					onChange={_handleChangeAttribute('characterThreshold')}
 					touched={touched['attributes.characterThreshold']}
@@ -101,7 +105,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 				/>
 
 				<ClayInput.GroupItem>
-					<label>
+					<label htmlFor={`include-asset-url-${index}`}>
 						{Liferay.Language.get('include-asset-url')}
 
 						<ClayTooltipProvider>
@@ -120,6 +124,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 
 					<ClaySelect
 						aria-label={Liferay.Language.get('include-asset-url')}
+						id={`include-asset-url-${index}`}
 						onChange={_handleChangeAttribute('includeAssetURL')}
 						value={value.attributes?.includeAssetURL}
 					>
@@ -136,7 +141,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem>
-					<label>
+					<label htmlFor={`include-asset-summary-${index}`}>
 						{Liferay.Language.get('include-asset-summary')}
 
 						<ClayTooltipProvider>
@@ -157,6 +162,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 						aria-label={Liferay.Language.get(
 							'include-asset-summary'
 						)}
+						id={`include-asset-summary-${index}`}
 						onChange={_handleChangeAttribute(
 							'includeAssetSearchSummary'
 						)}
@@ -178,6 +184,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 			<div className="c-mb-0 form-group-autofit">
 				<FieldsInput
 					fields={value.attributes?.fields}
+					index={index}
 					onBlur={onBlur('attributes.fields')}
 					onChange={_handleChangeFields}
 					touched={touched['attributes.fields']}

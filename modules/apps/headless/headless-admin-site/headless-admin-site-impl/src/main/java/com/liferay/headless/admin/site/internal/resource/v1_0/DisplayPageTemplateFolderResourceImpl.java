@@ -6,18 +6,15 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.DisplayPageTemplateFolderUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateFolderResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -154,8 +151,9 @@ public class DisplayPageTemplateFolderResourceImpl
 		}
 
 		long parentLayoutPageTemplateCollectionId =
-			_getParentLayoutPageTemplateCollectionId(
-				displayPageTemplateFolder, groupId);
+			DisplayPageTemplateFolderUtil.
+				getParentLayoutPageTemplateCollectionId(
+					displayPageTemplateFolder, groupId);
 
 		if (!Objects.equals(
 				layoutPageTemplateCollection.
@@ -184,71 +182,8 @@ public class DisplayPageTemplateFolderResourceImpl
 		throws Exception {
 
 		return _toDisplayPageTemplateFolder(
-			_layoutPageTemplateCollectionService.
-				addLayoutPageTemplateCollection(
-					displayPageTemplateFolder.getExternalReferenceCode(),
-					groupId,
-					_getParentLayoutPageTemplateCollectionId(
-						displayPageTemplateFolder, groupId),
-					displayPageTemplateFolder.getKey(),
-					displayPageTemplateFolder.getName(),
-					displayPageTemplateFolder.getDescription(),
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					_getServiceContext(displayPageTemplateFolder, groupId)));
-	}
-
-	private long _getParentLayoutPageTemplateCollectionId(
-			DisplayPageTemplateFolder displayPageTemplateFolder, long groupId)
-		throws Exception {
-
-		long parentLayoutPageTemplateCollectionId =
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
-
-		if (Validator.isNull(
-				displayPageTemplateFolder.
-					getParentDisplayPageTemplateFolderExternalReferenceCode())) {
-
-			return parentLayoutPageTemplateCollectionId;
-		}
-
-		LayoutPageTemplateCollection parentLayoutPageTemplateCollection =
-			_layoutPageTemplateCollectionService.
-				fetchLayoutPageTemplateCollection(
-					displayPageTemplateFolder.
-						getParentDisplayPageTemplateFolderExternalReferenceCode(),
-					groupId);
-
-		if (parentLayoutPageTemplateCollection != null) {
-			if (!Objects.equals(
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					parentLayoutPageTemplateCollection.getType())) {
-
-				throw new UnsupportedOperationException();
-			}
-
-			parentLayoutPageTemplateCollectionId =
-				parentLayoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId();
-		}
-
-		return parentLayoutPageTemplateCollectionId;
-	}
-
-	private ServiceContext _getServiceContext(
-		DisplayPageTemplateFolder displayPageTemplateFolder, long groupId) {
-
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			groupId, contextHttpServletRequest, null
-		).build();
-
-		serviceContext.setCreateDate(
-			displayPageTemplateFolder.getDateCreated());
-		serviceContext.setModifiedDate(
-			displayPageTemplateFolder.getDateModified());
-		serviceContext.setUuid(displayPageTemplateFolder.getUuid());
-
-		return serviceContext;
+			DisplayPageTemplateFolderUtil.addLayoutPageTemplateCollection(
+				displayPageTemplateFolder, groupId, contextHttpServletRequest));
 	}
 
 	private DisplayPageTemplateFolder _toDisplayPageTemplateFolder(

@@ -13,7 +13,15 @@ import com.liferay.site.cms.site.initializer.internal.display.context.ViewHomeSe
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-
+import org.osgi.service.component.annotations.Reference;
+import jakarta.portlet.RenderRequest;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.portal.workflow.manager.WorkflowLogManager;
+import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 /**
  * @author Christian Dorado
  */
@@ -32,12 +40,18 @@ public class ViewHomeSearchBarJSPSectionFragmentRenderer
 
 		return new ViewHomeSearchBarDisplayContext(
 			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY));
+				WebKeys.THEME_DISPLAY), _workflowLogManager, _workflowComparatorFactory);
 	}
 
 	@Override
 	protected String getJSPPath() {
 		return "/view_home_search_bar.jsp";
 	}
+	
+	@Reference
+	private WorkflowLogManager _workflowLogManager;
+
+	@Reference
+	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 }

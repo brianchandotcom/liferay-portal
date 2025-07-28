@@ -39,6 +39,10 @@ public abstract class ModulesTestClass extends BaseTestClass {
 
 		_taskName = taskName;
 
+		if (this instanceof JSUnitModulesTestClass) {
+			return;
+		}
+
 		for (File modulesProjectDir : getModulesProjectDirs()) {
 			String path = JenkinsResultsParserUtil.getPathRelativeTo(
 				modulesProjectDir, getPortalModulesBaseDir());

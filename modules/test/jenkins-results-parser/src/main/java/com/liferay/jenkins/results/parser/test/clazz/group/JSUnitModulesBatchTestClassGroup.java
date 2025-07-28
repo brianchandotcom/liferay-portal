@@ -119,6 +119,29 @@ public class JSUnitModulesBatchTestClassGroup
 				TestClass testClass = TestClassFactory.newTestClass(
 					this, moduleTestDir);
 
+				String moduleTestDirPath =
+					JenkinsResultsParserUtil.getCanonicalPath(moduleTestDir);
+
+				for (File jsUnitFile :
+						portalGitWorkingDirectory.getJSUnitFiles()) {
+
+					String jsUnitFilePath =
+						JenkinsResultsParserUtil.getCanonicalPath(jsUnitFile);
+
+					if (!jsUnitFilePath.startsWith(moduleTestDirPath)) {
+						continue;
+					}
+
+					String testClassMethodName =
+						JenkinsResultsParserUtil.getPathRelativeTo(
+							jsUnitFile,
+							portalGitWorkingDirectory.getWorkingDirectory());
+
+					testClass.addTestClassMethod(
+						TestClassFactory.newTestClassMethod(
+							false, testClassMethodName, testClass));
+				}
+
 				if (!testClass.hasTestClassMethods()) {
 					continue;
 				}

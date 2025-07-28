@@ -25,6 +25,7 @@ Import-Package:\
 	org.apache.commons.io.function,\
 	org.apache.commons.io.input,\
 	org.apache.commons.io.output,\
+	org.apache.commons.lang3.*,\
 	org.apache.commons.math3.*,\
 	org.apache.commons.validator.routines
 -fixupmessages: Classes found in the wrong directory: ...;is:=ignore

@@ -11,15 +11,20 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	changeTrackingPagesTest,
 	dataApiHelpersTest,
+	pagesAdminPagesTest,
+	pageEditorPagesTest,
 	featureFlagsTest({
 		'LPD-20131': {enabled: true},
 	})
@@ -323,4 +328,62 @@ test('LPD-52950 Assert publications user cannot see publications they do not hav
 	await performLogout(page);
 
 	await performLoginViaApi({page, screenName: 'test'});
+});
+
+test('LPD-61747 Discarding changes in a Publication containing a deletion change throws NPE', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+	pageEditorPage,
+	pagesAdminPage,
+}) => {
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await page
+		.getByTestId('creationMenuNewButton')
+		.locator('visible=true')
+		.click();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.addPage({
+		name: pageTitle,
+	});
+
+	await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+	await pageEditorPage.publishPage();
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+	await pagesAdminPage.clickOnAction('Edit', pageTitle);
+
+	const headingId = await pageEditorPage.getFragmentId('Heading');
+
+	await pageEditorPage.deleteFragment(headingId);
+
+	await pageEditorPage.publishPage();
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	const firstDropdown = page
+		.locator('.cell-item-actions .dropdown svg.lexicon-icon-ellipsis-v')
+		.first();
+	await firstDropdown.waitFor();
+	await firstDropdown.click();
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Discard'}),
+		trigger: firstDropdown,
+	});
+
+	await page.getByRole('button', {name: 'Discard'}).click();
+
+	await waitForAlert(page, 'Success:Your request completed successfully.');
 });

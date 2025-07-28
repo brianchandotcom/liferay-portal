@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -80,7 +81,10 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		depotEntry.setGroupId(group.getGroupId());
 		depotEntry.setCompanyId(serviceContext.getCompanyId());
 		depotEntry.setUserId(serviceContext.getUserId());
-		depotEntry.setType(DepotConstants.TYPE_ASSET_LIBRARY);
+		depotEntry.setType(
+			GetterUtil.getInteger(
+				group.getTypeSettingsProperty("depotEntryType"),
+				DepotConstants.TYPE_ASSET_LIBRARY));
 
 		depotEntry = depotEntryPersistence.update(depotEntry);
 
@@ -113,6 +117,14 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			"/asset-library-" + depotEntry.getDepotEntryId(), false, false,
 			true, serviceContext);
+
+		_groupLocalService.updateGroup(
+			group.getGroupId(),
+			UnicodePropertiesBuilder.create(
+				group.getTypeSettingsProperties(), true
+			).put(
+				"depotEntryType", DepotConstants.TYPE_ASSET_LIBRARY
+			).buildString());
 
 		_userLocalService.addGroupUsers(
 			group.getGroupId(), new long[] {serviceContext.getUserId()});

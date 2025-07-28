@@ -69,6 +69,39 @@ export default function ({
 			: searchContainerData.split(',');
 	};
 
+	const onRemoveObjectDefinition =
+		objectDefinitionsSearchContainerContentBox.delegate(
+			'click',
+			({currentTarget: removeButton}: {currentTarget: any}) => {
+				objectDefinitionsSearchContainer.deleteRow(
+					removeButton.ancestor('tr'),
+					removeButton.attr('data-rowid')
+				);
+
+				const objectDefinitionIds = getSearchContainerData(
+					objectDefinitionsSearchContainer
+				);
+
+				objectDefinitionIdsInput.value = objectDefinitionIds.join(',');
+			},
+			'.remove-button'
+		);
+
+	const onRemoveSite = groupsSearchContainerContentBox.delegate(
+		'click',
+		({currentTarget: removeButton}: {currentTarget: any}) => {
+			groupsSearchContainer.deleteRow(
+				removeButton.ancestor('tr'),
+				removeButton.attr('data-rowid')
+			);
+
+			const groupIds = getSearchContainerData(groupsSearchContainer);
+
+			groupIdsInput.value = groupIds.join(',');
+		},
+		'.remove-button'
+	);
+
 	const onSelectObjectDefinitionClick = () => {
 		const objectDefinitionIds = getSearchContainerData(
 			objectDefinitionsSearchContainer
@@ -213,39 +246,6 @@ export default function ({
 			url: groupSelectorURL,
 		});
 	};
-
-	const onRemoveObjectDefinition =
-		objectDefinitionsSearchContainerContentBox.delegate(
-			'click',
-			({currentTarget: removeButton}: {currentTarget: any}) => {
-				objectDefinitionsSearchContainer.deleteRow(
-					removeButton.ancestor('tr'),
-					removeButton.attr('data-rowid')
-				);
-
-				const objectDefinitionIds = getSearchContainerData(
-					objectDefinitionsSearchContainer
-				);
-
-				objectDefinitionIdsInput.value = objectDefinitionIds.join(',');
-			},
-			'.remove-button'
-		);
-
-	const onRemoveSite = groupsSearchContainerContentBox.delegate(
-		'click',
-		({currentTarget: removeButton}: {currentTarget: any}) => {
-			groupsSearchContainer.deleteRow(
-				removeButton.ancestor('tr'),
-				removeButton.attr('data-rowid')
-			);
-
-			const groupIds = getSearchContainerData(groupsSearchContainer);
-
-			groupIdsInput.value = groupIds.join(',');
-		},
-		'.remove-button'
-	);
 
 	const selectObjectDefinitionDelegate = delegate(
 		selectObjectDefinitionButton,

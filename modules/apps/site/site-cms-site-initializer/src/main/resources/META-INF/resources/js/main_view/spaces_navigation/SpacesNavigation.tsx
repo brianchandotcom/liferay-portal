@@ -13,6 +13,7 @@ import SpaceSticker from '../../common/components/SpaceSticker';
 import {LogoColor} from '../../common/types/Space';
 
 export interface AssetLibrary {
+	active?: boolean;
 	id: number;
 	name: string;
 	settings?: {
@@ -22,6 +23,7 @@ export interface AssetLibrary {
 }
 
 interface SpacesNavigationProps {
+	allSpacesActive: boolean;
 	allSpacesURL: string;
 	assetLibraries: AssetLibrary[];
 	assetLibrariesCount: number;
@@ -46,6 +48,7 @@ interface VerticalNavItem {
 }
 
 const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
+	allSpacesActive,
 	allSpacesURL,
 	assetLibraries,
 	assetLibrariesCount,
@@ -62,12 +65,14 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 
 	const spacesNavigationItem = {
 		items: [
-			...assetLibraries.map(({name, settings, url}) => ({
+			...assetLibraries.map(({active, name, settings, url}) => ({
+				active,
 				href: url,
 				label: name,
 				stickerDisplayType: settings?.logoColor as LogoColor,
 			})),
 			{
+				active: allSpacesActive,
 				href: allSpacesURL,
 				icon: 'box-container',
 				label: sub(
@@ -101,6 +106,7 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 			{(item: VerticalNavItem) => {
 				return (
 					<VerticalNav.Item
+						active={item.active}
 						href={item.href}
 						items={item.items}
 						key={item.label}

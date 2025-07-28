@@ -40,7 +40,6 @@ dependencies {
 deployDependencies {
 	from configurations.compileOnly
 
-	include "commons-*.jar"
 	include "org.apache.cxf.*.jar"
 	include "jakarta.json.bind-api-*.jar"
 	include "jakarta.ws.rs-*.jar"

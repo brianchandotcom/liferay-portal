@@ -42,6 +42,16 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return _appServerProperties;
 	}
 
+	public List<File> getJSUnitFiles() {
+		if (_jsUnitFiles != null) {
+			return _jsUnitFiles;
+		}
+
+		_jsUnitFiles = new ArrayList<>(findFiles(null, "describe\\("));
+
+		return _jsUnitFiles;
+	}
+
 	public String getMajorPortalVersion() {
 		return JenkinsResultsParserUtil.getProperty(
 			getReleaseProperties(), "lp.version.major");
@@ -370,6 +380,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	}
 
 	private Properties _appServerProperties;
+	private List<File> _jsUnitFiles;
 	private Properties _releaseProperties;
 	private Properties _testProperties;
 

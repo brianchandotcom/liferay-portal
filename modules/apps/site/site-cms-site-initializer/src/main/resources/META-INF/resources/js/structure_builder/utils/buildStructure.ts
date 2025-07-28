@@ -20,6 +20,7 @@ import {Uuid} from '../types/Uuid';
 import {Field, FieldType, MultiselectField, SingleSelectField} from './field';
 import getUuid from './getUuid';
 import isCustomObjectField from './isCustomObjectField';
+import sortChildren from './sortChildren';
 
 export default function buildStructure({
 	mainObjectDefinition,
@@ -109,7 +110,7 @@ export function buildChildren({
 		}
 	}
 
-	return children;
+	return sortChildren(children);
 }
 
 export function buildField({

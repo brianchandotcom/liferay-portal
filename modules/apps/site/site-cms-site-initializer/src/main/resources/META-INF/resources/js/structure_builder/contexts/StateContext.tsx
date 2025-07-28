@@ -36,6 +36,7 @@ import insertGroup from '../utils/insertGroup';
 import normalizeName from '../utils/normalizeName';
 import openDeletionModal from '../utils/openDeletionModal';
 import refreshReferencedStructures from '../utils/refreshReferencedStructures';
+import sortChildren from '../utils/sortChildren';
 import ungroup from '../utils/ungroup';
 import updateChild from '../utils/updateChild';
 import {
@@ -198,14 +199,19 @@ function reducer(state: State, action: Action): State {
 
 			const name = findAvailableFieldName(structure.children, field.name);
 
-			const nextChildren = new Map(structure.children);
+			const children = new Map(structure.children);
 
-			nextChildren.set(field.uuid, {...field, name});
+			children.set(field.uuid, {...field, name});
+
+			const sortedChildren = sortChildren(children);
 
 			return {
 				...state,
 				selection: [field.uuid],
-				structure: {...structure, children: nextChildren},
+				structure: {
+					...structure,
+					children: sortedChildren,
+				},
 			};
 		}
 		case 'add-referenced-structures': {
@@ -213,7 +219,7 @@ function reducer(state: State, action: Action): State {
 
 			const {publishedChildren, structure} = state;
 
-			const nextChildren = new Map(structure.children);
+			const children = new Map(structure.children);
 
 			let nextPublishedChildren = new Set(publishedChildren);
 
@@ -223,7 +229,7 @@ function reducer(state: State, action: Action): State {
 				i,
 				referencedStructure,
 			] of referencedStructures.entries()) {
-				nextChildren.set(referencedStructure.uuid, referencedStructure);
+				children.set(referencedStructure.uuid, referencedStructure);
 
 				nextPublishedChildren = new Set([
 					...nextPublishedChildren,
@@ -235,11 +241,13 @@ function reducer(state: State, action: Action): State {
 				}
 			}
 
+			const sortedChildren = sortChildren(children);
+
 			return {
 				...state,
 				publishedChildren: nextPublishedChildren,
 				selection,
-				structure: {...structure, children: nextChildren},
+				structure: {...structure, children: sortedChildren},
 			};
 		}
 		case 'add-repeatable-group': {
@@ -249,20 +257,20 @@ function reducer(state: State, action: Action): State {
 
 			const uuids = uuid ? [uuid] : selection;
 
-			const children = uuids.map(
+			const groupChildren = uuids.map(
 				(uuid) => findChild({root: structure, uuid})!
 			);
 
 			let parent: Structure | RepeatableGroup = structure;
 
-			if (children[0].parent !== structure.uuid) {
+			if (groupChildren[0].parent !== structure.uuid) {
 				parent = findChild({
 					root: structure,
-					uuid: children[0].parent,
+					uuid: groupChildren[0].parent,
 				})! as RepeatableGroup;
 			}
 
-			for (const child of children) {
+			for (const child of groupChildren) {
 				if (publishedChildren.has(child.uuid)) {
 					showWarning({
 						text: Liferay.Language.get(
@@ -296,7 +304,7 @@ function reducer(state: State, action: Action): State {
 					child.type !== 'repeatable-group'
 			);
 
-			if (parentFields.length === children.length) {
+			if (parentFields.length === groupChildren.length) {
 				showWarning({
 					text: Liferay.Language.get(
 						'the-repeatable-group-cannot-be-created-because-at-least-one-field-is-required'
@@ -311,17 +319,19 @@ function reducer(state: State, action: Action): State {
 
 			const groupUuid = getUuid();
 
-			const nextChildren = insertGroup({
-				groupChildren: children,
+			const children = insertGroup({
+				groupChildren,
 				groupParent: parent.uuid,
 				groupUuid,
 				root: structure,
 			});
 
+			const sortedChildren = sortChildren(children);
+
 			return {
 				...state,
 				selection: [groupUuid],
-				structure: {...structure, children: nextChildren},
+				structure: {...structure, children: sortedChildren},
 			};
 		}
 		case 'add-validation-error': {

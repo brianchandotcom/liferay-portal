@@ -265,6 +265,10 @@ public class PageSpecificationsTestUtil {
 				}
 			};
 
+		new Settings()
+
+		contentPageSpecification.setSettings();
+
 		contentPageSpecification.
 			setDraftContentPageSpecificationExternalReferenceCode(
 				draftContentPageSpecificationExternalReferenceCode);

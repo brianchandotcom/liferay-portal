@@ -5,12 +5,15 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.headless.admin.site.client.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -172,11 +175,24 @@ public class SettingsTestUtil {
 			{
 				setColorSchemeName(() -> "01");
 				setCss(RandomTestUtil::randomString);
+				setFavIcon(() -> _getClientExtension(serviceContext));
+				setGlobalCSSClientExtensions(
+					() -> new ClientExtension[] {
+						_getClientExtension(serviceContext),
+						_getClientExtension(serviceContext)
+					});
+				setGlobalJSClientExtensions(
+					() -> new ClientExtension[] {
+						_getClientExtension(serviceContext),
+						_getClientExtension(serviceContext)
+					});
 				setJavascript(RandomTestUtil::randomString);
 				setMasterPageItemExternalReference(
 					() -> _getMasterPageItemExternalReference(serviceContext));
 				setStyleBookItemExternalReference(
 					() -> _getStyleBookItemExternalReference(serviceContext));
+				setThemeCSSClientExtension(
+					() -> _getClientExtension(serviceContext));
 				setThemeName(() -> "classic_WAR_classictheme");
 				setThemeSettings(
 					() -> TreeMapBuilder.put(
@@ -186,6 +202,8 @@ public class SettingsTestUtil {
 						"lfr-theme:" + RandomTestUtil.randomString(),
 						RandomTestUtil.randomString()
 					).build());
+				setThemeSpritemapClientExtension(
+					() -> _getClientExtension(serviceContext));
 			}
 		};
 	}
@@ -264,6 +282,26 @@ public class SettingsTestUtil {
 		}
 	}
 
+	private static ClientExtension _getClientExtension(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		CETManager cetManager = _cetManagerSnapshot.get();
+
+		String clientExtensionExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		cetManager.addCET(
+			null, serviceContext.getCompanyId(),
+			clientExtensionExternalReferenceCode);
+
+		return new ClientExtension() {
+			{
+				setExternalReferenceCode(clientExtensionExternalReferenceCode);
+			}
+		};
+	}
+
 	private static ItemExternalReference _getMasterPageItemExternalReference(
 			ServiceContext serviceContext)
 		throws Exception {
@@ -316,5 +354,8 @@ public class SettingsTestUtil {
 
 		return themeSettingsUnicodeProperties;
 	}
+
+	private static final Snapshot<CETManager> _cetManagerSnapshot =
+		new Snapshot<>(SettingsTestUtil.class, CETManager.class);
 
 }

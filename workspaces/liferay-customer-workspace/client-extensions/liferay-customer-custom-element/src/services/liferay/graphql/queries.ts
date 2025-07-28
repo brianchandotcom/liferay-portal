@@ -157,6 +157,9 @@ export const assignUserAccountWithAccount = gql`
 			externalReferenceCode: $accountKey
 			emailAddress: $emailAddress
 		) {
+			emailAddress
+			familyName
+			givenName
 			id
 		}
 	}

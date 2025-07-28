@@ -11,13 +11,11 @@ import {useEffect, useState} from 'react';
 import {Badge, Button} from '~/components';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {STATUS_CODE} from '~/features/project/utils/constants';
-import SearchBuilder from '~/lib/SearchBuilder';
 import {
 	addTeamMembersInvitation,
 	assignUserAccountWithAccount,
 	assignUserAccountWithAccountAndAccountRole,
 	deleteAccountUserAccount,
-	getUserAccountByEmail,
 	patchUserAccount,
 } from '~/services/liferay/graphql/queries';
 import {addContactRoleNameByEmailByProject} from '~/services/liferay/rest/raysource/TeamMembers';
@@ -234,27 +232,9 @@ const InviteTeamMembersPage = ({
 			displaySuccess: false,
 		};
 
-		const _getUserAccountByEmails = async (emails) => {
-			const getUserAccount = await client.query({
-				context,
-				query: getUserAccountByEmail,
-				variables: {
-					filter: Array.isArray(emails)
-						? SearchBuilder.in('emailAddress', emails)
-						: SearchBuilder.eq('emailAddress', emails),
-				},
-			});
-
-			return getUserAccount?.data?.userAccounts?.items ?? [];
-		};
-
-		const userAccounts = await _getUserAccountByEmails(
-			values?.invites?.map(({email}) => email)
-		);
-
 		for (const inviteMember of inviteMembers) {
 			try {
-				await assignUserWithAccount({
+				const {data} = await assignUserWithAccount({
 					context,
 					variables: {
 						accountKey: project.accountKey,
@@ -262,45 +242,54 @@ const InviteTeamMembersPage = ({
 					},
 				});
 
-				const currentUserAccount = userAccounts.find(
-					({emailAddress}) => emailAddress === inviteMember.email
-				);
+				const createdOrAssignedUser =
+					data?.createAccountUserAccountByExternalReferenceCodeByEmailAddress;
 
-				const isCurrentUserAccountWithSameNames =
-					currentUserAccount?.familyName ===
-						inviteMember.familyName &&
-					currentUserAccount?.givenName === inviteMember.givenName;
+				if (!createdOrAssignedUser) {
+					throw new Error(
+						`Failed to create or assign user ${inviteMember.email}`
+					);
+				}
 
-				if (!isCurrentUserAccountWithSameNames) {
-					const [invitedMemberUserAccount] =
-						await _getUserAccountByEmails(inviteMember.email);
+				const needsNameUpdate =
+					createdOrAssignedUser.givenName !==
+						inviteMember.givenName ||
+					createdOrAssignedUser.familyName !==
+						inviteMember.familyName;
 
-					if (invitedMemberUserAccount) {
-						try {
-							await updateUserAccount({
-								context,
-								variables: {
-									userAccount: {
-										emailAddress: inviteMember.email,
-										familyName: inviteMember.familyName,
-										givenName: inviteMember.givenName,
-									},
-									userAccountId: invitedMemberUserAccount.id,
+				if (needsNameUpdate) {
+					try {
+						await updateUserAccount({
+							context,
+							variables: {
+								userAccount: {
+									emailAddress: inviteMember.email,
+									familyName: inviteMember.familyName,
+									givenName: inviteMember.givenName,
 								},
-							});
-						}
-						catch (error) {}
+								userAccountId: createdOrAssignedUser.id,
+							},
+						});
+					}
+					catch (error) {
+						console.error(
+							`Failed to update name for ${inviteMember.email}`,
+							error
+						);
+
+						Liferay.Util.openToast({
+							...DEFAULT_WARNING,
+							message: i18n.sub(
+								'user-x-was-invited-successfully-but-there-was-a-problem-updating-their-name',
+								[inviteMember.givenName]
+							),
+						});
 					}
 				}
 
-				const inviteMemberRolesSelected = [];
-				const invitedMemberRoles = inviteMember.role;
+				const invitedMemberRoles = inviteMember.role || [];
 
-				invitedMemberRoles?.map((roleInvited) => {
-					inviteMemberRolesSelected.push(roleInvited);
-				});
-
-				for (const inviteRole of inviteMemberRolesSelected) {
+				for (const inviteRole of invitedMemberRoles) {
 					try {
 						await addContactRoleNameByEmailByProject(
 							project.accountKey,
@@ -355,7 +344,9 @@ const InviteTeamMembersPage = ({
 
 				Liferay.Util.openToast({
 					...DEFAULT_WARNING,
-					message: `Unable to invite ${inviteMember.givenName}`,
+					message: i18n.sub('unable-to-invite-x', [
+						inviteMember.givenName,
+					]),
 				});
 			}
 		}

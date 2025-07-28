@@ -2,11 +2,11 @@ components:
     schemas:
         ConnectionInfo:
             properties:
+                admin:
+                    type: boolean
                 connectedToAnalyticsCloud:
                     type: boolean
                 connectedToSpace:
-                    type: boolean
-                isAdmin:
                     type: boolean
                 siteSyncedToAnalyticsCloud:
                     type: boolean

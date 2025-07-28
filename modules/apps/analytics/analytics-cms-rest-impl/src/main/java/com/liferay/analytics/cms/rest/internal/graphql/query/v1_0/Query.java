@@ -5,9 +5,11 @@
 
 package com.liferay.analytics.cms.rest.internal.graphql.query.v1_0;
 
+import com.liferay.analytics.cms.rest.dto.v1_0.ConnectionInfo;
 import com.liferay.analytics.cms.rest.dto.v1_0.InventoryAnalysis;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryMetric;
 import com.liferay.analytics.cms.rest.dto.v1_0.Overview;
+import com.liferay.analytics.cms.rest.resource.v1_0.ConnectionInfoResource;
 import com.liferay.analytics.cms.rest.resource.v1_0.InventoryAnalysisResource;
 import com.liferay.analytics.cms.rest.resource.v1_0.ObjectEntryMetricResource;
 import com.liferay.analytics.cms.rest.resource.v1_0.OverviewResource;
@@ -40,6 +42,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setConnectionInfoResourceComponentServiceObjects(
+		ComponentServiceObjects<ConnectionInfoResource>
+			connectionInfoResourceComponentServiceObjects) {
+
+		_connectionInfoResourceComponentServiceObjects =
+			connectionInfoResourceComponentServiceObjects;
+	}
+
 	public static void setInventoryAnalysisResourceComponentServiceObjects(
 		ComponentServiceObjects<InventoryAnalysisResource>
 			inventoryAnalysisResourceComponentServiceObjects) {
@@ -62,6 +72,22 @@ public class Query {
 
 		_overviewResourceComponentServiceObjects =
 			overviewResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {connectionInfo(spaceId: ___){admin, connectedToAnalyticsCloud, connectedToSpace, siteSyncedToAnalyticsCloud}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ConnectionInfo connectionInfo(@GraphQLName("spaceId") Long spaceId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_connectionInfoResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			connectionInfoResource -> connectionInfoResource.getConnectionInfo(
+				spaceId));
 	}
 
 	/**
@@ -156,6 +182,39 @@ public class Query {
 			this::_populateResourceContext,
 			overviewResource -> overviewResource.getFileOverview(
 				languageId, rangeEnd, rangeKey, rangeStart, spaceId));
+	}
+
+	@GraphQLName("ConnectionInfoPage")
+	public class ConnectionInfoPage {
+
+		public ConnectionInfoPage(Page connectionInfoPage) {
+			actions = connectionInfoPage.getActions();
+
+			items = connectionInfoPage.getItems();
+			lastPage = connectionInfoPage.getLastPage();
+			page = connectionInfoPage.getPage();
+			pageSize = connectionInfoPage.getPageSize();
+			totalCount = connectionInfoPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<ConnectionInfo> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	@GraphQLName("InventoryAnalysisPage")
@@ -277,6 +336,22 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			ConnectionInfoResource connectionInfoResource)
+		throws Exception {
+
+		connectionInfoResource.setContextAcceptLanguage(_acceptLanguage);
+		connectionInfoResource.setContextCompany(_company);
+		connectionInfoResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		connectionInfoResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		connectionInfoResource.setContextUriInfo(_uriInfo);
+		connectionInfoResource.setContextUser(_user);
+		connectionInfoResource.setGroupLocalService(_groupLocalService);
+		connectionInfoResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			InventoryAnalysisResource inventoryAnalysisResource)
 		throws Exception {
 
@@ -321,6 +396,8 @@ public class Query {
 		overviewResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<ConnectionInfoResource>
+		_connectionInfoResourceComponentServiceObjects;
 	private static ComponentServiceObjects<InventoryAnalysisResource>
 		_inventoryAnalysisResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectEntryMetricResource>

@@ -63,6 +63,15 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 
 		if (!importNames.contains(
 				"com.liferay.portal.kernel.service.permission." +
+					"ModelPermissionsFactory")) {
+
+			content = StringBundler.concat(
+				"import com.liferay.portal.kernel.service.permission.",
+				"ModelPermissionsFactory;\n\n", content);
+		}
+
+		if (!importNames.contains(
+				"com.liferay.portal.kernel.service.permission." +
 					"ModelPermissions")) {
 
 			content = StringBundler.concat(

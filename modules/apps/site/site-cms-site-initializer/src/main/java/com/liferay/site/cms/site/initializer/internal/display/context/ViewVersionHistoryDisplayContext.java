@@ -64,7 +64,7 @@ public class ViewVersionHistoryDisplayContext {
 			new FDSActionDropdownItem(
 				"{actions.copy.href}", "copy", "copy",
 				_language.get(_httpServletRequest, "make-a-copy"), "post",
-				"copy", "headless"),
+				"copy", null),
 			new FDSActionDropdownItem(
 				_language.get(
 					_httpServletRequest,

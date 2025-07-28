@@ -99,7 +99,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	@Override
 	public DepotEntry addDepotEntry(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		_validateNameMap(nameMap, LocaleUtil.getDefault());
@@ -123,7 +123,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			UnicodePropertiesBuilder.create(
 				group.getTypeSettingsProperties(), true
 			).put(
-				"depotEntryType", DepotConstants.TYPE_ASSET_LIBRARY
+				"depotEntryType", type
 			).buildString());
 
 		_userLocalService.addGroupUsers(
@@ -146,7 +146,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		depotEntry.setGroupId(group.getGroupId());
 		depotEntry.setCompanyId(serviceContext.getCompanyId());
 		depotEntry.setUserId(serviceContext.getUserId());
-		depotEntry.setType(DepotConstants.TYPE_ASSET_LIBRARY);
+		depotEntry.setType(type);
 
 		depotEntry = depotEntryPersistence.update(depotEntry);
 

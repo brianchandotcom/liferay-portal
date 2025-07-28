@@ -46,7 +46,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	@Override
 	public DepotEntry addDepotEntry(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -54,7 +54,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 			DepotActionKeys.ADD_DEPOT_ENTRY);
 
 		return depotEntryLocalService.addDepotEntry(
-			nameMap, descriptionMap, serviceContext);
+			nameMap, descriptionMap, type, serviceContext);
 	}
 
 	@Override

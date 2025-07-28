@@ -5,7 +5,9 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCSiteTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ERCSiteTestEntityResource;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -19,4 +21,24 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class ERCSiteTestEntityResourceImpl
 	extends BaseERCSiteTestEntityResourceImpl {
+
+	@Override
+	protected Page<ERCSiteTestEntity> doGetSiteERCSiteTestEntitiesPage(
+			String siteExternalReferenceCode)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Override
+	protected ERCSiteTestEntity doPostSiteERCSiteTestEntity(
+			String siteExternalReferenceCode,
+			ERCSiteTestEntity ercSiteTestEntity)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 }

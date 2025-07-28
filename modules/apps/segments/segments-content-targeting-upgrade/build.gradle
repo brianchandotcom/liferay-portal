@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.8"
+	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.18.0"
 	compileOnly group: "com.liferay", name: "jakarta.ws.rs", version: "3.1.0.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "org.apache.cxf.rt.rs.client", version: "3.5.11.JAKARTA-LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "org.apache.cxf.rt.rs.extension.providers", version: "3.5.11.JAKARTA-LIFERAY-PATCHED-1"

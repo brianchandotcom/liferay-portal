@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author Brittney Nguyen
  */
-public class ScanCodeS3Object {
+public class ScanCodeCloudObject {
 
 	public void delete() {
 		_blob.delete();
@@ -31,8 +31,8 @@ public class ScanCodeS3Object {
 		return _blob.getName();
 	}
 
-	public ScanCodeS3Bucket getScanCodeS3Bucket() {
-		return _scanCodeS3Bucket;
+	public ScanCodeCloudBucket getScanCodeCloudBucket() {
+		return _scanCodeCloudBucket;
 	}
 
 	public URL getURL() {
@@ -56,14 +56,17 @@ public class ScanCodeS3Object {
 		return getURLString();
 	}
 
-	protected ScanCodeS3Object(Blob blob, ScanCodeS3Bucket scanCodeS3Bucket) {
+	protected ScanCodeCloudObject(
+		Blob blob, ScanCodeCloudBucket scanCodeCloudBucket) {
+
 		_blob = blob;
-		_scanCodeS3Bucket = scanCodeS3Bucket;
+		_scanCodeCloudBucket = scanCodeCloudBucket;
 
 		try {
 			_url = new URL(
 				JenkinsResultsParserUtil.combine(
-					scanCodeS3Bucket.getScanCodeS3BaseURL(), "/", getKey()));
+					scanCodeCloudBucket.getScanCodeCloudBaseURL(), "/",
+					getKey()));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
@@ -71,7 +74,7 @@ public class ScanCodeS3Object {
 	}
 
 	private final Blob _blob;
-	private final ScanCodeS3Bucket _scanCodeS3Bucket;
+	private final ScanCodeCloudBucket _scanCodeCloudBucket;
 	private final URL _url;
 
 }

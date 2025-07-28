@@ -16,6 +16,10 @@ public class JavaJakartaTransformCheck extends BaseJakartaTransformCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (!fileName.endsWith(".java")) {
+			return content;
+		}
+
 		content = replace(content);
 		content = replaceTaglibURIs(content);
 

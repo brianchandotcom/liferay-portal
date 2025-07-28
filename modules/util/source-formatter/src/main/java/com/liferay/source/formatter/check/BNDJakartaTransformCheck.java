@@ -37,6 +37,10 @@ public class BNDJakartaTransformCheck extends BaseJakartaTransformCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		if (!fileName.endsWith(".bnd")) {
+			return content;
+		}
+
 		content = _formatHeaders(content);
 		content = replace(content);
 

@@ -14,6 +14,10 @@ public class PropertiesJakartaTransformCheck extends BaseJakartaTransformCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (!fileName.endsWith(".properties")) {
+			return content;
+		}
+
 		return replace(content);
 	}
 

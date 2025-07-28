@@ -14,6 +14,10 @@ public class TSJakartaTransformCheck extends BaseJakartaTransformCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (!fileName.endsWith(".ts") && !fileName.endsWith(".tsx")) {
+			return content;
+		}
+
 		return replace(content);
 	}
 

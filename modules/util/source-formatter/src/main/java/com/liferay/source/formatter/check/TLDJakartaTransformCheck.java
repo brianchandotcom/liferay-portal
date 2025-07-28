@@ -14,6 +14,10 @@ public class TLDJakartaTransformCheck extends BaseJakartaTransformCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (!fileName.endsWith(".tld")) {
+			return content;
+		}
+
 		return replace(content);
 	}
 

@@ -14,6 +14,10 @@ public class JSJakartaTransformCheck extends BaseJakartaTransformCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (!fileName.endsWith(".js") && !fileName.endsWith(".jsx")) {
+			return content;
+		}
+
 		return replace(content);
 	}
 

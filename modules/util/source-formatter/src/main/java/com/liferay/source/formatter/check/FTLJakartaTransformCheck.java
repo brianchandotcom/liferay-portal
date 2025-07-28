@@ -14,6 +14,10 @@ public class FTLJakartaTransformCheck extends BaseJakartaTransformCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (!fileName.endsWith(".ftl")) {
+			return content;
+		}
+
 		return replace(content);
 	}
 

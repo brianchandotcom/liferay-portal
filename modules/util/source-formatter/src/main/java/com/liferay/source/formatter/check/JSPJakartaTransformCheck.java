@@ -14,6 +14,12 @@ public class JSPJakartaTransformCheck extends BaseJakartaTransformCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (!fileName.endsWith(".jsp") && !fileName.endsWith(".jspf") &&
+			!fileName.endsWith(".jspx")) {
+
+			return content;
+		}
+
 		content = replace(content);
 
 		return replaceTaglibURIs(content);

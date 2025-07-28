@@ -14,6 +14,10 @@ public class HTMLJakartaTransformCheck extends BaseJakartaTransformCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (!fileName.endsWith(".html")) {
+			return content;
+		}
+
 		return replace(content);
 	}
 

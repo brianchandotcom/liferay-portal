@@ -26,6 +26,10 @@ public class GradleJakartaTransformCheck extends BaseJakartaTransformCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		if (!fileName.endsWith(".gradle")) {
+			return content;
+		}
+
 		Map<String, String> jakartaTransformDependenciesMap =
 			_getJakartaTransformDependenciesMap();
 

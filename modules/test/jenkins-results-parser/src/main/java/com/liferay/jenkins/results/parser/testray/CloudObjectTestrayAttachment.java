@@ -10,9 +10,9 @@ import java.net.URL;
 /**
  * @author Michael Hashimoto
  */
-public class S3TestrayAttachment extends BaseTestrayAttachment {
+public class CloudObjectTestrayAttachment extends BaseTestrayAttachment {
 
-	public S3TestrayAttachment(
+	public CloudObjectTestrayAttachment(
 		TestrayCaseResult testrayCaseResult, String name, String key) {
 
 		super(testrayCaseResult, name, key);

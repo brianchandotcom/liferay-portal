@@ -17,7 +17,8 @@ import java.net.URL;
 /**
  * @author Michael Hashimoto
  */
-public class S3TestrayAttachmentUploader extends BaseTestrayAttachmentUploader {
+public class CloudObjectTestrayAttachmentUploader
+	extends BaseTestrayAttachmentUploader {
 
 	@Override
 	public File getPreparedFilesBaseDir() {
@@ -73,7 +74,9 @@ public class S3TestrayAttachmentUploader extends BaseTestrayAttachmentUploader {
 		_uploaded = true;
 	}
 
-	protected S3TestrayAttachmentUploader(Build build, URL testrayServerURL) {
+	protected CloudObjectTestrayAttachmentUploader(
+		Build build, URL testrayServerURL) {
+
 		super(build, testrayServerURL);
 	}
 

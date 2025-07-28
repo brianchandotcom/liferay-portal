@@ -16,7 +16,7 @@
 							<span class="sticker">
 								<span class="sticker-overlay">
 									<img
-										alt="${languageUtil.get(locale, "thumbnail")}"
+										alt="${entry.getContent()!''}"
 										class="sticker-img"
 										src="${entry.getThumbnailURLString()}"
 									/>

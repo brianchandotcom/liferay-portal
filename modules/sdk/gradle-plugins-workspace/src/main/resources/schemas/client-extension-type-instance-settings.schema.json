@@ -2216,7 +2216,7 @@
 				},
 				"enableLayoutTranslatedLanguages": {
 					"default": false,
-					"description": "Generate Hreflang meta data only for languages with translated content.",
+					"description": "Generate Hreflang metadata only for languages with translated content.",
 					"title": "Enable Only Translated Hreflangs",
 					"type": "boolean"
 				},
@@ -2860,6 +2860,166 @@
 				"troubleshootingURL": {
 					"default": "",
 					"type": "string"
+				}
+			},
+			"required": [
+				"pid"
+			]
+		},
+		{
+			"properties": {
+				"emailPatcherBuildCompleteBody": {
+					"properties": {
+					},
+					"title": "email-patcher-build-complete-body",
+					"type": "object"
+				},
+				"emailPatcherBuildCompleteSubject": {
+					"properties": {
+					},
+					"title": "email-patcher-build-complete-subject",
+					"type": "object"
+				},
+				"emailPatcherBuildConflictBody": {
+					"properties": {
+					},
+					"title": "email-patcher-build-conflict-body",
+					"type": "object"
+				},
+				"emailPatcherBuildConflictSubject": {
+					"properties": {
+					},
+					"title": "email-patcher-build-conflict-subject",
+					"type": "object"
+				},
+				"emailPatcherBuildFailedBody": {
+					"properties": {
+					},
+					"title": "email-patcher-build-failed-body",
+					"type": "object"
+				},
+				"emailPatcherBuildFailedSubject": {
+					"properties": {
+					},
+					"title": "email-patcher-build-failed-subject",
+					"type": "object"
+				},
+				"emailPatcherBuildQAAnalysisNeededBody": {
+					"properties": {
+					},
+					"title": "email-patcher-build-qa-analysis-needed-body",
+					"type": "object"
+				},
+				"emailPatcherBuildQAAnalysisNeededSubject": {
+					"properties": {
+					},
+					"title": "email-patcher-build-qa-analysis-needed-subject",
+					"type": "object"
+				},
+				"emailPatcherBuildQAAutomationPassedBody": {
+					"properties": {
+					},
+					"title": "email-patcher-build-qa-automation-passed-body",
+					"type": "object"
+				},
+				"emailPatcherBuildQAAutomationPassedSubject": {
+					"properties": {
+					},
+					"title": "email-patcher-build-qa-automation-passed-subject",
+					"type": "object"
+				},
+				"emailPatcherBuildQAFailedManuallyBody": {
+					"properties": {
+					},
+					"title": "email-patcher-build-qa-failed-manually-body",
+					"type": "object"
+				},
+				"emailPatcherBuildQAFailedManuallySubject": {
+					"properties": {
+					},
+					"title": "email-patcher-build-qa-failed-manually-subject",
+					"type": "object"
+				},
+				"emailPatcherBuildQAPassedManuallyBody": {
+					"properties": {
+					},
+					"title": "email-patcher-build-qa-passed-manually-body",
+					"type": "object"
+				},
+				"emailPatcherBuildQAPassedManuallySubject": {
+					"properties": {
+					},
+					"title": "email-patcher-build-qa-passed-manually-subject",
+					"type": "object"
+				},
+				"emailPatcherBuildRebaseConflictBody": {
+					"properties": {
+					},
+					"title": "email-patcher-build-rebase-conflict-body",
+					"type": "object"
+				},
+				"emailPatcherBuildRebaseConflictSubject": {
+					"properties": {
+					},
+					"title": "email-patcher-build-rebase-conflict-subject",
+					"type": "object"
+				},
+				"emailPatcherBuildTimeoutBody": {
+					"properties": {
+					},
+					"title": "email-patcher-build-timeout-body",
+					"type": "object"
+				},
+				"emailPatcherBuildTimeoutSubject": {
+					"properties": {
+					},
+					"title": "email-patcher-build-timeout-subject",
+					"type": "object"
+				},
+				"emailPatcherFixCompleteBody": {
+					"properties": {
+					},
+					"title": "email-patcher-fix-complete-body",
+					"type": "object"
+				},
+				"emailPatcherFixCompleteSubject": {
+					"properties": {
+					},
+					"title": "email-patcher-fix-complete-subject",
+					"type": "object"
+				},
+				"emailPatcherFixFailedBody": {
+					"properties": {
+					},
+					"title": "email-patcher-fix-failed-body",
+					"type": "object"
+				},
+				"emailPatcherFixFailedSubject": {
+					"properties": {
+					},
+					"title": "email-patcher-fix-failed-subject",
+					"type": "object"
+				},
+				"emailPatcherFixTimeoutBody": {
+					"properties": {
+					},
+					"title": "email-patcher-fix-timeout-body",
+					"type": "object"
+				},
+				"emailPatcherFixTimeoutSubject": {
+					"properties": {
+					},
+					"title": "email-patcher-fix-timeout-subject",
+					"type": "object"
+				},
+				"emailQAComments": {
+					"properties": {
+					},
+					"title": "email-qa-comments",
+					"type": "object"
+				},
+				"pid": {
+					"const": "com.liferay.osb.patcher.configuration.PatcherEmailConfiguration"
 				}
 			},
 			"required": [
@@ -4574,6 +4734,7 @@
 				"com.liferay.object.configuration.ObjectEntryScheduleConfiguration",
 				"com.liferay.object.configuration.ObjectEntryVersionConfiguration",
 				"com.liferay.osb.patcher.configuration.PatcherConfiguration",
+				"com.liferay.osb.patcher.configuration.PatcherEmailConfiguration",
 				"com.liferay.portal.crypto.hash.provider.bcrypt.internal.configuration.BCryptCryptoHashProviderConfiguration",
 				"com.liferay.portal.crypto.hash.provider.message.digest.internal.configuration.MessageDigestCryptoHashProviderConfiguration",
 				"com.liferay.portal.defaultpermissions.configuration.PortalDefaultPermissionsCompanyConfiguration",

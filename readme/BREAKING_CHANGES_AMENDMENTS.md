@@ -1,6 +1,6 @@
 # cb2501a618b8b2cfc7e045cc610f8bc872231fb0
 
-The commit message is not marked as a breaking change. The correct message is:
+This commit is missing a breaking change message. The correct message is:
 
 ```
 LPS-16086: Prevent to compute values for item selector and URL fields. This commit resolves a bug where pages containing item selector or URL fields could not be imported after being exported. Previously, the full value of these fields was computed and stored, leading to data inconsistencies during import/export. For a complete and correct response format, this change should be considered in conjunction with regressions LPD-33951 and LPD-57833.

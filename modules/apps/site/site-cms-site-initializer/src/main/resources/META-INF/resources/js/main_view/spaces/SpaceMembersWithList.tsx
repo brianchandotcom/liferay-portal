@@ -301,9 +301,7 @@ export function SpaceMembersWithList({
 		if (error) {
 			openToast({
 				message: sub(
-					Liferay.Language.get(
-						'unable-to-remove-group-x-from-space-x'
-					),
+					Liferay.Language.get('unable-to-remove-group-x-from-space'),
 					[`<strong>${item.name}</strong>`]
 				),
 				type: 'danger',
@@ -313,7 +311,7 @@ export function SpaceMembersWithList({
 			openToast({
 				message: sub(
 					Liferay.Language.get(
-						'group-x-successfully-removed-from-space-x'
+						'group-x-successfully-removed-from-space'
 					),
 					[`<strong>${item.name}</strong>`]
 				),

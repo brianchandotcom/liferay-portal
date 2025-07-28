@@ -200,12 +200,12 @@ public class PortalInstancesTest {
 			Assert.assertEquals(
 				_company.getCompanyId(),
 				(long)CompanyThreadLocal.getCompanyId());
-
-			return;
 		}
-
-		Assert.assertNotEquals(
-			_company.getCompanyId(), (long)CompanyThreadLocal.getCompanyId());
+		else {
+			Assert.assertNotEquals(
+				_company.getCompanyId(),
+				(long)CompanyThreadLocal.getCompanyId());
+		}
 	}
 
 	private void _testGetCompanyId(String hostname, LayoutSet layoutSet) {

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.tools.java.parser.JavaParser;
@@ -6341,9 +6342,19 @@ public class ServiceBuilder {
 	}
 
 	private boolean _hasLocalChanges(File propsFile) throws Exception {
-		for (String localChangesFileName :
-				GitUtil.getLocalChangesFileNames(_gitSearchStartDirName)) {
+		List<String> localChangesFileNames;
 
+		try {
+			localChangesFileNames = GitUtil.getLocalChangesFileNames(
+				_gitSearchStartDirName);
+		}
+		catch (GitException gitException) {
+			System.out.println("Cannot get local changed file names from git");
+
+			return false;
+		}
+
+		for (String localChangesFileName : localChangesFileNames) {
 			if (localChangesFileName.equals(propsFile.getPath())) {
 				return true;
 			}

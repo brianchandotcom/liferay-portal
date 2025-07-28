@@ -7,6 +7,7 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -1053,7 +1054,8 @@ public class ObjectDefinitionResourceTest
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+			Collections.emptyMap(), DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
 
 		Group group1 = depotEntry1.getGroup();
 
@@ -1089,7 +1091,8 @@ public class ObjectDefinitionResourceTest
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+			Collections.emptyMap(), DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
 
 		Group group2 = depotEntry2.getGroup();
 

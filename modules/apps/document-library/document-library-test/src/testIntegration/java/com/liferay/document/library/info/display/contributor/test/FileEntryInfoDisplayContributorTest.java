@@ -10,6 +10,7 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -255,6 +256,7 @@ public class FileEntryInfoDisplayContributorTest {
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				DepotConstants.TYPE_ASSET_LIBRARY,
 				ServiceContextTestUtil.getServiceContext());
 
 			DLFolder dlFolder = DLTestUtil.addDLFolder(

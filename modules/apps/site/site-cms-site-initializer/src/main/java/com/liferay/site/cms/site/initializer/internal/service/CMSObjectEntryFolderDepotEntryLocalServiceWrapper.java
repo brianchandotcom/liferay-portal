@@ -45,11 +45,11 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 	@Override
 	public DepotEntry addDepotEntry(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		DepotEntry depotEntry = super.addDepotEntry(
-			nameMap, descriptionMap, serviceContext);
+			nameMap, descriptionMap, type, serviceContext);
 
 		_addObjectEntryFolders(depotEntry);
 

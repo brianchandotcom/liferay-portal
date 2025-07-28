@@ -20,7 +20,7 @@ export function executeAsyncItemAction({
 }: {
 	errorMessage?: string;
 	method?: string;
-	refreshData?: () => {};
+	refreshData?: () => void;
 	requestBody?: string;
 	setActionItemLoading?: (loading: boolean) => void;
 	successMessage?: string;

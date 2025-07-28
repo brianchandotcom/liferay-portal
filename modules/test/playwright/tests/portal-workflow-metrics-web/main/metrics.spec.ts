@@ -29,28 +29,34 @@ export const test = mergeTests(
 	workflowPagesTest
 );
 
+const assignments = [];
+
 test('Pagination of Pending Items works correctly', async ({
 	apiHelpers,
-	configurationTabPage,
 	metricsPage,
 	page,
+	site,
 }) => {
 	test.slow();
-	await configurationTabPage.goTo();
+	await test.step('assign the "Single Approver" workflow to Web Content Article', async () => {
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.workflow}`
+		);
 
-	await page.getByLabel('Items per Page').click();
+		await page.waitForLoadState('networkidle');
 
-	await page.getByRole('option').filter({hasText: '40'}).click();
+		await page
+			.getByRole('row', {name: 'Web Content Article'})
+			.getByRole('button', {name: 'Edit'})
+			.click();
 
-	await configurationTabPage.assignWorkflowToAssetType(
-		'Single Approver',
-		'Web Content Article'
-	);
+		await page.getByRole('combobox').selectOption('Single Approver@1');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+	});
 
 	const basicWebContentStructureId =
 		await getBasicWebContentStructureId(apiHelpers);
-
-	const site = await apiHelpers.headlessSite.getSiteByERC('L_GUEST');
 
 	for (let i = 1; i <= 21; i++) {
 		const webContent =
@@ -112,11 +118,12 @@ test('Pagination of Pending Items works correctly', async ({
 	});
 });
 
-test('Can search assignees in All Assignees in Performance by Assignee', async ({
+test('Can search assignees and steps in Performance by Assignee and Step views', async ({
 	apiHelpers,
 	metricsPage,
 	page,
 	performanceByAssigneePage,
+	performanceByStepPage,
 	processMetricsPage,
 	site,
 	workflowTasksPage,
@@ -156,8 +163,6 @@ test('Can search assignees in All Assignees in Performance by Assignee', async (
 			title: pageName,
 		});
 	});
-
-	const assignments = [];
 
 	await test.step('create three users and three web contents', async () => {
 		const role =
@@ -269,5 +274,74 @@ test('Can search assignees in All Assignees in Performance by Assignee', async (
 		await page.getByRole('search').getByRole('button').click();
 
 		await expect(page.getByText('No results found')).toBeVisible();
+	});
+
+	await metricsPage.goTo();
+
+	await workflowTasksPage.processSingleAprover.click();
+
+	await workflowTasksPage.performanceTab.click();
+
+	await processMetricsPage.viewAllStepsButton.click();
+
+	await test.step('assert that it is possible to seach and filter a step in the View All Steps page', async () => {
+		await performanceByStepPage.searchBar.fill('Update');
+
+		await page.getByRole('search').getByRole('button').click();
+
+		const row = page
+			.getByRole('row', {name: 'Update'})
+			.filter({
+				has: page.getByRole('cell', {name: '0 (0%)'}),
+			})
+			.filter({
+				has: page.getByRole('cell', {name: '0min'}),
+			});
+
+		await expect(row).toBeVisible();
+
+		await page.getByRole('button', {name: 'Last'}).click();
+
+		await page.getByText('Yesterday').click();
+
+		await expect(row).toBeVisible();
+	});
+
+	await page.locator('#backButton').getByRole('link').click();
+
+	await test.step('assert custom date range filter displays selected dates', async () => {
+		const panel = page.locator('.panel').filter({
+			has: page.getByText('Performance by Step'),
+		});
+
+		await panel
+			.getByRole('button', {
+				name: 'Last 30 Days',
+			})
+			.click();
+
+		const dropdown = page.locator('.dropdown-menu.show');
+
+		await dropdown.getByRole('menuitem', {name: 'Custom Range'}).click();
+
+		const customRangeForm = page.locator(
+			'.dropdown-menu.dropdown-menu-inline-table.show'
+		);
+
+		await customRangeForm
+			.locator('input[name="dateStart"]')
+			.fill('09/22/2018');
+
+		await customRangeForm
+			.locator('input[name="dateEnd"]')
+			.fill('11/11/2018');
+
+		await customRangeForm.getByRole('button', {name: 'Apply'}).click();
+
+		await expect(
+			panel.getByRole('button', {
+				name: 'Sep 22, 2018 - Nov 11, 2018',
+			})
+		).toBeVisible();
 	});
 });

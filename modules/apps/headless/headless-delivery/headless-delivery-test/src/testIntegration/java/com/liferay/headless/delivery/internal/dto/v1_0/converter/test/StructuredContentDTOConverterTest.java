@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -85,7 +86,7 @@ public class StructuredContentDTOConverterTest {
 			boolean alphabeticalOrder, JSONArray expectedDataJSONArray)
 		throws Exception {
 
-		int nextInt = RandomUtil.nextInt(5);
+		int nextInt = RandomUtil.nextInt(Integer.MAX_VALUE);
 
 		String json = StringUtil.replace(
 			StringUtil.replace(
@@ -156,6 +157,7 @@ public class StructuredContentDTOConverterTest {
 	@Inject
 	private DTOConverterRegistry _dtoConverterRegistry;
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 }

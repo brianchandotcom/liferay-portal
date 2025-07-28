@@ -1318,3 +1318,85 @@ test.describe('Repeatable groups', () => {
 		}
 	);
 });
+
+test(
+	'Fields are sorted',
+	{
+		tag: '@LPD-61206',
+	},
+	async ({page, structureBuilderPage}) => {
+		const label1 = getRandomString();
+
+		// Create one structure to reference it later
+
+		await createStructure({
+			label: label1,
+			page: structureBuilderPage,
+		});
+
+		// Create main structure
+
+		const erc = await createStructure({
+			label: getRandomString(),
+			page: structureBuilderPage,
+		});
+
+		// Add a referenced structure
+
+		await structureBuilderPage.addReferencedStructures([label1]);
+
+		// Add two fields and check order
+
+		await structureBuilderPage.addField('Text');
+		await structureBuilderPage.addField('Boolean');
+
+		await expect(page.locator('.treeview-link').nth(2)).toHaveText('Text');
+
+		await expect(page.locator('.treeview-link').nth(3)).toHaveText(
+			'Boolean'
+		);
+
+		await expect(page.locator('.treeview-link').nth(4)).toHaveText(label1);
+
+		// Create repeatable group
+
+		await structureBuilderPage.createRepeatableGroup({
+			fields: [{label: 'Boolean'}],
+			label: 'Repeatable Group',
+		});
+
+		// Add another field and check order is correct
+
+		await structureBuilderPage.addField('Long Text');
+
+		await expect(page.locator('.treeview-link').nth(2)).toHaveText('Text');
+
+		await expect(page.locator('.treeview-link').nth(3)).toHaveText(
+			'Long Text'
+		);
+
+		await expect(page.locator('.treeview-link').nth(4)).toHaveText(label1);
+
+		await expect(page.locator('.treeview-link').nth(6)).toHaveText(
+			'Repeatable Group'
+		);
+
+		// Publish, refresh and check order
+
+		await structureBuilderPage.publishStructure();
+
+		await structureBuilderPage.editStructure(erc);
+
+		await expect(page.locator('.treeview-link').nth(2)).toHaveText('Text');
+
+		await expect(page.locator('.treeview-link').nth(3)).toHaveText(
+			'Long Text'
+		);
+
+		await expect(page.locator('.treeview-link').nth(4)).toHaveText(label1);
+
+		await expect(page.locator('.treeview-link').nth(5)).toHaveText(
+			'Repeatable Group'
+		);
+	}
+);

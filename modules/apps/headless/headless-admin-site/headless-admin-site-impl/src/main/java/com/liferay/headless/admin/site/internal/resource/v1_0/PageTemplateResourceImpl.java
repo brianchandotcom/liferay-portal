@@ -19,6 +19,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplateSettings;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageTemplateSetUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageTemplateResource;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
@@ -32,6 +33,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
@@ -543,10 +545,18 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				fetchLayoutPageTemplateCollection(
 					pageTemplateSet.getExternalReferenceCode(), groupId);
 
-		if ((layoutPageTemplateCollection == null) ||
-			!Objects.equals(
-				LayoutPageTemplateCollectionTypeConstants.BASIC,
-				layoutPageTemplateCollection.getType())) {
+		if (layoutPageTemplateCollection == null) {
+			if (!LazyReferencingThreadLocal.isEnabled()) {
+				throw new UnsupportedOperationException();
+			}
+
+			layoutPageTemplateCollection =
+				PageTemplateSetUtil.addLayoutPageTemplateCollection(
+					groupId, contextHttpServletRequest, pageTemplateSet);
+		}
+		else if (!Objects.equals(
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
+					layoutPageTemplateCollection.getType())) {
 
 			throw new UnsupportedOperationException();
 		}

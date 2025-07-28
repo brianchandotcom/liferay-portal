@@ -13,7 +13,7 @@ Consumers of the PageFragmentInstanceDefinitionMapper (specifically for item sel
 
 ## Why
 
-This change is required to fix the current bug (LPD-16086).
+This change is needed to make the import process work.
 ```
 
 ----

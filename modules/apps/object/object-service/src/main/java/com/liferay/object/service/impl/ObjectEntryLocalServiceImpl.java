@@ -1739,6 +1739,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectEntry moveObjectEntryToTrash(
 			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)

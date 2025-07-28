@@ -8,11 +8,15 @@ package com.liferay.search.experiences.internal.upgrade.v3_2_0;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -26,18 +30,29 @@ public class SXPBlueprintCollectionProviderUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select distinct companyId from PortalPreferenceValue where " +
-					"key_ = 'LPS-129412' and smallValue = 'true'")) {
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(FeatureFlagConstants.getKey("LPS-129412")))) {
 
-			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				while (resultSet.next()) {
-					_upgradeSXPBlueprints(resultSet.getLong(1));
+			CompanyLocalServiceUtil.forEachCompanyId(
+				companyId -> _upgradeSXPBlueprints(companyId));
+		}
+		else {
+			try (PreparedStatement preparedStatement1 =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select distinct companyId from ",
+							"PortalPreferenceValue where key_ = 'LPS-129412' ",
+							"and smallValue = 'true'"))) {
+
+				try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+					while (resultSet.next()) {
+						_upgradeSXPBlueprints(resultSet.getLong(1));
+					}
 				}
 			}
-		}
 
-		_upgradeSXPBlueprintSchemaVersion();
+			_upgradeSXPBlueprintSchemaVersion();
+		}
 	}
 
 	private String _updateConfigurationStorage(

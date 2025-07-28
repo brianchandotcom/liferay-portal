@@ -71,7 +71,7 @@ export default function ObjectEntryStatusDataRenderer({
 		if (versionNumber) {
 			const makeFetch = async () => {
 				const response = await fetch(
-					`${restContextPath}/${itemData.id}/versions`
+					`${restContextPath}/by-external-reference-code/${itemData.externalReferenceCode}/versions`
 				);
 
 				const data = await response.json();
@@ -81,7 +81,7 @@ export default function ObjectEntryStatusDataRenderer({
 
 			makeFetch();
 		}
-	}, [versionNumber, itemData.id, restContextPath]);
+	}, [itemData.externalReferenceCode, restContextPath, versionNumber]);
 
 	return (
 		<div className="lfr-objects__object-entry-status">

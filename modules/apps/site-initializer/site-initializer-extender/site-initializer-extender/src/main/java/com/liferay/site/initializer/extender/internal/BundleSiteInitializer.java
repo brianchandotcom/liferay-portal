@@ -36,6 +36,7 @@ import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.client.extension.util.CETUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -1947,7 +1948,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						jsonObject.getString("name_i18n")),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("description_i18n")),
-					serviceContext);
+					DepotConstants.TYPE_ASSET_LIBRARY, serviceContext);
 			}
 
 			UnicodeProperties unicodeProperties = new UnicodeProperties(true);

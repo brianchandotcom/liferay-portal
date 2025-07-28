@@ -6,6 +6,7 @@
 package com.liferay.depot.internal.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -63,6 +64,7 @@ public class DepotEntryInfoItemPermissionProviderTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
 		RoleTestUtil.removeResourcePermission(

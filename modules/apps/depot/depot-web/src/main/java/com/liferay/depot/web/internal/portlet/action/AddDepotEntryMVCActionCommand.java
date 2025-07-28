@@ -5,6 +5,7 @@
 
 package com.liferay.depot.web.internal.portlet.action;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotPortletKeys;
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
@@ -82,6 +83,7 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 						DepotEntry depotEntry =
 							_depotEntryService.addDepotEntry(
 								nameMap, descriptionMap,
+								DepotConstants.TYPE_ASSET_LIBRARY,
 								ServiceContextFactory.getInstance(
 									DepotEntry.class.getName(), actionRequest));
 

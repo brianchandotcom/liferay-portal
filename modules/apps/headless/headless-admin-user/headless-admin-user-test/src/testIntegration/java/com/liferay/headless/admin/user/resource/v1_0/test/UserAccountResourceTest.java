@@ -21,6 +21,7 @@ import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.captcha.rest.client.dto.v1_0.Captcha;
 import com.liferay.captcha.rest.client.resource.v1_0.CaptchaResource;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -2221,7 +2222,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			new HashMap<>(),
+			new HashMap<>(), DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), user.getUserId()));
 

@@ -8,6 +8,7 @@ package com.liferay.analytics.cms.rest.resource.v1_0.test;
 import com.liferay.analytics.cms.rest.client.dto.v1_0.ConnectionInfo;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -61,7 +62,7 @@ public class ConnectionInfoResourceTest
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			_serviceContext);
+			DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
 		_depotEntry2 = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -69,7 +70,7 @@ public class ConnectionInfoResourceTest
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			_serviceContext);
+			DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
 
 		_group = GroupTestUtil.addGroup();
 

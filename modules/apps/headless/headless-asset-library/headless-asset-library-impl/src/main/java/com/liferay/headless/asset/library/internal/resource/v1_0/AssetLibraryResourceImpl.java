@@ -6,6 +6,7 @@
 package com.liferay.headless.asset.library.internal.resource.v1_0;
 
 import com.liferay.depot.constants.DepotActionKeys;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryPin;
@@ -383,7 +384,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		}
 
 		DepotEntry depotEntry = _depotEntryService.addDepotEntry(
-			nameMap, descriptionMap, serviceContext);
+			nameMap, descriptionMap, DepotConstants.TYPE_ASSET_LIBRARY,
+			serviceContext);
 
 		group = depotEntry.getGroup();
 

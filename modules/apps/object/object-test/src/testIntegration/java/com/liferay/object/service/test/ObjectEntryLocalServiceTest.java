@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -2652,6 +2653,7 @@ public class ObjectEntryLocalServiceTest {
 		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
@@ -2677,6 +2679,7 @@ public class ObjectEntryLocalServiceTest {
 		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertFailure(
@@ -5266,6 +5269,7 @@ public class ObjectEntryLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
 		_testScope(0, ObjectDefinitionConstants.SCOPE_COMPANY, true);
@@ -5326,6 +5330,7 @@ public class ObjectEntryLocalServiceTest {
 		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertFailure(

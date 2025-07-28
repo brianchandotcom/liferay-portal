@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.content.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
@@ -91,7 +92,7 @@ public class StructuredContentResourceTest
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null,
+			null, DepotConstants.TYPE_ASSET_LIBRARY,
 			new ServiceContext() {
 				{
 					setCompanyId(testGroup.getCompanyId());

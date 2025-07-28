@@ -7,6 +7,7 @@ package com.liferay.depot.internal.change.tracking.spi.reference.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -50,7 +51,8 @@ public class DepotEntryGroupRelTableReferenceDefinitionTest
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			new HashMap<>(), ServiceContextTestUtil.getServiceContext());
+			new HashMap<>(), DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Override

@@ -6,6 +6,7 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
@@ -791,6 +792,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertFailure(
@@ -869,6 +871,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(

@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -103,7 +104,7 @@ public class InventoryAnalysisResourceTest
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			_serviceContext);
+			DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.

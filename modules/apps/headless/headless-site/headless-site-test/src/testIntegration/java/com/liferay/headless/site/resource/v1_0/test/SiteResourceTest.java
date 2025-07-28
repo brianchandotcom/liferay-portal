@@ -6,6 +6,7 @@
 package com.liferay.headless.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.site.client.dto.v1_0.Site;
@@ -322,7 +323,8 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, ServiceContextTestUtil.getServiceContext());
+			null, DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
 
 		sitesPage = siteResource.getSitesPage(null, Pagination.of(1, 100));
 

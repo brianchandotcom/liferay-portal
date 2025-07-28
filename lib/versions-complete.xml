@@ -218,13 +218,47 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.commerce.payment.method.authorize.net.jar!net.authorize.anet.java.sdk.jar</file-name>
-				<version>2.0.6.JAKARTA-LIFERAY-PATCHED-1</version>
-				<project-name>com.liferay:net.authorize.anet.java.sdk</project-name>
+				<file-name>com.liferay.commerce.payment.method.authorize.net.jar!anet-java-sdk.jar</file-name>
+				<version>3.0.0</version>
+				<project-name>Authorize.Net Java SDK</project-name>
+				<project-url>http://developer.authorize.net</project-url>
 				<licenses>
 					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+						<license-name>SDK License Agreement</license-name>
+						<license-url>https://github.com/AuthorizeNet/sdk-java/blob/master/LICENSE.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.commerce.payment.method.authorize.net.jar!httpclient5.jar</file-name>
+				<version>5.4.1</version>
+				<project-name>Apache HttpClient</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.commerce.payment.method.authorize.net.jar!httpcore5-h2.jar</file-name>
+				<version>5.3.2</version>
+				<project-name>Apache HttpComponents Core HTTP/2</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.commerce.payment.method.authorize.net.jar!httpcore5.jar</file-name>
+				<version>5.3.2</version>
+				<project-name>Apache HttpComponents Core HTTP/1.1</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -494,18 +528,6 @@
 					<license>
 						<license-name>Mozilla Public License Version 2.0</license-name>
 						<license-url>http://www.mozilla.org/MPL/2.0/</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.content.dashboard.web.jar!commons-lang3.jar</file-name>
-				<version>3.12.0</version>
-				<project-name>Apache Commons Lang</project-name>
-				<project-url>https://commons.apache.org/proper/commons-lang/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

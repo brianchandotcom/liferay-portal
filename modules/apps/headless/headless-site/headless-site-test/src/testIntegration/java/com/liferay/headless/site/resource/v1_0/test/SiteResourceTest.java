@@ -165,6 +165,13 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testGetSitesPageWithoutAuthentication();
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetSitesPageWithPagination() throws Exception {
+		super.testGetSitesPageWithPagination();
+	}
+
 	@Override
 	@Test
 	public void testPostSite() throws Exception {

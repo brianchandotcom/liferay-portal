@@ -13,8 +13,11 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.log.LogCapture;
@@ -177,6 +180,114 @@ public class OrphanReferencesDataCleanupUtilTest {
 			"companyId", "Company");
 	}
 
+	@Test
+	public void testFixOrphanUsersDeleteAction() throws Exception {
+		long userId = RandomTestUtil.nextLong();
+
+		_testFixOrphanUsers(
+			logCapture -> {
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				Assert.assertEquals(
+					_getDeletionExpectedMessage(
+						1, _dbInspector.normalizeName("Users_Roles"),
+						_dbInspector.normalizeName("userId"),
+						_dbInspector.normalizeName("User_"), userId),
+					logEntry.getMessage());
+			},
+			() -> _db.runSQL(
+				_connection,
+				"delete from Users_Roles where userId = " + userId),
+			() -> _db.runSQL(
+				_connection,
+				StringBundler.concat(
+					"insert into Users_Roles (companyId, roleId, userId, ",
+					"ctCollectionId) values (",
+					CompanyThreadLocal.getCompanyId(), ", ",
+					RandomTestUtil.nextLong(), ", ", userId, ", 0)")),
+			"userId", "Users_Roles");
+	}
+
+	@Test
+	public void testFixOrphanUsersExcludedTable() throws Exception {
+		long auditEventId = RandomTestUtil.nextLong();
+		long userId = RandomTestUtil.nextLong();
+
+		_testFixOrphanUsers(
+			logCapture -> {
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+			},
+			() -> _db.runSQL(
+				_connection,
+				"delete from Audit_AuditEvent where auditEventId = " +
+					auditEventId),
+			() -> _db.runSQL(
+				_connection,
+				StringBundler.concat(
+					"insert into Audit_AuditEvent (auditEventId, userId, ",
+					"className) values (", auditEventId, ", ", userId, ", '",
+					OrphanReferencesDataCleanupUtilTest.class.getName(), "')")),
+			"companyId", "Audit_AuditEvent");
+	}
+
+	@Test
+	public void testFixOrphanUsersUpdateAction() throws Exception {
+		User adminUser = UserTestUtil.getAdminUser(
+			CompanyThreadLocal.getCompanyId());
+		long layoutId = RandomTestUtil.nextLong();
+		long userId = RandomTestUtil.nextLong();
+
+		_testFixOrphanUsers(
+			logCapture -> {
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				Assert.assertEquals(
+					_getUserUpdatedExpectedMessage(
+						1, adminUser.getUserId(),
+						_dbInspector.normalizeName("Layout"),
+						_dbInspector.normalizeName("userId"),
+						_dbInspector.normalizeName("User_"), userId),
+					logEntry.getMessage());
+			},
+			() -> _db.runSQL(
+				_connection, "delete from Layout where layoutId = " + layoutId),
+			() -> _db.runSQL(
+				_connection,
+				StringBundler.concat(
+					"insert into Layout (mvccVersion, ctCollectionId, plid, ",
+					"groupId, companyId, userId, layoutId) values (0, 0, ",
+					RandomTestUtil.nextLong(), ", ", RandomTestUtil.nextLong(),
+					", ", CompanyThreadLocal.getCompanyId(), ", ", userId, ", ",
+					layoutId, ")")),
+			"userId", "Layout");
+	}
+
+	private String _getDeletionExpectedMessage(
+			long count, String sourceTableName, String targetColumn,
+			String targetTable, long targetValue)
+		throws Exception {
+
+		return StringBundler.concat(
+			count, " orphan entries from table ",
+			_dbInspector.normalizeName(sourceTableName),
+			" have been deleted because value ", targetValue,
+			" was not found in the origin table ",
+			_dbInspector.normalizeName(targetTable), " and column ",
+			_dbInspector.normalizeName(targetColumn));
+	}
+
 	private String _getExpectedMessage(
 			long count, String sourceTableName, String targetColumn,
 			String targetTable, long targetValue)
@@ -187,6 +298,20 @@ public class OrphanReferencesDataCleanupUtilTest {
 			_dbInspector.normalizeName(sourceTableName),
 			" have been deleted because value ", targetValue,
 			" was not found in the origin table ",
+			_dbInspector.normalizeName(targetTable), " and column ",
+			_dbInspector.normalizeName(targetColumn));
+	}
+
+	private String _getUserUpdatedExpectedMessage(
+			long count, long newValue, String sourceTableName,
+			String targetColumn, String targetTable, long targetValue)
+		throws Exception {
+
+		return StringBundler.concat(
+			count, " orphan entries from table ",
+			_dbInspector.normalizeName(sourceTableName),
+			" have been updated to value ", newValue, " because value ",
+			targetValue, " was not found in the origin table ",
 			_dbInspector.normalizeName(targetTable), " and column ",
 			_dbInspector.normalizeName(targetColumn));
 	}
@@ -212,6 +337,32 @@ public class OrphanReferencesDataCleanupUtilTest {
 				_dbInspector.normalizeName(sourceTableName),
 				_dbInspector.normalizeName(targetColumnName),
 				_dbInspector.normalizeName(targetTableName));
+
+			assertUnsafeConsumer.accept(logCapture);
+		}
+		finally {
+			cleanUpDataUnsafeRunnable.run();
+		}
+	}
+
+	private void _testFixOrphanUsers(
+			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
+			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
+			UnsafeRunnable<Exception> initializeDataUnsafeRunnable,
+			String sourceColumnName, String sourceTableName)
+		throws Exception {
+
+		initializeDataUnsafeRunnable.run();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				OrphanReferencesDataCleanupUtil.class.getName(),
+				LoggerTestUtil.INFO)) {
+
+			OrphanReferencesDataCleanupUtil.fixOrphanUsers(
+				_connection, _dbInspector.normalizeName(sourceColumnName),
+				_dbInspector.normalizeName(sourceTableName),
+				_dbInspector.normalizeName("userId"),
+				_dbInspector.normalizeName("User_"));
 
 			assertUnsafeConsumer.accept(logCapture);
 		}

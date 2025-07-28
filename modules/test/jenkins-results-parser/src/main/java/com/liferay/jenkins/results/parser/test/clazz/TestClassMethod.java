@@ -61,9 +61,9 @@ public class TestClassMethod {
 
 		_jsonObject = new JSONObject(
 		).put(
-			"annotations", ""
-		).put(
 			"ignored", ignored
+		).put(
+			"issues", ""
 		).put(
 			"name", name
 		);
@@ -73,8 +73,8 @@ public class TestClassMethod {
 		_jsonObject = jsonObject;
 		_testClass = testClass;
 
-		_issues = jsonObject.getString("annotations");
 		_ignored = jsonObject.getBoolean("ignored");
+		_issues = jsonObject.optString("issues");
 		_name = jsonObject.getString("name");
 	}
 

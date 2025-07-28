@@ -92,32 +92,32 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			return null;
 		}
 
-		for (URL testrayS3AttachmentURL :
+		for (URL testrayAttachmentURL :
 				buildReport.getTestrayAttachmentURLs()) {
 
-			String testrayS3AttachmentURLString = String.valueOf(
-				testrayS3AttachmentURL);
+			String testrayAttachmentURLString = String.valueOf(
+				testrayAttachmentURL);
 
-			if (!testrayS3AttachmentURLString.endsWith(key)) {
+			if (!testrayAttachmentURLString.endsWith(key)) {
 				continue;
 			}
 
-			String s3ObjectPath = null;
+			String cloudObjectPath = null;
 
 			try {
 				String buildBaseArtifactURL =
 					JenkinsResultsParserUtil.getBuildProperty(
 						"build.base.artifact.url");
 
-				s3ObjectPath = testrayS3AttachmentURLString.replace(
+				cloudObjectPath = testrayAttachmentURLString.replace(
 					buildBaseArtifactURL + "/", "");
 			}
 			catch (IOException ioException) {
 				continue;
 			}
 
-			TestrayAttachment testrayAttachment = new S3TestrayAttachment(
-				this, name, s3ObjectPath);
+			TestrayAttachment testrayAttachment =
+				new CloudObjectTestrayAttachment(this, name, cloudObjectPath);
 
 			_testrayAttachments.put(key, testrayAttachment);
 
@@ -246,7 +246,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			return null;
 		}
 
-		TestrayAttachment testrayAttachment = _uploadS3TestrayAttachment(
+		TestrayAttachment testrayAttachment = _uploadTestrayAttachment(
 			name, key, file);
 
 		if (testrayAttachment == null) {
@@ -258,7 +258,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		return testrayAttachment;
 	}
 
-	private TestrayAttachment _uploadS3TestrayAttachment(
+	private TestrayAttachment _uploadTestrayAttachment(
 		String name, String key, File file) {
 
 		if (!file.exists()) {
@@ -271,7 +271,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 
 			testrayCloudBucket.createTestrayCloudObject(key, file);
 
-			return new S3TestrayAttachment(this, name, key);
+			return new CloudObjectTestrayAttachment(this, name, key);
 		}
 		catch (Exception exception) {
 			return null;

@@ -183,7 +183,7 @@ public class TestrayFactory {
 			return testrayAttachmentUploader;
 		}
 
-		testrayAttachmentUploader = new S3TestrayAttachmentUploader(
+		testrayAttachmentUploader = new CloudObjectTestrayAttachmentUploader(
 			build, testrayServerURL);
 
 		_testrayAttachmentUploaders.put(key, testrayAttachmentUploader);

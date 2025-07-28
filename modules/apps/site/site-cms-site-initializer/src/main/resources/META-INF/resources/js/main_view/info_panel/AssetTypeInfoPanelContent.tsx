@@ -17,7 +17,7 @@ import '../../../css/components/AssetTypeInfoPanel.scss';
 import {getBaseAssetInformation} from './util';
 import {EVENTS} from './util/constants';
 
-const AssetTypeInfoPanelContent = () => {
+const AssetTypeInfoPanelContent = ({additionalProps: {cmsGroupId}}: any) => {
 	const [assetInfo, setAssetInfo] = useState(
 		{} as ISearchAssetTypeInformation
 	);
@@ -48,6 +48,7 @@ const AssetTypeInfoPanelContent = () => {
 			<AssetTypeInfoPanelContext.Provider
 				value={
 					{
+						cmsGroupId,
 						objectEntries,
 						...assetInfo,
 					} as IAssetTypeInfoPanelContext

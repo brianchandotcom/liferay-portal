@@ -17,9 +17,11 @@ import {
 } from '../../../structure_builder/types/AssetType';
 
 const AssetCategories = ({
+	cmsGroupId,
 	objectEntry,
 	updateObjectEntry,
 }: {
+	cmsGroupId?: string | null;
 	objectEntry: IAssetObjectEntry;
 	updateObjectEntry: (
 		object: Pick<IAssetObjectEntry, 'keywords' | 'taxonomyCategoryIds'>
@@ -33,7 +35,7 @@ const AssetCategories = ({
 
 	const {resource} = useResource({
 		fetch,
-		link: `${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/taxonomy-categories`,
+		link: `${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/taxonomy-categories`,
 		onNetworkStatusChange: setNetworkStatus,
 	});
 

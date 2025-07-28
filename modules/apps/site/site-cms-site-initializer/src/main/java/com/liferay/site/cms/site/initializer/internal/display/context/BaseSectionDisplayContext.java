@@ -106,6 +106,23 @@ public abstract class BaseSectionDisplayContext {
 				"com.liferay.portal.kernel.model.UserGroup&nestedFields=",
 				"embedded")
 		).put(
+			"cmsGroupId",
+			() -> {
+				try {
+					Group group = groupLocalService.getGroup(
+						themeDisplay.getCompanyId(), GroupConstants.CMS);
+
+					return GetterUtil.getLong(group.getGroupId());
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
+
+				return null;
+			}
+		).put(
 			"collaboratorURLs",
 			() -> {
 				Map<String, String> collaboratorURLs = new HashMap<>();

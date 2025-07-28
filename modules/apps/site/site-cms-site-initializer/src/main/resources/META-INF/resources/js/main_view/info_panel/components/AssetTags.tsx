@@ -13,9 +13,11 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {IAssetObjectEntry} from '../../../structure_builder/types/AssetType';
 
 const AssetTags = ({
+	cmsGroupId,
 	objectEntry,
 	updateObjectEntry,
 }: {
+	cmsGroupId?: string | null;
 	objectEntry: IAssetObjectEntry;
 	updateObjectEntry: (
 		object: Pick<IAssetObjectEntry, 'keywords' | 'taxonomyCategoryIds'>
@@ -27,7 +29,7 @@ const AssetTags = ({
 
 	const {refetch, resource} = useResource({
 		fetch,
-		link: `${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/keywords`,
+		link: `${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`,
 		onNetworkStatusChange: setNetworkStatus,
 	});
 
@@ -59,16 +61,9 @@ const AssetTags = ({
 
 			try {
 				const response = await fetch(
-					`/o/headless-admin-taxonomy/v1.0/keywords`,
+					`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`,
 					{
-						body: JSON.stringify({
-							assetLibraries: [
-								{
-									id: Liferay.ThemeDisplay.getSiteGroupId(),
-								},
-							],
-							name: value,
-						} as any),
+						body: JSON.stringify({name: value} as any),
 						headers: {
 							'Accept': 'application/json',
 							'Content-Type': 'application/json',
@@ -92,7 +87,7 @@ const AssetTags = ({
 				console.error('Failed to create new keyword.', error);
 			}
 		},
-		[addKeyword, refetch, value]
+		[addKeyword, cmsGroupId, refetch, value]
 	);
 
 	const removeKeyword = useCallback(

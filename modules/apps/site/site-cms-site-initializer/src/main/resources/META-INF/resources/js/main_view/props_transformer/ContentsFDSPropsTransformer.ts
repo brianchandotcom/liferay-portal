@@ -71,7 +71,7 @@ export default function ContentFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
-		infoPanelComponent: AssetTypeInfoPanel,
+		infoPanelComponent: () => AssetTypeInfoPanel(otherProps),
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'actionLink') {
 				return {

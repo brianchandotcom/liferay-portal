@@ -195,6 +195,11 @@ public class ServletDataImpl implements ServletData {
 							BatchTestEntityResourceImpl.class,
 							"putBatchTestEntityByExternalReferenceCode"));
 					put(
+						"mutation#deleteCompanyTestEntityByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CompanyTestEntityResourceImpl.class,
+							"deleteCompanyTestEntityByExternalReferenceCode"));
+					put(
 						"mutation#patchCompanyTestEntity",
 						new ObjectValuePair<>(
 							CompanyTestEntityResourceImpl.class,

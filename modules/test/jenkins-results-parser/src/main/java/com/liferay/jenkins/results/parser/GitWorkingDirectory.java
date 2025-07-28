@@ -985,9 +985,7 @@ public class GitWorkingDirectory {
 	}
 
 	public Set<File> findFiles(String fileName, String fileContentSnippet) {
-		if (JenkinsResultsParserUtil.isNullOrEmpty(fileName) ||
-			JenkinsResultsParserUtil.isNullOrEmpty(fileContentSnippet)) {
-
+		if (JenkinsResultsParserUtil.isNullOrEmpty(fileContentSnippet)) {
 			return null;
 		}
 
@@ -995,8 +993,11 @@ public class GitWorkingDirectory {
 
 		sb.append("git grep ");
 		sb.append(fileContentSnippet);
-		sb.append(" | grep ");
-		sb.append(fileName);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(fileName)) {
+			sb.append(" | grep ");
+			sb.append(fileName);
+		}
 
 		GitUtil.ExecutionResult result = executeBashCommands(
 			5, 1000, 30 * 1000, sb.toString());
@@ -1006,17 +1007,24 @@ public class GitWorkingDirectory {
 				this, "Unable to run: git grep");
 		}
 
-		Pattern pattern = Pattern.compile(
-			JenkinsResultsParserUtil.combine(
-				"(?<filePath>.+/", fileName, ")\\:.+"));
+		String regex = JenkinsResultsParserUtil.combine(
+			"(?<filePath>[^\\:]+)\\:.+");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(fileName)) {
+			regex = JenkinsResultsParserUtil.combine(
+				"(?<filePath>[^\\:]+/", fileName, ")\\:.+");
+		}
+
+		Pattern pattern = Pattern.compile(regex);
 
 		Matcher matcher = pattern.matcher(result.getStandardOut());
 
 		Set<File> files = new HashSet<>();
 
 		while (matcher.find()) {
-			files.add(
-				new File(getWorkingDirectory(), matcher.group("filePath")));
+			String filePath = matcher.group("filePath");
+
+			files.add(new File(getWorkingDirectory(), filePath.trim()));
 		}
 
 		return files;

@@ -45,15 +45,12 @@ public class DisplayPageTemplateFolderUtil {
 			DisplayPageTemplateFolder displayPageTemplateFolder, long groupId)
 		throws Exception {
 
-		long parentLayoutPageTemplateCollectionId =
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
-
 		if (Validator.isNull(
 				displayPageTemplateFolder.
 					getParentDisplayPageTemplateFolderExternalReferenceCode())) {
 
-			return parentLayoutPageTemplateCollectionId;
+			return LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
 		}
 
 		LayoutPageTemplateCollection parentLayoutPageTemplateCollection =
@@ -63,20 +60,16 @@ public class DisplayPageTemplateFolderUtil {
 						getParentDisplayPageTemplateFolderExternalReferenceCode(),
 					groupId);
 
-		if (parentLayoutPageTemplateCollection != null) {
-			if (!Objects.equals(
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					parentLayoutPageTemplateCollection.getType())) {
+		if ((parentLayoutPageTemplateCollection == null) ||
+			!Objects.equals(
+				LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+				parentLayoutPageTemplateCollection.getType())) {
 
-				throw new UnsupportedOperationException();
-			}
-
-			parentLayoutPageTemplateCollectionId =
-				parentLayoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId();
+			throw new UnsupportedOperationException();
 		}
 
-		return parentLayoutPageTemplateCollectionId;
+		return parentLayoutPageTemplateCollection.
+			getLayoutPageTemplateCollectionId();
 	}
 
 	private static ServiceContext _getServiceContext(

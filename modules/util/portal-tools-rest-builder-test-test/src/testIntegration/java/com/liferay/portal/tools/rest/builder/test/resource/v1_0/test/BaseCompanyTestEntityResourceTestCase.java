@@ -13,6 +13,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -137,6 +140,16 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 			LocaleUtil.getDefault()
 		).build();
 
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
 		permissionsCompanyTestEntityResource =
 			CompanyTestEntityResource.builder(
 			).authentication(
@@ -220,6 +233,39 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		Assert.assertEquals(regex, companyTestEntity.getDescription());
 		Assert.assertEquals(
 			regex, companyTestEntity.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testDeleteCompanyTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CompanyTestEntity companyTestEntity =
+			testDeleteCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
+
+		assertHttpResponseStatusCode(
+			204,
+			companyTestEntityResource.
+				deleteCompanyTestEntityByExternalReferenceCodeHttpResponse(
+					companyTestEntity.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			companyTestEntityResource.
+				getCompanyTestEntityByExternalReferenceCodeHttpResponse(
+					companyTestEntity.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			companyTestEntityResource.
+				getCompanyTestEntityByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected CompanyTestEntity
+			testDeleteCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1110,7 +1156,56 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		Assert.assertTrue(true);
+		CompanyTestEntity companyTestEntity1 =
+			testBatchEngineDeleteImportTask_addCompanyTestEntity();
+
+		testBatchEngineDeleteImportTask_deleteCompanyTestEntity(
+			200, companyTestEntity1.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(
+			404,
+			companyTestEntityResource.getCompanyTestEntityHttpResponse(
+				companyTestEntity1.getId()));
+	}
+
+	protected CompanyTestEntity
+			testBatchEngineDeleteImportTask_addCompanyTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteCompanyTestEntity(
+			int expectedStatusCode, String externalReferenceCode,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).parameters(
+			parameters
+		).build();
+
+		HttpResponse httpResponse =
+			importTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.portal.tools.rest.builder.test.dto.v1_0.CompanyTestEntity",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	protected CompanyTestEntity
@@ -1792,7 +1887,30 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		return companyTestEntity;
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected CompanyTestEntityResource companyTestEntityResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected CompanyTestEntityResource permissionsCompanyTestEntityResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;

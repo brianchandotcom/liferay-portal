@@ -1066,6 +1066,16 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"relatedCompanyTestEntity", additionalAssertFieldName)) {
+
+				if (batchTestEntity.getRelatedCompanyTestEntity() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1224,6 +1234,19 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 				if (!Objects.deepEquals(
 						batchTestEntity1.getNestedField(),
 						batchTestEntity2.getNestedField())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"relatedCompanyTestEntity", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						batchTestEntity1.getRelatedCompanyTestEntity(),
+						batchTestEntity2.getRelatedCompanyTestEntity())) {
 
 					return false;
 				}
@@ -1480,6 +1503,11 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("relatedCompanyTestEntity")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(

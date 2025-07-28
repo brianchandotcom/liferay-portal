@@ -1496,22 +1496,23 @@ public class DefaultObjectEntryManagerImpl
 
 	private void _deleteObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			com.liferay.object.model.ObjectEntry objectEntry)
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
-			(objectEntry.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
+			(serviceBuilderObjectEntry.getStatus() ==
+				WorkflowConstants.STATUS_IN_TRASH)) {
 
 			_objectEntryService.deleteObjectEntry(
-				objectEntry.getObjectEntryId());
+				serviceBuilderObjectEntry.getObjectEntryId());
 
 			return;
 		}
 
 		_objectEntryService.moveObjectEntryToTrash(
-			dtoConverterContext.getUserId(), objectEntry,
+			dtoConverterContext.getUserId(), serviceBuilderObjectEntry,
 			ServiceContextUtil.createServiceContext(
-				objectEntry.getObjectEntryId()));
+				serviceBuilderObjectEntry.getObjectEntryId()));
 	}
 
 	private void _disassociateRelatedModels(

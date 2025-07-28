@@ -1782,10 +1782,11 @@ public class ObjectEntryLocalServiceImpl
 				"title", objectEntry.getObjectEntryId()
 			).build());
 
-		for (ObjectEntryVersion version : objectEntryVersions) {
-			version.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+		for (ObjectEntryVersion objectEntryVersion : objectEntryVersions) {
+			objectEntryVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-			_objectEntryVersionLocalService.updateObjectEntryVersion(version);
+			_objectEntryVersionLocalService.updateObjectEntryVersion(
+				objectEntryVersion);
 		}
 
 		return objectEntry;

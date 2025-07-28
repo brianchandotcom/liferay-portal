@@ -63,6 +63,7 @@ function FieldsInput({
 					<span
 						className="c-ml-2"
 						data-tooltip-align="top"
+						tabIndex={0}
 						title={Liferay.Language.get('fields-suggestion-help')}
 					>
 						<ClayIcon symbol="question-circle-full" />

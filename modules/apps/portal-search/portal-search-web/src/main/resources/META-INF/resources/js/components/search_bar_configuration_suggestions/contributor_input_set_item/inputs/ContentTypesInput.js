@@ -241,6 +241,7 @@ export default function ContentTypesInput({onBlur, onChange, value}) {
 						<span
 							className="c-ml-2"
 							data-tooltip-align="top"
+							tabIndex={0}
 							title={Liferay.Language.get('content-types-help')}
 						>
 							<ClayIcon symbol="question-circle-full" />

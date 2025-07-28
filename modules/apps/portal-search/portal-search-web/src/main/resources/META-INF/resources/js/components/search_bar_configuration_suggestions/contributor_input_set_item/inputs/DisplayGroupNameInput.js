@@ -27,6 +27,7 @@ function DisplayGroupNameInput({onBlur, onChange, touched, value}) {
 					<span
 						className="c-ml-2"
 						data-tooltip-align="top"
+						tabIndex={0}
 						title={Liferay.Language.get('display-group-name-help')}
 					>
 						<ClayIcon symbol="question-circle-full" />

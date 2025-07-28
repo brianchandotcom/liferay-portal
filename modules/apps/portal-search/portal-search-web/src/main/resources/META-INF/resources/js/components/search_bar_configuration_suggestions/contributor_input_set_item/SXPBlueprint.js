@@ -108,6 +108,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 							<span
 								className="c-ml-2"
 								data-tooltip-align="top"
+								tabIndex={0}
 								title={Liferay.Language.get(
 									'include-asset-url-help'
 								)}
@@ -142,6 +143,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 							<span
 								className="c-ml-2"
 								data-tooltip-align="top"
+								tabIndex={0}
 								title={Liferay.Language.get(
 									'include-asset-summary-help'
 								)}

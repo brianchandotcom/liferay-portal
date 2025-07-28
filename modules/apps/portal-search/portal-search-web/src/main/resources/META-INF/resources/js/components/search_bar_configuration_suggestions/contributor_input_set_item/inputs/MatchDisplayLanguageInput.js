@@ -18,6 +18,7 @@ function MatchDisplayLanguageInput({onChange, value}) {
 					<span
 						className="c-ml-2"
 						data-tooltip-align="top"
+						tabIndex={0}
 						title={Liferay.Language.get(
 							'match-display-language-help'
 						)}

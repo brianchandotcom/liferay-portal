@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.admin.web.internal.util;
+package com.liferay.layout.util;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
@@ -43,6 +43,42 @@ import java.util.regex.Pattern;
 public class InfoFieldUtil {
 
 	public static <E extends Throwable> void forEachInfoField(
+			FragmentEntryLink fragmentEntryLink,
+			FragmentRendererController fragmentRendererController,
+			UnsafeTriConsumer
+				<String, InfoField<?>,
+				 UnsafeSupplier<JSONObject, JSONException>, E> consumer)
+		throws E {
+
+		if (fragmentEntryLink.isTypePortlet()) {
+			return;
+		}
+
+		String defaultElementName =
+			"defaultElementName" + StringUtil.randomId();
+
+		Map<String, String> editableTypes =
+			EditableFragmentEntryProcessorUtil.getEditableTypes(
+				_getHtml(
+					fragmentEntryLink, fragmentRendererController,
+					defaultElementName));
+
+		for (Map.Entry<String, String> entry : editableTypes.entrySet()) {
+			String name = entry.getKey();
+			String type = entry.getValue();
+
+			if (!name.equals(defaultElementName) && _isTextFieldType(type)) {
+				consumer.accept(
+					name,
+					_getInfoField(
+						fragmentEntryLink.getFragmentEntryLinkId(), name, type),
+					() -> JSONFactoryUtil.createJSONObject(
+						fragmentEntryLink.getEditableValues()));
+			}
+		}
+	}
+
+	public static <E extends Throwable> void forEachInfoField(
 			FragmentRendererController fragmentRendererController,
 			Layout layout, long segmentsExperienceId,
 			UnsafeTriConsumer
@@ -61,35 +97,8 @@ public class InfoFieldUtil {
 					layout.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			if (fragmentEntryLink.isTypePortlet()) {
-				continue;
-			}
-
-			String defaultElementName =
-				"defaultElementName" + StringUtil.randomId();
-
-			Map<String, String> editableTypes =
-				EditableFragmentEntryProcessorUtil.getEditableTypes(
-					_getHtml(
-						fragmentEntryLink, fragmentRendererController,
-						defaultElementName));
-
-			for (Map.Entry<String, String> entry : editableTypes.entrySet()) {
-				String name = entry.getKey();
-				String type = entry.getValue();
-
-				if (!name.equals(defaultElementName) &&
-					_isTextFieldType(type)) {
-
-					consumer.accept(
-						name,
-						_getInfoField(
-							fragmentEntryLink.getFragmentEntryLinkId(), name,
-							type),
-						() -> JSONFactoryUtil.createJSONObject(
-							fragmentEntryLink.getEditableValues()));
-				}
-			}
+			forEachInfoField(
+				fragmentEntryLink, fragmentRendererController, consumer);
 		}
 	}
 

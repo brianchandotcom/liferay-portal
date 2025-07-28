@@ -265,11 +265,6 @@
 						"readOnly": true,
 						"type": "string"
 					},
-					"dateDeleted": {
-						"format": "date-time",
-						"readOnly": true,
-						"type": "string"
-					},
 					"dateModified": {
 						"format": "date-time",
 						"readOnly": true,
@@ -277,9 +272,6 @@
 					},
 					"defaultLanguageId": {
 						"type": "string"
-					},
-					"deletedBy": {
-						"$ref": "#/components/schemas/Creator"
 					},
 					"displayDate": {
 						"format": "date-time",
@@ -344,6 +336,14 @@
 							"$ref": "#/components/schemas/Permission"
 						},
 						"type": "array"
+					},
+					"removedBy": {
+						"$ref": "#/components/schemas/Creator"
+					},
+					"removedDate": {
+						"format": "date-time",
+						"readOnly": true,
+						"type": "string"
 					},
 					"reviewDate": {
 						"format": "date-time",

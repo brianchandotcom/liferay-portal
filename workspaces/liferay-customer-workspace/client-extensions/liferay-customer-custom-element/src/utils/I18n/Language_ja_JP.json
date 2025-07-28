@@ -622,6 +622,7 @@
 	"type": "タイプ",
 	"uk": "イギリス",
 	"unable-to-export-keys-please-try-again": "キーをエクスポートできません。もう一度試してください。",
+	"unable-to-invite-x": "{0} を招待できません。",
 	"united-arab-emirates": "アラブ首長国連邦",
 	"united-states": "米国",
 	"unlimited-enterprise-wide": "無制限の Enterprise-Wide",

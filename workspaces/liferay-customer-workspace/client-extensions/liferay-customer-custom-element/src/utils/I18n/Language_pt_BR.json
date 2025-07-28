@@ -622,6 +622,7 @@
 	"type": "Tipo",
 	"uk": "Reino Unido",
 	"unable-to-export-keys-please-try-again": "Não foi possível exportar as chaves. Tente novamente.",
+	"unable-to-invite-x": "Não foi possível enviar o convite para {0}.",
 	"united-arab-emirates": "Emirados Árabes Unidos",
 	"united-states": "Estados Unidos",
 	"unlimited-enterprise-wide": "Ilimitado em toda a empresa",

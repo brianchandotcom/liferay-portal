@@ -622,6 +622,7 @@
 	"type": "Tipo",
 	"uk": "Reino Unido",
 	"unable-to-export-keys-please-try-again": "No se pudieron exportar los códigos de activación. Por favor, inténtalo de nuevo.",
+	"unable-to-invite-x": "No se ha podido invitar a {0}.",
 	"united-arab-emirates": "Emiratos Árabes Unidos",
 	"united-states": "Estados Unidos",
 	"unlimited-enterprise-wide": "Unlimited Enterprise-Wide",

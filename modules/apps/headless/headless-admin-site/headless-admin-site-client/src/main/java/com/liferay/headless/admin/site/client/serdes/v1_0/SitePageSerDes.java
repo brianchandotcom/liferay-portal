@@ -96,26 +96,6 @@ public class SitePageSerDes {
 			sb.append("\"");
 		}
 
-		if (sitePage.getCustomFields() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customFields\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < sitePage.getCustomFields().length; i++) {
-				sb.append(sitePage.getCustomFields()[i]);
-
-				if ((i + 1) < sitePage.getCustomFields().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (sitePage.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -388,13 +368,6 @@ public class SitePageSerDes {
 				String.valueOf(sitePage.getCreatorExternalReferenceCode()));
 		}
 
-		if (sitePage.getCustomFields() == null) {
-			map.put("customFields", null);
-		}
-		else {
-			map.put("customFields", String.valueOf(sitePage.getCustomFields()));
-		}
-
 		if (sitePage.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -548,9 +521,6 @@ public class SitePageSerDes {
 
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "customFields")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -637,26 +607,6 @@ public class SitePageSerDes {
 				if (jsonParserFieldValue != null) {
 					sitePage.setCreatorExternalReferenceCode(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "customFields")) {
-				if (jsonParserFieldValue != null) {
-					Object[] jsonParserFieldValues =
-						(Object[])jsonParserFieldValue;
-
-					com.liferay.headless.admin.site.client.custom.field.
-						CustomField[] customFieldsArray = new
-						com.liferay.headless.admin.site.client.custom.field.
-							CustomField[jsonParserFieldValues.length];
-
-					for (int i = 0; i < customFieldsArray.length; i++) {
-						customFieldsArray[i] =
-							com.liferay.headless.admin.site.client.custom.field.
-								CustomField.toDTO(
-									(String)jsonParserFieldValues[i]);
-					}
-
-					sitePage.setCustomFields(customFieldsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

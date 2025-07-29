@@ -94,35 +94,6 @@ public class SitePage implements Cloneable, Serializable {
 
 	protected String creatorExternalReferenceCode;
 
-	public com.liferay.headless.admin.site.client.custom.field.CustomField[]
-		getCustomFields() {
-
-		return customFields;
-	}
-
-	public void setCustomFields(
-		com.liferay.headless.admin.site.client.custom.field.CustomField[]
-			customFields) {
-
-		this.customFields = customFields;
-	}
-
-	public void setCustomFields(
-		UnsafeSupplier
-			<com.liferay.headless.admin.site.client.custom.field.CustomField[],
-			 Exception> customFieldsUnsafeSupplier) {
-
-		try {
-			customFields = customFieldsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected com.liferay.headless.admin.site.client.custom.field.CustomField[]
-		customFields;
-
 	public Date getDateCreated() {
 		return dateCreated;
 	}

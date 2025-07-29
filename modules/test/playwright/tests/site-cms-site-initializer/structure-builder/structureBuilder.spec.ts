@@ -13,7 +13,8 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {cmsPagesTest} from './fixtures/cmsPagesTest';
+import {cmsPagesTest} from '../main/fixtures/cmsPagesTest';
+import {structureBuilderPagesTest} from './fixtures/structureBuilderPagesTest';
 import {FIELD_TYPES, StructureBuilderPage} from './pages/StructureBuilderPage';
 
 const test = mergeTests(
@@ -23,7 +24,8 @@ const test = mergeTests(
 		'LPD-17564': {enabled: true},
 	}),
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	structureBuilderPagesTest
 );
 
 let structureIds = [];

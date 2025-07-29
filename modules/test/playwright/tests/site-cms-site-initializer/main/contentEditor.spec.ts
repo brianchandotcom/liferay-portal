@@ -15,6 +15,7 @@ import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -25,7 +26,8 @@ const test = mergeTests(
 		'LPD-17564': {enabled: true},
 	}),
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	structureBuilderPagesTest
 );
 
 test(

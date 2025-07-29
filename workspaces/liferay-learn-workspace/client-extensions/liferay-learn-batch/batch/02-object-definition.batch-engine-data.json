@@ -22,21 +22,21 @@
 			"name": "P2S3Announcement",
 			"objectFields": [
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "TITLE",
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"externalReferenceCode": "CONTENT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Title"
+						"en_US": "Content"
 					},
-					"localized": false,
-					"name": "title",
+					"localized": true,
+					"name": "content",
 					"readOnly": "false",
-					"required": true,
+					"required": false,
 					"state": false,
-					"type": "String",
+					"type": "Clob",
 					"unique": false
 				},
 				{
@@ -49,7 +49,7 @@
 					"label": {
 						"en_US": "Description"
 					},
-					"localized": false,
+					"localized": true,
 					"name": "description",
 					"objectFieldSettings": [
 						{
@@ -58,28 +58,8 @@
 						}
 					],
 					"readOnly": "false",
-					"required": true,
+					"required": false,
 					"state": false,
-					"system": false,
-					"type": "Clob",
-					"unique": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "RichText",
-					"externalReferenceCode": "CONTENT",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Content"
-					},
-					"localized": false,
-					"name": "content",
-					"readOnly": "false",
-					"required": true,
-					"state": false,
-					"system": false,
 					"type": "Clob",
 					"unique": false
 				},
@@ -113,6 +93,24 @@
 					"required": false,
 					"state": false,
 					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"localized": true,
+					"name": "title",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
 					"unique": false
 				}
 			],

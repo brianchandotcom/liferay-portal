@@ -499,7 +499,7 @@ const siteObjectDefinition: ObjectDefinition = {
 	status: {code: 0},
 };
 
-test('Can download custom object sample file', async ({
+test('can download custom object sample file', async ({
 	apiHelpers,
 	dataMigrationCenterPage,
 }) => {
@@ -529,7 +529,9 @@ test('Can download custom object sample file', async ({
 	);
 });
 
-test('Can download object sample file', async ({dataMigrationCenterPage}) => {
+test('can download object definition sample file', async ({
+	dataMigrationCenterPage,
+}) => {
 	await dataMigrationCenterPage.gotoPage();
 	await dataMigrationCenterPage.goToImportFile();
 

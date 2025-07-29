@@ -37,6 +37,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -61,6 +63,7 @@ public class ModifiedFacetDisplayContextBuilderTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
+		_defaultLocale = LocaleThreadLocal.getDefaultLocale();
 		_jsonFactoryImpl = new JSONFactoryImpl();
 
 		_setUpPortalUtil();
@@ -82,8 +85,6 @@ public class ModifiedFacetDisplayContextBuilderTest
 		).when(
 			_facet
 		).getSearchContext();
-
-		_defaultLocale = LocaleThreadLocal.getDefaultLocale();
 	}
 
 	@After
@@ -167,6 +168,42 @@ public class ModifiedFacetDisplayContextBuilderTest
 			modifiedFacetDisplayContext.getCustomRangeBucketDisplayContext();
 
 		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
+	}
+
+	@Test
+	public void testCustomRangeUsesStandardizedDateFormat() {
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder();
+
+		modifiedFacetDisplayContextBuilder.setCurrentURL(
+			"/?modifiedFrom=2018-01-01&modifiedTo=2018-01-31");
+
+		for (Locale locale : List.of(LocaleUtil.US, new Locale("ar", "SA"))) {
+			LocaleThreadLocal.setDefaultLocale(locale);
+
+			ModifiedFacetDisplayContext modifiedFacetDisplayContext =
+				modifiedFacetDisplayContextBuilder.build();
+
+			BucketDisplayContext bucketDisplayContext =
+				modifiedFacetDisplayContext.
+					getCustomRangeBucketDisplayContext();
+
+			String modifiedFrom = HttpComponentsUtil.getParameter(
+				bucketDisplayContext.getFilterValue(), "modifiedFrom", false);
+			String modifiedTo = HttpComponentsUtil.getParameter(
+				bucketDisplayContext.getFilterValue(), "modifiedTo", false);
+
+			Assert.assertNotEquals("2018-01-01", modifiedFrom);
+			Assert.assertNotEquals("2018-01-31", modifiedTo);
+
+			Matcher matcher = _pattern.matcher(modifiedFrom);
+
+			Assert.assertTrue(modifiedFrom, matcher.matches());
+
+			matcher = _pattern.matcher(modifiedTo);
+
+			Assert.assertTrue(modifiedTo, matcher.matches());
+		}
 	}
 
 	@Override
@@ -313,30 +350,6 @@ public class ModifiedFacetDisplayContextBuilderTest
 
 		_assertTermDisplayContextsDoNotHaveFromAndToParameters(
 			modifiedFacetDisplayContext.getBucketDisplayContexts());
-	}
-
-	@Test
-	public void testModifiedFilterParametersUseUSFormat() {
-		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
-			createDisplayContextBuilder();
-
-		modifiedFacetDisplayContextBuilder.setCurrentURL(
-			"/?modifiedFrom=2018-01-01&modifiedTo=2018-01-31");
-
-		for (Locale locale : _localesToTest) {
-			LocaleThreadLocal.setDefaultLocale(locale);
-
-			ModifiedFacetDisplayContext modifiedFacetDisplayContext =
-				modifiedFacetDisplayContextBuilder.build();
-
-			BucketDisplayContext bucketDisplayContext =
-				modifiedFacetDisplayContext.
-					getCustomRangeBucketDisplayContext();
-
-			Assert.assertEquals(
-				"/?modifiedFrom=2025-07-10&modifiedTo=2025-07-11",
-				bucketDisplayContext.getFilterValue());
-		}
 	}
 
 	@Override
@@ -654,12 +667,13 @@ public class ModifiedFacetDisplayContextBuilderTest
 		portalUtil.setPortal(portal);
 	}
 
+	private static final Pattern _pattern = Pattern.compile(
+		"\\d{4}-\\d{2}-\\d{2}");
+
 	private Locale _defaultLocale;
 	private final Facet _facet = Mockito.mock(Facet.class);
 	private final FacetCollector _facetCollector = Mockito.mock(
 		FacetCollector.class);
 	private JSONFactoryImpl _jsonFactoryImpl;
-	private final List<Locale> _localesToTest = List.of(
-		LocaleUtil.US, new Locale("ar", "EG"));
 
 }

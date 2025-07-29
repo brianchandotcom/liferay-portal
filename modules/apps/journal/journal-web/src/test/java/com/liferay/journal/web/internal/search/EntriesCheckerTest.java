@@ -42,7 +42,7 @@ public class EntriesCheckerTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		_articleLocalServiceUtilMockedStatic.close();
+		_journalArticleLocalServiceUtilMockedStatic.close();
 		_languageUtilMockedStatic.close();
 		_journalArticlePermissionMockedStatic.close();
 	}
@@ -60,7 +60,7 @@ public class EntriesCheckerTest {
 			_ARTICLE_ID
 		);
 
-		_articleLocalServiceUtilMockedStatic.when(
+		_journalArticleLocalServiceUtilMockedStatic.when(
 			() -> JournalArticleLocalServiceUtil.fetchArticle(
 				_SCOPE_GROUP_ID, _ARTICLE_ID)
 		).thenReturn(
@@ -86,7 +86,8 @@ public class EntriesCheckerTest {
 		String rowCheckBox = entriesChecker.getRowCheckBox(
 			_getHttpServletRequest(), false, false, _ARTICLE_ID);
 
-		Assert.assertTrue((rowCheckBox != null) && !rowCheckBox.isEmpty());
+		Assert.assertNotNull(rowCheckBox);
+		Assert.assertFalse(rowCheckBox.isEmpty());
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {
@@ -139,7 +140,7 @@ public class EntriesCheckerTest {
 	private static final long _SCOPE_GROUP_ID = 0;
 
 	private static final MockedStatic<JournalArticleLocalServiceUtil>
-		_articleLocalServiceUtilMockedStatic = Mockito.mockStatic(
+		_journalArticleLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			JournalArticleLocalServiceUtil.class);
 	private static final MockedStatic<JournalArticlePermission>
 		_journalArticlePermissionMockedStatic = Mockito.mockStatic(

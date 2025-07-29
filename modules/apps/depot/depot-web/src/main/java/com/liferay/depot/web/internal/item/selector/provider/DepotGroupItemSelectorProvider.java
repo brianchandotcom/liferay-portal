@@ -5,6 +5,7 @@
 
 package com.liferay.depot.web.internal.item.selector.provider;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
@@ -60,7 +61,8 @@ public class DepotGroupItemSelectorProvider
 
 			for (DepotEntry depotEntry :
 					_depotEntryService.getCurrentAndGroupConnectedDepotEntries(
-						_getGroupId(groupId), start, end)) {
+						_getGroupId(groupId), DepotConstants.TYPE_ANY, start,
+						end)) {
 
 				groups.add(depotEntry.getGroup());
 			}
@@ -78,7 +80,7 @@ public class DepotGroupItemSelectorProvider
 	public int getGroupsCount(long companyId, long groupId, String keywords) {
 		try {
 			return _depotEntryService.getGroupConnectedDepotEntriesCount(
-				_getGroupId(groupId));
+				_getGroupId(groupId), DepotConstants.TYPE_ANY);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

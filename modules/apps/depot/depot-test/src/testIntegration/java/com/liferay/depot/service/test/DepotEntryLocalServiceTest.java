@@ -345,6 +345,7 @@ public class DepotEntryLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), description
 			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
 		_depotEntries.add(depotEntry);

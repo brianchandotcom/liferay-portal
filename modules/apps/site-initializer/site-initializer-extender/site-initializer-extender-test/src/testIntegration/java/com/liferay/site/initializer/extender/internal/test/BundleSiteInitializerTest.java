@@ -49,6 +49,7 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
@@ -1483,7 +1484,8 @@ public class BundleSiteInitializerTest {
 	private void _assertDepotEntries1() throws Exception {
 		List<DepotEntry> depotEntries =
 			_depotEntryLocalService.getGroupConnectedDepotEntries(
-				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				_group.getGroupId(), DepotConstants.TYPE_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(depotEntries.toString(), 2, depotEntries.size());
 
@@ -1513,7 +1515,7 @@ public class BundleSiteInitializerTest {
 	private void _assertDepotEntries2() throws Exception {
 		List<DepotEntry> depotEntries =
 			_depotEntryLocalService.getGroupConnectedDepotEntries(
-				_group.getGroupId(), -1, -1);
+				_group.getGroupId(), DepotConstants.TYPE_ANY, -1, -1);
 
 		Assert.assertEquals(depotEntries.toString(), 3, depotEntries.size());
 

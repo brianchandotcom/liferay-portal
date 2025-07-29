@@ -7,6 +7,7 @@ package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.batch.engine.attachment.BatchEngineAttachmentManager;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
@@ -627,7 +628,8 @@ public class DefaultObjectEntryManagerImpl
 
 			groupIds = TransformUtil.transformToArray(
 				_depotEntryLocalService.getGroupConnectedDepotEntries(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					groupId, DepotConstants.TYPE_ANY, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
 				depotEntry -> depotEntry.getGroupId(), Long.class);
 		}
 		else {

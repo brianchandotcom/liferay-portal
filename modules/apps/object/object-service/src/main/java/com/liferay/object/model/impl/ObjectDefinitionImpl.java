@@ -270,7 +270,9 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			return false;
 		}
 
-		if ((getRootObjectDefinitionId() > 0) && !isRootNode()) {
+		if (ArrayUtil.isNotEmpty(getRootObjectDefinitionIds()) &&
+			!isRootNode()) {
+
 			return true;
 		}
 
@@ -293,11 +295,8 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			return false;
 		}
 
-		if (getObjectDefinitionId() == getRootObjectDefinitionId()) {
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.contains(
+			getRootObjectDefinitionIds(), getObjectDefinitionId());
 	}
 
 	@Override

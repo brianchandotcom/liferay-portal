@@ -27,6 +27,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -102,6 +103,69 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
+		operationId = "patchByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode"
+	)
+	@Parameters(
+		{
+			@Parameter(
+				in = ParameterIn.PATH, name = "currentExternalReferenceCode"
+			),
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipName"),
+			@Parameter(
+				in = ParameterIn.PATH, name = "relatedExternalReferenceCode"
+			)
+		}
+	)
+	@PATCH
+	@Path(
+		"/by-external-reference-code/{currentExternalReferenceCode}/{objectRelationshipName}/{relatedExternalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(@Tag(name = "ObjectEntry"))
+	public abstract Object
+			patchByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("currentExternalReferenceCode")
+				String currentExternalReferenceCode,
+				ObjectEntry objectEntry,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("objectRelationshipName")
+				String objectRelationshipName,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("relatedExternalReferenceCode")
+				String relatedExternalReferenceCode)
+		throws Exception;
+
+	@Consumes({"application/json", "application/xml"})
+	@Operation(operationId = "patchCurrentObjectEntry")
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.PATH, name = "currentObjectEntryId"),
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipName"),
+			@Parameter(in = ParameterIn.PATH, name = "relatedObjectEntryId")
+		}
+	)
+	@PATCH
+	@Path(
+		"/{currentObjectEntryId}/{objectRelationshipName}/{relatedObjectEntryId}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(@Tag(name = "ObjectEntry"))
+	public abstract Object patchCurrentObjectEntry(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("currentObjectEntryId")
+			Long currentObjectEntryId,
+			ObjectEntry objectEntry,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("objectRelationshipName")
+			String objectRelationshipName,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("relatedObjectEntryId")
+			Long relatedObjectEntryId)
+		throws Exception;
+
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
 		operationId = "postByExternalReferenceCodeObjectEntryObjectRelationshipName"
 	)
 	@Parameters(
@@ -151,8 +215,9 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 			String objectRelationshipName)
 		throws Exception;
 
+	@Consumes({"application/json", "application/xml"})
 	@Operation(
-		operationId = "putByExternalReferenceCodeObjectEntryObjectRelationshipNameRelatedObjectEntry"
+		operationId = "putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode"
 	)
 	@Parameters(
 		{
@@ -176,6 +241,7 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 				@NotNull @Parameter(hidden = true)
 				@PathParam("currentExternalReferenceCode")
 				String currentExternalReferenceCode,
+				ObjectEntry objectEntry,
 				@NotNull @Parameter(hidden = true)
 				@PathParam("objectRelationshipName")
 				String objectRelationshipName,
@@ -184,9 +250,8 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 				String relatedExternalReferenceCode)
 		throws Exception;
 
-	@Operation(
-		operationId = "putObjectEntryObjectRelationshipNameRelatedObjectEntry"
-	)
+	@Consumes({"application/json", "application/xml"})
+	@Operation(operationId = "putCurrentObjectEntry")
 	@Parameters(
 		{
 			@Parameter(in = ParameterIn.PATH, name = "currentObjectEntryId"),
@@ -204,6 +269,7 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 			@NotNull @Parameter(hidden = true)
 			@PathParam("currentObjectEntryId")
 			Long currentObjectEntryId,
+			ObjectEntry objectEntry,
 			@NotNull @Parameter(hidden = true)
 			@PathParam("objectRelationshipName")
 			String objectRelationshipName,

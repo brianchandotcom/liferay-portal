@@ -398,6 +398,13 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					schemaName));
 		}
 
+		if (operations.containsKey(PathItem.HttpMethod.PATCH)) {
+			pathItem.patch(
+				_getObjectRelationshipOperation(
+					objectRelationship, existingPathItem.getPatch(), schemaName,
+					schemaName));
+		}
+
 		if (operations.containsKey(PathItem.HttpMethod.POST)) {
 			pathItem.post(
 				_getObjectRelationshipOperation(

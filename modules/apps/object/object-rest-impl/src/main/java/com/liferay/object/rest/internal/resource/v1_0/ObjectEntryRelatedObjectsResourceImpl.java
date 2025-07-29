@@ -137,6 +137,66 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	}
 
 	@Override
+	public Object
+			patchByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				String currentExternalReferenceCode, ObjectEntry objectEntry,
+				String objectRelationshipName,
+				String relatedExternalReferenceCode)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		ObjectEntry currentObjectEntry =
+			defaultObjectEntryManager.getObjectEntry(
+				_objectDefinition.getCompanyId(), _getDTOConverterContext(null),
+				currentExternalReferenceCode, _objectDefinition, null);
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		ObjectEntry relatedObjectEntry =
+			defaultObjectEntryManager.getObjectEntry(
+				_objectDefinition.getCompanyId(), _getDTOConverterContext(null),
+				relatedExternalReferenceCode,
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId2()),
+				null);
+
+		return patchCurrentObjectEntry(
+			currentObjectEntry.getId(), objectEntry, objectRelationshipName,
+			relatedObjectEntry.getId());
+	}
+
+	@Override
+	public Object patchCurrentObjectEntry(
+			Long currentObjectEntryId, ObjectEntry objectEntry,
+			String objectRelationshipName, Long relatedObjectEntryId)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		return defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
+			_getDTOConverterContext(null),
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2()),
+			objectEntry, relatedObjectEntryId, objectRelationship,
+			currentObjectEntryId);
+	}
+
+	@Override
 	public Object postByExternalReferenceCodeObjectEntryObjectRelationshipName(
 			String currentExternalReferenceCode, ObjectEntry objectEntry,
 			String objectRelationshipName)
@@ -180,7 +240,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	@Override
 	public Object
 			putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
-				String currentExternalReferenceCode,
+				String currentExternalReferenceCode, ObjectEntry objectEntry,
 				String objectRelationshipName,
 				String relatedExternalReferenceCode)
 		throws Exception {
@@ -207,14 +267,14 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				relatedObjectDefinition.getObjectDefinitionId());
 
 		return putCurrentObjectEntry(
-			currentObjectEntry.getObjectEntryId(), objectRelationshipName,
-			relatedObjectEntry.getObjectEntryId());
+			currentObjectEntry.getObjectEntryId(), objectEntry,
+			objectRelationshipName, relatedObjectEntry.getObjectEntryId());
 	}
 
 	@Override
 	public Object putCurrentObjectEntry(
-			Long currentObjectEntryId, String objectRelationshipName,
-			Long relatedObjectEntryId)
+			Long currentObjectEntryId, ObjectEntry objectEntry,
+			String objectRelationshipName, Long relatedObjectEntryId)
 		throws Exception {
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
@@ -230,6 +290,13 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		ObjectDefinition relatedObjectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
+
+		if (objectRelationship.isEdge()) {
+			return defaultObjectEntryManager.updateRelatedObjectEntry(
+				_getDTOConverterContext(currentObjectEntryId),
+				relatedObjectDefinition, relatedObjectEntryId, objectEntry,
+				objectRelationship, currentObjectEntryId);
+		}
 
 		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 			return defaultObjectEntryManager.

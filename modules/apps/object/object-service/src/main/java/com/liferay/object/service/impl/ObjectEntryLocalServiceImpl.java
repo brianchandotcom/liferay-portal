@@ -116,7 +116,6 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
-import com.liferay.object.tree.ObjectEntryTreeFactory;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.util.comparator.ObjectEntryVersionVersionComparator;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -5522,7 +5521,7 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
-		long objectEntryId = 0;
+		long parentObjectEntryId = 0L;
 
 		List<ObjectRelationship> objectRelationships =
 			_objectRelationshipPersistence.findByODI2_E(
@@ -5532,47 +5531,21 @@ public class ObjectEntryLocalServiceImpl
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
 				objectRelationship.getObjectFieldId2());
 
-			if (values.containsKey(objectField.getName())) {
-				objectEntryId = MapUtil.getLong(values, objectField.getName());
+			parentObjectEntryId = MapUtil.getLong(
+				values, objectField.getName());
 
+			if (parentObjectEntryId != 0) {
 				break;
 			}
 		}
 
-		ObjectEntry parentObjectEntry = fetchObjectEntry(objectEntryId);
-
-		if (parentObjectEntry == null) {
+		if (parentObjectEntryId == 0) {
 			objectEntry.setRootObjectEntryId(0);
 
 			return;
 		}
 
-		if ((objectEntry.getRootObjectEntryId() !=
-				parentObjectEntry.getRootObjectEntryId()) &&
-			(objectEntry.getRootObjectEntryId() != 0)) {
-
-			ObjectEntryTreeFactory objectEntryTreeFactory =
-				new ObjectEntryTreeFactory(
-					objectEntryLocalService,
-					_objectRelationshipLocalServiceSnapshot.get());
-
-			Tree tree = objectEntryTreeFactory.create(
-				objectEntry.getObjectEntryId());
-
-			Iterator<Node> iterator = tree.iterator();
-
-			while (iterator.hasNext()) {
-				Node objectEntryNode = iterator.next();
-
-				ObjectEntry nodeObjectEntry = getObjectEntry(
-					objectEntryNode.getPrimaryKey());
-
-				nodeObjectEntry.setRootObjectEntryId(
-					parentObjectEntry.getRootObjectEntryId());
-
-				objectEntryLocalService.updateObjectEntry(nodeObjectEntry);
-			}
-		}
+		ObjectEntry parentObjectEntry = getObjectEntry(parentObjectEntryId);
 
 		objectEntry.setRootObjectEntryId(
 			parentObjectEntry.getRootObjectEntryId());
@@ -6816,12 +6789,29 @@ public class ObjectEntryLocalServiceImpl
 				}
 			}
 
+			if (existingValues == null) {
+				return;
+			}
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipPersistence.fetchByObjectFieldId2(
+					objectField.getObjectFieldId());
+
+			if (objectRelationship.isEdge() &&
+				!Objects.equals(
+					existingValues.get(objectField.getName()), value)) {
+
+				_handle(
+					new ObjectEntryValuesException.InvalidValue(
+						objectField.getName()),
+					validationErrors);
+			}
+
 			if (!objectDefinition.isAccountEntryRestricted() ||
 				!Objects.equals(
 					objectField.getObjectFieldId(),
 					objectDefinition.
-						getAccountEntryRestrictedObjectFieldId()) ||
-				(existingValues == null)) {
+						getAccountEntryRestrictedObjectFieldId())) {
 
 				return;
 			}

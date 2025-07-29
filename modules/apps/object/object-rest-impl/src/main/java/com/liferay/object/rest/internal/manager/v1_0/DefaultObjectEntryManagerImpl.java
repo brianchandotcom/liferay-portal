@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1010,8 +1011,25 @@ public class DefaultObjectEntryManagerImpl
 				objectDefinition.getObjectDefinitionId(), objectEntry);
 
 		return _updateObjectEntry(
-			dtoConverterContext, objectDefinition, existingObjectEntry,
+			0L, dtoConverterContext, objectDefinition, existingObjectEntry,
 			objectEntryId, true);
+	}
+
+	@Override
+	public ObjectEntry partialUpdateRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			long objectEntryId, ObjectRelationship objectRelationship,
+			long parentObjectEntryId)
+		throws Exception {
+
+		return updateRelatedObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntryId,
+			ObjectEntryManagerUtil.partialUpdateObjectEntry(
+				getObjectEntry(
+					dtoConverterContext, objectDefinition, objectEntryId),
+				objectDefinition.getObjectDefinitionId(), objectEntry),
+			objectRelationship, parentObjectEntryId);
 	}
 
 	@Override
@@ -1083,8 +1101,8 @@ public class DefaultObjectEntryManagerImpl
 		throws Exception {
 
 		return _updateObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry, objectEntryId,
-			false);
+			0L, dtoConverterContext, objectDefinition, objectEntry,
+			objectEntryId, false);
 	}
 
 	@Override
@@ -1121,6 +1139,41 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
 				serviceBuilderObjectEntry, scopeKey));
+	}
+
+	public ObjectEntry updateRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId,
+			ObjectEntry objectEntry, ObjectRelationship objectRelationship,
+			long parentObjectEntryId)
+		throws Exception {
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		properties.put(objectField.getName(), parentObjectEntryId);
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(objectEntryId);
+
+		if (!Objects.equals(
+				MapUtil.getLong(
+					serviceBuilderObjectEntry.getValues(),
+					objectField.getName()),
+				parentObjectEntryId)) {
+
+			throw new NoSuchObjectEntryException(
+				String.format(
+					"No ObjectEntry exists with the key {%s=%s, " +
+						"objectEntryId=%s}",
+					objectField.getName(), parentObjectEntryId, objectEntryId));
+		}
+
+		return _updateObjectEntry(
+			objectRelationship.getObjectFieldId2(), dtoConverterContext,
+			objectDefinition, objectEntry, objectEntryId, false);
 	}
 
 	@Override
@@ -2753,6 +2806,7 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private ObjectEntry _updateObjectEntry(
+			long allowedRelationshipObjectFieldId,
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			long objectEntryId, boolean partialUpdate)
@@ -2775,22 +2829,18 @@ public class DefaultObjectEntryManagerImpl
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 
+		Map<String, Serializable> values = _toObjectValues(
+			allowedRelationshipObjectFieldId, dtoConverterContext.getLocale(),
+			objectDefinition, objectEntry, scopeKey, serviceContext);
+
 		if (partialUpdate) {
 			serviceBuilderObjectEntry =
 				_objectEntryService.partialUpdateObjectEntry(
-					objectEntryId,
-					_toObjectValues(
-						0L, dtoConverterContext.getLocale(), objectDefinition,
-						objectEntry, scopeKey, serviceContext),
-					serviceContext);
+					objectEntryId, values, serviceContext);
 		}
 		else {
 			serviceBuilderObjectEntry = _objectEntryService.updateObjectEntry(
-				objectEntryId,
-				_toObjectValues(
-					0L, dtoConverterContext.getLocale(), objectDefinition,
-					objectEntry, scopeKey, serviceContext),
-				serviceContext);
+				objectEntryId, values, serviceContext);
 		}
 
 		return _toObjectEntry(

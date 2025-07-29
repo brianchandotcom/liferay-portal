@@ -177,6 +177,13 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			ObjectEntry objectEntry)
 		throws Exception;
 
+	public ObjectEntry partialUpdateRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			long objectEntryId, ObjectRelationship objectRelationship,
+			long parentObjectEntryId)
+		throws Exception;
+
 	public ObjectEntry restoreObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId, int version)
@@ -204,6 +211,13 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,
 			ObjectEntry objectEntry)
+		throws Exception;
+
+	public ObjectEntry updateRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId,
+			ObjectEntry objectEntry, ObjectRelationship objectRelationship,
+			long parentNodeObjectEntryId)
 		throws Exception;
 
 	public void validateObjectEntry(

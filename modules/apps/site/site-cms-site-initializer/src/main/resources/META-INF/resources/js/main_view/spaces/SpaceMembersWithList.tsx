@@ -22,6 +22,7 @@ import {
 export interface SpaceMembersWithListProps {
 	assetLibraryCreatorUserId: string;
 	assetLibraryId: string;
+	canManageMembers: boolean;
 	className?: string;
 	onHasSelectedMembersChange?: (hasSelectedMembers: boolean) => void;
 	pageSize?: number;
@@ -32,6 +33,7 @@ const DEFAULT_PAGE_SIZE = 20;
 export function SpaceMembersWithList({
 	assetLibraryCreatorUserId,
 	assetLibraryId,
+	canManageMembers,
 	className,
 	onHasSelectedMembersChange,
 	pageSize = DEFAULT_PAGE_SIZE,
@@ -324,13 +326,15 @@ export function SpaceMembersWithList({
 
 	return (
 		<div className={classNames('space-members-with-list', className)}>
-			<SpaceMembersInputWithSelect
-				onAutocompleteItemSelected={onAutocompleteItemSelected}
-				onSelectChange={(value) => {
-					setSelectedOption(value);
-				}}
-				selectValue={selectedOption}
-			/>
+			{canManageMembers && (
+				<SpaceMembersInputWithSelect
+					onAutocompleteItemSelected={onAutocompleteItemSelected}
+					onSelectChange={(value) => {
+						setSelectedOption(value);
+					}}
+					selectValue={selectedOption}
+				/>
+			)}
 
 			<label className="d-block" id={listLabelId}>
 				{Liferay.Language.get('who-has-access')}
@@ -343,6 +347,7 @@ export function SpaceMembersWithList({
 				{selectedOption === SelectOptions.USERS ? (
 					<MembersListItem
 						assetLibraryCreatorUserId={assetLibraryCreatorUserId}
+						canManageMembers={canManageMembers}
 						currentUserId={currentUserId}
 						emptyMessage={Liferay.Language.get(
 							'this-space-has-no-user-yet'
@@ -353,6 +358,7 @@ export function SpaceMembersWithList({
 					/>
 				) : (
 					<MembersListItem
+						canManageMembers={canManageMembers}
 						emptyMessage={Liferay.Language.get(
 							'this-space-has-no-group-yet'
 						)}

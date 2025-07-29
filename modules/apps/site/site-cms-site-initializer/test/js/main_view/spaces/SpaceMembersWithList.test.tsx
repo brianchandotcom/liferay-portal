@@ -75,6 +75,7 @@ describe('SpaceMembersWithList', () => {
 	const props: SpaceMembersWithListProps = {
 		assetLibraryCreatorUserId: testUsers[0].id,
 		assetLibraryId: testSpace.id,
+		canManageMembers: true,
 	};
 
 	const {ResizeObserver: ResizeObserverOriginal} = window;
@@ -547,5 +548,39 @@ describe('SpaceMembersWithList', () => {
 		);
 
 		expect(linkSpy).toHaveBeenCalledTimes(1);
+	});
+
+	describe('When canManageMembers is false', () => {
+		it('does not render the add members input', async () => {
+			render(
+				<SpaceMembersWithList {...props} canManageMembers={false} />
+			);
+
+			await waitFor(() => {
+				expect(
+					screen.getByLabelText('who-has-access')
+				).toBeInTheDocument();
+			});
+
+			expect(
+				screen.queryByRole('combobox', {
+					name: 'add-people-to-collaborate',
+				})
+			).not.toBeInTheDocument();
+		});
+
+		it('does not render the remove button for members', async () => {
+			render(
+				<SpaceMembersWithList {...props} canManageMembers={false} />
+			);
+
+			await waitFor(() => {
+				expect(screen.getByText(testUsers[1].name)).toBeInTheDocument();
+			});
+
+			expect(
+				screen.queryByRole('button', {name: /remove/i})
+			).not.toBeInTheDocument();
+		});
 	});
 });

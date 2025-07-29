@@ -5,6 +5,9 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.headless.admin.site.client.custom.field.CustomField;
+import com.liferay.headless.admin.site.client.custom.field.CustomValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
@@ -29,8 +32,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
+import java.io.Serializable;
+
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -239,6 +245,63 @@ public class PageSpecificationsTestUtil {
 			pageSpecifications[1], draftLayout.getPlid());
 	}
 
+	public static void assertPostCustomFields(
+			long groupId, PageSpecification[] postBodyPageSpecifications,
+			PageSpecification[] postPageSpecifications)
+		throws Exception {
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(postPageSpecifications));
+
+		CustomField customField = _getCustomField(
+			_EXPANDO_ATTRIBUTE_NAMES[1], _EXPANDO_ATTRIBUTE_DEFAULT_VALUES[1]);
+
+		_assertCustomFields(
+			ArrayUtil.append(
+				postBodyPageSpecifications[0].getCustomFields(), customField),
+			groupId, postPageSpecifications[0]);
+
+		if (postPageSpecifications.length == 2) {
+			_assertCustomFields(
+				ArrayUtil.append(
+					postBodyPageSpecifications[1].getCustomFields(),
+					customField),
+				groupId, postPageSpecifications[1]);
+		}
+	}
+
+	public static void assertUpdateCustomFields(
+			long groupId, PageSpecification[] pageSpecifications,
+			CustomField[][] postCustomFields,
+			CustomField[][] updateBodyCustomFields)
+		throws Exception {
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(pageSpecifications));
+
+		_assertCustomFields(
+			new CustomField[] {
+				_getCustomField(
+					_EXPANDO_ATTRIBUTE_NAMES[0], postCustomFields[0]),
+				_getCustomField(
+					_EXPANDO_ATTRIBUTE_NAMES[1], updateBodyCustomFields[0]),
+				_getCustomField(
+					_EXPANDO_ATTRIBUTE_NAMES[2], postCustomFields[0])
+			},
+			groupId, pageSpecifications[0]);
+
+		if (pageSpecifications.length == 2) {
+			_assertCustomFields(
+				new CustomField[] {
+					_getCustomField(
+						_EXPANDO_ATTRIBUTE_NAMES[0], postCustomFields[1]),
+					_getCustomField(
+						_EXPANDO_ATTRIBUTE_NAMES[1], updateBodyCustomFields[1]),
+					_getCustomField(
+						_EXPANDO_ATTRIBUTE_NAMES[2], postCustomFields[1])
+				},
+				groupId, pageSpecifications[1]);
+		}
+	}
+
 	public static void assertWidgetPageSpecification(
 		WidgetPageSpecification expectedWidgetPageSpecification,
 		WidgetPageSpecification actualWidgetPageSpecification) {
@@ -346,6 +409,70 @@ public class PageSpecificationsTestUtil {
 				widgetPageSpecification.getExternalReferenceCode(), null,
 				PageSpecification.Status.APPROVED)
 		};
+	}
+
+	public static PageSpecification[] getPostPageSpecificationsWithCustomFields(
+		String publishedPageSpecificationExternalReferenceCode,
+		PageSpecification.Type type) {
+
+		PageSpecification[] pageSpecifications;
+
+		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
+			pageSpecifications = _getContentPageSpecifications(
+				RandomTestUtil.randomString(),
+				publishedPageSpecificationExternalReferenceCode);
+		}
+		else {
+			pageSpecifications = new PageSpecification[] {
+				getWidgetPageSpecification(
+					publishedPageSpecificationExternalReferenceCode, null,
+					PageSpecification.Status.APPROVED)
+			};
+		}
+
+		pageSpecifications[0].setCustomFields(
+			new CustomField[] {
+				_getCustomField(
+					_EXPANDO_ATTRIBUTE_NAMES[0], RandomTestUtil.randomString()),
+				_getCustomField(
+					_EXPANDO_ATTRIBUTE_NAMES[2], RandomTestUtil.randomString())
+			});
+
+		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
+			pageSpecifications[1].setCustomFields(
+				new CustomField[] {
+					_getCustomField(
+						_EXPANDO_ATTRIBUTE_NAMES[0],
+						RandomTestUtil.randomString()),
+					_getCustomField(
+						_EXPANDO_ATTRIBUTE_NAMES[2],
+						RandomTestUtil.randomString())
+				});
+		}
+
+		return pageSpecifications;
+	}
+
+	public static CustomField[][] getUpdateCustomFields(
+		PageSpecification.Type type) {
+
+		CustomField[] publishedCustomFields = {
+			_getCustomField(_EXPANDO_ATTRIBUTE_NAMES[0], (String)null),
+			_getCustomField(
+				_EXPANDO_ATTRIBUTE_NAMES[1], RandomTestUtil.randomString())
+		};
+
+		CustomField[] draftCustomFields = null;
+
+		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
+			draftCustomFields = new CustomField[] {
+				_getCustomField(_EXPANDO_ATTRIBUTE_NAMES[0], (String)null),
+				_getCustomField(
+					_EXPANDO_ATTRIBUTE_NAMES[1], RandomTestUtil.randomString())
+			};
+		}
+
+		return new CustomField[][] {publishedCustomFields, draftCustomFields};
 	}
 
 	public static WidgetPageSpecification getWidgetPageSpecification(
@@ -475,6 +602,36 @@ public class PageSpecificationsTestUtil {
 			() -> unsafeFunction.apply(draftContentPageSpecification));
 	}
 
+	private static void _assertCustomFields(
+			CustomField[] expectedCustomFields, long groupId,
+			PageSpecification pageSpecification)
+		throws Exception {
+
+		CustomField[] customFields = pageSpecification.getCustomFields();
+
+		Assert.assertTrue(
+			Arrays.toString(customFields) +
+				" does not contain all custom fields in " +
+					Arrays.toString(expectedCustomFields),
+			ArrayUtil.containsAll(customFields, expectedCustomFields));
+
+		Layout layout = LayoutLocalServiceUtil.getLayoutByExternalReferenceCode(
+			pageSpecification.getExternalReferenceCode(), groupId);
+
+		ExpandoBridge expandoBridge = layout.getExpandoBridge();
+
+		Map<String, Serializable> attributes = expandoBridge.getAttributes();
+
+		Assert.assertFalse(attributes.isEmpty());
+
+		for (CustomField customField : expectedCustomFields) {
+			CustomValue customValue = customField.getCustomValue();
+
+			Assert.assertEquals(
+				customValue.getData(), attributes.get(customField.getName()));
+		}
+	}
+
 	private static void _assertProblemException(
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
@@ -511,11 +668,44 @@ public class PageSpecificationsTestUtil {
 		};
 	}
 
+	private static CustomField _getCustomField(
+		String attributeName, CustomField[] customFields) {
+
+		CustomField[] filteredCustomFields = ArrayUtil.filter(
+			customFields,
+			customField -> Objects.equals(
+				customField.getName(), attributeName));
+
+		return filteredCustomFields[0];
+	}
+
+	private static CustomField _getCustomField(String curName, String curData) {
+		return new CustomField() {
+			{
+				customValue = new CustomValue() {
+					{
+						data = curData;
+						dataType = "Text";
+					}
+				};
+				name = curName;
+			}
+		};
+	}
 
 	private static boolean _isPublished(Layout draftLayout) {
 		return GetterUtil.getBoolean(
 			draftLayout.getTypeSettingsProperty(
 				LayoutTypeSettingsConstants.KEY_PUBLISHED));
 	}
+
+	private static final String[] _EXPANDO_ATTRIBUTE_DEFAULT_VALUES = {
+		RandomTestUtil.randomString(), RandomTestUtil.randomString(), null
+	};
+
+	private static final String[] _EXPANDO_ATTRIBUTE_NAMES = {
+		RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+		RandomTestUtil.randomString()
+	};
 
 }

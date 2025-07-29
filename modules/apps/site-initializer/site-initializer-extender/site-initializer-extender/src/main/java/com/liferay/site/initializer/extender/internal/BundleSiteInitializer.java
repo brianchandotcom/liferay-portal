@@ -1217,7 +1217,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_replaceObjectDefinitionValues(
 				serviceBuilderObjectDefinition.getClassName(),
-				serviceBuilderObjectDefinition.getName(),
+				serviceBuilderObjectDefinition.getShortName(),
 				serviceBuilderObjectDefinition.getObjectDefinitionId(),
 				stringUtilReplaceValues);
 		}

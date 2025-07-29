@@ -1,17 +1,11 @@
-<%--
-/**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
- */
---%>
-
-<%@ include file="/init.jsp" %>
-
-<%
-ViewSpaceMembersSummarySectionDisplayContext viewSpaceMembersSummarySectionDisplayContext = (ViewSpaceMembersSummarySectionDisplayContext)request.getAttribute(ViewSpaceMembersSummarySectionDisplayContext.class.getName());
+<%-- /** * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com *
+SPDX-License-Identifier: LGPL-2.1-or-later OR
+LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06 */ --%> <%@ include file="/init.jsp"
+%> <% ViewSpaceMembersSummarySectionDisplayContext
+viewSpaceMembersSummarySectionDisplayContext = (ViewSpaceMembersSummarySectionDisplayContext)request.getAttribute(ViewSpaceMembersSummarySectionDisplayContext.class.getName());
 %>
 
-<div class="cms-section">
+<div class="cms-section cms-tabs-fluid">
 	<div id="<%= CMSSiteInitializerFDSNames.SPACE_MEMBERS_SUMMARY_SECTION %>">
 		<react:component
 			module="{SpaceSummaryHeader} from site-cms-site-initializer"

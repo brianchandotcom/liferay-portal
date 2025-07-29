@@ -2172,6 +2172,14 @@ components:
                     WidgetPageSpecification: "#/components/schemas/WidgetPageSpecification"
                 propertyName: type
             properties:
+                customFields:
+                    # @review
+                    description:
+                        Custom fields associated with the page specification. Not available if this page specification
+                        belongs to a utility page.
+                    items:
+                        type: customField
+                    type: array
                 externalReferenceCode:
                     description:
                         The page specification's external reference code, unique per site.
@@ -2627,13 +2635,6 @@ components:
                     description:
                         The page's creator external reference code.
                     type: string
-                customFields:
-                    # @review
-                    description:
-                        Custom fields associated with the page.
-                    items:
-                        type: customField
-                    type: array
                 dateCreated:
                     # @review
                     description:

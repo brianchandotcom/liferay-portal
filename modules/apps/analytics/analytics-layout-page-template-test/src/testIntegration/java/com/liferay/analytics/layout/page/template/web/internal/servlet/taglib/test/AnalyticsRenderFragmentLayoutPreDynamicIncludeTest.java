@@ -91,11 +91,11 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"<div data-analytics-external-reference-code=\"",
-				blogsEntry.getExternalReferenceCode(),
-				"\" data-analytics-asset-id=\"", blogsEntry.getEntryId(),
+				"<div data-analytics-asset-id=\"", blogsEntry.getEntryId(),
 				"\" data-analytics-asset-title=\"", blogsEntry.getTitle(),
-				"\" data-analytics-asset-type=\"blog\">"),
+				"\" data-analytics-asset-type=\"blog\" ",
+				"data-analytics-external-reference-code=\"",
+				blogsEntry.getExternalReferenceCode(), "\">"),
 			mockHttpServletResponse.getContentAsString());
 	}
 
@@ -128,14 +128,13 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"<div data-analytics-asset-action=\"preview\" ",
-				"data-analytics-external-reference-code=\"",
-				fileEntry.getExternalReferenceCode(),
+				"<div data-analytics-asset-action=\"preview",
 				"\" data-analytics-asset-id=\"", fileEntry.getFileEntryId(),
 				"\" data-analytics-asset-title=\"", fileEntry.getTitle(),
 				"\" data-analytics-asset-type=\"document\" ",
 				"data-analytics-asset-version=\"", fileEntry.getVersion(),
-				"\">"),
+				"\" data-analytics-external-reference-code=\"",
+				fileEntry.getExternalReferenceCode(), "\">"),
 			mockHttpServletResponse.getContentAsString());
 	}
 
@@ -164,13 +163,13 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"<div data-analytics-external-reference-code=\"",
-				journalArticle.getExternalReferenceCode(),
-				"\" data-analytics-asset-id=\"",
+				"<div data-analytics-asset-id=\"",
 				journalArticle.getResourcePrimKey(),
 				"\" data-analytics-asset-title=\"", journalArticle.getTitle(),
-				"\" data-analytics-asset-type=\"web-content\" ",
-				"data-analytics-web-content-resource-pk=\"",
+				"\" data-analytics-asset-type=\"web-content",
+				"\" data-analytics-external-reference-code=\"",
+				journalArticle.getExternalReferenceCode(),
+				"\" data-analytics-web-content-resource-pk=\"",
 				journalArticle.getResourcePrimKey(), "\">"),
 			mockHttpServletResponse.getContentAsString());
 	}

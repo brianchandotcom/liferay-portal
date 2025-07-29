@@ -7,7 +7,7 @@ import {Text} from '@clayui/core';
 import classNames from 'classnames';
 import React from 'react';
 
-import {toThousands} from '../../utils/math';
+import {toThousands} from '../../../utils/math';
 import {ChartData, chartBgColors, chartColors} from './StackedBarChart';
 
 interface IStackedBarLegendProps {

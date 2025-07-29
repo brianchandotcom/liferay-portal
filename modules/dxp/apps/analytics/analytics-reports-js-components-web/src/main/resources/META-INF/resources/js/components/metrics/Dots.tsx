@@ -9,6 +9,7 @@ export type DotProps = {
 	cx?: number;
 	cy?: number;
 	displayOutsideOfRecharts?: boolean;
+	fill?: string;
 	size?: number;
 	stroke: string;
 	strokeOpacity?: string;
@@ -172,4 +173,87 @@ export function PublishedVersionDot({
 	}
 
 	return <PublishedVersionCircle size={6} />;
+}
+
+export function DashedDotIcon({
+	cx,
+	cy,
+	displayOutsideOfRecharts = false,
+	size = 16,
+	stroke,
+}: DotProps) {
+	const halfSize = size / 2;
+	const lineLength = size * 0.7;
+
+	const effectiveCx = cx ?? halfSize;
+	const effectiveCy = cy ?? halfSize;
+
+	const IconContent = (
+		<line
+			stroke={stroke}
+			strokeDasharray="2 4"
+			strokeLinecap="round"
+			strokeWidth="2"
+			x1={effectiveCx - lineLength / 2}
+			x2={effectiveCx + lineLength / 2}
+			y1={effectiveCy}
+			y2={effectiveCy}
+		/>
+	);
+
+	if (displayOutsideOfRecharts) {
+		return <DotWrapper size={size}>{IconContent}</DotWrapper>;
+	}
+
+	return (
+		<svg
+			height={size}
+			width={size}
+			x={effectiveCx - halfSize}
+			y={effectiveCy - halfSize}
+		>
+			{IconContent}
+		</svg>
+	);
+}
+
+export function PreviousDot({
+	cx,
+	cy,
+	displayOutsideOfRecharts = false,
+	fill,
+	stroke,
+	strokeOpacity,
+	value,
+}: DotProps) {
+	const PreviousCircle = ({size}: {size: number}) => {
+		const halfSize = size / 2;
+
+		return (
+			<circle
+				cx={cx || size}
+				cy={cy || size}
+				fill={fill}
+				fillOpacity={strokeOpacity}
+				r={displayOutsideOfRecharts ? halfSize - 1 : halfSize}
+				stroke={stroke}
+				strokeOpacity={strokeOpacity}
+				strokeWidth={2}
+			/>
+		);
+	};
+
+	if (value === null) {
+		return null;
+	}
+
+	if (displayOutsideOfRecharts) {
+		return (
+			<DotWrapper size={14}>
+				<PreviousCircle size={8} />
+			</DotWrapper>
+		);
+	}
+
+	return <PreviousCircle size={6} />;
 }

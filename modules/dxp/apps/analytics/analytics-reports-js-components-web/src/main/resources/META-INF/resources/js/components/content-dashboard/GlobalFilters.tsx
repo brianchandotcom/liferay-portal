@@ -5,11 +5,11 @@
 
 import React, {useContext} from 'react';
 
-import {AnalyticsReportsContext} from '../AnalyticsReportsContext';
-import {Individuals, RangeSelectors} from '../types/global';
-import {formatDate, getDateRange} from '../utils/date';
-import Filter from './Filter';
-import Title from './Title';
+import {Context} from '../../Context';
+import {Individuals, RangeSelectors} from '../../types/global';
+import {formatDate, getDateRange} from '../../utils/date';
+import Filter from '../Filter';
+import Title from '../Title';
 
 const individualFilterLang = {
 	[Individuals.AllIndividuals]: Liferay.Language.get('all-individuals'),
@@ -27,7 +27,7 @@ function formatDateRange(rangeSelector: RangeSelectors) {
 
 const GlobalFilters = () => {
 	const {changeIndividualFilter, changeRangeSelectorFilter, filters} =
-		useContext(AnalyticsReportsContext);
+		useContext(Context);
 
 	let timeFilterItems = [
 		{

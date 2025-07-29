@@ -6,12 +6,12 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext} from 'react';
 
-import {Context} from '../../Context';
-import useFetch from '../../hooks/useFetch';
-import {MetricName, MetricType} from '../../types/global';
-import {buildQueryString} from '../../utils/buildQueryString';
-import Title from '../Title';
-import StackedBarChart from '../content-dashboard/stacked-bar/StackedBarChart';
+import {Context} from '../../../Context';
+import useFetch from '../../../hooks/useFetch';
+import {MetricName, MetricType} from '../../../types/global';
+import {buildQueryString} from '../../../utils/buildQueryString';
+import Title from '../../Title';
+import StackedBarChart from '../stacked-bar/StackedBarChart';
 import {formatData} from './utils';
 
 export type Data = {
@@ -41,7 +41,7 @@ const Technology = () => {
 	});
 
 	const {data, loading} = useFetch<Data>(
-		`/o/analytics-reports-rest/v1.0/${groupId}/asset-metrics/${assetType}/devices${queryString}`
+		`/o/analytics-reports-rest/${groupId}/asset-metrics/${assetType}/devices${queryString}`
 	);
 
 	const title = TITLE[filters.metric];
@@ -54,6 +54,8 @@ const Technology = () => {
 		return null;
 	}
 
+	const formattedData = formatData(data, filters.metric);
+
 	return (
 		<div>
 			<Title
@@ -64,10 +66,7 @@ const Technology = () => {
 				value={title}
 			/>
 
-			<StackedBarChart
-				data={formatData(data, filters.metric)}
-				tooltipTitle={title}
-			/>
+			<StackedBarChart data={formattedData} tooltipTitle={title} />
 		</div>
 	);
 };

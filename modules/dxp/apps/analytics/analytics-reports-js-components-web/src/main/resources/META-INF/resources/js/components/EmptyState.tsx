@@ -8,6 +8,10 @@ import React from 'react';
 
 interface IEmptyStateProps extends React.HTMLAttributes<HTMLElement> {
 	description: string;
+	externalImage?: {
+		src: string;
+		style: object;
+	};
 	imgSrc?: string;
 	title: string;
 }
@@ -15,6 +19,7 @@ interface IEmptyStateProps extends React.HTMLAttributes<HTMLElement> {
 const EmptyState: React.FC<IEmptyStateProps> = ({
 	children,
 	description,
+	externalImage,
 	imgSrc,
 	title,
 }) => (
@@ -23,12 +28,9 @@ const EmptyState: React.FC<IEmptyStateProps> = ({
 			className="align-items-center d-flex flex-column justify-content-center text-center"
 			style={{maxWidth: 268}}
 		>
-			{!imgSrc && (
-				<div style={{width: 88}}>
-					<img
-						src="/o/analytics-reports-js-components-web/assets/ac-icon.svg"
-						style={{width: '100%'}}
-					/>
+			{externalImage && (
+				<div style={{...externalImage.style}}>
+					<img src={externalImage.src} style={{width: '100%'}} />
 				</div>
 			)}
 

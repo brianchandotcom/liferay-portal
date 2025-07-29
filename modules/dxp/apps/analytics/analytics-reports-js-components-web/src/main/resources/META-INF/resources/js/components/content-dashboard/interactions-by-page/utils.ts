@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Colors, MetricName} from '../../types/global';
-import {toUnix} from '../../utils/date';
-import {AssetMetricComplement} from '../../utils/metrics';
-import {FormattedData, formatter} from '../metrics/utils';
+import {Colors, MetricName} from '../../../types/global';
+import {toUnix} from '../../../utils/date';
+import {AssetMetricComplement} from '../../../utils/metrics';
+import {FormattedData, formatter} from '../../metrics/utils';
 import {Data} from './InteractionsByPage';
 
 export enum InteractionsByPageDataKey {

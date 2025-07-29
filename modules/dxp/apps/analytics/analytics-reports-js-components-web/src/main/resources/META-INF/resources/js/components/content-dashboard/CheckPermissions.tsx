@@ -5,16 +5,16 @@
 
 import {Provider as ClayIconProvider} from '@clayui/core';
 import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {AnalyticsReportsProvider} from '../AnalyticsReportsContext';
-import {AssetTypes, Version} from '../types/global';
-import EmptyState from './EmptyState';
-import StateRenderer from './StateRenderer';
+import {ContextProvider} from '../../Context';
+import {AssetTypes, Version} from '../../types/global';
+import EmptyState from '.././EmptyState';
 
-interface IAppSetupStateRendererProps
+interface ICheckPermissionsStateRendererProps
 	extends React.HTMLAttributes<HTMLElement> {
 	contentPerformanceDataFetchURL: string;
 	getItemVersionsURL: string;
@@ -34,12 +34,15 @@ type Data = {
 	versions: Version[] | null;
 };
 
-interface IAppSetupProps {
+interface ICheckPermissionsProps {
 	children?: React.ReactNode;
 	data: Data;
 }
 
-const AppSetup: React.FC<IAppSetupProps> = ({children, data}) => {
+const CheckPermissionsContent: React.FC<ICheckPermissionsProps> = ({
+	children,
+	data,
+}) => {
 	if (!data.connectedToAnalyticsCloud) {
 		if (data.isAdmin) {
 			return (
@@ -146,28 +149,27 @@ const AppSetup: React.FC<IAppSetupProps> = ({children, data}) => {
 		>
 			<ClayTooltipProvider>
 				<div>
-					<AnalyticsReportsProvider
-						assetId={data?.assetId ?? '0'}
-						assetType={data?.assetType ?? null}
-						groupId={data?.groupId ?? '0'}
-						versions={data?.versions ?? null}
+					<ContextProvider
+						customState={{
+							assetId: data?.assetId ?? '0',
+							assetType: data?.assetType ?? AssetTypes.Undefined,
+							groupId: data?.groupId,
+							versions: data?.versions,
+						}}
 					>
 						{children}
-					</AnalyticsReportsProvider>
+					</ContextProvider>
 				</div>
 			</ClayTooltipProvider>
 		</ClayIconProvider>
 	);
 };
 
-const AppSetupStateRenderer: React.FC<IAppSetupStateRendererProps> = ({
-	children,
-	contentPerformanceDataFetchURL,
-	getItemVersionsURL,
-}) => {
+const CheckPermissionsStateRenderer: React.FC<
+	ICheckPermissionsStateRendererProps
+> = ({children, contentPerformanceDataFetchURL, getItemVersionsURL}) => {
 	const [data, setData] = useState<Data | null>(null);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState('');
 
 	useEffect(() => {
 		async function fetchData() {
@@ -216,7 +218,6 @@ const AppSetupStateRenderer: React.FC<IAppSetupStateRendererProps> = ({
 					),
 				});
 				setLoading(false);
-				setError('');
 			}
 			catch (error: any) {
 				if (process.env.NODE_ENV === 'development') {
@@ -225,18 +226,25 @@ const AppSetupStateRenderer: React.FC<IAppSetupStateRendererProps> = ({
 
 				setData(null);
 				setLoading(false);
-				setError(error.toString());
 			}
 		}
 
 		fetchData();
 	}, [contentPerformanceDataFetchURL, getItemVersionsURL]);
 
+	if (loading) {
+		return <ClayLoadingIndicator className="my-5" />;
+	}
+
+	if (!data) {
+		return null;
+	}
+
 	return (
-		<StateRenderer data={data} error={error} loading={loading}>
-			{({data}) => <AppSetup data={data}>{children}</AppSetup>}
-		</StateRenderer>
+		<CheckPermissionsContent data={data}>
+			{children}
+		</CheckPermissionsContent>
 	);
 };
 
-export default AppSetupStateRenderer;
+export default CheckPermissionsStateRenderer;

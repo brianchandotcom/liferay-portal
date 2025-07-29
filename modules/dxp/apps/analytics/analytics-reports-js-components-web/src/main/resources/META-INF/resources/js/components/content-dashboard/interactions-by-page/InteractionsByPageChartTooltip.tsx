@@ -5,13 +5,13 @@
 
 import React from 'react';
 
-import {Alignments, RangeSelectors, Weights} from '../../types/global';
-import {formatTooltipDate} from '../../utils/date';
-import ChartTooltip from '../ChartTooltip';
-import {IAccessibleTickProps} from '../metrics/AccessibleTick';
-import {DotProps} from '../metrics/Dots';
-import {DataKey} from '../metrics/MetricsChart';
-import {FormattedData} from '../metrics/utils';
+import {Alignments, RangeSelectors, Weights} from '../../../types/global';
+import {formatTooltipDate} from '../../../utils/date';
+import ChartTooltip from '../../ChartTooltip';
+import {IAccessibleTickProps} from '../../metrics/AccessibleTick';
+import {DotProps} from '../../metrics/Dots';
+import {DataKey} from '../../metrics/MetricsChart';
+import {FormattedData} from '../../metrics/utils';
 import {Dot} from './InteractionsByPageChart';
 
 const TOOLTIP_FIRST_COLUMN_WIDTH = 250;

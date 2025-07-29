@@ -12,13 +12,14 @@ import {DotProps} from './Dots';
 
 export interface IMetricsChartLegendProps {
 	activeTabIndex: boolean;
+	align: string;
 	legendItems: {
 		Dot: React.JSXElementConstructor<DotProps>;
 		block?: boolean;
 		dataKey: string;
 		dotColor: string;
 		title: string;
-		total: string | number;
+		total?: string | number;
 		url?: string;
 	}[];
 	onDatakeyChange: (dataKey: string | null) => void;
@@ -26,11 +27,12 @@ export interface IMetricsChartLegendProps {
 
 const MetricsChartLegend: React.FC<IMetricsChartLegendProps> = ({
 	activeTabIndex,
+	align,
 	legendItems,
 	onDatakeyChange,
 }) => {
 	return (
-		<ul className="d-inline-block mb-3 metrics-chart__legend ml-5">
+		<ul className={classNames('mb-3 metrics-chart__legend ml-5', align)}>
 			{legendItems.map(
 				(
 					{Dot, block = false, dataKey, dotColor, title, total, url},
@@ -74,7 +76,9 @@ const MetricsChartLegend: React.FC<IMetricsChartLegendProps> = ({
 										'click-to-view-page'
 									)}
 								>
-									<Text size={3}>{`${title}: ${total}`}</Text>
+									<Text size={3}>
+										{`${title}`} {total && `: ${total}`}
+									</Text>
 								</ClayLink>
 							) : (
 								<Text
@@ -83,7 +87,7 @@ const MetricsChartLegend: React.FC<IMetricsChartLegendProps> = ({
 									}
 									size={3}
 								>
-									{`${title}: ${total}`}
+									{`${title}${total ? `: ${total}` : ''}`}
 								</Text>
 							)}
 						</li>

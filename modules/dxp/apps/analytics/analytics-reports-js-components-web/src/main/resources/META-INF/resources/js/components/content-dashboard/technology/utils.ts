@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {MetricType} from '../../types/global';
-import {getPercentage} from '../../utils/math';
-import {metricNameByType} from '../../utils/metrics';
-import {ChartData} from '../content-dashboard/stacked-bar/StackedBarChart';
+import {MetricType} from '../../../types/global';
+import {getPercentage} from '../../../utils/math';
+import {metricNameByType} from '../../../utils/metrics';
+import {ChartData} from '../stacked-bar/StackedBarChart';
 import {Data} from './Technology';
 
 const getSafePercentage = (value: number, total: number) =>

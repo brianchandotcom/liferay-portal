@@ -5,11 +5,16 @@
 
 import React from 'react';
 
-import {Alignments, Colors, RangeSelectors, Weights} from '../../types/global';
-import {formatTooltipDate} from '../../utils/date';
-import ChartTooltip from '../ChartTooltip';
-import {CircleDot, PublishedVersionDot} from '../metrics/Dots';
-import {FormattedData} from '../metrics/utils';
+import {
+	Alignments,
+	Colors,
+	RangeSelectors,
+	Weights,
+} from '../../../types/global';
+import {formatTooltipDate} from '../../../utils/date';
+import ChartTooltip from '../../ChartTooltip';
+import {CircleDot, PublishedVersionDot} from '../../metrics/Dots';
+import {FormattedData} from '../../metrics/utils';
 import {VisitorsBehaviorDataKey} from './utils';
 
 interface IVisitorsBehaviorChartTooltipProps

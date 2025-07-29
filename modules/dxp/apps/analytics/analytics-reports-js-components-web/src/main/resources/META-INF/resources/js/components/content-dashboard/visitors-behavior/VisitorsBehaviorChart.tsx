@@ -6,14 +6,14 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {Line} from 'recharts';
 
-import {AnalyticsReportsContext} from '../../AnalyticsReportsContext';
-import {Colors, MetricType} from '../../types/global';
-import {formatTooltipDate} from '../../utils/date';
-import {assetContent, metricNameByType} from '../../utils/metrics';
-import {CircleDot, PublishedVersionDot} from '../metrics/Dots';
-import MetricsChart, {DataKey} from '../metrics/MetricsChart';
-import {IMetricsChartLegendProps} from '../metrics/MetricsChartLegend';
-import {getFillOpacity} from '../metrics/utils';
+import {Context} from '../../../Context';
+import {Colors} from '../../../types/global';
+import {formatTooltipDate} from '../../../utils/date';
+import {assetContent, metricNameByType} from '../../../utils/metrics';
+import {CircleDot, PublishedVersionDot} from '../../metrics/Dots';
+import MetricsChart, {DataKey} from '../../metrics/MetricsChart';
+import {IMetricsChartLegendProps} from '../../metrics/MetricsChartLegend';
+import {getFillOpacity} from '../../metrics/utils';
 import {Data, PublishedVersionData} from './VisitorsBehavior';
 import VisitorsBehaviorChartTooltip from './VisitorsBehaviorChartTooltip';
 import {VisitorsBehaviorDataKey, formatVisitorsBehaviorData} from './utils';
@@ -27,7 +27,7 @@ const VisitorsBehaviorChart: React.FC<IVisitorsBehaviorChartProps> = ({
 	data,
 	publishedVersionData,
 }) => {
-	const {filters} = useContext(AnalyticsReportsContext);
+	const {filters} = useContext(Context);
 
 	const [activeTabIndex, setActiveTabIndex] = useState(false);
 
@@ -35,8 +35,7 @@ const VisitorsBehaviorChart: React.FC<IVisitorsBehaviorChartProps> = ({
 		VisitorsBehaviorDataKey | DataKey | null
 	>(null);
 
-	const metricName =
-		metricNameByType[filters?.metric || MetricType.Undefined];
+	const metricName = metricNameByType[filters.metric];
 
 	const formattedData = useMemo(
 		() =>

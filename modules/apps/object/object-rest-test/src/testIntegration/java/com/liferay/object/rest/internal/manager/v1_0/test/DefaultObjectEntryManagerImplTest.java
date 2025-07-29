@@ -731,10 +731,8 @@ public class DefaultObjectEntryManagerImplTest
 		ObjectField objectField = objectFieldLocalService.getObjectField(
 			objectRelationship1.getObjectFieldId2());
 
-		_objectRelationshipERCObjectFieldName = ObjectFieldSettingUtil.getValue(
-			ObjectFieldSettingConstants.
-				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-			objectField);
+		_objectRelationshipERCObjectFieldName =
+			_getObjectRelationshipERCObjectFieldName(objectField);
 		_objectRelationshipFieldName = objectField.getName();
 
 		_objectDefinition3 =
@@ -2308,9 +2306,7 @@ public class DefaultObjectEntryManagerImplTest
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		String objectRelationshipERCObjectFieldName =
-			ObjectFieldSettingUtil.getValue(
-				ObjectFieldSettingConstants.
-					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+			_getObjectRelationshipERCObjectFieldName(
 				objectFieldLocalService.getObjectField(
 					objectRelationship.getObjectFieldId2()));
 
@@ -5216,15 +5212,11 @@ public class DefaultObjectEntryManagerImplTest
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
-							ObjectFieldSettingUtil.getValue(
-								ObjectFieldSettingConstants.
-									NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+							_getObjectRelationshipERCObjectFieldName(
 								objectField1),
 							objectEntry1.getExternalReferenceCode()
 						).put(
-							ObjectFieldSettingUtil.getValue(
-								ObjectFieldSettingConstants.
-									NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+							_getObjectRelationshipERCObjectFieldName(
 								objectField2),
 							objectEntry2.getExternalReferenceCode()
 						).putAll(
@@ -5244,15 +5236,11 @@ public class DefaultObjectEntryManagerImplTest
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
-							ObjectFieldSettingUtil.getValue(
-								ObjectFieldSettingConstants.
-									NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+							_getObjectRelationshipERCObjectFieldName(
 								objectField1),
 							objectEntry1.getExternalReferenceCode()
 						).put(
-							ObjectFieldSettingUtil.getValue(
-								ObjectFieldSettingConstants.
-									NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+							_getObjectRelationshipERCObjectFieldName(
 								objectField2),
 							objectEntry4.getExternalReferenceCode()
 						).putAll(
@@ -8681,6 +8669,15 @@ public class DefaultObjectEntryManagerImplTest
 				objectFieldName + "_i18n");
 
 		return localizedValues.get(languageId);
+	}
+
+	private String _getObjectRelationshipERCObjectFieldName(
+		ObjectField objectField) {
+
+		return ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.
+				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+			objectField);
 	}
 
 	private Page<ObjectEntry> _getPage(

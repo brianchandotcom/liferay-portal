@@ -74,11 +74,11 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 
 	@Override
 	public Overview getContentOverview(
-			String languageId, String rangeEnd, Integer rangeKey,
-			String rangeStart, Long spaceId)
+			Long depotEntryId, String languageId, String rangeEnd,
+			Integer rangeKey, String rangeStart)
 		throws Exception {
 
-		List<DepotEntry> depotEntries = _getDepotEntries(spaceId);
+		List<DepotEntry> depotEntries = _getDepotEntries(depotEntryId);
 
 		if (depotEntries.isEmpty()) {
 			return _toOverview(0, Trend.Classification.NEUTRAL, 0.0, 0, 0, 0);
@@ -97,11 +97,11 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 
 	@Override
 	public Overview getFileOverview(
-			String languageId, String rangeEnd, Integer rangeKey,
-			String rangeStart, Long spaceId)
+			Long depotEntryId, String languageId, String rangeEnd,
+			Integer rangeKey, String rangeStart)
 		throws Exception {
 
-		List<DepotEntry> depotEntries = _getDepotEntries(spaceId);
+		List<DepotEntry> depotEntries = _getDepotEntries(depotEntryId);
 
 		if (depotEntries.isEmpty()) {
 			return _toOverview(0, Trend.Classification.NEUTRAL, 0.0, 0, 0, 0);
@@ -122,14 +122,16 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 		return DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
 	}
 
-	private List<DepotEntry> _getDepotEntries(Long spaceId) throws Exception {
+	private List<DepotEntry> _getDepotEntries(Long depotEntryId)
+		throws Exception {
+
 		List<DepotEntry> depotEntries = new ArrayList<>();
 
-		if (spaceId == null) {
+		if (depotEntryId == null) {
 			depotEntries.addAll(_getViewableDepotEntries());
 		}
 		else {
-			depotEntries.add(_depotEntryService.getDepotEntry(spaceId));
+			depotEntries.add(_depotEntryService.getDepotEntry(depotEntryId));
 		}
 
 		return depotEntries;

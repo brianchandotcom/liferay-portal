@@ -7,43 +7,62 @@ package com.liferay.osb.patcher.web.internal.messaging;
 
 import com.liferay.osb.patcher.configuration.PatcherConfiguration;
 import com.liferay.osb.patcher.util.PatcherUtil;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Balogh
  */
-public class PatcherBuildSchedulerMessageListener extends BaseMessageListener {
+@Component(
+	configurationPid = "com.liferay.osb.patcher.configuration.PatcherConfiguration",
+	service = SchedulerJobConfiguration.class
+)
+public class PatcherBuildSchedulerMessageListener
+	implements SchedulerJobConfiguration {
 
-	public static PatcherBuildSchedulerMessageListener getInstance() {
-		return _patcherBuildSchedulerMessageListener;
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
+		return () -> _companyLocalService.forEachCompanyId(
+			companyId -> {
+				PatcherUtil.processOSBPatcherMessageQueue(companyId);
+
+				PatcherUtil.processOSBPatcherStatusFiles(
+					companyId,
+					_patcherConfiguration.patcherStatusBuildJenkinsPath());
+
+				PatcherUtil.processOSBPatcherStatusFiles(
+					companyId,
+					_patcherConfiguration.patcherStatusBuildJenkinsTestPath());
+
+				PatcherUtil.processOSBPatcherStatusFiles(
+					companyId, _patcherConfiguration.patcherStatusBuildPath());
+			});
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		PatcherUtil.processOSBPatcherMessageQueue(companyId);
-
-		PatcherConfiguration patcherConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, companyId);
-
-		PatcherUtil.processOSBPatcherStatusFiles(
-			companyId, patcherConfiguration.patcherStatusBuildJenkinsPath());
-
-		PatcherUtil.processOSBPatcherStatusFiles(
-			companyId,
-			patcherConfiguration.patcherStatusBuildJenkinsTestPath());
-
-		PatcherUtil.processOSBPatcherStatusFiles(
-			companyId, patcherConfiguration.patcherStatusBuildPath());
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			"*/4 * * * * ? *");
 	}
 
-	private static final PatcherBuildSchedulerMessageListener
-		_patcherBuildSchedulerMessageListener =
-			new PatcherBuildSchedulerMessageListener();
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_patcherConfiguration = ConfigurableUtil.createConfigurable(
+			PatcherConfiguration.class, properties);
+	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	private PatcherConfiguration _patcherConfiguration;
 
 }

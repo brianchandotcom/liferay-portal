@@ -7,35 +7,54 @@ package com.liferay.osb.patcher.web.internal.messaging;
 
 import com.liferay.osb.patcher.configuration.PatcherConfiguration;
 import com.liferay.osb.patcher.util.PatcherUtil;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Balogh
  */
-public class PatcherFixSchedulerMessageListener extends BaseMessageListener {
+@Component(
+	configurationPid = "com.liferay.osb.patcher.configuration.PatcherConfiguration",
+	service = SchedulerJobConfiguration.class
+)
+public class PatcherFixSchedulerMessageListener
+	implements SchedulerJobConfiguration {
 
-	public static PatcherFixSchedulerMessageListener getInstance() {
-		return _patcherFixSchedulerMessageListener;
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
+		return () -> _companyLocalService.forEachCompanyId(
+			companyId -> {
+				PatcherUtil.processOSBPatcherStatusFiles(
+					companyId, _patcherConfiguration.patcherStatusFixPath());
+
+				PatcherUtil.notifyUsersInactivePatcherBaseModels();
+			});
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		PatcherConfiguration patcherConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
-
-		PatcherUtil.processOSBPatcherStatusFiles(
-			CompanyThreadLocal.getCompanyId(),
-			patcherConfiguration.patcherStatusFixPath());
-
-		PatcherUtil.notifyUsersInactivePatcherBaseModels();
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			"*/4 * * * * ? *");
 	}
 
-	private static final PatcherFixSchedulerMessageListener
-		_patcherFixSchedulerMessageListener =
-			new PatcherFixSchedulerMessageListener();
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_patcherConfiguration = ConfigurableUtil.createConfigurable(
+			PatcherConfiguration.class, properties);
+	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	private PatcherConfiguration _patcherConfiguration;
 
 }

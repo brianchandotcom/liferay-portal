@@ -69,11 +69,11 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 
 	@Override
 	public List<DepotEntry> getCurrentAndGroupConnectedDepotEntries(
-			long groupId, int start, int end)
+			long groupId, int type, int start, int end)
 		throws PortalException {
 
 		List<DepotEntry> filteredDepotEntries = getGroupConnectedDepotEntries(
-			groupId, start, end);
+			groupId, type, start, end);
 
 		DepotEntry depotEntry = depotEntryLocalService.fetchGroupDepotEntry(
 			groupId);
@@ -117,7 +117,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 
 	@Override
 	public List<DepotEntry> getGroupConnectedDepotEntries(
-			long groupId, int start, int end)
+			long groupId, int type, int start, int end)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -132,7 +132,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 
 		for (DepotEntry depotEntry :
 				depotEntryLocalService.getGroupConnectedDepotEntries(
-					groupId, start, end)) {
+					groupId, type, start, end)) {
 
 			Group group = depotEntry.getGroup();
 
@@ -149,7 +149,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	}
 
 	@Override
-	public int getGroupConnectedDepotEntriesCount(long groupId)
+	public int getGroupConnectedDepotEntriesCount(long groupId, int type)
 		throws PortalException {
 
 		if (!GroupPermissionUtil.contains(
@@ -159,7 +159,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 		}
 
 		return depotEntryLocalService.getGroupConnectedDepotEntriesCount(
-			groupId);
+			groupId, type);
 	}
 
 	@Override

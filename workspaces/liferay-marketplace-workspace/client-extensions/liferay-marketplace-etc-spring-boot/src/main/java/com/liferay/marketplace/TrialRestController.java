@@ -488,7 +488,7 @@ public class TrialRestController extends BaseRestController {
 		}
 
 		throw new IllegalArgumentException(
-			"Unsupported orderType: " + orderTypeExternalReferenceCode);
+			"Unsupported order type: " + orderTypeExternalReferenceCode);
 	}
 
 	private PortalInstance _postPortalInstance(

@@ -122,6 +122,36 @@ public abstract class BaseDuplicateItemMVCActionCommand
 				}
 			}
 
+			String fragmentEntryLinkNamespace =
+				fragmentEntryLink.getNamespace();
+
+			JSONObject duplicatedEditableValuesJSONObject =
+				jsonFactory.createJSONObject();
+
+			for (String key : editableValuesJSONObject.keySet()) {
+				Object value = editableValuesJSONObject.get(key);
+
+				if (!(value instanceof JSONObject)) {
+					duplicatedEditableValuesJSONObject.put(key, value);
+
+					continue;
+				}
+
+				JSONObject jsonObject = (JSONObject)value;
+				JSONObject duplicatedJSONObject =
+					jsonFactory.createJSONObject();
+
+				for (String curKey : jsonObject.keySet()) {
+					duplicatedJSONObject.put(
+						StringUtil.replace(
+							curKey, fragmentEntryLinkNamespace, namespace),
+						jsonObject.get(curKey));
+				}
+
+				duplicatedEditableValuesJSONObject.put(
+					key, duplicatedJSONObject);
+			}
+
 			FragmentEntryLink duplicatedFragmentEntryLink =
 				fragmentEntryLinkService.addFragmentEntryLink(
 					null, fragmentEntryLink.getGroupId(), 0,
@@ -130,7 +160,7 @@ public abstract class BaseDuplicateItemMVCActionCommand
 					fragmentEntryLink.getPlid(), fragmentEntryLink.getCss(),
 					fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
 					fragmentEntryLink.getConfiguration(),
-					editableValuesJSONObject.toString(), namespace, 0,
+					duplicatedEditableValuesJSONObject.toString(), namespace, 0,
 					fragmentEntryLink.getRendererKey(),
 					fragmentEntryLink.getType(), serviceContext);
 

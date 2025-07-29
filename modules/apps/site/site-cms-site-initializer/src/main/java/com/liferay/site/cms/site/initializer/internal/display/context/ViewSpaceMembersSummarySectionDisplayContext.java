@@ -100,6 +100,9 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			_httpServletRequest, "view-all-members",
 			HashMapBuilder.<String, Object>put(
+				"canManageMembers", _canManageMembers()
+			).build(),
+			HashMapBuilder.<String, Object>put(
 				"action", "open-members-modal"
 			).put(
 				"assetLibraryCreatorUserId", _getAssetLibraryCreatorUserId()
@@ -122,6 +125,12 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 					_language.get(_httpServletRequest, "user-groups"));
 			}
 		).build();
+	}
+
+	// TODO: Add logic for the permission
+
+	private Boolean _canManageMembers() {
+		return true;
 	}
 
 	private String _getAssetLibraryCreatorUserId() throws Exception {

@@ -68,7 +68,7 @@ public class ViewSpaceFilesSummarySectionDisplayContext
 
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			httpServletRequest, "view-all-files", Collections.emptyMap(),
-			"files",
+			Collections.emptyMap(), "files",
 			ActionUtil.getBaseViewFolderURL(themeDisplay) +
 				objectEntryFolder.getObjectEntryFolderId());
 	}

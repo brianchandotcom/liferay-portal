@@ -19,7 +19,7 @@ ObjectRelationship objectRelationship = objectEntryDisplayContext.getObjectRelat
 %>
 
 <c:choose>
-	<c:when test='<%= (externalReferenceCode != "") && (objectEntry == null) %>'>
+	<c:when test="<%= !Validator.isBlank(externalReferenceCode) && (objectEntry == null) %>">
 		<clay:alert
 			displayType="danger"
 			message="the-object-entry-could-not-be-found"

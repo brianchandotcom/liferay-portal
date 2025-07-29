@@ -7,6 +7,7 @@ import {Button as ClayButton} from '@clayui/core';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useState} from 'react';
+import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import i18n from '~/utils/I18n';
 
 import './AttachmentUploader.css';
@@ -24,6 +25,7 @@ const AttachmentUploader = () => {
 	const [comment, setComment] = useState<string>('');
 	const [file, setFile] = useState<File>();
 	const [hasPersonalData, setHasPersonalData] = useState<boolean>(false);
+	const {helpCenterURL} = useAppPropertiesContext();
 
 	const {ticketId} = useParams();
 
@@ -150,7 +152,19 @@ const AttachmentUploader = () => {
 			<div className="attachment-uploader-container">
 				<div className="d-flex text-neutral-10">
 					<div className="h2">
-						{i18n.sub('attach-file-to-ticket-x', [ticketId || ''])}
+						<p
+							dangerouslySetInnerHTML={{
+								__html: i18n.sub('attach-file-to-ticket-x', [
+									'<a href="' +
+										helpCenterURL +
+										'/' +
+										ticketId +
+										'">' +
+										ticketId +
+										'</a>',
+								]),
+							}}
+						/>
 					</div>
 				</div>
 

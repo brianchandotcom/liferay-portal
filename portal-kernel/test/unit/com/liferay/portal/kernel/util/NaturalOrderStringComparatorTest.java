@@ -58,6 +58,22 @@ public class NaturalOrderStringComparatorTest {
 	}
 
 	@Test
+	public void testSortDateStrings() {
+		testSort(
+			new String[] {
+				"20250729214517", "20250728214613", "20250729214527",
+				"20240729214614", "20250629214610", "20250729204606",
+				"20250729214528"
+			},
+			new String[] {
+				"20240729214614", "20250629214610", "20250728214613",
+				"20250729204606", "20250729214517", "20250729214527",
+				"20250729214528"
+			},
+			true);
+	}
+
+	@Test
 	public void testSortJarVersions() {
 		testSort(
 			new String[] {

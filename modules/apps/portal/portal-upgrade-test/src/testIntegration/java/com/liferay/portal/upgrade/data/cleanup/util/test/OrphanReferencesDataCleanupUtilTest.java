@@ -56,11 +56,11 @@ public class OrphanReferencesDataCleanupUtilTest {
 	}
 
 	@Test
-	public void testCleanUpExcludedTable() throws Exception {
+	public void testCleanTablesUpExcludedTable() throws Exception {
 		long auditEventId = RandomTestUtil.nextLong();
 		long companyId = RandomTestUtil.nextLong();
 
-		_test(
+		_testCleanUpTables(
 			logCapture -> {
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -80,10 +80,10 @@ public class OrphanReferencesDataCleanupUtilTest {
 	}
 
 	@Test
-	public void testCleanUpWithoutWhereClause() throws Exception {
+	public void testCleanUpTablesWithoutWhereClause() throws Exception {
 		long companyId = RandomTestUtil.nextLong();
 
-		_test(
+		_testCleanUpTables(
 			logCapture -> {
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -93,7 +93,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 				LogEntry logEntry = logEntries.get(0);
 
 				Assert.assertEquals(
-					_getExpectedMessage(
+					_getCleanUpTableExpectedMessage(
 						2, _dbInspector.normalizeName("Portlet"),
 						_dbInspector.normalizeName("companyId"),
 						_dbInspector.normalizeName("Company"), companyId),
@@ -122,12 +122,12 @@ public class OrphanReferencesDataCleanupUtilTest {
 	}
 
 	@Test
-	public void testCleanUpWithWhereClause() throws Exception {
+	public void testCleanUpTablesWithWhereClause() throws Exception {
 		long companyId = RandomTestUtil.nextLong();
 		long ownerType1 = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
 		long ownerType2 = PortletKeys.PREFS_OWNER_TYPE_GROUP;
 
-		_test(
+		_testCleanUpTables(
 			logCapture -> {
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -137,7 +137,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 				LogEntry logEntry = logEntries.get(0);
 
 				Assert.assertEquals(
-					_getExpectedMessage(
+					_getCleanUpTableExpectedMessage(
 						2, _dbInspector.normalizeName("PortletPreferences"),
 						_dbInspector.normalizeName("companyId"),
 						_dbInspector.normalizeName("Company"), companyId),
@@ -194,7 +194,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 				LogEntry logEntry = logEntries.get(0);
 
 				Assert.assertEquals(
-					_getDeletionExpectedMessage(
+					_getUserDeletedExpectedMessage(
 						1, _dbInspector.normalizeName("Users_Roles"),
 						_dbInspector.normalizeName("userId"),
 						_dbInspector.normalizeName("User_"), userId),
@@ -274,7 +274,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 			"userId", "Layout");
 	}
 
-	private String _getDeletionExpectedMessage(
+	private String _getCleanUpTableExpectedMessage(
 			long count, String sourceTableName, String targetColumn,
 			String targetTable, long targetValue)
 		throws Exception {
@@ -288,7 +288,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 			_dbInspector.normalizeName(targetColumn));
 	}
 
-	private String _getExpectedMessage(
+	private String _getUserDeletedExpectedMessage(
 			long count, String sourceTableName, String targetColumn,
 			String targetTable, long targetValue)
 		throws Exception {
@@ -316,7 +316,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 			_dbInspector.normalizeName(targetColumn));
 	}
 
-	private void _test(
+	private void _testCleanUpTables(
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
 			UnsafeRunnable<Exception> initializeDataUnsafeRunnable,

@@ -14,8 +14,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys" %><%@
-page import="com.liferay.petra.string.StringBundler" %><%@
+<%@ page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
@@ -45,6 +44,7 @@ page import="com.liferay.portal.security.ldap.constants.LDAPConstants" %><%@
 page import="com.liferay.portal.security.ldap.util.LDAPUtil" %><%@
 page import="com.liferay.portal.security.ldap.validator.LDAPFilterException" %><%@
 page import="com.liferay.portal.security.ldap.validator.LDAPFilterValidator" %><%@
+page import="com.liferay.portal.settings.authentication.ldap.web.internal.portlet.action.ActionUtil" %><%@
 page import="com.liferay.portal.settings.authentication.ldap.web.internal.portlet.util.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.settings.authentication.ldap.web.internal.util.LDAPFilterValidatorUtil" %><%@
 page import="com.liferay.portal.settings.authentication.ldap.web.internal.util.SafePortalLDAPUtil" %><%@

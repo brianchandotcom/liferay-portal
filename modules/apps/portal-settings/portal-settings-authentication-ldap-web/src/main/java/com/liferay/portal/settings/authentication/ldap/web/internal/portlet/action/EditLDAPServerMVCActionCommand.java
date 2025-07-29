@@ -13,17 +13,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.ldap.DuplicateLDAPServerNameException;
 import com.liferay.portal.security.ldap.LDAPServerNameException;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
@@ -66,19 +63,7 @@ public class EditLDAPServerMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			String portletId = PortalUtil.getPortletId(actionRequest);
-
-			long companyId = 0L;
-
-			if (portletId.equals(
-					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS)) {
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)actionRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				companyId = themeDisplay.getCompanyId();
-			}
+			long companyId = ActionUtil.getCompanyId(actionRequest);
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				_updateLDAPServer(actionRequest, companyId);

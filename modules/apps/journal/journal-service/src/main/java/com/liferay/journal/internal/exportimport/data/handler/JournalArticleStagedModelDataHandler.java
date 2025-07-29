@@ -1039,13 +1039,6 @@ public class JournalArticleStagedModelDataHandler
 				}
 			}
 
-			importedArticle.setModifiedDate(article.getModifiedDate());
-			importedArticle.setStatusByUserId(article.getStatusByUserId());
-			importedArticle.setStatusByUserName(article.getStatusByUserName());
-
-			importedArticle = _journalArticleLocalService.updateJournalArticle(
-				importedArticle);
-
 			Map<Long, Long> primaryKeys =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					JournalArticle.class);
@@ -1084,6 +1077,13 @@ public class JournalArticleStagedModelDataHandler
 					article.getSmallImageURL(), smallFile, null, articleURL,
 					serviceContext);
 			}
+
+			importedArticle.setModifiedDate(article.getModifiedDate());
+			importedArticle.setStatusByUserId(article.getStatusByUserId());
+			importedArticle.setStatusByUserName(article.getStatusByUserName());
+
+			importedArticle = _journalArticleLocalService.updateJournalArticle(
+				importedArticle);
 
 			if (_isUpdateAsset(
 					importedArticle.getGroupId(),

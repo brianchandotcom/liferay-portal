@@ -36,7 +36,7 @@
 		);
 		var externalReferenceCode = <portlet:namespace />getValueByAttribute(
 			anchor,
-			'analyticsFileExternalReferenceCode'
+			'analyticsExternalReferenceCode'
 		);
 
 		if (fileEntryId) {

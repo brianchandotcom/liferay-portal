@@ -7,11 +7,11 @@ import classNames from 'classnames';
 import {utcFormat} from 'd3';
 import React, {useContext} from 'react';
 
-import {AnalyticsReportsContext} from '../../AnalyticsReportsContext';
-import {Alignments, RangeSelectors, Weights} from '../../types/global';
-import {getDateRange} from '../../utils/date';
-import {toThousands} from '../../utils/math';
-import ChartTooltip from '../ChartTooltip';
+import {Context} from '../../../Context';
+import {Alignments, RangeSelectors, Weights} from '../../../types/global';
+import {getDateRange} from '../../../utils/date';
+import {toThousands} from '../../../utils/math';
+import ChartTooltip from '../../ChartTooltip';
 import {ChartData, chartBgColors, chartColors} from './StackedBarChart';
 
 const TOOLTIP_WIDTH = 450;
@@ -53,7 +53,7 @@ const StackedBarTooltip: React.FC<IStackedBarTooltipProps> = ({
 }) => {
 	const selectedData = data.data[activeIndex];
 
-	const {filters} = useContext(AnalyticsReportsContext);
+	const {filters} = useContext(Context);
 
 	const header = [
 		{

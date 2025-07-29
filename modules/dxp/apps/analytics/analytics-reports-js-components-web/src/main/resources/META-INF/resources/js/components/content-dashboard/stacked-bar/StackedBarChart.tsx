@@ -6,7 +6,7 @@
 import classNames from 'classnames';
 import React, {useRef, useState} from 'react';
 
-import {Colors, Textures} from '../../types/global';
+import {Colors, Textures} from '../../../types/global';
 import StackedBarLegend from './StackedBarLegend';
 import StackedBarTooltip from './StackedBarTooltip';
 

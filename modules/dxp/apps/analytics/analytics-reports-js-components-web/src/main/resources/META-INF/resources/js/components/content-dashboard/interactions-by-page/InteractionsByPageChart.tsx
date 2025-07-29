@@ -6,14 +6,13 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {Line} from 'recharts';
 
-import {AnalyticsReportsContext} from '../../AnalyticsReportsContext';
-import {MetricType} from '../../types/global';
-import {formatTooltipDate} from '../../utils/date';
-import {assetContent, metricNameByType} from '../../utils/metrics';
-import {CircleDot, DiamondDot, DotProps, SquareDot} from '../metrics/Dots';
-import MetricsChart, {DataKey} from '../metrics/MetricsChart';
-import {IMetricsChartLegendProps} from '../metrics/MetricsChartLegend';
-import {getFillOpacity} from '../metrics/utils';
+import {Context} from '../../../Context';
+import {formatTooltipDate} from '../../../utils/date';
+import {assetContent, metricNameByType} from '../../../utils/metrics';
+import {CircleDot, DiamondDot, DotProps, SquareDot} from '../../metrics/Dots';
+import MetricsChart, {DataKey} from '../../metrics/MetricsChart';
+import {IMetricsChartLegendProps} from '../../metrics/MetricsChartLegend';
+import {getFillOpacity} from '../../metrics/utils';
 import {Data} from './InteractionsByPage';
 import InteractionsByPageChartTooltip from './InteractionsByPageChartTooltip';
 import {InteractionsByPageDataKey, formatInteractionsByPageData} from './utils';
@@ -35,7 +34,7 @@ export const Dot: {
 const InteractionsByPageChart: React.FC<IInteractionsByPageChartProps> = ({
 	data,
 }) => {
-	const {filters} = useContext(AnalyticsReportsContext);
+	const {filters} = useContext(Context);
 
 	const [activeTabIndex, setActiveTabIndex] = useState(false);
 
@@ -43,8 +42,7 @@ const InteractionsByPageChart: React.FC<IInteractionsByPageChartProps> = ({
 		InteractionsByPageDataKey | DataKey | null
 	>(null);
 
-	const metricName =
-		metricNameByType[filters?.metric || MetricType.Undefined];
+	const metricName = metricNameByType[filters.metric];
 
 	const formattedData = useMemo(
 		() =>
@@ -163,17 +161,20 @@ const InteractionsByPageChart: React.FC<IInteractionsByPageChartProps> = ({
 			<div
 				data-qa-page-1-chart-data={JSON.stringify(
 					formattedData.combinedData.map(
-						(dataKey) => dataKey[InteractionsByPageDataKey.Page1]
+						(dataKey: any) =>
+							dataKey[InteractionsByPageDataKey.Page1]
 					)
 				)}
 				data-qa-page-2-chart-data={JSON.stringify(
 					formattedData.combinedData.map(
-						(dataKey) => dataKey[InteractionsByPageDataKey.Page2]
+						(dataKey: any) =>
+							dataKey[InteractionsByPageDataKey.Page2]
 					)
 				)}
 				data-qa-page-3-chart-data={JSON.stringify(
 					formattedData.combinedData.map(
-						(dataKey) => dataKey[InteractionsByPageDataKey.Page3]
+						(dataKey: any) =>
+							dataKey[InteractionsByPageDataKey.Page3]
 					)
 				)}
 				data-qa-tooltip-formatted-date={JSON.stringify(

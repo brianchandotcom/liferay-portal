@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext} from 'react';
 
-import {AnalyticsReportsContext} from '../../AnalyticsReportsContext';
-import {fetchBlogPosting} from '../../apis/headless-dxp';
-import useFetch from '../../hooks/useFetch';
-import {MetricType} from '../../types/global';
-import {metricNameByType} from '../../utils/metrics';
-import StateRenderer from '../StateRenderer';
+import {Context} from '../../../Context';
+import useFetch from '../../../hooks/useFetch';
+import {metricNameByType} from '../../../utils/metrics';
 import {Data} from './VisitorsBehavior';
 import VisitorsBehaviorChart from './VisitorsBehaviorChart';
 import {
@@ -35,10 +33,9 @@ interface IVisitorsBehaviorWithBlogDataProps {
 const VisitorsBehaviorWithBlogData: React.FC<
 	IVisitorsBehaviorWithBlogDataProps
 > = ({data, visitorsBehaviorData}) => {
-	const {filters} = useContext(AnalyticsReportsContext);
+	const {filters} = useContext(Context);
 
-	const metricName =
-		metricNameByType[filters?.metric || MetricType.Undefined];
+	const metricName = metricNameByType[filters.metric];
 	const selectedHistogram = getSelectedHistogram(
 		visitorsBehaviorData,
 		metricName
@@ -71,26 +68,25 @@ const VisitorsBehaviorWithBlogData: React.FC<
 const BlogPostingsStateRenderer: React.FC<IBlogPostingsStateRendererProps> = ({
 	data: visitorsBehaviorData,
 }) => {
-	const {assetId} = useContext(AnalyticsReportsContext);
+	const {assetId} = useContext(Context);
 
-	const {data, error, loading} = useFetch<
-		BlogPostingsData,
-		{assetId: string}
-	>(fetchBlogPosting, {
-		variables: {
-			assetId,
-		},
-	});
+	const {data, loading} = useFetch<BlogPostingsData>(
+		`/o/headless-delivery/v1.0/blog-postings/${assetId}`
+	);
+
+	if (loading) {
+		return <ClayLoadingIndicator className="my-5" />;
+	}
+
+	if (!data) {
+		return null;
+	}
 
 	return (
-		<StateRenderer data={data} error={error} loading={loading}>
-			{({data}) => (
-				<VisitorsBehaviorWithBlogData
-					data={data}
-					visitorsBehaviorData={visitorsBehaviorData}
-				/>
-			)}
-		</StateRenderer>
+		<VisitorsBehaviorWithBlogData
+			data={data}
+			visitorsBehaviorData={visitorsBehaviorData}
+		/>
 	);
 };
 

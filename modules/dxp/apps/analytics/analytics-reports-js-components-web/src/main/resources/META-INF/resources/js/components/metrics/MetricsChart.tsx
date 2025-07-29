@@ -95,6 +95,7 @@ interface IMetricsChartProps extends React.HTMLAttributes<HTMLElement> {
 	activeTabIndex: boolean;
 	emptyChartProps: IChartEmptyStateProps;
 	formattedData: FormattedData;
+	legendAlign?: string;
 	legendItems: IMetricsChartLegendProps['legendItems'];
 	onChartBlur: () => void;
 	onChartFocus: () => void;
@@ -139,6 +140,7 @@ const MetricsChart: React.FC<IMetricsChartProps> = ({
 	children,
 	emptyChartProps,
 	formattedData,
+	legendAlign = 'text-left',
 	legendItems,
 	onChartBlur,
 	onChartFocus,
@@ -302,6 +304,7 @@ const MetricsChart: React.FC<IMetricsChartProps> = ({
 
 				<MetricsChartLegend
 					activeTabIndex={activeTabIndex}
+					align={legendAlign}
 					legendItems={legendItems}
 					onDatakeyChange={onDatakeyChange}
 				/>

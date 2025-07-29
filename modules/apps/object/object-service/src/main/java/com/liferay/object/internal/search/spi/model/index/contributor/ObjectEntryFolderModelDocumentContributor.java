@@ -36,14 +36,13 @@ public class ObjectEntryFolderModelDocumentContributor
 		document.addKeyword(
 			Field.FOLDER_ID, objectEntryFolder.getParentObjectEntryFolderId());
 		document.addText(Field.NAME, objectEntryFolder.getName());
+		document.addKeyword(Field.STATUS, objectEntryFolder.getStatus());
 		document.addText(Field.TITLE, objectEntryFolder.getName());
 
 		String[] parts = StringUtil.split(
 			objectEntryFolder.getTreePath(), CharPool.SLASH);
 
 		document.addKeyword(Field.TREE_PATH, parts);
-
-		document.addKeyword(Field.STATUS, objectEntryFolder.getStatus());
 
 		String cmsSection = _getCMSSection(parts);
 

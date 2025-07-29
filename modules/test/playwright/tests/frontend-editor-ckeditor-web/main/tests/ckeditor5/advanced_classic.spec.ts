@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
@@ -14,7 +13,6 @@ import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
 import {classicPageTest} from './fixtures/classicPageTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	ckeditorSamplePageTest,
 	classicPageTest,
 	featureFlagsTest({
@@ -28,15 +26,8 @@ export const test = mergeTests(
 test.beforeEach(async ({ckeditorSamplePage, page, site}) => {
 	await ckeditorSamplePage.createAndGotoSitePage({site});
 
-	const productMenuToggle =
-		ckeditorSamplePage.page.getByLabel('Close Product Menu');
-
-	if (await productMenuToggle.isVisible()) {
-		await productMenuToggle.click();
-	}
-
 	await ckeditorSamplePage.selectTab('CKEditor 5');
-	await ckeditorSamplePage.selectTab('Classic');
+	await ckeditorSamplePage.selectTab('Advanced Classic');
 
 	await waitForEditor({page});
 });
@@ -61,12 +52,14 @@ test(
 
 		await test.step('Toolbar contains advanced preset controls', async () => {
 			const advancedPresetControls = [
+				'Accessibility help',
 				'Undo',
 				'Redo',
 				'Styles',
 				'Normal',
 				'Bold',
 				'Italic',
+				'Underline',
 				'Strikethrough',
 				'Font Color',
 				'Font Background Color',
@@ -89,12 +82,6 @@ test(
 				await classicPage.toolbar.buttonLabels.allInnerTexts();
 
 			expect(controls).toEqual(advancedPresetControls);
-		});
-
-		await test.step('Toolbar does not contain removed plugin', async () => {
-			await expect(
-				classicPage.toolbar.buttonLabels.getByLabel('Underline')
-			).toBeHidden();
 		});
 	}
 );

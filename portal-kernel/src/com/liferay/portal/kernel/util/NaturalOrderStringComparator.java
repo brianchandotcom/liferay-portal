@@ -65,13 +65,18 @@ public class NaturalOrderStringComparator
 				String leadingDigitsAsString2 = StringUtil.extractLeadingDigits(
 					s2.substring(i2));
 
-				int leadingNumber1 = GetterUtil.getInteger(
+				long leadingNumber1 = GetterUtil.getLong(
 					leadingDigitsAsString1);
-				int leadingNumber2 = GetterUtil.getInteger(
+				long leadingNumber2 = GetterUtil.getLong(
 					leadingDigitsAsString2);
 
 				if (leadingNumber1 != leadingNumber2) {
-					value = leadingNumber1 - leadingNumber2;
+					if (leadingNumber1 < leadingNumber2) {
+						value = -1;
+					}
+					else {
+						value = 1;
+					}
 
 					break;
 				}

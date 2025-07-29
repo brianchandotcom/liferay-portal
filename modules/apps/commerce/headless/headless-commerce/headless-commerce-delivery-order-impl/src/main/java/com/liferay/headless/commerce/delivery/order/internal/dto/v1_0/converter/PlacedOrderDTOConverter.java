@@ -397,8 +397,10 @@ public class PlacedOrderDTOConverter
 			{
 				setCurrency(() -> commerceCurrency.getName(locale));
 				setItemsCount(
-					() -> _commerceOrderItemService.getCommerceOrderItemsCount(
-						commerceOrder.getCommerceOrderId()));
+					() ->
+						_commerceOrderItemService.
+							getParentCommerceOrderItemsCount(
+								commerceOrder.getCommerceOrderId(), 0));
 				setItemsQuantity(
 					() -> BigDecimalUtil.stripTrailingZeros(
 						_commerceOrderItemService.getCommerceOrderItemsQuantity(

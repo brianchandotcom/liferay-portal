@@ -39,9 +39,9 @@ public class ViewVersionHistoryTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"systemProperties.version.number", "version",
+			"version", "version",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"version"
+				"versionTableCellRenderer"
 			).setSortable(
 				true
 			)

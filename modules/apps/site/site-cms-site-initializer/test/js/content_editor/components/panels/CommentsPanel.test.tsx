@@ -99,7 +99,9 @@ describe('CommentsPanel', () => {
 
 		await waitFor(() => {
 			expect(mockFetch).toBeCalledWith('deleteCommentURL', {
-				body: {commentId: '2'},
+				body: {
+					commentId: '2',
+				},
 				method: 'POST',
 			});
 

@@ -6,6 +6,10 @@
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.custom.field.CustomValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
@@ -22,13 +26,18 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
@@ -363,6 +372,10 @@ public class PageSpecificationsTestUtil {
 		return contentPageSpecification;
 	}
 
+	public static ExpandoTableAutocloseable getExpandoTableAutoCloseable() {
+		return new ExpandoTableAutocloseable();
+	}
+
 	public static PageSpecification[] getPatchPageSpecifications(
 		PageSpecification[] pageSpecifications) {
 
@@ -600,6 +613,53 @@ public class PageSpecificationsTestUtil {
 
 		_assertProblemException(
 			() -> unsafeFunction.apply(draftContentPageSpecification));
+	}
+
+	public static class ExpandoTableAutocloseable implements AutoCloseable {
+
+		public ExpandoTableAutocloseable() {
+			_originalPermissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			try {
+				PermissionThreadLocal.setPermissionChecker(
+					PermissionCheckerFactoryUtil.create(
+						TestPropsValues.getUser()));
+
+				_expandoTable = ExpandoTableLocalServiceUtil.addDefaultTable(
+					PortalUtil.getDefaultCompanyId(), Layout.class.getName());
+
+				for (int i = 0; i < _EXPANDO_ATTRIBUTE_NAMES.length; i++) {
+					ExpandoColumnLocalServiceUtil.addColumn(
+						_expandoTable.getTableId(), _EXPANDO_ATTRIBUTE_NAMES[i],
+						ExpandoColumnConstants.STRING,
+						_EXPANDO_ATTRIBUTE_DEFAULT_VALUES[i]);
+				}
+			}
+			catch (PortalException portalException) {
+				throw new RuntimeException(portalException);
+			}
+		}
+
+		@Override
+		public void close() {
+			try {
+				if (_expandoTable != null) {
+					ExpandoTableLocalServiceUtil.deleteTable(_expandoTable);
+				}
+			}
+			catch (PortalException portalException) {
+				throw new RuntimeException(portalException);
+			}
+			finally {
+				PermissionThreadLocal.setPermissionChecker(
+					_originalPermissionChecker);
+			}
+		}
+
+		private final ExpandoTable _expandoTable;
+		private final PermissionChecker _originalPermissionChecker;
+
 	}
 
 	private static void _assertCustomFields(

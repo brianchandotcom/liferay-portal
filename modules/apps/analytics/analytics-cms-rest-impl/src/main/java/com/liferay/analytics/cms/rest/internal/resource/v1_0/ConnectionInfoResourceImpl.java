@@ -9,7 +9,6 @@ import com.liferay.analytics.cms.rest.dto.v1_0.ConnectionInfo;
 import com.liferay.analytics.cms.rest.resource.v1_0.ConnectionInfoResource;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRelModel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryService;
@@ -38,8 +37,10 @@ public class ConnectionInfoResourceImpl extends BaseConnectionInfoResourceImpl {
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextUser.getCompanyId());
 
-		List<Long> groupIds = _getDepotEntryGroupRelToGroupId(
-			_depotEntryService.getDepotEntry(spaceId));
+		List<Long> groupIds = transform(
+			_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
+				_depotEntryService.getDepotEntry(spaceId)),
+			DepotEntryGroupRelModel::getToGroupId);
 
 		return _toConnectionInfo(
 			roleLocalService.hasUserRole(
@@ -49,12 +50,6 @@ public class ConnectionInfoResourceImpl extends BaseConnectionInfoResourceImpl {
 			!groupIds.isEmpty(),
 			_hasSitesSyncedToAnalyticsCloud(
 				analyticsConfiguration.syncedGroupIds(), groupIds));
-	}
-
-	private List<Long> _getDepotEntryGroupRelToGroupId(DepotEntry depotEntry) {
-		return transform(
-			_depotEntryGroupRelLocalService.getDepotEntryGroupRels(depotEntry),
-			DepotEntryGroupRelModel::getToGroupId);
 	}
 
 	private boolean _hasSitesSyncedToAnalyticsCloud(

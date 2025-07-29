@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -270,6 +271,30 @@ public class LayoutUtil {
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			draftLayout.getRobotsMap(), draftLayout.getFriendlyURLMap(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
+	}
+
+	public static Layout addPortletLayout(
+			long companyId, String externalReferenceCode, long groupId,
+			Map<Locale, String> nameMap, Map<Locale, String> friendlyURLMap,
+			boolean hiddenFromNavigation, long parentLayoutId,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext,
+			WidgetPageSpecification widgetPageSpecification)
+		throws Exception {
+
+		String typeSettings = null;
+
+		if (typeSettingsUnicodeProperties != null) {
+			typeSettings = typeSettingsUnicodeProperties.toString();
+		}
+
+		_setExpandoBridgeAttributes(
+			companyId, widgetPageSpecification, serviceContext);
+
+		return LayoutServiceUtil.addLayout(
+			externalReferenceCode, groupId, false, parentLayoutId, nameMap,
+			null, null, null, null, LayoutConstants.TYPE_PORTLET, typeSettings,
+			hiddenFromNavigation, friendlyURLMap, 0, serviceContext);
 	}
 
 	public static Layout getLayoutPrototypeLayout(

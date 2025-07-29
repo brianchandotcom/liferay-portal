@@ -620,6 +620,24 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceOrderItem> getParentCommerceOrderItems(
+		long commerceOrderId, long parentCommerceOrderItemId, int start,
+		int end, OrderByComparator<CommerceOrderItem> orderByComparator) {
+
+		return commerceOrderItemPersistence.findByC_PCOI(
+			commerceOrderId, parentCommerceOrderItemId, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public int getParentCommerceOrderItemsCount(
+		long commerceOrderId, long parentCommerceOrderItemId) {
+
+		return commerceOrderItemPersistence.countByC_PCOI(
+			commerceOrderId, parentCommerceOrderItemId);
+	}
+
+	@Override
 	public List<CommerceOrderItem> getSubscriptionCommerceOrderItems(
 		long commerceOrderId) {
 

@@ -11,9 +11,11 @@ import {SpaceMembersWithList} from './SpaceMembersWithList';
 export default function SpaceMembersModal({
 	assetLibraryCreatorUserId,
 	assetLibraryId,
+	canManageMembers,
 }: {
 	assetLibraryCreatorUserId: string;
 	assetLibraryId: string;
+	canManageMembers: boolean;
 }) {
 	return (
 		<div>
@@ -25,6 +27,7 @@ export default function SpaceMembersModal({
 				<SpaceMembersWithList
 					assetLibraryCreatorUserId={assetLibraryCreatorUserId}
 					assetLibraryId={assetLibraryId}
+					canManageMembers={canManageMembers}
 				/>
 			</ClayModal.Body>
 		</div>

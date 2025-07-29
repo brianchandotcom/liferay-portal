@@ -90,6 +90,7 @@ export default function AllSpacesFDSPropsTransformer({
 				const data: ManageMembersData = {
 					assetLibraryCreatorUserId,
 					assetLibraryId,
+					canManageMembers: additionalProps.canManageMembers,
 					title: Liferay.Language.get('all-members'),
 				};
 

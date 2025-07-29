@@ -15,6 +15,10 @@ export enum SpaceSummaryHeaderActions {
 	OPEN_MEMBERS_MODAL = 'open-members-modal',
 }
 
+export type SpaceSummaryHeaderPermissions = {
+	canManageMembers: boolean;
+};
+
 type SpaceModalPropsType = {
 	action: SpaceSummaryHeaderActions;
 	assetLibraryCreatorUserId: string;
@@ -23,6 +27,7 @@ type SpaceModalPropsType = {
 
 interface SpaceSummaryHeaderProps {
 	label: string;
+	permissions?: SpaceSummaryHeaderPermissions;
 	spaceModalProps?: SpaceModalPropsType;
 	title: string;
 	url: string;
@@ -30,6 +35,7 @@ interface SpaceSummaryHeaderProps {
 
 export default function SpaceSummaryHeader({
 	label,
+	permissions,
 	spaceModalProps,
 	title,
 	url,
@@ -41,6 +47,7 @@ export default function SpaceSummaryHeader({
 		const data: ManageMembersData = {
 			assetLibraryCreatorUserId,
 			assetLibraryId,
+			canManageMembers: Boolean(permissions?.canManageMembers),
 			title,
 		};
 

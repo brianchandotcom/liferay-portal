@@ -30,6 +30,7 @@ describe('SpaceMembersModal', () => {
 	const props = {
 		assetLibraryCreatorUserId: '1',
 		assetLibraryId: '123',
+		canManageMembers: true,
 	};
 
 	const {IntersectionObserver: IntersectionObserverOriginal} = window;
@@ -108,6 +109,32 @@ describe('SpaceMembersModal', () => {
 			expect(
 				screen.getByText('this-space-has-no-user-yet')
 			).toBeInTheDocument();
+		});
+	});
+
+	describe('when canManageMembers is false', () => {
+		it('does not render the add members input or remove buttons', async () => {
+			render(<SpaceMembersModal {...props} canManageMembers={false} />);
+
+			await waitFor(() => {
+				expect(
+					screen.getByLabelText('who-has-access')
+				).toBeInTheDocument();
+			});
+
+			expect(
+				screen.queryByRole('combobox', {
+					name: 'add-people-to-collaborate',
+				})
+			).not.toBeInTheDocument();
+
+			await waitFor(() => {
+				expect(screen.getByText(mockUsers[1].name)).toBeInTheDocument();
+			});
+
+			expect(
+				screen.queryByRole('button', {name: /remove/i})
+			).not.toBeInTheDocument();
 		});
 	});
 });

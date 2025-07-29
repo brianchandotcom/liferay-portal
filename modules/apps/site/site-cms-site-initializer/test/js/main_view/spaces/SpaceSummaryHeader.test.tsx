@@ -63,33 +63,49 @@ describe('SpaceSummaryHeader', () => {
 		expect(screen.queryByRole('link')).not.toBeInTheDocument();
 	});
 
-	it('calls manageMembersAction when the button is clicked', async () => {
-		const spaceModalProps = {
-			action: SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL,
-			assetLibraryCreatorUserId: '123',
-			assetLibraryId: '456',
-		};
+	describe('manageMembersAction', () => {
+		it.each([
+			[false, undefined],
+			[false, false],
+			[true, true],
+		])(
+			'is called with canManageMembers=%s when permissions.canManageMembers is %s',
+			async (expectedCanManageMembers, canManageMembers) => {
+				const spaceModalProps = {
+					action: SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL,
+					assetLibraryCreatorUserId: '123',
+					assetLibraryId: '456',
+				};
 
-		const props = {
-			...defaultProps,
-			spaceModalProps,
-		};
+				const props = {
+					...defaultProps,
+					permissions:
+						canManageMembers !== undefined
+							? {canManageMembers}
+							: undefined,
+					spaceModalProps,
+				};
 
-		render(<SpaceSummaryHeader {...props} />);
+				render(<SpaceSummaryHeader {...props} />);
 
-		const button = screen.getByRole('button', {name: defaultProps.label});
+				const button = screen.getByRole('button', {
+					name: defaultProps.label,
+				});
 
-		await userEvent.click(button);
+				await userEvent.click(button);
 
-		expect(manageMembersAction).toHaveBeenCalledTimes(1);
-		expect(manageMembersAction).toHaveBeenCalledWith(
-			{
-				assetLibraryCreatorUserId:
-					spaceModalProps.assetLibraryCreatorUserId,
-				assetLibraryId: spaceModalProps.assetLibraryId,
-				title: defaultProps.title,
-			},
-			expect.any(Function)
+				expect(manageMembersAction).toHaveBeenCalledTimes(1);
+				expect(manageMembersAction).toHaveBeenCalledWith(
+					{
+						assetLibraryCreatorUserId:
+							spaceModalProps.assetLibraryCreatorUserId,
+						assetLibraryId: spaceModalProps.assetLibraryId,
+						canManageMembers: expectedCanManageMembers,
+						title: defaultProps.title,
+					},
+					expect.any(Function)
+				);
+			}
 		);
 	});
 

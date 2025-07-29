@@ -25,49 +25,42 @@ describe('manageMembersAction', () => {
 		jest.clearAllMocks();
 	});
 
-	it('calls openModal with the correct parameters', () => {
-		const data: ManageMembersData = {
-			assetLibraryCreatorUserId: 'user-123',
-			assetLibraryId: 'lib-456',
-			title: 'Manage Members Title',
-		};
-		const loadData = jest.fn();
+	describe('openModal', () => {
+		it.each([
+			[true, jest.fn()],
+			[false, undefined],
+		])(
+			'is called with canManageMembers=%s and loadData=%s',
+			(canManageMembers, loadData) => {
+				const data: ManageMembersData = {
+					assetLibraryCreatorUserId: 'user-123',
+					assetLibraryId: 'lib-456',
+					canManageMembers,
+					title: 'Manage Members Title',
+				};
 
-		manageMembersAction(data, loadData);
+				manageMembersAction(data, loadData);
 
-		expect(openModal).toHaveBeenCalledTimes(1);
+				expect(openModal).toHaveBeenCalledTimes(1);
 
-		const openModalConfig = (openModal as jest.Mock).mock.calls[0][0];
+				const openModalConfig = (openModal as jest.Mock).mock
+					.calls[0][0];
 
-		expect(openModalConfig.center).toBe(true);
-		expect(openModalConfig.onClose).toBe(loadData);
-		expect(openModalConfig.size).toBe('md');
-		expect(openModalConfig.title).toBe(data.title);
+				expect(openModalConfig.center).toBe(true);
+				expect(openModalConfig.onClose).toBe(loadData);
+				expect(openModalConfig.size).toBe('md');
+				expect(openModalConfig.title).toBe(data.title);
 
-		const Content = openModalConfig.contentComponent;
+				const Content = openModalConfig.contentComponent;
 
-		Content();
+				Content();
 
-		expect(mockSpaceMembersModal).toHaveBeenCalledWith({
-			assetLibraryCreatorUserId: data.assetLibraryCreatorUserId,
-			assetLibraryId: data.assetLibraryId,
-		});
-	});
-
-	it('calls openModal correctly when loadData is not provided', () => {
-		const data: ManageMembersData = {
-			assetLibraryCreatorUserId: 'user-789',
-			assetLibraryId: 'lib-012',
-			title: 'Another Title',
-		};
-
-		manageMembersAction(data);
-
-		expect(openModal).toHaveBeenCalledTimes(1);
-
-		const openModalConfig = (openModal as jest.Mock).mock.calls[0][0];
-
-		expect(openModalConfig.onClose).toBeUndefined();
-		expect(openModalConfig.title).toBe(data.title);
+				expect(mockSpaceMembersModal).toHaveBeenCalledWith({
+					assetLibraryCreatorUserId: data.assetLibraryCreatorUserId,
+					assetLibraryId: data.assetLibraryId,
+					canManageMembers: data.canManageMembers,
+				});
+			}
+		);
 	});
 });

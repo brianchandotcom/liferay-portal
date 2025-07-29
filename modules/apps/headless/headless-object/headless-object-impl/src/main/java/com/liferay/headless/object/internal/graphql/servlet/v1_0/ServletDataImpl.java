@@ -8,8 +8,10 @@ package com.liferay.headless.object.internal.graphql.servlet.v1_0;
 import com.liferay.headless.object.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.object.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.object.internal.resource.v1_0.CollaboratorResourceImpl;
+import com.liferay.headless.object.internal.resource.v1_0.ObjectEntryCMSBulkActionResourceImpl;
 import com.liferay.headless.object.internal.resource.v1_0.ObjectEntryFolderResourceImpl;
 import com.liferay.headless.object.resource.v1_0.CollaboratorResource;
+import com.liferay.headless.object.resource.v1_0.ObjectEntryCMSBulkActionResource;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -38,6 +40,8 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setCollaboratorResourceComponentServiceObjects(
 			_collaboratorResourceComponentServiceObjects);
+		Mutation.setObjectEntryCMSBulkActionResourceComponentServiceObjects(
+			_objectEntryCMSBulkActionResourceComponentServiceObjects);
 		Mutation.setObjectEntryFolderResourceComponentServiceObjects(
 			_objectEntryFolderResourceComponentServiceObjects);
 
@@ -116,6 +120,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CollaboratorResourceImpl.class,
 							"putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator"));
+					put(
+						"mutation#createObjectEntryCMSBulkAction",
+						new ObjectValuePair<>(
+							ObjectEntryCMSBulkActionResourceImpl.class,
+							"postObjectEntryCMSBulkAction"));
+					put(
+						"mutation#createObjectEntryCMSBulkActionBatch",
+						new ObjectValuePair<>(
+							ObjectEntryCMSBulkActionResourceImpl.class,
+							"postObjectEntryCMSBulkActionBatch"));
 					put(
 						"mutation#deleteObjectEntryFolder",
 						new ObjectValuePair<>(
@@ -218,6 +232,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CollaboratorResourceImpl.class,
 							"getObjectEntryFolderCollaboratorsPage"));
+					put(
+						"query#ObjectEntryCMSBulkAction.objectEntryFolder",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"getObjectEntryFolder"));
 
 					put(
 						"query#ObjectEntryFolder.parentObjectEntryFolder",
@@ -230,6 +249,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CollaboratorResource>
 		_collaboratorResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ObjectEntryCMSBulkActionResource>
+		_objectEntryCMSBulkActionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ObjectEntryFolderResource>

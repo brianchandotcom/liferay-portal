@@ -6,8 +6,11 @@
 package com.liferay.headless.object.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.object.dto.v1_0.Collaborator;
+import com.liferay.headless.object.dto.v1_0.ObjectEntryCMSBulkAction;
+import com.liferay.headless.object.dto.v1_0.ObjectEntryCMSBulkActionResult;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.resource.v1_0.CollaboratorResource;
+import com.liferay.headless.object.resource.v1_0.ObjectEntryCMSBulkActionResource;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -45,6 +48,15 @@ public class Mutation {
 
 		_collaboratorResourceComponentServiceObjects =
 			collaboratorResourceComponentServiceObjects;
+	}
+
+	public static void
+		setObjectEntryCMSBulkActionResourceComponentServiceObjects(
+			ComponentServiceObjects<ObjectEntryCMSBulkActionResource>
+				objectEntryCMSBulkActionResourceComponentServiceObjects) {
+
+		_objectEntryCMSBulkActionResourceComponentServiceObjects =
+			objectEntryCMSBulkActionResourceComponentServiceObjects;
 	}
 
 	public static void setObjectEntryFolderResourceComponentServiceObjects(
@@ -202,6 +214,47 @@ public class Mutation {
 					putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
 						scopeKey, externalReferenceCode, type, collaboratorId,
 						collaborator));
+	}
+
+	@GraphQLField(description = "Execute the object entries bulk action.")
+	public ObjectEntryCMSBulkActionResult createObjectEntryCMSBulkAction(
+			@GraphQLName("action") String action,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("objectEntryCMSBulkAction") ObjectEntryCMSBulkAction
+				objectEntryCMSBulkAction)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryCMSBulkActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryCMSBulkActionResource ->
+				objectEntryCMSBulkActionResource.postObjectEntryCMSBulkAction(
+					action, search,
+					_filterBiFunction.apply(
+						objectEntryCMSBulkActionResource, filterString),
+					objectEntryCMSBulkAction));
+	}
+
+	@GraphQLField
+	public Response createObjectEntryCMSBulkActionBatch(
+			@GraphQLName("action") String action,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryCMSBulkActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryCMSBulkActionResource ->
+				objectEntryCMSBulkActionResource.
+					postObjectEntryCMSBulkActionBatch(
+						action, search,
+						_filterBiFunction.apply(
+							objectEntryCMSBulkActionResource, filterString),
+						callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -433,6 +486,30 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			ObjectEntryCMSBulkActionResource objectEntryCMSBulkActionResource)
+		throws Exception {
+
+		objectEntryCMSBulkActionResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		objectEntryCMSBulkActionResource.setContextCompany(_company);
+		objectEntryCMSBulkActionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		objectEntryCMSBulkActionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		objectEntryCMSBulkActionResource.setContextUriInfo(_uriInfo);
+		objectEntryCMSBulkActionResource.setContextUser(_user);
+		objectEntryCMSBulkActionResource.setGroupLocalService(
+			_groupLocalService);
+		objectEntryCMSBulkActionResource.setRoleLocalService(_roleLocalService);
+
+		objectEntryCMSBulkActionResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		objectEntryCMSBulkActionResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			ObjectEntryFolderResource objectEntryFolderResource)
 		throws Exception {
 
@@ -456,11 +533,16 @@ public class Mutation {
 
 	private static ComponentServiceObjects<CollaboratorResource>
 		_collaboratorResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ObjectEntryCMSBulkActionResource>
+		_objectEntryCMSBulkActionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectEntryFolderResource>
 		_objectEntryFolderResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction
+		<Object, String, com.liferay.portal.kernel.search.filter.Filter>
+			_filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;

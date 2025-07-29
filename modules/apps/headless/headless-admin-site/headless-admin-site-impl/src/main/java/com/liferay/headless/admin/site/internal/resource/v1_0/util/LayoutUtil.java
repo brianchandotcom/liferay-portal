@@ -375,16 +375,16 @@ public class LayoutUtil {
 		ContentPageSpecification publishedContentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[0];
 
-		if (!Objects.equals(
+		if (Objects.equals(
 				layout.getExternalReferenceCode(),
 				publishedContentPageSpecification.getExternalReferenceCode())) {
 
-			draftContentPageSpecification = publishedContentPageSpecification;
-			publishedContentPageSpecification =
+			draftContentPageSpecification =
 				(ContentPageSpecification)pageSpecifications[1];
 		}
 		else {
-			draftContentPageSpecification =
+			draftContentPageSpecification = publishedContentPageSpecification;
+			publishedContentPageSpecification =
 				(ContentPageSpecification)pageSpecifications[1];
 		}
 

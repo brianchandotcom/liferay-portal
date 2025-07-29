@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -101,6 +102,11 @@ public class InvokerFilter implements Filter {
 		String uri = getURI(originalURI);
 
 		httpServletRequest.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
+
+		// Company ID needs to be called here so that it is set
+		// across all filters
+
+		PortalUtil.getCompanyId(httpServletRequest);
 
 		try {
 			InvokerFilterChain invokerFilterChain = getInvokerFilterChain(

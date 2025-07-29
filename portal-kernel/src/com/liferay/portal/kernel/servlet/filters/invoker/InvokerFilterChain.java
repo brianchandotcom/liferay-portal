@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.servlet.TryFinallyFilter;
 import com.liferay.portal.kernel.servlet.WrapHttpServletRequestFilter;
 import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
-import com.liferay.portal.kernel.util.PortalUtil;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -68,11 +67,6 @@ public class InvokerFilterChain implements FilterChain {
 				(HttpServletRequest)servletRequest;
 			HttpServletResponse httpServletResponse =
 				(HttpServletResponse)servletResponse;
-
-			// Company ID needs to be called here so that it is set
-			// across all filters
-
-			PortalUtil.getCompanyId(httpServletRequest);
 
 			while (_index < _filters.size()) {
 				Filter filter = _filters.get(_index++);

@@ -5764,7 +5764,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		Page<ObjectEntry> page =
 			_defaultObjectEntryManager.getVersionedObjectEntries(
-				dtoConverterContext, objectEntry1.getId(), null);
+				dtoConverterContext, _objectDefinition1, objectEntry1.getId(),
+				null);
 
 		assertEquals(
 			(List<ObjectEntry>)page.getItems(),
@@ -5774,7 +5775,8 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition1, objectEntry1, 2);
 
 		page = _defaultObjectEntryManager.getVersionedObjectEntries(
-			dtoConverterContext, objectEntry2.getId(), null);
+			dtoConverterContext, _objectDefinition1, objectEntry2.getId(),
+			null);
 
 		assertEquals(
 			(List<ObjectEntry>)page.getItems(),

@@ -417,6 +417,10 @@
 			<finder-column name="commerceOrderId" />
 			<finder-column name="CPInstanceId" />
 		</finder>
+		<finder name="C_PCOI" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+			<finder-column name="parentCommerceOrderItemId" />
+		</finder>
 		<finder name="C_S" return-type="Collection">
 			<finder-column name="commerceOrderId" />
 			<finder-column name="subscription" />

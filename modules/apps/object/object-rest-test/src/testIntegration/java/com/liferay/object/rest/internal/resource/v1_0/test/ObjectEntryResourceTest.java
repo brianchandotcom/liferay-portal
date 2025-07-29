@@ -44,6 +44,7 @@ import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
+import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
 import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
@@ -96,6 +97,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -182,6 +184,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
@@ -5772,6 +5776,48 @@ public class ObjectEntryResourceTest {
 			LocaleUtil.setDefault(
 				locale.getLanguage(), locale.getCountry(), locale.getVariant());
 		}
+	}
+
+	@Test
+	public void testGetObjectEntriesVersionsPage() throws Exception {
+		_objectDefinition1.setEnableObjectEntryVersioning(true);
+		_objectDefinition2.setEnableObjectEntryVersioning(true);
+
+		_objectDefinition1 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+		_objectDefinition2 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition2);
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntryResource objectEntryResource1 = _getObjectEntryResource(
+			_objectDefinition1, TestPropsValues.getUser());
+
+		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntryPage =
+			objectEntryResource1.getObjectEntriesVersionsPage(
+				objectEntry.getObjectEntryId(),
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+
+		Assert.assertEquals(2, objectEntryPage.getTotalCount());
+
+		ObjectEntryResource objectEntryResource2 = _getObjectEntryResource(
+			_objectDefinition2, TestPropsValues.getUser());
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class, null,
+			() -> objectEntryResource2.getObjectEntriesVersionsPage(
+				objectEntry.getObjectEntryId(),
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
 	}
 
 	@Test

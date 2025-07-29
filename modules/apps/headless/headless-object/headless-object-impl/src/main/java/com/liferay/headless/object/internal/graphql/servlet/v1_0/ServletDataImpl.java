@@ -218,6 +218,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CollaboratorResourceImpl.class,
 							"getObjectEntryFolderCollaboratorsPage"));
+					put(
+						"query#ObjectEntryCMSBulkActionRequest.objectEntryFolder",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"getObjectEntryFolder"));
 
 					put(
 						"query#ObjectEntryFolder.parentObjectEntryFolder",

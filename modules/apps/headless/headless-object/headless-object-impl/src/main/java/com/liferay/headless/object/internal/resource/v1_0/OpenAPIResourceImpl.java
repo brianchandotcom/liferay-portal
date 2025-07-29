@@ -87,6 +87,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(CollaboratorResourceImpl.class);
 
+			add(ObjectEntryCMSBulkActionResourceImpl.class);
+
 			add(ObjectEntryFolderResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

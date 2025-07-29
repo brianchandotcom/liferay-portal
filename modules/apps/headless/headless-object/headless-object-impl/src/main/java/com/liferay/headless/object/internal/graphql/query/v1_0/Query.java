@@ -6,6 +6,7 @@
 package com.liferay.headless.object.internal.graphql.query.v1_0;
 
 import com.liferay.headless.object.dto.v1_0.Collaborator;
+import com.liferay.headless.object.dto.v1_0.ObjectEntryCMSBulkActionRequest;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.resource.v1_0.CollaboratorResource;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
@@ -306,6 +307,31 @@ public class Query {
 		}
 
 		private ObjectEntryFolder _objectEntryFolder;
+
+	}
+
+	@GraphQLTypeExtension(ObjectEntryCMSBulkActionRequest.class)
+	public class GetObjectEntryFolderTypeExtension {
+
+		public GetObjectEntryFolderTypeExtension(
+			ObjectEntryCMSBulkActionRequest objectEntryCMSBulkActionRequest) {
+
+			_objectEntryCMSBulkActionRequest = objectEntryCMSBulkActionRequest;
+		}
+
+		@GraphQLField(description = "Retrieves the object entry folder.")
+		public ObjectEntryFolder objectEntryFolder() throws Exception {
+			return _applyComponentServiceObjects(
+				_objectEntryFolderResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectEntryFolderResource ->
+					objectEntryFolderResource.getObjectEntryFolder(
+						_objectEntryCMSBulkActionRequest.
+							getObjectEntryFolderId()));
+		}
+
+		private ObjectEntryCMSBulkActionRequest
+			_objectEntryCMSBulkActionRequest;
 
 	}
 

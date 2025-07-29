@@ -10,7 +10,6 @@ import com.liferay.layout.utility.page.kernel.request.contributor.StatusLayoutUt
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -54,11 +53,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 	public void addAttributesAndParameters(
 		DynamicServletRequest dynamicServletRequest) {
 
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		if (companyId == 0) {
-			companyId = PortalInstancePool.getDefaultCompanyId();
-		}
+		long companyId = CompanyThreadLocal.getNonsystemCompanyId();
 
 		PermissionChecker permissionChecker = _getPermissionChecker(
 			companyId, dynamicServletRequest);

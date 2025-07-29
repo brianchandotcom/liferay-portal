@@ -43,6 +43,8 @@ public class ObjectEntryFolderModelDocumentContributor
 
 		document.addKeyword(Field.TREE_PATH, parts);
 
+		document.addKeyword(Field.STATUS, objectEntryFolder.getStatus());
+
 		String cmsSection = _getCMSSection(parts);
 
 		if (cmsSection != null) {

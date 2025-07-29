@@ -5,40 +5,31 @@
 
 import {useEffect, useState} from 'react';
 
+import ApiHelper from '../apis/ApiHelper';
+
 interface FetchState<Data> {
 	data: Data | null;
-	error: string;
 	loading: boolean;
 }
 
-const useFetch = <Data, Variables>(
-	fetchFn: (variables: Variables) => Promise<Response>,
-	{variables}: {variables: Variables}
-): FetchState<Data> => {
+const useFetch = <Data>(endpointUrl: string): FetchState<Data> => {
 	const [state, setState] = useState<FetchState<Data>>({
 		data: null,
-		error: '',
-		loading: true,
+		loading: false,
 	});
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				setState({data: null, error: '', loading: true});
+				setState({data: null, loading: true});
 
-				const response = await fetchFn(variables);
+				const {data, error} = await ApiHelper.get<Data>(endpointUrl);
 
-				if (!response?.ok) {
-					throw new Error();
+				if (error) {
+					throw new Error(error);
 				}
 
-				const data: Data & {error: string} = await response.json();
-
-				if (data.error) {
-					throw new Error(data.error);
-				}
-
-				setState({data, error: '', loading: false});
+				setState({data, loading: false});
 			}
 			catch (error: any) {
 				if (process.env.NODE_ENV === 'development') {
@@ -47,16 +38,13 @@ const useFetch = <Data, Variables>(
 
 				setState({
 					data: null,
-					error: error.message ?? 'Unknown error',
 					loading: false,
 				});
 			}
 		};
 
 		fetchData();
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fetchFn, JSON.stringify(variables)]);
+	}, [endpointUrl]);
 
 	return state;
 };

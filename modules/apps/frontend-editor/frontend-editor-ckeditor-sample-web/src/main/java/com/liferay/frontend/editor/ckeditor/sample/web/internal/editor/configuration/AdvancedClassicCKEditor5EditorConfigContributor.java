@@ -21,12 +21,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=sampleCKEditor5ClassicEditor",
+		"editor.config.key=advancedClassicCKEditor5Editor",
 		"jakarta.portlet.name=" + CKEditorSamplePortletKeys.CKEDITOR_SAMPLE
 	},
 	service = EditorConfigContributor.class
 )
-public class CKEditor5ClassicEditorConfigContributor
+public class AdvancedClassicCKEditor5EditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -37,10 +37,7 @@ public class CKEditor5ClassicEditorConfigContributor
 
 		jsonObject.put(
 			"placeholder",
-			"This placeholder is set from EditorConfigContributor."
-		).put(
-			"removePlugins", toJSONArray("['Underline']")
-		);
+			"This placeholder is set from EditorConfigContributor.");
 	}
 
 }

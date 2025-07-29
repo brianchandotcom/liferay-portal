@@ -1527,16 +1527,7 @@ public interface PropsKeys {
 
 	public static final String LOGOUT_EVENTS_PRE = "logout.events.pre";
 
-	public static final String MAIL_AUDIT_TRAIL = "mail.audit.trail";
-
-	public static final String MAIL_BATCH_SIZE = "mail.batch.size";
-
 	public static final String MAIL_MX_UPDATE = "mail.mx.update";
-
-	public static final String MAIL_SEND_BLACKLIST = "mail.send.blacklist";
-
-	public static final String MAIL_THROWS_EXCEPTION_ON_FAILURE =
-		"mail.throws.exception.on.failure";
 
 	public static final String MARKETPLACE_CLIENT_ID = "marketplace.client.id";
 
@@ -2038,8 +2029,6 @@ public interface PropsKeys {
 
 	public static final String PHONE_NUMBER_FORMAT_USA_REGEXP =
 		"phone.number.format.usa.regexp";
-
-	public static final String POP_SERVER_SUBDOMAIN = "pop.server.subdomain";
 
 	public static final String PORTAL_IMPERSONATION_DEFAULT_URL =
 		"portal.impersonation.default.url";

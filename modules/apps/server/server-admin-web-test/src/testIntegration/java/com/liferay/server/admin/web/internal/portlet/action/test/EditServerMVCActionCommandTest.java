@@ -549,55 +549,56 @@ public class EditServerMVCActionCommandTest {
 			return;
 		}
 
-		if (!cmd.equals("addLogLevel") &&
-			!cmd.equals("dlGenerateAudioPreviews") &&
-			!cmd.equals("dlGenerateOpenOfficePreviews") &&
-			!cmd.equals("dlGenerateVideoPreviews") &&
-			!cmd.equals("updateLogLevels") &&
-			!cmd.equals("updatePortalProperties")) {
+		if (cmd.equals("addLogLevel") ||
+			cmd.equals("dlGenerateAudioPreviews") ||
+			cmd.equals("dlGenerateOpenOfficePreviews") ||
+			cmd.equals("dlGenerateVideoPreviews") ||
+			cmd.equals("updateLogLevels") ||
+			cmd.equals("updatePortalProperties")) {
 
-			try (CompanyConfigurationTemporarySwapper
-					companyConfigurationTemporarySwapper =
-						new CompanyConfigurationTemporarySwapper(
-							TestPropsValues.getCompanyId(),
-							CaptchaConfiguration.class.getName(),
-							new HashMapDictionaryBuilder(
-							).<String, Object>put(
-								"createAccountCaptchaEnabled", "true"
-							).put(
-								"maxChallenges", "1"
-							).put(
-								"sendPasswordCaptchaEnabled", "true"
-							).build());
-				ConfigurationTemporarySwapper configurationTemporarySwapper =
-					new ConfigurationTemporarySwapper(
-						"com.liferay.captcha.configuration." +
-							"CaptchaConfiguration",
-						HashMapDictionaryBuilder.<String, Object>put(
+			Assert.assertTrue(
+				_mvcActionCommand.processAction(
+					mockLiferayPortletActionRequest,
+					mockLiferayPortletActionResponse));
+
+			return;
+		}
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CaptchaConfiguration.class.getName(),
+						new HashMapDictionaryBuilder(
+						).<String, Object>put(
 							"createAccountCaptchaEnabled", "true"
 						).put(
 							"maxChallenges", "1"
 						).put(
 							"sendPasswordCaptchaEnabled", "true"
-						).build())) {
+						).build());
+			ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.captcha.configuration." +
+						"CaptchaConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"createAccountCaptchaEnabled", "true"
+					).put(
+						"maxChallenges", "1"
+					).put(
+						"sendPasswordCaptchaEnabled", "true"
+					).build())) {
 
-				_mvcActionCommand.processAction(
-					mockLiferayPortletActionRequest,
-					mockLiferayPortletActionResponse);
+			_mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				mockLiferayPortletActionResponse);
 
-				Assert.fail(cmd + " should fail by CaptchaTextException");
-			}
-			catch (Exception exception) {
-				Throwable throwable = exception.getCause();
-
-				Assert.assertTrue(throwable instanceof CaptchaTextException);
-			}
+			Assert.fail(cmd + " should fail by CaptchaTextException");
 		}
-		else {
-			Assert.assertTrue(
-				_mvcActionCommand.processAction(
-					mockLiferayPortletActionRequest,
-					mockLiferayPortletActionResponse));
+		catch (Exception exception) {
+			Throwable throwable = exception.getCause();
+
+			Assert.assertTrue(throwable instanceof CaptchaTextException);
 		}
 	}
 

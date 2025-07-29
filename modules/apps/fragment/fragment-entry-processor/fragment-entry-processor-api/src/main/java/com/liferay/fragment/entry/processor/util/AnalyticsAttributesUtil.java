@@ -22,8 +22,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
 import java.util.Locale;
 import java.util.Map;
@@ -161,6 +163,21 @@ public class AnalyticsAttributesUtil {
 	private static String _getAnalyticsExternalReferenceCode(
 		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
 		InfoItemFieldMapped infoItemFieldMapped, Locale locale) {
+
+		Object object = infoItemFieldMapped.getObject();
+
+		if (object instanceof LiferayFileEntry) {
+			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)object;
+
+			object = liferayFileEntry.getDLFileEntry();
+		}
+
+		if (object instanceof ExternalReferenceCodeModel) {
+			ExternalReferenceCodeModel externalReferenceCodeModel =
+				(ExternalReferenceCodeModel)object;
+
+			return externalReferenceCodeModel.getExternalReferenceCode();
+		}
 
 		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
 			infoItemFieldMapped.getInfoItemReference());

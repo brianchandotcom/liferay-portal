@@ -42,6 +42,7 @@ import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -500,20 +501,9 @@ public class ObjectDefinitionResourceTest
 
 		randomObjectDefinition = randomObjectDefinition();
 
-		ObjectRelationship objectRelationship = new ObjectRelationship();
-
-		objectRelationship.setDeletionType(
-			ObjectRelationship.DeletionType.CASCADE);
-		objectRelationship.setExternalReferenceCode(
-			RandomTestUtil.randomString());
-		objectRelationship.setName("a" + RandomTestUtil.randomString());
-		objectRelationship.setObjectDefinitionExternalReferenceCode1(
-			randomObjectDefinition.getExternalReferenceCode());
-		objectRelationship.setObjectDefinitionExternalReferenceCode2(
-			randomObjectDefinition.getExternalReferenceCode());
-		objectRelationship.setObjectDefinitionId1(RandomTestUtil.randomLong());
-		objectRelationship.setObjectDefinitionId2(RandomTestUtil.randomLong());
-		objectRelationship.setType(ObjectRelationship.Type.ONE_TO_MANY);
+		ObjectRelationship objectRelationship = _createObjectRelationship(
+			randomObjectDefinition, randomObjectDefinition,
+			ObjectRelationship.Type.ONE_TO_MANY);
 
 		randomObjectDefinition.setObjectRelationships(
 			new ObjectRelationship[] {objectRelationship});
@@ -572,6 +562,8 @@ public class ObjectDefinitionResourceTest
 		assertValid(postObjectDefinition);
 
 		_testPostObjectDefinitionBatch();
+
+		_testPostObjectDefinitionWithSystemAggregationObjectField();
 	}
 
 	@FeatureFlags(
@@ -1657,6 +1649,61 @@ public class ObjectDefinitionResourceTest
 		}
 	}
 
+	private ObjectRelationship _createObjectRelationship(
+		ObjectDefinition objectDefinition1, ObjectDefinition objectDefinition2,
+		ObjectRelationship.Type type) {
+
+		ObjectRelationship objectRelationship = new ObjectRelationship();
+
+		objectRelationship.setDeletionType(
+			ObjectRelationship.DeletionType.CASCADE);
+		objectRelationship.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+		objectRelationship.setName("a" + RandomTestUtil.randomString());
+		objectRelationship.setObjectDefinitionExternalReferenceCode1(
+			objectDefinition1.getExternalReferenceCode());
+		objectRelationship.setObjectDefinitionExternalReferenceCode2(
+			objectDefinition2.getExternalReferenceCode());
+		objectRelationship.setObjectDefinitionId1(objectDefinition1.getId());
+		objectRelationship.setObjectDefinitionId2(objectDefinition2.getId());
+		objectRelationship.setType(type);
+
+		return objectRelationship;
+	}
+
+	private JSONObject _postObjectDefinitionBatchHttpResponse(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2)
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		ObjectDefinitionResource batchObjectDefinitionResource =
+			ObjectDefinitionResource.builder(
+			).authentication(
+				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameter(
+				"createStrategy", "UPSERT"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		return _waitForFinish(
+			"COMPLETED", true,
+			JSONFactoryUtil.createJSONObject(
+				batchObjectDefinitionResource.
+					postObjectDefinitionBatchHttpResponse(
+						null,
+						JSONUtil.putAll(
+							JSONFactoryUtil.createJSONObject(
+								String.valueOf(objectDefinition1)),
+							JSONFactoryUtil.createJSONObject(
+								String.valueOf(objectDefinition2)))
+					).getContent()));
+	}
+
 	private ObjectDefinition _randomModifiableSystemObjectDefinition()
 		throws Exception {
 
@@ -1670,7 +1717,7 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setExternalReferenceCode(
 			randomObjectDefinitionExternalReferenceCode);
 
-		objectDefinition.setName("Test");
+		objectDefinition.setName("Test" + RandomTestUtil.randomString());
 		objectDefinition.setObjectFields(
 			new ObjectField[] {
 				new ObjectField() {
@@ -1802,32 +1849,8 @@ public class ObjectDefinitionResourceTest
 				}
 			});
 
-		User user = TestPropsValues.getUser();
-
-		ObjectDefinitionResource batchObjectDefinitionResource =
-			ObjectDefinitionResource.builder(
-			).authentication(
-				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
-			).endpoint(
-				testCompany.getVirtualHostname(), 8080, "http"
-			).parameter(
-				"createStrategy", "UPSERT"
-			).locale(
-				LocaleUtil.getDefault()
-			).build();
-
-		JSONObject jsonObject = _waitForFinish(
-			"COMPLETED", true,
-			JSONFactoryUtil.createJSONObject(
-				batchObjectDefinitionResource.
-					postObjectDefinitionBatchHttpResponse(
-						null,
-						JSONUtil.putAll(
-							JSONFactoryUtil.createJSONObject(
-								String.valueOf(objectDefinition1)),
-							JSONFactoryUtil.createJSONObject(
-								String.valueOf(objectDefinition2)))
-					).getContent()));
+		JSONObject jsonObject = _postObjectDefinitionBatchHttpResponse(
+			objectDefinition1, objectDefinition2);
 
 		Assert.assertEquals(2, jsonObject.getLong("processedItemsCount"));
 		Assert.assertEquals(2, jsonObject.getLong("totalItemsCount"));
@@ -1840,6 +1863,99 @@ public class ObjectDefinitionResourceTest
 				null, null);
 
 		Assert.assertEquals(2, page.getTotalCount());
+	}
+
+	private void _testPostObjectDefinitionWithSystemAggregationObjectField()
+		throws Exception {
+
+		ObjectDefinition randomModifiableSystemObjectDefinition1 =
+			_randomModifiableSystemObjectDefinition();
+
+		ObjectDefinition randomModifiableSystemObjectDefinition2 =
+			_randomModifiableSystemObjectDefinition();
+
+		ObjectRelationship objectRelationship = _createObjectRelationship(
+			randomModifiableSystemObjectDefinition1,
+			randomModifiableSystemObjectDefinition2,
+			ObjectRelationship.Type.MANY_TO_MANY);
+
+		randomModifiableSystemObjectDefinition1.setObjectRelationships(
+			new ObjectRelationship[] {objectRelationship});
+
+		String aggregationObjectFieldName = "c" + RandomTestUtil.randomString();
+
+		randomModifiableSystemObjectDefinition1.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.AGGREGATION;
+						DBType = ObjectField.DBType.create("String");
+						defaultValue = null;
+						externalReferenceCode = RandomTestUtil.randomString();
+						indexed = false;
+						indexedAsKeyword = false;
+						indexedLanguageId = StringPool.BLANK;
+						label = Collections.singletonMap(
+							"en-US", RandomTestUtil.randomString());
+						localized = false;
+						name = aggregationObjectFieldName;
+						objectFieldSettings = new ObjectFieldSetting[] {
+							new ObjectFieldSetting() {
+								{
+									name =
+										ObjectFieldSettingConstants.
+											NAME_FUNCTION;
+									value =
+										ObjectFieldSettingConstants.VALUE_COUNT;
+								}
+							},
+							new ObjectFieldSetting() {
+								{
+									name =
+										ObjectFieldSettingConstants.
+											NAME_OBJECT_RELATIONSHIP_NAME;
+									value = objectRelationship.getName();
+								}
+							}
+						};
+						readOnly = ReadOnly.TRUE;
+						readOnlyConditionExpression = StringPool.BLANK;
+						required = false;
+						state = false;
+						system = true;
+						unique = false;
+					}
+				}
+			});
+
+		JSONObject jsonObject = _postObjectDefinitionBatchHttpResponse(
+			randomModifiableSystemObjectDefinition2,
+			randomModifiableSystemObjectDefinition1);
+
+		Assert.assertEquals(2, jsonObject.getLong("processedItemsCount"));
+		Assert.assertEquals(2, jsonObject.getLong("totalItemsCount"));
+
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition1 =
+				_objectDefinitionLocalService.
+					getObjectDefinitionByExternalReferenceCode(
+						randomModifiableSystemObjectDefinition1.
+							getExternalReferenceCode(),
+						TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(serviceBuilderObjectDefinition1);
+
+		Assert.assertNotNull(
+			_objectFieldLocalService.getObjectField(
+				serviceBuilderObjectDefinition1.getObjectDefinitionId(),
+				aggregationObjectFieldName));
+
+		Assert.assertNotNull(
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					randomModifiableSystemObjectDefinition2.
+						getExternalReferenceCode(),
+					TestPropsValues.getCompanyId()));
 	}
 
 	private JSONObject _waitForFinish(
@@ -1885,6 +2001,9 @@ public class ObjectDefinitionResourceTest
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private final List<ObjectDefinition> _objectDefinitions = new ArrayList<>();
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectFolder _objectFolder1;

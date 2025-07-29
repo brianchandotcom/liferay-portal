@@ -28,6 +28,20 @@
 	margin-inline: -1rem;
 }
 
+.cms-tabs-fluid .nav-tabs {
+	margin-inline: -1rem;
+}
+
+.cms-tabs-fluid .nav-tabs+.tab-content .tab-pane {
+	margin-top: -.5rem;
+	padding: 0;
+}
+
+.cms-tabs-fluid .table-list td {
+	background-color: #ffffff !important;
+	border: 0;
+}
+
 .cursor-pointer {
 	cursor: pointer;
 }

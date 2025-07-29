@@ -396,11 +396,12 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		Layout foundLayout = _layoutLocalService.getLayout(
 			layoutFriendlyURL.getPlid());
 
-		String sourcePrototypeLayoutUuid =
-			layout.getSourcePrototypeLayoutUuid();
+		String layoutSetPrototypeLayoutERC =
+			layout.getLayoutSetPrototypeLayoutERC();
 
-		if (Validator.isNotNull(layout.getSourcePrototypeLayoutUuid()) &&
-			sourcePrototypeLayoutUuid.equals(foundLayout.getUuid())) {
+		if (Validator.isNotNull(layout.getLayoutSetPrototypeLayoutERC()) &&
+			layoutSetPrototypeLayoutERC.equals(
+				foundLayout.getExternalReferenceCode())) {
 
 			return null;
 		}

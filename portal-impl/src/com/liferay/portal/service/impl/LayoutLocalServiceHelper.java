@@ -174,8 +174,8 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 	}
 
 	public int getNextPriority(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		String sourcePrototypeLayoutUuid, int defaultPriority) {
+		long groupId, String layoutSetPrototypeLayoutERC, boolean privateLayout,
+		long parentLayoutId, int defaultPriority) {
 
 		int priority = defaultPriority;
 
@@ -192,7 +192,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		}
 
 		if ((priority < _PRIORITY_BUFFER) &&
-			Validator.isNull(sourcePrototypeLayoutUuid)) {
+			Validator.isNull(layoutSetPrototypeLayoutERC)) {
 
 			LayoutSet layoutSet = layoutSetPersistence.fetchByG_P(
 				groupId, privateLayout);
@@ -293,7 +293,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 				groupId, privateLayout, parentLayoutId);
 
 			if (((layout == null) ||
-				 Validator.isNull(layout.getSourcePrototypeLayoutUuid())) &&
+				 Validator.isNull(layout.getLayoutSetPrototypeLayoutERC())) &&
 				!_isDraftLayout(classNameId, classPK, type) &&
 				((layout instanceof VirtualLayout) ||
 				 !parentLayout.isLayoutSortable())) {
@@ -644,7 +644,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		// Layout cannot become a child of a layout that is not sortable because
 		// it is linked to a layout set prototype
 
-		if ((Validator.isNull(layout.getSourcePrototypeLayoutUuid()) &&
+		if ((Validator.isNull(layout.getLayoutSetPrototypeLayoutERC()) &&
 			 (layout instanceof VirtualLayout)) ||
 			!parentLayout.isLayoutSortable()) {
 

@@ -356,7 +356,7 @@ public class SitesImpl implements Sites {
 	@Override
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout) {
 		if ((layout == null) ||
-			Validator.isNull(layout.getSourcePrototypeLayoutUuid()) ||
+			Validator.isNull(layout.getLayoutSetPrototypeLayoutERC()) ||
 			layout.isLayoutPrototypeLinkActive() ||
 			(layout instanceof VirtualLayout) || !layout.isLayoutUpdateable()) {
 
@@ -474,10 +474,10 @@ public class SitesImpl implements Sites {
 	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception {
 
-		String sourcePrototypeLayoutUuid =
-			layout.getSourcePrototypeLayoutUuid();
+		String layoutSetPrototypeLayoutERC =
+			layout.getLayoutSetPrototypeLayoutERC();
 
-		if (Validator.isNull(sourcePrototypeLayoutUuid)) {
+		if (Validator.isNull(layoutSetPrototypeLayoutERC)) {
 			doMergeLayoutPrototypeLayout(group, layout);
 
 			return;
@@ -493,9 +493,9 @@ public class SitesImpl implements Sites {
 					layout.getCompanyId(), layoutSetPrototypeId);
 
 			Layout sourcePrototypeLayout =
-				_layoutLocalService.fetchLayoutByUuidAndGroupId(
-					sourcePrototypeLayoutUuid,
-					layoutSetPrototypeGroup.getGroupId(), true);
+				_layoutLocalService.fetchLayoutByExternalReferenceCode(
+					layoutSetPrototypeLayoutERC,
+					layoutSetPrototypeGroup.getGroupId());
 
 			if (sourcePrototypeLayout != null) {
 				doMergeLayoutPrototypeLayout(

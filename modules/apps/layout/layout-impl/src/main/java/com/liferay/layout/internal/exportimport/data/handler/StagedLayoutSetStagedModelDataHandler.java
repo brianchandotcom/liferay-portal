@@ -293,7 +293,7 @@ public class StagedLayoutSetStagedModelDataHandler
 					portletDataContext.getGroupId(),
 					portletDataContext.isPrivateLayout())) {
 
-			if (Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
+			if (Validator.isNull(layout.getLayoutSetPrototypeLayoutERC())) {
 				continue;
 			}
 
@@ -303,9 +303,10 @@ public class StagedLayoutSetStagedModelDataHandler
 				continue;
 			}
 
-			Layout sourcePrototypeLayout = _layoutLocalService.fetchLayout(
-				layout.getSourcePrototypeLayoutUuid(),
-				layoutSetPrototype.getGroupId(), true);
+			Layout sourcePrototypeLayout =
+				_layoutLocalService.fetchLayoutByExternalReferenceCode(
+					layout.getLayoutSetPrototypeLayoutERC(),
+					layoutSetPrototype.getGroupId());
 
 			if ((sourcePrototypeLayout == null) &&
 				_layoutLocalService.hasLayout(
@@ -1028,9 +1029,10 @@ public class StagedLayoutSetStagedModelDataHandler
 					layoutElement.attributeValue("layout-priority"));
 
 				layoutPriority = _layoutLocalServiceHelper.getNextPriority(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getParentLayoutId(),
-					layout.getSourcePrototypeLayoutUuid(), layoutPriority);
+					layout.getGroupId(),
+					layout.getLayoutSetPrototypeLayoutERC(),
+					layout.isPrivateLayout(), layout.getParentLayoutId(),
+					layoutPriority);
 
 				layoutPriorities.put(layout.getPlid(), layoutPriority);
 			}

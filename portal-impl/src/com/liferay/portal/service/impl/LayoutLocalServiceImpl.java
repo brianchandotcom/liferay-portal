@@ -276,7 +276,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		if (!system) {
 			priority = layoutLocalServiceHelper.getNextPriority(
-				groupId, privateLayout, parentLayoutId, null, -1);
+				groupId, null, privateLayout, parentLayoutId, -1);
 		}
 
 		layoutLocalServiceHelper.validate(
@@ -2957,8 +2957,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				_getParentPlid(groupId, privateLayout, parentLayoutId));
 
 			int priority = layoutLocalServiceHelper.getNextPriority(
-				groupId, privateLayout, parentLayoutId,
-				layout.getSourcePrototypeLayoutUuid(), -1);
+				groupId, layout.getLayoutSetPrototypeLayoutERC(), privateLayout,
+				parentLayoutId, -1);
 
 			layout.setPriority(priority);
 		}
@@ -3300,8 +3300,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				_getParentPlid(groupId, privateLayout, parentLayoutId));
 
 			int priority = layoutLocalServiceHelper.getNextPriority(
-				groupId, privateLayout, parentLayoutId,
-				layout.getSourcePrototypeLayoutUuid(), -1);
+				groupId, layout.getLayoutSetPrototypeLayoutERC(), privateLayout,
+				parentLayoutId, -1);
 
 			layout.setPriority(priority);
 		}
@@ -3361,8 +3361,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		if (parentLayoutId != layout.getParentLayoutId()) {
 			int priority = layoutLocalServiceHelper.getNextPriority(
-				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId,
-				layout.getSourcePrototypeLayoutUuid(), -1);
+				layout.getGroupId(), layout.getLayoutSetPrototypeLayoutERC(),
+				layout.isPrivateLayout(), parentLayoutId, -1);
 
 			layout.setPriority(priority);
 		}
@@ -3421,9 +3421,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		for (Layout layout : layouts) {
 			int nextPriority = layoutLocalServiceHelper.getNextPriority(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getParentLayoutId(),
-				layout.getSourcePrototypeLayoutUuid(), layout.getPriority());
+				layout.getGroupId(), layout.getLayoutSetPrototypeLayoutERC(),
+				layout.isPrivateLayout(), layout.getParentLayoutId(),
+				layout.getPriority());
 
 			layout.setPriority(nextPriority);
 
@@ -3458,9 +3458,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		int oldPriority = layout.getPriority();
 
 		int nextPriority = layoutLocalServiceHelper.getNextPriority(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getParentLayoutId(), layout.getSourcePrototypeLayoutUuid(),
-			priority);
+			layout.getGroupId(), layout.getLayoutSetPrototypeLayoutERC(),
+			layout.isPrivateLayout(), layout.getParentLayoutId(), priority);
 
 		if (oldPriority == nextPriority) {
 			return layout;
@@ -3504,9 +3503,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		for (Layout curLayout : layouts) {
 			int curNextPriority = layoutLocalServiceHelper.getNextPriority(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getParentLayoutId(),
-				curLayout.getSourcePrototypeLayoutUuid(), newPriority++);
+				layout.getGroupId(), curLayout.getLayoutSetPrototypeLayoutERC(),
+				layout.isPrivateLayout(), layout.getParentLayoutId(),
+				newPriority++);
 
 			if (curLayout.getPriority() == curNextPriority) {
 				continue;
@@ -4306,7 +4305,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		if (Validator.isNull(layout.getLayoutPrototypeUuid()) &&
-			Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
+			Validator.isNull(layout.getLayoutSetPrototypeLayoutERC())) {
 
 			return false;
 		}
@@ -4322,7 +4321,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			sites.mergeLayoutPrototypeLayout(group, layout);
 
-			if (Validator.isNotNull(layout.getSourcePrototypeLayoutUuid())) {
+			if (Validator.isNotNull(layout.getLayoutSetPrototypeLayoutERC())) {
 				sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 			}
 		}

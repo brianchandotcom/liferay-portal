@@ -9,7 +9,10 @@
 		"@clayui/icon": "3.128.0",
 		"@clayui/link": "3.141.0",
 		"@clayui/loading-indicator": "3.128.0",
+		"@clayui/pagination": "3.141.1",
+		"@clayui/pagination-bar": "3.141.1",
 		"@clayui/popover": "3.141.1",
+		"@clayui/table": "3.111.0",
 		"@clayui/tooltip": "3.141.1",
 		"classnames": "2.3.1",
 		"d3": "5.9.3",
@@ -32,7 +35,7 @@
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"test": "USE_REACT_16=true node-scripts test"
+		"test": "node-scripts test"
 	},
 	"version": "1.0.15"
 }

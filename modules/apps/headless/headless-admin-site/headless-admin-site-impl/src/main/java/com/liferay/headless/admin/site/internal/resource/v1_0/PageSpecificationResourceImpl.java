@@ -319,7 +319,7 @@ public class PageSpecificationResourceImpl
 				LayoutUtil.updateLayout(
 					layout, layout.getNameMap(), layout.getTitleMap(),
 					layout.getDescriptionMap(), layout.getRobotsMap(),
-					layout.getFriendlyURLMap(), pageSpecification.getSettings(),
+					layout.getFriendlyURLMap(), pageSpecification,
 					serviceContext));
 		}
 

@@ -462,8 +462,7 @@ public class LayoutUtil {
 
 		updateLayout(
 			layout, nameMap, titleMap, descriptionMap, robotsMap,
-			friendlyURLMap, contentPageSpecification.getSettings(),
-			serviceContext);
+			friendlyURLMap, contentPageSpecification, serviceContext);
 
 		_updatePageExperiences(
 			layout, contentPageSpecification.getPageExperiences(),
@@ -478,8 +477,14 @@ public class LayoutUtil {
 			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
-			Settings settings, ServiceContext serviceContext)
+			PageSpecification pageSpecification, ServiceContext serviceContext)
 		throws Exception {
+
+		Settings settings = null;
+
+		if (pageSpecification != null) {
+			settings = pageSpecification.getSettings();
+		}
 
 		layout = _updateLookAndFeel(layout, settings);
 
@@ -500,15 +505,10 @@ public class LayoutUtil {
 			WidgetPageSpecification widgetPageSpecification)
 		throws Exception {
 
-		Settings settings = null;
-
-		if (widgetPageSpecification != null) {
-			settings = widgetPageSpecification.getSettings();
-		}
-
 		layout = updateLayout(
 			layout, nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
-			layout.getRobotsMap(), friendlyURLMap, settings, serviceContext);
+			layout.getRobotsMap(), friendlyURLMap, widgetPageSpecification,
+			serviceContext);
 
 		if (typeSettingsUnicodeProperties == null) {
 			return layout;

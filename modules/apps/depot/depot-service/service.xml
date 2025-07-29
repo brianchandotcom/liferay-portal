@@ -85,6 +85,7 @@
 		<column name="depotEntryId" type="long" />
 		<column name="searchable" type="boolean" />
 		<column name="toGroupId" type="long" />
+		<column name="type" type="long" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->

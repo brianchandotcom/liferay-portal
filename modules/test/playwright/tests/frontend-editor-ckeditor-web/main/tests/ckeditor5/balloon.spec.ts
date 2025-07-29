@@ -28,13 +28,6 @@ export const test = mergeTests(
 test.beforeEach(async ({ckeditorSamplePage, page, site}) => {
 	await ckeditorSamplePage.createAndGotoSitePage({site});
 
-	const productMenuToggle =
-		ckeditorSamplePage.page.getByLabel('Close Product Menu');
-
-	if (await productMenuToggle.isVisible()) {
-		await productMenuToggle.click();
-	}
-
 	await ckeditorSamplePage.selectTab('CKEditor 5');
 	await ckeditorSamplePage.selectTab('Balloon');
 
@@ -54,6 +47,7 @@ test(
 		await expect(balloonPage.toolbar).toBeVisible();
 
 		const advancedPresetControls = [
+			'Accessibility help',
 			'Undo',
 			'Redo',
 			'Styles',

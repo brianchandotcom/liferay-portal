@@ -90,6 +90,8 @@ const getDefaultEditorConfig = ({
 			plugins: basicPlugins,
 			toolbar: {
 				items: [
+					'accessibilityHelp',
+					'|',
 					'undo',
 					'redo',
 					'|',
@@ -143,6 +145,8 @@ const getDefaultEditorConfig = ({
 	}
 
 	const toolbarItems = [
+		'accessibilityHelp',
+		'|',
 		'undo',
 		'redo',
 		'|',

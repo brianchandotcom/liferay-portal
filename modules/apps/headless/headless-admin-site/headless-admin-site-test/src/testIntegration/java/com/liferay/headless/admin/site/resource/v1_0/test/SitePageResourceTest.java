@@ -1219,7 +1219,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertSitePage(
 			_layoutLocalService.getLayoutByExternalReferenceCode(
 				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
-			sitePage);
+			putSitePage);
 
 		_assertPutSiteSiteByExternalReferenceCodeSitePageProblemException(
 			_getRandomSitePage(

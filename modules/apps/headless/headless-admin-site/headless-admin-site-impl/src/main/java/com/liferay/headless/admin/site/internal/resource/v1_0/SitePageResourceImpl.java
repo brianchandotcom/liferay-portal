@@ -16,7 +16,6 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -271,12 +270,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			String externalReferenceCode, long groupId, SitePage sitePage)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			groupId, contextHttpServletRequest, sitePage.getViewableByAsString()
-		).build();
-
-		serviceContext.setUserId(contextUser.getUserId());
-		serviceContext.setUuid(sitePage.getUuid());
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			null, sitePage.getDateCreated(), groupId, contextHttpServletRequest,
+			null, sitePage.getDateModified(), contextUser.getUserId(),
+			sitePage.getUuid());
 
 		_validatePageSpecificationExternalReferenceCode(
 			serviceContext, sitePage);

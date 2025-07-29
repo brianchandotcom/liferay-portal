@@ -11,23 +11,14 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author Zsolt Balogh
  */
 public class PatcherFixSchedulerMessageListener extends BaseMessageListener {
 
-	public static PatcherFixSchedulerMessageListener getInstance(
-		ThemeDisplay themeDisplay) {
-
-		_patcherFixSchedulerMessageListener.setThemeDisplay(themeDisplay);
-
+	public static PatcherFixSchedulerMessageListener getInstance() {
 		return _patcherFixSchedulerMessageListener;
-	}
-
-	public void setThemeDisplay(ThemeDisplay themeDisplay) {
-		_themeDisplay = themeDisplay;
 	}
 
 	@Override
@@ -37,7 +28,8 @@ public class PatcherFixSchedulerMessageListener extends BaseMessageListener {
 				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
 
 		PatcherUtil.processOSBPatcherStatusFiles(
-			patcherConfiguration.patcherStatusFixPath(), _themeDisplay);
+			CompanyThreadLocal.getCompanyId(),
+			patcherConfiguration.patcherStatusFixPath());
 
 		PatcherUtil.notifyUsersInactivePatcherBaseModels();
 	}
@@ -45,7 +37,5 @@ public class PatcherFixSchedulerMessageListener extends BaseMessageListener {
 	private static final PatcherFixSchedulerMessageListener
 		_patcherFixSchedulerMessageListener =
 			new PatcherFixSchedulerMessageListener();
-
-	private ThemeDisplay _themeDisplay;
 
 }

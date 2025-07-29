@@ -11,49 +11,39 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author Zsolt Balogh
  */
 public class PatcherBuildSchedulerMessageListener extends BaseMessageListener {
 
-	public static PatcherBuildSchedulerMessageListener getInstance(
-		ThemeDisplay themeDisplay) {
-
-		_patcherBuildSchedulerMessageListener.setThemeDisplay(themeDisplay);
-
+	public static PatcherBuildSchedulerMessageListener getInstance() {
 		return _patcherBuildSchedulerMessageListener;
-	}
-
-	public void setThemeDisplay(ThemeDisplay themeDisplay) {
-		_themeDisplay = themeDisplay;
 	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		PatcherUtil.processOSBPatcherMessageQueue(_themeDisplay);
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		PatcherUtil.processOSBPatcherMessageQueue(companyId);
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, companyId);
 
 		PatcherUtil.processOSBPatcherStatusFiles(
-			patcherConfiguration.patcherStatusBuildJenkinsPath(),
-			_themeDisplay);
+			companyId, patcherConfiguration.patcherStatusBuildJenkinsPath());
 
 		PatcherUtil.processOSBPatcherStatusFiles(
-			patcherConfiguration.patcherStatusBuildJenkinsTestPath(),
-			_themeDisplay);
+			companyId,
+			patcherConfiguration.patcherStatusBuildJenkinsTestPath());
 
 		PatcherUtil.processOSBPatcherStatusFiles(
-			patcherConfiguration.patcherStatusBuildPath(), _themeDisplay);
+			companyId, patcherConfiguration.patcherStatusBuildPath());
 	}
 
 	private static final PatcherBuildSchedulerMessageListener
 		_patcherBuildSchedulerMessageListener =
 			new PatcherBuildSchedulerMessageListener();
-
-	private ThemeDisplay _themeDisplay;
 
 }

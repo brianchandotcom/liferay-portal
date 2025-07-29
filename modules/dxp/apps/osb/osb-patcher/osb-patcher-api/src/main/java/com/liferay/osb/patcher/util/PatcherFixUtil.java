@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -740,7 +739,7 @@ public class PatcherFixUtil {
 		rollbackFor = Exception.class
 	)
 	public static void processOSBPatcherFixAddJenkinsStatus(
-			long patcherFixId, String servletStatus, ThemeDisplay themeDisplay)
+			long patcherFixId, String servletStatus, User user)
 		throws Exception {
 
 		PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(
@@ -769,12 +768,12 @@ public class PatcherFixUtil {
 		if (patcherFix.getType() == PatcherFixConstants.TYPE_REBASE) {
 			updatePatcherFixRebaseStatus(
 				patcherFixId, osbPatcherServletOutcome.getStatus(),
-				osbPatcherServletOutcome.getResult(), messages, themeDisplay);
+				osbPatcherServletOutcome.getResult(), messages, user);
 		}
 		else {
 			updatePatcherFixStatus(
 				patcherFixId, osbPatcherServletOutcome.getStatus(),
-				osbPatcherServletOutcome.getResult(), messages, themeDisplay);
+				osbPatcherServletOutcome.getResult(), messages, user);
 		}
 	}
 
@@ -895,7 +894,7 @@ public class PatcherFixUtil {
 
 	protected static void updatePatcherFixPatcherBuildRebaseStatus(
 			long patcherFixId, int osbPatcherServletOutcomeStatus,
-			List<String> messages, ThemeDisplay themeDisplay)
+			List<String> messages, User user)
 		throws Exception {
 
 		List<PatcherBuild> patcherBuilds =
@@ -924,22 +923,18 @@ public class PatcherFixUtil {
 				}
 
 				patcherBuild = PatcherBuildLocalServiceUtil.updateStatus(
-					themeDisplay.getUserId(), patcherBuild.getPatcherBuildId(),
-					status);
+					user.getUserId(), patcherBuild.getPatcherBuildId(), status);
 
-				PatcherBuildUtil.workflowParentPatcherBuild(
-					themeDisplay.getUser(), patcherBuild);
+				PatcherBuildUtil.workflowParentPatcherBuild(user, patcherBuild);
 
 				if (status == WorkflowConstants.STATUS_BUILD_COMPILING) {
-					JenkinsUtil.sendDistJenkinsRequest(
-						themeDisplay.getUser(), patcherBuild);
+					JenkinsUtil.sendDistJenkinsRequest(user, patcherBuild);
 				}
 				else if ((status ==
 							WorkflowConstants.STATUS_BUILD_MERGING_ONLY) ||
 						 (status == WorkflowConstants.STATUS_BUILD_MERGING)) {
 
-					JenkinsUtil.sendAgentJenkinsRequest(
-						themeDisplay.getUser(), patcherBuild);
+					JenkinsUtil.sendAgentJenkinsRequest(user, patcherBuild);
 				}
 			}
 			else if (osbPatcherServletOutcomeStatus ==
@@ -952,25 +947,21 @@ public class PatcherFixUtil {
 				}
 
 				patcherBuild = PatcherBuildLocalServiceUtil.updateStatus(
-					themeDisplay.getUserId(), patcherBuild.getPatcherBuildId(),
-					status);
+					user.getUserId(), patcherBuild.getPatcherBuildId(), status);
 
-				PatcherBuildUtil.workflowParentPatcherBuild(
-					themeDisplay.getUser(), patcherBuild);
+				PatcherBuildUtil.workflowParentPatcherBuild(user, patcherBuild);
 			}
 			else {
 				patcherBuild = PatcherBuildLocalServiceUtil.updateStatus(
-					themeDisplay.getUserId(), patcherBuild.getPatcherBuildId(),
-					status);
+					user.getUserId(), patcherBuild.getPatcherBuildId(), status);
 
-				PatcherBuildUtil.workflowParentPatcherBuild(
-					themeDisplay.getUser(), patcherBuild);
+				PatcherBuildUtil.workflowParentPatcherBuild(user, patcherBuild);
 			}
 		}
 	}
 
 	protected static void updatePatcherFixPatcherBuilds(
-			long patcherFixId, List<String> messages, ThemeDisplay themeDisplay)
+			long patcherFixId, List<String> messages, User user)
 		throws Exception {
 
 		List<PatcherBuild> patcherBuilds =
@@ -1007,10 +998,9 @@ public class PatcherFixUtil {
 			}
 
 			PatcherBuildUtil.updatePatcherBuildFixes(
-				themeDisplay.getUser(), patcherBuild, patcherFixIds);
+				user, patcherBuild, patcherFixIds);
 
-			JenkinsUtil.sendAgentJenkinsRequest(
-				themeDisplay.getUser(), patcherBuild);
+			JenkinsUtil.sendAgentJenkinsRequest(user, patcherBuild);
 
 			PatcherUtil.addMessage(
 				StringBundler.concat(
@@ -1023,7 +1013,7 @@ public class PatcherFixUtil {
 	protected static void updatePatcherFixRebaseStatus(
 			long patcherFixId, int osbPatcherServletOutcomeStatus,
 			String osbPatcherServletOutcomeResult, List<String> messages,
-			ThemeDisplay themeDisplay)
+			User user)
 		throws Exception {
 
 		PatcherFix patcherFix = null;
@@ -1032,20 +1022,19 @@ public class PatcherFixUtil {
 				OSBPatcherServletOutcome.STATUS_SUCCESS) {
 
 			patcherFix = PatcherFixLocalServiceUtil.updatePatcherFix(
-				themeDisplay.getUserId(), patcherFixId,
-				osbPatcherServletOutcomeResult,
+				user.getUserId(), patcherFixId, osbPatcherServletOutcomeResult,
 				WorkflowConstants.STATUS_FIX_COMPLETE);
 		}
 		else if (osbPatcherServletOutcomeStatus ==
 					OSBPatcherServletOutcome.STATUS_CONFLICT) {
 
 			patcherFix = PatcherFixLocalServiceUtil.updateStatus(
-				themeDisplay.getUserId(), patcherFixId,
+				user.getUserId(), patcherFixId,
 				WorkflowConstants.STATUS_FIX_REBASE_CONFLICT);
 		}
 		else {
 			patcherFix = PatcherFixLocalServiceUtil.updateStatus(
-				themeDisplay.getUserId(), patcherFixId,
+				user.getUserId(), patcherFixId,
 				WorkflowConstants.STATUS_FIX_FAILED);
 		}
 
@@ -1056,22 +1045,20 @@ public class PatcherFixUtil {
 			messages);
 
 		updatePatcherFixPatcherBuildRebaseStatus(
-			patcherFixId, osbPatcherServletOutcomeStatus, messages,
-			themeDisplay);
+			patcherFixId, osbPatcherServletOutcomeStatus, messages, user);
 	}
 
 	protected static void updatePatcherFixStatus(
 			long patcherFixId, int osbPatcherServletOutcomeStatus,
 			String osbPatcherServletOutcomeResult, List<String> messages,
-			ThemeDisplay themeDisplay)
+			User user)
 		throws Exception {
 
 		if (osbPatcherServletOutcomeStatus ==
 				OSBPatcherServletOutcome.STATUS_SUCCESS) {
 
 			PatcherFix patcherFix = PatcherFixLocalServiceUtil.updatePatcherFix(
-				themeDisplay.getUserId(), patcherFixId,
-				osbPatcherServletOutcomeResult,
+				user.getUserId(), patcherFixId, osbPatcherServletOutcomeResult,
 				WorkflowConstants.STATUS_FIX_COMPLETE);
 
 			PatcherUtil.addMessage(
@@ -1080,11 +1067,11 @@ public class PatcherFixUtil {
 					patcherFix.getName(), " was successfully added."),
 				messages);
 
-			updatePatcherFixPatcherBuilds(patcherFixId, messages, themeDisplay);
+			updatePatcherFixPatcherBuilds(patcherFixId, messages, user);
 		}
 		else {
 			PatcherFix patcherFix = PatcherFixLocalServiceUtil.updateStatus(
-				themeDisplay.getUserId(), patcherFixId,
+				user.getUserId(), patcherFixId,
 				WorkflowConstants.STATUS_FIX_FAILED);
 
 			PatcherUtil.addMessage(

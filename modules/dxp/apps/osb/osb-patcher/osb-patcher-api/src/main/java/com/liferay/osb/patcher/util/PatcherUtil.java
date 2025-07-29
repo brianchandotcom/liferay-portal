@@ -303,23 +303,21 @@ public class PatcherUtil {
 			new String[] {StringPool.BLANK, StringPool.BLANK});
 	}
 
-	public static void processOSBPatcherMessageQueue(ThemeDisplay themeDisplay)
+	public static void processOSBPatcherMessageQueue(long companyId)
 		throws Exception {
 
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-			themeDisplay.getCompanyId());
+		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
 		String lockClassName = PatcherBuild.class.getName() + "_Jenkins";
 
 		if (LockLocalServiceUtil.hasLock(
-				defaultUserId, lockClassName, themeDisplay.getCompanyId())) {
+				defaultUserId, lockClassName, companyId)) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Skipping ", lockClassName,
-						" file processing for company ",
-						themeDisplay.getCompanyId(),
+						" file processing for company ", companyId,
 						"because it is currently running"));
 			}
 
@@ -328,8 +326,8 @@ public class PatcherUtil {
 
 		try {
 			LockLocalServiceUtil.lock(
-				defaultUserId, lockClassName, themeDisplay.getCompanyId(),
-				lockClassName, false, Time.HOUR);
+				defaultUserId, lockClassName, companyId, lockClassName, false,
+				Time.HOUR);
 
 			String jenkinsStatusJSONString = getNextPatcherBuilderStatusMsg();
 
@@ -364,23 +362,20 @@ public class PatcherUtil {
 			_log.error(exception);
 		}
 		finally {
-			LockLocalServiceUtil.unlock(
-				lockClassName, themeDisplay.getCompanyId());
+			LockLocalServiceUtil.unlock(lockClassName, companyId);
 		}
 	}
 
-	public static void processOSBPatcherStatusFiles(
-			String path, ThemeDisplay themeDisplay)
+	public static void processOSBPatcherStatusFiles(long companyId, String path)
 		throws Exception {
 
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-			themeDisplay.getCompanyId());
+		User defaultUser = UserLocalServiceUtil.getDefaultUser(companyId);
 
 		String lockClassName = PatcherFix.class.getName();
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, themeDisplay.getCompanyId());
+				PatcherConfiguration.class, companyId);
 
 		String patcherStatusPath = patcherConfiguration.patcherStatusPath();
 
@@ -404,14 +399,13 @@ public class PatcherUtil {
 		}
 
 		if (LockLocalServiceUtil.hasLock(
-				defaultUserId, lockClassName, themeDisplay.getCompanyId())) {
+				defaultUser.getUserId(), lockClassName, companyId)) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Skipping ", lockClassName,
-						" file processing for company ",
-						themeDisplay.getCompanyId(),
+						" file processing for company ", companyId,
 						"because it is currently running"));
 			}
 
@@ -420,7 +414,7 @@ public class PatcherUtil {
 
 		try {
 			LockLocalServiceUtil.lock(
-				defaultUserId, lockClassName, themeDisplay.getCompanyId(),
+				defaultUser.getUserId(), lockClassName, companyId,
 				lockClassName, false, Time.HOUR);
 
 			String[] patcherFileNames = FileUtil.listFiles(path);
@@ -487,7 +481,7 @@ public class PatcherUtil {
 					else {
 						PatcherFixUtil.processOSBPatcherFixAddJenkinsStatus(
 							GetterUtil.getLong(patcherId),
-							jenkinsStatusJSONString, themeDisplay);
+							jenkinsStatusJSONString, defaultUser);
 					}
 				}
 				catch (Exception exception) {
@@ -499,8 +493,7 @@ public class PatcherUtil {
 			_log.error(exception);
 		}
 		finally {
-			LockLocalServiceUtil.unlock(
-				lockClassName, themeDisplay.getCompanyId());
+			LockLocalServiceUtil.unlock(lockClassName, companyId);
 		}
 	}
 

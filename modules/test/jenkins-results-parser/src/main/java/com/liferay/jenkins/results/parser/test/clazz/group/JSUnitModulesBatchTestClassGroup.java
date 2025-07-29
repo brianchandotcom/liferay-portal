@@ -173,7 +173,7 @@ public class JSUnitModulesBatchTestClassGroup
 		}
 	}
 
-	private List<File> _getModulesProjectDirs(final File portalModulesBaseDir)
+	private List<File> _getModulesProjectDirs(File portalModulesBaseDir)
 		throws IOException {
 
 		List<File> modulesProjectDirs = new ArrayList<>();
@@ -187,10 +187,6 @@ public class JSUnitModulesBatchTestClassGroup
 				@Override
 				public FileVisitResult preVisitDirectory(
 					Path filePath, BasicFileAttributes basicFileAttributes) {
-
-					if (filePath.equals(portalModulesBaseDir.toPath())) {
-						return FileVisitResult.CONTINUE;
-					}
 
 					File file = filePath.toFile();
 

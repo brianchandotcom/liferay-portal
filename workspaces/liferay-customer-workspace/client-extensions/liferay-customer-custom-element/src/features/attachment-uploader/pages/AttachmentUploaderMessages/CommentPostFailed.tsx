@@ -33,7 +33,7 @@ const CommentPostFailed = () => {
 			{state?.ticketId && (
 				<a
 					className="btn btn-primary button-rounded"
-					href={`${helpCenterURL}/hc/requests/${state.ticketId}`}
+					href={`${helpCenterURL}/${state.ticketId}`}
 				>
 					{i18n.translate('return-to-ticket')}
 				</a>

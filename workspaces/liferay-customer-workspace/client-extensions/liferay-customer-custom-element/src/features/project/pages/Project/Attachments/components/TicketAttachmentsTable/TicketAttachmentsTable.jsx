@@ -175,7 +175,7 @@ const TicketAttachmentsTable = ({
 								ticket: (
 									<a
 										className="m-0 text-truncate"
-										href={`${helpCenterURL}/browse/${ticketAttachment?.ticketId}`}
+										href={`${helpCenterURL}/${ticketAttachment?.ticketId}`}
 									>
 										{'#' + ticketAttachment?.ticketId}
 									</a>

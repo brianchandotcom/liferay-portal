@@ -35,7 +35,7 @@ const UploadConfirmation = () => {
 			{state?.ticketId && (
 				<a
 					className="btn btn-primary uploader-primary-button"
-					href={`${helpCenterURL}/browse/${state.ticketId}`}
+					href={`${helpCenterURL}/${state.ticketId}`}
 				>
 					{i18n.translate('return-to-ticket')}
 				</a>

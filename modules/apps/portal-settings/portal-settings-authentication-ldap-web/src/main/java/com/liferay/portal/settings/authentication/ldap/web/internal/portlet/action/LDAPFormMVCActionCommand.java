@@ -55,16 +55,7 @@ public class LDAPFormMVCActionCommand extends BaseFormMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String portletId = PortalUtil.getPortletId(actionRequest);
-
-		long companyId = 0L;
-
-		if (portletId.equals(ConfigurationAdminPortletKeys.INSTANCE_SETTINGS)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			companyId = themeDisplay.getCompanyId();
-		}
+		long companyId = ActionUtil.getCompanyId(actionRequest);
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

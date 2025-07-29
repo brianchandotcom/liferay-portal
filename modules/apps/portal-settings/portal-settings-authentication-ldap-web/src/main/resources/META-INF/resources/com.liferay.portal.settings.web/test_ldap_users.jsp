@@ -16,13 +16,7 @@ String principal = ParamUtil.getString(request, "principal");
 
 String credentials = request.getParameter("credentials");
 
-long companyId = 0L;
-
-String portletId = PortalUtil.getPortletId(request);
-
-if (portletId.equals(ConfigurationAdminPortletKeys.INSTANCE_SETTINGS)) {
-	companyId = themeDisplay.getCompanyId();
-}
+long companyId = ActionUtil.getCompanyId(request);
 
 if (credentials.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
 	LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(companyId, ldapServerId);

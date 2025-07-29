@@ -557,29 +557,28 @@ public class EditServerMVCActionCommandTest {
 			!cmd.equals("updatePortalProperties")) {
 
 			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-					 new ConfigurationTemporarySwapper(
-				"com.liferay.captcha.configuration.CaptchaConfiguration",
-				HashMapDictionaryBuilder.<String, Object>put(
-					"createAccountCaptchaEnabled", "true"
-				).put(
-					"maxChallenges", "1"
-				).put(
-					"sendPasswordCaptchaEnabled", "true"
-				).build());
-				CompanyConfigurationTemporarySwapper
-					companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(),
-						CaptchaConfiguration.class.getName(),
-						new HashMapDictionaryBuilder(
-						).<String, Object>put(
+					new ConfigurationTemporarySwapper(
+						"com.liferay.captcha.configuration.CaptchaConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
 							"createAccountCaptchaEnabled", "true"
 						).put(
-							"sendPasswordCaptchaEnabled", "true"
-						).put(
 							"maxChallenges", "1"
-						).build())
-			) {
+						).put(
+							"sendPasswordCaptchaEnabled", "true"
+						).build());
+				CompanyConfigurationTemporarySwapper
+					companyConfigurationTemporarySwapper =
+						new CompanyConfigurationTemporarySwapper(
+							TestPropsValues.getCompanyId(),
+							CaptchaConfiguration.class.getName(),
+							new HashMapDictionaryBuilder(
+							).<String, Object>put(
+								"createAccountCaptchaEnabled", "true"
+							).put(
+								"sendPasswordCaptchaEnabled", "true"
+							).put(
+								"maxChallenges", "1"
+							).build())) {
 
 				_mvcActionCommand.processAction(
 					mockLiferayPortletActionRequest,

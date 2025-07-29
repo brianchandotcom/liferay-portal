@@ -121,7 +121,6 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
-import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -5735,11 +5734,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectDefinitionId);
+
 		stringUtilReplaceValues.put(
 			"OBJECT_DEFINITION_PORTLET_ID:" + name,
-			StringBundler.concat(
-				ObjectPortletKeys.OBJECT_DEFINITIONS, StringPool.UNDERLINE,
-				StringUtil.split(className, StringPool.POUND)[1]));
+			serviceBuilderObjectDefinition.getPortletId());
 	}
 
 	private void _setDefaultLayoutUtilityPageEntries(

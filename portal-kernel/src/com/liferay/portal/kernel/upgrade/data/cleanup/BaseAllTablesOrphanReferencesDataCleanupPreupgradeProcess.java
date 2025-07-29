@@ -25,6 +25,11 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 		_targetTableName = targetTableName;
 	}
 
+	protected abstract void cleanUp(
+			String sourceColumnName, String sourceTableName,
+			String targetColumnName, String targetTableName)
+		throws Exception;
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
@@ -61,16 +66,11 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 				continue;
 			}
 
-			executeLogic(
+			cleanUp(
 				targetColumnName, sourceTableName, targetColumnName,
 				targetTableName);
 		}
 	}
-
-	protected abstract void executeLogic(
-			String sourceColumnName, String sourceTableName,
-			String targetColumnName, String targetTableName)
-		throws Exception;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess.class);

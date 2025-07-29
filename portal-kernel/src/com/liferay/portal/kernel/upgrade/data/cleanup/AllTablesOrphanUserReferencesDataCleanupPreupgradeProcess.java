@@ -18,7 +18,7 @@ public class AllTablesOrphanUserReferencesDataCleanupPreupgradeProcess
 	}
 
 	@Override
-	protected void executeLogic(
+	protected void cleanUp(
 			String sourceColumnName, String sourceTableName,
 			String targetColumnName, String targetTableName)
 		throws Exception {

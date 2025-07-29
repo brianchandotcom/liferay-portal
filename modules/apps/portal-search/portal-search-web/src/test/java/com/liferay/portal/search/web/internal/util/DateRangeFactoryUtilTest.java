@@ -54,17 +54,17 @@ public class DateRangeFactoryUtilTest {
 	}
 
 	@Test(expected = ParseException.class)
-	public void testDateFormatShouldBeyyyyMMddHHmmss() throws Exception {
-		_assertForEachLocale(
-			() -> DateRangeFactoryUtil.validateRanges(
-				"[{\"label\":\"past-hour\", \"range\":\"[20190908 TO *]\"}]"));
-	}
-
-	@Test(expected = ParseException.class)
 	public void testInvalidRangeAliases() throws Exception {
 		_assertForEachLocale(
 			() -> DateRangeFactoryUtil.validateRanges(
 				"[{\"label\":\"past-hour\", \"range\":\"[past-test TO *]\"}]"));
+	}
+
+	@Test(expected = ParseException.class)
+	public void testInvalidRangeDateFormat() throws Exception {
+		_assertForEachLocale(
+			() -> DateRangeFactoryUtil.validateRanges(
+				"[{\"label\":\"past-hour\", \"range\":\"[20190908 TO *]\"}]"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -135,26 +135,26 @@ public class DateRangeFactoryUtilTest {
 	}
 
 	@FunctionalInterface
-	protected interface TestThrowingRunnable {
+	protected interface CheckedRunnable {
 
 		public void run() throws Exception;
 
 	}
 
-	private void _assertForEachLocale(TestThrowingRunnable assertionBlock)
+	private void _assertForEachLocale(CheckedRunnable checkedRunnable)
 		throws Exception {
 
-		for (Locale locale : _localesToTest) {
+		for (Locale locale : _locales) {
 			LocaleThreadLocal.setDefaultLocale(locale);
 
-			assertionBlock.run();
+			checkedRunnable.run();
 		}
 	}
 
 	private final Calendar _calendar = new GregorianCalendar(
 		2018, Calendar.MAY, 15, 23, 59, 59);
 	private Locale _defaultLocale;
-	private final List<Locale> _localesToTest = List.of(
-		LocaleUtil.US, new Locale("ar", "EG"));
+	private final List<Locale> _locales = List.of(
+		LocaleUtil.US, new Locale("ar", "SA"));
 
 }

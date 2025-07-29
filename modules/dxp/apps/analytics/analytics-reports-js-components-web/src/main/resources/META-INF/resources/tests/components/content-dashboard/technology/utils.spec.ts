@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {formatData} from '../../../js/components/technology/utils';
-import {MetricName, MetricType} from '../../../js/types/global';
+import {formatData} from '../../../../js/components/technology/utils';
+import {MetricName, MetricType} from '../../../../js/types/global';
 
 describe('Format Technology Data', () => {
 	it('format data for scenario 1', () => {

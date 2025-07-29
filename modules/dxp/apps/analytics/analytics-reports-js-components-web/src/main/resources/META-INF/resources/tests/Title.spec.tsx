@@ -6,7 +6,7 @@
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import Title from '../../js/components/Title';
+import Title from '../js/components/Title';
 
 describe('Title', () => {
 	it('renders component', () => {

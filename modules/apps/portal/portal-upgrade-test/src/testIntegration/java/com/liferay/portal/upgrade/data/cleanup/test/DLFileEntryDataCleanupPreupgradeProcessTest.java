@@ -7,6 +7,8 @@ package com.liferay.portal.upgrade.data.cleanup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -72,10 +74,14 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 				logMessages.contains(
 					"Deleted document library file entry " + fileEntryId1 +
 						" because its name was null"));
+
 			Assert.assertTrue(
 				logMessages.contains(
-					"Deleted document library file entry " + fileEntryId2 +
-						" because its name was empty"));
+					StringBundler.concat(
+						"Deleted document library file entry ", fileEntryId2,
+						" because its name was ",
+						(DBManagerUtil.getDBType() == DBType.ORACLE) ? "null" :
+							"empty")));
 		}
 		finally {
 			runSQL(

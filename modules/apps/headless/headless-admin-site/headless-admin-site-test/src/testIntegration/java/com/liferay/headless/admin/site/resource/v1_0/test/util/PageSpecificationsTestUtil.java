@@ -443,6 +443,27 @@ public class PageSpecificationsTestUtil {
 		}
 	}
 
+	private static ContentPageSpecification[] _getContentPageSpecifications(
+		String draftPageSpecificationExternalReferenceCode,
+		String publishedPageSpecificationExternalReferenceCode) {
+
+		ContentPageSpecification draftContentPageSpecification =
+			getContentPageSpecification(
+				draftPageSpecificationExternalReferenceCode, null,
+				PageSpecification.Status.DRAFT);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			getContentPageSpecification(
+				publishedPageSpecificationExternalReferenceCode,
+				draftContentPageSpecification.getExternalReferenceCode(),
+				PageSpecification.Status.APPROVED);
+
+		return new ContentPageSpecification[] {
+			publishedContentPageSpecification, draftContentPageSpecification
+		};
+	}
+
+
 	private static boolean _isPublished(Layout draftLayout) {
 		return GetterUtil.getBoolean(
 			draftLayout.getTypeSettingsProperty(

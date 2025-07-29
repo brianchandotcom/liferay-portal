@@ -108,6 +108,10 @@
 			<finder-column name="searchable" />
 			<finder-column name="toGroupId" />
 		</finder>
+		<finder name="TGI_T" return-type="Collection">
+			<finder-column name="toGroupId" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="DepotEntryPin" remote-service="true" trash-enabled="false" uuid="true">
 

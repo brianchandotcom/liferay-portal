@@ -127,8 +127,8 @@ function SubscribeButton({
 	const [subscribed, setSubscribed] = useState<boolean>(isSubscribed);
 
 	const title = subscribed
-		? Liferay.Language.get('subscribe')
-		: Liferay.Language.get('unsubscribe');
+		? Liferay.Language.get('unsubscribe')
+		: Liferay.Language.get('subscribe');
 
 	return (
 		<ClayButtonWithIcon
@@ -177,7 +177,7 @@ function SubscribeButton({
 				}
 			}}
 			size="sm"
-			symbol={subscribed ? 'bell-on' : 'bell-off'}
+			symbol={subscribed ? 'bell-off' : 'bell-on'}
 			title={title}
 		/>
 	);

@@ -12,7 +12,7 @@ import React from 'react';
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 
 interface MembersListItemProps {
-	assetLibraryCreatorUserId?: string;
+	assetLibraryCreatorUserId?: string | number;
 	currentUserId?: string;
 	emptyMessage: string;
 	itemType: 'user' | 'group';
@@ -39,7 +39,8 @@ export function MembersListItem({
 			{items.map((item) => {
 				const isUser = itemType === 'user';
 				const isOwner =
-					isUser && assetLibraryCreatorUserId === String(item.id);
+					isUser &&
+					String(assetLibraryCreatorUserId) === String(item.id);
 
 				const renderGroupCount = () => {
 					if (!isUser) {

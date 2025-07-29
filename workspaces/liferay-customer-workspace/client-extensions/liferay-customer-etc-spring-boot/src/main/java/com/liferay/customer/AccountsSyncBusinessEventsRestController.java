@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -322,23 +323,19 @@ public class AccountsSyncBusinessEventsRestController
 				zendeskTicketQuery);
 
 			for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
-				Map<Long, String> customFields =
-					zendeskTicket.getCustomFields();
-
-				customFields.put(
-					_zendeskBusinessEventTicketFieldId, businessEvents);
-
 				Set<String> tags = zendeskTicket.getTags();
 
 				tags.remove("impacting_business_event");
+
+				Map<Long, String> customFields =
+					zendeskTicket.getCustomFields();
+
+				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
 
 				if (associatedTicketsHeatTags.containsKey(
 						zendeskTicket.getZendeskTicketId())) {
 
 					tags.add("impacting_business_event");
-
-					String heatTag = customFields.get(
-						_zendeskHeatTagTicketFieldId);
 
 					String highestHeatTag = associatedTicketsHeatTags.get(
 						zendeskTicket.getZendeskTicketId());
@@ -347,15 +344,19 @@ public class AccountsSyncBusinessEventsRestController
 							HeatTagConstants.getScore(highestHeatTag)) &&
 						!heatTag.equals(highestHeatTag)) {
 
-						customFields.put(
-							_zendeskHeatTagTicketFieldId, highestHeatTag);
+						heatTag = highestHeatTag;
 					}
 				}
 
 				_zendeskService.updateZendeskTicket(
 					zendeskTicket.getZendeskTicketId(), zendeskOrganizationId,
 					zendeskTicket.getRequesterId(), zendeskTicket.getStatus(),
-					customFields, tags);
+					HashMapBuilder.put(
+						_zendeskBusinessEventTicketFieldId, businessEvents
+					).put(
+						_zendeskHeatTagTicketFieldId, heatTag
+					).build(),
+					tags);
 			}
 
 			page = searchHits.getNextPage();
@@ -403,12 +404,13 @@ public class AccountsSyncBusinessEventsRestController
 					continue;
 				}
 
-				customFields.put(_zendeskHeatTagTicketFieldId, highestHeatTag);
-
 				_zendeskService.updateZendeskTicket(
 					zendeskTicket.getZendeskTicketId(), zendeskOrganizationId,
 					zendeskTicket.getRequesterId(), zendeskTicket.getStatus(),
-					customFields, zendeskTicket.getTags());
+					HashMapBuilder.put(
+						_zendeskHeatTagTicketFieldId, highestHeatTag
+					).build(),
+					zendeskTicket.getTags());
 			}
 
 			page = searchHits.getNextPage();

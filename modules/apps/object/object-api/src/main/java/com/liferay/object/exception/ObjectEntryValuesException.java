@@ -257,6 +257,12 @@ public class ObjectEntryValuesException extends PortalException {
 			_objectFieldName = objectFieldName;
 		}
 
+		public InvalidValue(String message, String objectFieldName) {
+			super(message);
+
+			_objectFieldName = objectFieldName;
+		}
+
 		public String getObjectFieldName() {
 			return _objectFieldName;
 		}

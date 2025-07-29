@@ -50,6 +50,10 @@ public abstract class BaseOverviewResourceImpl implements OverviewResource {
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "depotEntryId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "languageId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -63,10 +67,6 @@ public abstract class BaseOverviewResourceImpl implements OverviewResource {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "rangeStart"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "spaceId"
 			)
 		}
 	)
@@ -79,6 +79,9 @@ public abstract class BaseOverviewResourceImpl implements OverviewResource {
 	@Override
 	public Overview getContentOverview(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("depotEntryId")
+			Long depotEntryId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("languageId")
 			String languageId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
@@ -89,10 +92,7 @@ public abstract class BaseOverviewResourceImpl implements OverviewResource {
 			Integer rangeKey,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("rangeStart")
-			String rangeStart,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("spaceId")
-			Long spaceId)
+			String rangeStart)
 		throws Exception {
 
 		return new Overview();
@@ -107,6 +107,10 @@ public abstract class BaseOverviewResourceImpl implements OverviewResource {
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "depotEntryId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "languageId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -120,10 +124,6 @@ public abstract class BaseOverviewResourceImpl implements OverviewResource {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "rangeStart"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "spaceId"
 			)
 		}
 	)
@@ -136,6 +136,9 @@ public abstract class BaseOverviewResourceImpl implements OverviewResource {
 	@Override
 	public Overview getFileOverview(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("depotEntryId")
+			Long depotEntryId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("languageId")
 			String languageId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
@@ -146,10 +149,7 @@ public abstract class BaseOverviewResourceImpl implements OverviewResource {
 			Integer rangeKey,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("rangeStart")
-			String rangeStart,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("spaceId")
-			Long spaceId)
+			String rangeStart)
 		throws Exception {
 
 		return new Overview();

@@ -77,33 +77,34 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {connectionInfo(spaceId: ___){admin, connectedToAnalyticsCloud, connectedToSpace, siteSyncedToAnalyticsCloud}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {connectionInfo(depotEntryId: ___){admin, connectedToAnalyticsCloud, connectedToSpace, siteSyncedToAnalyticsCloud}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public ConnectionInfo connectionInfo(@GraphQLName("spaceId") Long spaceId)
+	public ConnectionInfo connectionInfo(
+			@GraphQLName("depotEntryId") Long depotEntryId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_connectionInfoResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			connectionInfoResource -> connectionInfoResource.getConnectionInfo(
-				spaceId));
+				depotEntryId));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {inventoryAnalysis(categoryId: ___, groupBy: ___, languageId: ___, page: ___, pageSize: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___, spaceId: ___, structureId: ___, tagId: ___, vocabularyId: ___){inventoryAnalysisItems, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {inventoryAnalysis(categoryId: ___, depotEntryId: ___, groupBy: ___, languageId: ___, page: ___, pageSize: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___, structureId: ___, tagId: ___, vocabularyId: ___){inventoryAnalysisItems, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public InventoryAnalysis inventoryAnalysis(
 			@GraphQLName("categoryId") Long categoryId,
+			@GraphQLName("depotEntryId") Long depotEntryId,
 			@GraphQLName("groupBy") String groupBy,
 			@GraphQLName("languageId") String languageId,
 			@GraphQLName("rangeEnd") String rangeEnd,
 			@GraphQLName("rangeKey") Integer rangeKey,
 			@GraphQLName("rangeStart") String rangeStart,
-			@GraphQLName("spaceId") Long spaceId,
 			@GraphQLName("structureId") Long structureId,
 			@GraphQLName("tagId") Long tagId,
 			@GraphQLName("vocabularyId") Long vocabularyId,
@@ -116,8 +117,8 @@ public class Query {
 			this::_populateResourceContext,
 			inventoryAnalysisResource ->
 				inventoryAnalysisResource.getInventoryAnalysis(
-					categoryId, groupBy, languageId, rangeEnd, rangeKey,
-					rangeStart, spaceId, structureId, tagId, vocabularyId,
+					categoryId, depotEntryId, groupBy, languageId, rangeEnd,
+					rangeKey, rangeStart, structureId, tagId, vocabularyId,
 					Pagination.of(page, pageSize)));
 	}
 
@@ -145,43 +146,43 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentOverview(languageId: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___, spaceId: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentOverview(depotEntryId: ___, languageId: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Overview contentOverview(
+			@GraphQLName("depotEntryId") Long depotEntryId,
 			@GraphQLName("languageId") String languageId,
 			@GraphQLName("rangeEnd") String rangeEnd,
 			@GraphQLName("rangeKey") Integer rangeKey,
-			@GraphQLName("rangeStart") String rangeStart,
-			@GraphQLName("spaceId") Long spaceId)
+			@GraphQLName("rangeStart") String rangeStart)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_overviewResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			overviewResource -> overviewResource.getContentOverview(
-				languageId, rangeEnd, rangeKey, rangeStart, spaceId));
+				depotEntryId, languageId, rangeEnd, rangeKey, rangeStart));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {fileOverview(languageId: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___, spaceId: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {fileOverview(depotEntryId: ___, languageId: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Overview fileOverview(
+			@GraphQLName("depotEntryId") Long depotEntryId,
 			@GraphQLName("languageId") String languageId,
 			@GraphQLName("rangeEnd") String rangeEnd,
 			@GraphQLName("rangeKey") Integer rangeKey,
-			@GraphQLName("rangeStart") String rangeStart,
-			@GraphQLName("spaceId") Long spaceId)
+			@GraphQLName("rangeStart") String rangeStart)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_overviewResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			overviewResource -> overviewResource.getFileOverview(
-				languageId, rangeEnd, rangeKey, rangeStart, spaceId));
+				depotEntryId, languageId, rangeEnd, rangeKey, rangeStart));
 	}
 
 	@GraphQLName("ConnectionInfoPage")

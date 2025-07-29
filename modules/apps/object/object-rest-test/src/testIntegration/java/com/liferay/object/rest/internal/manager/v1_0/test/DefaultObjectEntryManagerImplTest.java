@@ -6416,9 +6416,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@FeatureFlag("LPD-42577")
 	@Test
-	public void testSubscribeObjectEntryWithHierarchy()
-		throws Exception {
-
+	public void testSubscribeObjectEntryWithHierarchy() throws Exception {
 		ObjectDefinition objectDefinitionA =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 		ObjectDefinition objectDefinitionAA =

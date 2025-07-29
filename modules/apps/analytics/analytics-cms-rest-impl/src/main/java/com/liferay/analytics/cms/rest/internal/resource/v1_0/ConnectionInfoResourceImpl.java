@@ -32,14 +32,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ConnectionInfoResourceImpl extends BaseConnectionInfoResourceImpl {
 
 	@Override
-	public ConnectionInfo getConnectionInfo(Long spaceId) throws Exception {
+	public ConnectionInfo getConnectionInfo(Long depotEntryId)
+		throws Exception {
+
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextUser.getCompanyId());
 
 		List<Long> groupIds = transform(
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
-				_depotEntryService.getDepotEntry(spaceId)),
+				_depotEntryService.getDepotEntry(depotEntryId)),
 			DepotEntryGroupRelModel::getToGroupId);
 
 		return _toConnectionInfo(

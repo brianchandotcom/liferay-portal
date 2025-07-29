@@ -75,8 +75,8 @@ const ContentAndFilesCard: React.FC<IContentAndFilesCard> = ({
 	const [metrics, setMetrics] = useState<IMetricsProps>();
 
 	const queryParams = buildQueryString({
+		depotEntryId: space.value,
 		languageId: language.value,
-		spaceId: space.value,
 		...getSafeRangeSelector(rangeSelector),
 	});
 

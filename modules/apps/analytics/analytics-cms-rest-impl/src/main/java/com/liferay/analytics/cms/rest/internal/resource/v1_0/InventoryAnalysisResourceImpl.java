@@ -78,14 +78,15 @@ public class InventoryAnalysisResourceImpl
 
 	@Override
 	public InventoryAnalysis getInventoryAnalysis(
-			Long categoryId, String groupBy, String languageId, String rangeEnd,
-			Integer rangeKey, String rangeStart, Long spaceId, Long structureId,
-			Long tagId, Long vocabularyId, Pagination pagination)
+			Long categoryId, Long depotEntryId, String groupBy,
+			String languageId, String rangeEnd, Integer rangeKey,
+			String rangeStart, Long structureId, Long tagId, Long vocabularyId,
+			Pagination pagination)
 		throws Exception {
 
 		InventoryAnalysis inventoryAnalysis = new InventoryAnalysis();
 
-		Long[] groupIds = _getGroupIds(_getDepotEntries(spaceId));
+		Long[] groupIds = _getGroupIds(_getDepotEntries(depotEntryId));
 
 		inventoryAnalysis.setInventoryAnalysisItems(
 			() -> transformToArray(
@@ -141,14 +142,16 @@ public class InventoryAnalysisResourceImpl
 		return DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
 	}
 
-	private List<DepotEntry> _getDepotEntries(Long spaceId) throws Exception {
+	private List<DepotEntry> _getDepotEntries(Long depotEntryId)
+		throws Exception {
+
 		List<DepotEntry> depotEntries = new ArrayList<>();
 
-		if (spaceId == null) {
+		if (depotEntryId == null) {
 			depotEntries.addAll(_getViewableDepotEntries());
 		}
 		else {
-			depotEntries.add(_depotEntryService.getDepotEntry(spaceId));
+			depotEntries.add(_depotEntryService.getDepotEntry(depotEntryId));
 		}
 
 		return depotEntries;

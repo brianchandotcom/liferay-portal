@@ -68,9 +68,9 @@ async function fetchStructureData({
 }) {
 	const queryParams = buildQueryString({
 		categoryId: filters.category?.value,
+		depotEntryId: space?.value,
 		groupBy: filters.structureType?.value,
 		languageId: language?.value,
-		spaceId: space?.value,
 		structureId: filters.structure?.value,
 		tagId: filters.tag?.value,
 		vocabularyId: filters.vocabulary?.value,
@@ -94,7 +94,7 @@ async function fetchStructureData({
 
 export function filterBySpaces(
 	assetLibraries: {id: number}[],
-	spaceId: string
+	depotEntryId: string
 ) {
 	return assetLibraries.some(({id}) => {
 
@@ -107,7 +107,7 @@ export function filterBySpaces(
 		// Decreasing -1 due a bug where response is increasing +1 in the id.
 		// Returns true if match id with id from space.
 
-		return String(id - 1) === spaceId;
+		return String(id - 1) === depotEntryId;
 	});
 }
 

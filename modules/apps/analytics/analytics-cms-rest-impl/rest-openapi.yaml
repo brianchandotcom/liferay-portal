@@ -93,7 +93,7 @@ paths:
             operationId: getConnectionInfo
             parameters:
                 -   in: query
-                    name: spaceId
+                    name: depotEntryId
                     required: true
                     schema:
                         format: int64
@@ -113,6 +113,11 @@ paths:
             operationId: getContentOverview
             parameters:
                 -   in: query
+                    name: depotEntryId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
                     name: languageId
                     schema:
                         type: string
@@ -128,11 +133,6 @@ paths:
                     name: rangeStart
                     schema:
                         type: string
-                -   in: query
-                    name: spaceId
-                    schema:
-                        format: int64
-                        type: integer
             responses:
                 200:
                     content:
@@ -148,6 +148,11 @@ paths:
             operationId: getFileOverview
             parameters:
                 -   in: query
+                    name: depotEntryId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
                     name: languageId
                     schema:
                         type: string
@@ -163,11 +168,6 @@ paths:
                     name: rangeStart
                     schema:
                         type: string
-                -   in: query
-                    name: spaceId
-                    schema:
-                        format: int64
-                        type: integer
             responses:
                 200:
                     content:
@@ -184,6 +184,11 @@ paths:
             parameters:
                 -   in: query
                     name: categoryId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: depotEntryId
                     schema:
                         format: int64
                         type: integer
@@ -215,11 +220,6 @@ paths:
                     name: rangeStart
                     schema:
                         type: string
-                -   in: query
-                    name: spaceId
-                    schema:
-                        format: int64
-                        type: integer
                 -   in: query
                     name: structureId
                     schema:

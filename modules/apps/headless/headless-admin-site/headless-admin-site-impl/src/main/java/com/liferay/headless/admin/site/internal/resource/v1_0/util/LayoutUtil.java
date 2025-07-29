@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -636,6 +637,21 @@ public class LayoutUtil {
 				itemExternalReference.getExternalReferenceCode(), groupId);
 
 		return styleBookEntry.getStyleBookEntryId();
+	}
+
+	private static void _setExpandoBridgeAttributes(
+		long companyId, PageSpecification pageSpecification,
+		ServiceContext serviceContext) {
+
+		if (pageSpecification == null) {
+			serviceContext.setExpandoBridgeAttributes(null);
+		}
+		else {
+			serviceContext.setExpandoBridgeAttributes(
+				CustomFieldsUtil.toMap(
+					Layout.class.getName(), companyId,
+					pageSpecification.getCustomFields(), null));
+		}
 	}
 
 	private static Layout _updateLayout(

@@ -3,22 +3,26 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-type ShouldIgnoreParamFn = (value: string) => boolean;
+type ShouldIgnoreParamFn = (value: string | string[]) => boolean;
 
 function formatQueryParam(
 	param: string,
-	value?: string,
+	value?: string | string[],
 	shouldIgnoreParam?: ShouldIgnoreParamFn
 ) {
 	if (!value?.length || shouldIgnoreParam?.(value)) {
 		return;
 	}
 
+	if (Array.isArray(value)) {
+		return `${encodeURIComponent(param)}=${value.join(',')}`;
+	}
+
 	return `${encodeURIComponent(param)}=${encodeURIComponent(value)}`;
 }
 
 function buildQueryString(
-	params: Record<string, string>,
+	params: Record<string, string | string[]>,
 	options?: {
 		shouldIgnoreParam?: ShouldIgnoreParamFn;
 	}

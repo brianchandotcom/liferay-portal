@@ -4,11 +4,11 @@
  */
 
 import {Text} from '@clayui/core';
+import {buildQueryString} from '@liferay/analytics-reports-js-components-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
-import {buildQueryString} from '../utils/buildQueryString';
 import {AllCategoriesDropdown} from './AllCategoriesDropdown';
 import {AllStructureTypesDropdown} from './AllStructureTypesDropdown';
 import {AllTagsDropdown} from './AllTagsDropdown';
@@ -66,15 +66,20 @@ async function fetchStructureData({
 	language: Item;
 	space: Item;
 }) {
-	const queryParams = buildQueryString({
-		categoryId: filters.category?.value,
-		depotEntryId: space?.value,
-		groupBy: filters.structureType?.value,
-		languageId: language?.value,
-		structureId: filters.structure?.value,
-		tagId: filters.tag?.value,
-		vocabularyId: filters.vocabulary?.value,
-	});
+	const queryParams = buildQueryString(
+		{
+			categoryId: filters.category?.value,
+			depotEntryId: space?.value,
+			groupBy: filters.structureType?.value,
+			languageId: language?.value,
+			structureId: filters.structure?.value,
+			tagId: filters.tag?.value,
+			vocabularyId: filters.vocabulary?.value,
+		},
+		{
+			shouldIgnoreParam: (value) => value === 'all',
+		}
+	);
 
 	const endpoint = `/o/analytics-cms-rest/v1.0/inventory-analysis${queryParams}`;
 

@@ -5115,6 +5115,154 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testGetObjectEntriesWithRelatedObjectEntries()
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 = _createObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectDefinition objectDefinition2 = _createObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_SITE);
+		ObjectDefinition objectDefinition3 = _createObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectRelationship objectRelationship1 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinition1, objectDefinition3,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectField objectField1 = objectFieldLocalService.getObjectField(
+			objectRelationship1.getObjectFieldId2());
+
+		ObjectRelationship objectRelationship2 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinition2, objectDefinition3,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectField objectField2 = objectFieldLocalService.getObjectField(
+			objectRelationship2.getObjectFieldId2());
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			objectDefinition1,
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build());
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = Collections.emptyMap();
+					scopeId = group1.getGroupId();
+				}
+			},
+			group1.getGroupKey());
+
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			objectDefinition3,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectField1.getName(), objectEntry1.getId()
+					).put(
+						objectField2.getName(), objectEntry2.getId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+					scopeId = group1.getGroupId();
+				}
+			},
+			group1.getGroupKey());
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		ObjectEntry objectEntry4 = _addObjectEntry(
+			objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = Collections.emptyMap();
+					scopeId = group2.getGroupId();
+				}
+			},
+			group2.getGroupKey());
+
+		ObjectEntry objectEntry5 = _addObjectEntry(
+			objectDefinition3,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectField1.getName(), objectEntry1.getId()
+					).put(
+						objectField2.getName(), objectEntry4.getId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+					scopeId = group2.getGroupId();
+				}
+			},
+			group2.getGroupKey());
+
+		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
+			TestPropsValues.getCompanyId(), objectDefinition3,
+			group1.getGroupKey(), null, _createDTOConverterContext(),
+			(String)null, null, null, null);
+
+		assertEquals(
+			(List<ObjectEntry>)page.getItems(),
+			List.of(
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							ObjectFieldSettingUtil.getValue(
+								ObjectFieldSettingConstants.
+									NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+								objectField1),
+							objectEntry1.getExternalReferenceCode()
+						).put(
+							ObjectFieldSettingUtil.getValue(
+								ObjectFieldSettingConstants.
+									NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+								objectField2),
+							objectEntry2.getExternalReferenceCode()
+						).putAll(
+							objectEntry3.getProperties()
+						).build();
+					}
+				}));
+
+		page = _objectEntryManager.getObjectEntries(
+			TestPropsValues.getCompanyId(), objectDefinition3,
+			group2.getGroupKey(), null, _createDTOConverterContext(),
+			(String)null, null, null, null);
+
+		assertEquals(
+			(List<ObjectEntry>)page.getItems(),
+			List.of(
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							ObjectFieldSettingUtil.getValue(
+								ObjectFieldSettingConstants.
+									NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+								objectField1),
+							objectEntry1.getExternalReferenceCode()
+						).put(
+							ObjectFieldSettingUtil.getValue(
+								ObjectFieldSettingConstants.
+									NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+								objectField2),
+							objectEntry4.getExternalReferenceCode()
+						).putAll(
+							objectEntry5.getProperties()
+						).build();
+					}
+				}));
+	}
+
+	@Test
 	public void testGetObjectEntriesWithRootObjectEntryId() throws Exception {
 
 		// User with permission to VIEW object definition A
@@ -8404,6 +8552,23 @@ public class DefaultObjectEntryManagerImplTest
 		throws Exception {
 
 		return _createObjectDefinition(false, objectFields, scope);
+	}
+
+	private ObjectDefinition _createObjectDefinition(String scope)
+		throws Exception {
+
+		return _createObjectDefinition(
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName"
+				).build()),
+			scope);
 	}
 
 	private Tree _createObjectEntryTree(

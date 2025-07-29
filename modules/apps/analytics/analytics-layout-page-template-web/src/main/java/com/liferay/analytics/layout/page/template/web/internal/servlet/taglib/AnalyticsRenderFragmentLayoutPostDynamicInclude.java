@@ -104,9 +104,10 @@ public class AnalyticsRenderFragmentLayoutPostDynamicInclude
 		PageContext pageContext) {
 
 		try {
-			StringBundler sb = new StringBundler(9);
+			StringBundler sb = new StringBundler(10);
 
-			sb.append("window.onload = function() {Analytics.track(\"");
+			sb.append("window.onload = function() {window.Analytics && ");
+			sb.append("window.Analytics.track(\"");
 
 			InfoItemClassDetails infoItemClassDetails =
 				new InfoItemClassDetails(

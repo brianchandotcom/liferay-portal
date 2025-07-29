@@ -5,30 +5,23 @@
 
 import React, {createContext, useReducer} from 'react';
 
-import {
-	AssetTypes,
-	Individuals,
-	MetricType,
-	RangeSelectors,
-	Version,
-} from './types/global';
+import {Individuals, MetricType, RangeSelectors} from './types/global';
 
 export type State = {
-	assetId: string;
-	assetType: AssetTypes | null;
 	changeIndividualFilter: (value: any) => void;
 	changeMetricFilter: (value: any) => void;
 	changeRangeSelectorFilter: (value: any) => void;
 	filters: {
+		channel: string;
 		individual: Individuals;
-		metric: MetricType | null;
+		metric: MetricType;
 		rangeSelector: RangeSelectors;
 	};
-	groupId: string;
-	versions: Version[] | null;
+	[key: string]: any;
 };
 
 enum Types {
+	ChangeChannelFilter = 'CHANGE_CHANNEL_FILTER',
 	ChangeIndividualFilter = 'CHANGE_INDIVIDUAL_FILTER',
 	ChangeMetricFilter = 'CHANGE_METRIC_FILTER',
 	ChangeRangeSelectorFilter = 'CHANGE_RANGE_SELECTOR_FILTER',
@@ -40,26 +33,34 @@ type Action = {
 };
 
 const initialState: State = {
-	assetId: '0',
-	assetType: AssetTypes.Undefined,
+	ChangeChannelFilter: () => {},
 	changeIndividualFilter: () => {},
 	changeMetricFilter: () => {},
 	changeRangeSelectorFilter: () => {},
 	filters: {
+		channel: '',
 		individual: Individuals.AllIndividuals,
-		metric: null,
+		metric: MetricType.Undefined,
 		rangeSelector: RangeSelectors.Last30Days,
 	},
-	groupId: '0',
-	versions: null,
 };
 
-export const AnalyticsReportsContext = createContext(initialState);
+export const Context = createContext(initialState);
 
-AnalyticsReportsContext.displayName = 'AnalyticsReportsContext';
+Context.displayName = 'Context';
 
 const reducer = (state: State, action: Action): State => {
 	switch (action.type) {
+		case Types.ChangeChannelFilter: {
+			return {
+				...state,
+				filters: {
+					...state.filters,
+					channel: action.payload,
+				},
+			};
+		}
+
 		case Types.ChangeIndividualFilter: {
 			return {
 				...state,
@@ -96,20 +97,15 @@ const reducer = (state: State, action: Action): State => {
 	}
 };
 
-interface IAnalyticsReportsProviderProps
-	extends React.HTMLAttributes<HTMLElement> {
-	assetId: string;
-	assetType: AssetTypes | null;
-	groupId: string;
-	versions: Version[] | null;
+interface IContextProviderProps extends React.HTMLAttributes<HTMLElement> {
+	customState: {
+		[key: string]: any;
+	};
 }
 
-const AnalyticsReportsProvider: React.FC<IAnalyticsReportsProviderProps> = ({
-	assetId,
-	assetType,
+const ContextProvider: React.FC<IContextProviderProps> = ({
 	children,
-	groupId,
-	versions,
+	customState,
 }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -135,21 +131,18 @@ const AnalyticsReportsProvider: React.FC<IAnalyticsReportsProviderProps> = ({
 	};
 
 	return (
-		<AnalyticsReportsContext.Provider
+		<Context.Provider
 			value={{
+				...customState,
 				...state,
-				assetId,
-				assetType,
 				changeIndividualFilter,
 				changeMetricFilter,
 				changeRangeSelectorFilter,
-				groupId,
-				versions,
 			}}
 		>
 			{children}
-		</AnalyticsReportsContext.Provider>
+		</Context.Provider>
 	);
 };
 
-export {AnalyticsReportsProvider};
+export {ContextProvider};

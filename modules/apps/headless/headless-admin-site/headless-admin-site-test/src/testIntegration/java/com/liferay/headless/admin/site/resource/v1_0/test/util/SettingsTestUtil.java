@@ -5,12 +5,15 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.headless.admin.site.client.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -50,6 +53,14 @@ public class SettingsTestUtil {
 		}
 		else {
 			Assert.assertEquals(layout.getCss(), settings.getCss());
+		}
+
+		if (Validator.isNull(layout.getColorSchemeId())) {
+			Assert.assertTrue(Validator.isNull(settings.getColorSchemeName()));
+		}
+		else {
+			Assert.assertEquals(
+				layout.getColorSchemeId(), settings.getColorSchemeName());
 		}
 
 		UnicodeProperties unicodeProperties =
@@ -134,6 +145,21 @@ public class SettingsTestUtil {
 			expectedSettings.getColorSchemeName(),
 			actualSettings.getColorSchemeName());
 		Assert.assertEquals(expectedSettings.getCss(), actualSettings.getCss());
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				expectedSettings.getFavIcon(), actualSettings.getFavIcon()));
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				expectedSettings.getGlobalCSSClientExtensions(),
+				actualSettings.getGlobalCSSClientExtensions()));
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				expectedSettings.getGlobalJSClientExtensions(),
+				actualSettings.getGlobalJSClientExtensions()));
+
 		Assert.assertEquals(
 			expectedSettings.getJavascript(), actualSettings.getJavascript());
 
@@ -146,6 +172,11 @@ public class SettingsTestUtil {
 			Objects.deepEquals(
 				expectedSettings.getStyleBookItemExternalReference(),
 				actualSettings.getStyleBookItemExternalReference()));
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				expectedSettings.getThemeCSSClientExtension(),
+				actualSettings.getThemeCSSClientExtension()));
 
 		Assert.assertEquals(
 			expectedSettings.getThemeName(), actualSettings.getThemeName());
@@ -165,6 +196,11 @@ public class SettingsTestUtil {
 		Assert.assertEquals(
 			MapUtil.toString(curThemeSettings), themeSettings,
 			curThemeSettings);
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				expectedSettings.getThemeSpritemapClientExtension(),
+				actualSettings.getThemeSpritemapClientExtension()));
 	}
 
 	public static Settings getSettings(ServiceContext serviceContext) {
@@ -172,11 +208,24 @@ public class SettingsTestUtil {
 			{
 				setColorSchemeName(() -> "01");
 				setCss(RandomTestUtil::randomString);
+				setFavIcon(() -> _getClientExtension(serviceContext));
+				setGlobalCSSClientExtensions(
+					() -> new ClientExtension[] {
+						_getClientExtension(serviceContext),
+						_getClientExtension(serviceContext)
+					});
+				setGlobalJSClientExtensions(
+					() -> new ClientExtension[] {
+						_getClientExtension(serviceContext),
+						_getClientExtension(serviceContext)
+					});
 				setJavascript(RandomTestUtil::randomString);
 				setMasterPageItemExternalReference(
 					() -> _getMasterPageItemExternalReference(serviceContext));
 				setStyleBookItemExternalReference(
 					() -> _getStyleBookItemExternalReference(serviceContext));
+				setThemeCSSClientExtension(
+					() -> _getClientExtension(serviceContext));
 				setThemeName(() -> "classic_WAR_classictheme");
 				setThemeSettings(
 					() -> TreeMapBuilder.put(
@@ -186,6 +235,8 @@ public class SettingsTestUtil {
 						"lfr-theme:" + RandomTestUtil.randomString(),
 						RandomTestUtil.randomString()
 					).build());
+				setThemeSpritemapClientExtension(
+					() -> _getClientExtension(serviceContext));
 			}
 		};
 	}
@@ -193,6 +244,35 @@ public class SettingsTestUtil {
 	public static void modifySettings(
 			ServiceContext serviceContext, Settings settings)
 		throws Exception {
+
+		if (Validator.isNotNull(settings.getFavIcon())) {
+			settings.setFavIcon(() -> null);
+		}
+		else {
+			settings.setFavIcon(_getClientExtension(serviceContext));
+		}
+
+		if (Validator.isNotNull(settings.getGlobalCSSClientExtensions())) {
+			settings.setGlobalCSSClientExtensions(() -> null);
+		}
+		else {
+			settings.setGlobalCSSClientExtensions(
+				new ClientExtension[] {
+					_getClientExtension(serviceContext),
+					_getClientExtension(serviceContext)
+				});
+		}
+
+		if (Validator.isNotNull(settings.getGlobalJSClientExtensions())) {
+			settings.setGlobalJSClientExtensions(() -> null);
+		}
+		else {
+			settings.setGlobalJSClientExtensions(
+				new ClientExtension[] {
+					_getClientExtension(serviceContext),
+					_getClientExtension(serviceContext)
+				});
+		}
 
 		if (Validator.isNotNull(settings.getJavascript())) {
 			settings.setJavascript(() -> null);
@@ -239,6 +319,14 @@ public class SettingsTestUtil {
 				});
 		}
 
+		if (Validator.isNotNull(settings.getThemeCSSClientExtension())) {
+			settings.setThemeCSSClientExtension(() -> null);
+		}
+		else {
+			settings.setThemeCSSClientExtension(
+				_getClientExtension(serviceContext));
+		}
+
 		if (Validator.isNotNull(settings.getThemeName())) {
 			settings.setColorSchemeName(() -> null);
 			settings.setThemeName(() -> null);
@@ -262,6 +350,34 @@ public class SettingsTestUtil {
 					"true"
 				).build());
 		}
+
+		if (Validator.isNotNull(settings.getThemeSpritemapClientExtension())) {
+			settings.setThemeSpritemapClientExtension(() -> null);
+		}
+		else {
+			settings.setThemeSpritemapClientExtension(
+				_getClientExtension(serviceContext));
+		}
+	}
+
+	private static ClientExtension _getClientExtension(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		CETManager cetManager = _cetManagerSnapshot.get();
+
+		String clientExtensionExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		cetManager.addCET(
+			null, serviceContext.getCompanyId(),
+			clientExtensionExternalReferenceCode);
+
+		return new ClientExtension() {
+			{
+				setExternalReferenceCode(clientExtensionExternalReferenceCode);
+			}
+		};
 	}
 
 	private static ItemExternalReference _getMasterPageItemExternalReference(
@@ -316,5 +432,8 @@ public class SettingsTestUtil {
 
 		return themeSettingsUnicodeProperties;
 	}
+
+	private static final Snapshot<CETManager> _cetManagerSnapshot =
+		new Snapshot<>(SettingsTestUtil.class, CETManager.class);
 
 }

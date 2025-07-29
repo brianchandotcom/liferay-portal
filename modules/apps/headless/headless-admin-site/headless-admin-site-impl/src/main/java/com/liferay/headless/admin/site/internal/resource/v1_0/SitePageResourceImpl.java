@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -298,24 +299,18 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
 		else {
-			String typeSettings = null;
-
-			if (typeSettingsUnicodeProperties != null) {
-				typeSettings = typeSettingsUnicodeProperties.toString();
-			}
-
-			layout = _layoutService.addLayout(
-				externalReferenceCode, groupId, false,
+			layout = LayoutUtil.addPortletLayout(
+				contextCompany.getCompanyId(),
+				sitePage.getExternalReferenceCode(), groupId, nameMap,
+				LocalizedMapUtil.getLocalizedMap(
+					sitePage.getFriendlyUrlPath_i18n()),
+				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				_getParentLayoutId(
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
 					sitePage.getParentSitePageExternalReferenceCode()),
-				nameMap, null, null, null, null,
-				SitePageTypeUtil.toInternalType(sitePage.getType()),
-				typeSettings,
-				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
-				LocalizedMapUtil.getLocalizedMap(
-					sitePage.getFriendlyUrlPath_i18n()),
-				0, serviceContext);
+				typeSettingsUnicodeProperties, serviceContext,
+				PageSpecificationUtil.getWidgetPageSpecification(
+					sitePage.getPageSpecifications()));
 		}
 
 		PageSettings pageSettings = sitePage.getPageSettings();

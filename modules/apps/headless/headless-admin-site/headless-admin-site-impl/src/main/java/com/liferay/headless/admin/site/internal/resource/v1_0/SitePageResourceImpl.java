@@ -275,6 +275,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			sitePage.setExternalReferenceCode(() -> externalReferenceCode);
 		}
 
+		if (!Objects.equals(
+				externalReferenceCode, sitePage.getExternalReferenceCode())) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
 			null, sitePage.getDateCreated(), groupId, contextHttpServletRequest,
 			null, sitePage.getDateModified(), contextUser.getUserId(),

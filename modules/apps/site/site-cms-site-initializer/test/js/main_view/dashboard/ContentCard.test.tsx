@@ -4,6 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {TrendClassification} from '@liferay/analytics-reports-js-components-web';
 import {
 	render,
 	screen,
@@ -12,10 +13,7 @@ import {
 import React from 'react';
 
 import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
-import {
-	IMetricsProps,
-	TrendClassification,
-} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/ContentAndFilesCard';
+import {IMetricsProps} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/ContentAndFilesCard';
 import {ContentCard} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/ContentCard';
 
 describe('[CMS Dashboard] Components: ContentCard', () => {

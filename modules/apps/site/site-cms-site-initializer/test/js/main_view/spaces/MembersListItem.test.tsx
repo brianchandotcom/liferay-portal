@@ -14,7 +14,7 @@ jest.mock('frontend-js-web', () => ({
 	sub: (str: string, arg: string) => str.replace('x', arg),
 }));
 
-describe('MemberListItem', () => {
+describe('MembersListItem', () => {
 	const testUserAccount = {
 		emailAddress: 'brian.smith@example.com',
 		id: 'user',
@@ -29,6 +29,7 @@ describe('MemberListItem', () => {
 	};
 
 	const props = {
+		canManageMembers: true,
 		currentUserId: testUserAccount.id,
 		emptyMessage: 'No users',
 		onRemoveItem: jest.fn(),
@@ -144,6 +145,27 @@ describe('MemberListItem', () => {
 			testUserGroupWithoutMembers.name
 		);
 		expect(listItemElement).toHaveTextContent('(0-members)');
+	});
+
+	it('does not render the remove button when canManageMembers is false', () => {
+		const anotherUser = {
+			emailAddress: 'another.user@example.com',
+			id: 'another-user-id',
+			name: 'Another User',
+		};
+
+		render(
+			<MembersListItem
+				{...props}
+				canManageMembers={false}
+				itemType="user"
+				items={[anotherUser]}
+			/>
+		);
+
+		expect(
+			screen.queryByRole('button', {name: /remove/i})
+		).not.toBeInTheDocument();
 	});
 
 	it.each([

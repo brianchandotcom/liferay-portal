@@ -13,6 +13,7 @@ import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 
 interface MembersListItemProps {
 	assetLibraryCreatorUserId?: string | number;
+	canManageMembers: boolean;
 	currentUserId?: string;
 	emptyMessage: string;
 	itemType: 'user' | 'group';
@@ -22,6 +23,7 @@ interface MembersListItemProps {
 
 export function MembersListItem({
 	assetLibraryCreatorUserId,
+	canManageMembers,
 	currentUserId,
 	emptyMessage,
 	itemType,
@@ -102,7 +104,7 @@ export function MembersListItem({
 							<span className="text-3 text-capitalize text-secondary">
 								({Liferay.Language.get('owner')})
 							</span>
-						) : (
+						) : canManageMembers ? (
 							<ClayButtonWithIcon
 								aria-label={sub(
 									Liferay.Language.get('remove-x'),
@@ -118,7 +120,7 @@ export function MembersListItem({
 								symbol="times-circle"
 								translucent
 							/>
-						)}
+						) : null}
 					</li>
 				);
 			})}

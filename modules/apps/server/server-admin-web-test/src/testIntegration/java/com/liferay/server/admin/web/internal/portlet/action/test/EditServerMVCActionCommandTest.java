@@ -566,7 +566,6 @@ public class EditServerMVCActionCommandTest {
 				).put(
 					"sendPasswordCaptchaEnabled", "true"
 				).build());
-
 				CompanyConfigurationTemporarySwapper
 					companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(

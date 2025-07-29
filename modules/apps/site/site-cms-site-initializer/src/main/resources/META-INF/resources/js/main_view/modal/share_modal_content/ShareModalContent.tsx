@@ -4,9 +4,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {Option, Picker} from '@clayui/core';
 import {useResource} from '@clayui/data-provider';
-import ClayDatePicker from '@clayui/date-picker';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -15,11 +13,17 @@ import ClayMultiSelect from '@clayui/multi-select';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import {openToast} from 'frontend-js-components-web';
-import {dateUtils, fetch, sub} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import '../../../css/components/ShareModalContent.scss';
-import {UserAccount, UserGroup} from '../../common/types/UserAccount';
+import ExpirationDateSelector, {
+	formatDateForView,
+	formatDateToISO,
+} from './ExpirationDateSelector';
+import PermissionSelector from './PermissionSelector';
+
+import '../../../../css/components/ShareModalContent.scss';
+import {UserAccount, UserGroup} from '../../../common/types/UserAccount';
 
 export interface collaborator {
 	actionIds?: string;
@@ -34,35 +38,6 @@ export interface collaborator {
 const TYPES = {
 	USER: 'User',
 	USER_GROUP: 'UserGroup',
-};
-
-const formatDateForView = (date: string): string => {
-	const formattedDate = new Date(date.replace('--:--', '23:59'));
-
-	if (isNaN(formattedDate.getTime())) {
-		return 'NaN';
-	}
-
-	if (formattedDate < new Date()) {
-		return 'EXPIRED';
-	}
-
-	return formattedDate.toLocaleString(
-		Liferay.ThemeDisplay.getBCP47LanguageId(),
-		{
-			day: 'numeric',
-			hour: 'numeric',
-			minute: 'numeric',
-			month: 'short',
-			year: 'numeric',
-		}
-	);
-};
-
-const formatDateToISO = (date: string): string => {
-	const formattedDate = new Date(date.replace('--:--', '23:59'));
-
-	return formattedDate.toISOString();
 };
 
 function CollaboratorListItem({
@@ -86,27 +61,8 @@ function CollaboratorListItem({
 	type: string;
 	user: UserAccount | UserGroup;
 }) {
-	const _handleDatePickerChange = (value: string) => {
-		if (value === '') {
-			onChangeUser(user, {dateExpired: '', error: ''});
-		}
-		else {
-			const formattedDate = formatDateForView(value);
-
-			onChangeUser(user, {
-				dateExpired: value,
-				error:
-					formattedDate === 'NaN'
-						? Liferay.Language.get(
-								'please-select-a-valid-expiration-date'
-							)
-						: formattedDate === 'EXPIRED'
-							? Liferay.Language.get(
-									'please-enter-an-expiration-date-that-comes-after-today'
-								)
-							: '',
-			});
-		}
+	const handleChangeUserProperties = (propertyObj: object) => {
+		onChangeUser(user, propertyObj);
 	};
 
 	return (
@@ -165,7 +121,12 @@ function CollaboratorListItem({
 								className="c-ml-1 inline-item"
 								displayType="secondary"
 								monospaced
-								onClick={() => _handleDatePickerChange('')}
+								onClick={() =>
+									handleChangeUserProperties({
+										dateExpired: '',
+										error: '',
+									})
+								}
 								size="xs"
 								symbol="trash"
 							/>
@@ -175,91 +136,18 @@ function CollaboratorListItem({
 			</div>
 
 			<div className="autofit-col">
-				<Picker
-					aria-label={Liferay.Language.get('edit-permissions')}
-					className="border-0 c-py-0 permissions-picker text-2 text-secondary text-weight-semi-bold"
-					items={[
-						{
-							label: Liferay.Language.get('view-and-download'),
-							value: 'VIEW',
-						},
-						{
-							label: Liferay.Language.get(
-								'view-download-and-comment'
-							),
-							value: 'ADD_DISCUSSION,VIEW',
-						},
-						{
-							label: Liferay.Language.get(
-								'view-download-comment-and-update'
-							),
-							value: 'UPDATE,ADD_DISCUSSION,VIEW',
-						},
-					]}
-					onSelectionChange={(value: React.Key) =>
-						onChangeUser(user, {actionIds: value})
-					}
-					placeholder=""
-					selectedKey={actionIds}
-				>
-					{(item: {label: string; value: string}) => (
-						<Option key={item.value}>{item.label}</Option>
-					)}
-				</Picker>
+				<PermissionSelector
+					actionIds={actionIds}
+					onChange={handleChangeUserProperties}
+				/>
 			</div>
 
 			<div className="autofit-col">
 				<div className="d-flex">
-					<ClayDropDown
-						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get(
-									'set-expiration-date'
-								)}
-								borderless
-								className="inline-item inline-item-before lfr-portal-tooltip"
-								displayType="secondary"
-								monospaced
-								size="xs"
-								symbol="date-time"
-								title={Liferay.Language.get(
-									'set-expiration-date'
-								)}
-							/>
-						}
-					>
-						<ClayDropDown.ItemList>
-							<ClayDropDown.Section>
-								<ClayDatePicker
-									firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
-									months={[
-										`${Liferay.Language.get('january')}`,
-										`${Liferay.Language.get('february')}`,
-										`${Liferay.Language.get('march')}`,
-										`${Liferay.Language.get('april')}`,
-										`${Liferay.Language.get('may')}`,
-										`${Liferay.Language.get('june')}`,
-										`${Liferay.Language.get('july')}`,
-										`${Liferay.Language.get('august')}`,
-										`${Liferay.Language.get('september')}`,
-										`${Liferay.Language.get('october')}`,
-										`${Liferay.Language.get('november')}`,
-										`${Liferay.Language.get('december')}`,
-									]}
-									onChange={_handleDatePickerChange}
-									placeholder={Liferay.Language.get(
-										'yyyy-mm-dd hh:mm'
-									)}
-									time={true}
-									value={dateExpired}
-									years={{
-										end: new Date().getFullYear(),
-										start: 1998,
-									}}
-								/>
-							</ClayDropDown.Section>
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
+					<ExpirationDateSelector
+						dateExpired={dateExpired}
+						onChange={handleChangeUserProperties}
+					/>
 
 					<ClayDropDown
 						hasLeftSymbols={true}
@@ -283,7 +171,7 @@ function CollaboratorListItem({
 								)}
 								key={`share-${user.id}`}
 								onClick={() =>
-									onChangeUser(user, {
+									handleChangeUserProperties({
 										share: !share,
 									})
 								}
@@ -350,7 +238,7 @@ export default function ShareModalContent({
 		variables: {search: autocompleteValue},
 	});
 
-	const _handleAddUser = (user: UserAccount | UserGroup, type: string) => {
+	const handleAddUser = (user: UserAccount | UserGroup, type: string) => {
 		setCollaborators((collaborators) => {
 			return collaborators.every(
 				(collaborator) => collaborator.user.id !== user.id
@@ -371,7 +259,7 @@ export default function ShareModalContent({
 		setAutocompleteValue('');
 	};
 
-	const _handleRemoveUser = async (
+	const handleRemoveUser = async (
 		user: UserAccount | UserGroup
 	): Promise<void> => {
 		setCollaborators((collaborator) =>
@@ -381,7 +269,7 @@ export default function ShareModalContent({
 		);
 	};
 
-	const _handleChangeUser = (
+	const handleChangeUser = (
 		user: UserAccount | UserGroup,
 		property: object
 	) => {
@@ -399,7 +287,7 @@ export default function ShareModalContent({
 		);
 	};
 
-	const _handleSubmit = async (event: React.FormEvent) => {
+	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 
 		if (collaborators.some(({error}) => !!error)) {
@@ -499,7 +387,7 @@ export default function ShareModalContent({
 										? users.items?.map((item: any) => {
 												if (
 													item.entryClassName?.includes(
-														'UserGroup'
+														TYPES.USER_GROUP
 													)
 												) {
 													return {
@@ -540,7 +428,7 @@ export default function ShareModalContent({
 									<ClayMultiSelect.Item
 										key={`autocomplete-${type}-${user.id}`}
 										onClick={() =>
-											_handleAddUser(user, type)
+											handleAddUser(user, type)
 										}
 										textValue={user.name}
 									>
@@ -611,8 +499,8 @@ export default function ShareModalContent({
 								{collaborators.map((item) => (
 									<CollaboratorListItem
 										key={`listItem-${item.type}-${item.user.id}`}
-										onChangeUser={_handleChangeUser}
-										onRemoveUser={_handleRemoveUser}
+										onChangeUser={handleChangeUser}
+										onRemoveUser={handleRemoveUser}
 										{...item}
 									/>
 								))}
@@ -679,7 +567,7 @@ export default function ShareModalContent({
 						<ClayButton
 							disabled={loading || !_isCollaboratorsUpdated()}
 							displayType="primary"
-							onClick={_handleSubmit}
+							onClick={handleSubmit}
 							type="submit"
 						>
 							{loading && (

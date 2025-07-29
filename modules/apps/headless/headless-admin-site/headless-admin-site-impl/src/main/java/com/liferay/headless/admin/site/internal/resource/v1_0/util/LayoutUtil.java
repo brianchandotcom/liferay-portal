@@ -514,6 +514,9 @@ public class LayoutUtil {
 
 		layout = _updateLookAndFeel(layout, settings);
 
+		_setExpandoBridgeAttributes(
+			layout.getCompanyId(), pageSpecification, serviceContext);
+
 		return _updateLayout(
 			layout, nameMap, titleMap, descriptionMap, robotsMap,
 			_getStyleBookEntryId(serviceContext.getScopeGroupId(), settings),

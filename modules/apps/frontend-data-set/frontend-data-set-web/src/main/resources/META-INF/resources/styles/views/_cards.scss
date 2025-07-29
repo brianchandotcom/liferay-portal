@@ -18,6 +18,7 @@
 
 		&:hover .card {
 			background-color: $light;
+			border: 1px solid $primary-color;
 		}
 
 		&.active {
@@ -27,6 +28,7 @@
 
 			.card {
 				background-color: $primary-l3;
+				border: 1px solid $primary-color;
 			}
 		}
 	}

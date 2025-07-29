@@ -692,12 +692,12 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			ObjectDefinition objectDefinition, Map<String, Serializable> values)
 		throws PortalException {
 
+		long parentObjectEntryId = 0;
+
 		List<ObjectRelationship> objectRelationships =
 			_objectRelationshipLocalService.
 				getObjectRelationshipsByObjectDefinitionId2(
 					objectDefinition.getObjectDefinitionId(), true);
-
-		long parentObjectEntryId = 0;
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			ObjectField objectField2 = _objectFieldLocalService.getObjectField(

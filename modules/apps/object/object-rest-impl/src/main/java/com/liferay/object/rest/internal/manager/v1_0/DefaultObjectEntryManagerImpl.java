@@ -224,17 +224,17 @@ public class DefaultObjectEntryManagerImpl
 			throw new UnsupportedOperationException();
 		}
 
-		ServiceContext serviceContext = _createServiceContext(
-			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
-
-		Map<String, Object> properties = objectEntry.getProperties();
+		long groupId = getGroupId(objectDefinition, scopeKey);
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
+		Map<String, Object> properties = objectEntry.getProperties();
+
 		properties.put(objectField.getName(), parentObjectEntryId);
 
-		long groupId = getGroupId(objectDefinition, scopeKey);
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,

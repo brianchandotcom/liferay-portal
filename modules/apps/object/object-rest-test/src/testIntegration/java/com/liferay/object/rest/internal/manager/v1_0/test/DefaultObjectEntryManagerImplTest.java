@@ -3810,8 +3810,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Delete object entry
 
-		ObjectDefinition objectDefinitionA = _createObjectDefinition();
-		ObjectDefinition objectDefinitionAA = _createObjectDefinition();
+		ObjectDefinition objectDefinitionA = _addObjectDefinition();
+		ObjectDefinition objectDefinitionAA = _addObjectDefinition();
 
 		ObjectRelationship objectRelationshipA_AA =
 			ObjectRelationshipTestUtil.addObjectRelationship(
@@ -3819,7 +3819,7 @@ public class DefaultObjectEntryManagerImplTest
 				TestPropsValues.getUserId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		ObjectDefinition objectDefinitionB = _createObjectDefinition();
+		ObjectDefinition objectDefinitionB = _addObjectDefinition();
 
 		ObjectRelationship objectRelationshipB_AA =
 			ObjectRelationshipTestUtil.addObjectRelationship(
@@ -3838,21 +3838,21 @@ public class DefaultObjectEntryManagerImplTest
 			_objectFieldLocalService.getObjectField(
 				objectRelationshipA_AA.getObjectFieldId2());
 
-		ObjectEntry objectEntryAA2 = _addObjectEntry(
+		ObjectEntry objectEntryAA1 = _addObjectEntry(
 			objectDefinitionAA, Collections.emptyMap());
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			objectDefinitionAA, objectEntryAA2.getId());
+			objectDefinitionAA, objectEntryAA1.getId());
 
 		Assert.assertNull(
-			_objectEntryLocalService.fetchObjectEntry(objectEntryAA2.getId()));
+			_objectEntryLocalService.fetchObjectEntry(objectEntryAA1.getId()));
 
 		// Delete related object entry
 
 		ObjectEntry objectEntryB = _addObjectEntry(
 			objectDefinitionB, Collections.emptyMap());
 
-		ObjectEntry objectEntryAA1 =
+		ObjectEntry objectEntryAA2 =
 			_defaultObjectEntryManager.addRelatedObjectEntry(
 				_createDTOConverterContext(), objectDefinitionAA,
 				new ObjectEntry() {
@@ -3873,17 +3873,17 @@ public class DefaultObjectEntryManagerImplTest
 				"No ObjectEntry exists with the key {",
 				objectRelationshipA_AAObjectField2.getName(), "=",
 				objectEntryB.getId(), ", objectEntryId=",
-				objectEntryAA1.getId(), "}"),
+				objectEntryAA2.getId(), "}"),
 			() -> _defaultObjectEntryManager.deleteRelatedObjectEntry(
-				objectDefinitionAA, objectEntryAA1.getId(),
+				objectDefinitionAA, objectEntryAA2.getId(),
 				objectRelationshipA_AA, objectEntryB.getId()));
 
 		_defaultObjectEntryManager.deleteRelatedObjectEntry(
-			objectDefinitionAA, objectEntryAA1.getId(), objectRelationshipA_AA,
+			objectDefinitionAA, objectEntryAA2.getId(), objectRelationshipA_AA,
 			objectEntryA.getId());
 
 		Assert.assertNull(
-			_objectEntryLocalService.fetchObjectEntry(objectEntryAA1.getId()));
+			_objectEntryLocalService.fetchObjectEntry(objectEntryAA2.getId()));
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -6900,10 +6900,26 @@ public class DefaultObjectEntryManagerImplTest
 	@FeatureFlag("LPD-42577")
 	@Test
 	public void testSubscribeObjectEntryWithHierarchy() throws Exception {
-		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.publishObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.publishObjectDefinition();
+		ObjectDefinition objectDefinitionA = _addObjectDefinition(
+			true,
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					"textObjectFieldName"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectDefinition objectDefinitionAA = _addObjectDefinition(
+			true,
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					"textObjectFieldName"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(

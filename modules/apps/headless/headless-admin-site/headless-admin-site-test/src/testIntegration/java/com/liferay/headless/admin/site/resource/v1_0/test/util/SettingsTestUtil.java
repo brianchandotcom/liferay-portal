@@ -5,6 +5,9 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
@@ -19,6 +22,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,6 +30,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -62,6 +68,18 @@ public class SettingsTestUtil {
 			Assert.assertEquals(
 				layout.getColorSchemeId(), settings.getColorSchemeName());
 		}
+
+		_assertClientExtension(
+			(ClientExtension)settings.getFavIcon(), layout,
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+		_assertClientExtensions(
+			settings.getGlobalCSSClientExtensions(), layout,
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+
+		_assertClientExtensions(
+			settings.getGlobalJSClientExtensions(), layout,
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
@@ -103,6 +121,10 @@ public class SettingsTestUtil {
 				styleBookItemExternalReference.getExternalReferenceCode());
 		}
 
+		_assertClientExtension(
+			settings.getThemeCSSClientExtension(), layout,
+			ClientExtensionEntryConstants.TYPE_THEME_CSS);
+
 		if (Validator.isNull(layout.getThemeId())) {
 			Assert.assertTrue(Validator.isNull(settings.getThemeName()));
 		}
@@ -130,6 +152,10 @@ public class SettingsTestUtil {
 					entry.getValue(), themeSettings.get(entry.getKey()));
 			}
 		}
+
+		_assertClientExtension(
+			settings.getThemeSpritemapClientExtension(), layout,
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
 	}
 
 	public static void assertSettings(
@@ -357,6 +383,65 @@ public class SettingsTestUtil {
 		else {
 			settings.setThemeSpritemapClientExtension(
 				_getClientExtension(serviceContext));
+		}
+	}
+
+	private static void _assertClientExtension(
+		ClientExtension clientExtension, Layout layout, String type) {
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			ClientExtensionEntryRelLocalServiceUtil.
+				fetchClientExtensionEntryRel(
+					PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+					type);
+
+		if (clientExtensionEntryRel == null) {
+			Assert.assertNull(clientExtension);
+		}
+		else {
+			Assert.assertEquals(
+				clientExtensionEntryRel.getCETExternalReferenceCode(),
+				clientExtension.getExternalReferenceCode());
+		}
+	}
+
+	private static void _assertClientExtensions(
+		ClientExtension[] clientExtensions, Layout layout, String type) {
+
+		List<ClientExtensionEntryRel> clientExtensionEntryRels =
+			ClientExtensionEntryRelLocalServiceUtil.getClientExtensionEntryRels(
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+				type);
+
+		if (clientExtensionEntryRels.isEmpty()) {
+			Assert.assertNull(clientExtensions);
+		}
+		else {
+			Assert.assertEquals(
+				Arrays.toString(clientExtensions),
+				clientExtensionEntryRels.size(), clientExtensions.length);
+
+			for (ClientExtensionEntryRel clientExtensionEntryRel :
+					clientExtensionEntryRels) {
+
+				boolean found = false;
+
+				for (ClientExtension clientExtension : clientExtensions) {
+					if (Objects.equals(
+							clientExtensionEntryRel.
+								getCETExternalReferenceCode(),
+							clientExtension.getExternalReferenceCode())) {
+
+						found = true;
+
+						break;
+					}
+				}
+
+				if (!found) {
+					Assert.fail();
+				}
+			}
 		}
 	}
 

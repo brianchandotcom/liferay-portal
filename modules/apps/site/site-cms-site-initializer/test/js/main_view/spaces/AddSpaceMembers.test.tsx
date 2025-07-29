@@ -50,6 +50,7 @@ describe('AddSpaceMembers', () => {
 		assetLibraryId: testSpace.id,
 		assetLibraryName: testSpace.name,
 		baseAssetLibraryURL: '/web/cms/e/space/28632',
+		canManageMembers: true,
 		learnResources: mockLearnResources,
 	};
 

@@ -83,7 +83,7 @@ public class AddSpaceMembersFragmentRenderer
 			"assetLibraryName", assetLibraryName
 		).put(
 			"baseAssetLibraryURL", ActionUtil.getBaseSpaceURL(themeDisplay)
-		).put(
+		).put("canManageMembers", true).		.put(
 			"learnResources",
 			LearnMessageUtil.getReactDataJSONObject("site-cms-site-initializer")
 		).build();

@@ -32,9 +32,10 @@ public interface ConnectionInfoResource {
 		return new Builder();
 	}
 
-	public ConnectionInfo getConnectionInfo(Long spaceId) throws Exception;
+	public ConnectionInfo getConnectionInfo(Long depotEntryId) throws Exception;
 
-	public HttpInvoker.HttpResponse getConnectionInfoHttpResponse(Long spaceId)
+	public HttpInvoker.HttpResponse getConnectionInfoHttpResponse(
+			Long depotEntryId)
 		throws Exception;
 
 	public static class Builder {
@@ -146,9 +147,11 @@ public interface ConnectionInfoResource {
 	public static class ConnectionInfoResourceImpl
 		implements ConnectionInfoResource {
 
-		public ConnectionInfo getConnectionInfo(Long spaceId) throws Exception {
+		public ConnectionInfo getConnectionInfo(Long depotEntryId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getConnectionInfoHttpResponse(spaceId);
+				getConnectionInfoHttpResponse(depotEntryId);
 
 			String content = httpResponse.getContent();
 
@@ -210,7 +213,7 @@ public interface ConnectionInfoResource {
 		}
 
 		public HttpInvoker.HttpResponse getConnectionInfoHttpResponse(
-				Long spaceId)
+				Long depotEntryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -234,8 +237,9 @@ public interface ConnectionInfoResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (spaceId != null) {
-				httpInvoker.parameter("spaceId", String.valueOf(spaceId));
+			if (depotEntryId != null) {
+				httpInvoker.parameter(
+					"depotEntryId", String.valueOf(depotEntryId));
 			}
 
 			httpInvoker.path(

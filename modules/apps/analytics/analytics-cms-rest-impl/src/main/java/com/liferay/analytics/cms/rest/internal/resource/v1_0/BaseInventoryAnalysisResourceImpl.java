@@ -56,6 +56,10 @@ public abstract class BaseInventoryAnalysisResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "depotEntryId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "groupBy"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -81,10 +85,6 @@ public abstract class BaseInventoryAnalysisResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "rangeStart"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "spaceId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -114,6 +114,9 @@ public abstract class BaseInventoryAnalysisResourceImpl
 			@jakarta.ws.rs.QueryParam("categoryId")
 			Long categoryId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("depotEntryId")
+			Long depotEntryId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("groupBy")
 			String groupBy,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
@@ -128,9 +131,6 @@ public abstract class BaseInventoryAnalysisResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("rangeStart")
 			String rangeStart,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("spaceId")
-			Long spaceId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("structureId")
 			Long structureId,

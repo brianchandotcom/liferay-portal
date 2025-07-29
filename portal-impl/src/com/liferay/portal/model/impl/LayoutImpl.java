@@ -1212,7 +1212,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	@Override
 	public boolean isLayoutDeleteable() {
 		try {
-			if (Validator.isNull(getSourcePrototypeLayoutUuid())) {
+			if (Validator.isNull(getLayoutSetPrototypeLayoutERC())) {
 				return true;
 			}
 
@@ -1222,10 +1222,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 				return true;
 			}
 
-			if (LayoutLocalServiceUtil.hasLayoutSetPrototypeLayout(
-					layoutSet.getLayoutSetPrototypeUuid(), getCompanyId(),
-					getSourcePrototypeLayoutUuid())) {
+			Layout layoutSetPrototypeLayout = getLayoutSetPrototypeLayout();
 
+			if (layoutSetPrototypeLayout != null) {
 				return false;
 			}
 		}
@@ -1266,7 +1265,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	public boolean isLayoutUpdateable() {
 		try {
 			if (Validator.isNull(getLayoutPrototypeUuid()) &&
-				Validator.isNull(getSourcePrototypeLayoutUuid())) {
+				Validator.isNull(getLayoutSetPrototypeLayoutERC())) {
 
 				return true;
 			}

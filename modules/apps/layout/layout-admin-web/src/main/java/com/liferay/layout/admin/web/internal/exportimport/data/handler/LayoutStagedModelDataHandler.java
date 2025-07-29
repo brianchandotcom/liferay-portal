@@ -920,8 +920,8 @@ public class LayoutStagedModelDataHandler
 					priority = TransactionInvokerUtil.invoke(
 						_transactionConfig,
 						() -> _layoutLocalServiceHelper.getNextPriority(
-							groupId, finalPrivateLayout, finalParentLayoutId,
-							null, -1));
+							groupId, null, finalPrivateLayout,
+							finalParentLayoutId, -1));
 				}
 
 				importedLayout.setPriority(priority);

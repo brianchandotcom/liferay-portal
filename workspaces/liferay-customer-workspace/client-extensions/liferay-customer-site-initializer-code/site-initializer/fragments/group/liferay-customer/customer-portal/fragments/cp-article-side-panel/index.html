@@ -1,48 +1,130 @@
+[#function isCategoryVisible category]
+	[#if category.taxonomyCategoryProperties?has_content]
+		[#list category.taxonomyCategoryProperties as prop]
+			[#if prop.key == 'visible' && prop.value == 'false']
+				[#return false /]
+			[/#if]
+		[/#list]
+	[/#if]
+
+	[#return true /]
+[/#function]
+
 [#assign displayObject = (request.getAttribute("LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER").getDisplayObject())!{} /]
 
 [#if displayObject?has_content]
 	[#assign
 		articleId = displayObject.articleId!""
+		baseURL = themeDisplay.getURLCurrent()?replace('/[wv]/.*', '', 'r')
 		categoryId = displayObject.categoryId!""
-		parentTaxonomyCategoryId = displayObject.parentCategoryId!""
+		currentCategoryId = ""
+		folderId = displayObject.folderId!""
+		parentCategoryId = ""
+		parentCategory = {}
+		siblingCategories = {}
+		vocabularyId = ""
 	/]
 
 	[#if articleId?has_content]
-		[#assign
-			currentItemId = articleId
-			restArticle = (restClient.get("/headless-delivery/v1.0/structured-contents/${displayObject.resourcePrimKey}?nestedFields=embeddedTaxonomyCategory"))!{}
-		/]
+		[#assign restArticle = (restClient.get("/headless-delivery/v1.0/structured-contents/${displayObject.resourcePrimKey}?nestedFields=embeddedTaxonomyCategory"))!{} /]
 
-		[#if restArticle?has_content]
+		[#if restArticle.taxonomyCategoryBriefs?has_content]
 			[#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief]
 				[#if taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name == "Article Categories"]
-					[#if taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyCategory??]
-						[#assign parentTaxonomyCategoryId = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyCategory.id!"" /]
-					[#else]
-						[#assign parentTaxonomyCategoryId = taxonomyCategoryBrief.embeddedTaxonomyCategory.id!"" /]
-					[/#if]
-
-					[#break/]
+					[#assign currentCategoryId = taxonomyCategoryBrief.embeddedTaxonomyCategory.id!"" /]
+					[#break /]
 				[/#if]
 			[/#list]
 		[/#if]
-	[#elseif categoryId?has_content]
-		[#assign currentItemId = categoryId /]
+	[#else]
+		[#assign currentCategoryId = categoryId /]
 	[/#if]
+
+	[#if currentCategoryId?has_content]
+		[#attempt]
+			[#assign currentCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + currentCategoryId) /]
+
+			[#if currentCategory.parentTaxonomyCategory??]
+				[#assign parentCategoryId = currentCategory.parentTaxonomyCategory.id!"" /]
+
+				[#if parentCategoryId?has_content]
+					[#assign parentCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + parentCategoryId) /]
+				[/#if]
+			[/#if]
+
+			[#assign vocabularyId = currentCategory.parentTaxonomyVocabulary.id!"" /]
+		[#recover]
+		[/#attempt]
+	[/#if]
+
+	[#if parentCategoryId?has_content]
+		[#assign siblingCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + parentCategoryId + "/taxonomy-categories") /]
+	[#elseif currentCategoryId?has_content]
+		[#assign siblingCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories") /]
+	[/#if]
+
+	<div class="cp-article-side-panel">
+		[@liferay_ui["panel-container"]]
+			[#if parentCategory?has_content]
+				<a class="border border-neutral-3 border-radius-lg cp-article-side-panel-back-link cp-article-side-panel-item cp-article-side-panel-link mb-2 p-3" href="${baseURL}/v/${parentCategory.id}">
+					[@clay["icon"] symbol="angle-left-small" /]
+					<span>${parentCategory.name}</span>
+				</a>
+			[/#if]
+
+			[#if siblingCategories.items?has_content]
+				[#list siblingCategories.items as siblingCategory]
+					[#if isCategoryVisible(siblingCategory)]
+						[#assign isCurrentActive = (categoryId?has_content && siblingCategory.id?number == categoryId?number) /]
+						[#assign isCurrentParent = (siblingCategory.id?number == currentCategoryId?number) /]
+
+						[@liferay_ui.panel
+							collapsible=true
+							cssClass="bg-transparent pl-2 pr-2 ${isCurrentActive?then('active', '')}"
+							extended=isCurrentParent
+							title=siblingCategory.name
+						]
+							<ul class="cp-article-side-panel-list list-unstyled m-0">
+								[#attempt]
+									[#assign childCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + siblingCategory.id + "/taxonomy-categories") /]
+
+									[#if childCategories.items?has_content]
+										[#list childCategories.items as childCategory]
+											[#if isCategoryVisible(childCategory)]
+												[#assign isCurrentChildActive = (!articleId?has_content && childCategory.id?number == currentCategoryId?number) /]
+
+												<li>
+													<a class="cp-article-side-panel-item cp-article-side-panel-link ${isCurrentChildActive?then('active', '')}" href="${baseURL}/v/${childCategory.id}">
+														${childCategory.name}
+													</a>
+												</li>
+											[/#if]
+										[/#list]
+									[/#if]
+								[#recover]
+								[/#attempt]
+
+								[#attempt]
+									[#assign articles = restClient.get("/headless-delivery/v1.0/structured-content-folders/${folderId}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${siblingCategory.id})") /]
+
+									[#if articles?has_content && articles.items?has_content]
+										[#list articles.items as article]
+											[#assign isCurrentArticleActive = (articleId?has_content && article.id?number == displayObject.resourcePrimKey?number) /]
+
+											<li>
+												<a class="cp-article-side-panel-item cp-article-side-panel-link ${isCurrentArticleActive?then('active', '')}" href="${baseURL}/w/${article.friendlyUrlPath}">
+													${article.title}
+												</a>
+											</li>
+										[/#list]
+									[/#if]
+								[#recover]
+								[/#attempt]
+							</ul>
+						[/@]
+					[/#if]
+				[/#list]
+			[/#if]
+		[/@]
+	</div>
 [/#if]
-
-[#if parentTaxonomyCategoryId?has_content]
-	<script>
-		const prefix = `${fragmentElementId}`.replaceAll('-', '');
-
-		const currentItemIdVarName = prefix + "CurrentItemId";
-
-		window[currentItemIdVarName] = "${currentItemId}";
-
-		const parentTaxonomyCategoryIdVarName = prefix + "ParentTaxonomyCategoryId";
-
-		window[parentTaxonomyCategoryIdVarName] = "${parentTaxonomyCategoryId}";
-	</script>
-[/#if]
-
-<div aria-hidden="true" class="loading-animation"></div>

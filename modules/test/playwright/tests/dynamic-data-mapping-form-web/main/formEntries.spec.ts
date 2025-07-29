@@ -237,10 +237,10 @@ test('can add image to repeated Rich Text field', async ({
 
 	await formFieldsPage.richTextselectImage('planet.png');
 
+	const textBox = editorContentFrame.nth(1).getByRole('textbox');
+
 	await expect(
-		editorContentFrame
-			.nth(1)
-			.locator('img[src="/documents/d/guest/planet-png"]')
+		textBox.locator('img[src="/documents/d/guest/planet-png"]')
 	).toBeVisible();
 });
 

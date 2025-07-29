@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {formatStackedBarTooltipDate} from '../../../js/components/stacked-bar/StackedBarTooltip';
-import {RangeSelectors} from '../../../js/types/global';
+import {formatStackedBarTooltipDate} from '../../../../js/components/content-dashboard/stacked-bar/StackedBarTooltip';
+import {RangeSelectors} from '../../../../js/types/global';
 
 describe('Stacked Bar', () => {
 	it('format stacked bar tooltip date', () => {

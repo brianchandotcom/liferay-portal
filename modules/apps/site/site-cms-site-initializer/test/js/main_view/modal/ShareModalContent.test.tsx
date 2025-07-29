@@ -10,7 +10,7 @@ import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__
 import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import ShareModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/ShareModalContent';
+import ShareModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/ShareModalContent';
 
 jest.useFakeTimers();
 
@@ -33,6 +33,7 @@ const DEFAULT_PROPS = {
 			user: {id: '2', name: 'Test2 Test2'},
 		},
 	],
+	itemId: 20,
 	title: 'Test Document',
 };
 

@@ -4,6 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {TrendClassification} from '@liferay/analytics-reports-js-components-web';
 import {
 	render,
 	screen,
@@ -16,7 +17,6 @@ import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/comm
 import {
 	ContentAndFilesCard,
 	IMetricsProps,
-	TrendClassification,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/ContentAndFilesCard';
 import {RangeSelectors} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/RangeSelectorsDropdown';
 

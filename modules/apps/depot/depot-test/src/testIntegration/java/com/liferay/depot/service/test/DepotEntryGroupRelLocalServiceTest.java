@@ -364,7 +364,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 		List<DepotEntryGroupRel> depotEntryGroupRels =
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
-				_group1.getGroupId(), 0, 20);
+				_group1.getGroupId(), DepotConstants.TYPE_ASSET_LIBRARY, 0, 20);
 
 		Assert.assertEquals(
 			depotEntryGroupRels.toString(), depotEntryGroupRels.size(), 1);
@@ -392,11 +392,11 @@ public class DepotEntryGroupRelLocalServiceTest {
 		Assert.assertEquals(
 			2,
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
-				_group1.getGroupId()));
+				_group1.getGroupId(), DepotConstants.TYPE_ASSET_LIBRARY));
 		Assert.assertEquals(
 			0,
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
-				RandomTestUtil.randomInt()));
+				RandomTestUtil.randomInt(), DepotConstants.TYPE_ASSET_LIBRARY));
 	}
 
 	@Test

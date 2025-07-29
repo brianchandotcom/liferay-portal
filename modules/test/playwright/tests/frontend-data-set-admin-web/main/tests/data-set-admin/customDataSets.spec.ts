@@ -121,7 +121,7 @@ async function assertTableColumnLabels(customDataSetsPage: CustomDataSetsPage) {
 		'REST Schema',
 		'REST Endpoint',
 		'Modified Date',
-		'Manage Columns Visibility',
+		'Item Actions',
 	];
 
 	expect(tableColumnLabels).toEqual(expectedLabels);

@@ -519,7 +519,7 @@ test(
 					.first()
 					.locator('td')
 					.allInnerTexts()
-			).toEqual(['Topic', '0', 'Manage Columns Visibility']);
+			).toEqual(['Topic', '0', '']);
 		});
 	}
 );

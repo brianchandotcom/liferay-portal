@@ -65,7 +65,7 @@ test(
 				'Nombre',
 				'Apellido',
 				'Dirección de correo',
-				'Administrar la visibilidad de las columnas',
+				'Acciones del elemento',
 			]);
 		});
 	}

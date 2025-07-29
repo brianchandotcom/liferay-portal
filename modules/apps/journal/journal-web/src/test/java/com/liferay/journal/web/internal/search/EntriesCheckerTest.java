@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -39,56 +40,53 @@ public class EntriesCheckerTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@AfterClass
+	public static void tearDownClass() {
+		_articleLocalServiceUtilMockedStatic.close();
+		_languageUtilMockedStatic.close();
+		_journalArticlePermissionMockedStatic.close();
+	}
+
 	@Test
 	public void testGetRowCheckBoxForNoJournalArticlePermissions() {
 		EntriesChecker entriesChecker = new EntriesChecker(
 			_getLiferayPortletRequest(), _getLiferayPortletResponse());
 
-		try (MockedStatic<JournalArticleLocalServiceUtil>
-				articleLocalServiceUtilMockedStatic = Mockito.mockStatic(
-					JournalArticleLocalServiceUtil.class);
-			MockedStatic<LanguageUtil> languageUtilMockedStatic =
-				Mockito.mockStatic(LanguageUtil.class);
-			MockedStatic<JournalArticlePermission>
-				journalArticlePermissionMockedStatic = Mockito.mockStatic(
-					JournalArticlePermission.class)) {
+		JournalArticle mockArticle = Mockito.mock(JournalArticle.class);
 
-			JournalArticle mockArticle = Mockito.mock(JournalArticle.class);
+		Mockito.when(
+			mockArticle.getArticleId()
+		).thenReturn(
+			_ARTICLE_ID
+		);
 
-			Mockito.when(
-				mockArticle.getArticleId()
-			).thenReturn(
-				_ARTICLE_ID
-			);
+		_articleLocalServiceUtilMockedStatic.when(
+			() -> JournalArticleLocalServiceUtil.fetchArticle(
+				_SCOPE_GROUP_ID, _ARTICLE_ID)
+		).thenReturn(
+			mockArticle
+		);
 
-			articleLocalServiceUtilMockedStatic.when(
-				() -> JournalArticleLocalServiceUtil.fetchArticle(
-					_SCOPE_GROUP_ID, _ARTICLE_ID)
-			).thenReturn(
-				mockArticle
-			);
+		_languageUtilMockedStatic.when(
+			() -> LanguageUtil.get(
+				Mockito.any(Locale.class), Mockito.eq("select"))
+		).thenReturn(
+			"Select (mocked)"
+		);
 
-			languageUtilMockedStatic.when(
-				() -> LanguageUtil.get(
-					Mockito.any(Locale.class), Mockito.eq("select"))
-			).thenReturn(
-				"Select (mocked)"
-			);
+		_journalArticlePermissionMockedStatic.when(
+			() -> JournalArticlePermission.contains(
+				ArgumentMatchers.any(PermissionChecker.class),
+				ArgumentMatchers.any(JournalArticle.class),
+				ArgumentMatchers.anyString())
+		).thenReturn(
+			false
+		);
 
-			journalArticlePermissionMockedStatic.when(
-				() -> JournalArticlePermission.contains(
-					ArgumentMatchers.any(PermissionChecker.class),
-					ArgumentMatchers.any(JournalArticle.class),
-					ArgumentMatchers.anyString())
-			).thenReturn(
-				false
-			);
+		String rowCheckBox = entriesChecker.getRowCheckBox(
+			_getHttpServletRequest(), false, false, _ARTICLE_ID);
 
-			String rowCheckBox = entriesChecker.getRowCheckBox(
-				_getHttpServletRequest(), false, false, _ARTICLE_ID);
-
-			Assert.assertTrue((rowCheckBox != null) && !rowCheckBox.isEmpty());
-		}
+		Assert.assertTrue((rowCheckBox != null) && !rowCheckBox.isEmpty());
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {
@@ -139,5 +137,14 @@ public class EntriesCheckerTest {
 	private static final String _ARTICLE_ID = "1234";
 
 	private static final long _SCOPE_GROUP_ID = 0;
+
+	private static final MockedStatic<JournalArticleLocalServiceUtil>
+		_articleLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			JournalArticleLocalServiceUtil.class);
+	private static final MockedStatic<JournalArticlePermission>
+		_journalArticlePermissionMockedStatic = Mockito.mockStatic(
+			JournalArticlePermission.class);
+	private static final MockedStatic<LanguageUtil> _languageUtilMockedStatic =
+		Mockito.mockStatic(LanguageUtil.class);
 
 }

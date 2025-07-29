@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.segments.service.SegmentsExperienceService;
@@ -314,6 +315,10 @@ public class PageSpecificationDTOConverter
 
 		return new ContentPageSpecification() {
 			{
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						true, Layout.class.getName(), layout.getPlid(),
+						layout.getCompanyId(), null));
 				setDraftContentPageSpecificationExternalReferenceCode(
 					() -> {
 						Layout draftLayout = layout.fetchDraftLayout();
@@ -364,6 +369,10 @@ public class PageSpecificationDTOConverter
 	private PageSpecification _toWidgetPageSpecification(Layout layout) {
 		return new WidgetPageSpecification() {
 			{
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						true, Layout.class.getName(), layout.getPlid(),
+						layout.getCompanyId(), null));
 				setExternalReferenceCode(
 					() -> {
 						LayoutPageTemplateEntry layoutPageTemplateEntry =

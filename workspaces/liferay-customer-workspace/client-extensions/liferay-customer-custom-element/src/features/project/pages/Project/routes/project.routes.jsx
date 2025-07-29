@@ -234,24 +234,22 @@ const ProjectRoutes = () => {
 							/>
 						</Route>
 
-						{featureFlags.includes('LPS-153478') && (
-							<Route
-								element={
-									<ProductOutlet
-										product={
-											PRODUCT_TYPES.liferayExperienceCloud
-										}
-									/>
-								}
-							>
-								<Route
-									element={<LiferayExperienceCloud />}
-									path={getKebabCase(
+						<Route
+							element={
+								<ProductOutlet
+									product={
 										PRODUCT_TYPES.liferayExperienceCloud
-									)}
+									}
 								/>
-							</Route>
-						)}
+							}
+						>
+							<Route
+								element={<LiferayExperienceCloud />}
+								path={getKebabCase(
+									PRODUCT_TYPES.liferayExperienceCloud
+								)}
+							/>
+						</Route>
 
 						<Route
 							element={

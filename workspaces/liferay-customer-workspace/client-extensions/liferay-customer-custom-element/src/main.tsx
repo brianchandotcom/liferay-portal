@@ -18,7 +18,6 @@ import Projects from './features/projects';
 import SecurityVulnerabilities from './features/security-vulnerabilities';
 import useApollo from './hooks/useApollo';
 import useGlobalNetworkIndicator from './hooks/useGlobalNetworkIndicator';
-import {Liferay} from './services/liferay';
 import getIconSpriteMap from './utils/getIconSpriteMap';
 import swrCacheProvider from './utils/swrCacheProvider';
 
@@ -135,13 +134,6 @@ class CustomerPortalWebComponent extends HTMLElement {
 				'about-the-overview-page-url'
 			),
 		};
-
-		if (
-			!properties.featureFlags.includes('LPS-153478') &&
-			(Liferay.FeatureFlags as any)['LPS-153478']
-		) {
-			properties.featureFlags.push('LPS-153478');
-		}
 
 		const apis = {
 			gravatarAPI: super.getAttribute('gravatar-api'),

@@ -44,10 +44,7 @@ const SideMenu = () => {
 		() =>
 			subscriptionGroups?.filter((subscriptionGroup) => {
 				return (
-					subscriptionGroup.hasActivation &&
-					subscriptionGroup.name === MENU_TYPES.liferaySaaS
-						? featureFlags.includes('LPS-153478')
-						: true
+					subscriptionGroup.hasActivation
 				);
 			}),
 		[subscriptionGroups]

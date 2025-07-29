@@ -748,6 +748,20 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		};
 	}
 
+	private PageSpecification.Type _getPageSpecificationType(
+		SitePage.Type type) {
+
+		PageSpecification.Type pageSpecificationType =
+			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION;
+
+		if (type == SitePage.Type.WIDGET_PAGE) {
+			pageSpecificationType =
+				PageSpecification.Type.WIDGET_PAGE_SPECIFICATION;
+		}
+
+		return pageSpecificationType;
+	}
+
 	private SitePage _getRandomSitePage(SitePage.Type type) throws Exception {
 		return _getRandomSitePage(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()), null, type,

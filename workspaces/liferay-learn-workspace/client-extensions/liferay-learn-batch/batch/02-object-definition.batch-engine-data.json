@@ -1213,7 +1213,6 @@
 					"readOnly": "false",
 					"required": false,
 					"state": false,
-					"system": false,
 					"type": "Integer",
 					"unique": false
 				},
@@ -1678,7 +1677,6 @@
 				"label": "approved",
 				"label_i18n": "Approved"
 			},
-			"system": false,
 			"titleObjectFieldName": "title"
 		},
 		{
@@ -3715,7 +3713,6 @@
 					"objectDefinitionScope2": "company",
 					"objectDefinitionSystem2": false,
 					"reverse": false,
-					"system": false,
 					"type": "manyToMany"
 				},
 				{
@@ -3732,7 +3729,6 @@
 					"objectDefinitionScope2": "company",
 					"objectDefinitionSystem2": false,
 					"reverse": false,
-					"system": false,
 					"type": "manyToMany"
 				},
 				{
@@ -3749,7 +3745,6 @@
 					"objectDefinitionScope2": "company",
 					"objectDefinitionSystem2": false,
 					"reverse": false,
-					"system": false,
 					"type": "manyToMany"
 				},
 				{
@@ -3766,7 +3761,6 @@
 					"objectDefinitionScope2": "company",
 					"objectDefinitionSystem2": false,
 					"reverse": false,
-					"system": false,
 					"type": "oneToMany"
 				}
 			],

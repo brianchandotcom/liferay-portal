@@ -530,61 +530,7 @@ public class EditServerMVCActionCommandTest {
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();
 
-		if (permissionChecker.isOmniadmin()) {
-			if (!cmd.equals("addLogLevel") &&
-				!cmd.equals("dlGenerateAudioPreviews") &&
-				!cmd.equals("dlGenerateOpenOfficePreviews") &&
-				!cmd.equals("dlGenerateVideoPreviews") &&
-				!cmd.equals("updateLogLevels") &&
-				!cmd.equals("updatePortalProperties")) {
-
-				try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-						 new ConfigurationTemporarySwapper(
-					"com.liferay.captcha.configuration.CaptchaConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"createAccountCaptchaEnabled", "true"
-					).put(
-						"maxChallenges", "1"
-					).put(
-						"sendPasswordCaptchaEnabled", "true"
-					).build());
-
-					CompanyConfigurationTemporarySwapper
-						companyConfigurationTemporarySwapper =
-						new CompanyConfigurationTemporarySwapper(
-							TestPropsValues.getCompanyId(),
-							CaptchaConfiguration.class.getName(),
-							new HashMapDictionaryBuilder(
-							).<String, Object>put(
-								"createAccountCaptchaEnabled", "true"
-							).put(
-								"sendPasswordCaptchaEnabled", "true"
-							).put(
-								"maxChallenges", "1"
-							).build())
-				) {
-
-					_mvcActionCommand.processAction(
-						mockLiferayPortletActionRequest,
-						mockLiferayPortletActionResponse);
-
-					Assert.fail(cmd + " should fail by CaptchaTextException");
-				}
-				catch (Exception exception) {
-					Throwable throwable = exception.getCause();
-
-					Assert.assertTrue(
-						throwable instanceof CaptchaTextException);
-				}
-			}
-			else {
-				Assert.assertTrue(
-					_mvcActionCommand.processAction(
-						mockLiferayPortletActionRequest,
-						mockLiferayPortletActionResponse));
-			}
-		}
-		else {
+		if (!permissionChecker.isOmniadmin()) {
 			if (cmd.equals("updateMail") &&
 				permissionChecker.isCompanyAdmin()) {
 
@@ -599,6 +545,60 @@ public class EditServerMVCActionCommandTest {
 						mockLiferayPortletActionRequest,
 						mockLiferayPortletActionResponse));
 			}
+
+			return;
+		}
+
+		if (!cmd.equals("addLogLevel") &&
+			!cmd.equals("dlGenerateAudioPreviews") &&
+			!cmd.equals("dlGenerateOpenOfficePreviews") &&
+			!cmd.equals("dlGenerateVideoPreviews") &&
+			!cmd.equals("updateLogLevels") &&
+			!cmd.equals("updatePortalProperties")) {
+
+			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+					 new ConfigurationTemporarySwapper(
+				"com.liferay.captcha.configuration.CaptchaConfiguration",
+				HashMapDictionaryBuilder.<String, Object>put(
+					"createAccountCaptchaEnabled", "true"
+				).put(
+					"maxChallenges", "1"
+				).put(
+					"sendPasswordCaptchaEnabled", "true"
+				).build());
+
+				CompanyConfigurationTemporarySwapper
+					companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CaptchaConfiguration.class.getName(),
+						new HashMapDictionaryBuilder(
+						).<String, Object>put(
+							"createAccountCaptchaEnabled", "true"
+						).put(
+							"sendPasswordCaptchaEnabled", "true"
+						).put(
+							"maxChallenges", "1"
+						).build())
+			) {
+
+				_mvcActionCommand.processAction(
+					mockLiferayPortletActionRequest,
+					mockLiferayPortletActionResponse);
+
+				Assert.fail(cmd + " should fail by CaptchaTextException");
+			}
+			catch (Exception exception) {
+				Throwable throwable = exception.getCause();
+
+				Assert.assertTrue(throwable instanceof CaptchaTextException);
+			}
+		}
+		else {
+			Assert.assertTrue(
+				_mvcActionCommand.processAction(
+					mockLiferayPortletActionRequest,
+					mockLiferayPortletActionResponse));
 		}
 	}
 

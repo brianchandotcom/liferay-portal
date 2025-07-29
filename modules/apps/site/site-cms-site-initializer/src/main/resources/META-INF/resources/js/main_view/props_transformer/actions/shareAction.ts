@@ -6,7 +6,9 @@
 import {openModal, openToast} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 
-import ShareModalContent, {collaborator} from '../../modal/ShareModalContent';
+import ShareModalContent, {
+	collaborator,
+} from '../../modal/share_modal_content/ShareModalContent';
 
 export default function shareAction({
 	autocompleteURL,

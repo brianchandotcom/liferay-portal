@@ -62,50 +62,6 @@ describe('ContentEditorSidePanel', () => {
 			expect(screen.getByText('comments')).toBeInTheDocument();
 		});
 
-		const unsubscribeButton = screen.getByLabelText('unsubscribe');
-
-		expect(unsubscribeButton).toBeEnabled();
-
-		const clickPromise = userEvent.click(unsubscribeButton);
-
-		await waitFor(() => {
-			expect(unsubscribeButton).toBeDisabled();
-		});
-
-		await clickPromise;
-
-		await waitFor(() => {
-			expect(unsubscribeButton).toBeEnabled();
-		});
-
-		expect(mockFetch).toBeCalledWith('subscribeURL', {
-			body: {
-				cmd: 'subscribe',
-			},
-			method: 'POST',
-		});
-
-		const formData = (fetch as jest.Mock).mock.calls[0][1].body;
-		const formDataObject = Object.fromEntries(formData.entries());
-
-		expect(formDataObject).toEqual({cmd: 'subscribe'});
-
-		await waitFor(() => {
-			expect(
-				screen.getByText('you-have-successfully-subscribed-to-comments')
-			).toBeInTheDocument();
-		});
-	});
-
-	it('calls the unsubscribe request', async () => {
-		renderComponent({isSubscribed: true});
-
-		await userEvent.click(screen.getByLabelText('comments'));
-
-		await waitFor(() => {
-			expect(screen.getByText('comments')).toBeInTheDocument();
-		});
-
 		const subscribeButton = screen.getByLabelText('subscribe');
 
 		expect(subscribeButton).toBeEnabled();
@@ -124,15 +80,49 @@ describe('ContentEditorSidePanel', () => {
 
 		expect(mockFetch).toBeCalledWith('subscribeURL', {
 			body: {
-				cmd: 'unsubscribe',
+				cmd: 'subscribe',
 			},
 			method: 'POST',
 		});
 
-		const formData = (fetch as jest.Mock).mock.calls[0][1].body;
-		const formDataObject = Object.fromEntries(formData.entries());
+		await waitFor(() => {
+			expect(
+				screen.getByText('you-have-successfully-subscribed-to-comments')
+			).toBeInTheDocument();
+		});
+	});
 
-		expect(formDataObject).toEqual({cmd: 'unsubscribe'});
+	it('calls the unsubscribe request', async () => {
+		renderComponent({isSubscribed: true});
+
+		await userEvent.click(screen.getByLabelText('comments'));
+
+		await waitFor(() => {
+			expect(screen.getByText('comments')).toBeInTheDocument();
+		});
+
+		const unsubscribeButton = screen.getByLabelText('unsubscribe');
+
+		expect(unsubscribeButton).toBeEnabled();
+
+		const clickPromise = userEvent.click(unsubscribeButton);
+
+		await waitFor(() => {
+			expect(unsubscribeButton).toBeDisabled();
+		});
+
+		await clickPromise;
+
+		await waitFor(() => {
+			expect(unsubscribeButton).toBeEnabled();
+		});
+
+		expect(mockFetch).toBeCalledWith('subscribeURL', {
+			body: {
+				cmd: 'unsubscribe',
+			},
+			method: 'POST',
+		});
 
 		await waitFor(() => {
 			expect(

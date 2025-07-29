@@ -1300,17 +1300,6 @@ public class BatchEngineImportTaskExecutorTest
 		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
 	}
 
-	private void _importBlogPostings(
-			BatchEngineTaskOperation batchEngineTaskOperation, byte[] content,
-			String contentType, Map<String, String> fieldNameMappingMap,
-			String importStrategy)
-		throws Exception {
-
-		_importBlogPostings(
-			batchEngineTaskOperation, content, contentType, fieldNameMappingMap,
-			importStrategy);
-	}
-
 	private byte[] _toContent(String contentType, StringBundler sb)
 		throws Exception {
 

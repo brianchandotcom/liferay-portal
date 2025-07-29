@@ -6794,10 +6794,26 @@ public class DefaultObjectEntryManagerImplTest
 	@FeatureFlag("LPD-42577")
 	@Test
 	public void testSubscribeObjectEntryWithHierarchy() throws Exception {
-		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.publishObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.publishObjectDefinition();
+		ObjectDefinition objectDefinitionA = _createObjectDefinition(
+			true,
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					"textObjectFieldName"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectDefinition objectDefinitionAA = _createObjectDefinition(
+			true,
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					"textObjectFieldName"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(

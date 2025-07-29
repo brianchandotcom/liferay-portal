@@ -5,15 +5,21 @@
 
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.ToolDependencies;
+import com.liferay.portal.util.PortalImpl;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -40,6 +46,7 @@ public class InvokerFilterTest {
 	@Before
 	public void setUp() {
 		ToolDependencies.wireCaches();
+		_setUpPortalUtil();
 	}
 
 	@Test
@@ -93,6 +100,27 @@ public class InvokerFilterTest {
 		testLongURL("/c/portal/login?param=");
 	}
 
+	@Test
+	public void testSetCompanyId() throws Exception {
+		InvokerFilter invokerFilter = new InvokerFilter();
+
+		ReflectionTestUtil.setFieldValue(
+			invokerFilter, "_invokerFilterHelper", new InvokerFilterHelper());
+
+		long companyId = RandomTestUtil.randomLong();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.COMPANY_ID, companyId);
+
+		invokerFilter.doFilter(
+			mockHttpServletRequest, new MockHttpServletResponse(),
+			new MockFilterChain());
+
+		Assert.assertEquals(companyId, (long)CompanyThreadLocal.getCompanyId());
+	}
+
 	protected void testLongURL(String urlPrefix) throws Exception {
 		InvokerFilter invokerFilter = new InvokerFilter();
 
@@ -136,6 +164,12 @@ public class InvokerFilterTest {
 
 			Assert.assertTrue(message.startsWith("Rejected " + urlPrefix));
 		}
+	}
+
+	private void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(new PortalImpl());
 	}
 
 }

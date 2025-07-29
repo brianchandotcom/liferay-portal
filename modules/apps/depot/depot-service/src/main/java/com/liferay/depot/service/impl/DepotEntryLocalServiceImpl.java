@@ -11,6 +11,7 @@ import com.liferay.depot.exception.DepotEntryGroupException;
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.exception.DepotEntryStagedException;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
@@ -217,18 +218,22 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<DepotEntry> getGroupConnectedDepotEntries(
-			long groupId, int start, int end)
+			long groupId, int type, int start, int end)
 		throws PortalException {
 
 		return TransformUtil.transform(
-			_depotEntryGroupRelPersistence.findByToGroupId(groupId, start, end),
+			_getGroupConnectedDepotEntries(groupId, type, start, end),
 			depotEntryGroupRel -> depotEntryLocalService.getDepotEntry(
 				depotEntryGroupRel.getDepotEntryId()));
 	}
 
 	@Override
-	public int getGroupConnectedDepotEntriesCount(long groupId) {
-		return _depotEntryGroupRelPersistence.countByToGroupId(groupId);
+	public int getGroupConnectedDepotEntriesCount(long groupId, int type) {
+		if (type == DepotConstants.TYPE_ANY) {
+			return _depotEntryGroupRelPersistence.countByToGroupId(groupId);
+		}
+
+		return _depotEntryGroupRelPersistence.countByTGI_T(groupId, type);
 	}
 
 	@Override
@@ -318,6 +323,18 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		}
 
 		return _language.get(defaultLocale, "unnamed-asset-library");
+	}
+
+	private List<DepotEntryGroupRel> _getGroupConnectedDepotEntries(
+		long groupId, int type, int start, int end) {
+
+		if (type == DepotConstants.TYPE_ANY) {
+			return _depotEntryGroupRelPersistence.findByToGroupId(
+				groupId, start, end);
+		}
+
+		return _depotEntryGroupRelPersistence.findByTGI_T(
+			groupId, type, start, end);
 	}
 
 	private boolean _isStaged(DepotEntry depotEntry) throws PortalException {

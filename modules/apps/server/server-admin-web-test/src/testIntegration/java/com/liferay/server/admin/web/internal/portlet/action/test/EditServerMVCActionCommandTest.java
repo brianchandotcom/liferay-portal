@@ -579,8 +579,7 @@ public class EditServerMVCActionCommandTest {
 						).build());
 			ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					"com.liferay.captcha.configuration." +
-						"CaptchaConfiguration",
+					"com.liferay.captcha.configuration.CaptchaConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
 						"createAccountCaptchaEnabled", "true"
 					).put(

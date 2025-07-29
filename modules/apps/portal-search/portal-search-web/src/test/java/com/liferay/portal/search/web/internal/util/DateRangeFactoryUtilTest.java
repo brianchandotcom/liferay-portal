@@ -76,18 +76,16 @@ public class DateRangeFactoryUtilTest {
 
 	@Test
 	public void testNamedRange() throws Exception {
-		Calendar calendar = new GregorianCalendar(
-			2018, Calendar.MARCH, 1, 16, 30, 42);
-
 		_assertForEachLocale(
 			() -> {
 				Assert.assertEquals(
-					"[20180301153042 TO 20180301163042]",
-					DateRangeFactoryUtil.getRangeString("past-hour", calendar));
-				Assert.assertEquals(
-					"[20180228163042 TO 20180301163042]",
+					"[20180515225959 TO 20180515235959]",
 					DateRangeFactoryUtil.getRangeString(
-						"past-24-hours", calendar));
+						"past-hour", _calendar));
+				Assert.assertEquals(
+					"[20180514235959 TO 20180515235959]",
+					DateRangeFactoryUtil.getRangeString(
+						"past-24-hours", _calendar));
 			});
 	}
 

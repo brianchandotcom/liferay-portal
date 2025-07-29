@@ -300,6 +300,54 @@ public class PageSpecificationsTestUtil {
 		return contentPageSpecification;
 	}
 
+	public static PageSpecification[] getPatchPageSpecifications(
+		PageSpecification[] pageSpecifications) {
+
+		if (pageSpecifications.length == 2) {
+			ContentPageSpecification draftContentPageSpecification = null;
+
+			ContentPageSpecification publishedContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[0];
+
+			String draftContentPageSpecificationExternalReferenceCode =
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode();
+
+			if (draftContentPageSpecificationExternalReferenceCode != null) {
+				draftContentPageSpecification =
+					(ContentPageSpecification)pageSpecifications[1];
+			}
+			else {
+				draftContentPageSpecification =
+					publishedContentPageSpecification;
+				publishedContentPageSpecification =
+					(ContentPageSpecification)pageSpecifications[1];
+			}
+
+			ContentPageSpecification[] updatedPageSpecifications =
+				_getContentPageSpecifications(
+					draftContentPageSpecification.getExternalReferenceCode(),
+					publishedContentPageSpecification.
+						getExternalReferenceCode());
+
+			updatedPageSpecifications[0].setPageExperiences(
+				publishedContentPageSpecification.getPageExperiences());
+			updatedPageSpecifications[1].setPageExperiences(
+				draftContentPageSpecification.getPageExperiences());
+
+			return updatedPageSpecifications;
+		}
+
+		WidgetPageSpecification widgetPageSpecification =
+			(WidgetPageSpecification)pageSpecifications[0];
+
+		return new PageSpecification[] {
+			getWidgetPageSpecification(
+				widgetPageSpecification.getExternalReferenceCode(), null,
+				PageSpecification.Status.APPROVED)
+		};
+	}
+
 	public static WidgetPageSpecification getWidgetPageSpecification(
 		String externalReferenceCode, Settings settings,
 		PageSpecification.Status status) {

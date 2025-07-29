@@ -26,7 +26,8 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 				fileEntryUUID: '<%= fileEntry.getUuid() %>',
 				title: '<%= HtmlUtil.escapeJS(fileEntry.getTitle()) %>',
 				version: '<%= fileEntry.getVersion() %>',
-				externalReferenceCode: '<%= fileEntry.getExternalReferenceCode() %>',
+				externalReferenceCode:
+					'<%= fileEntry.getExternalReferenceCode() %>',
 			});
 		}
 	}

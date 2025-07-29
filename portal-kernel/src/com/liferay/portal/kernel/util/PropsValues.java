@@ -1244,14 +1244,8 @@ public class PropsValues {
 	public static final String[] LOGOUT_EVENTS_PRE = PropsUtil.getArray(
 		PropsKeys.LOGOUT_EVENTS_PRE);
 
-	public static final String MAIL_AUDIT_TRAIL = PropsUtil.get(
-		PropsKeys.MAIL_AUDIT_TRAIL);
-
 	public static final boolean MAIL_MX_UPDATE = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.MAIL_MX_UPDATE));
-
-	public static final String[] MAIL_SEND_BLACKLIST = PropsUtil.getArray(
-		PropsKeys.MAIL_SEND_BLACKLIST);
 
 	public static final String MARKETPLACE_CLIENT_ID = PropsUtil.get(
 		PropsKeys.MARKETPLACE_CLIENT_ID);
@@ -1726,9 +1720,6 @@ public class PropsValues {
 
 	public static String PHONE_NUMBER_FORMAT_USA_REGEXP = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.PHONE_NUMBER_FORMAT_USA_REGEXP));
-
-	public static final String POP_SERVER_SUBDOMAIN = PropsUtil.get(
-		PropsKeys.POP_SERVER_SUBDOMAIN);
 
 	public static final boolean PORTAL_IMPERSONATION_ENABLE =
 		GetterUtil.getBoolean(

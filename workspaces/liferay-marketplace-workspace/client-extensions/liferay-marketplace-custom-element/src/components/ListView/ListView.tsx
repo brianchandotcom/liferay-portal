@@ -132,6 +132,7 @@ const ListView = <T extends Record<string, any>>({
 
 	const updateUrlParams = useUpdateUrlParams();
 	const [searchParams] = useSearchParams();
+
 	const {filters, keywords, sort} = listViewContext;
 
 	const filterSchema = (filterSchemas as any)[
@@ -141,12 +142,13 @@ const ListView = <T extends Record<string, any>>({
 	const encodedFilter = searchParams.get('filter');
 
 	const setFilters = useCallback(() => {
-		const fields = filterSchema?.fields ?? ([] as RendererFields[]);
 		const parsedFilter = safeJSONParse(encodedFilter, {});
 
 		if (!Object.keys(parsedFilter).length) {
 			return;
 		}
+
+		const fields = filterSchema?.fields ?? ([] as RendererFields[]);
 
 		const normalizedFilter = Object.fromEntries(
 			Object.entries(parsedFilter).map(([key, value]) => {
@@ -164,18 +166,20 @@ const ListView = <T extends Record<string, any>>({
 			})
 		);
 
-		const entries = Object.entries(normalizedFilter).map(
-			([key, selectedOptions]) => ({
-				label: fields.find(({name}) => name === key)?.label ?? key,
-				name: key,
-				value: selectedOptions.map((opt) => opt.label).join(', '),
-			})
-		);
-
 		dispatch({
 			payload: {
 				filters: {
-					entries,
+					entries: Object.entries(normalizedFilter).map(
+						([key, selectedOptions]) => ({
+							label:
+								fields.find(({name}) => name === key)?.label ??
+								key,
+							name: key,
+							value: selectedOptions
+								.map((opt) => opt.label)
+								.join(', '),
+						})
+					),
 					filter: normalizedFilter,
 				},
 			},

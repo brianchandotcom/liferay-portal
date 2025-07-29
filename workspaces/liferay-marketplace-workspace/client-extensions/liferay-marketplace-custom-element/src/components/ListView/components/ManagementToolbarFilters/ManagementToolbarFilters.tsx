@@ -91,7 +91,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 				},
 			];
 		}
-		if (type === 'select-one') {
+		else if (type === 'select-one') {
 			value = [
 				{
 					label: options.item(options.selectedIndex).label,
@@ -99,12 +99,13 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 				},
 			];
 		}
+
 		if (Array.isArray(value)) {
-			if (typeof value[0] === 'object') {
-				value = !value[0].label ? '' : value;
-			}
 			if (!value[0]) {
 				value = '';
+			}
+			else if (typeof value[0] === 'object') {
+				value = !value[0].label ? '' : value;
 			}
 		}
 

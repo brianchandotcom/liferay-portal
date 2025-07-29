@@ -383,7 +383,8 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.getVersionedObjectEntries(
-			_getDTOConverterContext(objectEntryId), objectEntryId, pagination);
+			_getDTOConverterContext(objectEntryId), _objectDefinition,
+			objectEntryId, pagination);
 	}
 
 	@Override

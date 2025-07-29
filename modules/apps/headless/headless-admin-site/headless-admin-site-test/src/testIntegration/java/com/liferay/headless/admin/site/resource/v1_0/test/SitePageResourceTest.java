@@ -252,7 +252,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
-		SitePageResource sitePageResource = _getSitePageResource();
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
 
 		SitePage sitePage =
 			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
@@ -806,7 +807,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return types.get(RandomTestUtil.randomInt(0, types.size() - 1));
 	}
 
-	private SitePageResource _getSitePageResource() throws Exception {
+	private SitePageResource _getSitePageResource(String nestedFields)
+		throws Exception {
+
 		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		return SitePageResource.builder(
@@ -817,7 +820,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "friendlyUrlHistory,pageSpecifications"
+			"nestedFields", nestedFields
 		).build();
 	}
 
@@ -854,7 +857,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				SitePage sitePage)
 		throws Exception {
 
-		SitePageResource sitePageResource = _getSitePageResource();
+		SitePageResource sitePageResource = _getSitePageResource(
+			"friendlyUrlHistory,pageSpecifications");
 
 		_assertNestedFields(
 			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
@@ -1011,7 +1015,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				publishedContentPageSpecification, draftContentPageSpecification
 			});
 
-		SitePageResource sitePageResource = _getSitePageResource();
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
 
 		SitePage postSitePage =
 			sitePageResource.postByExternalReferenceCodeSitePage(
@@ -1162,7 +1167,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				publishedContentPageSpecification, draftContentPageSpecification
 			});
 
-		SitePageResource sitePageResource = _getSitePageResource();
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
 
 		_assertPageSpecifications(
 			draftContentPageSpecification, publishedContentPageSpecification,
@@ -1257,7 +1263,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				publishedContentPageSpecification, draftContentPageSpecification
 			});
 
-		SitePageResource sitePageResource = _getSitePageResource();
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
 
 		_assertPageSpecifications(
 			draftContentPageSpecification, publishedContentPageSpecification,

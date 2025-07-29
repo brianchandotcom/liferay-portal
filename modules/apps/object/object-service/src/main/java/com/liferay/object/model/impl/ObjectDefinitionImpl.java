@@ -146,45 +146,13 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		if (!isRootDescendantNode()) {
-			if (isModifiableAndSystem()) {
-				return ObjectDefinitionUtil.
-					getModifiableSystemObjectDefinitionRESTContextPath(
-						getName());
-			}
-
-			String lowerCaseShortName = StringUtil.toLowerCase(getShortName());
-
-			return "/c/" + TextFormatter.formatPlural(lowerCaseShortName);
-		}
-
-		ObjectDefinition rootObjectDefinition =
-			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				getRootObjectDefinitionId());
-
 		if (isModifiableAndSystem()) {
-			String rootRESTContextPath =
-				ObjectDefinitionUtil.
-					getModifiableSystemObjectDefinitionRESTContextPath(
-						rootObjectDefinition.getName());
-
-			String restContextPath =
-				ObjectDefinitionUtil.
-					getModifiableSystemObjectDefinitionRESTContextPath(
-						getName());
-
-			restContextPath = restContextPath.substring(
-				restContextPath.lastIndexOf(StringPool.SLASH));
-
-			return rootRESTContextPath + restContextPath;
+			return ObjectDefinitionUtil.
+				getModifiableSystemObjectDefinitionRESTContextPath(getName());
 		}
 
-		return StringBundler.concat(
-			"/c/",
-			TextFormatter.formatPlural(
-				StringUtil.toLowerCase(rootObjectDefinition.getShortName())),
-			StringPool.SLASH,
-			TextFormatter.formatPlural(StringUtil.toLowerCase(getShortName())));
+		return "/c/" +
+			TextFormatter.formatPlural(StringUtil.toLowerCase(getShortName()));
 	}
 
 	@Override

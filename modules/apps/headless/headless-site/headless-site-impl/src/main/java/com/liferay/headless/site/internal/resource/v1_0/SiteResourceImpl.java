@@ -148,7 +148,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			_portal.getClassNameId(Company.class.getName()),
 			_portal.getClassNameId(Group.class.getName())
 		};
-
 		LinkedHashMap<String, Object> params =
 			LinkedHashMapBuilder.<String, Object>put(
 				"active", true

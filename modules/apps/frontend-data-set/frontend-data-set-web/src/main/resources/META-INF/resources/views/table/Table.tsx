@@ -122,7 +122,9 @@ const Head = ({
 								textValue="select-item"
 								width="51px"
 							>
-								{null}
+								<span className="sr-only">
+									{Liferay.Language.get('item-selection')}
+								</span>
 							</ClayTableCell>
 						);
 					}
@@ -136,7 +138,13 @@ const Head = ({
 						sortable={(field as any).sortable}
 						textValue="select"
 					>
-						{(field as any).label}
+						{field.label || (
+							<span className="sr-only">
+								{field.fieldName === 'select'
+									? Liferay.Language.get('item-selection')
+									: field.fieldName}
+							</span>
+						)}
 					</HeadCellResizer>
 				);
 			}}
@@ -829,6 +837,9 @@ const Table = ({
 					columnsVisibility: Liferay.Language.get(
 						'manage-columns-visibility'
 					),
+					columnsVisibilityCell: itemsActions?.length
+						? Liferay.Language.get('item-actions')
+						: undefined,
 					columnsVisibilityDescription: Liferay.Language.get(
 						'at-least-one-column-must-remain-visible'
 					),

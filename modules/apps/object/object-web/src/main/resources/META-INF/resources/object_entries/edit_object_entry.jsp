@@ -23,7 +23,6 @@ ObjectRelationship objectRelationship = objectEntryDisplayContext.getObjectRelat
 		<clay:alert
 			displayType="danger"
 			message="the-object-entry-could-not-be-found"
-			title="Error"
 		/>
 	</c:when>
 	<c:otherwise>

@@ -37,6 +37,7 @@ import jakarta.portlet.RenderResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -65,23 +66,10 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		Indexer<ConfigurationModel> indexer =
 			_indexerRegistry.nullSafeGetIndexer(ConfigurationModel.class);
 
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setAndSearch(false);
-		searchContext.setCompanyId(CompanyConstants.SYSTEM);
-		searchContext.setLocale(renderRequest.getLocale());
-
 		String keywords = renderRequest.getParameter("keywords");
 
-		if (Validator.isNotNull(keywords)) {
-			searchContext.setKeywords(keywords);
-		}
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(true);
-		queryConfig.setLocale(renderRequest.getLocale());
-		queryConfig.setScoreEnabled(true);
+		SearchContext searchContext = _getSearchContext(
+			renderRequest.getLocale(), keywords);
 
 		try {
 			Hits hits = indexer.search(searchContext);
@@ -91,37 +79,10 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 			ConfigurationScopeDisplayContext configurationScopeDisplayContext =
 				ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
-			Map<String, ConfigurationModel> configurationModels =
-				_configurationModelRetriever.getConfigurationModels(
-					configurationScopeDisplayContext.getScope(),
-					configurationScopeDisplayContext.getScopePK());
-
-			List<ConfigurationEntry> configurationEntries = new ArrayList<>(
-				documents.length);
-
-			for (Document document : documents) {
-				String configurationModelId = document.get(
-					FieldNames.CONFIGURATION_MODEL_ID);
-
-				ConfigurationModel configurationModel = configurationModels.get(
-					configurationModelId);
-
-				if (configurationModel == null) {
-					String configurationModelFactoryId = document.get(
-						FieldNames.CONFIGURATION_MODEL_FACTORY_PID);
-
-					configurationModel = configurationModels.get(
-						configurationModelFactoryId);
-				}
-
-				if ((configurationModel != null) &&
-					configurationModel.isGenerateUI()) {
-
-					configurationEntries.add(
-						new ConfigurationModelConfigurationEntry(
-							configurationModel, renderRequest.getLocale()));
-				}
-			}
+			List<ConfigurationEntry> configurationEntries =
+				_getConfigurationEntries(
+					configurationScopeDisplayContext, documents,
+					renderRequest.getLocale());
 
 			ExtendedObjectClassDefinition.Scope scope =
 				configurationScopeDisplayContext.getScope();
@@ -174,6 +135,65 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return "/search_results.jsp";
+	}
+
+	private List<ConfigurationEntry> _getConfigurationEntries(
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext,
+		Document[] documents, Locale locale) {
+
+		List<ConfigurationEntry> configurationEntries = new ArrayList<>(
+			documents.length);
+
+		Map<String, ConfigurationModel> configurationModels =
+			_configurationModelRetriever.getConfigurationModels(
+				configurationScopeDisplayContext.getScope(),
+				configurationScopeDisplayContext.getScopePK());
+
+		for (Document document : documents) {
+			String configurationModelId = document.get(
+				FieldNames.CONFIGURATION_MODEL_ID);
+
+			ConfigurationModel configurationModel = configurationModels.get(
+				configurationModelId);
+
+			if (configurationModel == null) {
+				String configurationModelFactoryId = document.get(
+					FieldNames.CONFIGURATION_MODEL_FACTORY_PID);
+
+				configurationModel = configurationModels.get(
+					configurationModelFactoryId);
+			}
+
+			if ((configurationModel != null) &&
+				configurationModel.isGenerateUI()) {
+
+				configurationEntries.add(
+					new ConfigurationModelConfigurationEntry(
+						configurationModel, locale));
+			}
+		}
+
+		return configurationEntries;
+	}
+
+	private SearchContext _getSearchContext(Locale locale, String keywords) {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(false);
+		searchContext.setCompanyId(CompanyConstants.SYSTEM);
+		searchContext.setLocale(locale);
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(true);
+		queryConfig.setLocale(locale);
+		queryConfig.setScoreEnabled(true);
+
+		return searchContext;
 	}
 
 	@Reference

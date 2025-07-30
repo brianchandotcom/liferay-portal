@@ -104,20 +104,24 @@ test(
 	{tag: '@LPD-60975'},
 	async ({classicPage, page}) => {
 		let requestWasMade = false;
+		const sampleRelativeURL = '/sample-relative-url';
 
 		page.on('request', (request) => {
-			if (request.url().includes('/sample-relative-url')) {
+			if (request.url().includes(sampleRelativeURL)) {
 				requestWasMade = true;
 			}
 		});
 
-		const link = classicPage.editable.getByRole('link', {
-			name: 'Diam quis',
-		});
+		const link = classicPage.editable.locator(
+			`a[href*="${sampleRelativeURL}"]`
+		);
 
 		await link.click();
 
-		await page.waitForTimeout(100);
+		// Wait small amout of time. It is reasonable to expect that request
+		// would have been made in this time after click.
+
+		await page.waitForTimeout(200);
 
 		expect(requestWasMade).toBe(false);
 	}

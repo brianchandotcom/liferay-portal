@@ -79,7 +79,7 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public Page<ObjectEntry> getObjectEntriesPage(
-			Boolean flatten, String search,
+			String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
@@ -115,7 +115,7 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public Page<ObjectEntry> getScopeScopeKeyPage(
-			String scopeKey, Boolean flatten, String search,
+			String scopeKey, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,

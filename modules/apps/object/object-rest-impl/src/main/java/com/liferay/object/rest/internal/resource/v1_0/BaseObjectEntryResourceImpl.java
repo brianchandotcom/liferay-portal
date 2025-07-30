@@ -433,10 +433,6 @@ public abstract class BaseObjectEntryResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "flatten"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -469,9 +465,6 @@ public abstract class BaseObjectEntryResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<ObjectEntry> getObjectEntriesPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("flatten")
-			Boolean flatten,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
@@ -809,10 +802,6 @@ public abstract class BaseObjectEntryResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "flatten"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -848,9 +837,6 @@ public abstract class BaseObjectEntryResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.PathParam("scopeKey")
 			String scopeKey,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("flatten")
-			Boolean flatten,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
@@ -2317,9 +2303,7 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getObjectEntriesPage(
-			_parseBoolean((String)parameters.get("flatten")), search, null,
-			filter, pagination, sorts);
+		return getObjectEntriesPage(search, null, filter, pagination, sorts);
 	}
 
 	@Override
@@ -2385,14 +2369,6 @@ public abstract class BaseObjectEntryResourceImpl
 				objectEntryUnsafeFunction.apply(objectEntry);
 			}
 		}
-	}
-
-	private Boolean _parseBoolean(String value) {
-		if (value != null) {
-			return Boolean.parseBoolean(value);
-		}
-
-		return null;
 	}
 
 	@Override

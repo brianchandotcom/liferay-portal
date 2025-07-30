@@ -9,6 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.AssetUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
@@ -49,6 +50,9 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 				setFriendlyUrlPath_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						true, layout.getFriendlyURLMap()));
+				setKeywords(
+					() -> AssetUtil.getKeywords(
+						Layout.class.getName(), layout.getPlid()));
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						true, layout.getNameMap()));
@@ -65,6 +69,10 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 						return parentLayout.getExternalReferenceCode();
 					});
+				setTaxonomyCategoryItemExternalReferences(
+					() -> AssetUtil.getTaxonomyCategoryItemExternalReferences(
+						Layout.class.getName(), layout.getPlid(),
+						layout.getGroupId()));
 				setType(
 					() -> SitePageTypeUtil.toExternalType(layout.getType()));
 				setUuid(layout::getUuid);

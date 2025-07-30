@@ -19,6 +19,7 @@ import {ApplicationsMenuPage} from '../../../pages/product-navigation-applicatio
 import {SCIMConfigurationPage} from '../../../pages/scim-configuraiton-web/SCIMConfigurationPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../../utils/performLogin';
+import {newScimUser} from './utils/newScimUserUtil';
 
 export const featureFlagDisabledtest = mergeTests(
 	featureFlagsTest({
@@ -100,129 +101,7 @@ featureFlagDisabledtest(
 
 		const randomNumber = getRandomInt();
 
-		const newUser = {
-			active: true,
-			addresses: [
-				{
-					country: 'GB',
-					formatted:
-						'Muffin Man\n' +
-						'1234 Drury Lane\n' +
-						'Great Britain, England 54321\n' +
-						'United Kingdom',
-					locality: 'Great Britain',
-					postalCode: '54321',
-					primary: false,
-					region: 'England',
-					streetAddress: 'Muffin Man\n' + '1234 Drury Lane',
-					type: 'personal',
-				},
-				{
-					country: 'US',
-					formatted:
-						'The President of the United States\n' +
-						'1600 Pennsylvania Ave NW\n' +
-						'Washington, District of Columbia 20500\n' +
-						'United States',
-					locality: 'Washington',
-					postalCode: '20500',
-					primary: true,
-					region: 'District of Columbia',
-					streetAddress:
-						'The President of the United States\n' +
-						'1600 Pennsylvania Ave NW',
-					type: 'business',
-				},
-			],
-			displayName: 'testDisplayName',
-			emails: [
-				{
-					primary: false,
-					type: 'default',
-					value: 'emailAddress1@liferay.com',
-				},
-				{
-					primary: true,
-					type: 'default',
-					value: `able${randomNumber}@liferay.com`,
-				},
-				{
-					primary: false,
-					type: 'default',
-					value: 'emailAddress3@liferay.com',
-				},
-			],
-			entitlements: [
-				{
-					value: 'testEntitlement1',
-				},
-				{
-					value: 'testEntitlement2',
-				},
-			],
-			ims: [
-				{
-					type: 'Jabber',
-					value: 'testJabberIms',
-				},
-				{
-					type: 'Skype',
-					value: 'testSkypeIms',
-				},
-			],
-			name: {
-				familyName: `Baker ${randomNumber}`,
-				givenName: `Able ${randomNumber}`,
-				honorificPrefix: 'Dr',
-				honorificSuffix: 'Phd',
-				middleName: 'testMiddleName',
-			},
-			nickName: 'testNickName',
-			phoneNumbers: [
-				{
-					primary: true,
-					type: 'Business',
-					value: '555-555-5555',
-				},
-				{
-					primary: false,
-					type: 'Personal',
-					value: '555-555-4444',
-				},
-			],
-			photos: [
-				{
-					value: 'testPhoto1',
-				},
-				{
-					value: 'testPhoto2',
-				},
-			],
-			preferredLanguage: 'testPreferredLanguage',
-			profileUrl: 'http://testProfileUrl.com',
-			roles: [
-				{
-					value: 'Invalid Role',
-				},
-				{
-					value: 'Power User',
-				},
-				{
-					value: 'Supplier',
-				},
-			],
-			timezone: 'America/Los_Angeles',
-			userName: `able${randomNumber}.baker`,
-			userType: 'testUserType',
-			x509Certificates: [
-				{
-					value: 'testx509Certificate1',
-				},
-				{
-					value: 'testx509Certificate2',
-				},
-			],
-		};
+		const newUser = await newScimUser(randomNumber);
 
 		const apiHelper = new ApiHelpers(page);
 
@@ -436,23 +315,7 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
-	const randomNumber = getRandomInt();
-
-	const newUser = {
-		active: true,
-		emails: [
-			{
-				primary: true,
-				type: 'default',
-				value: `able${randomNumber}@liferay.com`,
-			},
-		],
-		name: {
-			familyName: `Baker ${randomNumber}`,
-			givenName: `Able ${randomNumber}`,
-		},
-		userName: `able${randomNumber}.baker`,
-	};
+	const newUser = await newScimUser();
 
 	const apiHelper = new ApiHelpers(page);
 
@@ -545,23 +408,7 @@ test('LPD-33284 verify that post and get users requests work with oauth token', 
 	const accessToken =
 		await scimConfigurationPage.accessTokenField.inputValue();
 
-	const randomNumber = getRandomInt();
-
-	const newUser = {
-		active: true,
-		emails: [
-			{
-				primary: true,
-				type: 'default',
-				value: `able${randomNumber}@liferay.com`,
-			},
-		],
-		name: {
-			familyName: `Baker ${randomNumber}`,
-			givenName: `Able ${randomNumber}`,
-		},
-		userName: `able${randomNumber}.baker`,
-	};
+	const newUser = await newScimUser();
 
 	const apiHelper = new ApiHelpers(page);
 
@@ -712,23 +559,7 @@ test('LPD-37452 verify expando field is not visible for user added to SCIM', asy
 
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
-	const randomNumber = getRandomInt();
-
-	const newUser = {
-		active: true,
-		emails: [
-			{
-				primary: true,
-				type: 'default',
-				value: `able${randomNumber}@liferay.com`,
-			},
-		],
-		name: {
-			familyName: `Baker ${randomNumber}`,
-			givenName: `Able ${randomNumber}`,
-		},
-		userName: `able${randomNumber}.baker`,
-	};
+	const newUser = await newScimUser();
 
 	const apiHelper = new ApiHelpers(page);
 
@@ -800,129 +631,7 @@ test('LPD-56434 Verify SCIM user attributes are properly imported during provisi
 
 	const randomNumber = getRandomInt();
 
-	const newUser = {
-		active: true,
-		addresses: [
-			{
-				country: 'GB',
-				formatted:
-					'Muffin Man\n' +
-					'1234 Drury Lane\n' +
-					'Great Britain, England 54321\n' +
-					'United Kingdom',
-				locality: 'Great Britain',
-				postalCode: '54321',
-				primary: false,
-				region: 'England',
-				streetAddress: 'Muffin Man\n' + '1234 Drury Lane',
-				type: 'personal',
-			},
-			{
-				country: 'US',
-				formatted:
-					'The President of the United States\n' +
-					'1600 Pennsylvania Ave NW\n' +
-					'Washington, District of Columbia 20500\n' +
-					'United States',
-				locality: 'Washington',
-				postalCode: '20500',
-				primary: true,
-				region: 'District of Columbia',
-				streetAddress:
-					'The President of the United States\n' +
-					'1600 Pennsylvania Ave NW',
-				type: 'business',
-			},
-		],
-		displayName: 'testDisplayName',
-		emails: [
-			{
-				primary: false,
-				type: 'default',
-				value: 'emailAddress1@liferay.com',
-			},
-			{
-				primary: true,
-				type: 'default',
-				value: `able${randomNumber}@liferay.com`,
-			},
-			{
-				primary: false,
-				type: 'default',
-				value: 'emailAddress3@liferay.com',
-			},
-		],
-		entitlements: [
-			{
-				value: 'testEntitlement1',
-			},
-			{
-				value: 'testEntitlement2',
-			},
-		],
-		ims: [
-			{
-				type: 'Jabber',
-				value: 'testJabberIms',
-			},
-			{
-				type: 'Skype',
-				value: 'testSkypeIms',
-			},
-		],
-		name: {
-			familyName: `Baker ${randomNumber}`,
-			givenName: `Able ${randomNumber}`,
-			honorificPrefix: 'Dr',
-			honorificSuffix: 'Phd',
-			middleName: 'testMiddleName',
-		},
-		nickName: 'testNickName',
-		phoneNumbers: [
-			{
-				primary: true,
-				type: 'Business',
-				value: '555-555-5555',
-			},
-			{
-				primary: false,
-				type: 'Personal',
-				value: '555-555-4444',
-			},
-		],
-		photos: [
-			{
-				value: 'testPhoto1',
-			},
-			{
-				value: 'testPhoto2',
-			},
-		],
-		preferredLanguage: 'testPreferredLanguage',
-		profileUrl: 'http://testProfileUrl.com',
-		roles: [
-			{
-				value: 'Invalid Role',
-			},
-			{
-				value: 'Power User',
-			},
-			{
-				value: 'Supplier',
-			},
-		],
-		timezone: 'America/Los_Angeles',
-		userName: `able${randomNumber}.baker`,
-		userType: 'testUserType',
-		x509Certificates: [
-			{
-				value: 'testx509Certificate1',
-			},
-			{
-				value: 'testx509Certificate2',
-			},
-		],
-	};
+	const newUser = await newScimUser(randomNumber);
 
 	const apiHelper = new ApiHelpers(page);
 

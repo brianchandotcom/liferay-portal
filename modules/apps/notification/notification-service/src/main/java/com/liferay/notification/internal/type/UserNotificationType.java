@@ -75,6 +75,7 @@ public class UserNotificationType extends BaseNotificationType {
 		return SetUtil.fromArray(
 			NotificationRecipientSettingConstants.NAME_ROLE_NAME,
 			NotificationRecipientSettingConstants.NAME_TERM,
+			NotificationRecipientSettingConstants.NAME_USER_GROUP_NAME,
 			NotificationRecipientSettingConstants.NAME_USER_SCREEN_NAME);
 	}
 

@@ -27,7 +27,7 @@ const fieldLocalizableTranslated: WebContentField = {
 	fieldName: 'Text890',
 	localizable: true,
 	localizedValueEdited: {en_US: 'value', pt_BR: 'valor'},
-	name: 'Text890#Fieldset123',
+	name: 'Text890#Fieldset123$0$$en_US',
 	settingsContext: {pages: []},
 	type: 'text',
 	value: 'value',
@@ -56,31 +56,31 @@ describe('addVisibleFieldsets(visibleFieldsets, name)', () => {
 		const visibleFieldsets = new Set<string>();
 
 		addVisibleFieldsets({
-			name: 'Fieldset123Fieldset567Fieldset890',
+			name: 'ddm$$Fieldset123$0#Fieldset456$0#Fieldset789$0$$en_US',
 			visibleFieldsets,
 		});
 
 		expect(visibleFieldsets.has('Fieldset123')).toBe(true);
-		expect(visibleFieldsets.has('Fieldset567')).toBe(true);
-		expect(visibleFieldsets.has('Fieldset890')).toBe(true);
+		expect(visibleFieldsets.has('Fieldset456')).toBe(true);
+		expect(visibleFieldsets.has('Fieldset789')).toBe(true);
 	});
 });
 
 describe('getAllFieldsetsFromName(name)', () => {
 	it('returns an array of all the fieldsets fieldnames related to the corresponding nested field', () => {
 		let fieldsets = getAllFieldsetsFromName(
-			'Fieldset123Fieldset567Fieldset890'
+			'ddm$$FirstFieldset$0#SecondFieldset$0#ThirdFieldset$0$$en_US'
 		);
 
-		expect(fieldsets[0]).toBe('Fieldset123');
-		expect(fieldsets[1]).toBe('Fieldset567');
-		expect(fieldsets[2]).toBe('Fieldset890');
+		expect(fieldsets[0]).toBe('FirstFieldset');
+		expect(fieldsets[1]).toBe('SecondFieldset');
+		expect(fieldsets[2]).toBe('ThirdFieldset');
 		expect(fieldsets.length).toBe(3);
 
 		fieldsets = getAllFieldsetsFromName(
-			'Field||set123Fieldset$#567Fieldset890'
+			'Field||set123Fieldset$#567Fieldset890$0$$en_US'
 		);
-		expect(fieldsets[0]).toBe('Fieldset890');
+		expect(fieldsets[0]).toBe('567Fieldset890');
 		expect(fieldsets.length).toBe(1);
 
 		fieldsets = getAllFieldsetsFromName('');

@@ -29,8 +29,7 @@ public class ERCAssetLibraryTestEntityResourceImpl
 				String assetLibraryExternalReferenceCode)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -40,8 +39,7 @@ public class ERCAssetLibraryTestEntityResourceImpl
 				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		throw new UnsupportedOperationException();
 	}
 
 }

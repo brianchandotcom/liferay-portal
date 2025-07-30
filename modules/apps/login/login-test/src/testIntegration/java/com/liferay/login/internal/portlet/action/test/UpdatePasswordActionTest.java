@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -212,8 +211,9 @@ public class UpdatePasswordActionTest {
 
 		_ticketLocalService.updateTicket(ticket);
 
-		return StringUtil.contains(
-			URLUtil.toString(url), expectedText, StringPool.BLANK);
+		String content = URLUtil.toString(url);
+
+		return content.contains(expectedText);
 	}
 
 	private void _test(

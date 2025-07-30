@@ -17,7 +17,7 @@ const PERMISSION_OPTIONS = [
 	},
 	{
 		label: Liferay.Language.get('view-download-comment-and-update'),
-		value: 'UPDATE,ADD_DISCUSSION,VIEW',
+		value: 'ADD_DISCUSSION,UPDATE,VIEW',
 	},
 ];
 

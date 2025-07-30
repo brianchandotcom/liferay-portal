@@ -41,6 +41,7 @@ import {
 } from 'ckeditor5';
 import {sub} from 'frontend-js-web';
 
+import AiCreator from '../plugins/AiCreator';
 import ItemSelector from '../plugins/ItemSelector';
 import {EEditorConfigPreset, EEditorVariant} from './types';
 
@@ -117,6 +118,7 @@ const getDefaultEditorConfig = ({
 
 	const advancedPlugins = [
 		...basicPlugins,
+		AiCreator,
 		Alignment,
 		BlockQuote,
 		Font,
@@ -180,6 +182,9 @@ const getDefaultEditorConfig = ({
 		'horizontalLine',
 		'|',
 		'alignment',
+		'|',
+		'aiCreator',
+		'|',
 	];
 
 	if (editorVariant === EEditorVariant.CLASSIC) {

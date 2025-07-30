@@ -1245,6 +1245,9 @@
 		<finder db-index="false" name="CompanyIdLocations" return-type="Collection" where="parentOrganizationId != 0">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="LogoId" return-type="Collection">
+			<finder-column name="logoId" />
+		</finder>
 		<finder name="C_P" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="parentOrganizationId" />

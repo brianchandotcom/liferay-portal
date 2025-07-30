@@ -169,6 +169,13 @@ public class ObjectEntryFolderWrapper
 	}
 
 	@Override
+	public java.util.List<Long> getAncestorObjectEntryFolderIds()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAncestorObjectEntryFolderIds();
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
 	}
@@ -452,6 +459,11 @@ public class ObjectEntryFolderWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	@Override
+	public boolean isRoot() {
+		return model.isRoot();
 	}
 
 	@Override

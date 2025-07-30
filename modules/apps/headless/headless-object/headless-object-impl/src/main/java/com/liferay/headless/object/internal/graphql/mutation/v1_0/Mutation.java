@@ -304,6 +304,44 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean
+			createScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe(
+				@GraphQLName("scopeKey") String scopeKey,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.
+					postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe(
+						scopeKey, externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean
+			createScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe(
+				@GraphQLName("scopeKey") String scopeKey,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.
+					postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe(
+						scopeKey, externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
 	public ObjectEntryFolder updateObjectEntryFolder(
 			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
 			@GraphQLName("objectEntryFolder") ObjectEntryFolder

@@ -1544,6 +1544,90 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder objectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe_addObjectEntryFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectEntryFolderResource.
+				postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribeHttpResponse(
+					testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe_getScopeKey(
+						objectEntryFolder),
+					objectEntryFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.
+				postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribeHttpResponse(
+					testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe_getScopeKey(
+						objectEntryFolder),
+					"-"));
+	}
+
+	protected String
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe_getScopeKey(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ObjectEntryFolder
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder objectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe_addObjectEntryFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectEntryFolderResource.
+				postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribeHttpResponse(
+					testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe_getScopeKey(
+						objectEntryFolder),
+					objectEntryFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.
+				postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribeHttpResponse(
+					testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe_getScopeKey(
+						objectEntryFolder),
+					"-"));
+	}
+
+	protected String
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe_getScopeKey(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ObjectEntryFolder
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutObjectEntryFolder() throws Exception {
 		ObjectEntryFolder postObjectEntryFolder =
 			testPutObjectEntryFolder_addObjectEntryFolder();

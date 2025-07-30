@@ -218,6 +218,54 @@ public class ObjectEntryFolderResourceImpl
 	}
 
 	@Override
+	public void
+			postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe(
+				String scopeKey, String externalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		long groupId = _getGroupId(scopeKey);
+
+		com.liferay.object.model.ObjectEntryFolder
+			serviceBuilderObjectEntryFolder =
+				_objectEntryFolderService.
+					getObjectEntryFolderByExternalReferenceCode(
+						externalReferenceCode, groupId,
+						contextUser.getCompanyId());
+
+		_objectEntryFolderService.subscribeObjectEntryFolder(
+			contextUser.getUserId(), groupId,
+			serviceBuilderObjectEntryFolder.getObjectEntryFolderId());
+	}
+
+	@Override
+	public void
+			postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe(
+				String scopeKey, String externalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		long groupId = _getGroupId(scopeKey);
+
+		com.liferay.object.model.ObjectEntryFolder
+			serviceBuilderObjectEntryFolder =
+				_objectEntryFolderService.
+					getObjectEntryFolderByExternalReferenceCode(
+						externalReferenceCode, groupId,
+						contextUser.getCompanyId());
+
+		_objectEntryFolderService.unsubscribeObjectEntryFolder(
+			contextUser.getUserId(), groupId,
+			serviceBuilderObjectEntryFolder.getObjectEntryFolderId());
+	}
+
+	@Override
 	public ObjectEntryFolder
 			putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
 				String scopeKey, String externalReferenceCode,

@@ -174,6 +174,8 @@ baseTest(
 
 		const title = getRandomString();
 
+		await page.waitForTimeout(5000);
+
 		await journalEditArticlePage.saveAsDraftWithPermissions(title);
 
 		await waitForAlert(

@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+
+import java.text.DateFormat;
 
 import java.util.Map;
 
@@ -75,6 +78,10 @@ public class ObjectEntryInfoItemCreator
 					_objectDefinition,
 					new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
 						{
+							setExpirationDate(
+								() -> GetterUtil.getDate(
+									curProperties.get("expirationDate"),
+									_dateTimeFormatter, null));
 							setFriendlyUrlPath(
 								() -> GetterUtil.getString(
 									curProperties.get("objectEntryFriendlyURL"),
@@ -84,6 +91,10 @@ public class ObjectEntryInfoItemCreator
 									"objectEntryFriendlyURL_i18n"));
 							setKeywords(serviceContext::getAssetTagNames);
 							setProperties(() -> curProperties);
+							setReviewDate(
+								() -> GetterUtil.getDate(
+									curProperties.get("reviewDate"),
+									_dateTimeFormatter, null));
 							setStatus(
 								() -> new Status() {
 									{
@@ -117,6 +128,9 @@ public class ObjectEntryInfoItemCreator
 
 		return null;
 	}
+
+	private static final DateFormat _dateTimeFormatter =
+		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;
 	private final ObjectDefinition _objectDefinition;

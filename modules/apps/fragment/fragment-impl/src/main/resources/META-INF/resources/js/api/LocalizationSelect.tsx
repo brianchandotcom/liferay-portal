@@ -4,7 +4,7 @@
  */
 
 import {LanguagePicker} from '@clayui/core';
-import React, {Key, useEffect, useMemo, useState} from 'react';
+import React, {Key, useEffect, useRef, useState} from 'react';
 
 import './LocalizationSelect.scss';
 
@@ -37,11 +37,9 @@ export function LocalizationSelect({
 	const [active, setActive] = useState(false);
 	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
 	const [translations, setTranslations] = useState<Translations>({});
+	const [form, setForm] = useState<HTMLFormElement>();
 
-	const localizableInputsTotal = useMemo(
-		() => document.querySelectorAll('[data-localizable="true"]').length,
-		[]
-	);
+	const containerRef = useRef<HTMLDivElement>(null);
 
 	const onSelectedLocaleChange = (localeId: Liferay.Language.Locale) => {
 		setSelectedLocaleId(localeId);
@@ -49,19 +47,35 @@ export function LocalizationSelect({
 	};
 
 	useEffect(() => {
+		const form = containerRef.current?.closest(
+			'.lfr-layout-structure-item-form'
+		);
+
+		if (form) {
+			setForm(form as HTMLFormElement);
+		}
+	}, []);
+
+	useEffect(() => {
 		const updateTranslationStatus = ({
 			languageId,
 		}: {
 			languageId: Liferay.Language.Locale;
 		}) => {
-			const totalTranslatedInputs = new Set([
+			const element = form || document;
+
+			const total = element.querySelectorAll(
+				'[data-localizable="true"]'
+			).length;
+
+			const translated = new Set([
 				...Array.from(
-					document.querySelectorAll(
+					element.querySelectorAll(
 						`[data-localizable="true"] [type="file"][name$="_${languageId}"]`
 					)
 				),
 				...Array.from(
-					document.querySelectorAll(
+					element.querySelectorAll(
 						`[data-localizable="true"] [type="hidden"][name$="_${languageId}"]`
 					)
 				)
@@ -79,10 +93,10 @@ export function LocalizationSelect({
 
 			setTranslations((previousState) => ({
 				...previousState,
-				...(totalTranslatedInputs && {
+				...(translated && {
 					[label]: {
-						total: localizableInputsTotal,
-						translated: totalTranslatedInputs,
+						total,
+						translated,
 					},
 				}),
 			}));
@@ -95,16 +109,22 @@ export function LocalizationSelect({
 		}
 
 		return () => {
-			Liferay.detach(EVENT_TRANSLATION_STATUS);
+			Liferay.detach(EVENT_TRANSLATION_STATUS, updateTranslationStatus);
 		};
-	}, [defaultLanguageId, locales, localizableInputsTotal]);
+	}, [defaultLanguageId, form, locales]);
 
 	useEffect(() => {
 		const onLocaleChanged = ({
+			formId,
 			languageId,
 		}: {
+			formId?: string;
 			languageId: Liferay.Language.Locale;
 		}) => {
+			if (formId && formId !== form?.id) {
+				return;
+			}
+
 			if (selectedLocaleId !== languageId) {
 				setSelectedLocaleId(languageId);
 			}
@@ -115,39 +135,42 @@ export function LocalizationSelect({
 		return () => {
 			Liferay.detach('localizationSelect:localeChanged', onLocaleChanged);
 		};
-	}, [selectedLocaleId]);
+	}, [form, selectedLocaleId]);
 
 	return (
-		<LanguagePicker
-			active={active}
-			defaultLocaleId={defaultLanguageId}
-			hideTriggerText={hideLanguageLabel}
-			locales={locales}
-			messages={{
-				default: Liferay.Language.get('default'),
-				option: Liferay.Language.get('x-language-x'),
-				translated: Liferay.Language.get('translated'),
-				translating: Liferay.Language.get('translating-x-x'),
-				trigger: Liferay.Language.get(
-					'select-a-language.-current-language-x'
-				),
-				untranslated: Liferay.Language.get('not-translated'),
-			}}
-			onActiveChange={(active: boolean) => {
-				if (!editMode) {
-					setActive(active);
-				}
-			}}
-			onSelectedLocaleChange={(id: Key) => {
-				onSelectedLocaleChange(id as Liferay.Language.Locale);
+		<div ref={containerRef}>
+			<LanguagePicker
+				active={active}
+				defaultLocaleId={defaultLanguageId}
+				hideTriggerText={hideLanguageLabel}
+				locales={locales}
+				messages={{
+					default: Liferay.Language.get('default'),
+					option: Liferay.Language.get('x-language-x'),
+					translated: Liferay.Language.get('translated'),
+					translating: Liferay.Language.get('translating-x-x'),
+					trigger: Liferay.Language.get(
+						'select-a-language.-current-language-x'
+					),
+					untranslated: Liferay.Language.get('not-translated'),
+				}}
+				onActiveChange={(active: boolean) => {
+					if (!editMode) {
+						setActive(active);
+					}
+				}}
+				onSelectedLocaleChange={(id: Key) => {
+					onSelectedLocaleChange(id as Liferay.Language.Locale);
 
-				Liferay.fire('localizationSelect:localeChanged', {
-					languageId: id,
-				});
-			}}
-			selectedLocaleId={selectedLocaleId}
-			small={size === 'small'}
-			translations={translations}
-		/>
+					Liferay.fire('localizationSelect:localeChanged', {
+						formId: form?.id,
+						languageId: id,
+					});
+				}}
+				selectedLocaleId={selectedLocaleId}
+				small={size === 'small'}
+				translations={translations}
+			/>
+		</div>
 	);
 }

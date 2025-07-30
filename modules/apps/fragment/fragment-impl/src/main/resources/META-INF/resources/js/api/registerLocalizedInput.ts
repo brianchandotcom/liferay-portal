@@ -62,7 +62,24 @@ export function registerLocalizedInput({
 
 	Liferay.on(
 		'localizationSelect:localeChanged',
-		({languageId}: {languageId: Liferay.Language.Locale}) => {
+		({
+			formId,
+			languageId,
+		}: {
+			formId?: string;
+			languageId: Liferay.Language.Locale;
+		}) => {
+
+			// Return if event is sent from a different form
+
+			const form = inputElement?.closest(
+				'.lfr-layout-structure-item-form'
+			);
+
+			if (form && formId && !form.classList.contains(formId)) {
+				return;
+			}
+
 			currentLanguageId = languageId;
 
 			if (changeTextDirection) {

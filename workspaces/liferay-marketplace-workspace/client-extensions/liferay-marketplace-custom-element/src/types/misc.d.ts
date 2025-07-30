@@ -28,7 +28,7 @@ type APIResponse<Query = any> = {
 	lastPage: number;
 	page: number;
 	pageSize: number;
-	results: Query[]
+	results: Query[];
 	totalCount: number;
 };
 
@@ -41,6 +41,7 @@ type ContactSales = {
 };
 
 type DefaultProperties = {
+	accountId: string;
 	analyticsCloudURL: string;
 	cloudConsoleURL: string;
 	contactSupportURL: string;

@@ -7,37 +7,26 @@ import {Outlet} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {PageRenderer} from '../../components/Page';
-import useAccounts, {useAccount} from '../../hooks/data/useAccounts';
-import {getAccountImage} from '../../utils/util';
 import {useSSATrialsExtend} from './useSSATrialsExtend';
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 
 const SSADashboardOutlet = () => {
-	const accountsSearch = useAccounts();
-
-	const {
-		data: selectedAccount,
-		error: errorAccount,
-		isLoading: isLoadingAccount,
-	} = useAccount();
+	const {properties} = useMarketplaceContext();
+	const selectedAccount = Number(properties.accountId);
 
 	const {
 		data: ssaTrialExtend,
-		error: errorTrialsExtend,
-		isLoading: isLoadingTrialsExtend,
+		error,
+		isLoading,
 		mutate: ssaTrialExtendMutate,
 	} = useSSATrialsExtend({
-		accountId: selectedAccount?.id,
+		accountId: selectedAccount,
 	});
-
-	const error = errorAccount || errorTrialsExtend;
-	const isLoading = isLoadingAccount || isLoadingTrialsExtend;
 
 	return (
 		<PageRenderer error={error} isLoading={isLoading}>
 			<div className="published-apps-dashboard-page-container">
 				<DashboardNavigation
-					accountIcon={getAccountImage(selectedAccount?.logoURL)}
-					accountsSearch={accountsSearch}
 					currentAccount={selectedAccount as any}
 					dashboardNavigationItems={[
 						{

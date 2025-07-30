@@ -20,6 +20,7 @@ class WebComponent extends HTMLElement {
 				<Routes
 					path={this.getAttribute('path') as RouteType}
 					properties={{
+						accountId: this.getAttribute('accountId') || '',
 						analyticsCloudURL:
 							this.getAttribute('analyticsCloudURL') || '',
 						cloudConsoleURL:

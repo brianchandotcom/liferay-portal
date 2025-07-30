@@ -16,6 +16,7 @@ import {Action} from '../../../../utils/constants';
 import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 
 type TrialsListViewProps = {
 	actions: Action[];
@@ -33,19 +34,20 @@ type TrialsListViewProps = {
 	>;
 };
 
-const resource = `/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${Liferay.CommerceContext.account?.accountId}/placed-orders?${new URLSearchParams(
-	{
-		nestedFields: 'placedOrderItems',
-		sort: 'createDate:desc',
-	}
-)}`;
-
 export default function TrialListView({
 	actions,
 	listViewProps,
 	managementToolbarProps,
 }: TrialsListViewProps) {
 	const {ssaTrialExtend} = useOutletContext<any>();
+	const {properties} = useMarketplaceContext();
+
+	const resource = `/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${properties.accountId}/placed-orders?${new URLSearchParams(
+		{
+			nestedFields: 'placedOrderItems',
+			sort: 'createDate:desc',
+		}
+	)}`;
 
 	return (
 		<ListView<PlacedOrder>

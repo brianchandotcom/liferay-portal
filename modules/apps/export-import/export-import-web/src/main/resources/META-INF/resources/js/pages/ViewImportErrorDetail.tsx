@@ -122,7 +122,7 @@ export function ViewImportErrorDetail({
 		<ClayLayout.ContainerFluid>
 			{isLoading ? (
 				<div className="align-items-center d-flex justify-content-center mt-4">
-					<ClayLoadingIndicator title="Loading import error details..." />
+					<ClayLoadingIndicator />
 				</div>
 			) : (
 				<>

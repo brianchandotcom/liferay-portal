@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.field.business.type;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -16,8 +17,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.relationship.util.ObjectRelationshipUtil;
-import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -144,15 +142,6 @@ public class RelationshipObjectFieldBusinessType
 
 				ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
 					externalReferenceCode,
-					ObjectRelationshipUtil.getRelatedGroupId(
-						_groupLocalService,
-						_objectDefinitionLocalService.getObjectDefinition(
-							objectRelationship.getObjectDefinitionId2()),
-						_objectScopeProviderRegistry, objectDefinition,
-						MapUtil.getString(
-							(Map<String, Object>)values.get(relationshipName),
-							"scopeKey"),
-						String.valueOf(groupId)),
 					objectDefinition.getObjectDefinitionId());
 
 				if (!Objects.equals(
@@ -244,30 +233,35 @@ public class RelationshipObjectFieldBusinessType
 					fetchObjectRelationshipByObjectFieldId2(
 						objectField.getObjectFieldId());
 
-			ObjectDefinition objectDefinition =
+			ObjectDefinition objectDefinition1 =
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
-			if (objectDefinition.isUnmodifiableSystemObject()) {
+			if (objectDefinition1.isUnmodifiableSystemObject()) {
 				return _getPrimaryKeyObj(
-					externalReferenceCode, objectDefinition, 0L);
+					externalReferenceCode, objectDefinition1, 0L);
+			}
+
+			long objectDefinition1GroupId = 0;
+
+			ObjectDefinition objectDefinition2 =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
+
+			if (Objects.equals(
+					objectDefinition1.getScope(),
+					ObjectDefinitionConstants.SCOPE_SITE) &&
+				Objects.equals(
+					objectDefinition2.getScope(),
+					ObjectDefinitionConstants.SCOPE_SITE)) {
+
+				objectDefinition1GroupId = GetterUtil.getLong(groupId);
 			}
 
 			ObjectEntry objectEntry =
 				_objectEntryLocalService.getOrAddEmptyObjectEntry(
-					externalReferenceCode,
-					ObjectRelationshipUtil.getRelatedGroupId(
-						_groupLocalService,
-						_objectDefinitionLocalService.getObjectDefinition(
-							objectRelationship.getObjectDefinitionId2()),
-						_objectScopeProviderRegistry, objectDefinition,
-						MapUtil.getString(
-							values,
-							com.liferay.portal.kernel.util.StringUtil.
-								replaceLast(
-									objectField.getName(), "Id", "ScopeKey")),
-						String.valueOf(groupId)),
-					userId, objectDefinition.getObjectDefinitionId());
+					externalReferenceCode, objectDefinition1GroupId, userId,
+					objectDefinition1.getObjectDefinitionId());
 
 			return objectEntry.getObjectEntryId();
 		}
@@ -322,9 +316,6 @@ public class RelationshipObjectFieldBusinessType
 		RelationshipObjectFieldBusinessType.class);
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private Language _language;
 
 	@Reference
@@ -338,9 +329,6 @@ public class RelationshipObjectFieldBusinessType
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Reference
-	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

@@ -244,7 +244,7 @@ public class ObjectRelationshipExtensionProvider
 						objectDefinition, primaryKey, null, userId),
 					nestedObjectEntry.getExternalReferenceCode(),
 					relatedObjectDefinition, nestedObjectEntry,
-					GetterUtil.getString(nestedObjectEntry.getScopeKey()));
+					relatedObjectDefinition.getScope());
 
 				_relateNestedObjectEntry(
 					objectDefinition, objectRelationship, primaryKey,

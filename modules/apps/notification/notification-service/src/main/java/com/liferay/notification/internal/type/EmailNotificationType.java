@@ -26,6 +26,7 @@ import com.liferay.notification.internal.type.email.provider.DefaultEmailProvide
 import com.liferay.notification.internal.type.email.provider.EmailProvider;
 import com.liferay.notification.internal.type.email.provider.RoleEmailProvider;
 import com.liferay.notification.internal.type.email.provider.SubscribersEmailProvider;
+import com.liferay.notification.internal.type.email.provider.UserGroupEmailProvider;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.model.NotificationRecipient;
@@ -316,10 +317,14 @@ public class EmailNotificationType extends BaseNotificationType {
 				NotificationRecipientSettingConstants.NAME_TO));
 
 		if (Validator.isNull(validEmailAddresses) &&
-			Objects.equals(
+			(Objects.equals(
 				notificationRecipientSettings.get(
 					NotificationRecipientSettingConstants.NAME_TO_TYPE),
-				NotificationRecipientConstants.TYPE_ROLE)) {
+				NotificationRecipientConstants.TYPE_ROLE) ||
+			 Objects.equals(
+				 notificationRecipientSettings.get(
+					 NotificationRecipientSettingConstants.NAME_TO_TYPE),
+				 NotificationRecipientConstants.TYPE_USER_GROUP))) {
 
 			return;
 		}
@@ -509,6 +514,11 @@ public class EmailNotificationType extends BaseNotificationType {
 			new SubscribersEmailProvider(
 				_objectEntryFolderLocalService, _objectEntryLocalService,
 				_subscriptionLocalService, _userLocalService));
+		_emailProviders.put(
+			NotificationRecipientConstants.TYPE_USER_GROUP,
+			new UserGroupEmailProvider(
+				_permissionCheckerFactory, userGroupLocalService,
+				_userLocalService));
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, TemplateContextContributor.class,

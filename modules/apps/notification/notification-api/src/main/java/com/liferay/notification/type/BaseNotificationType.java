@@ -38,8 +38,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -123,47 +125,86 @@ public abstract class BaseNotificationType implements NotificationType {
 					continue;
 				}
 
-				if (!Objects.equals(
+				if (Objects.equals(
 						recipientMap.get(
 							NotificationRecipientSettingConstants.
 								getRecipientTypeName(entry.getKey())),
 						NotificationRecipientConstants.TYPE_ROLE)) {
 
+					Set<String> roleNames = new HashSet<>();
+
+					for (Map<String, String> roleMap :
+							_toList(entry.getValue())) {
+
+						String roleName = roleMap.get(
+							NotificationRecipientSettingConstants.
+								NAME_ROLE_NAME);
+
+						if (Validator.isNull(roleName) ||
+							roleNames.contains(roleName)) {
+
+							continue;
+						}
+
+						Role role = roleLocalService.fetchRole(
+							user.getCompanyId(), roleName);
+
+						if ((role == null) ||
+							((role.getType() != RoleConstants.TYPE_ACCOUNT) &&
+							 (role.getType() !=
+								 RoleConstants.TYPE_ORGANIZATION) &&
+							 (role.getType() != RoleConstants.TYPE_REGULAR))) {
+
+							continue;
+						}
+
+						roleNames.add(roleName);
+
+						_addNotificationRecipientSetting(
+							entry.getKey(), notificationRecipientId,
+							notificationRecipientSettings, user, roleName);
+					}
+				}
+				else if (Objects.equals(
+							recipientMap.get(
+								NotificationRecipientSettingConstants.
+									getRecipientTypeName(entry.getKey())),
+							NotificationRecipientConstants.TYPE_USER_GROUP)) {
+
+					Set<String> userGroupNames = new HashSet<>();
+
+					for (Map<String, String> userGroupMap :
+							_toList(entry.getValue())) {
+
+						String userGroupName = userGroupMap.get(
+							NotificationRecipientSettingConstants.
+								NAME_USER_GROUP_NAME);
+
+						if (Validator.isNull(userGroupName) ||
+							userGroupNames.contains(userGroupName)) {
+
+							continue;
+						}
+
+						UserGroup userGroup =
+							userGroupLocalService.fetchUserGroup(
+								user.getCompanyId(), userGroupName);
+
+						if (userGroup == null) {
+							continue;
+						}
+
+						userGroupNames.add(userGroupName);
+
+						_addNotificationRecipientSetting(
+							entry.getKey(), notificationRecipientId,
+							notificationRecipientSettings, user, userGroupName);
+					}
+				}
+				else {
 					_addNotificationRecipientSetting(
 						entry.getKey(), notificationRecipientId,
 						notificationRecipientSettings, user, entry.getValue());
-
-					continue;
-				}
-
-				Set<String> roleNames = new HashSet<>();
-
-				for (Map<String, String> roleMap : _toList(entry.getValue())) {
-					String roleName = roleMap.get(
-						NotificationRecipientSettingConstants.NAME_ROLE_NAME);
-
-					if (Validator.isNull(roleName) ||
-						roleNames.contains(roleName)) {
-
-						continue;
-					}
-
-					Role role = roleLocalService.fetchRole(
-						user.getCompanyId(), roleName);
-
-					if ((role == null) ||
-						((role.getType() != RoleConstants.TYPE_ACCOUNT) &&
-						 (role.getType() != RoleConstants.TYPE_ORGANIZATION) &&
-						 (role.getType() != RoleConstants.TYPE_REGULAR))) {
-
-						continue;
-					}
-
-					roleNames.add(roleName);
-
-					_addNotificationRecipientSetting(
-						entry.getKey(), notificationRecipientId,
-						notificationRecipientSettings, user, roleName);
 				}
 			}
 		}
@@ -448,6 +489,10 @@ public abstract class BaseNotificationType implements NotificationType {
 	protected RoleLocalService roleLocalService;
 
 	protected Locale siteDefaultLocale;
+
+	@Reference
+	protected UserGroupLocalService userGroupLocalService;
+
 	protected Locale userLocale;
 
 	@Reference

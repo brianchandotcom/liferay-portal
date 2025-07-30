@@ -34,7 +34,7 @@ type EmailNotificationRecipients = {
 };
 
 type UserNotificationRecipients = {
-	[key in 'term' | 'userScreenName' | 'roleName']?: string;
+	[key in 'term' | 'userScreenName' | 'userGroupName' | 'roleName']?: string;
 };
 interface NotificationTemplate {
 	attachmentObjectFieldIds: string[] | number[];

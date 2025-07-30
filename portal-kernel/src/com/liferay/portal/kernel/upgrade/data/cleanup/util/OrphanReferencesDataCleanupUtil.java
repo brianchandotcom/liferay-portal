@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -229,15 +230,23 @@ public class OrphanReferencesDataCleanupUtil {
 			String targetColumnName, String targetTableName)
 		throws Exception {
 
+		DB db = DBManagerUtil.getDB();
 		DBInspector dbInspector = new DBInspector(connection);
+
+		String additionalNullCheck = "";
+
+		if (dbInspector.isNumeric(sourceTableName, sourceColumnName)) {
+			additionalNullCheck = " and " + sourceColumnName + " != 0";
+		}
+		else if (db.getDBType() != DBType.ORACLE) {
+			additionalNullCheck = " and " + sourceColumnName + " != ''";
+		}
 
 		return StringBundler.concat(
 			" where not exists (select 1 from ", targetTableName, " where ",
 			targetTableName, StringPool.PERIOD, targetColumnName, " = ",
 			sourceTableName, StringPool.PERIOD, sourceColumnName, ") and ",
-			sourceColumnName, " is not null and ", sourceColumnName, " != ",
-			dbInspector.isNumeric(sourceTableName, sourceColumnName) ? "0" :
-				"''",
+			sourceColumnName, " is not null", additionalNullCheck,
 			(sourceAdditionalWhereClause != null) ?
 				" and " + sourceAdditionalWhereClause : "");
 	}

@@ -5,6 +5,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -144,6 +145,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		com.liferay.object.model.ObjectEntry currentObjectEntry =
 			_objectEntryLocalService.getObjectEntry(
 				currentExternalReferenceCode,
+				ObjectDefinitionConstants.DEFAULT_GROUP_ID,
 				_objectDefinition.getObjectDefinitionId());
 
 		return postObjectEntryObjectRelationshipName(
@@ -186,6 +188,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		com.liferay.object.model.ObjectEntry currentObjectEntry =
 			_objectEntryLocalService.getObjectEntry(
 				currentExternalReferenceCode,
+				ObjectDefinitionConstants.DEFAULT_GROUP_ID,
 				_objectDefinition.getObjectDefinitionId());
 
 		ObjectRelationship objectRelationship =
@@ -200,6 +203,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		com.liferay.object.model.ObjectEntry relatedObjectEntry =
 			_objectEntryLocalService.getObjectEntry(
 				relatedExternalReferenceCode,
+				ObjectDefinitionConstants.DEFAULT_GROUP_ID,
 				relatedObjectDefinition.getObjectDefinitionId());
 
 		return putCurrentObjectEntry(

@@ -47,12 +47,12 @@ public class DisplayPageTemplateFolderUtil {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
+			displayPageTemplateFolder.getParentDisplayPageTemplateFolder();
+
 		if (Validator.isNull(
 				displayPageTemplateFolder.
 					getParentDisplayPageTemplateFolderExternalReferenceCode())) {
-
-			DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
-				displayPageTemplateFolder.getParentDisplayPageTemplateFolder();
 
 			if (!LazyReferencingThreadLocal.isEnabled() ||
 				(parentDisplayPageTemplateFolder == null) ||
@@ -77,9 +77,17 @@ public class DisplayPageTemplateFolderUtil {
 					groupId);
 
 		if ((parentLayoutPageTemplateCollection == null) &&
-			(displayPageTemplateFolder.getParentDisplayPageTemplateFolder() !=
-				null) &&
+			(parentDisplayPageTemplateFolder != null) &&
 			LazyReferencingThreadLocal.isEnabled()) {
+
+			if (!Objects.equals(
+					displayPageTemplateFolder.
+						getParentDisplayPageTemplateFolderExternalReferenceCode(),
+					parentDisplayPageTemplateFolder.
+						getExternalReferenceCode())) {
+
+				throw new UnsupportedOperationException();
+			}
 
 			parentLayoutPageTemplateCollection =
 				addLayoutPageTemplateCollection(

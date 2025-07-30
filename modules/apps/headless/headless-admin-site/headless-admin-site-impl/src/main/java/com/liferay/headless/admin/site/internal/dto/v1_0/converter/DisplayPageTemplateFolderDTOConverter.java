@@ -40,7 +40,14 @@ public class DisplayPageTemplateFolderDTOConverter
 	}
 
 	private DisplayPageTemplateFolder _getDisplayPageTemplateFolder(
-		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+			LayoutPageTemplateCollection layoutPageTemplateCollection)
+		throws Exception {
+
+		LayoutPageTemplateCollection parentLayoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				fetchLayoutPageTemplateCollection(
+					layoutPageTemplateCollection.
+						getParentLayoutPageTemplateCollectionId());
 
 		return new DisplayPageTemplateFolder() {
 			{
@@ -53,15 +60,17 @@ public class DisplayPageTemplateFolderDTOConverter
 					layoutPageTemplateCollection::
 						getLayoutPageTemplateCollectionKey);
 				setName(layoutPageTemplateCollection::getName);
+				setParentDisplayPageTemplateFolder(
+					() -> {
+						if (parentLayoutPageTemplateCollection == null) {
+							return null;
+						}
+
+						return _getDisplayPageTemplateFolder(
+							parentLayoutPageTemplateCollection);
+					});
 				setParentDisplayPageTemplateFolderExternalReferenceCode(
 					() -> {
-						LayoutPageTemplateCollection
-							parentLayoutPageTemplateCollection =
-								_layoutPageTemplateCollectionService.
-									fetchLayoutPageTemplateCollection(
-										layoutPageTemplateCollection.
-											getParentLayoutPageTemplateCollectionId());
-
 						if (parentLayoutPageTemplateCollection == null) {
 							return null;
 						}

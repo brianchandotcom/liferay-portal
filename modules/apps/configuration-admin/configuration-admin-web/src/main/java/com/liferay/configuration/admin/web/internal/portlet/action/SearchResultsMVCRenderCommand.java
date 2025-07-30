@@ -128,7 +128,9 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 			for (ConfigurationScreen configurationScreen :
 					_configurationEntryRetriever.getAllConfigurationScreens()) {
 
-				if (!Objects.equals(scope, configurationScreen.getScope()) ||
+				if (!Objects.equals(
+						String.valueOf(scope),
+						configurationScreen.getScope()) ||
 					!configurationScreen.isVisible()) {
 
 					continue;

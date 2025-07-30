@@ -162,7 +162,7 @@ public class InfoRequestFieldValuesProviderHelper {
 					infoFieldValues.put(
 						infoField.getUniqueId(),
 						_getInfoFieldValue(
-							infoField, themeDisplay.getLocale(), false));
+							infoField, themeDisplay.getLocale(), false, true));
 
 					continue;
 				}
@@ -175,7 +175,7 @@ public class InfoRequestFieldValuesProviderHelper {
 						infoField.getUniqueId(),
 						_getInfoFieldValue(
 							infoField, themeDisplay.getLocale(),
-							Collections.emptyList()));
+							Collections.emptyList(), true));
 
 					continue;
 				}
@@ -187,7 +187,8 @@ public class InfoRequestFieldValuesProviderHelper {
 				themeDisplay.getUserId());
 
 			InfoFieldValue<Object> infoFieldValue = _getInfoFieldValue(
-				infoField, themeDisplay.getLocale(), value);
+				infoField, themeDisplay.getLocale(), value,
+				regularParameters != null);
 
 			if (infoFieldValue != null) {
 				infoFieldValues.put(infoField.getUniqueId(), infoFieldValue);
@@ -224,9 +225,10 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	private InfoFieldValue<Object> _getInfoFieldValue(
-		InfoField<?> infoField, Locale locale, Object value) {
+		InfoField<?> infoField, Locale locale, Object value,
+		boolean includeNullValues) {
 
-		if (value == null) {
+		if ((value == null) && !includeNullValues) {
 			return null;
 		}
 

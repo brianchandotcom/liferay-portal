@@ -341,8 +341,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"externalReferenceCode", "friendlyUrlPath_i18n", "name_i18n",
-			"type", "uuid"
+			"externalReferenceCode", "friendlyUrlPath_i18n", "keywords",
+			"name_i18n", "taxonomyCategoryItemExternalReferences", "type",
+			"uuid"
 		};
 	}
 

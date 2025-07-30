@@ -1142,13 +1142,6 @@
 					},
 					{
 						"in": "query",
-						"name": "flatten",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
 						"name": "nestedFields",
 						"schema": {
 							"type": "string"

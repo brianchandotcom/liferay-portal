@@ -247,12 +247,18 @@ public class DisplayPageTemplateFolderResourceTest
 
 		DisplayPageTemplateFolder displayPageTemplateFolder =
 			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				randomDisplayPageTemplateFolder(),
-				RandomTestUtil.randomString());
+				randomDisplayPageTemplateFolder(), null);
 
 		Assert.assertNull(
 			displayPageTemplateFolder.
 				getParentDisplayPageTemplateFolderExternalReferenceCode());
+
+		_assertProblemException(
+			"BAD_REQUEST", null,
+			() ->
+				_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					randomDisplayPageTemplateFolder(),
+					RandomTestUtil.randomString()));
 
 		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
 			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
@@ -279,7 +285,7 @@ public class DisplayPageTemplateFolderResourceTest
 		DisplayPageTemplateFolder liveGroupDisplayPageTemplateFolder =
 			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 				randomDisplayPageTemplateFolder(),
-				RandomTestUtil.randomString());
+				displayPageTemplateFolder.getExternalReferenceCode());
 
 		_enableLocalStaging();
 

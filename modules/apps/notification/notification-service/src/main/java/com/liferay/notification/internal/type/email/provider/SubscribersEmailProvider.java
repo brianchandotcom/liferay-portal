@@ -34,7 +34,7 @@ public class SubscribersEmailProvider implements EmailProvider {
 	public String provide(NotificationContext notificationContext, Object value)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			return null;
 		}
 

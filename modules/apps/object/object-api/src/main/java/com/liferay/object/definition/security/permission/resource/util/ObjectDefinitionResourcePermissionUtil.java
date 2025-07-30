@@ -271,7 +271,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 		}
 
 		if (objectDefinition.isEnableObjectEntrySubscription() &&
-			FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+			FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 
 			permissionsSupports = StringBundler.concat(
 				permissionsSupports, "<action-key>", ActionKeys.SUBSCRIBE,

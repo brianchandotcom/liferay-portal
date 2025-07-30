@@ -1353,8 +1353,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@FeatureFlags(
 		featureFlags = {
-			@FeatureFlag(value = "LPD-17564"),
-			@FeatureFlag(value = "LPD-32050"), @FeatureFlag(value = "LPD-42577")
+			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-32050")
 		}
 	)
 	@Test
@@ -2474,11 +2473,7 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
-	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-42577")
-		}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testUpdateCustomObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =

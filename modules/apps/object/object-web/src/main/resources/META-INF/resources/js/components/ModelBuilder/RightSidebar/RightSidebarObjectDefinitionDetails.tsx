@@ -210,7 +210,7 @@ export function RightSidebarObjectDefinitionDetails({
 		);
 
 	const showSubscriptionSection =
-		Liferay.FeatureFlags['LPD-42577'] &&
+		Liferay.FeatureFlags['LPD-17564'] &&
 		!(!values.modifiable && values.system);
 
 	return (

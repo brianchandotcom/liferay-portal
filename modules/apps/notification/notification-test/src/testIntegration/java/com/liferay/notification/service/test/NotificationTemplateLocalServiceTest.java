@@ -57,7 +57,7 @@ public class NotificationTemplateLocalServiceTest {
 		_externalReferenceCode = RandomTestUtil.randomString();
 	}
 
-	@FeatureFlag("LPD-42577")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddNotificationTemplate() throws Exception {
 		User user = TestPropsValues.getUser();

@@ -1786,7 +1786,7 @@ public class ObjectActionLocalServiceTest {
 					"usePreferredLanguageForGuests")));
 	}
 
-	@FeatureFlag("LPD-42577")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddOrUpdateSubscriptionObjectActions() throws Exception {
 		ObjectDefinition objectDefinition =

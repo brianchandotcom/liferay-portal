@@ -683,7 +683,7 @@ public class ObjectDefinitionResourceImpl
 				objectAction ->
 					objectAction.isSystem() ||
 					(FeatureFlagManagerUtil.isEnabled(
-						contextCompany.getCompanyId(), "LPD-42577") &&
+						contextCompany.getCompanyId(), "LPD-17564") &&
 					 ArrayUtil.contains(
 						 ObjectActionConstants.
 							 getSubscriptionObjectActionNames(),
@@ -931,7 +931,7 @@ public class ObjectDefinitionResourceImpl
 
 				if (serviceBuilderObjectAction != null) {
 					if (FeatureFlagManagerUtil.isEnabled(
-							contextCompany.getCompanyId(), "LPD-42577") &&
+							contextCompany.getCompanyId(), "LPD-17564") &&
 						ArrayUtil.contains(
 							ObjectActionConstants.
 								getSubscriptionObjectActionNames(),

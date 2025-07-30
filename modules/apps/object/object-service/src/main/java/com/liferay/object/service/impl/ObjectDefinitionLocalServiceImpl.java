@@ -592,7 +592,7 @@ public class ObjectDefinitionLocalServiceImpl
 						_classNameLocalService.getClassNameId(
 							objectDefinition.getClassName()));
 
-					if (FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+					if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 						_subscriptionLocalService.deleteSubscriptions(
 							objectDefinition.getCompanyId(),
 							objectDefinition.getClassName());
@@ -1527,7 +1527,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-42577")) {
+				objectDefinition.getCompanyId(), "LPD-17564")) {
 
 			objectDefinition.setEnableObjectEntrySubscription(
 				enableObjectEntrySubscription);
@@ -1571,7 +1571,7 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition, objectDefinitionSettings);
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-42577") &&
+				objectDefinition.getCompanyId(), "LPD-17564") &&
 			objectDefinition.isEnableObjectEntrySubscription()) {
 
 			_objectActionLocalService.addOrUpdateSubscriptionObjectActions(
@@ -2539,7 +2539,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-42577")) {
+				objectDefinition.getCompanyId(), "LPD-17564")) {
 
 			objectDefinition.setEnableObjectEntrySubscription(
 				enableObjectEntrySubscription);
@@ -2561,7 +2561,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-42577") &&
+				objectDefinition.getCompanyId(), "LPD-17564") &&
 			(objectDefinition.isEnableObjectEntrySubscription() !=
 				oldEnableObjectEntrySubscription)) {
 
@@ -2923,7 +2923,7 @@ public class ObjectDefinitionLocalServiceImpl
 			boolean system)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			return;
 		}
 

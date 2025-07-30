@@ -63,7 +63,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -252,19 +251,6 @@ public class PatcherUtil {
 		return sortTokens(overriddenTickets);
 	}
 
-	public static Map<String, Object> getPropertiesMap(Object... properties) {
-		Map<String, Object> propertiesMap = new HashMap<>();
-
-		for (int i = 0; i < properties.length; i += 2) {
-			String propertyName = String.valueOf(properties[i]);
-			Object propertyValue = properties[i + 1];
-
-			propertiesMap.put(propertyName, propertyValue);
-		}
-
-		return propertiesMap;
-	}
-
 	public static List<String> getTickets(String name) {
 		List<String> tickets = new ArrayList<>();
 
@@ -294,29 +280,6 @@ public class PatcherUtil {
 
 	public static List<String> getTokens(String name) {
 		return ListUtil.fromArray(StringUtil.split(name));
-	}
-
-	public static String getUserDisplayURL(
-			ThemeDisplay themeDisplay, long userId)
-		throws Exception {
-
-		User user = UserLocalServiceUtil.fetchUser(userId);
-
-		if (user == null) {
-			return StringPool.BLANK;
-		}
-
-		PatcherConfiguration patcherConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
-
-		if (Validator.isNull(patcherConfiguration.liferayUsersProfileURL())) {
-			return user.getDisplayURL(themeDisplay);
-		}
-
-		return StringUtil.replace(
-			patcherConfiguration.liferayUsersProfileURL(),
-			"${liferay:screenName}", user.getScreenName());
 	}
 
 	public static boolean isPatcherProjectVersionName(String name) {
@@ -376,17 +339,6 @@ public class PatcherUtil {
 		PatcherBuildUtil.notifyUsersInactivePatcherBuilds();
 
 		PatcherFixUtil.notifyUsersInactivePatcherFixes();
-	}
-
-	public static String prepareKeywords(String keywords) {
-		if (Validator.isNull(keywords)) {
-			return StringPool.BLANK;
-		}
-
-		String[] keywordsArray = keywords.split("\\s*(,|\\s)\\s*");
-
-		return StringPool.QUOTE + StringUtil.merge(keywordsArray, "\" \"") +
-			StringPool.QUOTE;
 	}
 
 	public static String preparePatcherName(String name) {

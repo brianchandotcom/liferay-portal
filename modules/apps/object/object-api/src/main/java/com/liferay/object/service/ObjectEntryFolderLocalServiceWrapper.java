@@ -472,6 +472,24 @@ public class ObjectEntryFolderLocalServiceWrapper
 	}
 
 	@Override
+	public void subscribeObjectEntryFolder(
+			long userId, long groupId, long objectEntryFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectEntryFolderLocalService.subscribeObjectEntryFolder(
+			userId, groupId, objectEntryFolderId);
+	}
+
+	@Override
+	public void unsubscribeObjectEntryFolder(
+			long userId, long groupId, long objectEntryFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectEntryFolderLocalService.unsubscribeObjectEntryFolder(
+			userId, groupId, objectEntryFolderId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntryFolder updateObjectEntryFolder(
 			long userId, long objectEntryFolderId,
 			long parentObjectEntryFolderId, String description,

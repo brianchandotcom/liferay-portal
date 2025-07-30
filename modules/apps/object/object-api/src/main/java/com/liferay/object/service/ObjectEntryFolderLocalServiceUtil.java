@@ -416,6 +416,22 @@ public class ObjectEntryFolderLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void subscribeObjectEntryFolder(
+			long userId, long groupId, long objectEntryFolderId)
+		throws PortalException {
+
+		getService().subscribeObjectEntryFolder(
+			userId, groupId, objectEntryFolderId);
+	}
+
+	public static void unsubscribeObjectEntryFolder(
+			long userId, long groupId, long objectEntryFolderId)
+		throws PortalException {
+
+		getService().unsubscribeObjectEntryFolder(
+			userId, groupId, objectEntryFolderId);
+	}
+
 	public static ObjectEntryFolder updateObjectEntryFolder(
 			long userId, long objectEntryFolderId,
 			long parentObjectEntryFolderId, String description,

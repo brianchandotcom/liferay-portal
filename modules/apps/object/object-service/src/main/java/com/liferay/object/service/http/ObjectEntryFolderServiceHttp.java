@@ -426,6 +426,82 @@ public class ObjectEntryFolderServiceHttp {
 		}
 	}
 
+	public static void subscribeObjectEntryFolder(
+			HttpPrincipal httpPrincipal, long userId, long groupId,
+			long objectEntryFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectEntryFolderServiceUtil.class,
+				"subscribeObjectEntryFolder",
+				_subscribeObjectEntryFolderParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, groupId, objectEntryFolderId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static void unsubscribeObjectEntryFolder(
+			HttpPrincipal httpPrincipal, long userId, long groupId,
+			long objectEntryFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectEntryFolderServiceUtil.class,
+				"unsubscribeObjectEntryFolder",
+				_unsubscribeObjectEntryFolderParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, groupId, objectEntryFolderId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.object.model.ObjectEntryFolder
 			updateObjectEntryFolder(
 				HttpPrincipal httpPrincipal, long objectEntryFolderId,
@@ -437,7 +513,7 @@ public class ObjectEntryFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryFolderServiceUtil.class, "updateObjectEntryFolder",
-				_updateObjectEntryFolderParameterTypes9);
+				_updateObjectEntryFolderParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryFolderId, parentObjectEntryFolderId,
@@ -499,7 +575,13 @@ public class ObjectEntryFolderServiceHttp {
 		new Class[] {long.class, long.class, long.class, int.class, int.class};
 	private static final Class<?>[] _getObjectEntryFoldersCountParameterTypes8 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _updateObjectEntryFolderParameterTypes9 =
+	private static final Class<?>[] _subscribeObjectEntryFolderParameterTypes9 =
+		new Class[] {long.class, long.class, long.class};
+	private static final Class<?>[]
+		_unsubscribeObjectEntryFolderParameterTypes10 = new Class[] {
+			long.class, long.class, long.class
+		};
+	private static final Class<?>[] _updateObjectEntryFolderParameterTypes11 =
 		new Class[] {
 			long.class, long.class, String.class, java.util.Map.class,
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class

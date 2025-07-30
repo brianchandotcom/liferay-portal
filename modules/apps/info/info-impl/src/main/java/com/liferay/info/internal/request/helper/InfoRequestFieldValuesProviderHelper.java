@@ -107,7 +107,10 @@ public class InfoRequestFieldValuesProviderHelper {
 		for (InfoField<?> infoField :
 				_getInfoFields(className, classTypeId, groupId)) {
 
-			if (!infoField.isEditable()) {
+			if (!infoField.isEditable() &&
+				!ArrayUtil.contains(
+					_ALLOWED_NONEDITABLE_FIELDS, infoField.getName())) {
+
 				continue;
 			}
 
@@ -376,6 +379,10 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		return null;
 	}
+
+	private static final String[] _ALLOWED_NONEDITABLE_FIELDS = {
+		"expirationDate", "reviewDate"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InfoRequestFieldValuesProviderHelper.class);

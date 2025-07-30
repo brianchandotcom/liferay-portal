@@ -153,7 +153,8 @@ public class DisplayPageTemplateFolderResourceImpl
 		long parentLayoutPageTemplateCollectionId =
 			DisplayPageTemplateFolderUtil.
 				getParentLayoutPageTemplateCollectionId(
-					displayPageTemplateFolder, groupId);
+					displayPageTemplateFolder, groupId,
+					contextHttpServletRequest);
 
 		if (!Objects.equals(
 				layoutPageTemplateCollection.

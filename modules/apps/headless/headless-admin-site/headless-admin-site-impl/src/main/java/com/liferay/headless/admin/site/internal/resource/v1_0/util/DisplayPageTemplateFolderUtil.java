@@ -51,8 +51,22 @@ public class DisplayPageTemplateFolderUtil {
 				displayPageTemplateFolder.
 					getParentDisplayPageTemplateFolderExternalReferenceCode())) {
 
-			return LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+			DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
+				displayPageTemplateFolder.getParentDisplayPageTemplateFolder();
+
+			if (!LazyReferencingThreadLocal.isEnabled() ||
+				(parentDisplayPageTemplateFolder == null) ||
+				Validator.isNull(
+					parentDisplayPageTemplateFolder.
+						getExternalReferenceCode())) {
+
+				return LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+			}
+
+			displayPageTemplateFolder.
+				setParentDisplayPageTemplateFolderExternalReferenceCode(
+					parentDisplayPageTemplateFolder::getExternalReferenceCode);
 		}
 
 		LayoutPageTemplateCollection parentLayoutPageTemplateCollection =

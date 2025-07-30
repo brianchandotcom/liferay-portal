@@ -576,7 +576,7 @@ public class ObjectDefinitionResourceTest
 
 	@FeatureFlags(
 		featureFlags = {
-			@FeatureFlag(value = "LPD-32050"), @FeatureFlag(value = "LPD-42577")
+			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-32050")
 		}
 	)
 	@Override

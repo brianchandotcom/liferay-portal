@@ -54,7 +54,7 @@ public class GetGeneralNotificationTemplateTermsMVCResourceCommand
 		List<ObjectField> objectFields, String partialTermName,
 		ThemeDisplay themeDisplay) {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			_termNames.putAll(
 				HashMapBuilder.put(
 					"email-recipient-address", "[%EMAIL_RECIPIENT_ADDRESS%]"

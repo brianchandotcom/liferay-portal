@@ -2614,7 +2614,7 @@ public class DefaultObjectEntryManagerImpl
 					"putScopeScopeKeyByExternalReferenceCodeObjectAction" +
 						"ObjectActionName";
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 					if (!_isSubscribed(
 							serviceBuilderObjectEntry,
 							dtoConverterContext.getUser())) {
@@ -2654,7 +2654,7 @@ public class DefaultObjectEntryManagerImpl
 				methodName =
 					"putByExternalReferenceCodeObjectActionObjectActionName";
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-42577")) {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 					if (!_isSubscribed(
 							serviceBuilderObjectEntry,
 							dtoConverterContext.getUser())) {

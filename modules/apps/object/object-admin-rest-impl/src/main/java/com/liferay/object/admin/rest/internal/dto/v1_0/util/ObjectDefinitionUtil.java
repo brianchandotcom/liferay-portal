@@ -173,7 +173,7 @@ public class ObjectDefinitionUtil {
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled(
 								serviceBuilderObjectDefinition.getCompanyId(),
-								"LPD-42577")) {
+								"LPD-17564")) {
 
 							return null;
 						}

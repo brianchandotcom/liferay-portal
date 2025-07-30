@@ -74,7 +74,7 @@ export function EmailNotificationSettings({
 						errors={errors}
 						learnResources={learnResources}
 						recipientOptions={
-							Liferay.FeatureFlags['LPD-42577']
+							Liferay.FeatureFlags['LPD-17564']
 								? [...RECIPIENT_OPTIONS, SUBSCRIBERS_OPTION]
 								: RECIPIENT_OPTIONS
 						}

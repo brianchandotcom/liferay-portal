@@ -179,6 +179,32 @@ public class ObjectEntryFolderServiceImpl
 	}
 
 	@Override
+	public void subscribeObjectEntryFolder(
+			long userId, long groupId, long objectEntryFolderId)
+		throws PortalException {
+
+		ModelResourcePermissionUtil.check(
+			_modelResourcePermission, getPermissionChecker(), groupId,
+			objectEntryFolderId, ActionKeys.SUBSCRIBE);
+
+		objectEntryFolderLocalService.subscribeObjectEntryFolder(
+			userId, groupId, objectEntryFolderId);
+	}
+
+	@Override
+	public void unsubscribeObjectEntryFolder(
+			long userId, long groupId, long objectEntryFolderId)
+		throws PortalException {
+
+		ModelResourcePermissionUtil.check(
+			_modelResourcePermission, getPermissionChecker(), groupId,
+			objectEntryFolderId, ActionKeys.SUBSCRIBE);
+
+		objectEntryFolderLocalService.unsubscribeObjectEntryFolder(
+			userId, groupId, objectEntryFolderId);
+	}
+
+	@Override
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long objectEntryFolderId, long parentObjectEntryFolderId,
 			String description, Map<Locale, String> labelMap, String name,

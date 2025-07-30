@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.Collections;
 import java.util.List;
@@ -305,6 +306,39 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	@Override
+	public void subscribeObjectEntryFolder(
+			long userId, long groupId, long objectEntryFolderId)
+		throws PortalException {
+
+		if (objectEntryFolderId ==
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			objectEntryFolderId = groupId;
+		}
+
+		_subscriptionLocalService.addSubscription(
+			userId, groupId, ObjectEntryFolder.class.getName(),
+			objectEntryFolderId);
+	}
+
+	@Override
+	public void unsubscribeObjectEntryFolder(
+			long userId, long groupId, long objectEntryFolderId)
+		throws PortalException {
+
+		if (objectEntryFolderId ==
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			objectEntryFolderId = groupId;
+		}
+
+		_subscriptionLocalService.deleteSubscription(
+			userId, ObjectEntryFolder.class.getName(), objectEntryFolderId);
+	}
+
+	@Override
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long userId, long objectEntryFolderId,
 			long parentObjectEntryFolderId, String description,
@@ -526,6 +560,9 @@ public class ObjectEntryFolderLocalServiceImpl
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

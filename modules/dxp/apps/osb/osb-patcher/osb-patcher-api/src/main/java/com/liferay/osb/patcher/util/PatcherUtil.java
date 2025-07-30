@@ -5,7 +5,6 @@
 
 package com.liferay.osb.patcher.util;
 
-import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.auth.oauth2.ServiceAccountCredentials;
@@ -152,22 +151,16 @@ public class PatcherUtil {
 				new FileInputStream(
 					patcherConfiguration.patcherPubsubCredentialFilePath()));
 
-		CredentialsProvider credentialsProvider =
-			FixedCredentialsProvider.create(serviceAccountCredentials);
-
-		SubscriberStubSettings.Builder subscriberStubSettingsBuilder =
-			SubscriberStubSettings.newBuilder();
-
-		subscriberStubSettingsBuilder.setCredentialsProvider(
-			credentialsProvider);
-		subscriberStubSettingsBuilder.setTransportChannelProvider(
-			SubscriberStubSettings.defaultGrpcTransportProviderBuilder(
-			).setMaxInboundMessageSize(
-				20 * 1024 * 1024
-			).build());
-
 		SubscriberStubSettings subscriberStubSettings =
-			subscriberStubSettingsBuilder.build();
+			SubscriberStubSettings.newBuilder(
+			).setCredentialsProvider(
+				FixedCredentialsProvider.create(serviceAccountCredentials)
+			).setTransportChannelProvider(
+				SubscriberStubSettings.defaultGrpcTransportProviderBuilder(
+				).setMaxInboundMessageSize(
+					20 * 1024 * 1024
+				).build()
+			).build();
 
 		SubscriberStub subscriber = null;
 
@@ -178,12 +171,12 @@ public class PatcherUtil {
 				patcherConfiguration.patcherPubsubProjectId(),
 				patcherConfiguration.patcherPubsubSubscriptionId());
 
-			PullRequest.Builder pullRequestBuilder = PullRequest.newBuilder();
-
-			pullRequestBuilder.setMaxMessages(1);
-			pullRequestBuilder.setSubscription(subscriptionName);
-
-			PullRequest pullRequest = pullRequestBuilder.build();
+			PullRequest pullRequest = PullRequest.newBuilder(
+			).setMaxMessages(
+				1
+			).setSubscription(
+				subscriptionName
+			).build();
 
 			UnaryCallable<PullRequest, PullResponse> pullUnaryCallable =
 				subscriber.pullCallable();
@@ -195,15 +188,13 @@ public class PatcherUtil {
 
 			ReceivedMessage receivedMessage = receivedMessageList.get(0);
 
-			AcknowledgeRequest.Builder acknowledgeRequestBuilder =
-				AcknowledgeRequest.newBuilder();
-
-			acknowledgeRequestBuilder.setSubscription(subscriptionName);
-			acknowledgeRequestBuilder.addAllAckIds(
-				Collections.singleton(receivedMessage.getAckId()));
-
 			AcknowledgeRequest acknowledgeRequest =
-				acknowledgeRequestBuilder.build();
+				AcknowledgeRequest.newBuilder(
+				).setSubscription(
+					subscriptionName
+				).addAllAckIds(
+					Collections.singleton(receivedMessage.getAckId())
+				).build();
 
 			UnaryCallable<AcknowledgeRequest, Empty> acknowledgeUnaryCallable =
 				subscriber.acknowledgeCallable();

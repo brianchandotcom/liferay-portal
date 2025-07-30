@@ -27,8 +27,7 @@ public class ERCSiteTestEntityResourceImpl
 			String siteExternalReferenceCode)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -37,8 +36,7 @@ public class ERCSiteTestEntityResourceImpl
 			ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		throw new UnsupportedOperationException();
 	}
 
 }

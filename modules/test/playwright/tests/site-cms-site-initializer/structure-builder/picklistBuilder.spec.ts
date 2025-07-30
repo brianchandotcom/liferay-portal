@@ -13,8 +13,8 @@ import {cmsPagesTest} from '../main/fixtures/cmsPagesTest';
 const test = mergeTests(
 	cmsPagesTest,
 	featureFlagsTest({
-		'LPD-11232': {enabled: true},
 		'LPD-17564': {enabled: true},
+		'LPS-179669': {enabled: true},
 	}),
 	loginTest()
 );

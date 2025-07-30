@@ -751,7 +751,10 @@ public class FreeMarkerTool {
 		String httpMethod, List<JavaMethodSignature> javaMethodSignatures,
 		String parentSchemaName, String schemaName) {
 
-		if (parentSchemaName == null) {
+		if ((parentSchemaName == null) ||
+			!(Objects.equals(parentSchemaName, "AssetLibrary") ||
+			  Objects.equals(parentSchemaName, "Site"))) {
+
 			return null;
 		}
 

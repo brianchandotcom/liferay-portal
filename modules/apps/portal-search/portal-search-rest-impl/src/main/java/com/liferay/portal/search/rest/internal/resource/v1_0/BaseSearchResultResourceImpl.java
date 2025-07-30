@@ -72,7 +72,7 @@ public abstract class BaseSearchResultResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/search/v1.0/search'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Search the company index for matching content. This endpoint is development and requires setting the portal property 'feature.flag.LPD-11232' to true or enabling via Instance Settings > Feature Flags: Developer."
+		description = "Search the company index for matching content. This endpoint requires setting the portal property 'feature.flag.LPS-179669' to true or enabling via Instance Settings > Feature Flags: Release."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

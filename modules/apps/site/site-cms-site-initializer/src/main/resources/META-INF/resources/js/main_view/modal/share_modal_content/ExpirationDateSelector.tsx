@@ -9,15 +9,22 @@ import ClayDropDown from '@clayui/drop-down';
 import {dateUtils} from 'frontend-js-web';
 import React from 'react';
 
+const CUTOFF_TIME = '23:59';
+
+const INVALID_DATE = {
+	EXPIRED: 'EXPIRED',
+	NAN: 'NaN',
+};
+
 export function formatDateForView(date: string): string {
-	const formattedDate = new Date(date.replace('--:--', '23:59'));
+	const formattedDate = new Date(date.replace('--:--', CUTOFF_TIME));
 
 	if (isNaN(formattedDate.getTime())) {
-		return 'NaN';
+		return INVALID_DATE.NAN;
 	}
 
 	if (formattedDate < new Date()) {
-		return 'EXPIRED';
+		return INVALID_DATE.EXPIRED;
 	}
 
 	return formattedDate.toLocaleString(
@@ -33,7 +40,7 @@ export function formatDateForView(date: string): string {
 }
 
 export function formatDateToISO(date: string): string {
-	const formattedDate = new Date(date.replace('--:--', '23:59'));
+	const formattedDate = new Date(date.replace('--:--', CUTOFF_TIME));
 
 	return formattedDate.toISOString();
 }
@@ -55,11 +62,11 @@ export default function ExpirationDateSelector({
 			onChange({
 				dateExpired: value,
 				error:
-					formattedDate === 'NaN'
+					formattedDate === INVALID_DATE.NAN
 						? Liferay.Language.get(
 								'please-select-a-valid-expiration-date'
 							)
-						: formattedDate === 'EXPIRED'
+						: formattedDate === INVALID_DATE.EXPIRED
 							? Liferay.Language.get(
 									'please-enter-an-expiration-date-that-comes-after-today'
 								)

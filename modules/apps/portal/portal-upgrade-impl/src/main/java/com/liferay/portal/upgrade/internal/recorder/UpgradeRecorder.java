@@ -102,6 +102,17 @@ public class UpgradeRecorder {
 			PreupgradeVerifyProcessSuite.class.getName());
 	}
 
+	public void recordDataCleanupMessage(String loggerName, String message) {
+		Map<String, Integer> messages = _dataCleanUpMessages.computeIfAbsent(
+			loggerName, key -> new ConcurrentHashMap<>());
+
+		int occurrences = messages.computeIfAbsent(message, key -> 0);
+
+		occurrences++;
+
+		messages.put(message, occurrences);
+	}
+
 	public void recordErrorMessage(
 		String loggerName, String message, Throwable throwable) {
 
@@ -281,15 +292,6 @@ public class UpgradeRecorder {
 	private Map<String, Map<String, Integer>> _filter(
 		Map<String, Map<String, Integer>> messages) {
 
-		for (String dataCleanUpClassName : _DATA_CLEAN_UP_CLASS_NAMES) {
-			if (messages.containsKey(dataCleanUpClassName)) {
-				_dataCleanUpMessages.putIfAbsent(
-					dataCleanUpClassName, messages.get(dataCleanUpClassName));
-
-				messages.remove(dataCleanUpClassName);
-			}
-		}
-
 		for (String filteredClassName : _FILTERED_CLASS_NAMES) {
 			messages.remove(filteredClassName);
 		}
@@ -337,10 +339,6 @@ public class UpgradeRecorder {
 			_log.error("Unable to process Release_ table", exception);
 		}
 	}
-
-	private static final String[] _DATA_CLEAN_UP_CLASS_NAMES = {
-		"com.liferay.portal.kernel.dao.db.DuplicateUniqueFinderRowsCleaner"
-	};
 
 	private static final String[] _FILTERED_CLASS_NAMES = {
 		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +

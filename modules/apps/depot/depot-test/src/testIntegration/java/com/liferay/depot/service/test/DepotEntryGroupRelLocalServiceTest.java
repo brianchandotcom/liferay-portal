@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -34,8 +35,6 @@ import com.liferay.sites.kernel.util.Sites;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,13 +64,13 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Test
 	public void testAddDepotEntryGroupRel() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		DepotEntryGroupRel depotEntryGroupRel =
 			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 				depotEntry.getDepotEntryId(), _group1.getGroupId());
 
-		Assert.assertNotNull(depotEntryGroupRel.getDepotEntryId());
 		Assert.assertEquals(
 			depotEntry.getDepotEntryId(), depotEntryGroupRel.getDepotEntryId());
 		Assert.assertEquals(
@@ -82,7 +81,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 	public void testAddDepotEntryGroupRelWithARepeatedDepotEntryGroupRel()
 		throws Exception {
 
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		DepotEntryGroupRel originalDepotEntryGroupRel =
 			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -107,7 +107,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 	public void testAddDepotEntryGroupRelWithLayoutSetPrototypeWithoutPropagation()
 		throws Exception {
 
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		LayoutSetPrototype layoutSetPrototype =
 			_layoutSetPrototypeLocalService.addLayoutSetPrototype(
@@ -115,7 +116,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
-				(Map<Locale, String>)null, true, true, false,
+				null, true, true, false,
 				ServiceContextTestUtil.getServiceContext());
 
 		Group group = _setUpLayoutSetPrototypeGroup(layoutSetPrototype);
@@ -140,7 +141,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 	public void testAddDepotEntryGroupRelWithLayoutSetPrototypeWithPropagation()
 		throws Exception {
 
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		LayoutSetPrototype layoutSetPrototype =
 			_layoutSetPrototypeLocalService.addLayoutSetPrototype(
@@ -148,8 +150,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
-				(Map<Locale, String>)null, true, true,
-				ServiceContextTestUtil.getServiceContext());
+				null, true, true, ServiceContextTestUtil.getServiceContext());
 
 		Group group = _setUpLayoutSetPrototypeGroup(layoutSetPrototype);
 
@@ -171,7 +172,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Test
 	public void testDeleteDepotEntryGroupRel() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		DepotEntryGroupRel depotEntryGroupRel =
 			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -180,21 +182,20 @@ public class DepotEntryGroupRelLocalServiceTest {
 		_depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
 			depotEntryGroupRel.getDepotEntryGroupRelId());
 
-		try {
-			_depotEntryGroupRelLocalService.getDepotEntryGroupRel(
-				depotEntryGroupRel.getDepotEntryGroupRelId());
-
-			Assert.fail();
-		}
-		catch (NoSuchEntryGroupRelException noSuchEntryGroupRelException) {
-		}
+		AssertUtils.assertFailure(
+			NoSuchEntryGroupRelException.class,
+			"No DepotEntryGroupRel exists with the primary key " +
+				depotEntryGroupRel.getDepotEntryGroupRelId(),
+			() -> _depotEntryGroupRelLocalService.getDepotEntryGroupRel(
+				depotEntryGroupRel.getDepotEntryGroupRelId()));
 	}
 
 	@Test
 	public void testDeleteDepotEntryGroupRelWithLayoutSetPrototypeWithoutPropagation()
 		throws Exception {
 
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		LayoutSetPrototype layoutSetPrototype =
 			_layoutSetPrototypeLocalService.addLayoutSetPrototype(
@@ -202,8 +203,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
-				(Map<Locale, String>)null, true, true,
-				ServiceContextTestUtil.getServiceContext());
+				null, true, true, ServiceContextTestUtil.getServiceContext());
 
 		Group group = _setUpLayoutSetPrototypeGroup(layoutSetPrototype);
 
@@ -221,7 +221,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			(Map<Locale, String>)null, true, true, false,
+			null, true, true, false,
 			ServiceContextTestUtil.getServiceContext());
 
 		int systemEventsCount = _systemEventLocalService.getSystemEventsCount();
@@ -253,7 +253,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 	public void testDeleteDepotEntryGroupRelWithLayoutSetPrototypeWithPropagation()
 		throws Exception {
 
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		LayoutSetPrototype layoutSetPrototype =
 			_layoutSetPrototypeLocalService.addLayoutSetPrototype(
@@ -261,8 +262,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
-				(Map<Locale, String>)null, true, true,
-				ServiceContextTestUtil.getServiceContext());
+				null, true, true, ServiceContextTestUtil.getServiceContext());
 
 		Group group = _setUpLayoutSetPrototypeGroup(layoutSetPrototype);
 
@@ -302,7 +302,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Test
 	public void testDeleteGroup() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		Group group = _groupLocalService.addGroup(
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
@@ -334,7 +335,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Test
 	public void testGetDepotEntryGroupRel() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		DepotEntryGroupRel originalDepotEntryGroupRel =
 			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -357,7 +359,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Test
 	public void testGetDepotEntryGroupRels() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntry.getDepotEntryId(), _group1.getGroupId());
@@ -367,7 +370,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 				_group1.getGroupId(), DepotConstants.TYPE_ASSET_LIBRARY, 0, 20);
 
 		Assert.assertEquals(
-			depotEntryGroupRels.toString(), depotEntryGroupRels.size(), 1);
+			depotEntryGroupRels.toString(), 1, depotEntryGroupRels.size());
 
 		DepotEntryGroupRel depotEntryGroupRel = depotEntryGroupRels.get(0);
 
@@ -379,12 +382,14 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Test
 	public void testGetDepotEntryGroupRelsCount() throws Exception {
-		DepotEntry depotEntry1 = _addDepotEntry();
+		DepotEntry depotEntry1 = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntry1.getDepotEntryId(), _group1.getGroupId());
 
-		DepotEntry depotEntry2 = _addDepotEntry();
+		DepotEntry depotEntry2 = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntry2.getDepotEntryId(), _group1.getGroupId());
@@ -401,7 +406,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Test
 	public void testGetSearchableDepotEntryGroupRels() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		DepotEntryGroupRel depotEntryGroupRel =
 			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -428,7 +434,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 	public void testGetSearchableDepotEntryGroupRelsWithAnUnsearchableDepotEntryGroupRel()
 		throws Exception {
 
-		DepotEntry depotEntry = _addDepotEntry();
+		DepotEntry depotEntry = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntry.getDepotEntryId(), _group1.getGroupId(), false);
@@ -450,7 +457,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Test
 	public void testUpdateSearchable() throws Exception {
-		DepotEntry depotEntry1 = _addDepotEntry();
+		DepotEntry depotEntry1 = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		DepotEntryGroupRel depotEntryGroupRel =
 			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -469,14 +477,13 @@ public class DepotEntryGroupRelLocalServiceTest {
 		Assert.assertTrue(depotEntryGroupRel.isSearchable());
 	}
 
-	private DepotEntry _addDepotEntry() throws Exception {
+	private DepotEntry _addDepotEntry(int type) throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			DepotConstants.TYPE_ASSET_LIBRARY,
-			ServiceContextTestUtil.getServiceContext());
+			type, ServiceContextTestUtil.getServiceContext());
 
 		_depotEntries.add(depotEntry);
 

@@ -1092,6 +1092,22 @@ paths:
                                 $ref: "#/components/schemas/CompanyTestEntity"
             tags: ["CompanyTestEntity"]
     "/company-test-entities/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteCompanyTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        "OK"
+            tags: ["CompanyTestEntity"]
         get:
             operationId: getCompanyTestEntityByExternalReferenceCode
             parameters:

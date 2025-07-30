@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -34,7 +35,9 @@ import com.liferay.sites.kernel.util.Sites;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,17 +67,29 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Test
 	public void testAddDepotEntryGroupRel() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry(
+		DepotEntry depotEntry1 = _addDepotEntry(
 			DepotConstants.TYPE_ASSET_LIBRARY);
 
-		DepotEntryGroupRel depotEntryGroupRel =
+		DepotEntryGroupRel depotEntryGroupRel1 =
 			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-				depotEntry.getDepotEntryId(), _group1.getGroupId());
+				depotEntry1.getDepotEntryId(), _group1.getGroupId());
 
 		Assert.assertEquals(
-			depotEntry.getDepotEntryId(), depotEntryGroupRel.getDepotEntryId());
+			depotEntry1.getDepotEntryId(),
+			depotEntryGroupRel1.getDepotEntryId());
 		Assert.assertEquals(
-			_group1.getGroupId(), depotEntryGroupRel.getToGroupId());
+			_group1.getGroupId(), depotEntryGroupRel1.getToGroupId());
+		Assert.assertEquals(
+			depotEntry1.getType(), depotEntryGroupRel1.getType());
+
+		DepotEntry depotEntry2 = _addDepotEntry(DepotConstants.TYPE_SPACE);
+
+		DepotEntryGroupRel depotEntryGroupRel2 =
+			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+				depotEntry2.getDepotEntryId(), _group1.getGroupId());
+
+		Assert.assertEquals(
+			depotEntry2.getType(), depotEntryGroupRel2.getType());
 	}
 
 	@Test
@@ -359,25 +374,55 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Test
 	public void testGetDepotEntryGroupRels() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry(
+		DepotEntry depotEntry1 = _addDepotEntry(
 			DepotConstants.TYPE_ASSET_LIBRARY);
+		DepotEntry depotEntry2 = _addDepotEntry(DepotConstants.TYPE_SPACE);
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			depotEntry.getDepotEntryId(), _group1.getGroupId());
+			depotEntry1.getDepotEntryId(), _group1.getGroupId());
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry2.getDepotEntryId(), _group1.getGroupId());
 
-		List<DepotEntryGroupRel> depotEntryGroupRels =
+		List<DepotEntryGroupRel> depotEntryGroupRels1 =
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
 				_group1.getGroupId(), DepotConstants.TYPE_ASSET_LIBRARY, 0, 20);
 
 		Assert.assertEquals(
-			depotEntryGroupRels.toString(), 1, depotEntryGroupRels.size());
+			depotEntryGroupRels1.toString(), 1, depotEntryGroupRels1.size());
 
-		DepotEntryGroupRel depotEntryGroupRel = depotEntryGroupRels.get(0);
+		DepotEntryGroupRel depotEntryGroupRel1 = depotEntryGroupRels1.get(0);
 
 		Assert.assertEquals(
-			depotEntry.getDepotEntryId(), depotEntryGroupRel.getDepotEntryId());
+			depotEntry1.getDepotEntryId(),
+			depotEntryGroupRel1.getDepotEntryId());
 		Assert.assertEquals(
-			_group1.getGroupId(), depotEntryGroupRel.getToGroupId());
+			_group1.getGroupId(), depotEntryGroupRel1.getToGroupId());
+
+		List<DepotEntryGroupRel> depotEntryGroupRels2 =
+			_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
+				_group1.getGroupId(), DepotConstants.TYPE_SPACE, 0, 20);
+
+		Assert.assertEquals(
+			depotEntryGroupRels2.toString(), 1, depotEntryGroupRels2.size());
+
+		DepotEntryGroupRel depotEntryGroupRel2 = depotEntryGroupRels2.get(0);
+
+		Assert.assertEquals(
+			depotEntry2.getDepotEntryId(),
+			depotEntryGroupRel2.getDepotEntryId());
+		Assert.assertEquals(
+			_group1.getGroupId(), depotEntryGroupRel2.getToGroupId());
+
+		Set<DepotEntryGroupRel> expectedDepotEntryGroupRels = new HashSet<>();
+
+		expectedDepotEntryGroupRels.addAll(depotEntryGroupRels1);
+		expectedDepotEntryGroupRels.addAll(depotEntryGroupRels2);
+
+		Assert.assertEquals(
+			expectedDepotEntryGroupRels,
+			SetUtil.fromCollection(
+				_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
+					_group1.getGroupId(), DepotConstants.TYPE_ANY, 0, 20)));
 	}
 
 	@Test

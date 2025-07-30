@@ -245,7 +245,7 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public JspConfigDescriptor getJspConfigDescriptor() {
-		return _servletContext.getJspConfigDescriptor();
+		return null;
 	}
 
 	@Override

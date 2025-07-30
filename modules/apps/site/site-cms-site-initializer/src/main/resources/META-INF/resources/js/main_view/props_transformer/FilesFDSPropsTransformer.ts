@@ -37,7 +37,6 @@ export default function FilesFDSPropsTransformer({
 }: {
 	additionalProps: {
 		autocompleteURL: string;
-		collaboratorByTypeURLs: Record<string, string>;
 		collaboratorURLs: Record<string, string>;
 	};
 	creationMenu: any;
@@ -116,11 +115,9 @@ export default function FilesFDSPropsTransformer({
 		}),
 		onActionDropdownItemClick: ({
 			action,
-			event,
 			itemData,
 		}: {
 			action: any;
-			event: Event;
 			itemData: any;
 		}) => {
 			if (action?.data?.id === 'show-details') {
@@ -137,8 +134,6 @@ export default function FilesFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'share') {
-				event?.preventDefault();
-
 				const {autocompleteURL, collaboratorURLs} = additionalProps;
 
 				shareAction({

@@ -276,7 +276,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		}
 
 		throw new NoSuchUserException(
-			"No active administrator found for company " + companyId);
+			StringBundler.concat(
+				"No active user exists in company ", companyId, " with role ",
+				role.getName()));
 	}
 
 	private Bundle _getBundle(BatchEngineUnit batchEngineUnit) {

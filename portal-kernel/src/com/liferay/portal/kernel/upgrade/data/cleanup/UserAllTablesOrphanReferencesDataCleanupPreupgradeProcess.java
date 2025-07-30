@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -66,6 +67,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 
 			while (resultSet.next()) {
 				long companyId = resultSet.getLong(2);
+				long count = resultSet.getLong(3);
 				long userId = resultSet.getLong(1);
 
 				if (_isPartOfUniqueIndex(
@@ -79,11 +81,11 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							StringBundler.concat(
-								resultSet.getLong(3),
-								" orphan entries from table ", sourceTableName,
-								" have been deleted because value ", userId,
-								" was not found in the origin table ",
-								targetTableName, " and column ",
+								"Table ", sourceTableName, ", ", count,
+								(count == 1) ? " entry " : " entries ",
+								"deleted because ", sourceColumnName,
+								StringPool.SPACE, userId, " was not found in ",
+								targetTableName, StringPool.PERIOD,
 								targetColumnName));
 					}
 
@@ -113,11 +115,13 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							resultSet.getLong(3), " orphan entries from table ",
-							sourceTableName, " have been updated to value ",
-							newUserId, " because value ", userId,
-							" was not found in the origin table ",
-							targetTableName, " and column ", targetColumnName));
+							"Table ", sourceTableName, ", ", count,
+							(count == 1) ? " entry " : " entries ",
+							"updated column ", sourceColumnName, " to value ",
+							newUserId, " because ", sourceColumnName,
+							StringPool.SPACE, userId, " was not found in ",
+							targetTableName, StringPool.PERIOD,
+							targetColumnName));
 				}
 			}
 		}

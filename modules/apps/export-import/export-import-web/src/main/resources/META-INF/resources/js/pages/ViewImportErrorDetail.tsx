@@ -69,9 +69,8 @@ export function ViewImportErrorDetail({
 			response.json().then((data: ErrorDetail) => {
 				setErrorDetail({
 					...data,
-					...(data.dateCreated && {
-						dateCreated: formatDate(data.dateCreated),
-					}),
+					dateCreated:
+						data.dateCreated && formatDate(data.dateCreated),
 				});
 				setIsLoading(false);
 			});

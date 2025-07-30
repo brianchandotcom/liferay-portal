@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ResourceServlet;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
 
 import jakarta.servlet.DispatcherType;
@@ -73,7 +74,6 @@ import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistratio
 import org.eclipse.equinox.http.servlet.internal.servlet.FilterConfigImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionAdaptor;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
-import org.eclipse.equinox.http.servlet.internal.servlet.ResourceServlet;
 import org.eclipse.equinox.http.servlet.internal.servlet.ServletConfigImpl;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
@@ -400,9 +400,7 @@ public class LiferayContextController extends ContextController {
 
 		ResourceRegistration resourceRegistration = new ResourceRegistration(
 			new ContextController.ServiceHolder<>(
-				new ResourceServlet(
-					resourcePrefix, servletContextHelper,
-					AccessController.getContext()),
+				new ResourceServlet(resourcePrefix, servletContextHelper),
 				bundle, resourceDTO.serviceId,
 				GetterUtil.getInteger(
 					serviceReference.getProperty(Constants.SERVICE_RANKING))),

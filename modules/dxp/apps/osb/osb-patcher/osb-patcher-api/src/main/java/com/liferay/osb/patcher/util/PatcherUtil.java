@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -135,10 +134,12 @@ public class PatcherUtil {
 		return sortTokens(newTickets);
 	}
 
-	public static String getNextPatcherBuilderStatusMsg() throws Exception {
+	public static String getNextPatcherBuilderStatusMsg(long companyId)
+		throws Exception {
+
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, companyId);
 
 		if (Validator.isNull(
 				patcherConfiguration.patcherPubsubCredentialFilePath())) {
@@ -377,7 +378,8 @@ public class PatcherUtil {
 				defaultUserId, lockClassName, companyId, lockClassName, false,
 				Time.HOUR);
 
-			String jenkinsStatusJSONString = getNextPatcherBuilderStatusMsg();
+			String jenkinsStatusJSONString = getNextPatcherBuilderStatusMsg(
+				companyId);
 
 			if (Validator.isNotNull(jenkinsStatusJSONString) &&
 				_log.isInfoEnabled()) {

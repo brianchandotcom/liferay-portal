@@ -146,7 +146,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 			Liferay.Patcher.populateProjectVersionField(
 				productVersionId,
 				select,
-				<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject() %>
+				<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject(themeDisplay.getCompanyId()) %>
 			);
 
 			getTicketSuggestionFields();
@@ -248,7 +248,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 		Liferay.Patcher.populateProjectVersionField(
 			productVersionId,
 			select,
-			<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject() %>
+			<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject(themeDisplay.getCompanyId()) %>
 		);
 
 		var projectVersionId =

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -391,10 +390,10 @@ public class JenkinsUtil {
 		return getJenkinsResults(jenkinsResults, false);
 	}
 
-	public static String getJenkinsURL() throws Exception {
+	public static String getJenkinsURL(long companyId) throws Exception {
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, companyId);
 
 		if (patcherConfiguration.jenkinsLoadBalancerEnabled() &&
 			Validator.isNotNull(
@@ -471,7 +470,7 @@ public class JenkinsUtil {
 		).put(
 			"patcher.build.support.ticket.url",
 			PatcherBuildUtil.getSupportTicketURL(
-				patcherBuild.getSupportTicket())
+				patcherBuild.getCompanyId(), patcherBuild.getSupportTicket())
 		).put(
 			"patcher.request.key", patcherBuild.getRequestKey()
 		).put(
@@ -488,8 +487,8 @@ public class JenkinsUtil {
 		return matcher.find();
 	}
 
-	public static boolean isValidJenkinsSetup() throws Exception {
-		return Validator.isNull(validateJenkinsSetup());
+	public static boolean isValidJenkinsSetup(long companyId) throws Exception {
+		return Validator.isNull(validateJenkinsSetup(companyId));
 	}
 
 	public static boolean isValidSendAgentJenkinsRequest(
@@ -667,7 +666,7 @@ public class JenkinsUtil {
 		options.addPart("patcher.user.id", String.valueOf(user.getUserId()));
 		options.addPart("token", patcherConfiguration.jenkinsToken());
 
-		String jenkinsURL = getJenkinsURL();
+		String jenkinsURL = getJenkinsURL(user.getCompanyId());
 
 		options.setLocation(
 			jenkinsURL + patcherConfiguration.jenkinsBuildWithParametersPath());
@@ -713,10 +712,10 @@ public class JenkinsUtil {
 		);
 	}
 
-	public static String validateJenkinsSetup() throws Exception {
+	public static String validateJenkinsSetup(long companyId) throws Exception {
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, companyId);
 
 		if (Validator.isNull(
 				patcherConfiguration.jenkinsBuildWithParametersPath())) {

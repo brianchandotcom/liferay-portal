@@ -73,7 +73,8 @@ public class PatcherFixPackValidator {
 	}
 
 	public void validateBuild(PatcherFixPack patcherFixPack) throws Exception {
-		String message = JenkinsUtil.validateJenkinsSetup();
+		String message = JenkinsUtil.validateJenkinsSetup(
+			patcherFixPack.getCompanyId());
 
 		if (Validator.isNotNull(message)) {
 			throw new PortalException(message);

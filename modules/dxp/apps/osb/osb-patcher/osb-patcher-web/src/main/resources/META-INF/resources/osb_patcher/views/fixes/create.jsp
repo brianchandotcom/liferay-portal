@@ -85,7 +85,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 			Liferay.Patcher.populateProjectVersionField(
 				productVersionId,
 				select,
-				<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject() %>
+				<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject(themeDisplay.getCompanyId()) %>
 			);
 		},
 		['aui-base']
@@ -101,7 +101,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		Liferay.Patcher.populateProjectVersionField(
 			productVersionId,
 			select,
-			<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject() %>
+			<%= PatcherProjectVersionUtil.getPatcherProjectVersionsJSONObject(themeDisplay.getCompanyId()) %>
 		);
 	});
 </aui:script>

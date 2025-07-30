@@ -3650,18 +3650,43 @@ public class DefaultObjectEntryManagerImplTest
 		_addResourcePermission(
 			ActionKeys.DELETE, _rootObjectDefinition, _buyerRole);
 
-		TreeTestUtil.forEachNodeObjectEntry(
-			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
-			_objectEntryLocalService,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
+		Iterator<Node> iterator = tree.iterator(
+			TreeConstants.ITERATOR_TYPE_POST_ORDER);
+
+		Node rootNode = tree.getRootNode();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			Node parentNode = node.getParentNode();
+
+			if (parentNode == null) {
+				com.liferay.object.model.ObjectEntry rootObjectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						rootNode.getPrimaryKey());
 
 				_defaultObjectEntryManager.deleteObjectEntry(
-					dtoConverterContext, objectDefinition,
-					objectEntry.getObjectEntryId());
-			});
+					dtoConverterContext,
+					objectDefinitionLocalService.fetchObjectDefinition(
+						rootObjectEntry.getObjectDefinitionId()),
+					rootNode.getPrimaryKey());
+
+				continue;
+			}
+
+			Edge edge = node.getEdge();
+
+			com.liferay.object.model.ObjectEntry nodeObjectEntry =
+				_objectEntryLocalService.getObjectEntry(node.getPrimaryKey());
+
+			_defaultObjectEntryManager.deleteRelatedObjectEntry(
+				objectDefinitionLocalService.fetchObjectDefinition(
+					nodeObjectEntry.getObjectDefinitionId()),
+				node.getPrimaryKey(),
+				_objectRelationshipLocalService.getObjectRelationship(
+					edge.getObjectRelationshipId()),
+				parentNode.getPrimaryKey());
+		}
 
 		// Users cannot delete object entries from accounts that they do not
 		// belong to
@@ -3778,6 +3803,87 @@ public class DefaultObjectEntryManagerImplTest
 			_objectEntryLocalService.fetchObjectEntry(objectEntry3.getId()));
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(objectEntry4.getId()));
+	}
+
+	@Test
+	public void testDeleteRelatedObjectEntry() throws Exception {
+
+		// Delete object entry
+
+		ObjectDefinition objectDefinitionA = _createObjectDefinition();
+		ObjectDefinition objectDefinitionAA = _createObjectDefinition();
+
+		ObjectRelationship objectRelationshipA_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinitionA, objectDefinitionAA,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectDefinition objectDefinitionB = _createObjectDefinition();
+
+		ObjectRelationship objectRelationshipB_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinitionB, objectDefinitionAA,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			List.of(objectRelationshipA_AA, objectRelationshipB_AA));
+
+		ObjectEntry objectEntryA = _addObjectEntry(
+			objectDefinitionA, Collections.emptyMap());
+
+		ObjectField objectRelationshipA_AAObjectField2 =
+			_objectFieldLocalService.getObjectField(
+				objectRelationshipA_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA2 = _addObjectEntry(
+			objectDefinitionAA, Collections.emptyMap());
+
+		_defaultObjectEntryManager.deleteObjectEntry(
+			objectDefinitionAA, objectEntryAA2.getId());
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(objectEntryAA2.getId()));
+
+		// Delete related object entry
+
+		ObjectEntry objectEntryB = _addObjectEntry(
+			objectDefinitionB, Collections.emptyMap());
+
+		ObjectEntry objectEntryAA1 =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_createDTOConverterContext(), objectDefinitionAA,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							objectRelationshipA_AAObjectField2::getName,
+							objectEntryA.getId()
+						).build();
+					}
+				},
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectRelationshipA_AA.getObjectRelationshipId()),
+				objectEntryA.getId(), ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key {",
+				objectRelationshipA_AAObjectField2.getName(), "=",
+				objectEntryB.getId(), ", objectEntryId=",
+				objectEntryAA1.getId(), "}"),
+			() -> _defaultObjectEntryManager.deleteRelatedObjectEntry(
+				objectDefinitionAA, objectEntryAA1.getId(),
+				objectRelationshipA_AA, objectEntryB.getId()));
+
+		_defaultObjectEntryManager.deleteRelatedObjectEntry(
+			objectDefinitionAA, objectEntryAA1.getId(), objectRelationshipA_AA,
+			objectEntryA.getId());
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(objectEntryAA1.getId()));
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -9256,15 +9362,20 @@ public class DefaultObjectEntryManagerImplTest
 			String actionId, Tree tree)
 		throws Exception {
 
+		Iterator<Node> iterator = tree.iterator(
+			TreeConstants.ITERATOR_TYPE_POST_ORDER);
+
 		Node rootNode = tree.getRootNode();
 
-		TreeTestUtil.forEachNodeObjectEntry(
-			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
-			_objectEntryLocalService,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			Node parentNode = node.getParentNode();
+
+			if (parentNode == null) {
+				com.liferay.object.model.ObjectEntry rootObjectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						rootNode.getPrimaryKey());
 
 				AssertUtils.assertFailure(
 					PrincipalException.MustHavePermission.class,
@@ -9274,9 +9385,33 @@ public class DefaultObjectEntryManagerImplTest
 						_rootObjectDefinition.getClassName(), StringPool.SPACE,
 						rootNode.getPrimaryKey()),
 					() -> _defaultObjectEntryManager.deleteObjectEntry(
-						dtoConverterContext, objectDefinition,
-						objectEntry.getObjectEntryId()));
-			});
+						dtoConverterContext,
+						objectDefinitionLocalService.fetchObjectDefinition(
+							rootObjectEntry.getObjectDefinitionId()),
+						rootNode.getPrimaryKey()));
+
+				continue;
+			}
+
+			Edge edge = node.getEdge();
+
+			com.liferay.object.model.ObjectEntry nodeObjectEntry =
+				_objectEntryLocalService.getObjectEntry(node.getPrimaryKey());
+
+			AssertUtils.assertFailure(
+				PrincipalException.MustHavePermission.class,
+				StringBundler.concat(
+					"User ", _user.getUserId(), " must have ", actionId,
+					" permission for ", _rootObjectDefinition.getClassName(),
+					StringPool.SPACE, rootNode.getPrimaryKey()),
+				() -> _defaultObjectEntryManager.deleteRelatedObjectEntry(
+					objectDefinitionLocalService.fetchObjectDefinition(
+						nodeObjectEntry.getObjectDefinitionId()),
+					node.getPrimaryKey(),
+					_objectRelationshipLocalService.getObjectRelationship(
+						edge.getObjectRelationshipId()),
+					parentNode.getPrimaryKey()));
+		}
 	}
 
 	private void _testGetObjectEntriesWithAccountEntryRestricted2(

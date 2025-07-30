@@ -250,25 +250,25 @@
 </@>
 
 <style>
-input[type=checkbox] {
-	accent-color: var(--color-brand-primary)
-}
+	input[type=checkbox] {
+		accent-color: var(--color-brand-primary)
+	}
 
-.panel ul {
-	list-style: none;
-}
+	.panel ul {
+		list-style: none;
+	}
 
-.panel-body, .panel-header {
-	padding: 0;
-}
+	.panel-body, .panel-header {
+		padding: 0;
+	}
 
-.panel-header .collapse-icon-closed, .panel-header .collapse-icon-open {
-	top: var(--spacer-1);
-}
+	.panel-header .collapse-icon-closed, .panel-header .collapse-icon-open {
+		top: var(--spacer-1);
+	}
 
-.panel-title {
-	font-size: var(--h5-font-size, 0.875rem);
-	font-weight: var(--h5-font-weight);
-	text-transform: none;
-}
+	.panel-title {
+		font-size: var(--h5-font-size, 0.875rem);
+		font-weight: var(--h5-font-weight);
+		text-transform: none;
+	}
 </style>

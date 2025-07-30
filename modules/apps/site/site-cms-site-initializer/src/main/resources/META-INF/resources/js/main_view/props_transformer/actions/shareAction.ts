@@ -4,13 +4,13 @@
  */
 
 import {openModal, openToast} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
 
+import CollaboratorService from '../../../common/services/CollaboratorService';
 import ShareModalContent, {
-	collaborator,
+	Collaborator,
 } from '../../modal/share_modal_content/ShareModalContent';
 
-export default function shareAction({
+export default async function shareAction({
 	autocompleteURL,
 	collaboratorURL,
 	creator,
@@ -28,62 +28,52 @@ export default function shareAction({
 	itemId: number;
 	title: string;
 }) {
-	const collaboratorURLWithId = collaboratorURL.replace(
-		'{objectEntryId}',
-		itemId.toString()
-	);
+	try {
+		const items = await CollaboratorService.getCollaborators(
+			collaboratorURL,
+			itemId
+		);
 
-	fetch(collaboratorURLWithId, {
-		headers: {
-			'Accept': 'application/json',
-			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-			'Content-Type': 'application/json',
-		},
-		method: 'GET',
-	})
-		.then((response) => response.json())
-		.then(({items}) => {
-			const initialCollaborators: collaborator[] = items.reverse().map(
-				(collaboratorItem: any) =>
-					({
-						actionIds: collaboratorItem.actionIds.includes('UPDATE')
-							? 'UPDATE,ADD_DISCUSSION,VIEW'
-							: collaboratorItem.actionIds.includes(
-										'ADD_DISCUSSION'
-								  )
-								? 'ADD_DISCUSSION,VIEW'
-								: 'VIEW',
-						dateExpired: collaboratorItem.dateExpired,
-						share: collaboratorItem.share,
-						type: collaboratorItem.type,
-						user: {
-							id: collaboratorItem.id.toString(),
-							image: collaboratorItem.portrait || '',
-							name: collaboratorItem.name,
-						},
-					}) as collaborator
-			);
+		const initialCollaborators: Collaborator[] = items.reverse().map(
+			({actionIds, dateExpired, id, name, portrait, share, type}) =>
+				({
+					actionIds: actionIds.includes('UPDATE')
+						? 'UPDATE,ADD_DISCUSSION,VIEW'
+						: actionIds.includes('ADD_DISCUSSION')
+							? 'ADD_DISCUSSION,VIEW'
+							: 'VIEW',
+					dateExpired,
+					share,
+					type,
+					user: {
+						id: id.toString(),
+						image: portrait,
+						name,
+					},
+				}) as Collaborator
+		);
 
-			openModal({
-				className: 'share-modal',
-				contentComponent: ({closeModal}: {closeModal: () => void}) =>
-					ShareModalContent({
-						autocompleteURL,
-						closeModal,
-						collaboratorURL: collaboratorURLWithId,
-						creator: {...creator, id: creator.id.toString()},
-						initialCollaborators,
-						title,
-					}),
-				size: 'md',
-			});
-		})
-		.catch((error) => {
-			openToast({
-				message:
-					error.message ||
-					Liferay.Language.get('an-unexpected-error-occurred'),
-				type: 'danger',
-			});
+		openModal({
+			className: 'share-modal',
+			contentComponent: ({closeModal}: {closeModal: () => void}) =>
+				ShareModalContent({
+					autocompleteURL,
+					closeModal,
+					collaboratorURL,
+					creator: {...creator, id: creator.id.toString()},
+					initialCollaborators,
+					itemId,
+					title,
+				}),
+			size: 'md',
 		});
+	}
+	catch (error: any) {
+		openToast({
+			message:
+				error.message ||
+				Liferay.Language.get('an-unexpected-error-occurred'),
+			type: 'danger',
+		});
+	}
 }

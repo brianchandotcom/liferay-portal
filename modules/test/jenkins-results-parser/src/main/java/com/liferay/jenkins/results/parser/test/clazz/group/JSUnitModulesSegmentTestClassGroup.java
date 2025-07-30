@@ -7,7 +7,6 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 

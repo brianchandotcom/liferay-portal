@@ -21,8 +21,6 @@ import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.ObjectEntryOpenAPIContributor;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
-import com.liferay.object.scope.ObjectScopeProvider;
-import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -32,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -76,7 +73,6 @@ public class ObjectEntryOpenAPIResourceImpl
 		ObjectEntryOpenAPIResourceProvider objectEntryOpenAPIResourceProvider,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		OpenAPIResource openAPIResource,
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry) {
@@ -90,7 +86,6 @@ public class ObjectEntryOpenAPIResourceImpl
 			objectEntryOpenAPIResourceProvider;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
-		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_openAPIResource = openAPIResource;
 		_systemObjectDefinitionManagerRegistry =
 			systemObjectDefinitionManagerRegistry;
@@ -321,7 +316,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			String relationshipName = objectRelationship.getName();
 
-			List<DTOProperty> dtoProperties = ListUtil.fromArray(
+			return Arrays.asList(
 				new RelationshipDTOProperty(
 					HashMapBuilder.<String, Object>put(
 						"x-parent-map", "properties"
@@ -367,39 +362,6 @@ public class ObjectEntryOpenAPIResourceImpl
 						setReadOnly(true);
 					}
 				});
-
-			ObjectDefinition parentObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectRelationship.getObjectDefinitionId1());
-
-			if (StringUtil.equals(
-					_objectDefinition.getScope(),
-					parentObjectDefinition.getScope())) {
-
-				return dtoProperties;
-			}
-
-			ObjectScopeProvider objectScopeProvider =
-				_objectScopeProviderRegistry.getObjectScopeProvider(
-					parentObjectDefinition.getScope());
-
-			if (!objectScopeProvider.isGroupAware()) {
-				return dtoProperties;
-			}
-
-			dtoProperties.add(
-				new RelationshipDTOProperty(
-					Collections.singletonMap("x-parent-map", "properties"),
-					StringUtil.replaceLast(
-						objectField.getName(), "Id", "ScopeKey"),
-					relationshipName, String.class.getSimpleName()) {
-
-					{
-						setRequired(objectField.isRequired());
-					}
-				});
-
-			return dtoProperties;
 		}
 
 		return ListUtil.fromArray(
@@ -556,7 +518,6 @@ public class ObjectEntryOpenAPIResourceImpl
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
-	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final OpenAPIResource _openAPIResource;
 	private final SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;

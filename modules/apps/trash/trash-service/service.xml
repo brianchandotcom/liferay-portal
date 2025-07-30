@@ -50,6 +50,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 		</finder>
+		<finder name="C_CN" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="C_C" return-type="TrashEntry" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

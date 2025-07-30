@@ -12,10 +12,13 @@ import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -468,6 +471,29 @@ public class DisplayPageTemplateFolderResourceTest
 				testGroup, TestPropsValues.getUserId()));
 	}
 
+	private DisplayPageTemplateFolder _getParentDisplayPageTemplateFolder(
+			int count)
+		throws Exception {
+
+		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
+			randomDisplayPageTemplateFolder();
+
+		for (int i = 0; i < count; i++) {
+			DisplayPageTemplateFolder displayPageTemplateFolder =
+				randomDisplayPageTemplateFolder();
+
+			displayPageTemplateFolder.setParentDisplayPageTemplateFolder(
+				parentDisplayPageTemplateFolder);
+			displayPageTemplateFolder.
+				setParentDisplayPageTemplateFolderExternalReferenceCode(
+					parentDisplayPageTemplateFolder.getExternalReferenceCode());
+
+			parentDisplayPageTemplateFolder = displayPageTemplateFolder;
+		}
+
+		return parentDisplayPageTemplateFolder;
+	}
+
 	private long _getParentLayoutPageTemplateCollectionId(
 			int count,
 			List<LayoutPageTemplateCollection>
@@ -670,12 +696,67 @@ public class DisplayPageTemplateFolderResourceTest
 		_assertParentDisplayPageTemplateFolder(
 			displayPageTemplateFolder, parentDisplayPageTemplateFolder);
 
-		displayPageTemplateFolder =
+		DisplayPageTemplateFolder putDisplayPageTemplateFolder =
 			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 				displayPageTemplateFolder, StringPool.BLANK);
 
-		_assertNoParentDisplayPageTemplateFolder(displayPageTemplateFolder);
+		_assertNoParentDisplayPageTemplateFolder(putDisplayPageTemplateFolder);
+
+		parentDisplayPageTemplateFolder = _getParentDisplayPageTemplateFolder(
+			5);
+
+		putDisplayPageTemplateFolder.setParentDisplayPageTemplateFolder(
+			parentDisplayPageTemplateFolder);
+		putDisplayPageTemplateFolder.
+			setParentDisplayPageTemplateFolderExternalReferenceCode(
+				parentDisplayPageTemplateFolder.getExternalReferenceCode());
+
+		_assertProblemException(
+			"BAD_REQUEST", null,
+			() ->
+				displayPageTemplateFolderResource.
+					putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+						testGroup.getExternalReferenceCode(),
+						putDisplayPageTemplateFolder.getExternalReferenceCode(),
+						putDisplayPageTemplateFolder));
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			displayPageTemplateFolderResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					testGroup.getExternalReferenceCode(),
+					putDisplayPageTemplateFolder.getExternalReferenceCode(),
+					putDisplayPageTemplateFolder);
+
+			List<LayoutPageTemplateCollection>
+				parentLayoutPageTemplateCollections = new ArrayList<>();
+
+			while (parentDisplayPageTemplateFolder != null) {
+				parentLayoutPageTemplateCollections.add(
+					_layoutPageTemplateCollectionService.
+						getLayoutPageTemplateCollection(
+							parentDisplayPageTemplateFolder.
+								getExternalReferenceCode(),
+							testGroup.getGroupId()));
+
+				parentDisplayPageTemplateFolder =
+					parentDisplayPageTemplateFolder.
+						getParentDisplayPageTemplateFolder();
+			}
+
+			_assertParentDisplayPageTemplateFolder(
+				_layoutPageTemplateCollectionService.
+					getLayoutPageTemplateCollection(
+						putDisplayPageTemplateFolder.getExternalReferenceCode(),
+						testGroup.getGroupId()),
+				parentLayoutPageTemplateCollections);
+		}
 	}
+
+	@Inject
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
 
 	@Inject
 	private LayoutPageTemplateCollectionService

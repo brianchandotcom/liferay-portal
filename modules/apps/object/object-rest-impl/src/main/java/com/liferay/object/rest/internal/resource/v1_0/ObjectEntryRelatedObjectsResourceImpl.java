@@ -5,7 +5,6 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -15,20 +14,15 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
-import com.liferay.object.scope.ObjectScopeProvider;
-import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.GroupUtil;
 
 import jakarta.ws.rs.core.Context;
 
@@ -41,22 +35,18 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	extends BaseObjectEntryRelatedObjectsResourceImpl {
 
 	public ObjectEntryRelatedObjectsResourceImpl(
-		GroupLocalService groupLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
-		ObjectRelationshipLocalService objectRelationshipLocalService,
-		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
+		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
-		_groupLocalService = groupLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
-		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 	}
 
 	@Override
@@ -193,9 +183,28 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				String relatedExternalReferenceCode)
 		throws Exception {
 
-		return _putByExternalReferenceCodeCurrentObjectEntry(
-			null, currentExternalReferenceCode, objectRelationshipName,
-			relatedExternalReferenceCode);
+		com.liferay.object.model.ObjectEntry currentObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				currentExternalReferenceCode,
+				_objectDefinition.getObjectDefinitionId());
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		ObjectDefinition relatedObjectDefinition =
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				_objectDefinition, objectRelationship);
+
+		com.liferay.object.model.ObjectEntry relatedObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				relatedExternalReferenceCode,
+				relatedObjectDefinition.getObjectDefinitionId());
+
+		return putCurrentObjectEntry(
+			currentObjectEntry.getObjectEntryId(), objectRelationshipName,
+			relatedObjectEntry.getObjectEntryId());
 	}
 
 	@Override
@@ -231,19 +240,6 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				_getDTOConverterContext(currentObjectEntryId),
 				objectRelationship, currentObjectEntryId,
 				relatedObjectEntryId));
-	}
-
-	@Override
-	public Object
-			putScopeScopeKeyByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
-				String scopeKey, String currentExternalReferenceCode,
-				String objectRelationshipName,
-				String relatedExternalReferenceCode)
-		throws Exception {
-
-		return _putByExternalReferenceCodeCurrentObjectEntry(
-			scopeKey, currentExternalReferenceCode, objectRelationshipName,
-			relatedExternalReferenceCode);
 	}
 
 	private void _checkCurrentObjectEntry(
@@ -293,22 +289,6 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			contextUser);
 	}
 
-	private long _getGroupId(
-		ObjectDefinition objectDefinition, String scopeKey) {
-
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition.getScope());
-
-		if (!objectScopeProvider.isGroupAware()) {
-			return ObjectDefinitionConstants.DEFAULT_GROUP_ID;
-		}
-
-		return GetterUtil.getLong(
-			GroupUtil.getGroupId(
-				objectDefinition.getCompanyId(), scopeKey, _groupLocalService));
-	}
-
 	private ObjectEntry _getRelatedObjectEntry(
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
 
@@ -340,37 +320,6 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		return objectEntry;
 	}
 
-	private Object _putByExternalReferenceCodeCurrentObjectEntry(
-			String scopeKey, String currentExternalReferenceCode,
-			String objectRelationshipName, String relatedExternalReferenceCode)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry currentObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				currentExternalReferenceCode,
-				_getGroupId(_objectDefinition, scopeKey),
-				_objectDefinition.getObjectDefinitionId());
-
-		ObjectDefinition relatedObjectDefinition =
-			ObjectRelationshipUtil.getRelatedObjectDefinition(
-				_objectDefinition,
-				_objectRelationshipLocalService.getObjectRelationship(
-					_objectDefinition.getObjectDefinitionId(),
-					objectRelationshipName));
-
-		com.liferay.object.model.ObjectEntry relatedObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				relatedExternalReferenceCode,
-				_getGroupId(relatedObjectDefinition, scopeKey),
-				relatedObjectDefinition.getObjectDefinitionId());
-
-		return putCurrentObjectEntry(
-			currentObjectEntry.getObjectEntryId(), objectRelationshipName,
-			relatedObjectEntry.getObjectEntryId());
-	}
-
-	private final GroupLocalService _groupLocalService;
-
 	@Context
 	private ObjectDefinition _objectDefinition;
 
@@ -381,6 +330,5 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		_objectRelatedModelsProviderRegistry;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
-	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 }

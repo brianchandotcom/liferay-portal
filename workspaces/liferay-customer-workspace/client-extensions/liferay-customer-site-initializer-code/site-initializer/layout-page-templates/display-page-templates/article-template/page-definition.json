@@ -172,6 +172,41 @@
 									"size": 3
 								},
 								"id": "62d7ee52-2179-6d85-b6ba-5fe81f99e146",
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"backgroundColor": "colorNeutral1",
+												"borderRadius": "borderRadiusLg"
+											},
+											"indexed": true,
+											"layout": {
+											}
+										},
+										"id": "968b82ab-c6f1-4f91-6ff7-31e696355888",
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "cp-article-side-panel",
+														"siteKey": "Customer Portal"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"backgroundColor": ""
+													},
+													"indexed": true
+												},
+												"id": "e74cfee6-88b7-c042-f8ce-3056a58a9672",
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
 								"type": "Column"
 							},
 							{
@@ -341,6 +376,23 @@
 													"size": 3
 												},
 												"id": "d8fe44a1-f9ea-da4c-d234-dd7911743793",
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "dynamic-outline",
+																"siteKey": "Customer Portal"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"id": "8219382d-c4fa-b7ad-cb96-6be1a215961e",
+														"type": "Fragment"
+													}
+												],
 												"type": "Column"
 											}
 										],

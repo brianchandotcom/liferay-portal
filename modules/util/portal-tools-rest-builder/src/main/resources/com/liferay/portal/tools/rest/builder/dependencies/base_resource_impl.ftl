@@ -261,8 +261,7 @@ public abstract class Base${schemaName}ResourceImpl
 													${schemaVarName}Id
 												</#if>
 										<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
-											${getParentPermissionsPageJavaMethodSignature.methodName}(
-												${parentSchemaName?uncap_first}ExternalReferenceCode, ${schemaVarName}.getExternalReferenceCode()
+											${getParentPermissionsPageJavaMethodSignature.methodName}(${parentSchemaName?uncap_first}ExternalReferenceCode, ${schemaVarName}.getExternalReferenceCode()
 										</#if>
 											, null);
 
@@ -289,8 +288,7 @@ public abstract class Base${schemaName}ResourceImpl
 											${schemaVarName}Id
 										</#if>
 									<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
-										${getParentPermissionsPageJavaMethodSignature.methodName}(
-											${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
+										${getParentPermissionsPageJavaMethodSignature.methodName}(${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 									</#if>
 											, null);
 
@@ -328,8 +326,7 @@ public abstract class Base${schemaName}ResourceImpl
 								${schemaVarName}Id
 							</#if>
 						<#elseif putParentPermissionsPageJavaMethodSignature?has_content>
-							${putParentPermissionsPageJavaMethodSignature.methodName}(
-								${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
+							${putParentPermissionsPageJavaMethodSignature.methodName}(${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 						</#if>
 							, permissions);
 

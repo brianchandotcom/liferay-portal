@@ -280,13 +280,13 @@ public abstract class Base${schemaName}ResourceImpl
 									Page<Permission> permissionsPage =
 									<#if getPermissionsPageJavaMethodSignature?has_content>
 										${getPermissionsPageJavaMethodSignature.methodName}(
-										<#if properties?keys?seq_contains("id")>
-											${httpMethod}${schemaName}.getId()
-										<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-											${httpMethod}${schemaName}.get${schemaVarName}Id()
-										<#else>
-											${schemaVarName}Id
-										</#if>
+											<#if properties?keys?seq_contains("id")>
+												${httpMethod}${schemaName}.getId()
+											<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
+												${httpMethod}${schemaName}.get${schemaVarName}Id()
+											<#else>
+												${schemaVarName}Id
+											</#if>
 									<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
 										${getParentPermissionsPageJavaMethodSignature.methodName}(${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 									</#if>
@@ -318,13 +318,13 @@ public abstract class Base${schemaName}ResourceImpl
 						Page<Permission> permissionsPage =
 						<#if putPermissionsPageJavaMethodSignature?has_content>
 							${putPermissionsPageJavaMethodSignature.methodName}(
-							<#if properties?keys?seq_contains("id")>
-								${httpMethod}${schemaName}.getId()
-							<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-								${httpMethod}${schemaName}.get${schemaVarName}Id()
-							<#else>
-								${schemaVarName}Id
-							</#if>
+								<#if properties?keys?seq_contains("id")>
+									${httpMethod}${schemaName}.getId()
+								<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
+									${httpMethod}${schemaName}.get${schemaVarName}Id()
+								<#else>
+									${schemaVarName}Id
+								</#if>
 						<#elseif putParentPermissionsPageJavaMethodSignature?has_content>
 							${putParentPermissionsPageJavaMethodSignature.methodName}(${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 						</#if>

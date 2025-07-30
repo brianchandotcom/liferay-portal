@@ -335,10 +335,6 @@ paths:
                     schema:
                         type: string
                 -   in: query
-                    name: flatten
-                    schema:
-                        type: boolean
-                -   in: query
                     name: nestedFields
                     schema:
                         type: string
@@ -1899,10 +1895,6 @@ paths:
                     name: filter
                     schema:
                         type: string
-                -   in: query
-                    name: flatten
-                    schema:
-                        type: boolean
                 -   in: query
                     name: nestedFields
                     schema:

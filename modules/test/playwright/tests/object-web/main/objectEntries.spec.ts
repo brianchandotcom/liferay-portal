@@ -12,6 +12,8 @@ import {
 	ObjectValidationRuleAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {Locator, expect, mergeTests} from '@playwright/test';
+import fs from 'fs';
+import path from 'path';
 
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
@@ -2021,6 +2023,70 @@ test.describe('Manage object entries through View Object Entries', () => {
 			expect(test.info().errors).toHaveLength(0);
 		}
 	);
+
+	test('verify that an appropriate error message appears after attempting to upload an oversized file', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const {objectFields} = await mockObjectFields({
+			apiHelpers,
+			objectFieldBusinessTypes: ['richText'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await test.step('Go to the object entry page, click to add an entry, attempt to upload the files, and verify the error messages', async () => {
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			const filePath = path.join(__dirname, 'dependencies', 'planet.jpg');
+
+			const fileBase64 = fs.readFileSync(filePath).toString('base64');
+
+			const imageHtml = `<p><img alt="" src="data:image/jpeg;base64,${fileBase64}" /></p>`;
+
+			const sourceButton = page.getByLabel('Source');
+
+			await sourceButton.click();
+
+			await page.getByRole('textbox').last().fill(imageHtml);
+
+			await sourceButton.click();
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(page, 'Error:The input was too large.', {
+				type: 'danger',
+			});
+
+			await page.reload();
+
+			const imagesHtml = `<p><img alt="" src="data:image/jpeg;base64,${fileBase64}" /><img alt="" src="data:image/jpeg;base64,${fileBase64}" /><img alt="" src="data:image/jpeg;base64,${fileBase64}" /><img alt="" src="data:image/jpeg;base64,${fileBase64}" /><img alt="" src="data:image/jpeg;base64,${fileBase64}" /></p>`;
+
+			await sourceButton.click();
+
+			await page.getByRole('textbox').last().fill(imagesHtml);
+
+			await sourceButton.click();
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(page, 'Error:Upload size is too large.', {
+				type: 'danger',
+			});
+		});
+	});
 
 	test('Verify that temporary files are deleted from the database if the object creation is not completed', async ({
 		apiHelpers,

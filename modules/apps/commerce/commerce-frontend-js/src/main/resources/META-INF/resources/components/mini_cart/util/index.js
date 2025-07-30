@@ -307,7 +307,7 @@ export function filterOptions(jsonString) {
 
 export function parseValue(value) {
 	if (Array.isArray(value)) {
-		const [valueContent] = value;
+		const [valueContent = ''] = value;
 
 		if (valueContent.includes('fileEntryId')) {
 			try {

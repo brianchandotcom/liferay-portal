@@ -627,6 +627,11 @@ components:
                     description:
                         The display page template folder's name.
                     type: string
+                parentDisplayPageTemplateFolder:
+                    $ref: "#/components/schemas/DisplayPageTemplateFolder"
+                    # @review
+                    description:
+                        The parent display page template folder.
                 parentDisplayPageTemplateFolderExternalReferenceCode:
                     # @review
                     description:

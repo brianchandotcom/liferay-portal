@@ -11,6 +11,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTy
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,7 +33,7 @@ public class DisplayPageTemplateFolderUtil {
 			addLayoutPageTemplateCollection(
 				displayPageTemplateFolder.getExternalReferenceCode(), groupId,
 				getParentLayoutPageTemplateCollectionId(
-					displayPageTemplateFolder, groupId),
+					displayPageTemplateFolder, groupId, httpServletRequest),
 				displayPageTemplateFolder.getKey(),
 				displayPageTemplateFolder.getName(),
 				displayPageTemplateFolder.getDescription(),
@@ -42,7 +43,8 @@ public class DisplayPageTemplateFolderUtil {
 	}
 
 	public static long getParentLayoutPageTemplateCollectionId(
-			DisplayPageTemplateFolder displayPageTemplateFolder, long groupId)
+			DisplayPageTemplateFolder displayPageTemplateFolder, long groupId,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		if (Validator.isNull(
@@ -59,6 +61,18 @@ public class DisplayPageTemplateFolderUtil {
 					displayPageTemplateFolder.
 						getParentDisplayPageTemplateFolderExternalReferenceCode(),
 					groupId);
+
+		if ((parentLayoutPageTemplateCollection == null) &&
+			(displayPageTemplateFolder.getParentDisplayPageTemplateFolder() !=
+				null) &&
+			LazyReferencingThreadLocal.isEnabled()) {
+
+			parentLayoutPageTemplateCollection =
+				addLayoutPageTemplateCollection(
+					displayPageTemplateFolder.
+						getParentDisplayPageTemplateFolder(),
+					groupId, httpServletRequest);
+		}
 
 		if ((parentLayoutPageTemplateCollection == null) ||
 			!Objects.equals(

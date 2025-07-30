@@ -257,6 +257,10 @@ export default {
 	'extension-optional': 'Extension (optional)',
 	'extension-request': 'Extension Request',
 	'extension-status': 'Extension Status',
+	'failed-to-approve-trial-extension': 'Failed to approve trial extension',
+	'failed-to-expire-trial': 'Failed to expire the trial.',
+	'failed-to-reject-trial-extension': 'Failed to reject trial extension.',
+	'failure': 'Failure',
 	'file-not-available-for-download': 'File not available for download',
 	'filter': 'Filter',
 	'first-name': 'First Name',
@@ -611,6 +615,11 @@ export default {
 	'trial': 'Trial',
 	'trial-details': 'Trial Details',
 	'trial-end-date': 'Trial End Date',
+	'trial-expired-successfully': 'Trial expired successfully.',
+	'trial-extension-approved-successfully':
+		'Trial extension approved successfully',
+	'trial-extension-rejected-successfully':
+		'Trial extension rejected successfully.',
 	'trial-info': 'Trial Info',
 	'trial-resources': 'Trial Resources',
 	'trial-start-date': 'Trial Start Date',

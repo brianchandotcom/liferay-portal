@@ -39,5 +39,5 @@ export const TRIAL_STATUS_LABEL = {
 	'completed': 'Expired',
 	'in-progress': 'Active',
 	'pending': 'Not Processed',
-	'processing': 'Active',
+	'processing': 'Processing',
 };

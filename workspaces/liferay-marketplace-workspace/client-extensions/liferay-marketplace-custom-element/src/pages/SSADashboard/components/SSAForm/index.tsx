@@ -4,6 +4,7 @@
  */
 
 import Button from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useRef} from 'react';
 
 import useModalContext from '../../../../hooks/useModalContext';
@@ -14,38 +15,45 @@ const useSSAForm = () => {
 	const modalContext = useModalContext();
 	const submitRef = useRef<() => boolean>(() => false);
 
-	return {
-		openModal: () =>
-			modalContext.onOpenModal({
-				body: <SSAFormBody submitRef={submitRef} />,
-				footer: [
-					null,
-					null,
-					<div key={1}>
-						<Button
-							className="mr-2"
-							displayType="secondary"
-							onClick={() => modalContext.onClose()}
-						>
-							{i18n.translate('cancel')}
-						</Button>
-						<Button
-							displayType="primary"
-							onClick={async () => {
-								const successful = await submitRef.current();
+	const openModal = () => {
+		modalContext.onOpenModal({
+			body: <SSAFormBody submitRef={submitRef} />,
+			footer: [
+				null,
+				null,
+				<div key={1}>
+					<Button
+						className="mr-2"
+						displayType="secondary"
+						onClick={() => modalContext.onClose()}
+					>
+						{i18n.translate('cancel')}
+					</Button>
+					<Button
+						displayType="primary"
+						onClick={async () => {
+							const successful = await submitRef.current();
 
-								if (successful) {
-									modalContext.onClose();
-								}
-							}}
-						>
+							if (successful) {
+								modalContext.onClose();
+							}
+						}}
+					>
+						<div className="align-items-center d-flex">
+							{false && (
+								<ClayLoadingIndicator className="mr-3 my-0" />
+							)}
+
 							{i18n.translate('create')}
-						</Button>
-					</div>,
-				],
-				size: 'md',
-			}),
+						</div>
+					</Button>
+				</div>,
+			],
+			size: 'md',
+		});
 	};
+
+	return {openModal};
 };
 
 export {useSSAForm};

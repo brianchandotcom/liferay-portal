@@ -4,6 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 
 import {OrderStatus as Status} from '../../../../enums/Order';
@@ -15,27 +16,49 @@ type TrialStatusProps = {
 	trialStatus: string;
 };
 
-const TrialStatus = ({trialStatus}: TrialStatusProps) => (
-	<>
-		<ClayIcon
-			className={classNames('mr-2 trial-status-icon', {
-				'trial-status-icon-completed': [
-					Status.COMPLETED,
-					Status.APPROVED,
-				].includes(trialStatus as Status),
-				'trial-status-icon-in_progress':
-					Status.IN_PROGRESS === trialStatus,
-				'trial-status-icon-pending': Status.PENDING === trialStatus,
-				'trial-status-icon-processing':
-					trialStatus === Status.PROCESSING,
-			})}
-			symbol="circle"
-		/>
+const TrialStatus = ({trialStatus}: TrialStatusProps) => {
+	if (Status.PROCESSING === trialStatus) {
+		return (
+			<span className="d-flex trial-status-text">
+				<ClayLoadingIndicator
+					className="m-0 mr-1"
+					displayType="primary"
+				/>
+				{
+					TRIAL_STATUS_LABEL[
+						trialStatus as keyof typeof TRIAL_STATUS_LABEL
+					]
+				}
+			</span>
+		);
+	}
 
-		<span className="trial-status-text">
-			{TRIAL_STATUS_LABEL[trialStatus as keyof typeof TRIAL_STATUS_LABEL]}
-		</span>
-	</>
-);
+	return (
+		<>
+			{' '}
+			<ClayIcon
+				className={classNames('mr-2 trial-status-icon', {
+					'trial-status-icon-completed': [
+						Status.COMPLETED,
+						Status.APPROVED,
+					].includes(trialStatus as Status),
+					'trial-status-icon-in_progress':
+						Status.IN_PROGRESS === trialStatus,
+					'trial-status-icon-pending': Status.PENDING === trialStatus,
+					'trial-status-icon-processing':
+						trialStatus === Status.PROCESSING,
+				})}
+				symbol="circle"
+			/>
+			<span className="trial-status-text">
+				{
+					TRIAL_STATUS_LABEL[
+						trialStatus as keyof typeof TRIAL_STATUS_LABEL
+					]
+				}
+			</span>
+		</>
+	);
+};
 
 export default TrialStatus;

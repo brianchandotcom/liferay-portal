@@ -4,13 +4,15 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {addDays, format} from 'date-fns';
-import {ReactElement} from 'react';
+import {ReactElement, useState} from 'react';
 import {KeyedMutator} from 'swr';
 
 import {OrderCustomFields, OrderStatus as Status} from '../../../enums/Order';
 import i18n from '../../../i18n';
+import {Liferay} from '../../../liferay/liferay';
 import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
 import {TRIAL_STATUS_LABEL} from '../constants';
@@ -43,8 +45,8 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 	trialExtend,
 	trialExtendCount,
 }) => {
-	const trialSettings = JSON.parse(
-		order?.customFields[OrderCustomFields.TRIAL_SETTINGS]
+	const [submitting, setSubmitting] = useState<null | 'approve' | 'reject'>(
+		null
 	);
 
 	return (
@@ -93,10 +95,10 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 
 						<Details title={i18n.translate('expiration-date')}>
 							<span className="extend-request-info">
-								{trialSettings[OrderCustomFields.END_DATE]
+								{order.customFields[OrderCustomFields.END_DATE]
 									? format(
 											new Date(
-												trialSettings[
+												order.customFields[
 													OrderCustomFields.END_DATE
 												]
 											),
@@ -165,7 +167,11 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 							<span className="extend-request-info">
 								{format(
 									addDays(
-										new Date(order.createDate),
+										new Date(
+											order.customFields[
+												OrderCustomFields.END_DATE
+											]
+										),
 										trialExtend.duration
 									),
 									'dd MMM, yyyy'
@@ -185,84 +191,143 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 					</div>
 				</div>
 			</div>
+
 			<div className="d-flex justify-content-end pt-8">
 				<ClayButton
 					className="mr-4"
+					disabled={!!submitting}
 					displayType="secondary"
 					onClick={async () => {
-						await HeadlessTrialExtensionRequest.updateTrialExtensionRequest(
-							trialExtend.id,
-							{dueStatus: {key: ExtendRequestStatus.REJECTED}}
-						);
+						setSubmitting('reject');
 
-						ssaTrialExtendMutate(
-							(data: any) => {
-								const updatedItems = data.items.map(
-									(item: TrialExtend) => {
-										if (item.id === trialExtend.id) {
-											return {
-												...item,
-												statusRequest: {
-													key: ExtendRequestStatus.REJECTED,
-												},
-											};
+						try {
+							await HeadlessTrialExtensionRequest.updateTrialExtensionRequest(
+								trialExtend.id,
+								{dueStatus: {key: ExtendRequestStatus.REJECTED}}
+							);
+
+							ssaTrialExtendMutate(
+								(data: any) => {
+									const updatedItems = data.items.map(
+										(item: TrialExtend) => {
+											if (item.id === trialExtend.id) {
+												return {
+													...item,
+													dueStatus: {
+														key: ExtendRequestStatus.REJECTED,
+													},
+												};
+											}
+
+											return item;
 										}
+									);
 
-										return item;
-									}
-								);
+									return {
+										...data,
+										items: updatedItems,
+									};
+								},
+								{revalidate: false}
+							);
 
-								return {
-									...data,
-									items: updatedItems,
-								};
-							},
-							{revalidate: false}
-						);
+							setSubmitting(null);
+
+							Liferay.Util.openToast({
+								message: i18n.translate(
+									'trial-extension-rejected-successfully'
+								),
+								title: i18n.translate('success'),
+								type: 'success',
+							});
+						}
+						catch (error) {
+							console.error(error);
+
+							Liferay.Util.openToast({
+								message: i18n.translate(
+									'failed-to-reject-trial-extension'
+								),
+								title: i18n.translate('failure'),
+								type: 'danger',
+							});
+						}
+
 						onClose();
 					}}
 				>
-					{i18n.translate('reject-request')}
+					<div className="align-items-center d-flex">
+						{submitting === 'reject' && (
+							<ClayLoadingIndicator className="mr-3 my-0" />
+						)}
+						{i18n.translate('reject-request')}
+					</div>
 				</ClayButton>
 
 				<ClayButton
+					disabled={!!submitting}
 					onClick={async () => {
-						await HeadlessTrialExtensionRequest.updateTrialExtensionRequest(
-							trialExtend.id,
-							{dueStatus: {key: ExtendRequestStatus.APPROVED}}
-						);
+						setSubmitting('approve');
 
-						ssaTrialExtendMutate(
-							(data: any) => {
-								const updatedItems = data.items.map(
-									(item: TrialExtend) => {
-										if (item.id === trialExtend.id) {
-											return {
-												...item,
-												statusRequest: {
-													key: ExtendRequestStatus.APPROVED,
-												},
-											};
-										}
+						try {
+							await HeadlessTrialExtensionRequest.updateTrialExtensionRequest(
+								trialExtend.id,
+								{dueStatus: {key: ExtendRequestStatus.APPROVED}}
+							);
 
-										return item;
-									}
-								);
-
-								return {
+							ssaTrialExtendMutate(
+								(data: any) => ({
 									...data,
-									items: updatedItems,
-								};
-							},
-							{revalidate: false}
-						);
+									items: data.items.map(
+										(item: TrialExtend) =>
+											item.id === trialExtend.id
+												? {
+														...item,
+														dueStatus: {
+															key: ExtendRequestStatus.APPROVED,
+														},
+													}
+												: item
+									),
+								}),
+								{
+									revalidate: false,
+								}
+							);
 
-						await trialOAuth2.extendTrial(trialExtend.id);
+							await trialOAuth2.extendTrial(trialExtend.id);
+
+							setSubmitting(null);
+
+							Liferay.Util.openToast({
+								message: i18n.translate(
+									'trial-extension-approved-successfully'
+								),
+								title: i18n.translate('success'),
+								type: 'success',
+							});
+						}
+						catch (error) {
+							console.error(error);
+
+							Liferay.Util.openToast({
+								message: i18n.translate(
+									'failed-to-approve-trial-extension'
+								),
+								title: i18n.translate('failure'),
+								type: 'danger',
+							});
+						}
 
 						onClose();
 					}}
 				>
-					{i18n.translate('approve-request')}
+					<div className="align-items-center d-flex">
+						{submitting === 'approve' && (
+							<ClayLoadingIndicator className="mr-3 my-0" />
+						)}
+						{i18n.translate('approve-request')}
+					</div>
 				</ClayButton>
 			</div>
 		</div>

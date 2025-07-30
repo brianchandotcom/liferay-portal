@@ -5,32 +5,42 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
+import com.liferay.petra.string.StringPool;
+
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextAttributeEvent;
+import jakarta.servlet.ServletContextAttributeListener;
 import jakarta.servlet.ServletRegistration;
 import jakarta.servlet.SessionCookieConfig;
 import jakarta.servlet.SessionTrackingMode;
 import jakarta.servlet.descriptor.JspConfigDescriptor;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
 
-import java.security.AccessControlContext;
-
+import java.util.Collections;
+import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.EventListener;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
-import org.eclipse.equinox.http.servlet.internal.servlet.ServletContextAdaptor;
+import org.eclipse.equinox.http.servlet.internal.servlet.Match;
+import org.eclipse.equinox.http.servlet.internal.servlet.RequestDispatcherAdaptor;
+import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.context.ServletContextHelper;
 
 /**
@@ -41,13 +51,17 @@ public class ServletContextWrapper implements ServletContext {
 	public ServletContextWrapper(
 		Bundle bundle, ContextController contextController,
 		ServletContextHelper servletContextHelper,
-		ServletContextHelperDataContext servletContextHelperDataContext,
-		AccessControlContext accessControlContext) {
+		ServletContextHelperDataContext servletContextHelperDataContext) {
 
-		_servletContextAdaptor = new ServletContextAdaptor(
-			contextController, bundle, servletContextHelper,
-			servletContextHelperDataContext,
-			contextController.getEventListeners(), accessControlContext);
+		_bundle = bundle;
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		_classLoader = bundleWiring.getClassLoader();
+
+		_contextController = contextController;
+		_servletContextHelper = servletContextHelper;
+		_servletContextHelperDataContext = servletContextHelperDataContext;
 
 		_servletContext = servletContextHelperDataContext.getServletContext();
 	}
@@ -56,117 +70,122 @@ public class ServletContextWrapper implements ServletContext {
 	public FilterRegistration.Dynamic addFilter(
 		String filterName, Class<? extends Filter> filterClass) {
 
-		_servletContextAdaptor.addFilter(filterName, filterClass);
-
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public FilterRegistration.Dynamic addFilter(
 		String filterName, Filter filter) {
 
-		_servletContextAdaptor.addFilter(filterName, filter);
-
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public FilterRegistration.Dynamic addFilter(
 		String filterName, String className) {
 
-		_servletContextAdaptor.addFilter(filterName, className);
-
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ServletRegistration.Dynamic addJspFile(
 		String servletName, String jspFile) {
 
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void addListener(Class<? extends EventListener> listenerClass) {
-		_servletContextAdaptor.addListener(listenerClass);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void addListener(String className) {
-		_servletContextAdaptor.addListener(className);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public <T extends EventListener> void addListener(T t) {
-		_servletContextAdaptor.addListener(t);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ServletRegistration.Dynamic addServlet(
 		String servletName, Class<? extends Servlet> servletClass) {
 
-		_servletContextAdaptor.addServlet(servletName, servletClass);
-
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ServletRegistration.Dynamic addServlet(
 		String servletName, Servlet servlet) {
 
-		_servletContextAdaptor.addServlet(servletName, servlet);
-
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ServletRegistration.Dynamic addServlet(
 		String servletName, String className) {
 
-		_servletContextAdaptor.addServlet(servletName, className);
-
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public <T extends Filter> T createFilter(Class<T> filterClass) {
-		_servletContextAdaptor.createFilter(filterClass);
-
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public <T extends EventListener> T createListener(Class<T> listenerClass) {
-		_servletContextAdaptor.createListener(listenerClass);
-
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public <T extends Servlet> T createServlet(Class<T> servletClass) {
-		_servletContextAdaptor.createServlet(servletClass);
-
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void declareRoles(String... roleNames) {
-		_servletContextAdaptor.declareRoles(roleNames);
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof ServletContextWrapper)) {
+			return false;
+		}
+
+		ServletContextWrapper otherServletContextWrapper =
+			(ServletContextWrapper)other;
+
+		return _contextController.equals(
+			otherServletContextWrapper._contextController);
 	}
 
 	@Override
 	public Object getAttribute(String name) {
-		return _servletContextAdaptor.getAttribute(name);
+		if (name.equals("osgi-bundlecontext")) {
+			return _bundle.getBundleContext();
+		}
+
+		Dictionary<String, Object> attributes =
+			_servletContextHelperDataContext.getContextAttributes();
+
+		return attributes.get(name);
 	}
 
 	@Override
 	public Enumeration<String> getAttributeNames() {
-		return _servletContextAdaptor.getAttributeNames();
+		Dictionary<String, Object> contextAttributes =
+			_servletContextHelperDataContext.getContextAttributes();
+
+		return contextAttributes.keys();
 	}
 
 	@Override
 	public ClassLoader getClassLoader() {
-		return _servletContextAdaptor.getClassLoader();
+		return _classLoader;
 	}
 
 	@Override
@@ -176,7 +195,7 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public String getContextPath() {
-		return _servletContextAdaptor.getContextPath();
+		return _contextController.getFullContextPath();
 	}
 
 	@Override
@@ -211,12 +230,16 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public String getInitParameter(String name) {
-		return _servletContextAdaptor.getInitParameter(name);
+		Map<String, String> initParams = _contextController.getInitParams();
+
+		return initParams.get(name);
 	}
 
 	@Override
 	public Enumeration<String> getInitParameterNames() {
-		return _servletContextAdaptor.getInitParameterNames();
+		Map<String, String> initParams = _contextController.getInitParams();
+
+		return Collections.enumeration(initParams.keySet());
 	}
 
 	@Override
@@ -231,7 +254,13 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public String getMimeType(String file) {
-		return _servletContextAdaptor.getMimeType(file);
+		String mimeType = _servletContextHelper.getMimeType(file);
+
+		if (mimeType != null) {
+			return mimeType;
+		}
+
+		return _servletContext.getMimeType(file);
 	}
 
 	@Override
@@ -241,12 +270,19 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public RequestDispatcher getNamedDispatcher(String servletName) {
-		return _servletContextAdaptor.getNamedDispatcher(servletName);
+		DispatchTargets dispatchTargets = _contextController.getDispatchTargets(
+			servletName, null, null, null, null, null, Match.EXACT);
+
+		if (dispatchTargets == null) {
+			return null;
+		}
+
+		return new RequestDispatcherAdaptor(dispatchTargets, servletName);
 	}
 
 	@Override
 	public String getRealPath(String path) {
-		return _servletContextAdaptor.getRealPath(path);
+		return _servletContextHelper.getRealPath(path);
 	}
 
 	@Override
@@ -256,22 +292,56 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public RequestDispatcher getRequestDispatcher(String path) {
-		return _servletContextAdaptor.getRequestDispatcher(path);
+		if (!path.startsWith(StringPool.SLASH)) {
+			return null;
+		}
+
+		String fullContextPath = _contextController.getFullContextPath();
+
+		if (path.startsWith(fullContextPath)) {
+			path = path.substring(fullContextPath.length());
+		}
+
+		DispatchTargets dispatchTargets = _contextController.getDispatchTargets(
+			path);
+
+		if (dispatchTargets == null) {
+			return null;
+		}
+
+		return new RequestDispatcherAdaptor(dispatchTargets, path);
 	}
 
 	@Override
 	public URL getResource(String path) {
-		return _servletContextAdaptor.getResource(path);
+		return _servletContextHelper.getResource(path);
 	}
 
 	@Override
 	public InputStream getResourceAsStream(String path) {
-		return _servletContextAdaptor.getResourceAsStream(path);
+		URL url = getResource(path);
+
+		if (url == null) {
+			return null;
+		}
+
+		try {
+			return url.openStream();
+		}
+		catch (IOException ioException) {
+			_servletContext.log(ioException.getMessage(), ioException);
+		}
+
+		return null;
 	}
 
 	@Override
 	public Set<String> getResourcePaths(String path) {
-		return _servletContextAdaptor.getResourcePaths(path);
+		if ((path == null) || !path.startsWith(StringPool.SLASH)) {
+			return null;
+		}
+
+		return _servletContextHelper.getResourcePaths(path);
 	}
 
 	@Override
@@ -286,7 +356,7 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public String getServletContextName() {
-		return _servletContextAdaptor.getServletContextName();
+		return _contextController.getContextName();
 	}
 
 	@Override
@@ -317,6 +387,11 @@ public class ServletContextWrapper implements ServletContext {
 	}
 
 	@Override
+	public int hashCode() {
+		return _contextController.hashCode();
+	}
+
+	@Override
 	public void log(String message) {
 		_servletContext.log(message);
 	}
@@ -328,12 +403,74 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public void removeAttribute(String name) {
-		_servletContextAdaptor.removeAttribute(name);
+		Dictionary<String, Object> contextAttributes =
+			_servletContextHelperDataContext.getContextAttributes();
+
+		Object attributeValue = contextAttributes.remove(name);
+
+		EventListeners eventListeners = _contextController.getEventListeners();
+
+		List<ServletContextAttributeListener> servletContextAttributeListeners =
+			eventListeners.get(ServletContextAttributeListener.class);
+
+		if (servletContextAttributeListeners.isEmpty()) {
+			return;
+		}
+
+		ServletContextAttributeEvent servletContextAttributeEvent =
+			new ServletContextAttributeEvent(this, name, attributeValue);
+
+		for (ServletContextAttributeListener servletContextAttributeListener :
+				servletContextAttributeListeners) {
+
+			servletContextAttributeListener.attributeRemoved(
+				servletContextAttributeEvent);
+		}
 	}
 
 	@Override
 	public void setAttribute(String name, Object value) {
-		_servletContextAdaptor.setAttribute(name, value);
+		if (value == null) {
+			removeAttribute(name);
+
+			return;
+		}
+
+		Dictionary<String, Object> contextAttributes =
+			_servletContextHelperDataContext.getContextAttributes();
+
+		boolean added = false;
+
+		if (contextAttributes.get(name) == null) {
+			added = true;
+		}
+
+		contextAttributes.put(name, value);
+
+		EventListeners eventListeners = _contextController.getEventListeners();
+
+		List<ServletContextAttributeListener> servletContextAttributeListeners =
+			eventListeners.get(ServletContextAttributeListener.class);
+
+		if (servletContextAttributeListeners.isEmpty()) {
+			return;
+		}
+
+		ServletContextAttributeEvent servletContextAttributeEvent =
+			new ServletContextAttributeEvent(this, name, value);
+
+		for (ServletContextAttributeListener servletContextAttributeListener :
+				servletContextAttributeListeners) {
+
+			if (added) {
+				servletContextAttributeListener.attributeAdded(
+					servletContextAttributeEvent);
+			}
+			else {
+				servletContextAttributeListener.attributeReplaced(
+					servletContextAttributeEvent);
+			}
+		}
 	}
 
 	@Override
@@ -363,7 +500,12 @@ public class ServletContextWrapper implements ServletContext {
 		_servletContext.setSessionTrackingModes(sessionTrackingModes);
 	}
 
+	private final Bundle _bundle;
+	private final ClassLoader _classLoader;
+	private final ContextController _contextController;
 	private final ServletContext _servletContext;
-	private final ServletContextAdaptor _servletContextAdaptor;
+	private final ServletContextHelper _servletContextHelper;
+	private final ServletContextHelperDataContext
+		_servletContextHelperDataContext;
 
 }

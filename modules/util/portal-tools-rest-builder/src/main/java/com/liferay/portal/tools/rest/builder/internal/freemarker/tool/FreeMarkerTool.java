@@ -777,22 +777,6 @@ public class FreeMarkerTool {
 		return null;
 	}
 
-	public JavaMethodSignature getPermissionsPageJavaMethodSignature(
-		String httpMethod, List<JavaMethodSignature> javaMethodSignatures,
-		String schemaName) {
-
-		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
-			if (Objects.equals(
-					javaMethodSignature.getMethodName(),
-					httpMethod + schemaName + "PermissionsPage")) {
-
-				return javaMethodSignature;
-			}
-		}
-
-		return null;
-	}
-
 	public JavaMethodSignature getPostSchemaJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String parameterName,
 		String schemaName) {

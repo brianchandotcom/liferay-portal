@@ -173,6 +173,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				objectEntry.getCreateDate()));
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
+				ObjectEntryInfoItemFields.expirationDateInfoField,
+				objectEntry.getExpirationDate()));
+		objectEntryFieldValues.add(
+			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.externalReferenceCodeInfoField,
 				objectEntry.getExternalReferenceCode()));
 		objectEntryFieldValues.add(
@@ -187,6 +191,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.publishDateInfoField,
 				objectEntry.getLastPublishDate()));
+		objectEntryFieldValues.add(
+			new InfoFieldValue<>(
+				ObjectEntryInfoItemFields.reviewDateInfoField,
+				objectEntry.getReviewDate()));
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.statusInfoField,
@@ -261,12 +269,20 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				objectEntry.getDateCreated()));
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
+				ObjectEntryInfoItemFields.expirationDateInfoField,
+				objectEntry.getExpirationDate()));
+		objectEntryFieldValues.add(
+			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.modifiedDateInfoField,
 				objectEntry.getDateModified()));
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.publishDateInfoField,
 				objectEntry.getDateModified()));
+		objectEntryFieldValues.add(
+			new InfoFieldValue<>(
+				ObjectEntryInfoItemFields.reviewDateInfoField,
+				objectEntry.getReviewDate()));
 		objectEntryFieldValues.addAll(
 			ObjectEntryInfoItemValuesProviderUtil.getInfoFieldValues(
 				_dlAppLocalService, _dlURLHelper, _friendlyURLEntryLocalService,

@@ -33,6 +33,4 @@ export default async function checkAccessibility({
 	if (violations.length) {
 		throw new Error(formatAccessibility(violations));
 	}
-
-	expect(true).toBe(true);
 }

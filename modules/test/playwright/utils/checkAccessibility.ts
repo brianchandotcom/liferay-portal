@@ -59,13 +59,8 @@ export async function checkAccessibility({
 
 	const {violations} = await axeBuilder.withTags(tags).analyze();
 
-	if (violations.length) {
-		(soft ? expect.soft : expect)(
-			false,
-			formatAccessibility(violations)
-		).toBe(true);
-	}
-	else {
-		expect(true, 'Accessibility issues').toBe(true);
-	}
+	(soft ? expect.soft : expect)(
+		violations.length,
+		formatAccessibility(violations)
+	).toBe(0);
 }

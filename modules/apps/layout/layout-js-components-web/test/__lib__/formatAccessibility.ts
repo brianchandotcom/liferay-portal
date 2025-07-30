@@ -15,6 +15,10 @@ function indentMultiline(text: string, spaces = 4): string {
 export default function formatAccessibility(
 	violations: AxeViolation[]
 ): string {
+	if (!violations.length) {
+		return 'No Accessibility issues found.';
+	}
+
 	const RED = '\x1b[31m';
 	const YELLOW = '\x1b[33m';
 	const CYAN = '\x1b[36m';
@@ -45,19 +49,22 @@ export default function formatAccessibility(
 		output.push(`  Impact : ${violation.impact}`);
 		output.push('');
 
-		for (let i = 0; i < violation.nodes.length; i++) {
-			const node = violation.nodes[i];
+		violation.nodes.forEach((node, index) => {
+			if (index > 0) {
+				output.push(`${CYAN}    ${'-'.repeat(40)}${RESET}\n`);
+			}
 
-			i > 0 && output.push(`${CYAN}    ${'-'.repeat(40)}${RESET}\n`);
 			output.push(`${CYAN}  - Affected element:${RESET}`);
 			output.push(`    ${node.html}`);
 			output.push(`${CYAN}  - Target selector(s):${RESET}`);
 			output.push(`    ${node.target.join(', ')}`);
-			output.push(`${CYAN}  - Summary:${RESET}`);
-			node.failureSummary &&
+
+			if (node.failureSummary) {
+				output.push(`${CYAN}  - Summary:${RESET}`);
 				output.push(indentMultiline(node.failureSummary.trim()));
+			}
 			output.push('');
-		}
+		});
 
 		output.push(`${CYAN}${'-'.repeat(80)}${RESET}`);
 	}

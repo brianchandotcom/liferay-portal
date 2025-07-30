@@ -16,6 +16,7 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.entry.folder.subscription.util.ObjectEntryFolderSubscriptionUtil;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectEntryValuesException;
@@ -84,7 +85,6 @@ import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -2089,6 +2089,64 @@ public class DefaultObjectEntryManagerImpl
 		return QueryUtil.ALL_POS;
 	}
 
+	private Map<String, Map<String, String>> _getSubscriptionActions(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564") ||
+			!objectDefinition.isEnableObjectEntrySubscription() ||
+			ObjectEntryFolderSubscriptionUtil.isSubscribedToObjectEntryFolder(
+				serviceBuilderObjectEntry.getCompanyId(),
+				serviceBuilderObjectEntry.getGroupId(),
+				serviceBuilderObjectEntry.getObjectEntryFolderId(),
+				dtoConverterContext.getUserId())) {
+
+			return Collections.emptyMap();
+		}
+
+		String subscribeMethodName = "postByExternalReferenceCodeSubscribe";
+		String unsubscribeMethodName = "postByExternalReferenceCodeUnsubscribe";
+
+		if (Objects.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_SITE)) {
+
+			subscribeMethodName =
+				"postScopeScopeKeyByExternalReferenceCodeSubscribe";
+			unsubscribeMethodName =
+				"postScopeScopeKeyByExternalReferenceCodeUnsubscribe";
+		}
+
+		if (!_subscriptionLocalService.isSubscribed(
+				serviceBuilderObjectEntry.getCompanyId(),
+				dtoConverterContext.getUserId(),
+				serviceBuilderObjectEntry.getModelClassName(),
+				serviceBuilderObjectEntry.getObjectEntryId())) {
+
+			return Collections.singletonMap(
+				"subscribe",
+				_addAction(
+					ActionKeys.SUBSCRIBE, subscribeMethodName,
+					serviceBuilderObjectEntry,
+					Collections.singletonMap(
+						"externalReferenceCode",
+						serviceBuilderObjectEntry.getExternalReferenceCode()),
+					dtoConverterContext.getUriInfo()));
+		}
+
+		return Collections.singletonMap(
+			"unsubscribe",
+			_addAction(
+				ActionKeys.SUBSCRIBE, unsubscribeMethodName,
+				serviceBuilderObjectEntry,
+				Collections.singletonMap(
+					"externalReferenceCode",
+					serviceBuilderObjectEntry.getExternalReferenceCode()),
+				dtoConverterContext.getUriInfo()));
+	}
+
 	private Page<ObjectEntry> _getSystemObjectRelatedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,
@@ -2174,16 +2232,6 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		return false;
-	}
-
-	private boolean _isSubscribed(
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
-		User user) {
-
-		return _subscriptionLocalService.isSubscribed(
-			serviceBuilderObjectEntry.getCompanyId(), user.getUserId(),
-			serviceBuilderObjectEntry.getModelClassName(),
-			serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	private long _processAttachment(
@@ -2601,6 +2649,10 @@ public class DefaultObjectEntryManagerImpl
 				_addAction(
 					ActionKeys.VIEW, "getObjectEntriesVersionsPage",
 					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
+			).putAll(
+				_getSubscriptionActions(
+					dtoConverterContext, objectDefinition,
+					serviceBuilderObjectEntry)
 			).build();
 
 			String methodName = null;
@@ -2613,70 +2665,10 @@ public class DefaultObjectEntryManagerImpl
 				methodName =
 					"putScopeScopeKeyByExternalReferenceCodeObjectAction" +
 						"ObjectActionName";
-
-				if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-					if (!_isSubscribed(
-							serviceBuilderObjectEntry,
-							dtoConverterContext.getUser())) {
-
-						actions.put(
-							"subscribe",
-							_addAction(
-								ActionKeys.SUBSCRIBE,
-								"postScopeScopeKeyByExternalReferenceCode" +
-									"Subscribe",
-								serviceBuilderObjectEntry,
-								HashMapBuilder.put(
-									"externalReferenceCode",
-									serviceBuilderObjectEntry.
-										getExternalReferenceCode()
-								).build(),
-								dtoConverterContext.getUriInfo()));
-					}
-					else {
-						actions.put(
-							"unsubscribe",
-							_addAction(
-								ActionKeys.SUBSCRIBE,
-								"postScopeScopeKeyByExternalReferenceCode" +
-									"Unsubscribe",
-								serviceBuilderObjectEntry,
-								HashMapBuilder.put(
-									"externalReferenceCode",
-									serviceBuilderObjectEntry.
-										getExternalReferenceCode()
-								).build(),
-								dtoConverterContext.getUriInfo()));
-					}
-				}
 			}
 			else {
 				methodName =
 					"putByExternalReferenceCodeObjectActionObjectActionName";
-
-				if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-					if (!_isSubscribed(
-							serviceBuilderObjectEntry,
-							dtoConverterContext.getUser())) {
-
-						actions.put(
-							"subscribe",
-							_addAction(
-								ActionKeys.SUBSCRIBE,
-								"postByExternalReferenceCodeSubscribe",
-								serviceBuilderObjectEntry,
-								dtoConverterContext.getUriInfo()));
-					}
-					else {
-						actions.put(
-							"unsubscribe",
-							_addAction(
-								ActionKeys.SUBSCRIBE,
-								"postByExternalReferenceCodeUnsubscribe",
-								serviceBuilderObjectEntry,
-								dtoConverterContext.getUriInfo()));
-					}
-				}
 			}
 
 			for (ObjectAction objectAction :

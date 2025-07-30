@@ -327,10 +327,8 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(objectEntryId);
 
-		_checkObjectEntryObjectDefinitionId(
-			objectDefinition, serviceBuilderObjectEntry);
-
-		_deleteObjectEntry(dtoConverterContext, serviceBuilderObjectEntry);
+		_deleteObjectEntry(
+			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
 	}
 
 	@Override
@@ -345,10 +343,8 @@ public class DefaultObjectEntryManagerImpl
 				externalReferenceCode, companyId,
 				getGroupId(objectDefinition, scopeKey));
 
-		_checkObjectEntryObjectDefinitionId(
-			objectDefinition, serviceBuilderObjectEntry);
-
-		_deleteObjectEntry(dtoConverterContext, serviceBuilderObjectEntry);
+		_deleteObjectEntry(
+			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
 	}
 
 	@Override
@@ -1500,8 +1496,12 @@ public class DefaultObjectEntryManagerImpl
 
 	private void _deleteObjectEntry(
 			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
+
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition, serviceBuilderObjectEntry);
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
 			(serviceBuilderObjectEntry.getStatus() ==

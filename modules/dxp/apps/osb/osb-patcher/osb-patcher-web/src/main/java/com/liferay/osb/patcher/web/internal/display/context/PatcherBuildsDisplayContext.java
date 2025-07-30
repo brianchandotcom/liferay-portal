@@ -175,7 +175,7 @@ public class PatcherBuildsDisplayContext {
 				PatcherPermission.contains(
 					_themeDisplay.getPermissionChecker(), patcherBuild,
 					PatcherActionKeys.SEND_REQUEST, patcherBuild.getUserId()) &&
-				JenkinsUtil.isValidJenkinsSetup() &&
+				JenkinsUtil.isValidJenkinsSetup(_themeDisplay.getCompanyId()) &&
 				JenkinsUtil.isValidSendDistJenkinsRequest(patcherBuild) &&
 				(patcherBuild.getType() != PatcherBuildConstants.TYPE_FIX_PACK),
 			dropdownItem -> {

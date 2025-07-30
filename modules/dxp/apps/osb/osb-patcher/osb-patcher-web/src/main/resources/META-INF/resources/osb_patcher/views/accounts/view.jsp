@@ -99,7 +99,7 @@ PatcherAccountsViewDisplayContext patcherAccountsViewDisplayContext = new Patche
 
 		<liferay-ui:search-container-column-text
 			cssClass="nobr"
-			href="<%= PatcherBuildUtil.getSupportTicketURL(patcherBuild.getSupportTicket()) %>"
+			href="<%= PatcherBuildUtil.getSupportTicketURL(patcherBuild.getCompanyId(), patcherBuild.getSupportTicket()) %>"
 			name="support-ticket"
 			target="_blank"
 			value="<%= patcherBuild.getSupportTicket() %>"

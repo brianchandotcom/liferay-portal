@@ -67,7 +67,7 @@ public class PatcherFixBuildsDisplayContext {
 		return DropdownItemListBuilder.add(
 			() ->
 				Validator.isNotNull(patcherFix.getGitHash()) &&
-				JenkinsUtil.isValidJenkinsSetup() &&
+				JenkinsUtil.isValidJenkinsSetup(_themeDisplay.getCompanyId()) &&
 				JenkinsUtil.isValidSendDistJenkinsRequest(patcherBuild),
 			dropdownItem -> {
 				dropdownItem.putData("action", "submitForm");

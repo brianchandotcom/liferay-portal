@@ -12,7 +12,6 @@ import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.service.PatcherAccountLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -42,13 +41,15 @@ public class HelpCenterUtil {
 
 		File file = new File(path);
 
-		uploadAttachment(file, fileName, patcherBuild.getSupportTicket());
+		uploadAttachment(
+			patcherBuild.getCompanyId(), file, fileName,
+			patcherBuild.getSupportTicket());
 
 		Http.Options options = new Http.Options();
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, patcherBuild.getCompanyId());
 
 		String login =
 			patcherConfiguration.helpCenterApiUserName() + ":" +
@@ -86,14 +87,15 @@ public class HelpCenterUtil {
 		return HttpUtil.URLtoString(options);
 	}
 
-	public static long fetchAccountEntryId(String accountEntryCode)
+	public static long fetchAccountEntryId(
+			String accountEntryCode, long companyId)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, companyId);
 
 		String login =
 			patcherConfiguration.helpCenterApiUserName() + ":" +
@@ -125,14 +127,15 @@ public class HelpCenterUtil {
 		return 0;
 	}
 
-	protected static String getAttachmentToken(String supportTicket)
+	protected static String getAttachmentToken(
+			long companyId, String supportTicket)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, companyId);
 
 		String uploadTokenURL =
 			patcherConfiguration.helpCenterFileRepoURL() + "/token";
@@ -150,12 +153,12 @@ public class HelpCenterUtil {
 	}
 
 	protected static void uploadAttachment(
-			File file, String fileName, String supportTicket)
+			long companyId, File file, String fileName, String supportTicket)
 		throws Exception {
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, companyId);
 
 		String uploadURL =
 			patcherConfiguration.helpCenterFileRepoURL() + "/upload";
@@ -171,7 +174,7 @@ public class HelpCenterUtil {
 		uploadURL = HttpComponentsUtil.addParameter(
 			uploadURL, "resumableTotalSize", file.length());
 		uploadURL = HttpComponentsUtil.addParameter(
-			uploadURL, "token", getAttachmentToken(supportTicket));
+			uploadURL, "token", getAttachmentToken(companyId, supportTicket));
 
 		URL url = new URL(uploadURL);
 

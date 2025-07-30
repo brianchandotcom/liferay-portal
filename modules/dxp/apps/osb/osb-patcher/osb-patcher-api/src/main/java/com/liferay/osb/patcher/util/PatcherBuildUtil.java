@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -145,8 +144,8 @@ public class PatcherBuildUtil {
 
 		if (patcherAccount == null) {
 			addPatcherAccountPatcherBuild(
-				themeDisplay.getUserId(), patcherBuild.getPatcherBuildId(),
-				accountEntryCode);
+				themeDisplay.getUserId(), patcherBuild.getCompanyId(),
+				patcherBuild.getPatcherBuildId(), accountEntryCode);
 
 			patcherAccount = PatcherAccountLocalServiceUtil.getPatcherAccount(
 				accountEntryCode);
@@ -659,12 +658,13 @@ public class PatcherBuildUtil {
 		return relatedPatcherBuildFixIds;
 	}
 
-	public static String getSupportTicketURL(String supportTicket)
+	public static String getSupportTicketURL(
+			long companyId, String supportTicket)
 		throws Exception {
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, companyId);
 
 		if (Validator.isNumber(supportTicket)) {
 			return patcherConfiguration.helpCenterURL() +
@@ -734,7 +734,7 @@ public class PatcherBuildUtil {
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, patcherBuild.getCompanyId());
 
 		if (patcherConfiguration.patcherScanningEnabled()) {
 			return patcherBuild.isLatestSupportTicketBuild();
@@ -1326,8 +1326,8 @@ public class PatcherBuildUtil {
 
 		if (parentPatcherBuild.isNew()) {
 			addPatcherAccountPatcherBuild(
-				userId, parentPatcherBuild.getPatcherBuildId(),
-				accountEntryCode);
+				userId, parentPatcherBuild.getCompanyId(),
+				parentPatcherBuild.getPatcherBuildId(), accountEntryCode);
 
 			PatcherAccount patcherAccount =
 				PatcherAccountLocalServiceUtil.getPatcherAccount(
@@ -1868,7 +1868,8 @@ public class PatcherBuildUtil {
 	}
 
 	protected static void addPatcherAccountPatcherBuild(
-			long userId, long patcherBuildId, String accountEntryCode)
+			long userId, long companyId, long patcherBuildId,
+			String accountEntryCode)
 		throws Exception {
 
 		PatcherAccount patcherAccount =
@@ -1883,7 +1884,8 @@ public class PatcherBuildUtil {
 		}
 
 		patcherAccount = PatcherAccountLocalServiceUtil.addPatcherAccount(
-			userId, HelpCenterUtil.fetchAccountEntryId(accountEntryCode),
+			userId,
+			HelpCenterUtil.fetchAccountEntryId(accountEntryCode, companyId),
 			accountEntryCode);
 
 		PatcherBuildLocalServiceUtil.addPatcherAccountPatcherBuild(

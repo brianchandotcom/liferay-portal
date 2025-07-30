@@ -33,11 +33,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -69,9 +70,13 @@ public class PatcherBuildValidator {
 			}
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, themeDisplay.getCompanyId());
 
 		List<String> accountWhitelist = ListUtil.fromArray(
 			patcherConfiguration.patcherAccountWhitelist());
@@ -80,7 +85,7 @@ public class PatcherBuildValidator {
 				StringUtil.toLowerCase(accountEntryCode))) {
 
 			long accountEntryId = HelpCenterUtil.fetchAccountEntryId(
-				accountEntryCode);
+				accountEntryCode, themeDisplay.getCompanyId());
 
 			if (accountEntryId <= 0) {
 				_log.error(
@@ -126,7 +131,8 @@ public class PatcherBuildValidator {
 
 		validatePatcherFixPack(patcherBuild);
 
-		String message = JenkinsUtil.validateJenkinsSetup();
+		String message = JenkinsUtil.validateJenkinsSetup(
+			patcherBuild.getCompanyId());
 
 		if (Validator.isNotNull(message)) {
 			throw new PortalException(message);
@@ -212,7 +218,7 @@ public class PatcherBuildValidator {
 	public void validateKey(PatcherBuild patcherBuild) throws Exception {
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, patcherBuild.getCompanyId());
 
 		if (patcherConfiguration.patcherScanningEnabled()) {
 			return;
@@ -528,7 +534,7 @@ public class PatcherBuildValidator {
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, patcherBuild.getCompanyId());
 
 		if (!patcherConfiguration.patcherScanningEnabled() &&
 			!PatcherBuildUtil.isLatestPatcherBuild(patcherBuild)) {

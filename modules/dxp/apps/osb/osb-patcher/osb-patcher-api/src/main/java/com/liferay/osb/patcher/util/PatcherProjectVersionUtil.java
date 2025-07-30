@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -161,7 +160,7 @@ public class PatcherProjectVersionUtil {
 		return patcherProjectVersion.getPatcherProductVersionId();
 	}
 
-	public static JSONObject getPatcherProjectVersionsJSONObject()
+	public static JSONObject getPatcherProjectVersionsJSONObject(long companyId)
 		throws Exception {
 
 		JSONObject patcherProjectVersionsJSONObject =
@@ -169,7 +168,7 @@ public class PatcherProjectVersionUtil {
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, CompanyThreadLocal.getCompanyId());
+				PatcherConfiguration.class, companyId);
 
 		List<PatcherProductVersion> patcherProductVersions =
 			PatcherProductVersionLocalServiceUtil.getPatcherProductVersions(

@@ -24,17 +24,19 @@ import ExtendRequestModal from './ExtendRequestModal';
 import ExtendSSATrialModal from './ExtendSSATrialModal';
 
 export default function SaaSTrials() {
-	const {marketplaceUserAccount, myUserAccount} = useMarketplaceContext();
+	const {marketplaceUserAccount, myUserAccount, properties} =
+		useMarketplaceContext();
 	const modal = useModal();
 	const modalContext = useModalContext();
 	const navigate = useNavigate();
 	const ssaForm = useSSAForm();
 	const {selectedAccount, ssaTrialExtend, ssaTrialExtendMutate} =
 		useOutletContext<any>();
-
+	const accountId = properties.accountId;
 	const {
 		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
 	} = usePlacedOrders({
+		accountId: Number(accountId),
 		filter: new SearchBuilder()
 			.eq('author', myUserAccount?.name)
 			.and()

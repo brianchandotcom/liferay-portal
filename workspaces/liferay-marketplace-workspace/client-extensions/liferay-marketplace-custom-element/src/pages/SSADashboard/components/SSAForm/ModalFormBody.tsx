@@ -10,7 +10,6 @@ import Loading from '../../../../components/Loading';
 import {Label} from '../../../../components/MarketplaceForm/Label';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {OrderCustomFields} from '../../../../enums/Order';
-import {useAccount} from '../../../../hooks/data/useAccounts';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
@@ -45,7 +44,7 @@ const SSAFormBody = ({
 	});
 	const {channel, properties} = useMarketplaceContext();
 	const [product, setProduct] = useState<DeliveryProduct | null>(null);
-	const {data: account} = useAccount();
+	const accountId = properties.accountId;
 
 	useEffect(() => {
 		const fetchProduct = async () => {
@@ -66,12 +65,16 @@ const SSAFormBody = ({
 	}, [channel, properties]);
 
 	const productPurchase = useMemo(() => {
-		if (!account || !channel || !product) {
+		if (!accountId || !channel || !product) {
 			return null;
 		}
 
-		return new ProductPurchaseSSATrial(account, channel, product);
-	}, [account, channel, product]);
+		return new ProductPurchaseSSATrial(
+			{id: Number(accountId)} as Account,
+			channel,
+			product
+		);
+	}, [accountId, channel, product]);
 
 	const isTestTrial = formData.objective === 'Test';
 

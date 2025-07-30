@@ -7,8 +7,8 @@ import {Outlet} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {PageRenderer} from '../../components/Page';
-import {useSSATrialsExtend} from './useSSATrialsExtend';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {useSSATrialsExtend} from './useSSATrialsExtend';
 
 const SSADashboardOutlet = () => {
 	const {properties} = useMarketplaceContext();

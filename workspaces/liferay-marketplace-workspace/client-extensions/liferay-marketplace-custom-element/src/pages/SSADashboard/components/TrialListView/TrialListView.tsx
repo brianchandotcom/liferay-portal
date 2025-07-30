@@ -8,6 +8,7 @@ import {useOutletContext} from 'react-router-dom';
 
 import ListView, {ListViewProps} from '../../../../components/ListView';
 import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {OrderCustomFields, OrderTypes} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
@@ -16,7 +17,6 @@ import {Action} from '../../../../utils/constants';
 import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
-import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 
 type TrialsListViewProps = {
 	actions: Action[];

@@ -8,10 +8,10 @@ import useSWR from 'swr';
 import {Liferay} from '../../liferay/liferay';
 import HeadlessCommerceDeliveryOrder from '../../services/rest/HeadlessCommerceDeliveryOrder';
 
-const accountId = Liferay.CommerceContext.account?.accountId || 0;
 const channelId = Liferay.CommerceContext.commerceChannelId;
 
 type Props = {
+	accountId: number;
 	filter?: string;
 	orderTypeExternalReferenceCodes?: string[];
 	page: number;
@@ -24,6 +24,7 @@ const usePlacedOrder = (orderId: number | string) =>
 	);
 
 const usePlacedOrders = ({
+	accountId,
 	filter,
 	orderTypeExternalReferenceCodes,
 	page,

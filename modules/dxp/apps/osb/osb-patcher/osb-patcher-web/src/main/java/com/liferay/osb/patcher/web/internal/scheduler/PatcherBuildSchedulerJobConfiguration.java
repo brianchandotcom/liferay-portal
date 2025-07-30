@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.patcher.web.internal.messaging;
+package com.liferay.osb.patcher.web.internal.scheduler;
 
 import com.liferay.osb.patcher.configuration.PatcherConfiguration;
 import com.liferay.osb.patcher.util.PatcherUtil;
@@ -26,17 +26,25 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.osb.patcher.configuration.PatcherConfiguration",
 	service = SchedulerJobConfiguration.class
 )
-public class PatcherFixSchedulerMessageListener
+public class PatcherBuildSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> _companyLocalService.forEachCompanyId(
 			companyId -> {
-				PatcherUtil.processOSBPatcherStatusFiles(
-					companyId, _patcherConfiguration.patcherStatusFixPath());
+				PatcherUtil.processOSBPatcherMessageQueue(companyId);
 
-				PatcherUtil.notifyUsersInactivePatcherBaseModels();
+				PatcherUtil.processOSBPatcherStatusFiles(
+					companyId,
+					_patcherConfiguration.patcherStatusBuildJenkinsPath());
+
+				PatcherUtil.processOSBPatcherStatusFiles(
+					companyId,
+					_patcherConfiguration.patcherStatusBuildJenkinsTestPath());
+
+				PatcherUtil.processOSBPatcherStatusFiles(
+					companyId, _patcherConfiguration.patcherStatusBuildPath());
 			});
 	}
 

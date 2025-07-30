@@ -282,9 +282,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			null, sitePage.getDateCreated(), groupId, contextHttpServletRequest,
-			null, sitePage.getDateModified(), contextUser.getUserId(),
-			sitePage.getUuid());
+			sitePage.getTaxonomyCategoryItemExternalReferences(),
+			sitePage.getDateCreated(), groupId, contextHttpServletRequest,
+			sitePage.getKeywords(), sitePage.getDateModified(),
+			contextUser.getUserId(), sitePage.getUuid());
 
 		_validatePageSpecificationExternalReferenceCode(
 			serviceContext, sitePage);
@@ -428,8 +429,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			layout.getGroupId(), contextHttpServletRequest,
-			contextUser.getUserId());
+			sitePage.getTaxonomyCategoryItemExternalReferences(),
+			sitePage.getDateCreated(), layout.getGroupId(),
+			contextHttpServletRequest, sitePage.getKeywords(),
+			sitePage.getDateModified(), contextUser.getUserId(),
+			sitePage.getUuid());
 
 		serviceContext.setAttribute(
 			"hidden",

@@ -7,6 +7,7 @@ package com.liferay.object.info.item;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.FriendlyURLInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -37,9 +38,9 @@ public class ObjectEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "create-date")
 		).build();
-	public static final InfoField<DateInfoFieldType> expirationDateInfoField =
-		BuilderHolder._builder.infoFieldType(
-			DateInfoFieldType.INSTANCE
+	public static final InfoField<DateTimeInfoFieldType>
+		expirationDateInfoField = BuilderHolder._builder.infoFieldType(
+			DateTimeInfoFieldType.INSTANCE
 		).name(
 			"expirationDate"
 		).labelInfoLocalizedValue(
@@ -81,9 +82,9 @@ public class ObjectEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "publish-date")
 		).build();
-	public static final InfoField<DateInfoFieldType> reviewDateInfoField =
+	public static final InfoField<DateTimeInfoFieldType> reviewDateInfoField =
 		BuilderHolder._builder.infoFieldType(
-			DateInfoFieldType.INSTANCE
+			DateTimeInfoFieldType.INSTANCE
 		).name(
 			"reviewDate"
 		).labelInfoLocalizedValue(

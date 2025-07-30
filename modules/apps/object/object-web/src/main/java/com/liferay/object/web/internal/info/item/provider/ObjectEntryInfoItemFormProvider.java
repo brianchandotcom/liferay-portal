@@ -95,6 +95,8 @@ public class ObjectEntryInfoItemFormProvider
 				).infoFieldSetEntry(
 					ObjectEntryInfoItemFields.createDateInfoField
 				).infoFieldSetEntry(
+					ObjectEntryInfoItemFields.expirationDateInfoField
+				).infoFieldSetEntry(
 					ObjectEntryInfoItemFields.externalReferenceCodeInfoField
 				).infoFieldSetEntry(
 					ObjectEntryInfoItemFields.modifiedDateInfoField
@@ -115,6 +117,8 @@ public class ObjectEntryInfoItemFormProvider
 					ObjectEntryInfoItemFields.objectEntryIdInfoField
 				).infoFieldSetEntry(
 					ObjectEntryInfoItemFields.publishDateInfoField
+				).infoFieldSetEntry(
+					ObjectEntryInfoItemFields.reviewDateInfoField
 				).infoFieldSetEntry(
 					ObjectEntryInfoItemFields.statusInfoField
 				).infoFieldSetEntry(

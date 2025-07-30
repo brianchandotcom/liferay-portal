@@ -947,10 +947,6 @@ public abstract class BaseObjectEntryResourceImpl
 			existingObjectEntry.setReviewDate(objectEntry.getReviewDate());
 		}
 
-		if (objectEntry.getScopeKey() != null) {
-			existingObjectEntry.setScopeKey(objectEntry.getScopeKey());
-		}
-
 		if (objectEntry.getTaxonomyCategoryIds() != null) {
 			existingObjectEntry.setTaxonomyCategoryIds(
 				objectEntry.getTaxonomyCategoryIds());
@@ -1054,10 +1050,6 @@ public abstract class BaseObjectEntryResourceImpl
 
 		if (objectEntry.getReviewDate() != null) {
 			existingObjectEntry.setReviewDate(objectEntry.getReviewDate());
-		}
-
-		if (objectEntry.getScopeKey() != null) {
-			existingObjectEntry.setScopeKey(objectEntry.getScopeKey());
 		}
 
 		if (objectEntry.getTaxonomyCategoryIds() != null) {
@@ -1174,10 +1166,6 @@ public abstract class BaseObjectEntryResourceImpl
 
 		if (objectEntry.getReviewDate() != null) {
 			existingObjectEntry.setReviewDate(objectEntry.getReviewDate());
-		}
-
-		if (objectEntry.getScopeKey() != null) {
-			existingObjectEntry.setScopeKey(objectEntry.getScopeKey());
 		}
 
 		if (objectEntry.getTaxonomyCategoryIds() != null) {

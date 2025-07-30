@@ -258,9 +258,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		Assert.assertFalse(
-			StringUtil.contains(
-				_getReportContent(), "Table Name", StringPool.BLANK));
+		String content = _getReportContent();
+
+		Assert.assertFalse(content.contains("Table Name"));
 	}
 
 	@Test
@@ -503,13 +503,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			String longestRunningSQLs = _getLogContextValueDiagnostics(
 				"upgrade.report.longest.running.sqls");
 
-			Assert.assertFalse(
-				StringUtil.contains(
-					longestRunningSQLs, belowThresholdSQL, StringPool.BLANK));
-
-			Assert.assertTrue(
-				StringUtil.contains(
-					longestRunningSQLs, aboveThresholdSQL, StringPool.BLANK));
+			Assert.assertFalse(longestRunningSQLs.contains(belowThresholdSQL));
+			Assert.assertTrue(longestRunningSQLs.contains(aboveThresholdSQL));
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -560,9 +555,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"upgrade.report.longest.upgrade.processes");
 
 		Assert.assertFalse(
-			StringUtil.contains(
-				longestUpgradeProcessesValue, belowThresholdUpgradeProcessName,
-				StringPool.BLANK));
+			longestUpgradeProcessesValue.contains(
+				belowThresholdUpgradeProcessName));
 
 		int index1 = longestUpgradeProcessesValue.indexOf(
 			slowerUpgradeProcessClassName);
@@ -653,12 +647,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
+			String logEntries = String.valueOf(logCapture.getLogEntries());
+
 			Assert.assertTrue(
-				StringUtil.contains(
-					String.valueOf(logCapture.getLogEntries()),
+				logEntries.contains(
 					"Upgrade report was not generated because no upgrade " +
-						"processes were executed",
-					StringPool.BLANK));
+						"processes were executed"));
 		}
 
 		File file = new File(
@@ -1068,8 +1062,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_reportContent = _getReportContent();
 		}
 
-		Assert.assertTrue(
-			StringUtil.contains(_reportContent, testString, StringPool.BLANK));
+		Assert.assertTrue(_reportContent.contains(testString));
 	}
 
 	private void _assertReportDiagnostics(String testString) throws Exception {
@@ -1077,9 +1070,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_diagnosticsReportContent = _getReportContentDiagnostics();
 		}
 
-		Assert.assertTrue(
-			StringUtil.contains(
-				_diagnosticsReportContent, testString, StringPool.BLANK));
+		Assert.assertTrue(_diagnosticsReportContent.contains(testString));
 	}
 
 	private void _assertTablesAreSortedByInitialRows(Matcher matcher) {
@@ -1114,15 +1105,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		URI uri = reportFile.toURI();
 
-		Assert.assertTrue(
-			StringUtil.contains(
-				uri.getPath(), _upgradeReportDir, StringPool.BLANK));
+		String path = uri.getPath();
+
+		Assert.assertTrue(path.contains(_upgradeReportDir));
+
+		String logEntries = String.valueOf(logCapture.getLogEntries());
 
 		Assert.assertTrue(
-			StringUtil.contains(
-				String.valueOf(logCapture.getLogEntries()),
-				"Upgrade report generated in " + reportFile.getAbsolutePath(),
-				StringPool.BLANK));
+			logEntries.contains(
+				"Upgrade report generated in " + reportFile.getAbsolutePath()));
 	}
 
 	private void _assertUpgradeReportDirectoryWriteProtected(
@@ -1133,11 +1124,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		Assert.assertFalse(reportFile.exists());
 
+		String logEntries = String.valueOf(logCapture.getLogEntries());
+
 		Assert.assertTrue(
-			StringUtil.contains(
-				String.valueOf(logCapture.getLogEntries()),
-				"Unable to generate the upgrade report at /",
-				StringPool.BLANK));
+			logEntries.contains("Unable to generate the upgrade report at /"));
 
 		_upgradeReportDir = "";
 
@@ -1145,10 +1135,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		Assert.assertTrue(reportFile.exists());
 		Assert.assertTrue(
-			StringUtil.contains(
-				String.valueOf(logCapture.getLogEntries()),
-				"Upgrade report generated in " + reportFile.getAbsolutePath(),
-				StringPool.BLANK));
+			logEntries.contains(
+				"Upgrade report generated in " + reportFile.getAbsolutePath()));
 	}
 
 	private String _getLogContent() {

@@ -37,11 +37,7 @@ export default async function shareAction({
 		const initialCollaborators: Collaborator[] = items.reverse().map(
 			({actionIds, dateExpired, id, name, portrait, share, type}) =>
 				({
-					actionIds: actionIds.includes('UPDATE')
-						? 'UPDATE,ADD_DISCUSSION,VIEW'
-						: actionIds.includes('ADD_DISCUSSION')
-							? 'ADD_DISCUSSION,VIEW'
-							: 'VIEW',
+					actionIds: actionIds.sort().join(','),
 					dateExpired,
 					share,
 					type,

@@ -190,8 +190,12 @@ export default class SearchBuilder {
 		return this.group('CLOSE');
 	}
 
-	public ne(key: Key, value: Value) {
-		return this.setContext(SearchBuilder.ne(key, value));
+	public ne(key: Key, value: Value, options = {unquote: false}) {
+		const parseFn = options.unquote
+			? SearchBuilder.unquote
+			: (fn: any) => fn;
+
+		return this.setContext(parseFn(SearchBuilder.ne(key, value)));
 	}
 
 	public group(type: 'CLOSE' | 'OPEN') {

@@ -40,7 +40,7 @@ export default function SaaSTrials() {
 			.and()
 			.eq('orderTypeExternalReferenceCode', OrderTypes.SSA_SAAS)
 			.and()
-			.eq('orderStatusInfo/code', 0, {
+			.ne('orderStatusInfo/code', 0, {
 				unquote: true,
 			})
 			.build(),
@@ -52,7 +52,7 @@ export default function SaaSTrials() {
 
 	const canCreateTrial = isSSAAdmin
 		? true
-		: SSATrialsInProgress.totalCount <= 3;
+		: SSATrialsInProgress.totalCount < 3;
 
 	const actions: Action[] = [
 		{

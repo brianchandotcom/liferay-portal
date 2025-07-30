@@ -65,14 +65,16 @@ public class OrphanReferencesDataCleanupUtil {
 			}
 
 			while (resultSet.next()) {
+				long count = resultSet.getLong(2);
+
 				_log.info(
 					StringBundler.concat(
-						String.valueOf(resultSet.getLong(2)),
-						" orphan entries from table ", sourceTableName,
-						" have been deleted because value ",
+						"Table ", sourceTableName, ", ", String.valueOf(count),
+						(count == 1) ? " entry " : " entries ",
+						"deleted because ", sourceColumnName, StringPool.SPACE,
 						String.valueOf(resultSet.getObject(1)),
-						" was not found in the origin table ", targetTableName,
-						" and column ", targetColumnName));
+						" was not found in ", targetTableName,
+						StringPool.PERIOD, targetColumnName));
 			}
 		}
 	}

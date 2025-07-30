@@ -70,7 +70,7 @@
 										"widgetConfig": {
 											"destination": "",
 											"displayStyle": "ddmTemplate_SEARCH-BAR-LEFT-ALIGNED-ICON-FTL",
-											"displayStyleGroupId": "20121",
+											"displayStyleGroupId": "[$GROUP_ID$]",
 											"displayStyleGroupKey": "68390129561053",
 											"federatedSearchKey": "",
 											"invisible": "false",
@@ -106,10 +106,10 @@
 					},
 					"indexed": true,
 					"layout": {
-						"paddingBottom": 2,
+						"paddingBottom": 4,
 						"paddingLeft": 2,
 						"paddingRight": 2,
-						"paddingTop": 2,
+						"paddingTop": 4,
 						"widthType": "Fixed"
 					}
 				},
@@ -194,7 +194,7 @@
 													"widgetInstance": {
 														"widgetConfig": {
 															"displayStyle": "ddmTemplate_SEARCH-SORT",
-															"displayStyleGroupId": "33863",
+															"displayStyleGroupId": "[$GROUP_ID$]",
 															"displayStyleGroupKey": "Customer Portal",
 															"fields": "[{\"field\": \"\", \"label\": \"relevance\"}, {\"field\": \"title+\", \"label\": \"alphabetical-a-z\"}, {\"field\": \"title-\", \"label\": \"alphabetical-z-a\"}, {\"field\": \"publishDate-\", \"label\": \"publish-date\"}]"
 														},
@@ -212,7 +212,7 @@
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayStyle": "ddmTemplate_SEARCH-CATEGORY-FACET",
-													"displayStyleGroupId": "33863",
+													"displayStyleGroupId": "[$GROUP_ID$]",
 													"displayStyleGroupKey": "Customer Portal",
 													"frequenciesVisible": "false",
 													"frequencyThreshold": "1",
@@ -278,7 +278,7 @@
 												"widgetConfig": {
 													"displayInDocumentForm": "false",
 													"displayStyle": "ddmTemplate_SEARCH-RESULTS",
-													"displayStyleGroupId": "33863",
+													"displayStyleGroupId": "[$GROUP_ID$]",
 													"displayStyleGroupKey": "Customer Portal",
 													"federatedSearchKey": "",
 													"fieldsToDisplay": "",

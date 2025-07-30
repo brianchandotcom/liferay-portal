@@ -75,7 +75,7 @@
 										"widgetConfig": {
 											"destination": "",
 											"displayStyle": "ddmTemplate_SEARCH-BAR-LEFT-ALIGNED-ICON-FTL",
-											"displayStyleGroupId": "20121",
+											"displayStyleGroupId": "[$GROUP_ID$]",
 											"displayStyleGroupKey": "68390129561053",
 											"federatedSearchKey": "",
 											"invisible": "false",

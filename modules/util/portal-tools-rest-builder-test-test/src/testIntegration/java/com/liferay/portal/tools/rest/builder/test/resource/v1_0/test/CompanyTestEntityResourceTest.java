@@ -62,6 +62,24 @@ public class CompanyTestEntityResourceTest
 
 	@Override
 	protected CompanyTestEntity
+			testBatchEngineDeleteImportTask_addCompanyTestEntity()
+		throws Exception {
+
+		return companyTestEntityResource.postCompanyTestEntity(
+			randomCompanyTestEntity());
+	}
+
+	@Override
+	protected CompanyTestEntity
+			testDeleteCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity()
+		throws Exception {
+
+		return companyTestEntityResource.postCompanyTestEntity(
+			randomCompanyTestEntity());
+	}
+
+	@Override
+	protected CompanyTestEntity
 			testGetCompanyTestEntitiesPage_addCompanyTestEntity(
 				CompanyTestEntity companyTestEntity)
 		throws Exception {

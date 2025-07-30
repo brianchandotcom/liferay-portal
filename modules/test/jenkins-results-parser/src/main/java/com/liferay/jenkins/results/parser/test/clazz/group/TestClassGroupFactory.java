@@ -191,6 +191,18 @@ public class TestClassGroupFactory {
 		}
 		else if (batchTestClassGroup instanceof ModulesBatchTestClassGroup) {
 			if (batchTestClassGroup instanceof
+					JSUnitModulesBatchTestClassGroup) {
+
+				if (jsonObject != null) {
+					return new JSUnitModulesSegmentTestClassGroup(
+						batchTestClassGroup, jsonObject);
+				}
+
+				return new JSUnitModulesSegmentTestClassGroup(
+					batchTestClassGroup);
+			}
+
+			if (batchTestClassGroup instanceof
 					SemVerModulesBatchTestClassGroup) {
 
 				if (jsonObject != null) {

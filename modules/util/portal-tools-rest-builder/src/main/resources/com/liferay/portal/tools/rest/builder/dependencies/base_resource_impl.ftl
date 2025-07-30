@@ -203,8 +203,8 @@ public abstract class Base${schemaName}ResourceImpl
 
 		<#if freeMarkerTool.isGeneratePermissions(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName)>
 			<#assign
-				getPermissionsPageJavaMethodSignature = freeMarkerTool.getPermissionsPageJavaMethodSignature("get", javaMethodSignatures, schemaName)!""
-				putPermissionsPageJavaMethodSignature = freeMarkerTool.getPermissionsPageJavaMethodSignature("put", javaMethodSignatures, schemaName)!""
+				getPermissionsPageJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName + "PermissionsPage")!""
+				putPermissionsPageJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "put" + schemaName + "PermissionsPage")!""
 			/>
 
 			<#if !(getPermissionsPageJavaMethodSignature?has_content || putPermissionsPageJavaMethodSignature?has_content)>

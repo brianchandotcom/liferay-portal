@@ -13,6 +13,7 @@ import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.internal.type.users.provider.DefaultUsersProvider;
 import com.liferay.notification.internal.type.users.provider.RoleUsersProvider;
 import com.liferay.notification.internal.type.users.provider.TermUsersProvider;
+import com.liferay.notification.internal.type.users.provider.UserGroupUsersProvider;
 import com.liferay.notification.internal.type.users.provider.UsersProvider;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -199,6 +201,11 @@ public class UserNotificationType extends BaseNotificationType {
 			NotificationRecipientConstants.TYPE_USER,
 			new DefaultUsersProvider(
 				_permissionCheckerFactory, userLocalService));
+		_usersProviders.put(
+			NotificationRecipientConstants.TYPE_USER_GROUP,
+			new UserGroupUsersProvider(
+				_permissionCheckerFactory, _userGroupLocalService,
+				userLocalService));
 	}
 
 	@Reference
@@ -212,6 +219,9 @@ public class UserNotificationType extends BaseNotificationType {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

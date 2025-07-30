@@ -36,6 +36,12 @@ public class DisplayPageTemplateFolderDTOConverter
 			LayoutPageTemplateCollection layoutPageTemplateCollection)
 		throws Exception {
 
+		return _getDisplayPageTemplateFolder(layoutPageTemplateCollection);
+	}
+
+	private DisplayPageTemplateFolder _getDisplayPageTemplateFolder(
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+
 		return new DisplayPageTemplateFolder() {
 			{
 				setDateCreated(layoutPageTemplateCollection::getCreateDate);

@@ -150,6 +150,7 @@ import java.io.InputStream;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -703,6 +704,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				"((status eq 0) or (status eq 5))"),
 			userAccount1, userAccount2, userAccount3, userAccount6);
 
+		_testGetUserAccountsPageWithSortFullName();
 		_testGetUserAccountsPageWithBirthDateFilter();
 		_testGetUserAccountsPageWithCustomFields();
 	}
@@ -2068,6 +2070,40 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				"(customFields/", expandoColumn.getName(), " eq '", value,
 				"')"),
 			userAccount);
+	}
+
+	private void _testGetUserAccountsPageWithSortFullName() throws Exception {
+		List<UserAccount> userAccounts = new ArrayList<>();
+		String domain = StringUtil.randomString() + ".com";
+
+		userAccounts.add(
+			userAccountResource.postUserAccount(
+				null, null,
+				_randomUserAccount(
+					userAccount -> {
+						userAccount.setGivenName("aaa");
+						userAccount.setEmailAddress("aaa@" + domain);
+					})));
+		userAccounts.add(
+			userAccountResource.postUserAccount(
+				null, null,
+				_randomUserAccount(
+					userAccount -> {
+						userAccount.setGivenName("bbb");
+						userAccount.setEmailAddress("bbb@" + domain);
+					})));
+
+		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
+			domain, null, Pagination.of(1, 10), "name:asc");
+
+		assertEquals(userAccounts, (List<UserAccount>)page.getItems());
+
+		Collections.reverse(userAccounts);
+
+		page = userAccountResource.getUserAccountsPage(
+			domain, null, Pagination.of(1, 10), "name:desc");
+
+		assertEquals(userAccounts, (List<UserAccount>)page.getItems());
 	}
 
 	private void _testGetUserAccountWithGender() throws Exception {

@@ -13,7 +13,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import {openToast} from 'frontend-js-components-web';
-import {fetch, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import ExpirationDateSelector, {
@@ -23,22 +23,23 @@ import ExpirationDateSelector, {
 import PermissionSelector from './PermissionSelector';
 
 import '../../../../css/components/ShareModalContent.scss';
+import CollaboratorService from '../../../common/services/CollaboratorService';
 import {UserAccount, UserGroup} from '../../../common/types/UserAccount';
 
-export interface collaborator {
-	actionIds?: string;
-	dateExpired?: string;
-	error?: string;
-	share?: boolean;
-	toBeShared?: boolean;
-	type: string;
-	user: UserAccount | UserGroup;
-}
-
-const TYPES = {
+const COLLABORATOR_TYPE = {
 	USER: 'User',
 	USER_GROUP: 'UserGroup',
 };
+
+export interface Collaborator {
+	actionIds: string;
+	dateExpired?: string;
+	error?: string;
+	share: boolean;
+	toBeShared?: boolean;
+	type: typeof COLLABORATOR_TYPE.USER | typeof COLLABORATOR_TYPE.USER_GROUP;
+	user: UserAccount | UserGroup;
+}
 
 function CollaboratorListItem({
 	actionIds,
@@ -48,17 +49,17 @@ function CollaboratorListItem({
 	onRemoveUser,
 	share,
 	toBeShared,
-	type = TYPES.USER,
+	type = COLLABORATOR_TYPE.USER,
 	user,
 }: {
-	actionIds?: string;
+	actionIds: string;
 	dateExpired?: string;
 	error?: string;
 	onChangeUser: (user: UserAccount | UserGroup, property: object) => void;
 	onRemoveUser: (user: UserAccount | UserGroup) => void;
-	share?: boolean;
+	share: boolean;
 	toBeShared?: boolean;
-	type: string;
+	type: typeof COLLABORATOR_TYPE.USER | typeof COLLABORATOR_TYPE.USER_GROUP;
 	user: UserAccount | UserGroup;
 }) {
 	const handleChangeUserProperties = (propertyObj: object) => {
@@ -72,7 +73,7 @@ function CollaboratorListItem({
 		>
 			<div className="autofit-col">
 				<ClaySticker displayType="secondary" shape="circle" size="sm">
-					{type === TYPES.USER ? (
+					{type === COLLABORATOR_TYPE.USER ? (
 						'image' in user && user.image ? (
 							<img
 								alt={user.name}
@@ -203,6 +204,7 @@ export default function ShareModalContent({
 	collaboratorURL = '',
 	creator,
 	initialCollaborators = [],
+	itemId,
 	title = '',
 }: {
 	autocompleteURL: string;
@@ -214,14 +216,15 @@ export default function ShareModalContent({
 		image?: string;
 		name: string;
 	};
-	initialCollaborators: collaborator[];
+	initialCollaborators: Collaborator[];
+	itemId: number;
 	title: string;
 }) {
 	const [autocompleteValue, setAutocompleteValue] = useState('');
 	const [autocompleteNetworkStatus, setAutocompleteNetworkStatus] =
 		useState(4);
 	const [collaborators, setCollaborators] =
-		useState<collaborator[]>(initialCollaborators);
+		useState<Collaborator[]>(initialCollaborators);
 	const [loading, setLoading] = useState(false);
 
 	const {resource: users} = useResource({
@@ -296,63 +299,45 @@ export default function ShareModalContent({
 
 		setLoading(true);
 
-		const data = collaborators.map(
-			({actionIds, dateExpired, share, type, user}) => ({
-				actionIds: actionIds?.split(','),
-				...(!!dateExpired && {
-					dateExpired: formatDateToISO(dateExpired),
-				}),
-				id: user.id,
-				share,
-				type,
-			})
+		const {error} = await CollaboratorService.updateCollaborators(
+			collaboratorURL,
+			itemId,
+			collaborators.map(
+				({actionIds, dateExpired, share, type, user}) => ({
+					actionIds: actionIds.split(','),
+					...(!!dateExpired && {
+						dateExpired: formatDateToISO(dateExpired),
+					}),
+					id: user.id,
+					share,
+					type,
+				})
+			)
 		);
 
-		fetch(collaboratorURL, {
-			body: JSON.stringify(data),
-			headers: {
-				'Accept': 'application/json',
-				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-		})
-			.then((response) => {
-				setLoading(false);
+		setLoading(false);
 
-				const jsonResponse = response.json();
-
-				return response.ok
-					? jsonResponse
-					: jsonResponse.then((json) => {
-							throw Object.assign(new Error(json.title), {
-								response,
-							});
-						});
-			})
-			.then(() => {
-				openToast({
-					message: sub(
-						collaborators.some(({toBeShared}) => !!toBeShared)
-							? Liferay.Language.get('x-was-shared-successfully')
-							: Liferay.Language.get(
-									'x-was-updated-successfully'
-								),
-						title
-					),
-					type: 'success',
-				});
-
-				closeModal();
-			})
-			.catch((error) => {
-				openToast({
-					message:
-						error.message ||
-						Liferay.Language.get('an-unexpected-error-occurred'),
-					type: 'danger',
-				});
+		if (error) {
+			openToast({
+				message:
+					error ||
+					Liferay.Language.get('an-unexpected-error-occurred'),
+				type: 'danger',
 			});
+		}
+		else {
+			openToast({
+				message: sub(
+					collaborators.some(({toBeShared}) => !!toBeShared)
+						? Liferay.Language.get('x-was-shared-successfully')
+						: Liferay.Language.get('x-was-updated-successfully'),
+					title
+				),
+				type: 'success',
+			});
+
+			closeModal();
+		}
 	};
 
 	const _isCollaboratorsUpdated = () =>
@@ -387,11 +372,11 @@ export default function ShareModalContent({
 										? users.items?.map((item: any) => {
 												if (
 													item.entryClassName?.includes(
-														TYPES.USER_GROUP
+														COLLABORATOR_TYPE.USER_GROUP
 													)
 												) {
 													return {
-														type: TYPES.USER_GROUP,
+														type: COLLABORATOR_TYPE.USER_GROUP,
 														user: {
 															id: item.embedded.id.toString(),
 															name: item.embedded
@@ -401,7 +386,7 @@ export default function ShareModalContent({
 												}
 
 												return {
-													type: TYPES.USER,
+													type: COLLABORATOR_TYPE.USER,
 													user: {
 														emailAddress:
 															item.embedded
@@ -438,7 +423,8 @@ export default function ShareModalContent({
 													className="sticker-user-icon"
 													size="sm"
 												>
-													{type === TYPES.USER ? (
+													{type ===
+													COLLABORATOR_TYPE.USER ? (
 														'image' in user &&
 														user.image ? (
 															<div className="sticker-overlay">

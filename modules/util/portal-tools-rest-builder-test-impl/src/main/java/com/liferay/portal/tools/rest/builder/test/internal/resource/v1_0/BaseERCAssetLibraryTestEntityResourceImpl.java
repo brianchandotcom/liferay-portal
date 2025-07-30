@@ -34,8 +34,10 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
@@ -114,6 +116,11 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 		throws Exception {
 	}
 
+	protected abstract Page<ERCAssetLibraryTestEntity>
+			doGetAssetLibraryERCAssetLibraryTestEntitiesPage(
+				String assetLibraryExternalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -140,7 +147,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<ERCAssetLibraryTestEntity>
+	public final Page<ERCAssetLibraryTestEntity>
 			getAssetLibraryERCAssetLibraryTestEntitiesPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
@@ -148,7 +155,33 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 				String assetLibraryExternalReferenceCode)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		Page<ERCAssetLibraryTestEntity> ercAssetLibraryTestEntitiesPage =
+			doGetAssetLibraryERCAssetLibraryTestEntitiesPage(
+				assetLibraryExternalReferenceCode);
+
+		for (ERCAssetLibraryTestEntity ercAssetLibraryTestEntity :
+				ercAssetLibraryTestEntitiesPage.getItems()) {
+
+			ercAssetLibraryTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Page<Permission> permissionsPage =
+							getAssetLibraryERCAssetLibraryTestEntityPermissionsPage(
+								assetLibraryExternalReferenceCode,
+								ercAssetLibraryTestEntity.
+									getExternalReferenceCode(),
+								null);
+
+						Collection<Permission> permissions =
+							permissionsPage.getItems();
+
+						return permissions.toArray(
+							new Permission[permissions.size()]);
+					}));
+		}
+
+		return ercAssetLibraryTestEntitiesPage;
 	}
 
 	/**
@@ -195,6 +228,69 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 		throws Exception {
 
 		return new ERCAssetLibraryTestEntity();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}/permissions'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "assetLibraryExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "ercAssetLibraryTestEntityExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "restrictFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "roleNames"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "ERCAssetLibraryTestEntity"
+			)
+		}
+	)
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
+		"/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}/permissions"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<Permission>
+			getAssetLibraryERCAssetLibraryTestEntityPermissionsPage(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+				String assetLibraryExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam(
+					"ercAssetLibraryTestEntityExternalReferenceCode"
+				)
+				String ercAssetLibraryTestEntityExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@jakarta.ws.rs.QueryParam("roleNames")
+				String roleNames)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	/**
@@ -272,6 +368,12 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 		).build();
 	}
 
+	protected abstract ERCAssetLibraryTestEntity
+			doPostAssetLibraryERCAssetLibraryTestEntity(
+				String assetLibraryExternalReferenceCode,
+				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -299,15 +401,41 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ERCAssetLibraryTestEntity postAssetLibraryERCAssetLibraryTestEntity(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
-			String assetLibraryExternalReferenceCode,
-			ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
+	public final ERCAssetLibraryTestEntity
+			postAssetLibraryERCAssetLibraryTestEntity(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+				String assetLibraryExternalReferenceCode,
+				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 
-		return new ERCAssetLibraryTestEntity();
+		Permission[] permissions = ercAssetLibraryTestEntity.getPermissions();
+
+		ERCAssetLibraryTestEntity postERCAssetLibraryTestEntity =
+			doPostAssetLibraryERCAssetLibraryTestEntity(
+				assetLibraryExternalReferenceCode, ercAssetLibraryTestEntity);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage =
+				putAssetLibraryERCAssetLibraryTestEntityPermissionsPage(
+					assetLibraryExternalReferenceCode,
+					postERCAssetLibraryTestEntity.getExternalReferenceCode(),
+					permissions);
+
+			postERCAssetLibraryTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return postERCAssetLibraryTestEntity;
 	}
 
 	/**
@@ -415,6 +543,56 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 		throws Exception {
 
 		return new ERCAssetLibraryTestEntity();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}/permissions'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "assetLibraryExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "ercAssetLibraryTestEntityExternalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "ERCAssetLibraryTestEntity"
+			)
+		}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path(
+		"/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}/permissions"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
+	@Override
+	public Page<Permission>
+			putAssetLibraryERCAssetLibraryTestEntityPermissionsPage(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+				String assetLibraryExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam(
+					"ercAssetLibraryTestEntityExternalReferenceCode"
+				)
+				String ercAssetLibraryTestEntityExternalReferenceCode,
+				Permission[] permissions)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override

@@ -63,6 +63,12 @@ public interface ERCSiteTestEntityResource {
 			String ercSiteTestEntityExternalReferenceCode)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteERCSiteTestEntityPermissionsPage(
+				String siteExternalReferenceCode,
+				String ercSiteTestEntityExternalReferenceCode, String roleNames)
+		throws Exception;
+
 	public Response postSiteERCSiteTestEntitiesPageExportBatch(
 			String siteExternalReferenceCode, String callbackURL,
 			String contentType, String fieldNames)
@@ -81,6 +87,13 @@ public interface ERCSiteTestEntityResource {
 			String siteExternalReferenceCode,
 			String ercSiteTestEntityExternalReferenceCode,
 			ERCSiteTestEntity ercSiteTestEntity)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteERCSiteTestEntityPermissionsPage(
+				String siteExternalReferenceCode,
+				String ercSiteTestEntityExternalReferenceCode,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

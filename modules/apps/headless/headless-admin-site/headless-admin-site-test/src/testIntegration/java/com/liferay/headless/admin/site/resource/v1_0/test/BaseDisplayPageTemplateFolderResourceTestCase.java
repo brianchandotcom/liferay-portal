@@ -1309,6 +1309,19 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"parentDisplayPageTemplateFolder",
+					additionalAssertFieldName)) {
+
+				if (displayPageTemplateFolder.
+						getParentDisplayPageTemplateFolder() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"parentDisplayPageTemplateFolderExternalReferenceCode",
 					additionalAssertFieldName)) {
 
@@ -1540,6 +1553,22 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						displayPageTemplateFolder1.getName(),
 						displayPageTemplateFolder2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"parentDisplayPageTemplateFolder",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						displayPageTemplateFolder1.
+							getParentDisplayPageTemplateFolder(),
+						displayPageTemplateFolder2.
+							getParentDisplayPageTemplateFolder())) {
 
 					return false;
 				}
@@ -1980,6 +2009,11 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("parentDisplayPageTemplateFolder")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals(

@@ -201,6 +201,15 @@ public class ObjectEntryFolderLocalServiceImpl
 			ObjectEntryFolder.class.getName(),
 			objectEntryFolder.getObjectEntryFolderId());
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			_subscriptionLocalService.deleteSubscriptions(
+				objectEntryFolder.getCompanyId(),
+				ObjectEntryFolder.class.getName(),
+				_getClassPK(
+					objectEntryFolder.getGroupId(),
+					objectEntryFolder.getObjectEntryFolderId()));
+		}
+
 		if (FeatureFlagManagerUtil.isEnabled("LPD-42553")) {
 			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 				objectEntryFolder.getCompanyId(),
@@ -310,16 +319,9 @@ public class ObjectEntryFolderLocalServiceImpl
 			long userId, long groupId, long objectEntryFolderId)
 		throws PortalException {
 
-		if (objectEntryFolderId ==
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
-
-			objectEntryFolderId = groupId;
-		}
-
 		_subscriptionLocalService.addSubscription(
 			userId, groupId, ObjectEntryFolder.class.getName(),
-			objectEntryFolderId);
+			_getClassPK(groupId, objectEntryFolderId));
 	}
 
 	@Override
@@ -327,15 +329,9 @@ public class ObjectEntryFolderLocalServiceImpl
 			long userId, long groupId, long objectEntryFolderId)
 		throws PortalException {
 
-		if (objectEntryFolderId ==
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
-
-			objectEntryFolderId = groupId;
-		}
-
 		_subscriptionLocalService.deleteSubscription(
-			userId, ObjectEntryFolder.class.getName(), objectEntryFolderId);
+			userId, ObjectEntryFolder.class.getName(),
+			_getClassPK(groupId, objectEntryFolderId));
 	}
 
 	@Override
@@ -418,6 +414,17 @@ public class ObjectEntryFolderLocalServiceImpl
 				objectEntryFolder.getObjectEntryFolderId(),
 				serviceContext.getModelPermissions());
 		}
+	}
+
+	private long _getClassPK(long groupId, long objectEntryFolderId) {
+		if (objectEntryFolderId ==
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			return groupId;
+		}
+
+		return objectEntryFolderId;
 	}
 
 	private Map<Locale, String> _getLabelMap(

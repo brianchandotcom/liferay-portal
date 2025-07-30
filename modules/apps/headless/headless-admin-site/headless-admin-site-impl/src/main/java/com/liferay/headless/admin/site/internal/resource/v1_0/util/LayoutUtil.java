@@ -690,6 +690,21 @@ public class LayoutUtil {
 		}
 	}
 
+	private static void _updateClientExtensionEntryRel(
+			ClientExtension clientExtension, Layout layout, String type,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		ClientExtension[] clientExtensions = null;
+
+		if (clientExtension != null) {
+			clientExtensions = new ClientExtension[] {clientExtension};
+		}
+
+		_updateClientExtensionEntryRels(
+			clientExtensions, layout, type, serviceContext);
+	}
+
 	private static void _updateClientExtensionEntryRels(
 			ClientExtension[] clientExtensions, Layout layout, String type,
 			ServiceContext serviceContext)
@@ -746,23 +761,19 @@ public class LayoutUtil {
 			return;
 		}
 
-		_updateClientExtensionEntryRels(
-			new ClientExtension[] {
-				settings.getFavIcon() instanceof ClientExtension ?
-					(ClientExtension)settings.getFavIcon() : null
-			},
+		_updateClientExtensionEntryRel(
+			settings.getFavIcon() instanceof ClientExtension ?
+				(ClientExtension)settings.getFavIcon() : null,
 			layout, ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
 			serviceContext);
 
-		_updateClientExtensionEntryRels(
-			new ClientExtension[] {settings.getThemeCSSClientExtension()},
-			layout, ClientExtensionEntryConstants.TYPE_THEME_CSS,
-			serviceContext);
+		_updateClientExtensionEntryRel(
+			settings.getThemeCSSClientExtension(), layout,
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, serviceContext);
 
-		_updateClientExtensionEntryRels(
-			new ClientExtension[] {settings.getThemeSpritemapClientExtension()},
-			layout, ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP,
-			serviceContext);
+		_updateClientExtensionEntryRel(
+			settings.getThemeSpritemapClientExtension(), layout,
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, serviceContext);
 
 		_updateClientExtensionEntryRels(
 			settings.getGlobalCSSClientExtensions(), layout,

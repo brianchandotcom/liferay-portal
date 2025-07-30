@@ -200,9 +200,9 @@ public class EditInfoItemStrutsActionTest {
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			RandomTestUtil.randomString(), null, null, null,
-			objectEntry.getObjectEntryId(), null, null, null, null, friendlyURL,
-			null, null, null, null, null, WorkflowConstants.STATUS_APPROVED,
-			null, null);
+			objectEntry.getObjectEntryId(), null, null, null, null, null,
+			friendlyURL, null, null, null, null, null, null,
+			WorkflowConstants.STATUS_APPROVED, null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -279,7 +279,7 @@ public class EditInfoItemStrutsActionTest {
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			null, null, null, null, 0, null, null, null, null, null, null, null,
-			null, "invalid", null, 0, null, null);
+			null, null, "invalid", null, null, 0, null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -402,9 +402,9 @@ public class EditInfoItemStrutsActionTest {
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			null, null, StringPool.BLANK, StringPool.BLANK, 0, StringPool.BLANK,
-			StringPool.BLANK, null, StringPool.BLANK, null, StringPool.BLANK,
-			StringPool.BLANK, null, StringPool.BLANK, StringPool.BLANK, 0,
-			StringPool.BLANK, null);
+			StringPool.BLANK, null, StringPool.BLANK, null, null,
+			StringPool.BLANK, StringPool.BLANK, null, StringPool.BLANK, null,
+			StringPool.BLANK, 0, StringPool.BLANK, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -431,6 +431,7 @@ public class EditInfoItemStrutsActionTest {
 			"http://localhost:8080/home");
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testUpdateInfoItem() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
@@ -447,10 +448,11 @@ public class EditInfoItemStrutsActionTest {
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			RandomTestUtil.randomString(), null,
 			"-99999999999999.9999999999999999", Boolean.TRUE.toString(), 0,
-			"2023-03-01", "2023-03-01T11:08", null, "-999.9999999999999", null,
-			"-123456", "-9007199254740991",
+			"2023-03-01", "2023-03-01T11:08", null, "-999.9999999999999",
+			"2999-03-01T11:11", null, "-123456", "-9007199254740991",
 			Arrays.asList(listTypeEntry1.getKey(), listTypeEntry2.getKey()),
-			listTypeEntry1.getKey(), "<p>TITLE</p>", 0, null, null);
+			listTypeEntry1.getKey(), "2100-03-01T11:11", "<p>TITLE</p>", 0,
+			null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -471,15 +473,25 @@ public class EditInfoItemStrutsActionTest {
 
 		ObjectEntry objectEntry = objectEntries.get(0);
 
+		Assert.assertEquals(
+			DateUtil.parseDate(
+				"yyyy-MM-dd'T'HH:mm", "2999-03-01T11:11", LocaleUtil.US),
+			objectEntry.getExpirationDate());
+
+		Assert.assertEquals(
+			DateUtil.parseDate(
+				"yyyy-MM-dd'T'HH:mm", "2100-03-01T11:11", LocaleUtil.US),
+			objectEntry.getReviewDate());
+
 		ListTypeEntry listTypeEntry3 = _listTypeEntries.get(2);
 
 		uploadPortletRequest = _getUploadPortletRequest(
 			"file", null, "99999999999999.9999999999999999",
 			Boolean.FALSE.toString(), objectEntry.getObjectEntryId(),
 			"2020-03-01", "2023-03-01T11:11", null, "999.9999999999999", null,
-			"123456", "9007199254740991",
+			null, "123456", "9007199254740991",
 			Arrays.asList(listTypeEntry2.getKey(), listTypeEntry3.getKey()),
-			listTypeEntry2.getKey(), "<p>SUBTITLE</p>", 0, null, null);
+			listTypeEntry2.getKey(), null, "<p>SUBTITLE</p>", 0, null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -488,6 +500,9 @@ public class EditInfoItemStrutsActionTest {
 
 		objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			objectEntry.getObjectEntryId());
+
+		Assert.assertNull(objectEntry.getExpirationDate());
+		Assert.assertNull(objectEntry.getReviewDate());
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -645,8 +660,8 @@ public class EditInfoItemStrutsActionTest {
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			null, null, "-99999999999999.9999999999999999",
 			Boolean.TRUE.toString(), 0, "2023-03-01", "2023-03-01T11:08", null,
-			"-999.9999999999999", null, "-123456", "-9007199254740991", null,
-			listTypeEntry.getKey(), "<p>TITLE</p>", 0, null, null);
+			"-999.9999999999999", null, null, "-123456", "-9007199254740991",
+			null, listTypeEntry.getKey(), null, "<p>TITLE</p>", 0, null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -670,9 +685,9 @@ public class EditInfoItemStrutsActionTest {
 		uploadPortletRequest = _getUploadPortletRequest(
 			null, null, StringPool.BLANK, StringPool.BLANK,
 			objectEntry.getObjectEntryId(), StringPool.BLANK, StringPool.BLANK,
-			null, StringPool.BLANK, null, StringPool.BLANK, StringPool.BLANK,
-			null, StringPool.BLANK, StringPool.BLANK, 0, StringPool.BLANK,
-			null);
+			null, StringPool.BLANK, null, null, StringPool.BLANK,
+			StringPool.BLANK, null, StringPool.BLANK, null, StringPool.BLANK, 0,
+			StringPool.BLANK, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -1048,11 +1063,12 @@ public class EditInfoItemStrutsActionTest {
 			String attachmentValue, String backURL, String bigDecimalValueInput,
 			String booleanValueInput, long classPK, String dateValueInput,
 			String dateTimeValueInput, String displayPage,
-			String doubleValueInput, String friendlyURL,
+			String doubleValueInput, String expirationDate, String friendlyURL,
 			String integerValueInput, String longValueInput,
 			List<String> multiselectPicklistValueInput,
-			String picklistValueInput, String richTextValueInput, int status,
-			String stringValue, String redirect)
+			String picklistValueInput, String reviewDate,
+			String richTextValueInput, int status, String stringValue,
+			String redirect)
 		throws Exception {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
@@ -1112,6 +1128,8 @@ public class EditInfoItemStrutsActionTest {
 
 						return null;
 					}
+				).put(
+					"expirationDate", Collections.singletonList(expirationDate)
 				).put(
 					"formItemId", Collections.singletonList(_formItemId)
 				).put(
@@ -1247,6 +1265,8 @@ public class EditInfoItemStrutsActionTest {
 						return null;
 					}
 				).put(
+					"reviewDate", Collections.singletonList(reviewDate)
+				).put(
 					"segmentsExperienceId",
 					Collections.singletonList(
 						String.valueOf(_defaultSegmentsExperienceId))
@@ -1303,8 +1323,9 @@ public class EditInfoItemStrutsActionTest {
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			attachmentValue, backURL, bigDecimalValueInput, null, 0, null, null,
-			displayPage, doubleValueInput, friendlyURL, integerValueInput,
-			longValueInput, null, null, null, status, stringValue, redirect);
+			displayPage, doubleValueInput, null, friendlyURL, integerValueInput,
+			longValueInput, null, null, null, null, status, stringValue,
+			redirect);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -1412,8 +1433,8 @@ public class EditInfoItemStrutsActionTest {
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			null, null, bigDecimalValueInput, null, 0, null, null, null, null,
-			null, integerValueInput, longValueInput, null, null, null, 0, null,
-			null);
+			null, null, integerValueInput, longValueInput, null, null, null,
+			null, 0, null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 

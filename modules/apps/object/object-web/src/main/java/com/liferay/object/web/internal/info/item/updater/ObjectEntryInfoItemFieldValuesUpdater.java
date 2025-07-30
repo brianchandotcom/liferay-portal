@@ -22,9 +22,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+
+import java.text.DateFormat;
 
 import java.util.Map;
 
@@ -58,8 +61,8 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 
 	@Override
 	public ObjectEntry updateFromInfoItemFieldValues(
-			ObjectEntry objectEntry, InfoItemFieldValues infoItemFieldValues,
-			int statusInt)
+			ObjectEntry originalObjectEntry,
+			InfoItemFieldValues infoItemFieldValues, int statusInt)
 		throws InfoFormException {
 
 		ObjectEntryManager objectEntryManager =
@@ -75,14 +78,18 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 			themeDisplay.getCompanyId(), infoItemFieldValues);
 
 		try {
-			return ObjectEntryUtil.toObjectEntry(
-				objectEntry.getObjectDefinitionId(),
+			String scopeKey = ObjectEntryInfoItemUtil.getScopeKey(
+				originalObjectEntry.getGroupId(), _objectDefinition,
+				_objectScopeProviderRegistry);
+
+			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				objectEntryManager.partialUpdateObjectEntry(
-					objectEntry.getCompanyId(),
+					originalObjectEntry.getCompanyId(),
 					new DefaultDTOConverterContext(
 						false, null, null, null, null, themeDisplay.getLocale(),
 						null, themeDisplay.getUser()),
-					objectEntry.getExternalReferenceCode(), _objectDefinition,
+					originalObjectEntry.getExternalReferenceCode(),
+					_objectDefinition,
 					new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
 						{
 							setFriendlyUrlPath(
@@ -105,18 +112,56 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 									serviceContext.getAssetCategoryIds()));
 						}
 					},
-					ObjectEntryInfoItemUtil.getScopeKey(
-						objectEntry.getGroupId(), _objectDefinition,
-						_objectScopeProviderRegistry)));
+					scopeKey);
+
+			if (curProperties.containsKey("reviewDate") ||
+				curProperties.containsKey("expirationDate")) {
+
+				objectEntry.setExpirationDate(
+					() -> {
+						if (curProperties.containsKey("expirationDate")) {
+							return GetterUtil.getDate(
+								curProperties.get("expirationDate"),
+								_dateTimeFormatter, null);
+						}
+
+						return originalObjectEntry.getExpirationDate();
+					});
+
+				objectEntry.setReviewDate(
+					() -> {
+						if (curProperties.containsKey("reviewDate")) {
+							return GetterUtil.getDate(
+								curProperties.get("reviewDate"),
+								_dateTimeFormatter, null);
+						}
+
+						return originalObjectEntry.getReviewDate();
+					});
+
+				objectEntry = objectEntryManager.updateObjectEntry(
+					originalObjectEntry.getCompanyId(),
+					new DefaultDTOConverterContext(
+						false, null, null, null, null, themeDisplay.getLocale(),
+						null, themeDisplay.getUser()),
+					originalObjectEntry.getExternalReferenceCode(),
+					_objectDefinition, objectEntry, scopeKey);
+			}
+
+			return ObjectEntryUtil.toObjectEntry(
+				originalObjectEntry.getObjectDefinitionId(), objectEntry);
 		}
 		catch (Exception exception) {
 			ObjectEntryInfoItemExceptionRequestHandler.handleInfoFormException(
-				exception, objectEntry.getGroupId(), _infoItemFormProvider,
-				_objectDefinition);
+				exception, originalObjectEntry.getGroupId(),
+				_infoItemFormProvider, _objectDefinition);
 		}
 
 		return null;
 	}
+
+	private static final DateFormat _dateTimeFormatter =
+		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;
 	private final ObjectDefinition _objectDefinition;

@@ -278,30 +278,7 @@ public class DisplayPageTemplateFolderResourceTest
 
 		_assertNoParentDisplayPageTemplateFolder(displayPageTemplateFolder);
 
-		_assertProblemException(
-			"BAD_REQUEST", null,
-			() ->
-				_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					randomDisplayPageTemplateFolder(),
-					RandomTestUtil.randomString()));
-
-		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
-			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
-				randomDisplayPageTemplateFolder());
-
-		displayPageTemplateFolder =
-			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				randomDisplayPageTemplateFolder(),
-				parentDisplayPageTemplateFolder.getExternalReferenceCode());
-
-		_assertParentDisplayPageTemplateFolder(
-			displayPageTemplateFolder, parentDisplayPageTemplateFolder);
-
-		displayPageTemplateFolder =
-			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				displayPageTemplateFolder, StringPool.BLANK);
-
-		_assertNoParentDisplayPageTemplateFolder(displayPageTemplateFolder);
+		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithParentDisplayPageTemplateFolder();
 
 		DisplayPageTemplateFolder liveGroupDisplayPageTemplateFolder =
 			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
@@ -321,7 +298,7 @@ public class DisplayPageTemplateFolderResourceTest
 						testGroup.getExternalReferenceCode(),
 						liveGroupDisplayPageTemplateFolder.
 							getExternalReferenceCode(),
-						parentDisplayPageTemplateFolder));
+						liveGroupDisplayPageTemplateFolder));
 	}
 
 	@Override
@@ -669,6 +646,35 @@ public class DisplayPageTemplateFolderResourceTest
 		assertValid(putDisplayPageTemplateFolder);
 
 		return putDisplayPageTemplateFolder;
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithParentDisplayPageTemplateFolder()
+		throws Exception {
+
+		_assertProblemException(
+			"BAD_REQUEST", null,
+			() ->
+				_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					randomDisplayPageTemplateFolder(),
+					RandomTestUtil.randomString()));
+
+		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder());
+
+		DisplayPageTemplateFolder displayPageTemplateFolder =
+			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder(),
+				parentDisplayPageTemplateFolder.getExternalReferenceCode());
+
+		_assertParentDisplayPageTemplateFolder(
+			displayPageTemplateFolder, parentDisplayPageTemplateFolder);
+
+		displayPageTemplateFolder =
+			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				displayPageTemplateFolder, StringPool.BLANK);
+
+		_assertNoParentDisplayPageTemplateFolder(displayPageTemplateFolder);
 	}
 
 	@Inject

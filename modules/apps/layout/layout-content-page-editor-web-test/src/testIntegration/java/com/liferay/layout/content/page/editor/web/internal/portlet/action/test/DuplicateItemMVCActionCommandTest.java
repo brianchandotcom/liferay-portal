@@ -25,6 +25,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -119,6 +121,97 @@ public class DuplicateItemMVCActionCommandTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	@TestInfo("LPD-61879")
+	public void testDuplicatedHeadingFragmentEntryLinkUpdatesNamespace()
+		throws Exception {
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
+		FragmentEntryLink headingFragmentEntryLink = _addFragmentEntryLink(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						LocaleUtil.toLanguageId(
+							_portal.getSiteDefaultLocale(_group)),
+						RandomTestUtil.randomString()))
+			).toString(),
+			"<h1 data-lfr-editable-id=\"${fragmentEntryLinkNamespace}-" +
+				"element-text\" data-lfr-editable-type=\"text\">" +
+					"Heading Example</h1>",
+			null, segmentsExperienceId);
+
+		String namespace = headingFragmentEntryLink.getNamespace();
+
+		String editableValues = headingFragmentEntryLink.getEditableValues();
+
+		editableValues = StringUtil.replace(
+			editableValues, "element-text", namespace + "-element-text");
+
+		headingFragmentEntryLink =
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				TestPropsValues.getUserId(),
+				headingFragmentEntryLink.getFragmentEntryLinkId(),
+				editableValues);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_layout.getGroupId(), _layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		FragmentStyledLayoutStructureItem
+			headingFragmentStyledLayoutStructureItem =
+				_assertFragmentStyledLayoutStructureItem(
+					layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+						headingFragmentEntryLink.getFragmentEntryLinkId()));
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockLiferayPortletActionRequest(
+				new String[] {
+					headingFragmentStyledLayoutStructureItem.getItemId()
+				},
+				segmentsExperienceId),
+			new MockLiferayPortletActionResponse());
+
+		JSONArray duplicatedFragmentEntryLinksJSONArray =
+			jsonObject.getJSONArray("duplicatedFragmentEntryLinks");
+
+		long duplicatedFragmentEntryLinkId = 0;
+
+		for (int i = 0; i < duplicatedFragmentEntryLinksJSONArray.length();
+			 i++) {
+
+			JSONObject duplicatedFragmentEntryLinksJSONObject =
+				duplicatedFragmentEntryLinksJSONArray.getJSONObject(i);
+
+			duplicatedFragmentEntryLinkId =
+				duplicatedFragmentEntryLinksJSONObject.getLong(
+					"fragmentEntryLinkId");
+		}
+
+		FragmentEntryLink duplicatedHeadingFragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				duplicatedFragmentEntryLinkId);
+
+		String duplicatedEditableValues =
+			duplicatedHeadingFragmentEntryLink.getEditableValues();
+
+		Assert.assertTrue(
+			duplicatedEditableValues.contains(
+				duplicatedHeadingFragmentEntryLink.getNamespace() +
+					"-element-text"));
 	}
 
 	@Test

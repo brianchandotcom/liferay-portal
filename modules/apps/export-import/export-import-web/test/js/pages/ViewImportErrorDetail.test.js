@@ -13,7 +13,7 @@ import {openModal} from 'frontend-js-components-web';
 
 import {ViewImportErrorDetail} from '../../../src/main/resources/META-INF/resources/js/pages/ViewImportErrorDetail';
 
-const _getComponent = (props) => {
+const renderComponent = (props) => {
 	return <ViewImportErrorDetail {...props} />;
 };
 
@@ -41,7 +41,7 @@ describe('ViewImportErrorDetail', () => {
 		mockData({});
 
 		render(
-			_getComponent({
+			renderComponent({
 				apiURL: '/group/__mocks__/get-import-error-detail',
 				backURL: 'www.localhost:8080',
 			})
@@ -79,7 +79,7 @@ describe('ViewImportErrorDetail', () => {
 		});
 
 		const {getByRole} = render(
-			_getComponent({
+			renderComponent({
 				apiURL: '/group/__mocks__/get-import-error-detail',
 				backURL: 'www.localhost:8080',
 			})

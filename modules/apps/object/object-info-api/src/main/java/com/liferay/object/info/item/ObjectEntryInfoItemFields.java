@@ -37,6 +37,15 @@ public class ObjectEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "create-date")
 		).build();
+	public static final InfoField<DateInfoFieldType> expirationDateInfoField =
+		BuilderHolder._builder.infoFieldType(
+			DateInfoFieldType.INSTANCE
+		).name(
+			"expirationDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				ObjectEntryInfoItemFields.class, "expiration-date")
+		).build();
 	public static final InfoField<TextInfoFieldType>
 		externalReferenceCodeInfoField = BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
@@ -71,6 +80,15 @@ public class ObjectEntryInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "publish-date")
+		).build();
+	public static final InfoField<DateInfoFieldType> reviewDateInfoField =
+		BuilderHolder._builder.infoFieldType(
+			DateInfoFieldType.INSTANCE
+		).name(
+			"reviewDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				ObjectEntryInfoItemFields.class, "review-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> statusInfoField =
 		BuilderHolder._builder.infoFieldType(

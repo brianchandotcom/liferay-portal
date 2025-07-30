@@ -42,3 +42,23 @@ page import="com.liferay.site.cms.site.initializer.internal.display.context.View
 <liferay-util:html-top>
 	<aui:link href='<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>' rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
+
+<aui:script>
+	(function () {
+		const sessionKey = 'com.liferay.site.cms.site.initializer.successMessage';
+
+		const successMessage = Liferay.Util.SessionStorage.getItem(
+			sessionKey,
+			Liferay.Util.SessionStorage.TYPES.NECESSARY
+		);
+
+		if (successMessage) {
+			Liferay.Util.openToast({
+				message: successMessage,
+				type: 'success',
+			});
+
+			Liferay.Util.SessionStorage.removeItem(sessionKey);
+		}
+	})();
+</aui:script>

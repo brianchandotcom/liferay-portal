@@ -40,16 +40,16 @@ describe('ViewImportErrorDetail', () => {
 	it('renders loading state initially', async () => {
 		mockData({});
 
-		render(
+		const {container} = render(
 			renderComponent({
 				apiURL: '/group/__mocks__/get-import-error-detail',
 				backURL: 'www.localhost:8080',
 			})
 		);
 
-		expect(
-			screen.getByTitle('Loading import error details...')
-		).toBeInTheDocument();
+		const loadingSpinner = container.querySelector('.loading-animation');
+
+		expect(loadingSpinner).toBeInTheDocument();
 	});
 
 	it('renders error details when loaded', async () => {

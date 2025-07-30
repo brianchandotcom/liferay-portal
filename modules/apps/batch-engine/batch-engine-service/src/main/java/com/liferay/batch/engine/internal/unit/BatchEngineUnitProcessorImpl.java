@@ -267,9 +267,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		Role role = _roleLocalService.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);
 
-		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
-
-		for (long userId : userIds) {
+		for (long userId : _userLocalService.getRoleUserIds(role.getRoleId())) {
 			User user = _userLocalService.fetchUser(userId);
 
 			if ((user != null) && user.isActive()) {

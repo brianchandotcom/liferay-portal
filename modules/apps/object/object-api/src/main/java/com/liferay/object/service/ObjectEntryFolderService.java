@@ -95,6 +95,14 @@ public interface ObjectEntryFolderService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public void subscribeObjectEntryFolder(
+			long userId, long groupId, long objectEntryFolderId)
+		throws PortalException;
+
+	public void unsubscribeObjectEntryFolder(
+			long userId, long groupId, long objectEntryFolderId)
+		throws PortalException;
+
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long objectEntryFolderId, long parentObjectEntryFolderId,
 			String description, Map<Locale, String> labelMap, String name,

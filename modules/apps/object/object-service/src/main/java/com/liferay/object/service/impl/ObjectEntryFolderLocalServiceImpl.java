@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.entry.folder.subscription.util.ObjectEntryFolderSubscriptionUtil;
 import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryFolderExternalReferenceCodeException;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
@@ -318,6 +319,14 @@ public class ObjectEntryFolderLocalServiceImpl
 	public void subscribeObjectEntryFolder(
 			long userId, long groupId, long objectEntryFolderId)
 		throws PortalException {
+
+		User user = _userLocalService.fetchUser(userId);
+
+		if (ObjectEntryFolderSubscriptionUtil.isSubscribedToObjectEntryFolder(
+				user.getCompanyId(), groupId, objectEntryFolderId, userId)) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		_subscriptionLocalService.addSubscription(
 			userId, groupId, ObjectEntryFolder.class.getName(),

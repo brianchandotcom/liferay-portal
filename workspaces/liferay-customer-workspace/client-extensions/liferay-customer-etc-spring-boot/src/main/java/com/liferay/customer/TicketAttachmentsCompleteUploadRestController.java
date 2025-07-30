@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -131,12 +132,10 @@ public class TicketAttachmentsCompleteUploadRestController
 			Jwt jwt, TicketAttachment ticketAttachment, String commentBody)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
-		sb.append(lxcDXPServerProtocol);
-		sb.append("://");
-		sb.append(lxcDXPMainDomain);
-		sb.append("/placeholder/");
+		sb.append(_customerPortalURL);
+		sb.append("/ticket-attachments/#/id/");
 		sb.append(ticketAttachment.getTicketAttachmentId());
 
 		return new JSONObject(
@@ -273,6 +272,9 @@ public class TicketAttachmentsCompleteUploadRestController
 
 	private static final Log _log = LogFactory.getLog(
 		TicketAttachmentsCompleteUploadRestController.class);
+
+	@Value("${liferay.customer.portal.url}")
+	private String _customerPortalURL;
 
 	@Autowired
 	private JiraService _jiraService;

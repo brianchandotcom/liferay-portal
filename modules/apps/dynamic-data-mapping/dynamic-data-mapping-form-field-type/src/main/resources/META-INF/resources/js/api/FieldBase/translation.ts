@@ -48,9 +48,7 @@ export interface WebContentField<T = unknown> {
  */
 
 export function getAllFieldsetsFromName(name: string) {
-	const pattern = /Fieldset\d+/g;
-
-	return name.match(pattern) || [];
+	return [...name.matchAll(/(?:\$|#)([^$#]+)\$/g)].map((match) => match[1]);
 }
 
 /**

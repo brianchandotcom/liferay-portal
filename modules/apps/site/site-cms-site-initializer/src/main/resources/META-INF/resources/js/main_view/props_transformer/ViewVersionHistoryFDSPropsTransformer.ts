@@ -4,7 +4,7 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
-import {navigate, sessionStorage} from 'frontend-js-web';
+import {navigate, sessionStorage, sub} from 'frontend-js-web';
 
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
@@ -55,6 +55,11 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 				actions: {
 					copy: {href: string; method: string};
 				};
+				systemProperties: {
+					version: {
+						number: number;
+					};
+				};
 			};
 		}) {
 			if (action.data.id === 'copy') {
@@ -62,11 +67,15 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 
 				executeAsyncItemAction({
 					method: itemData.actions.copy.method,
-					refreshData: () => {
+					refreshData: (responseData) => {
 						sessionStorage.setItem(
 							'com.liferay.site.cms.site.initializer.successMessage',
-							Liferay.Language.get(
-								'your-request-completed-successfully'
+							sub(
+								Liferay.Language.get(
+									'version-x-successfully-copied-as-x'
+								),
+								itemData.systemProperties.version.number,
+								`<strong>"${responseData.title}"</strong>`
 							),
 							sessionStorage.TYPES.NECESSARY
 						);

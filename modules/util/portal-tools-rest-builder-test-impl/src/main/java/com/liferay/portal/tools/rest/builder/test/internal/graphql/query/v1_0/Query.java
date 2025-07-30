@@ -386,6 +386,33 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryERCAssetLibraryTestEntityPermissions(assetLibraryExternalReferenceCode: ___, ercAssetLibraryTestEntityExternalReferenceCode: ___, roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ERCAssetLibraryTestEntityPage
+			assetLibraryERCAssetLibraryTestEntityPermissions(
+				@GraphQLName("assetLibraryExternalReferenceCode") @NotEmpty
+					String assetLibraryExternalReferenceCode,
+				@GraphQLName("ercAssetLibraryTestEntityExternalReferenceCode")
+					String ercAssetLibraryTestEntityExternalReferenceCode,
+				@GraphQLName("roleNames") String roleNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ercAssetLibraryTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ercAssetLibraryTestEntityResource ->
+				new ERCAssetLibraryTestEntityPage(
+					ercAssetLibraryTestEntityResource.
+						getAssetLibraryERCAssetLibraryTestEntityPermissionsPage(
+							assetLibraryExternalReferenceCode,
+							ercAssetLibraryTestEntityExternalReferenceCode,
+							roleNames)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryERCScopedTestEntities(assetLibraryExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -505,6 +532,30 @@ public class Query {
 				ercSiteTestEntityResource.getSiteERCSiteTestEntity(
 					siteExternalReferenceCode,
 					ercSiteTestEntityExternalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {eRCSiteTestEntityPermissions(ercSiteTestEntityExternalReferenceCode: ___, roleNames: ___, siteExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ERCSiteTestEntityPage eRCSiteTestEntityPermissions(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("ercSiteTestEntityExternalReferenceCode") String
+				ercSiteTestEntityExternalReferenceCode,
+			@GraphQLName("roleNames") String roleNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ercSiteTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ercSiteTestEntityResource -> new ERCSiteTestEntityPage(
+				ercSiteTestEntityResource.
+					getSiteERCSiteTestEntityPermissionsPage(
+						siteExternalReferenceCode,
+						ercSiteTestEntityExternalReferenceCode, roleNames)));
 	}
 
 	/**

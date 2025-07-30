@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -43,6 +45,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ERCAssetLibraryTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
+import com.liferay.portal.tools.rest.builder.test.client.permission.Permission;
 import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.ERCAssetLibraryTestEntityResource;
 import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ERCAssetLibraryTestEntitySerDes;
 import com.liferay.portal.util.PropsValues;
@@ -149,6 +152,19 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		permissionsERCAssetLibraryTestEntityResource =
+			ERCAssetLibraryTestEntityResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).parameter(
+				"nestedFields", "permissions"
+			).build();
 	}
 
 	@After
@@ -341,6 +357,23 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			page,
 			testGetAssetLibraryERCAssetLibraryTestEntitiesPage_getExpectedActions(
 				assetLibraryExternalReferenceCode));
+
+		for (ERCAssetLibraryTestEntity ercAssetLibraryTestEntity :
+				page.getItems()) {
+
+			Assert.assertNull(ercAssetLibraryTestEntity.getPermissions());
+		}
+
+		page =
+			permissionsERCAssetLibraryTestEntityResource.
+				getAssetLibraryERCAssetLibraryTestEntitiesPage(
+					assetLibraryExternalReferenceCode);
+
+		for (ERCAssetLibraryTestEntity ercAssetLibraryTestEntity :
+				page.getItems()) {
+
+			Assert.assertNotNull(ercAssetLibraryTestEntity.getPermissions());
+		}
 	}
 
 	protected Map<String, Map<String, String>>
@@ -555,6 +588,34 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryERCAssetLibraryTestEntityPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ERCAssetLibraryTestEntity postERCAssetLibraryTestEntity =
+			testGetAssetLibraryERCAssetLibraryTestEntityPermissionsPage_addERCAssetLibraryTestEntity();
+
+		Page<Permission> page =
+			ercAssetLibraryTestEntityResource.
+				getAssetLibraryERCAssetLibraryTestEntityPermissionsPage(
+					testDepotEntryGroup.getExternalReferenceCode(),
+					postERCAssetLibraryTestEntity.getExternalReferenceCode(),
+					RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testGetAssetLibraryERCAssetLibraryTestEntityPermissionsPage_addERCAssetLibraryTestEntity()
+		throws Exception {
+
+		return ercAssetLibraryTestEntityResource.
+			postAssetLibraryERCAssetLibraryTestEntity(
+				testDepotEntryGroup.getExternalReferenceCode(),
+				randomERCAssetLibraryTestEntity());
+	}
+
+	@Test
 	public void testPostAssetLibraryERCAssetLibraryTestEntity()
 		throws Exception {
 
@@ -568,10 +629,39 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		assertEquals(
 			randomERCAssetLibraryTestEntity, postERCAssetLibraryTestEntity);
 		assertValid(postERCAssetLibraryTestEntity);
+
+		ERCAssetLibraryTestEntity randomPermissionsERCAssetLibraryTestEntity1 =
+			randomPermissionsERCAssetLibraryTestEntity();
+
+		ERCAssetLibraryTestEntity postPermissionsERCAssetLibraryTestEntity1 =
+			testPostAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity(
+				randomPermissionsERCAssetLibraryTestEntity1);
+
+		Assert.assertNull(
+			postPermissionsERCAssetLibraryTestEntity1.getPermissions());
+
+		ERCAssetLibraryTestEntity randomPermissionsERCAssetLibraryTestEntity2 =
+			randomPermissionsERCAssetLibraryTestEntity();
+
+		ERCAssetLibraryTestEntity postPermissionsERCAssetLibraryTestEntity2 =
+			testPostAssetLibraryERCAssetLibraryTestEntity_addPermissionsERCAssetLibraryTestEntity(
+				randomPermissionsERCAssetLibraryTestEntity2);
+
+		Assert.assertNotNull(
+			postPermissionsERCAssetLibraryTestEntity2.getPermissions());
 	}
 
 	protected ERCAssetLibraryTestEntity
 			testPostAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity(
+				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testPostAssetLibraryERCAssetLibraryTestEntity_addPermissionsERCAssetLibraryTestEntity(
 				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 
@@ -615,6 +705,61 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 	protected ERCAssetLibraryTestEntity
 			testPutAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
+		throws Exception {
+
+		return ercAssetLibraryTestEntityResource.
+			postAssetLibraryERCAssetLibraryTestEntity(
+				testDepotEntryGroup.getExternalReferenceCode(),
+				randomERCAssetLibraryTestEntity());
+	}
+
+	@Test
+	public void testPutAssetLibraryERCAssetLibraryTestEntityPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity =
+			testPutAssetLibraryERCAssetLibraryTestEntityPermissionsPage_addERCAssetLibraryTestEntity();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			ercAssetLibraryTestEntityResource.
+				putAssetLibraryERCAssetLibraryTestEntityPermissionsPageHttpResponse(
+					ercAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			ercAssetLibraryTestEntityResource.
+				putAssetLibraryERCAssetLibraryTestEntityPermissionsPageHttpResponse(
+					ercAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testPutAssetLibraryERCAssetLibraryTestEntityPermissionsPage_addERCAssetLibraryTestEntity()
 		throws Exception {
 
 		return ercAssetLibraryTestEntityResource.
@@ -1429,6 +1574,29 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		return randomERCAssetLibraryTestEntity();
 	}
 
+	protected ERCAssetLibraryTestEntity
+			randomPermissionsERCAssetLibraryTestEntity()
+		throws Exception {
+
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity =
+			randomERCAssetLibraryTestEntity();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		ercAssetLibraryTestEntity.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return ercAssetLibraryTestEntity;
+	}
+
 	protected final JSONObject waitForFinish(
 			String expectedExecuteStatus, JSONObject jsonObject)
 		throws Exception {
@@ -1455,6 +1623,8 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		ercAssetLibraryTestEntityResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected ERCAssetLibraryTestEntityResource
+		permissionsERCAssetLibraryTestEntityResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry irrelevantDepotEntry;
 	protected com.liferay.portal.kernel.model.Group irrelevantDepotEntryGroup;

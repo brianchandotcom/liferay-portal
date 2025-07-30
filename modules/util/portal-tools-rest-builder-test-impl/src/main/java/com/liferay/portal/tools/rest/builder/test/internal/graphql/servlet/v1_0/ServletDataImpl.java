@@ -260,6 +260,11 @@ public class ServletDataImpl implements ServletData {
 							ERCAssetLibraryTestEntityResourceImpl.class,
 							"putAssetLibraryERCAssetLibraryTestEntity"));
 					put(
+						"mutation#updateAssetLibraryERCAssetLibraryTestEntityPermissionsPage",
+						new ObjectValuePair<>(
+							ERCAssetLibraryTestEntityResourceImpl.class,
+							"putAssetLibraryERCAssetLibraryTestEntityPermissionsPage"));
+					put(
 						"mutation#deleteAssetLibraryERCScopedTestEntity",
 						new ObjectValuePair<>(
 							ERCScopedTestEntityResourceImpl.class,
@@ -334,6 +339,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ERCSiteTestEntityResourceImpl.class,
 							"putSiteERCSiteTestEntity"));
+					put(
+						"mutation#updateSiteERCSiteTestEntityPermissionsPage",
+						new ObjectValuePair<>(
+							ERCSiteTestEntityResourceImpl.class,
+							"putSiteERCSiteTestEntityPermissionsPage"));
 					put(
 						"mutation#createFiltersPageExportBatch",
 						new ObjectValuePair<>(
@@ -586,6 +596,11 @@ public class ServletDataImpl implements ServletData {
 							ERCAssetLibraryTestEntityResourceImpl.class,
 							"getAssetLibraryERCAssetLibraryTestEntity"));
 					put(
+						"query#assetLibraryERCAssetLibraryTestEntityPermissions",
+						new ObjectValuePair<>(
+							ERCAssetLibraryTestEntityResourceImpl.class,
+							"getAssetLibraryERCAssetLibraryTestEntityPermissionsPage"));
+					put(
 						"query#assetLibraryERCScopedTestEntities",
 						new ObjectValuePair<>(
 							ERCScopedTestEntityResourceImpl.class,
@@ -615,6 +630,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ERCSiteTestEntityResourceImpl.class,
 							"getSiteERCSiteTestEntity"));
+					put(
+						"query#eRCSiteTestEntityPermissions",
+						new ObjectValuePair<>(
+							ERCSiteTestEntityResourceImpl.class,
+							"getSiteERCSiteTestEntityPermissionsPage"));
 					put(
 						"query#entityModelResourceTestEntities1",
 						new ObjectValuePair<>(

@@ -34,8 +34,10 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
@@ -110,6 +112,10 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 		throws Exception {
 	}
 
+	protected abstract Page<ERCSiteTestEntity> doGetSiteERCSiteTestEntitiesPage(
+			String siteExternalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -134,14 +140,38 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<ERCSiteTestEntity> getSiteERCSiteTestEntitiesPage(
+	public final Page<ERCSiteTestEntity> getSiteERCSiteTestEntitiesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		Page<ERCSiteTestEntity> ercSiteTestEntitiesPage =
+			doGetSiteERCSiteTestEntitiesPage(siteExternalReferenceCode);
+
+		for (ERCSiteTestEntity ercSiteTestEntity :
+				ercSiteTestEntitiesPage.getItems()) {
+
+			ercSiteTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Page<Permission> permissionsPage =
+							getSiteERCSiteTestEntityPermissionsPage(
+								siteExternalReferenceCode,
+								ercSiteTestEntity.getExternalReferenceCode(),
+								null);
+
+						Collection<Permission> permissions =
+							permissionsPage.getItems();
+
+						return permissions.toArray(
+							new Permission[permissions.size()]);
+					}));
+		}
+
+		return ercSiteTestEntitiesPage;
 	}
 
 	/**
@@ -184,6 +214,64 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 		throws Exception {
 
 		return new ERCSiteTestEntity();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}/permissions'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "ercSiteTestEntityExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "restrictFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "roleNames"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ERCSiteTestEntity")
+		}
+	)
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}/permissions"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<Permission> getSiteERCSiteTestEntityPermissionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
+			String ercSiteTestEntityExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("roleNames")
+			String roleNames)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	/**
@@ -259,6 +347,11 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 		).build();
 	}
 
+	protected abstract ERCSiteTestEntity doPostSiteERCSiteTestEntity(
+			String siteExternalReferenceCode,
+			ERCSiteTestEntity ercSiteTestEntity)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -284,7 +377,7 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ERCSiteTestEntity postSiteERCSiteTestEntity(
+	public final ERCSiteTestEntity postSiteERCSiteTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -292,7 +385,31 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 			ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception {
 
-		return new ERCSiteTestEntity();
+		Permission[] permissions = ercSiteTestEntity.getPermissions();
+
+		ERCSiteTestEntity postERCSiteTestEntity = doPostSiteERCSiteTestEntity(
+			siteExternalReferenceCode, ercSiteTestEntity);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage =
+				putSiteERCSiteTestEntityPermissionsPage(
+					siteExternalReferenceCode,
+					postERCSiteTestEntity.getExternalReferenceCode(),
+					permissions);
+
+			postERCSiteTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return postERCSiteTestEntity;
 	}
 
 	/**
@@ -393,6 +510,51 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 		throws Exception {
 
 		return new ERCSiteTestEntity();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}/permissions'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "ercSiteTestEntityExternalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ERCSiteTestEntity")
+		}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}/permissions"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
+	@Override
+	public Page<Permission> putSiteERCSiteTestEntityPermissionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
+			String ercSiteTestEntityExternalReferenceCode,
+			Permission[] permissions)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override

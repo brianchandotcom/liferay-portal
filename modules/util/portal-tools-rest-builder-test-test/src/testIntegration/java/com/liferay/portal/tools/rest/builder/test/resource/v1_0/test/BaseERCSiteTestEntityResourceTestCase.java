@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -41,6 +43,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ERCSiteTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
+import com.liferay.portal.tools.rest.builder.test.client.permission.Permission;
 import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.ERCSiteTestEntityResource;
 import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ERCSiteTestEntitySerDes;
 import com.liferay.portal.util.PropsValues;
@@ -123,6 +126,19 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		permissionsERCSiteTestEntityResource =
+			ERCSiteTestEntityResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).parameter(
+				"nestedFields", "permissions"
+			).build();
 	}
 
 	@After
@@ -379,6 +395,18 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			page,
 			testGetSiteERCSiteTestEntitiesPage_getExpectedActions(
 				siteExternalReferenceCode));
+
+		for (ERCSiteTestEntity ercSiteTestEntity : page.getItems()) {
+			Assert.assertNull(ercSiteTestEntity.getPermissions());
+		}
+
+		page =
+			permissionsERCSiteTestEntityResource.getSiteERCSiteTestEntitiesPage(
+				siteExternalReferenceCode);
+
+		for (ERCSiteTestEntity ercSiteTestEntity : page.getItems()) {
+			Assert.assertNotNull(ercSiteTestEntity.getPermissions());
+		}
 	}
 
 	protected Map<String, Map<String, String>>
@@ -580,6 +608,29 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteERCSiteTestEntityPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ERCSiteTestEntity postERCSiteTestEntity =
+			testGetSiteERCSiteTestEntityPermissionsPage_addERCSiteTestEntity();
+
+		Page<Permission> page =
+			ercSiteTestEntityResource.getSiteERCSiteTestEntityPermissionsPage(
+				testGroup.getExternalReferenceCode(),
+				postERCSiteTestEntity.getExternalReferenceCode(),
+				RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected ERCSiteTestEntity
+			testGetSiteERCSiteTestEntityPermissionsPage_addERCSiteTestEntity()
+		throws Exception {
+
+		return ercSiteTestEntityResource.postSiteERCSiteTestEntity(
+			testGroup.getExternalReferenceCode(), randomERCSiteTestEntity());
+	}
+
+	@Test
 	public void testPostSiteERCSiteTestEntity() throws Exception {
 		ERCSiteTestEntity randomERCSiteTestEntity = randomERCSiteTestEntity();
 
@@ -589,10 +640,38 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		assertEquals(randomERCSiteTestEntity, postERCSiteTestEntity);
 		assertValid(postERCSiteTestEntity);
+
+		ERCSiteTestEntity randomPermissionsERCSiteTestEntity1 =
+			randomPermissionsERCSiteTestEntity();
+
+		ERCSiteTestEntity postPermissionsERCSiteTestEntity1 =
+			testPostSiteERCSiteTestEntity_addERCSiteTestEntity(
+				randomPermissionsERCSiteTestEntity1);
+
+		Assert.assertNull(postPermissionsERCSiteTestEntity1.getPermissions());
+
+		ERCSiteTestEntity randomPermissionsERCSiteTestEntity2 =
+			randomPermissionsERCSiteTestEntity();
+
+		ERCSiteTestEntity postPermissionsERCSiteTestEntity2 =
+			testPostSiteERCSiteTestEntity_addPermissionsERCSiteTestEntity(
+				randomPermissionsERCSiteTestEntity2);
+
+		Assert.assertNotNull(
+			postPermissionsERCSiteTestEntity2.getPermissions());
 	}
 
 	protected ERCSiteTestEntity
 			testPostSiteERCSiteTestEntity_addERCSiteTestEntity(
+				ERCSiteTestEntity ercSiteTestEntity)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ERCSiteTestEntity
+			testPostSiteERCSiteTestEntity_addPermissionsERCSiteTestEntity(
 				ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception {
 
@@ -638,6 +717,53 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 	protected ERCSiteTestEntity
 			testPutSiteERCSiteTestEntity_addERCSiteTestEntity()
+		throws Exception {
+
+		return ercSiteTestEntityResource.postSiteERCSiteTestEntity(
+			testGroup.getExternalReferenceCode(), randomERCSiteTestEntity());
+	}
+
+	@Test
+	public void testPutSiteERCSiteTestEntityPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ERCSiteTestEntity ercSiteTestEntity =
+			testPutSiteERCSiteTestEntityPermissionsPage_addERCSiteTestEntity();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			ercSiteTestEntityResource.
+				putSiteERCSiteTestEntityPermissionsPageHttpResponse(
+					ercSiteTestEntity.getSiteExternalReferenceCode(), null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			ercSiteTestEntityResource.
+				putSiteERCSiteTestEntityPermissionsPageHttpResponse(
+					ercSiteTestEntity.getSiteExternalReferenceCode(), null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected ERCSiteTestEntity
+			testPutSiteERCSiteTestEntityPermissionsPage_addERCSiteTestEntity()
 		throws Exception {
 
 		return ercSiteTestEntityResource.postSiteERCSiteTestEntity(
@@ -1508,6 +1634,27 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		return randomERCSiteTestEntity();
 	}
 
+	protected ERCSiteTestEntity randomPermissionsERCSiteTestEntity()
+		throws Exception {
+
+		ERCSiteTestEntity ercSiteTestEntity = randomERCSiteTestEntity();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		ercSiteTestEntity.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return ercSiteTestEntity;
+	}
+
 	protected final JSONObject waitForFinish(
 			String expectedExecuteStatus, JSONObject jsonObject)
 		throws Exception {
@@ -1533,6 +1680,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 	protected ERCSiteTestEntityResource ercSiteTestEntityResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected ERCSiteTestEntityResource permissionsERCSiteTestEntityResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 

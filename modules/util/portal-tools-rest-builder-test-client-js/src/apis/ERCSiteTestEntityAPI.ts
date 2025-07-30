@@ -203,6 +203,84 @@ export class ERCSiteTestEntityAPI {
 		/**
 		 * 
 				 * @param siteExternalReferenceCode
+				 * @param ercSiteTestEntityExternalReferenceCode
+				 * @param fields
+				 * @param restrictFields
+				 * @param roleNames
+		 * @param headers Optional custom request headers
+		 */
+		public async getSiteERCSiteTestEntityPermissionsPage(
+						siteExternalReferenceCode: string,
+						ercSiteTestEntityExternalReferenceCode: string,
+						fields?: string,
+						restrictFields?: string,
+						roleNames?: string,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body?: any;
+			response: Response;
+		}> {
+
+			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}/permissions"
+						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
+										.replace("{ercSiteTestEntityExternalReferenceCode}",encodeURIComponent(ercSiteTestEntityExternalReferenceCode))
+																;
+
+			const queryParameters: any = {};
+
+						if (siteExternalReferenceCode === null || siteExternalReferenceCode === undefined) {
+							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling getSiteERCSiteTestEntityPermissionsPage.");
+						}
+
+						if (ercSiteTestEntityExternalReferenceCode === null || ercSiteTestEntityExternalReferenceCode === undefined) {
+							throw new Error("Required parameter ercSiteTestEntityExternalReferenceCode was null or undefined when calling getSiteERCSiteTestEntityPermissionsPage.");
+						}
+
+						if (fields !== undefined) {
+							queryParameters["fields"] = ObjectSerializer.serialize(fields, "string");
+						}
+
+						if (restrictFields !== undefined) {
+							queryParameters["restrictFields"] = ObjectSerializer.serialize(restrictFields, "string");
+						}
+
+						if (roleNames !== undefined) {
+							queryParameters["roleNames"] = ObjectSerializer.serialize(roleNames, "string");
+						}
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/json"
+						}
+					,headers || {}
+					),
+				method: "GET",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: await response.json(), response};
+					}
+					else {
+						return {body: await response.text(), response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
+		/**
+		 * 
+				 * @param siteExternalReferenceCode
 		 		* @param requestBody Request body that can be one of multiple content types
 		 * @param headers Optional custom request headers
 		 */
@@ -414,4 +492,64 @@ export class ERCSiteTestEntityAPI {
 							headers
 						);
 					}
+		/**
+		 * 
+				 * @param siteExternalReferenceCode
+				 * @param ercSiteTestEntityExternalReferenceCode
+		 * @param headers Optional custom request headers
+		 */
+		public async putSiteERCSiteTestEntityPermissionsPage(
+						siteExternalReferenceCode: string,
+						ercSiteTestEntityExternalReferenceCode: string,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body?: any;
+			response: Response;
+		}> {
+
+			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}/permissions"
+						.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
+										.replace("{ercSiteTestEntityExternalReferenceCode}",encodeURIComponent(ercSiteTestEntityExternalReferenceCode))
+				;
+
+			const queryParameters: any = {};
+
+						if (siteExternalReferenceCode === null || siteExternalReferenceCode === undefined) {
+							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling putSiteERCSiteTestEntityPermissionsPage.");
+						}
+
+						if (ercSiteTestEntityExternalReferenceCode === null || ercSiteTestEntityExternalReferenceCode === undefined) {
+							throw new Error("Required parameter ercSiteTestEntityExternalReferenceCode was null or undefined when calling putSiteERCSiteTestEntityPermissionsPage.");
+						}
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/json"
+						}
+					,headers || {}
+					),
+				method: "PUT",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: await response.json(), response};
+					}
+					else {
+						return {body: await response.text(), response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
 }

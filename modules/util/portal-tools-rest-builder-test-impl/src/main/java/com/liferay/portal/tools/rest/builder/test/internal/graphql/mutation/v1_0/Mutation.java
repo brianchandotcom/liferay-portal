@@ -500,6 +500,33 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateAssetLibraryERCAssetLibraryTestEntityPermissionsPage(
+				@GraphQLName("assetLibraryExternalReferenceCode") @NotEmpty
+					String assetLibraryExternalReferenceCode,
+				@GraphQLName("ercAssetLibraryTestEntityExternalReferenceCode")
+					String ercAssetLibraryTestEntityExternalReferenceCode,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ercAssetLibraryTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ercAssetLibraryTestEntityResource -> {
+				Page paginationPage =
+					ercAssetLibraryTestEntityResource.
+						putAssetLibraryERCAssetLibraryTestEntityPermissionsPage(
+							assetLibraryExternalReferenceCode,
+							ercAssetLibraryTestEntityExternalReferenceCode,
+							permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
 	public boolean deleteAssetLibraryERCScopedTestEntity(
 			@GraphQLName("assetLibraryExternalReferenceCode") @NotEmpty String
 				assetLibraryExternalReferenceCode,
@@ -769,6 +796,33 @@ public class Mutation {
 				ercSiteTestEntityResource.putSiteERCSiteTestEntity(
 					siteExternalReferenceCode,
 					ercSiteTestEntityExternalReferenceCode, ercSiteTestEntity));
+	}
+
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateSiteERCSiteTestEntityPermissionsPage(
+				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+					siteExternalReferenceCode,
+				@GraphQLName("ercSiteTestEntityExternalReferenceCode") String
+					ercSiteTestEntityExternalReferenceCode,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ercSiteTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ercSiteTestEntityResource -> {
+				Page paginationPage =
+					ercSiteTestEntityResource.
+						putSiteERCSiteTestEntityPermissionsPage(
+							siteExternalReferenceCode,
+							ercSiteTestEntityExternalReferenceCode,
+							permissions);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField

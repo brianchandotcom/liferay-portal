@@ -543,6 +543,12 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 					Set releaseDependentModules = new TreeSet();
 
+					String testReleaseAdditionalDependencyModules = project.getProperty("test.release.additional.dependency.modules");
+
+					if (testReleaseAdditionalDependencyModules != null) {
+						releaseDependentModules.addAll(new ArrayList(Arrays.asList(testReleaseAdditionalDependencyModules.split(","))));
+					}
+
 					releaseDependentModules.addAll(getTestUtilModules());
 
 					String deprecatedModuleGroups = project.getProperty("test.batch.deprecated.module.groups");

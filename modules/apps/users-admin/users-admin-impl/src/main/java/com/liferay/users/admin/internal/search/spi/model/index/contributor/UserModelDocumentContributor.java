@@ -74,6 +74,9 @@ public class UserModelDocumentContributor
 			document.addKeyword(Field.TYPE, user.getType());
 			document.addKeyword(Field.USER_ID, user.getUserId());
 			document.addKeyword(Field.USER_NAME, user.getFullName(), true);
+			document.addText(
+				Field.getSortableFieldName(Field.USER_NAME),
+				StringUtil.toLowerCase(user.getFullName()));
 			document.addKeyword(
 				"ancestorOrganizationIds",
 				_getAncestorOrganizationIds(user.getOrganizationIds()));

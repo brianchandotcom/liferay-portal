@@ -198,7 +198,7 @@ public class OrphanReferencesDataCleanupUtil {
 			sb.append(" and User_.type_ = ?");
 		}
 
-		sb.append(" order by User_.userId asc limit 1");
+		sb.append(" order by User_.userId asc");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sb.toString())) {

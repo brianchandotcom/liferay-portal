@@ -31,6 +31,7 @@ import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
@@ -406,26 +407,10 @@ public class ServletContextWrapper implements ServletContext {
 		Dictionary<String, Object> contextAttributes =
 			_servletContextHelperDataContext.getContextAttributes();
 
-		Object attributeValue = contextAttributes.remove(name);
+		Object value = contextAttributes.remove(name);
 
-		EventListeners eventListeners = _contextController.getEventListeners();
-
-		List<ServletContextAttributeListener> servletContextAttributeListeners =
-			eventListeners.get(ServletContextAttributeListener.class);
-
-		if (servletContextAttributeListeners.isEmpty()) {
-			return;
-		}
-
-		ServletContextAttributeEvent servletContextAttributeEvent =
-			new ServletContextAttributeEvent(this, name, attributeValue);
-
-		for (ServletContextAttributeListener servletContextAttributeListener :
-				servletContextAttributeListeners) {
-
-			servletContextAttributeListener.attributeRemoved(
-				servletContextAttributeEvent);
-		}
+		_fireServletContextAttributeEvent(
+			name, value, ServletContextAttributeListener::attributeRemoved);
 	}
 
 	@Override
@@ -439,37 +424,16 @@ public class ServletContextWrapper implements ServletContext {
 		Dictionary<String, Object> contextAttributes =
 			_servletContextHelperDataContext.getContextAttributes();
 
-		boolean added = false;
+		Object oldValue = contextAttributes.put(name, value);
 
-		if (contextAttributes.get(name) == null) {
-			added = true;
+		if (oldValue == null) {
+			_fireServletContextAttributeEvent(
+				name, value, ServletContextAttributeListener::attributeAdded);
 		}
-
-		contextAttributes.put(name, value);
-
-		EventListeners eventListeners = _contextController.getEventListeners();
-
-		List<ServletContextAttributeListener> servletContextAttributeListeners =
-			eventListeners.get(ServletContextAttributeListener.class);
-
-		if (servletContextAttributeListeners.isEmpty()) {
-			return;
-		}
-
-		ServletContextAttributeEvent servletContextAttributeEvent =
-			new ServletContextAttributeEvent(this, name, value);
-
-		for (ServletContextAttributeListener servletContextAttributeListener :
-				servletContextAttributeListeners) {
-
-			if (added) {
-				servletContextAttributeListener.attributeAdded(
-					servletContextAttributeEvent);
-			}
-			else {
-				servletContextAttributeListener.attributeReplaced(
-					servletContextAttributeEvent);
-			}
+		else {
+			_fireServletContextAttributeEvent(
+				name, value,
+				ServletContextAttributeListener::attributeReplaced);
 		}
 	}
 
@@ -498,6 +462,32 @@ public class ServletContextWrapper implements ServletContext {
 		Set<SessionTrackingMode> sessionTrackingModes) {
 
 		_servletContext.setSessionTrackingModes(sessionTrackingModes);
+	}
+
+	private void _fireServletContextAttributeEvent(
+		String name, Object value,
+		BiConsumer
+			<ServletContextAttributeListener, ServletContextAttributeEvent>
+				biConsumer) {
+
+		EventListeners eventListeners = _contextController.getEventListeners();
+
+		List<ServletContextAttributeListener> servletContextAttributeListeners =
+			eventListeners.get(ServletContextAttributeListener.class);
+
+		if (servletContextAttributeListeners.isEmpty()) {
+			return;
+		}
+
+		ServletContextAttributeEvent servletContextAttributeEvent =
+			new ServletContextAttributeEvent(this, name, value);
+
+		for (ServletContextAttributeListener servletContextAttributeListener :
+				servletContextAttributeListeners) {
+
+			biConsumer.accept(
+				servletContextAttributeListener, servletContextAttributeEvent);
+		}
 	}
 
 	private final Bundle _bundle;

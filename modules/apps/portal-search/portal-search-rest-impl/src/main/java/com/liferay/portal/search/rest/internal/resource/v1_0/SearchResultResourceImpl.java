@@ -105,7 +105,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11232")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-179669")) {
 			throw new NotFoundException();
 		}
 

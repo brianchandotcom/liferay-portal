@@ -316,6 +316,26 @@ public class ObjectEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		ObjectFolder objectFolder =
+			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
+				ObjectFolderConstants.
+					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+				TestPropsValues.getCompanyId());
+
+		if (objectFolder != null) {
+			_cmsObjectDefinition =
+				ObjectDefinitionTestUtil.publishObjectDefinition(
+					false, ObjectDefinitionTestUtil.getRandomName(),
+					Arrays.asList(
+						ObjectFieldUtil.createObjectField(
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING, "name",
+							"name")),
+					objectFolder.getObjectFolderId(),
+					ObjectDefinitionConstants.SCOPE_SITE,
+					TestPropsValues.getUserId());
+		}
+
 		_draftObjectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				Arrays.asList(
@@ -562,26 +582,6 @@ public class ObjectEntryLocalServiceTest {
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())),
 				ObjectDefinitionConstants.SCOPE_SITE);
-
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.
-					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-				TestPropsValues.getCompanyId());
-
-		if (objectFolder != null) {
-			_cmsObjectDefinition =
-				ObjectDefinitionTestUtil.publishObjectDefinition(
-					false, ObjectDefinitionTestUtil.getRandomName(),
-					Arrays.asList(
-						ObjectFieldUtil.createObjectField(
-							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-							ObjectFieldConstants.DB_TYPE_STRING, "name",
-							"name")),
-					objectFolder.getObjectFolderId(),
-					ObjectDefinitionConstants.SCOPE_SITE,
-					TestPropsValues.getUserId());
-		}
 	}
 
 	@After

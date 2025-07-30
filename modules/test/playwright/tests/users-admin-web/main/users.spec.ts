@@ -839,3 +839,47 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'The Account Users filter persists through pagination',
+	{tag: ['@LPD-2049']},
+	async ({apiHelpers, page, usersAndOrganizationsPage}) => {
+		test.setTimeout(120000);
+
+		const account = await apiHelpers.headlessAdminUser.postAccount();
+
+		for (let i = 1; i < 22; i++) {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount({
+				alternateName: `user${String(i).padStart(2, '0')}`,
+				emailAddress: `user${String(i).padStart(2, '0')}@liferay.com`,
+				familyName: `User${String(i).padStart(2, '0')}`,
+				givenName: `User${String(i).padStart(2, '0')}`,
+			});
+
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account.id,
+				[user.emailAddress]
+			);
+		}
+
+		await usersAndOrganizationsPage.goto();
+
+		await usersAndOrganizationsPage.filterUsers('Account Users');
+
+		await expect(
+			usersAndOrganizationsPage.usersTableCell('user20')
+		).toBeVisible();
+		await expect(
+			page.getByText('Showing 1 to 20 of 21 entries.')
+		).toBeVisible();
+
+		await nextPage(page);
+
+		await expect(
+			usersAndOrganizationsPage.usersTableCell('user21')
+		).toBeVisible();
+		await expect(
+			page.getByText('Showing 21 to 21 of 21 entries.')
+		).toBeVisible();
+	}
+);

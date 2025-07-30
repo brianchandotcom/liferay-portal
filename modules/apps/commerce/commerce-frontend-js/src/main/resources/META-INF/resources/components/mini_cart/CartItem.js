@@ -85,15 +85,15 @@ function CartItem({
 	name,
 	options: rawOptions,
 	price,
+	productId,
 	productURLs,
 	quantity: cartItemQuantity,
+	replacedSku,
 	settings,
 	sku,
 	skuId,
-	updateCartItem,
-	replacedSku,
 	skuUnitOfMeasure,
-	productId,
+	updateCartItem,
 }) {
 	const [itemState, setItemState] = useState(INITIAL_ITEM_STATE);
 	const [selectorQuantity, setSelectorQuantity] = useState(cartItemQuantity);
@@ -302,9 +302,14 @@ function CartItem({
 							!!errors.length,
 							setIsUpdating
 						)
-							.then(() => {
+							.then((updatedItem) => {
 								if (isMounted()) {
 									setIsUpdating(false);
+
+									updateCartItem((cartItem) => ({
+										...cartItem,
+										...updatedItem,
+									}));
 
 									updateCartModel({
 										order: {id: cartState.id},
@@ -374,9 +379,20 @@ function CartItem({
 							<ClayDropDown.Item
 								onClick={() =>
 									setEditedItem({
-										cartItemId,
+										adaptiveMediaImageHTMLTag,
+										cartItems: childItems,
+										id: cartItemId,
 										name,
+										options: rawOptions,
+										price,
 										productId,
+										productURLs,
+										quantity: cartItemQuantity,
+										replacedSku,
+										settings,
+										sku,
+										skuId,
+										skuUnitOfMeasure,
 									})
 								}
 							>

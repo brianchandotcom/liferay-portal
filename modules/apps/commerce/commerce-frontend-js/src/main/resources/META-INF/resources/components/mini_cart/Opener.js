@@ -8,12 +8,15 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect} from 'react';
 
+import ServiceProvider from '../../ServiceProvider';
 import {
 	OPEN_MINICART_FOR_EDITING,
 	OPEN_MINI_CART,
 } from '../../utilities/eventsDefinitions';
 import MiniCartContext from './MiniCartContext';
 import {hasOptions} from './util/index';
+
+const CartItemResource = ServiceProvider.DeliveryCartAPI('v1');
 
 function Opener({disabled = false}) {
 	const {cartState, displayTotalItemsQuantity, openCart, setEditedItem} =
@@ -27,20 +30,27 @@ function Opener({disabled = false}) {
 		: itemsCount;
 
 	const openMiniCartForEditing = useCallback(
-		({dataSetId, orderItemId}) => {
-			const cartItem = cartItems.find(
+		async ({dataSetId, orderItemId}) => {
+			let cartItem = cartItems.find(
 				(cartItem) => cartItem.id === orderItemId
 			);
+
+			if (!cartItem) {
+				try {
+					cartItem = await CartItemResource.getItemById(orderItemId);
+				}
+				catch (error) {
+					console.error('Unable to fetch cart item.', error);
+				}
+			}
 
 			if (
 				cartItem &&
 				(hasOptions(cartItem.options) || cartItem.skuUnitOfMeasure)
 			) {
 				setEditedItem({
-					cartItemId: orderItemId,
+					...cartItem,
 					dataSetId,
-					name: cartItem.name,
-					productId: cartItem.productId,
 				});
 
 				openCart();

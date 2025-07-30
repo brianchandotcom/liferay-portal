@@ -3,42 +3,37 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import { useModal } from '@clayui/modal';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import {useModal} from '@clayui/modal';
+import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import Modal from '../../../components/Modal';
 import Page from '../../../components/Page';
-import { useMarketplaceContext } from '../../../context/MarketplaceContext';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
-import {
-	OrderStatus,
-	OrderTypes,
-	OrderWorkflowStatusCode,
-} from '../../../enums/Order';
-import { usePlacedOrders } from '../../../hooks/data/usePlacedOrder';
+import {OrderStatus, OrderTypes} from '../../../enums/Order';
+import {usePlacedOrders} from '../../../hooks/data/usePlacedOrder';
 import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
-import trialOAuth2 from '../../../services/oauth/Trial';
-import { Action } from '../../../utils/constants';
-import { useSSAForm } from '../components/SSAForm';
+import {Action} from '../../../utils/constants';
+import {useSSAForm} from '../components/SSAForm';
 import TrialListView from '../components/TrialListView/TrialListView';
-import { ExtendRequestStatus } from '../enums/SSATrials';
+import {ExtendRequestStatus} from '../enums/SSATrials';
+import ExpireSSAModal from './ExpireSSAModal';
 import ExtendRequestModal from './ExtendRequestModal';
 import ExtendSSATrialModal from './ExtendSSATrialModal';
 
 export default function SaaSTrials() {
-	const { marketplaceUserAccount, myUserAccount } = useMarketplaceContext();
+	const {marketplaceUserAccount, myUserAccount} = useMarketplaceContext();
 	const modal = useModal();
 	const modalContext = useModalContext();
 	const navigate = useNavigate();
 	const ssaForm = useSSAForm();
-	const { selectedAccount, ssaTrialExtend, ssaTrialExtendMutate } =
+	const {selectedAccount, ssaTrialExtend, ssaTrialExtendMutate} =
 		useOutletContext<any>();
 
 	const {
-		data: SSATrialsInProgress = { items: [], pageSize: 1, totalCount: 0 },
+		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
 	} = usePlacedOrders({
 		filter: new SearchBuilder()
 			.eq('author', myUserAccount?.name)
@@ -72,7 +67,8 @@ export default function SaaSTrials() {
 			name: i18n.translate('go-to-trial'),
 			onClick: (order: Order) =>
 				window.open(
-					`https://${order?.customFields?.['trial-virtualhost'] as string
+					`https://${
+						order?.customFields?.['trial-virtual-host'] as string
 					}`
 				),
 		},
@@ -146,12 +142,11 @@ export default function SaaSTrials() {
 				}
 
 				return (
-					[
-						OrderWorkflowStatusCode.COMPLETED,
-						OrderWorkflowStatusCode.PENDING,
-					].includes(order.orderStatus) ||
+					order.orderStatusInfo.label === OrderStatus.APPROVED ||
+					order.orderStatusInfo.label === OrderStatus.COMPLETED ||
+					order.orderStatusInfo.label === OrderStatus.PENDING ||
 					extendRequests[0]?.dueStatus.key ===
-					ExtendRequestStatus.PENDING
+						ExtendRequestStatus.PENDING
 				);
 			},
 			name: 'Extend',
@@ -170,7 +165,7 @@ export default function SaaSTrials() {
 					body: (
 						<ExtendSSATrialModal
 							accountId={selectedAccount.id}
-							firstExtendRequest={extendRequests?.length === 0}
+							firstExtendRequest={!extendRequests?.length}
 							onClose={modalContext.onClose}
 							order={order}
 							ssaTrialExtendMutate={ssaTrialExtendMutate}
@@ -189,58 +184,13 @@ export default function SaaSTrials() {
 			onClick: (order: Order, mutate) => {
 				modalContext.onOpenModal({
 					body: (
-						<div>
-							<ClayAlert displayType="warning" role={null}>
-								{i18n.translate('this-action-cannot-be-undone')}
-							</ClayAlert>
-							<p>
-								{i18n.translate(
-									'are-you-sure-you-want-to-expire-this-trial-this-action-imply-the-end-of-the-test-environment-permanently'
-								)}
-							</p>
-						</div>
+						<ExpireSSAModal
+							accountId={selectedAccount.id}
+							mutate={mutate}
+							onClose={modalContext.onClose}
+							order={order}
+						/>
 					),
-					footer: [
-						undefined,
-						undefined,
-						<div key="footer-buttons">
-							<ClayButton
-								aria-label="cancel"
-								displayType="secondary"
-								key={0}
-								onClick={modalContext.onClose}
-							>
-								{i18n.translate('cancel')}
-							</ClayButton>
-
-							<ClayButton
-								aria-label="close"
-								className="ml-4"
-								displayType="warning"
-								key={2}
-								onClick={async () => {
-									await trialOAuth2.expireTrial(order.id);
-
-									mutate(
-										{
-											...order,
-											orderStatusInfo: {
-												...order.orderStatusInfo,
-												label: OrderStatus.COMPLETED,
-											},
-										},
-										{
-											revalidate: false,
-										}
-									);
-
-									modalContext.onClose();
-								}}
-							>
-								{i18n.translate('got-it')}
-							</ClayButton>
-						</div>,
-					],
 					header: `Expire ${order.id} Trial`,
 					status: undefined,
 				});
@@ -256,7 +206,7 @@ export default function SaaSTrials() {
 						? i18n.translate('manage-your-teams-trial')
 						: i18n.translate('manage-your-current-trials')
 				}
-				pageRendererProps={{ className: 'border py-2' }}
+				pageRendererProps={{className: 'border py-2'}}
 				rightButton={
 					<ClayButton
 						onClick={() =>

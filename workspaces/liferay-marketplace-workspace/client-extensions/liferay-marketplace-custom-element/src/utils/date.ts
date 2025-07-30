@@ -12,6 +12,10 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 };
 
 export function formatDate(date: string) {
+	if (!date) {
+		return 'N/A';
+	}
+
 	return new Intl.DateTimeFormat(
 		Liferay.ThemeDisplay.getBCP47LanguageId(),
 		dateOptions

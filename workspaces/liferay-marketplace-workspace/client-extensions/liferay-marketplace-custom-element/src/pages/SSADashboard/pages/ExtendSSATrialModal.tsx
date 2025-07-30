@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
 import {useState} from 'react';
@@ -13,6 +14,7 @@ import {useForm} from 'react-hook-form';
 import {KeyedMutator} from 'swr';
 
 import BaseWrapper from '../../../components/Form/BaseWrapper';
+import {OrderCustomFields} from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema, {z} from '../../../schema/zod';
@@ -38,6 +40,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 }) => {
 	const [duration, setDuration] = useState<number | undefined>(undefined);
 	const [reason, setReason] = useState<string>('');
+	const [submitting, setSubmitting] = useState<boolean>(false);
 
 	const {formState, handleSubmit, setValue, trigger} = useForm({
 		defaultValues: {
@@ -60,6 +63,12 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 	);
 
 	const onSubmit = async (form: z.infer<typeof zodSchema.extendSSATrial>) => {
+		setSubmitting(true);
+
+		const trialSettings =
+			order.customFields?.[OrderCustomFields.TRIAL_SETTINGS];
+		const projectId = JSON.parse(trialSettings)?.projectId;
+
 		try {
 			const extendTrial = {
 				dueStatus: {
@@ -69,6 +78,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 							: ExtendRequestStatus.PENDING,
 				},
 				duration: form.duration,
+				projectId,
 				r_accountToTrialExtensionRequest_accountEntryId: accountId,
 				r_orderToTrialExtensionRequest_commerceOrderId: order.id,
 				reason: form.reason,
@@ -92,6 +102,13 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 				},
 				{revalidate: false}
 			);
+
+			Liferay.Util.openToast({
+				message: i18n.translate('success'),
+				type: 'success',
+			});
+
+			setSubmitting(false);
 
 			onClose();
 		}
@@ -148,16 +165,22 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 			<div className="d-flex justify-content-end">
 				<ClayButton
 					className="mr-4"
+					disabled={!!submitting}
 					displayType="secondary"
 					onClick={onClose}
 				>
 					{i18n.translate('cancel')}
 				</ClayButton>
 				<ClayButton
-					disabled={!isValid || isLoading}
+					disabled={!isValid || isLoading || submitting}
 					onClick={handleSubmit(onSubmit)}
 				>
-					{extendOptions?.actionText}
+					<div className="align-items-center d-flex">
+						{submitting && (
+							<ClayLoadingIndicator className="mr-3 my-0" />
+						)}
+						{extendOptions?.actionText}
+					</div>
 				</ClayButton>
 			</div>
 		</div>

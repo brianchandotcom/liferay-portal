@@ -13,6 +13,7 @@ import {useSSATrialsExtend} from './useSSATrialsExtend';
 
 const SSADashboardOutlet = () => {
 	const accountsSearch = useAccounts();
+
 	const {
 		data: selectedAccount,
 		error: errorAccount,

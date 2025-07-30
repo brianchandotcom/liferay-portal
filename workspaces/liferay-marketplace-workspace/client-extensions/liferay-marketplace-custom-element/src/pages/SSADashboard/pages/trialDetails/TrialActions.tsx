@@ -3,32 +3,34 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useOutletContext} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {OrderStatus} from '../../../../enums/Order';
 import useModalContext from '../../../../hooks/useModalContext';
 import i18n from '../../../../i18n';
-import trialOAuth2 from '../../../../services/oauth/Trial';
 import {ExtendRequestStatus} from '../../enums/SSATrials';
+import ExpireSSAModal from '../ExpireSSAModal';
 import ExtendRequestModal from '../ExtendRequestModal';
 import ExtendSSATrialModal from '../ExtendSSATrialModal';
 
 type TrialActionsProps = {
+	mutatePlacedOrder: KeyedMutator<any>;
 	placedOrder: PlacedOrder;
+	ssaTrialExtendMutate: KeyedMutator<any>;
 };
 
-function TrialActions({placedOrder}: TrialActionsProps) {
+function TrialActions({
+	mutatePlacedOrder,
+	placedOrder,
+	ssaTrialExtendMutate,
+}: TrialActionsProps) {
 	const {marketplaceUserAccount} = useMarketplaceContext();
 	const modalContext = useModalContext();
-	const {selectedAccount, ssaTrialExtend, ssaTrialExtendMutate} =
-		useOutletContext<any>();
-
-	const onExpireTrial = (order: Order) => trialOAuth2.expireTrial(order.id);
+	const {selectedAccount, ssaTrialExtend} = useOutletContext<any>();
 
 	const isUserSSAAdmin = marketplaceUserAccount.isSSAAdmin;
 
@@ -164,80 +166,13 @@ function TrialActions({placedOrder}: TrialActionsProps) {
 					onClick={() =>
 						modalContext.onOpenModal({
 							body: (
-								<div>
-									<ClayAlert
-										displayType="warning"
-										role={null}
-									>
-										{i18n.translate(
-											'this-action-cannot-be-undone'
-										)}
-									</ClayAlert>
-									<p>
-										{i18n.translate(
-											'are-you-sure-you-want-to-expire-this-trial-this-action-imply-the-end-of-the-test-environment-permanently'
-										)}
-									</p>
-								</div>
+								<ExpireSSAModal
+									accountId={selectedAccount.id}
+									mutate={mutatePlacedOrder}
+									onClose={modalContext.onClose}
+									order={placedOrder}
+								/>
 							),
-							footer: [
-								undefined,
-								undefined,
-								<div key="footer-buttons">
-									<ClayButton
-										aria-label="cancel"
-										displayType="secondary"
-										key={0}
-										onClick={modalContext.onClose}
-									>
-										{i18n.translate('cancel')}
-									</ClayButton>
-
-									<ClayButton
-										aria-label="close"
-										className="ml-4"
-										displayType="warning"
-										key={2}
-										onClick={() => {
-											onExpireTrial(
-												placedOrder as unknown as Order
-											);
-
-											ssaTrialExtendMutate(
-												{
-													...ssaTrialExtend,
-													items: ssaTrialExtend.items.map(
-														(
-															order: TrialExtend
-														) => {
-															if (
-																order.r_orderToTrialExtensionRequest_commerceOrderId ===
-																placedOrder.id
-															) {
-																return {
-																	...order,
-																	dueStatus: {
-																		key: ExtendRequestStatus.EXTENSION_EXPIRED,
-																	},
-																};
-															}
-
-															return order;
-														}
-													),
-												},
-												{
-													revalidate: false,
-												}
-											);
-
-											modalContext.onClose();
-										}}
-									>
-										{i18n.translate('got-it')}
-									</ClayButton>
-								</div>,
-							],
 							header: `Expire ${placedOrder.id} Trial`,
 							status: undefined,
 						})
@@ -262,7 +197,7 @@ function TrialActions({placedOrder}: TrialActionsProps) {
 						window.open(
 							`https://${
 								placedOrder?.customFields?.[
-									'trial-virtualhost'
+									'trial-virtual-host'
 								] as string
 							}`
 						);

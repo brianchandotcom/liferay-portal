@@ -354,8 +354,8 @@ public class ObjectEntryResourceImpl
 
 	@Override
 	public Page<ObjectEntry> getObjectEntriesPage(
-			Boolean flatten, String search, Aggregation aggregation,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		ObjectEntryManager objectEntryManager =
@@ -500,9 +500,8 @@ public class ObjectEntryResourceImpl
 
 	@Override
 	public Page<ObjectEntry> getScopeScopeKeyPage(
-			String scopeKey, Boolean flatten, String search,
-			Aggregation aggregation, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			String scopeKey, String search, Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		ObjectEntryManager objectEntryManager =
@@ -990,14 +989,11 @@ public class ObjectEntryResourceImpl
 
 		if (objectScopeProvider.isGroupAware()) {
 			return getScopeScopeKeyPage(
-				_getScopeKey(parameters),
-				Boolean.parseBoolean((String)parameters.get("flatten")), search,
-				null, filter, pagination, sorts);
+				_getScopeKey(parameters), search, null, filter, pagination,
+				sorts);
 		}
 
-		return getObjectEntriesPage(
-			Boolean.parseBoolean((String)parameters.get("flatten")), search,
-			null, filter, pagination, sorts);
+		return getObjectEntriesPage(search, null, filter, pagination, sorts);
 	}
 
 	public void setObjectDefinition(ObjectDefinition objectDefinition) {

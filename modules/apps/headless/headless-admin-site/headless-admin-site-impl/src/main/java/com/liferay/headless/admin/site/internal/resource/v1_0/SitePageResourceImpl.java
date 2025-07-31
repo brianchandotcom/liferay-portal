@@ -310,7 +310,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 		else {
 			layout = LayoutUtil.addPortletLayout(
-				contextCompany.getCompanyId(),
 				sitePage.getExternalReferenceCode(), groupId, nameMap,
 				LocalizedMapUtil.getLocalizedMap(
 					sitePage.getFriendlyUrlPath_i18n()),

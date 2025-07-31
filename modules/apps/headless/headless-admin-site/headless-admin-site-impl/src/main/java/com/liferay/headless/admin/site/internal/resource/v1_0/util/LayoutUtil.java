@@ -274,7 +274,7 @@ public class LayoutUtil {
 	}
 
 	public static Layout addPortletLayout(
-			long companyId, String externalReferenceCode, long groupId,
+			String externalReferenceCode, long groupId,
 			Map<Locale, String> nameMap, Map<Locale, String> friendlyURLMap,
 			boolean hiddenFromNavigation, long parentLayoutId,
 			UnicodeProperties typeSettingsUnicodeProperties,
@@ -288,8 +288,7 @@ public class LayoutUtil {
 			typeSettings = typeSettingsUnicodeProperties.toString();
 		}
 
-		_setExpandoBridgeAttributes(
-			companyId, widgetPageSpecification, serviceContext);
+		_setExpandoBridgeAttributes(widgetPageSpecification, serviceContext);
 
 		return LayoutServiceUtil.addLayout(
 			externalReferenceCode, groupId, false, parentLayoutId, nameMap,
@@ -514,8 +513,7 @@ public class LayoutUtil {
 
 		layout = _updateLookAndFeel(layout, settings);
 
-		_setExpandoBridgeAttributes(
-			layout.getCompanyId(), pageSpecification, serviceContext);
+		_setExpandoBridgeAttributes(pageSpecification, serviceContext);
 
 		return _updateLayout(
 			layout, nameMap, titleMap, descriptionMap, robotsMap,
@@ -668,8 +666,7 @@ public class LayoutUtil {
 	}
 
 	private static void _setExpandoBridgeAttributes(
-		long companyId, PageSpecification pageSpecification,
-		ServiceContext serviceContext) {
+		PageSpecification pageSpecification, ServiceContext serviceContext) {
 
 		if (pageSpecification == null) {
 			serviceContext.setExpandoBridgeAttributes(null);
@@ -677,7 +674,7 @@ public class LayoutUtil {
 		else {
 			serviceContext.setExpandoBridgeAttributes(
 				CustomFieldsUtil.toMap(
-					Layout.class.getName(), companyId,
+					Layout.class.getName(), serviceContext.getCompanyId(),
 					pageSpecification.getCustomFields(), null));
 		}
 	}

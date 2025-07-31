@@ -3,20 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {format} from 'date-fns';
-import {useOutletContext} from 'react-router-dom';
+import { format } from 'date-fns';
+import { useOutletContext } from 'react-router-dom';
 
-import ListView, {ListViewProps} from '../../../../components/ListView';
-import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
-import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
+import ListView, { ListViewProps } from '../../../../components/ListView';
+import { ManagementToolbarProps } from '../../../../components/ListView/components/ManagementToolbar';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import { OrderCustomFields, OrderStatus, OrderTypes } from '../../../../enums/Order';
 import i18n from '../../../../i18n';
-import {Liferay} from '../../../../liferay/liferay';
-import {Action} from '../../../../utils/constants';
-import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
+import { Liferay } from '../../../../liferay/liferay';
+import { Action } from '../../../../utils/constants';
+import { EXTEND_TRIAL_STATUS_LABEL } from '../../constants';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
+import CreateTrialModalForm from '../../pages/CreateTrialModalform';
+import { useState } from 'react';
+import { OrderStatus as Status } from '../../../../enums/Order';
+import { useMarketplaceContext } from '../../../../context/MarketplaceContext';
 
 type TrialsListViewProps = {
 	actions: Action[];
@@ -32,15 +35,17 @@ type TrialsListViewProps = {
 		| 'tableProps'
 		| 'totalItems'
 	>;
+	createTrialFormModal: any
 };
 
 export default function TrialListView({
+	createTrialFormModal,
 	actions,
 	listViewProps,
 	managementToolbarProps,
 }: TrialsListViewProps) {
-	const {ssaTrialExtend} = useOutletContext<any>();
-	const {properties} = useMarketplaceContext();
+	const { ssaTrialExtend } = useOutletContext<any>();
+	const { properties } = useMarketplaceContext();
 
 	const resource = `/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${properties.accountId}/placed-orders?${new URLSearchParams(
 		{
@@ -49,15 +54,20 @@ export default function TrialListView({
 		}
 	)}`;
 
+	const [items, setItems] = useState<PlacedOrder[]>([]);
+
+	const refresh = items.some((item) => item.orderStatusInfo.label === Status.PROCESSING)
+
 	return (
 		<ListView<PlacedOrder>
+			refreshInterval={refresh ? 60 * 1000 : undefined}
 			defaultFilters={{
 				filter: SearchBuilder.eq(
 					'orderTypeExternalReferenceCode',
 					OrderTypes.SSA_SAAS
 				),
 			}}
-			emptyStateProps={{title: i18n.translate('no-trials-yet')}}
+			emptyStateProps={{ title: i18n.translate('no-trials-yet') }}
 			id="ssa-trials"
 			managementToolbarProps={{
 				filterSchema: 'administratorSSATrials',
@@ -70,12 +80,12 @@ export default function TrialListView({
 					{
 						id: 'placedOrderItems',
 						name: 'Project ID',
-						render: (_, {customFields, id}) => {
+						render: (_, { customFields, id }) => {
 							return (
 								<span className="font-weight-semi-bold ml-2">
 									{JSON.parse(
 										customFields[
-											OrderCustomFields.TRIAL_SETTINGS
+										OrderCustomFields.TRIAL_SETTINGS
 										]
 									)?.projectId ?? id}
 								</span>
@@ -85,7 +95,7 @@ export default function TrialListView({
 					{
 						id: 'author',
 						name: 'Created By',
-						render: (author, {createDate}) => {
+						render: (author, { createDate }) => {
 							return (
 								<div className="d-flex flex-column">
 									<span className="dashboard-table-row-text">
@@ -114,16 +124,16 @@ export default function TrialListView({
 					{
 						id: 'createDate',
 						name: 'End Date',
-						render: (_, {customFields}) => {
+						render: (_, { customFields }) => {
 							return customFields[OrderCustomFields.END_DATE]
 								? format(
-										new Date(
-											customFields[
-												OrderCustomFields.END_DATE
-											]
-										),
-										'dd MMM, yyyy'
-									).toString()
+									new Date(
+										customFields[
+										OrderCustomFields.END_DATE
+										]
+									),
+									'dd MMM, yyyy'
+								).toString()
 								: 'DNE';
 						},
 						sortable: true,
@@ -150,7 +160,7 @@ export default function TrialListView({
 										);
 									}
 								) as TrialExtend[];
-							
+
 							if (
 								!extendRequests ||
 								extendRequests?.length === 0
@@ -164,9 +174,9 @@ export default function TrialListView({
 								<ExtensionStatus
 									extensionStatus={
 										placedOrder.orderStatusInfo.label === OrderStatus.COMPLETED
-										? 'extension-expired'
-										:extendRequests[0]?.dueStatus
-											.key as keyof typeof EXTEND_TRIAL_STATUS_LABEL
+											? 'extension-expired'
+											: extendRequests[0]?.dueStatus
+												.key as keyof typeof EXTEND_TRIAL_STATUS_LABEL
 									}
 								/>
 							);
@@ -175,6 +185,13 @@ export default function TrialListView({
 				],
 			}}
 			{...listViewProps}
-		/>
+		>
+			{
+				(data, { mutate }) => {
+					setItems(data.items);
+					return <CreateTrialModalForm modal={createTrialFormModal} mutate={mutate} />;
+				}
+			}
+		</ListView>
 	);
 }

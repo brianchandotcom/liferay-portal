@@ -4,37 +4,35 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useModal} from '@clayui/modal';
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import { useModal } from '@clayui/modal';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 import Modal from '../../../components/Modal';
 import Page from '../../../components/Page';
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import { useMarketplaceContext } from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
-import {OrderStatus, OrderTypes} from '../../../enums/Order';
-import {usePlacedOrders} from '../../../hooks/data/usePlacedOrder';
+import { OrderStatus, OrderTypes } from '../../../enums/Order';
+import { usePlacedOrders } from '../../../hooks/data/usePlacedOrder';
 import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
-import {Action} from '../../../utils/constants';
-import {useSSAForm} from '../components/SSAForm';
+import { Action } from '../../../utils/constants';
 import TrialListView from '../components/TrialListView/TrialListView';
-import {ExtendRequestStatus} from '../enums/SSATrials';
+import { ExtendRequestStatus } from '../enums/SSATrials';
 import ExpireSSAModal from './ExpireSSAModal';
 import ExtendRequestModal from './ExtendRequestModal';
 import ExtendSSATrialModal from './ExtendSSATrialModal';
 
 export default function SaaSTrials() {
-	const {marketplaceUserAccount, myUserAccount, properties} =
-		useMarketplaceContext();
+	const { marketplaceUserAccount, myUserAccount, properties } = useMarketplaceContext();
 	const modal = useModal();
 	const modalContext = useModalContext();
 	const navigate = useNavigate();
-	const ssaForm = useSSAForm();
-	const {selectedAccountId, ssaTrialExtend, ssaTrialExtendMutate} =
+	const createTrialFormModal = useModal();
+	const { selectedAccountId, ssaTrialExtend, ssaTrialExtendMutate } =
 		useOutletContext<any>();
 	const accountId = properties.accountId;
 	const {
-		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
+		data: SSATrialsInProgress = { items: [], pageSize: 1, totalCount: 0 },
 	} = usePlacedOrders({
 		accountId: Number(accountId),
 		filter: new SearchBuilder()
@@ -159,7 +157,7 @@ export default function SaaSTrials() {
 					order.orderStatusInfo.label === OrderStatus.COMPLETED ||
 					order.orderStatusInfo.label === OrderStatus.PENDING ||
 					extendRequests[0]?.dueStatus.key ===
-						ExtendRequestStatus.PENDING
+					ExtendRequestStatus.PENDING
 				);
 			},
 			name: 'Extend',
@@ -220,14 +218,13 @@ export default function SaaSTrials() {
 						? i18n.translate('manage-your-teams-trial')
 						: i18n.translate('manage-your-current-trials')
 				}
-				pageRendererProps={{className: 'border py-2'}}
+				pageRendererProps={{ className: 'border py-2' }}
 				rightButton={
 					<ClayButton
 						onClick={() =>
 							canCreateTrial
-								? ssaForm.openModal()
-								: modal.onOpenChange(true)
-						}
+								? createTrialFormModal.onOpenChange(true)
+								: modal.onOpenChange(true)}
 					>
 						{i18n.translate('add-new-trial')}
 					</ClayButton>
@@ -235,6 +232,7 @@ export default function SaaSTrials() {
 				title={isSSAAdmin ? 'SaaS Demos' : 'My SaaS Demos'}
 			>
 				<TrialListView
+					createTrialFormModal={createTrialFormModal}
 					actions={actions}
 					isSortable
 					managementToolbarProps={{
@@ -242,31 +240,33 @@ export default function SaaSTrials() {
 						visible: isSSAAdmin ? true : false,
 					}}
 				/>
-			</Page>
+			</Page >
 
-			{modal.open && (
-				<Modal
-					last={
-						<ClayButton
-							className="btn"
-							displayType="secondary"
-							onClick={() => modal.onClose()}
-						>
-							{i18n.translate('cancel')}
-						</ClayButton>
-					}
-					observer={modal.observer}
-					size={'md' as any}
-					title={i18n.translate('ssa-trials-limit-reached')}
-					visible={modal.open}
-				>
-					<span>
-						{i18n.translate(
-							'you-have-reached-the-maximum-number-of-active-trials-allowed-to-start-a-new-trial-please-end-one-of-your-existing-trials-first'
-						)}
-					</span>
-				</Modal>
-			)}
+			{
+				modal.open && (
+					<Modal
+						last={
+							<ClayButton
+								className="btn"
+								displayType="secondary"
+								onClick={() => modal.onClose()}
+							>
+								{i18n.translate('cancel')}
+							</ClayButton>
+						}
+						observer={modal.observer}
+						size={'md' as any}
+						title={i18n.translate('ssa-trials-limit-reached')}
+						visible={modal.open}
+					>
+						<span>
+							{i18n.translate(
+								'you-have-reached-the-maximum-number-of-active-trials-allowed-to-start-a-new-trial-please-end-one-of-your-existing-trials-first'
+							)}
+						</span>
+					</Modal>
+				)
+			}
 		</>
 	);
 }

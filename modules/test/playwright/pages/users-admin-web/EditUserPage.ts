@@ -3,20 +3,40 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
+import {waitForAlert} from '../../utils/waitForAlert';
 import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 
 export class EditUserPage {
 	readonly accountsLink: Locator;
+	readonly addAdditionalEmailAddressesButton: Locator;
+	readonly addAddressButton: Locator;
+	readonly addAddressCityInput: Locator;
+	readonly addAddressCountrySelect: Locator;
+	readonly addAddressPostalCodeInput: Locator;
+	readonly addAddressRegionSelect: Locator;
+	readonly addAddressStreet1Input: Locator;
+	readonly additionalEmailAddressInput: Locator;
+	readonly additionalEmailAddressesTable: Locator;
+	readonly additionalEmailAddressesTablePrimaryText: (
+		emailAddress: string
+	) => Promise<Locator>;
 	readonly additionalEmailAddressesTableRow: (
 		colPosition: number,
 		value: string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
-	readonly additionalEmailAddressesTable: Locator;
+	readonly additionalEmailAddressesTableRowActions: (
+		emailAddress: string
+	) => Promise<Locator>;
+	readonly addPhoneNumbersButton: Locator;
+	readonly addPhoneNumbersInput: Locator;
+	readonly addressActions: (street: string) => Locator;
 	readonly addressesLink: Locator;
+	readonly addressPrimaryText: (streetName: string) => Locator;
+	readonly alertsAndAnnouncementsDeliveryTable: DataTablePage;
 	readonly appsLink: Locator;
 	readonly backLink: Locator;
 	readonly birthdayInput: Locator;
@@ -29,14 +49,18 @@ export class EditUserPage {
 	readonly customField: (fieldName: string) => Promise<Locator>;
 	readonly displaySettingsLink: Locator;
 	readonly doneButton: Locator;
+	readonly editMenuItem: Locator;
 	readonly emailAddressError: Locator;
 	readonly emailAddressInput: Locator;
 	readonly emailAddressInvalidError: Locator;
 	readonly firstNameInput: Locator;
 	readonly generateWebDAVPasswordButton: Locator;
+	readonly greetingInput: Locator;
 	readonly jabberInput: Locator;
 	readonly informationLink: Locator;
 	readonly lastNameInput: Locator;
+	readonly makePrimaryCheckbox: Locator;
+	readonly makePrimaryMenuItem: Locator;
 	readonly maxFileSizeText: Locator;
 	readonly membershipsAccountsRemoveButton: (accountName: string) => Locator;
 	readonly membershipsAccountsTableRow: (
@@ -79,24 +103,30 @@ export class EditUserPage {
 	readonly passwordInput: Locator;
 	readonly passwordReenterInput: Locator;
 	readonly passwordLink: Locator;
+	readonly phoneNumbersTable: Locator;
+	readonly phoneNumbersTablePrimaryText: (
+		phoneNumber: string
+	) => Promise<Locator>;
 	readonly phoneNumbersTableRow: (
 		colPosition: number,
 		value: string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
-	readonly phoneNumbersTable: Locator;
+	readonly phoneNumbersTableRowActions: (
+		phoneNumber: string
+	) => Promise<Locator>;
 	readonly preferencesLink: Locator;
 	readonly prefixInput: Locator;
 	readonly profileAndDashboardLink: Locator;
 	readonly regularRoleCell: (name: string) => Locator;
 	readonly regularRoleCellButton: (name: string) => Locator;
 	readonly regularRolesTable: DataTablePage;
+	readonly removeMenuItem: Locator;
 	readonly rolesLink: Locator;
 	readonly saveButton: Locator;
 	readonly screenNameError: Locator;
 	readonly screenNameInput: Locator;
 	readonly selectAccountsButton: Locator;
-
 	readonly selectOrganizationRolesButton: Locator;
 	readonly selectOrganizationRolesChooseButton: (
 		name: string
@@ -174,6 +204,38 @@ export class EditUserPage {
 			exact: true,
 			name: 'Accounts',
 		});
+		this.addAdditionalEmailAddressesButton = page.getByLabel(
+			'Add Additional Email Addresses'
+		);
+		this.addAddressButton = page.getByLabel('Add Addresses');
+		this.addAddressCityInput = page.getByLabel('City Required');
+		this.addAddressCountrySelect = page.getByLabel('Country Required');
+		this.addAddressPostalCodeInput = page.getByLabel(
+			'Postal Code Required'
+		);
+		this.addAddressRegionSelect = page.getByLabel('Region Required');
+		this.addAddressStreet1Input = page.getByLabel('Street 1 Required');
+		this.additionalEmailAddressInput = page.getByLabel('Address Required');
+		this.additionalEmailAddressesTable = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_emailAddressesSearchContainer'
+		);
+		this.additionalEmailAddressesTablePrimaryText = async (
+			emailAddress: string
+		) => {
+			const additionalEmailAddressTableRow =
+				await this.additionalEmailAddressesTableRow(
+					0,
+					emailAddress,
+					true
+				);
+
+			if (
+				additionalEmailAddressTableRow &&
+				additionalEmailAddressTableRow.column
+			) {
+				return additionalEmailAddressTableRow.row.getByText('Primary');
+			}
+		};
 		this.additionalEmailAddressesTableRow = async (
 			colPosition: number,
 			value: string,
@@ -186,13 +248,49 @@ export class EditUserPage {
 				strictEqual
 			);
 		};
-		this.additionalEmailAddressesTable = page.locator(
-			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_emailAddressesSearchContainer'
-		);
+		this.additionalEmailAddressesTableRowActions = async (
+			emailAddress: string
+		) => {
+			const additionalEmailAddressTableRow =
+				await this.additionalEmailAddressesTableRow(
+					0,
+					emailAddress,
+					true
+				);
+
+			if (
+				additionalEmailAddressTableRow &&
+				additionalEmailAddressTableRow.column
+			) {
+				return additionalEmailAddressTableRow.row.getByLabel(
+					'Edit Email Address'
+				);
+			}
+		};
+		this.addPhoneNumbersButton = page.getByLabel('Add Phone Numbers');
+		this.addPhoneNumbersInput = page.getByLabel('Number Required');
+		this.addressActions = (street: string) => {
+			return page
+				.locator('li')
+				.filter({hasText: `${street}`})
+				.getByLabel('Edit Address');
+		};
 		this.addressesLink = page.getByRole('link', {
 			exact: true,
 			name: 'Addresses',
 		});
+		this.addressPrimaryText = (streetName: string) => {
+			return page
+				.locator('li')
+				.filter({hasText: streetName})
+				.filter({hasText: 'Primary'});
+		};
+		this.alertsAndAnnouncementsDeliveryTable = new DataTablePage(
+			page,
+			page.locator(
+				'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_announcementsDeliveriesSearchContainer'
+			)
+		);
 		this.appsLink = page.getByRole('link', {
 			exact: true,
 			name: 'Apps',
@@ -233,6 +331,9 @@ export class EditUserPage {
 			name: 'Display Settings',
 		});
 		this.doneButton = page.getByRole('button', {name: 'Done'});
+		this.editMenuItem = page.getByRole('menuitem', {
+			name: 'Edit',
+		});
 		this.emailAddressError = page
 			.locator(
 				'#_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet_emailAddressHelper'
@@ -255,12 +356,17 @@ export class EditUserPage {
 		this.generateWebDAVPasswordButton = page.getByTestId(
 			'generateWebDAVPasswordButton'
 		);
+		this.greetingInput = page.getByLabel('Greeting');
 		this.informationLink = page.getByRole('link', {
 			exact: true,
 			name: 'Information',
 		});
 		this.jabberInput = page.getByLabel('Jabber');
 		this.lastNameInput = page.getByLabel('Last Name');
+		this.makePrimaryCheckbox = page.getByLabel('Make Primary');
+		this.makePrimaryMenuItem = page.getByRole('menuitem', {
+			name: 'Make Primary',
+		});
 		this.maxFileSizeText = page
 			.frameLocator('iframe[title="Upload Image"]')
 			.getByText('Upload images no larger than 300 KB.');
@@ -371,6 +477,20 @@ export class EditUserPage {
 			exact: true,
 			name: 'Password',
 		});
+		this.phoneNumbersTable = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_phonesSearchContainer'
+		);
+		this.phoneNumbersTablePrimaryText = async (phoneNumber: string) => {
+			const tableRow = await this.phoneNumbersTableRow(
+				0,
+				phoneNumber,
+				true
+			);
+
+			if (tableRow && tableRow.column) {
+				return tableRow.row.getByText('Primary');
+			}
+		};
 		this.phoneNumbersTableRow = async (
 			colPosition: number,
 			value: string,
@@ -383,9 +503,17 @@ export class EditUserPage {
 				strictEqual
 			);
 		};
-		this.phoneNumbersTable = page.locator(
-			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_phonesSearchContainer'
-		);
+		this.phoneNumbersTableRowActions = async (phoneNumber: string) => {
+			const tableRow = await this.phoneNumbersTableRow(
+				0,
+				phoneNumber,
+				true
+			);
+
+			if (tableRow && tableRow.column) {
+				return tableRow.row.getByLabel('Edit Phone Number');
+			}
+		};
 		this.preferencesLink = page.getByRole('link', {
 			exact: true,
 			name: 'Preferences',
@@ -404,6 +532,9 @@ export class EditUserPage {
 				'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_rolesSearchContainer'
 			)
 		);
+		this.removeMenuItem = page.getByRole('menuitem', {
+			name: 'Remove',
+		});
 		this.rolesLink = page.getByRole('link', {
 			exact: true,
 			name: 'Roles',
@@ -642,6 +773,34 @@ export class EditUserPage {
 		);
 		this.yourPasswordInput =
 			this.passwordConfirmationFrame.getByLabel('Your Password');
+	}
+
+	async addNewAddress(makePrimary: boolean, streetName: string) {
+		await expect(async () => {
+			await this.addAddressButton.click();
+			if (makePrimary) {
+				await this.makePrimaryCheckbox.check();
+			}
+			await this.addAddressStreet1Input.fill(streetName);
+			await this.addAddressCityInput.fill('Miami');
+			await this.addAddressCountrySelect.selectOption({
+				label: 'United States',
+			});
+			await this.addAddressRegionSelect.selectOption({label: 'Florida'});
+			await this.addAddressPostalCodeInput.fill('33101');
+			await this.saveButton.click();
+		}).toPass();
+	}
+	async addNewPhoneNumber(makePrimary: boolean, phoneNumber: string) {
+		await expect(async () => {
+			await this.addPhoneNumbersButton.click();
+			if (makePrimary) {
+				await this.makePrimaryCheckbox.check();
+			}
+			await this.addPhoneNumbersInput.fill(phoneNumber);
+			await this.saveButton.click();
+		}).toPass();
+		await waitForAlert(this.page);
 	}
 
 	async selectTag(tagNames: Array<string>) {

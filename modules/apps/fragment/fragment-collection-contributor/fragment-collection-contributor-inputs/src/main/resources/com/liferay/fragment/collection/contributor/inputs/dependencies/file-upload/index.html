@@ -67,6 +67,7 @@
 						${languageUtil.format(locale, "upload-a-x-no-larger-than-x-mb", [input.attributes.allowedFileExtensions!"", input.attributes.maxFileSize!""])}
 					[/#if]
 				[/#if]
+
 				${input.showHelpText?then(htmlUtil.escape(input.helpText), '' )}
 			</p>
 		[/#if]

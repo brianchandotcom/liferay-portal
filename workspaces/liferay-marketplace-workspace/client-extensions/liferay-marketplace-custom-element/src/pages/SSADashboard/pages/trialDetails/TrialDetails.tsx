@@ -12,7 +12,7 @@ import {Link, useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import {PageRenderer} from '../../../../components/Page';
 import QATable, {Orientation} from '../../../../components/QATable';
-import {OrderCustomFields} from '../../../../enums/Order';
+import {OrderCustomFields, OrderStatus} from '../../../../enums/Order';
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import {formatDate} from '../../../../utils/date';
@@ -24,7 +24,7 @@ import TrialActions from './TrialActions';
 const TrialDetails = () => {
 	const navigate = useNavigate();
 	const {orderId} = useParams();
-	const {ssaTrialExtend, ssaTrialExtendMutate} = useOutletContext<any>();
+	const {ssaTrialExtend, ssaTrialExtendMutate, orderMutate} = useOutletContext<any>();
 	const {
 		data,
 		error,
@@ -85,9 +85,10 @@ const TrialDetails = () => {
 				>
 					{data?.placedOrder && (
 						<TrialActions
-							mutatePlacedOrder={mutatePlacedOrder}
 							placedOrder={data?.placedOrder}
 							ssaTrialExtendMutate={ssaTrialExtendMutate}
+							orderMutate={orderMutate}
+							mutatePlacedOrder={mutatePlacedOrder}
 						/>
 					)}
 				</DropDown>
@@ -245,17 +246,23 @@ const TrialDetails = () => {
 											title: i18n.translate(
 												'extension-status'
 											),
-											value: ssaTrialExtend && (
-												<div className="my-3">
-													<ExtensionStatus
-														extensionStatus={
-															ssaTrialExtend
-																?.items[0]
-																?.dueStatus?.key
-														}
-													/>
-												</div>
-											),
+											value: (() => {
+												return (
+													<div className="my-3">
+														<ExtensionStatus
+															extensionStatus={
+																placedOrder?.orderStatusInfo?.label === OrderStatus.COMPLETED
+																	? "extension-expired"
+																	: ssaTrialExtend?.items?.find(
+																		({ projectId }: { projectId: string }) =>
+																			projectId === placedOrderCustomFields?.projectId
+																	)?.dueStatus?.key
+															}
+														/>
+
+													</div>
+												);
+											})(),
 										},
 									]}
 									orientation={Orientation.VERTICAL}

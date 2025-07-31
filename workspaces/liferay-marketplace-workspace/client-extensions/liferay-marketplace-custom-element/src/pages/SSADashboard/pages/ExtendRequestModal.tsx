@@ -3,20 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, { ClayButtonWithIcon } from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {addDays, format} from 'date-fns';
-import {ReactElement, useState} from 'react';
-import {KeyedMutator} from 'swr';
+import { addDays, format } from 'date-fns';
+import { ReactElement, useState } from 'react';
+import { KeyedMutator } from 'swr';
 
-import {OrderCustomFields, OrderStatus as Status} from '../../../enums/Order';
+import { OrderCustomFields, OrderStatus as Status } from '../../../enums/Order';
 import i18n from '../../../i18n';
-import {Liferay} from '../../../liferay/liferay';
+import { Liferay } from '../../../liferay/liferay';
 import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
-import {TRIAL_STATUS_LABEL} from '../constants';
-import {ExtendRequestStatus} from '../enums/SSATrials';
+import { TRIAL_STATUS_LABEL } from '../constants';
+import { ExtendRequestStatus } from '../enums/SSATrials';
 
 type ExtendSSATrialModalProps = {
 	onClose: () => void;
@@ -24,6 +24,7 @@ type ExtendSSATrialModalProps = {
 	ssaTrialExtendMutate: KeyedMutator<any>;
 	trialExtend: TrialExtend;
 	trialExtendCount: number;
+	orderMutate: KeyedMutator<any>;
 };
 
 type DetailsProps = {
@@ -31,7 +32,7 @@ type DetailsProps = {
 	title: string;
 };
 
-const Details: React.FC<DetailsProps> = ({children, title}) => (
+const Details: React.FC<DetailsProps> = ({ children, title }) => (
 	<div className="d-flex flex-column mb-4">
 		<p className="font-weight-bold m-0 text-black-50">{title}</p>
 		<div className="d-inline-flex">{children}</div>
@@ -44,6 +45,7 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 	ssaTrialExtendMutate,
 	trialExtend,
 	trialExtendCount,
+	orderMutate,
 }) => {
 	const [submitting, setSubmitting] = useState<null | 'approve' | 'reject'>(
 		null
@@ -97,13 +99,13 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 							<span className="extend-request-info">
 								{order.customFields[OrderCustomFields.END_DATE]
 									? format(
-											new Date(
-												order.customFields[
-													OrderCustomFields.END_DATE
-												]
-											),
-											'dd MMM, yyyy'
-										).toString()
+										new Date(
+											order.customFields[
+											OrderCustomFields.END_DATE
+											]
+										),
+										'dd MMM, yyyy'
+									).toString()
 									: 'DNE'}
 							</span>
 						</Details>
@@ -130,8 +132,8 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 							>
 								{
 									TRIAL_STATUS_LABEL[
-										order.orderStatusInfo
-											.label as keyof typeof TRIAL_STATUS_LABEL
+									order.orderStatusInfo
+										.label as keyof typeof TRIAL_STATUS_LABEL
 									]
 								}
 							</span>
@@ -167,11 +169,7 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 							<span className="extend-request-info">
 								{format(
 									addDays(
-										new Date(
-											order.customFields[
-												OrderCustomFields.END_DATE
-											]
-										),
+										new Date(order.customFields[OrderCustomFields.END_DATE]),
 										trialExtend.duration
 									),
 									'dd MMM, yyyy'
@@ -203,7 +201,7 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 						try {
 							await HeadlessTrialExtensionRequest.updateTrialExtensionRequest(
 								trialExtend.id,
-								{dueStatus: {key: ExtendRequestStatus.REJECTED}}
+								{ dueStatus: { key: ExtendRequestStatus.REJECTED } }
 							);
 
 							ssaTrialExtendMutate(
@@ -228,7 +226,7 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 										items: updatedItems,
 									};
 								},
-								{revalidate: false}
+								{ revalidate: false }
 							);
 
 							setSubmitting(null);
@@ -272,7 +270,7 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 						try {
 							await HeadlessTrialExtensionRequest.updateTrialExtensionRequest(
 								trialExtend.id,
-								{dueStatus: {key: ExtendRequestStatus.APPROVED}}
+								{ dueStatus: { key: ExtendRequestStatus.APPROVED } }
 							);
 
 							ssaTrialExtendMutate(
@@ -282,17 +280,41 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 										(item: TrialExtend) =>
 											item.id === trialExtend.id
 												? {
-														...item,
-														dueStatus: {
-															key: ExtendRequestStatus.APPROVED,
-														},
-													}
+													...item,
+													dueStatus: {
+														key: ExtendRequestStatus.APPROVED,
+													},
+												}
 												: item
 									),
 								}),
 								{
 									revalidate: false,
 								}
+							);
+
+							orderMutate(
+								(orders: any) => {
+
+									const updatedOrder = {
+										...order,
+										items: orders.items.map((item: any) => {
+											if (item.id !== order.id) return item;
+											return {
+												...item,
+												customFields: {
+													...item.customFields,
+													[OrderCustomFields.END_DATE] : addDays(
+														new Date(order.customFields[OrderCustomFields.END_DATE]),
+														trialExtend.duration
+													).toISOString(),
+												},
+											};
+										}),
+									};
+									return updatedOrder;
+								},
+								{ revalidate: false }
 							);
 
 							await trialOAuth2.extendTrial(trialExtend.id);

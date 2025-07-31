@@ -21,16 +21,18 @@ type TrialActionsProps = {
 	mutatePlacedOrder: KeyedMutator<any>;
 	placedOrder: PlacedOrder;
 	ssaTrialExtendMutate: KeyedMutator<any>;
+	orderMutate: KeyedMutator<any>;
 };
 
 function TrialActions({
 	mutatePlacedOrder,
 	placedOrder,
 	ssaTrialExtendMutate,
+	orderMutate,
 }: TrialActionsProps) {
 	const {marketplaceUserAccount} = useMarketplaceContext();
 	const modalContext = useModalContext();
-	const {selectedAccount, ssaTrialExtend} = useOutletContext<any>();
+	const {selectedAccountId, ssaTrialExtend} = useOutletContext<any>();
 
 	const isUserSSAAdmin = marketplaceUserAccount.isSSAAdmin;
 
@@ -80,6 +82,7 @@ function TrialActions({
 		);
 	};
 
+
 	return (
 		<DropDown.ItemList>
 			<ClayTooltipProvider>
@@ -100,13 +103,14 @@ function TrialActions({
 						modalContext.onOpenModal({
 							body: (
 								<ExtendSSATrialModal
-									accountId={selectedAccount.id}
+									accountId={selectedAccountId}
 									firstExtendRequest={
 										extendRequests?.length === 0
 									}
 									onClose={modalContext.onClose}
 									order={placedOrder}
 									ssaTrialExtendMutate={ssaTrialExtendMutate}
+									orderMutate={orderMutate}
 								/>
 							),
 							header: `Extend ${placedOrder.id} Trial`,
@@ -142,6 +146,7 @@ function TrialActions({
 									ssaTrialExtendMutate={ssaTrialExtendMutate}
 									trialExtend={extendRequests[0]}
 									trialExtendCount={extendRequests?.length}
+									orderMutate={orderMutate}
 								/>
 							),
 							center: true,
@@ -167,7 +172,7 @@ function TrialActions({
 						modalContext.onOpenModal({
 							body: (
 								<ExpireSSAModal
-									accountId={selectedAccount.id}
+									accountId={selectedAccountId}
 									mutate={mutatePlacedOrder}
 									onClose={modalContext.onClose}
 									order={placedOrder}
@@ -195,10 +200,9 @@ function TrialActions({
 					}
 					onClick={() => {
 						window.open(
-							`https://${
-								placedOrder?.customFields?.[
-									'trial-virtual-host'
-								] as string
+							`https://${placedOrder?.customFields?.[
+							'trial-virtual-host'
+							] as string
 							}`
 						);
 					}}

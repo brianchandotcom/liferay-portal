@@ -1,12 +1,22 @@
 @import 'atlas-variables';
 
 .sidebar-layout {
-	--sidebar-layout-width: 472px !important;
+	--fds-sidebar-layout-width: 472px;
+
+	@include media-breakpoint-up(sm) {
+		.fds {
+			&-info-panel {
+				--sidebar-layout-width: var(--fds-sidebar-layout-width);
+			}
+
+			&.c-slideout-push-end {
+				padding-right: var(--fds-sidebar-layout-width);
+			}
+		}
+	}
 }
 
 .c-slideout .sidebar {
-	background-color: $white !important;
-
 	.asset-metadata-section {
 		margin-top: 1rem;
 
@@ -41,14 +51,6 @@
 
 	.nav {
 		flex-wrap: nowrap;
-	}
-
-	.nav-link {
-		&:focus-visible,
-		&:hover,
-		&.active {
-			background-color: transparent;
-		}
 	}
 
 	.nav-tabs {

@@ -1,22 +1,20 @@
 .sidebar-container {
 	background-color: $gray-100;
-	border-right: 0.8px solid $secondary-l0;
+	border-right: 0.05rem solid $secondary-l0;
 }
 
-.sidebar-layout {
-	--sidebar-layout-height: calc(
-		100vh - var(--control-menu-container-height, 0)
-	);
-	--sidebar-layout-width: 280px;
-
-	&.cms-sidebar-nav {
-		@include media-breakpoint-up(md) {
-			background-color: $gray-100;
-			border-right: 0.8px solid $secondary-l0;
-			max-width: var(--sidebar-layout-width);
-			min-height: var(--sidebar-layout-height);
-			min-width: var(--sidebar-layout-width);
-			scroll-behavior: smooth;
-		}
+.cms-sidebar-nav {
+	@include media-breakpoint-up(md) {
+		background-color: $gray-100;
+		border-right: 0.05rem solid $secondary-l0;
+		max-width: var(--sidebar-layout-width, 280px);
+		min-height: var(--sidebar-layout-height);
+		min-width: var(--sidebar-layout-width, 280px);
+		scroll-behavior: smooth;
 	}
+}
+
+.fds .sidebar-light {
+	border-left: 0.05rem solid $secondary-l0;
+	box-shadow: none;
 }

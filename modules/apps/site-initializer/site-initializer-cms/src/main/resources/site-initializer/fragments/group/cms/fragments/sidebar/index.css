@@ -1,4 +1,9 @@
 .sidebar-layout {
+	--sidebar-layout-height: calc(
+		100vh - var(--control-menu-container-height, 0)
+	);
+	--sidebar-layout-width: 280px;
+
 	display: grid;
 	grid-template-areas: 'sidebar content';
 	grid-template-columns: 0px minmax(0, 1fr);
@@ -15,24 +20,26 @@
 		min-width: var(--sidebar-layout-width);
 		scroll-behavior: smooth;
 
-		.nav-link {
-			&:focus-visible,
-			&:hover,
-			&.active {
-				background-color: #f1f2f5;
-			}
+		.menubar-primary {
+			.nav-link {
+				&:focus-visible,
+				&:hover,
+				&.active {
+					background-color: #f1f2f5;
+				}
 
-			&:hover:before {
-				background-color: #6b6c7e;
-				content: '';
-				height: 100%;
-				left: 0;
-				position: absolute;
-				top: 0;
-			}
+				&:hover:before {
+					background-color: #6b6c7e;
+					content: '';
+					height: 100%;
+					left: 0;
+					position: absolute;
+					top: 0;
+				}
 
-			&:hover:not(.active):before {
-				width: 2px;
+				&:hover:not(.active):before {
+					width: 2px;
+				}
 			}
 		}
 	}

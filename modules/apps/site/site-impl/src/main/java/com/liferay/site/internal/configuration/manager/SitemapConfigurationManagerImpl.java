@@ -8,6 +8,7 @@ package com.liferay.site.internal.configuration.manager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
@@ -124,6 +125,20 @@ public class SitemapConfigurationManagerImpl
 				SitemapGroupConfiguration.class, groupId);
 
 		return sitemapGroupConfiguration.includeWebContent();
+	}
+
+	@Override
+	public boolean isObjectDefinitionCompanyIncluded(
+			long companyId, String objectDefinitionId)
+		throws ConfigurationException {
+
+		SitemapCompanyConfiguration sitemapCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				SitemapCompanyConfiguration.class, companyId);
+
+		return ArrayUtil.contains(
+			sitemapCompanyConfiguration.companySitemapObjectDefinitionIds(),
+			objectDefinitionId);
 	}
 
 	@Override

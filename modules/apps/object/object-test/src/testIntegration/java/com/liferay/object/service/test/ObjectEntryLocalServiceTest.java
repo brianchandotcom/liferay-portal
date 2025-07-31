@@ -1309,29 +1309,23 @@ public class ObjectEntryLocalServiceTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntryWithAssetTag() throws Exception {
-		ObjectDefinition objectDefinition = null;
-
 		ObjectFolder objectFolder =
 			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
 				ObjectFolderConstants.
 					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 				TestPropsValues.getCompanyId());
 
-		if (objectFolder != null) {
-			objectDefinition =
-				ObjectDefinitionTestUtil.publishObjectDefinition(
-					false, ObjectDefinitionTestUtil.getRandomName(),
-					Arrays.asList(
-						ObjectFieldUtil.createObjectField(
-							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-							ObjectFieldConstants.DB_TYPE_STRING, "name",
-							"name")),
-					objectFolder.getObjectFolderId(),
-					ObjectDefinitionConstants.SCOPE_SITE,
-					TestPropsValues.getUserId());
-		}
-
-		Assume.assumeNotNull(objectDefinition);
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				false, ObjectDefinitionTestUtil.getRandomName(),
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "name",
+						"name")),
+				objectFolder.getObjectFolderId(),
+				ObjectDefinitionConstants.SCOPE_SITE,
+				TestPropsValues.getUserId());
 
 		String tagName = StringUtil.randomString();
 

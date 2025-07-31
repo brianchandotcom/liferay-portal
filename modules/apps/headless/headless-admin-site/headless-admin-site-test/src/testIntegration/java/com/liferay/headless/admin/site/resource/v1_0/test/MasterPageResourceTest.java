@@ -648,8 +648,11 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				testGroup.getExternalReferenceCode(), randomMasterPage);
 
 		PageSpecificationsTestUtil.assertCustomFields(
-			pageSpecifications, testGroup.getGroupId(),
-			postMasterPage.getPageSpecifications());
+			TransformUtil.transform(
+				pageSpecifications,
+				pageSpecification -> pageSpecification.getCustomFields(),
+				CustomField[].class),
+			testGroup.getGroupId(), postMasterPage.getPageSpecifications());
 
 		return postMasterPage;
 	}

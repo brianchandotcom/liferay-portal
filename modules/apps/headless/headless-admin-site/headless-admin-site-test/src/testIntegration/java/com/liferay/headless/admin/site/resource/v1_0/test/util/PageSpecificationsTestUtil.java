@@ -109,26 +109,6 @@ public class PageSpecificationsTestUtil {
 		}
 	}
 
-	public static void assertCustomFields(
-			PageSpecification[] expectedPageSpecifications, long groupId,
-			PageSpecification[] pageSpecifications)
-		throws Exception {
-
-		Assert.assertTrue(ArrayUtil.isNotEmpty(pageSpecifications));
-
-		_assertCustomFields(
-			_getExpectedCustomFields(
-				expectedPageSpecifications[0].getCustomFields()),
-			groupId, pageSpecifications[0]);
-
-		if (pageSpecifications.length == 2) {
-			_assertCustomFields(
-				_getExpectedCustomFields(
-					expectedPageSpecifications[1].getCustomFields()),
-				groupId, pageSpecifications[1]);
-		}
-	}
-
 	public static void assertPageSpecifications(
 		ContentPageSpecification expectedDraftContentPageSpecification,
 		ContentPageSpecification expectedPublishedContentPageSpecification,

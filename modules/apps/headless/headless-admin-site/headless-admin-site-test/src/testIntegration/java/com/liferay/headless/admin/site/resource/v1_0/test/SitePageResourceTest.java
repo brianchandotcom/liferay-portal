@@ -862,8 +862,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testGroup.getExternalReferenceCode(), randomSitePage);
 
 		PageSpecificationsTestUtil.assertCustomFields(
-			pageSpecifications, testGroup.getGroupId(),
-			postSitePage.getPageSpecifications());
+			TransformUtil.transform(
+				pageSpecifications,
+				pageSpecification -> pageSpecification.getCustomFields(),
+				CustomField[].class),
+			testGroup.getGroupId(), postSitePage.getPageSpecifications());
 
 		return postSitePage;
 	}

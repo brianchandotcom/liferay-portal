@@ -69,6 +69,7 @@ describe('refreshReferencedStructures', () => {
 			enableIndexSearch: true,
 			enableLocalization: true,
 			enableObjectEntryDraft: true,
+			enableObjectEntrySchedule: true,
 			enableObjectEntryVersioning: true,
 			externalReferenceCode: 'referenced-structure-erc',
 			id: 1,

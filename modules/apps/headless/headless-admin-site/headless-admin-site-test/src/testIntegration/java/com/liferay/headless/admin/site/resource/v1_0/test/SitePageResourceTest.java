@@ -1116,25 +1116,26 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePageResource sitePageResource = _getSitePageResource(
 			"pageSpecifications");
 
-		SitePage patchBodySitePage = new SitePage() {
-			{
-				setExternalReferenceCode(
-					postSitePage.getExternalReferenceCode());
-				setPageSpecifications(
-					PageSpecificationsTestUtil.getPatchPageSpecifications(
-						postSitePage.getPageSpecifications()));
-				setType(postSitePage.getType());
-			}
-		};
+		PageSpecification[] patchPageSpecifications =
+			PageSpecificationsTestUtil.getPatchPageSpecifications(
+				postSitePage.getPageSpecifications());
 
 		SitePage patchSitePage =
 			sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(),
-				postSitePage.getExternalReferenceCode(), patchBodySitePage);
+				postSitePage.getExternalReferenceCode(),
+				new SitePage() {
+					{
+						setExternalReferenceCode(
+							postSitePage.getExternalReferenceCode());
+						setPageSpecifications(patchPageSpecifications);
+						setType(postSitePage.getType());
+					}
+				});
 
 		PageSpecificationsTestUtil.assertCustomFields(
 			TransformUtil.transform(
-				patchBodySitePage.getPageSpecifications(),
+				patchPageSpecifications,
 				pageSpecification -> pageSpecification.getCustomFields(),
 				CustomField[].class),
 			testGroup.getGroupId(), patchSitePage.getPageSpecifications());

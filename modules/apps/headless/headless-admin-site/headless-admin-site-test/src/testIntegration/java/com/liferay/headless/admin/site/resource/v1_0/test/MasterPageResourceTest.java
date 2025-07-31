@@ -799,26 +799,26 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 			MasterPageResource masterPageResource = _getMasterPageResource();
 
-			MasterPage patchBodyMasterPage = new MasterPage() {
-				{
-					setExternalReferenceCode(
-						postMasterPage.getExternalReferenceCode());
-					setPageSpecifications(
-						PageSpecificationsTestUtil.getPatchPageSpecifications(
-							postMasterPage.getPageSpecifications()));
-				}
-			};
+			PageSpecification[] patchPageSpecifications =
+				PageSpecificationsTestUtil.getPatchPageSpecifications(
+					postMasterPage.getPageSpecifications());
 
 			MasterPage patchMasterPage =
 				masterPageResource.
 					patchSiteSiteByExternalReferenceCodeMasterPage(
 						testGroup.getExternalReferenceCode(),
 						postMasterPage.getExternalReferenceCode(),
-						patchBodyMasterPage);
+						new MasterPage() {
+							{
+								setExternalReferenceCode(
+									postMasterPage::getExternalReferenceCode);
+								setPageSpecifications(patchPageSpecifications);
+							}
+						});
 
 			PageSpecificationsTestUtil.assertCustomFields(
 				TransformUtil.transform(
-					patchBodyMasterPage.getPageSpecifications(),
+					patchPageSpecifications,
 					pageSpecification -> pageSpecification.getCustomFields(),
 					CustomField[].class),
 				testGroup.getGroupId(),

@@ -192,6 +192,8 @@ test(
 		await editOrganizationPage.createSiteToggle.check();
 		await editOrganizationPage.organizationSiteSaveButton.click();
 
+		await waitForAlert(page);
+
 		await siteSettingsPage.goToSiteSetting(
 			'Site Configuration',
 			null,
@@ -1181,6 +1183,8 @@ test(
 		await editOrganizationPage.organizationSiteLink.click();
 		await editOrganizationPage.createSiteToggle.check();
 		await editOrganizationPage.organizationSiteSaveButton.click();
+
+		await waitForAlert(page);
 
 		const siteUrl = `/${organization.name}`;
 

@@ -54,7 +54,6 @@ public class CPConfigurationListModelDocumentContributor
 			document.addText(Field.NAME, cpConfigurationList.getName());
 			document.addNumber(
 				Field.PRIORITY, cpConfigurationList.getPriority());
-
 			document.addNumber(
 				"commerceAccountGroupIds",
 				TransformUtil.transformToLongArray(
@@ -63,7 +62,6 @@ public class CPConfigurationListModelDocumentContributor
 							cpConfigurationList.getCPConfigurationListId(),
 							null, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					CPConfigurationListRel::getClassPK));
-
 			document.addNumber(
 				"commerceAccountId",
 				TransformUtil.transformToLongArray(
@@ -72,7 +70,6 @@ public class CPConfigurationListModelDocumentContributor
 							cpConfigurationList.getCPConfigurationListId(),
 							null, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					CPConfigurationListRel::getClassPK));
-
 			document.addNumber(
 				"commerceChannelId",
 				TransformUtil.transformToLongArray(
@@ -81,7 +78,6 @@ public class CPConfigurationListModelDocumentContributor
 						cpConfigurationList.getCPConfigurationListId(), null,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					CommerceChannelRel::getCommerceChannelId));
-
 			document.addNumber(
 				"commerceOrderTypeId",
 				TransformUtil.transformToLongArray(

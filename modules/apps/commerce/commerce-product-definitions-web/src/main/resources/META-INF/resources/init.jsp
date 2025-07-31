@@ -104,6 +104,7 @@ page import="com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefini
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
 page import="com.liferay.commerce.product.model.CPConfigurationEntry" %><%@
 page import="com.liferay.commerce.product.model.CPConfigurationList" %><%@
+page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionLink" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionRel" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" %><%@
@@ -166,7 +167,7 @@ page import="java.util.Objects" %><%@
 page import="java.util.StringJoiner" %><%@
 page import="java.util.TimeZone" %>
 
-page import="com.liferay.commerce.product.model.CPDefinition" %><liferay-frontend:defineObjects />
+<liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 

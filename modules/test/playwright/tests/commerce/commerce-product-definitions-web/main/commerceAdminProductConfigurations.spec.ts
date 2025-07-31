@@ -12,10 +12,10 @@ import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {createCategories} from '../../../../helpers/CreateCategories';
+import {TCustomField} from '../../../../helpers/CustomFieldTypesHelper';
 import getGlobalSiteId from '../../../../utils/getGlobalSiteId';
 import getRandomString from '../../../../utils/getRandomString';
 import {waitForAlert} from '../../../../utils/waitForAlert';
-import {TCustomField} from "../../../../helpers/CustomFieldTypesHelper";
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -1147,6 +1147,11 @@ test('LPD-43013 Edit child configuration list', async ({
 	await expect(
 		commerceAdminProductConfigurationListPage.expirationDateInput
 	).toBeEnabled();
+	await expect(
+		commerceAdminProductConfigurationListPage.customFieldInput(
+			customField.fieldName
+		)
+	).toHaveValue(randomString);
 });
 
 test('LPD-43017 Can bulk set configuration entries visibility', async ({

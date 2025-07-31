@@ -56,11 +56,11 @@ public class ViewVersionHistoryDisplayContext {
 			new FDSActionDropdownItem(
 				"{actions.restore.href}", "restore", "restore",
 				_language.get(_httpServletRequest, "restore"), "put", "restore",
-				"headless"),
+				null),
 			new FDSActionDropdownItem(
 				"{actions.expire.href}", "time", "expire",
 				_language.get(_httpServletRequest, "expire"), "post", "expire",
-				"headless"),
+				null),
 			new FDSActionDropdownItem(
 				"{actions.copy.href}", "copy", "copy",
 				_language.get(_httpServletRequest, "make-a-copy"), "post",

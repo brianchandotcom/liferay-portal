@@ -51,12 +51,14 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 			itemData,
 			loadData,
 		}: {
-			action: {data: {id: string}; href?: string};
+			action: {data: {id: string; successMessage: string}; href?: string};
 			event: Event;
 			itemData: {
 				actions: {
 					copy: {href: string; method: string};
 					delete: {href: string; method: string};
+					expire: {href: string; method: string};
+					restore: {href: string; method: string};
 				};
 				systemProperties: {
 					version: {
@@ -90,6 +92,19 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 					url: itemData.actions.copy.href,
 				});
 			}
+			else if (action.data.id === 'expire') {
+				event?.preventDefault();
+
+				executeAsyncItemAction({
+					method: itemData.actions.expire.method,
+					refreshData: loadData,
+					successMessage: sub(
+						Liferay.Language.get('expire-version-success-message'),
+						`<strong>${sub(Liferay.Language.get('version-x'), itemData.systemProperties.version.number)}</strong>`
+					),
+					url: itemData.actions.expire.href,
+				});
+			}
 			else if (action.data.id === 'delete') {
 				event?.preventDefault();
 
@@ -109,6 +124,19 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 						Liferay.Language.get('delete-version-x'),
 						itemData.systemProperties.version.number
 					),
+				});
+			}
+			else if (action.data.id === 'restore') {
+				event?.preventDefault();
+
+				executeAsyncItemAction({
+					method: itemData.actions.restore.method,
+					refreshData: loadData,
+					successMessage: sub(
+						Liferay.Language.get('restore-version-success-message'),
+						`<strong>${sub(Liferay.Language.get('version-x'), itemData.systemProperties.version.number)}</strong>`
+					),
+					url: itemData.actions.restore.href,
 				});
 			}
 		},

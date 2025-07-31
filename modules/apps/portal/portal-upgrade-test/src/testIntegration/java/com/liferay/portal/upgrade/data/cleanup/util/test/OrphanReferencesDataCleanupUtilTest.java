@@ -56,7 +56,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 	}
 
 	@Test
-	public void testCleanTablesUpExcludedTable() throws Exception {
+	public void testCleanUpTablesExcludedTable() throws Exception {
 		long auditEventId = RandomTestUtil.nextLong();
 		long companyId = RandomTestUtil.nextLong();
 

@@ -319,7 +319,17 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		}
 
 		long layoutPageTemplateCollectionId =
-			_getLayoutPageTemplateCollectionId(groupId, pageTemplate);
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_getOrAddLayoutPageTemplateCollection(groupId, pageTemplate);
+
+		if (layoutPageTemplateCollection != null) {
+			layoutPageTemplateCollectionId =
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId();
+		}
 
 		if (!Objects.equals(
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
@@ -522,12 +532,24 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			long groupId, PageTemplate pageTemplate)
 		throws Exception {
 
+		long layoutPageTemplateCollectionId =
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_getOrAddLayoutPageTemplateCollection(groupId, pageTemplate);
+
+		if (layoutPageTemplateCollection != null) {
+			layoutPageTemplateCollectionId =
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId();
+		}
+
 		return _addPageTemplate(
-			groupId, _getLayoutPageTemplateCollectionId(groupId, pageTemplate),
-			pageTemplate);
+			groupId, layoutPageTemplateCollectionId, pageTemplate);
 	}
 
-	private long _getLayoutPageTemplateCollectionId(
+	private LayoutPageTemplateCollection _getOrAddLayoutPageTemplateCollection(
 			long groupId, PageTemplate pageTemplate)
 		throws Exception {
 
@@ -536,8 +558,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		if ((pageTemplateSet == null) ||
 			Validator.isNull(pageTemplateSet.getExternalReferenceCode())) {
 
-			return LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+			return null;
 		}
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -561,7 +582,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+		return layoutPageTemplateCollection;
 	}
 
 	private long _getLayoutPlid(

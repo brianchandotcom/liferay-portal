@@ -14,7 +14,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -307,8 +306,6 @@ public class FragmentEntryLinkModelListenerTest {
 	}
 
 	private String _createEditableValues(String key, String value) {
-		JSONObject hrefJSONObject = JSONUtil.put("en_US", RANDOM_STRING);
-
 		return JSONUtil.put(
 			FragmentEntryProcessorConstants.
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -317,7 +314,7 @@ public class FragmentEntryLinkModelListenerTest {
 				JSONUtil.put(
 					"config",
 					JSONUtil.put(
-						"href", hrefJSONObject
+						"href", JSONUtil.put("en_US", RANDOM_STRING)
 					).put(
 						"mapperType", "link"
 					).put(

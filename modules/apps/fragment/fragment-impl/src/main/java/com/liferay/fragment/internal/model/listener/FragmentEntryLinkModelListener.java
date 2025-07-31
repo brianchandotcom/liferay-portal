@@ -143,11 +143,13 @@ public class FragmentEntryLinkModelListener
 		return editableValuesJSONObject.toString();
 	}
 
-	private List<InfoField<?>> _getInfoFields(FragmentEntryLink model) {
+	private List<InfoField<?>> _getInfoFields(
+		FragmentEntryLink fragmentEntryLink) {
+
 		List<InfoField<?>> infoFields = new ArrayList<>();
 
 		InfoFieldUtil.forEachInfoField(
-			model, _fragmentRendererController,
+			fragmentEntryLink, _fragmentRendererController,
 			(name, infoField, unsafeSupplier) -> infoFields.add(infoField));
 
 		return infoFields;

@@ -5,6 +5,8 @@
 
 package com.liferay.portal.settings.authentication.ldap.web.internal.configuration.admin.display;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
@@ -56,7 +58,9 @@ public class ImportLDAPPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getKey() {
-			return LDAPImportConfiguration.class.getName();
+			return StringBundler.concat(
+				LDAPImportConfiguration.class.getName(), StringPool.POUND,
+				getScope());
 		}
 
 		@Override

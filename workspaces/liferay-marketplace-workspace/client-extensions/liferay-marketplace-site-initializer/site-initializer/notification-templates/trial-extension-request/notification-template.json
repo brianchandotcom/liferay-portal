@@ -17,7 +17,7 @@
 		}
 	],
 	"subject": {
-		"en_US": "Liferay Marketplace - Trial Extension Request: %PROJECT_ID% - User %COMMERCEORDER_ACCOUNT_NAME%"
+		"en_US": "Liferay Marketplace - Trial Extension Request: [%TRIALEXTENSIONREQUEST_PROJECTID%] - User [%TRIALEXTENSIONREQUEST_AUTHOR_FIRST_NAME%]"
 	},
 	"type": "email"
 }

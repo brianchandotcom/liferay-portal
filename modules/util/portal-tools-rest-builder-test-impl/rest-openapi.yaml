@@ -33,6 +33,8 @@ components:
                     type: string
                 nestedField:
                     type: string
+                relatedCompanyTestEntity:
+                    $ref: "#/components/schemas/CompanyTestEntity"
             type: object
         ChildTestEntity1:
             allOf:

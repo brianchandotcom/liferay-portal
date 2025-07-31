@@ -19,6 +19,7 @@ import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryItera
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.search.Document;
@@ -136,6 +137,11 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 					continue;
 				}
 
+				String configurationScreenCategoryKey = StringUtil.toLowerCase(
+					LanguageUtil.get(
+						renderRequest.getLocale(),
+						"category." + configurationScreen.getCategoryKey()),
+					renderRequest.getLocale());
 				String configurationScreenKey = StringUtil.toLowerCase(
 					configurationScreen.getKey(), renderRequest.getLocale());
 				String configurationScreenName = StringUtil.toLowerCase(
@@ -146,6 +152,8 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 					keywords, renderRequest.getLocale());
 
 				if (Validator.isNull(keywords) ||
+					configurationScreenCategoryKey.contains(
+						searchReadyKeywords) ||
 					configurationScreenKey.contains(searchReadyKeywords) ||
 					configurationScreenName.contains(searchReadyKeywords)) {
 

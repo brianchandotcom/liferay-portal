@@ -411,7 +411,7 @@ public class DefaultObjectEntryManagerImplTest
 			).build()
 		).build();
 
-		_objectDefinition1 = _createObjectDefinition(
+		_objectDefinition1 = _addObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).indexed(
@@ -437,7 +437,7 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition1.getObjectDefinitionId()
 			).build());
 
-		_objectDefinition2 = _createObjectDefinition(
+		_objectDefinition2 = _addObjectDefinition(
 			Arrays.asList(
 				new AttachmentObjectFieldBuilder(
 				).indexed(
@@ -810,7 +810,7 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition4);
 
-		_objectDefinition5 = _createObjectDefinition(
+		_objectDefinition5 = _addObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).indexed(
@@ -1225,7 +1225,7 @@ public class DefaultObjectEntryManagerImplTest
 	public void testAddObjectEntryWithAttachmentObjectField() throws Exception {
 		String dlFolderName = RandomTestUtil.randomString();
 
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Collections.singletonList(
 				new AttachmentObjectFieldBuilder(
 				).labelMap(
@@ -1309,7 +1309,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testAddObjectEntryWithBooleanObjectField() throws Exception {
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Arrays.asList(
 				new BooleanObjectFieldBuilder(
 				).labelMap(
@@ -1433,7 +1433,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testAddObjectEntryWithDefaultValue() throws Exception {
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Arrays.asList(
 				new BooleanObjectFieldBuilder(
 				).labelMap(
@@ -2236,7 +2236,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		String requiredObjectFieldName = "a" + RandomTestUtil.randomString();
 
-		ObjectDefinition parentObjectDefinition = _createObjectDefinition(
+		ObjectDefinition parentObjectDefinition = _addObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).indexed(
@@ -2287,11 +2287,11 @@ public class DefaultObjectEntryManagerImplTest
 			false
 		).build();
 
-		parentObjectDefinition = _createObjectDefinition(
+		parentObjectDefinition = _addObjectDefinition(
 			Collections.singletonList(objectField),
 			ObjectDefinitionConstants.SCOPE_SITE);
 
-		ObjectDefinition childObjectDefinition = _createObjectDefinition(
+		ObjectDefinition childObjectDefinition = _addObjectDefinition(
 			Collections.singletonList(objectField),
 			ObjectDefinitionConstants.SCOPE_SITE);
 
@@ -2525,7 +2525,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testAddObjectEntryWithRichTextObjectField() throws Exception {
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Collections.singletonList(
 				new RichTextObjectFieldBuilder(
 				).labelMap(
@@ -2581,7 +2581,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		// User non-UTC timezone
 
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Collections.singletonList(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -2858,7 +2858,7 @@ public class DefaultObjectEntryManagerImplTest
 						Collections.singletonMap(
 							LocaleUtil.US, RandomTestUtil.randomString()))));
 
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Collections.singletonList(
 				new PicklistObjectFieldBuilder(
 				).indexed(
@@ -2930,8 +2930,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Add related object entry
 
-		ObjectDefinition objectDefinitionA = _createObjectDefinition();
-		ObjectDefinition objectDefinitionAA = _createObjectDefinition();
+		ObjectDefinition objectDefinitionA = _addObjectDefinition();
+		ObjectDefinition objectDefinitionAA = _addObjectDefinition();
 
 		ObjectRelationship objectRelationshipA_AA =
 			ObjectRelationshipTestUtil.addObjectRelationship(
@@ -2939,7 +2939,7 @@ public class DefaultObjectEntryManagerImplTest
 				TestPropsValues.getUserId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		ObjectDefinition objectDefinitionB = _createObjectDefinition();
+		ObjectDefinition objectDefinitionB = _addObjectDefinition();
 
 		ObjectRelationship objectRelationshipB_AA =
 			ObjectRelationshipTestUtil.addObjectRelationship(
@@ -3172,7 +3172,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testDeleteObjectEntry() throws Exception {
-		ObjectDefinition objectDefinition1 = _createObjectDefinition(
+		ObjectDefinition objectDefinition1 = _addObjectDefinition(
 			Collections.singletonList(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -3181,7 +3181,7 @@ public class DefaultObjectEntryManagerImplTest
 				).name(
 					"textObjectFieldName"
 				).build()));
-		ObjectDefinition objectDefinition2 = _createObjectDefinition(
+		ObjectDefinition objectDefinition2 = _addObjectDefinition(
 			Collections.singletonList(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -5114,11 +5114,11 @@ public class DefaultObjectEntryManagerImplTest
 	public void testGetObjectEntriesWithRelatedObjectEntries()
 		throws Exception {
 
-		ObjectDefinition objectDefinition1 = _createObjectDefinition(
+		ObjectDefinition objectDefinition1 = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-		ObjectDefinition objectDefinition2 = _createObjectDefinition(
+		ObjectDefinition objectDefinition2 = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_SITE);
-		ObjectDefinition objectDefinition3 = _createObjectDefinition(
+		ObjectDefinition objectDefinition3 = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_SITE);
 
 		ObjectRelationship objectRelationship1 =
@@ -5255,8 +5255,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		// User with permission to VIEW object definition A
 
-		ObjectDefinition objectDefinitionA = _createObjectDefinition();
-		ObjectDefinition objectDefinitionAA = _createObjectDefinition();
+		ObjectDefinition objectDefinitionA = _addObjectDefinition();
+		ObjectDefinition objectDefinitionAA = _addObjectDefinition();
 
 		ObjectRelationship objectRelationshipA_AA =
 			ObjectRelationshipTestUtil.addObjectRelationship(
@@ -5264,7 +5264,7 @@ public class DefaultObjectEntryManagerImplTest
 				TestPropsValues.getUserId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		ObjectDefinition objectDefinitionB = _createObjectDefinition();
+		ObjectDefinition objectDefinitionB = _addObjectDefinition();
 
 		ObjectRelationship objectRelationshipB_AA =
 			ObjectRelationshipTestUtil.addObjectRelationship(
@@ -5501,7 +5501,7 @@ public class DefaultObjectEntryManagerImplTest
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		_objectDefinition2 = _createObjectDefinition(
+		_objectDefinition2 = _addObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).indexed(
@@ -5645,7 +5645,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Account entry restricted scope
 
-		ObjectDefinition childObjectDefinition = _createObjectDefinition(
+		ObjectDefinition childObjectDefinition = _addObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -6159,7 +6159,7 @@ public class DefaultObjectEntryManagerImplTest
 	public void testPartialUpdateObjectEntryWithAttachmentObjectField()
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Collections.singletonList(
 				new AttachmentObjectFieldBuilder(
 				).labelMap(
@@ -6220,7 +6220,7 @@ public class DefaultObjectEntryManagerImplTest
 	public void testPartialUpdateObjectEntryWithLocalizedAttachmentObjectField()
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Collections.singletonList(
 				new AttachmentObjectFieldBuilder(
 				).labelMap(
@@ -6533,7 +6533,7 @@ public class DefaultObjectEntryManagerImplTest
 	@FeatureFlag("LPD-42577")
 	@Test
 	public void testSubscribeObjectEntry() throws Exception {
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			true,
 			Collections.singletonList(
 				new TextObjectFieldBuilder(
@@ -6719,7 +6719,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		String objectFieldName = "c" + RandomTestUtil.randomString();
 
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Collections.singletonList(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -7436,7 +7436,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Account roles' permissions should not be restricted by account entry
 
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -7554,7 +7554,7 @@ public class DefaultObjectEntryManagerImplTest
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testUpdateObjectEntryWithScheduleDates() throws Exception {
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition objectDefinition = _addObjectDefinition(
 			Collections.singletonList(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -8497,8 +8497,8 @@ public class DefaultObjectEntryManagerImplTest
 			LocaleUtil.getDefault(), null, _user);
 	}
 
-	private ObjectDefinition _createObjectDefinition() throws Exception {
-		return _createObjectDefinition(
+	private ObjectDefinition _addObjectDefinition() throws Exception {
+		return _addObjectDefinition(
 			List.of(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -8510,7 +8510,7 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
-	private ObjectDefinition _createObjectDefinition(
+	private ObjectDefinition _addObjectDefinition(
 			boolean enableObjectEntrySubscription,
 			List<ObjectField> objectFields, String scope)
 		throws Exception {
@@ -8529,25 +8529,25 @@ public class DefaultObjectEntryManagerImplTest
 			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
-	private ObjectDefinition _createObjectDefinition(
+	private ObjectDefinition _addObjectDefinition(
 			List<ObjectField> objectFields)
 		throws Exception {
 
-		return _createObjectDefinition(
+		return _addObjectDefinition(
 			objectFields, ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
-	private ObjectDefinition _createObjectDefinition(
+	private ObjectDefinition _addObjectDefinition(
 			List<ObjectField> objectFields, String scope)
 		throws Exception {
 
-		return _createObjectDefinition(false, objectFields, scope);
+		return _addObjectDefinition(false, objectFields, scope);
 	}
 
-	private ObjectDefinition _createObjectDefinition(String scope)
+	private ObjectDefinition _addObjectDefinition(String scope)
 		throws Exception {
 
-		return _createObjectDefinition(
+		return _addObjectDefinition(
 			Collections.singletonList(
 				new TextObjectFieldBuilder(
 				).indexed(

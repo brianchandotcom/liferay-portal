@@ -41,9 +41,9 @@
 
 		if (fileEntryId) {
 			Analytics.send('documentDownloaded', 'Document', {
-				groupId: themeDisplay.getScopeGroupId(),
-				fileEntryId,
 				externalReferenceCode,
+				fileEntryId,
+				groupId: themeDisplay.getScopeGroupId(),
 				preview:
 					!!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
 				title,

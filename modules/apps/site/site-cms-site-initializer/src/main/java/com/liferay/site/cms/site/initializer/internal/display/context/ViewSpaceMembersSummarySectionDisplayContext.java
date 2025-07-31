@@ -14,10 +14,15 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
 import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUtil;
 
@@ -36,7 +41,8 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		UserGroupLocalService userGroupLocalService,
-		UserLocalService userLocalService) {
+		UserLocalService userLocalService,
+		ModelResourcePermission<User> userModelResourcePermission) {
 
 		_depotEntryLocalService = depotEntryLocalService;
 		_groupId = groupId;
@@ -45,6 +51,10 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 		_language = language;
 		_userGroupLocalService = userGroupLocalService;
 		_userLocalService = userLocalService;
+		_userModelResourcePermission = userModelResourcePermission;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAPIURL(String type) {
@@ -127,8 +137,6 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 		).build();
 	}
 
-	// TODO: Add logic for the permission
-
 	private String _getAssetLibraryCreatorUserId() throws Exception {
 		Group group = _groupLocalService.getGroup(_groupId);
 
@@ -144,8 +152,10 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 			StringPool.CLOSE_PARENTHESIS);
 	}
 
-	private Boolean _hasAssignMembersPermission() {
-		return true;
+	private boolean _hasAssignMembersPermission() throws Exception {
+		return _userModelResourcePermission.contains(
+			_themeDisplay.getPermissionChecker(), _groupId,
+			ActionKeys.ASSIGN_MEMBERS);
 	}
 
 	private final DepotEntryLocalService _depotEntryLocalService;
@@ -153,7 +163,9 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final ThemeDisplay _themeDisplay;
 	private final UserGroupLocalService _userGroupLocalService;
 	private final UserLocalService _userLocalService;
+	private final ModelResourcePermission<User> _userModelResourcePermission;
 
 }

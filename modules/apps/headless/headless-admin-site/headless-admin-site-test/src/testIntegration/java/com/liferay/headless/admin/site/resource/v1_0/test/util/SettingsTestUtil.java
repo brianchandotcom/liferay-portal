@@ -8,12 +8,14 @@ package com.liferay.headless.admin.site.resource.v1_0.test.util;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
+import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -454,8 +456,18 @@ public class SettingsTestUtil {
 		String clientExtensionExternalReferenceCode =
 			RandomTestUtil.randomString();
 
+		CETConfiguration cetConfiguration = ConfigurableUtil.createConfigurable(
+			CETConfiguration.class,
+			HashMapBuilder.<String, Object>put(
+				"baseURL", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"type", "customElement"
+			).build());
+
 		cetManager.addCET(
-			null, serviceContext.getCompanyId(),
+			cetConfiguration, serviceContext.getCompanyId(),
 			clientExtensionExternalReferenceCode);
 
 		return new ClientExtension() {

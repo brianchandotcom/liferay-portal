@@ -9,6 +9,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -71,17 +72,17 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 	}
 
 	protected String getExpectedMessage(
-			long count, String sourceTableName, String targetColumn,
-			String targetTable, long targetValue)
+			long count, String sourceColumnName, String sourceTableName,
+			String targetColumnName, String targetTableName, long targetValue)
 		throws Exception {
 
 		return StringBundler.concat(
-			count, " orphan entries from table ",
-			dbInspector.normalizeName(sourceTableName),
-			" have been deleted because value ", targetValue,
-			" was not found in the origin table ",
-			dbInspector.normalizeName(targetTable), " and column ",
-			dbInspector.normalizeName(targetColumn));
+			"Table ", dbInspector.normalizeName(sourceTableName), ", ", count,
+			(count == 1) ? " entry " : " entries ", "deleted because ",
+			dbInspector.normalizeName(sourceColumnName), StringPool.SPACE,
+			targetValue, " was not found in ",
+			dbInspector.normalizeName(targetTableName), StringPool.PERIOD,
+			dbInspector.normalizeName(targetColumnName));
 	}
 
 	protected abstract UnsafeRunnable<Exception> getInsertDataUnsafeRunnable();

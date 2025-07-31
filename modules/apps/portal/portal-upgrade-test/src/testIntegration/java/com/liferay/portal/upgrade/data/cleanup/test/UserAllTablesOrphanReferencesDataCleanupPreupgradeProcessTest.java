@@ -10,6 +10,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -81,21 +82,22 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
-						"1 orphan entries from table ",
-						dbInspector.normalizeName("Layout"),
-						" have been updated to value ", _adminUser.getUserId(),
-						" because value ", _userId,
-						" was not found in the origin table ",
-						dbInspector.normalizeName("User_"), " and column ",
+						"Table ", dbInspector.normalizeName("Layout"), ", 1 ",
+						"entry updated column ",
+						dbInspector.normalizeName("userId"), " to value ",
+						_adminUser.getUserId(), " because ",
+						dbInspector.normalizeName("userId"), StringPool.SPACE,
+						_userId, " was not found in ",
+						dbInspector.normalizeName("User_"), StringPool.PERIOD,
 						dbInspector.normalizeName("userId"))));
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
-						"1 orphan entries from table ",
-						dbInspector.normalizeName("Users_Roles"),
-						" have been deleted because value ", _userId,
-						" was not found in the origin table ",
-						dbInspector.normalizeName("User_"), " and column ",
+						"Table ", dbInspector.normalizeName("Users_Roles"),
+						", 1 entry deleted because ",
+						dbInspector.normalizeName("userId"), StringPool.SPACE,
+						_userId, " was not found in ",
+						dbInspector.normalizeName("User_"), StringPool.PERIOD,
 						dbInspector.normalizeName("userId"))));
 			Assert.assertTrue(
 				messages.contains("No admin user found for company 0"));

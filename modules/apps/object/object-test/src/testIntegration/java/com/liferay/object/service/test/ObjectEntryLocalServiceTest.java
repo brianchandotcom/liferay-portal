@@ -316,26 +316,6 @@ public class ObjectEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.
-					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-				TestPropsValues.getCompanyId());
-
-		if (objectFolder != null) {
-			_cmsObjectDefinition =
-				ObjectDefinitionTestUtil.publishObjectDefinition(
-					false, ObjectDefinitionTestUtil.getRandomName(),
-					Arrays.asList(
-						ObjectFieldUtil.createObjectField(
-							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-							ObjectFieldConstants.DB_TYPE_STRING, "name",
-							"name")),
-					objectFolder.getObjectFolderId(),
-					ObjectDefinitionConstants.SCOPE_SITE,
-					TestPropsValues.getUserId());
-		}
-
 		_draftObjectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				Arrays.asList(
@@ -1329,7 +1309,29 @@ public class ObjectEntryLocalServiceTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntryWithAssetTag() throws Exception {
-		Assume.assumeNotNull(_cmsObjectDefinition);
+		ObjectDefinition objectDefinition = null;
+
+		ObjectFolder objectFolder =
+			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
+				ObjectFolderConstants.
+					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+				TestPropsValues.getCompanyId());
+
+		if (objectFolder != null) {
+			objectDefinition =
+				ObjectDefinitionTestUtil.publishObjectDefinition(
+					false, ObjectDefinitionTestUtil.getRandomName(),
+					Arrays.asList(
+						ObjectFieldUtil.createObjectField(
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING, "name",
+							"name")),
+					objectFolder.getObjectFolderId(),
+					ObjectDefinitionConstants.SCOPE_SITE,
+					TestPropsValues.getUserId());
+		}
+
+		Assume.assumeNotNull(objectDefinition);
 
 		String tagName = StringUtil.randomString();
 
@@ -1349,7 +1351,7 @@ public class ObjectEntryLocalServiceTest {
 		serviceContext.setAssetTagNames(new String[] {tagName});
 
 		_addObjectEntry(
-			TestPropsValues.getGroupId(), _cmsObjectDefinition,
+			TestPropsValues.getGroupId(), objectDefinition,
 			HashMapBuilder.<String, Serializable>put(
 				"name", StringUtil.randomString()
 			).build(),
@@ -1361,6 +1363,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertNotNull(
 			_assetTagLocalService.fetchTag(group.getGroupId(), tagName));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test
@@ -8678,9 +8682,6 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _cmsObjectDefinition;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

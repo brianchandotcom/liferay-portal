@@ -98,11 +98,9 @@ public class LoginActionTest {
 
 		URL url = httpURLConnection.getURL();
 
-		Assert.assertTrue(
-			url.getQuery(
-			).contains(
-				"p_p_state=exclusive"
-			));
+		String query = url.getQuery();
+
+		Assert.assertTrue(query.contains("p_p_state=exclusive"));
 	}
 
 	@Test
@@ -118,16 +116,16 @@ public class LoginActionTest {
 			httpURLConnection.setInstanceFollowRedirects(false);
 
 			Assert.assertEquals(302, httpURLConnection.getResponseCode());
+
+			String location = httpURLConnection.getHeaderField("Location");
+
 			Assert.assertTrue(
-				httpURLConnection.getHeaderField(
-					"Location"
-				).contains(
+				location.contains(
 					StringBundler.concat(
 						"_com_liferay_login_web_portlet_LoginPortlet_redirect=",
 						"http%3A%2F%2F", _company.getVirtualHostname(),
 						"%3A8080", HtmlUtil.escapeURL(contextPath),
-						"%2Fweb%2Fguest%2Fhome")
-				));
+						"%2Fweb%2Fguest%2Fhome")));
 		}
 	}
 
@@ -145,14 +143,14 @@ public class LoginActionTest {
 
 			URL url = httpURLConnection.getURL();
 
+			String query = url.getQuery();
+
 			Assert.assertTrue(
-				url.getQuery(
-				).contains(
+				query.contains(
 					StringBundler.concat(
 						"_com_liferay_login_web_portlet_LoginPortlet_redirect=",
 						"http%3A%2F%2F", _company.getVirtualHostname(),
-						"%3A8080%2Fweb%2Fguest%2Fhome")
-				));
+						"%3A8080%2Fweb%2Fguest%2Fhome")));
 		}
 	}
 
@@ -224,11 +222,9 @@ public class LoginActionTest {
 
 			url = httpURLConnection.getURL();
 
-			Assert.assertTrue(
-				url.getQuery(
-				).contains(
-					"p_p_state=normal"
-				));
+			String query = url.getQuery();
+
+			Assert.assertTrue(query.contains("p_p_state=normal"));
 		}
 	}
 

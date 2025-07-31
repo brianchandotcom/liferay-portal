@@ -715,7 +715,7 @@ database.db2.docker.image=${database.db2.docker.image}
 database.db2.host=localhost_db2
 database.db2.password=${database.db2.password}
 database.db2.schema=lportal
-database.db2.url=jdbc:db2://localhost:25010/lportal:deferPrepares=false;fullyMaterializeInputStreams=true;fullyMaterializeLobData=true;progresssiveLocators=2;progressiveStreaming=2;
+database.db2.url=jdbc:db2://localhost:25010/lportal:deferPrepares=false;fullyMaterializeInputStreams=true;fullyMaterializeLobData=true;progressiveLocators=2;progressiveStreaming=2;
 database.db2.username=${database.db2.username}
 database.db2.version=${database.version}
 database.type=db2

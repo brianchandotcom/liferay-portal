@@ -698,11 +698,6 @@ public class ObjectEntryLocalServiceImpl
 			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
 			objectEntry::getValues);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-53981")) {
-			_trashEntryLocalService.deleteEntry(
-				objectDefinition.getClassName(), objectEntry.getPrimaryKey());
-		}
-
 		if (!ObjectDefinitionThreadLocal.isDeleteObjectDefinitionId(
 				objectDefinition.getObjectDefinitionId())) {
 
@@ -732,6 +727,12 @@ public class ObjectEntryLocalServiceImpl
 			if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 				_subscriptionLocalService.deleteSubscriptions(
 					objectEntry.getCompanyId(), objectEntry.getModelClassName(),
+					objectEntry.getObjectEntryId());
+			}
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-53981")) {
+				_trashEntryLocalService.deleteEntry(
+					objectDefinition.getClassName(),
 					objectEntry.getObjectEntryId());
 			}
 

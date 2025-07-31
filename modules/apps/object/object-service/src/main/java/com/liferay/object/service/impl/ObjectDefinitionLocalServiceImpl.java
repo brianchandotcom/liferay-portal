@@ -184,6 +184,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.trash.service.TrashEntryLocalService;
 
 import java.sql.PreparedStatement;
 
@@ -595,6 +596,12 @@ public class ObjectDefinitionLocalServiceImpl
 
 					if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 						_subscriptionLocalService.deleteSubscriptions(
+							objectDefinition.getCompanyId(),
+							objectDefinition.getClassName());
+					}
+
+					if (FeatureFlagManagerUtil.isEnabled("LPD-53981")) {
+						_trashEntryLocalService.deleteTrashEntries(
 							objectDefinition.getCompanyId(),
 							objectDefinition.getClassName());
 					}
@@ -3446,6 +3453,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private SystemEventLocalService _systemEventLocalService;
+
+	@Reference
+	private TrashEntryLocalService _trashEntryLocalService;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

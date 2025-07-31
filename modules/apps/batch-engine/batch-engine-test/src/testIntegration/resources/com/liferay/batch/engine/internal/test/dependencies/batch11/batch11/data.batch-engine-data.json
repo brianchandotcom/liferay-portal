@@ -1,0 +1,36 @@
+{
+	"configuration": {
+		"callbackURL": null,
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": null
+	},
+	"items": [
+		{
+			"label": {
+				"en_US": "Audit Test Object"
+			},
+			"name": "AuditTestObject",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Test Field"
+					},
+					"name": "testField",
+					"required": false,
+					"system": false
+				}
+			],
+			"pluralLabel": {
+				"en_US": "Audit Test Objects"
+			},
+			"scope": "company",
+			"storageType": "default",
+			"system": false
+		}
+	]
+}

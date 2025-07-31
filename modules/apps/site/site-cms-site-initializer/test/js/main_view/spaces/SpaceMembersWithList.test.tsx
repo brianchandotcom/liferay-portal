@@ -551,7 +551,7 @@ describe('SpaceMembersWithList', () => {
 	});
 
 	describe('When hasAssignMembersPermission is false', () => {
-		it('does not render the add members input', async () => {
+		it('renders the add members input as disabled', () => {
 			render(
 				<SpaceMembersWithList
 					{...props}
@@ -559,17 +559,15 @@ describe('SpaceMembersWithList', () => {
 				/>
 			);
 
-			await waitFor(() => {
-				expect(
-					screen.getByLabelText('who-has-access')
-				).toBeInTheDocument();
-			});
-
 			expect(
-				screen.queryByRole('combobox', {
+				screen.getByRole('combobox', {
 					name: 'add-people-to-collaborate',
 				})
-			).not.toBeInTheDocument();
+			).toBeInTheDocument();
+
+			expect(
+				screen.getByPlaceholderText('enter-name-or-email')
+			).toBeDisabled();
 		});
 
 		it('does not render the remove button for members', async () => {

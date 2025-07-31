@@ -326,15 +326,14 @@ export function SpaceMembersWithList({
 
 	return (
 		<div className={classNames('space-members-with-list', className)}>
-			{hasAssignMembersPermission && (
-				<SpaceMembersInputWithSelect
-					onAutocompleteItemSelected={onAutocompleteItemSelected}
-					onSelectChange={(value) => {
-						setSelectedOption(value);
-					}}
-					selectValue={selectedOption}
-				/>
-			)}
+			<SpaceMembersInputWithSelect
+				disabled={!hasAssignMembersPermission}
+				onAutocompleteItemSelected={onAutocompleteItemSelected}
+				onSelectChange={(value) => {
+					setSelectedOption(value);
+				}}
+				selectValue={selectedOption}
+			/>
 
 			<label className="d-block" id={listLabelId}>
 				{Liferay.Language.get('who-has-access')}

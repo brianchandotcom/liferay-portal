@@ -59,7 +59,11 @@ public class AdvancedTableFDSView extends BaseTableFDSView {
 			)
 		).add(
 			"title", "title",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink"
+			).setSortable(
+				true
+			)
 		).add(
 			"creator.name", "author",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

@@ -18,7 +18,6 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -259,7 +258,7 @@ public class RelationshipObjectFieldBusinessType
 			}
 
 			ObjectEntry objectEntry =
-				_objectEntryLocalService.getOrAddEmptyObjectEntry(
+				_objectEntryService.getOrAddEmptyObjectEntry(
 					externalReferenceCode, objectDefinition1GroupId, userId,
 					objectDefinition1.getObjectDefinitionId());
 
@@ -320,9 +319,6 @@ public class RelationshipObjectFieldBusinessType
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

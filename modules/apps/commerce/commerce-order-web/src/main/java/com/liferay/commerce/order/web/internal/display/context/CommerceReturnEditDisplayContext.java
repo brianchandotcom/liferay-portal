@@ -682,8 +682,8 @@ public class CommerceReturnEditDisplayContext {
 		return _objectEntryLocalService.getOneToManyObjectEntries(
 			objectEntry.getGroupId(),
 			objectRelationship.getObjectRelationshipId(),
-			objectEntry.getObjectEntryId(), true, null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			new Long[] {objectEntry.getObjectEntryId()}, true, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	private boolean _hasStatusCompleted() throws Exception {

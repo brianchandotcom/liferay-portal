@@ -40,14 +40,14 @@ public class ManyToManyObjectRelationshipRelatedInfoCollectionProvider
 			objectEntryLocalService.getManyToManyObjectEntries(
 				objectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
-				objectEntry.getObjectEntryId(), true,
+				new Long[] {objectEntry.getObjectEntryId()}, true,
 				objectRelationship.isReverse(), null, pagination.getStart(),
 				pagination.getEnd()),
 			pagination,
 			objectEntryLocalService.getManyToManyObjectEntriesCount(
 				objectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
-				objectEntry.getObjectEntryId(), true,
+				new Long[] {objectEntry.getObjectEntryId()}, true,
 				objectRelationship.isReverse(), null));
 	}
 

@@ -896,13 +896,13 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext,
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(),
-					serviceBuilderObjectEntry.getPrimaryKey(), null,
-					_getStartPosition(pagination),
+					new Long[] {serviceBuilderObjectEntry.getPrimaryKey()},
+					null, _getStartPosition(pagination),
 					_getEndPosition(pagination))),
 			pagination,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				groupId, objectRelationship.getObjectRelationshipId(),
-				serviceBuilderObjectEntry.getPrimaryKey(), null));
+				new Long[] {serviceBuilderObjectEntry.getPrimaryKey()}, null));
 	}
 
 	@Override
@@ -934,8 +934,8 @@ public class DefaultObjectEntryManagerImpl
 					objectRelatedModelsProvider.getRelatedModels(
 						serviceBuilderObjectEntry.getGroupId(),
 						objectRelationship.getObjectRelationshipId(),
-						serviceBuilderObjectEntry.getPrimaryKey(), null,
-						_getStartPosition(pagination),
+						new Long[] {serviceBuilderObjectEntry.getPrimaryKey()},
+						null, _getStartPosition(pagination),
 						_getEndPosition(pagination)),
 				baseModel -> _toDTO(
 					baseModel, serviceBuilderObjectEntry,
@@ -946,7 +946,7 @@ public class DefaultObjectEntryManagerImpl
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				serviceBuilderObjectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
-				serviceBuilderObjectEntry.getPrimaryKey(), null));
+				new Long[] {serviceBuilderObjectEntry.getPrimaryKey()}, null));
 	}
 
 	@Override
@@ -2058,8 +2058,8 @@ public class DefaultObjectEntryManagerImpl
 
 		return objectRelatedModelsProvider.getRelatedModels(
 			GroupThreadLocal.getGroupId(),
-			objectRelationship.getObjectRelationshipId(), primaryKey, null, -1,
-			-1);
+			objectRelationship.getObjectRelationshipId(),
+			new Long[] {primaryKey}, null, -1, -1);
 	}
 
 	private ObjectDefinition _getRelatedObjectDefinition(
@@ -2185,12 +2185,13 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext,
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(),
-					objectEntryId, null, _getStartPosition(pagination),
+					new Long[] {objectEntryId}, null,
+					_getStartPosition(pagination),
 					_getEndPosition(pagination))),
 			pagination,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				groupId, objectRelationship.getObjectRelationshipId(),
-				objectEntryId, null));
+				new Long[] {objectEntryId}, null));
 	}
 
 	private Serializable _getValue(

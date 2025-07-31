@@ -67,13 +67,13 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcessTest
 			Assert.assertTrue(
 				messages.contains(
 					getExpectedMessage(
-						1, "PortletPreferences", "companyId", "Company",
-						_companyId1)));
+						1, "ownerId", "PortletPreferences", "companyId",
+						"Company", _companyId1)));
 			Assert.assertTrue(
 				messages.contains(
 					getExpectedMessage(
-						1, "PortletPreferences", "companyId", "Company",
-						_companyId2)));
+						1, "ownerId", "PortletPreferences", "companyId",
+						"Company", _companyId2)));
 		};
 	}
 

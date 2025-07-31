@@ -54,6 +54,19 @@ public class ObjectActionConstants {
 	private static final Map<String, Map<String, String>>
 		_subscriptionObjectActions =
 			LinkedHashMapBuilder.<String, Map<String, String>>put(
+				"SubscriptionAdded",
+				HashMapBuilder.put(
+					"conditionExpression", "objectEntryFolderId > 0"
+				).put(
+					"label", "Subscription Added"
+				).put(
+					"notificationTemplateExternalReferenceCode",
+					"L_SUBSCRIPTION_ADDED_NOTIFICATION_TEMPLATE"
+				).put(
+					"objectActionTriggerKey",
+					ObjectActionTriggerConstants.KEY_ON_AFTER_ADD
+				).build()
+			).put(
 				"SubscriptionExpired",
 				HashMapBuilder.put(
 					"conditionExpression",

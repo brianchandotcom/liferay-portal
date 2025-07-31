@@ -21,6 +21,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"enableObjectEntrySchedule": true,
 			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_BASIC_DOCUMENT",
 			"label": {
@@ -123,6 +124,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"enableObjectEntrySchedule": true,
 			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_BASIC_WEB_CONTENT",
 			"label": {
@@ -203,6 +205,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"enableObjectEntrySchedule": true,
 			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_BLOG",
 			"label": {
@@ -343,6 +346,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"enableObjectEntrySchedule": true,
 			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_EXTERNAL_VIDEO",
 			"label": {
@@ -423,6 +427,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"enableObjectEntrySchedule": true,
 			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_KNOWLEDGE_BASE",
 			"label": {

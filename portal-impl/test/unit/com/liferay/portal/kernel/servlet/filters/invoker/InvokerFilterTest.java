@@ -45,8 +45,11 @@ public class InvokerFilterTest {
 
 	@Before
 	public void setUp() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(new PortalImpl());
+
 		ToolDependencies.wireCaches();
-		_setUpPortalUtil();
 	}
 
 	@Test
@@ -164,12 +167,6 @@ public class InvokerFilterTest {
 
 			Assert.assertTrue(message.startsWith("Rejected " + urlPrefix));
 		}
-	}
-
-	private void _setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(new PortalImpl());
 	}
 
 }

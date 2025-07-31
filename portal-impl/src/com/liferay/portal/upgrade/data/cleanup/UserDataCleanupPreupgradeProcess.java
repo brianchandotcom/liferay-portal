@@ -28,13 +28,13 @@ public class UserDataCleanupPreupgradeProcess
 				StringBundler.concat(
 					"classNameId = (select classNameId from ClassName_ where ",
 					"value = '", User.class.getName(), "')"),
-				"classPK", "Contact_", "userId", "User_"));
+				"classPK", "AssetEntry", "userId", "User_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				StringBundler.concat(
 					"classNameId = (select classNameId from ClassName_ where ",
 					"value = '", User.class.getName(), "')"),
-				"classPK", "AssetEntry", "userId", "User_"));
+				"classPK", "Contact_", "userId", "User_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				StringBundler.concat(

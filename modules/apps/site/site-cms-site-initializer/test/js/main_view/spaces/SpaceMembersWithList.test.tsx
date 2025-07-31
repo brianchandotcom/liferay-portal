@@ -506,7 +506,7 @@ describe('SpaceMembersWithList', () => {
 
 				const alert = screen.getByRole('alert');
 				expect(alert).toHaveTextContent(
-					`unable-to-remove-group-${testUserGroups[0].name}-from-space-x`
+					`unable-to-remove-group-${testUserGroups[0].name}-from-space`
 				);
 			});
 		});

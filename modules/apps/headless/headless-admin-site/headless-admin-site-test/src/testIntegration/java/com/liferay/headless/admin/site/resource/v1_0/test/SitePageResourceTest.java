@@ -862,8 +862,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePageResource.postByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(), randomSitePage);
 
-		PageSpecificationsTestUtil.assertPostCustomFields(
-			testGroup.getGroupId(), pageSpecifications,
+		PageSpecificationsTestUtil.assertCustomFields(
+			pageSpecifications, testGroup.getGroupId(),
 			postSitePage.getPageSpecifications());
 
 		return postSitePage;
@@ -1144,7 +1144,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			patchBodySitePage.getPageSpecifications();
 
 		CustomField[][] updateCustomFields =
-			PageSpecificationsTestUtil.getUpdateCustomFields(
+			PageSpecificationsTestUtil.getCustomFields(
 				_getPageSpecificationType(type));
 
 		CustomField[] publishedCustomFields = updateCustomFields[0];
@@ -1460,7 +1460,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 
 		CustomField[][] updateCustomFields =
-			PageSpecificationsTestUtil.getUpdateCustomFields(
+			PageSpecificationsTestUtil.getCustomFields(
 				_getPageSpecificationType(type));
 
 		SitePageResource sitePageResource = _getSitePageResource(

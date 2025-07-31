@@ -254,27 +254,27 @@ public class PageSpecificationsTestUtil {
 			pageSpecifications[1], draftLayout.getPlid());
 	}
 
-	public static void assertPostCustomFields(
-			long groupId, PageSpecification[] postBodyPageSpecifications,
-			PageSpecification[] postPageSpecifications)
+	public static void assertCustomFields(
+		PageSpecification[] expectedPageSpecifications, long groupId,
+		PageSpecification[] pageSpecifications)
 		throws Exception {
 
-		Assert.assertTrue(ArrayUtil.isNotEmpty(postPageSpecifications));
+		Assert.assertTrue(ArrayUtil.isNotEmpty(pageSpecifications));
 
 		CustomField customField = _getCustomField(
 			_EXPANDO_ATTRIBUTE_NAMES[1], _EXPANDO_ATTRIBUTE_DEFAULT_VALUES[1]);
 
 		_assertCustomFields(
 			ArrayUtil.append(
-				postBodyPageSpecifications[0].getCustomFields(), customField),
-			groupId, postPageSpecifications[0]);
+				expectedPageSpecifications[0].getCustomFields(), customField),
+			groupId, pageSpecifications[0]);
 
-		if (postPageSpecifications.length == 2) {
+		if (pageSpecifications.length == 2) {
 			_assertCustomFields(
 				ArrayUtil.append(
-					postBodyPageSpecifications[1].getCustomFields(),
+					expectedPageSpecifications[1].getCustomFields(),
 					customField),
-				groupId, postPageSpecifications[1]);
+				groupId, pageSpecifications[1]);
 		}
 	}
 
@@ -463,7 +463,7 @@ public class PageSpecificationsTestUtil {
 		return pageSpecifications;
 	}
 
-	public static CustomField[][] getUpdateCustomFields(
+	public static CustomField[][] getCustomFields(
 		PageSpecification.Type type) {
 
 		CustomField[] publishedCustomFields = {

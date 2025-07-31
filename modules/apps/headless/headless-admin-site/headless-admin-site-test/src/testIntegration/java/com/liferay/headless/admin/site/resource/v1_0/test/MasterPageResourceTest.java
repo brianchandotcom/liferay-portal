@@ -648,8 +648,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			masterPageResource.postSiteSiteByExternalReferenceCodeMasterPage(
 				testGroup.getExternalReferenceCode(), randomMasterPage);
 
-		PageSpecificationsTestUtil.assertPostCustomFields(
-			testGroup.getGroupId(), pageSpecifications,
+		PageSpecificationsTestUtil.assertCustomFields(
+			pageSpecifications, testGroup.getGroupId(),
 			postMasterPage.getPageSpecifications());
 
 		return postMasterPage;
@@ -822,7 +822,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				patchBodyMasterPage.getPageSpecifications();
 
 			CustomField[][] updateCustomFields =
-				PageSpecificationsTestUtil.getUpdateCustomFields(
+				PageSpecificationsTestUtil.getCustomFields(
 					PageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
 
 			CustomField[] publishedCustomFields = updateCustomFields[0];
@@ -1087,7 +1087,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			};
 
 			CustomField[][] updateCustomFields =
-				PageSpecificationsTestUtil.getUpdateCustomFields(
+				PageSpecificationsTestUtil.getCustomFields(
 					PageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
 
 			MasterPageResource masterPageResource = _getMasterPageResource();

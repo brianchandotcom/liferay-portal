@@ -17,9 +17,9 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -30,8 +30,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -166,25 +168,20 @@ public class BatchEngineBundleTrackerTest {
 	public void testProcessBatchEngineBundleUsesActiveAdministratorUser()
 		throws Exception {
 
-		long originalUserId = -1;
+		User adminUser = null;
 		int originalStatus = -1;
-		User fallbackAdminUser = null;
+		long originalUserId = -1;
 
 		try {
-
-			// First batch engine run to capture initial user
-
-			AtomicReference<BatchEngineImportTask> initialTaskRef =
-				new AtomicReference<>();
+			AtomicReference<BatchEngineImportTask>
+				initialBatchEngineImportTaskReference = new AtomicReference<>();
 
 			_testProcessBatchEngineBundle(
-				batchEngineImportTask -> initialTaskRef.compareAndSet(
-					null, batchEngineImportTask),
-				"batch11", "/batch11/data.batch-engine-data.json");
+				initialBatchEngineImportTaskReference::set, "batch11",
+				"/batch11/data.batch-engine-data.json");
 
-			BatchEngineImportTask initialTask = initialTaskRef.get();
-
-			originalUserId = initialTask.getUserId();
+			originalUserId = initialBatchEngineImportTaskReference.get(
+			).getUserId();
 
 			User originalUser = _userLocalService.getUser(originalUserId);
 
@@ -192,47 +189,44 @@ public class BatchEngineBundleTrackerTest {
 
 			originalStatus = originalUser.getStatus();
 
-			// Simulate a scenario where the original user becomes inactive
-
 			_userLocalService.updateStatus(
-				originalUserId, WorkflowConstants.STATUS_INACTIVE,
+				originalUser, WorkflowConstants.STATUS_INACTIVE,
 				new ServiceContext());
 
 			Assert.assertFalse(originalUser.isActive());
 
-			// Create an active admin user as a fallback for batch processing
+			adminUser = UserTestUtil.addCompanyAdminUser(
+				_companyLocalService.getCompany(
+					TestPropsValues.getCompanyId()));
 
-			fallbackAdminUser = _createAdminUser();
+			Assert.assertTrue(adminUser.isActive());
 
-			Assert.assertTrue(fallbackAdminUser.isActive());
-
-			// Second batch engine run to verify user selection
-
-			AtomicReference<BatchEngineImportTask> fallbackTaskRef =
-				new AtomicReference<>();
+			AtomicReference<BatchEngineImportTask>
+				fallbackBatchEngineImportTaskReference =
+					new AtomicReference<>();
 
 			_testProcessBatchEngineBundle(
-				batchEngineImportTask -> fallbackTaskRef.compareAndSet(
-					null, batchEngineImportTask),
-				"batch11", "/batch11/data.batch-engine-data.json");
+				fallbackBatchEngineImportTaskReference::set, "batch11",
+				"/batch11/data.batch-engine-data.json");
 
-			BatchEngineImportTask fallbackTask = fallbackTaskRef.get();
+			User fallbackBatchEngineImportTaskUser = _userLocalService.getUser(
+				fallbackBatchEngineImportTaskReference.get(
+				).getUserId());
 
-			User fallbackUser = _userLocalService.getUser(
-				fallbackTask.getUserId());
-
-			Assert.assertTrue(
-				"Fallback user should be active", fallbackUser.isActive());
+			Assert.assertTrue(fallbackBatchEngineImportTaskUser.isActive());
 
 			Assert.assertTrue(
-				"Fallback user should have the Administrator role",
-				_hasAdminRole(fallbackUser));
+				ListUtil.exists(
+					_roleLocalService.getUserRoles(
+						fallbackBatchEngineImportTaskUser.getUserId()),
+					userRole -> RoleConstants.ADMINISTRATOR.equals(
+						userRole.getName())));
 		}
 		finally {
 			_userLocalService.updateStatus(
 				originalUserId, originalStatus, new ServiceContext());
 
-			_userLocalService.deleteUser(fallbackAdminUser);
+			_userLocalService.deleteUser(adminUser);
 		}
 	}
 
@@ -252,31 +246,10 @@ public class BatchEngineBundleTrackerTest {
 			"batch10", "/batch10/data.batch-engine-data.json");
 	}
 
-	private User _createAdminUser() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		Role role = _roleLocalService.getRole(
-			user.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		_userLocalService.addRoleUser(role.getRoleId(), user);
-
-		return user;
-	}
-
 	private String _getDataFileName(
 		BatchEngineImportTask batchEngineImportTask) {
 
 		return batchEngineImportTask.getParameterValue("dataFileName");
-	}
-
-	private boolean _hasAdminRole(User user) {
-		for (Role userRole : _roleLocalService.getUserRoles(user.getUserId())) {
-			if (RoleConstants.ADMINISTRATOR.equals(userRole.getName())) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private void _testProcessBatchEngineBundle(
@@ -452,6 +425,9 @@ public class BatchEngineBundleTrackerTest {
 
 	@DeleteAfterTestRun
 	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

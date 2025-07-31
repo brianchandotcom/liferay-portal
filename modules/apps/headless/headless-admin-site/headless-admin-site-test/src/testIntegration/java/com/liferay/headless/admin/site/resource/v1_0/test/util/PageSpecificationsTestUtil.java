@@ -92,6 +92,30 @@ public class PageSpecificationsTestUtil {
 			pageSpecification.getType());
 	}
 
+	public static void assertCustomFields(
+			PageSpecification[] expectedPageSpecifications, long groupId,
+			PageSpecification[] pageSpecifications)
+		throws Exception {
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(pageSpecifications));
+
+		CustomField customField = _getCustomField(
+			_EXPANDO_ATTRIBUTE_NAMES[1], _EXPANDO_ATTRIBUTE_DEFAULT_VALUES[1]);
+
+		_assertCustomFields(
+			ArrayUtil.append(
+				expectedPageSpecifications[0].getCustomFields(), customField),
+			groupId, pageSpecifications[0]);
+
+		if (pageSpecifications.length == 2) {
+			_assertCustomFields(
+				ArrayUtil.append(
+					expectedPageSpecifications[1].getCustomFields(),
+					customField),
+				groupId, pageSpecifications[1]);
+		}
+	}
+
 	public static void assertPageSpecifications(
 		ContentPageSpecification expectedDraftContentPageSpecification,
 		ContentPageSpecification expectedPublishedContentPageSpecification,
@@ -254,30 +278,6 @@ public class PageSpecificationsTestUtil {
 			pageSpecifications[1], draftLayout.getPlid());
 	}
 
-	public static void assertCustomFields(
-		PageSpecification[] expectedPageSpecifications, long groupId,
-		PageSpecification[] pageSpecifications)
-		throws Exception {
-
-		Assert.assertTrue(ArrayUtil.isNotEmpty(pageSpecifications));
-
-		CustomField customField = _getCustomField(
-			_EXPANDO_ATTRIBUTE_NAMES[1], _EXPANDO_ATTRIBUTE_DEFAULT_VALUES[1]);
-
-		_assertCustomFields(
-			ArrayUtil.append(
-				expectedPageSpecifications[0].getCustomFields(), customField),
-			groupId, pageSpecifications[0]);
-
-		if (pageSpecifications.length == 2) {
-			_assertCustomFields(
-				ArrayUtil.append(
-					expectedPageSpecifications[1].getCustomFields(),
-					customField),
-				groupId, pageSpecifications[1]);
-		}
-	}
-
 	public static void assertUpdateCustomFields(
 			long groupId, PageSpecification[] pageSpecifications,
 			CustomField[][] postCustomFields,
@@ -376,6 +376,26 @@ public class PageSpecificationsTestUtil {
 		return contentPageSpecification;
 	}
 
+	public static CustomField[][] getCustomFields(PageSpecification.Type type) {
+		CustomField[] publishedCustomFields = {
+			_getCustomField(_EXPANDO_ATTRIBUTE_NAMES[0], (String)null),
+			_getCustomField(
+				_EXPANDO_ATTRIBUTE_NAMES[1], RandomTestUtil.randomString())
+		};
+
+		CustomField[] draftCustomFields = null;
+
+		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
+			draftCustomFields = new CustomField[] {
+				_getCustomField(_EXPANDO_ATTRIBUTE_NAMES[0], (String)null),
+				_getCustomField(
+					_EXPANDO_ATTRIBUTE_NAMES[1], RandomTestUtil.randomString())
+			};
+		}
+
+		return new CustomField[][] {publishedCustomFields, draftCustomFields};
+	}
+
 	public static ExpandoTableAutocloseable getExpandoTableAutoCloseable() {
 		return new ExpandoTableAutocloseable();
 	}
@@ -461,28 +481,6 @@ public class PageSpecificationsTestUtil {
 		}
 
 		return pageSpecifications;
-	}
-
-	public static CustomField[][] getCustomFields(
-		PageSpecification.Type type) {
-
-		CustomField[] publishedCustomFields = {
-			_getCustomField(_EXPANDO_ATTRIBUTE_NAMES[0], (String)null),
-			_getCustomField(
-				_EXPANDO_ATTRIBUTE_NAMES[1], RandomTestUtil.randomString())
-		};
-
-		CustomField[] draftCustomFields = null;
-
-		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
-			draftCustomFields = new CustomField[] {
-				_getCustomField(_EXPANDO_ATTRIBUTE_NAMES[0], (String)null),
-				_getCustomField(
-					_EXPANDO_ATTRIBUTE_NAMES[1], RandomTestUtil.randomString())
-			};
-		}
-
-		return new CustomField[][] {publishedCustomFields, draftCustomFields};
 	}
 
 	public static WidgetPageSpecification getWidgetPageSpecification(

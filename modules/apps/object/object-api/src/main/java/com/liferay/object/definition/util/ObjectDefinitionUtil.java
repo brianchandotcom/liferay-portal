@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Alejandro Tardín
@@ -27,7 +26,7 @@ public class ObjectDefinitionUtil {
 	public static String getModifiableSystemObjectDefinitionRESTContextPath(
 		String name) {
 
-		if (PortalRunMode.isTestMode() && Objects.equals(name, "Test")) {
+		if (PortalRunMode.isTestMode() && StringUtil.startsWith(name, "Test")) {
 			return "/test";
 		}
 

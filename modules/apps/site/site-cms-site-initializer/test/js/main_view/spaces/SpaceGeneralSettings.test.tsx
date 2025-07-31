@@ -97,7 +97,7 @@ describe('SpaceGeneralSettings', () => {
 
 		expect(
 			screen.getByRole('checkbox', {
-				name: /enable-this-option-to-allow-users/,
+				name: /enable-sharing/,
 			})
 		).toBeChecked();
 

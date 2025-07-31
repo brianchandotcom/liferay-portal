@@ -97,6 +97,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
@@ -1551,10 +1552,8 @@ public class DefaultObjectEntryManagerImpl
 					className = roleTypeContributor.getClassName();
 				}
 
-				_roleLocalService.getOrAddEmptyRole(
-					permission.getRoleExternalReferenceCode(),
-					objectDefinition.getCompanyId(),
-					dtoConverterContext.getUserId(), className, 0,
+				_roleService.getOrAddEmptyRole(
+					permission.getRoleExternalReferenceCode(), className, 0,
 					permission.getRoleName(),
 					RoleConstants.getLabelType(permission.getRoleType()));
 			}
@@ -2987,6 +2986,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private RoleService _roleService;
 
 	@Reference
 	private RoleTypeContributorProvider _roleTypeContributorProvider;

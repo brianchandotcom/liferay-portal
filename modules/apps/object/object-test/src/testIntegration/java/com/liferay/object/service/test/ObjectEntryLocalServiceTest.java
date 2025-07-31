@@ -264,7 +264,6 @@ import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -1321,8 +1320,7 @@ public class ObjectEntryLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, "name",
-						"name")),
+						ObjectFieldConstants.DB_TYPE_STRING, "name", "name")),
 				objectFolder.getObjectFolderId(),
 				ObjectDefinitionConstants.SCOPE_SITE,
 				TestPropsValues.getUserId());
@@ -1354,7 +1352,6 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertNull(
 			_assetTagLocalService.fetchTag(
 				TestPropsValues.getGroupId(), assetTagName));
-
 		Assert.assertNotNull(
 			_assetTagLocalService.fetchTag(group.getGroupId(), assetTagName));
 

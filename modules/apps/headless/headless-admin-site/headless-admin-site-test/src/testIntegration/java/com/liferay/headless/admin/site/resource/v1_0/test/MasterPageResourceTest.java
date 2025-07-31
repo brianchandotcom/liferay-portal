@@ -8,7 +8,6 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.MasterPage;
@@ -22,6 +21,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -798,14 +797,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			MasterPage postMasterPage =
 				_postByExternalReferenceCodeMasterPageWithPageSpecificationsWithCustomFields();
 
-			CustomField[][] postCustomFields = {
-				ArrayUtil.clone(
-					postMasterPage.getPageSpecifications()[0].
-						getCustomFields()),
-				ArrayUtil.clone(
-					postMasterPage.getPageSpecifications()[1].getCustomFields())
-			};
-
 			MasterPageResource masterPageResource = _getMasterPageResource();
 
 			MasterPage patchBodyMasterPage = new MasterPage() {
@@ -818,29 +809,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				}
 			};
 
-			PageSpecification[] patchBodyPagePageSpecifications =
-				patchBodyMasterPage.getPageSpecifications();
-
-			CustomField[][] updateCustomFields =
-				PageSpecificationsTestUtil.getCustomFields(
-					PageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
-
-			CustomField[] publishedCustomFields = updateCustomFields[0];
-
-			patchBodyPagePageSpecifications[0].setCustomFields(
-				new CustomField[] {
-					publishedCustomFields[0], publishedCustomFields[1]
-				});
-
-			if (patchBodyPagePageSpecifications.length == 2) {
-				CustomField[] draftCustomFields = updateCustomFields[1];
-
-				patchBodyPagePageSpecifications[1].setCustomFields(
-					new CustomField[] {
-						draftCustomFields[0], draftCustomFields[1]
-					});
-			}
-
 			MasterPage patchMasterPage =
 				masterPageResource.
 					patchSiteSiteByExternalReferenceCodeMasterPage(
@@ -850,7 +818,10 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 			PageSpecificationsTestUtil.assertUpdateCustomFields(
 				testGroup.getGroupId(), patchMasterPage.getPageSpecifications(),
-				updateCustomFields);
+				TransformUtil.transform(
+					patchBodyMasterPage.getPageSpecifications(),
+					pageSpecification -> pageSpecification.getCustomFields(),
+					CustomField[].class));
 		}
 	}
 
@@ -1078,47 +1049,33 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			MasterPage postMasterPage =
 				_postByExternalReferenceCodeMasterPageWithPageSpecificationsWithCustomFields();
 
-			CustomField[][] postCustomFields = {
-				ArrayUtil.clone(
-					postMasterPage.getPageSpecifications()[0].
-						getCustomFields()),
-				ArrayUtil.clone(
-					postMasterPage.getPageSpecifications()[1].getCustomFields())
-			};
-
-			CustomField[][] updateCustomFields =
-				PageSpecificationsTestUtil.getCustomFields(
-					PageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
-
 			MasterPageResource masterPageResource = _getMasterPageResource();
 
-			PageSpecification[] putBodyPagePageSpecifications =
-				postMasterPage.getPageSpecifications();
+			MasterPage putMasterPage = postMasterPage;
 
-			CustomField[] publishedCustomFields = updateCustomFields[0];
+			putMasterPage.setPageSpecifications(
+				() -> TransformUtil.transform(
+					putMasterPage.getPageSpecifications(),
+					pageSpecification -> {
+						pageSpecification.setCustomFields(
+							PageSpecificationsTestUtil.getCustomFields());
 
-			putBodyPagePageSpecifications[0].setCustomFields(
-				new CustomField[] {
-					publishedCustomFields[0], publishedCustomFields[1]
-				});
-
-			if (putBodyPagePageSpecifications.length == 2) {
-				CustomField[] draftCustomFields = updateCustomFields[1];
-
-				putBodyPagePageSpecifications[1].setCustomFields(
-					new CustomField[] {
-						draftCustomFields[0], draftCustomFields[1]
-					});
-			}
+						return pageSpecification;
+					},
+					PageSpecification.class));
 
 			MasterPage updateMasterPage =
 				masterPageResource.putSiteSiteByExternalReferenceCodeMasterPage(
 					testGroup.getExternalReferenceCode(),
-					postMasterPage.getExternalReferenceCode(), postMasterPage);
+					postMasterPage.getExternalReferenceCode(), putMasterPage);
 
 			PageSpecificationsTestUtil.assertUpdateCustomFields(
 				testGroup.getGroupId(),
-				updateMasterPage.getPageSpecifications(), updateCustomFields);
+				updateMasterPage.getPageSpecifications(),
+				TransformUtil.transform(
+					putMasterPage.getPageSpecifications(),
+					pageSpecification -> pageSpecification.getCustomFields(),
+					CustomField[].class));
 		}
 	}
 

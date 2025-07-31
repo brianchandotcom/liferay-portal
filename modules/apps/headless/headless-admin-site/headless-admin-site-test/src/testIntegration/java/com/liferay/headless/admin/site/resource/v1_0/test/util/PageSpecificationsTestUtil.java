@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
@@ -307,16 +308,8 @@ public class PageSpecificationsTestUtil {
 	}
 
 	public static ContentPageSpecification getContentPageSpecification(
-		String draftContentPageSpecificationExternalReferenceCode,
-		PageSpecification.Status status) {
-
-		return getContentPageSpecification(
-			RandomTestUtil.randomString(),
-			draftContentPageSpecificationExternalReferenceCode, null, status);
-	}
-
-	public static ContentPageSpecification getContentPageSpecification(
 		String contentPageSpecificationExternalReferenceCode,
+		CustomField[] customFields,
 		String draftContentPageSpecificationExternalReferenceCode,
 		PageExperience[] pageExperiences, PageSpecification.Status status) {
 
@@ -327,6 +320,7 @@ public class PageSpecificationsTestUtil {
 				}
 			};
 
+		contentPageSpecification.setCustomFields(customFields);
 		contentPageSpecification.
 			setDraftContentPageSpecificationExternalReferenceCode(
 				draftContentPageSpecificationExternalReferenceCode);
@@ -357,24 +351,21 @@ public class PageSpecificationsTestUtil {
 		return contentPageSpecification;
 	}
 
-	public static CustomField[][] getCustomFields(PageSpecification.Type type) {
-		CustomField[] publishedCustomFields = {
+	public static ContentPageSpecification getContentPageSpecification(
+		String draftContentPageSpecificationExternalReferenceCode,
+		PageSpecification.Status status) {
+
+		return getContentPageSpecification(
+			RandomTestUtil.randomString(), null,
+			draftContentPageSpecificationExternalReferenceCode, null, status);
+	}
+
+	public static CustomField[] getCustomFields() {
+		return new CustomField[] {
 			_getCustomField(_EXPANDO_ATTRIBUTE_NAMES[0], (String)null),
 			_getCustomField(
 				_EXPANDO_ATTRIBUTE_NAMES[1], RandomTestUtil.randomString())
 		};
-
-		CustomField[] draftCustomFields = null;
-
-		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
-			draftCustomFields = new CustomField[] {
-				_getCustomField(_EXPANDO_ATTRIBUTE_NAMES[0], (String)null),
-				_getCustomField(
-					_EXPANDO_ATTRIBUTE_NAMES[1], RandomTestUtil.randomString())
-			};
-		}
-
-		return new CustomField[][] {publishedCustomFields, draftCustomFields};
 	}
 
 	public static ExpandoTableAutocloseable getExpandoTableAutoCloseable() {
@@ -406,8 +397,10 @@ public class PageSpecificationsTestUtil {
 			}
 
 			return _getContentPageSpecifications(
+				getCustomFields(),
 				draftContentPageSpecification.getExternalReferenceCode(),
 				draftContentPageSpecification.getPageExperiences(),
+				getCustomFields(),
 				publishedContentPageSpecification.getExternalReferenceCode(),
 				publishedContentPageSpecification.getPageExperiences());
 		}
@@ -417,6 +410,7 @@ public class PageSpecificationsTestUtil {
 
 		return new PageSpecification[] {
 			getWidgetPageSpecification(
+				getCustomFields(),
 				widgetPageSpecification.getExternalReferenceCode(), null,
 				PageSpecification.Status.APPROVED)
 		};
@@ -430,43 +424,25 @@ public class PageSpecificationsTestUtil {
 
 		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
 			pageSpecifications = _getContentPageSpecifications(
-				RandomTestUtil.randomString(), null,
+				getCustomFields(), RandomTestUtil.randomString(), null,
+				getCustomFields(),
 				publishedPageSpecificationExternalReferenceCode, null);
 		}
 		else {
 			pageSpecifications = new PageSpecification[] {
 				getWidgetPageSpecification(
+					getCustomFields(),
 					publishedPageSpecificationExternalReferenceCode, null,
 					PageSpecification.Status.APPROVED)
 			};
-		}
-
-		pageSpecifications[0].setCustomFields(
-			new CustomField[] {
-				_getCustomField(
-					_EXPANDO_ATTRIBUTE_NAMES[0], RandomTestUtil.randomString()),
-				_getCustomField(
-					_EXPANDO_ATTRIBUTE_NAMES[2], RandomTestUtil.randomString())
-			});
-
-		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
-			pageSpecifications[1].setCustomFields(
-				new CustomField[] {
-					_getCustomField(
-						_EXPANDO_ATTRIBUTE_NAMES[0],
-						RandomTestUtil.randomString()),
-					_getCustomField(
-						_EXPANDO_ATTRIBUTE_NAMES[2],
-						RandomTestUtil.randomString())
-				});
 		}
 
 		return pageSpecifications;
 	}
 
 	public static WidgetPageSpecification getWidgetPageSpecification(
-		String externalReferenceCode, Settings settings,
-		PageSpecification.Status status) {
+		CustomField[] customFields, String externalReferenceCode,
+		Settings settings, PageSpecification.Status status) {
 
 		WidgetPageSpecification widgetPageSpecification =
 			new WidgetPageSpecification() {
@@ -475,6 +451,7 @@ public class PageSpecificationsTestUtil {
 				}
 			};
 
+		widgetPageSpecification.setCustomFields(customFields);
 		widgetPageSpecification.setExternalReferenceCode(externalReferenceCode);
 		widgetPageSpecification.setSettings(settings);
 		widgetPageSpecification.setStatus(status);
@@ -685,20 +662,24 @@ public class PageSpecificationsTestUtil {
 	}
 
 	private static ContentPageSpecification[] _getContentPageSpecifications(
+		CustomField[] draftPageSpecificationCustomFields,
 		String draftPageSpecificationExternalReferenceCode,
 		PageExperience[] draftPageSpecificationPageExperiences,
+		CustomField[] publishedPageSpecificationCustomFields,
 		String publishedPageSpecificationExternalReferenceCode,
 		PageExperience[] publishedPageSpecificationPageExperiences) {
 
 		ContentPageSpecification draftContentPageSpecification =
 			getContentPageSpecification(
-				draftPageSpecificationExternalReferenceCode, null,
+				draftPageSpecificationExternalReferenceCode,
+				draftPageSpecificationCustomFields, null,
 				draftPageSpecificationPageExperiences,
 				PageSpecification.Status.DRAFT);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			getContentPageSpecification(
 				publishedPageSpecificationExternalReferenceCode,
+				publishedPageSpecificationCustomFields,
 				draftContentPageSpecification.getExternalReferenceCode(),
 				publishedPageSpecificationPageExperiences,
 				PageSpecification.Status.APPROVED);

@@ -1324,7 +1324,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 								() -> new PageSpecification[] {
 									PageSpecificationsTestUtil.
 										getWidgetPageSpecification(
-											null,
+											null, null,
 											widgetPageSpecification.
 												getSettings(),
 											PageSpecification.Status.APPROVED)
@@ -1444,7 +1444,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		WidgetPageSpecification widgetPageSpecification =
 			PageSpecificationsTestUtil.getWidgetPageSpecification(
-				pageTemplate.getExternalReferenceCode(), null,
+				null, pageTemplate.getExternalReferenceCode(), null,
 				PageSpecification.Status.APPROVED);
 
 		pageTemplate.setPageSpecifications(
@@ -1575,7 +1575,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		WidgetPageSpecification widgetPageSpecification =
 			PageSpecificationsTestUtil.getWidgetPageSpecification(
-				pageTemplate.getExternalReferenceCode(),
+				null, pageTemplate.getExternalReferenceCode(),
 				SettingsTestUtil.getSettings(
 					ServiceContextTestUtil.getServiceContext(
 						testGroup.getGroupId(), TestPropsValues.getUserId())),

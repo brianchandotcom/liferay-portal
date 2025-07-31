@@ -41,8 +41,7 @@ public class TicketAttachmentsDownloadRestController
 		@PathVariable("ticketAttachmentId") long ticketAttachmentId) {
 
 		return _getResponse(
-			"Bearer " + jwt.getTokenValue(),
-			new TicketAttachmentIdentifier(ticketAttachmentId));
+			"Bearer " + jwt.getTokenValue(), ticketAttachmentId);
 	}
 
 	@GetMapping("/by-external-reference-code/{externalReferenceCode}/download")
@@ -51,27 +50,24 @@ public class TicketAttachmentsDownloadRestController
 		@PathVariable("externalReferenceCode") String externalReferenceCode) {
 
 		return _getResponse(
-			"Bearer " + jwt.getTokenValue(),
-			new TicketAttachmentIdentifier(externalReferenceCode));
+			"Bearer " + jwt.getTokenValue(), externalReferenceCode);
 	}
 
 	private ResponseEntity<String> _getResponse(
-		String bearerToken,
-		TicketAttachmentIdentifier ticketAttachmentIdentifier) {
+		String bearerToken, Object identifier) {
 
 		try {
 			TicketAttachment ticketAttachment = null;
 
-			if (ticketAttachmentIdentifier.isById()) {
+			if (identifier instanceof Long) {
 				ticketAttachment =
 					_ticketAttachmentService.fetchTicketAttachment(
-						bearerToken, ticketAttachmentIdentifier.getId());
+						bearerToken, (Long)identifier);
 			}
-			else if (ticketAttachmentIdentifier.isByExternalReferenceCode()) {
+			else if (identifier instanceof String) {
 				ticketAttachment =
 					_ticketAttachmentService.fetchTicketAttachment(
-						bearerToken,
-						ticketAttachmentIdentifier.getExternalReferenceCode());
+						bearerToken, (String)identifier);
 			}
 			else {
 				return new ResponseEntity<>(

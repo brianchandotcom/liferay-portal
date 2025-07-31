@@ -276,6 +276,16 @@ $label-danger: map-deep-merge(
 	$label-danger
 );
 
+$sticker-sizes: () !default;
+$sticker-sizes: map-deep-merge(
+	(
+		sticker-xs: (
+			border-radius: $sticker-sm-border-radius,
+		),
+	),
+	$sticker-sizes
+);
+
 $sticker-sm: () !default;
 $sticker-sm: map-deep-merge(
 	(

@@ -310,14 +310,15 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 		else {
 			layout = LayoutUtil.addPortletLayout(
-				sitePage.getExternalReferenceCode(), groupId, nameMap,
-				LocalizedMapUtil.getLocalizedMap(
-					sitePage.getFriendlyUrlPath_i18n()),
-				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
+				sitePage.getExternalReferenceCode(), groupId,
 				_getParentLayoutId(
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
 					sitePage.getParentSitePageExternalReferenceCode()),
-				typeSettingsUnicodeProperties, serviceContext,
+				nameMap, typeSettingsUnicodeProperties,
+				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
+				LocalizedMapUtil.getLocalizedMap(
+					sitePage.getFriendlyUrlPath_i18n()),
+				serviceContext,
 				PageSpecificationUtil.getWidgetPageSpecification(
 					sitePage.getPageSpecifications()));
 		}

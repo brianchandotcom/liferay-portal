@@ -274,10 +274,10 @@ public class LayoutUtil {
 	}
 
 	public static Layout addPortletLayout(
-			String externalReferenceCode, long groupId,
-			Map<Locale, String> nameMap, Map<Locale, String> friendlyURLMap,
-			boolean hiddenFromNavigation, long parentLayoutId,
+			String externalReferenceCode, long groupId, long parentLayoutId,
+			Map<Locale, String> nameMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
+			boolean hiddenFromNavigation, Map<Locale, String> friendlyURLMap,
 			ServiceContext serviceContext,
 			WidgetPageSpecification widgetPageSpecification)
 		throws Exception {

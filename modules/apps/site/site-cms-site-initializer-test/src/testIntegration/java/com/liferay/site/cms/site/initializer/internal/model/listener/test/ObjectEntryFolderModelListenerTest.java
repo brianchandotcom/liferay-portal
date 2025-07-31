@@ -138,7 +138,7 @@ public class ObjectEntryFolderModelListenerTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testDeleteObjectEntryFolder() throws Exception {
-		int sharingEntriesInitialCount =
+		int sharingEntriesCount =
 			_sharingEntryLocalService.getSharingEntriesCount();
 
 		ObjectEntryFolder objectEntryFolder =
@@ -163,14 +163,14 @@ public class ObjectEntryFolderModelListenerTest {
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
-			sharingEntriesInitialCount + 1,
+			sharingEntriesCount + 1,
 			_sharingEntryLocalService.getSharingEntriesCount());
 
 		_objectEntryFolderLocalService.deleteObjectEntryFolder(
 			objectEntryFolder.getObjectEntryFolderId());
 
 		Assert.assertEquals(
-			sharingEntriesInitialCount,
+			sharingEntriesCount,
 			_sharingEntryLocalService.getSharingEntriesCount());
 	}
 

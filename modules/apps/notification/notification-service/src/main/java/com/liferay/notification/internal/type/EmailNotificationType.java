@@ -38,6 +38,8 @@ import com.liferay.notification.type.util.NotificationTypeUtil;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -505,6 +507,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		_emailProviders.put(
 			NotificationRecipientConstants.TYPE_SUBSCRIBERS,
 			new SubscribersEmailProvider(
+				_objectEntryFolderLocalService, _objectEntryLocalService,
 				_subscriptionLocalService, _userLocalService));
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
@@ -807,6 +810,12 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

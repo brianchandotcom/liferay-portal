@@ -268,6 +268,16 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		return trashEntry;
 	}
 
+	@Override
+	public void deleteTrashEntries(long companyId, String className) {
+		List<TrashEntry> trashEntries = trashEntryPersistence.findByC_CN(
+			companyId, _classNameLocalService.getClassNameId(className));
+
+		for (TrashEntry trashEntry : trashEntries) {
+			deleteEntry(trashEntry);
+		}
+	}
+
 	/**
 	 * Returns the trash entry with the primary key.
 	 *

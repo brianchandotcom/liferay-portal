@@ -117,67 +117,6 @@ public class TicketAttachmentService extends BaseService {
 	}
 
 	public TicketAttachment fetchTicketAttachment(
-			String authorization, long ticketAttachmentId)
-		throws TicketAttachmentNotFoundException {
-
-		try {
-			JSONObject jsonObject = new JSONObject(
-				get(
-					authorization,
-					UriComponentsBuilder.fromPath(
-						"/o/c/ticketattachments/" + ticketAttachmentId
-					).build(
-					).toUri()));
-
-			if (jsonObject.isNull("id")) {
-				throw new TicketAttachmentNotFoundException();
-			}
-
-			return new TicketAttachment(jsonObject);
-		}
-		catch (HttpClientErrorException.NotFound httpClientErrorException) {
-			throw new TicketAttachmentNotFoundException(
-				httpClientErrorException);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw exception;
-		}
-	}
-
-	public TicketAttachment fetchTicketAttachment(
-			String authorization, String externalReferenceCode)
-		throws TicketAttachmentNotFoundException {
-
-		try {
-			JSONObject jsonObject = new JSONObject(
-				get(
-					authorization,
-					UriComponentsBuilder.fromPath(
-						"/o/c/ticketattachments/by-external-reference-code/" +
-							externalReferenceCode
-					).build(
-					).toUri()));
-
-			if (jsonObject.isNull("id")) {
-				throw new TicketAttachmentNotFoundException();
-			}
-
-			return new TicketAttachment(jsonObject);
-		}
-		catch (HttpClientErrorException.NotFound httpClientErrorException) {
-			throw new TicketAttachmentNotFoundException(
-				httpClientErrorException);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw exception;
-		}
-	}
-
-	public TicketAttachment fetchTicketAttachment(
 			String authorization, String fileName, String jiraIssueKey,
 			String md5Checksum)
 		throws Exception {
@@ -218,6 +157,67 @@ public class TicketAttachmentService extends BaseService {
 		}
 
 		return null;
+	}
+
+	public TicketAttachment getTicketAttachment(
+			String authorization, long ticketAttachmentId)
+		throws TicketAttachmentNotFoundException {
+
+		try {
+			JSONObject jsonObject = new JSONObject(
+				get(
+					authorization,
+					UriComponentsBuilder.fromPath(
+						"/o/c/ticketattachments/" + ticketAttachmentId
+					).build(
+					).toUri()));
+
+			if (jsonObject.isNull("id")) {
+				throw new TicketAttachmentNotFoundException();
+			}
+
+			return new TicketAttachment(jsonObject);
+		}
+		catch (HttpClientErrorException.NotFound httpClientErrorException) {
+			throw new TicketAttachmentNotFoundException(
+				httpClientErrorException);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw exception;
+		}
+	}
+
+	public TicketAttachment getTicketAttachment(
+			String authorization, String externalReferenceCode)
+		throws TicketAttachmentNotFoundException {
+
+		try {
+			JSONObject jsonObject = new JSONObject(
+				get(
+					authorization,
+					UriComponentsBuilder.fromPath(
+						"/o/c/ticketattachments/by-external-reference-code/" +
+							externalReferenceCode
+					).build(
+					).toUri()));
+
+			if (jsonObject.isNull("id")) {
+				throw new TicketAttachmentNotFoundException();
+			}
+
+			return new TicketAttachment(jsonObject);
+		}
+		catch (HttpClientErrorException.NotFound httpClientErrorException) {
+			throw new TicketAttachmentNotFoundException(
+				httpClientErrorException);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw exception;
+		}
 	}
 
 	public List<TicketAttachment> search(

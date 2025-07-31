@@ -11,9 +11,7 @@ if (identifier[0] === 'id') {
 	redirectURL = await Liferay.OAuth2Client.FromUserAgentApplication(
 		'liferay-customer-etc-spring-boot-oaua'
 	)
-		.fetch(
-			`/ticket-attachments/by-ticket-attachment-id/${identifier[1]}/download`
-		)
+		.fetch(`/ticket-attachments/by-id/${identifier[1]}/download`)
 		.then((response) => response.text());
 }
 else {

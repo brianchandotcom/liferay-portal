@@ -51,7 +51,7 @@ public class TicketAttachmentsRestController extends BaseRestController {
 
 		try {
 			TicketAttachment ticketAttachment =
-				_ticketAttachmentService.fetchTicketAttachment(
+				_ticketAttachmentService.getTicketAttachment(
 					"Bearer " + jwt.getTokenValue(), ticketAttachmentId);
 
 			_ticketAttachmentService.updateTicketAttachmentState(

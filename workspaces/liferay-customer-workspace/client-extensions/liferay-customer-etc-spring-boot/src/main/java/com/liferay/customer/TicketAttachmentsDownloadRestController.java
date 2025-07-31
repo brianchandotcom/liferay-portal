@@ -35,43 +35,35 @@ import org.springframework.web.bind.annotation.RestController;
 public class TicketAttachmentsDownloadRestController
 	extends BaseRestController {
 
-	@GetMapping("/by-ticket-attachment-id/{ticketAttachmentId}/download")
-	public ResponseEntity<String> get(
-		@AuthenticationPrincipal Jwt jwt,
-		@PathVariable("ticketAttachmentId") long ticketAttachmentId) {
-
-		return _getResponse(
-			"Bearer " + jwt.getTokenValue(),
-			new TicketAttachmentIdentifier(ticketAttachmentId));
-	}
-
 	@GetMapping("/by-external-reference-code/{externalReferenceCode}/download")
-	public ResponseEntity<String> get(
+	public ResponseEntity<String> getByExternalReferenceCodeDownload(
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable("externalReferenceCode") String externalReferenceCode) {
 
 		return _getResponse(
-			"Bearer " + jwt.getTokenValue(),
-			new TicketAttachmentIdentifier(externalReferenceCode));
+			"Bearer " + jwt.getTokenValue(), externalReferenceCode);
+	}
+
+	@GetMapping("/by-id/{id}/download")
+	public ResponseEntity<String> getByIdDownload(
+		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") long id) {
+
+		return _getResponse("Bearer " + jwt.getTokenValue(), id);
 	}
 
 	private ResponseEntity<String> _getResponse(
-		String bearerToken,
-		TicketAttachmentIdentifier ticketAttachmentIdentifier) {
+		String bearerToken, Object identifier) {
 
 		try {
 			TicketAttachment ticketAttachment = null;
 
-			if (ticketAttachmentIdentifier.isById()) {
-				ticketAttachment =
-					_ticketAttachmentService.fetchTicketAttachment(
-						bearerToken, ticketAttachmentIdentifier.getId());
+			if (identifier instanceof Long) {
+				ticketAttachment = _ticketAttachmentService.getTicketAttachment(
+					bearerToken, (Long)identifier);
 			}
-			else if (ticketAttachmentIdentifier.isByExternalReferenceCode()) {
-				ticketAttachment =
-					_ticketAttachmentService.fetchTicketAttachment(
-						bearerToken,
-						ticketAttachmentIdentifier.getExternalReferenceCode());
+			else if (identifier instanceof String) {
+				ticketAttachment = _ticketAttachmentService.getTicketAttachment(
+					bearerToken, (String)identifier);
 			}
 			else {
 				return new ResponseEntity<>(

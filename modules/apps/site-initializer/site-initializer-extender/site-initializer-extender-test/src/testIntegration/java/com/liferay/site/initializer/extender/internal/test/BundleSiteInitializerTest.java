@@ -3390,6 +3390,9 @@ public class BundleSiteInitializerTest {
 				"[$TestObjectDefinition3#Test_Object_Entry_1$]"));
 		Assert.assertFalse(
 			pageDefinitionString.contains(
+				"[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition1$]"));
+		Assert.assertFalse(
+			pageDefinitionString.contains(
 				"[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition3$]"));
 		Assert.assertFalse(
 			pageDefinitionString.contains(

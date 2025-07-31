@@ -96,6 +96,15 @@ public class ObjectEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntry fetchObjectEntry(
+			String externalReferenceCode, long groupId, long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.fetchObjectEntry(
+			externalReferenceCode, groupId, objectDefinitionId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.object.model.ObjectEntry>
 			getManyToManyObjectEntries(
 				long groupId, long objectRelationshipId, long primaryKey,
@@ -166,6 +175,16 @@ public class ObjectEntryServiceWrapper
 
 		return _objectEntryService.getOneToManyObjectEntriesCount(
 			groupId, objectRelationshipId, primaryKey, related, search);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry getOrAddEmptyObjectEntry(
+			String externalReferenceCode, long groupId, long userId,
+			long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.getOrAddEmptyObjectEntry(
+			externalReferenceCode, groupId, userId, objectDefinitionId);
 	}
 
 	/**

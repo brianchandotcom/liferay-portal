@@ -153,29 +153,29 @@ public class OrphanReferencesDataCleanupUtil {
 								targetTableName, " and column ",
 								targetColumnName));
 					}
+
+					continue;
 				}
-				else {
-					long newUserId = _getAdminUserId(connection, companyId);
 
-					preparedStatement3.setLong(1, newUserId);
+				long newUserId = _getAdminUserId(connection, companyId);
 
-					preparedStatement3.setLong(2, userId);
-					preparedStatement3.setLong(3, companyId);
+				preparedStatement3.setLong(1, newUserId);
 
-					preparedStatement3.executeUpdate();
+				preparedStatement3.setLong(2, userId);
+				preparedStatement3.setLong(3, companyId);
 
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								String.valueOf(resultSet.getLong(3)),
-								" orphan entries from table ", sourceTableName,
-								" have been updated to value ",
-								String.valueOf(newUserId), " because value ",
-								String.valueOf(userId),
-								" was not found in the origin table ",
-								targetTableName, " and column ",
-								targetColumnName));
-					}
+				preparedStatement3.executeUpdate();
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							String.valueOf(resultSet.getLong(3)),
+							" orphan entries from table ", sourceTableName,
+							" have been updated to value ",
+							String.valueOf(newUserId), " because value ",
+							String.valueOf(userId),
+							" was not found in the origin table ",
+							targetTableName, " and column ", targetColumnName));
 				}
 			}
 		}

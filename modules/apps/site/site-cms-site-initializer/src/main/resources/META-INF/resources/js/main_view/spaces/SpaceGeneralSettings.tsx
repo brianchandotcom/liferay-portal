@@ -205,17 +205,22 @@ export default function SpaceGeneralSettings({
 			</SpacePanel>
 
 			<SpacePanel title={Liferay.Language.get('sharing')}>
-				<ClayForm.Group>
-					<ClayCheckbox
-						checked={values.sharingEnabled}
-						label={Liferay.Language.get(
+				<>
+					<p className="mb-4">
+						{Liferay.Language.get(
 							'enable-this-option-to-allow-users-to-share-items-with-other-users'
 						)}
-						onChange={({target: {checked}}) =>
-							setFieldValue('sharingEnabled', checked)
-						}
-					/>
-				</ClayForm.Group>
+					</p>
+					<ClayForm.Group>
+						<ClayCheckbox
+							checked={values.sharingEnabled}
+							label={Liferay.Language.get('enable-sharing')}
+							onChange={({target: {checked}}) =>
+								setFieldValue('sharingEnabled', checked)
+							}
+						/>
+					</ClayForm.Group>
+				</>
 			</SpacePanel>
 
 			<SpacePanel title={Liferay.Language.get('mime-type-limit')}>

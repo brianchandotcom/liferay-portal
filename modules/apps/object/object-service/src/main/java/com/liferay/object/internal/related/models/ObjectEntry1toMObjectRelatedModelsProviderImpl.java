@@ -57,8 +57,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			groupId, objectRelationshipId, new Long[] {primaryKey}, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -148,23 +148,23 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<ObjectEntry> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			String search, int start, int end)
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, true, search, start,
+			groupId, objectRelationshipId, primaryKeys, true, search, start,
 			end);
 	}
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			String search)
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, true, search);
+			groupId, objectRelationshipId, primaryKeys, true, search);
 	}
 
 	@Override
@@ -175,8 +175,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, objectEntryId, false, search, start,
-			end);
+			groupId, objectRelationshipId, new Long[] {objectEntryId}, false,
+			search, start, end);
 	}
 
 	@Override
@@ -186,7 +186,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, objectEntryId, false, search);
+			groupId, objectRelationshipId, new Long[] {objectEntryId}, false,
+			search);
 	}
 
 	private final String _className;

@@ -85,8 +85,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<T> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			groupId, objectRelationshipId, new Long[] {primaryKey}, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -249,7 +249,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<T> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			String search, int start, int end)
 		throws PortalException {
 
@@ -261,7 +261,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		DSLQuery dslQuery = _getGroupByStep(
 			_getDynamicObjectDefinitionTable(),
 			DSLQueryFactoryUtil.selectDistinct(_table), groupId,
-			objectRelationshipId, primaryKey, search
+			objectRelationshipId, primaryKeys, search
 		).orderBy(
 			_systemObjectDefinitionManager.getPrimaryKeyColumn(
 			).ascending()
@@ -274,7 +274,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			String search)
 		throws PortalException {
 
@@ -291,7 +291,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 				dynamicObjectDefinitionTable,
 				DSLQueryFactoryUtil.countDistinct(
 					dynamicObjectDefinitionTable.getPrimaryKeyColumn()),
-				groupId, objectRelationshipId, primaryKey, search));
+				groupId, objectRelationshipId, primaryKeys, search));
 	}
 
 	@Override
@@ -388,7 +388,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 	private GroupByStep _getGroupByStep(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
 			FromStep fromStep, long groupId, long objectRelationshipId,
-			long primaryKey, String search)
+			Long[] primaryKeys, String search)
 		throws PortalException {
 
 		Column<?, Long> primaryKeyColumn = null;
@@ -445,8 +445,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		}
 
 		return joinStep.where(
-			primaryKeyColumn.eq(
-				primaryKey
+			primaryKeyColumn.in(
+				primaryKeys
 			).and(
 				() -> {
 					Column<?, Long> groupIdColumn = _table.getColumn("groupId");

@@ -56,7 +56,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, null, 0, 1);
+			groupId, objectRelationshipId, new Long[] {primaryKey}, null, 0, 1);
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -139,22 +139,22 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<ObjectEntry> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			String search, int start, int end)
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, true, search, 0, 1);
+			groupId, objectRelationshipId, primaryKeys, true, search, 0, 1);
 	}
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			String search)
 		throws PortalException {
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, search, 0, 1);
+			groupId, objectRelationshipId, primaryKeys, search, 0, 1);
 
 		return relatedModels.size();
 	}

@@ -71,8 +71,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		List<T> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			groupId, objectRelationshipId, new Long[] {primaryKey}, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -138,7 +138,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<T> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			String search, int start, int end)
 		throws PortalException {
 
@@ -150,7 +150,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		return persistedModelLocalService.dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(_table), groupId,
-				objectRelationshipId, primaryKey, search
+				objectRelationshipId, primaryKeys, search
 			).orderBy(
 				_systemObjectDefinitionManager.getPrimaryKeyColumn(
 				).ascending()
@@ -161,7 +161,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			String search)
 		throws PortalException {
 
@@ -175,7 +175,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 				DSLQueryFactoryUtil.countDistinct(
 					_table.getColumn(
 						_objectDefinition.getPKObjectFieldDBColumnName())),
-				groupId, objectRelationshipId, primaryKey, search));
+				groupId, objectRelationshipId, primaryKeys, search));
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 	private GroupByStep _getGroupByStep(
 			FromStep fromStep, long groupId, long objectRelationshipId,
-			long primaryKey, String search)
+			Long[] primaryKeys, String search)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -284,8 +284,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		}
 
 		return joinStep.where(
-			primaryKeyColumn1.eq(
-				primaryKey
+			primaryKeyColumn1.in(
+				primaryKeys
 			).and(
 				() -> {
 					Column<?, Long> groupIdColumn = _table.getColumn("groupId");

@@ -89,22 +89,22 @@ public class DeleteOnDisassociateObjectRelatedModelsProvider
 
 	@Override
 	public List<ObjectEntry> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			String search, int start, int end)
 		throws PortalException {
 
 		return _objectRelatedModelsProvider.getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, search, start, end);
+			groupId, objectRelationshipId, primaryKeys, search, start, end);
 	}
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			String search)
 		throws PortalException {
 
 		return _objectRelatedModelsProvider.getRelatedModelsCount(
-			groupId, objectRelationshipId, primaryKey, search);
+			groupId, objectRelationshipId, primaryKeys, search);
 	}
 
 	@Override

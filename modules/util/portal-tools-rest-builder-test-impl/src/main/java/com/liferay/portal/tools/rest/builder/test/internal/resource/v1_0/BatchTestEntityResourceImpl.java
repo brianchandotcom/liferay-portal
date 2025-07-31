@@ -5,21 +5,28 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.util.LongWrapper;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.CompanyTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.BatchTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.CompanyTestEntityResource;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.ws.rs.core.Response;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -40,7 +47,16 @@ public class BatchTestEntityResourceImpl
 		BatchTestEntity batchTestEntity = _fetchBatchTestEntity(
 			externalReferenceCode);
 
-		_batchTestEntities.remove(batchTestEntity);
+		if (batchTestEntity == null) {
+			return Response.status(
+				204
+			).build();
+		}
+
+		long batchTestEntityId = batchTestEntity.getId();
+
+		_batchTestEntities.remove(batchTestEntityId);
+		_relationships.remove(batchTestEntityId);
 
 		return Response.status(
 			204
@@ -50,23 +66,7 @@ public class BatchTestEntityResourceImpl
 	@Override
 	public Page<BatchTestEntity> getBatchTestEntitiesPage() {
 		return Page.of(
-			transform(
-				_batchTestEntities,
-				originalBatchTestEntity -> {
-					BatchTestEntity batchTestEntity = new BatchTestEntity();
-
-					batchTestEntity.setExternalReferenceCode(
-						originalBatchTestEntity.getExternalReferenceCode());
-					batchTestEntity.setId(originalBatchTestEntity.getId());
-					batchTestEntity.setName(originalBatchTestEntity.getName());
-					batchTestEntity.setNestedField(
-						() -> NestedFieldsSupplier.supply(
-							"nestedField",
-							nestedField ->
-								originalBatchTestEntity.getNestedField()));
-
-					return batchTestEntity;
-				}));
+			transform(_batchTestEntities.values(), this::_toBatchTestEntity));
 	}
 
 	@Override
@@ -80,18 +80,7 @@ public class BatchTestEntityResourceImpl
 			throw new NoSuchModelException();
 		}
 
-		BatchTestEntity batchTestEntity = new BatchTestEntity();
-
-		batchTestEntity.setExternalReferenceCode(
-			originalBatchTestEntity.getExternalReferenceCode());
-		batchTestEntity.setId(originalBatchTestEntity.getId());
-		batchTestEntity.setName(originalBatchTestEntity.getName());
-		batchTestEntity.setNestedField(
-			() -> NestedFieldsSupplier.supply(
-				"nestedField",
-				nestedField -> originalBatchTestEntity.getNestedField()));
-
-		return batchTestEntity;
+		return _toBatchTestEntity(originalBatchTestEntity);
 	}
 
 	@Override
@@ -106,12 +95,12 @@ public class BatchTestEntityResourceImpl
 			throw new NoSuchModelException();
 		}
 
-		return batchTestEntity;
+		return _toBatchTestEntity(batchTestEntity);
 	}
 
 	@Override
 	public List<String> getNestedFields() {
-		return Collections.singletonList("nestedField");
+		return Arrays.asList("nestedField", "relatedCompanyTestEntity");
 	}
 
 	@Override
@@ -126,21 +115,72 @@ public class BatchTestEntityResourceImpl
 	}
 
 	@Override
-	public BatchTestEntity postBatchTestEntity(
-		BatchTestEntity batchTestEntity) {
+	public BatchTestEntity postBatchTestEntity(BatchTestEntity batchTestEntity)
+		throws Exception {
 
-		batchTestEntity.setId(Long.valueOf(_batchTestEntities.size()));
+		long batchTestEntityId = _counter.increment();
 
-		_batchTestEntities.add(batchTestEntity);
+		batchTestEntity.setId(batchTestEntityId);
 
-		return batchTestEntity;
+		CompanyTestEntity companyTestEntity =
+			batchTestEntity.getRelatedCompanyTestEntity();
+
+		if (companyTestEntity != null) {
+			CompanyTestEntityResource companyTestEntityResource =
+				_factory.create(
+				).uriInfo(
+					contextUriInfo
+				).user(
+					contextUser
+				).build();
+
+			CompanyTestEntity finalCompanyTestEntity = companyTestEntity;
+
+			companyTestEntity = _emptyModelManager.getOrAddEmptyModel(
+				CompanyTestEntity.class, contextCompany.getCompanyId(),
+				() -> companyTestEntityResource.postCompanyTestEntity(
+					finalCompanyTestEntity),
+				companyTestEntity.getExternalReferenceCode(),
+				(relatedExternalReferenceCode, companyId) -> {
+					try {
+						return companyTestEntityResource.
+							getCompanyTestEntityByExternalReferenceCode(
+								relatedExternalReferenceCode);
+					}
+					catch (Exception exception) {
+						return null;
+					}
+				},
+				(relatedExternalReferenceCode, companyId) ->
+					companyTestEntityResource.
+						getCompanyTestEntityByExternalReferenceCode(
+							relatedExternalReferenceCode));
+
+			batchTestEntity.setRelatedCompanyTestEntity(companyTestEntity);
+
+			_relationships.put(
+				batchTestEntity.getId(), companyTestEntity.getId());
+		}
+		else {
+			_relationships.remove(batchTestEntityId);
+		}
+
+		_batchTestEntities.put(batchTestEntityId, batchTestEntity);
+
+		return _toBatchTestEntity(batchTestEntity);
 	}
 
 	@Override
 	public BatchTestEntity putBatchTestEntityByExternalReferenceCode(
-		String externalReferenceCode, BatchTestEntity batchTestEntity) {
+			String externalReferenceCode, BatchTestEntity batchTestEntity)
+		throws Exception {
 
-		batchTestEntity.setExternalReferenceCode(externalReferenceCode);
+		if (StringUtil.startsWith(
+				batchTestEntity.getExternalReferenceCode(), "FAIL_ON_UPSERT")) {
+
+			throw new UnsupportedOperationException(
+				"This is the error message");
+		}
 
 		BatchTestEntity existingBatchTestEntity = _fetchBatchTestEntity(
 			externalReferenceCode);
@@ -149,15 +189,60 @@ public class BatchTestEntityResourceImpl
 			return postBatchTestEntity(batchTestEntity);
 		}
 
+		batchTestEntity.setExternalReferenceCode(externalReferenceCode);
 		batchTestEntity.setId(existingBatchTestEntity.getId());
-		batchTestEntity.setName(batchTestEntity.getName());
 
-		return batchTestEntity;
+		CompanyTestEntity companyTestEntity =
+			batchTestEntity.getRelatedCompanyTestEntity();
+
+		if (companyTestEntity != null) {
+			CompanyTestEntityResource companyTestEntityResource =
+				_factory.create(
+				).uriInfo(
+					contextUriInfo
+				).user(
+					contextUser
+				).build();
+
+			CompanyTestEntity finalCompanyTestEntity = companyTestEntity;
+
+			companyTestEntity = _emptyModelManager.getOrAddEmptyModel(
+				CompanyTestEntity.class, contextCompany.getCompanyId(),
+				() -> companyTestEntityResource.postCompanyTestEntity(
+					finalCompanyTestEntity),
+				companyTestEntity.getExternalReferenceCode(),
+				(relatedExternalReferenceCode, companyId) -> {
+					try {
+						return companyTestEntityResource.
+							getCompanyTestEntityByExternalReferenceCode(
+								relatedExternalReferenceCode);
+					}
+					catch (Exception exception) {
+						return null;
+					}
+				},
+				(relatedExternalReferenceCode, companyId) ->
+					companyTestEntityResource.
+						getCompanyTestEntityByExternalReferenceCode(
+							relatedExternalReferenceCode));
+
+			_relationships.put(
+				batchTestEntity.getId(), companyTestEntity.getId());
+
+			batchTestEntity.setRelatedCompanyTestEntity(companyTestEntity);
+		}
+		else {
+			_relationships.remove(batchTestEntity.getId());
+		}
+
+		_batchTestEntities.put(batchTestEntity.getId(), batchTestEntity);
+
+		return _toBatchTestEntity(batchTestEntity);
 	}
 
 	private BatchTestEntity _fetchBatchTestEntity(long id) {
-		if (_batchTestEntities.size() > id) {
-			return _batchTestEntities.get(Math.toIntExact(id));
+		if (_batchTestEntities.containsKey(id)) {
+			return _batchTestEntities.get(id);
 		}
 
 		return null;
@@ -166,7 +251,7 @@ public class BatchTestEntityResourceImpl
 	private BatchTestEntity _fetchBatchTestEntity(
 		String externalReferenceCode) {
 
-		for (BatchTestEntity batchTestEntity : _batchTestEntities) {
+		for (BatchTestEntity batchTestEntity : _batchTestEntities.values()) {
 			if (Objects.equals(
 					externalReferenceCode,
 					batchTestEntity.getExternalReferenceCode())) {
@@ -178,7 +263,56 @@ public class BatchTestEntityResourceImpl
 		return null;
 	}
 
-	private static final List<BatchTestEntity> _batchTestEntities =
-		new ArrayList<>();
+	private BatchTestEntity _toBatchTestEntity(
+		BatchTestEntity originalBatchTestEntity) {
+
+		return new BatchTestEntity() {
+			{
+				setExternalReferenceCode(
+					originalBatchTestEntity.getExternalReferenceCode());
+				setId(originalBatchTestEntity.getId());
+				setName(originalBatchTestEntity.getName());
+				setNestedField(
+					() -> NestedFieldsSupplier.supply(
+						"nestedField",
+						nestedField ->
+							originalBatchTestEntity.getNestedField()));
+				setRelatedCompanyTestEntity(
+					() -> NestedFieldsSupplier.supply(
+						"relatedCompanyTestEntity",
+						nestedField -> {
+							if (!_relationships.containsKey(
+									originalBatchTestEntity.getId())) {
+
+								return null;
+							}
+
+							CompanyTestEntityResource
+								companyTestEntityResource = _factory.create(
+								).uriInfo(
+									contextUriInfo
+								).user(
+									contextUser
+								).build();
+
+							return companyTestEntityResource.
+								getCompanyTestEntity(
+									_relationships.get(
+										originalBatchTestEntity.getId()));
+						}));
+			}
+		};
+	}
+
+	private static final Map<Long, BatchTestEntity> _batchTestEntities =
+		new TreeMap<>();
+	private static final LongWrapper _counter = new LongWrapper();
+	private static final Map<Long, Long> _relationships = new TreeMap<>();
+
+	@Reference
+	private EmptyModelManager _emptyModelManager;
+
+	@Reference
+	private CompanyTestEntityResource.Factory _factory;
 
 }

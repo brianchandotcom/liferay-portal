@@ -94,6 +94,22 @@ public class PageSpecificationsTestUtil {
 	}
 
 	public static void assertCustomFields(
+			CustomField[][] expectedCustomFields, long groupId,
+			PageSpecification[] pageSpecifications)
+		throws Exception {
+
+		Assert.assertEquals(
+			Arrays.toString(pageSpecifications), expectedCustomFields.length,
+			pageSpecifications.length);
+
+		for (int i = 0; i < pageSpecifications.length; i++) {
+			_assertCustomFields(
+				_getExpectedCustomFields(expectedCustomFields[i]), groupId,
+				pageSpecifications[i]);
+		}
+	}
+
+	public static void assertCustomFields(
 			PageSpecification[] expectedPageSpecifications, long groupId,
 			PageSpecification[] pageSpecifications)
 		throws Exception {
@@ -273,22 +289,6 @@ public class PageSpecificationsTestUtil {
 
 		assertContentPageSpecification(
 			pageSpecifications[1], draftLayout.getPlid());
-	}
-
-	public static void assertUpdateCustomFields(
-			long groupId, PageSpecification[] pageSpecifications,
-			CustomField[][] expectedCustomFields)
-		throws Exception {
-
-		Assert.assertEquals(
-			Arrays.toString(pageSpecifications), expectedCustomFields.length,
-			pageSpecifications.length);
-
-		for (int i = 0; i < pageSpecifications.length; i++) {
-			_assertCustomFields(
-				_getExpectedCustomFields(expectedCustomFields[i]), groupId,
-				pageSpecifications[i]);
-		}
 	}
 
 	public static void assertWidgetPageSpecification(

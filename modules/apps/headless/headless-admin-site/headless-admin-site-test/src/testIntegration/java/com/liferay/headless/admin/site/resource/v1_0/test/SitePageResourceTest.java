@@ -1132,12 +1132,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				postSitePage.getExternalReferenceCode(), patchBodySitePage);
 
-		PageSpecificationsTestUtil.assertUpdateCustomFields(
-			testGroup.getGroupId(), patchSitePage.getPageSpecifications(),
+		PageSpecificationsTestUtil.assertCustomFields(
 			TransformUtil.transform(
 				patchBodySitePage.getPageSpecifications(),
 				pageSpecification -> pageSpecification.getCustomFields(),
-				CustomField[].class));
+				CustomField[].class),
+			testGroup.getGroupId(), patchSitePage.getPageSpecifications());
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeSitePageWithPriority()
@@ -1437,12 +1437,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				postSitePage.getExternalReferenceCode(), putSitePage);
 
-		PageSpecificationsTestUtil.assertUpdateCustomFields(
-			testGroup.getGroupId(), updateSitePage.getPageSpecifications(),
+		PageSpecificationsTestUtil.assertCustomFields(
 			TransformUtil.transform(
 				putSitePage.getPageSpecifications(),
 				pageSpecification -> pageSpecification.getCustomFields(),
-				CustomField[].class));
+				CustomField[].class),
+			testGroup.getGroupId(), updateSitePage.getPageSpecifications());
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodeSitePageWithPriority()

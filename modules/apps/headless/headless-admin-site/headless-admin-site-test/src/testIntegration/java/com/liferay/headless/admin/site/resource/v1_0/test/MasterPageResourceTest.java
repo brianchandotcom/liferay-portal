@@ -816,12 +816,13 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 						postMasterPage.getExternalReferenceCode(),
 						patchBodyMasterPage);
 
-			PageSpecificationsTestUtil.assertUpdateCustomFields(
-				testGroup.getGroupId(), patchMasterPage.getPageSpecifications(),
+			PageSpecificationsTestUtil.assertCustomFields(
 				TransformUtil.transform(
 					patchBodyMasterPage.getPageSpecifications(),
 					pageSpecification -> pageSpecification.getCustomFields(),
-					CustomField[].class));
+					CustomField[].class),
+				testGroup.getGroupId(),
+				patchMasterPage.getPageSpecifications());
 		}
 	}
 
@@ -1069,13 +1070,13 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					testGroup.getExternalReferenceCode(),
 					postMasterPage.getExternalReferenceCode(), putMasterPage);
 
-			PageSpecificationsTestUtil.assertUpdateCustomFields(
-				testGroup.getGroupId(),
-				updateMasterPage.getPageSpecifications(),
+			PageSpecificationsTestUtil.assertCustomFields(
 				TransformUtil.transform(
 					putMasterPage.getPageSpecifications(),
 					pageSpecification -> pageSpecification.getCustomFields(),
-					CustomField[].class));
+					CustomField[].class),
+				testGroup.getGroupId(),
+				updateMasterPage.getPageSpecifications());
 		}
 	}
 

@@ -11,17 +11,28 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.service.ListTypeEntryService;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -140,6 +151,64 @@ public class ListTypeEntryServiceTest {
 		}
 
 		_testGetListTypeEntryByExternalReferenceCode(_user);
+	}
+
+	@Test
+	public void testGetOrAddEmptyListTypeEntry() throws Exception {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			// With permissions
+
+			Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+			RoleTestUtil.addResourcePermission(
+				role, _listTypeDefinition.getModelClassName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				ActionKeys.UPDATE);
+
+			User user = UserTestUtil.addUser();
+
+			UserLocalServiceUtil.addRoleUser(
+				role.getRoleId(), user.getUserId());
+
+			_setUser(user);
+
+			ListTypeEntry listTypeEntry =
+				_listTypeEntryService.getOrAddEmptyListTypeEntry(
+					user.getUserId(),
+					_listTypeDefinition.getListTypeDefinitionId(),
+					RandomTestUtil.randomString());
+
+			// Without Permissions
+
+			user = UserTestUtil.addUser();
+
+			long userId = user.getUserId();
+
+			_setUser(user);
+
+			AssertUtils.assertFailure(
+				PrincipalException.MustHavePermission.class,
+				StringBundler.concat(
+					"User ", userId, " must have UPDATE permission for ",
+					_listTypeDefinition.getModelClassName(), " ",
+					_listTypeDefinition.getListTypeDefinitionId()),
+				() -> _listTypeEntryService.getOrAddEmptyListTypeEntry(
+					userId, _listTypeDefinition.getListTypeDefinitionId(),
+					RandomTestUtil.randomString()));
+
+			AssertUtils.assertFailure(
+				PrincipalException.MustHavePermission.class,
+				StringBundler.concat(
+					"User ", userId, " must have VIEW permission for ",
+					_listTypeDefinition.getModelClassName(), " ",
+					_listTypeDefinition.getListTypeDefinitionId()),
+				() -> _listTypeEntryService.getOrAddEmptyListTypeEntry(
+					userId, listTypeEntry.getListTypeDefinitionId(),
+					listTypeEntry.getKey()));
+		}
 	}
 
 	@Test

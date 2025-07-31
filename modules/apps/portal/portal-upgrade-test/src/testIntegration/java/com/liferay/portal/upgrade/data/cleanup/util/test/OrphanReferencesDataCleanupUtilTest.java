@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -91,7 +92,8 @@ public class OrphanReferencesDataCleanupUtilTest {
 
 				Assert.assertEquals(
 					_getCleanUpTableExpectedMessage(
-						2, _dbInspector.normalizeName("Portlet"),
+						2, _dbInspector.normalizeName("companyId"),
+						_dbInspector.normalizeName("Portlet"),
 						_dbInspector.normalizeName("companyId"),
 						_dbInspector.normalizeName("Company"), companyId),
 					logEntry.getMessage());
@@ -135,7 +137,8 @@ public class OrphanReferencesDataCleanupUtilTest {
 
 				Assert.assertEquals(
 					_getCleanUpTableExpectedMessage(
-						2, _dbInspector.normalizeName("PortletPreferences"),
+						2, _dbInspector.normalizeName("ownerId"),
+						_dbInspector.normalizeName("PortletPreferences"),
 						_dbInspector.normalizeName("companyId"),
 						_dbInspector.normalizeName("Company"), companyId),
 					logEntry.getMessage());
@@ -178,17 +181,17 @@ public class OrphanReferencesDataCleanupUtilTest {
 	}
 
 	private String _getCleanUpTableExpectedMessage(
-			long count, String sourceTableName, String targetColumn,
-			String targetTable, long targetValue)
+			long count, String sourceColumnName, String sourceTableName,
+			String targetColumnName, String targetTableName, long targetValue)
 		throws Exception {
 
 		return StringBundler.concat(
-			count, " orphan entries from table ",
-			_dbInspector.normalizeName(sourceTableName),
-			" have been deleted because value ", targetValue,
-			" was not found in the origin table ",
-			_dbInspector.normalizeName(targetTable), " and column ",
-			_dbInspector.normalizeName(targetColumn));
+			"Table ", _dbInspector.normalizeName(sourceTableName), ", ", count,
+			(count == 1) ? " entry " : " entries ", "deleted because ",
+			_dbInspector.normalizeName(sourceColumnName), StringPool.SPACE,
+			targetValue, " was not found in ",
+			_dbInspector.normalizeName(targetTableName), StringPool.PERIOD,
+			_dbInspector.normalizeName(targetColumnName));
 	}
 
 	private void _testCleanUpTables(

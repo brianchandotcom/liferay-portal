@@ -5,6 +5,7 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.base.ObjectEntryFolderServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -176,6 +177,29 @@ public class ObjectEntryFolderServiceImpl
 
 		return objectEntryFolderLocalService.getObjectEntryFoldersCount(
 			groupId, companyId, parentObjectEntryFolderId);
+	}
+
+	@Override
+	public ObjectEntryFolder getOrAddEmptyObjectEntryFolder(
+			String externalReferenceCode, long groupId, long companyId,
+			long userId, ServiceContext serviceContext)
+		throws PortalException {
+
+		ObjectEntryFolder objectEntryFolder =
+			fetchObjectEntryFolderByExternalReferenceCode(
+				externalReferenceCode, groupId, companyId);
+
+		if (objectEntryFolder != null) {
+			return objectEntryFolder;
+		}
+
+		ModelResourcePermissionUtil.check(
+			_modelResourcePermission, getPermissionChecker(), groupId,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			ActionKeys.ADD_FOLDER);
+
+		return objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
+			externalReferenceCode, groupId, companyId, userId, serviceContext);
 	}
 
 	@Override

@@ -51,6 +51,7 @@ type Item = {
 };
 
 type BaseData = {
+	error: string;
 	neverExpire: boolean;
 	value: string;
 };
@@ -96,11 +97,13 @@ export default function ContentEditorSidePanel(props: Props) {
 	const [formId, setFormId] = useState<string | undefined>();
 	const [scheduleFields, setScheduleFields] = useState<ScheduleFields>({
 		expirationDate: {
+			error: '',
 			neverExpire: Boolean(props.expirationDate),
 			serverValue: props.expirationDate,
 			value: toMomentDate(props.expirationDate),
 		},
 		reviewDate: {
+			error: '',
 			neverExpire: Boolean(props.reviewDate),
 			serverValue: props.reviewDate,
 			value: toMomentDate(props.reviewDate),
@@ -108,6 +111,7 @@ export default function ContentEditorSidePanel(props: Props) {
 	});
 
 	const onUpdateFieldData = ({
+		error,
 		name,
 		neverExpire,
 		value,
@@ -124,6 +128,7 @@ export default function ContentEditorSidePanel(props: Props) {
 			[name]: {
 				...fields[name],
 				...values,
+				error,
 			},
 		}));
 	};

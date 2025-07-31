@@ -46,6 +46,7 @@ export default function SchedulePanel({
 					<ScheduleField
 						date={values.value}
 						dateConfig={dateConfig}
+						error={values.error}
 						key={name}
 						label={label}
 						name={name}
@@ -96,6 +97,7 @@ function ScheduleField({
 		setError(error);
 
 		updateFieldData({
+			error,
 			name,
 			value,
 		});
@@ -150,6 +152,7 @@ function ScheduleField({
 						setChecked(checked);
 
 						updateFieldData({
+							error,
 							name,
 							neverExpire: checked,
 							value: checked ? '' : date,

@@ -877,6 +877,48 @@ public class ObjectEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectEntry moveObjectEntryToTrash(
+			HttpPrincipal httpPrincipal, long userId,
+			com.liferay.object.model.ObjectEntry objectEntry,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectEntryServiceUtil.class, "moveObjectEntryToTrash",
+				_moveObjectEntryToTrashParameterTypes20);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, objectEntry, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.object.model.ObjectEntry partialUpdateObjectEntry(
 			HttpPrincipal httpPrincipal, long objectEntryId,
 			java.util.Map<String, java.io.Serializable> values,
@@ -886,7 +928,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "partialUpdateObjectEntry",
-				_partialUpdateObjectEntryParameterTypes20);
+				_partialUpdateObjectEntryParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId, values, serviceContext);
@@ -927,7 +969,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "subscribeObjectEntry",
-				_subscribeObjectEntryParameterTypes21);
+				_subscribeObjectEntryParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId, objectEntryId);
@@ -963,7 +1005,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "unsubscribeObjectEntry",
-				_unsubscribeObjectEntryParameterTypes22);
+				_unsubscribeObjectEntryParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, objectEntryId);
@@ -1001,7 +1043,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "updateObjectEntry",
-				_updateObjectEntryParameterTypes23);
+				_updateObjectEntryParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId, values, serviceContext);
@@ -1044,7 +1086,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "validate",
-				_validateParameterTypes24);
+				_validateParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, objectEntry,
@@ -1149,21 +1191,26 @@ public class ObjectEntryServiceHttp {
 		_hasPortletResourcePermissionParameterTypes19 = new Class[] {
 			long.class, long.class, String.class
 		};
-	private static final Class<?>[] _partialUpdateObjectEntryParameterTypes20 =
+	private static final Class<?>[] _moveObjectEntryToTrashParameterTypes20 =
+		new Class[] {
+			long.class, com.liferay.object.model.ObjectEntry.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _partialUpdateObjectEntryParameterTypes21 =
 		new Class[] {
 			long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _subscribeObjectEntryParameterTypes21 =
+	private static final Class<?>[] _subscribeObjectEntryParameterTypes22 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _unsubscribeObjectEntryParameterTypes22 =
+	private static final Class<?>[] _unsubscribeObjectEntryParameterTypes23 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateObjectEntryParameterTypes23 =
+	private static final Class<?>[] _updateObjectEntryParameterTypes24 =
 		new Class[] {
 			long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _validateParameterTypes24 = new Class[] {
+	private static final Class<?>[] _validateParameterTypes25 = new Class[] {
 		long.class, com.liferay.object.model.ObjectEntry.class,
 		java.util.List.class,
 		com.liferay.portal.kernel.service.ServiceContext.class

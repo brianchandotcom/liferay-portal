@@ -180,8 +180,10 @@ public class BatchEngineBundleTrackerTest {
 				initialBatchEngineImportTaskReference::set, "batch11",
 				"/batch11/data.batch-engine-data.json");
 
-			originalUserId = initialBatchEngineImportTaskReference.get(
-			).getUserId();
+			BatchEngineImportTask batchEngineImportTask1 =
+				initialBatchEngineImportTaskReference.get();
+
+			originalUserId = batchEngineImportTask1.getUserId();
 
 			User originalUser = _userLocalService.getUser(originalUserId);
 
@@ -189,7 +191,7 @@ public class BatchEngineBundleTrackerTest {
 
 			originalStatus = originalUser.getStatus();
 
-			_userLocalService.updateStatus(
+			originalUser = _userLocalService.updateStatus(
 				originalUser, WorkflowConstants.STATUS_INACTIVE,
 				new ServiceContext());
 
@@ -209,9 +211,11 @@ public class BatchEngineBundleTrackerTest {
 				fallbackBatchEngineImportTaskReference::set, "batch11",
 				"/batch11/data.batch-engine-data.json");
 
+			BatchEngineImportTask batchEngineImportTask2 =
+				fallbackBatchEngineImportTaskReference.get();
+
 			User fallbackBatchEngineImportTaskUser = _userLocalService.getUser(
-				fallbackBatchEngineImportTaskReference.get(
-				).getUserId());
+				batchEngineImportTask2.getUserId());
 
 			Assert.assertTrue(fallbackBatchEngineImportTaskUser.isActive());
 
@@ -223,10 +227,14 @@ public class BatchEngineBundleTrackerTest {
 						userRole.getName())));
 		}
 		finally {
-			_userLocalService.updateStatus(
-				originalUserId, originalStatus, new ServiceContext());
+			if (adminUser != null) {
+				_userLocalService.deleteUser(adminUser);
+			}
 
-			_userLocalService.deleteUser(adminUser);
+			if (originalUserId != -1) {
+				_userLocalService.updateStatus(
+					originalUserId, originalStatus, new ServiceContext());
+			}
 		}
 	}
 

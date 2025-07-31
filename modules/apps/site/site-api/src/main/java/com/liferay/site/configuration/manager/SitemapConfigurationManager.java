@@ -26,6 +26,10 @@ public interface SitemapConfigurationManager {
 	public boolean includeCategoriesGroupEnabled(long companyId, long groupId)
 		throws ConfigurationException;
 
+	public boolean includeObjectsCompanyEnabled(
+			long companyId, String objectDefinitionId)
+		throws ConfigurationException;
+
 	public boolean includePagesCompanyEnabled(long companyId)
 		throws ConfigurationException;
 

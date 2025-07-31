@@ -92,6 +92,14 @@ public class ObjectEntryServiceUtil {
 		return getService().fetchObjectEntry(objectEntryId);
 	}
 
+	public static ObjectEntry fetchObjectEntry(
+			String externalReferenceCode, long groupId, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().fetchObjectEntry(
+			externalReferenceCode, groupId, objectDefinitionId);
+	}
+
 	public static List<ObjectEntry> getManyToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, boolean reverse, String search, int start, int end)
@@ -151,6 +159,15 @@ public class ObjectEntryServiceUtil {
 
 		return getService().getOneToManyObjectEntriesCount(
 			groupId, objectRelationshipId, primaryKey, related, search);
+	}
+
+	public static ObjectEntry getOrAddEmptyObjectEntry(
+			String externalReferenceCode, long groupId, long userId,
+			long objectDefinitionId)
+		throws PortalException {
+
+		return getService().getOrAddEmptyObjectEntry(
+			externalReferenceCode, groupId, userId, objectDefinitionId);
 	}
 
 	/**

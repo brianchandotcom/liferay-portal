@@ -1804,18 +1804,21 @@ public class ObjectActionLocalServiceTest {
 			_objectActionLocalService.getObjectActions(
 				objectDefinition.getObjectDefinitionId());
 
-		Assert.assertEquals(objectActions.size(), 2, objectActions.size());
+		Assert.assertEquals(objectActions.size(), 3, objectActions.size());
 
+		_assertObjectAction(
+			true, "SubscriptionAdded",
+			"L_SUBSCRIPTION_ADDED_NOTIFICATION_TEMPLATE", objectActions.get(0));
 		_assertObjectAction(
 			true, "SubscriptionExpired",
 			"L_SUBSCRIPTION_EXPIRED_NOTIFICATION_TEMPLATE",
-			objectActions.get(0));
+			objectActions.get(1));
 		_assertObjectAction(
 			true, "SubscriptionUpdated",
 			"L_SUBSCRIPTION_UPDATED_NOTIFICATION_TEMPLATE",
-			objectActions.get(1));
+			objectActions.get(2));
 
-		_objectActionLocalService.deleteObjectAction(objectActions.get(1));
+		_objectActionLocalService.deleteObjectAction(objectActions.get(2));
 
 		objectDefinition.setEnableObjectEntrySubscription(false);
 
@@ -1828,9 +1831,10 @@ public class ObjectActionLocalServiceTest {
 		objectActions = _objectActionLocalService.getObjectActions(
 			objectDefinition.getObjectDefinitionId());
 
-		Assert.assertEquals(objectActions.size(), 1, objectActions.size());
+		Assert.assertEquals(objectActions.size(), 2, objectActions.size());
 
-		_assertObjectAction(false, "SubscriptionExpired", objectActions.get(0));
+		_assertObjectAction(false, "SubscriptionAdded", objectActions.get(0));
+		_assertObjectAction(false, "SubscriptionExpired", objectActions.get(1));
 
 		objectDefinition.setEnableObjectEntrySubscription(true);
 
@@ -1843,10 +1847,11 @@ public class ObjectActionLocalServiceTest {
 		objectActions = _objectActionLocalService.getObjectActions(
 			objectDefinition.getObjectDefinitionId());
 
-		Assert.assertEquals(objectActions.size(), 2, objectActions.size());
+		Assert.assertEquals(objectActions.size(), 3, objectActions.size());
 
-		_assertObjectAction(true, "SubscriptionExpired", objectActions.get(0));
-		_assertObjectAction(true, "SubscriptionUpdated", objectActions.get(1));
+		_assertObjectAction(true, "SubscriptionAdded", objectActions.get(0));
+		_assertObjectAction(true, "SubscriptionExpired", objectActions.get(1));
+		_assertObjectAction(true, "SubscriptionUpdated", objectActions.get(2));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());

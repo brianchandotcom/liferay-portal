@@ -874,7 +874,7 @@ public class ObjectDefinitionResourceTest
 
 		ObjectAction[] objectActions = postObjectDefinition.getObjectActions();
 
-		Assert.assertEquals(objectActions.toString(), 2, objectActions.length);
+		Assert.assertEquals(objectActions.toString(), 3, objectActions.length);
 
 		ObjectAction objectAction1 = objectActions[0];
 
@@ -883,6 +883,10 @@ public class ObjectDefinitionResourceTest
 		ObjectAction objectAction2 = objectActions[1];
 
 		Assert.assertTrue(objectAction2.getActive());
+
+		ObjectAction objectAction3 = objectActions[2];
+
+		Assert.assertTrue(objectAction3.getActive());
 
 		postObjectDefinition.setEnableObjectEntrySubscription(false);
 
@@ -898,6 +902,10 @@ public class ObjectDefinitionResourceTest
 		objectAction2 = objectActions[1];
 
 		Assert.assertFalse(objectAction2.getActive());
+
+		objectAction3 = objectActions[2];
+
+		Assert.assertFalse(objectAction3.getActive());
 
 		// Modifiable system object definition
 

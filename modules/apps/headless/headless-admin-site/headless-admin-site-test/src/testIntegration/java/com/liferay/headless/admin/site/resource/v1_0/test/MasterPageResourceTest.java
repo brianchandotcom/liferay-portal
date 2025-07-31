@@ -850,7 +850,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 			PageSpecificationsTestUtil.assertUpdateCustomFields(
 				testGroup.getGroupId(), patchMasterPage.getPageSpecifications(),
-				postCustomFields, updateCustomFields);
+				updateCustomFields);
 		}
 	}
 
@@ -1118,8 +1118,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 			PageSpecificationsTestUtil.assertUpdateCustomFields(
 				testGroup.getGroupId(),
-				updateMasterPage.getPageSpecifications(), postCustomFields,
-				updateCustomFields);
+				updateMasterPage.getPageSpecifications(), updateCustomFields);
 		}
 	}
 

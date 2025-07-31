@@ -1168,7 +1168,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		PageSpecificationsTestUtil.assertUpdateCustomFields(
 			testGroup.getGroupId(), patchSitePage.getPageSpecifications(),
-			postCustomFields, updateCustomFields);
+			updateCustomFields);
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeSitePageWithPriority()
@@ -1490,7 +1490,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		PageSpecificationsTestUtil.assertUpdateCustomFields(
 			testGroup.getGroupId(), updateSitePage.getPageSpecifications(),
-			postCustomFields, updateCustomFields);
+			updateCustomFields);
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodeSitePageWithPriority()

@@ -196,7 +196,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return null;
 		}
 
-		return _objectDefinition.getName();
+		return _objectDefinition.getShortName();
 	}
 
 	private String _evaluateObjectEntry(

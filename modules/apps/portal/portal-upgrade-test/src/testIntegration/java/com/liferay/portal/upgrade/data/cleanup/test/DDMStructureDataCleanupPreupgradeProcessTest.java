@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -84,12 +85,12 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 					Assert.assertTrue(
 						messages.contains(
 							_getExpectedMessage(
-								1, "JournalArticle", "structureKey",
-								"DDMStructure", structureId)));
+								1, "structureId", "JournalArticle",
+								"structureKey", "DDMStructure", structureId)));
 					Assert.assertTrue(
 						messages.contains(
 							_getExpectedMessage(
-								1, "JournalFeed", "structureKey",
+								1, "structureId", "JournalFeed", "structureKey",
 								"DDMStructure", structureId)));
 				});
 		}
@@ -134,13 +135,13 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 					Assert.assertTrue(
 						messages.contains(
 							_getExpectedMessage(
-								1, "JournalArticle", "structureKey",
-								"DDMStructure", structureId)));
+								1, "DDMStructureKey", "JournalArticle",
+								"structureKey", "DDMStructure", structureId)));
 					Assert.assertTrue(
 						messages.contains(
 							_getExpectedMessage(
-								1, "JournalFeed", "structureKey",
-								"DDMStructure", structureId)));
+								1, "DDMStructureKey", "JournalFeed",
+								"structureKey", "DDMStructure", structureId)));
 				});
 		}
 		finally {
@@ -174,28 +175,28 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 				Assert.assertTrue(
 					messages.contains(
 						_getExpectedMessage(
-							1, "JournalArticle", "structureId", "DDMStructure",
-							structureId)));
+							1, "DDMStructureId", "JournalArticle",
+							"structureId", "DDMStructure", structureId)));
 				Assert.assertTrue(
 					messages.contains(
 						_getExpectedMessage(
-							1, "JournalFeed", "structureId", "DDMStructure",
-							structureId)));
+							1, "DDMStructureId", "JournalFeed", "structureId",
+							"DDMStructure", structureId)));
 			});
 	}
 
 	private String _getExpectedMessage(
-			long count, String sourceTableName, String targetColumn,
-			String targetTable, Object targetValue)
+			long count, String sourceColumnName, String sourceTableName,
+			String targetColumnName, String targetTableName, Object targetValue)
 		throws Exception {
 
 		return StringBundler.concat(
-			count, " orphan entries from table ",
-			_dbInspector.normalizeName(sourceTableName),
-			" have been deleted because value ", targetValue,
-			" was not found in the origin table ",
-			_dbInspector.normalizeName(targetTable), " and column ",
-			_dbInspector.normalizeName(targetColumn));
+			"Table ", _dbInspector.normalizeName(sourceTableName), ", ", count,
+			(count == 1) ? " entry " : " entries ", "deleted because ",
+			_dbInspector.normalizeName(sourceColumnName), StringPool.SPACE,
+			targetValue, " was not found in ",
+			_dbInspector.normalizeName(targetTableName), StringPool.PERIOD,
+			_dbInspector.normalizeName(targetColumnName));
 	}
 
 	private void _test(

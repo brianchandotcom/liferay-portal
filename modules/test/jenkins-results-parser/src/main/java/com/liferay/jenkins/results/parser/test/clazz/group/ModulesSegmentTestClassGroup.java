@@ -57,23 +57,21 @@ public class ModulesSegmentTestClassGroup extends SegmentTestClassGroup {
 	}
 
 	protected String getTestTaskNames(int axisIndex) {
+		StringBuilder sb = new StringBuilder();
+
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup(
 			axisIndex);
 
-		List<TestClassMethod> testClassMethods = new ArrayList<>();
-
 		for (TestClass testClass : axisTestClassGroup.getTestClasses()) {
-			testClassMethods.addAll(testClass.getTestClassMethods());
+			for (TestClassMethod testClassMethod :
+					testClass.getTestClassMethods()) {
+
+				sb.append(testClassMethod.getName());
+				sb.append(",");
+			}
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		for (TestClassMethod testClassMethod : testClassMethods) {
-			sb.append(testClassMethod.getName());
-			sb.append(",");
-		}
-
-		if (!testClassMethods.isEmpty()) {
+		if (!sb.isEmpty()) {
 			sb.setLength(sb.length() - 1);
 		}
 

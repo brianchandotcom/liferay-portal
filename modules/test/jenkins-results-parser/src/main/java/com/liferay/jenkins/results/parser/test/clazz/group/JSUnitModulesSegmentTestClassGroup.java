@@ -7,9 +7,6 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
-import java.util.Set;
-import java.util.TreeSet;
-
 import org.json.JSONObject;
 
 /**
@@ -32,23 +29,17 @@ public class JSUnitModulesSegmentTestClassGroup
 
 	@Override
 	protected String getTestTaskNames(int axisIndex) {
+		StringBuilder sb = new StringBuilder();
+
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup(
 			axisIndex);
 
-		StringBuilder sb = new StringBuilder();
-
-		Set<String> testTaskNames = new TreeSet<>();
-
 		for (TestClass testClass : axisTestClassGroup.getTestClasses()) {
-			testTaskNames.add(testClass.getTestTaskName());
-		}
-
-		for (String testTaskName : testTaskNames) {
-			sb.append(testTaskName);
+			sb.append(testClass.getTestTaskName());
 			sb.append(",");
 		}
 
-		if (!testTaskNames.isEmpty()) {
+		if (!sb.isEmpty()) {
 			sb.setLength(sb.length() - 1);
 		}
 

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -75,6 +76,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -221,6 +223,25 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	@Override
+	public ObjectEntry fetchObjectEntry(
+			String externalReferenceCode, long groupId, long objectDefinitionId)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryLocalService.fetchObjectEntry(
+			externalReferenceCode, groupId, objectDefinitionId);
+
+		if ((objectEntry != null) &&
+			!ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
+
+			_checkPermission(
+				ActionKeys.VIEW, objectEntry.getObjectDefinitionId(),
+				objectEntry);
+		}
+
+		return objectEntry;
+	}
+
+	@Override
 	public List<ObjectEntry> getManyToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, boolean reverse, String search, int start, int end)
@@ -333,6 +354,30 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		return objectEntryLocalService.getOneToManyObjectEntriesCount(
 			groupId, objectRelationshipId, primaryKey, related, search);
+	}
+
+	@Override
+	public ObjectEntry getOrAddEmptyObjectEntry(
+			String externalReferenceCode, long groupId, long userId,
+			long objectDefinitionId)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryService.fetchObjectEntry(
+			externalReferenceCode, groupId, objectDefinitionId);
+
+		if (objectEntry != null) {
+			return objectEntry;
+		}
+
+		if (!ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
+			_checkAddObjectEntryPortletResourcePermission(
+				groupId, objectDefinitionId, 0L, new HashMap<>());
+		}
+
+		_validateSubmissionLimit(objectDefinitionId, getUser());
+
+		return objectEntryLocalService.getOrAddEmptyObjectEntry(
+			externalReferenceCode, groupId, userId, objectDefinitionId);
 	}
 
 	@Override
@@ -537,7 +582,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			}
 		}
 
-		if (permissionChecker.hasPermission(
+		if (LazyReferencingThreadLocal.isEnabled() ||
+			permissionChecker.hasPermission(
 				groupId, portletResourcePermission.getResourceName(), 0,
 				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
 

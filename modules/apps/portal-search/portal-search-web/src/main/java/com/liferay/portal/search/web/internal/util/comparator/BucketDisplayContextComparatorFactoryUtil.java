@@ -39,9 +39,8 @@ public class BucketDisplayContextComparatorFactoryUtil {
 	private static int _compareBucketText(
 		String bucketText1, String bucketText2, Locale locale) {
 
-		NaturalOrderStringComparator comparator =
-			new NaturalOrderStringComparator(
-				true, false, CollatorUtil.getInstance(locale));
+		Comparator<String> comparator = new NaturalOrderStringComparator(
+			true, false, CollatorUtil.getInstance(locale));
 
 		return comparator.compare(bucketText1, bucketText2);
 	}

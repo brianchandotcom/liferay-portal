@@ -27,6 +27,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.list.type.exception.NoSuchListTypeEntryException;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.list.type.service.ListTypeEntryService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.configuration.ObjectConfiguration;
@@ -6462,7 +6463,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		try {
-			_listTypeEntryLocalService.getOrAddEmptyListTypeEntry(
+			_listTypeEntryService.getOrAddEmptyListTypeEntry(
 				objectField.getUserId(), objectField.getListTypeDefinitionId(),
 				listTypeEntryKey);
 		}
@@ -7226,6 +7227,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private ListTypeEntryService _listTypeEntryService;
 
 	@Reference
 	private Localization _localization;

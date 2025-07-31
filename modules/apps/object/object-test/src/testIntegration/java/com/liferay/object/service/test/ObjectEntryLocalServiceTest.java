@@ -1327,22 +1327,22 @@ public class ObjectEntryLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_SITE,
 				TestPropsValues.getUserId());
 
-		String tagName = StringUtil.randomString();
+		String assetTagName = StringUtil.randomString();
 
 		Assert.assertNull(
 			_assetTagLocalService.fetchTag(
-				TestPropsValues.getGroupId(), tagName));
+				TestPropsValues.getGroupId(), assetTagName));
 
 		Group group = _groupLocalService.fetchGroup(
 			TestPropsValues.getCompanyId(), GroupConstants.CMS);
 
 		Assert.assertNull(
-			_assetTagLocalService.fetchTag(group.getGroupId(), tagName));
+			_assetTagLocalService.fetchTag(group.getGroupId(), assetTagName));
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		serviceContext.setAssetTagNames(new String[] {tagName});
+		serviceContext.setAssetTagNames(new String[] {assetTagName});
 
 		_addObjectEntry(
 			TestPropsValues.getGroupId(), objectDefinition,
@@ -1353,10 +1353,10 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertNull(
 			_assetTagLocalService.fetchTag(
-				TestPropsValues.getGroupId(), tagName));
+				TestPropsValues.getGroupId(), assetTagName));
 
 		Assert.assertNotNull(
-			_assetTagLocalService.fetchTag(group.getGroupId(), tagName));
+			_assetTagLocalService.fetchTag(group.getGroupId(), assetTagName));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

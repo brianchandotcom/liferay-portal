@@ -30,7 +30,7 @@ describe('SpaceMembersModal', () => {
 	const props = {
 		assetLibraryCreatorUserId: '1',
 		assetLibraryId: '123',
-		canManageMembers: true,
+		hasAssignMembersPermission: true,
 	};
 
 	const {IntersectionObserver: IntersectionObserverOriginal} = window;
@@ -112,9 +112,14 @@ describe('SpaceMembersModal', () => {
 		});
 	});
 
-	describe('when canManageMembers is false', () => {
+	describe('when hasAssignMembersPermission is false', () => {
 		it('does not render the add members input or remove buttons', async () => {
-			render(<SpaceMembersModal {...props} canManageMembers={false} />);
+			render(
+				<SpaceMembersModal
+					{...props}
+					hasAssignMembersPermission={false}
+				/>
+			);
 
 			await waitFor(() => {
 				expect(

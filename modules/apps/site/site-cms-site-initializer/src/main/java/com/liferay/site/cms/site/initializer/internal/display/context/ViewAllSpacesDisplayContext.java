@@ -57,7 +57,7 @@ public class ViewAllSpacesDisplayContext {
 
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
-			"canManageMembers", _canManageMembers()
+			"hasAssignMembersPermission", _hasAssignMembersPermission()
 		).put(
 			"pinnedAssetLibraryIds",
 			TransformUtil.transformToArray(
@@ -163,7 +163,7 @@ public class ViewAllSpacesDisplayContext {
 
 	// TODO: Add logic for the permission
 
-	private Boolean _canManageMembers() {
+	private Boolean _hasAssignMembersPermission() {
 		return false;
 	}
 

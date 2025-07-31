@@ -29,9 +29,9 @@ describe('MembersListItem', () => {
 	};
 
 	const props = {
-		canManageMembers: true,
 		currentUserId: testUserAccount.id,
 		emptyMessage: 'No users',
+		hasAssignMembersPermission: true,
 		onRemoveItem: jest.fn(),
 	};
 
@@ -147,7 +147,7 @@ describe('MembersListItem', () => {
 		expect(listItemElement).toHaveTextContent('(0-members)');
 	});
 
-	it('does not render the remove button when canManageMembers is false', () => {
+	it('does not render the remove button when hasAssignMembersPermission is false', () => {
 		const anotherUser = {
 			emailAddress: 'another.user@example.com',
 			id: 'another-user-id',
@@ -157,7 +157,7 @@ describe('MembersListItem', () => {
 		render(
 			<MembersListItem
 				{...props}
-				canManageMembers={false}
+				hasAssignMembersPermission={false}
 				itemType="user"
 				items={[anotherUser]}
 			/>

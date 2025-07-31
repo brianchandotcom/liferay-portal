@@ -30,12 +30,12 @@ describe('manageMembersAction', () => {
 			[true, jest.fn()],
 			[false, undefined],
 		])(
-			'is called with canManageMembers=%s and loadData=%s',
-			(canManageMembers, loadData) => {
+			'is called with hasAssignMembersPermission=%s and loadData=%s',
+			(hasAssignMembersPermission, loadData) => {
 				const data: ManageMembersData = {
 					assetLibraryCreatorUserId: 'user-123',
 					assetLibraryId: 'lib-456',
-					canManageMembers,
+					hasAssignMembersPermission,
 					title: 'Manage Members Title',
 				};
 
@@ -58,7 +58,7 @@ describe('manageMembersAction', () => {
 				expect(mockSpaceMembersModal).toHaveBeenCalledWith({
 					assetLibraryCreatorUserId: data.assetLibraryCreatorUserId,
 					assetLibraryId: data.assetLibraryId,
-					canManageMembers: data.canManageMembers,
+					hasAssignMembersPermission: data.hasAssignMembersPermission,
 				});
 			}
 		);

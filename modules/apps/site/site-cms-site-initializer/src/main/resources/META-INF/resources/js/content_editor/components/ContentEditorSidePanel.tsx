@@ -39,6 +39,7 @@ type Props = {
 type SidePanelProps = Props & {
 	dateConfig: datetimeUtils.DateConfig;
 	fields: ScheduleFields;
+	onUpdateFieldData: (props: UpdateFieldProps) => void;
 };
 
 type Item = {
@@ -50,6 +51,7 @@ type Item = {
 };
 
 type BaseData = {
+	neverExpire: boolean;
 	value: string;
 };
 
@@ -92,15 +94,38 @@ const dateConfig = datetimeUtils.generateDateConfigurations({
 
 export default function ContentEditorSidePanel(props: Props) {
 	const [formId, setFormId] = useState<string | undefined>();
-	const scheduleFields = {
+	const [scheduleFields, setScheduleFields] = useState<ScheduleFields>({
 		expirationDate: {
+			neverExpire: Boolean(props.expirationDate),
 			serverValue: props.expirationDate,
 			value: toMomentDate(props.expirationDate),
 		},
 		reviewDate: {
+			neverExpire: Boolean(props.reviewDate),
 			serverValue: props.reviewDate,
 			value: toMomentDate(props.reviewDate),
 		},
+	});
+
+	const onUpdateFieldData = ({
+		name,
+		neverExpire,
+		value,
+	}: UpdateFieldProps) => {
+		const values = neverExpire
+			? {serverValue: ''}
+			: {
+					serverValue: toServerFormat(value).replace(' ', 'T'),
+					value,
+				};
+
+		setScheduleFields((fields: ScheduleFields) => ({
+			...fields,
+			[name]: {
+				...fields[name],
+				...values,
+			},
+		}));
 	};
 
 	useEffect(() => {
@@ -117,6 +142,7 @@ export default function ContentEditorSidePanel(props: Props) {
 				{...props}
 				dateConfig={dateConfig}
 				fields={scheduleFields}
+				onUpdateFieldData={onUpdateFieldData}
 			/>
 			{Object.entries(scheduleFields).map(([name, {serverValue}]) => (
 				<input

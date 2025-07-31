@@ -10,7 +10,7 @@ import {dateUtils} from 'frontend-js-web';
 import React, {useId, useState} from 'react';
 
 import FieldWrapper from '../../../common/components/forms/FieldWrapper';
-import {ScheduleFields} from '../ContentEditorSidePanel';
+import {ScheduleFields, UpdateFieldProps} from '../ContentEditorSidePanel';
 
 const LABELS = {
 	expirationDate: Liferay.Language.get('expiration-date'),
@@ -20,9 +20,11 @@ const LABELS = {
 export default function SchedulePanel({
 	dateConfig,
 	fields,
+	onUpdateFieldData,
 }: {
 	dateConfig: datetimeUtils.DateConfig;
 	fields: ScheduleFields;
+	onUpdateFieldData: (props: UpdateFieldProps) => void;
 }) {
 	return (
 		<div className="px-3">
@@ -41,6 +43,9 @@ export default function SchedulePanel({
 						dateConfig={dateConfig}
 						key={name}
 						label={label}
+						name={name}
+						neverExpire={!values.serverValue}
+						updateFieldData={onUpdateFieldData}
 					/>
 				);
 			})}
@@ -52,12 +57,19 @@ function ScheduleField({
 	date: initialDate = '',
 	dateConfig,
 	label,
+	name,
+	neverExpire,
+	updateFieldData,
 }: {
 	date: string | undefined;
 	dateConfig: datetimeUtils.DateConfig;
+	error?: string;
 	label: string;
+	name: string;
+	neverExpire: boolean;
+	updateFieldData: any;
 }) {
-	const [checked, setChecked] = useState<boolean>(initialDate === '');
+	const [checked, setChecked] = useState<boolean>(neverExpire);
 	const [date, setDate] = useState<string>(initialDate);
 
 	const id = useId();
@@ -97,6 +109,12 @@ function ScheduleField({
 					label={Liferay.Language.get('never-expire')}
 					onChange={({target: {checked}}) => {
 						setChecked(checked);
+
+						updateFieldData({
+							name,
+							neverExpire: checked,
+							value: checked ? '' : date,
+						});
 					}}
 				/>
 			</ClayForm.Group>

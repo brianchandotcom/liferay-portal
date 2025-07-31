@@ -592,7 +592,7 @@ public class EditServerMVCActionCommandTest {
 				mockLiferayPortletActionRequest,
 				mockLiferayPortletActionResponse);
 
-			Assert.fail(cmd + " should fail by CaptchaTextException");
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Throwable throwable = exception.getCause();

@@ -30,7 +30,7 @@ export default function SaaSTrials() {
 	const modalContext = useModalContext();
 	const navigate = useNavigate();
 	const ssaForm = useSSAForm();
-	const {selectedAccount, ssaTrialExtend, ssaTrialExtendMutate} =
+	const {selectedAccountId, ssaTrialExtend, ssaTrialExtendMutate} =
 		useOutletContext<any>();
 	const accountId = properties.accountId;
 	const {
@@ -69,8 +69,7 @@ export default function SaaSTrials() {
 			name: i18n.translate('go-to-trial'),
 			onClick: (order: Order) =>
 				window.open(
-					`https://${
-						order?.customFields?.['trial-virtual-host'] as string
+					`https://${order?.customFields?.['trial-virtual-host'] as string
 					}`
 				),
 		},
@@ -98,14 +97,25 @@ export default function SaaSTrials() {
 				return true;
 			},
 			name: i18n.translate('view-request'),
-			onClick: (order: PlacedOrder) => {
+			onClick: (order: PlacedOrder, orderMutate) => {
 				const ssaTrialsExtendRequests = ssaTrialExtend.items;
 				const extendRequests = ssaTrialsExtendRequests?.filter(
 					(extend: TrialExtend) => {
+
 						return (
 							extend.r_orderToTrialExtensionRequest_commerceOrderId ===
 							Number(order.id)
 						);
+					}
+				) as TrialExtend[];
+
+				const extendRequestsCount = extendRequests?.filter(
+					(extend: TrialExtend) => {
+
+						return extend.dueStatus?.key ===
+							ExtendRequestStatus.APPROVED ||
+							extend.dueStatus?.key ===
+							ExtendRequestStatus.AUTO_APPROVED;
 					}
 				) as TrialExtend[];
 
@@ -120,7 +130,8 @@ export default function SaaSTrials() {
 							order={order}
 							ssaTrialExtendMutate={ssaTrialExtendMutate}
 							trialExtend={extendRequests[0]}
-							trialExtendCount={extendRequests?.length}
+							trialExtendCount={extendRequestsCount?.length}
+							orderMutate={orderMutate}
 						/>
 					),
 					center: true,
@@ -152,7 +163,7 @@ export default function SaaSTrials() {
 				);
 			},
 			name: 'Extend',
-			onClick: (order: PlacedOrder) => {
+			onClick: (order: PlacedOrder, orderMutate: any) => {
 				const ssaTrialsExtendRequests = ssaTrialExtend.items;
 				const extendRequests = ssaTrialsExtendRequests?.filter(
 					(extend: TrialExtend) => {
@@ -166,11 +177,12 @@ export default function SaaSTrials() {
 				modalContext.onOpenModal({
 					body: (
 						<ExtendSSATrialModal
-							accountId={selectedAccount.id}
+							accountId={selectedAccountId}
 							firstExtendRequest={!extendRequests?.length}
 							onClose={modalContext.onClose}
 							order={order}
 							ssaTrialExtendMutate={ssaTrialExtendMutate}
+							orderMutate={orderMutate}
 						/>
 					),
 					header: `Extend ${order.id} Trial`,
@@ -187,7 +199,7 @@ export default function SaaSTrials() {
 				modalContext.onOpenModal({
 					body: (
 						<ExpireSSAModal
-							accountId={selectedAccount.id}
+							accountId={selectedAccountId}
 							mutate={mutate}
 							onClose={modalContext.onClose}
 							order={order}

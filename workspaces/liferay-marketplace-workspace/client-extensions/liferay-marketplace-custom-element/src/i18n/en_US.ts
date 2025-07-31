@@ -247,6 +247,7 @@ export default {
 	'exit-from-providing-app-build': 'Exit from providing app build',
 	'exp-date': 'Exp. Date',
 	'expiration-date': 'Expiration Date',
+	'expire': 'Expire',
 	'expire-trial': 'Expire Trial',
 	'expired': 'Expired',
 	'explore-over-800-apps-available-in-the-liferay-marketplace-from-a-variety-of-publishers-apps-allow-you-to-accelerate-your-liferay-development-get-to-market-faster':

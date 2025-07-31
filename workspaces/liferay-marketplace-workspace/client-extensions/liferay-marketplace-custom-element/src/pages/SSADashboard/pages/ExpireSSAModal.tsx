@@ -90,7 +90,7 @@ const ExpireSSAModal: React.FC<ExpireSSAModalProps> = ({
 						{isSubmitting && (
 							<ClayLoadingIndicator className="mr-3 my-0" />
 						)}
-						{i18n.translate('got-it')}
+						{i18n.translate('expire')}
 					</div>
 				</ClayButton>
 			</div>

@@ -10,7 +10,7 @@ import ListView, {ListViewProps} from '../../../../components/ListView';
 import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
-import {OrderCustomFields, OrderTypes} from '../../../../enums/Order';
+import { OrderCustomFields, OrderStatus, OrderTypes } from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import {Action} from '../../../../utils/constants';
@@ -138,7 +138,7 @@ export default function TrialListView({
 					{
 						id: 'id',
 						name: 'Extension Status',
-						render: (orderId) => {
+						render: (orderId, placedOrder) => {
 							const ssaTrialsExtendRequests =
 								ssaTrialExtend.items;
 							const extendRequests =
@@ -150,7 +150,7 @@ export default function TrialListView({
 										);
 									}
 								) as TrialExtend[];
-
+							
 							if (
 								!extendRequests ||
 								extendRequests?.length === 0
@@ -163,7 +163,9 @@ export default function TrialListView({
 							return (
 								<ExtensionStatus
 									extensionStatus={
-										extendRequests[0]?.dueStatus
+										placedOrder.orderStatusInfo.label === OrderStatus.COMPLETED
+										? 'extension-expired'
+										:extendRequests[0]?.dueStatus
 											.key as keyof typeof EXTEND_TRIAL_STATUS_LABEL
 									}
 								/>

@@ -12,7 +12,7 @@ import {useSSATrialsExtend} from './useSSATrialsExtend';
 
 const SSADashboardOutlet = () => {
 	const {properties} = useMarketplaceContext();
-	const selectedAccount = Number(properties.accountId);
+	const selectedAccountId = Number(properties.accountId);
 
 	const {
 		data: ssaTrialExtend,
@@ -20,14 +20,14 @@ const SSADashboardOutlet = () => {
 		isLoading,
 		mutate: ssaTrialExtendMutate,
 	} = useSSATrialsExtend({
-		accountId: selectedAccount,
+		accountId: selectedAccountId,
 	});
 
 	return (
 		<PageRenderer error={error} isLoading={isLoading}>
 			<div className="published-apps-dashboard-page-container">
 				<DashboardNavigation
-					currentAccount={selectedAccount as any}
+					currentAccount={selectedAccountId as any}
 					dashboardNavigationItems={[
 						{
 							itemTitle: 'SaaS Demos',
@@ -39,7 +39,7 @@ const SSADashboardOutlet = () => {
 				<span className="h-vh-100 ml-6 w-100">
 					<Outlet
 						context={{
-							selectedAccount,
+							selectedAccountId,
 							ssaTrialExtend,
 							ssaTrialExtendMutate,
 						}}

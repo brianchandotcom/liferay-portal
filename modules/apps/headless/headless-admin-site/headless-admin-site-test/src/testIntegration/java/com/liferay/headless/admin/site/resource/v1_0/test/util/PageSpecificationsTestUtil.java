@@ -331,13 +331,13 @@ public class PageSpecificationsTestUtil {
 
 		return getContentPageSpecification(
 			RandomTestUtil.randomString(),
-			draftContentPageSpecificationExternalReferenceCode, status);
+			draftContentPageSpecificationExternalReferenceCode, null, status);
 	}
 
 	public static ContentPageSpecification getContentPageSpecification(
 		String contentPageSpecificationExternalReferenceCode,
 		String draftContentPageSpecificationExternalReferenceCode,
-		PageSpecification.Status status) {
+		PageExperience[] pageExperiences, PageSpecification.Status status) {
 
 		ContentPageSpecification contentPageSpecification =
 			new ContentPageSpecification() {
@@ -351,22 +351,26 @@ public class PageSpecificationsTestUtil {
 				draftContentPageSpecificationExternalReferenceCode);
 		contentPageSpecification.setExternalReferenceCode(
 			contentPageSpecificationExternalReferenceCode);
-		contentPageSpecification.setPageExperiences(
-			() -> {
-				PageExperience pageExperience = new PageExperience();
 
-				pageExperience.setExternalReferenceCode(
-					RandomTestUtil::randomString);
-				pageExperience.setKey(SegmentsExperienceConstants.KEY_DEFAULT);
-				pageExperience.setName_i18n(
-					Collections.singletonMap(
-						"en-US", RandomTestUtil.randomString()));
-				pageExperience.setPageElements(new PageElement[0]);
-				pageExperience.setPageSpecificationExternalReferenceCode(
-					contentPageSpecification.getExternalReferenceCode());
+		if (pageExperiences == null) {
+			pageExperiences = new PageExperience[] {
+				new PageExperience() {
+					{
+						setExternalReferenceCode(RandomTestUtil::randomString);
+						setKey(SegmentsExperienceConstants.KEY_DEFAULT);
+						setName_i18n(
+							Collections.singletonMap(
+								"en-US", RandomTestUtil.randomString()));
+						setPageElements(new PageElement[0]);
+						setPageSpecificationExternalReferenceCode(
+							contentPageSpecification.
+								getExternalReferenceCode());
+					}
+				}
+			};
+		}
 
-				return new PageExperience[] {pageExperience};
-			});
+		contentPageSpecification.setPageExperiences(pageExperiences);
 		contentPageSpecification.setStatus(status);
 
 		return contentPageSpecification;
@@ -400,18 +404,11 @@ public class PageSpecificationsTestUtil {
 					(ContentPageSpecification)pageSpecifications[1];
 			}
 
-			ContentPageSpecification[] updatedPageSpecifications =
-				_getContentPageSpecifications(
-					draftContentPageSpecification.getExternalReferenceCode(),
-					publishedContentPageSpecification.
-						getExternalReferenceCode());
-
-			updatedPageSpecifications[0].setPageExperiences(
+			return _getContentPageSpecifications(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				draftContentPageSpecification.getPageExperiences(),
+				publishedContentPageSpecification.getExternalReferenceCode(),
 				publishedContentPageSpecification.getPageExperiences());
-			updatedPageSpecifications[1].setPageExperiences(
-				draftContentPageSpecification.getPageExperiences());
-
-			return updatedPageSpecifications;
 		}
 
 		WidgetPageSpecification widgetPageSpecification =
@@ -432,8 +429,8 @@ public class PageSpecificationsTestUtil {
 
 		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
 			pageSpecifications = _getContentPageSpecifications(
-				RandomTestUtil.randomString(),
-				publishedPageSpecificationExternalReferenceCode);
+				RandomTestUtil.randomString(), null,
+				publishedPageSpecificationExternalReferenceCode, null);
 		}
 		else {
 			pageSpecifications = new PageSpecification[] {
@@ -710,17 +707,21 @@ public class PageSpecificationsTestUtil {
 
 	private static ContentPageSpecification[] _getContentPageSpecifications(
 		String draftPageSpecificationExternalReferenceCode,
-		String publishedPageSpecificationExternalReferenceCode) {
+		PageExperience[] draftPageSpecificationPageExperiences,
+		String publishedPageSpecificationExternalReferenceCode,
+		PageExperience[] publishedPageSpecificationPageExperiences) {
 
 		ContentPageSpecification draftContentPageSpecification =
 			getContentPageSpecification(
 				draftPageSpecificationExternalReferenceCode, null,
+				draftPageSpecificationPageExperiences,
 				PageSpecification.Status.DRAFT);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			getContentPageSpecification(
 				publishedPageSpecificationExternalReferenceCode,
 				draftContentPageSpecification.getExternalReferenceCode(),
+				publishedPageSpecificationPageExperiences,
 				PageSpecification.Status.APPROVED);
 
 		return new ContentPageSpecification[] {

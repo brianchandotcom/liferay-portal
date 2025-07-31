@@ -382,6 +382,10 @@ public class ObjectEntryModelDocumentContributor
 		ObjectEntryFolder rootObjectEntryFolder = _getRootObjectEntryFolder(
 			objectEntryFolder);
 
+		if (rootObjectEntryFolder == null) {
+			return;
+		}
+
 		String cmsSection = _getCMSSection(
 			rootObjectEntryFolder.getExternalReferenceCode());
 

@@ -57,8 +57,6 @@ public class ViewAllSpacesDisplayContext {
 
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
-			"hasAssignMembersPermission", _hasAssignMembersPermission()
-		).put(
 			"pinnedAssetLibraryIds",
 			TransformUtil.transformToArray(
 				_depotEntryPinLocalService.getUserDepotEntryPins(
@@ -159,12 +157,6 @@ public class ViewAllSpacesDisplayContext {
 				null, "trash", "delete",
 				_language.get(_httpServletRequest, "delete"), "delete",
 				"delete", "headless"));
-	}
-
-	// TODO: Add logic for the permission
-
-	private Boolean _hasAssignMembersPermission() {
-		return false;
 	}
 
 	private final DepotEntryPinLocalService _depotEntryPinLocalService;

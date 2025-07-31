@@ -75,7 +75,7 @@ describe('SpaceMembersWithList', () => {
 	const props: SpaceMembersWithListProps = {
 		assetLibraryCreatorUserId: testUsers[0].id,
 		assetLibraryId: testSpace.id,
-		canManageMembers: true,
+		hasAssignMembersPermission: true,
 	};
 
 	const {ResizeObserver: ResizeObserverOriginal} = window;
@@ -550,10 +550,13 @@ describe('SpaceMembersWithList', () => {
 		expect(linkSpy).toHaveBeenCalledTimes(1);
 	});
 
-	describe('When canManageMembers is false', () => {
+	describe('When hasAssignMembersPermission is false', () => {
 		it('does not render the add members input', async () => {
 			render(
-				<SpaceMembersWithList {...props} canManageMembers={false} />
+				<SpaceMembersWithList
+					{...props}
+					hasAssignMembersPermission={false}
+				/>
 			);
 
 			await waitFor(() => {
@@ -571,7 +574,10 @@ describe('SpaceMembersWithList', () => {
 
 		it('does not render the remove button for members', async () => {
 			render(
-				<SpaceMembersWithList {...props} canManageMembers={false} />
+				<SpaceMembersWithList
+					{...props}
+					hasAssignMembersPermission={false}
+				/>
 			);
 
 			await waitFor(() => {

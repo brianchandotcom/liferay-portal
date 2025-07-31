@@ -100,7 +100,7 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
 			_httpServletRequest, "view-all-members",
 			HashMapBuilder.<String, Object>put(
-				"canManageMembers", _canManageMembers()
+				"hasAssignMembersPermission", _hasAssignMembersPermission()
 			).build(),
 			HashMapBuilder.<String, Object>put(
 				"action", "open-members-modal"
@@ -129,10 +129,6 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 
 	// TODO: Add logic for the permission
 
-	private Boolean _canManageMembers() {
-		return true;
-	}
-
 	private String _getAssetLibraryCreatorUserId() throws Exception {
 		Group group = _groupLocalService.getGroup(_groupId);
 
@@ -146,6 +142,10 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 			_userGroupLocalService.getGroupUserGroupsCount(_groupId) +
 				_userLocalService.getGroupUsersCount(_groupId),
 			StringPool.CLOSE_PARENTHESIS);
+	}
+
+	private Boolean _hasAssignMembersPermission() {
+		return true;
 	}
 
 	private final DepotEntryLocalService _depotEntryLocalService;

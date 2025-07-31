@@ -16,7 +16,7 @@ export enum SpaceSummaryHeaderActions {
 }
 
 export type SpaceSummaryHeaderPermissions = {
-	canManageMembers: boolean;
+	hasAssignMembersPermission: boolean;
 };
 
 type SpaceModalPropsType = {
@@ -47,7 +47,9 @@ export default function SpaceSummaryHeader({
 		const data: ManageMembersData = {
 			assetLibraryCreatorUserId,
 			assetLibraryId,
-			canManageMembers: Boolean(permissions?.canManageMembers),
+			hasAssignMembersPermission: Boolean(
+				permissions?.hasAssignMembersPermission
+			),
 			title,
 		};
 

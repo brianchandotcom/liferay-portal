@@ -13,9 +13,9 @@ import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 
 interface MembersListItemProps {
 	assetLibraryCreatorUserId?: string | number;
-	canManageMembers: boolean;
 	currentUserId?: string;
 	emptyMessage: string;
+	hasAssignMembersPermission: boolean;
 	itemType: 'user' | 'group';
 	items: (UserAccount | UserGroup)[];
 	onRemoveItem: (item: UserAccount | UserGroup) => Promise<void>;
@@ -23,9 +23,9 @@ interface MembersListItemProps {
 
 export function MembersListItem({
 	assetLibraryCreatorUserId,
-	canManageMembers,
 	currentUserId,
 	emptyMessage,
+	hasAssignMembersPermission,
 	itemType,
 	items,
 	onRemoveItem,
@@ -104,7 +104,7 @@ export function MembersListItem({
 							<span className="text-3 text-capitalize text-secondary">
 								({Liferay.Language.get('owner')})
 							</span>
-						) : canManageMembers ? (
+						) : hasAssignMembersPermission ? (
 							<ClayButtonWithIcon
 								aria-label={sub(
 									Liferay.Language.get('remove-x'),

@@ -69,8 +69,11 @@ describe('SpaceSummaryHeader', () => {
 			[false, false],
 			[true, true],
 		])(
-			'is called with canManageMembers=%s when permissions.canManageMembers is %s',
-			async (expectedCanManageMembers, canManageMembers) => {
+			'is called with hasAssignMembersPermission=%s when permissions.hasAssignMembersPermission is %s',
+			async (
+				expectedHasAssignMembersPermission,
+				hasAssignMembersPermission
+			) => {
 				const spaceModalProps = {
 					action: SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL,
 					assetLibraryCreatorUserId: '123',
@@ -80,8 +83,8 @@ describe('SpaceSummaryHeader', () => {
 				const props = {
 					...defaultProps,
 					permissions:
-						canManageMembers !== undefined
-							? {canManageMembers}
+						hasAssignMembersPermission !== undefined
+							? {hasAssignMembersPermission}
 							: undefined,
 					spaceModalProps,
 				};
@@ -100,7 +103,8 @@ describe('SpaceSummaryHeader', () => {
 						assetLibraryCreatorUserId:
 							spaceModalProps.assetLibraryCreatorUserId,
 						assetLibraryId: spaceModalProps.assetLibraryId,
-						canManageMembers: expectedCanManageMembers,
+						hasAssignMembersPermission:
+							expectedHasAssignMembersPermission,
 						title: defaultProps.title,
 					},
 					expect.any(Function)

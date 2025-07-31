@@ -16,6 +16,7 @@ import React, {useState} from 'react';
 
 import CommentsPanel from './panels/CommentsPanel';
 import GeneralPanel from './panels/GeneralPanel';
+import SchedulePanel from './panels/SchedulePanel';
 import {Comment} from './services/CommentService';
 
 type Props = {
@@ -24,6 +25,7 @@ type Props = {
 	deleteCommentURL: string;
 	editCommentURL: string;
 	editorConfig: LiferayEditorConfig;
+	expirationDate: string;
 	id: string;
 	isSubscribed: boolean;
 	subscribeURL: string;
@@ -45,6 +47,12 @@ const items: Item[] = [
 		icon: 'info-circle',
 		id: 'general',
 		title: Liferay.Language.get('general'),
+	},
+	{
+		component: SchedulePanel,
+		icon: 'date-time',
+		id: 'schedule',
+		title: Liferay.Language.get('schedule'),
 	},
 	{
 		component: CommentsPanel,

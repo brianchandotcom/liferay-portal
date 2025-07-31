@@ -1097,10 +1097,15 @@ public class PortalImpl implements Portal {
 
 		Layout layout = null;
 
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
+
 		if (Validator.isNull(friendlyURL)) {
 			if (AuthLoginGroupSettingsUtil.isPromptEnabled(groupId) &&
-				!_isSignedIn(
-					(HttpServletRequest)requestContext.get("request"))) {
+				!_isSignedIn(httpServletRequest) &&
+				!GetterUtil.getBoolean(
+					httpServletRequest.getAttribute(
+						NoSuchLayoutException.class.getName()))) {
 
 				// Ensure that virtual layouts are merged. See LPS-42222.
 

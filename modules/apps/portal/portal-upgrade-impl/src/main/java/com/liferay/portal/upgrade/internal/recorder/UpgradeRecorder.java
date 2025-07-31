@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.sql.DataSource;
 
@@ -104,7 +105,7 @@ public class UpgradeRecorder {
 
 	public void recordDataCleanupMessage(String loggerName, String message) {
 		Map<String, Integer> messages = _dataCleanUpMessages.computeIfAbsent(
-			loggerName, key -> new ConcurrentHashMap<>());
+			loggerName, key -> new ConcurrentSkipListMap<>());
 
 		int occurrences = messages.computeIfAbsent(message, key -> 0);
 

@@ -28,6 +28,7 @@ import com.liferay.portlet.display.template.test.util.BaseExportImportTestCase;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.test.util.SiteNavigationMenuItemTestUtil;
 import com.liferay.site.navigation.test.util.SiteNavigationMenuTestUtil;
@@ -108,6 +109,58 @@ public class SiteNavigationMenuExportImportTest
 	@Override
 	@Test
 	public void testExportImportAssetLinks() throws Exception {
+	}
+
+	@Test
+	public void testExportImportChildLayoutSiteNavigationMenuItems()
+		throws Exception {
+
+		_setUpLocalStaging();
+
+		_setUpSiteNavigationMenu(_stagingGroup);
+
+		Layout parentLayout = LayoutTestUtil.addTypePortletLayout(
+			_stagingGroup);
+
+		SiteNavigationMenuItem parentSiteNavigationMenuItem =
+			SiteNavigationMenuItemTestUtil.addLayoutTypeSiteNavigationMenuItem(
+				_siteNavigationMenu, parentLayout, 0L);
+
+		Layout childLayout1 = LayoutTestUtil.addTypePortletLayout(
+			_stagingGroup);
+
+		SiteNavigationMenuItem childSiteNavigationMenuItem1 =
+			SiteNavigationMenuItemTestUtil.addLayoutTypeSiteNavigationMenuItem(
+				_siteNavigationMenu, childLayout1,
+				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+		_publishLayouts();
+
+		Layout childLayout2 = LayoutTestUtil.addTypePortletLayout(
+			_stagingGroup);
+
+		SiteNavigationMenuItem childSiteNavigationMenuItem2 =
+			SiteNavigationMenuItemTestUtil.addLayoutTypeSiteNavigationMenuItem(
+				_siteNavigationMenu, childLayout2,
+				childSiteNavigationMenuItem1.getSiteNavigationMenuItemId());
+
+		_publishLayouts(new long[] {childLayout2.getLayoutId()});
+
+		childSiteNavigationMenuItem2 =
+			_siteNavigationMenuItemLocalService.
+				getSiteNavigationMenuItemByUuidAndGroupId(
+					childSiteNavigationMenuItem2.getUuid(),
+					_liveGroup.getGroupId());
+
+		childSiteNavigationMenuItem1 =
+			_siteNavigationMenuItemLocalService.fetchSiteNavigationMenuItem(
+				childSiteNavigationMenuItem2.
+					getParentSiteNavigationMenuItemId());
+
+		Assert.assertNotNull(childSiteNavigationMenuItem1);
+
+		Assert.assertEquals(
+			_liveGroup.getGroupId(), childSiteNavigationMenuItem1.getGroupId());
 	}
 
 	@Test
@@ -202,20 +255,31 @@ public class SiteNavigationMenuExportImportTest
 	}
 
 	private void _publishLayouts() throws Exception {
+		_publishLayouts(null);
+	}
+
+	private void _publishLayouts(long[] layoutIds) throws Exception {
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactoryUtil.
 				buildParameterMap();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.FALSE.toString()});
+			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {Boolean.FALSE.toString()});
 
-		StagingUtil.publishLayouts(
-			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
-			_liveGroup.getGroupId(), false, parameterMap);
+		if (layoutIds != null) {
+			StagingUtil.publishLayouts(
+				TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+				_liveGroup.getGroupId(), false, layoutIds, parameterMap);
+		}
+		else {
+			StagingUtil.publishLayouts(
+				TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+				_liveGroup.getGroupId(), false, parameterMap);
+		}
 	}
 
 	private void _setUpLocalStaging() throws Exception {
@@ -249,6 +313,10 @@ public class SiteNavigationMenuExportImportTest
 
 	private SiteNavigationMenu _siteNavigationMenu;
 	private SiteNavigationMenuItem _siteNavigationMenuItem;
+
+	@Inject
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
 
 	@Inject
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;

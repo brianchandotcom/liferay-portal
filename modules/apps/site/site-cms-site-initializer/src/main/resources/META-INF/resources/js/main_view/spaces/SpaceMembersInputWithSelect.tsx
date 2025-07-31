@@ -23,6 +23,7 @@ export enum SelectOptions {
 
 export interface SpaceMembersInputWithSelectProps {
 	className?: string;
+	disabled: boolean;
 	onAutocompleteItemSelected?: (item: UserAccount | UserGroup) => void;
 	onSelectChange?: (value: SelectOptions) => void;
 	selectValue?: SelectOptions;
@@ -30,6 +31,7 @@ export interface SpaceMembersInputWithSelectProps {
 
 export function SpaceMembersInputWithSelect({
 	className,
+	disabled,
 	onAutocompleteItemSelected,
 	onSelectChange,
 	selectValue,
@@ -169,27 +171,35 @@ export function SpaceMembersInputWithSelect({
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem append>
-					<Autocomplete
-						allowsCustomValue
-						id="autocomplete"
-						items={(resource?.items ?? []) as any}
-						loadingState={networkStatus}
-						menuTrigger="focus"
-						messages={{
-							loading: Liferay.Language.get('loading...'),
-							notFound: Liferay.Language.get('no-results-found'),
-						}}
-						onChange={(value: string) => {
-							setValue(value);
-						}}
-						onFocusCapture={refetch}
-						placeholder={Liferay.Language.get(
-							'enter-name-or-email'
-						)}
-						value={value}
-					>
-						{renderAutocompleteItem()}
-					</Autocomplete>
+					{disabled ? (
+						<ClayInput
+							disabled
+							placeholder={Liferay.Language.get(
+								'enter-name-or-email'
+							)}
+						/>
+					) : (
+						<Autocomplete
+							allowsCustomValue
+							id="autocomplete"
+							items={(resource?.items ?? []) as any}
+							loadingState={networkStatus}
+							menuTrigger="focus"
+							messages={{
+								loading: Liferay.Language.get('loading...'),
+								notFound:
+									Liferay.Language.get('no-results-found'),
+							}}
+							onChange={setValue}
+							onFocusCapture={refetch}
+							placeholder={Liferay.Language.get(
+								'enter-name-or-email'
+							)}
+							value={value}
+						>
+							{renderAutocompleteItem()}
+						</Autocomplete>
+					)}
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
 		</ClayForm.Group>

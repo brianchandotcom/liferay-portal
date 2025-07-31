@@ -71,7 +71,10 @@ describe('SpaceMembersInputWithSelect', () => {
 		const customClass = 'custom-class';
 
 		const {container} = render(
-			<SpaceMembersInputWithSelect className={customClass} />
+			<SpaceMembersInputWithSelect
+				className={customClass}
+				disabled={false}
+			/>
 		);
 
 		expect(container.getElementsByClassName(customClass)).toHaveLength(1);
@@ -80,7 +83,12 @@ describe('SpaceMembersInputWithSelect', () => {
 	it('renders with initial value for select', () => {
 		const selectValue = SelectOptions.USERS;
 
-		render(<SpaceMembersInputWithSelect selectValue={selectValue} />);
+		render(
+			<SpaceMembersInputWithSelect
+				disabled={false}
+				selectValue={selectValue}
+			/>
+		);
 
 		const typeSelect = screen.getByRole('combobox', {
 			name: 'add-people-to-collaborate',
@@ -92,7 +100,12 @@ describe('SpaceMembersInputWithSelect', () => {
 	it('calls "onSelectChange" callback when changing value for input', async () => {
 		const onSelectChange = jest.fn();
 
-		render(<SpaceMembersInputWithSelect onSelectChange={onSelectChange} />);
+		render(
+			<SpaceMembersInputWithSelect
+				disabled={false}
+				onSelectChange={onSelectChange}
+			/>
+		);
 
 		expect(onSelectChange).not.toHaveBeenCalled();
 
@@ -111,7 +124,10 @@ describe('SpaceMembersInputWithSelect', () => {
 		} as Response);
 
 		render(
-			<SpaceMembersInputWithSelect selectValue={SelectOptions.USERS} />
+			<SpaceMembersInputWithSelect
+				disabled={false}
+				selectValue={SelectOptions.USERS}
+			/>
 		);
 
 		await userEvent.click(
@@ -139,7 +155,10 @@ describe('SpaceMembersInputWithSelect', () => {
 		} as Response);
 
 		render(
-			<SpaceMembersInputWithSelect selectValue={SelectOptions.GROUPS} />
+			<SpaceMembersInputWithSelect
+				disabled={false}
+				selectValue={SelectOptions.GROUPS}
+			/>
 		);
 
 		await userEvent.click(
@@ -170,7 +189,10 @@ describe('SpaceMembersInputWithSelect', () => {
 		} as Response);
 
 		render(
-			<SpaceMembersInputWithSelect selectValue={SelectOptions.GROUPS} />
+			<SpaceMembersInputWithSelect
+				disabled={false}
+				selectValue={SelectOptions.GROUPS}
+			/>
 		);
 
 		await userEvent.click(
@@ -190,7 +212,10 @@ describe('SpaceMembersInputWithSelect', () => {
 		} as Response);
 
 		render(
-			<SpaceMembersInputWithSelect selectValue={SelectOptions.USERS} />
+			<SpaceMembersInputWithSelect
+				disabled={false}
+				selectValue={SelectOptions.USERS}
+			/>
 		);
 
 		const input = screen.getByPlaceholderText('enter-name-or-email');
@@ -211,6 +236,7 @@ describe('SpaceMembersInputWithSelect', () => {
 
 		render(
 			<SpaceMembersInputWithSelect
+				disabled={false}
 				onAutocompleteItemSelected={onAutocompleteItemSelected}
 				selectValue={SelectOptions.USERS}
 			/>
@@ -255,6 +281,7 @@ describe('SpaceMembersInputWithSelect', () => {
 
 		render(
 			<SpaceMembersInputWithSelect
+				disabled={false}
 				onAutocompleteItemSelected={onAutocompleteItemSelected}
 				selectValue={SelectOptions.GROUPS}
 			/>
@@ -282,5 +309,18 @@ describe('SpaceMembersInputWithSelect', () => {
 		});
 
 		await waitFor(() => expect(input).toHaveValue(''));
+	});
+
+	it('renders a disabled input when disabled is true', () => {
+		render(
+			<SpaceMembersInputWithSelect
+				disabled
+				selectValue={SelectOptions.USERS}
+			/>
+		);
+
+		const input = screen.getByPlaceholderText('enter-name-or-email');
+
+		expect(input).toBeDisabled();
 	});
 });

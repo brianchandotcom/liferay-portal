@@ -1411,7 +1411,7 @@ public class DefaultObjectEntryManagerImpl
 
 						nestedObjectEntry = _toObjectEntry(
 							dtoConverterContext, relatedObjectDefinition,
-							objectEntryLocalService.getOrAddEmptyObjectEntry(
+							_objectEntryService.getOrAddEmptyObjectEntry(
 								nestedObjectEntry.getExternalReferenceCode(),
 								groupId, dtoConverterContext.getUserId(),
 								relatedObjectDefinition.

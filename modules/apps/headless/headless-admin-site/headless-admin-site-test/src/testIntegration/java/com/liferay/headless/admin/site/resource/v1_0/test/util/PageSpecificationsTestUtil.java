@@ -26,7 +26,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -346,7 +345,9 @@ public class PageSpecificationsTestUtil {
 		};
 	}
 
-	public static ExpandoTableAutocloseable getExpandoTableAutoCloseable() {
+	public static ExpandoTableAutocloseable getExpandoTableAutoCloseable()
+		throws Exception {
+
 		return new ExpandoTableAutocloseable();
 	}
 
@@ -548,39 +549,30 @@ public class PageSpecificationsTestUtil {
 
 	public static class ExpandoTableAutocloseable implements AutoCloseable {
 
-		public ExpandoTableAutocloseable() {
+		public ExpandoTableAutocloseable() throws Exception {
 			_originalPermissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			try {
-				PermissionThreadLocal.setPermissionChecker(
-					PermissionCheckerFactoryUtil.create(
-						TestPropsValues.getUser()));
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
-				_expandoTable = ExpandoTableLocalServiceUtil.addDefaultTable(
-					PortalUtil.getDefaultCompanyId(), Layout.class.getName());
+			_expandoTable = ExpandoTableLocalServiceUtil.addDefaultTable(
+				PortalUtil.getDefaultCompanyId(), Layout.class.getName());
 
-				for (int i = 0; i < _EXPANDO_ATTRIBUTE_NAMES.length; i++) {
-					ExpandoColumnLocalServiceUtil.addColumn(
-						_expandoTable.getTableId(), _EXPANDO_ATTRIBUTE_NAMES[i],
-						ExpandoColumnConstants.STRING,
-						_EXPANDO_ATTRIBUTE_DEFAULT_VALUES[i]);
-				}
-			}
-			catch (PortalException portalException) {
-				throw new RuntimeException(portalException);
+			for (int i = 0; i < _EXPANDO_ATTRIBUTE_NAMES.length; i++) {
+				ExpandoColumnLocalServiceUtil.addColumn(
+					_expandoTable.getTableId(), _EXPANDO_ATTRIBUTE_NAMES[i],
+					ExpandoColumnConstants.STRING,
+					_EXPANDO_ATTRIBUTE_DEFAULT_VALUES[i]);
 			}
 		}
 
 		@Override
-		public void close() {
+		public void close() throws Exception {
 			try {
 				if (_expandoTable != null) {
 					ExpandoTableLocalServiceUtil.deleteTable(_expandoTable);
 				}
-			}
-			catch (PortalException portalException) {
-				throw new RuntimeException(portalException);
 			}
 			finally {
 				PermissionThreadLocal.setPermissionChecker(

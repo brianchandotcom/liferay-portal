@@ -3063,6 +3063,7 @@ public class DefaultObjectEntryManagerImplTest
 					objectRelationship, _group.getGroupKey()));
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testCopyObjectEntryByVersion() throws Exception {
 
@@ -3074,13 +3075,19 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
 			2);
 
+		ObjectEntry copyObjectEntry1 =
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition1, objectEntry.getId(),
+				2);
+
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition1, null, 2),
-			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition1, objectEntry.getId(),
-				2));
+			_defaultObjectEntryManager.getObjectEntryByVersion(
+				dtoConverterContext,
+				copyObjectEntry1.getExternalReferenceCode(), _objectDefinition1,
+				null, 1));
 
 		// Site scope
 
@@ -3088,13 +3095,19 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition4,
 			_addObjectEntry(_objectDefinition4, _group.getGroupKey(), 1), 2);
 
+		ObjectEntry copyObjectEntry2 =
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				_objectDefinition4, _group.getGroupKey(), 2);
+
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition4, _group.getGroupKey(), 2),
-			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), 2));
+			_defaultObjectEntryManager.getObjectEntryByVersion(
+				dtoConverterContext,
+				copyObjectEntry2.getExternalReferenceCode(), _objectDefinition4,
+				_group.getGroupKey(), 1));
 
 		// Status draft
 
@@ -3104,12 +3117,12 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition4);
 
-		ObjectEntry copyObjectEntry =
+		ObjectEntry copyObjectEntry3 =
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
 				dtoConverterContext, _objectDefinition4, objectEntry.getId(),
 				1);
 
-		Status status = copyObjectEntry.getStatus();
+		Status status = copyObjectEntry3.getStatus();
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, status.getCode());
@@ -3128,11 +3141,12 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition4, _group.getGroupKey(), 2));
 
-		copyObjectEntry = _defaultObjectEntryManager.copyObjectEntryByVersion(
-			dtoConverterContext, objectEntry.getExternalReferenceCode(),
-			_objectDefinition4, _group.getGroupKey(), 2);
+		ObjectEntry copyObjectEntry4 =
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				_objectDefinition4, _group.getGroupKey(), 2);
 
-		status = copyObjectEntry.getStatus();
+		status = copyObjectEntry4.getStatus();
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, status.getCode());

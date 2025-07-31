@@ -277,19 +277,17 @@ public class PageSpecificationsTestUtil {
 
 	public static void assertUpdateCustomFields(
 			long groupId, PageSpecification[] pageSpecifications,
-			CustomField[][] updateBodyCustomFields)
+			CustomField[][] expectedCustomFields)
 		throws Exception {
 
-		Assert.assertTrue(ArrayUtil.isNotEmpty(pageSpecifications));
+		Assert.assertEquals(
+			Arrays.toString(pageSpecifications), expectedCustomFields.length,
+			pageSpecifications.length);
 
-		_assertCustomFields(
-			_getExpectedCustomFields(updateBodyCustomFields[0]), groupId,
-			pageSpecifications[0]);
-
-		if (pageSpecifications.length == 2) {
+		for (int i = 0; i < pageSpecifications.length; i++) {
 			_assertCustomFields(
-				_getExpectedCustomFields(updateBodyCustomFields[1]), groupId,
-				pageSpecifications[1]);
+				_getExpectedCustomFields(expectedCustomFields[i]), groupId,
+				pageSpecifications[i]);
 		}
 	}
 

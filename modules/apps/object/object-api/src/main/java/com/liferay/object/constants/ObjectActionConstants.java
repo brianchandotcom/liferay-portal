@@ -83,6 +83,9 @@ public class ObjectActionConstants {
 			).put(
 				"SubscriptionUpdated",
 				HashMapBuilder.put(
+					"conditionExpression",
+					"status != " + WorkflowConstants.STATUS_EXPIRED
+				).put(
 					"label", "Subscription Updated"
 				).put(
 					"notificationTemplateExternalReferenceCode",

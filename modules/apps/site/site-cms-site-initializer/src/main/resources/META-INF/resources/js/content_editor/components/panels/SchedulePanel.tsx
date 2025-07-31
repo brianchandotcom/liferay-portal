@@ -7,10 +7,15 @@ import ClayDatePicker from '@clayui/date-picker';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {datetimeUtils} from '@liferay/object-js-components-web';
 import {dateUtils} from 'frontend-js-web';
+import moment from 'moment';
 import React, {useId, useState} from 'react';
 
 import FieldWrapper from '../../../common/components/forms/FieldWrapper';
-import {ScheduleFields, UpdateFieldProps} from '../ContentEditorSidePanel';
+import {
+	ScheduleFields,
+	UpdateFieldProps,
+	toServerFormat,
+} from '../ContentEditorSidePanel';
 
 const LABELS = {
 	expirationDate: Liferay.Language.get('expiration-date'),
@@ -56,6 +61,7 @@ export default function SchedulePanel({
 function ScheduleField({
 	date: initialDate = '',
 	dateConfig,
+	error: initialError = '',
 	label,
 	name,
 	neverExpire,
@@ -71,9 +77,29 @@ function ScheduleField({
 }) {
 	const [checked, setChecked] = useState<boolean>(neverExpire);
 	const [date, setDate] = useState<string>(initialDate);
+	const [error, setError] = useState<string>(initialError);
 
 	const id = useId();
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
+
+	const onBlur = (value: string) => {
+		let error = '';
+		const isValid = moment(value, dateConfig.momentFormat, true).isValid();
+
+		if (value && !isValid) {
+			error = Liferay.Language.get('the-field-value-is-invalid');
+		}
+		else if (isPastDate(date)) {
+			error = Liferay.Language.get('the-date-entered-is-in-the-past');
+		}
+
+		setError(error);
+
+		updateFieldData({
+			name,
+			value,
+		});
+	};
 
 	const placeholder = dateConfig.momentFormat
 		.replace(/hh:mm|HH:mm/g, '--:--')
@@ -81,15 +107,28 @@ function ScheduleField({
 
 	return (
 		<div aria-label={label} role="group">
-			<FieldWrapper disabled={checked} fieldId={id} label={label}>
+			<FieldWrapper
+				disabled={checked}
+				errorMessage={!checked ? error : ''}
+				fieldId={id}
+				label={label}
+			>
 				<ClayDatePicker
+					aria-describedby={error}
 					dateFormat={dateConfig.clayFormat}
 					disabled={checked}
 					firstDayOfWeek={dateUtils.getFirstDayOfWeek(locale)}
 					id={id}
 					months={dateUtils.getMonthsLong(locale)}
+					onBlur={({target: {value}}) => onBlur(value)}
 					onChange={(value: string) => {
+						setError('');
 						setDate(value);
+					}}
+					onExpandedChange={(open: boolean) => {
+						if (!open) {
+							onBlur(date);
+						}
 					}}
 					placeholder={placeholder}
 					time
@@ -120,4 +159,17 @@ function ScheduleField({
 			</ClayForm.Group>
 		</div>
 	);
+}
+
+function isPastDate(value: string) {
+	const languageId = Liferay.ThemeDisplay.getBCP47LanguageId();
+	const timeZone = Liferay.ThemeDisplay.getTimeZone();
+
+	const timeZoneDateTime = new Date(
+		new Date().toLocaleString(languageId, {
+			timeZone,
+		})
+	);
+
+	return timeZoneDateTime >= new Date(toServerFormat(value));
 }

@@ -56,7 +56,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParserRegi
 import com.liferay.object.rest.manager.v1_0.util.ObjectEntryManagerUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectEntryVersionService;
@@ -1964,7 +1964,7 @@ public class DefaultObjectEntryManagerImpl
 
 		try {
 			ObjectEntryFolder objectEntryFolder =
-				_objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
+				_objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
 					objectEntryFolderExternalReferenceCode, groupId, companyId,
 					serviceContext.getGuestOrUserId(), serviceContext);
 
@@ -3103,7 +3103,7 @@ public class DefaultObjectEntryManagerImpl
 		_objectEntryDTOConverter;
 
 	@Reference
-	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+	private ObjectEntryFolderService _objectEntryFolderService;
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;

@@ -9,10 +9,12 @@ import '../../../css/content_editor/ContentEditorSidePanel.scss';
 
 import {Button, VerticalBar} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import {datetimeUtils} from '@liferay/object-js-components-web';
 import {LiferayEditorConfig} from 'frontend-editor-ckeditor-web';
 import {openToast} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
-import React, {useState} from 'react';
+import moment from 'moment';
+import React, {useEffect, useState} from 'react';
 
 import CommentsPanel from './panels/CommentsPanel';
 import GeneralPanel from './panels/GeneralPanel';
@@ -28,17 +30,37 @@ type Props = {
 	expirationDate: string;
 	id: string;
 	isSubscribed: boolean;
+	reviewDate: string;
 	subscribeURL: string;
 	type: string;
 	version: string;
 };
 
+type SidePanelProps = Props & {
+	dateConfig: datetimeUtils.DateConfig;
+	fields: ScheduleFields;
+};
+
 type Item = {
-	component: React.ComponentType<Props>;
+	component: React.ComponentType<SidePanelProps>;
 	divider?: boolean;
 	icon: string;
 	id: string;
 	title: string;
+};
+
+type BaseData = {
+	value: string;
+};
+
+export type FieldData = BaseData & {
+	serverValue: string;
+};
+
+export type ScheduleFields = {expirationDate: FieldData; reviewDate: FieldData};
+
+export type UpdateFieldProps = BaseData & {
+	name: keyof ScheduleFields;
 };
 
 const items: Item[] = [
@@ -62,7 +84,54 @@ const items: Item[] = [
 	},
 ];
 
+const dateConfig = datetimeUtils.generateDateConfigurations({
+	defaultLanguageId: Liferay.ThemeDisplay.getDefaultLanguageId(),
+	locale: Liferay.ThemeDisplay.getLanguageId(),
+	type: 'DateTime',
+});
+
 export default function ContentEditorSidePanel(props: Props) {
+	const [formId, setFormId] = useState<string | undefined>();
+	const scheduleFields = {
+		expirationDate: {
+			serverValue: props.expirationDate,
+			value: toMomentDate(props.expirationDate),
+		},
+		reviewDate: {
+			serverValue: props.reviewDate,
+			value: toMomentDate(props.reviewDate),
+		},
+	};
+
+	useEffect(() => {
+		const form = document.querySelector('.lfr-layout-structure-item-form');
+
+		if (form) {
+			setFormId(form.id);
+		}
+	}, []);
+
+	return (
+		<>
+			<SidePanel
+				{...props}
+				dateConfig={dateConfig}
+				fields={scheduleFields}
+			/>
+			{Object.entries(scheduleFields).map(([name, {serverValue}]) => (
+				<input
+					form={formId}
+					key={name}
+					name={name}
+					type="hidden"
+					value={serverValue}
+				/>
+			))}
+		</>
+	);
+}
+
+function SidePanel(props: SidePanelProps) {
 	const [panel, setPanel] = useState<React.Key | null>(null);
 
 	return (
@@ -188,5 +257,15 @@ function SubscribeButton({
 			symbol={subscribed ? 'bell-off' : 'bell-on'}
 			title={title}
 		/>
+	);
+}
+
+function toMomentDate(value: string) {
+	return value ? moment(value).format(dateConfig.momentFormat) : '';
+}
+
+export function toServerFormat(value: string) {
+	return moment(value, dateConfig.momentFormat, true).format(
+		dateConfig.serverFormat
 	);
 }

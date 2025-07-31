@@ -292,15 +292,11 @@ export class CalendarWidgetPage {
 			await this.publishEvent();
 		}
 
-		await this.closeNewEventModal();
+		await this.closeModalEvent();
 	}
 
 	async closeModalEvent() {
-		await this.page.getByRole('button', {name: 'Close'}).click();
-	}
-
-	async closeNewEventModal() {
-		await this.page.getByLabel('close', {exact: true}).click();
+		await this.closeEventModalButton.click();
 	}
 
 	async clickAddEventButton() {

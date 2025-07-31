@@ -30,9 +30,28 @@ public class BucketDisplayContextComparatorFactoryUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetBucketDisplayContextComparatorByBucketTextAsc() {
-		List<BucketDisplayContext> bucketDisplayContexts =
-			_createBucketDisplayContexts();
+	public void testGetBucketDisplayContextComparator() {
+		try {
+			BucketDisplayContextComparatorFactoryUtil.
+				getBucketDisplayContextComparator("invalid");
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertNotNull(illegalArgumentException);
+		}
+
+		List<BucketDisplayContext> bucketDisplayContexts = Arrays.asList(
+			_createBucketDisplayContext("01", 1),
+			_createBucketDisplayContext("1", 1),
+			_createBucketDisplayContext("2", 3),
+			_createBucketDisplayContext("11", 1),
+			_createBucketDisplayContext("albert", 2),
+			_createBucketDisplayContext("Allen", 1),
+			_createBucketDisplayContext("Árbol", 2),
+			_createBucketDisplayContext("Aslan", 1),
+			_createBucketDisplayContext("tom", 1),
+			_createBucketDisplayContext("tom", 2));
 
 		bucketDisplayContexts.sort(
 			BucketDisplayContextComparatorFactoryUtil.
@@ -43,12 +62,6 @@ public class BucketDisplayContextComparatorFactoryUtilTest {
 			List.of(
 				"01:1", "1:1", "2:3", "11:1", "albert:2", "Allen:1", "Árbol:2",
 				"Aslan:1", "tom:2", "tom:1"));
-	}
-
-	@Test
-	public void testGetBucketDisplayContextComparatorByBucketTextDesc() {
-		List<BucketDisplayContext> bucketDisplayContexts =
-			_createBucketDisplayContexts();
 
 		bucketDisplayContexts.sort(
 			BucketDisplayContextComparatorFactoryUtil.
@@ -59,12 +72,6 @@ public class BucketDisplayContextComparatorFactoryUtilTest {
 			List.of(
 				"tom:2", "tom:1", "Aslan:1", "Árbol:2", "Allen:1", "albert:2",
 				"11:1", "2:3", "1:1", "01:1"));
-	}
-
-	@Test
-	public void testGetBucketDisplayContextComparatorByFrequencyAsc() {
-		List<BucketDisplayContext> bucketDisplayContexts =
-			_createBucketDisplayContexts();
 
 		bucketDisplayContexts.sort(
 			BucketDisplayContextComparatorFactoryUtil.
@@ -75,12 +82,6 @@ public class BucketDisplayContextComparatorFactoryUtilTest {
 			List.of(
 				"01:1", "1:1", "11:1", "Allen:1", "Aslan:1", "tom:1",
 				"albert:2", "Árbol:2", "tom:2", "2:3"));
-	}
-
-	@Test
-	public void testGetBucketDisplayContextComparatorByFrequencyDesc() {
-		List<BucketDisplayContext> bucketDisplayContexts =
-			_createBucketDisplayContexts();
 
 		bucketDisplayContexts.sort(
 			BucketDisplayContextComparatorFactoryUtil.
@@ -91,12 +92,6 @@ public class BucketDisplayContextComparatorFactoryUtilTest {
 			List.of(
 				"2:3", "albert:2", "Árbol:2", "tom:2", "01:1", "1:1", "11:1",
 				"Allen:1", "Aslan:1", "tom:1"));
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testGetBucketDisplayContextComparatorShouldThrowException() {
-		BucketDisplayContextComparatorFactoryUtil.
-			getBucketDisplayContextComparator("invalid");
 	}
 
 	private void _assertOrder(
@@ -125,20 +120,6 @@ public class BucketDisplayContextComparatorFactoryUtilTest {
 		bucketDisplayContext.setLocale(LocaleUtil.getDefault());
 
 		return bucketDisplayContext;
-	}
-
-	private List<BucketDisplayContext> _createBucketDisplayContexts() {
-		return Arrays.asList(
-			_createBucketDisplayContext("01", 1),
-			_createBucketDisplayContext("1", 1),
-			_createBucketDisplayContext("2", 3),
-			_createBucketDisplayContext("11", 1),
-			_createBucketDisplayContext("albert", 2),
-			_createBucketDisplayContext("Allen", 1),
-			_createBucketDisplayContext("Árbol", 2),
-			_createBucketDisplayContext("Aslan", 1),
-			_createBucketDisplayContext("tom", 1),
-			_createBucketDisplayContext("tom", 2));
 	}
 
 }

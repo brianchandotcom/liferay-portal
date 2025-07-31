@@ -167,8 +167,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByOrganizationDateModified {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -225,8 +223,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByOrganizationHierarchyPath {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -333,8 +329,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByOrganizationOrganization {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -387,8 +381,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByOrganizationParentOrganization {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -505,8 +497,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByOrganizationTag {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -756,8 +746,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentBySessionCookies {
-		property portal.acceptance = "true";
-
 		task ("Add segment") {
 			LexiconEntry.gotoAdd();
 
@@ -793,8 +781,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentBySessionHostname {
-		property portal.acceptance = "true";
-
 		task ("Add segment") {
 			LexiconEntry.gotoAdd();
 
@@ -950,8 +936,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentBySessionReferrerURL {
-		property portal.acceptance = "true";
-
 		task ("Add segment") {
 			LexiconEntry.gotoAdd();
 
@@ -981,8 +965,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentBySessionRequestParameters {
-		property portal.acceptance = "true";
-
 		task ("Add segment") {
 			LexiconEntry.gotoAdd();
 
@@ -1018,8 +1000,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentBySessionSignedIn {
-		property portal.acceptance = "true";
-
 		task ("Add segment") {
 			LexiconEntry.gotoAdd();
 
@@ -1082,8 +1062,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentBySessionUserAgent {
-		property portal.acceptance = "true";
-
 		task ("Add segment") {
 			LexiconEntry.gotoAdd();
 
@@ -1119,8 +1097,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserDateModified {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1212,8 +1188,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserEmailAddress {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1258,8 +1232,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserEmailAddressEquals {
-		property portal.acceptance = "true";
-
 		task ("Add segment") {
 			LexiconEntry.gotoAdd();
 
@@ -1293,8 +1265,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserEmailAddressNotContains {
-		property portal.acceptance = "true";
-
 		task ("Add segment") {
 			LexiconEntry.gotoAdd();
 
@@ -1328,8 +1298,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserEmailAddressNotEquals {
-		property portal.acceptance = "true";
-
 		task ("Add segment") {
 			LexiconEntry.gotoAdd();
 
@@ -1363,8 +1331,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserFirstName {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1407,8 +1373,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserJobTitle {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				jobTitle = "QA",
@@ -1452,8 +1416,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserLastName {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1496,8 +1458,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserName {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1540,8 +1500,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserRole {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1589,8 +1547,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserScreenName {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1633,8 +1589,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserSite {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1736,8 +1690,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserTag {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				assetTagNames = "tagname",
@@ -1776,8 +1728,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserTeam {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1833,8 +1783,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserUser {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1872,8 +1820,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserUserGroup {
-		property portal.acceptance = "true";
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -2273,8 +2219,6 @@ definition {
 	@priority = 4
 	@uitest
 	test CheckSegmentationWithApostropheValueFilter {
-		property portal.acceptance = "true";
-
 		task ("Add user with apostrophe in first and last name") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

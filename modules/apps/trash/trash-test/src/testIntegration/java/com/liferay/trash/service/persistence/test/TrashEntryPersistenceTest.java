@@ -209,6 +209,14 @@ public class TrashEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_CN() throws Exception {
+		_persistence.countByC_CN(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_CN(0L, 0L);
+	}
+
+	@Test
 	public void testCountByC_C() throws Exception {
 		_persistence.countByC_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

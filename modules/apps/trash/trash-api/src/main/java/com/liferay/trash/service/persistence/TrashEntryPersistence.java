@@ -631,6 +631,161 @@ public interface TrashEntryPersistence
 	public int countByG_C(long groupId, long classNameId);
 
 	/**
+	 * Returns all the trash entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @return the matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByC_CN(
+		long companyId, long classNameId);
+
+	/**
+	 * Returns a range of all the trash entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @return the range of matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByC_CN(
+		long companyId, long classNameId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the trash entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByC_CN(
+		long companyId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the trash entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByC_CN(
+		long companyId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching trash entry
+	 * @throws NoSuchEntryException if a matching trash entry could not be found
+	 */
+	public TrashEntry findByC_CN_First(
+			long companyId, long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the first trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public TrashEntry fetchByC_CN_First(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching trash entry
+	 * @throws NoSuchEntryException if a matching trash entry could not be found
+	 */
+	public TrashEntry findByC_CN_Last(
+			long companyId, long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the last trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public TrashEntry fetchByC_CN_Last(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the trash entries before and after the current trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param entryId the primary key of the current trash entry
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next trash entry
+	 * @throws NoSuchEntryException if a trash entry with the primary key could not be found
+	 */
+	public TrashEntry[] findByC_CN_PrevAndNext(
+			long entryId, long companyId, long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Removes all the trash entries where companyId = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 */
+	public void removeByC_CN(long companyId, long classNameId);
+
+	/**
+	 * Returns the number of trash entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @return the number of matching trash entries
+	 */
+	public int countByC_CN(long companyId, long classNameId);
+
+	/**
 	 * Returns the trash entry where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID

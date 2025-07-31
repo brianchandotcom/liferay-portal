@@ -40,13 +40,13 @@ public class OneToManyObjectRelationshipRelatedInfoCollectionProvider
 			objectEntryLocalService.getOneToManyObjectEntries(
 				objectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
-				objectEntry.getObjectEntryId(), true, null,
+				new Long[] {objectEntry.getObjectEntryId()}, true, null,
 				pagination.getStart(), pagination.getEnd()),
 			pagination,
 			objectEntryLocalService.getOneToManyObjectEntriesCount(
 				objectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
-				objectEntry.getObjectEntryId(), true, null));
+				new Long[] {objectEntry.getObjectEntryId()}, true, null));
 	}
 
 }

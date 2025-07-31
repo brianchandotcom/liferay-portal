@@ -85,8 +85,8 @@ public class SystemRelatedModelsFDSDataProvider
 		return TransformUtil.transform(
 			(List<BaseModel<?>>)objectRelatedModelsProvider.getRelatedModels(
 				objectScopeProvider.getGroupId(httpServletRequest),
-				objectRelationshipId, objectEntryId, fdsKeywords.getKeywords(),
-				fdsPagination.getStartPosition(),
+				objectRelationshipId, new Long[] {objectEntryId},
+				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition()),
 			relatedModel -> {
 				ObjectField titleObjectField =
@@ -155,7 +155,8 @@ public class SystemRelatedModelsFDSDataProvider
 
 		return objectRelatedModelsProvider.getRelatedModelsCount(
 			objectScopeProvider.getGroupId(httpServletRequest),
-			objectRelationshipId, objectEntryId, fdsKeywords.getKeywords());
+			objectRelationshipId, new Long[] {objectEntryId},
+			fdsKeywords.getKeywords());
 	}
 
 	@Reference

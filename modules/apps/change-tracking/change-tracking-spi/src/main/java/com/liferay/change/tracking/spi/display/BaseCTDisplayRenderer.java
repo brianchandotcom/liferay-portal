@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -163,6 +164,8 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			String languageKey,
 			UnsafeSupplier<Object, Exception> unsafeSupplier, boolean escape,
 			boolean formatted);
+
+		public DisplayBuilder<T> displaySectionHeader(String languageKey);
 
 		public DisplayContext<T> getDisplayContext();
 
@@ -327,6 +330,29 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				if (_log.isWarnEnabled()) {
 					_log.warn(exception);
 				}
+			}
+
+			return this;
+		}
+
+		@Override
+		public DisplayBuilder<T> displaySectionHeader(String languageKey) {
+			HttpServletResponse httpServletResponse =
+				_displayContext.getHttpServletResponse();
+
+			try {
+				Writer writer = httpServletResponse.getWriter();
+
+				writer.write("<tr><td class=\"publications-section-header ");
+				writer.write("table-cell-expand-small\">");
+				writer.write(
+					StringUtil.toUpperCase(
+						LanguageUtil.get(_resourceBundle, languageKey)));
+				writer.write("</td><td class=\"publications-section-header ");
+				writer.write("table-cell-expand\" /></tr>");
+			}
+			catch (IOException ioException) {
+				throw new UncheckedIOException(ioException);
 			}
 
 			return this;

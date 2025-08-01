@@ -73,6 +73,9 @@ public class SortTranslator {
 		if (sort.isReverse()) {
 			builder.order(SortOrder.Desc);
 		}
+		else {
+			builder.order(SortOrder.Asc);
+		}
 
 		builder.unmappedType(FieldType.Keyword);
 

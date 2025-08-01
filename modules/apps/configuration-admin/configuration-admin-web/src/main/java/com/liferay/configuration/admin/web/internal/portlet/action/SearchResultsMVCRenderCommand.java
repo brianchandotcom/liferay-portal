@@ -144,25 +144,9 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		List<ConfigurationEntry> configurationEntries = new ArrayList<>(
 			documents.length);
 
-		Map<String, ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels(
-				configurationScopeDisplayContext.getScope(),
-				configurationScopeDisplayContext.getScopePK());
-
 		for (Document document : documents) {
-			String configurationModelId = document.get(
-				FieldNames.CONFIGURATION_MODEL_ID);
-
-			ConfigurationModel configurationModel = configurationModels.get(
-				configurationModelId);
-
-			if (configurationModel == null) {
-				String configurationModelFactoryId = document.get(
-					FieldNames.CONFIGURATION_MODEL_FACTORY_PID);
-
-				configurationModel = configurationModels.get(
-					configurationModelFactoryId);
-			}
+			ConfigurationModel configurationModel = _getConfigurationModel(
+				configurationScopeDisplayContext, document);
 
 			if ((configurationModel != null) &&
 				configurationModel.isGenerateUI()) {
@@ -174,6 +158,32 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return configurationEntries;
+	}
+
+	private ConfigurationModel _getConfigurationModel(
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext,
+		Document document) {
+
+		Map<String, ConfigurationModel> configurationModels =
+			_configurationModelRetriever.getConfigurationModels(
+				configurationScopeDisplayContext.getScope(),
+				configurationScopeDisplayContext.getScopePK());
+
+		String configurationModelId = document.get(
+			FieldNames.CONFIGURATION_MODEL_ID);
+
+		ConfigurationModel configurationModel = configurationModels.get(
+			configurationModelId);
+
+		if (configurationModel == null) {
+			String configurationModelFactoryId = document.get(
+				FieldNames.CONFIGURATION_MODEL_FACTORY_PID);
+
+			configurationModel = configurationModels.get(
+				configurationModelFactoryId);
+		}
+
+		return configurationModel;
 	}
 
 	private SearchContext _getSearchContext(Locale locale, String keywords) {

@@ -164,7 +164,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 	private void _testSystemObjectEntry1toMObjectRelatedModels(long groupId)
 		throws Exception {
 
-		long[] primaryKeys = addBaseModels(3);
+		long[] primaryKeys = addBaseModels(4);
 
 		addObjectRelationship(
 			_objectDefinition, _systemObjectDefinition,
@@ -194,6 +194,28 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			3, objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
 			new Long[] {objectEntry1.getObjectEntryId()});
+
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		ObjectRelationshipTestUtil.assertGetRelatedModels(
+			3, objectRelatedModelsProvider,
+			_objectRelationship.getObjectRelationshipId(),
+			new Long[] {
+				objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId()
+			});
+
+		insertIntoOrUpdateExtensionTable(
+			objectEntry2.getObjectEntryId(), primaryKeys[3],
+			_systemObjectDefinition.getObjectDefinitionId());
+
+		ObjectRelationshipTestUtil.assertGetRelatedModels(
+			4, objectRelatedModelsProvider,
+			_objectRelationship.getObjectRelationshipId(),
+			new Long[] {
+				objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId()
+			});
 
 		// Get related models with search
 
@@ -246,25 +268,25 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectRelationship.getLabelMap());
 
-		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, _objectDefinition.getObjectDefinitionId(),
 			Collections.emptyMap());
 
 		insertIntoOrUpdateExtensionTable(
-			objectEntry2.getObjectEntryId(), primaryKeys[0],
+			objectEntry3.getObjectEntryId(), primaryKeys[0],
 			_systemObjectDefinition.getObjectDefinitionId());
 
 		ObjectRelationshipTestUtil.assertGetRelatedModels(
 			1, objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
-			new Long[] {objectEntry2.getObjectEntryId()});
+			new Long[] {objectEntry3.getObjectEntryId()});
 
-		_objectEntryLocalService.deleteObjectEntry(objectEntry2);
+		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
 
 		ObjectRelationshipTestUtil.assertGetRelatedModels(
 			0, objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
-			new Long[] {objectEntry2.getObjectEntryId()});
+			new Long[] {objectEntry3.getObjectEntryId()});
 
 		Assert.assertNotNull(fetchBaseModel(primaryKeys[0]));
 
@@ -276,12 +298,12 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectRelationship.getLabelMap());
 
-		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+		ObjectEntry objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, _objectDefinition.getObjectDefinitionId(),
 			Collections.emptyMap());
 
 		insertIntoOrUpdateExtensionTable(
-			objectEntry3.getObjectEntryId(), primaryKeys[0],
+			objectEntry4.getObjectEntryId(), primaryKeys[0],
 			_systemObjectDefinition.getObjectDefinitionId());
 
 		AssertUtils.assertFailure(
@@ -290,12 +312,12 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 				"Object relationship ",
 				_objectRelationship.getObjectRelationshipId(),
 				" does not allow deletes"),
-			() -> _objectEntryLocalService.deleteObjectEntry(objectEntry3));
+			() -> _objectEntryLocalService.deleteObjectEntry(objectEntry4));
 
 		ObjectRelationshipTestUtil.assertGetRelatedModels(
 			1, objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
-			new Long[] {objectEntry3.getObjectEntryId()});
+			new Long[] {objectEntry4.getObjectEntryId()});
 
 		objectRelationshipLocalService.deleteObjectRelationship(
 			_objectRelationship);
@@ -304,7 +326,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 	private void _testSystemObjectEntryMtoMObjectRelatedModels(long groupId)
 		throws Exception {
 
-		long[] primaryKeys = addBaseModels(3);
+		long[] primaryKeys = addBaseModels(4);
 
 		addObjectRelationship(
 			_objectDefinition, _systemObjectDefinition,
@@ -331,6 +353,39 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			2, objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
 			new Long[] {objectEntry1.getObjectEntryId()});
+
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		ObjectRelationshipTestUtil.assertGetRelatedModels(
+			2, objectRelatedModelsProvider,
+			_objectRelationship.getObjectRelationshipId(),
+			new Long[] {
+				objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId()
+			});
+
+		ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
+			_objectRelationship.getObjectRelationshipId(),
+			objectEntry2.getObjectEntryId(), primaryKeys[0]);
+
+		ObjectRelationshipTestUtil.assertGetRelatedModels(
+			2, objectRelatedModelsProvider,
+			_objectRelationship.getObjectRelationshipId(),
+			new Long[] {
+				objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId()
+			});
+
+		ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
+			_objectRelationship.getObjectRelationshipId(),
+			objectEntry2.getObjectEntryId(), primaryKeys[3]);
+
+		ObjectRelationshipTestUtil.assertGetRelatedModels(
+			3, objectRelatedModelsProvider,
+			_objectRelationship.getObjectRelationshipId(),
+			new Long[] {
+				objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId()
+			});
 
 		// Get related models with search
 
@@ -382,25 +437,25 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectRelationship.getLabelMap());
 
-		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, _objectDefinition.getObjectDefinitionId(),
 			Collections.emptyMap());
 
 		ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
 			_objectRelationship.getObjectRelationshipId(),
-			objectEntry2.getObjectEntryId(), primaryKeys[2]);
+			objectEntry3.getObjectEntryId(), primaryKeys[2]);
 
 		ObjectRelationshipTestUtil.assertGetRelatedModels(
 			1, objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
-			new Long[] {objectEntry2.getObjectEntryId()});
+			new Long[] {objectEntry3.getObjectEntryId()});
 
-		_objectEntryLocalService.deleteObjectEntry(objectEntry2);
+		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
 
 		ObjectRelationshipTestUtil.assertGetRelatedModels(
 			0, objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
-			new Long[] {objectEntry2.getObjectEntryId()});
+			new Long[] {objectEntry3.getObjectEntryId()});
 
 		Assert.assertNotNull(fetchBaseModel(primaryKeys[2]));
 
@@ -412,7 +467,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectRelationship.getLabelMap());
 
-		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+		ObjectEntry objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, _objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"able", "Entry"
@@ -420,7 +475,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 
 		ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
 			_objectRelationship.getObjectRelationshipId(),
-			objectEntry3.getObjectEntryId(), primaryKeys[2]);
+			objectEntry4.getObjectEntryId(), primaryKeys[2]);
 
 		AssertUtils.assertFailure(
 			RequiredObjectRelationshipException.class,
@@ -428,7 +483,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 				"Object relationship ",
 				_objectRelationship.getObjectRelationshipId(),
 				" does not allow deletes"),
-			() -> _objectEntryLocalService.deleteObjectEntry(objectEntry3));
+			() -> _objectEntryLocalService.deleteObjectEntry(objectEntry4));
 
 		// Reverse object relationship
 
@@ -444,7 +499,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 				_objectDefinition.getCompanyId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		ObjectEntry objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
+		ObjectEntry objectEntry5 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, _objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"able", "New Entry"
@@ -452,7 +507,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 
 		ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
 			_objectRelationship.getObjectRelationshipId(), primaryKeys[2],
-			objectEntry4.getObjectEntryId());
+			objectEntry5.getObjectEntryId());
 
 		ObjectRelationshipTestUtil.assertGetRelatedModels(
 			2, objectRelatedModelsProvider,
@@ -469,7 +524,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			1, objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
 			new Long[] {primaryKeys[2]},
-			String.valueOf(objectEntry3.getObjectEntryId()));
+			String.valueOf(objectEntry4.getObjectEntryId()));
 		ObjectRelationshipTestUtil.assertSearchRelatedModels(
 			1, objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),

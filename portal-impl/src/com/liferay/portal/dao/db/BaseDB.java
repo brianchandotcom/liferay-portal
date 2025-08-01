@@ -965,6 +965,59 @@ public abstract class BaseDB implements DB {
 			validIndexNames);
 	}
 
+	public void updatePrimaryKey(
+			Connection connection, String tableName,
+			String[] primaryKeyColumnNames)
+		throws Exception {
+
+		if (_isSkipIndexOperation(connection, tableName)) {
+			return;
+		}
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		if (!dbInspector.hasTable(tableName)) {
+			return;
+		}
+
+		for (String columnName : primaryKeyColumnNames) {
+			if (!dbInspector.hasColumn(tableName, columnName)) {
+				if (StringUtil.equalsIgnoreCase(columnName, "ctCollectionId")) {
+					primaryKeyColumnNames = ArrayUtil.filter(
+						primaryKeyColumnNames,
+						name -> !StringUtil.equalsIgnoreCase(
+							name, "ctCollectionId"));
+				}
+				else {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Cannot recreate primary key for table ",
+								tableName, " because column ", columnName,
+								" does not exist yet"));
+					}
+
+					return;
+				}
+			}
+		}
+
+		String[] actualPrimaryKeyColumns = getPrimaryKeyColumnNames(
+			connection, tableName);
+
+		if (ArrayUtil.equalsIgnoreCase(
+				actualPrimaryKeyColumns, primaryKeyColumnNames)) {
+
+			return;
+		}
+
+		if (ArrayUtil.isNotEmpty(actualPrimaryKeyColumns)) {
+			removePrimaryKey(connection, tableName);
+		}
+
+		addPrimaryKey(connection, tableName, primaryKeyColumnNames);
+	}
+
 	protected BaseDB(DBType dbType, int majorVersion, int minorVersion) {
 		_dbType = dbType;
 		_majorVersion = majorVersion;

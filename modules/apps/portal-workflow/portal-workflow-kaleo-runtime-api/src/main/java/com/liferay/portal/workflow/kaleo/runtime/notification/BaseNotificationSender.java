@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.kaleo.runtime.notification;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.constants.MyWorkflowTasksConstants;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.definition.RecipientType;
@@ -129,6 +130,19 @@ public abstract class BaseNotificationSender implements NotificationSender {
 			Set<NotificationRecipient> notificationRecipients =
 				retrieveNotificationRecipients(
 					notificationRecipientsMap, notificationReceptionType);
+
+			String kaleoNotificationRecipientClassName =
+				kaleoNotificationRecipient.getRecipientClassName();
+
+			if (notificationRecipients.isEmpty() &&
+				StringUtil.equals(
+					kaleoNotificationRecipientClassName,
+					RecipientType.SCRIPT.getValue())) {
+
+				notificationRecipientsMap.clear();
+
+				return notificationRecipientsMap;
+			}
 
 			RecipientType recipientType = RecipientType.parse(
 				kaleoNotificationRecipient.getRecipientClassName());

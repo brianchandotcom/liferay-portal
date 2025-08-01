@@ -83,42 +83,15 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 				_getConfigurationEntries(
 					configurationScopeDisplayContext, documents, locale);
 
-			ExtendedObjectClassDefinition.Scope scope =
-				configurationScopeDisplayContext.getScope();
+			List<ConfigurationScreen> matchingConfigurationScreens =
+				_getMatchingConfigurationScreens(
+					configurationScopeDisplayContext.getScope(), searchContext);
 
 			for (ConfigurationScreen configurationScreen :
-					_configurationEntryRetriever.getAllConfigurationScreens()) {
-
-				if (!Objects.equals(
-						String.valueOf(scope),
-						configurationScreen.getScope()) ||
-					!configurationScreen.isVisible()) {
-
-					continue;
-				}
-
-				String configurationScreenCategoryKey = StringUtil.toLowerCase(
-					_language.get(
-						renderRequest.getLocale(),
-						"category." + configurationScreen.getCategoryKey()),
-					renderRequest.getLocale());
-				String configurationScreenKey = StringUtil.toLowerCase(
-					configurationScreen.getKey(), locale);
-				String configurationScreenName = StringUtil.toLowerCase(
-					configurationScreen.getName(locale), locale);
-				String searchReadyKeywords = StringUtil.toLowerCase(
-					keywords, locale);
-
-				if (Validator.isNull(keywords) ||
-					configurationScreenCategoryKey.contains(
-						searchReadyKeywords) ||
-					configurationScreenKey.contains(searchReadyKeywords) ||
-					configurationScreenName.contains(searchReadyKeywords)) {
-
-					configurationEntries.add(
-						new ConfigurationScreenConfigurationEntry(
-							configurationScreen, locale));
-				}
+					matchingConfigurationScreens) {
+				configurationEntries.add(
+					new ConfigurationScreenConfigurationEntry(
+						configurationScreen, locale));
 			}
 
 			renderRequest.setAttribute(
@@ -182,6 +155,50 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return configurationModel;
+	}
+
+	private List<ConfigurationScreen> _getMatchingConfigurationScreens(
+		ExtendedObjectClassDefinition.Scope scope,
+		SearchContext searchContext) {
+
+		List<ConfigurationScreen> configurationScreens = new ArrayList<>();
+
+		for (ConfigurationScreen configurationScreen :
+				_configurationEntryRetriever.getAllConfigurationScreens()) {
+
+			if (!Objects.equals(String.valueOf(scope), configurationScreen.getScope()) ||
+				!configurationScreen.isVisible()) {
+
+				continue;
+			}
+
+			Locale locale = searchContext.getLocale();
+
+			String configurationScreenCategoryKey = StringUtil.toLowerCase(
+				_language.get(
+					locale,
+					"category." + configurationScreen.getCategoryKey()),
+				locale);
+			String configurationScreenKey = StringUtil.toLowerCase(
+				configurationScreen.getKey(), locale);
+			String configurationScreenName = StringUtil.toLowerCase(
+				configurationScreen.getName(locale), locale);
+
+			String keywords = searchContext.getKeywords();
+
+			String searchReadyKeywords = StringUtil.toLowerCase(
+				keywords, locale);
+
+			if (Validator.isNull(keywords) ||
+				configurationScreenCategoryKey.contains(searchReadyKeywords) ||
+				configurationScreenKey.contains(searchReadyKeywords) ||
+				configurationScreenName.contains(searchReadyKeywords)) {
+
+				configurationScreens.add(configurationScreen);
+			}
+		}
+
+		return configurationScreens;
 	}
 
 	private SearchContext _getSearchContext(Locale locale, String keywords) {

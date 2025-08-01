@@ -144,7 +144,7 @@ public class OrganizationAdminPortletDataHandlerTest {
 				TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, accountEntry.getStatus());
+			WorkflowConstants.STATUS_EMPTY, accountEntry.getStatus());
 
 		organization =
 			_organizationLocalService.fetchOrganizationByExternalReferenceCode(

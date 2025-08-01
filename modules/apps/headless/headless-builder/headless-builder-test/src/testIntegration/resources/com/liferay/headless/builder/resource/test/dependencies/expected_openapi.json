@@ -50,6 +50,10 @@
 					"link": {
 						"$ref": "#/components/schemas/Link"
 					},
+					"mimeType": {
+						"readOnly": true,
+						"type": "string"
+					},
 					"name": {
 						"type": "string"
 					},

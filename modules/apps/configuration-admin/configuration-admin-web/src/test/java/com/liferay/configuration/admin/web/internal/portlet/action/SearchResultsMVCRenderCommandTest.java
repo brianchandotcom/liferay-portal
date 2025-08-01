@@ -41,6 +41,7 @@ import org.junit.Test;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
@@ -83,61 +84,67 @@ public class SearchResultsMVCRenderCommandTest {
 			hits
 		);
 
-		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-			Mockito.mock(ConfigurationScopeDisplayContext.class);
-
-		Mockito.when(
-			configurationScopeDisplayContext.getScope()
-		).thenReturn(
-			ExtendedObjectClassDefinition.Scope.COMPANY
-		);
-
-		Mockito.when(
-			configurationScopeDisplayContext.getScopePK()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
-
-		Mockito.mockStatic(ConfigurationScopeDisplayContextFactory.class);
-
-		Mockito.when(
-			ConfigurationScopeDisplayContextFactory.create(Mockito.any())
-		).thenReturn(
-			configurationScopeDisplayContext
-		);
-
 		Mockito.when(
 			_language.get(Mockito.any(Locale.class), Mockito.anyString())
 		).thenAnswer(
 			invocation -> invocation.getArgument(1, String.class)
 		);
 
-		String keyword1 = RandomTestUtil.randomString();
-		String keyword2 = RandomTestUtil.randomString();
-		String keyword3 =
-			RandomTestUtil.randomString() + " " + RandomTestUtil.randomString();
+		try (MockedStatic<ConfigurationScopeDisplayContextFactory>
+				configurationScopeDisplayContextFactoryMockedStatic =
+					Mockito.mockStatic(
+						ConfigurationScopeDisplayContextFactory.class)) {
 
-		ConfigurationScreen configurationScreen1 = _getConfigurationScreen(
-			RandomTestUtil.randomString(), keyword1,
-			RandomTestUtil.randomString());
-		ConfigurationScreen configurationScreen2 = _getConfigurationScreen(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			keyword2);
-		ConfigurationScreen configurationScreen3 = _getConfigurationScreen(
-			keyword3, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+				Mockito.mock(ConfigurationScopeDisplayContext.class);
 
-		Mockito.when(
-			_configurationEntryRetriever.getAllConfigurationScreens()
-		).thenReturn(
-			ListUtil.fromArray(
-				configurationScreen1, configurationScreen2,
-				configurationScreen3)
-		);
+			Mockito.when(
+				configurationScopeDisplayContext.getScope()
+			).thenReturn(
+				ExtendedObjectClassDefinition.Scope.COMPANY
+			);
 
-		_assertConfigurationEntry(configurationScreen1.getKey(), keyword1);
-		_assertConfigurationEntry(configurationScreen2.getKey(), keyword2);
-		_assertConfigurationEntry(configurationScreen3.getKey(), keyword3);
+			Mockito.when(
+				configurationScopeDisplayContext.getScopePK()
+			).thenReturn(
+				RandomTestUtil.randomLong()
+			);
+
+			configurationScopeDisplayContextFactoryMockedStatic.when(
+				() -> ConfigurationScopeDisplayContextFactory.create(
+					Mockito.any())
+			).thenReturn(
+				configurationScopeDisplayContext
+			);
+
+			String keyword1 = RandomTestUtil.randomString();
+			String keyword2 = RandomTestUtil.randomString();
+			String keyword3 =
+				RandomTestUtil.randomString() + " " +
+					RandomTestUtil.randomString();
+
+			ConfigurationScreen configurationScreen1 = _getConfigurationScreen(
+				RandomTestUtil.randomString(), keyword1,
+				RandomTestUtil.randomString());
+			ConfigurationScreen configurationScreen2 = _getConfigurationScreen(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				keyword2);
+			ConfigurationScreen configurationScreen3 = _getConfigurationScreen(
+				keyword3, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+
+			Mockito.when(
+				_configurationEntryRetriever.getAllConfigurationScreens()
+			).thenReturn(
+				ListUtil.fromArray(
+					configurationScreen1, configurationScreen2,
+					configurationScreen3)
+			);
+
+			_assertConfigurationEntry(configurationScreen1.getKey(), keyword1);
+			_assertConfigurationEntry(configurationScreen2.getKey(), keyword2);
+			_assertConfigurationEntry(configurationScreen3.getKey(), keyword3);
+		}
 	}
 
 	private void _assertConfigurationEntry(String key, String keywords)

@@ -12,6 +12,8 @@ import OverviewMetrics from './components/cms/OverviewMetrics';
 import {AssetMetrics} from './components/cms/asset-metrics/AssetMetrics';
 
 import '../css/cms_performance.scss';
+import {TrafficChannels} from './components/cms/TrafficChannels';
+
 interface ICMSPerformanceProps extends React.HTMLAttributes<HTMLElement> {
 	externalReferenceCode?: string;
 	objectEntryFolderExternalReferenceCode?: string;
@@ -40,6 +42,8 @@ const CMSPerformance: React.FC<ICMSPerformanceProps> = ({
 					<OverviewMetrics />
 
 					<AssetMetrics />
+
+					<TrafficChannels />
 				</ContextProvider>
 			</CheckPermissions>
 		</div>

@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactConstants;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.Website;
@@ -67,14 +69,19 @@ import java.io.File;
 
 import java.text.DateFormat;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -222,7 +229,10 @@ public class ScimUtil {
 		scimUser.setBirthday(_getBirthday(user));
 		scimUser.setCompanyId(companyId);
 		scimUser.setDisplayName(user.getDisplayName());
-		scimUser.setEmails(_getEmails(user.getEmails()));
+		scimUser.setEmails(
+			_getEmails(
+				user.getEmails(), MultiValuedComplexType::getValue,
+				MultiValuedComplexType::isPrimary));
 		scimUser.setEntitlements(_getEntitlements(user));
 		scimUser.setExternalReferenceCode(user.getExternalId());
 
@@ -279,7 +289,10 @@ public class ScimUtil {
 			if (FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
 				scimUser.setEmails(
 					_getEmails(
-						portalUser.getCompanyId(), portalUser.getContactId()));
+						EmailAddressLocalServiceUtil.getEmailAddresses(
+							portalUser.getCompanyId(), Contact.class.getName(),
+							portalUser.getContactId()),
+						EmailAddress::getAddress, EmailAddress::isPrimary));
 			}
 			else {
 				scimUser.setEmails(new String[] {portalUser.getEmailAddress()});
@@ -685,80 +698,33 @@ public class ScimUtil {
 		}
 	}
 
-	private static String[] _getEmails(
-		List<MultiValuedComplexType> multiValuedComplexTypes) {
+	private static <T> String[] _getEmails(
+		List<T> emails, Function<T, String> function, Predicate<T> predicate) {
 
-		if (ListUtil.isEmpty(multiValuedComplexTypes)) {
+		if (ListUtil.isEmpty(emails)) {
 			return new String[0];
 		}
 
-		String[] emails = new String[multiValuedComplexTypes.size()];
+		Deque<String> deque = new ArrayDeque<>(emails.size());
 
-		boolean primarySet = false;
-
-		for (int i = 0; i < multiValuedComplexTypes.size(); i++) {
-			if (!primarySet &&
-				multiValuedComplexTypes.get(
-					i
-				).isPrimary()) {
-
-				emails[i] = emails[0];
-
-				emails[0] = multiValuedComplexTypes.get(
-					i
-				).getValue();
-
-				primarySet = true;
+		for (T email : emails) {
+			if (predicate.test(email)) {
+				deque.addFirst(function.apply(email));
 			}
 			else {
-				emails[i] = multiValuedComplexTypes.get(
-					i
-				).getValue();
+				deque.addLast(function.apply(email));
 			}
 		}
 
-		return emails;
-	}
-
-	private static String[] _getEmails(long companyId, long contactId) {
-		List<EmailAddress> emailAddresses =
-			EmailAddressLocalServiceUtil.getEmailAddresses(
-				companyId, Contact.class.getName(), contactId);
-
-		String[] emails = new String[emailAddresses.size()];
-
-		boolean primarySet = false;
-
-		for (int i = 0; i < emailAddresses.size(); i++) {
-			if (!primarySet &&
-				emailAddresses.get(
-					i
-				).isPrimary()) {
-
-				emails[i] = emails[0];
-
-				emails[0] = emailAddresses.get(
-					i
-				).getAddress();
-
-				primarySet = true;
-			}
-			else {
-				emails[i] = emailAddresses.get(
-					i
-				).getAddress();
-			}
-		}
-
-		return emails;
+		return deque.toArray(new String[0]);
 	}
 
 	private static String[] _getEntitlements(User user) {
 		try {
+			List<String> values = new ArrayList<>();
+
 			MultiValuedAttribute entitlements =
 				(MultiValuedAttribute)user.getAttribute("entitlements");
-
-			List<String> values = new ArrayList<>();
 
 			for (Attribute attribute : entitlements.getAttributeValues()) {
 				SimpleAttribute simpleAttribute =
@@ -854,30 +820,19 @@ public class ScimUtil {
 				streetAddressSB.append("\n");
 			}
 
-			StringBundler formattedAddressSB = new StringBundler(8);
+			Country country = address.getCountry();
+			ListType listType = address.getListType();
+			Region region = address.getRegion();
 
-			formattedAddressSB.append(streetAddressSB.toString());
-			formattedAddressSB.append(address.getCity());
-			formattedAddressSB.append(StringPool.COMMA_AND_SPACE);
-			formattedAddressSB.append(address.getRegion());
-			formattedAddressSB.append(StringPool.SPACE);
-			formattedAddressSB.append(address.getZip());
-			formattedAddressSB.append("\n");
-			formattedAddressSB.append(address.getCountry());
-
-			ScimAddress scimAddress = new ScimAddress(
-				formattedAddressSB.toString(),
-				address.getListType(
-				).getName(),
-				streetAddressSB.toString(), address.getCity(),
-				address.getRegion(
-				).getName(),
-				address.getZip(),
-				address.getCountry(
-				).getA2(),
-				address.isPrimary());
-
-			scimAddresses.add(scimAddress);
+			scimAddresses.add(
+				new ScimAddress(
+					StringBundler.concat(
+						streetAddressSB, address.getCity(),
+						StringPool.COMMA_AND_SPACE, region, StringPool.SPACE,
+						address.getZip(), "\n", country),
+					listType.getName(), streetAddressSB.toString(),
+					address.getCity(), region.getName(), address.getZip(),
+					country.getA2(), address.isPrimary()));
 		}
 
 		return scimAddresses;
@@ -969,14 +924,14 @@ public class ScimUtil {
 		return ArrayUtil.toStringArray(values);
 	}
 
-	private static String _getTimeZoneId(String timezone) {
-		if (timezone == null) {
+	private static String _getTimeZoneId(String timeZoneId) {
+		if (timeZoneId == null) {
 			return null;
 		}
 
-		return TimeZoneUtil.getTimeZone(
-			timezone
-		).getID();
+		TimeZone timeZone = TimeZoneUtil.getTimeZone(timeZoneId);
+
+		return timeZone.getID();
 	}
 
 	private static boolean _isActive(User user) {

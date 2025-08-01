@@ -574,14 +574,6 @@ public class UserManagerImpl implements UserManager {
 			portalUser = _addPortalUser(
 				birthdayMonth, birthdayDay, birthdayYear,
 				scimClientOAuth2ApplicationConfiguration, scimUser);
-
-			if (FeatureFlagManagerUtil.isEnabled("LPD-56434") &&
-				Validator.isNotNull(scimUser.getTimeZoneId())) {
-
-				portalUser.setTimeZoneId(scimUser.getTimeZoneId());
-
-				portalUser = _userLocalService.updateUser(portalUser);
-			}
 		}
 		else {
 			portalUser = _updatePortalUser(
@@ -634,19 +626,17 @@ public class UserManagerImpl implements UserManager {
 				}
 			}
 
-			String[] streetAddresses = scimAddress.getStreetAddress(
-			).split(
-				"\n"
-			);
+			String[] streetAddressParts = StringUtil.split(
+				scimAddress.getStreetAddress(), "\n");
 
-			address.setStreet1(streetAddresses[0]);
+			address.setStreet1(streetAddressParts[0]);
 
-			if (streetAddresses.length == 3) {
-				address.setStreet2(streetAddresses[1]);
-				address.setStreet3(streetAddresses[2]);
+			if (streetAddressParts.length > 1) {
+				address.setStreet2(streetAddressParts[1]);
 			}
-			else if (streetAddresses.length == 2) {
-				address.setStreet2(streetAddresses[1]);
+
+			if (streetAddressParts.length > 2) {
+				address.setStreet3(streetAddressParts[2]);
 			}
 
 			_addressLocalService.addAddress(address);
@@ -693,21 +683,15 @@ public class UserManagerImpl implements UserManager {
 
 		Contact contact = portalUser.getContact();
 
-		String jabberSn = String.valueOf(
-			scimUser.getIms(
-			).get(
-				"Jabber"
-			));
+		Map<String, String> ims = scimUser.getIms();
+
+		String jabberSn = ims.get("Jabber");
 
 		if (Validator.isNotNull(jabberSn)) {
 			contact.setJabberSn(jabberSn);
 		}
 
-		String skypeSn = String.valueOf(
-			scimUser.getIms(
-			).get(
-				"Skype"
-			));
+		String skypeSn = ims.get("Skype");
 
 		if (Validator.isNotNull(skypeSn)) {
 			contact.setSkypeSn(skypeSn);
@@ -748,13 +732,10 @@ public class UserManagerImpl implements UserManager {
 				StringUtil.toLowerCase(phoneNumber.getType()),
 				Contact.class.getName() + ".phone");
 
-			ServiceContext serviceContext = new ServiceContext();
-
 			_phoneLocalService.addPhone(
-				serviceContext.getUuidWithoutReset(), portalUser.getUserId(),
-				Contact.class.getName(), portalUser.getContactId(),
-				phoneNumber.getValue(), null, listTypeId,
-				phoneNumber.isPrimary(), serviceContext);
+				null, portalUser.getUserId(), Contact.class.getName(),
+				portalUser.getContactId(), phoneNumber.getValue(), null,
+				listTypeId, phoneNumber.isPrimary(), new ServiceContext());
 		}
 
 		_websiteLocalService.deleteWebsites(
@@ -766,14 +747,11 @@ public class UserManagerImpl implements UserManager {
 				portalUser.getCompanyId(), "personal",
 				Contact.class.getName() + ".website");
 
-			ServiceContext serviceContext = new ServiceContext();
-
 			try {
 				_websiteLocalService.addWebsite(
-					serviceContext.getUuidWithoutReset(),
-					portalUser.getUserId(), Contact.class.getName(),
+					null, portalUser.getUserId(), Contact.class.getName(),
 					portalUser.getContactId(), scimUser.getProfileUrl(),
-					listTypeId, true, serviceContext);
+					listTypeId, true, new ServiceContext());
 			}
 			catch (WebsiteURLException websiteURLException) {
 				if (_log.isDebugEnabled()) {
@@ -895,6 +873,12 @@ public class UserManagerImpl implements UserManager {
 
 		portalUser.setExternalReferenceCode(
 			scimUser.getExternalReferenceCode());
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-56434") &&
+			Validator.isNotNull(scimUser.getTimeZoneId())) {
+
+			portalUser.setTimeZoneId(scimUser.getTimeZoneId());
+		}
 
 		portalUser = _userLocalService.updateUser(portalUser);
 

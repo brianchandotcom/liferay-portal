@@ -8,8 +8,7 @@ package com.liferay.commerce.product.content.search.web.internal.portlet.shared.
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.helper.CommerceAccountHelper;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;

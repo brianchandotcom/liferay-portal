@@ -1,5 +1,3 @@
-<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %>
-
 <%--
 /**
  * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com

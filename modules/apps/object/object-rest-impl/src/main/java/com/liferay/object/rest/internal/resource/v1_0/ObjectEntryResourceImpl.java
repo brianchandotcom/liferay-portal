@@ -766,6 +766,21 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public ObjectEntry postScopeScopeKeyByExternalReferenceCodeExpire(
+			String scopeKey, String externalReferenceCode)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.expireObjectEntry(
+			_getDTOConverterContext(null), externalReferenceCode,
+			_objectDefinition, scopeKey);
+	}
+
+	@Override
 	public void postScopeScopeKeyByExternalReferenceCodeSubscribe(
 			String scopeKey, String externalReferenceCode)
 		throws Exception {

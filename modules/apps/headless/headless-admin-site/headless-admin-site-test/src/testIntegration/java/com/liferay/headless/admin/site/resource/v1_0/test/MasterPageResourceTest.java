@@ -636,7 +636,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		PageSpecification[] pageSpecifications =
 			PageSpecificationsTestUtil.getPageSpecificationsWithCustomFields(
-				randomMasterPage.getExternalReferenceCode(),
+				RandomTestUtil.randomString(),
 				PageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
 
 		randomMasterPage.setPageSpecifications(pageSpecifications);

@@ -316,9 +316,15 @@ public class PageSpecificationDTOConverter
 		return new ContentPageSpecification() {
 			{
 				setCustomFields(
-					() -> CustomFieldsUtil.toCustomFields(
-						true, Layout.class.getName(), layout.getPlid(),
-						layout.getCompanyId(), null));
+					() -> {
+						if (layout.isTypeUtility()) {
+							return null;
+						}
+
+						return CustomFieldsUtil.toCustomFields(
+							true, Layout.class.getName(), layout.getPlid(),
+							layout.getCompanyId(), null);
+					});
 				setDraftContentPageSpecificationExternalReferenceCode(
 					() -> {
 						Layout draftLayout = layout.fetchDraftLayout();

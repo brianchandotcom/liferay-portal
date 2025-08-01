@@ -1730,6 +1730,11 @@ public class DisplayPageTemplateResourceTest
 	}
 
 	@Inject
+	private
+		com.liferay.headless.admin.site.resource.v1_0.
+			DisplayPageTemplateResource _displayPageTemplateResource;
+
+	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject

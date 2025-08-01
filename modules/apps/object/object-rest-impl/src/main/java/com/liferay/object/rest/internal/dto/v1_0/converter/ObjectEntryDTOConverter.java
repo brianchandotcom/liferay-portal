@@ -882,6 +882,14 @@ public class ObjectEntryDTOConverter
 				ObjectDefinition objectDefinition, long primaryKey)
 		throws Exception {
 
+		Map<String, Map<Long, List<com.liferay.object.model.ObjectEntry>>>
+			objectRelationshipRelatedObjectEntriesMap =
+				(Map
+					<String,
+					 Map<Long, List<com.liferay.object.model.ObjectEntry>>>)
+						 dtoConverterContext.getAttribute(
+							 "objectRelationshipRelatedObjectEntriesMap");
+
 		return NestedFieldsSupplier.supplyUnsafeSupplier(
 			nestedFieldName -> {
 				ObjectRelationship objectRelationship =
@@ -921,11 +929,27 @@ public class ObjectEntryDTOConverter
 					relatedObjectDefinitionGroupId = 0;
 				}
 
-				List<?> relatedModels =
-					objectRelatedModelsProvider.getRelatedModels(
-						relatedObjectDefinitionGroupId,
-						objectRelationship.getObjectRelationshipId(),
-						primaryKey, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				List<?> relatedModels;
+
+				if ((objectRelationshipRelatedObjectEntriesMap != null) &&
+					objectRelationshipRelatedObjectEntriesMap.containsKey(
+						objectRelationship.getName())) {
+
+					Map<Long, List<com.liferay.object.model.ObjectEntry>>
+						relatedObjectEntriesMap =
+							objectRelationshipRelatedObjectEntriesMap.get(
+								objectRelationship.getName());
+
+					relatedModels = relatedObjectEntriesMap.get(primaryKey);
+				}
+				else {
+					relatedModels =
+						objectRelatedModelsProvider.getRelatedModels(
+							relatedObjectDefinitionGroupId,
+							objectRelationship.getObjectRelationshipId(),
+							new Long[] {primaryKey}, null, QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS);
+				}
 
 				if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 					SystemObjectDefinitionManager

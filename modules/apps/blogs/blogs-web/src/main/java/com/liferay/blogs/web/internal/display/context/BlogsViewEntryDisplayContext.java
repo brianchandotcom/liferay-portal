@@ -57,7 +57,9 @@ public class BlogsViewEntryDisplayContext {
 	}
 
 	public String getBlogEntryExternalReferenceCode() {
-		return getBlogsEntry().getExternalReferenceCode();
+		BlogsEntry blogsEntry = getBlogsEntry();
+
+		return blogsEntry.getExternalReferenceCode();
 	}
 
 	public BlogsEntry getBlogsEntry() {

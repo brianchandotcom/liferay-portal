@@ -3131,6 +3131,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 						}
 
 						public static String getTestClassNameForTestResults(String testClass){
+							String[] testClassVars = testClass.split("#");
+
+							if (testClassVars.length > 0) {
+								testClass = testClassVars[0];
+							}
+
 							testClass = testClass.replace(".java", "");
 
 							testClass = testClass.replace("/", ".");
@@ -3139,12 +3145,21 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 						}
 
 						public static String getTestName(String testClassFilePath) {
-							Pattern pattern = Pattern.compile("/([^/]+)\\.java");
+							Pattern pattern = Pattern.compile("([^/]+$)");
 
 							Matcher matcher = pattern.matcher(testClassFilePath);
 
 							if (matcher.find()) {
-								return matcher.group(1);
+								String testName = matcher.group(1);
+
+								if (testName.contains("#")) {
+									testName = testName.replace(".java#", ".");
+								}
+								else{
+									testName = testName.replace(".java", "");
+								}
+
+								return testName;
 							}
 
 							return null;
@@ -3172,6 +3187,60 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							return new File(project.getProperty("project.dir") + "/modules/" + testProjectName.replaceAll(":", "/") + "/test-results/");
 						}
 
+						public void updateTestClassFileNamesFile() throws IOException {
+							String projectDir = project.getProperty("project.dir");
+
+							File testClassFileNamesFile = new File(projectDir + "/test.class.file.names.properties");
+
+							String fileContent = JenkinsResultsParserUtil.read(testClassFileNamesFile);
+
+							if (!fileContent.contains("#")) {
+								return;
+							}
+
+							Set testClassSet = new HashSet();
+
+							Pattern pattern = Pattern.compile("(TEST_CLASS_GROUP_\\d+=)(.*)");
+
+							Matcher matcher = pattern.matcher(fileContent);
+
+							if (matcher.find()) {
+								String testClassGroupIndex = matcher.group(1);
+
+								String testClasses = matcher.group(2);
+
+								String[] testClassList = testClasses.split(",");
+
+								for (int i=0; i < testClassList.length; i++) {
+									String testClassName = testClassList[i];
+
+									int hashIndex = testClassName.indexOf('#');
+
+									if (hashIndex != -1) {
+										testClassSet.add(testClassName.substring(0, hashIndex));
+									}
+									else{
+										testClassSet.add(testClassName);
+									}
+								}
+
+								StringBuilder sb = new StringBuilder();
+
+								sb.append(testClassGroupIndex);
+
+								for (String testClass : testClassSet) {
+									sb.append(testClass);
+									sb.append(",");
+								}
+
+								if (testClassSet.size() > 0) {
+									sb.deleteCharAt(sb.length() - 1);
+								}
+
+								JenkinsResultsParserUtil.write(testClassFileNamesFile, sb.toString());
+							}
+						}
+
 						File projectDir = new File(project.getProperty("project.dir"));
 
 						String testClassGroup = project.getProperty("test.class.group");
@@ -3187,7 +3256,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							String testClassName = getTestClassNameForTestResults(testClass);
 
-							File testClassFile = JenkinsResultsParserUtil.getFileFromPathSnippet(projectDir, testClass);
+							File testClassFile = JenkinsResultsParserUtil.getFileFromPathSnippet(projectDir, testClassName);
 
 							String testProjectName = getTestProjectName(testClassFile.toString());
 
@@ -3195,7 +3264,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							generateJunitReport(baseDir, testClassName, testTaskName);
 
-							String testName = getTestName(testClassFile.toString());
+							String testName = getTestName(testClass);
 
 							addProjectToMap(testProjectName, testName, projectTestMap);
 						}
@@ -3221,6 +3290,8 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							int timeout = Integer.parseInt(project.getProperty("test.class.timeout.minutes"));
 
 							try {
+								updateTestClassFileNamesFile();
+
 								System.out.println("\"gradle-execute-modules\" will timeout in " + timeout);
 
 								AntUtil.callTargetWithTimeout(projectDir, "build-common.xml", "gradle-execute-modules", parameters, timeout, true);

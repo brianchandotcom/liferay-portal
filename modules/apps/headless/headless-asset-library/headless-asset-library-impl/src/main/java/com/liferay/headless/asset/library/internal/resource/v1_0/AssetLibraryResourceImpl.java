@@ -22,10 +22,13 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -565,6 +568,20 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
+					"assign-members",
+					() -> {
+						if (_userModelResourcePermission.contains(
+								PermissionThreadLocal.getPermissionChecker(),
+								depotEntry.getGroupId(),
+								ActionKeys.ASSIGN_MEMBERS)) {
+
+							return addAction(
+								ActionKeys.VIEW, depotEntry, "getAssetLibrary");
+						}
+
+						return null;
+					}
+				).put(
 					"create",
 					addAction(
 						DepotActionKeys.ADD_DEPOT_ENTRY, depotEntry,
@@ -592,6 +609,20 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					"update",
 					addAction(
 						ActionKeys.UPDATE, depotEntry, "patchAssetLibrary")
+				).put(
+					"view-members",
+					() -> {
+						if (!_userModelResourcePermission.contains(
+								PermissionThreadLocal.getPermissionChecker(),
+								depotEntry.getGroupId(),
+								ActionKeys.ASSIGN_MEMBERS)) {
+
+							return addAction(
+								ActionKeys.VIEW, depotEntry, "getAssetLibrary");
+						}
+
+						return null;
+					}
 				).build(),
 				_dtoConverterRegistry, depotEntry.getDepotEntryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
@@ -649,5 +680,10 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private ModelResourcePermission<User> _userModelResourcePermission;
 
 }

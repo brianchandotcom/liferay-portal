@@ -2907,3 +2907,78 @@ test(
 		});
 	}
 );
+
+test(
+	'UOM incremental order quantity and pricing quantity display double value',
+	{tag: ['@LPD-62187']},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		commerceAdminProductDetailsPage,
+		commerceAdminProductDetailsSkusPage,
+		commerceAdminProductPage,
+	}) => {
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: 'Catalog',
+			});
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {
+					en_US: 'Product',
+				},
+			});
+
+		const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku = productSkus[0];
+
+		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+			sku.id,
+			{
+				incrementalOrderQuantity: 1.5,
+				name: {en_US: 'UOM'},
+				precision: 1,
+				pricingQuantity: 1.5,
+				priority: 0,
+			}
+		);
+
+		await applicationsMenuPage.goToProducts();
+
+		await commerceAdminProductPage.managementToolbarSearchInput.fill(
+			'Product'
+		);
+		await commerceAdminProductPage.managementToolbarSearchInput.press(
+			'Enter'
+		);
+
+		await commerceAdminProductPage.productsTableRowLink('Product').click();
+
+		await commerceAdminProductDetailsPage.goToProductSkus();
+
+		await commerceAdminProductDetailsSkusPage
+			.skusTableRowLink(`${sku.sku}`)
+			.click();
+
+		await commerceAdminProductDetailsSkusPage.goToSkuUOM();
+
+		await commerceAdminProductDetailsSkusPage
+			.uomTableRowLink('UOM')
+			.click();
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.incrementalOrderQuantity
+		).toHaveValue('1.5');
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.pricinQuantity
+		).toHaveValue('1.5');
+	}
+);

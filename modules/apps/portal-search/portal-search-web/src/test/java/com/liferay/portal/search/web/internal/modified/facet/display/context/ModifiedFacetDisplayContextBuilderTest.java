@@ -171,7 +171,7 @@ public class ModifiedFacetDisplayContextBuilderTest
 	}
 
 	@Test
-	public void testCustomRangeUsesStandardizedDateFormat() {
+	public void testCustomRangeUsesStandardDateFormat() {
 		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
 			createDisplayContextBuilder();
 
@@ -190,10 +190,12 @@ public class ModifiedFacetDisplayContextBuilderTest
 
 			String modifiedFrom = HttpComponentsUtil.getParameter(
 				bucketDisplayContext.getFilterValue(), "modifiedFrom", false);
+
+			Assert.assertNotEquals("2018-01-01", modifiedFrom);
+
 			String modifiedTo = HttpComponentsUtil.getParameter(
 				bucketDisplayContext.getFilterValue(), "modifiedTo", false);
 
-			Assert.assertNotEquals("2018-01-01", modifiedFrom);
 			Assert.assertNotEquals("2018-01-31", modifiedTo);
 
 			Matcher matcher = _pattern.matcher(modifiedFrom);

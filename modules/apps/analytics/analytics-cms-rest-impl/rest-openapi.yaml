@@ -10,6 +10,20 @@ components:
                     type: boolean
                 siteSyncedToAnalyticsCloud:
                     type: boolean
+        Histogram:
+            properties:
+                metricName:
+                    type: string
+                metrics:
+                    items:
+                        $ref: "#/components/schemas/Metric"
+                    type: array
+                total:
+                    format: double
+                    type: number
+                totalValue:
+                    format: double
+                    type: number
         InventoryAnalysis:
             properties:
                 inventoryAnalysisItems:
@@ -44,6 +58,12 @@ components:
                     type: number
                 valueKey:
                     type: string
+        ObjectEntryHistogramMetric:
+            properties:
+                histograms:
+                    items:
+                        $ref: "#/components/schemas/Histogram"
+                    type: array
         ObjectEntryMetric:
             properties:
                 dataSourceId:
@@ -245,6 +265,40 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/InventoryAnalysis"
             tags: ["InventoryAnalysis"]
+    "/object-entry-histogram-metric":
+        get:
+            operationId: getObjectEntryHistogramMetric
+            parameters:
+                -   in: query
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: groupId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+                -   in: query
+                    name: selectedMetrics
+                    schema:
+                        items:
+                            type: string
+                        type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryHistogramMetric"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryHistogramMetric"
+            tags: ["ObjectEntryHistogramMetric"]
     "/object-entry-metric":
         get:
             operationId: getObjectEntryMetric

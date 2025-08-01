@@ -204,15 +204,16 @@ public class CPDefinitionSystemObjectRelatedModelsProviderTest
 		ObjectRelationshipTestUtil.assertSearchRelatedModels(
 			0, objectRelatedModelsProvider,
 			objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), StringUtil.randomString());
+			new Long[] {objectEntry.getPrimaryKey()},
+			StringUtil.randomString());
 		ObjectRelationshipTestUtil.assertSearchRelatedModels(
 			1, objectRelatedModelsProvider,
 			objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), cpDefinition.getName());
+			new Long[] {objectEntry.getPrimaryKey()}, cpDefinition.getName());
 		ObjectRelationshipTestUtil.assertSearchRelatedModels(
 			2, objectRelatedModelsProvider,
 			objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), "CP");
+			new Long[] {objectEntry.getPrimaryKey()}, "CP");
 
 		objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship.getObjectRelationshipId());

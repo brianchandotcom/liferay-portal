@@ -358,6 +358,7 @@
 						"type": "integer"
 					},
 					"scopeKey": {
+						"readOnly": true,
 						"type": "string"
 					},
 					"status": {

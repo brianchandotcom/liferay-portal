@@ -187,6 +187,10 @@ public interface ObjectEntryResource {
 			String scopeKey, String externalReferenceCode, Integer version)
 		throws Exception;
 
+	public ObjectEntry postScopeScopeKeyByExternalReferenceCodeExpire(
+			String scopeKey, String externalReferenceCode)
+		throws Exception;
+
 	public void postScopeScopeKeyByExternalReferenceCodeSubscribe(
 			String scopeKey, String externalReferenceCode)
 		throws Exception;

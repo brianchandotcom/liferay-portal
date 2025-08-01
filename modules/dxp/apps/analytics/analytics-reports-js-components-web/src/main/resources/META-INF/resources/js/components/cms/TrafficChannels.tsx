@@ -205,9 +205,10 @@ const TrafficChannelsEntry = ({
 		>
 			<div
 				aria-label={`Channel name: ${name}`}
-				className="traffic-channel-item__name"
+				className="tab-focus traffic-channel-item__name"
 				role="cell"
 				style={{width: '35%'}}
+				tabIndex={0}
 			>
 				<Text size={3} weight="semi-bold">
 					{name}
@@ -218,9 +219,10 @@ const TrafficChannelsEntry = ({
 				aria-label={`Volume: ${volume}, Percentage: ${percentage.toFixed(
 					2
 				)}%`}
-				className="d-flex flex-row traffic-channel-item__chart"
+				className="d-flex flex-row tab-focus traffic-channel-item__chart"
 				role="cell"
 				style={{width: '40%'}}
+				tabIndex={0}
 			>
 				<div
 					aria-hidden="true"
@@ -237,9 +239,10 @@ const TrafficChannelsEntry = ({
 
 			<div
 				aria-label={`Percentage: ${percentage.toFixed(2)}%`}
-				className="d-flex justify-content-end traffic-channel-item__percentage"
+				className="d-flex justify-content-end tab-focus traffic-channel-item__percentage"
 				role="cell"
 				style={{width: '25%'}}
+				tabIndex={0}
 			>
 				<Text size={3} weight="semi-bold">
 					{`${percentage.toFixed(2)}%`}
@@ -284,38 +287,58 @@ export function TrafficChannels() {
 	]);
 
 	return (
-		<section className="mt-3">
+		<section aria-labelledby="traffic-channels-header" className="mt-3">
 			<header
 				className="py-2 text-uppercase w-100"
 				style={{borderBottom: '1px solid #dfe0e7'}}
 			>
 				<Text color="secondary" size={3} weight="semi-bold">
-					{MetricsTitle[filters.metric]}
+					{Liferay.Language.get('views-by-traffic-channels')}
 				</Text>
 			</header>
 
-			<section className="pt-3">
+			<section
+				aria-labelledby="top-five-traffic-channels"
+				className="pt-3"
+			>
 				<Text color="secondary" size={3} weight="normal">
 					{Liferay.Language.get('top-five-traffic-channels')}
 				</Text>
 			</section>
 
-			<main className="traffic-channels-table">
-				<header className="d-flex flex-row justify-content-between py-3">
-					<div style={{width: '35%'}}>
+			<main
+				aria-label={Liferay.Language.get('traffic-channels-table')}
+				className="traffic-channels-table"
+				role="table"
+			>
+				<header
+					className="d-flex flex-row justify-content-between py-3"
+					role="row"
+				>
+					<div
+						aria-label={Liferay.Language.get('traffic-channel')}
+						role="columnheader"
+						style={{width: '35%'}}
+					>
 						<Text color="secondary" size={3} weight="semi-bold">
 							{Liferay.Language.get('traffic-channel')}
 						</Text>
 					</div>
 
-					<div style={{width: '35%'}}>
+					<div
+						aria-label={MetricsTitle[filters.metric]}
+						role="columnheader"
+						style={{width: '35%'}}
+					>
 						<Text color="secondary" size={3} weight="semi-bold">
 							{MetricsTitle[filters.metric]}
 						</Text>
 					</div>
 
 					<div
+						aria-label={`${Liferay.Language.get('%-of')} ${MetricsTitle[filters.metric]}`}
 						className="d-flex justify-content-end"
+						role="columnheader"
 						style={{width: '30%'}}
 					>
 						<Text color="secondary" size={3} weight="semi-bold">

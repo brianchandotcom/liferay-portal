@@ -67,9 +67,9 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 			_indexerRegistry.nullSafeGetIndexer(ConfigurationModel.class);
 
 		String keywords = renderRequest.getParameter("keywords");
+		Locale locale = renderRequest.getLocale();
 
-		SearchContext searchContext = _getSearchContext(
-			renderRequest.getLocale(), keywords);
+		SearchContext searchContext = _getSearchContext(locale, keywords);
 
 		try {
 			Hits hits = indexer.search(searchContext);
@@ -81,8 +81,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 
 			List<ConfigurationEntry> configurationEntries =
 				_getConfigurationEntries(
-					configurationScopeDisplayContext, documents,
-					renderRequest.getLocale());
+					configurationScopeDisplayContext, documents, locale);
 
 			ExtendedObjectClassDefinition.Scope scope =
 				configurationScopeDisplayContext.getScope();
@@ -104,12 +103,11 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 						"category." + configurationScreen.getCategoryKey()),
 					renderRequest.getLocale());
 				String configurationScreenKey = StringUtil.toLowerCase(
-					configurationScreen.getKey(), renderRequest.getLocale());
+					configurationScreen.getKey(), locale);
 				String configurationScreenName = StringUtil.toLowerCase(
-					configurationScreen.getName(renderRequest.getLocale()),
-					renderRequest.getLocale());
+					configurationScreen.getName(locale), locale);
 				String searchReadyKeywords = StringUtil.toLowerCase(
-					keywords, renderRequest.getLocale());
+					keywords, locale);
 
 				if (Validator.isNull(keywords) ||
 					configurationScreenCategoryKey.contains(
@@ -119,7 +117,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 
 					configurationEntries.add(
 						new ConfigurationScreenConfigurationEntry(
-							configurationScreen, renderRequest.getLocale()));
+							configurationScreen, locale));
 				}
 			}
 

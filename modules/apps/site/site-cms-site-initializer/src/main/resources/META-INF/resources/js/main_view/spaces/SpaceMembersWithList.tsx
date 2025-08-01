@@ -20,6 +20,7 @@ import {
 	SelectOptions,
 	SpaceMembersInputWithSelect,
 } from './SpaceMembersInputWithSelect';
+import {SPACE_MEMBER_ROLE_ID} from './SpaceMembersPermissionSelect';
 
 export interface SpaceMembersWithListProps {
 	assetLibraryCreatorUserId: string;
@@ -202,12 +203,21 @@ export function SpaceMembersWithList({
 	const onAutocompleteItemSelected = async (
 		item: UserAccount | UserGroup
 	) => {
+		const defaultRole = spacePermissionsRoles.find(
+			(role) => role.id === SPACE_MEMBER_ROLE_ID
+		);
+
+		const itemWithRoles = {
+			...item,
+			roles: defaultRole ? [defaultRole] : [],
+		};
+
 		if (selectedOption === SelectOptions.USERS) {
 			if (selectedUsers.some((user) => user.id === item.id)) {
 				return;
 			}
 
-			setSelectedUsers([item as UserAccount, ...selectedUsers]);
+			setSelectedUsers([itemWithRoles as UserAccount, ...selectedUsers]);
 
 			const {error} = await SpaceService.linkUserToSpace({
 				spaceId: assetLibraryId,
@@ -242,7 +252,10 @@ export function SpaceMembersWithList({
 			return;
 		}
 
-		setSelectedUserGroups([item, ...selectedUserGroups]);
+		setSelectedUserGroups([
+			itemWithRoles as UserGroup,
+			...selectedUserGroups,
+		]);
 
 		const {error} = await SpaceService.linkUserGroupToSpace({
 			spaceId: assetLibraryId,
@@ -337,9 +350,73 @@ export function SpaceMembersWithList({
 
 	const onUpdateItemRoles = useCallback(
 		async (itemToUpdate: UserAccount | UserGroup, newRoles: number[]) => {
-			console.log(itemToUpdate, newRoles);
+			const isUser = selectedOption === SelectOptions.USERS;
+			const originalRoles = itemToUpdate.roles;
+
+			const newRoleObjects = spacePermissionsRoles.filter((role) =>
+				newRoles.includes(role.id)
+			);
+
+			const stateUpdater = isUser
+				? setSelectedUsers
+				: setSelectedUserGroups;
+
+			const setStateUpdater = stateUpdater as React.Dispatch<
+				React.SetStateAction<(UserAccount | UserGroup)[]>
+			>;
+
+			setStateUpdater((current) =>
+				current.map((item) =>
+					item.id === itemToUpdate.id
+						? {...item, roles: newRoleObjects}
+						: item
+				)
+			);
+
+			const {error} = isUser
+				? await SpaceService.updateUserRoles({
+						roleIds: newRoles,
+						spaceId: assetLibraryId,
+						userId: itemToUpdate.id,
+					})
+				: await SpaceService.updateUserGroupRoles({
+						roleIds: newRoles,
+						spaceId: assetLibraryId,
+						userGroupId: itemToUpdate.id,
+					});
+
+			if (error) {
+				setStateUpdater((current) =>
+					current.map((item) =>
+						item.id === itemToUpdate.id
+							? {...item, roles: originalRoles}
+							: item
+					)
+				);
+
+				openToast({
+					message: sub(
+						Liferay.Language.get(
+							isUser
+								? 'unable-to-update-roles-for-user-x'
+								: 'unable-to-update-roles-for-group-x'
+						),
+						[`<strong>${itemToUpdate.name}</strong>`]
+					),
+					type: 'danger',
+				});
+			}
+			else {
+				openToast({
+					message: sub(
+						Liferay.Language.get('x-role-as-successfully-updated'),
+						[`<strong>${itemToUpdate.name}</strong>`]
+					),
+					type: 'success',
+				});
+			}
 		},
-		[]
+		[assetLibraryId, selectedOption, spacePermissionsRoles]
 	);
 
 	const listLabelId = useId();

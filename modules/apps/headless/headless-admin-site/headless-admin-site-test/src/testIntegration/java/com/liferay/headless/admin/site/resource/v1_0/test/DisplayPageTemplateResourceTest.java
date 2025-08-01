@@ -745,6 +745,20 @@ public class DisplayPageTemplateResourceTest
 		}
 	}
 
+	private void _assertUnsupportedOperationException(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			Assert.assertNotNull(unsupportedOperationException);
+		}
+	}
+
 	private void _enableLocalStaging() throws Exception {
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), testGroup, true, false,

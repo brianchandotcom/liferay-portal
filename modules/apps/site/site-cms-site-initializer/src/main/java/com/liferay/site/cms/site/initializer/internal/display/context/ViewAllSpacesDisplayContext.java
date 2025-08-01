@@ -126,10 +126,7 @@ public class ViewAllSpacesDisplayContext {
 			new FDSActionDropdownItem(
 				null, "users", "view-members",
 				LanguageUtil.get(_httpServletRequest, "view-members"), "get",
-				"assign-members", null,
-				HashMapBuilder.put(
-					"hasAssignMembersPermission", true
-				).build()),
+				"assign-members", null),
 			new FDSActionDropdownItem(
 				null, "users", "view-members",
 				LanguageUtil.get(_httpServletRequest, "view-members"), "get",

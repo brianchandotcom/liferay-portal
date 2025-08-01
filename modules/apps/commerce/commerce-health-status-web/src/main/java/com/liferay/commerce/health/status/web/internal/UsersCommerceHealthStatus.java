@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -103,8 +102,7 @@ public class UsersCommerceHealthStatus implements CommerceHealthStatus {
 
 	@Override
 	public boolean isActive() {
-		return FeatureFlagManagerUtil.isEnabled(
-			CompanyThreadLocal.getCompanyId(), "LPD-10562");
+		return FeatureFlagManagerUtil.isEnabled("LPD-10562");
 	}
 
 	@Override

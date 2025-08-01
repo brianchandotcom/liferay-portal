@@ -142,9 +142,9 @@ public class JSUnitBatchBuildTestrayCaseResult
 
 		if (errorMessages.size() > 1) {
 			return JenkinsResultsParserUtil.combine(
-				"Failed tests: ",
+				"Failed tests:\n",
 				JenkinsResultsParserUtil.join(
-					", ", new ArrayList<>(errorMessages.keySet())));
+					"\n", new ArrayList<>(errorMessages.keySet())));
 		}
 		else if (errorMessages.size() == 1) {
 			List<String> values = new ArrayList<>(errorMessages.values());

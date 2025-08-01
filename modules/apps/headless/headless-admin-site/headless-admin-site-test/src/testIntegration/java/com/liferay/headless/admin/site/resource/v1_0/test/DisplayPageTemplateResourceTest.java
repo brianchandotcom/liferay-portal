@@ -70,9 +70,11 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -81,6 +83,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -102,6 +105,34 @@ public class DisplayPageTemplateResourceTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_displayPageTemplateResource.setContextAcceptLanguage(
+			new AcceptLanguage() {
+
+				@Override
+				public List<Locale> getLocales() {
+					return Arrays.asList(LocaleUtil.getDefault());
+				}
+
+				@Override
+				public String getPreferredLanguageId() {
+					return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+				}
+
+				@Override
+				public Locale getPreferredLocale() {
+					return LocaleUtil.getDefault();
+				}
+
+			});
+
+		_displayPageTemplateResource.setContextUser(TestPropsValues.getUser());
+	}
 
 	@Override
 	@Test

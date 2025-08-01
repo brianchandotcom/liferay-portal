@@ -5,6 +5,7 @@
 
 package com.liferay.portal.db;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +25,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,6 +78,12 @@ public class DBResourceUtil {
 		return tableNames;
 	}
 
+	public static Map<String, String[]> getModuleTablesPrimaryKeyColumnNames(
+		Bundle bundle) {
+
+		return _getTablesPrimaryKeyColumnNames(getModuleTablesSQL(bundle));
+	}
+
 	public static String getModuleTablesSQL(Bundle bundle) {
 		return _read(bundle, "/META-INF/sql/tables.sql");
 	}
@@ -98,6 +107,10 @@ public class DBResourceUtil {
 			dbInspector, getPortalTablesSQL());
 
 		return _portalTableNames;
+	}
+
+	public static Map<String, String[]> getPortalTablesPrimaryKeyColumnNames() {
+		return _getTablesPrimaryKeyColumnNames(getPortalTablesSQL());
 	}
 
 	public static String getPortalTablesSQL() {
@@ -166,6 +179,30 @@ public class DBResourceUtil {
 		return tableNames;
 	}
 
+	private static Map<String, String[]> _getTablesPrimaryKeyColumnNames(
+		String sql) {
+
+		Map<String, String[]> tablesPrimaryKeyColumnNames = new HashMap<>();
+
+		for (Pattern pattern :
+				new Pattern[] {
+					_composedPrimaryKeyPattern, _inlinedPrimaryKeyPattern
+				}) {
+
+			Matcher matcher = pattern.matcher(sql);
+
+			while (matcher.find()) {
+				tablesPrimaryKeyColumnNames.put(
+					matcher.group(1),
+					StringUtil.split(
+						StringUtil.removeChar(
+							matcher.group(2), CharPool.SPACE)));
+			}
+		}
+
+		return tablesPrimaryKeyColumnNames;
+	}
+
 	private static String _read(Bundle bundle, String path) {
 		URL resource = bundle.getResource(path);
 
@@ -189,8 +226,15 @@ public class DBResourceUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(DBResourceUtil.class);
 
+	private static final Pattern _composedPrimaryKeyPattern = Pattern.compile(
+		"create table\\s+(\\w+)\\s*\\((?:[^;]*?)?primary key\\s*\\(([^)]+)\\)",
+		Pattern.DOTALL);
 	private static final Pattern _createTablePattern = Pattern.compile(
 		"create table (\\S*) \\(");
+	private static final Pattern _inlinedPrimaryKeyPattern = Pattern.compile(
+		"create table\\s+(\\w+)\\s*\\([^;]*?(\\w+)\\s+\\w+(?:\\([^)]*\\))?" +
+			"(?:\\s+\\w+)*\\s+primary key\\b",
+		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 	private static volatile Set<String> _portalTableNames;
 
 }

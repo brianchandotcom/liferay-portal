@@ -34,7 +34,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		ClassNameLocalService classNameLocalService,
 		DTOConverter<SharingEntry, Collaborator> collaboratorDTOConverter,
 		DTOConverterRegistry dtoConverterRegistry,
-		GroupLocalService groupLocalService, ObjectDefinition objectDefinition,
+		GroupLocalService groupLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		SharingEntryService sharingEntryService,
 		SharingEntryLocalService sharingEntryLocalService,
@@ -45,7 +45,6 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		_collaboratorDTOConverter = collaboratorDTOConverter;
 		_dtoConverterRegistry = dtoConverterRegistry;
 		_groupLocalService = groupLocalService;
-		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
 		_sharingEntryService = sharingEntryService;
 		_sharingEntryLocalService = sharingEntryLocalService;

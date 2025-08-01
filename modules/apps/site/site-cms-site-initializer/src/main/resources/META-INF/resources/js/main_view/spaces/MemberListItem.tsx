@@ -9,7 +9,9 @@ import ClaySticker from '@clayui/sticker';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import {Role} from '../../common/types/Role';
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
+import {SpaceMembersPermissionSelect} from './SpaceMembersPermissionSelect';
 
 interface MembersListItemProps {
 	assetLibraryCreatorUserId?: string | number;
@@ -19,6 +21,8 @@ interface MembersListItemProps {
 	itemType: 'user' | 'group';
 	items: (UserAccount | UserGroup)[];
 	onRemoveItem: (item: UserAccount | UserGroup) => Promise<void>;
+	onUpdateItemRoles: (item: UserAccount | UserGroup, roles: number[]) => void;
+	roles: Role[];
 }
 
 export function MembersListItem({
@@ -29,6 +33,8 @@ export function MembersListItem({
 	itemType,
 	items,
 	onRemoveItem,
+	onUpdateItemRoles,
+	roles,
 }: MembersListItemProps) {
 	if (!items || !items.length) {
 		return (
@@ -43,6 +49,9 @@ export function MembersListItem({
 				const isOwner =
 					isUser &&
 					String(assetLibraryCreatorUserId) === String(item.id);
+
+				const memberRoles = item.roles.map((r) => r.id);
+				const selectedRoles = memberRoles.length ? memberRoles : [];
 
 				const renderGroupCount = () => {
 					if (!isUser) {
@@ -105,21 +114,31 @@ export function MembersListItem({
 								({Liferay.Language.get('owner')})
 							</span>
 						) : hasAssignMembersPermission ? (
-							<ClayButtonWithIcon
-								aria-label={sub(
-									Liferay.Language.get('remove-x'),
-									isUser
-										? Liferay.Language.get('user')
-										: Liferay.Language.get('group')
-								)}
-								borderless
-								displayType="secondary"
-								onClick={async () => {
-									await onRemoveItem(item);
-								}}
-								symbol="times-circle"
-								translucent
-							/>
+							<div className="align-items-center c-gap-2 d-flex">
+								<SpaceMembersPermissionSelect
+									onChange={(newRoles) =>
+										onUpdateItemRoles(item, newRoles)
+									}
+									roles={roles}
+									selectedRoles={selectedRoles}
+								/>
+
+								<ClayButtonWithIcon
+									aria-label={sub(
+										Liferay.Language.get('remove-x'),
+										isUser
+											? Liferay.Language.get('user')
+											: Liferay.Language.get('group')
+									)}
+									borderless
+									displayType="secondary"
+									onClick={async () => {
+										await onRemoveItem(item);
+									}}
+									symbol="times-circle"
+									translucent
+								/>
+							</div>
 						) : null}
 					</li>
 				);

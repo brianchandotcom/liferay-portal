@@ -11,6 +11,9 @@ import React from 'react';
 import ContentEditorSidePanel from '../../../../src/main/resources/META-INF/resources/js/content_editor/components/ContentEditorSidePanel';
 import {mockFetch} from '../../__mocks__/frontend-js-web';
 
+const EXPIRATION_DATE = '2025-08-14T00:01';
+const REVIEW_DATE = '2025-08-15T00:01';
+
 const renderComponent = ({isSubscribed = false} = {}) => {
 	return render(
 		<ContentEditorSidePanel
@@ -19,8 +22,10 @@ const renderComponent = ({isSubscribed = false} = {}) => {
 			deleteCommentURL="deleteCommentURL"
 			editCommentURL="editCommentURL"
 			editorConfig={{}}
+			expirationDate={EXPIRATION_DATE}
 			id="contentId"
 			isSubscribed={isSubscribed}
+			reviewDate={REVIEW_DATE}
 			subscribeURL="subscribeURL"
 			type="Content Type"
 			version="Version 1"
@@ -131,5 +136,19 @@ describe('ContentEditorSidePanel', () => {
 				)
 			).toBeInTheDocument();
 		});
+	});
+
+	it('renders the hidden inputs with initial values', async () => {
+		renderComponent();
+
+		const expirationInput: HTMLInputElement | null = document.querySelector(
+			'[name="expirationDate"]'
+		);
+		const reviewInput: HTMLInputElement | null = document.querySelector(
+			'[name="reviewDate"]'
+		);
+
+		expect(expirationInput?.value).toBe(EXPIRATION_DATE);
+		expect(reviewInput?.value).toBe(REVIEW_DATE);
 	});
 });

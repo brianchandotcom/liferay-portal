@@ -8,7 +8,9 @@ package com.liferay.osb.patcher.service.impl;
 import com.liferay.osb.patcher.constants.PatcherFixConstants;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.model.PatcherFix;
+import com.liferay.osb.patcher.service.PatcherFixLocalServiceUtil;
 import com.liferay.osb.patcher.service.base.PatcherFixLocalServiceBaseImpl;
+import com.liferay.osb.patcher.service.persistence.PatcherFixRelPersistence;
 import com.liferay.osb.patcher.util.EmailUtil;
 import com.liferay.osb.patcher.util.PatcherFixRelUtil;
 import com.liferay.osb.patcher.util.PatcherFixUtil;
@@ -82,6 +84,36 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 			patcherFixId);
 
 		PatcherFixUtil.validateDelete(patcherFix);
+
+		if (patcherFix.getKeyVersion() !=
+				PatcherFixConstants.KEY_VERSION_DEFAULT) {
+
+			PatcherFix oldPatcherFix = _fetchPatcherFixByNextKeyVersion(
+				patcherFix);
+
+			if (oldPatcherFix != null) {
+				boolean patcherFixExcluded = false;
+
+				if (patcherFix.getType() == PatcherFixConstants.TYPE_EXCLUDED) {
+					patcherFixExcluded = true;
+				}
+
+				oldPatcherFix = PatcherFixUtil.updateObsolete(
+					oldPatcherFix.getPatcherFixId(), patcherFixExcluded);
+
+				int status = oldPatcherFix.getStatus();
+
+				if (patcherFixExcluded) {
+					status = PatcherFixConstants.TYPE_EXCLUDED;
+				}
+
+				PatcherFixLocalServiceUtil.updatePatcherFix(
+					oldPatcherFix.getPatcherFixId(), true, status);
+			}
+		}
+
+		_patcherFixRelPersistence.removeByChildPatcherFixId(
+			patcherFix.getPatcherFixId());
 
 		return patcherFixPersistence.remove(patcherFixId);
 	}
@@ -393,6 +425,19 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		return patcherFixPersistence.update(patcherFix);
 	}
 
+	private PatcherFix _fetchPatcherFixByNextKeyVersion(PatcherFix patcherFix) {
+		List<PatcherFix> patcherFixes =
+			PatcherFixLocalServiceUtil.getPatcherFixes(
+				patcherFix.getKey(), patcherFix.getKeyVersion(),
+				PatcherFixConstants.TYPE_GENERATED_PRIVATE_PUBLIC, true);
+
+		if (patcherFixes.isEmpty()) {
+			return null;
+		}
+
+		return patcherFixes.get(0);
+	}
+
 	private void _sendEmail(PatcherFix patcherFix, int oldStatus, long userId)
 		throws Exception {
 
@@ -417,6 +462,9 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PatcherFixLocalServiceImpl.class);
+
+	@Reference
+	private PatcherFixRelPersistence _patcherFixRelPersistence;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -184,43 +184,6 @@ public class PatcherFixUtil {
 		return false;
 	}
 
-	public static void deletePatcherFix(PatcherFix patcherFix)
-		throws Exception {
-
-		if (patcherFix.getKeyVersion() !=
-				PatcherFixConstants.KEY_VERSION_DEFAULT) {
-
-			PatcherFix oldPatcherFix = fetchPatcherFixByNextKeyVersion(
-				patcherFix, true);
-
-			if (oldPatcherFix != null) {
-				boolean patcherFixExcluded = false;
-
-				if (patcherFix.getType() == PatcherFixConstants.TYPE_EXCLUDED) {
-					patcherFixExcluded = true;
-				}
-
-				oldPatcherFix = updateObsolete(
-					oldPatcherFix.getPatcherFixId(), patcherFixExcluded);
-
-				int status = oldPatcherFix.getStatus();
-
-				if (patcherFixExcluded) {
-					status = PatcherFixConstants.TYPE_EXCLUDED;
-				}
-
-				PatcherFixLocalServiceUtil.updatePatcherFix(
-					oldPatcherFix.getPatcherFixId(), true, status);
-			}
-		}
-
-		PatcherFixRelLocalServiceUtil.deletePatcherFixRelsByChildPatcherFixId(
-			patcherFix.getPatcherFixId());
-
-		PatcherFixLocalServiceUtil.deletePatcherFix(
-			patcherFix.getPatcherFixId());
-	}
-
 	public static PatcherFix fetchLongestTicketPatcherFix(
 		List<PatcherFix> patcherFixes) {
 
@@ -249,21 +212,6 @@ public class PatcherFixUtil {
 		}
 
 		return null;
-	}
-
-	public static PatcherFix fetchPatcherFixByNextKeyVersion(
-		PatcherFix patcherFix, boolean older) {
-
-		List<PatcherFix> patcherFixes =
-			PatcherFixLocalServiceUtil.getPatcherFixes(
-				patcherFix.getKey(), patcherFix.getKeyVersion(),
-				PatcherFixConstants.TYPE_GENERATED_PRIVATE_PUBLIC, older);
-
-		if (patcherFixes.isEmpty()) {
-			return null;
-		}
-
-		return patcherFixes.get(0);
 	}
 
 	public static PatcherFix fetchSiblingChildPatcherBuildMainFix(

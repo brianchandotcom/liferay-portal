@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateFolderResource;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -753,6 +754,10 @@ public class DisplayPageTemplateFolderResourceTest
 				parentLayoutPageTemplateCollections);
 		}
 	}
+
+	@Inject
+	private DisplayPageTemplateFolderResource
+		_displayPageTemplateFolderResource;
 
 	@Inject
 	private LayoutPageTemplateCollectionLocalService

@@ -634,6 +634,22 @@ public class DefaultObjectEntryManagerImpl
 			groupIds = new Long[] {groupId};
 		}
 
+		List<Long> primaryKeys = objectEntryLocalService.getPrimaryKeys(
+			groupIds, companyId, dtoConverterContext.getUserId(),
+			objectDefinition.getObjectDefinitionId(), predicate, search, start,
+			end, sorts);
+
+		Map<String, Map<Long, List<com.liferay.object.model.ObjectEntry>>>
+			objectRelationshipRelatedObjectEntriesMap = new HashMap<>();
+
+		_populateObjectRelationshipRelatedObjectEntriesMap(
+			groupId, objectDefinition,
+			objectRelationshipRelatedObjectEntriesMap, primaryKeys);
+
+		dtoConverterContext.setAttribute(
+			"objectRelationshipRelatedObjectEntriesMap",
+			objectRelationshipRelatedObjectEntriesMap);
+
 		return Page.of(
 			HashMapBuilder.put(
 				"create",
@@ -674,10 +690,7 @@ public class DefaultObjectEntryManagerImpl
 			).build(),
 			facets,
 			TransformUtil.transform(
-				objectEntryLocalService.getPrimaryKeys(
-					groupIds, companyId, dtoConverterContext.getUserId(),
-					objectDefinition.getObjectDefinitionId(), predicate, search,
-					start, end, sorts),
+				primaryKeys,
 				primaryKey -> _getObjectEntry(
 					dtoConverterContext, objectDefinition, primaryKey)),
 			pagination,
@@ -2235,6 +2248,101 @@ public class DefaultObjectEntryManagerImpl
 		return false;
 	}
 
+	private void _populateObjectRelationshipRelatedObjectEntriesMap(
+			long groupId, ObjectDefinition objectDefinition,
+			Map<String, Map<Long, List<com.liferay.object.model.ObjectEntry>>>
+				objectRelationshipRelatedObjectEntriesMap,
+			List<Long> primaryKeys)
+		throws Exception {
+
+		if (primaryKeys.isEmpty()) {
+			return;
+		}
+
+		NestedFieldsSupplier.supplyUnsafeSupplier(
+			nestedFieldName -> {
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectDefinitionId1(
+							objectDefinition.getObjectDefinitionId(),
+							nestedFieldName);
+
+				if ((objectRelationship == null) ||
+					!objectRelationship.isAllowedObjectRelationshipType(
+						objectRelationship.getType())) {
+
+					return null;
+				}
+
+				ObjectDefinition relatedObjectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId2());
+
+				if (!relatedObjectDefinition.isActive() ||
+					!Objects.equals(
+						objectRelationship.getType(),
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
+					relatedObjectDefinition.isUnmodifiableSystemObject()) {
+
+					return null;
+				}
+
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							relatedObjectDefinition.getClassName(),
+							relatedObjectDefinition.getCompanyId(),
+							objectRelationship.getType());
+
+				long relatedObjectDefinitionGroupId = groupId;
+
+				if (Objects.equals(
+						relatedObjectDefinition.getScope(),
+						ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+					relatedObjectDefinitionGroupId = 0;
+				}
+
+				List<com.liferay.object.model.ObjectEntry> objectEntries =
+					objectRelatedModelsProvider.getRelatedModels(
+						relatedObjectDefinitionGroupId,
+						objectRelationship.getObjectRelationshipId(),
+						primaryKeys.toArray(new Long[0]), null,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				ObjectField relationshipObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectRelationship.getObjectFieldId2());
+
+				Map<Long, List<com.liferay.object.model.ObjectEntry>>
+					relatedObjectEntriesMap = new HashMap<>();
+
+				primaryKeys.forEach(
+					primaryKey -> relatedObjectEntriesMap.put(
+						primaryKey, new ArrayList<>()));
+
+				for (com.liferay.object.model.ObjectEntry objectEntry :
+						objectEntries) {
+
+					Map<String, Serializable> values = objectEntry.getValues();
+
+					Long parentObjectEntryId = GetterUtil.getLong(
+						values.get(relationshipObjectField.getName()));
+
+					List<com.liferay.object.model.ObjectEntry>
+						relatedObjectEntries = relatedObjectEntriesMap.get(
+							parentObjectEntryId);
+
+					relatedObjectEntries.add(objectEntry);
+				}
+
+				objectRelationshipRelatedObjectEntriesMap.put(
+					objectRelationship.getName(), relatedObjectEntriesMap);
+
+				return null;
+			});
+	}
+
 	private long _processAttachment(
 			ObjectDefinition objectDefinition, ObjectField objectField,
 			Object propertyValue, String scopeKey,
@@ -2720,6 +2828,10 @@ public class DefaultObjectEntryManagerImpl
 
 		defaultDTOConverterContext.setAttribute(
 			"objectDefinition", objectDefinition);
+		defaultDTOConverterContext.setAttribute(
+			"objectRelationshipRelatedObjectEntriesMap",
+			dtoConverterContext.getAttribute(
+				"objectRelationshipRelatedObjectEntriesMap"));
 
 		return _objectEntryDTOConverter.toDTO(
 			defaultDTOConverterContext, serviceBuilderObjectEntry);

@@ -3516,7 +3516,7 @@ public class DefaultObjectEntryManagerImplTest
 				exception.getMessage(),
 				StringBundler.concat(
 					"User ", _user.getUserId(),
-					" must have DELETE permission for ", dtoConverterContext,
+					" must have DELETE permission for ",
 					_objectDefinition3.getClassName(), StringPool.SPACE,
 					objectEntry2.getId()));
 		}
@@ -3842,7 +3842,8 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionAA, Collections.emptyMap());
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			objectDefinitionAA, objectEntryAA1.getId());
+			_createDTOConverterContext(), objectDefinitionAA,
+			objectEntryAA1.getId());
 
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(objectEntryAA1.getId()));

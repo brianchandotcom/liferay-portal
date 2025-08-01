@@ -4,7 +4,7 @@
  */
 
 import {useCallback, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {IUploadProperties} from '~/utils/types';
 
 import useGCSGetUploadOffset from './useGCSGetUploadOffset';
 import useTicketAttachmentsCompleteUpload from './useTicketAttachmentsCompleteUpload';
@@ -18,18 +18,22 @@ interface IParams {
 	ticketId: string;
 }
 
+interface IUploadResult {
+	success: boolean;
+	uploadProperties?: IUploadProperties;
+}
+
 interface IProps {
 	abortUpload: () => void;
 	loading: boolean;
 	progress: number;
-	uploadFile: (params: IParams) => Promise<boolean>;
+	uploadFile: (params: IParams) => Promise<IUploadResult>;
 }
 
 const useGCSUploadFile = (): IProps => {
 	const [abortController, setAbortController] =
 		useState<AbortController | null>(null);
 	const [loading, setLoading] = useState(false);
-	const navigate = useNavigate();
 	const [progress, setProgress] = useState(0);
 
 	const {
@@ -177,7 +181,7 @@ const useGCSUploadFile = (): IProps => {
 				setAbortController(null);
 
 				if (uploadFailed || controller.signal.aborted) {
-					return false;
+					return {success: false};
 				}
 
 				await completeUpload({
@@ -190,32 +194,36 @@ const useGCSUploadFile = (): IProps => {
 				}
 
 				if (!gcsGetUploadOffsetLoading && !completeUploadLoading) {
-					navigate(`/${ticketId}/upload-confirmation`, {
-						state: {
+					return {
+						success: true,
+						uploadProperties: {
 							attachmentName: file.name,
 							ticketId,
 							uploadAccountKey: accountKey,
 						},
-					});
-
-					return true;
+					};
 				}
 				else {
-					navigate(`/${ticketId}/unexpected-error`);
-
-					return false;
+					return {
+						success: false,
+						uploadProperties: {
+							errorCode: 'UNEXPECTED_ERROR',
+						},
+					};
 				}
 			}
 			catch (uploadError) {
-				navigate(`/${ticketId}/unexpected-error`, {
-					state: {
-						message: String(uploadError),
-					},
-				});
-
 				setProgress(0);
 
-				return false;
+				return {
+					success: false,
+					uploadProperties: {
+						errorCode: 'UNEXPECTED_ERROR',
+						errorMessage: String(uploadError),
+						ticketId,
+						uploadAccountKey: accountKey,
+					},
+				};
 			}
 			finally {
 				setLoading(false);
@@ -229,7 +237,6 @@ const useGCSUploadFile = (): IProps => {
 			gcsGetUploadOffsetError,
 			getUploadOffset,
 			gcsGetUploadOffsetLoading,
-			navigate,
 		]
 	);
 

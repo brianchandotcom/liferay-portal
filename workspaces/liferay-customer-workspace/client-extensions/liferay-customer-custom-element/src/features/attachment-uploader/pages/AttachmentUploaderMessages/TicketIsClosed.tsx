@@ -5,18 +5,14 @@
 
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-interface UnexpectedErrorProps {
-	uploadErrorMessage: string;
-}
-
-const UnexpectedError = ({uploadErrorMessage}: UnexpectedErrorProps) => {
+const TicketIsClosed = () => {
 	return (
 		<AttachmentMessage
 			icon="warning-full"
-			subtitle={uploadErrorMessage}
-			title="unexpected-error"
+			subtitle="no-further-edits-can-be-made-when-tickets-are-closed-please-open-a-new-support-ticket-if-assistance-is-needed"
+			title="this-ticket-has-been-closed"
 		/>
 	);
 };
 
-export default UnexpectedError;
+export default TicketIsClosed;

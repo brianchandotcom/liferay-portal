@@ -4,7 +4,7 @@
  */
 
 import {useCallback, useRef, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {IUploadProperties} from '~/utils/types';
 
 import {generateFileMd5} from '../utils/generateFileMd5';
 
@@ -13,9 +13,15 @@ interface IParams {
 	ticketId: string;
 }
 
+interface IGenerateMd5Result {
+	hash?: string;
+	success: boolean;
+	uploadProperties?: IUploadProperties;
+}
+
 interface IProps {
 	abortGenerateMd5: () => void;
-	generateMd5: (params: IParams) => Promise<string | null>;
+	generateMd5: (params: IParams) => Promise<IGenerateMd5Result>;
 	loading: boolean;
 	md5: string | null;
 }
@@ -24,10 +30,9 @@ export default function useGenerateFileMd5(): IProps {
 	const [loading, setLoading] = useState(false);
 	const [md5, setMd5] = useState<string | null>(null);
 	const abortControllerRef = useRef<AbortController | null>(null);
-	const navigate = useNavigate();
 
 	const generateMd5 = useCallback(
-		async (params: IParams): Promise<string | null> => {
+		async (params: IParams): Promise<IGenerateMd5Result> => {
 			if (abortControllerRef.current) {
 				abortControllerRef.current.abort();
 			}
@@ -37,7 +42,7 @@ export default function useGenerateFileMd5(): IProps {
 			setLoading(true);
 			setMd5(null);
 
-			const {file, ticketId} = params;
+			const {file} = params;
 
 			try {
 				const hash = await generateFileMd5(file);
@@ -45,41 +50,44 @@ export default function useGenerateFileMd5(): IProps {
 				if (abortControllerRef.current?.signal.aborted) {
 					setMd5(null);
 
-					return null;
+					return {
+						success: false,
+					};
 				}
 
 				setMd5(hash);
 
-				return hash;
+				return {hash, success: true};
 			}
 			catch (generateError) {
 				if (abortControllerRef.current?.signal.aborted) {
 					setMd5(null);
-				}
-				else {
-					navigate(`/${ticketId}/unexpected-error`, {
-						state: {
-							message: String(generateError),
+
+					return {
+						success: false,
+						uploadProperties: {
+							errorCode: 'UNEXPECTED_ERROR',
+							errorMessage: String(generateError),
 						},
-					});
+					};
 				}
 
-				return null;
+				return {
+					success: false,
+				};
 			}
 			finally {
 				setLoading(false);
-
 				abortControllerRef.current = null;
 			}
 		},
-		[navigate]
+		[]
 	);
 
 	const abortGenerateMd5 = useCallback(() => {
 		if (abortControllerRef.current) {
 			abortControllerRef.current.abort();
 			setLoading(false);
-
 			setMd5(null);
 		}
 	}, []);

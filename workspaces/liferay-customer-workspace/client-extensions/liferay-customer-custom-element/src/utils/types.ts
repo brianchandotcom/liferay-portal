@@ -143,6 +143,17 @@ export interface ITimeInput {
 	minutes: string;
 }
 
+export interface IUploadProperties {
+	accountKey?: string;
+	attachmentName?: string;
+	errorCode?: string;
+	errorMessage?: string;
+	gcsSessionURL?: string;
+	ticketAttachmentId?: string;
+	ticketId?: string;
+	uploadAccountKey?: string;
+}
+
 export interface IUserAccount {
 	accountBriefs?: IAccountBrief[];
 	accountKey?: string;

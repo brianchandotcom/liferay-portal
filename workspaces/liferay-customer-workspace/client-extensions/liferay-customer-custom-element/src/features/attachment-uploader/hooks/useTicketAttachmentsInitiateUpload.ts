@@ -4,8 +4,8 @@
  */
 
 import {useCallback, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
 import {Liferay} from '~/services/liferay';
+import {IUploadProperties} from '~/utils/types';
 
 interface IParams {
 	fileMd5: string;
@@ -14,27 +14,25 @@ interface IParams {
 	ticketId: string;
 }
 
-interface IResponse {
-	accountKey: string;
-	gcsSessionURL: string;
-	ticketAttachmentId: string;
+interface IUploadInitial {
+	success: boolean;
+	uploadProperties?: IUploadProperties;
 }
 
 interface IProps {
 	gcsSessionURL: string;
-	initiateUpload: (params: IParams) => Promise<IResponse | null>;
+	initiateUpload: (params: IParams) => Promise<IUploadInitial | null>;
 	loading: boolean;
 	ticketAttachmentId: string;
 }
 
 const useTicketAttachmentsInitiateUpload = (): IProps => {
 	const [loading, setLoading] = useState(false);
-	const navigate = useNavigate();
 	const [gcsSessionURL, setGCSSessionURL] = useState('');
 	const [ticketAttachmentId, setTicketAttachmentId] = useState('');
 
 	const initiateUpload = useCallback(
-		async (params: IParams): Promise<IResponse | null> => {
+		async (params: IParams): Promise<IUploadInitial | null> => {
 			setLoading(true);
 
 			const {fileMd5, fileName, fileSize, ticketId} = params;
@@ -66,36 +64,39 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 				setTicketAttachmentId(responseJSON.ticketAttachmentId);
 
 				return {
-					accountKey: responseJSON.accountKey,
-					gcsSessionURL: responseJSON.gcsSessionURL,
-					ticketAttachmentId: responseJSON.ticketAttachmentId,
+					success: true,
+					uploadProperties: {
+						accountKey: responseJSON.accountKey,
+						gcsSessionURL: responseJSON.gcsSessionURL,
+						ticketAttachmentId: responseJSON.ticketAttachmentId,
+					},
 				};
 			}
 			catch (uploadError) {
 				if ((uploadError as any).status === 409) {
-					navigate(`/${ticketId}/attachment-already-exists`, {
-						state: {
+					return {
+						success: false,
+						uploadProperties: {
 							attachmentName: fileName,
+							errorCode: 'ATTACHMENT_ALREADY_EXISTS',
 							ticketId,
 						},
-					});
-
-					return null;
+					};
 				}
 
-				navigate(`/${ticketId}/unexpected-error`, {
-					state: {
-						message: String(uploadError),
+				return {
+					success: false,
+					uploadProperties: {
+						errorCode: 'UNEXPECTED_ERROR',
+						errorMessage: String(uploadError),
 					},
-				});
-
-				return null;
+				};
 			}
 			finally {
 				setLoading(false);
 			}
 		},
-		[navigate]
+		[]
 	);
 
 	return {

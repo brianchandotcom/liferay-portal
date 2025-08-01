@@ -1,79 +1,92 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {Liferay} from '~/services/liferay';
+
+type ErrorCode =
+	| 'FORBIDDEN_ACCESS'
+	| 'TICKET_IS_CLOSED'
+	| 'INVALID_TICKET_NUMBER'
+	| 'ZENDESK_ORGANIZATION_ERROR'
+	| 'UNEXPECTED_ERROR'
+	| 'UNKNOWN';
 
 interface Props {
-  loading: boolean;
-  hasAccess: boolean | null;
+	errorCode: ErrorCode | null;
+	hasAccess: boolean | null;
+	loading: boolean;
 }
 
 export default function useCheckUploadAccess(): Props {
-  const { ticketId } = useParams();
-  const navigate = useNavigate();
+	const {ticketId} = useParams();
 
-  const [loading, setLoading] = useState(true);
-  const [hasAccess, setHasAccess] = useState<boolean | null>(null);
+	const [loading, setLoading] = useState(true);
+	const [hasAccess, setHasAccess] = useState<boolean | null>(null);
+	const [errorCode, setErrorCode] = useState<ErrorCode | null>(null);
 
-  useEffect(() => {
-    if (!ticketId) {
-      setLoading(false);
-      return;
-    }
+	useEffect(() => {
+		if (!ticketId) {
+			setLoading(false);
+			setHasAccess(false);
+			setErrorCode('INVALID_TICKET_NUMBER');
 
-    const controller = new AbortController();
+			return;
+		}
 
-    const fetchAccess = async () => {
-      try {
-        const response = await fetch(
-          `/o/customer/tickets/${ticketId}/ticket-attachments/upload-access-check`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            signal: controller.signal,
-          }
-        );
+		const controller = new AbortController();
 
-        if (response.ok) {
-          setHasAccess(true);
-        }
-        else {
-          const errorCode = await response.text();
+		const fetchAccess = async () => {
+			try {
+				const response =
+					await Liferay.OAuth2Client.FromUserAgentApplication(
+						'liferay-customer-etc-spring-boot-oaua'
+					).fetch(
+						`/tickets/${ticketId}/ticket-attachments/upload-access-check`,
+						{
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							method: 'GET',
+							signal: controller.signal,
+						}
+					);
 
-          switch (errorCode) {
-            case 'FORBIDDEN_ACCESS':
-              navigate(`/${ticketId}/forbidden-access`);
-              break;
-            case 'TICKET_IS_CLOSED':
-              navigate(`/${ticketId}/invalid-ticket-number`);
-              break;
-            case 'INVALID_TICKET_NUMBER':
-              navigate(`/invalid-ticket-number`);
-              break;
-            case 'ZENDESK_ORGANIZATION_ERROR':
-            case 'UNEXPECTED_ERROR':
-            default:
-              navigate(`/${ticketId}/unexpected-error`);
-          }
+				if (response.ok) {
+					setHasAccess(true);
+				}
+			}
+			catch (error: any) {
+				const errorCode = await error.text();
 
-          setHasAccess(false);
-        }
-      }
-      catch (error) {
-        if (!controller.signal.aborted) {
-          navigate(`/${ticketId}/unexpected-error`);
-        }
-      }
-      finally {
-        setLoading(false);
-      }
-    };
+				setHasAccess(false);
 
-    fetchAccess();
+				if (!controller.signal.aborted) {
+					switch (errorCode) {
+						case 'FORBIDDEN_ACCESS':
+						case 'TICKET_IS_CLOSED':
+						case 'INVALID_TICKET_NUMBER':
+						case 'ZENDESK_ORGANIZATION_ERROR':
+						case 'UNEXPECTED_ERROR':
+							setErrorCode(errorCode);
+							break;
+						default:
+							setErrorCode('UNEXPECTED_ERROR');
+					}
+				}
+			}
+			finally {
+				setLoading(false);
+			}
+		};
 
-    return () => {
-      controller.abort();
-    };
-  }, [ticketId, navigate]);
+		fetchAccess();
 
-  return { loading, hasAccess };
+		return () => controller.abort();
+	}, [ticketId]);
+
+	return {errorCode, hasAccess, loading};
 }

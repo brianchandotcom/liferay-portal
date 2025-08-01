@@ -245,7 +245,7 @@ public class ObjectEntryDTOConverter
 		ObjectEntry contentObjectEntry = (objectEntryVersion == null) ? null :
 			ObjectEntry.unsafeToDTO(objectEntryVersion.getContent());
 
-		TrashEntry trashEntry;
+		TrashEntry trashEntry = null;
 
 		if (serviceBuilderObjectEntry.getStatus() ==
 				WorkflowConstants.STATUS_IN_TRASH) {
@@ -254,6 +254,8 @@ public class ObjectEntryDTOConverter
 				objectDefinition.getClassName(),
 				serviceBuilderObjectEntry.getObjectEntryId());
 		}
+
+		TrashEntry finalTrashEntry = trashEntry;
 
 		return new ObjectEntry() {
 			{
@@ -388,19 +390,19 @@ public class ObjectEntryDTOConverter
 					});
 				setRemovedBy(
 					() -> {
-						if (trashEntry != null) {
+						if (finalTrashEntry != null) {
 							return CreatorUtil.toCreator(
 								_portal, dtoConverterContext.getUriInfo(),
 								_userLocalService.fetchUser(
-									trashEntry.getUserId()));
+									finalTrashEntry.getUserId()));
 						}
 
 						return null;
 					});
 				setRemovedDate(
 					() -> {
-						if (trashEntry != null) {
-							return trashEntry.getCreateDate();
+						if (finalTrashEntry != null) {
+							return finalTrashEntry.getCreateDate();
 						}
 
 						return null;

@@ -54,13 +54,14 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 			RandomTestUtil.randomString()
 		);
 
-		WorkflowDefinitionLinkSearchEntry searchEntry =
+		WorkflowDefinitionLinkSearchEntry workflowDefinitionLinkSearchEntry =
 			_workflowDefinitionLinkDisplayContext.
 				createWorkflowDefinitionLinkSearchEntry(
 					_workflowHandler, LocaleUtil.US);
 
 		Assert.assertEquals(
-			HtmlUtil.escapeAttribute(script), searchEntry.getResource());
+			HtmlUtil.escapeAttribute(script),
+			workflowDefinitionLinkSearchEntry.getResource());
 	}
 
 	private final WorkflowDefinitionLinkDisplayContext

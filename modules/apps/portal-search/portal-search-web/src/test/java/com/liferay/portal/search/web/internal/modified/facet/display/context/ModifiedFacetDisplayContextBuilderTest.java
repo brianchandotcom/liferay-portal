@@ -350,8 +350,30 @@ public class ModifiedFacetDisplayContextBuilderTest
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
 			modifiedFacetDisplayContextBuilder.build();
 
-		_assertBucketDisplayContextsDoNotHaveFromAndToParameters(
-			modifiedFacetDisplayContext.getBucketDisplayContexts());
+		for (BucketDisplayContext bucketDisplayContext :
+				modifiedFacetDisplayContext.getBucketDisplayContexts()) {
+
+			String label = bucketDisplayContext.getBucketText();
+
+			if (label.equals("custom-range")) {
+				continue;
+			}
+
+			String rangeURL = bucketDisplayContext.getFilterValue();
+
+			Assert.assertTrue(
+				Validator.isNotNull(
+					HttpComponentsUtil.getParameter(
+						rangeURL, "modified", false)));
+			Assert.assertTrue(
+				Validator.isNull(
+					HttpComponentsUtil.getParameter(
+						rangeURL, "modifiedFrom", false)));
+			Assert.assertTrue(
+				Validator.isNull(
+					HttpComponentsUtil.getParameter(
+						rangeURL, "modifiedTo", false)));
+		}
 	}
 
 	@Override
@@ -520,26 +542,6 @@ public class ModifiedFacetDisplayContextBuilderTest
 		jsonArray.put(jsonObject);
 	}
 
-	private void _assertBucketDisplayContextsDoNotHaveFromAndToParameters(
-		List<BucketDisplayContext> bucketDisplayContexts) {
-
-		for (BucketDisplayContext bucketDisplayContext :
-				bucketDisplayContexts) {
-
-			String label = bucketDisplayContext.getBucketText();
-
-			if (label.equals("custom-range")) {
-				continue;
-			}
-
-			String rangeURL = bucketDisplayContext.getFilterValue();
-
-			_assertHasParameter(rangeURL, "modified");
-			_assertDoesNotHasParameter(rangeURL, "modifiedFrom");
-			_assertDoesNotHasParameter(rangeURL, "modifiedTo");
-		}
-	}
-
 	private void _assertDisplayContext(Group group) throws Exception {
 		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
 			new ModifiedFacetDisplayContextBuilder(getRenderRequest(group));
@@ -556,18 +558,6 @@ public class ModifiedFacetDisplayContextBuilderTest
 		Assert.assertEquals(
 			group.getGroupId(),
 			modifiedFacetDisplayContext.getDisplayStyleGroupId());
-	}
-
-	private void _assertDoesNotHasParameter(String url, String name) {
-		Assert.assertTrue(
-			Validator.isNull(
-				HttpComponentsUtil.getParameter(url, name, false)));
-	}
-
-	private void _assertHasParameter(String url, String name) {
-		Assert.assertTrue(
-			Validator.isNotNull(
-				HttpComponentsUtil.getParameter(url, name, false)));
 	}
 
 	private JSONObject _createDataJSONObject(String... labelsAndRanges) {

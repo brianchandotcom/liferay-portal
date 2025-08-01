@@ -651,6 +651,28 @@ public class DisplayPageTemplateResourceTest
 			testPutSiteDisplayPageTemplatePermissionsPage_addDisplayPageTemplate();
 	}
 
+	private static com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate
+		_toDisplayPageTemplate(DisplayPageTemplate displayPageTemplate) {
+
+		if (displayPageTemplate == null) {
+			return null;
+		}
+
+		return com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate.
+			toDTO(displayPageTemplate.toString());
+	}
+
+	private static DisplayPageTemplate _toDisplayPageTemplate(
+		com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate
+			displayPageTemplate) {
+
+		if (displayPageTemplate == null) {
+			return null;
+		}
+
+		return DisplayPageTemplate.toDTO(displayPageTemplate.toString());
+	}
+
 	private FileEntry _addPortletFileEntry(long folderId) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -1758,28 +1780,6 @@ public class DisplayPageTemplateResourceTest
 					displayPageTemplate.getExternalReferenceCode(),
 					displayPageTemplate),
 			draftContentPageSpecification, publishedContentPageSpecification);
-	}
-
-	private com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate
-		_toDisplayPageTemplate(DisplayPageTemplate displayPageTemplate) {
-
-		if (displayPageTemplate == null) {
-			return null;
-		}
-
-		return com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate.
-			toDTO(displayPageTemplate.toString());
-	}
-
-	private DisplayPageTemplate _toDisplayPageTemplate(
-		com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate
-			displayPageTemplate) {
-
-		if (displayPageTemplate == null) {
-			return null;
-		}
-
-		return DisplayPageTemplate.toDTO(displayPageTemplate.toString());
 	}
 
 	private void _updateLayoutPageTemplateEntryStatus(

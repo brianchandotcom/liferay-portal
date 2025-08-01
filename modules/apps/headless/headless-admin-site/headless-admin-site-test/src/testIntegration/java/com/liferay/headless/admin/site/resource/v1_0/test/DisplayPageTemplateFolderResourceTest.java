@@ -342,6 +342,15 @@ public class DisplayPageTemplateFolderResourceTest
 				DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
 
+		if (LazyReferencingThreadLocal.isEnabled()) {
+			return _toDisplayPageTemplateFolder(
+				_displayPageTemplateFolderResource.
+					postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+						siteExternalReferenceCode,
+						_toDisplayPageTemplateFolder(
+							displayPageTemplateFolder)));
+		}
+
 		return displayPageTemplateFolderResource.
 			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 				siteExternalReferenceCode, displayPageTemplateFolder);
@@ -559,6 +568,30 @@ public class DisplayPageTemplateFolderResourceTest
 		return parentLayoutPageTemplateCollectionId;
 	}
 
+	private DisplayPageTemplateFolder
+			_putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				String siteExternalReferenceCode,
+				String displayPageTemplateFolderExternalReferenceCode,
+				DisplayPageTemplateFolder displayPageTemplateFolder)
+		throws Exception {
+
+		if (LazyReferencingThreadLocal.isEnabled()) {
+			return _toDisplayPageTemplateFolder(
+				_displayPageTemplateFolderResource.
+					putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+						siteExternalReferenceCode,
+						displayPageTemplateFolderExternalReferenceCode,
+						_toDisplayPageTemplateFolder(
+							displayPageTemplateFolder)));
+		}
+
+		return displayPageTemplateFolderResource.
+			putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				siteExternalReferenceCode,
+				displayPageTemplateFolderExternalReferenceCode,
+				displayPageTemplateFolder);
+	}
+
 	private void
 			_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 				String displayPageTemplateFolderExternalReferenceCode,
@@ -689,11 +722,10 @@ public class DisplayPageTemplateFolderResourceTest
 				parentDisplayPageTemplateFolderExternalReferenceCode);
 
 		DisplayPageTemplateFolder putDisplayPageTemplateFolder =
-			displayPageTemplateFolderResource.
-				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					testGroup.getExternalReferenceCode(),
-					displayPageTemplateFolder.getExternalReferenceCode(),
-					displayPageTemplateFolder);
+			_putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				testGroup.getExternalReferenceCode(),
+				displayPageTemplateFolder.getExternalReferenceCode(),
+				displayPageTemplateFolder);
 
 		assertEquals(displayPageTemplateFolder, putDisplayPageTemplateFolder);
 		assertValid(putDisplayPageTemplateFolder);
@@ -750,11 +782,10 @@ public class DisplayPageTemplateFolderResourceTest
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			displayPageTemplateFolderResource.
-				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					testGroup.getExternalReferenceCode(),
-					putDisplayPageTemplateFolder.getExternalReferenceCode(),
-					putDisplayPageTemplateFolder);
+			_putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				testGroup.getExternalReferenceCode(),
+				putDisplayPageTemplateFolder.getExternalReferenceCode(),
+				putDisplayPageTemplateFolder);
 
 			List<LayoutPageTemplateCollection>
 				parentLayoutPageTemplateCollections = new ArrayList<>();

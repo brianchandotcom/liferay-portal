@@ -368,6 +368,32 @@ public class DisplayPageTemplateFolderResourceTest
 			testPutSiteDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
 	}
 
+	private static
+		com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder
+			_toDisplayPageTemplateFolder(
+				DisplayPageTemplateFolder displayPageTemplateFolder) {
+
+		if (displayPageTemplateFolder == null) {
+			return null;
+		}
+
+		return com.liferay.headless.admin.site.dto.v1_0.
+			DisplayPageTemplateFolder.toDTO(
+				displayPageTemplateFolder.toString());
+	}
+
+	private static DisplayPageTemplateFolder _toDisplayPageTemplateFolder(
+		com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder
+			displayPageTemplateFolder) {
+
+		if (displayPageTemplateFolder == null) {
+			return null;
+		}
+
+		return DisplayPageTemplateFolder.toDTO(
+			displayPageTemplateFolder.toString());
+	}
+
 	private void _assertNoParentDisplayPageTemplateFolder(
 			DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {

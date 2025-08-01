@@ -219,7 +219,7 @@
 													"maxTerms": "1000",
 													"order": "key:asc",
 													"parameterName": "category",
-													"vocabularyIds": "34824"
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Article Categories$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}

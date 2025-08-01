@@ -31,6 +31,13 @@ public class EmptyLayoutTypeAccessPolicy extends BaseLayoutTypeAccessPolicy {
 	}
 
 	@Override
+	public boolean isUpdateLayoutAllowed(
+		PermissionChecker permissionChecker, Layout layout) {
+
+		return false;
+	}
+
+	@Override
 	public boolean isViewLayoutAllowed(
 			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException {

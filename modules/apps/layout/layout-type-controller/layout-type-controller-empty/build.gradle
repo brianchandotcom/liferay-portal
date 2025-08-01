@@ -9,7 +9,6 @@ dependencies {
 	compileOnly project(":apps:layout:layout-content-page-editor-api")
 	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:layout:layout-type-controller:layout-type-controller-api")
-	compileOnly project(":apps:layout:layout-utility-page-api")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")

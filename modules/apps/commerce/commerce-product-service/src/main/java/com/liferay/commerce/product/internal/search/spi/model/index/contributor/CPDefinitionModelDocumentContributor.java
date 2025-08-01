@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
@@ -255,7 +256,7 @@ public class CPDefinitionModelDocumentContributor
 				TransformUtil.transformToArray(
 					cpDefinitionSpecificationOptionValues,
 					cpDefinitionSpecificationOptionValue ->
-						com.liferay.portal.kernel.util.StringUtil.toLowerCase(
+						StringUtil.toLowerCase(
 							cpDefinitionSpecificationOptionValue.getValue(
 								cpDefinitionDefaultLanguageId)),
 					String.class));

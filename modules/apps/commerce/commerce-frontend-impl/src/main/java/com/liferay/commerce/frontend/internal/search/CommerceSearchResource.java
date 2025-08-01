@@ -114,7 +114,7 @@ public class CommerceSearchResource {
 			searchItemModels.addAll(
 				_searchProducts(
 					themeDisplay.getCompanyId(), layout.getGroupId(),
-					commerceContext, queryString, themeDisplay));
+					queryString, themeDisplay));
 
 			if (themeDisplay.isSignedIn()) {
 				searchItemModels.addAll(
@@ -443,8 +443,8 @@ public class CommerceSearchResource {
 	}
 
 	private List<SearchItemModel> _searchProducts(
-			long companyId, long groupId, CommerceContext commerceContext,
-			String queryString, ThemeDisplay themeDisplay)
+			long companyId, long groupId, String queryString,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<SearchItemModel> searchItemModels = new ArrayList<>();

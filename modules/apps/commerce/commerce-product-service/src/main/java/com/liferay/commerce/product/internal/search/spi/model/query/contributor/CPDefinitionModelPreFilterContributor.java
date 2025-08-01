@@ -246,32 +246,6 @@ public class CPDefinitionModelPreFilterContributor
 			commerceChannelBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
-	private void _filterByCPConfigurationListIds(
-		BooleanFilter booleanFilter, SearchContext searchContext) {
-
-		long[] cpConfigurationListIds = GetterUtil.getLongValues(
-			searchContext.getAttribute(CPField.CP_CONFIGURATION_LIST_IDS),
-			null);
-
-		if ((cpConfigurationListIds != null) &&
-			(cpConfigurationListIds.length > 0)) {
-
-			BooleanFilter cpConfigurationListIdsBooleanFilter =
-				new BooleanFilter();
-
-			for (long cpConfigurationListId : cpConfigurationListIds) {
-				cpConfigurationListIdsBooleanFilter.add(
-					new TermFilter(
-						CPField.CP_CONFIGURATION_LIST_IDS,
-						String.valueOf(cpConfigurationListId)),
-					BooleanClauseOccur.SHOULD);
-			}
-
-			booleanFilter.add(
-				cpConfigurationListIdsBooleanFilter, BooleanClauseOccur.MUST);
-		}
-	}
-
 	private void _filterByDefinitionLinks(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 

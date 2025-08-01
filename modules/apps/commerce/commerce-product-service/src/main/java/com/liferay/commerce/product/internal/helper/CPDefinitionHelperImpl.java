@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.product.internal.helper;
 
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.media.CommerceMediaResolverUtil;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
@@ -32,7 +31,6 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
-import com.liferay.commerce.util.CommerceContextThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -107,8 +105,6 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
-
-		CommerceContext commerceContext = CommerceContextThreadLocal.get();
 
 		if (!cpDefinition.isApproved() || !cpDefinition.isPublished()) {
 			return null;

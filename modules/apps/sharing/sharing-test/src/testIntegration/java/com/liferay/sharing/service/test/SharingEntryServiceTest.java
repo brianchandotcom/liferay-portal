@@ -572,7 +572,7 @@ public class SharingEntryServiceTest {
 		List<SharingEntry> sharingEntries =
 			_sharingEntryService.getSharingEntries(
 				_classNameId, _group.getGroupId(), _group.getGroupId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(
 			sharingEntries.toString(), sharingEntries.contains(sharingEntry1));

@@ -195,7 +195,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			getPermissionChecker(), classNameId, classPK, groupId);
 
 		return sharingEntryLocalService.getSharingEntries(
-			classNameId, classPK, start, end);
+			classNameId, classPK, start, end, orderByComparator);
 	}
 
 	@Override

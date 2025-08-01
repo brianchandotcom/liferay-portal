@@ -74,7 +74,7 @@ public class CollaboratorUtil {
 		List<SharingEntry> oldSharingEntries =
 			sharingEntryService.getSharingEntries(
 				classNameId, classPK, groupId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, null);
 
 		List<SharingEntry> newSharingEntries = new ArrayList<>();
 

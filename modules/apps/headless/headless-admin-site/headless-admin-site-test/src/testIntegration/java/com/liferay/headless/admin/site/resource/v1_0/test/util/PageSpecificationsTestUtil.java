@@ -357,6 +357,30 @@ public class PageSpecificationsTestUtil {
 		return new ExpandoTableAutocloseable();
 	}
 
+	public static PageSpecification[] getPageSpecificationsWithCustomFields(
+		String publishedPageSpecificationExternalReferenceCode,
+		PageSpecification.Type type) {
+
+		PageSpecification[] pageSpecifications;
+
+		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
+			pageSpecifications = _getContentPageSpecifications(
+				getCustomFields(), RandomTestUtil.randomString(), null,
+				getCustomFields(),
+				publishedPageSpecificationExternalReferenceCode, null);
+		}
+		else {
+			pageSpecifications = new PageSpecification[] {
+				getWidgetPageSpecification(
+					getCustomFields(),
+					publishedPageSpecificationExternalReferenceCode, null,
+					PageSpecification.Status.APPROVED)
+			};
+		}
+
+		return pageSpecifications;
+	}
+
 	public static PageSpecification[] getPatchPageSpecifications(
 		PageSpecification[] pageSpecifications) {
 
@@ -399,30 +423,6 @@ public class PageSpecificationsTestUtil {
 				widgetPageSpecification.getExternalReferenceCode(), null,
 				PageSpecification.Status.APPROVED)
 		};
-	}
-
-	public static PageSpecification[] getPageSpecificationsWithCustomFields(
-		String publishedPageSpecificationExternalReferenceCode,
-		PageSpecification.Type type) {
-
-		PageSpecification[] pageSpecifications;
-
-		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
-			pageSpecifications = _getContentPageSpecifications(
-				getCustomFields(), RandomTestUtil.randomString(), null,
-				getCustomFields(),
-				publishedPageSpecificationExternalReferenceCode, null);
-		}
-		else {
-			pageSpecifications = new PageSpecification[] {
-				getWidgetPageSpecification(
-					getCustomFields(),
-					publishedPageSpecificationExternalReferenceCode, null,
-					PageSpecification.Status.APPROVED)
-			};
-		}
-
-		return pageSpecifications;
 	}
 
 	public static WidgetPageSpecification getWidgetPageSpecification(

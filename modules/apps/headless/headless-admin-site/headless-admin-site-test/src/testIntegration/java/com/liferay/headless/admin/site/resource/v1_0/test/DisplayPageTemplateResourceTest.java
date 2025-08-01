@@ -1714,6 +1714,28 @@ public class DisplayPageTemplateResourceTest
 			draftContentPageSpecification, publishedContentPageSpecification);
 	}
 
+	private com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate
+		_toDisplayPageTemplate(DisplayPageTemplate displayPageTemplate) {
+
+		if (displayPageTemplate == null) {
+			return null;
+		}
+
+		return com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate.
+			toDTO(displayPageTemplate.toString());
+	}
+
+	private DisplayPageTemplate _toDisplayPageTemplate(
+		com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate
+			displayPageTemplate) {
+
+		if (displayPageTemplate == null) {
+			return null;
+		}
+
+		return DisplayPageTemplate.toDTO(displayPageTemplate.toString());
+	}
+
 	private void _updateLayoutPageTemplateEntryStatus(
 			String externalReferenceCode)
 		throws Exception {

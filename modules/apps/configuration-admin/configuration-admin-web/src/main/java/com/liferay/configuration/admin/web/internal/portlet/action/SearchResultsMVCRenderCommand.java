@@ -63,15 +63,15 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		Indexer<ConfigurationModel> indexer =
-			_indexerRegistry.nullSafeGetIndexer(ConfigurationModel.class);
-
-		Locale locale = renderRequest.getLocale();
-
-		SearchContext searchContext = _getSearchContext(
-			locale, renderRequest.getParameter("keywords"));
-
 		try {
+			Indexer<ConfigurationModel> indexer =
+				_indexerRegistry.nullSafeGetIndexer(ConfigurationModel.class);
+
+			Locale locale = renderRequest.getLocale();
+
+			SearchContext searchContext = _getSearchContext(
+				locale, renderRequest.getParameter("keywords"));
+
 			Hits hits = indexer.search(searchContext);
 
 			ConfigurationScopeDisplayContext configurationScopeDisplayContext =

@@ -31,95 +31,59 @@ public class SortTranslatorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testSortTranslatorWithCustomFieldAscOrder() {
-		List<Sort> sortList = List.of(
-			new Sort(
-				Field.ENTRY_CLASS_PK, Field.ENTRY_CLASS_PK, Sort.LONG_TYPE,
-				false));
+	public void testEntryClassNameField() {
+		List<SortOptions> sortOptionsList = _sortTranslator.translateSorts(
+			new Sort[] {new Sort(Field.ENTRY_CLASS_NAME, false)});
 
-		SortTranslator sortTranslator = new SortTranslator();
-
-		List<SortOptions> sortOptionsList = sortTranslator.translateSorts(
-			sortList.toArray(Sort[]::new));
-
-		_assetFirstFieldSort(
-			sortOptionsList, Field.ENTRY_CLASS_PK, SortOrder.Asc);
+		_assertSort(Field.ENTRY_CLASS_NAME, SortOrder.Asc, sortOptionsList);
 	}
 
 	@Test
-	public void testSortTranslatorWithCustomFieldDescOrder() {
-		List<Sort> sortList = List.of(
-			new Sort(
-				Field.ENTRY_CLASS_PK, Field.ENTRY_CLASS_PK, Sort.LONG_TYPE,
-				true));
+	public void testNondefaultSortableFieldAsc() {
+		List<SortOptions> sortOptionsList = _sortTranslator.translateSorts(
+			new Sort[] {new Sort(Field.ROLE_ID, Sort.LONG_TYPE, false)});
 
-		SortTranslator sortTranslator = new SortTranslator();
-
-		List<SortOptions> sortOptionsList = sortTranslator.translateSorts(
-			sortList.toArray(Sort[]::new));
-
-		_assetFirstFieldSort(
-			sortOptionsList, Field.ENTRY_CLASS_PK, SortOrder.Desc);
+		_assertSort(
+			Field.ROLE_ID + "_sortable", SortOrder.Asc, sortOptionsList);
 	}
 
 	@Test
-	public void testSortTranslatorWithEntryClassNameField() {
-		List<Sort> sortList = List.of(
-			new Sort(
-				Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_NAME,
-				Sort.STRING_TYPE, true));
+	public void testNondefaultSortableFieldDesc() {
+		List<SortOptions> sortOptionsList = _sortTranslator.translateSorts(
+			new Sort[] {new Sort(Field.ROLE_ID, Sort.LONG_TYPE, true)});
 
-		SortTranslator sortTranslator = new SortTranslator();
-
-		List<SortOptions> sortOptionsList = sortTranslator.translateSorts(
-			sortList.toArray(Sort[]::new));
-
-		_assetFirstFieldSort(
-			sortOptionsList, Field.ENTRY_CLASS_NAME, SortOrder.Desc);
+		_assertSort(
+			Field.ROLE_ID + "_sortable", SortOrder.Desc, sortOptionsList);
 	}
 
 	@Test
-	public void testSortTranslatorWithoutSorts() {
-		SortTranslator sortTranslator = new SortTranslator();
+	public void testPriorityField() {
+		List<SortOptions> sortOptionsList = _sortTranslator.translateSorts(
+			new Sort[] {new Sort(Field.PRIORITY, false)});
 
-		List<SortOptions> sortOptionsList = sortTranslator.translateSorts(
+		_assertSort(Field.PRIORITY, SortOrder.Asc, sortOptionsList);
+	}
+
+	@Test
+	public void testWithoutSorts() {
+		List<SortOptions> sortOptionsList = _sortTranslator.translateSorts(
 			new Sort[0]);
 
-		Assert.assertNotNull(sortOptionsList);
 		Assert.assertTrue(sortOptionsList.isEmpty());
 	}
 
-	@Test
-	public void testSortTranslatorWithPriorityField() {
-		List<Sort> sortList = List.of(new Sort(Field.PRIORITY, true));
-
-		SortTranslator sortTranslator = new SortTranslator();
-
-		List<SortOptions> sortOptionsList = sortTranslator.translateSorts(
-			sortList.toArray(Sort[]::new));
-
-		_assetFirstFieldSort(sortOptionsList, Field.PRIORITY, SortOrder.Desc);
-	}
-
-	private void _assetFirstFieldSort(
-		List<SortOptions> sortOptionsList, String expectedField,
-		SortOrder expectedSort) {
+	private void _assertSort(
+		String expectedField, SortOrder expectedSortOrder,
+		List<SortOptions> sortOptionsList) {
 
 		SortOptions sortOptions = sortOptionsList.get(0);
-
-		Assert.assertNotNull(sortOptions);
 
 		FieldSort fieldSort = sortOptions.field();
 
 		Assert.assertEquals(expectedField, fieldSort.field());
-
-		if (SortOrder.Desc == expectedSort) {
-			Assert.assertNotNull(fieldSort.order());
-			Assert.assertEquals(
-				expectedSort.name(),
-				fieldSort.order(
-				).name());
-		}
+		Assert.assertEquals(expectedSortOrder, fieldSort.order());
 	}
+
+	private final SortTranslator _sortTranslator = new SortTranslator();
 
 }

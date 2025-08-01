@@ -324,6 +324,64 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return _testProperties;
 	}
 
+	public static class Module {
+
+		public static Module getModule(Path path) {
+			File file = path.toFile();
+
+			if (!file.isDirectory()) {
+				return null;
+			}
+
+			for (int i = 0; i < _markerFileNames.size(); i++) {
+				for (String markerFileName : _markerFileNames.get(i)) {
+					File markerFile = new File(file, markerFileName);
+
+					if (markerFile.exists()) {
+						return new Module(file, i);
+					}
+				}
+			}
+
+			return null;
+		}
+
+		public File getFile() {
+			return _file;
+		}
+
+		public int getPriority() {
+			return _priority;
+		}
+
+		@Override
+		public String toString() {
+			return JenkinsResultsParserUtil.combine(
+				String.valueOf(_priority), " ", _file.toString());
+		}
+
+		private Module(File file, int priority) {
+			_file = file;
+			_priority = priority;
+		}
+
+		private static Map<Integer, String[]> _markerFileNames =
+			new HashMap<Integer, String[]>() {
+				{
+					put(0, new String[] {".lfrbuild-release-src", ".gitrepo"});
+					put(1, new String[] {"app.bnd"});
+					put(2, new String[] {"bnd.bnd"});
+					put(
+						3,
+						new String[] {"build.gradle", "build.xml", "pom.xml"});
+				}
+			};
+
+		private final File _file;
+		private final int _priority;
+
+	}
+
 	protected PortalGitWorkingDirectory(
 			String upstreamBranchName, String workingDirectoryPath)
 		throws IOException {
@@ -383,63 +441,5 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	private List<File> _jsUnitFiles;
 	private Properties _releaseProperties;
 	private Properties _testProperties;
-
-	private static class Module {
-
-		public static Module getModule(Path path) {
-			File file = path.toFile();
-
-			if (!file.isDirectory()) {
-				return null;
-			}
-
-			for (int i = 0; i < _markerFileNames.size(); i++) {
-				for (String markerFileName : _markerFileNames.get(i)) {
-					File markerFile = new File(file, markerFileName);
-
-					if (markerFile.exists()) {
-						return new Module(file, i);
-					}
-				}
-			}
-
-			return null;
-		}
-
-		public File getFile() {
-			return _file;
-		}
-
-		public int getPriority() {
-			return _priority;
-		}
-
-		@Override
-		public String toString() {
-			return JenkinsResultsParserUtil.combine(
-				String.valueOf(_priority), " ", _file.toString());
-		}
-
-		private Module(File file, int priority) {
-			_file = file;
-			_priority = priority;
-		}
-
-		private static Map<Integer, String[]> _markerFileNames =
-			new HashMap<Integer, String[]>() {
-				{
-					put(0, new String[] {".lfrbuild-release-src", ".gitrepo"});
-					put(1, new String[] {"app.bnd"});
-					put(2, new String[] {"bnd.bnd"});
-					put(
-						3,
-						new String[] {"build.gradle", "build.xml", "pom.xml"});
-				}
-			};
-
-		private final File _file;
-		private final int _priority;
-
-	}
 
 }

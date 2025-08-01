@@ -142,14 +142,11 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 						renderRequest.getLocale(),
 						"category." + configurationScreen.getCategoryKey()),
 					renderRequest.getLocale());
-
 				String configurationScreenKey = StringUtil.toLowerCase(
 					configurationScreen.getKey(), renderRequest.getLocale());
-
 				String configurationScreenName = StringUtil.toLowerCase(
 					configurationScreen.getName(renderRequest.getLocale()),
 					renderRequest.getLocale());
-
 				String searchReadyKeywords = StringUtil.toLowerCase(
 					keywords, renderRequest.getLocale());
 

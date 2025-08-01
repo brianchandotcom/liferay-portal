@@ -6,11 +6,9 @@
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.internal.sort.FieldSortImpl;
-import com.liferay.portal.search.sort.FieldSort;
-import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -18,13 +16,12 @@ import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -36,104 +33,82 @@ public class SearchSolrQueryAssemblerImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.openMocks(this);
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_searchSolrQueryAssemblerImpl = new SearchSolrQueryAssemblerImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			_searchSolrQueryAssemblerImpl, "_baseSolrQueryAssembler",
+			Mockito.mock(BaseSolrQueryAssembler.class));
 	}
 
 	@Test
-	public void testSearchSolrQueryAssemblerWithCustomFieldAscDesc() {
+	public void testEntryClassNameField() {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		FieldSort fieldSort = new FieldSortImpl(Field.ENTRY_CLASS_PK);
+		searchSearchRequest.setSorts(
+			new Sort[] {new Sort(Field.ENTRY_CLASS_NAME, false)});
 
-		fieldSort.setSortOrder(SortOrder.DESC);
-
-		searchSearchRequest.addSorts(fieldSort);
-
-		SolrQuery solrQuery = new SolrQuery();
-
-		SearchSolrQueryAssemblerImpl searchSolrQueryAssemblerImpl =
-			_setUpSearchSolrQueryAssemblerImpl();
-
-		searchSolrQueryAssemblerImpl.assemble(solrQuery, searchSearchRequest);
-
-		_assertFirstItemSort(
-			solrQuery.getSorts(), Field.ENTRY_CLASS_PK, SolrQuery.ORDER.desc);
+		_assertSort(
+			Field.ENTRY_CLASS_NAME, SolrQuery.ORDER.asc, searchSearchRequest);
 	}
 
 	@Test
-	public void testSearchSolrQueryAssemblerWithCustomFieldAscOrder() {
+	public void testNondefaultSortableFieldAsc() {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.addSorts(new FieldSortImpl(Field.ENTRY_CLASS_PK));
+		searchSearchRequest.setSorts(
+			new Sort[] {new Sort(Field.ROLE_ID, Sort.LONG_TYPE, false)});
 
-		SolrQuery solrQuery = new SolrQuery();
-
-		SearchSolrQueryAssemblerImpl searchSolrQueryAssemblerImpl =
-			_setUpSearchSolrQueryAssemblerImpl();
-
-		searchSolrQueryAssemblerImpl.assemble(solrQuery, searchSearchRequest);
-
-		_assertFirstItemSort(
-			solrQuery.getSorts(), Field.ENTRY_CLASS_PK, SolrQuery.ORDER.asc);
+		_assertSort(
+			Field.ROLE_ID + "_sortable", SolrQuery.ORDER.asc,
+			searchSearchRequest);
 	}
 
 	@Test
-	public void testSearchSolrQueryAssemblerWithEntryClassNameField() {
+	public void testNondefaultSortableFieldDesc() {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.addSorts(new FieldSortImpl(Field.ENTRY_CLASS_NAME));
+		searchSearchRequest.setSorts(
+			new Sort[] {new Sort(Field.ROLE_ID, Sort.LONG_TYPE, true)});
 
-		SolrQuery solrQuery = new SolrQuery();
-
-		SearchSolrQueryAssemblerImpl searchSolrQueryAssemblerImpl =
-			_setUpSearchSolrQueryAssemblerImpl();
-
-		searchSolrQueryAssemblerImpl.assemble(solrQuery, searchSearchRequest);
-
-		_assertFirstItemSort(
-			solrQuery.getSorts(), Field.ENTRY_CLASS_NAME, SolrQuery.ORDER.asc);
+		_assertSort(
+			Field.ROLE_ID + "_sortable", SolrQuery.ORDER.desc,
+			searchSearchRequest);
 	}
 
 	@Test
-	public void testSearchSolrQueryAssemblerWithoutSorts() {
+	public void testPriorityField() {
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setSorts(
+			new Sort[] {new Sort(Field.PRIORITY, false)});
+
+		_assertSort(Field.PRIORITY, SolrQuery.ORDER.asc, searchSearchRequest);
+	}
+
+	@Test
+	public void testWithoutSorts() {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		SolrQuery solrQuery = new SolrQuery();
 
-		SearchSolrQueryAssemblerImpl searchSolrQueryAssemblerImpl =
-			_setUpSearchSolrQueryAssemblerImpl();
+		_searchSolrQueryAssemblerImpl.assemble(solrQuery, searchSearchRequest);
 
-		searchSolrQueryAssemblerImpl.assemble(solrQuery, searchSearchRequest);
+		List<SolrQuery.SortClause> sorts = solrQuery.getSorts();
 
-		Assert.assertTrue(
-			solrQuery.getSorts(
-			).isEmpty());
+		Assert.assertTrue(sorts.isEmpty());
 	}
 
-	@Test
-	public void testSearchSolrQueryAssemblerWithPriorityField() {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.addSorts(new FieldSortImpl(Field.PRIORITY));
+	private void _assertSort(
+		String expectedItem, SolrQuery.ORDER expectedOrder,
+		SearchSearchRequest searchSearchRequest) {
 
 		SolrQuery solrQuery = new SolrQuery();
 
-		SearchSolrQueryAssemblerImpl searchSolrQueryAssemblerImpl =
-			_setUpSearchSolrQueryAssemblerImpl();
+		_searchSolrQueryAssemblerImpl.assemble(solrQuery, searchSearchRequest);
 
-		searchSolrQueryAssemblerImpl.assemble(solrQuery, searchSearchRequest);
-
-		_assertFirstItemSort(
-			solrQuery.getSorts(), Field.PRIORITY, SolrQuery.ORDER.asc);
-	}
-
-	private void _assertFirstItemSort(
-		List<SolrQuery.SortClause> sorts, String expectedItem,
-		SolrQuery.ORDER expectedOrder) {
-
-		Assert.assertNotNull(sorts);
+		List<SolrQuery.SortClause> sorts = solrQuery.getSorts();
 
 		SolrQuery.SortClause sort = sorts.get(0);
 
@@ -141,18 +116,6 @@ public class SearchSolrQueryAssemblerImplTest {
 		Assert.assertEquals(expectedOrder, sort.getOrder());
 	}
 
-	private SearchSolrQueryAssemblerImpl _setUpSearchSolrQueryAssemblerImpl() {
-		SearchSolrQueryAssemblerImpl searchSolrQueryAssemblerImpl =
-			new SearchSolrQueryAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			searchSolrQueryAssemblerImpl, "_baseSolrQueryAssembler",
-			_baseSolrQueryAssembler);
-
-		return searchSolrQueryAssemblerImpl;
-	}
-
-	@Mock
-	private BaseSolrQueryAssembler _baseSolrQueryAssembler;
+	private static SearchSolrQueryAssemblerImpl _searchSolrQueryAssemblerImpl;
 
 }

@@ -41,6 +41,7 @@ class MockBroadcastChannel {
 	},
 	ThemeDisplay: {
 		...(globalThis.Liferay.ThemeDisplay || {}),
+		getBCP47LanguageId: () => 'en-US',
 		getDefaultLanguageId: () => 'en_US',
 		getLanguageId: () => 'en_US',
 		getUserId: () => '1',

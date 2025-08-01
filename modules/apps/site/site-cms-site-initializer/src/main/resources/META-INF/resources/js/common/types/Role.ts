@@ -7,4 +7,7 @@ export type Role = {
 	externalReferenceCode: string;
 	id: number;
 	name: string;
+	name_i18n: {
+		[key: string]: string;
+	};
 };

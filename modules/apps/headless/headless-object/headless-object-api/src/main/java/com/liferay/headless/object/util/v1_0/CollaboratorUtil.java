@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -160,7 +161,9 @@ public class CollaboratorUtil {
 			TransformUtil.transform(
 				sharingEntryService.getSharingEntries(
 					classNameId, classPK, groupId,
-					pagination.getStartPosition(), pagination.getEndPosition()),
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					OrderByComparatorFactoryUtil.create(
+						"SharingEntry", "createDate", false)),
 				sharingEntry -> toCollaborator(
 					acceptLanguage, dtoConverter, dtoConverterRegistry,
 					sharingEntry, uriInfo, user)),

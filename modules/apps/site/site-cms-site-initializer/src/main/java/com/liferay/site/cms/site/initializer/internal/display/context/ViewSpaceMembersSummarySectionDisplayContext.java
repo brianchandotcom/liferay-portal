@@ -88,6 +88,7 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 					_getAssetLibraryCreatorUserId());
 				dropdownItem.putData(
 					"assetLibraryId", String.valueOf(_groupId));
+				dropdownItem.putData("hasAssignMembersPermission", _hasAssignMembersPermission());
 				dropdownItem.putData("title", _getSpaceMembersHeaderTitle());
 				dropdownItem.setLabel(
 					_language.get(_httpServletRequest, "add-members"));

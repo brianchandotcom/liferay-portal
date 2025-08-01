@@ -3,16 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export interface UserRole {
+	id: number;
+	name: string;
+}
+
 export interface UserAccount {
 	emailAddress: string;
 	id: string;
 	image?: string;
 	imageId: string;
 	name: string;
+	roles: UserRole[];
 }
 
 export interface UserGroup {
 	id: string;
 	name: string;
 	numberOfUserAccounts?: string;
+	roles: UserRole[];
 }

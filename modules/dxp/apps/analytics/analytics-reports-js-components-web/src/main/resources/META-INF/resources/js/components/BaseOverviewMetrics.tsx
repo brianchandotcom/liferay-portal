@@ -84,7 +84,7 @@ const BaseOverviewMetrics: React.FC<IBaseOverviewMetrics> = ({
 								'selected tab-focus': selected,
 							}
 						)}
-						data-testid={name}
+						data-testid={`overview__${name.toLocaleLowerCase()}-metric`}
 						key={metricType}
 						onClick={() => changeMetricFilter(metricType)}
 						onKeyDown={(event) => {
@@ -98,21 +98,23 @@ const BaseOverviewMetrics: React.FC<IBaseOverviewMetrics> = ({
 					>
 						<div
 							className="overview-metric__title"
-							data-testid={`${name}-title`}
+							data-testid={`overview__${name.toLocaleLowerCase()}-title`}
 						>
 							<Text size={3}>{name.toUpperCase()}</Text>
 						</div>
 
 						<div
 							className="overview-metric__value"
-							data-testid={`${name}-value`}
+							data-testid={`overview__${name.toLocaleLowerCase()}-value`}
 						>
 							{toThousands(value)}
 						</div>
 
 						<div className="overview-metric__comparison">
 							{trendPercentage !== 0 && (
-								<span data-testid={`${name}-percentage`}>
+								<span
+									data-testid={`overview__${name.toLocaleLowerCase()}-percentage`}
+								>
 									<Text
 										color={getStatsColor(
 											trend.trendClassification
@@ -130,7 +132,7 @@ const BaseOverviewMetrics: React.FC<IBaseOverviewMetrics> = ({
 
 							<span
 								className="ml-1 overview-metric__percentage-description"
-								data-testid={`${name}-percentage-description`}
+								data-testid={`overview__${name.toLocaleLowerCase()}-percentage-description`}
 							>
 								{small ? (
 									<Text

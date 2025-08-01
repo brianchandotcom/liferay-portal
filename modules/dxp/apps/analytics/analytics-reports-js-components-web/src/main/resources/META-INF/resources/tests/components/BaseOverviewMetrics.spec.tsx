@@ -87,28 +87,32 @@ describe('CMS Asset Type Info Panel Metrics Component', () => {
 	it('renders all cards', () => {
 		render(<WrapperComponent />);
 
-		const impressions = screen.getByTestId('impressions');
-		const views = screen.getByTestId('views');
-		const downloads = screen.getByTestId('downloads');
+		const impressions = screen.getByTestId('overview__impressions-metric');
+		const views = screen.getByTestId('overview__views-metric');
+		const downloads = screen.getByTestId('overview__downloads-metric');
 
 		expect(impressions).toBeInTheDocument();
 		expect(views).toBeInTheDocument();
 		expect(downloads).toBeInTheDocument();
 
-		const impressionsTitle = screen.getByTestId('impressions-title');
-		const viewsTitle = screen.getByTestId('views-title');
-		const downloadsTitle = screen.getByTestId('downloads-title');
+		const impressionsTitle = screen.getByTestId(
+			'overview__impressions-title'
+		);
+		const viewsTitle = screen.getByTestId('overview__views-title');
+		const downloadsTitle = screen.getByTestId('overview__downloads-title');
 
 		expect(impressionsTitle.textContent).toEqual('IMPRESSIONS');
 		expect(viewsTitle.textContent).toEqual('VIEWS');
 		expect(downloadsTitle.textContent).toEqual('DOWNLOADS');
 
 		const impressionsPercentageIcon = screen.getByTestId(
-			'impressions-percentage'
+			'overview__impressions-percentage'
 		);
-		const viewsPercentageIcon = screen.getByTestId('views-percentage');
+		const viewsPercentageIcon = screen.getByTestId(
+			'overview__views-percentage'
+		);
 		const downloadsPercentageIcon = screen.getByTestId(
-			'downloads-percentage'
+			'overview__downloads-percentage'
 		);
 
 		expect(
@@ -120,13 +124,13 @@ describe('CMS Asset Type Info Panel Metrics Component', () => {
 		).toBeTruthy();
 
 		const impressionsPercentageDescription = screen.getByTestId(
-			'impressions-percentage-description'
+			'overview__impressions-percentage-description'
 		);
 		const viewsPercentageDescription = screen.getByTestId(
-			'views-percentage-description'
+			'overview__views-percentage-description'
 		);
 		const downloadsPercentageDescription = screen.getByTestId(
-			'downloads-percentage-description'
+			'overview__downloads-percentage-description'
 		);
 
 		expect(impressionsPercentageDescription.textContent).toEqual('10%');
@@ -148,9 +152,9 @@ describe('CMS Asset Type Info Panel Metrics Component', () => {
 	it('allows keyboard navigation and selection', async () => {
 		render(<WrapperComponent />);
 
-		const impressions = screen.getByTestId('impressions');
-		const views = screen.getByTestId('views');
-		const downloads = screen.getByTestId('downloads');
+		const impressions = screen.getByTestId('overview__impressions-metric');
+		const views = screen.getByTestId('overview__views-metric');
+		const downloads = screen.getByTestId('overview__downloads-metric');
 
 		expect(impressions).toHaveAttribute('aria-pressed', 'true');
 

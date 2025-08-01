@@ -77,7 +77,7 @@ const MetricsChartLegend: React.FC<IMetricsChartLegendProps> = ({
 									)}
 								>
 									<Text size={3}>
-										{`${title}`} {total && `: ${total}`}
+										{`${title}${total ? `: ${total}` : ''}`}
 									</Text>
 								</ClayLink>
 							) : (

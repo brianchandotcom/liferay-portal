@@ -167,6 +167,17 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			utilityPageResource.getSiteSiteByExternalReferenceCodeUtilityPage(
 				testGroup.getExternalReferenceCode(),
 				postUtilityPage.getExternalReferenceCode()));
+
+		try (PageSpecificationsTestUtil.ExpandoTableAutocloseable
+				expandoTableAutoCloseable =
+					PageSpecificationsTestUtil.getExpandoTableAutoCloseable()) {
+
+			_assertNestedFields(
+				utilityPageResource.
+					getSiteSiteByExternalReferenceCodeUtilityPage(
+						testGroup.getExternalReferenceCode(),
+						postUtilityPage.getExternalReferenceCode()));
+		}
 	}
 
 	@Override

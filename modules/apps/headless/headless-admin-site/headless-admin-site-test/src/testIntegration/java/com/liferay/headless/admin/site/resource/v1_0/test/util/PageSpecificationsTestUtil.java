@@ -262,6 +262,12 @@ public class PageSpecificationsTestUtil {
 		Assert.assertEquals(
 			Arrays.toString(pageSpecifications), 2, pageSpecifications.length);
 
+		if (layout.isTypeUtility()) {
+			for (PageSpecification pageSpecification : pageSpecifications) {
+				Assert.assertNull(pageSpecification.getCustomFields());
+			}
+		}
+
 		assertContentPageSpecification(pageSpecifications[0], layout.getPlid());
 
 		Layout draftLayout = layout.fetchDraftLayout();

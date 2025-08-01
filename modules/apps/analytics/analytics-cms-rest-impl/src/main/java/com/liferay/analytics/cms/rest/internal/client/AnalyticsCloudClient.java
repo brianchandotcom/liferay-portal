@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
+import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryHistogramMetric;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryMetric;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +39,70 @@ public class AnalyticsCloudClient {
 
 	public AnalyticsCloudClient(Http http) {
 		_http = http;
+	}
+
+	public ObjectEntryHistogramMetric getObjectEntryHistogramMetric(
+			AnalyticsConfiguration analyticsConfiguration,
+			String externalReferenceCode, Long groupId, Integer rangeKey,
+			String[] selectedMetrics)
+		throws Exception {
+
+		try {
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			List<Long> groupIds = new ArrayList<>();
+
+			if (groupId != null) {
+				groupIds.add(groupId);
+			}
+
+			options.setLocation(
+				_getUrl(
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					externalReferenceCode, groupIds,
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					"/overview/histogram", rangeKey, selectedMetrics));
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				ObjectEntryHistogramMetric objectEntryHistogramMetric = null;
+
+				JsonNode jsonNode = ObjectMapperHolder._objectMapper.readTree(
+					content);
+
+				if (jsonNode != null) {
+					TypeFactory typeFactory = TypeFactory.defaultInstance();
+
+					ObjectReader objectReader =
+						ObjectMapperHolder._objectMapper.readerFor(
+							typeFactory.constructType(
+								ObjectEntryHistogramMetric.class));
+
+					objectEntryHistogramMetric = objectReader.readValue(
+						jsonNode);
+				}
+
+				return objectEntryHistogramMetric;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response code " + response.getResponseCode());
+			}
+
+			throw new PortalException(
+				"Unable to get object entry histogram metric");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to get object entry histogram metric", exception);
+		}
 	}
 
 	public ObjectEntryMetric getObjectEntryMetric(

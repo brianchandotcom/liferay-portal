@@ -16,7 +16,9 @@ import java.nio.file.PathMatcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -24,6 +26,10 @@ import java.util.Objects;
  */
 public abstract class BaseGlobJobProperty
 	extends BaseTestDirJobProperty implements GlobJobProperty {
+
+	public Map<String, List<String>> getGlobTestClassMethodsMap() {
+		return _globTestClassMethodsMap;
+	}
 
 	@Override
 	public List<PathMatcher> getPathMatchers() {
@@ -55,6 +61,38 @@ public abstract class BaseGlobJobProperty
 
 			if (relativeGlob.startsWith("/")) {
 				relativeGlob = relativeGlob.substring(1);
+			}
+
+			if (relativeGlob.contains("#")) {
+				String[] testMethods = relativeGlob.split("#");
+
+				if (testMethods.length == 2) {
+					String testClassGlob = testMethods[0];
+
+					String testClassMethodName = testMethods[1];
+
+					relativeGlob = testClassGlob;
+
+					List<String> testClassMethodNames;
+
+					if (_globTestClassMethodsMap.containsKey(testClassGlob)) {
+						testClassMethodNames = _globTestClassMethodsMap.get(
+							testClassGlob);
+
+						testClassMethodNames.add(testClassMethodName);
+
+						_globTestClassMethodsMap.replace(
+							relativeGlob, testClassMethodNames);
+					}
+					else {
+						testClassMethodNames = new ArrayList<>();
+
+						testClassMethodNames.add(testClassMethodName);
+
+						_globTestClassMethodsMap.put(
+							relativeGlob, testClassMethodNames);
+					}
+				}
 			}
 
 			relativeGlobs.add(relativeGlob);
@@ -137,5 +175,8 @@ public abstract class BaseGlobJobProperty
 
 		return portalGitWorkingDirectory.getWorkingDirectory();
 	}
+
+	private final Map<String, List<String>> _globTestClassMethodsMap =
+		new HashMap<>();
 
 }

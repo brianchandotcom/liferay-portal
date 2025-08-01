@@ -198,6 +198,60 @@ async function updateSpace(externalReferenceCode: string, body: any) {
 	);
 }
 
+async function updateUserRoles(payload: {
+	roleIds: number[];
+	spaceId: string;
+	userId: string;
+}): Promise<{
+	data: {
+		roleIds: number[];
+		spaceId: string;
+		userId: string;
+	} | null;
+	error: string | null;
+}> {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			if (Math.random() > 0.5) {
+				resolve({data: payload, error: null});
+			}
+			else {
+				resolve({
+					data: null,
+					error: 'An unexpected error occurred while updating roles.',
+				});
+			}
+		}, 300);
+	});
+}
+
+async function updateUserGroupRoles(payload: {
+	roleIds: number[];
+	spaceId: string;
+	userGroupId: string;
+}): Promise<{
+	data: {
+		roleIds: number[];
+		spaceId: string;
+		userGroupId: string;
+	} | null;
+	error: string | null;
+}> {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			if (Math.random() > 0.5) {
+				resolve({data: payload, error: null});
+			}
+			else {
+				resolve({
+					data: null,
+					error: 'An unexpected error occurred while updating roles.',
+				});
+			}
+		}, 300);
+	});
+}
+
 export default {
 	addSpace,
 	getSpace,
@@ -209,4 +263,6 @@ export default {
 	unlinkUserFromSpace,
 	unlinkUserGroupFromSpace,
 	updateSpace,
+	updateUserGroupRoles,
+	updateUserRoles,
 };

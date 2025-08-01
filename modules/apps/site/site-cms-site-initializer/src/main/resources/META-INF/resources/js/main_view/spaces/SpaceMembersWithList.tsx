@@ -11,7 +11,9 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 
+import AdminUserService from '../../common/services/AdminUserService';
 import SpaceService from '../../common/services/SpaceService';
+import {Role} from '../../common/types/Role';
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 import {MembersListItem} from './MemberListItem';
 import {
@@ -50,30 +52,39 @@ export function SpaceMembersWithList({
 	const [userGroupsLastPage, setUserGroupsLastPage] = useState(0);
 	const [userGroupsPage, setUserGroupsPage] = useState(1);
 	const sentinelRef = useRef(null);
+	const [spacePermissionsRoles, setSpacePermissionsRoles] = useState<Role[]>(
+		[]
+	);
 
 	useEffect(() => {
 		const fetchMembers = async () => {
 			setIsFetchingMembers(true);
 
 			try {
-				const [spaceUsers, spaceUserGroups] = await Promise.all([
-					SpaceService.getSpaceUsers({
-						page: 1,
-						pageSize,
-						spaceId: assetLibraryId,
-					}),
-					SpaceService.getSpaceUserGroups({
-						nestedFields: 'numberOfUserAccounts',
-						page: 1,
-						pageSize,
-						spaceId: assetLibraryId,
-					}),
-				]);
+				const [spaceUsers, spaceUserGroups, userRoles] =
+					await Promise.all([
+						SpaceService.getSpaceUsers({
+							nestedFields: 'roles',
+							page: 1,
+							pageSize,
+							spaceId: assetLibraryId,
+						}),
+						SpaceService.getSpaceUserGroups({
+							nestedFields: 'numberOfUserAccounts,roles',
+							page: 1,
+							pageSize,
+							spaceId: assetLibraryId,
+						}),
+						AdminUserService.getUserRoles({
+							filter: 'type eq 5',
+						}),
+					]);
 
 				setSelectedUsers(spaceUsers.items);
 				setSelectedUserGroups(spaceUserGroups.items);
 				setUserGroupsLastPage(spaceUserGroups.lastPage);
 				setUsersLastPage(spaceUsers.lastPage);
+				setSpacePermissionsRoles(userRoles.items);
 			}
 			catch (error) {
 				console.error(error);
@@ -104,6 +115,7 @@ export function SpaceMembersWithList({
 
 			try {
 				const spaceUsers = await SpaceService.getSpaceUsers({
+					nestedFields: 'roles',
 					page: newUsersPage,
 					pageSize,
 					spaceId: assetLibraryId,
@@ -135,6 +147,7 @@ export function SpaceMembersWithList({
 
 		try {
 			const spaceUserGroups = await SpaceService.getSpaceUserGroups({
+				nestedFields: 'numberOfUserAccounts,roles',
 				page: newUserGroupsPage,
 				pageSize,
 				spaceId: assetLibraryId,
@@ -322,6 +335,13 @@ export function SpaceMembersWithList({
 		}
 	};
 
+	const onUpdateItemRoles = useCallback(
+		async (itemToUpdate: UserAccount | UserGroup, newRoles: number[]) => {
+			console.log(itemToUpdate, newRoles);
+		},
+		[]
+	);
+
 	const listLabelId = useId();
 
 	return (
@@ -354,6 +374,8 @@ export function SpaceMembersWithList({
 						itemType="user"
 						items={selectedUsers}
 						onRemoveItem={onRemoveItem}
+						onUpdateItemRoles={onUpdateItemRoles}
+						roles={spacePermissionsRoles}
 					/>
 				) : (
 					<MembersListItem
@@ -364,6 +386,8 @@ export function SpaceMembersWithList({
 						itemType="group"
 						items={selectedUserGroups}
 						onRemoveItem={onRemoveItem}
+						onUpdateItemRoles={onUpdateItemRoles}
+						roles={spacePermissionsRoles}
 					/>
 				)}
 

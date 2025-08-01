@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -181,6 +182,8 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			return _addLayoutUtilityPageEntry(groupId, utilityPage);
 		}
 
+		_validateUtilityPage(utilityPage);
+
 		Layout layout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());
 
@@ -286,6 +289,8 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		_validateUtilityPage(utilityPage);
+
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			_portal.getSiteDefaultLocale(groupId), utilityPage.getName());
 
@@ -341,6 +346,20 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		}
 
 		throw new UnsupportedOperationException();
+	}
+
+	private void _validateUtilityPage(UtilityPage utilityPage) {
+		if (ArrayUtil.isEmpty(utilityPage.getPageSpecifications())) {
+			return;
+		}
+
+		for (PageSpecification pageSpecification :
+				utilityPage.getPageSpecifications()) {
+
+			if (pageSpecification.getCustomFields() != null) {
+				throw new UnsupportedOperationException();
+			}
+		}
 	}
 
 	private static final Map<UtilityPage.Type, String>

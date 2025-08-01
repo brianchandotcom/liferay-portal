@@ -1,0 +1,198 @@
+{
+	"#child-nodes": [
+		{
+			"#tag-name": "name",
+			"#value": "919a7355-98aa-0973-a46a-4d15c0868789"
+		},
+		{
+			"#tag-name": "version",
+			"#value": "1"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "StartNode"
+				},
+				{
+					"#tag-name": "description",
+					"#value": "Begin a workflow."
+				},
+				{
+					"#cdata-value": [
+						"{",
+						"    \"xy\": [",
+						"        100,",
+						"        40",
+						"    ]",
+						"}"
+					],
+					"#tag-name": "metadata"
+				},
+				{
+					"#tag-name": "initial",
+					"#value": "true"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#tag-name": "label",
+							"#value": "Start",
+							"language-id": "en_US"
+						}
+					],
+					"#tag-name": "labels"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#child-nodes": [
+								{
+									"#child-nodes": [
+										{
+											"#tag-name": "label",
+											"#value": "connector1239",
+											"language-id": "pt_BR"
+										}
+									],
+									"#tag-name": "labels"
+								},
+								{
+									"#tag-name": "name",
+									"#value": "connector1239"
+								},
+								{
+									"#tag-name": "target",
+									"#value": "EndNode"
+								},
+								{
+									"#tag-name": "default",
+									"#value": "true"
+								}
+							],
+							"#tag-name": "transition"
+						}
+					],
+					"#tag-name": "transitions"
+				}
+			],
+			"#tag-name": "state"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "EndNode"
+				},
+				{
+					"#tag-name": "description",
+					"#value": "Concluir fluxo de trabalho."
+				},
+				{
+					"#cdata-value": [
+						"{",
+						"    \"terminal\": true,",
+						"    \"xy\": [",
+						"        100,",
+						"        500",
+						"    ]",
+						"}"
+					],
+					"#tag-name": "metadata"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#child-nodes": [
+								{
+									"#tag-name": "name",
+									"#value": "Approve"
+								},
+								{
+									"#tag-name": "description",
+									"#value": "Approve"
+								},
+								{
+									"#tag-name": "status",
+									"#value": "0"
+								},
+								{
+									"#tag-name": "execution-type",
+									"#value": "onEntry"
+								}
+							],
+							"#tag-name": "action"
+						},
+						{
+							"#child-nodes": [
+								{
+									"#tag-name": "name",
+									"#value": "dont-send-if-not-needed"
+								},
+								{
+									"#cdata-value": [
+										"\"A notification that won't be sent if a recipient cannot be found\""
+									],
+									"#tag-name": "description"
+								},
+								{
+									"#cdata-value": [
+										"Hello"
+									],
+									"#tag-name": "template"
+								},
+								{
+									"#tag-name": "template-language",
+									"#value": "text"
+								},
+								{
+									"#tag-name": "notification-type",
+									"#value": "email"
+								},
+								{
+									"#child-nodes": [
+										{
+											"#child-nodes": [
+												{
+													"#tag-name": "script"
+												},
+												{
+													"#tag-name": "script-language",
+													"#value": "groovy"
+												}
+											],
+											"#tag-name": "scripted-recipient"
+										}
+									],
+									"#tag-name": "recipients",
+									"receptionType": "to"
+								},
+								{
+									"#tag-name": "execution-type",
+									"#value": "onEntry"
+								}
+							],
+							"#tag-name": "notification"
+						}
+					],
+					"#tag-name": "actions"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#tag-name": "label",
+							"#value": "End",
+							"language-id": "en_US"
+						}
+					],
+					"#tag-name": "labels"
+				}
+			],
+			"#tag-name": "state"
+		}
+	],
+	"#tag-name": "workflow-definition",
+	"xmlns": "urn:liferay.com:liferay-workflow_7.4.0",
+	"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+	"xsi:schemaLocation": "urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+}

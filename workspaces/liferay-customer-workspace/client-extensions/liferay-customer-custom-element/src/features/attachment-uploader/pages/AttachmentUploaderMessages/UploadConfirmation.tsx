@@ -9,7 +9,7 @@ import routerPath from '~/utils/routerPath';
 
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-interface IUploadParams {
+interface IProps {
 	attachmentName: string;
 	ticketId: string;
 	uploadAccountKey: string;
@@ -19,7 +19,7 @@ const UploadConfirmation = ({
 	attachmentName,
 	ticketId,
 	uploadAccountKey,
-}: IUploadParams) => {
+}: IProps) => {
 	const pageRoutes = routerPath();
 	const {helpCenterURL} = useAppPropertiesContext();
 

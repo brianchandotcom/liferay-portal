@@ -15,13 +15,13 @@ type ErrorCode =
 	| 'UNEXPECTED_ERROR'
 	| 'UNKNOWN';
 
-interface Props {
+interface IResponse {
 	errorCode: ErrorCode | null;
 	hasAccess: boolean | null;
 	loading: boolean;
 }
 
-export default function useCheckUploadAccess(): Props {
+export default function useCheckUploadAccess(): IResponse {
 	const {ticketId} = useParams();
 
 	const [loading, setLoading] = useState(true);

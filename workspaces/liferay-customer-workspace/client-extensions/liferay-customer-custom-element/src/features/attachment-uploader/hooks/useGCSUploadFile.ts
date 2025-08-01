@@ -18,7 +18,7 @@ interface IParams {
 	ticketId: string;
 }
 
-interface IUploadResult {
+interface IResponse {
 	success: boolean;
 	uploadProperties?: IUploadProperties;
 }
@@ -27,7 +27,7 @@ interface IProps {
 	abortUpload: () => void;
 	loading: boolean;
 	progress: number;
-	uploadFile: (params: IParams) => Promise<IUploadResult>;
+	uploadFile: (params: IParams) => Promise<IResponse>;
 }
 
 const useGCSUploadFile = (): IProps => {

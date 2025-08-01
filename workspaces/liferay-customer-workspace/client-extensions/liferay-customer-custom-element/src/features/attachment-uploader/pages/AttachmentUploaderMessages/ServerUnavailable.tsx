@@ -9,12 +9,12 @@ import routerPath from '~/utils/routerPath';
 
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-interface IUploadParams {
+interface IProps {
 	ticketId: string;
 	uploadAccountKey: string;
 }
 
-const ServerUnavailable = ({ticketId, uploadAccountKey}: IUploadParams) => {
+const ServerUnavailable = ({ticketId, uploadAccountKey}: IProps) => {
 	const pageRoutes = routerPath();
 
 	const {helpCenterURL} = useAppPropertiesContext();

@@ -14,14 +14,14 @@ interface IParams {
 	ticketId: string;
 }
 
-interface IUploadInitial {
+interface IResponse {
 	success: boolean;
 	uploadProperties?: IUploadProperties;
 }
 
 interface IProps {
 	gcsSessionURL: string;
-	initiateUpload: (params: IParams) => Promise<IUploadInitial | null>;
+	initiateUpload: (params: IParams) => Promise<IResponse | null>;
 	loading: boolean;
 	ticketAttachmentId: string;
 }
@@ -32,7 +32,7 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 	const [ticketAttachmentId, setTicketAttachmentId] = useState('');
 
 	const initiateUpload = useCallback(
-		async (params: IParams): Promise<IUploadInitial | null> => {
+		async (params: IParams): Promise<IResponse | null> => {
 			setLoading(true);
 
 			const {fileMd5, fileName, fileSize, ticketId} = params;

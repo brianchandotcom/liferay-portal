@@ -28,17 +28,14 @@ import {
 	UploadConfirmation,
 } from '../AttachmentUploaderMessages';
 
-interface IAttachmentUploader {
+interface IProps {
 	setUploadStateData: React.Dispatch<
 		React.SetStateAction<IUploadProperties | null>
 	>;
 	uploadStateData: IUploadProperties | null;
 }
 
-const AttachmentUploader = ({
-	setUploadStateData,
-	uploadStateData,
-}: IAttachmentUploader) => {
+const AttachmentUploader = ({setUploadStateData, uploadStateData}: IProps) => {
 	const {loading: accessCheckLoading} = useCheckUploadAccess();
 
 	const [comment, setComment] = useState<string>('');
@@ -148,28 +145,11 @@ const AttachmentUploader = ({
 			setHasPersonalData(false);
 
 			setUploadStateData(uploadResponse.uploadProperties ?? null);
-
-			if (
-				uploadResponse.uploadProperties?.errorCode ===
-				'COMMENT_POST_FAILED'
-			) {
-				setUploadResult('COMMENT_ERROR');
-			}
-			else {
-				setUploadResult('SUCCESS');
-			}
+			setUploadResult('SUCCESS');
 		}
 		else {
-			const message =
-				uploadResponse.uploadProperties?.errorMessage ?? 'Error';
-
-			if (message.includes('COMMENT_POST_FAILED')) {
-				setUploadResult('COMMENT_ERROR');
-			}
-			else {
-				setUploadResult('SERVER_ERROR');
-				setUploadStateData(uploadResponse.uploadProperties ?? null);
-			}
+			setUploadResult('SERVER_ERROR');
+			setUploadStateData(uploadResponse.uploadProperties ?? null);
 		}
 	}, [
 		comment,
@@ -214,7 +194,7 @@ const AttachmentUploader = ({
 	};
 
 	if (accessCheckLoading) {
-		return;
+		return null;
 	}
 
 	if (uploadResult === 'SUCCESS' && uploadStateData) {

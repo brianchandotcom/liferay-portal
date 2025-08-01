@@ -5,11 +5,11 @@
 
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-interface UnexpectedErrorProps {
+interface IProps {
 	uploadErrorMessage: string;
 }
 
-const UnexpectedError = ({uploadErrorMessage}: UnexpectedErrorProps) => {
+const UnexpectedError = ({uploadErrorMessage}: IProps) => {
 	return (
 		<AttachmentMessage
 			icon="warning-full"

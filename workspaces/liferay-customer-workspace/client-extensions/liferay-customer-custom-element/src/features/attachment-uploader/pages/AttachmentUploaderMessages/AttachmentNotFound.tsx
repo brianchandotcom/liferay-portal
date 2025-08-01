@@ -8,11 +8,11 @@ import routerPath from '~/utils/routerPath';
 
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-interface IAttachmentNotFound {
+interface IProps {
 	uploadAccountKey: string;
 }
 
-const AttachmentNotFound = ({uploadAccountKey}: IAttachmentNotFound) => {
+const AttachmentNotFound = ({uploadAccountKey}: IProps) => {
 	const pageRoutes = routerPath();
 
 	return (

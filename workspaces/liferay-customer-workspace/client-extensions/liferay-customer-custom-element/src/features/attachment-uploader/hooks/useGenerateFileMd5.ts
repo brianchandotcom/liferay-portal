@@ -13,7 +13,7 @@ interface IParams {
 	ticketId: string;
 }
 
-interface IGenerateMd5Result {
+interface IResponse {
 	hash?: string;
 	success: boolean;
 	uploadProperties?: IUploadProperties;
@@ -21,7 +21,7 @@ interface IGenerateMd5Result {
 
 interface IProps {
 	abortGenerateMd5: () => void;
-	generateMd5: (params: IParams) => Promise<IGenerateMd5Result>;
+	generateMd5: (params: IParams) => Promise<IResponse>;
 	loading: boolean;
 	md5: string | null;
 }
@@ -32,7 +32,7 @@ export default function useGenerateFileMd5(): IProps {
 	const abortControllerRef = useRef<AbortController | null>(null);
 
 	const generateMd5 = useCallback(
-		async (params: IParams): Promise<IGenerateMd5Result> => {
+		async (params: IParams): Promise<IResponse> => {
 			if (abortControllerRef.current) {
 				abortControllerRef.current.abort();
 			}

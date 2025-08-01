@@ -848,10 +848,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePage randomSitePage = _getRandomSitePage(type);
 
 		PageSpecification[] pageSpecifications =
-			PageSpecificationsTestUtil.
-				getPostPageSpecificationsWithCustomFields(
-					randomSitePage.getExternalReferenceCode(),
-					_getPageSpecificationType(type));
+			PageSpecificationsTestUtil.getPageSpecificationsWithCustomFields(
+				randomSitePage.getExternalReferenceCode(),
+				_getPageSpecificationType(type));
 
 		randomSitePage.setPageSpecifications(pageSpecifications);
 

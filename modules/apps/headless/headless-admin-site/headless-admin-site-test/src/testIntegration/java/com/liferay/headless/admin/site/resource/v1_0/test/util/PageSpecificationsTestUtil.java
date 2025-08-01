@@ -401,7 +401,7 @@ public class PageSpecificationsTestUtil {
 		};
 	}
 
-	public static PageSpecification[] getPostPageSpecificationsWithCustomFields(
+	public static PageSpecification[] getPageSpecificationsWithCustomFields(
 		String publishedPageSpecificationExternalReferenceCode,
 		PageSpecification.Type type) {
 

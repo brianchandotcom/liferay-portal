@@ -952,8 +952,7 @@ public class DisplayPageTemplateResourceTest
 			setParentDisplayPageTemplateFolderExternalReferenceCode(
 				parentDisplayPageTemplateFolder.getExternalReferenceCode());
 
-		_assertProblemException(
-			"BAD_REQUEST", null,
+		_assertUnsupportedOperationException(
 			() -> unsafeFunction.apply(displayPageTemplateFolder));
 
 		Assert.assertNull(

@@ -507,7 +507,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"model.class.name", objectDefinition.getClassName()
 					).build()));
-
 			serviceRegistrations.add(
 				_bundleContext.registerService(
 					WorkflowHandler.class,

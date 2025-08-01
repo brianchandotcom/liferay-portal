@@ -62,6 +62,18 @@ public class TestClassFactory {
 
 	public static TestClass newTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile,
+		List<String> testClassMethodNames) {
+
+		if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
+			return new JUnitTestClass(
+				batchTestClassGroup, testClassFile, testClassMethodNames);
+		}
+
+		return _newTestClass(batchTestClassGroup, null, testClassFile, null);
+	}
+
+	public static TestClass newTestClass(
+		BatchTestClassGroup batchTestClassGroup, File testClassFile,
 		String testClassMethodName) {
 
 		return _newTestClass(

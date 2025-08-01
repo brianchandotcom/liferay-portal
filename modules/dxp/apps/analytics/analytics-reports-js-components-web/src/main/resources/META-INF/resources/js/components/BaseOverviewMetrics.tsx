@@ -36,7 +36,7 @@ export type OverviewMetricsData = {
 	selectedMetrics: MetricData[];
 };
 
-const MetricsTitle: Metrics = {
+export const MetricsTitle: Metrics = {
 	[MetricType.Comments]: Liferay.Language.get('comments'),
 	[MetricType.Downloads]: Liferay.Language.get('downloads'),
 	[MetricType.Impressions]: Liferay.Language.get('impressions'),

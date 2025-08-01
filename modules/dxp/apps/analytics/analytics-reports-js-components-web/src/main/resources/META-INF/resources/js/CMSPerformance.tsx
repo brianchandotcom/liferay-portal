@@ -10,6 +10,7 @@ import {CheckPermissions} from './components/cms/CheckPermissions';
 import GlobalFilters from './components/cms/GlobalFilters';
 import OverviewMetrics from './components/cms/OverviewMetrics';
 import {TopPagesMetrics} from './components/cms/TopPagesMetrics';
+import {TrafficChannels} from './components/cms/TrafficChannels';
 import {AssetMetrics} from './components/cms/asset-metrics/AssetMetrics';
 
 import '../css/cms_performance.scss';
@@ -44,6 +45,8 @@ const CMSPerformance: React.FC<ICMSPerformanceProps> = ({
 					<AssetMetrics />
 
 					<TopPagesMetrics />
+
+					<TrafficChannels />
 				</ContextProvider>
 			</CheckPermissions>
 		</div>

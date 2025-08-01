@@ -1477,6 +1477,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public boolean isTypeEmpty() {
+		return Objects.equals(getType(), LayoutConstants.TYPE_EMPTY);
+	}
+
+	@Override
 	public boolean isTypeLinkToLayout() {
 		if (Objects.equals(getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT) ||
 			Objects.equals(

@@ -804,7 +804,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "moveObjectEntryToTrash",
-				_moveObjectEntryToTrashParameterTypes20);
+				_moveObjectEntryToTrashParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, objectEntry, serviceContext);
@@ -846,7 +846,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "partialUpdateObjectEntry",
-				_partialUpdateObjectEntryParameterTypes21);
+				_partialUpdateObjectEntryParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId, values, serviceContext);
@@ -887,7 +887,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "subscribeObjectEntry",
-				_subscribeObjectEntryParameterTypes22);
+				_subscribeObjectEntryParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId, objectEntryId);
@@ -923,7 +923,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "unsubscribeObjectEntry",
-				_unsubscribeObjectEntryParameterTypes23);
+				_unsubscribeObjectEntryParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, objectEntryId);
@@ -961,7 +961,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "updateObjectEntry",
-				_updateObjectEntryParameterTypes24);
+				_updateObjectEntryParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId, values, serviceContext);
@@ -1004,7 +1004,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "validate",
-				_validateParameterTypes25);
+				_validateParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, objectEntry,
@@ -1105,26 +1105,26 @@ public class ObjectEntryServiceHttp {
 		_hasPortletResourcePermissionParameterTypes17 = new Class[] {
 			long.class, long.class, String.class
 		};
-	private static final Class<?>[] _moveObjectEntryToTrashParameterTypes20 =
+	private static final Class<?>[] _moveObjectEntryToTrashParameterTypes18 =
 		new Class[] {
 			long.class, com.liferay.object.model.ObjectEntry.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _partialUpdateObjectEntryParameterTypes21 =
+	private static final Class<?>[] _partialUpdateObjectEntryParameterTypes19 =
 		new Class[] {
 			long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _subscribeObjectEntryParameterTypes22 =
+	private static final Class<?>[] _subscribeObjectEntryParameterTypes20 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _unsubscribeObjectEntryParameterTypes23 =
+	private static final Class<?>[] _unsubscribeObjectEntryParameterTypes21 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateObjectEntryParameterTypes24 =
+	private static final Class<?>[] _updateObjectEntryParameterTypes22 =
 		new Class[] {
 			long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _validateParameterTypes25 = new Class[] {
+	private static final Class<?>[] _validateParameterTypes23 = new Class[] {
 		long.class, com.liferay.object.model.ObjectEntry.class,
 		java.util.List.class,
 		com.liferay.portal.kernel.service.ServiceContext.class

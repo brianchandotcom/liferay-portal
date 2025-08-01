@@ -9542,6 +9542,75 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPostObjectEntryExpire() throws Exception {
+
+		// company scope
+
+		ObjectEntry companyObjectEntry =
+			_objectEntryLocalService.addObjectEntry(
+				0, TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, companyObjectEntry.getStatus());
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_getEndpoint(_objectDefinition1, 0), StringPool.SLASH,
+				companyObjectEntry.getObjectEntryId(), "/expire"),
+			Http.Method.POST);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			jsonObject.getJSONObject(
+				"status"
+			).get(
+				"code"
+			));
+
+		// site scope
+
+		Group group = _groupLocalService.fetchGroup(_testGroupId);
+
+		ObjectEntry siteObjectEntry = _objectEntryLocalService.addObjectEntry(
+			group.getGroupId(), TestPropsValues.getUserId(),
+			_siteScopedObjectDefinition1.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, siteObjectEntry.getStatus());
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_getEndpoint(_siteScopedObjectDefinition1, group.getGroupId()),
+				"/by-external-reference-code/",
+				siteObjectEntry.getExternalReferenceCode(), "/expire"),
+			Http.Method.POST);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			jsonObject.getJSONObject(
+				"status"
+			).get(
+				"code"
+			));
+	}
+
+	@Test
 	public void testPostObjectEntryWithKeywordsAndTaxonomyCategoryIdsWhenCategorizationDisabled()
 		throws Exception {
 

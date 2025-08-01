@@ -1762,7 +1762,7 @@ public class ObjectEntryLocalServiceImpl
 			new ArrayList<>();
 
 		if ((objectEntryVersions != null) && !objectEntryVersions.isEmpty()) {
-			objectEntryVersionStatusOVPs = _getObjectEntryVersionStatuses(
+			objectEntryVersionStatusOVPs = _getObjectEntryVersionStatusOVPs(
 				objectEntryVersions);
 		}
 
@@ -3917,7 +3917,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private List<ObjectValuePair<Long, Integer>> _getObjectEntryVersionStatuses(
+	private List<ObjectValuePair<Long, Integer>> _getObjectEntryVersionStatusOVPs(
 		List<ObjectEntryVersion> objectEntryVersions) {
 
 		return TransformUtil.transform(

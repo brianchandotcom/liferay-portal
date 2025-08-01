@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.web.internal.util;
 
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -134,20 +135,13 @@ public class DateRangeFactoryUtilTest {
 					"[past-year TO past-month]", _calendar)));
 	}
 
-	@FunctionalInterface
-	protected interface CheckedRunnable {
-
-		public void run() throws Exception;
-
-	}
-
-	private void _assertForEachLocale(CheckedRunnable checkedRunnable)
+	private void _assertForEachLocale(UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		for (Locale locale : _locales) {
 			LocaleThreadLocal.setDefaultLocale(locale);
 
-			checkedRunnable.run();
+			unsafeRunnable.run();
 		}
 	}
 

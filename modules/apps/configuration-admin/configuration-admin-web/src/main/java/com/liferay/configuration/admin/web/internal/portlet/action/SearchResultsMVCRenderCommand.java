@@ -66,22 +66,20 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		Indexer<ConfigurationModel> indexer =
 			_indexerRegistry.nullSafeGetIndexer(ConfigurationModel.class);
 
-		String keywords = renderRequest.getParameter("keywords");
 		Locale locale = renderRequest.getLocale();
 
-		SearchContext searchContext = _getSearchContext(locale, keywords);
+		SearchContext searchContext = _getSearchContext(
+			locale, renderRequest.getParameter("keywords"));
 
 		try {
 			Hits hits = indexer.search(searchContext);
-
-			Document[] documents = hits.getDocs();
 
 			ConfigurationScopeDisplayContext configurationScopeDisplayContext =
 				ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
 			List<ConfigurationEntry> configurationEntries =
 				_getConfigurationEntries(
-					configurationScopeDisplayContext, documents, locale);
+					configurationScopeDisplayContext, hits.getDocs(), locale);
 
 			List<ConfigurationScreen> matchingConfigurationScreens =
 				_getMatchingConfigurationScreens(

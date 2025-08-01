@@ -154,11 +154,15 @@
 
 									<div class="mt-2 subsection">
 										<#list 0..grandchildrenJSONArray.length()-1 as j>
-											<#assign grandchildJSONObject = grandchildrenJSONArray.getJSONObject(j) />
+											<#assign grandchildJSONObject = grandchildrenJSONArray.getJSONObject(j)! />
 
-											<a href="${grandchildJSONObject.getString("url")}">
-												${grandchildJSONObject.getString("title")}
-											</a>
+											<#if grandchildJSONObject??
+												&& grandchildJSONObject["title"]?has_content
+												&& grandchildJSONObject["url"]?has_content>
+												<a href="${grandchildJSONObject["url"]!}">
+													${grandchildJSONObject["title"]!}
+												</a>
+											</#if>
 										</#list>
 									</div>
 								</#if>
@@ -166,7 +170,6 @@
 						</#list>
 					</div>
 				</#if>
-
 				<div class="learn-article-categories-tags">
 					<#list taxonomyVocabularies as vocabulary>
 						<div class="align-items-baseline d-flex mt-2">

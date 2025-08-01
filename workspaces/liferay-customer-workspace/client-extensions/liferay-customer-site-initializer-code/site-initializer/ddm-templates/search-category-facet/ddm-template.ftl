@@ -273,42 +273,36 @@
 		}
 	}
 
+	function ${namespace}deselectCheckboxes(attribute, value, target) {
+		const selectedCheckboxes = document.querySelectorAll('input.facet-term:checked');
+
+		selectedCheckboxes.forEach(selectedCheckbox => {
+			event.preventDefault();
+
+			const selectedValue = selectedCheckbox.getAttribute(attribute);
+
+			if (selectedValue === value) {
+				selectedCheckbox.checked = false;
+
+				${namespace}deselectCheckboxes(attribute, selectedValue, target);
+			}
+		});
+	}
+
 	function ${namespace}handleSelection(event) {
 		event.preventDefault();
 
 		const checkbox = event.target;
-		const selectedCheckboxes = document.querySelectorAll('.facet-term');
 
 		const parentId = checkbox.getAttribute('data-parent-id');
 
 		if (checkbox.checked && parentId) {
-			selectedCheckboxes.forEach(parentCheckbox => {
-				if (parentCheckbox.getAttribute('data-term-id') === parentId && parentCheckbox.checked) {
-					parentCheckbox.checked = false;
-
-					const changeEvent = new Event('change', {
-						bubbles: true,
-						cancelable: true
-					});
-
-					parentCheckbox.dispatchEvent(changeEvent);
-				}
-			});
-		} else if (!checkbox.checked) {
+			${namespace}deselectCheckboxes('data-term-id', parentId, 'data-parent-id');
+		}
+		else if (!checkbox.checked) {
 			const termId = checkbox.getAttribute('data-term-id');
 
-			selectedCheckboxes.forEach(childCheckbox => {
-				if (childCheckbox.checked && (childCheckbox.getAttribute('data-parent-id') === termId)) {
-					childCheckbox.checked = false;
-
-					const changeEvent = new Event('change', {
-						bubbles: true,
-						cancelable: true
-					});
-
-					childCheckbox.dispatchEvent(changeEvent);
-				}
-			});
+			${namespace}deselectCheckboxes('data-parent-id', termId, 'data-term-id');
 		}
 
 		Liferay.Search.FacetUtil.changeSelection(event);

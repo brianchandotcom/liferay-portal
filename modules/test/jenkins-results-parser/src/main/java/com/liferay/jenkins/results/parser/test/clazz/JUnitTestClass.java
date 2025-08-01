@@ -123,6 +123,10 @@ public class JUnitTestClass extends BaseTestClass {
 		return getTestTaskName();
 	}
 
+	public List<String> getSpecificTestMethods() {
+		return _specificTestMethods;
+	}
+
 	@Override
 	public String getTestClassName() {
 		return JenkinsResultsParserUtil.combine(
@@ -192,6 +196,64 @@ public class JUnitTestClass extends BaseTestClass {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
+		}
+	}
+
+	protected JUnitTestClass(
+		BatchTestClassGroup batchTestClassGroup, File testClassFile,
+		List<String> testClassMethodNames) {
+
+		super(batchTestClassGroup, testClassFile);
+
+		File modulesBaseDir = _getPortalModulesBaseDir();
+
+		if ((modulesBaseDir != null) && modulesBaseDir.exists()) {
+			_modulesBaseDir = modulesBaseDir;
+		}
+		else {
+			_modulesBaseDir = new File(".");
+		}
+
+		File testPropertiesBaseDir = getTestPropertiesBaseDir(
+			getTestClassFile());
+
+		if ((testPropertiesBaseDir != null) && testPropertiesBaseDir.exists()) {
+			_testPropertiesFile = new File(
+				testPropertiesBaseDir, "test.properties");
+
+			String testrayMainComponentName =
+				JenkinsResultsParserUtil.getProperty(
+					JenkinsResultsParserUtil.getProperties(_testPropertiesFile),
+					"testray.main.component.name");
+
+			if ((testrayMainComponentName == null) &&
+				_modulesBaseDir.exists()) {
+
+				testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
+					JenkinsResultsParserUtil.getProperties(
+						_getParentTestPropertiesFile(testPropertiesBaseDir)),
+					"testray.main.component.name");
+			}
+
+			_testrayMainComponentName = testrayMainComponentName;
+		}
+		else {
+			_testPropertiesFile = null;
+			_testrayMainComponentName = null;
+		}
+
+		String testClassFileName = testClassFile.getName();
+
+		if (!testClassFileName.endsWith(".java")) {
+			return;
+		}
+
+		boolean methodIgnored = false;
+
+		for (String methodName : testClassMethodNames) {
+			_specificTestMethods.add(methodName);
+
+			addTestClassMethod(methodIgnored, methodName);
 		}
 	}
 
@@ -469,6 +531,7 @@ public class JUnitTestClass extends BaseTestClass {
 	private boolean _cachedTestReportSearched;
 	private boolean _classIgnored;
 	private final File _modulesBaseDir;
+	private final List<String> _specificTestMethods = new ArrayList<>();
 	private final File _testPropertiesFile;
 	private final String _testrayMainComponentName;
 

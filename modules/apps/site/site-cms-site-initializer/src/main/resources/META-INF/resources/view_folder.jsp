@@ -20,6 +20,7 @@ ViewFolderSectionDisplayContext viewFolderSectionDisplayContext = (ViewFolderSec
 	</div>
 
 	<frontend-data-set:headless-display
+		additionalProps="<%= viewFolderSectionDisplayContext.getAdditionalProps() %>"
 		apiURL="<%= viewFolderSectionDisplayContext.getAPIURL() %>"
 		bulkActionDropdownItems="<%= viewFolderSectionDisplayContext.getBulkActionDropdownItems() %>"
 		creationMenu="<%= viewFolderSectionDisplayContext.getCreationMenu() %>"

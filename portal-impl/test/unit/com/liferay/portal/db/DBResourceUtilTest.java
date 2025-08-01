@@ -14,6 +14,8 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -45,6 +47,19 @@ public class DBResourceUtilTest {
 		throws Exception {
 
 		_testGetModuleIndexesSQL(StringPool.RETURN_NEW_LINE);
+	}
+
+	@Test
+	public void testGetPortalTablesPrimaryKeyColumnNames() throws Exception {
+		Map<String, String[]> portalTablesPrimaryKeyColumnNames =
+			DBResourceUtil.getPortalTablesPrimaryKeyColumnNames();
+
+		Assert.assertArrayEquals(
+			new String[] {"companyId"},
+			portalTablesPrimaryKeyColumnNames.get("Company"));
+		Assert.assertArrayEquals(
+			new String[] {"virtualHostId", "ctCollectionId"},
+			portalTablesPrimaryKeyColumnNames.get("VirtualHost"));
 	}
 
 	private InputStream _getSQLFileInputStream(String lineSeparator) {

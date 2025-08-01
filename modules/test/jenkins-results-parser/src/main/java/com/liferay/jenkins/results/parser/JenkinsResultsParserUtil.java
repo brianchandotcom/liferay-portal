@@ -5504,6 +5504,12 @@ public class JenkinsResultsParserUtil {
 			httpAuthorization);
 	}
 
+	public static PathMatcher toPathMatcher(String prefix, String glob) {
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		return fileSystem.getPathMatcher(combine("glob:", prefix, glob));
+	}
+
 	public static List<PathMatcher> toPathMatchers(
 		String prefix, List<String> globs) {
 

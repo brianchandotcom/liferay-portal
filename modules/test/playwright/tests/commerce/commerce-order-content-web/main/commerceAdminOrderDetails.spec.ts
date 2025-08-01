@@ -409,6 +409,11 @@ test(
 			['test@liferay.com']
 		);
 
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id
+			);
+
 		const cartItem1 = {
 			options: '[]',
 			quantity: 3,
@@ -426,7 +431,9 @@ test(
 		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 			{
 				accountId: account.id,
+				billingAddressId: address.id,
 				cartItems: [cartItem1, cartItem2],
+				shippingAddressId: address.id,
 			},
 			channel.id
 		);

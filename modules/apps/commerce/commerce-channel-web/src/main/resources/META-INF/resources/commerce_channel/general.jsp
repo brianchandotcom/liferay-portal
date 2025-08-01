@@ -161,7 +161,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 					</div>
 
 					<div class="col-lg-6">
-						<aui:input checked="<%= commerceChannelDisplayContext.isGuestCheckoutEnabled() %>" helpMessage="configures-whether-a-guest-may-checkout-by-providing-an-email-address-or-if-they-must-sign-in" label="guest-checkout" labelOff="disabled" labelOn="enabled" name="settings--guestCheckoutEnabled--" type="toggle-switch" />
+						<aui:input checked="<%= commerceChannelDisplayContext.isGuestCheckoutEnabled() %>" helpMessage="configures-whether-a-guest-may-check-out-by-providing-an-email-address-or-if-they-must-sign-in" label="guest-checkout" labelOff="disabled" labelOn="enabled" name="settings--guestCheckoutEnabled--" type="toggle-switch" />
 					</div>
 
 					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-58472") %>'>

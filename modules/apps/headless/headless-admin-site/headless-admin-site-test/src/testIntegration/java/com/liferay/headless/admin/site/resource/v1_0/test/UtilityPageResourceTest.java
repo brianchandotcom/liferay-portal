@@ -861,7 +861,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 									setPageSpecifications(
 										() ->
 											PageSpecificationsTestUtil.
-												getPostPageSpecificationsWithCustomFields(
+												getPageSpecificationsWithCustomFields(
 													pageSpecification.
 														getExternalReferenceCode(),
 													PageSpecification.Type.
@@ -949,7 +949,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			utilityPage.setPageSpecifications(
 				() ->
 					PageSpecificationsTestUtil.
-						getPostPageSpecificationsWithCustomFields(
+						getPageSpecificationsWithCustomFields(
 							RandomTestUtil.randomString(),
 							PageSpecification.Type.CONTENT_PAGE_SPECIFICATION));
 
@@ -1052,7 +1052,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			utilityPage.setPageSpecifications(
 				() ->
 					PageSpecificationsTestUtil.
-						getPostPageSpecificationsWithCustomFields(
+						getPageSpecificationsWithCustomFields(
 							pageSpecification.getExternalReferenceCode(),
 							PageSpecification.Type.CONTENT_PAGE_SPECIFICATION));
 

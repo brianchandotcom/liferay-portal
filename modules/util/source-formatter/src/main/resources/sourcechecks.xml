@@ -493,7 +493,7 @@
 		</check>
 		<check name="JavaConfigurationCategoryCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks that the value of `category` in `@ExtendedObjectClassDefinition` matches the `categoryKey` of the corresponding class in `configuration-admin-web`." />
+			<description name="Checks that the value of `category` in `@ExtendedObjectClassDefinition` matches the `categoryKey` of the corresponding class that implements `ConfigurationCategory`." />
 		</check>
 		<check name="JavaConstructorParametersCheck">
 			<category name="Styling" />

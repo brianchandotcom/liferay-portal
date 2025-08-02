@@ -24,6 +24,11 @@ import java.util.regex.Pattern;
 public class JavaConfigurationCategoryCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isModuleSourceCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws IOException {

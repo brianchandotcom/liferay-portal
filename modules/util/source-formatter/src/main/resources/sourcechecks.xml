@@ -491,10 +491,6 @@
 			<category name="Bug Prevention" />
 			<description name="Checks for correct use of `location == ?` when calling `org.osgi.service.cm.ConfigurationAdmin#createFactoryConfiguration`." />
 		</check>
-		<check name="JavaConfigurationCategoryCheck">
-			<category name="Bug Prevention" />
-			<description name="Checks that the value of `category` in `@ExtendedObjectClassDefinition` matches the `categoryKey` of the corresponding class that implements `ConfigurationCategory`." />
-		</check>
 		<check name="JavaConstructorParametersCheck">
 			<category name="Styling" />
 			<description name="Checks that the order of variable assignments matches the order of the parameters in the constructor signature." />
@@ -1005,6 +1001,10 @@
 
 		<!-- Module Source Checks -->
 
+		<check name="JavaConfigurationCategoryCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that the value of `category` in `@ExtendedObjectClassDefinition` matches the `categoryKey` of the corresponding class that implements `ConfigurationCategory`." />
+		</check>
 		<check name="JavaLocalServiceImplErcUsageCheck">
 			<category name="Productivity" />
 			<description name="Automatically generates and ensures that `externalReferenceCode` is properly used in local `*ServiceImpl` add method." />

@@ -34,7 +34,7 @@ const salesClasses = {
 const salesElements = Object.fromEntries(
 	Object.entries(salesClasses).map(([key, className]) => [
 		key,
-		document.querySelector(`.${className}`)
+		document.querySelector(`.${className}`),
 	])
 );
 
@@ -76,8 +76,8 @@ const renderCardByRole = (isTrainer) => {
 const setCardInfo = ({description, goToText, href, title}) => {
 	const {
 		salesHubCardLink,
-		salesPageCardDescription,
 		salesPageCardCTA,
+		salesPageCardDescription,
 		salesPageCardTitle,
 	} = salesElements;
 

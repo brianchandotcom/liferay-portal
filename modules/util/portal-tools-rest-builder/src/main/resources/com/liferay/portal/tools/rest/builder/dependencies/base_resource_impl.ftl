@@ -263,6 +263,7 @@ public abstract class Base${schemaName}ResourceImpl
 											<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
 												${getParentPermissionsPageJavaMethodSignature.methodName}(${parentSchemaName?uncap_first}ExternalReferenceCode, ${schemaVarName}.getExternalReferenceCode()
 											</#if>
+
 											, null);
 
 										Collection<Permission> permissions = permissionsPage.getItems();
@@ -290,6 +291,7 @@ public abstract class Base${schemaName}ResourceImpl
 										<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
 											${getParentPermissionsPageJavaMethodSignature.methodName}(${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 										</#if>
+
 										, null);
 
 									Collection<Permission> permissions = permissionsPage.getItems();

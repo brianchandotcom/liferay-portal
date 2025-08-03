@@ -93,22 +93,22 @@ public class ObjectEntryServiceUtil {
 	}
 
 	public static List<ObjectEntry> getManyToManyObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			boolean related, boolean reverse, String search, int start, int end)
 		throws PortalException {
 
 		return getService().getManyToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, related, reverse, search,
-			start, end);
+			groupId, objectRelationshipId, primaryKeys, related, reverse,
+			search, start, end);
 	}
 
 	public static int getManyToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			boolean related, boolean reverse, String search)
 		throws PortalException {
 
 		return getService().getManyToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, related, reverse,
+			groupId, objectRelationshipId, primaryKeys, related, reverse,
 			search);
 	}
 
@@ -135,22 +135,22 @@ public class ObjectEntryServiceUtil {
 	}
 
 	public static List<ObjectEntry> getOneToManyObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			boolean related, String search, int start, int end)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, related, search, start,
+			groupId, objectRelationshipId, primaryKeys, related, search, start,
 			end);
 	}
 
 	public static int getOneToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
+			long groupId, long objectRelationshipId, Long[] primaryKeys,
 			boolean related, String search)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, related, search);
+			groupId, objectRelationshipId, primaryKeys, related, search);
 	}
 
 	/**

@@ -298,7 +298,7 @@ test.describe('ensure picklist translation', () => {
 			translatedListTypeDefinitionItems[0]
 		);
 
-		await expect(page.getByTitle('Remover Tudo')).toBeVisible();
+		await expect(page.getByTitle('Limpar Todos')).toBeVisible();
 	});
 
 	test('verify if translated picklist will be displayed on object admin', async ({

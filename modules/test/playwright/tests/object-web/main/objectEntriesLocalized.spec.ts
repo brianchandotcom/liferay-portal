@@ -1286,7 +1286,7 @@ test.describe('Manage object entries through Page Templates', () => {
 
 		await viewObjectEntriesPage.clickAddObjectEntry();
 
-		await page.getByPlaceholder('Busca', {exact: true}).click();
+		await page.getByPlaceholder('Buscar', {exact: true}).click();
 
 		itemValues.forEach((itemValue, index) => {
 			expect(
@@ -1310,7 +1310,7 @@ test.describe('Manage object entries through Page Templates', () => {
 
 		await viewObjectEntriesPage.clickAddObjectEntry();
 
-		await page.getByPlaceholder('Busca', {exact: true}).click();
+		await page.getByPlaceholder('Buscar', {exact: true}).click();
 
 		itemValues.forEach((itemValue) => {
 			expect(

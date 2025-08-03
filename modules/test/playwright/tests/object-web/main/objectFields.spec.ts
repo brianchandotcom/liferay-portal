@@ -510,17 +510,17 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		const objectFieldBusinessTypeNameLabel = {
 			Attachment: 'Anexo',
-			Boolean: 'Verdadeiro/falso',
+			Boolean: 'Boolean',
 			Date: 'Data',
 			DateTime: 'Data/Hora',
 			Decimal: 'Decimal',
 			Integer: 'Inteiro',
 			LongInteger: 'Número inteiro longo',
-			LongText: 'Texto Longo',
+			LongText: 'Texto longo',
 			Picklist: 'Lista de seleção',
 			PrecisionDecimal: 'Casa decimal',
 			RichText: 'Rich Text',
-			Text: 'Campo de texto',
+			Text: 'Texto',
 		};
 
 		const asyncArray = new AsyncArray<Locator, boolean>();

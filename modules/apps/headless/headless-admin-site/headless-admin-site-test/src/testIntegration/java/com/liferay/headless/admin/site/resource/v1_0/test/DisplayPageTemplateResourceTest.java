@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -997,7 +999,9 @@ public class DisplayPageTemplateResourceTest
 			Assert.fail();
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
-			Assert.assertNotNull(unsupportedOperationException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(unsupportedOperationException);
+			}
 		}
 
 		Assert.assertNull(
@@ -1788,6 +1792,9 @@ public class DisplayPageTemplateResourceTest
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DisplayPageTemplateResourceTest.class);
 
 	@Inject
 	private

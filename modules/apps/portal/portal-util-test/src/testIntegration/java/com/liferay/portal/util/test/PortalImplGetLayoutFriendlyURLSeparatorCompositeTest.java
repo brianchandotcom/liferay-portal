@@ -136,7 +136,7 @@ public class PortalImplGetLayoutFriendlyURLSeparatorCompositeTest {
 
 	@Test
 	@TestInfo("LPD-62227")
-	public void testNullFriendlyURLFirstLayoutWithoutPermissionLoginPromptEnabledNoSuchLayoutException()
+	public void testNullFriendlyURLFirstLayoutWithoutPermissionNoSuchLayoutException()
 		throws Exception {
 
 		_addLayoutWithoutPermission(true);
@@ -151,9 +151,20 @@ public class PortalImplGetLayoutFriendlyURLSeparatorCompositeTest {
 		mockHttpServletRequest.setAttribute(
 			NoSuchLayoutException.class.getName(), Boolean.TRUE.toString());
 
+		User guestUser = _userLocalService.fetchGuestUser(
+			_group.getCompanyId());
+
 		_assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
-			mockHttpServletRequest, layout, true,
-			_userLocalService.fetchGuestUser(_group.getCompanyId()));
+			mockHttpServletRequest, layout, false, guestUser);
+		_assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
+			mockHttpServletRequest, layout, true, guestUser);
+
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		_assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
+			mockHttpServletRequest, layout, false, user);
+		_assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
+			mockHttpServletRequest, layout, true, user);
 	}
 
 	private Layout _addLayoutWithoutPermission() throws Exception {

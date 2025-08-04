@@ -6,6 +6,7 @@
 package com.liferay.headless.delivery.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -161,6 +162,16 @@ public class DDMValueUtil {
 
 		return new UnlocalizedValue(
 			GetterUtil.getString(contentFieldValue.getData()));
+	}
+
+	private static String _getFileEntryUrl(FileEntry fileEntry) {
+		try {
+			return DLURLHelperUtil.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	private static Layout _getLayout(
@@ -439,6 +450,8 @@ public class DDMValueUtil {
 		).put(
 			"classPK", fileEntry.getFileEntryId()
 		).put(
+			"description", description
+		).put(
 			"fileEntryId", fileEntry.getFileEntryId()
 		).put(
 			"groupId", fileEntry.getGroupId()
@@ -450,6 +463,8 @@ public class DDMValueUtil {
 			"title", fileEntry.getFileName()
 		).put(
 			"type", "document"
+		).put(
+			"url", _getFileEntryUrl(fileEntry)
 		).put(
 			"uuid", fileEntry.getUuid()
 		).toString();

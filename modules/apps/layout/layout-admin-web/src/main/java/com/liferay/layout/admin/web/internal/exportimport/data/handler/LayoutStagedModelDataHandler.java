@@ -747,15 +747,17 @@ public class LayoutStagedModelDataHandler
 					layout, Layout.class, layout.getGroupId(),
 					masterLayoutUuid);
 
-			long originalPlid = portletDataContext.getPlid();
+			if (masterLayoutElement != null) {
+				long originalPlid = portletDataContext.getPlid();
 
-			try {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, masterLayoutElement);
-			}
-			finally {
-				portletDataContext.setPlid(originalPlid);
-				portletDataContext.setPrivateLayout(privateLayout);
+				try {
+					StagedModelDataHandlerUtil.importStagedModel(
+						portletDataContext, masterLayoutElement);
+				}
+				finally {
+					portletDataContext.setPlid(originalPlid);
+					portletDataContext.setPrivateLayout(privateLayout);
+				}
 			}
 
 			long masterLayoutPlid = GetterUtil.getLong(

@@ -361,6 +361,7 @@ test('can export as JSON with all field types mapped', async ({
 					href: expect.any(String),
 					label: expect.any(String),
 				},
+		 		mimeType: expect.any(String),
 				name: expect.any(String),
 				scope: {
 					externalReferenceCode: expect.any(String),

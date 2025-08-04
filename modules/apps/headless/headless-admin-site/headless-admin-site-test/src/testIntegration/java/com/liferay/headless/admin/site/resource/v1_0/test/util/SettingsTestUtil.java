@@ -18,7 +18,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -231,21 +230,24 @@ public class SettingsTestUtil {
 				actualSettings.getThemeSpritemapClientExtension()));
 	}
 
-	public static Settings getSettings(ServiceContext serviceContext) {
+	public static Settings getSettings(
+		CETManager cetManager, ServiceContext serviceContext) {
+
 		return new Settings() {
 			{
 				setColorSchemeName(() -> "01");
 				setCss(RandomTestUtil::randomString);
-				setFavIcon(() -> _getClientExtension(serviceContext));
+				setFavIcon(
+					() -> _getClientExtension(cetManager, serviceContext));
 				setGlobalCSSClientExtensions(
 					() -> new ClientExtension[] {
-						_getClientExtension(serviceContext),
-						_getClientExtension(serviceContext)
+						_getClientExtension(cetManager, serviceContext),
+						_getClientExtension(cetManager, serviceContext)
 					});
 				setGlobalJSClientExtensions(
 					() -> new ClientExtension[] {
-						_getClientExtension(serviceContext),
-						_getClientExtension(serviceContext)
+						_getClientExtension(cetManager, serviceContext),
+						_getClientExtension(cetManager, serviceContext)
 					});
 				setJavascript(RandomTestUtil::randomString);
 				setMasterPageItemExternalReference(
@@ -253,7 +255,7 @@ public class SettingsTestUtil {
 				setStyleBookItemExternalReference(
 					() -> _getStyleBookItemExternalReference(serviceContext));
 				setThemeCSSClientExtension(
-					() -> _getClientExtension(serviceContext));
+					() -> _getClientExtension(cetManager, serviceContext));
 				setThemeName(() -> "classic_WAR_classictheme");
 				setThemeSettings(
 					() -> TreeMapBuilder.put(
@@ -264,20 +266,22 @@ public class SettingsTestUtil {
 						RandomTestUtil.randomString()
 					).build());
 				setThemeSpritemapClientExtension(
-					() -> _getClientExtension(serviceContext));
+					() -> _getClientExtension(cetManager, serviceContext));
 			}
 		};
 	}
 
 	public static void modifySettings(
-			ServiceContext serviceContext, Settings settings)
+			CETManager cetManager, ServiceContext serviceContext,
+			Settings settings)
 		throws Exception {
 
 		if (Validator.isNotNull(settings.getFavIcon())) {
 			settings.setFavIcon(() -> null);
 		}
 		else {
-			settings.setFavIcon(_getClientExtension(serviceContext));
+			settings.setFavIcon(
+				_getClientExtension(cetManager, serviceContext));
 		}
 
 		if (Validator.isNotNull(settings.getGlobalCSSClientExtensions())) {
@@ -286,8 +290,8 @@ public class SettingsTestUtil {
 		else {
 			settings.setGlobalCSSClientExtensions(
 				new ClientExtension[] {
-					_getClientExtension(serviceContext),
-					_getClientExtension(serviceContext)
+					_getClientExtension(cetManager, serviceContext),
+					_getClientExtension(cetManager, serviceContext)
 				});
 		}
 
@@ -297,8 +301,8 @@ public class SettingsTestUtil {
 		else {
 			settings.setGlobalJSClientExtensions(
 				new ClientExtension[] {
-					_getClientExtension(serviceContext),
-					_getClientExtension(serviceContext)
+					_getClientExtension(cetManager, serviceContext),
+					_getClientExtension(cetManager, serviceContext)
 				});
 		}
 
@@ -352,7 +356,7 @@ public class SettingsTestUtil {
 		}
 		else {
 			settings.setThemeCSSClientExtension(
-				_getClientExtension(serviceContext));
+				_getClientExtension(cetManager, serviceContext));
 		}
 
 		if (Validator.isNotNull(settings.getThemeName())) {
@@ -384,7 +388,7 @@ public class SettingsTestUtil {
 		}
 		else {
 			settings.setThemeSpritemapClientExtension(
-				_getClientExtension(serviceContext));
+				_getClientExtension(cetManager, serviceContext));
 		}
 	}
 
@@ -448,10 +452,8 @@ public class SettingsTestUtil {
 	}
 
 	private static ClientExtension _getClientExtension(
-			ServiceContext serviceContext)
+			CETManager cetManager, ServiceContext serviceContext)
 		throws Exception {
-
-		CETManager cetManager = _cetManagerSnapshot.get();
 
 		String clientExtensionExternalReferenceCode =
 			RandomTestUtil.randomString();
@@ -529,8 +531,5 @@ public class SettingsTestUtil {
 
 		return themeSettingsUnicodeProperties;
 	}
-
-	private static final Snapshot<CETManager> _cetManagerSnapshot =
-		new Snapshot<>(SettingsTestUtil.class, CETManager.class);
 
 }

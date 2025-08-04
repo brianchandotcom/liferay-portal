@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
@@ -169,7 +170,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.addDraftToLayout(
-				contentPageSpecification,
+				_cetManager, contentPageSpecification,
 				_layoutLocalService.getLayout(
 					layoutPageTemplateEntry.getPlid()),
 				ServiceContextUtil.createServiceContext(
@@ -217,7 +218,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
 		layout = LayoutUtil.updateContentLayout(
-			layout, layout.getNameMap(), layout.getTitleMap(),
+			_cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(), layout.getRobotsMap(),
 			layout.getFriendlyURLMap(), masterPage.getPageSpecifications(),
 			serviceContext);
@@ -316,10 +317,10 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			groupId, masterPage.getPageSpecifications(), true, nameMap, nameMap,
-			nameMap, null, LayoutConstants.TYPE_CONTENT, null, true, true,
-			Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			_cetManager, groupId, masterPage.getPageSpecifications(), true,
+			nameMap, nameMap, nameMap, null, LayoutConstants.TYPE_CONTENT, null,
+			true, true, Collections.emptyMap(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		return layout.getPlid();
 	}
@@ -334,6 +335,9 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			masterPage.getKeywords(), masterPage.getDateModified(),
 			contextUser.getUserId(), masterPage.getUuid());
 	}
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

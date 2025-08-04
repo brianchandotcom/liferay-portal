@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationSettings;
@@ -239,7 +240,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.addDraftToLayout(
-				contentPageSpecification,
+				_cetManager, contentPageSpecification,
 				_layoutLocalService.getLayout(
 					layoutPageTemplateEntry.getPlid()),
 				ServiceContextUtil.createServiceContext(
@@ -507,7 +508,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			layoutPageTemplateEntry.getPlid());
 
 		LayoutUtil.updatePortletLayout(
-			layout, nameMap, layout.getFriendlyURLMap(),
+			_cetManager, layout, nameMap, layout.getFriendlyURLMap(),
 			_getWidgetPageTemplateTypeSettingsUnicodeProperties(
 				layout, widgetPageTemplate.getPageTemplateSettings()),
 			serviceContext, widgetPageSpecification);
@@ -569,10 +570,10 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			groupId, contentPageTemplate.getPageSpecifications(), true, nameMap,
-			nameMap, nameMap, null, LayoutConstants.TYPE_CONTENT, null, true,
-			true, Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			_cetManager, groupId, contentPageTemplate.getPageSpecifications(),
+			true, nameMap, nameMap, nameMap, null, LayoutConstants.TYPE_CONTENT,
+			null, true, true, Collections.emptyMap(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		return layout.getPlid();
 	}
@@ -692,7 +693,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			layoutPageTemplateEntry.getGroupId(), contentPageTemplate);
 
 		layout = LayoutUtil.updateContentLayout(
-			layout, layout.getNameMap(), layout.getTitleMap(),
+			_cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(), layout.getRobotsMap(),
 			layout.getFriendlyURLMap(),
 			contentPageTemplate.getPageSpecifications(), serviceContext);
@@ -757,7 +758,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			layoutPageTemplateEntry.getPlid());
 
 		LayoutUtil.updatePortletLayout(
-			layout, nameMap, layout.getFriendlyURLMap(),
+			_cetManager, layout, nameMap, layout.getFriendlyURLMap(),
 			_getWidgetPageTemplateTypeSettingsUnicodeProperties(
 				layout, widgetPageTemplate.getPageTemplateSettings()),
 			serviceContext,
@@ -768,6 +769,9 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 	}
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
@@ -153,7 +154,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.addDraftToLayout(
-				contentPageSpecification,
+				_cetManager, contentPageSpecification,
 				_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()),
 				ServiceContextUtil.createServiceContext(
 					layoutUtilityPageEntry.getGroupId(),
@@ -207,7 +208,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		}
 
 		LayoutUtil.updateContentLayout(
-			layout, layout.getNameMap(), titleMap, descriptionMap,
+			_cetManager, layout, layout.getNameMap(), titleMap, descriptionMap,
 			layout.getRobotsMap(),
 			LocalizedMapUtil.getLocalizedMap(
 				utilityPage.getFriendlyUrlPath_i18n()),
@@ -317,9 +318,9 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			groupId, utilityPage.getPageSpecifications(), false, nameMap,
-			titleMap, descriptionMap, null, LayoutConstants.TYPE_UTILITY, null,
-			true, true,
+			_cetManager, groupId, utilityPage.getPageSpecifications(), false,
+			nameMap, titleMap, descriptionMap, null,
+			LayoutConstants.TYPE_UTILITY, null, true, true,
 			LocalizedMapUtil.getLocalizedMap(
 				utilityPage.getFriendlyUrlPath_i18n()),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
@@ -386,6 +387,9 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			UtilityPage.Type.TERMS_OF_USE,
 			LayoutUtilityPageEntryConstants.TYPE_TERMS_OF_USE
 		).build();
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

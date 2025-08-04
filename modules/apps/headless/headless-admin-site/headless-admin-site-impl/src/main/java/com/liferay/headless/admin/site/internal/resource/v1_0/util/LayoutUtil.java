@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -61,13 +60,13 @@ import java.util.Objects;
 public class LayoutUtil {
 
 	public static Layout addContentLayout(
-			long groupId, PageSpecification[] pageSpecifications,
-			boolean privateLayout, Map<Locale, String> nameMap,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, String type,
-			UnicodeProperties typeSettingsUnicodeProperties, boolean hidden,
-			boolean system, Map<Locale, String> friendlyURLMap, int status,
-			ServiceContext serviceContext)
+			CETManager cetManager, long groupId,
+			PageSpecification[] pageSpecifications, boolean privateLayout,
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> robotsMap,
+			String type, UnicodeProperties typeSettingsUnicodeProperties,
+			boolean hidden, boolean system, Map<Locale, String> friendlyURLMap,
+			int status, ServiceContext serviceContext)
 		throws Exception {
 
 		if (typeSettingsUnicodeProperties == null) {
@@ -239,16 +238,18 @@ public class LayoutUtil {
 		}
 
 		updateLayout(
-			draftContentPageSpecification, draftLayout, nameMap, titleMap,
-			descriptionMap, draftLayout.getRobotsMap(),
+			cetManager, draftContentPageSpecification, draftLayout, nameMap,
+			titleMap, descriptionMap, draftLayout.getRobotsMap(),
 			draftLayout.getFriendlyURLMap(), draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			publishedContentPageSpecification, layout, nameMap, titleMap,
-			descriptionMap, robotsMap, friendlyURLMap, status, serviceContext);
+			cetManager, publishedContentPageSpecification, layout, nameMap,
+			titleMap, descriptionMap, robotsMap, friendlyURLMap, status,
+			serviceContext);
 	}
 
 	public static Layout addDraftToLayout(
+			CETManager cetManager,
 			ContentPageSpecification contentPageSpecification, Layout layout,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -276,10 +277,11 @@ public class LayoutUtil {
 		}
 
 		return updateLayout(
-			contentPageSpecification, draftLayout, layout.getNameMap(),
-			layout.getTitleMap(), layout.getDescriptionMap(),
-			draftLayout.getRobotsMap(), draftLayout.getFriendlyURLMap(),
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			cetManager, contentPageSpecification, draftLayout,
+			layout.getNameMap(), layout.getTitleMap(),
+			layout.getDescriptionMap(), draftLayout.getRobotsMap(),
+			draftLayout.getFriendlyURLMap(), WorkflowConstants.STATUS_DRAFT,
+			serviceContext);
 	}
 
 	public static Layout addPortletLayout(
@@ -387,7 +389,7 @@ public class LayoutUtil {
 	}
 
 	public static Layout updateContentLayout(
-			Layout layout, Map<Locale, String> nameMap,
+			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
 			PageSpecification[] pageSpecifications,
@@ -459,17 +461,18 @@ public class LayoutUtil {
 		}
 
 		updateLayout(
-			draftContentPageSpecification, draftLayout, nameMap, titleMap,
-			descriptionMap, robotsMap, draftLayout.getFriendlyURLMap(),
-			draftLayoutStatus, serviceContext);
+			cetManager, draftContentPageSpecification, draftLayout, nameMap,
+			titleMap, descriptionMap, robotsMap,
+			draftLayout.getFriendlyURLMap(), draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			publishedContentPageSpecification, layout, nameMap, titleMap,
-			descriptionMap, robotsMap, friendlyURLMap, status, serviceContext);
+			cetManager, publishedContentPageSpecification, layout, nameMap,
+			titleMap, descriptionMap, robotsMap, friendlyURLMap, status,
+			serviceContext);
 	}
 
 	public static Layout updateContentLayout(
-			Layout layout, Map<Locale, String> nameMap,
+			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
 			PageSpecification[] pageSpecifications,
@@ -482,11 +485,12 @@ public class LayoutUtil {
 			typeSettingsUnicodeProperties.toString());
 
 		return updateContentLayout(
-			layout, nameMap, titleMap, descriptionMap, robotsMap,
+			cetManager, layout, nameMap, titleMap, descriptionMap, robotsMap,
 			friendlyURLMap, pageSpecifications, serviceContext);
 	}
 
 	public static Layout updateLayout(
+			CETManager cetManager,
 			ContentPageSpecification contentPageSpecification, Layout layout,
 			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> robotsMap,
@@ -495,7 +499,7 @@ public class LayoutUtil {
 		throws Exception {
 
 		updateLayout(
-			layout, nameMap, titleMap, descriptionMap, robotsMap,
+			cetManager, layout, nameMap, titleMap, descriptionMap, robotsMap,
 			friendlyURLMap, contentPageSpecification, serviceContext);
 
 		_updatePageExperiences(
@@ -536,7 +540,7 @@ public class LayoutUtil {
 	}
 
 	public static Layout updatePortletLayout(
-			Layout layout, Map<Locale, String> nameMap,
+			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> friendlyURLMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext,
@@ -544,9 +548,9 @@ public class LayoutUtil {
 		throws Exception {
 
 		layout = updateLayout(
-			layout, nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
-			layout.getRobotsMap(), friendlyURLMap, widgetPageSpecification,
-			serviceContext);
+			cetManager, layout, nameMap, layout.getTitleMap(),
+			layout.getDescriptionMap(), layout.getRobotsMap(), friendlyURLMap,
+			widgetPageSpecification, serviceContext);
 
 		if (typeSettingsUnicodeProperties == null) {
 			return layout;

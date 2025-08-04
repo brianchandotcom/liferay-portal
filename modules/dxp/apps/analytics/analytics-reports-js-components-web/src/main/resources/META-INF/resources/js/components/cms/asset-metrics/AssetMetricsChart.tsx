@@ -6,7 +6,7 @@
 import React, {useMemo, useState} from 'react';
 import {Line} from 'recharts';
 
-import {Colors, MetricType} from '../../../types/global';
+import {Colors, MetricName, MetricType} from '../../../types/global';
 import {formatTooltipDate, toUnix} from '../../../utils/date';
 import {CircleDot, DashedDotIcon, PreviousDot} from '../../metrics/Dots';
 import MetricsChart from '../../metrics/MetricsChart';
@@ -107,6 +107,18 @@ export function formatData(
 	};
 }
 
+type Metrics = {
+	[key in MetricName]: string;
+};
+
+const MetricsTitle: Metrics = {
+	[MetricName.Comments]: Liferay.Language.get('comments'),
+	[MetricName.Downloads]: Liferay.Language.get('downloads'),
+	[MetricName.Impressions]: Liferay.Language.get('impressions'),
+	[MetricName.Undefined]: Liferay.Language.get('undefined'),
+	[MetricName.Views]: Liferay.Language.get('views'),
+};
+
 export type DotProps = {
 	cx?: number;
 	cy?: number;
@@ -163,6 +175,9 @@ const AssetMetricsChart: React.FC<ICommonProps> = ({histogram, metricType}) => {
 
 	return (
 		<>
+			<span className="text-3 text-nowrap text-secondary">
+				{MetricsTitle[histogram.metricName as MetricName]}
+			</span>
 			<MetricsChart
 				MetricsChartTooltip={AssetMetricsTooltip}
 				activeTabIndex={activeTabIndex}

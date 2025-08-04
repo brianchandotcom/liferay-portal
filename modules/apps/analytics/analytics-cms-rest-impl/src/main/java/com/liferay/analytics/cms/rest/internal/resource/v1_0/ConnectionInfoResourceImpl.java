@@ -6,12 +6,14 @@
 package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.cms.rest.dto.v1_0.ConnectionInfo;
+import com.liferay.analytics.cms.rest.internal.resource.exception.NoSuchDepotEntryException;
 import com.liferay.analytics.cms.rest.resource.v1_0.ConnectionInfoResource;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRelModel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
-import com.liferay.depot.service.DepotEntryService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,16 +34,23 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ConnectionInfoResourceImpl extends BaseConnectionInfoResourceImpl {
 
 	@Override
-	public ConnectionInfo getConnectionInfo(Long depotEntryId)
+	public ConnectionInfo getConnectionInfo(Long depotEntryGroupId)
 		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			depotEntryGroupId);
+
+		if (depotEntry == null) {
+			throw new NoSuchDepotEntryException(
+				"No depotEntry found with group ID " + depotEntryGroupId);
+		}
 
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextUser.getCompanyId());
 
 		List<Long> groupIds = transform(
-			_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
-				_depotEntryService.getDepotEntry(depotEntryId)),
+			_depotEntryGroupRelLocalService.getDepotEntryGroupRels(depotEntry),
 			DepotEntryGroupRelModel::getToGroupId);
 
 		return _toConnectionInfo(
@@ -91,6 +100,6 @@ public class ConnectionInfoResourceImpl extends BaseConnectionInfoResourceImpl {
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
 	@Reference
-	private DepotEntryService _depotEntryService;
+	private DepotEntryLocalService _depotEntryLocalService;
 
 }

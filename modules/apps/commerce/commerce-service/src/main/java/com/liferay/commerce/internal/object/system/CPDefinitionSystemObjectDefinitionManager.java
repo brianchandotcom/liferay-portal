@@ -60,7 +60,7 @@ public class CPDefinitionSystemObjectDefinitionManager
 
 		setExtendedProperties(Product.class.getName(), product, user, values);
 
-		return product.getId();
+		return product.getProductId();
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class CPDefinitionSystemObjectDefinitionManager
 			).build(),
 			new TextObjectFieldBuilder(
 			).dbColumnName(
-				"CPDefinitionId"
+				"CProductId"
 			).labelMap(
 				createLabelMap("product-id")
 			).name(
@@ -254,7 +254,7 @@ public class CPDefinitionSystemObjectDefinitionManager
 
 	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
-		return CPDefinitionTable.INSTANCE.CPDefinitionId;
+		return CPDefinitionTable.INSTANCE.CProductId;
 	}
 
 	@Override

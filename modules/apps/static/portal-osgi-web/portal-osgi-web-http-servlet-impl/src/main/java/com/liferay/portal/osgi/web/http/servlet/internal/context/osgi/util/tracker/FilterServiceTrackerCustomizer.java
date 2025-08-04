@@ -39,7 +39,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  */
 public class FilterServiceTrackerCustomizer
 	extends BaseServiceTrackerCustomizer
-		<Filter, AtomicReference<FilterRegistration>> {
+		<Filter, FilterRegistration, AtomicReference<FilterRegistration>> {
 
 	public FilterServiceTrackerCustomizer(
 		BundleContext bundleContext,

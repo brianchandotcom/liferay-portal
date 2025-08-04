@@ -42,7 +42,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  */
 public class ResourceServiceTrackerCustomizer
 	extends BaseServiceTrackerCustomizer
-		<Object, AtomicReference<ResourceRegistration>> {
+		<Object, ResourceRegistration, AtomicReference<ResourceRegistration>> {
 
 	public ResourceServiceTrackerCustomizer(
 		BundleContext bundleContext,

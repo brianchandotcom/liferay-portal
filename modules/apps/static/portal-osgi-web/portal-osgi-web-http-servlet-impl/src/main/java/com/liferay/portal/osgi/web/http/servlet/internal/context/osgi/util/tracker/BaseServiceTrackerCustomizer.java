@@ -22,7 +22,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Dante Wang
  */
 public abstract class BaseServiceTrackerCustomizer
-	<S, T extends AtomicReference<? extends Registration>>
+	<S, R extends Registration, T extends AtomicReference<R>>
 		implements ServiceTrackerCustomizer<S, T> {
 
 	public BaseServiceTrackerCustomizer(

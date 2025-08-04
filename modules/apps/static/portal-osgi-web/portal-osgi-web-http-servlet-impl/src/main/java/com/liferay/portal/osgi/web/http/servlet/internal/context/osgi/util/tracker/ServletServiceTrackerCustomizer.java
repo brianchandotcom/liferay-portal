@@ -46,7 +46,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  */
 public class ServletServiceTrackerCustomizer
 	extends BaseServiceTrackerCustomizer
-		<Servlet, AtomicReference<ServletRegistration>> {
+		<Servlet, ServletRegistration, AtomicReference<ServletRegistration>> {
 
 	public ServletServiceTrackerCustomizer(
 		BundleContext bundleContext,

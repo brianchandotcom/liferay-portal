@@ -49,7 +49,8 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  */
 public class EventListenerServiceTrackerCustomizer
 	extends BaseServiceTrackerCustomizer
-		<EventListener, AtomicReference<ListenerRegistration>> {
+		<EventListener, ListenerRegistration,
+		 AtomicReference<ListenerRegistration>> {
 
 	public EventListenerServiceTrackerCustomizer(
 		BundleContext bundleContext,

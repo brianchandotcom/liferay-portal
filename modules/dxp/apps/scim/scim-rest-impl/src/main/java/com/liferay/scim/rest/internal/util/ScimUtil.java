@@ -19,7 +19,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -274,96 +273,84 @@ public class ScimUtil {
 	}
 
 	public static ScimUser toScimUser(
-		com.liferay.portal.kernel.model.User portalUser) {
+			com.liferay.portal.kernel.model.User portalUser)
+		throws Exception {
 
-		try {
-			ScimUser scimUser = new ScimUser();
+		ScimUser scimUser = new ScimUser();
 
-			scimUser.setActive(portalUser.isActive());
-			scimUser.setAddresses(_getScimAddresses(portalUser));
-			scimUser.setBirthday(portalUser.getBirthday());
-			scimUser.setCompanyId(portalUser.getCompanyId());
-			scimUser.setCreateDate(_truncateDate(portalUser.getCreateDate()));
+		scimUser.setActive(portalUser.isActive());
+		scimUser.setAddresses(_getScimAddresses(portalUser));
+		scimUser.setBirthday(portalUser.getBirthday());
+		scimUser.setCompanyId(portalUser.getCompanyId());
+		scimUser.setCreateDate(_truncateDate(portalUser.getCreateDate()));
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
-				scimUser.setEmails(
-					_getEmails(
-						EmailAddressLocalServiceUtil.getEmailAddresses(
-							portalUser.getCompanyId(), Contact.class.getName(),
-							portalUser.getContactId()),
-						EmailAddress::getAddress, EmailAddress::isPrimary));
-			}
-			else {
-				scimUser.setEmails(new String[] {portalUser.getEmailAddress()});
-			}
-
-			scimUser.setExternalReferenceCode(
-				portalUser.getExternalReferenceCode());
-			scimUser.setFirstName(portalUser.getFirstName());
-			scimUser.setId(String.valueOf(portalUser.getUserId()));
-
-			Contact contact = portalUser.getContact();
-
-			Map<String, String> ims = new HashMap<>();
-
-			if (contact.getJabberSn() != null) {
-				ims.put("Jabber", contact.getJabberSn());
-			}
-
-			if (contact.getSkypeSn() != null) {
-				ims.put("Skype", contact.getSkypeSn());
-			}
-
-			scimUser.setIms(ims);
-
-			scimUser.setJobTitle(portalUser.getJobTitle());
-			scimUser.setLastName(portalUser.getLastName());
-			scimUser.setLocale(portalUser.getLocale());
-			scimUser.setMale(portalUser.isMale());
-			scimUser.setMiddleName(portalUser.getMiddleName());
-			scimUser.setModifiedDate(
-				_truncateDate(portalUser.getModifiedDate()));
-			scimUser.setPhoneNumbers(
-				TransformUtil.transform(
-					PhoneLocalServiceUtil.getPhones(
-						contact.getCompanyId(), Contact.class.getName(),
-						contact.getContactId()),
-					phone -> {
-						MultiValuedComplexType multiValuedComplexType =
-							new MultiValuedComplexType();
-
-						multiValuedComplexType.setPrimary(phone.isPrimary());
-
-						ListType listType =
-							ListTypeLocalServiceUtil.fetchListType(
-								phone.getListTypeId());
-
-						multiValuedComplexType.setType(listType.getName());
-
-						multiValuedComplexType.setValue(phone.getNumber());
-
-						return multiValuedComplexType;
-					}));
-			scimUser.setPrefix(contact.getPrefixListTypeId());
-			scimUser.setProfileUrl(_getScimProfileUrl(contact));
-			scimUser.setRoleIds(portalUser.getRoleIds());
-			scimUser.setScreenName(portalUser.getScreenName());
-			scimUser.setSuffix(contact.getSuffixListTypeId());
-			scimUser.setTimeZoneId(portalUser.getTimeZoneId());
-
-			_setExpandoValues(scimUser);
-
-			return scimUser;
+		if (FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
+			scimUser.setEmails(
+				_getEmails(
+					EmailAddressLocalServiceUtil.getEmailAddresses(
+						portalUser.getCompanyId(), Contact.class.getName(),
+						portalUser.getContactId()),
+					EmailAddress::getAddress, EmailAddress::isPrimary));
 		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to convert portal user to a SCIM user",
-					portalException);
-			}
-
-			return ReflectionUtil.throwException(portalException);
+		else {
+			scimUser.setEmails(new String[] {portalUser.getEmailAddress()});
 		}
+
+		scimUser.setExternalReferenceCode(
+			portalUser.getExternalReferenceCode());
+		scimUser.setFirstName(portalUser.getFirstName());
+		scimUser.setId(String.valueOf(portalUser.getUserId()));
+
+		Contact contact = portalUser.getContact();
+
+		Map<String, String> ims = new HashMap<>();
+
+		if (contact.getJabberSn() != null) {
+			ims.put("Jabber", contact.getJabberSn());
+		}
+
+		if (contact.getSkypeSn() != null) {
+			ims.put("Skype", contact.getSkypeSn());
+		}
+
+		scimUser.setIms(ims);
+
+		scimUser.setJobTitle(portalUser.getJobTitle());
+		scimUser.setLastName(portalUser.getLastName());
+		scimUser.setLocale(portalUser.getLocale());
+		scimUser.setMale(portalUser.isMale());
+		scimUser.setMiddleName(portalUser.getMiddleName());
+		scimUser.setModifiedDate(_truncateDate(portalUser.getModifiedDate()));
+		scimUser.setPhoneNumbers(
+			TransformUtil.transform(
+				PhoneLocalServiceUtil.getPhones(
+					contact.getCompanyId(), Contact.class.getName(),
+					contact.getContactId()),
+				phone -> {
+					MultiValuedComplexType multiValuedComplexType =
+						new MultiValuedComplexType();
+
+					multiValuedComplexType.setPrimary(phone.isPrimary());
+
+					ListType listType = ListTypeLocalServiceUtil.fetchListType(
+						phone.getListTypeId());
+
+					multiValuedComplexType.setType(listType.getName());
+
+					multiValuedComplexType.setValue(phone.getNumber());
+
+					return multiValuedComplexType;
+				}));
+		scimUser.setPrefix(contact.getPrefixListTypeId());
+		scimUser.setProfileUrl(_getScimProfileUrl(contact));
+		scimUser.setRoleIds(portalUser.getRoleIds());
+		scimUser.setScreenName(portalUser.getScreenName());
+		scimUser.setSuffix(contact.getSuffixListTypeId());
+		scimUser.setTimeZoneId(portalUser.getTimeZoneId());
+
+		_setExpandoValues(scimUser);
+
+		return scimUser;
 	}
 
 	public static User toUser(List<Group> groups, ScimUser scimUser)

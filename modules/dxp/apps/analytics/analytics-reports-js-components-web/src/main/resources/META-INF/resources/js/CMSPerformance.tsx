@@ -7,11 +7,11 @@ import React from 'react';
 
 import {ContextProvider} from './Context';
 import {CheckPermissions} from './components/cms/CheckPermissions';
+import GlobalFilters from './components/cms/GlobalFilters';
 import OverviewMetrics from './components/cms/OverviewMetrics';
 import {AssetMetrics} from './components/cms/asset-metrics/AssetMetrics';
 
 import '../css/cms_performance.scss';
-
 interface ICMSPerformanceProps extends React.HTMLAttributes<HTMLElement> {
 	depotEntryId: number;
 	externalReferenceCode: string;
@@ -33,6 +33,8 @@ const CMSPerformance: React.FC<ICMSPerformanceProps> = ({
 						objectEntryFolderExternalReferenceCode,
 					}}
 				>
+					<GlobalFilters />
+
 					<OverviewMetrics />
 
 					<AssetMetrics />

@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	RangeSelector,
+	RangeSelectors,
+	RangeSelectorsDropdown,
+} from '@liferay/analytics-reports-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -10,11 +15,6 @@ import {generateUrl} from '../utils/urls';
 import {ActionsDropdown} from './ActionsDropdown';
 import {BaseCard} from './BaseCard';
 import {ContentAndFilesCard} from './ContentAndFilesCard';
-import {
-	RangeSelector,
-	RangeSelectors,
-	RangeSelectorsDropdown,
-} from './RangeSelectorsDropdown';
 
 export function ContentCard() {
 	const [rangeSelector, setRangeSelector] = useState<RangeSelector>({
@@ -29,6 +29,14 @@ export function ContentCard() {
 				<>
 					<RangeSelectorsDropdown
 						activeRangeSelector={rangeSelector}
+						availableRangeKeys={[
+							RangeSelectors.Last24Hours,
+							RangeSelectors.Last7Days,
+							RangeSelectors.Last28Days,
+							RangeSelectors.Last30Days,
+							RangeSelectors.Last90Days,
+							RangeSelectors.CustomRange,
+						]}
 						className="mr-3"
 						onChange={setRangeSelector}
 					/>

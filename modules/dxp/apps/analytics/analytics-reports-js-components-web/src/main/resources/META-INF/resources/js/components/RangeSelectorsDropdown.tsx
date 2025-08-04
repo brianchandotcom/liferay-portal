@@ -11,7 +11,12 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 
-import {Item} from './FilterDropdown';
+type Item = {
+	description?: string;
+	hasChildren?: boolean;
+	label: string;
+	value: string;
+};
 
 enum View {
 	CustomRange = 'custom-range',
@@ -36,8 +41,12 @@ export type RangeSelector = {
 
 export interface IRangeSelectorsDropdown {
 	activeRangeSelector: RangeSelector;
+	availableRangeKeys: RangeSelectors[];
 	className?: string;
 	onChange: (rangeSelector: RangeSelector) => void;
+	showDescription?: boolean;
+	showIcon?: boolean;
+	size?: 'sm' | 'xs';
 }
 
 const LAST_24_HOURS = {
@@ -73,14 +82,42 @@ const LAST_90_DAYS = {
 	value: RangeSelectors.Last90Days,
 };
 
+const buildRangeSelectors = (showDescription = true): Item[] => [
+	{
+		...LAST_24_HOURS,
+		description: showDescription ? LAST_24_HOURS.description : undefined,
+	},
+	{
+		...LAST_7_DAYS,
+		description: showDescription ? LAST_7_DAYS.description : undefined,
+	},
+	{
+		...LAST_28_DAYS,
+		description: showDescription ? LAST_28_DAYS.description : undefined,
+	},
+	{
+		...LAST_30_DAYS,
+		description: showDescription ? LAST_30_DAYS.description : undefined,
+	},
+	{
+		...LAST_90_DAYS,
+		description: showDescription ? LAST_90_DAYS.description : undefined,
+	},
+	{
+		label: Liferay.Language.get('custom-range'),
+		value: RangeSelectors.CustomRange,
+	},
+];
+
 interface IView {
 	activeRangeSelector: RangeSelector;
+	availableRangeSelectors: Item[];
 	onActiveChange: (active: boolean) => void;
 	onChange: (rangeSelector: RangeSelector) => void;
 	onViewChange: (view: View) => void;
 }
 
-const CustomRangeView: React.FC<IView> = ({
+const CustomRangeView: React.FC<Omit<IView, 'availableRangeSelectors'>> = ({
 	onActiveChange,
 	onChange,
 	onViewChange,
@@ -173,69 +210,77 @@ const CustomRangeView: React.FC<IView> = ({
 	);
 };
 
-const rangeSelectors: Item[] = [
-	LAST_24_HOURS,
-	LAST_7_DAYS,
-	LAST_28_DAYS,
-	LAST_30_DAYS,
-	LAST_90_DAYS,
-];
-
 const DefaultView: React.FC<IView> = ({
 	activeRangeSelector,
+	availableRangeSelectors,
 	onActiveChange,
 	onChange,
 	onViewChange,
 }) => {
+	const hasCustomRange = availableRangeSelectors.some(
+		(item) => item.value === RangeSelectors.CustomRange
+	);
+
 	return (
 		<>
-			{rangeSelectors.map((item) => (
-				<ClayDropdown.Item
-					active={item.value === activeRangeSelector.rangeKey}
-					data-testid={`range-selector-dropdown-item-${item.value}`}
-					key={item.value}
-					onClick={() => {
-						onChange({
-							rangeEnd: '',
-							rangeKey: item.value as RangeSelectors,
-							rangeStart: '',
-						});
+			{availableRangeSelectors.map((item) => {
+				if (item.value === RangeSelectors.CustomRange) {
+					return null;
+				}
 
-						onActiveChange(false);
-					}}
+				return (
+					<ClayDropdown.Item
+						active={item.value === activeRangeSelector.rangeKey}
+						data-testid={`range-selector-dropdown-item-${item.value}`}
+						key={item.value}
+						onClick={() => {
+							onChange({
+								rangeEnd: '',
+								rangeKey: item.value as RangeSelectors,
+								rangeStart: '',
+							});
+
+							onActiveChange(false);
+						}}
+						symbolLeft={
+							item.value === activeRangeSelector.rangeKey
+								? 'check'
+								: ''
+						}
+					>
+						<div>
+							<Text size={4}>{item.label}</Text>
+						</div>
+
+						{item.description && (
+							<Text size={1}>
+								<span className="text-uppercase">
+									{item.description}
+								</span>
+							</Text>
+						)}
+					</ClayDropdown.Item>
+				);
+			})}
+
+			{hasCustomRange && (
+				<ClayDropdown.Item
+					onClick={() => onViewChange(View.CustomRange)}
 					symbolLeft={
-						item.value === activeRangeSelector.rangeKey
+						activeRangeSelector.rangeKey ===
+						RangeSelectors.CustomRange
 							? 'check'
 							: ''
 					}
+					symbolRight="angle-right"
 				>
 					<div>
-						<Text size={4}>{item.label}</Text>
-					</div>
-
-					{item.description && (
-						<Text size={1}>
-							<span className="text-uppercase">
-								{item.description}
-							</span>
+						<Text size={4}>
+							{Liferay.Language.get('custom-range')}
 						</Text>
-					)}
+					</div>
 				</ClayDropdown.Item>
-			))}
-
-			<ClayDropdown.Item
-				onClick={() => onViewChange(View.CustomRange)}
-				symbolLeft={
-					activeRangeSelector.rangeKey === RangeSelectors.CustomRange
-						? 'check'
-						: ''
-				}
-				symbolRight="angle-right"
-			>
-				<div>
-					<Text size={4}>{Liferay.Language.get('custom-range')}</Text>
-				</div>
-			</ClayDropdown.Item>
+			)}
 		</>
 	);
 };
@@ -247,11 +292,22 @@ const Views = {
 
 const RangeSelectorsDropdown: React.FC<IRangeSelectorsDropdown> = ({
 	activeRangeSelector,
+	availableRangeKeys,
 	className,
 	onChange,
+	showDescription = true,
+	showIcon = false,
+	size = 'sm',
 }) => {
 	const [dropdownActive, setDropdownActive] = useState(false);
 	const [view, setView] = useState<View>(View.Default);
+
+	const allSelectors = buildRangeSelectors(showDescription);
+	const filteredSelectors = availableRangeKeys
+		? allSelectors.filter((item) =>
+				availableRangeKeys.includes(item.value as RangeSelectors)
+			)
+		: allSelectors;
 
 	const triggerLabel = () => {
 		if (activeRangeSelector.rangeKey === RangeSelectors.CustomRange) {
@@ -259,7 +315,7 @@ const RangeSelectorsDropdown: React.FC<IRangeSelectorsDropdown> = ({
 		}
 
 		return (
-			rangeSelectors.find(
+			filteredSelectors.find(
 				({value}) => value === activeRangeSelector.rangeKey
 			)?.label ?? ''
 		);
@@ -281,9 +337,13 @@ const RangeSelectorsDropdown: React.FC<IRangeSelectorsDropdown> = ({
 					borderless
 					data-testid="rangeSelectors"
 					displayType="secondary"
-					size="sm"
+					size={size}
 				>
-					<span className="ml-2 range-selector-dropdown__trigger-label">
+					<span className="align-items-center d-flex ml-2 range-selector-dropdown__trigger-label">
+						{showIcon && (
+							<ClayIcon className="mr-2" symbol="date" />
+						)}
+
 						{triggerLabel()}
 
 						<ClayIcon className="ml-2" symbol="caret-bottom" />
@@ -293,6 +353,7 @@ const RangeSelectorsDropdown: React.FC<IRangeSelectorsDropdown> = ({
 		>
 			<ViewComponent
 				activeRangeSelector={activeRangeSelector}
+				availableRangeSelectors={filteredSelectors}
 				onActiveChange={setDropdownActive}
 				onChange={onChange}
 				onViewChange={setView}

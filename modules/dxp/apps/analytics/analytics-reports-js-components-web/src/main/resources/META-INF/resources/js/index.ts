@@ -9,6 +9,7 @@ import ContentDashboardPerformance from './ContentDashboardPerformance';
 export * from './utils/buildQueryString';
 export * from './utils/date';
 export * from './utils/math';
+export * from './components/RangeSelectorsDropdown';
 export * from './utils/metrics';
 
 export {ContentDashboardPerformance, CMSPerformance};

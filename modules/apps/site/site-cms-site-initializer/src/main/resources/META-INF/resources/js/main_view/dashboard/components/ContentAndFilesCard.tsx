@@ -7,8 +7,10 @@ import {Text} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {
+	RangeSelector,
 	TrendClassification,
 	buildQueryString,
+	getSafeRangeSelector,
 	getStatsColor,
 	getStatsIcon,
 	toThousands,
@@ -18,7 +20,6 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
-import {RangeSelector, getSafeRangeSelector} from './RangeSelectorsDropdown';
 
 export interface IMetricsProps {
 	categoriesCount: number;

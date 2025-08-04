@@ -41,7 +41,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ConnectionInfoResource {
 
-	public ConnectionInfo getConnectionInfo(Long depotEntryId) throws Exception;
+	public ConnectionInfo getConnectionInfo(Long depotEntryGroupId)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

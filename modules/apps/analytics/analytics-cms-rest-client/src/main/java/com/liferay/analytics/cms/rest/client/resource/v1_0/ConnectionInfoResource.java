@@ -32,10 +32,11 @@ public interface ConnectionInfoResource {
 		return new Builder();
 	}
 
-	public ConnectionInfo getConnectionInfo(Long depotEntryId) throws Exception;
+	public ConnectionInfo getConnectionInfo(Long depotEntryGroupId)
+		throws Exception;
 
 	public HttpInvoker.HttpResponse getConnectionInfoHttpResponse(
-			Long depotEntryId)
+			Long depotEntryGroupId)
 		throws Exception;
 
 	public static class Builder {
@@ -147,11 +148,11 @@ public interface ConnectionInfoResource {
 	public static class ConnectionInfoResourceImpl
 		implements ConnectionInfoResource {
 
-		public ConnectionInfo getConnectionInfo(Long depotEntryId)
+		public ConnectionInfo getConnectionInfo(Long depotEntryGroupId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getConnectionInfoHttpResponse(depotEntryId);
+				getConnectionInfoHttpResponse(depotEntryGroupId);
 
 			String content = httpResponse.getContent();
 
@@ -213,7 +214,7 @@ public interface ConnectionInfoResource {
 		}
 
 		public HttpInvoker.HttpResponse getConnectionInfoHttpResponse(
-				Long depotEntryId)
+				Long depotEntryGroupId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -237,9 +238,9 @@ public interface ConnectionInfoResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (depotEntryId != null) {
+			if (depotEntryGroupId != null) {
 				httpInvoker.parameter(
-					"depotEntryId", String.valueOf(depotEntryId));
+					"depotEntryGroupId", String.valueOf(depotEntryGroupId));
 			}
 
 			httpInvoker.path(

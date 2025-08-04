@@ -722,6 +722,14 @@ public class LayoutUtil {
 		}
 
 		for (ClientExtension clientExtension : clientExtensions) {
+			CET cet = cetManager.getCET(
+				layout.getCompanyId(),
+				clientExtension.getExternalReferenceCode());
+
+			if (cet == null) {
+				throw new UnsupportedOperationException();
+			}
+
 			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
 				serviceContext.getUserId(), layout.getGroupId(),
 				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
@@ -730,14 +738,6 @@ public class LayoutUtil {
 					clientExtension.getClientExtensionConfig(), true
 				).buildString(),
 				serviceContext);
-
-			CET cet = cetManager.getCET(
-				layout.getCompanyId(),
-				clientExtension.getExternalReferenceCode());
-
-			if (cet == null) {
-				throw new UnsupportedOperationException();
-			}
 		}
 	}
 

@@ -96,6 +96,10 @@ public class DuplicateItemMVCActionCommandTest {
 
 		_draftLayout = _layout.fetchDraftLayout();
 
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_draftLayout.getPlid());
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
@@ -127,16 +131,12 @@ public class DuplicateItemMVCActionCommandTest {
 
 	@Test
 	public void testDuplicateDropZoneFragmentEntryLink() throws Exception {
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_draftLayout.getPlid());
-
 		FragmentEntryLink dropzoneFragmentEntryLink = _addFragmentEntryLink(
 			"{}",
 			"<lfr-drop-zone " +
 				"data-lfr-drop-zone-id=${fragmentEntryLinkNamespace}>" +
 					"</lfr-drop-zone>",
-			null, segmentsExperienceId);
+			null);
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -144,7 +144,7 @@ public class DuplicateItemMVCActionCommandTest {
 					_draftLayout.getGroupId(), _draftLayout.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+			layoutPageTemplateStructure.getData(_segmentsExperienceId));
 
 		FragmentStyledLayoutStructureItem
 			dropZoneFragmentStyledLayoutStructureItem =
@@ -170,11 +170,10 @@ public class DuplicateItemMVCActionCommandTest {
 			).toString(),
 			"<h1 data-lfr-editable-id=\"element-text\" " +
 				"data-lfr-editable-type=\"text\">Heading Example</h1>",
-			fragmentDropZoneLayoutStructureItem.getItemId(),
-			segmentsExperienceId);
+			fragmentDropZoneLayoutStructureItem.getItemId());
 
 		layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+			layoutPageTemplateStructure.getData(_segmentsExperienceId));
 
 		FragmentStyledLayoutStructureItem
 			headingFragmentStyledLayoutStructureItem =
@@ -192,8 +191,7 @@ public class DuplicateItemMVCActionCommandTest {
 			_getMockLiferayPortletActionRequest(
 				new String[] {
 					dropZoneFragmentStyledLayoutStructureItem.getItemId()
-				},
-				segmentsExperienceId),
+				}),
 			new MockLiferayPortletActionResponse());
 
 		List<String> duplicatedItemIds = (List<String>)jsonObject.get(
@@ -204,7 +202,7 @@ public class DuplicateItemMVCActionCommandTest {
 		Assert.assertNotNull(duplicatedItemId);
 
 		layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+			layoutPageTemplateStructure.getData(_segmentsExperienceId));
 
 		FragmentStyledLayoutStructureItem
 			duplicatedDropZoneFragmentStyledLayoutStructureItem =
@@ -249,10 +247,6 @@ public class DuplicateItemMVCActionCommandTest {
 	public void testDuplicateFragmentEntryLinkWithNamespaceInEditableID()
 		throws Exception {
 
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_draftLayout.getPlid());
-
 		FragmentEntryLink headingFragmentEntryLink = _addFragmentEntryLink(
 			JSONUtil.put(
 				FragmentEntryProcessorConstants.
@@ -267,7 +261,7 @@ public class DuplicateItemMVCActionCommandTest {
 			"<h1 data-lfr-editable-id=\"${fragmentEntryLinkNamespace}-" +
 				"element-text\" data-lfr-editable-type=\"text\">" +
 					"Heading Example</h1>",
-			null, segmentsExperienceId);
+			null);
 
 		String namespace = headingFragmentEntryLink.getNamespace();
 
@@ -288,7 +282,7 @@ public class DuplicateItemMVCActionCommandTest {
 					_draftLayout.getGroupId(), _draftLayout.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+			layoutPageTemplateStructure.getData(_segmentsExperienceId));
 
 		FragmentStyledLayoutStructureItem
 			headingFragmentStyledLayoutStructureItem =
@@ -302,8 +296,7 @@ public class DuplicateItemMVCActionCommandTest {
 			_getMockLiferayPortletActionRequest(
 				new String[] {
 					headingFragmentStyledLayoutStructureItem.getItemId()
-				},
-				segmentsExperienceId),
+				}),
 			new MockLiferayPortletActionResponse());
 
 		JSONArray duplicatedFragmentEntryLinksJSONArray =
@@ -342,12 +335,8 @@ public class DuplicateItemMVCActionCommandTest {
 				fetchLayoutPageTemplateStructure(
 					_draftLayout.getGroupId(), _draftLayout.getPlid());
 
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_draftLayout.getPlid());
-
 		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+			layoutPageTemplateStructure.getData(_segmentsExperienceId));
 
 		LayoutStructureItem rowStyledLayoutStructureItem1 =
 			layoutStructure.addRowStyledLayoutStructureItem(
@@ -369,8 +358,7 @@ public class DuplicateItemMVCActionCommandTest {
 				new String[] {
 					rowStyledLayoutStructureItem1.getItemId(),
 					rowStyledLayoutStructureItem2.getItemId()
-				},
-				segmentsExperienceId),
+				}),
 			new MockLiferayPortletActionResponse());
 
 		List<String> duplicatedItemIds = (List<String>)jsonObject.get(
@@ -396,8 +384,7 @@ public class DuplicateItemMVCActionCommandTest {
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
-			String editableValues, String html, String parentItemId,
-			long segmentsExperienceId)
+			String editableValues, String html, String parentItemId)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -422,7 +409,7 @@ public class DuplicateItemMVCActionCommandTest {
 				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), _draftLayout,
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
-				parentItemId, 0, segmentsExperienceId);
+				parentItemId, 0, _segmentsExperienceId);
 
 		for (FragmentEntryLinkListener fragmentEntryLinkListener :
 				_fragmentEntryLinkListenerRegistry.
@@ -512,7 +499,7 @@ public class DuplicateItemMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String[] itemIds, long segmentExperienceId)
+			String[] itemIds)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -523,7 +510,7 @@ public class DuplicateItemMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.addParameter("itemIds", itemIds);
 		mockLiferayPortletActionRequest.addParameter(
-			"segmentsExperienceId", String.valueOf(segmentExperienceId));
+			"segmentsExperienceId", String.valueOf(_segmentsExperienceId));
 
 		return mockLiferayPortletActionRequest;
 	}
@@ -581,6 +568,8 @@ public class DuplicateItemMVCActionCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	private long _segmentsExperienceId;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

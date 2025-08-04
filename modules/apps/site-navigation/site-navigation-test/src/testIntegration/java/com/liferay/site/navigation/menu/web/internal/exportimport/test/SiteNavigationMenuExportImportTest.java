@@ -76,7 +76,7 @@ public class SiteNavigationMenuExportImportTest
 				new String[] {_siteNavigationMenu.getExternalReferenceCode()}
 			).build());
 
-		_publishLayouts();
+		_publishAllLayouts();
 
 		_siteNavigationMenuLocalService.
 			getSiteNavigationMenuByExternalReferenceCode(
@@ -134,7 +134,7 @@ public class SiteNavigationMenuExportImportTest
 				_siteNavigationMenu, childLayout1,
 				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId());
 
-		_publishLayouts();
+		_publishAllLayouts();
 
 		Layout childLayout2 = LayoutTestUtil.addTypePortletLayout(
 			_stagingGroup);
@@ -175,7 +175,7 @@ public class SiteNavigationMenuExportImportTest
 				"siteNavigationMenuType", new String[] {"1"}
 			).build());
 
-		_publishLayouts();
+		_publishAllLayouts();
 
 		Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			_layout.getUuid(), _liveGroup.getGroupId(),
@@ -221,7 +221,7 @@ public class SiteNavigationMenuExportImportTest
 				new String[] {curGroup.getExternalReferenceCode()}
 			).build());
 
-		_publishLayouts();
+		_publishAllLayouts();
 
 		Assert.assertNull(
 			_siteNavigationMenuLocalService.
@@ -254,8 +254,21 @@ public class SiteNavigationMenuExportImportTest
 				"rootMenuItemExternalReferenceCode", StringPool.BLANK));
 	}
 
-	private void _publishLayouts() throws Exception {
-		_publishLayouts(null);
+	private void _publishAllLayouts() throws Exception {
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
+
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {Boolean.FALSE.toString()});
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			_liveGroup.getGroupId(), false, parameterMap);
 	}
 
 	private void _publishLayouts(long[] layoutIds) throws Exception {
@@ -270,16 +283,9 @@ public class SiteNavigationMenuExportImportTest
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {Boolean.FALSE.toString()});
 
-		if (layoutIds != null) {
-			StagingUtil.publishLayouts(
-				TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
-				_liveGroup.getGroupId(), false, layoutIds, parameterMap);
-		}
-		else {
-			StagingUtil.publishLayouts(
-				TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
-				_liveGroup.getGroupId(), false, parameterMap);
-		}
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			_liveGroup.getGroupId(), false, layoutIds, parameterMap);
 	}
 
 	private void _setUpLocalStaging() throws Exception {

@@ -108,6 +108,20 @@ public abstract class BaseDuplicateItemMVCActionCommand
 						serviceContext.getRequest(), portletId, oldInstanceId,
 						namespace);
 				}
+
+				FragmentEntryLink duplicatedFragmentEntryLink =
+					fragmentEntryLinkService.addFragmentEntryLink(
+						null, fragmentEntryLink.getGroupId(), 0,
+						fragmentEntryLink.getFragmentEntryId(),
+						fragmentEntryLink.getSegmentsExperienceId(),
+						fragmentEntryLink.getPlid(), fragmentEntryLink.getCss(),
+						fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
+						fragmentEntryLink.getConfiguration(),
+						editableValuesJSONObject.toString(), namespace, 0,
+						fragmentEntryLink.getRendererKey(),
+						fragmentEntryLink.getType(), serviceContext);
+
+				return duplicatedFragmentEntryLink.getFragmentEntryLinkId();
 			}
 
 			if (fragmentEntryLink.isTypeInput()) {

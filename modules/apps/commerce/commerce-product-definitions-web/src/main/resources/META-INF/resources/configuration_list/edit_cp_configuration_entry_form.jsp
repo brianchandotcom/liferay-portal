@@ -169,7 +169,7 @@ CPConfigurationEntry cpConfigurationEntry = cpConfigurationListDisplayContext.ge
 				<aui:input data-qa-id="allowedOrderQuantitiesInput" helpMessage="<%= allowedOrderQuantitiesHelpMessage %>" name="allowedOrderQuantities" value='<%= BeanParamUtil.getString(cpConfigurationEntry, request, "allowedOrderQuantities") %>'>
 					<aui:validator errorMessage="<%= allowedOrderQuantitiesHelpMessage %>" name="custom">
 						function(val) {
-							const pattern = /^(\d{1,3}(,\d{3})*\.\d{2})(\s\d{1,3}(,\d{3})*\.\d{2})*$/;
+							const pattern = /^(\d{1,3}(,\d{3})*(\.\d{1,2})?)(\s\d{1,3}(,\d{3})*(\.\d{1,2})?)*$/;
 
 							return pattern.test(val);
 						}

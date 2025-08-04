@@ -126,6 +126,10 @@ public class ObjectDefinitionUtil {
 		).put(
 			"Bookmark", "/bookmarks"
 		).put(
+			"BulkActionTask", "/cms/bulk-action-task"
+		).put(
+			"BulkActionTaskItem", "/cms/bulk-action-task-item"
+		).put(
 			"CommerceReturn", "/commerce/returns"
 		).put(
 			"CommerceReturnItem", "/commerce/return-items"

@@ -91,7 +91,7 @@ public class ConnectionInfoResourceTest
 				}
 			},
 			connectionInfoResource.getConnectionInfo(
-				_depotEntry1.getDepotEntryId()));
+				_depotEntry1.getGroupId()));
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -123,7 +123,7 @@ public class ConnectionInfoResourceTest
 					}
 				},
 				connectionInfoResource.getConnectionInfo(
-					_depotEntry1.getDepotEntryId()));
+					_depotEntry1.getGroupId()));
 		}
 
 		Assert.assertEquals(
@@ -136,7 +136,7 @@ public class ConnectionInfoResourceTest
 				}
 			},
 			connectionInfoResource.getConnectionInfo(
-				_depotEntry2.getDepotEntryId()));
+				_depotEntry2.getGroupId()));
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -171,7 +171,7 @@ public class ConnectionInfoResourceTest
 					}
 				},
 				connectionInfoResource.getConnectionInfo(
-					_depotEntry2.getDepotEntryId()));
+					_depotEntry2.getGroupId()));
 		}
 	}
 

@@ -69,7 +69,9 @@ public class OpenAPIUtil {
 		else if (s.endsWith("ies")) {
 			s = s.substring(0, s.length() - 3) + "y";
 		}
-		else if (s.endsWith("s") && !s.endsWith("tus") &&
+		else if (s.endsWith("s") &&
+				 (!s.endsWith("tus") ||
+				  !ConfigUtil.isVersionCompatible(configYAML, 11)) &&
 				 (!s.endsWith("ss") ||
 				  !ConfigUtil.isVersionCompatible(configYAML, 6))) {
 

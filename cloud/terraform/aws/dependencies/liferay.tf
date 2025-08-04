@@ -1,6 +1,6 @@
-data "aws_caller_identity" "current" {
-}
-data "aws_region" "current" {
+locals {
+  oidc_provider = replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
+  oidc_provider_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider}"
 }
 module "s3_bucket" {
 	block_public_acls=true
@@ -75,12 +75,12 @@ resource "aws_iam_role" "liferay" {
 					Action="sts:AssumeRoleWithWebIdentity"
 					Condition={
 						StringEquals={
-							"${var.oidc_provider}:sub" : "system:serviceaccount:${var.deployment_namespace}:liferay-default"
+							"${local.oidc_provider}:sub" : "system:serviceaccount:${var.deployment_namespace}:liferay-default"
 						}
 					}
 					Effect="Allow"
 					Principal={
-						Federated=var.oidc_provider_arn
+						Federated=local.oidc_provider_arn
 					}
 				}
 			]
@@ -103,7 +103,7 @@ resource "aws_opensearch_domain" "os" {
 			"Principal": {
 				"AWS": "*"
 			},
-			"Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.deployment_name}-os-d/*"
+			"Resource": "arn:aws:es:${var.region}:${data.aws_caller_identity.current.account_id}:domain/${var.deployment_name}-os-d/*"
 		}
 	],
 	"Version": "2012-10-17"

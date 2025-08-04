@@ -19,12 +19,6 @@ output "node_role_arn" {
 output "node_security_group_id" {
 	value=aws_security_group.nodes.id
 }
-output "oidc_provider" {
-	value=module.eks.oidc_provider
-}
-output "oidc_provider_arn" {
-	value=module.eks.oidc_provider_arn
-}
 output "private_subnet_ids" {
 	value=module.vpc.private_subnets
 }

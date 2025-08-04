@@ -1,9 +1,3 @@
-data "aws_eks_cluster" "cluster" {
-	name=var.cluster_name
-}
-data "aws_eks_cluster_auth" "cluster" {
-	name=var.cluster_name
-}
 resource "random_password" "opensearch_password" {
 	length=16
 	min_lower=1
@@ -32,13 +26,13 @@ resource "random_password" "s3_bucket_suffix" {
 	upper=false
 }
 variable "cluster_endpoint" {
-	default="CLUSTER_ENDPOINT"
+	type=string
 }
 variable "cluster_name" {
-	default="CLUSTER_NAME"
+	type=string
 }
 variable "cluster_security_group_id" {
-	default="SECURITY_GROUP_ID"
+	type=string
 }
 variable "deployment_name" {
 	default="liferay-self-hosted"
@@ -47,32 +41,26 @@ variable "deployment_namespace" {
 	default="liferay-system"
 }
 variable "node_instance_type" {
-	default="NODE_INSTANCE_TYPE"
+	type=string
 }
 variable "node_role_arn" {
-	default="NODE_ROLE_ARN"
+	type=string
 }
 variable "node_security_group_id" {
-	default="NODE_SECURITY_GROUP"
-}
-variable "oidc_provider" {
-	default="OIDC_PROVIDER"
-}
-variable "oidc_provider_arn" {
-	default="OIDC_PROVIDER_ARN"
+	type=string
 }
 variable "private_subnet_ids" {
-	default=["PUBLIC_SUBNET_ID_ONE"]
+	type=list(string)
 }
 variable "public_subnet_ids" {
-	default=["PUBLIC_SUBNET_ID_ONE"]
+	type=list(string)
 }
 variable "region" {
-	default="REGION"
+	type=string
 }
 variable "vpc_cidr" {
-	default=""
+	type=string
 }
 variable "vpc_id" {
-	default="VPC_ID"
+	type=string
 }

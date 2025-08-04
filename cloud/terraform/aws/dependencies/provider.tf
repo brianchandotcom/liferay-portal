@@ -9,7 +9,7 @@ provider "aws" {
 provider "kubernetes" {
 	cluster_ca_certificate=base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
 	host=data.aws_eks_cluster.cluster.endpoint
-	token=data.aws_eks_cluster_auth.cluster.token
+	token=data.aws_eks_cluster_auth.cluster_auth.token
 }
 terraform {
 	required_providers {

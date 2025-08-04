@@ -7,10 +7,10 @@ package com.liferay.portal.osgi.web.http.servlet.internal.context.customizer;
 
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 
+import jakarta.servlet.Filter;
+
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
-
-import jakarta.servlet.Filter;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;

@@ -39,7 +39,7 @@ public class JSUnitModulesSegmentTestClassGroup
 			sb.append(",");
 		}
 
-		if (!sb.isEmpty()) {
+		if (sb.length() > 0) {
 			sb.setLength(sb.length() - 1);
 		}
 

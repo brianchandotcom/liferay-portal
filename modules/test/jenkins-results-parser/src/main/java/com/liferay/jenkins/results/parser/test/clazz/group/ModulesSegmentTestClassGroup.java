@@ -71,7 +71,7 @@ public class ModulesSegmentTestClassGroup extends SegmentTestClassGroup {
 			}
 		}
 
-		if (!sb.isEmpty()) {
+		if (sb.length() > 0) {
 			sb.setLength(sb.length() - 1);
 		}
 

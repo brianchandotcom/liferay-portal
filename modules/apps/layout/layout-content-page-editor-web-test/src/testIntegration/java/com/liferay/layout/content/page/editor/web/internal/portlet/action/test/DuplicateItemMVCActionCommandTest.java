@@ -247,23 +247,22 @@ public class DuplicateItemMVCActionCommandTest {
 	public void testDuplicateFragmentEntryLinkWithNamespaceInEditableID()
 		throws Exception {
 
-		FragmentEntryLink headingFragmentEntryLink = _addFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			"{}",
 			"<h1 data-lfr-editable-id=\"${fragmentEntryLinkNamespace}-" +
 				"element-text\" data-lfr-editable-type=\"text\">" +
 					"Heading Example</h1>",
 			null);
 
-		headingFragmentEntryLink =
+		fragmentEntryLink =
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 				TestPropsValues.getUserId(),
-				headingFragmentEntryLink.getFragmentEntryLinkId(),
+				fragmentEntryLink.getFragmentEntryLinkId(),
 				JSONUtil.put(
 					FragmentEntryProcessorConstants.
 						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 					JSONUtil.put(
-						headingFragmentEntryLink.getNamespace() +
-							"-element-text",
+						fragmentEntryLink.getNamespace() + "-element-text",
 						JSONUtil.put(
 							LocaleUtil.toLanguageId(
 								_portal.getSiteDefaultLocale(_group)),
@@ -278,43 +277,36 @@ public class DuplicateItemMVCActionCommandTest {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(_segmentsExperienceId));
 
-		FragmentStyledLayoutStructureItem
-			headingFragmentStyledLayoutStructureItem =
-				_assertFragmentStyledLayoutStructureItem(
-					layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-						headingFragmentEntryLink.getFragmentEntryLinkId()));
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			_assertFragmentStyledLayoutStructureItem(
+				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+					fragmentEntryLink.getFragmentEntryLinkId()));
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			_getMockLiferayPortletActionRequest(
-				new String[] {
-					headingFragmentStyledLayoutStructureItem.getItemId()
-				}),
+				new String[] {fragmentStyledLayoutStructureItem.getItemId()}),
 			new MockLiferayPortletActionResponse());
 
-		JSONArray duplicatedFragmentEntryLinksJSONArray =
-			jsonObject.getJSONArray("duplicatedFragmentEntryLinks");
+		JSONArray jsonArray = jsonObject.getJSONArray(
+			"duplicatedFragmentEntryLinks");
 
-		Assert.assertEquals(
-			duplicatedFragmentEntryLinksJSONArray.toString(), 1,
-			duplicatedFragmentEntryLinksJSONArray.length());
+		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
 
-		JSONObject duplicatedFragmentEntryLinksJSONObject =
-			duplicatedFragmentEntryLinksJSONArray.getJSONObject(0);
+		JSONObject duplicatedFragmentEntryLinkJSONObject =
+			jsonArray.getJSONObject(0);
 
-		FragmentEntryLink duplicatedHeadingFragmentEntryLink =
+		FragmentEntryLink duplicatedFragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				duplicatedFragmentEntryLinksJSONObject.getLong(
+				duplicatedFragmentEntryLinkJSONObject.getLong(
 					"fragmentEntryLinkId"));
 
-		String duplicatedEditableValues =
-			duplicatedHeadingFragmentEntryLink.getEditableValues();
+		String editableValues = duplicatedFragmentEntryLink.getEditableValues();
 
 		Assert.assertTrue(
-			duplicatedEditableValues.contains(
-				duplicatedHeadingFragmentEntryLink.getNamespace() +
-					"-element-text"));
+			editableValues.contains(
+				duplicatedFragmentEntryLink.getNamespace() + "-element-text"));
 	}
 
 	@Test

@@ -109,8 +109,9 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 	private JournalArticle _processAction(ActionRequest actionRequest)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 		String actionName = StringPool.BLANK;
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.ADD)) {
 			actionName = "/journal/add_article";

@@ -75,32 +75,4 @@ public class FilterServiceTrackerCustomizer
 		return filterRegistrationAtomicReference;
 	}
 
-	@Override
-	public void modifiedService(
-		ServiceReference<Filter> serviceReference,
-		AtomicReference<FilterRegistration> filterRegistrationAtomicReference) {
-
-		removedService(serviceReference, filterRegistrationAtomicReference);
-
-		AtomicReference<FilterRegistration>
-			newFilterRegistrationAtomicReference = addingService(
-				serviceReference);
-
-		filterRegistrationAtomicReference.set(
-			newFilterRegistrationAtomicReference.get());
-	}
-
-	@Override
-	public void removedService(
-		ServiceReference<Filter> serviceReference,
-		AtomicReference<FilterRegistration> filterRegistrationAtomicReference) {
-
-		FilterRegistration filterRegistration =
-			filterRegistrationAtomicReference.get();
-
-		if (filterRegistration != null) {
-			filterRegistration.destroy();
-		}
-	}
-
 }

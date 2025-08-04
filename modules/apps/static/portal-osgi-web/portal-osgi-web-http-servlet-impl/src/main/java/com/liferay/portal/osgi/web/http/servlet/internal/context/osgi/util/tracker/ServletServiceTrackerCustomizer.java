@@ -76,34 +76,4 @@ public class ServletServiceTrackerCustomizer
 		return servletRegistrationAtomicReference;
 	}
 
-	@Override
-	public void modifiedService(
-		ServiceReference<Servlet> serviceReference,
-		AtomicReference<ServletRegistration>
-			servletRegistrationAtomicReference) {
-
-		removedService(serviceReference, servletRegistrationAtomicReference);
-
-		AtomicReference<ServletRegistration>
-			newServletRegistrationAtomicReference = addingService(
-				serviceReference);
-
-		servletRegistrationAtomicReference.set(
-			newServletRegistrationAtomicReference.get());
-	}
-
-	@Override
-	public void removedService(
-		ServiceReference<Servlet> serviceReference,
-		AtomicReference<ServletRegistration>
-			servletRegistrationAtomicReference) {
-
-		ServletRegistration servletRegistration =
-			servletRegistrationAtomicReference.get();
-
-		if (servletRegistration != null) {
-			servletRegistration.destroy();
-		}
-	}
-
 }

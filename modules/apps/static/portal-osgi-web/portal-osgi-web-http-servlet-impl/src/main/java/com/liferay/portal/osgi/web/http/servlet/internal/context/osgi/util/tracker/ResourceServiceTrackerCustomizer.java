@@ -71,34 +71,4 @@ public class ResourceServiceTrackerCustomizer
 		return resourceRegistrationAtomicReference;
 	}
 
-	@Override
-	public void modifiedService(
-		ServiceReference<Object> serviceReference,
-		AtomicReference<ResourceRegistration>
-			resourceRegistrationAtomicReference) {
-
-		removedService(serviceReference, resourceRegistrationAtomicReference);
-
-		AtomicReference<ResourceRegistration>
-			newResourceRegistrationAtomicReference = addingService(
-				serviceReference);
-
-		resourceRegistrationAtomicReference.set(
-			newResourceRegistrationAtomicReference.get());
-	}
-
-	@Override
-	public void removedService(
-		ServiceReference<Object> serviceReference,
-		AtomicReference<ResourceRegistration>
-			resourceRegistrationAtomicReference) {
-
-		ResourceRegistration resourceRegistration =
-			resourceRegistrationAtomicReference.get();
-
-		if (resourceRegistration != null) {
-			resourceRegistration.destroy();
-		}
-	}
-
 }

@@ -82,34 +82,4 @@ public class EventListenerServiceTrackerCustomizer
 		return listenerRegistrationAtomicReference;
 	}
 
-	@Override
-	public void modifiedService(
-		ServiceReference<EventListener> serviceReference,
-		AtomicReference<ListenerRegistration>
-			listenerRegistrationAtomicReference) {
-
-		removedService(serviceReference, listenerRegistrationAtomicReference);
-
-		AtomicReference<ListenerRegistration>
-			newListenerRegistrationAtomicReference = addingService(
-				serviceReference);
-
-		listenerRegistrationAtomicReference.set(
-			newListenerRegistrationAtomicReference.get());
-	}
-
-	@Override
-	public void removedService(
-		ServiceReference<EventListener> serviceReference,
-		AtomicReference<ListenerRegistration>
-			listenerRegistrationAtomicReference) {
-
-		ListenerRegistration listenerRegistration =
-			listenerRegistrationAtomicReference.get();
-
-		if (listenerRegistration != null) {
-			listenerRegistration.destroy();
-		}
-	}
-
 }

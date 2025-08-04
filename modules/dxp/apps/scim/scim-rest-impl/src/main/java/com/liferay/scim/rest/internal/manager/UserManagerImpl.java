@@ -78,6 +78,7 @@ import java.util.Objects;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 
+import org.wso2.charon3.core.exceptions.AbstractCharonException;
 import org.wso2.charon3.core.exceptions.BadRequestException;
 import org.wso2.charon3.core.exceptions.CharonException;
 import org.wso2.charon3.core.exceptions.ConflictException;
@@ -184,6 +185,9 @@ public class UserManagerImpl implements UserManager {
 					return null;
 				});
 		}
+		catch (AbstractCharonException abstractCharonException) {
+			ReflectionUtil.throwException(abstractCharonException);
+		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(principalException);
@@ -212,9 +216,13 @@ public class UserManagerImpl implements UserManager {
 				GetterUtil.getLong(userId), WorkflowConstants.STATUS_INACTIVE,
 				new ServiceContext());
 		}
-		catch (Exception exception) {
+		catch (AbstractCharonException abstractCharonException) {
+			ReflectionUtil.throwException(abstractCharonException);
+		}
+		catch (PortalException portalException) {
 			throw new CharonException(
-				"Unable to delete user with user ID " + userId, exception);
+				"Unable to delete user with user ID " + userId,
+				portalException);
 		}
 	}
 
@@ -231,6 +239,9 @@ public class UserManagerImpl implements UserManager {
 					CompanyThreadLocal.getCompanyId(),
 					userGroup.getUserGroupId()),
 				userGroup);
+		}
+		catch (AbstractCharonException abstractCharonException) {
+			return ReflectionUtil.throwException(abstractCharonException);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -262,6 +273,9 @@ public class UserManagerImpl implements UserManager {
 					CompanyThreadLocal.getCompanyId(),
 					GetterUtil.getLong(scimUser.getId())),
 				scimUser);
+		}
+		catch (AbstractCharonException abstractCharonException) {
+			return ReflectionUtil.throwException(abstractCharonException);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -528,6 +542,9 @@ public class UserManagerImpl implements UserManager {
 						userGroup);
 				});
 		}
+		catch (AbstractCharonException abstractCharonException) {
+			return ReflectionUtil.throwException(abstractCharonException);
+		}
 		catch (Throwable throwable) {
 			throw new CharonException(
 				"Unable to provision a portal group for " +
@@ -758,6 +775,9 @@ public class UserManagerImpl implements UserManager {
 							GetterUtil.getLong(scimUser.getId())),
 						scimUser);
 				});
+		}
+		catch (AbstractCharonException abstractCharonException) {
+			return ReflectionUtil.throwException(abstractCharonException);
 		}
 		catch (Throwable throwable) {
 			throw new CharonException(
@@ -1013,7 +1033,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	private ScimUser _getScimUser(long companyId, long userId)
-		throws Exception {
+		throws AbstractCharonException {
 
 		com.liferay.portal.kernel.model.User portalUser = null;
 
@@ -1073,7 +1093,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	private UserGroup _getUserGroup(long companyId, long userGroupId)
-		throws Exception {
+		throws AbstractCharonException {
 
 		UserGroup userGroup = null;
 

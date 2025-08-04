@@ -283,85 +283,96 @@ public class ScimUtil {
 	}
 
 	public static ScimUser toScimUser(
-			com.liferay.portal.kernel.model.User portalUser)
-		throws Exception {
+		com.liferay.portal.kernel.model.User portalUser) {
 
-		ScimUser scimUser = new ScimUser();
+		try {
+			ScimUser scimUser = new ScimUser();
 
-		scimUser.setActive(portalUser.isActive());
-		scimUser.setAddresses(_getScimAddresses(portalUser));
-		scimUser.setBirthday(portalUser.getBirthday());
-		scimUser.setCompanyId(portalUser.getCompanyId());
-		scimUser.setCreateDate(_truncateDate(portalUser.getCreateDate()));
+			scimUser.setActive(portalUser.isActive());
+			scimUser.setAddresses(_getScimAddresses(portalUser));
+			scimUser.setBirthday(portalUser.getBirthday());
+			scimUser.setCompanyId(portalUser.getCompanyId());
+			scimUser.setCreateDate(_truncateDate(portalUser.getCreateDate()));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
-			scimUser.setEmailAddresses(
-				_getEmailAddresses(
-					EmailAddressLocalServiceUtil.getEmailAddresses(
-						portalUser.getCompanyId(), Contact.class.getName(),
-						portalUser.getContactId()),
-					EmailAddress::getAddress, EmailAddress::isPrimary));
+			if (FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
+				scimUser.setEmailAddresses(
+					_getEmailAddresses(
+						EmailAddressLocalServiceUtil.getEmailAddresses(
+							portalUser.getCompanyId(), Contact.class.getName(),
+							portalUser.getContactId()),
+						EmailAddress::getAddress, EmailAddress::isPrimary));
+			}
+			else {
+				scimUser.setEmailAddresses(
+					new String[] {portalUser.getEmailAddress()});
+			}
+
+			scimUser.setExternalReferenceCode(
+				portalUser.getExternalReferenceCode());
+			scimUser.setFirstName(portalUser.getFirstName());
+			scimUser.setId(String.valueOf(portalUser.getUserId()));
+
+			Map<String, String> ims = new HashMap<>();
+
+			Contact contact = portalUser.getContact();
+
+			if (contact.getJabberSn() != null) {
+				ims.put("Jabber", contact.getJabberSn());
+			}
+
+			if (contact.getSkypeSn() != null) {
+				ims.put("Skype", contact.getSkypeSn());
+			}
+
+			scimUser.setIMs(ims);
+
+			scimUser.setJobTitle(portalUser.getJobTitle());
+			scimUser.setLastName(portalUser.getLastName());
+			scimUser.setLocale(portalUser.getLocale());
+			scimUser.setMale(portalUser.isMale());
+			scimUser.setMiddleName(portalUser.getMiddleName());
+			scimUser.setModifiedDate(
+				_truncateDate(portalUser.getModifiedDate()));
+			scimUser.setPhoneNumberMultiValuedComplexTypes(
+				TransformUtil.transform(
+					PhoneLocalServiceUtil.getPhones(
+						contact.getCompanyId(), Contact.class.getName(),
+						contact.getContactId()),
+					phone -> {
+						MultiValuedComplexType multiValuedComplexType =
+							new MultiValuedComplexType();
+
+						multiValuedComplexType.setPrimary(phone.isPrimary());
+
+						ListType listType =
+							ListTypeLocalServiceUtil.fetchListType(
+								phone.getListTypeId());
+
+						multiValuedComplexType.setType(listType.getName());
+
+						multiValuedComplexType.setValue(phone.getNumber());
+
+						return multiValuedComplexType;
+					}));
+			scimUser.setPrefix(contact.getPrefixListTypeId());
+			scimUser.setProfileUrl(_getProfileURL(contact));
+			scimUser.setRoleIds(portalUser.getRoleIds());
+			scimUser.setScreenName(portalUser.getScreenName());
+			scimUser.setSuffix(contact.getSuffixListTypeId());
+			scimUser.setTimeZoneId(portalUser.getTimeZoneId());
+
+			_setExpandoValues(scimUser);
+
+			return scimUser;
 		}
-		else {
-			scimUser.setEmailAddresses(
-				new String[] {portalUser.getEmailAddress()});
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to convert portal user to a SCIM user", exception);
+			}
+
+			return ReflectionUtil.throwException(exception);
 		}
-
-		scimUser.setExternalReferenceCode(
-			portalUser.getExternalReferenceCode());
-		scimUser.setFirstName(portalUser.getFirstName());
-		scimUser.setId(String.valueOf(portalUser.getUserId()));
-
-		Map<String, String> ims = new HashMap<>();
-
-		Contact contact = portalUser.getContact();
-
-		if (contact.getJabberSn() != null) {
-			ims.put("Jabber", contact.getJabberSn());
-		}
-
-		if (contact.getSkypeSn() != null) {
-			ims.put("Skype", contact.getSkypeSn());
-		}
-
-		scimUser.setIMs(ims);
-
-		scimUser.setJobTitle(portalUser.getJobTitle());
-		scimUser.setLastName(portalUser.getLastName());
-		scimUser.setLocale(portalUser.getLocale());
-		scimUser.setMale(portalUser.isMale());
-		scimUser.setMiddleName(portalUser.getMiddleName());
-		scimUser.setModifiedDate(_truncateDate(portalUser.getModifiedDate()));
-		scimUser.setPhoneNumberMultiValuedComplexTypes(
-			TransformUtil.transform(
-				PhoneLocalServiceUtil.getPhones(
-					contact.getCompanyId(), Contact.class.getName(),
-					contact.getContactId()),
-				phone -> {
-					MultiValuedComplexType multiValuedComplexType =
-						new MultiValuedComplexType();
-
-					multiValuedComplexType.setPrimary(phone.isPrimary());
-
-					ListType listType = ListTypeLocalServiceUtil.fetchListType(
-						phone.getListTypeId());
-
-					multiValuedComplexType.setType(listType.getName());
-
-					multiValuedComplexType.setValue(phone.getNumber());
-
-					return multiValuedComplexType;
-				}));
-		scimUser.setPrefix(contact.getPrefixListTypeId());
-		scimUser.setProfileUrl(_getProfileURL(contact));
-		scimUser.setRoleIds(portalUser.getRoleIds());
-		scimUser.setScreenName(portalUser.getScreenName());
-		scimUser.setSuffix(contact.getSuffixListTypeId());
-		scimUser.setTimeZoneId(portalUser.getTimeZoneId());
-
-		_setExpandoValues(scimUser);
-
-		return scimUser;
 	}
 
 	public static User toUser(List<Group> groups, ScimUser scimUser)

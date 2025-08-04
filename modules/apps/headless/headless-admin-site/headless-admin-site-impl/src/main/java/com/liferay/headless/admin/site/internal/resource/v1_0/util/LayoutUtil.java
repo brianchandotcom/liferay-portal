@@ -508,7 +508,7 @@ public class LayoutUtil {
 	}
 
 	public static Layout updateLayout(
-			Layout layout, Map<Locale, String> nameMap,
+			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
 			PageSpecification pageSpecification, ServiceContext serviceContext)
@@ -520,7 +520,7 @@ public class LayoutUtil {
 			settings = pageSpecification.getSettings();
 		}
 
-		_updateClientExtensions(layout, settings, serviceContext);
+		_updateClientExtensions(cetManager, layout, settings, serviceContext);
 
 		layout = _updateLookAndFeel(layout, settings);
 
@@ -691,8 +691,8 @@ public class LayoutUtil {
 	}
 
 	private static void _updateClientExtensionEntryRel(
-			ClientExtension clientExtension, Layout layout, String type,
-			ServiceContext serviceContext)
+			CETManager cetManager, ClientExtension clientExtension,
+			Layout layout, String type, ServiceContext serviceContext)
 		throws Exception {
 
 		ClientExtension[] clientExtensions = null;
@@ -702,12 +702,12 @@ public class LayoutUtil {
 		}
 
 		_updateClientExtensionEntryRels(
-			clientExtensions, layout, type, serviceContext);
+			cetManager, clientExtensions, layout, type, serviceContext);
 	}
 
 	private static void _updateClientExtensionEntryRels(
-			ClientExtension[] clientExtensions, Layout layout, String type,
-			ServiceContext serviceContext)
+			CETManager cetManager, ClientExtension[] clientExtensions,
+			Layout layout, String type, ServiceContext serviceContext)
 		throws Exception {
 
 		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
@@ -716,8 +716,6 @@ public class LayoutUtil {
 		if (clientExtensions == null) {
 			return;
 		}
-
-		CETManager cetManager = _cetManagerSnapshot.get();
 
 		for (ClientExtension clientExtension : clientExtensions) {
 			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
@@ -740,7 +738,8 @@ public class LayoutUtil {
 	}
 
 	private static void _updateClientExtensions(
-			Layout layout, Settings settings, ServiceContext serviceContext)
+			CETManager cetManager, Layout layout, Settings settings,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (settings == null) {
@@ -766,25 +765,26 @@ public class LayoutUtil {
 		}
 
 		_updateClientExtensionEntryRel(
+			cetManager,
 			settings.getFavIcon() instanceof ClientExtension ?
 				(ClientExtension)settings.getFavIcon() : null,
 			layout, ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
 			serviceContext);
 
 		_updateClientExtensionEntryRel(
-			settings.getThemeCSSClientExtension(), layout,
+			cetManager, settings.getThemeCSSClientExtension(), layout,
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, serviceContext);
 
 		_updateClientExtensionEntryRel(
-			settings.getThemeSpritemapClientExtension(), layout,
+			cetManager, settings.getThemeSpritemapClientExtension(), layout,
 			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, serviceContext);
 
 		_updateClientExtensionEntryRels(
-			settings.getGlobalCSSClientExtensions(), layout,
+			cetManager, settings.getGlobalCSSClientExtensions(), layout,
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, serviceContext);
 
 		_updateClientExtensionEntryRels(
-			settings.getGlobalJSClientExtensions(), layout,
+			cetManager, settings.getGlobalJSClientExtensions(), layout,
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, serviceContext);
 	}
 
@@ -896,8 +896,5 @@ public class LayoutUtil {
 				layout, pageExperience, segmentsExperience, serviceContext);
 		}
 	}
-
-	private static final Snapshot<CETManager> _cetManagerSnapshot =
-		new Snapshot<>(LayoutUtil.class, CETManager.class);
 
 }

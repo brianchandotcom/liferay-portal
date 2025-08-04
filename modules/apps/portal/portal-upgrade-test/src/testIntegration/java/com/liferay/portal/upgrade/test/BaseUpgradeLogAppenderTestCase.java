@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
@@ -25,13 +26,17 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeSQLRecorder;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -261,6 +266,65 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		String content = _getReportContent();
 
 		Assert.assertFalse(content.contains("Table Name"));
+	}
+
+	@Test
+	public void testDataCleanupMessages() throws Exception {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader originalclassLoader =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PortalClassLoaderUtil.class, "_classLoader",
+				currentThread.getContextClassLoader());
+
+		long randomCompanyId = RandomTestUtil.nextLong();
+
+		try (Connection connection = DataAccess.getConnection()) {
+			_db.runSQL(
+				StringBundler.concat(
+					"insert into Portlet (mvccVersion, id_, companyId, ",
+					"portletId, active_) values (0, ",
+					RandomTestUtil.nextLong(), ", ", randomCompanyId, ", '",
+					RandomTestUtil.randomString(), "', [$FALSE$])"));
+
+			_appender.start();
+
+			TestDataCleanupPreupgradeProcess dataCleanupPreupgradeProcess =
+				new TestDataCleanupPreupgradeProcess();
+
+			dataCleanupPreupgradeProcess.upgrade();
+
+			OrphanReferencesDataCleanupUtil.cleanUpTable(
+				connection, null, "companyId", "Portlet", "companyId",
+				"Company");
+
+			_appender.stop();
+
+			_assertLogContextDiagnostics(
+				"upgrade.report.data.clean.up", _CLEANUP_INFO_MESSAGE);
+			_assertLogContextDiagnostics(
+				"upgrade.report.data.clean.up", _CLEANUP_WARNING_MESSAGE);
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			_assertLogContextDiagnostics(
+				"upgrade.report.data.clean.up",
+				StringBundler.concat(
+					"Table ", dbInspector.normalizeName("Portlet"),
+					", 1 entry deleted because ",
+					dbInspector.normalizeName("companyId"), StringPool.SPACE,
+					randomCompanyId, " was not found in ",
+					dbInspector.normalizeName("Company"), StringPool.PERIOD,
+					dbInspector.normalizeName("companyId")));
+		}
+		finally {
+			_db.runSQL(
+				"delete from Portlet where companyId = " + randomCompanyId);
+
+			ReflectionTestUtil.setFieldValue(
+				PortalClassLoaderUtil.class, "_classLoader",
+				originalclassLoader);
+		}
 	}
 
 	@Test
@@ -1250,6 +1314,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			originalUpgradeReportDLStorageSizeTimeout);
 	}
 
+	private static final String _CLEANUP_INFO_MESSAGE =
+		RandomTestUtil.randomString();
+
+	private static final String _CLEANUP_WARNING_MESSAGE =
+		RandomTestUtil.randomString();
+
 	private static DB _db;
 	private static Appender _logContextAppender;
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
@@ -1280,5 +1350,24 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private final UnsyncStringWriter _unsyncStringWriter =
 		new UnsyncStringWriter();
 	private String _upgradeReportDir = "";
+
+	private class TestDataCleanupPreupgradeProcess
+		extends DataCleanupPreupgradeProcess {
+
+		@Override
+		protected void doUpgrade() throws Exception {
+			if (_log.isInfoEnabled()) {
+				_log.info(_CLEANUP_INFO_MESSAGE);
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(_CLEANUP_WARNING_MESSAGE);
+			}
+		}
+
+		private static final Log _log = LogFactoryUtil.getLog(
+			TestDataCleanupPreupgradeProcess.class);
+
+	}
 
 }

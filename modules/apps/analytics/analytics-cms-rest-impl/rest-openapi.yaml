@@ -113,7 +113,7 @@ paths:
             operationId: getConnectionInfo
             parameters:
                 -   in: query
-                    name: depotEntryId
+                    name: depotEntryGroupId
                     required: true
                     schema:
                         format: int64

@@ -570,16 +570,16 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				HashMapBuilder.put(
 					"assign-members",
 					() -> {
-						if (_userModelResourcePermission.contains(
+						if (!_userModelResourcePermission.contains(
 								PermissionThreadLocal.getPermissionChecker(),
 								depotEntry.getGroupId(),
 								ActionKeys.ASSIGN_MEMBERS)) {
 
-							return addAction(
-								ActionKeys.VIEW, depotEntry, "getAssetLibrary");
+							return null;
 						}
 
-						return null;
+						return addAction(
+							ActionKeys.VIEW, depotEntry, "getAssetLibrary");
 					}
 				).put(
 					"create",
@@ -612,16 +612,16 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				).put(
 					"view-members",
 					() -> {
-						if (!_userModelResourcePermission.contains(
+						if (_userModelResourcePermission.contains(
 								PermissionThreadLocal.getPermissionChecker(),
 								depotEntry.getGroupId(),
 								ActionKeys.ASSIGN_MEMBERS)) {
 
-							return addAction(
-								ActionKeys.VIEW, depotEntry, "getAssetLibrary");
+							return null;
 						}
 
-						return null;
+						return addAction(
+							ActionKeys.VIEW, depotEntry, "getAssetLibrary");
 					}
 				).build(),
 				_dtoConverterRegistry, depotEntry.getDepotEntryId(),

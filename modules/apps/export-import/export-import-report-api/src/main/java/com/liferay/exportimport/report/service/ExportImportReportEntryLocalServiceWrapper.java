@@ -35,25 +35,30 @@ public class ExportImportReportEntryLocalServiceWrapper
 	public com.liferay.exportimport.report.model.ExportImportReportEntry
 		addEmptyExportImportReportEntry(
 			long groupId, long companyId, String classExternalReferenceCode,
-			long classNameId, long exportImportConfigurationId) {
+			long classNameId, String entryType,
+			long exportImportConfigurationId, int origin, String scope,
+			String scopeKey) {
 
 		return _exportImportReportEntryLocalService.
 			addEmptyExportImportReportEntry(
 				groupId, companyId, classExternalReferenceCode, classNameId,
-				exportImportConfigurationId);
+				entryType, exportImportConfigurationId, origin, scope,
+				scopeKey);
 	}
 
 	@Override
 	public com.liferay.exportimport.report.model.ExportImportReportEntry
 		addErrorExportImportReportEntry(
 			long groupId, long companyId, String classExternalReferenceCode,
-			long classNameId, long exportImportConfigurationId, String error,
-			String errorStacktrace) {
+			long classNameId, long classPK, String entryType,
+			long exportImportConfigurationId, String error,
+			String errorStacktrace, int origin, String scope, String scopeKey) {
 
 		return _exportImportReportEntryLocalService.
 			addErrorExportImportReportEntry(
 				groupId, companyId, classExternalReferenceCode, classNameId,
-				exportImportConfigurationId, error, errorStacktrace);
+				classPK, entryType, exportImportConfigurationId, error,
+				errorStacktrace, origin, scope, scopeKey);
 	}
 
 	/**

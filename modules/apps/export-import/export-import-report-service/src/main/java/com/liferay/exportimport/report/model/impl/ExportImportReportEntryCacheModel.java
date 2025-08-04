@@ -69,7 +69,7 @@ public class ExportImportReportEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -87,16 +87,26 @@ public class ExportImportReportEntryCacheModel
 		sb.append(classExternalReferenceCode);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
+		sb.append(", entryType=");
+		sb.append(entryType);
 		sb.append(", exportImportConfigurationId=");
 		sb.append(exportImportConfigurationId);
 		sb.append(", error=");
 		sb.append(error);
 		sb.append(", errorStacktrace=");
 		sb.append(errorStacktrace);
-		sb.append(", resolved=");
-		sb.append(resolved);
+		sb.append(", origin=");
+		sb.append(origin);
+		sb.append(", scope=");
+		sb.append(scope);
+		sb.append(", scopeKey=");
+		sb.append(scopeKey);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -136,12 +146,37 @@ public class ExportImportReportEntryCacheModel
 		}
 
 		exportImportReportEntryImpl.setClassNameId(classNameId);
+		exportImportReportEntryImpl.setClassPK(classPK);
+
+		if (entryType == null) {
+			exportImportReportEntryImpl.setEntryType("");
+		}
+		else {
+			exportImportReportEntryImpl.setEntryType(entryType);
+		}
+
 		exportImportReportEntryImpl.setExportImportConfigurationId(
 			exportImportConfigurationId);
 		exportImportReportEntryImpl.setError(error);
 		exportImportReportEntryImpl.setErrorStacktrace(errorStacktrace);
-		exportImportReportEntryImpl.setResolved(resolved);
+		exportImportReportEntryImpl.setOrigin(origin);
+
+		if (scope == null) {
+			exportImportReportEntryImpl.setScope("");
+		}
+		else {
+			exportImportReportEntryImpl.setScope(scope);
+		}
+
+		if (scopeKey == null) {
+			exportImportReportEntryImpl.setScopeKey("");
+		}
+		else {
+			exportImportReportEntryImpl.setScopeKey(scopeKey);
+		}
+
 		exportImportReportEntryImpl.setType(type);
+		exportImportReportEntryImpl.setStatus(status);
 
 		exportImportReportEntryImpl.resetOriginalValues();
 
@@ -165,13 +200,20 @@ public class ExportImportReportEntryCacheModel
 
 		classNameId = objectInput.readLong();
 
+		classPK = objectInput.readLong();
+		entryType = objectInput.readUTF();
+
 		exportImportConfigurationId = objectInput.readLong();
 		error = (String)objectInput.readObject();
 		errorStacktrace = (String)objectInput.readObject();
 
-		resolved = objectInput.readBoolean();
+		origin = objectInput.readInt();
+		scope = objectInput.readUTF();
+		scopeKey = objectInput.readUTF();
 
 		type = objectInput.readInt();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -195,6 +237,15 @@ public class ExportImportReportEntryCacheModel
 
 		objectOutput.writeLong(classNameId);
 
+		objectOutput.writeLong(classPK);
+
+		if (entryType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(entryType);
+		}
+
 		objectOutput.writeLong(exportImportConfigurationId);
 
 		if (error == null) {
@@ -211,9 +262,25 @@ public class ExportImportReportEntryCacheModel
 			objectOutput.writeObject(errorStacktrace);
 		}
 
-		objectOutput.writeBoolean(resolved);
+		objectOutput.writeInt(origin);
+
+		if (scope == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(scope);
+		}
+
+		if (scopeKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(scopeKey);
+		}
 
 		objectOutput.writeInt(type);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -224,10 +291,15 @@ public class ExportImportReportEntryCacheModel
 	public long modifiedDate;
 	public String classExternalReferenceCode;
 	public long classNameId;
+	public long classPK;
+	public String entryType;
 	public long exportImportConfigurationId;
 	public String error;
 	public String errorStacktrace;
-	public boolean resolved;
+	public int origin;
+	public String scope;
+	public String scopeKey;
 	public int type;
+	public int status;
 
 }

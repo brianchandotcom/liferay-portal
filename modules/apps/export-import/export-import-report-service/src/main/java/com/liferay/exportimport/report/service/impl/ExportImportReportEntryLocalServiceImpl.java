@@ -25,9 +25,11 @@ import org.osgi.service.component.annotations.Component;
 public class ExportImportReportEntryLocalServiceImpl
 	extends ExportImportReportEntryLocalServiceBaseImpl {
 
+	@Override
 	public ExportImportReportEntry addEmptyExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId) {
+		long classNameId, String entryType, long exportImportConfigurationId,
+		int origin, String scope, String scopeKey) {
 
 		ExportImportReportEntry exportImportReportEntry =
 			exportImportReportEntryPersistence.create(
@@ -38,10 +40,16 @@ public class ExportImportReportEntryLocalServiceImpl
 		exportImportReportEntry.setClassExternalReferenceCode(
 			classExternalReferenceCode);
 		exportImportReportEntry.setClassNameId(classNameId);
+		exportImportReportEntry.setEntryType(entryType);
 		exportImportReportEntry.setExportImportConfigurationId(
 			exportImportConfigurationId);
+		exportImportReportEntry.setOrigin(origin);
+		exportImportReportEntry.setScope(scope);
+		exportImportReportEntry.setScopeKey(scopeKey);
 		exportImportReportEntry.setType(
 			ExportImportReportEntryConstants.TYPE_EMPTY);
+		exportImportReportEntry.setStatus(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED);
 
 		return exportImportReportEntryPersistence.update(
 			exportImportReportEntry);
@@ -50,8 +58,9 @@ public class ExportImportReportEntryLocalServiceImpl
 	@Override
 	public ExportImportReportEntry addErrorExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId, String error,
-		String errorStacktrace) {
+		long classNameId, long classPK, String entryType,
+		long exportImportConfigurationId, String error, String errorStacktrace,
+		int origin, String scope, String scopeKey) {
 
 		ExportImportReportEntry exportImportReportEntry =
 			exportImportReportEntryPersistence.create(
@@ -62,12 +71,19 @@ public class ExportImportReportEntryLocalServiceImpl
 		exportImportReportEntry.setClassExternalReferenceCode(
 			classExternalReferenceCode);
 		exportImportReportEntry.setClassNameId(classNameId);
+		exportImportReportEntry.setClassPK(classPK);
+		exportImportReportEntry.setEntryType(entryType);
 		exportImportReportEntry.setExportImportConfigurationId(
 			exportImportConfigurationId);
 		exportImportReportEntry.setError(error);
 		exportImportReportEntry.setErrorStacktrace(errorStacktrace);
+		exportImportReportEntry.setOrigin(origin);
+		exportImportReportEntry.setScope(scope);
+		exportImportReportEntry.setScopeKey(scopeKey);
 		exportImportReportEntry.setType(
 			ExportImportReportEntryConstants.TYPE_ERROR);
+		exportImportReportEntry.setStatus(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED);
 
 		return exportImportReportEntryPersistence.update(
 			exportImportReportEntry);

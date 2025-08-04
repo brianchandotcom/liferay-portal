@@ -15,7 +15,6 @@ import Modal from '../../../components/Modal';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {OrderCustomFields} from '../../../enums/Order';
 import {OrderStatus as Status} from '../../../enums/Order';
-import {useAccount} from '../../../hooks/data/useAccounts';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema from '../../../schema/zod';
@@ -23,6 +22,7 @@ import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessCommerceDeliveryCatalog from '../../../services/rest/HeadlessCommerceDeliveryCatalog';
 import ProductPurchaseSSATrial from '../../ProductPurchase/services/ProductPurchaseSSATrial';
 import {FieldGroup} from '../components/SSAForm/FieldGroup';
+import Form from '../../../components/MarketplaceForm';
 
 export type FormFields = {
 	demoDuration: string;
@@ -307,9 +307,9 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 
 						<hr className="mb-5" />
 
-						<Label className="mb-2">
+						<Form.Label className="mb-2" info="Project ID">
 							{i18n.translate('project-id')}
-						</Label>
+						</Form.Label>
 
 						<ClayInput.Group>
 							<ClayInput

@@ -39,7 +39,7 @@ export default function SaaSTrials() {
 	const {
 		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
 	} = usePlacedOrders({
-		accountId: Number(accountId),
+		accountId: accountId,
 		filter: new SearchBuilder()
 			.eq('author', myUserAccount?.name)
 			.and()
@@ -68,6 +68,7 @@ export default function SaaSTrials() {
 			disabled: (order: Order) =>
 				order.orderStatusInfo.label === OrderStatus.APPROVED ||
 				order.orderStatusInfo.label === OrderStatus.COMPLETED ||
+				order.orderStatusInfo.label === OrderStatus.ON_HOLD ||
 				order.orderStatusInfo.label === OrderStatus.PENDING,
 			name: i18n.translate('go-to-trial'),
 			onClick: (order: Order) =>
@@ -161,6 +162,7 @@ export default function SaaSTrials() {
 				return (
 					order.orderStatusInfo.label === OrderStatus.APPROVED ||
 					order.orderStatusInfo.label === OrderStatus.COMPLETED ||
+					order.orderStatusInfo.label === OrderStatus.ON_HOLD ||
 					order.orderStatusInfo.label === OrderStatus.PENDING ||
 					extendRequests[0]?.dueStatus.key ===
 						ExtendRequestStatus.PENDING
@@ -197,6 +199,7 @@ export default function SaaSTrials() {
 			disabled: (order: Order) =>
 				order.orderStatusInfo.label === OrderStatus.APPROVED ||
 				order.orderStatusInfo.label === OrderStatus.COMPLETED ||
+				order.orderStatusInfo.label === OrderStatus.ON_HOLD ||
 				order.orderStatusInfo.label === OrderStatus.PENDING,
 			name: 'Expire',
 			onClick: (order: Order, mutate) => {

@@ -10,10 +10,10 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataC
 /**
  * @author Luis Ortiz
  */
-public class AllTablesOrphanUserReferencesDataCleanupPreupgradeProcess
+public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 	extends BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess {
 
-	public AllTablesOrphanUserReferencesDataCleanupPreupgradeProcess() {
+	public UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess() {
 		super("userId", "User_");
 	}
 

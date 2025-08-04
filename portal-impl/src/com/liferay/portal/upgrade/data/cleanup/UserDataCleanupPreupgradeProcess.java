@@ -8,9 +8,9 @@ package com.liferay.portal.upgrade.data.cleanup;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.upgrade.data.cleanup.AllTablesOrphanUserReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
@@ -22,7 +22,7 @@ public class UserDataCleanupPreupgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(
-			new AllTablesOrphanUserReferencesDataCleanupPreupgradeProcess());
+			new UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess());
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				StringBundler.concat(

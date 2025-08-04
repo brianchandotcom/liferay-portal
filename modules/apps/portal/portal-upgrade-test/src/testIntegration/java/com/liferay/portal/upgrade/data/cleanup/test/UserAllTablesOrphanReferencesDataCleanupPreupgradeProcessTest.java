@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.data.cleanup.AllTablesOrphanUserReferencesDataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.rule.Inject;
@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class AllTablesOrphanUserReferencesDataCleanupPreupgradeProcessTest
+public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	extends BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 
 	@Before
@@ -107,7 +107,7 @@ public class AllTablesOrphanUserReferencesDataCleanupPreupgradeProcessTest
 
 	@Override
 	protected UpgradeProcess getUpgradeProcess() {
-		return new AllTablesOrphanUserReferencesDataCleanupPreupgradeProcess();
+		return new UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess();
 	}
 
 	private User _adminUser;

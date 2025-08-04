@@ -36,11 +36,11 @@ import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.util.NotificationTypeUtil;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
-import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.util.HttpServletRequestThreadLocal;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
@@ -595,7 +595,7 @@ public class EmailNotificationType extends BaseNotificationType {
 					notificationContext.getClassName());
 
 		HttpServletRequest httpServletRequest =
-			ObjectActionThreadLocal.getHttpServletRequest();
+			HttpServletRequestThreadLocal.getHttpServletRequest();
 
 		ServiceContextThreadLocal.pushServiceContext(
 			_getServiceContext(

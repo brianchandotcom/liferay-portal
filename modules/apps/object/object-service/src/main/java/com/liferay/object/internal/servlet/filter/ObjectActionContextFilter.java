@@ -5,7 +5,7 @@
 
 package com.liferay.object.internal.servlet.filter;
 
-import com.liferay.object.action.util.ObjectActionThreadLocal;
+import com.liferay.object.util.HttpServletRequestThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
@@ -40,13 +40,13 @@ public class ObjectActionContextFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		ObjectActionThreadLocal.setHttpServletRequest(httpServletRequest);
+		HttpServletRequestThreadLocal.setHttpServletRequest(httpServletRequest);
 
 		try {
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}
 		finally {
-			ObjectActionThreadLocal.setHttpServletRequest(null);
+			HttpServletRequestThreadLocal.setHttpServletRequest(null);
 		}
 	}
 

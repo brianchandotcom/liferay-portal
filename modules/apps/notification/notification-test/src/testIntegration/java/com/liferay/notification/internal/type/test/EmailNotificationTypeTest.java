@@ -62,6 +62,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectEntryFolderTestUtil;
+import com.liferay.object.util.HttpServletRequestThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -234,7 +235,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@After
 	public void tearDown() {
-		ObjectActionThreadLocal.setHttpServletRequest(null);
+		HttpServletRequestThreadLocal.setHttpServletRequest(null);
 	}
 
 	@Test
@@ -1365,7 +1366,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		ObjectActionThreadLocal.setHttpServletRequest(httpServletRequest);
+		HttpServletRequestThreadLocal.setHttpServletRequest(httpServletRequest);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();

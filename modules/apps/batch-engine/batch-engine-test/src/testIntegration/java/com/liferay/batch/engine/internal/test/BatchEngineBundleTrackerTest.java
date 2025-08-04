@@ -168,66 +168,61 @@ public class BatchEngineBundleTrackerTest {
 	public void testProcessBatchEngineBundleUsesActiveAdministratorUser()
 		throws Exception {
 
-		User adminUser = null;
-		int originalStatus = -1;
-		long originalUserId = -1;
+		AtomicReference<BatchEngineImportTask>
+			initialBatchEngineImportTaskReference = new AtomicReference<>();
 
-		try {
-			AtomicReference<BatchEngineImportTask>
-				initialBatchEngineImportTaskReference = new AtomicReference<>();
+		_testProcessBatchEngineBundle(
+			initialBatchEngineImportTaskReference::set, "batch11",
+			"/batch11/data.batch-engine-data.json");
 
-			_testProcessBatchEngineBundle(
-				initialBatchEngineImportTaskReference::set, "batch11",
-				"/batch11/data.batch-engine-data.json");
+		BatchEngineImportTask batchEngineImportTask1 =
+			initialBatchEngineImportTaskReference.get();
 
-			originalUserId = initialBatchEngineImportTaskReference.get(
-			).getUserId();
+		long originalUserId = batchEngineImportTask1.getUserId();
 
-			User originalUser = _userLocalService.getUser(originalUserId);
+		User originalUser = _userLocalService.getUser(originalUserId);
 
-			Assert.assertTrue(originalUser.isActive());
+		Assert.assertTrue(originalUser.isActive());
 
-			originalStatus = originalUser.getStatus();
+		int originalStatus = originalUser.getStatus();
 
-			_userLocalService.updateStatus(
-				originalUser, WorkflowConstants.STATUS_INACTIVE,
-				new ServiceContext());
+		originalUser = _userLocalService.updateStatus(
+			originalUser, WorkflowConstants.STATUS_INACTIVE,
+			new ServiceContext());
 
-			Assert.assertFalse(originalUser.isActive());
+		Assert.assertFalse(originalUser.isActive());
 
-			adminUser = UserTestUtil.addCompanyAdminUser(
-				_companyLocalService.getCompany(
-					TestPropsValues.getCompanyId()));
+		User adminUser = UserTestUtil.addCompanyAdminUser(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 
-			Assert.assertTrue(adminUser.isActive());
+		Assert.assertTrue(adminUser.isActive());
 
-			AtomicReference<BatchEngineImportTask>
-				fallbackBatchEngineImportTaskReference =
-					new AtomicReference<>();
+		AtomicReference<BatchEngineImportTask>
+			fallbackBatchEngineImportTaskReference = new AtomicReference<>();
 
-			_testProcessBatchEngineBundle(
-				fallbackBatchEngineImportTaskReference::set, "batch11",
-				"/batch11/data.batch-engine-data.json");
+		_testProcessBatchEngineBundle(
+			fallbackBatchEngineImportTaskReference::set, "batch11",
+			"/batch11/data.batch-engine-data.json");
 
-			User fallbackBatchEngineImportTaskUser = _userLocalService.getUser(
-				fallbackBatchEngineImportTaskReference.get(
-				).getUserId());
+		BatchEngineImportTask batchEngineImportTask2 =
+			fallbackBatchEngineImportTaskReference.get();
 
-			Assert.assertTrue(fallbackBatchEngineImportTaskUser.isActive());
+		User fallbackBatchEngineImportTaskUser = _userLocalService.getUser(
+			batchEngineImportTask2.getUserId());
 
-			Assert.assertTrue(
-				ListUtil.exists(
-					_roleLocalService.getUserRoles(
-						fallbackBatchEngineImportTaskUser.getUserId()),
-					userRole -> RoleConstants.ADMINISTRATOR.equals(
-						userRole.getName())));
-		}
-		finally {
-			_userLocalService.updateStatus(
-				originalUserId, originalStatus, new ServiceContext());
+		Assert.assertTrue(fallbackBatchEngineImportTaskUser.isActive());
 
-			_userLocalService.deleteUser(adminUser);
-		}
+		Assert.assertTrue(
+			ListUtil.exists(
+				_roleLocalService.getUserRoles(
+					fallbackBatchEngineImportTaskUser.getUserId()),
+				userRole -> RoleConstants.ADMINISTRATOR.equals(
+					userRole.getName())));
+
+		_userLocalService.updateStatus(
+			originalUserId, originalStatus, new ServiceContext());
+
+		_userLocalService.deleteUser(adminUser);
 	}
 
 	@Test

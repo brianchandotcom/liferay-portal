@@ -35,7 +35,6 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 			screenName = StringUtil.extractFirst(emailAddress, CharPool.AT);
 
 			screenName = StringUtil.shorten(screenName, 64, StringPool.BLANK);
-
 			screenName = StringUtil.toLowerCase(screenName);
 
 			for (char c : screenName.toCharArray()) {

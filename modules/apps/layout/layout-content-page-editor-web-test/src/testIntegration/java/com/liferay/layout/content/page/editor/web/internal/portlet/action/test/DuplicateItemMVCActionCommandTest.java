@@ -248,33 +248,27 @@ public class DuplicateItemMVCActionCommandTest {
 		throws Exception {
 
 		FragmentEntryLink headingFragmentEntryLink = _addFragmentEntryLink(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"element-text",
-					JSONUtil.put(
-						LocaleUtil.toLanguageId(
-							_portal.getSiteDefaultLocale(_group)),
-						RandomTestUtil.randomString()))
-			).toString(),
+			"{}",
 			"<h1 data-lfr-editable-id=\"${fragmentEntryLinkNamespace}-" +
 				"element-text\" data-lfr-editable-type=\"text\">" +
 					"Heading Example</h1>",
 			null);
 
-		String namespace = headingFragmentEntryLink.getNamespace();
-
-		String editableValues = headingFragmentEntryLink.getEditableValues();
-
-		editableValues = StringUtil.replace(
-			editableValues, "element-text", namespace + "-element-text");
-
 		headingFragmentEntryLink =
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 				TestPropsValues.getUserId(),
 				headingFragmentEntryLink.getFragmentEntryLinkId(),
-				editableValues);
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						headingFragmentEntryLink.getNamespace() +
+							"-element-text",
+						JSONUtil.put(
+							LocaleUtil.toLanguageId(
+								_portal.getSiteDefaultLocale(_group)),
+							RandomTestUtil.randomString()))
+				).toString());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -302,22 +296,17 @@ public class DuplicateItemMVCActionCommandTest {
 		JSONArray duplicatedFragmentEntryLinksJSONArray =
 			jsonObject.getJSONArray("duplicatedFragmentEntryLinks");
 
-		long duplicatedFragmentEntryLinkId = 0;
+		Assert.assertEquals(
+			duplicatedFragmentEntryLinksJSONArray.toString(), 1,
+			duplicatedFragmentEntryLinksJSONArray.length());
 
-		for (int i = 0; i < duplicatedFragmentEntryLinksJSONArray.length();
-			 i++) {
-
-			JSONObject duplicatedFragmentEntryLinksJSONObject =
-				duplicatedFragmentEntryLinksJSONArray.getJSONObject(i);
-
-			duplicatedFragmentEntryLinkId =
-				duplicatedFragmentEntryLinksJSONObject.getLong(
-					"fragmentEntryLinkId");
-		}
+		JSONObject duplicatedFragmentEntryLinksJSONObject =
+			duplicatedFragmentEntryLinksJSONArray.getJSONObject(0);
 
 		FragmentEntryLink duplicatedHeadingFragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				duplicatedFragmentEntryLinkId);
+				duplicatedFragmentEntryLinksJSONObject.getLong(
+					"fragmentEntryLinkId"));
 
 		String duplicatedEditableValues =
 			duplicatedHeadingFragmentEntryLink.getEditableValues();

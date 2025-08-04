@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,6 +66,8 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 		List<String> tableNames = dbInspector.getTableNames(null);
 
 		tableNames.remove(targetTableName);
+
+		Collections.sort(tableNames);
 
 		for (String sourceTableName : tableNames) {
 			if (excludedTableNames.contains(sourceTableName) ||

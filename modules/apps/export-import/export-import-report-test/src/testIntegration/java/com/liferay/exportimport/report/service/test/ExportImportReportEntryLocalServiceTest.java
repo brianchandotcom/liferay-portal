@@ -48,13 +48,17 @@ public class ExportImportReportEntryLocalServiceTest {
 		long companyId = RandomTestUtil.randomLong();
 		String classExternalReferenceCode = RandomTestUtil.randomString();
 		long classNameId = RandomTestUtil.randomLong();
+		String entryType = RandomTestUtil.randomString();
 		long exportImportConfigurationId = RandomTestUtil.randomLong();
+		int origin = RandomTestUtil.randomInt();
+		String scope = RandomTestUtil.randomString();
+		String scopeKey = RandomTestUtil.randomString();
 
 		ExportImportReportEntry exportImportReportEntry =
 			_exportImportReportEntryLocalService.
 				addEmptyExportImportReportEntry(
-					groupId, companyId, classExternalReferenceCode, classNameId,
-					exportImportConfigurationId);
+					groupId, companyId, classExternalReferenceCode, classNameId, entryType,
+					exportImportConfigurationId, origin, scope, scopeKey);
 
 		Assert.assertEquals(groupId, exportImportReportEntry.getGroupId());
 		Assert.assertEquals(companyId, exportImportReportEntry.getCompanyId());
@@ -63,11 +67,18 @@ public class ExportImportReportEntryLocalServiceTest {
 			exportImportReportEntry.getClassExternalReferenceCode());
 		Assert.assertEquals(
 			classNameId, exportImportReportEntry.getClassNameId());
+		Assert.assertEquals(entryType, exportImportReportEntry.getEntryType());
 		Assert.assertEquals(
 			exportImportConfigurationId,
 			exportImportReportEntry.getExportImportConfigurationId());
 		Assert.assertNull(exportImportReportEntry.getError());
 		Assert.assertNull(exportImportReportEntry.getErrorStacktrace());
+		Assert.assertEquals(origin, exportImportReportEntry.getOrigin());
+		Assert.assertEquals(scope, exportImportReportEntry.getScope());
+		Assert.assertEquals(scopeKey, exportImportReportEntry.getScopeKey());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
+			exportImportReportEntry.getStatus());
 		Assert.assertEquals(
 			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntry.getType());
@@ -84,15 +95,21 @@ public class ExportImportReportEntryLocalServiceTest {
 		long companyId = RandomTestUtil.randomLong();
 		String classExternalReferenceCode = RandomTestUtil.randomString();
 		long classNameId = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
+		String entryType = RandomTestUtil.randomString();
 		long exportImportConfigurationId = RandomTestUtil.randomLong();
 		String error = RandomTestUtil.randomString();
 		String errorStacktrace = RandomTestUtil.randomString();
+		int origin = RandomTestUtil.randomInt();
+		String scope = RandomTestUtil.randomString();
+		String scopeKey = RandomTestUtil.randomString();
 
 		ExportImportReportEntry exportImportReportEntry =
 			_exportImportReportEntryLocalService.
 				addErrorExportImportReportEntry(
 					groupId, companyId, classExternalReferenceCode, classNameId,
-					exportImportConfigurationId, error, errorStacktrace);
+					classPK, entryType, exportImportConfigurationId, error,
+					errorStacktrace, origin, scope, scopeKey);
 
 		Assert.assertEquals(groupId, exportImportReportEntry.getGroupId());
 		Assert.assertEquals(companyId, exportImportReportEntry.getCompanyId());
@@ -101,12 +118,20 @@ public class ExportImportReportEntryLocalServiceTest {
 			exportImportReportEntry.getClassExternalReferenceCode());
 		Assert.assertEquals(
 			classNameId, exportImportReportEntry.getClassNameId());
+		Assert.assertEquals(classPK, exportImportReportEntry.getClassPK());
+		Assert.assertEquals(entryType, exportImportReportEntry.getEntryType());
 		Assert.assertEquals(
 			exportImportConfigurationId,
 			exportImportReportEntry.getExportImportConfigurationId());
 		Assert.assertEquals(error, exportImportReportEntry.getError());
 		Assert.assertEquals(
 			errorStacktrace, exportImportReportEntry.getErrorStacktrace());
+		Assert.assertEquals(origin, exportImportReportEntry.getOrigin());
+		Assert.assertEquals(scope, exportImportReportEntry.getScope());
+		Assert.assertEquals(scopeKey, exportImportReportEntry.getScopeKey());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
+			exportImportReportEntry.getStatus());
 		Assert.assertEquals(
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntry.getType());
@@ -129,19 +154,27 @@ public class ExportImportReportEntryLocalServiceTest {
 		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong());
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			exportImportConfigurationId);
+			RandomTestUtil.randomString(),
+			exportImportConfigurationId, RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
 			RandomTestUtil.randomLong(), companyId,
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong());
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
 			RandomTestUtil.randomLong(), companyId,
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			exportImportConfigurationId);
+			RandomTestUtil.randomString(),
+			exportImportConfigurationId, RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		exportImportReportEntries =
 			_exportImportReportEntryLocalService.getExportImportReportEntries(

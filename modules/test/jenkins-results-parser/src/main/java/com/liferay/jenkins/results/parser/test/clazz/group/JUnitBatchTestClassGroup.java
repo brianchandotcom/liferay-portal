@@ -207,7 +207,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return jsonObject;
 	}
 
-	public List<String> getSpecificTestClassMethods(
+	public List<String> getTestClassMethods(
 		File file, Map<String, List<String>> globTestClassMethodsMap) {
 
 		for (Map.Entry<String, List<String>> globTestClassMethodEntry :
@@ -744,18 +744,17 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
-			List<String> specificTestClassMethodList =
-				getSpecificTestClassMethods(
-					javaTestClassFile, getGlobTestClassMethodsMap());
+			List<String> testClassMethodList = getTestClassMethods(
+				javaTestClassFile, getGlobTestClassMethodsMap());
 
 			TestClass testClass = null;
 
-			if ((specificTestClassMethodList != null) &&
-				!specificTestClassMethodList.isEmpty()) {
+			if ((testClassMethodList != null) &&
+				!testClassMethodList.isEmpty()) {
 
 				testClass = TestClassFactory.newTestClass(
 					batchTestClassGroup, javaTestClassFile,
-					specificTestClassMethodList);
+					testClassMethodList);
 			}
 			else {
 				testClass = TestClassFactory.newTestClass(

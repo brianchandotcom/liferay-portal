@@ -738,7 +738,7 @@ public class ScimUtil {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to retrieve entitlements", exception);
+				_log.debug("Unable to get entitlements", exception);
 			}
 
 			return null;

@@ -39,8 +39,9 @@ const TrialStatus = ({trialStatus}: TrialStatusProps) => {
 			<ClayIcon
 				className={classNames('mr-2 trial-status-icon', {
 					'trial-status-icon-completed': [
-						Status.COMPLETED,
 						Status.APPROVED,
+						Status.CANCELLED,
+						Status.COMPLETED,
 					].includes(trialStatus as Status),
 					'trial-status-icon-in_progress':
 						Status.IN_PROGRESS === trialStatus,

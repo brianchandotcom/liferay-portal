@@ -36,6 +36,7 @@ export const EXTEND_TRIAL_STATUS_LABEL = {
 
 export const TRIAL_STATUS_LABEL = {
 	'approved': 'Expired',
+	'cancelled': 'Cancelled',
 	'completed': 'Expired',
 	'in-progress': 'Active',
 	'on-hold': 'On Hold',

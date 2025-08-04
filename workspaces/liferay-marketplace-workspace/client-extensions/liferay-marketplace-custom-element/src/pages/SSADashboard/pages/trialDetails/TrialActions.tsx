@@ -73,10 +73,7 @@ function TrialActions({
 		}
 
 		return (
-			placedOrder.orderStatusInfo.label === OrderStatus.APPROVED ||
-			placedOrder.orderStatusInfo.label === OrderStatus.COMPLETED ||
-			placedOrder.orderStatusInfo.label === OrderStatus.ON_HOLD ||
-			placedOrder.orderStatusInfo.label === OrderStatus.PENDING ||
+			placedOrder.orderStatusInfo.label !== OrderStatus.IN_PROGRESS ||
 			extendRequests[0]?.dueStatus.key === ExtendRequestStatus.PENDING
 		);
 	};
@@ -172,14 +169,8 @@ function TrialActions({
 				<DropDown.Item
 					data-tooltip-align="left"
 					disabled={
-						placedOrder.orderStatusInfo.label ===
-							OrderStatus.APPROVED ||
-						placedOrder.orderStatusInfo.label ===
-							OrderStatus.COMPLETED ||
-						placedOrder.orderStatusInfo.label ===
-							OrderStatus.ON_HOLD ||
-						placedOrder.orderStatusInfo.label ===
-							OrderStatus.PENDING
+						placedOrder.orderStatusInfo.label !==
+						OrderStatus.IN_PROGRESS
 					}
 					onClick={() =>
 						modalContext.onOpenModal({
@@ -204,14 +195,8 @@ function TrialActions({
 				<DropDown.Item
 					data-tooltip-align="left"
 					disabled={
-						placedOrder.orderStatusInfo.label ===
-							OrderStatus.APPROVED ||
-						placedOrder.orderStatusInfo.label ===
-							OrderStatus.COMPLETED ||
-						placedOrder.orderStatusInfo.label ===
-							OrderStatus.ON_HOLD ||
-						placedOrder.orderStatusInfo.label ===
-							OrderStatus.PENDING
+						placedOrder.orderStatusInfo.label !==
+						OrderStatus.IN_PROGRESS
 					}
 					onClick={() => {
 						window.open(

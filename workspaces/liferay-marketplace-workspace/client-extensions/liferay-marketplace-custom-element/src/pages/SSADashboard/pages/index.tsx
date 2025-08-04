@@ -66,10 +66,7 @@ export default function SaaSTrials() {
 		},
 		{
 			disabled: (order: Order) =>
-				order.orderStatusInfo.label === OrderStatus.APPROVED ||
-				order.orderStatusInfo.label === OrderStatus.COMPLETED ||
-				order.orderStatusInfo.label === OrderStatus.ON_HOLD ||
-				order.orderStatusInfo.label === OrderStatus.PENDING,
+				order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS,
 			name: i18n.translate('go-to-trial'),
 			onClick: (order: Order) =>
 				window.open(
@@ -160,15 +157,12 @@ export default function SaaSTrials() {
 				}
 
 				return (
-					order.orderStatusInfo.label === OrderStatus.APPROVED ||
-					order.orderStatusInfo.label === OrderStatus.COMPLETED ||
-					order.orderStatusInfo.label === OrderStatus.ON_HOLD ||
-					order.orderStatusInfo.label === OrderStatus.PENDING ||
+					order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS ||
 					extendRequests[0]?.dueStatus.key ===
 						ExtendRequestStatus.PENDING
 				);
 			},
-			name: 'Extend',
+			name: i18n.translate('extend-trial'),
 			onClick: (order: PlacedOrder, orderMutate: any) => {
 				const ssaTrialsExtendRequests = ssaTrialExtend.items;
 				const extendRequests = ssaTrialsExtendRequests?.filter(
@@ -197,11 +191,8 @@ export default function SaaSTrials() {
 		},
 		{
 			disabled: (order: Order) =>
-				order.orderStatusInfo.label === OrderStatus.APPROVED ||
-				order.orderStatusInfo.label === OrderStatus.COMPLETED ||
-				order.orderStatusInfo.label === OrderStatus.ON_HOLD ||
-				order.orderStatusInfo.label === OrderStatus.PENDING,
-			name: 'Expire',
+				order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS,
+			name: i18n.translate('expire-trial'),
 			onClick: (order: Order, mutate) => {
 				modalContext.onOpenModal({
 					body: (

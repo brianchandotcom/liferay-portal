@@ -446,18 +446,17 @@ public class SettingsTestUtil {
 		String clientExtensionExternalReferenceCode =
 			RandomTestUtil.randomString();
 
-		CETConfiguration cetConfiguration = ConfigurableUtil.createConfigurable(
-			CETConfiguration.class,
-			HashMapBuilder.<String, Object>put(
-				"baseURL", RandomTestUtil.randomString()
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"type", "customElement"
-			).build());
-
 		cetManager.addCET(
-			cetConfiguration, serviceContext.getCompanyId(),
+			ConfigurableUtil.createConfigurable(
+				CETConfiguration.class,
+				HashMapBuilder.<String, Object>put(
+					"baseURL", RandomTestUtil.randomString()
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"type", "customElement"
+				).build()),
+			serviceContext.getCompanyId(),
 			clientExtensionExternalReferenceCode);
 
 		return new ClientExtension() {

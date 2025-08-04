@@ -91,7 +91,7 @@ const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 	const shouldDisableContinueBtn = isSubmitting || !values.name;
 
 	return (
-		<ClayLayout.Row className="p-4">
+		<ClayLayout.Row className="m-4">
 			<ClayLayout.Col className="mw-50 px-9 w-50">
 				<NewSpaceFormSection
 					description={Liferay.Language.get(

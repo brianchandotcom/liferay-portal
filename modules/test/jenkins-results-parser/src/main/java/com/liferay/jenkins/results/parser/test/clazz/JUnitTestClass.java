@@ -123,14 +123,14 @@ public class JUnitTestClass extends BaseTestClass {
 		return getTestTaskName();
 	}
 
-	public List<String> getSpecificTestMethods() {
-		return _specificTestMethods;
-	}
-
 	@Override
 	public String getTestClassName() {
 		return JenkinsResultsParserUtil.combine(
 			_getPackageName(), ".", _getClassName());
+	}
+
+	public List<String> getTestMethods() {
+		return _testMethods;
 	}
 
 	public String getTestrayMainComponentName() {
@@ -251,7 +251,7 @@ public class JUnitTestClass extends BaseTestClass {
 		boolean methodIgnored = false;
 
 		for (String methodName : testClassMethodNames) {
-			_specificTestMethods.add(methodName);
+			_testMethods.add(methodName);
 
 			addTestClassMethod(methodIgnored, methodName);
 		}
@@ -531,7 +531,7 @@ public class JUnitTestClass extends BaseTestClass {
 	private boolean _cachedTestReportSearched;
 	private boolean _classIgnored;
 	private final File _modulesBaseDir;
-	private final List<String> _specificTestMethods = new ArrayList<>();
+	private final List<String> _testMethods = new ArrayList<>();
 	private final File _testPropertiesFile;
 	private final String _testrayMainComponentName;
 

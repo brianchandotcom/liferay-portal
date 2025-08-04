@@ -209,6 +209,149 @@
 		},
 		{
 			"active": true,
+			"enableComments": false,
+			"enableLocalization": true,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "P2S3_ANNOUNCEMENT_IMAGE_TYPE",
+			"label": {
+				"en_US": "P2S3 Announcement Image Type"
+			},
+			"modifiable": true,
+			"name": "P2S3AnnouncementImageType",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"externalReferenceCode": "IMAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Image"
+					},
+					"localized": false,
+					"name": "image",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "jpeg, jpg, pdf, png"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
+						},
+						{
+							"name": "fileSource",
+							"value": "documentsAndMedia"
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": false,
+					"name": "name",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Announcement Image Type Create / Edit"
+					},
+					"objectDefinitionExternalReferenceCode": "P2S3_ANNOUNCEMENT_IMAGE_TYPE",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Announcement Image Type Information"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Main"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "name",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "image",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							],
+							"priority": 0
+						}
+					]
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_ANNOUNCEMENT_IMAGE_TYPE_TO_P2S3_ANNOUNCEMENT",
+					"label": {
+						"en_US": "P2S3 Announcement Image Type to P2S3 Announcement"
+					},
+					"name": "p2s3ImageTypeToP2S3Announcement",
+					"objectDefinitionExternalReferenceCode1": "P2S3_ANNOUNCEMENT_IMAGE_TYPE",
+					"objectDefinitionExternalReferenceCode2": "P2S3_ANNOUNCEMENT",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "P2S3 Announcement Image Types"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/p2s3announcementimagetypes",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "name"
+		},
+		{
+			"active": true,
 			"enableLocalization": true,
 			"enableObjectEntryHistory": false,
 			"externalReferenceCode": "P2S3_ASSESSMENT",

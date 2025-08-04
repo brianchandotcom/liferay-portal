@@ -10,6 +10,7 @@ import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalServiceUtil;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClientExtension;
+import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -65,15 +66,27 @@ public class SettingsTestUtil {
 			Assert.assertEquals(layout.getCss(), settings.getCss());
 		}
 
-		if (settings.getFavIcon() == null) {
-			_assertClientExtension(
-				null, layout, ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+		FavIcon favIcon = settings.getFavIcon();
+
+		ClientExtension clientExtension = null;
+
+		if ((favIcon != null) &&
+			Objects.equals(
+				favIcon.getClassName(),
+				com.liferay.headless.admin.site.dto.v1_0.ClientExtension.class.
+					getName())) {
+
+			clientExtension = new ClientExtension() {
+				{
+					setClientExtensionConfig(favIcon::getClientExtensionConfig);
+					setExternalReferenceCode(favIcon::getExternalReferenceCode);
+				}
+			};
 		}
-		else if (settings.getFavIcon() instanceof ClientExtension) {
-			_assertClientExtension(
-				(ClientExtension)settings.getFavIcon(), layout,
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-		}
+
+		_assertClientExtension(
+			clientExtension, layout,
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 
 		_assertClientExtensions(
 			settings.getGlobalCSSClientExtensions(), layout,
@@ -252,7 +265,7 @@ public class SettingsTestUtil {
 			{
 				setColorSchemeName(() -> "01");
 				setCss(RandomTestUtil::randomString);
-				setFavIcon(() -> _getClientExtension());
+				setFavIcon(() -> _getFavIcon());
 				setGlobalCSSClientExtensions(
 					() -> new ClientExtension[] {
 						_getClientExtension(), _getClientExtension()
@@ -310,7 +323,7 @@ public class SettingsTestUtil {
 			settings.setFavIcon(() -> null);
 		}
 		else {
-			settings.setFavIcon(() -> _getClientExtension());
+			settings.setFavIcon(() -> _getFavIcon());
 		}
 
 		if (Validator.isNotNull(settings.getGlobalCSSClientExtensions())) {
@@ -504,6 +517,23 @@ public class SettingsTestUtil {
 			).buildString());
 
 		return clientExtension;
+	}
+
+	private static FavIcon _getFavIcon() throws Exception {
+		ClientExtension clientExtension = _getClientExtension();
+
+		return new FavIcon() {
+			{
+				setClassName(
+					() ->
+						com.liferay.headless.admin.site.dto.v1_0.
+							ClientExtension.class.getName());
+				setClientExtensionConfig(
+					clientExtension::getClientExtensionConfig);
+				setExternalReferenceCode(
+					clientExtension::getExternalReferenceCode);
+			}
+		};
 	}
 
 	private static UnicodeProperties _getThemeSettingsUnicodeProperties(

@@ -8,8 +8,8 @@ package com.liferay.portal.upgrade.data.cleanup;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.upgrade.data.cleanup.AllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
 
@@ -22,7 +22,7 @@ public class GroupDataCleanupPreupgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(
-			new AllTablesOrphanReferencesDataCleanupPreupgradeProcess(
+			new DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 				"groupId", "Group_"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(

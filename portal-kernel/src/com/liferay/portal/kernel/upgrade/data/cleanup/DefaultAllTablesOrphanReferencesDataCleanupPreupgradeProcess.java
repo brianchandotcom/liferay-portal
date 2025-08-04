@@ -10,10 +10,10 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataC
 /**
  * @author Luis Ortiz
  */
-public class AllTablesOrphanReferencesDataCleanupPreupgradeProcess
+public class DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 	extends BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess {
 
-	public AllTablesOrphanReferencesDataCleanupPreupgradeProcess(
+	public DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 		String targetColumnName, String targetTableName) {
 
 		super(targetColumnName, targetTableName);

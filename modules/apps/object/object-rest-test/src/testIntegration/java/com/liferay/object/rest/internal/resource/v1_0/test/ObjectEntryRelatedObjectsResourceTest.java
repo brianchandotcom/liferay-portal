@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -40,13 +41,16 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,6 +60,8 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -766,8 +772,18 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
+	@TestInfo({"LPD-55420", "LPD-60419", "LPD-60423"})
 	public void testGetRelatedObjectEntryWithDifferentScope() throws Exception {
-		ObjectDefinition siteScopedObjectDefinition =
+
+		// Company scope
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1,
+			RandomTestUtil.randomString());
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		ObjectDefinition siteObjectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
@@ -777,37 +793,107 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						false)),
 				ObjectDefinitionConstants.SCOPE_SITE);
 
-		_objectDefinitions.add(siteScopedObjectDefinition);
+		_objectDefinitions.add(siteObjectDefinition);
 
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			siteScopedObjectDefinition, _OBJECT_FIELD_NAME_1,
-			_OBJECT_FIELD_VALUE_2);
+			group1.getGroupId(), siteObjectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).build());
 
-		ObjectRelationship objectRelationship = _addObjectRelationship(
-			_objectDefinition1, siteScopedObjectDefinition,
-			_objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
+		ObjectRelationship objectRelationship1 = _addObjectRelationship(
+			_objectDefinition1, siteObjectDefinition,
+			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			group2.getGroupId(), siteObjectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).build());
+
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			objectEntry1.getPrimaryKey(), objectEntry3.getPrimaryKey(),
+			objectRelationship1, TestPropsValues.getUserId());
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2
+				"externalReferenceCode", objectEntry1.getExternalReferenceCode()
 			).put(
-				"externalReferenceCode", objectEntry2.getExternalReferenceCode()
-			).put(
-				objectRelationship.getName(),
+				objectRelationship1.getName(),
 				JSONUtil.putAll(
 					JSONUtil.put(
-						_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
-					).put(
 						"externalReferenceCode",
-						_objectEntry1.getExternalReferenceCode()
-					))
+						objectEntry2.getExternalReferenceCode()),
+					JSONUtil.put(
+						"externalReferenceCode",
+						objectEntry3.getExternalReferenceCode()))
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_getEndpoint(
+					String.valueOf(objectEntry1.getObjectEntryId()),
+					objectRelationship1, _objectDefinition1),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// Site scope
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"externalReferenceCode", objectEntry2.getExternalReferenceCode()
+			).put(
+				objectRelationship1.getName(),
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode",
+						objectEntry1.getExternalReferenceCode()))
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
 				_getEndpoint(
 					String.valueOf(objectEntry2.getPrimaryKey()),
-					objectRelationship, siteScopedObjectDefinition),
+					objectRelationship1, siteObjectDefinition),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		ObjectEntry objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition2, _OBJECT_FIELD_NAME_2,
+			RandomTestUtil.randomString());
+
+		ObjectRelationship objectRelationship2 = _addObjectRelationship(
+			_objectDefinition1, _objectDefinition2,
+			objectEntry1.getPrimaryKey(), objectEntry4.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"externalReferenceCode", objectEntry2.getExternalReferenceCode()
+			).put(
+				objectRelationship1.getName(),
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode",
+						objectEntry1.getExternalReferenceCode()
+					).put(
+						objectRelationship2.getName(),
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"externalReferenceCode",
+								objectEntry4.getExternalReferenceCode()))
+					))
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_getEndpoint(
+						String.valueOf(objectEntry2.getObjectEntryId()),
+						objectRelationship1, siteObjectDefinition),
+					",", objectRelationship2.getName(), "&nestedFieldsDepth=2"),
 				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);

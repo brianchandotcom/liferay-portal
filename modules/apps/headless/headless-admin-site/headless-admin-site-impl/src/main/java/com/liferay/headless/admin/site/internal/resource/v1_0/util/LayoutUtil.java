@@ -744,6 +744,9 @@ public class LayoutUtil {
 		throws Exception {
 
 		if (settings == null) {
+			ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
 			return;
 		}
 

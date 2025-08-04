@@ -5,18 +5,40 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker;
 
+import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
 
 import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletException;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
+import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
 import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistration;
+import org.eclipse.equinox.http.servlet.internal.servlet.ServletConfigImpl;
+import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.http.context.ServletContextHelper;
+import org.osgi.service.http.runtime.dto.ErrorPageDTO;
+import org.osgi.service.http.runtime.dto.ServletDTO;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
@@ -29,11 +51,14 @@ public class ServletServiceTrackerCustomizer
 	public ServletServiceTrackerCustomizer(
 		BundleContext bundleContext,
 		HttpServletEndpointController httpServletEndpointController,
-		LiferayContextController liferayContextController) {
+		LiferayContextController liferayContextController,
+		ServletContextHelperDataContext servletContextHelperDataContext,
+		long servletContextHelperServiceId) {
 
 		super(
 			bundleContext, httpServletEndpointController,
-			liferayContextController);
+			liferayContextController, servletContextHelperDataContext,
+			servletContextHelperServiceId);
 	}
 
 	@Override
@@ -65,8 +90,7 @@ public class ServletServiceTrackerCustomizer
 
 		try {
 			servletRegistrationAtomicReference.set(
-				liferayContextController.addServletRegistration(
-					serviceReference));
+				_addServletRegistration(serviceReference));
 		}
 		catch (Exception exception) {
 			httpServletEndpointController.log(
@@ -75,5 +99,172 @@ public class ServletServiceTrackerCustomizer
 
 		return servletRegistrationAtomicReference;
 	}
+
+	private ServletRegistration _addServletRegistration(
+			ServiceReference<Servlet> serviceReference)
+		throws ServletException {
+
+		liferayContextController.checkShutdown();
+
+		ContextController.ServiceHolder<Servlet> serviceHolder =
+			new ContextController.ServiceHolder<>(
+				bundleContext.getServiceObjects(serviceReference));
+
+		Servlet servlet = serviceHolder.get();
+
+		ServletRegistration servletRegistration = null;
+
+		boolean addedRegisteredObject = false;
+
+		Set<Object> registeredObjects =
+			httpServletEndpointController.getRegisteredObjects();
+
+		try {
+			if (servlet == null) {
+				throw new IllegalArgumentException("Servlet is null");
+			}
+
+			addedRegisteredObject = registeredObjects.add(servlet);
+
+			if (addedRegisteredObject) {
+				ObjectValuePair<ServletDTO, ErrorPageDTO> objectValuePair =
+					_createServletDTOs(serviceReference, servlet);
+
+				ServletDTO servletDTO = objectValuePair.getKey();
+
+				ServletContextHelper servletContextHelper =
+					liferayContextController.getServletContextHelper(
+						serviceHolder.getBundle());
+
+				servletRegistration = new ServletRegistration(
+					serviceHolder, servletDTO, objectValuePair.getValue(),
+					servletContextHelper, liferayContextController, null);
+
+				servletRegistration.init(
+					new ServletConfigImpl(
+						servletDTO.name, servletDTO.initParams,
+						new ServletContextWrapper(
+							serviceHolder.getBundle(), liferayContextController,
+							servletContextHelper,
+							servletContextHelperDataContext)));
+
+				Set<EndpointRegistration<?>> endpointRegistrations =
+					liferayContextController.getEndpointRegistrations();
+
+				endpointRegistrations.add(servletRegistration);
+			}
+		}
+		finally {
+			if (servletRegistration == null) {
+				serviceHolder.release();
+
+				if (addedRegisteredObject) {
+					registeredObjects.remove(servlet);
+				}
+			}
+		}
+
+		return servletRegistration;
+	}
+
+	private ObjectValuePair<ServletDTO, ErrorPageDTO> _createServletDTOs(
+		ServiceReference<Servlet> serviceReference, Servlet servlet) {
+
+		String[] servletErrorPages = ArrayUtil.toStringArray(
+			StringPlus.asList(
+				serviceReference.getProperty(
+					HttpWhiteboardConstants.
+						HTTP_WHITEBOARD_SERVLET_ERROR_PAGE)));
+		String servletName = (String)serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
+		String[] servletPatterns = ArrayUtil.toStringArray(
+			StringPlus.asList(
+				serviceReference.getProperty(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN)));
+
+		if ((servletErrorPages.length == 0) && (servletName == null) &&
+			(servletPatterns.length == 0)) {
+
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"One of the service properties ",
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE,
+					", ", HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+					", and ",
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+					" must contain a value"));
+		}
+
+		for (String servletPattern : servletPatterns) {
+			ContextController.checkPattern(servletPattern);
+		}
+
+		ServletDTO servletDTO = new ServletDTO();
+
+		servletDTO.asyncSupported = ServiceProperties.parseBoolean(
+			serviceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED);
+		servletDTO.initParams = ServiceProperties.parseInitParams(
+			serviceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
+		servletDTO.name = ServiceProperties.parseName(servletName, servlet);
+		servletDTO.patterns = sort(servletPatterns);
+		servletDTO.serviceId = (long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+		servletDTO.servletContextId = servletContextHelperServiceId;
+		servletDTO.servletInfo = servlet.getServletInfo();
+
+		ErrorPageDTO errorPageDTO = null;
+
+		if (servletErrorPages.length > 0) {
+			errorPageDTO = new ErrorPageDTO();
+
+			errorPageDTO.asyncSupported = servletDTO.asyncSupported;
+
+			Set<Long> httpErrorCodes = new LinkedHashSet<>();
+
+			List<String> exceptionErrorPages = new ArrayList<>();
+
+			for (String servletErrorPage : servletErrorPages) {
+				try {
+					if (Objects.equals(servletErrorPage, "4xx")) {
+						for (long code = 400; code < 500; code++) {
+							httpErrorCodes.add(code);
+						}
+					}
+					else if (Objects.equals(servletErrorPage, "5xx")) {
+						for (long code = 500; code < 600; code++) {
+							httpErrorCodes.add(code);
+						}
+					}
+					else {
+						httpErrorCodes.add(Long.parseLong(servletErrorPage));
+					}
+				}
+				catch (NumberFormatException numberFormatException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(numberFormatException);
+					}
+
+					exceptionErrorPages.add(servletErrorPage);
+				}
+			}
+
+			errorPageDTO.errorCodes = TransformUtil.transformToLongArray(
+				httpErrorCodes, errorCode -> errorCode);
+			errorPageDTO.exceptions = exceptionErrorPages.toArray(
+				new String[0]);
+			errorPageDTO.initParams = servletDTO.initParams;
+			errorPageDTO.name = servletDTO.name;
+			errorPageDTO.serviceId = servletDTO.serviceId;
+			errorPageDTO.servletContextId = servletContextHelperServiceId;
+			errorPageDTO.servletInfo = servlet.getServletInfo();
+		}
+
+		return new ObjectValuePair<>(servletDTO, errorPageDTO);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServletServiceTrackerCustomizer.class);
 
 }

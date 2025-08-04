@@ -141,7 +141,8 @@ public class AssetTestUtil {
 		for (int i = 0; i < RandomTestUtil.randomInt(1, 3); i++) {
 			AssetVocabulary assetVocabulary =
 				AssetVocabularyLocalServiceUtil.addVocabulary(
-					TestPropsValues.getUserId(), companyGroupId,
+					TestPropsValues.getUserId(),
+					serviceContext.getScopeGroupId(),
 					RandomTestUtil.randomString(), serviceContext);
 
 			assetCategories = ListUtil.concat(

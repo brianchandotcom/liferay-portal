@@ -349,6 +349,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	@Override
+	protected SitePage randomIrrelevantSitePage() throws Exception {
+		return _getRandomSitePage(
+			ServiceContextTestUtil.getServiceContext(
+				irrelevantGroup, TestPropsValues.getUserId()),
+			_getRandomType(_types));
+	}
+
+	@Override
 	protected SitePage randomSitePage() throws Exception {
 		return _getRandomSitePage(_getRandomType(_types));
 	}
@@ -766,16 +774,27 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return pageSpecificationType;
 	}
 
+	private SitePage _getRandomSitePage(
+			ServiceContext serviceContext, SitePage.Type type)
+		throws Exception {
+
+		return _getRandomSitePage(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
+			serviceContext, type,
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+	}
+
 	private SitePage _getRandomSitePage(SitePage.Type type) throws Exception {
 		return _getRandomSitePage(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()), null, type,
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()),
+			type);
 	}
 
 	private SitePage _getRandomSitePage(
 			String externalReferenceCode,
-			String parentSitePageExternalReferenceCode, SitePage.Type type,
-			String uuid)
+			String parentSitePageExternalReferenceCode,
+			ServiceContext serviceContext, SitePage.Type type, String uuid)
 		throws Exception {
 
 		SitePage sitePage = new SitePage();
@@ -794,10 +813,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				StringPool.FORWARD_SLASH +
 					StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).build());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId());
 
 		sitePage.setKeywords(AssetTestUtil.randomKeywords(serviceContext));
 

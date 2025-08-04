@@ -305,14 +305,6 @@ test('LPD-43013 Configuration Entry form in side panel', async ({
 
 	expect(configurationList).not.toBeNull();
 
-	await apiHelpers.headlessCommerceAdminCatalog.postProductConfiguration(
-		configurationList.id,
-		{
-			entityExternalReferenceCode: product.externalReferenceCode,
-			entityId: product.id,
-		}
-	);
-
 	await applicationsMenuPage.goToCommerceProductConfigurationLists();
 
 	await (
@@ -501,14 +493,6 @@ test('LPD-43013 Configuration Entry form in side panel for virtual products', as
 	);
 
 	expect(configurationList).not.toBeNull();
-
-	await apiHelpers.headlessCommerceAdminCatalog.postProductConfiguration(
-		configurationList.id,
-		{
-			entityExternalReferenceCode: product.externalReferenceCode,
-			entityId: product.id,
-		}
-	);
 
 	await applicationsMenuPage.goToCommerceProductConfigurationLists();
 

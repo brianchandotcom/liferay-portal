@@ -10,6 +10,7 @@ import {ReactElement, ReactNode} from 'react';
 type ModalProps = {
 	children: ReactNode;
 	className?: string;
+	disableAutoClose?: boolean;
 	first?: ReactElement;
 	last?: ReactElement;
 	observer: Observer;
@@ -18,7 +19,6 @@ type ModalProps = {
 	subtitle?: string;
 	title?: string;
 	visible: boolean;
-	disableAutoClose?: boolean;
 };
 
 const Modal = ({

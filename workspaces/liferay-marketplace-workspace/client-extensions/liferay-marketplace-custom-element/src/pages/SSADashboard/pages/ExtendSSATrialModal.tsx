@@ -12,6 +12,7 @@ import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {KeyedMutator} from 'swr';
 
+import FormInput from '../../../components/Input/formInput';
 import {OrderCustomFields} from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
@@ -20,16 +21,15 @@ import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
 import {EXTEND_OPTIONS, EXTEND_TYPES} from '../constants';
 import {ExtendRequestStatus} from '../enums/SSATrials';
-import FormInput from '../../../components/Input/formInput';
 
 type ExtendSSATrialModalProps = {
 	accountId: number;
 	firstExtendRequest: boolean;
+	mutatePlacedOrder?: KeyedMutator<any>;
 	onClose: () => void;
 	order: PlacedOrder;
-	ssaTrialExtendMutate: KeyedMutator<any>;
-	mutatePlacedOrder?: KeyedMutator<any>;
 	orderMutate?: KeyedMutator<any>;
+	ssaTrialExtendMutate: KeyedMutator<any>;
 };
 
 const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
@@ -44,7 +44,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 	const [submitting, setSubmitting] = useState<boolean>(false);
 
 	const {
-		formState: {errors, isLoading, isValid},
+		formState: {errors, isLoading},
 		handleSubmit,
 		register,
 	} = useForm({

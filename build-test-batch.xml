@@ -2672,13 +2672,13 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 						}
 
 						public static String getTestClassNameForTestResults(String testClass){
-							String[] testClassVars = testClass.split("#");
+							Pattern pattern = Pattern.compile("([^#]+)\\.java#.*");
 
-							if (testClassVars.length > 0) {
-								testClass = testClassVars[0];
+							Matcher matcher = pattern.matcher(testClass);
+
+							if (matcher.matches()) {
+								testClass=matcher.group(1);
 							}
-
-							testClass = testClass.replace(".java", "");
 
 							testClass = testClass.replace("/", ".");
 
@@ -2686,21 +2686,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 						}
 
 						public static String getTestName(String testClassFilePath) {
-							Pattern pattern = Pattern.compile("([^/]+$)");
+							Pattern pattern = Pattern.compile("([^\\/#]+)#?.*$");
 
 							Matcher matcher = pattern.matcher(testClassFilePath);
 
 							if (matcher.find()) {
-								String testName = matcher.group(1);
-
-								if (testName.contains("#")) {
-									testName = testName.replace(".java#", ".");
-								}
-								else{
-									testName = testName.replace(".java", "");
-								}
-
-								return testName;
+								return matcher.group(1);
 							}
 
 							return null;

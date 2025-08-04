@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -391,8 +392,14 @@ public class Sidecar {
 		URL sidecarAgentBundleURL = _getBundleURL(SidecarAgent.class);
 
 		try {
-			arguments.add(
-				"-javaagent:" + Path.of(sidecarAgentBundleURL.toURI()));
+			URI sidecarAgentBundleURI = new URI(
+				sidecarAgentBundleURL.getProtocol(),
+				sidecarAgentBundleURL.getAuthority(),
+				sidecarAgentBundleURL.getPath(),
+				sidecarAgentBundleURL.getQuery(),
+				sidecarAgentBundleURL.getRef());
+
+			arguments.add("-javaagent:" + Path.of(sidecarAgentBundleURI));
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			ReflectionUtil.throwException(uriSyntaxException);

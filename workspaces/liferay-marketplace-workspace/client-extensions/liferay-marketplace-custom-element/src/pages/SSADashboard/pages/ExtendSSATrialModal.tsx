@@ -5,16 +5,13 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {zodResolver} from '@hookform/resolvers/zod';
-import classNames from 'classnames';
 import {addDays} from 'date-fns';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {KeyedMutator} from 'swr';
 
-import BaseWrapper from '../../../components/Form/BaseWrapper';
 import {OrderCustomFields} from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
@@ -23,6 +20,7 @@ import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
 import {EXTEND_OPTIONS, EXTEND_TYPES} from '../constants';
 import {ExtendRequestStatus} from '../enums/SSATrials';
+import FormInput from '../../../components/Input/formInput';
 
 type ExtendSSATrialModalProps = {
 	accountId: number;
@@ -43,21 +41,26 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 	orderMutate,
 	ssaTrialExtendMutate,
 }) => {
-	const [duration, setDuration] = useState<number | undefined>(undefined);
-	const [reason, setReason] = useState<string>('');
 	const [submitting, setSubmitting] = useState<boolean>(false);
 
-	const {formState, handleSubmit, setValue, trigger} = useForm({
+	const {
+		formState: {errors, isLoading, isValid},
+		handleSubmit,
+		register,
+	} = useForm({
 		defaultValues: {
 			duration: 0,
 			reason: '',
 		},
-		mode: 'all',
-		reValidateMode: 'onChange',
+		mode: 'onSubmit',
 		resolver: zodResolver(zodSchema.extendSSATrial),
 	});
 
-	const {isLoading, isValid} = formState;
+	const inputProps = {
+		errors,
+		register,
+		required: true,
+	};
 
 	const extendType = firstExtendRequest
 		? EXTEND_TYPES.AUTO_EXTEND
@@ -140,7 +143,9 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 							const updatedOrder = {
 								...order,
 								items: orders.items.map((item: any) => {
-									if (item.id !== order.id) {return item;}
+									if (item.id !== order.id) {
+										return item;
+									}
 
 									return {
 										...item,
@@ -193,41 +198,24 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 			<ClayAlert displayType={extendOptions?.alertType}>
 				{extendOptions?.alertText}
 			</ClayAlert>
-			<BaseWrapper label="Duration (days)" required>
-				<ClayInput
-					className={classNames('my-4', {
-						'has-error': formState.errors.duration,
-					})}
-					max={60}
-					min={1}
-					onChange={(event) => {
-						setDuration(
-							Number(event.target.value) < 1
-								? undefined
-								: Number(event.target.value)
-						);
-						setValue('duration', Number(event.target.value));
-						trigger();
-					}}
-					placeholder="Value between 1 and 60"
-					type="number"
-					value={duration}
-				></ClayInput>
-			</BaseWrapper>
-			<BaseWrapper label="Reason" required>
-				<ClayInput
-					className={classNames('my-4', {
-						'has-error': formState.errors.reason,
-					})}
-					onChange={(event) => {
-						setReason(event.target.value);
-						setValue('reason', event.target.value);
-						trigger();
-					}}
-					type="text"
-					value={reason}
-				></ClayInput>
-			</BaseWrapper>
+			<FormInput
+				{...inputProps}
+				boldLabel
+				label="Duration"
+				name="duration"
+				placeholder="Value between 1 and 60"
+				required={true}
+				type="number"
+			/>
+			<FormInput
+				{...inputProps}
+				boldLabel
+				label={i18n.translate('reason')}
+				name="reason"
+				placeholder="Tell why you need to extend the trial"
+				required={true}
+				type="textarea"
+			/>
 			<div className="d-flex justify-content-end">
 				<ClayButton
 					className="mr-4"
@@ -238,7 +226,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 					{i18n.translate('cancel')}
 				</ClayButton>
 				<ClayButton
-					disabled={!isValid || isLoading || submitting}
+					disabled={isLoading || submitting}
 					onClick={handleSubmit(onSubmit)}
 				>
 					<div className="align-items-center d-flex">

@@ -191,7 +191,11 @@ const zodSchema = {
 		name: z.string().min(3, i18n.sub('x-is-required', 'name')),
 	}),
 	extendSSATrial: z.object({
-		duration: z.number().int().max(60).min(1),
+		duration: z.coerce
+			.number()
+			.int()
+			.min(1, 'Please enter a valid number (1-60)')
+			.max(60, 'Please enter a valid number (1-60)'),
 		reason: z.string().min(3),
 	}),
 	generateLicenseKey: z.object({

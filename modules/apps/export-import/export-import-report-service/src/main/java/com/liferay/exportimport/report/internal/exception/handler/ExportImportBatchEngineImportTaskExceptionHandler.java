@@ -9,6 +9,8 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.exception.handler.BatchEngineImportTaskExceptionHandler;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
+import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.kernel.log.Log;
@@ -65,9 +67,30 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 			groupId, batchEngineImportTask.getCompanyId(),
 			_getExternalReferenceCode(item),
 			_classNameLocalService.getClassNameId(ClassUtil.getClassName(item)),
+			_getClassPK(item), ExportImportReportEntryUtil.getEntryType(item),
 			GetterUtil.getLong(
 				ExportImportThreadLocal.getExportImportConfigurationId()),
-			exception.getMessage(), _getTraceString(exception));
+			exception.getMessage(), _getTraceString(exception),
+			ExportImportReportEntryConstants.ORIGIN_BATCH,
+			ExportImportReportEntryUtil.getScope(groupId),
+			ExportImportReportEntryUtil.getScopeKey(groupId));
+	}
+
+	private long _getClassPK(Object item) {
+		try {
+			Class<?> clazz = item.getClass();
+
+			Method method = clazz.getDeclaredMethod("getClassPK");
+
+			return GetterUtil.getLong(method.invoke(item));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			return 0L;
+		}
 	}
 
 	private String _getExternalReferenceCode(Object item) {

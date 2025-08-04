@@ -47,6 +47,7 @@ const TrialStatus = ({trialStatus}: TrialStatusProps) => {
 					'trial-status-icon-pending': Status.PENDING === trialStatus,
 					'trial-status-icon-processing':
 						trialStatus === Status.PROCESSING,
+					'trial-status-icon-on-hold': Status.ON_HOLD === trialStatus,
 				})}
 				symbol="circle"
 			/>

@@ -18,8 +18,10 @@ export enum OrderStatus {
 	APPROVED = 'approved',
 	COMPLETED = 'completed',
 	IN_PROGRESS = 'in-progress',
+	ON_HOLD = 'on-hold',
 	PENDING = 'pending',
 	PROCESSING = 'processing',
+	OPEN = 'open',
 }
 
 export enum OrderTypes {

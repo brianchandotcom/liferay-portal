@@ -118,11 +118,12 @@ const Table = <T extends Record<string, any>>({
 						}))}
 						trigger={<ClayIcon symbol="ellipsis-v" />}
 					>
-						{(item) => (
+						{(item, index) => (
 							<ClayDropDown.Item
 								disabled={item.disabled}
 								hidden={!!item.hidden}
 								onClick={() => item.onClick()}
+								{...{['keyValue']: index}}
 							>
 								{item.icon && (
 									<ClayIcon

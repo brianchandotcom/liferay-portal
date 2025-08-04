@@ -7,7 +7,7 @@ import useSWR from 'swr';
 
 type APIParametersOptions = {
 	aggregationTerms?: string;
-	customParams?: { [key: string]: unknown };
+	customParams?: {[key: string]: unknown};
 	fields?: string;
 	filter?: string;
 	nestedFields?: string;
@@ -72,12 +72,13 @@ const getBaseURL = (url: string | null, options?: APIParametersOptions) => {
 export function useFetch<Data = any, Error = any>(
 	url: string | null,
 	fetchParameters?: Record<string, any>,
-	refreshInterval?: number,
+	refreshInterval?: number
 ) {
-	const { params } = fetchParameters ?? {};
+	const {params} = fetchParameters ?? {};
 
-	const { data, error, isLoading, isValidating, mutate } = useSWR<Data, Error>(
-		getBaseURL(url, params), { refreshInterval }
+	const {data, error, isLoading, isValidating, mutate} = useSWR<Data, Error>(
+		getBaseURL(url, params),
+		{refreshInterval}
 	);
 
 	return {
@@ -86,6 +87,6 @@ export function useFetch<Data = any, Error = any>(
 		isValidating,
 		loading: isLoading,
 		mutate,
-		revalidate: () => mutate((response) => response, { revalidate: true }),
+		revalidate: () => mutate((response) => response, {revalidate: true}),
 	};
 }

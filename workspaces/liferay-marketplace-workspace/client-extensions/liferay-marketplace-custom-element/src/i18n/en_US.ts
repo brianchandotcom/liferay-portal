@@ -260,6 +260,7 @@ export default {
 	'extension-status': 'Extension Status',
 	'failed-to-approve-trial-extension': 'Failed to approve trial extension',
 	'failed-to-expire-trial': 'Failed to expire the trial.',
+	'failed-to-extend-trial': 'Failed to extend trial',
 	'failed-to-reject-trial-extension': 'Failed to reject trial extension.',
 	'failure': 'Failure',
 	'file-not-available-for-download': 'File not available for download',
@@ -281,6 +282,7 @@ export default {
 	'go-to-dxp': 'Go to DXP',
 	'go-to-marketplace': 'Go to Marketplace',
 	'go-to-my-apps': 'Go to My Apps',
+	'go-to-ssa-trial-listing': 'Go to SSA Trial Listing',
 	'go-to-trial': 'Go to Trial',
 	'got-it': 'Got it',
 	'header': 'Header',
@@ -530,6 +532,7 @@ export default {
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
 	'specify-your-apps-version-this-will-help-the-user-to-understand-the-latest-version-of-your-app-offered-on-the-marketplace':
 		'Specify your app’s version. This will help the user to understand the latest version of your app offered on the Marketplace.',
+	'ssa-trial-installation-in-progress': 'SSA Trial Installation in Progress',
 	'ssa-trial-summary': 'SSA Trial Summary',
 	'ssa-trials': 'SSA Trials',
 	'ssa-trials-limit-reached': 'SSA Trials Limit Reached',
@@ -580,6 +583,8 @@ export default {
 		'The DXP app is module-based and is compatible with 7.4 builds of Liferay Self-Managed.',
 	'the-installation-process-is-ongoing-and-may-take-some-time':
 		'The installation process is ongoing and may take some time. Navigating to other sections will not cancel the process.',
+	'the-installation-process-is-ongoing-and-may-take-some-time-navigating-to-other-sections-will-not-cancel-the-process':
+		'The installation process is ongoing and may take some time... Navigating to other sections will not cancel the process.',
 	'the-installation-process-is-underway-and-should-be-completed-shortly':
 		'The installation process is underway and should be completed shortly...',
 	'the-liferay-marketplace-gives-you-the-opportunity-to-monetize-your-app-or-solutions-from-a-single-use-case-to-many-while-engaging-with-new-customer-opportunities-and-generating-ongoing-revenue':
@@ -621,6 +626,7 @@ export default {
 		'Trial extension approved successfully',
 	'trial-extension-rejected-successfully':
 		'Trial extension rejected successfully.',
+	'trial-extension-successfully': 'Trial extension successfully',
 	'trial-info': 'Trial Info',
 	'trial-resources': 'Trial Resources',
 	'trial-start-date': 'Trial Start Date',

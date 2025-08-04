@@ -4,8 +4,8 @@
  */
 
 import Form from '../../../../components/MarketplaceForm';
+import {FormFields} from '../../pages/CreateTrialModalform';
 import {Input} from './Input';
-import {FormFields} from './ModalFormBody';
 
 type FieldGroupProps = {
 	primaryField: FieldProps;

@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -63,35 +65,32 @@ public abstract class BaseGlobJobProperty
 				relativeGlob = relativeGlob.substring(1);
 			}
 
-			if (relativeGlob.contains("#")) {
-				String[] testMethods = relativeGlob.split("#");
+			Matcher matcher = _globClassMethodPattern.matcher(relativeGlob);
 
-				if (testMethods.length == 2) {
-					String testClassGlob = testMethods[0];
+			if (matcher.matches()) {
+				String testClassGlob = matcher.group("class");
+				String testClassMethodName = matcher.group("method");
 
-					String testClassMethodName = testMethods[1];
+				relativeGlob = testClassGlob;
 
-					relativeGlob = testClassGlob;
+				List<String> testClassMethodNames;
 
-					List<String> testClassMethodNames;
+				if (_globTestClassMethodsMap.containsKey(testClassGlob)) {
+					testClassMethodNames = _globTestClassMethodsMap.get(
+						testClassGlob);
 
-					if (_globTestClassMethodsMap.containsKey(testClassGlob)) {
-						testClassMethodNames = _globTestClassMethodsMap.get(
-							testClassGlob);
+					testClassMethodNames.add(testClassMethodName);
 
-						testClassMethodNames.add(testClassMethodName);
+					_globTestClassMethodsMap.replace(
+						relativeGlob, testClassMethodNames);
+				}
+				else {
+					testClassMethodNames = new ArrayList<>();
 
-						_globTestClassMethodsMap.replace(
-							relativeGlob, testClassMethodNames);
-					}
-					else {
-						testClassMethodNames = new ArrayList<>();
+					testClassMethodNames.add(testClassMethodName);
 
-						testClassMethodNames.add(testClassMethodName);
-
-						_globTestClassMethodsMap.put(
-							relativeGlob, testClassMethodNames);
-					}
+					_globTestClassMethodsMap.put(
+						relativeGlob, testClassMethodNames);
 				}
 			}
 
@@ -175,6 +174,9 @@ public abstract class BaseGlobJobProperty
 
 		return portalGitWorkingDirectory.getWorkingDirectory();
 	}
+
+	private static final Pattern _globClassMethodPattern = Pattern.compile(
+		"(?<class>[^#]+)#(?<method>.+)");
 
 	private final Map<String, List<String>> _globTestClassMethodsMap =
 		new HashMap<>();

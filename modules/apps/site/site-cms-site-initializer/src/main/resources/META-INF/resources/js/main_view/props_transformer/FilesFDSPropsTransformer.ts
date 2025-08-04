@@ -37,6 +37,7 @@ export default function FilesFDSPropsTransformer({
 }: {
 	additionalProps: {
 		autocompleteURL: string;
+		cmsGroupId?: number;
 		collaboratorURLs: Record<string, string>;
 	};
 	creationMenu: any;
@@ -81,7 +82,7 @@ export default function FilesFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
-		infoPanelComponent: () => AssetTypeInfoPanel(otherProps),
+		infoPanelComponent: () => AssetTypeInfoPanel({additionalProps}),
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'download') {
 				return {

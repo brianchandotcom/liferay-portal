@@ -100,6 +100,7 @@ export function registerLocalizedInput({
 			}
 
 			const translationInput = getTranslationInput({
+				createIfMissing: false,
 				inputId: inputElement?.id || inputName,
 				inputName,
 				languageId,
@@ -107,7 +108,10 @@ export function registerLocalizedInput({
 				namespace,
 			});
 
-			if (translationInput.getAttribute('value') !== null) {
+			if (
+				translationInput &&
+				translationInput.getAttribute('value') !== null
+			) {
 				onLocaleChange?.({languageId, value: translationInput.value});
 
 				setInputValue({

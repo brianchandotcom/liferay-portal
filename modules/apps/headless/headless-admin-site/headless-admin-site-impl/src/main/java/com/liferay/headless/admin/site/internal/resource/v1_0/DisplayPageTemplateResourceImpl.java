@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.headless.admin.site.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
@@ -269,7 +270,7 @@ public class DisplayPageTemplateResourceImpl
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.addDraftToLayout(
-				contentPageSpecification,
+				_cetManager, contentPageSpecification,
 				_layoutLocalService.getLayout(
 					layoutPageTemplateEntry.getPlid()),
 				ServiceContextUtil.createServiceContext(
@@ -378,7 +379,7 @@ public class DisplayPageTemplateResourceImpl
 			layoutPageTemplateEntry.getPlid());
 
 		layout = LayoutUtil.updateContentLayout(
-			layout, layout.getNameMap(), layout.getTitleMap(),
+			_cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(),
 			_getRobotsMap(displayPageTemplateSettings),
 			LocalizedMapUtil.getLocalizedMap(
@@ -467,8 +468,9 @@ public class DisplayPageTemplateResourceImpl
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			groupId, displayPageTemplate.getPageSpecifications(), false,
-			nameMap, nameMap, null, _getRobotsMap(displayPageTemplateSettings),
+			_cetManager, groupId, displayPageTemplate.getPageSpecifications(),
+			false, nameMap, nameMap, null,
+			_getRobotsMap(displayPageTemplateSettings),
 			LayoutConstants.TYPE_ASSET_DISPLAY,
 			_getUnicodeProperties(displayPageTemplateSettings), true, true,
 			LocalizedMapUtil.getLocalizedMap(
@@ -665,6 +667,9 @@ public class DisplayPageTemplateResourceImpl
 
 		return unicodeProperties;
 	}
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

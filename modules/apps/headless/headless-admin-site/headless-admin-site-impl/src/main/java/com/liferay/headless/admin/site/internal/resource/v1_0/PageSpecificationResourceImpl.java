@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
@@ -317,10 +318,10 @@ public class PageSpecificationResourceImpl
 
 			return _pageSpecificationDTOConverter.toDTO(
 				LayoutUtil.updateLayout(
-					layout, layout.getNameMap(), layout.getTitleMap(),
-					layout.getDescriptionMap(), layout.getRobotsMap(),
-					layout.getFriendlyURLMap(), pageSpecification,
-					serviceContext));
+					_cetManager, layout, layout.getNameMap(),
+					layout.getTitleMap(), layout.getDescriptionMap(),
+					layout.getRobotsMap(), layout.getFriendlyURLMap(),
+					pageSpecification, serviceContext));
 		}
 
 		if (!Objects.equals(
@@ -336,8 +337,8 @@ public class PageSpecificationResourceImpl
 
 		return _pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.updateLayout(
-				(ContentPageSpecification)pageSpecification, layout,
-				layout.getNameMap(), layout.getTitleMap(),
+				_cetManager, (ContentPageSpecification)pageSpecification,
+				layout, layout.getNameMap(), layout.getTitleMap(),
 				layout.getDescriptionMap(), layout.getRobotsMap(),
 				layout.getFriendlyURLMap(), WorkflowConstants.STATUS_DRAFT,
 				serviceContext));
@@ -474,6 +475,9 @@ public class PageSpecificationResourceImpl
 			_pageSpecificationDTOConverter.toDTO(layout),
 			_pageSpecificationDTOConverter.toDTO(draftLayout));
 	}
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

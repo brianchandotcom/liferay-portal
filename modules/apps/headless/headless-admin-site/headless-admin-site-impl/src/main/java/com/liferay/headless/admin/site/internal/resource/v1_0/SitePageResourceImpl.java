@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
@@ -192,7 +193,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.addDraftToLayout(
-				contentPageSpecification, layout,
+				_cetManager, contentPageSpecification, layout,
 				ServiceContextUtil.createServiceContext(
 					layout.getGroupId(), contextHttpServletRequest,
 					contextUser.getUserId())));
@@ -300,8 +301,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.addContentLayout(
-				groupId, sitePage.getPageSpecifications(), false, nameMap, null,
-				null, null, SitePageTypeUtil.toInternalType(sitePage.getType()),
+				_cetManager, groupId, sitePage.getPageSpecifications(), false,
+				nameMap, null, null, null,
+				SitePageTypeUtil.toInternalType(sitePage.getType()),
 				typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				false,
@@ -447,14 +449,14 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.updateContentLayout(
-				layout, nameMap, layout.getTitleMap(),
+				_cetManager, layout, nameMap, layout.getTitleMap(),
 				layout.getDescriptionMap(), layout.getRobotsMap(),
 				friendlyURLMap, sitePage.getPageSpecifications(),
 				serviceContext);
 		}
 		else {
 			layout = LayoutUtil.updatePortletLayout(
-				layout, nameMap, friendlyURLMap,
+				_cetManager, layout, nameMap, friendlyURLMap,
 				_getTypeSettingsUnicodeProperties(sitePage), serviceContext,
 				PageSpecificationUtil.getWidgetPageSpecification(
 					sitePage.getPageSpecifications()));
@@ -550,6 +552,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 	}
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

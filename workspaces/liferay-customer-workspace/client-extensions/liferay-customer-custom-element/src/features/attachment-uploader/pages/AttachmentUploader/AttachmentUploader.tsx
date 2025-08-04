@@ -13,7 +13,7 @@ import i18n from '~/utils/I18n';
 import './AttachmentUploader.css';
 
 import {useParams} from 'react-router-dom';
-import {IUploadProperties} from '~/utils/types';
+import {IUpload} from '~/utils/types';
 
 import DropzoneUpload from '../../components/DropzoneUpload';
 import FileList from '../../components/FileList';
@@ -29,10 +29,8 @@ import {
 } from '../AttachmentUploaderMessages';
 
 interface IProps {
-	setUploadStateData: React.Dispatch<
-		React.SetStateAction<IUploadProperties | null>
-	>;
-	uploadStateData: IUploadProperties | null;
+	setUploadStateData: React.Dispatch<React.SetStateAction<IUpload | null>>;
+	uploadStateData: IUpload | null;
 }
 
 const AttachmentUploader = ({setUploadStateData, uploadStateData}: IProps) => {

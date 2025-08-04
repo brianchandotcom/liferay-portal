@@ -4,7 +4,7 @@
  */
 
 import {useCallback, useState} from 'react';
-import {IUploadProperties} from '~/utils/types';
+import {IUpload} from '~/utils/types';
 
 import useGCSGetUploadOffset from './useGCSGetUploadOffset';
 import useTicketAttachmentsCompleteUpload from './useTicketAttachmentsCompleteUpload';
@@ -20,7 +20,7 @@ interface IParams {
 
 interface IResponse {
 	success: boolean;
-	uploadProperties?: IUploadProperties;
+	uploadProperties?: IUpload;
 }
 
 interface IProps {

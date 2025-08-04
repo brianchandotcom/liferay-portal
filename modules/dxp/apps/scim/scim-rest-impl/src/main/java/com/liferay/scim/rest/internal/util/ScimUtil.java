@@ -331,7 +331,7 @@ public class ScimUtil {
 			scimUser.setSuffix(contact.getSuffixListTypeId());
 			scimUser.setTimeZoneId(portalUser.getTimeZoneId());
 
-			_setExpandoValueAttributes(scimUser);
+			_setExpandoValues(scimUser);
 
 			return scimUser;
 		}
@@ -975,7 +975,7 @@ public class ScimUtil {
 		}
 	}
 
-	private static void _setExpandoValueAttributes(ScimUser scimUser) {
+	private static void _setExpandoValues(ScimUser scimUser) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-56434")) {
 			return;
 		}
@@ -995,36 +995,30 @@ public class ScimUtil {
 				_getExpandoValue(
 					expandoTable.getTableId(), "scimDisplayName",
 					scimUser.getId()));
-
 			scimUser.setEntitlements(
 				StringUtil.split(
 					_getExpandoValue(
 						expandoTable.getTableId(), "scimEntitlements",
 						scimUser.getId()),
 					StringPool.NEW_LINE));
-
 			scimUser.setNickName(
 				_getExpandoValue(
 					expandoTable.getTableId(), "scimNickName",
 					scimUser.getId()));
-
 			scimUser.setPhotos(
 				StringUtil.split(
 					_getExpandoValue(
 						expandoTable.getTableId(), "scimPhotos",
 						scimUser.getId()),
 					StringPool.NEW_LINE));
-
 			scimUser.setPreferredLanguage(
 				_getExpandoValue(
 					expandoTable.getTableId(), "scimPreferredLanguage",
 					scimUser.getId()));
-
 			scimUser.setUserType(
 				_getExpandoValue(
 					expandoTable.getTableId(), "scimUserType",
 					scimUser.getId()));
-
 			scimUser.setX509Certificates(
 				StringUtil.split(
 					_getExpandoValue(

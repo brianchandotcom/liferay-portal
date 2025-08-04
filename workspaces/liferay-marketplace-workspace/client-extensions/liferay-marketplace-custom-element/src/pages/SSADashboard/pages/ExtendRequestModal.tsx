@@ -169,17 +169,16 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 							)}
 						>
 							<span className="extend-request-info">
-								{format(
-									addDays(
-										new Date(
-											order.customFields[
-												OrderCustomFields.END_DATE
-											]
-										),
-										trialExtend.duration
-									),
-									'dd MMM, yyyy'
-								).toString()}
+								{order.customFields[OrderCustomFields.END_DATE]
+									? format(
+											new Date(
+												order.customFields[
+													OrderCustomFields.END_DATE
+												]
+											),
+											'dd MMM, yyyy'
+										).toString()
+									: 'DNE'}
 							</span>
 						</Details>
 					</div>
@@ -333,8 +332,9 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 											...order,
 											items: orders.items.map(
 												(item: any) => {
-													if (item.id !== order.id)
-														{return item;}
+													if (item.id !== order.id) {
+														return item;
+													}
 
 													return {
 														...item,

@@ -33,6 +33,7 @@ export default function ContentFDSPropsTransformer({
 }: {
 	additionalProps: {
 		autocompleteURL: string;
+		cmsGroupId?: number;
 		collaboratorURLs: Record<string, string>;
 	};
 	creationMenu: any;
@@ -77,7 +78,7 @@ export default function ContentFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
-		infoPanelComponent: () => AssetTypeInfoPanel(otherProps),
+		infoPanelComponent: () => AssetTypeInfoPanel({additionalProps}),
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'actionLink') {
 				return {

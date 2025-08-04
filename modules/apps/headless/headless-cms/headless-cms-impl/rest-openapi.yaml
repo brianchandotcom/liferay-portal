@@ -1,0 +1,125 @@
+components:
+    schemas:
+        BulkActionDefinition:
+            discriminator:
+                mapping:
+                    Category: "#/components/schemas/CategoryDefinition"
+                    Delete: "#/components/schemas/DeleteDefinition"
+                    Move: "#/components/schemas/MoveDefinition"
+                    Permission: "#/components/schemas/PermissionDefinition"
+                    Status: "#/components/schemas/StatusDefinition"
+                    Tag: "#/components/schemas/TagDefinition"
+                propertyName: type
+            properties:
+                cmsEntryDefinitions:
+                    items:
+                        $ref: "#/components/schemas/CMSEntryDefinition"
+                    type: array
+                type:
+                    enum:
+                        -   Category
+                        -   Delete
+                        -   Move
+                        -   Permission
+                        -   Status
+                        -   Tag
+                    type: string
+        BulkActionTask:
+            properties:
+                bulkActionTaskId:
+                    description:
+                        The bulk action task ID.
+                    format: int64
+                    type: integer
+        CMSEntryDefinition:
+            properties:
+                className:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+        CategoryDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/BulkActionDefinition"
+                -   properties:
+                        taxonomyCategoryIds:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+        DeleteDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/BulkActionDefinition"
+        MoveDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/BulkActionDefinition"
+                -   properties:
+                        objectEntryFolderId:
+                            description:
+                                The object entry folder's ID.
+                            format: int64
+                            type: integer
+        PermissionDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/BulkActionDefinition"
+                -   properties:
+                        permissions:
+                            items:
+                                type: permission
+                            type: array
+        StatusDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/BulkActionDefinition"
+                -   properties:
+                        status:
+                            format: int32
+                            type: integer
+        TagDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/BulkActionDefinition"
+                -   properties:
+                        keywords:
+                            items:
+                                type: string
+                            type: array
+info:
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: ""
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/bulk-action":
+        post:
+            description:
+                Execute a bulk action
+            parameters:
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/BulkActionDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BulkActionDefinition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BulkActionTask"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BulkActionTask"
+            tags: ["BulkAction"]

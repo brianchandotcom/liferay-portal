@@ -4006,7 +4006,11 @@ public class ObjectEntryLocalServiceImpl
 									objectField.getDBColumnName());
 					}
 
-					return column.in(primaryKeys);
+					if (related) {
+						return column.in(primaryKeys);
+					}
+
+					return column.notIn(primaryKeys);
 				}
 			).and(
 				() -> objectRelationship.isSelf() ?

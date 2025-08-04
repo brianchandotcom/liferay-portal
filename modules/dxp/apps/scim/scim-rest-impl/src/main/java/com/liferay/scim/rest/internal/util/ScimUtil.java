@@ -353,7 +353,7 @@ public class ScimUtil {
 					return multiValuedComplexType;
 				}));
 		scimUser.setPrefix(contact.getPrefixListTypeId());
-		scimUser.setProfileUrl(_getScimProfileUrl(contact));
+		scimUser.setProfileUrl(_getProfileURL(contact));
 		scimUser.setRoleIds(portalUser.getRoleIds());
 		scimUser.setScreenName(portalUser.getScreenName());
 		scimUser.setSuffix(contact.getSuffixListTypeId());
@@ -863,7 +863,7 @@ public class ScimUtil {
 		return scimAddresses;
 	}
 
-	private static String _getScimProfileUrl(Contact contact) {
+	private static String _getProfileURL(Contact contact) {
 		long listTypeId = ListTypeLocalServiceUtil.getListTypeId(
 			contact.getCompanyId(), "personal",
 			Contact.class.getName() + ".website");

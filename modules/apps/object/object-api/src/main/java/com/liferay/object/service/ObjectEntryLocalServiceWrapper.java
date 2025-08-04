@@ -760,6 +760,15 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void moveRelatedObjectEntriesToTrash(
+			long groupId, long objectDefinitionId, long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectEntryLocalService.moveRelatedObjectEntriesToTrash(
+			groupId, objectDefinitionId, primaryKey);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntry partialUpdateObjectEntry(
 			long userId, long objectEntryId,
 			java.util.Map<String, java.io.Serializable> values,

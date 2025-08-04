@@ -695,8 +695,9 @@ public class LayoutUtil {
 	}
 
 	private static void _updateClientExtensionEntryRel(
-			CETManager cetManager, ClientExtension clientExtension,
-			Layout layout, String type, ServiceContext serviceContext)
+			CETManager cetManager, long classNameId,
+			ClientExtension clientExtension, Layout layout, String type,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		ClientExtension[] clientExtensions = null;
@@ -706,16 +707,18 @@ public class LayoutUtil {
 		}
 
 		_updateClientExtensionEntryRels(
-			cetManager, clientExtensions, layout, type, serviceContext);
+			cetManager, classNameId, clientExtensions, layout, type,
+			serviceContext);
 	}
 
 	private static void _updateClientExtensionEntryRels(
-			CETManager cetManager, ClientExtension[] clientExtensions,
-			Layout layout, String type, ServiceContext serviceContext)
+			CETManager cetManager, long classNameId,
+			ClientExtension[] clientExtensions, Layout layout, String type,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
+			classNameId, layout.getPlid(), type);
 
 		if (ArrayUtil.isEmpty(clientExtensions)) {
 			return;
@@ -731,9 +734,9 @@ public class LayoutUtil {
 			}
 
 			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
-				serviceContext.getUserId(), layout.getGroupId(),
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-				clientExtension.getExternalReferenceCode(), type,
+				serviceContext.getUserId(), layout.getGroupId(), classNameId,
+				layout.getPlid(), clientExtension.getExternalReferenceCode(),
+				type,
 				UnicodePropertiesBuilder.create(
 					clientExtension.getClientExtensionConfig(), true
 				).buildString(),
@@ -768,28 +771,34 @@ public class LayoutUtil {
 			return;
 		}
 
+		long classNameId = PortalUtil.getClassNameId(Layout.class);
+
 		_updateClientExtensionEntryRel(
-			cetManager,
+			cetManager, classNameId,
 			settings.getFavIcon() instanceof ClientExtension ?
 				(ClientExtension)settings.getFavIcon() : null,
 			layout, ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
 			serviceContext);
 
 		_updateClientExtensionEntryRel(
-			cetManager, settings.getThemeCSSClientExtension(), layout,
-			ClientExtensionEntryConstants.TYPE_THEME_CSS, serviceContext);
+			cetManager, classNameId, settings.getThemeCSSClientExtension(),
+			layout, ClientExtensionEntryConstants.TYPE_THEME_CSS,
+			serviceContext);
 
 		_updateClientExtensionEntryRel(
-			cetManager, settings.getThemeSpritemapClientExtension(), layout,
+			cetManager, classNameId,
+			settings.getThemeSpritemapClientExtension(), layout,
 			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, serviceContext);
 
 		_updateClientExtensionEntryRels(
-			cetManager, settings.getGlobalCSSClientExtensions(), layout,
-			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, serviceContext);
+			cetManager, classNameId, settings.getGlobalCSSClientExtensions(),
+			layout, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
+			serviceContext);
 
 		_updateClientExtensionEntryRels(
-			cetManager, settings.getGlobalJSClientExtensions(), layout,
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, serviceContext);
+			cetManager, classNameId, settings.getGlobalJSClientExtensions(),
+			layout, ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
+			serviceContext);
 	}
 
 	private static Layout _updateLayout(

@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -1313,7 +1312,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			(WidgetPageSpecification)pageSpecifications[0];
 
 		SettingsTestUtil.modifySettings(
-			_cetManager, serviceContext, widgetPageSpecification.getSettings());
+			serviceContext, widgetPageSpecification.getSettings());
 
 		pageTemplate =
 			pageTemplateResource.
@@ -1483,7 +1482,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		widgetPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
-				_cetManager,
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId())));
 
@@ -1580,7 +1578,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			PageSpecificationsTestUtil.getWidgetPageSpecification(
 				null, pageTemplate.getExternalReferenceCode(),
 				SettingsTestUtil.getSettings(
-					_cetManager,
 					ServiceContextTestUtil.getServiceContext(
 						testGroup.getGroupId(), TestPropsValues.getUserId())),
 				PageSpecification.Status.APPROVED);
@@ -1598,7 +1595,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		widgetPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
-				_cetManager,
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId())));
 
@@ -1682,9 +1678,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			_depotEntryLocalService.deleteDepotEntry(depotEntry);
 		}
 	}
-
-	@Inject
-	private CETManager _cetManager;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

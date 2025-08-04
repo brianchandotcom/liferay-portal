@@ -443,8 +443,11 @@ public class SettingsTestUtil {
 			CETManager cetManager, ServiceContext serviceContext)
 		throws Exception {
 
-		String clientExtensionExternalReferenceCode =
-			RandomTestUtil.randomString();
+		ClientExtension clientExtension = new ClientExtension() {
+			{
+				setExternalReferenceCode(RandomTestUtil::randomString);
+			}
+		};
 
 		cetManager.addCET(
 			ConfigurableUtil.createConfigurable(
@@ -457,13 +460,9 @@ public class SettingsTestUtil {
 					"type", "customElement"
 				).build()),
 			serviceContext.getCompanyId(),
-			clientExtensionExternalReferenceCode);
+			clientExtension.getExternalReferenceCode());
 
-		return new ClientExtension() {
-			{
-				setExternalReferenceCode(clientExtensionExternalReferenceCode);
-			}
-		};
+		return clientExtension;
 	}
 
 	private static ItemExternalReference _getMasterPageItemExternalReference(

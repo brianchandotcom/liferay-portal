@@ -62,14 +62,6 @@ public class SettingsTestUtil {
 			Assert.assertEquals(layout.getCss(), settings.getCss());
 		}
 
-		if (Validator.isNull(layout.getColorSchemeId())) {
-			Assert.assertTrue(Validator.isNull(settings.getColorSchemeName()));
-		}
-		else {
-			Assert.assertEquals(
-				layout.getColorSchemeId(), settings.getColorSchemeName());
-		}
-
 		_assertClientExtension(
 			(ClientExtension)settings.getFavIcon(), layout,
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);

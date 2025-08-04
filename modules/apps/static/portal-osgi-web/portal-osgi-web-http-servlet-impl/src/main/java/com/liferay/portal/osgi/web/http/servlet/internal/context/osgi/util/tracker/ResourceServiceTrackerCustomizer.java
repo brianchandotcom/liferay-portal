@@ -86,8 +86,7 @@ public class ResourceServiceTrackerCustomizer
 				_addResourceRegistration(serviceReference));
 		}
 		catch (Exception exception) {
-			httpServletEndpointController.log(
-				exception.getMessage(), exception);
+			_log.error(exception);
 		}
 
 		return resourceRegistrationAtomicReference;

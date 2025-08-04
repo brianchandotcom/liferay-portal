@@ -93,8 +93,7 @@ public class ServletServiceTrackerCustomizer
 				_addServletRegistration(serviceReference));
 		}
 		catch (Exception exception) {
-			httpServletEndpointController.log(
-				exception.getMessage(), exception);
+			_log.error(exception);
 		}
 
 		return servletRegistrationAtomicReference;

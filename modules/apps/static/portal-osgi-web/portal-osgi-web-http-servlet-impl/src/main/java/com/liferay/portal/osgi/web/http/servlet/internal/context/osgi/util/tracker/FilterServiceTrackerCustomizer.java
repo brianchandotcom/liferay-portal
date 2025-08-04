@@ -6,6 +6,8 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker;
 
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
@@ -83,8 +85,7 @@ public class FilterServiceTrackerCustomizer
 				_addFilterRegistration(serviceReference));
 		}
 		catch (Exception exception) {
-			httpServletEndpointController.log(
-				exception.getMessage(), exception);
+			_log.error(exception);
 		}
 
 		return filterRegistrationAtomicReference;
@@ -243,5 +244,8 @@ public class FilterServiceTrackerCustomizer
 	private static final String[] _DISPATCHER_TYPES = {
 		DispatcherType.REQUEST.toString()
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FilterServiceTrackerCustomizer.class.getName());
 
 }

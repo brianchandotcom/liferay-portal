@@ -16,7 +16,7 @@ import {
 	YAxis,
 } from 'recharts';
 
-import {RangeSelectors} from '../../types/global';
+import {RangeSelectors} from '../RangeSelectorsDropdown';
 import AccessibleTick, {IAccessibleTickProps} from './AccessibleTick';
 import EmptyChart, {IChartEmptyStateProps} from './EmptyChart';
 import MetricsChartLegend, {

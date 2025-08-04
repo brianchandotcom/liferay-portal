@@ -36,7 +36,7 @@ const InteractionsByPage = () => {
 	const queryString = buildQueryString({
 		assetId,
 		identityType: filters.individual,
-		rangeKey: filters.rangeSelector,
+		rangeKey: filters.rangeSelector.rangeKey,
 	});
 
 	const {data, loading} = useFetch<Data>(

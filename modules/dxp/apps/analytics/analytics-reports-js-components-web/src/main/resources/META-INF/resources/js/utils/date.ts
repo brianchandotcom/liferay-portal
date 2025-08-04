@@ -5,7 +5,7 @@
 
 import {dateUtils} from 'frontend-js-web';
 
-import {RangeSelectors} from '../types/global';
+import {RangeSelectors} from '../components/RangeSelectorsDropdown';
 
 export function formatDate(date: Date) {
 	const options: Intl.DateTimeFormatOptions = {

@@ -107,7 +107,7 @@ const InteractionsByPageChart: React.FC<IInteractionsByPageChartProps> = ({
 				onDatakeyChange={(dataKey) =>
 					setActiveLegendItem(dataKey as InteractionsByPageDataKey)
 				}
-				rangeSelector={filters.rangeSelector}
+				rangeSelector={filters.rangeSelector.rangeKey}
 				tooltipTitle={
 					assetContent[metricName].interactionsByPageTooltipTitle
 				}
@@ -182,7 +182,7 @@ const InteractionsByPageChart: React.FC<IInteractionsByPageChartProps> = ({
 						formattedData.combinedData[0]?.[
 							InteractionsByPageDataKey.AxisX
 						] as number,
-						filters.rangeSelector
+						filters.rangeSelector.rangeKey
 					)
 				)}
 				data-testid="interactions-by-page-chart-data"

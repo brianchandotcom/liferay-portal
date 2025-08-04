@@ -8,10 +8,11 @@ import {utcFormat} from 'd3';
 import React, {useContext} from 'react';
 
 import {Context} from '../../../Context';
-import {Alignments, RangeSelectors, Weights} from '../../../types/global';
+import {Alignments, Weights} from '../../../types/global';
 import {getDateRange} from '../../../utils/date';
 import {toThousands} from '../../../utils/math';
 import ChartTooltip from '../../ChartTooltip';
+import {RangeSelectors} from '../../RangeSelectorsDropdown';
 import {ChartData, chartBgColors, chartColors} from './StackedBarChart';
 
 const TOOLTIP_WIDTH = 450;
@@ -65,7 +66,9 @@ const StackedBarTooltip: React.FC<IStackedBarTooltipProps> = ({
 				},
 				{
 					align: Alignments.Right,
-					label: formatStackedBarTooltipDate(filters.rangeSelector),
+					label: formatStackedBarTooltipDate(
+						filters.rangeSelector.rangeKey
+					),
 					width: 140,
 				},
 				{

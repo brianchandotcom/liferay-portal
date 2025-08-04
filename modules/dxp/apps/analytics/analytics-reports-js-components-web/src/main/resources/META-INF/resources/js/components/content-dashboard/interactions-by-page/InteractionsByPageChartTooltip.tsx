@@ -5,9 +5,10 @@
 
 import React from 'react';
 
-import {Alignments, RangeSelectors, Weights} from '../../../types/global';
+import {Alignments, Weights} from '../../../types/global';
 import {formatTooltipDate} from '../../../utils/date';
 import ChartTooltip from '../../ChartTooltip';
+import {RangeSelectors} from '../../RangeSelectorsDropdown';
 import {IAccessibleTickProps} from '../../metrics/AccessibleTick';
 import {DotProps} from '../../metrics/Dots';
 import {DataKey} from '../../metrics/MetricsChart';

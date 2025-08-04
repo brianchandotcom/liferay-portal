@@ -6,9 +6,12 @@
 import React, {useContext} from 'react';
 
 import {Context} from '../../Context';
-import {Individuals, RangeSelectors} from '../../types/global';
-import {formatDate, getDateRange} from '../../utils/date';
+import {Individuals} from '../../types/global';
 import Filter from '../Filter';
+import {
+	RangeSelectors,
+	RangeSelectorsDropdown,
+} from '../RangeSelectorsDropdown';
 import Title from '../Title';
 
 const individualFilterLang = {
@@ -19,58 +22,19 @@ const individualFilterLang = {
 	[Individuals.KnownIndividuals]: Liferay.Language.get('known-individuals'),
 };
 
-function formatDateRange(rangeSelector: RangeSelectors) {
-	const {endDate, startDate} = getDateRange(rangeSelector);
-
-	return `${formatDate(endDate)} - ${formatDate(startDate)}`;
-}
-
 const GlobalFilters = () => {
 	const {changeIndividualFilter, changeRangeSelectorFilter, filters} =
 		useContext(Context);
 
-	let timeFilterItems = [
-		{
-			description: formatDateRange(RangeSelectors.Last7Days),
-			label: Liferay.Util.sub(Liferay.Language.get('last-x-days'), [
-				RangeSelectors.Last7Days,
-			]),
-			value: RangeSelectors.Last7Days,
-		},
-		{
-			description: formatDateRange(RangeSelectors.Last28Days),
-			label: Liferay.Util.sub(Liferay.Language.get('last-x-days'), [
-				RangeSelectors.Last28Days,
-			]),
-			value: RangeSelectors.Last28Days,
-		},
-		{
-			description: formatDateRange(RangeSelectors.Last30Days),
-			label: Liferay.Util.sub(Liferay.Language.get('last-x-days'), [
-				RangeSelectors.Last30Days,
-			]),
-			value: RangeSelectors.Last30Days,
-		},
-		{
-			description: formatDateRange(RangeSelectors.Last90Days),
-			label: Liferay.Util.sub(Liferay.Language.get('last-x-days'), [
-				RangeSelectors.Last90Days,
-			]),
-			value: RangeSelectors.Last90Days,
-		},
+	const rangeSelectors = [
+		RangeSelectors.Last7Days,
+		RangeSelectors.Last28Days,
+		RangeSelectors.Last30Days,
+		RangeSelectors.Last90Days,
 	];
 
 	if (process.env.NODE_ENV === 'development') {
-		timeFilterItems = [
-			{
-				description: formatDateRange(RangeSelectors.Last24Hours),
-				label: Liferay.Util.sub(Liferay.Language.get('last-x-hours'), [
-					24,
-				]),
-				value: RangeSelectors.Last24Hours,
-			},
-			...timeFilterItems,
-		];
+		rangeSelectors.push(RangeSelectors.Last24Hours);
 	}
 
 	return (
@@ -103,19 +67,11 @@ const GlobalFilters = () => {
 					triggerLabel={individualFilterLang[filters.individual]}
 				/>
 
-				<Filter
-					active={filters.rangeSelector}
-					filterByValue="rangeSelectors"
-					icon="calendar"
-					items={timeFilterItems}
-					onSelectItem={(item) =>
-						changeRangeSelectorFilter(item.value)
-					}
-					triggerLabel={
-						timeFilterItems.find(
-							({value}) => value === filters.rangeSelector
-						)?.label ?? ''
-					}
+				<RangeSelectorsDropdown
+					activeRangeSelector={filters.rangeSelector}
+					availableRangeKeys={rangeSelectors}
+					onChange={changeRangeSelectorFilter}
+					size="xs"
 				/>
 			</div>
 		</div>

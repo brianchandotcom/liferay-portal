@@ -8,15 +8,11 @@ import React, {useContext} from 'react';
 
 import {Context} from '../../Context';
 import useFetch from '../../hooks/useFetch';
-import {
-	AssetTypes,
-	Individuals,
-	MetricName,
-	RangeSelectors,
-} from '../../types/global';
+import {AssetTypes, Individuals, MetricName} from '../../types/global';
 import {buildQueryString} from '../../utils/buildQueryString';
 import {assetMetrics} from '../../utils/metrics';
 import {BaseOverviewMetrics, OverviewMetricsData} from '../BaseOverviewMetrics';
+import {RangeSelectors} from '../RangeSelectorsDropdown';
 
 export type AssetMetricProps = {
 	assetId: string;
@@ -37,7 +33,7 @@ const CMSOverviewMetrics = () => {
 	const queryString = buildQueryString({
 		externalReferenceCode,
 		groupId: filters.channel,
-		rangeKey: filters.rangeSelector,
+		rangeKey: filters.rangeSelector.rangeKey,
 		selectedMetrics:
 			assetMetrics[objectEntryFolderExternalReferenceCode as AssetTypes],
 	});

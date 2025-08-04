@@ -5,14 +5,10 @@
 
 import React from 'react';
 
-import {
-	Alignments,
-	Colors,
-	RangeSelectors,
-	Weights,
-} from '../../../types/global';
+import {Alignments, Colors, Weights} from '../../../types/global';
 import {formatTooltipDate} from '../../../utils/date';
 import ChartTooltip from '../../ChartTooltip';
+import {RangeSelectors} from '../../RangeSelectorsDropdown';
 import {CircleDot, PublishedVersionDot} from '../../metrics/Dots';
 import {FormattedData} from '../../metrics/utils';
 import {VisitorsBehaviorDataKey} from './utils';

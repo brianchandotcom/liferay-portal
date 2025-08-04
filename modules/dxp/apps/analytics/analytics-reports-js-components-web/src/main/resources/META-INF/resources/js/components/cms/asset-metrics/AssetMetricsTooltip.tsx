@@ -5,10 +5,11 @@
 
 import React from 'react';
 
-import {Alignments, RangeSelectors, Weights} from '../../../types/global';
+import {Alignments, Weights} from '../../../types/global';
 import {formatTooltipDate} from '../../../utils/date';
 import {toThousands} from '../../../utils/math';
 import ChartTooltip from '../../ChartTooltip';
+import {RangeSelectors} from '../../RangeSelectorsDropdown';
 import {CircleDot} from '../../metrics/Dots';
 import {FormattedData} from '../../metrics/utils';
 import {MetricDataKey} from './AssetMetricsChart';

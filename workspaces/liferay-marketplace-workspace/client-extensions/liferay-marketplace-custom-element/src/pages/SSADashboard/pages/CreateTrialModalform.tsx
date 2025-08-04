@@ -5,16 +5,15 @@
 
 import Button from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
-import Label from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Size} from '@clayui/modal/lib/types';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 
 import Loading from '../../../components/Loading';
+import Form from '../../../components/MarketplaceForm';
 import Modal from '../../../components/Modal';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-import {OrderCustomFields} from '../../../enums/Order';
-import {OrderStatus as Status} from '../../../enums/Order';
+import {OrderCustomFields, OrderStatus as Status} from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema from '../../../schema/zod';
@@ -22,7 +21,6 @@ import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessCommerceDeliveryCatalog from '../../../services/rest/HeadlessCommerceDeliveryCatalog';
 import ProductPurchaseSSATrial from '../../ProductPurchase/services/ProductPurchaseSSATrial';
 import {FieldGroup} from '../components/SSAForm/FieldGroup';
-import Form from '../../../components/MarketplaceForm';
 
 export type FormFields = {
 	demoDuration: string;
@@ -35,13 +33,13 @@ export type FormFields = {
 type ValidationErrors = Partial<Record<keyof FormFields, string>>;
 
 type CreateTrialModalFormProps = {
+	items?: PlacedOrder[];
 	modal: {
-		open: boolean;
 		observer: any;
 		onClose: () => void;
+		open: boolean;
 	};
 	mutate: any;
-	items?: PlacedOrder[];
 };
 
 const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
@@ -232,7 +230,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 
 			modal.onClose();
 		}
-	}, [formData, modal, productPurchase, validateProjectId]);
+	}, [formData, modal, mutate, productPurchase, validateProjectId]);
 
 	useEffect(() => {
 		if (items && order && submitSuccessful) {
@@ -247,7 +245,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 				modal.onClose();
 			}
 		}
-	}, [items, order, submitSuccessful]);
+	}, [items, modal, order, submitSuccessful]);
 
 	useEffect(() => {
 		if (!modal.open) {

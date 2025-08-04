@@ -39,7 +39,7 @@ export default function SaaSTrials() {
 	const {
 		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
 	} = usePlacedOrders({
-		accountId: accountId,
+		accountId,
 		filter: new SearchBuilder()
 			.eq('author', myUserAccount?.name)
 			.and()

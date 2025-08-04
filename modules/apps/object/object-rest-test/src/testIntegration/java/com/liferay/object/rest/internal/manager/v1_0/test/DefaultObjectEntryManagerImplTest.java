@@ -3650,10 +3650,10 @@ public class DefaultObjectEntryManagerImplTest
 		_addResourcePermission(
 			ActionKeys.DELETE, _rootObjectDefinition, _buyerRole);
 
+		Node rootNode = tree.getRootNode();
+
 		Iterator<Node> iterator = tree.iterator(
 			TreeConstants.ITERATOR_TYPE_POST_ORDER);
-
-		Node rootNode = tree.getRootNode();
 
 		while (iterator.hasNext()) {
 			Node node = iterator.next();
@@ -9363,10 +9363,10 @@ public class DefaultObjectEntryManagerImplTest
 			String actionId, Tree tree)
 		throws Exception {
 
+		Node rootNode = tree.getRootNode();
+
 		Iterator<Node> iterator = tree.iterator(
 			TreeConstants.ITERATOR_TYPE_POST_ORDER);
-
-		Node rootNode = tree.getRootNode();
 
 		while (iterator.hasNext()) {
 			Node node = iterator.next();

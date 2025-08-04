@@ -87,7 +87,7 @@ public class AutoSaveArticleMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONObject jsonObject;
+		JSONObject jsonObject = null;
 
 		try {
 			UploadPortletRequest uploadPortletRequest =

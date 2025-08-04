@@ -10,16 +10,28 @@ import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__
 import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
+import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import ShareModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/ShareModalContent';
 
 jest.useFakeTimers();
+
+jest.mock('frontend-js-components-web', () => ({
+	openToast: jest.fn(),
+}));
+
+jest.mock('frontend-js-web', () => ({
+	dateUtils: {
+		getFirstDayOfWeek: jest.fn(() => 0),
+	},
+	sub: jest.fn((str) => str),
+}));
 
 const mockCloseModal = jest.fn();
 
 const DEFAULT_PROPS = {
 	autocompleteURL: '/search',
 	closeModal: mockCloseModal,
-	collaboratorURL: '/o/cms/basic-documents/1/collaborators',
+	collaboratorURL: '/o/cms/basic-documents/{objectEntryId}/collaborators',
 	creator: {
 		contentType: 'UserAccount',
 		id: '1',
@@ -138,6 +150,10 @@ describe('ShareModalContent', () => {
 	});
 
 	it('calls submission when save is clicked', async () => {
+		const apiPostSpy = jest
+			.spyOn(ApiHelper, 'post')
+			.mockResolvedValue({data: {}, error: null});
+
 		const {getByLabelText, getByRole, getByText} = renderComponent();
 
 		fireEvent.click(getByLabelText('more-options'));
@@ -160,19 +176,11 @@ describe('ShareModalContent', () => {
 			fireEvent.click(getByText('save'));
 		});
 
-		expect(global.fetch).toHaveBeenCalledWith(
-			'/o/cms/basic-documents/1/collaborators',
-			expect.objectContaining({
-				body: JSON.stringify([
-					{
-						actionIds: ['VIEW'],
-						id: '2',
-						share: true,
-						type: 'User',
-					},
-				]),
-			})
+		expect(apiPostSpy).toHaveBeenCalledWith(
+			'/o/cms/basic-documents/20/collaborators',
+			[{actionIds: ['VIEW'], id: '2', share: true, type: 'User'}]
 		);
+
 		expect(mockCloseModal).toHaveBeenCalledTimes(1);
 	});
 });

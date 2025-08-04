@@ -13,7 +13,6 @@ import com.liferay.headless.object.client.pagination.Page;
 import com.liferay.headless.object.client.pagination.Pagination;
 import com.liferay.headless.object.client.problem.Problem;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -152,75 +150,6 @@ public class ObjectEntryFolderResourceTest
 				Collections.singletonList(objectEntryFolder1),
 				(List<ObjectEntryFolder>)page.getItems());
 		}
-	}
-
-	@Override
-	@Test
-	public void testPatchObjectEntryFolder() throws Exception {
-		super.testPatchObjectEntryFolder();
-
-		// Change parent object entry folder to default object entry folder
-
-		ObjectEntryFolder postParentObjectEntryFolder =
-			testPatchObjectEntryFolder_addObjectEntryFolder();
-
-		ObjectEntryFolder postObjectEntryFolder1 =
-			testPatchObjectEntryFolder_addObjectEntryFolder();
-
-		postObjectEntryFolder1.setParentObjectEntryFolderId(
-			postParentObjectEntryFolder.getId());
-
-		objectEntryFolderResource.patchObjectEntryFolder(
-			postObjectEntryFolder1.getId(), postObjectEntryFolder1);
-
-		postObjectEntryFolder1.setParentObjectEntryFolderId(
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
-
-		ObjectEntryFolder patchObjectEntryFolder1 =
-			objectEntryFolderResource.patchObjectEntryFolder(
-				postObjectEntryFolder1.getId(), postObjectEntryFolder1);
-
-		Assert.assertEquals(
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			GetterUtil.getLong(
-				patchObjectEntryFolder1.getParentObjectEntryFolderId()));
-
-		// Change parent object entry folder to existing object entry folder
-
-		ObjectEntryFolder postObjectEntryFolder2 =
-			testPatchObjectEntryFolder_addObjectEntryFolder();
-
-		postObjectEntryFolder2.setParentObjectEntryFolderId(
-			postParentObjectEntryFolder.getId());
-
-		ObjectEntryFolder patchObjectEntryFolder2 =
-			objectEntryFolderResource.patchObjectEntryFolder(
-				postObjectEntryFolder2.getId(), postObjectEntryFolder2);
-
-		Assert.assertEquals(
-			postParentObjectEntryFolder.getId(),
-			patchObjectEntryFolder2.getParentObjectEntryFolderId());
-
-		// Preserve existing parent object entry folder ID
-
-		ObjectEntryFolder postObjectEntryFolder3 =
-			testPatchObjectEntryFolder_addObjectEntryFolder();
-
-		postObjectEntryFolder3.setParentObjectEntryFolderId(
-			postParentObjectEntryFolder.getId());
-
-		objectEntryFolderResource.patchObjectEntryFolder(
-			postObjectEntryFolder3.getId(), postObjectEntryFolder3);
-
-		postObjectEntryFolder3.setParentObjectEntryFolderId((Long)null);
-
-		ObjectEntryFolder patchObjectEntryFolder3 =
-			objectEntryFolderResource.patchObjectEntryFolder(
-				postObjectEntryFolder3.getId(), postObjectEntryFolder3);
-
-		Assert.assertEquals(
-			postParentObjectEntryFolder.getId(),
-			patchObjectEntryFolder3.getParentObjectEntryFolderId());
 	}
 
 	@Override

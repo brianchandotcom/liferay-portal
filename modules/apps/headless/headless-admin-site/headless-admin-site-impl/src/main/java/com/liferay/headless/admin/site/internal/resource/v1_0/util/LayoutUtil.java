@@ -717,7 +717,7 @@ public class LayoutUtil {
 		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
 			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
 
-		if (clientExtensions == null) {
+		if (ArrayUtil.isEmpty(clientExtensions)) {
 			return;
 		}
 

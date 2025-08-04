@@ -1,0 +1,326 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-17564",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"enableCategorization": true,
+			"externalReferenceCode": "L_BULK_ACTION_TASK_ITEM",
+			"label": {
+				"en_US": "Bulk Action Task Item"
+			},
+			"modifiable": true,
+			"name": "BulkActionTaskItem",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "BULK_ACTION_ITEM_ERC",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bulk Action Item ERC"
+					},
+					"localized": false,
+					"name": "bulkActionItemERC",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "BULK_ACTION_ITEM_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Bulk Action Item ID"
+					},
+					"localized": false,
+					"name": "bulkActionItemID",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "BULK_ACTION_ITEM_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bulk Action Item Name"
+					},
+					"localized": false,
+					"name": "bulkActionItemName",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "BULK_ACTION_ITEM_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bulk Action Item Type"
+					},
+					"localized": false,
+					"name": "bulkActionItemType",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"localized": false,
+					"name": "description",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EXECUTE_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Execute Status"
+					},
+					"localized": false,
+					"name": "executeStatus",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "IMPORT_TASK_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Import Task ID"
+					},
+					"localized": false,
+					"name": "importTaskID",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Bulk Action Task Items"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"enableCategorization": true,
+			"externalReferenceCode": "L_BULK_ACTION_TASK",
+			"label": {
+				"en_US": "Bulk Action Task"
+			},
+			"modifiable": true,
+			"name": "BulkActionTask",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ACTION_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Action Name"
+					},
+					"name": "actionName",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "DateTime",
+					"businessType": "DateTime",
+					"externalReferenceCode": "COMPLETED_DATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Completed Date"
+					},
+					"localized": false,
+					"name": "completedDate",
+					"objectFieldSettings": [
+						{
+							"name": "timeStorage",
+							"value": "convertToUTC"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "DateTime"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EXECUTE_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Execute Status"
+					},
+					"localized": false,
+					"name": "executeStatus",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "NUMBER_OF_ITEMS",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Number of Items"
+					},
+					"localized": false,
+					"name": "numberOfItems",
+					"objectFieldSettings": [
+						{
+							"name": "objectRelationshipName",
+							"value": "bulkActionTaskToBulkActionTaskItem"
+						},
+						{
+							"name": "function",
+							"value": "COUNT"
+						}
+					],
+					"readOnly": "true",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Type"
+					},
+					"localized": false,
+					"name": "type",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"edge": false,
+					"externalReferenceCode": "L_BULK_ACTION_TASK_TO_L_BULK_ACTION_TASK_ITEM",
+					"label": {
+						"en_US": "Bulk Action Task To Bulk Action Task Item"
+					},
+					"name": "bulkActionTaskToBulkActionTaskItem",
+					"objectDefinitionExternalReferenceCode1": "L_BULK_ACTION_TASK",
+					"objectDefinitionExternalReferenceCode2": "L_BULK_ACTION_TASK_ITEM",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "BulkActionTaskItem",
+					"objectDefinitionScope2": "company",
+					"objectDefinitionSystem2": false,
+					"objectField": {
+						"DBType": "Long",
+						"businessType": "Relationship",
+						"externalReferenceCode": "BULK_ACTION_TASK_TO_BULK_ACTION_TASK_ITEMS",
+						"indexed": true,
+						"indexedAsKeyword": false,
+						"label": {
+							"en_US": "Bulk Action Task To Bulk Action Task Items"
+						},
+						"localized": false,
+						"name": "r_bulkActionTaskToBulkActionTaskItem_c_bulkActionTaskId",
+						"objectFieldSettings": [
+							{
+								"name": "objectDefinition1ShortName",
+								"value": "BulkActionTask"
+							},
+							{
+								"name": "objectRelationshipERCObjectFieldName",
+								"value": "r_bulkActionTaskToBulkActionTaskItem_c_bulkActionTaskERC"
+							}
+						],
+						"relationshipType": "oneToMany",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "Long"
+					},
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Bulk Action Tasks"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "id"
+		}
+	]
+}

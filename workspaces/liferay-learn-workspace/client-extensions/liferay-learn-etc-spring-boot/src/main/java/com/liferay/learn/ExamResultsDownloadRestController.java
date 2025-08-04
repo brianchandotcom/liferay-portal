@@ -98,7 +98,7 @@ public class ExamResultsDownloadRestController extends BaseRestController {
 					get(
 						"Bearer " + jwt.getTokenValue(),
 						UriComponentsBuilder.fromPath(
-							"/o/c/p2s3examresults/scopes/" + _siteGroupId
+							"/o/c/p2s3examresults/"
 						).queryParam(
 							"filter", filterString
 						).queryParam(

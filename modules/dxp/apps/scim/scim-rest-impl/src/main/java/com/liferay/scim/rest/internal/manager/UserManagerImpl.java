@@ -956,11 +956,14 @@ public class UserManagerImpl implements UserManager {
 		UnicodeProperties unicodeProperties =
 			expandoColumn.getTypeSettingsProperties();
 
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.INDEX_TYPE,
+			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+
 		if (textBox) {
 			unicodeProperties.setProperty(
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE,
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX);
-
 			unicodeProperties.setProperty(
 				ExpandoColumnConstants.PROPERTY_HEIGHT, "150");
 		}
@@ -969,10 +972,6 @@ public class UserManagerImpl implements UserManager {
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE,
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD);
 		}
-
-		unicodeProperties.setProperty(
-			ExpandoColumnConstants.INDEX_TYPE,
-			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
 
 		unicodeProperties.setProperty(
 			ExpandoColumnConstants.PROPERTY_WIDTH, "400");

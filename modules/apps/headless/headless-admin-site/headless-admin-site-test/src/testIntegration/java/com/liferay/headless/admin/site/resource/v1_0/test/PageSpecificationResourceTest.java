@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
@@ -680,8 +679,7 @@ public class PageSpecificationResourceTest
 		_modifyPageExperiences(contentPageSpecification.getPageExperiences());
 
 		SettingsTestUtil.modifySettings(
-			_cetManager, serviceContext,
-			contentPageSpecification.getSettings());
+			serviceContext, contentPageSpecification.getSettings());
 
 		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
@@ -1056,7 +1054,7 @@ public class PageSpecificationResourceTest
 					layout.getExternalReferenceCode());
 
 		SettingsTestUtil.modifySettings(
-			_cetManager, serviceContext, pageSpecification.getSettings());
+			serviceContext, pageSpecification.getSettings());
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			pageSpecification,
@@ -1138,8 +1136,7 @@ public class PageSpecificationResourceTest
 						}));
 
 		SettingsTestUtil.modifySettings(
-			_cetManager, serviceContext,
-			contentPageSpecification.getSettings());
+			serviceContext, contentPageSpecification.getSettings());
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			contentPageSpecification,
@@ -1172,7 +1169,7 @@ public class PageSpecificationResourceTest
 					pageSpecificationExternalReferenceCode);
 
 		SettingsTestUtil.modifySettings(
-			_cetManager, serviceContext, pageSpecification.getSettings());
+			serviceContext, pageSpecification.getSettings());
 
 		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
 
@@ -1270,9 +1267,6 @@ public class PageSpecificationResourceTest
 			layout.getIconImage(), null, _getStyleBookEntryId(serviceContext),
 			0, layout.getMasterLayoutPlid(), serviceContext);
 	}
-
-	@Inject
-	private CETManager _cetManager;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

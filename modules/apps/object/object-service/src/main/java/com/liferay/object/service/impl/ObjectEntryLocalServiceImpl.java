@@ -5521,7 +5521,7 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
-		long parentObjectEntryId = 0L;
+		long parentObjectEntryId = 0;
 
 		List<ObjectRelationship> objectRelationships =
 			_objectRelationshipPersistence.findByODI2_E(

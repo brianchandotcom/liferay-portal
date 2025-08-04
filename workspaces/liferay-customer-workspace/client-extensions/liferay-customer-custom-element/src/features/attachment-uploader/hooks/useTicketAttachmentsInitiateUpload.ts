@@ -5,7 +5,7 @@
 
 import {useCallback, useState} from 'react';
 import {Liferay} from '~/services/liferay';
-import {IUploadProperties} from '~/utils/types';
+import {IUpload} from '~/utils/types';
 
 interface IParams {
 	fileMd5: string;
@@ -16,7 +16,7 @@ interface IParams {
 
 interface IResponse {
 	success: boolean;
-	uploadProperties?: IUploadProperties;
+	uploadProperties?: IUpload;
 }
 
 interface IProps {

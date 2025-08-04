@@ -4,7 +4,7 @@
  */
 
 import {useCallback, useRef, useState} from 'react';
-import {IUploadProperties} from '~/utils/types';
+import {IUpload} from '~/utils/types';
 
 import {generateFileMd5} from '../utils/generateFileMd5';
 
@@ -16,7 +16,7 @@ interface IParams {
 interface IResponse {
 	hash?: string;
 	success: boolean;
-	uploadProperties?: IUploadProperties;
+	uploadProperties?: IUpload;
 }
 
 interface IProps {

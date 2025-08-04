@@ -9,11 +9,11 @@ import {Liferay} from '~/services/liferay';
 
 type ErrorCode =
 	| 'FORBIDDEN_ACCESS'
-	| 'TICKET_IS_CLOSED'
 	| 'INVALID_TICKET_NUMBER'
-	| 'ZENDESK_ORGANIZATION_ERROR'
+	| 'TICKET_IS_CLOSED'
 	| 'UNEXPECTED_ERROR'
-	| 'UNKNOWN';
+	| 'UNKNOWN'
+	| 'ZENDESK_ORGANIZATION_ERROR';
 
 interface IResponse {
 	errorCode: ErrorCode | null;

@@ -6,7 +6,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useState} from 'react';
 import useCheckUploadAccess from '~/features/attachment-uploader/hooks/useCheckUploadAccess';
-import {IUploadProperties} from '~/utils/types';
+import {IUpload} from '~/utils/types';
 
 import AttachmentUploader from '../../AttachmentUploader';
 import {
@@ -20,7 +20,7 @@ import TicketIsClosed from '../../AttachmentUploaderMessages/TicketIsClosed';
 
 const renderErrorComponent = (
 	errorCode: string | null,
-	uploadStateData: IUploadProperties | null
+	uploadStateData: IUpload | null
 ) => {
 	switch (errorCode) {
 		case 'FORBIDDEN_ACCESS':
@@ -53,8 +53,9 @@ const renderErrorComponent = (
 
 const AttachmentOutlet = () => {
 	const {errorCode, hasAccess, loading} = useCheckUploadAccess();
-	const [uploadStateData, setUploadStateData] =
-		useState<IUploadProperties | null>(null);
+	const [uploadStateData, setUploadStateData] = useState<IUpload | null>(
+		null
+	);
 
 	if (loading) {
 		return (

@@ -143,7 +143,7 @@ export interface ITimeInput {
 	minutes: string;
 }
 
-export interface IUploadProperties {
+export interface IUpload {
 	accountKey?: string;
 	attachmentName?: string;
 	errorCode?: string;

@@ -11,6 +11,7 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
@@ -196,7 +197,18 @@ public class PageSpecificationDTOConverter
 							ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 
 						if (clientExtension != null) {
-							return clientExtension;
+							return new FavIcon() {
+								{
+									setClassName(
+										() -> ClientExtension.class.getName());
+									setClientExtensionConfig(
+										clientExtension::
+											getClientExtensionConfig);
+									setExternalReferenceCode(
+										clientExtension::
+											getExternalReferenceCode);
+								}
+							};
 						}
 
 						long faviconFileEntryId =
@@ -213,7 +225,7 @@ public class PageSpecificationDTOConverter
 							return null;
 						}
 
-						return new ItemExternalReference() {
+						return new FavIcon() {
 							{
 								setClassName(() -> FileEntry.class.getName());
 								setExternalReferenceCode(

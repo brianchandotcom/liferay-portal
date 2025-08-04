@@ -2795,6 +2795,8 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<sequential>
 			<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
 			<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
+			<var name="app.server.type" value="@{app.server.type}" />
+			<var name="database.type" value="@{database.type}" />
 
 			<run-batch-test>
 				<test-action>
@@ -2831,6 +2833,8 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<try>
 									<exec executable="/bin/bash">
 										<arg value="modules/test/playwright/env/set_up.sh" />
+										<env key="APP_SERVER_TYPE" value="@{app.server.type}" />
+										<env key="DATABASE_TYPE" value="@{database.type}" />
 										<env key="JAVA_HOME" value="${java.jdk.home}" />
 										<env key="JAVA_OPTS" value="${java.jdk.opts}" />
 										<env key="LIFERAY_HOME" value="${liferay.home}" />
@@ -2893,6 +2897,8 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 									<exec executable="/bin/bash">
 										<arg value="modules/test/playwright/env/tear_down.sh" />
+										<env key="APP_SERVER_TYPE" value="@{app.server.type}" />
+										<env key="DATABASE_TYPE" value="@{database.type}" />
 										<env key="JAVA_HOME" value="${java.jdk.home}" />
 										<env key="JAVA_OPTS" value="${java.jdk.opts}" />
 										<env key="LIFERAY_HOME" value="${liferay.home}" />
@@ -3237,13 +3243,24 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 			<if>
 				<and>
 					<or>
-						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
-						<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
+						<or>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
+						</or>
+						<and>
+							<available file="dist/liferay-portal-elasticsearch.zip" />
+							<available file="dist/liferay-portal-osgi.zip" />
+							<available file="dist/liferay-portal-tools.zip" />
+							<available file="dist/liferay-portal.war" />
+						</and>
 					</or>
 					<available file="liferay-portal-source.tar.gz" />
 				</and>
 				<then>
-					<prepare-test-environment />
+					<prepare-test-environment
+						app.server.type="${app.server.type}"
+						app.server.version="${app.server.version}"
+					/>
 				</then>
 				<elseif>
 					<and>
@@ -8155,6 +8172,10 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="playwright-js-smoke-jboss80-postgresql155">
+		<run-playwright-js-test app.server.type="jboss" database.type="postgresql" />
+	</target>
+
 	<target name="playwright-js-smoke-tomcat101-db2115">
 		<run-playwright-js-test database.type="db2" />
 	</target>
@@ -8181,6 +8202,10 @@ ${output.content}</echo>
 
 	<target name="playwright-js-smoke-tomcat101-sqlserver2022">
 		<run-playwright-js-test database.type="sqlserver" />
+	</target>
+
+	<target name="playwright-js-smoke-wildfly300-mariadb106">
+		<run-playwright-js-test app.server.type="wildfly" database.type="mariadb" />
 	</target>
 
 	<target name="playwright-js-tomcat101-mysql57">

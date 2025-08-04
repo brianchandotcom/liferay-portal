@@ -15,7 +15,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -28,11 +27,13 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -407,6 +408,11 @@ public class SettingsTestUtil {
 			Assert.assertEquals(
 				clientExtensionEntryRel.getCETExternalReferenceCode(),
 				clientExtension.getExternalReferenceCode());
+			Assert.assertEquals(
+				clientExtensionEntryRel.getTypeSettings(),
+				UnicodePropertiesBuilder.create(
+					clientExtension.getClientExtensionConfig(), true
+				).buildString());
 		}
 	}
 
@@ -426,16 +432,26 @@ public class SettingsTestUtil {
 			return;
 		}
 
-		List<String> cetExternalReferenceCodes = TransformUtil.transform(
-			clientExtensionEntryRels,
-			clientExtensionEntryRel ->
-				clientExtensionEntryRel.getCETExternalReferenceCode());
+		Map<String, String> map = new HashMap<>();
 
 		for (ClientExtension clientExtension : clientExtensions) {
+			map.put(
+				clientExtension.getExternalReferenceCode(),
+				UnicodePropertiesBuilder.create(
+					clientExtension.getClientExtensionConfig(), true
+				).buildString());
+		}
+
+		for (ClientExtensionEntryRel clientExtensionEntryRel :
+				clientExtensionEntryRels) {
+
 			Assert.assertTrue(
-				clientExtension.toString(),
-				cetExternalReferenceCodes.contains(
-					clientExtension.getExternalReferenceCode()));
+				clientExtensionEntryRel.toString(),
+				map.containsKey(
+					clientExtensionEntryRel.getCETExternalReferenceCode()));
+			Assert.assertEquals(
+				map.get(clientExtensionEntryRel.getCETExternalReferenceCode()),
+				clientExtensionEntryRel.getTypeSettings());
 		}
 	}
 
@@ -445,6 +461,11 @@ public class SettingsTestUtil {
 
 		ClientExtension clientExtension = new ClientExtension() {
 			{
+				setClientExtensionConfig(
+					() -> HashMapBuilder.put(
+						RandomTestUtil::randomString,
+						RandomTestUtil::randomString
+					).build());
 				setExternalReferenceCode(RandomTestUtil::randomString);
 			}
 		};

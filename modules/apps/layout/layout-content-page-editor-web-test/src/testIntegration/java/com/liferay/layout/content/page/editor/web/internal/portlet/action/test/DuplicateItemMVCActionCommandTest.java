@@ -94,6 +94,8 @@ public class DuplicateItemMVCActionCommandTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		_draftLayout = _layout.fetchDraftLayout();
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
@@ -106,7 +108,7 @@ public class DuplicateItemMVCActionCommandTest {
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
 
 		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
-			_company, _group, _layout);
+			_company, _group, _draftLayout);
 
 		themeDisplay.setRequest(mockHttpServletRequest);
 
@@ -127,7 +129,7 @@ public class DuplicateItemMVCActionCommandTest {
 	public void testDuplicateDropZoneFragmentEntryLink() throws Exception {
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				_draftLayout.getPlid());
 
 		FragmentEntryLink dropzoneFragmentEntryLink = _addFragmentEntryLink(
 			"{}",
@@ -139,7 +141,7 @@ public class DuplicateItemMVCActionCommandTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
+					_draftLayout.getGroupId(), _draftLayout.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
@@ -249,7 +251,7 @@ public class DuplicateItemMVCActionCommandTest {
 
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				_draftLayout.getPlid());
 
 		FragmentEntryLink headingFragmentEntryLink = _addFragmentEntryLink(
 			JSONUtil.put(
@@ -283,7 +285,7 @@ public class DuplicateItemMVCActionCommandTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
+					_draftLayout.getGroupId(), _draftLayout.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
@@ -338,11 +340,11 @@ public class DuplicateItemMVCActionCommandTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
+					_draftLayout.getGroupId(), _draftLayout.getPlid());
 
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				_draftLayout.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
@@ -357,7 +359,7 @@ public class DuplicateItemMVCActionCommandTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_layout.getGroupId(), _layout.getPlid(),
+				_draftLayout.getGroupId(), _draftLayout.getPlid(),
 				layoutStructure.toString());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
@@ -418,7 +420,7 @@ public class DuplicateItemMVCActionCommandTest {
 				editableValues, fragmentEntry.getCss(),
 				fragmentEntry.getConfiguration(),
 				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), _layout,
+				fragmentEntry.getJs(), _draftLayout,
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
 				parentItemId, 0, segmentsExperienceId);
 
@@ -530,12 +532,12 @@ public class DuplicateItemMVCActionCommandTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setLayoutSet(_layout.getLayoutSet());
+		themeDisplay.setLayout(_draftLayout);
+		themeDisplay.setLayoutSet(_draftLayout.getLayoutSet());
 		themeDisplay.setLocale(LocaleUtil.US);
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setPlid(_layout.getPlid());
+		themeDisplay.setPlid(_draftLayout.getPlid());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
@@ -547,6 +549,8 @@ public class DuplicateItemMVCActionCommandTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private Layout _draftLayout;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

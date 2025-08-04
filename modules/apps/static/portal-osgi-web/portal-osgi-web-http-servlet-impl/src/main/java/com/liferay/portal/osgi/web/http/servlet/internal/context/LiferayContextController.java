@@ -13,10 +13,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.customizer.EventListenerServiceTrackerCustomizer;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.customizer.FilterServiceTrackerCustomizer;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.customizer.ResourceServiceTrackerCustomizer;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.customizer.ServletServiceTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.EventListenerServiceTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.FilterServiceTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.ResourceServiceTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.ServletServiceTrackerCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ResourceServlet;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
 

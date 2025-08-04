@@ -130,7 +130,7 @@ public class ViewAllSpacesDisplayContext {
 			new FDSActionDropdownItem(
 				null, "users", "view-members",
 				LanguageUtil.get(_httpServletRequest, "view-members"), "get",
-				null, null),
+				"view-members", null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					PortalUtil.getControlPanelPortletURL(

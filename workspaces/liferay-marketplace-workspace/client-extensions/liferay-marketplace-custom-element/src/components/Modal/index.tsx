@@ -18,11 +18,13 @@ type ModalProps = {
 	subtitle?: string;
 	title?: string;
 	visible: boolean;
+	disableAutoClose?: boolean;
 };
 
 const Modal = ({
 	children,
 	className,
+	disableAutoClose = false,
 	first,
 	last,
 	observer,
@@ -40,6 +42,7 @@ const Modal = ({
 		<ClayModal
 			center
 			className={className}
+			disableAutoClose={disableAutoClose}
 			observer={observer}
 			size={size}
 			status={status}

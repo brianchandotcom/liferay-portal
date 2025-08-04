@@ -8,11 +8,16 @@ import {Outlet} from 'react-router-dom';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {PageRenderer} from '../../components/Page';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {Liferay} from '../../liferay/liferay';
 import {useSSATrialsExtend} from './useSSATrialsExtend';
 
 const SSADashboardOutlet = () => {
 	const {properties} = useMarketplaceContext();
 	const selectedAccountId = Number(properties.accountId);
+
+	if (Liferay.CommerceContext.account) {
+		Liferay.CommerceContext.account.accountId = selectedAccountId;
+	}
 
 	const {
 		data: ssaTrialExtend,

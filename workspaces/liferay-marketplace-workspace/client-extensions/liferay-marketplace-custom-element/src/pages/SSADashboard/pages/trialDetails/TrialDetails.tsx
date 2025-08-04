@@ -24,7 +24,7 @@ import TrialActions from './TrialActions';
 const TrialDetails = () => {
 	const navigate = useNavigate();
 	const {orderId} = useParams();
-	const {ssaTrialExtend, ssaTrialExtendMutate, orderMutate} = useOutletContext<any>();
+	const {ssaTrialExtend, ssaTrialExtendMutate} = useOutletContext<any>();
 	const {
 		data,
 		error,
@@ -85,10 +85,9 @@ const TrialDetails = () => {
 				>
 					{data?.placedOrder && (
 						<TrialActions
+							mutatePlacedOrder={mutatePlacedOrder}
 							placedOrder={data?.placedOrder}
 							ssaTrialExtendMutate={ssaTrialExtendMutate}
-							orderMutate={orderMutate}
-							mutatePlacedOrder={mutatePlacedOrder}
 						/>
 					)}
 				</DropDown>
@@ -251,15 +250,24 @@ const TrialDetails = () => {
 													<div className="my-3">
 														<ExtensionStatus
 															extensionStatus={
-																placedOrder?.orderStatusInfo?.label === OrderStatus.COMPLETED
-																	? "extension-expired"
+																placedOrder
+																	?.orderStatusInfo
+																	?.label ===
+																OrderStatus.COMPLETED
+																	? 'extension-expired'
 																	: ssaTrialExtend?.items?.find(
-																		({ projectId }: { projectId: string }) =>
-																			projectId === placedOrderCustomFields?.projectId
-																	)?.dueStatus?.key
+																			({
+																				projectId,
+																			}: {
+																				projectId: string;
+																			}) =>
+																				projectId ===
+																				placedOrderCustomFields?.projectId
+																		)
+																			?.dueStatus
+																			?.key
 															}
 														/>
-
 													</div>
 												);
 											})(),

@@ -5,24 +5,24 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import { ClayInput } from '@clayui/form';
+import {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { KeyedMutator } from 'swr';
+import {addDays} from 'date-fns';
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {KeyedMutator} from 'swr';
 
 import BaseWrapper from '../../../components/Form/BaseWrapper';
-import { OrderCustomFields } from '../../../enums/Order';
+import {OrderCustomFields} from '../../../enums/Order';
 import i18n from '../../../i18n';
-import { Liferay } from '../../../liferay/liferay';
-import zodSchema, { z } from '../../../schema/zod';
+import {Liferay} from '../../../liferay/liferay';
+import zodSchema, {z} from '../../../schema/zod';
 import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
-import { EXTEND_OPTIONS, EXTEND_TYPES } from '../constants';
-import { ExtendRequestStatus } from '../enums/SSATrials';
-import { addDays } from 'date-fns';
+import {EXTEND_OPTIONS, EXTEND_TYPES} from '../constants';
+import {ExtendRequestStatus} from '../enums/SSATrials';
 
 type ExtendSSATrialModalProps = {
 	accountId: number;
@@ -30,22 +30,24 @@ type ExtendSSATrialModalProps = {
 	onClose: () => void;
 	order: PlacedOrder;
 	ssaTrialExtendMutate: KeyedMutator<any>;
-	orderMutate: KeyedMutator<any>;
+	mutatePlacedOrder?: KeyedMutator<any>;
+	orderMutate?: KeyedMutator<any>;
 };
 
 const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 	accountId,
 	firstExtendRequest,
+	mutatePlacedOrder,
 	onClose,
 	order,
-	ssaTrialExtendMutate,
 	orderMutate,
+	ssaTrialExtendMutate,
 }) => {
 	const [duration, setDuration] = useState<number | undefined>(undefined);
 	const [reason, setReason] = useState<string>('');
 	const [submitting, setSubmitting] = useState<boolean>(false);
 
-	const { formState, handleSubmit, setValue, trigger } = useForm({
+	const {formState, handleSubmit, setValue, trigger} = useForm({
 		defaultValues: {
 			duration: 0,
 			reason: '',
@@ -55,7 +57,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 		resolver: zodResolver(zodSchema.extendSSATrial),
 	});
 
-	const { isLoading, isValid } = formState;
+	const {isLoading, isValid} = formState;
 
 	const extendType = firstExtendRequest
 		? EXTEND_TYPES.AUTO_EXTEND
@@ -103,37 +105,71 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 						items: [newExtensionRequest, ...data.items],
 					};
 				},
-				{ revalidate: false }
+				{revalidate: false}
 			);
 
 			if (extendType === EXTEND_TYPES.AUTO_EXTEND) {
-				orderMutate(
-					(orders: any) => {
-
-						const updatedOrder = {
-							...order,
-							items: orders.items.map((item: any) => {
-								if (item.id !== order.id) return item;
-								return {
-									...item,
+				if (mutatePlacedOrder) {
+					mutatePlacedOrder(
+						(apireposne: any) => {
+							return {
+								...apireposne,
+								placedOrder: {
+									...apireposne.placedOrder,
 									customFields: {
-										...item.customFields,
+										...apireposne.placedOrder.customFields,
 										[OrderCustomFields.END_DATE]: addDays(
-											new Date(order.customFields[OrderCustomFields.END_DATE]),
+											new Date(
+												apireposne.placedOrder.customFields[
+													OrderCustomFields.END_DATE
+												]
+											),
 											form.duration
 										).toISOString(),
 									},
-								};
-							}),
-						};
-						return updatedOrder;
-					},
-					{ revalidate: false }
-				);
-			};
+								},
+							};
+						},
+						{revalidate: false}
+					);
+				}
+
+				if (orderMutate) {
+					orderMutate(
+						(orders: any) => {
+							const updatedOrder = {
+								...order,
+								items: orders.items.map((item: any) => {
+									if (item.id !== order.id) {return item;}
+
+									return {
+										...item,
+										customFields: {
+											...item.customFields,
+											[OrderCustomFields.END_DATE]:
+												addDays(
+													new Date(
+														order.customFields[
+															OrderCustomFields.END_DATE
+														]
+													),
+													form.duration
+												).toISOString(),
+										},
+									};
+								}),
+							};
+
+							return updatedOrder;
+						},
+						{revalidate: false}
+					);
+				}
+			}
 
 			Liferay.Util.openToast({
-				message: i18n.translate('success'),
+				message: i18n.translate('trial-extension-successfully'),
+				title: i18n.translate('success'),
 				type: 'success',
 			});
 
@@ -145,7 +181,8 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 			console.error(error);
 
 			Liferay.Util.openToast({
-				message: i18n.translate('an-unexpected-error-occurred'),
+				message: i18n.translate('failed-to-extend-trial'),
+				title: i18n.translate('failure'),
 				type: 'danger',
 			});
 		}

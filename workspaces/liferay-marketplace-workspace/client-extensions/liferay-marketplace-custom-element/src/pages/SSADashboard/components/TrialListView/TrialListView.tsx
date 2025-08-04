@@ -3,23 +3,28 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { format } from 'date-fns';
-import { useOutletContext } from 'react-router-dom';
+import {format} from 'date-fns';
+import {useRef, useState} from 'react';
+import {useOutletContext} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
-import ListView, { ListViewProps } from '../../../../components/ListView';
-import { ManagementToolbarProps } from '../../../../components/ListView/components/ManagementToolbar';
+import ListView, {ListViewProps} from '../../../../components/ListView';
+import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
-import { OrderCustomFields, OrderStatus, OrderTypes } from '../../../../enums/Order';
+import {
+	OrderCustomFields,
+	OrderStatus,
+	OrderTypes,
+} from '../../../../enums/Order';
+import {OrderStatus as Status} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
-import { Liferay } from '../../../../liferay/liferay';
-import { Action } from '../../../../utils/constants';
-import { EXTEND_TRIAL_STATUS_LABEL } from '../../constants';
+import {Liferay} from '../../../../liferay/liferay';
+import {Action} from '../../../../utils/constants';
+import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
+import CreateTrialModalForm from '../../pages/CreateTrialModalform';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
-import CreateTrialModalForm from '../../pages/CreateTrialModalform';
-import { useState } from 'react';
-import { OrderStatus as Status } from '../../../../enums/Order';
-import { useMarketplaceContext } from '../../../../context/MarketplaceContext';
 
 type TrialsListViewProps = {
 	actions: Action[];
@@ -35,163 +40,184 @@ type TrialsListViewProps = {
 		| 'tableProps'
 		| 'totalItems'
 	>;
-	createTrialFormModal: any
+	createTrialFormModal: any;
 };
 
 export default function TrialListView({
-	createTrialFormModal,
 	actions,
+	createTrialFormModal,
 	listViewProps,
 	managementToolbarProps,
 }: TrialsListViewProps) {
-	const { ssaTrialExtend } = useOutletContext<any>();
-	const { properties } = useMarketplaceContext();
+	const {ssaTrialExtend} = useOutletContext<any>();
+	const {properties} = useMarketplaceContext();
+	const [items, setItems] = useState<PlacedOrder[]>([]);
 
-	const resource = `/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${properties.accountId}/placed-orders?${new URLSearchParams(
+	const mutateRef = useRef<KeyedMutator<APIResponse<PlacedOrder>>>();
+
+	const handleDataLoad = ({
+		items,
+		mutate,
+	}: {
+		items: PlacedOrder[];
+		mutate: KeyedMutator<APIResponse<PlacedOrder>>;
+	}) => {
+		setItems(items);
+		mutateRef.current = mutate;
+	};
+
+	const refresh = items.some(
+		(item) => item.orderStatusInfo.label === Status.PROCESSING
+	);
+
+	const resource = `/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${properties?.accountId}/placed-orders?${new URLSearchParams(
 		{
 			nestedFields: 'placedOrderItems',
 			sort: 'createDate:desc',
 		}
 	)}`;
 
-	const [items, setItems] = useState<PlacedOrder[]>([]);
-
-	const refresh = items.some((item) => item.orderStatusInfo.label === Status.PROCESSING)
-
 	return (
-		<ListView<PlacedOrder>
-			refreshInterval={refresh ? 60 * 1000 : undefined}
-			defaultFilters={{
-				filter: SearchBuilder.eq(
-					'orderTypeExternalReferenceCode',
-					OrderTypes.SSA_SAAS
-				),
-			}}
-			emptyStateProps={{ title: i18n.translate('no-trials-yet') }}
-			id="ssa-trials"
-			managementToolbarProps={{
-				filterSchema: 'administratorSSATrials',
-				...managementToolbarProps,
-			}}
-			resource={resource}
-			tableProps={{
-				actions,
-				columns: [
-					{
-						id: 'placedOrderItems',
-						name: 'Project ID',
-						render: (_, { customFields, id }) => {
-							return (
-								<span className="font-weight-semi-bold ml-2">
-									{JSON.parse(
-										customFields[
-										OrderCustomFields.TRIAL_SETTINGS
-										]
-									)?.projectId ?? id}
-								</span>
-							);
-						},
-					},
-					{
-						id: 'author',
-						name: 'Created By',
-						render: (author, { createDate }) => {
-							return (
-								<div className="d-flex flex-column">
-									<span className="dashboard-table-row-text">
-										{author}
-									</span>
-
-									<span className="dashboard-table-row-purchased-date">
-										{new Date(
-											createDate
-										).toLocaleDateString('en-US', {
-											day: 'numeric',
-											month: 'short',
-											year: 'numeric',
-										})}
-									</span>
-								</div>
-							);
-						},
-						sortable: true,
-					},
-					{
-						id: 'id',
-						name: 'Order ID',
-						sortable: true,
-					},
-					{
-						id: 'createDate',
-						name: 'End Date',
-						render: (_, { customFields }) => {
-							return customFields[OrderCustomFields.END_DATE]
-								? format(
-									new Date(
-										customFields[
-										OrderCustomFields.END_DATE
-										]
-									),
-									'dd MMM, yyyy'
-								).toString()
-								: 'DNE';
-						},
-						sortable: true,
-					},
-					{
-						id: 'orderStatusInfo',
-						name: 'Trial Status',
-						render: (orderStatusInfo) => (
-							<TrialStatus trialStatus={orderStatusInfo?.label} />
-						),
-					},
-					{
-						id: 'id',
-						name: 'Extension Status',
-						render: (orderId, placedOrder) => {
-							const ssaTrialsExtendRequests =
-								ssaTrialExtend.items;
-							const extendRequests =
-								ssaTrialsExtendRequests?.filter(
-									(extend: TrialExtend) => {
-										return (
-											extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-											Number(orderId)
-										);
-									}
-								) as TrialExtend[];
-
-							if (
-								!extendRequests ||
-								extendRequests?.length === 0
-							) {
+		<>
+			<ListView<PlacedOrder>
+				defaultFilters={{
+					filter: SearchBuilder.eq(
+						'orderTypeExternalReferenceCode',
+						OrderTypes.SSA_SAAS
+					),
+				}}
+				emptyStateProps={{title: i18n.translate('no-trials-yet')}}
+				id="ssa-trials"
+				managementToolbarProps={{
+					filterSchema: 'administratorSSATrials',
+					...managementToolbarProps,
+				}}
+				onDataLoad={handleDataLoad}
+				refreshInterval={refresh ? 60 * 1000 : undefined}
+				resource={resource}
+				tableProps={{
+					actions,
+					columns: [
+						{
+							id: 'placedOrderItems',
+							name: 'Project ID',
+							render: (_, {customFields, id}) => {
 								return (
-									<ExtensionStatus extensionStatus="not-requested" />
+									<span className="font-weight-semi-bold ml-2">
+										{(customFields &&
+											JSON.parse(
+												customFields[
+													OrderCustomFields
+														.TRIAL_SETTINGS
+												]
+											)?.projectId) ??
+											id}
+									</span>
 								);
-							}
-
-							return (
-								<ExtensionStatus
-									extensionStatus={
-										placedOrder.orderStatusInfo.label === OrderStatus.COMPLETED
-											? 'extension-expired'
-											: extendRequests[0]?.dueStatus
-												.key as keyof typeof EXTEND_TRIAL_STATUS_LABEL
-									}
-								/>
-							);
+							},
 						},
-					},
-				],
-			}}
-			{...listViewProps}
-		>
-			{
-				(data, { mutate }) => {
-					setItems(data.items);
-					return <CreateTrialModalForm modal={createTrialFormModal} mutate={mutate} />;
-				}
-			}
-		</ListView>
+						{
+							id: 'author',
+							name: 'Created By',
+							render: (author, {createDate}) => {
+								return (
+									<div className="d-flex flex-column">
+										<span className="dashboard-table-row-text">
+											{author}
+										</span>
+
+										<span className="dashboard-table-row-purchased-date">
+											{new Date(
+												createDate
+											).toLocaleDateString('en-US', {
+												day: 'numeric',
+												month: 'short',
+												year: 'numeric',
+											})}
+										</span>
+									</div>
+								);
+							},
+							sortable: true,
+						},
+						{
+							id: 'id',
+							name: 'Order ID',
+							sortable: true,
+						},
+						{
+							id: 'createDate',
+							name: 'End Date',
+							render: (_, {customFields}) => {
+								return customFields[OrderCustomFields.END_DATE]
+									? format(
+											new Date(
+												customFields[
+													OrderCustomFields.END_DATE
+												]
+											),
+											'dd MMM, yyyy'
+										).toString()
+									: 'DNE';
+							},
+							sortable: true,
+						},
+						{
+							id: 'orderStatusInfo',
+							name: 'Trial Status',
+							render: (orderStatusInfo) => (
+								<TrialStatus
+									trialStatus={orderStatusInfo?.label}
+								/>
+							),
+						},
+						{
+							id: 'id',
+							name: 'Extension Status',
+							render: (orderId, placedOrder) => {
+								const ssaTrialsExtendRequests =
+									ssaTrialExtend.items;
+								const extendRequests =
+									ssaTrialsExtendRequests?.filter(
+										(extend: TrialExtend) => {
+											return (
+												extend.r_orderToTrialExtensionRequest_commerceOrderId ===
+												Number(orderId)
+											);
+										}
+									) as TrialExtend[];
+
+								if (
+									!extendRequests ||
+									extendRequests?.length === 0
+								) {
+									return (
+										<ExtensionStatus extensionStatus="not-requested" />
+									);
+								}
+
+								return (
+									<ExtensionStatus
+										extensionStatus={
+											placedOrder.orderStatusInfo
+												.label === OrderStatus.COMPLETED
+												? 'extension-expired'
+												: (extendRequests[0]?.dueStatus
+														.key as keyof typeof EXTEND_TRIAL_STATUS_LABEL)
+										}
+									/>
+								);
+							},
+						},
+					],
+				}}
+				{...listViewProps}
+			/>
+			<CreateTrialModalForm
+				items={items}
+				modal={createTrialFormModal}
+				mutate={mutateRef.current}
+			/>
+		</>
 	);
 }

@@ -15,6 +15,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -65,6 +66,7 @@ test.afterEach(async ({apiHelpers, notificationTemplatesPage, page}) => {
 
 				if (deleteButton) {
 					await deleteButton.click();
+					await waitForAlert(page);
 				}
 			}
 		}

@@ -125,7 +125,7 @@ public class DuplicateItemMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-61879")
-	public void testDuplicatedHeadingFragmentEntryLinkUpdatesNamespace()
+	public void testDuplicateFragmentEntryLinkWithNamespaceInEditableID()
 		throws Exception {
 
 		long segmentsExperienceId =

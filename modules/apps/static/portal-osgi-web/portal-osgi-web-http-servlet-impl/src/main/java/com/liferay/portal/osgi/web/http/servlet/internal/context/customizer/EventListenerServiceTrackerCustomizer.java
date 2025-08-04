@@ -52,7 +52,8 @@ public class EventListenerServiceTrackerCustomizer
 			return null;
 		}
 
-		AtomicReference<ListenerRegistration> result = new AtomicReference<>();
+		AtomicReference<ListenerRegistration>
+			listenerRegistrationAtomicReference = new AtomicReference<>();
 
 		try {
 			if (!(listenerObject instanceof Boolean) &&
@@ -66,10 +67,10 @@ public class EventListenerServiceTrackerCustomizer
 			}
 
 			if (!GetterUtil.getBoolean(listenerObject)) {
-				return result;
+				return listenerRegistrationAtomicReference;
 			}
 
-			result.set(
+			listenerRegistrationAtomicReference.set(
 				liferayContextController.addListenerRegistration(
 					serviceReference));
 		}
@@ -78,25 +79,33 @@ public class EventListenerServiceTrackerCustomizer
 				exception.getMessage(), exception);
 		}
 
-		return result;
+		return listenerRegistrationAtomicReference;
 	}
 
 	@Override
 	public void modifiedService(
 		ServiceReference<EventListener> serviceReference,
-		AtomicReference<ListenerRegistration> listenerRegistration) {
+		AtomicReference<ListenerRegistration>
+			listenerRegistrationAtomicReference) {
 
-		removedService(serviceReference, listenerRegistration);
+		removedService(serviceReference, listenerRegistrationAtomicReference);
 
-		addingService(serviceReference);
+		AtomicReference<ListenerRegistration>
+			newListenerRegistrationAtomicReference = addingService(
+				serviceReference);
+
+		listenerRegistrationAtomicReference.set(
+			newListenerRegistrationAtomicReference.get());
 	}
 
 	@Override
 	public void removedService(
 		ServiceReference<EventListener> serviceReference,
-		AtomicReference<ListenerRegistration> listenerReference) {
+		AtomicReference<ListenerRegistration>
+			listenerRegistrationAtomicReference) {
 
-		ListenerRegistration listenerRegistration = listenerReference.get();
+		ListenerRegistration listenerRegistration =
+			listenerRegistrationAtomicReference.get();
 
 		if (listenerRegistration != null) {
 			listenerRegistration.destroy();

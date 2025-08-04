@@ -55,10 +55,11 @@ public class ResourceServiceTrackerCustomizer
 			return null;
 		}
 
-		AtomicReference<ResourceRegistration> result = new AtomicReference<>();
+		AtomicReference<ResourceRegistration>
+			resourceRegistrationAtomicReference = new AtomicReference<>();
 
 		try {
-			result.set(
+			resourceRegistrationAtomicReference.set(
 				liferayContextController.addResourceRegistration(
 					serviceReference));
 		}
@@ -67,31 +68,36 @@ public class ResourceServiceTrackerCustomizer
 				exception.getMessage(), exception);
 		}
 
-		return result;
+		return resourceRegistrationAtomicReference;
 	}
 
 	@Override
 	public void modifiedService(
 		ServiceReference<Object> serviceReference,
-		AtomicReference<ResourceRegistration> resourceReference) {
+		AtomicReference<ResourceRegistration>
+			resourceRegistrationAtomicReference) {
 
-		removedService(serviceReference, resourceReference);
+		removedService(serviceReference, resourceRegistrationAtomicReference);
 
-		AtomicReference<ResourceRegistration> added = addingService(
-			serviceReference);
+		AtomicReference<ResourceRegistration>
+			newResourceRegistrationAtomicReference = addingService(
+				serviceReference);
 
-		resourceReference.set(added.get());
+		resourceRegistrationAtomicReference.set(
+			newResourceRegistrationAtomicReference.get());
 	}
 
 	@Override
 	public void removedService(
 		ServiceReference<Object> serviceReference,
-		AtomicReference<ResourceRegistration> resourceReference) {
+		AtomicReference<ResourceRegistration>
+			resourceRegistrationAtomicReference) {
 
-		ResourceRegistration registration = resourceReference.get();
+		ResourceRegistration resourceRegistration =
+			resourceRegistrationAtomicReference.get();
 
-		if (registration != null) {
-			registration.destroy();
+		if (resourceRegistration != null) {
+			resourceRegistration.destroy();
 		}
 	}
 

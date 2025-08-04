@@ -60,10 +60,11 @@ public class ServletServiceTrackerCustomizer
 			return null;
 		}
 
-		AtomicReference<ServletRegistration> result = new AtomicReference<>();
+		AtomicReference<ServletRegistration>
+			servletRegistrationAtomicReference = new AtomicReference<>();
 
 		try {
-			result.set(
+			servletRegistrationAtomicReference.set(
 				liferayContextController.addServletRegistration(
 					serviceReference));
 		}
@@ -72,31 +73,36 @@ public class ServletServiceTrackerCustomizer
 				exception.getMessage(), exception);
 		}
 
-		return result;
+		return servletRegistrationAtomicReference;
 	}
 
 	@Override
 	public void modifiedService(
 		ServiceReference<Servlet> serviceReference,
-		AtomicReference<ServletRegistration> servletReference) {
+		AtomicReference<ServletRegistration>
+			servletRegistrationAtomicReference) {
 
-		removedService(serviceReference, servletReference);
+		removedService(serviceReference, servletRegistrationAtomicReference);
 
-		AtomicReference<ServletRegistration> added = addingService(
-			serviceReference);
+		AtomicReference<ServletRegistration>
+			newServletRegistrationAtomicReference = addingService(
+				serviceReference);
 
-		servletReference.set(added.get());
+		servletRegistrationAtomicReference.set(
+			newServletRegistrationAtomicReference.get());
 	}
 
 	@Override
 	public void removedService(
 		ServiceReference<Servlet> serviceReference,
-		AtomicReference<ServletRegistration> servletReference) {
+		AtomicReference<ServletRegistration>
+			servletRegistrationAtomicReference) {
 
-		ServletRegistration registration = servletReference.get();
+		ServletRegistration servletRegistration =
+			servletRegistrationAtomicReference.get();
 
-		if (registration != null) {
-			registration.destroy();
+		if (servletRegistration != null) {
+			servletRegistration.destroy();
 		}
 	}
 

@@ -59,10 +59,11 @@ public class FilterServiceTrackerCustomizer
 			return null;
 		}
 
-		AtomicReference<FilterRegistration> result = new AtomicReference<>();
+		AtomicReference<FilterRegistration> filterRegistrationAtomicReference =
+			new AtomicReference<>();
 
 		try {
-			result.set(
+			filterRegistrationAtomicReference.set(
 				liferayContextController.addFilterRegistration(
 					serviceReference));
 		}
@@ -71,28 +72,31 @@ public class FilterServiceTrackerCustomizer
 				exception.getMessage(), exception);
 		}
 
-		return result;
+		return filterRegistrationAtomicReference;
 	}
 
 	@Override
 	public void modifiedService(
 		ServiceReference<Filter> serviceReference,
-		AtomicReference<FilterRegistration> filterReference) {
+		AtomicReference<FilterRegistration> filterRegistrationAtomicReference) {
 
-		removedService(serviceReference, filterReference);
+		removedService(serviceReference, filterRegistrationAtomicReference);
 
-		AtomicReference<FilterRegistration> added = addingService(
-			serviceReference);
+		AtomicReference<FilterRegistration>
+			newFilterRegistrationAtomicReference = addingService(
+				serviceReference);
 
-		filterReference.set(added.get());
+		filterRegistrationAtomicReference.set(
+			newFilterRegistrationAtomicReference.get());
 	}
 
 	@Override
 	public void removedService(
 		ServiceReference<Filter> serviceReference,
-		AtomicReference<FilterRegistration> filterReference) {
+		AtomicReference<FilterRegistration> filterRegistrationAtomicReference) {
 
-		FilterRegistration filterRegistration = filterReference.get();
+		FilterRegistration filterRegistration =
+			filterRegistrationAtomicReference.get();
 
 		if (filterRegistration != null) {
 			filterRegistration.destroy();

@@ -39,7 +39,7 @@ public class ObjectActionCourseRestController extends BaseRestController {
 			get(
 				"Bearer " + jwt.getTokenValue(),
 				UriComponentsBuilder.fromPath(
-					"/o/c/courses/scopes/" + _siteGroupId
+					"/o/c/courses/"
 				).queryParam(
 					"fields",
 					"id,module.lessonDurationMinutes,module.lessons," +

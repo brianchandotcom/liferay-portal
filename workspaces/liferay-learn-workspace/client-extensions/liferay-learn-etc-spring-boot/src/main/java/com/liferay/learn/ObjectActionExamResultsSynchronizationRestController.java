@@ -98,8 +98,7 @@ public class ObjectActionExamResultsSynchronizationRestController
 			get(
 				_getAuthorization(),
 				UriComponentsBuilder.fromPath(
-					"/o/c/p2s3examresultssynchronizations/scopes/" +
-						_siteGroupId
+					"/o/c/p2s3examresultssynchronizations/"
 				).queryParam(
 					"fields", "dateCreated"
 				).queryParam(
@@ -225,7 +224,7 @@ public class ObjectActionExamResultsSynchronizationRestController
 					_getAuthorization(), _getPayload(jsonObject1),
 					UriComponentsBuilder.fromPath(
 						StringBundler.concat(
-							"/o/c/p2s3examresults/scopes/", _siteGroupId,
+							"/o/c/p2s3examresults/",
 							"/by-external-reference-code/",
 							jsonObject1.getLong("id"))
 					).build(

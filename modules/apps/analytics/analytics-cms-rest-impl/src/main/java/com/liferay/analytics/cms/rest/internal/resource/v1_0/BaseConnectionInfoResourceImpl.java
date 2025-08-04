@@ -51,7 +51,7 @@ public abstract class BaseConnectionInfoResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "depotEntryId"
+				name = "depotEntryGroupId"
 			)
 		}
 	)
@@ -67,8 +67,8 @@ public abstract class BaseConnectionInfoResourceImpl
 	public ConnectionInfo getConnectionInfo(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.QueryParam("depotEntryId")
-			Long depotEntryId)
+			@jakarta.ws.rs.QueryParam("depotEntryGroupId")
+			Long depotEntryGroupId)
 		throws Exception {
 
 		return new ConnectionInfo();

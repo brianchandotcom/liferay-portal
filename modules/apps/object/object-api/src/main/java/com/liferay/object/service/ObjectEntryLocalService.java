@@ -493,6 +493,10 @@ public interface ObjectEntryLocalService
 			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void moveRelatedObjectEntriesToTrash(
+			long groupId, long objectDefinitionId, long primaryKey)
+		throws PortalException;
+
 	public ObjectEntry partialUpdateObjectEntry(
 			long userId, long objectEntryId, Map<String, Serializable> values,
 			ServiceContext serviceContext)

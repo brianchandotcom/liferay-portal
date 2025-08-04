@@ -92,6 +92,10 @@ public interface TestEntityResource {
 			Long optionalParameter, String callbackURL, Object object)
 		throws Exception;
 
+	public TestEntity putTestEntityStatus(
+			Long testEntityId, TestEntity testEntity)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

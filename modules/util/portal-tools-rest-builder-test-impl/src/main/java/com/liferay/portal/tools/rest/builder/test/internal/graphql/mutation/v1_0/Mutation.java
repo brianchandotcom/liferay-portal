@@ -1468,6 +1468,19 @@ public class Mutation {
 				optionalParameter, callbackURL, object));
 	}
 
+	@GraphQLField
+	public TestEntity updateTestEntityStatus(
+			@GraphQLName("testEntityId") Long testEntityId,
+			@GraphQLName("testEntity") TestEntity testEntity)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testEntityResource -> testEntityResource.putTestEntityStatus(
+				testEntityId, testEntity));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

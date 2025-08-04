@@ -577,6 +577,38 @@ public abstract class BaseTestEntityResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/test-entities/{testEntityId}/status' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "self": ___, "stringTestEntities": ___, "stringTestEntity": ___, "testEntities": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testEntityId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path("/test-entities/{testEntityId}/status")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
+	@Override
+	public TestEntity putTestEntityStatus(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("testEntityId")
+			Long testEntityId,
+			TestEntity testEntity)
+		throws Exception {
+
+		return null;
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(

@@ -1015,6 +1015,39 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testPutTestEntityStatus() throws Exception {
+		TestEntity postTestEntity = testPutTestEntityStatus_addTestEntity();
+
+		TestEntity randomTestEntity = randomTestEntity();
+
+		TestEntity putTestEntity = testEntityResource.putTestEntityStatus(
+			postTestEntity.getId(), randomTestEntity);
+
+		assertEquals(randomTestEntity, putTestEntity);
+		assertValid(putTestEntity);
+
+		TestEntity getTestEntity = testPutTestEntityStatus_getTestEntity(
+			putTestEntity.getId());
+
+		assertEquals(randomTestEntity, getTestEntity);
+		assertValid(getTestEntity);
+	}
+
+	protected TestEntity testPutTestEntityStatus_getTestEntity(
+		Long testEntityId) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected TestEntity testPutTestEntityStatus_addTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		TestEntity testEntity1 =
 			testBatchEngineDeleteImportTask_addTestEntity();

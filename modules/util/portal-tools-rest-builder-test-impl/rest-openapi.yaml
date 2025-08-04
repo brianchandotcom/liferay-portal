@@ -2553,6 +2553,34 @@ paths:
                     description:
                         "OK"
             tags: ["TestEntity"]
+    "/test-entities/{testEntityId}/status":
+        put:
+            operationId: putTestEntityStatus
+            parameters:
+                -   in: path
+                    name: testEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/TestEntity"
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TestEntity"
+            tags: ["TestEntity"]
     "/test-entities/{testEntityId}/test-entity-address":
         get:
             operationId: getTestEntityTestEntityAddress

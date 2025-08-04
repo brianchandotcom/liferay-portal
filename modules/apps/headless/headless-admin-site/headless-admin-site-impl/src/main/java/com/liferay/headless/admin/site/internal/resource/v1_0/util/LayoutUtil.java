@@ -744,14 +744,15 @@ public class LayoutUtil {
 		throws Exception {
 
 		if (settings == null) {
-			ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+			ClientExtensionEntryRelLocalServiceUtil.
+				deleteClientExtensionEntryRels(
+					PortalUtil.getClassNameId(Layout.class), layout.getPlid());
 
 			return;
 		}
 
 		if (layout.isTypeUtility()) {
-			if ((settings.getFavIcon() instanceof ClientExtension) ||
+			if (Validator.isNotNull(settings.getFavIcon()) ||
 				ArrayUtil.isNotEmpty(settings.getGlobalCSSClientExtensions()) ||
 				ArrayUtil.isNotEmpty(settings.getGlobalJSClientExtensions()) ||
 				Validator.isNotNull(settings.getThemeCSSClientExtension()) ||

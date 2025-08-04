@@ -148,4 +148,30 @@ export class WorkflowTasksPage {
 
 		await waitForAlert(this.page);
 	}
+
+	async updateDueDate(articleTitle: string, date: string) {
+		const currDate = new Date();
+
+		const year = currDate.getFullYear() + 1;
+
+		const row = this.page.getByRole('row').filter({hasText: articleTitle});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.locator('.dropdown-menu:visible')
+				.getByText('Update Due Date', {exact: true}),
+			trigger: row.locator('.dropdown-toggle'),
+		});
+
+		const frame = this.page.frameLocator('iframe[title="Update Due Date"]');
+
+		await frame
+			.getByRole('textbox', {name: 'Due Date'})
+			.fill(`${date}/${year}`);
+
+		await frame.getByRole('textbox', {name: 'Due Date'}).click();
+
+		await frame.getByRole('button', {name: 'Done'}).click();
+	}
 }

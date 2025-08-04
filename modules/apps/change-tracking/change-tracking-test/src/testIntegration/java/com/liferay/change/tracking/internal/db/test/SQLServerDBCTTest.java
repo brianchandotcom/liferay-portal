@@ -79,7 +79,7 @@ public class SQLServerDBCTTest {
 	}
 
 	@Test
-	public void testDeleteCTCollectionWithOver50000CTEntries()
+	public void testDeleteCTCollectionWithOver60000CTEntries()
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -138,6 +138,12 @@ public class SQLServerDBCTTest {
 				TestPropsValues.getUserId(), _ctCollection.getCtCollectionId());
 		}
 
+		_ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollection.getCtCollectionId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, _ctCollection.getStatus());
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			 Connection connection = DataAccess.getConnection();
 
@@ -151,7 +157,7 @@ public class SQLServerDBCTTest {
 	}
 
 	@Test
-	public void testPublishCTCollectionWithOver50000CTEntries()
+	public void testPublishCTCollectionWithOver60000CTEntries()
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -176,7 +182,7 @@ public class SQLServerDBCTTest {
 
 	private static final int _BATCH_SIZE_HIBERNATE = 2001;
 
-	private static final int _BATCH_SIZE_QUERY_PROCESSOR = 50001;
+	private static final int _BATCH_SIZE_QUERY_PROCESSOR = 60001;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

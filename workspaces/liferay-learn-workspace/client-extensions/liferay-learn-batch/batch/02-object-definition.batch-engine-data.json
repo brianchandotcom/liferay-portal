@@ -210,7 +210,6 @@
 		{
 			"active": true,
 			"enableComments": false,
-			"enableLocalization": true,
 			"enableObjectEntryHistory": false,
 			"externalReferenceCode": "P2S3_ANNOUNCEMENT_IMAGE_TYPE",
 			"label": {
@@ -246,8 +245,7 @@
 						}
 					],
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
-					"required": false,
+					"required": true,
 					"state": false,
 					"type": "Long",
 					"unique": false
@@ -265,8 +263,7 @@
 					"localized": false,
 					"name": "name",
 					"readOnly": "false",
-					"readOnlyConditionExpression": "",
-					"required": false,
+					"required": true,
 					"state": false,
 					"type": "String",
 					"unique": false

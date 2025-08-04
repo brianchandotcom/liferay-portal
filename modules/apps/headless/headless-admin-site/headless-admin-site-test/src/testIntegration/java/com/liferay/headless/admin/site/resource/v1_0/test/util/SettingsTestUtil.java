@@ -62,9 +62,15 @@ public class SettingsTestUtil {
 			Assert.assertEquals(layout.getCss(), settings.getCss());
 		}
 
-		_assertClientExtension(
-			(ClientExtension)settings.getFavIcon(), layout,
-			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+		if (settings.getFavIcon() == null) {
+			_assertClientExtension(
+				null, layout, ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+		}
+		else if (settings.getFavIcon() instanceof ClientExtension) {
+			_assertClientExtension(
+				(ClientExtension)settings.getFavIcon(), layout,
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+		}
 
 		_assertClientExtensions(
 			settings.getGlobalCSSClientExtensions(), layout,

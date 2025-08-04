@@ -35,8 +35,8 @@ export function NewSpaceFormSection({
 }: PropsWithChildren<NewSpaceFormSectionProps>) {
 	const pageContent = (
 		<>
-			<ClayLayout.Container className="mb-5 p-0">
-				<p className="mb-2 mt-6 text-secondary">
+			<ClayLayout.ContainerFluid className="mb-5 p-0">
+				<p className="mb-2 mt-3 mt-lg-6 text-secondary">
 					{sub(Liferay.Language.get('step-x-of-x'), [step, 2])}
 				</p>
 
@@ -51,7 +51,7 @@ export function NewSpaceFormSection({
 						resourceKey={learnResourceKey}
 					/>
 				</LearnResourcesContext.Provider>
-			</ClayLayout.Container>
+			</ClayLayout.ContainerFluid>
 
 			{children}
 		</>

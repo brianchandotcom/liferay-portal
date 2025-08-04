@@ -75,6 +75,7 @@ function TrialActions({
 		return (
 			placedOrder.orderStatusInfo.label === OrderStatus.APPROVED ||
 			placedOrder.orderStatusInfo.label === OrderStatus.COMPLETED ||
+			placedOrder.orderStatusInfo.label === OrderStatus.ON_HOLD ||
 			placedOrder.orderStatusInfo.label === OrderStatus.PENDING ||
 			extendRequests[0]?.dueStatus.key === ExtendRequestStatus.PENDING
 		);
@@ -176,6 +177,8 @@ function TrialActions({
 						placedOrder.orderStatusInfo.label ===
 							OrderStatus.COMPLETED ||
 						placedOrder.orderStatusInfo.label ===
+							OrderStatus.ON_HOLD ||
+						placedOrder.orderStatusInfo.label ===
 							OrderStatus.PENDING
 					}
 					onClick={() =>
@@ -205,6 +208,8 @@ function TrialActions({
 							OrderStatus.APPROVED ||
 						placedOrder.orderStatusInfo.label ===
 							OrderStatus.COMPLETED ||
+						placedOrder.orderStatusInfo.label ===
+							OrderStatus.ON_HOLD ||
 						placedOrder.orderStatusInfo.label ===
 							OrderStatus.PENDING
 					}

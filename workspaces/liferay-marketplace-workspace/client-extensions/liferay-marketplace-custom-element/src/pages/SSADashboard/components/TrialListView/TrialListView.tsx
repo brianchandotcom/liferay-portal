@@ -50,7 +50,8 @@ export default function TrialListView({
 	managementToolbarProps,
 }: TrialsListViewProps) {
 	const {ssaTrialExtend} = useOutletContext<any>();
-	const {properties} = useMarketplaceContext();
+	const {marketplaceUserAccount, myUserAccount, properties} =
+		useMarketplaceContext();
 	const [items, setItems] = useState<PlacedOrder[]>([]);
 
 	const mutateRef = useRef<KeyedMutator<APIResponse<PlacedOrder>>>();
@@ -77,15 +78,21 @@ export default function TrialListView({
 		}
 	)}`;
 
+	const defaultFilters = marketplaceUserAccount.isSSAAdmin
+		? SearchBuilder.eq(
+				'orderTypeExternalReferenceCode',
+				OrderTypes.SSA_SAAS
+			)
+		: new SearchBuilder()
+				.eq('author', myUserAccount?.name)
+				.and()
+				.eq('orderTypeExternalReferenceCode', OrderTypes.SSA_SAAS)
+				.build();
+
 	return (
 		<>
 			<ListView<PlacedOrder>
-				defaultFilters={{
-					filter: SearchBuilder.eq(
-						'orderTypeExternalReferenceCode',
-						OrderTypes.SSA_SAAS
-					),
-				}}
+				defaultFilters={{filter: defaultFilters}}
 				emptyStateProps={{title: i18n.translate('no-trials-yet')}}
 				id="ssa-trials"
 				managementToolbarProps={{

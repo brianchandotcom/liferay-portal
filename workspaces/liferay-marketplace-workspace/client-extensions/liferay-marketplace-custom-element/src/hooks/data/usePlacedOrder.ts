@@ -11,7 +11,7 @@ import HeadlessCommerceDeliveryOrder from '../../services/rest/HeadlessCommerceD
 const channelId = Liferay.CommerceContext.commerceChannelId;
 
 type Props = {
-	accountId: number;
+	accountId: number | string;
 	filter?: string;
 	orderTypeExternalReferenceCodes?: string[];
 	page: number;

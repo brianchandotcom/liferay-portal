@@ -662,6 +662,14 @@ public class ObjectEntryLocalServiceUtil {
 			userId, objectEntry, serviceContext);
 	}
 
+	public static void moveRelatedObjectEntriesToTrash(
+			long groupId, long objectDefinitionId, long primaryKey)
+		throws PortalException {
+
+		getService().moveRelatedObjectEntriesToTrash(
+			groupId, objectDefinitionId, primaryKey);
+	}
+
 	public static ObjectEntry partialUpdateObjectEntry(
 			long userId, long objectEntryId, Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

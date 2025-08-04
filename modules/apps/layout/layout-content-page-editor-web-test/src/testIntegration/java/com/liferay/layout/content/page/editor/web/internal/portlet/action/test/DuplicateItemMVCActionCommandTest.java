@@ -302,10 +302,19 @@ public class DuplicateItemMVCActionCommandTest {
 				duplicatedFragmentEntryLinkJSONObject.getLong(
 					"fragmentEntryLinkId"));
 
-		String editableValues = duplicatedFragmentEntryLink.getEditableValues();
+		JSONObject editableValuesJSONObject =
+			duplicatedFragmentEntryLink.getEditableValuesJSONObject();
 
+		JSONObject editableFragmentEntryProcessorJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		Assert.assertFalse(
+			editableFragmentEntryProcessorJSONObject.has(
+				fragmentEntryLink.getNamespace() + "-element-text"));
 		Assert.assertTrue(
-			editableValues.contains(
+			editableFragmentEntryProcessorJSONObject.has(
 				duplicatedFragmentEntryLink.getNamespace() + "-element-text"));
 	}
 

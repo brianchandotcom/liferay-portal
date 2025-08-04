@@ -134,6 +134,10 @@ public class AssetTestUtil {
 
 		List<AssetCategory> assetCategories = new ArrayList<>();
 
+		if (RandomTestUtil.randomBoolean()) {
+			return assetCategories;
+		}
+
 		for (int i = 0; i < RandomTestUtil.randomInt(1, 3); i++) {
 			AssetVocabulary assetVocabulary =
 				AssetVocabularyLocalServiceUtil.addVocabulary(

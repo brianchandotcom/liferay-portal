@@ -13,6 +13,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
-import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -323,7 +323,27 @@ public class ScimUtil {
 			scimUser.setMiddleName(portalUser.getMiddleName());
 			scimUser.setModifiedDate(
 				_truncateDate(portalUser.getModifiedDate()));
-			scimUser.setPhoneNumbers(_getScimPhoneNumbers(contact));
+			scimUser.setPhoneNumbers(
+				TransformUtil.transform(
+					PhoneLocalServiceUtil.getPhones(
+						contact.getCompanyId(), Contact.class.getName(),
+						contact.getContactId()),
+					phone -> {
+						MultiValuedComplexType multiValuedComplexType =
+							new MultiValuedComplexType();
+
+						multiValuedComplexType.setPrimary(phone.isPrimary());
+
+						ListType listType =
+							ListTypeLocalServiceUtil.fetchListType(
+								phone.getListTypeId());
+
+						multiValuedComplexType.setType(listType.getName());
+
+						multiValuedComplexType.setValue(phone.getNumber());
+
+						return multiValuedComplexType;
+					}));
 			scimUser.setPrefix(contact.getPrefixListTypeId());
 			scimUser.setProfileUrl(_getScimProfileUrl(contact));
 			scimUser.setRoleIds(portalUser.getRoleIds());
@@ -858,34 +878,6 @@ public class ScimUtil {
 		}
 
 		return imsMap;
-	}
-
-	private static List<MultiValuedComplexType> _getScimPhoneNumbers(
-		Contact contact) {
-
-		List<MultiValuedComplexType> multiValuedComplexTypes = new ArrayList<>();
-
-		for (Phone phone :
-				PhoneLocalServiceUtil.getPhones(
-					contact.getCompanyId(), Contact.class.getName(),
-					contact.getContactId())) {
-
-			MultiValuedComplexType multiValuedComplexType =
-				new MultiValuedComplexType();
-
-			multiValuedComplexType.setPrimary(phone.isPrimary());
-
-			ListType listType = ListTypeLocalServiceUtil.fetchListType(
-				phone.getListTypeId());
-
-			multiValuedComplexType.setType(listType.getName());
-
-			multiValuedComplexType.setValue(phone.getNumber());
-
-			multiValuedComplexTypes.add(multiValuedComplexType);
-		}
-
-		return multiValuedComplexTypes;
 	}
 
 	private static String _getScimProfileUrl(Contact contact) {

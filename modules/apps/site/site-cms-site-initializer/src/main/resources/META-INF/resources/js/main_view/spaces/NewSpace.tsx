@@ -91,8 +91,8 @@ const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 	const shouldDisableContinueBtn = isSubmitting || !values.name;
 
 	return (
-		<ClayLayout.Row className="m-4">
-			<ClayLayout.Col className="mw-50 px-9 w-50">
+		<ClayLayout.Row className="m-2 m-md-4">
+			<ClayLayout.Col className="col px-md-4 px-xl-9" lg={6}>
 				<NewSpaceFormSection
 					description={Liferay.Language.get(
 						'spaces-are-essential-for-organizing-defining-and-managing-your-content-and-files'
@@ -137,11 +137,13 @@ const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 				</NewSpaceFormSection>
 			</ClayLayout.Col>
 
-			<ClayLayout.Col>
-				<img
-					aria-hidden="true"
-					src={getImage('create_space_step_one_illustration.svg')}
-				></img>
+			<ClayLayout.Col className="col d-lg-flex d-none" lg={6}>
+				<div className="border overflow-hidden rounded-lg">
+					<img
+						alt=""
+						src={getImage('create_space_step_one_illustration.svg')}
+					></img>
+				</div>
 			</ClayLayout.Col>
 		</ClayLayout.Row>
 	);

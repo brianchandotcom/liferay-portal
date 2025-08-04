@@ -15,12 +15,14 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -31,7 +33,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -417,35 +418,24 @@ public class SettingsTestUtil {
 				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
 				type);
 
-		if (clientExtensionEntryRels.isEmpty()) {
-			Assert.assertNull(clientExtensions);
-		}
-		else {
+		if (ArrayUtil.isEmpty(clientExtensions)) {
 			Assert.assertEquals(
-				Arrays.toString(clientExtensions),
-				clientExtensionEntryRels.size(), clientExtensions.length);
+				clientExtensionEntryRels.toString(), 0,
+				clientExtensionEntryRels.size());
 
-			for (ClientExtensionEntryRel clientExtensionEntryRel :
-					clientExtensionEntryRels) {
+			return;
+		}
 
-				boolean found = false;
+		List<String> cetExternalReferenceCodes = TransformUtil.transform(
+			clientExtensionEntryRels,
+			clientExtensionEntryRel ->
+				clientExtensionEntryRel.getCETExternalReferenceCode());
 
-				for (ClientExtension clientExtension : clientExtensions) {
-					if (Objects.equals(
-							clientExtensionEntryRel.
-								getCETExternalReferenceCode(),
-							clientExtension.getExternalReferenceCode())) {
-
-						found = true;
-
-						break;
-					}
-				}
-
-				if (!found) {
-					Assert.fail();
-				}
-			}
+		for (ClientExtension clientExtension : clientExtensions) {
+			Assert.assertTrue(
+				clientExtension.toString(),
+				cetExternalReferenceCodes.contains(
+					clientExtension.getExternalReferenceCode()));
 		}
 	}
 

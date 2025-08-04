@@ -6,6 +6,7 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterRegistration;
@@ -33,7 +34,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
@@ -50,7 +50,7 @@ import org.osgi.service.http.context.ServletContextHelper;
 public class ServletContextWrapper implements ServletContext {
 
 	public ServletContextWrapper(
-		Bundle bundle, ContextController contextController,
+		Bundle bundle, LiferayContextController liferayContextController,
 		ServletContextHelper servletContextHelper,
 		ServletContextHelperDataContext servletContextHelperDataContext) {
 
@@ -60,7 +60,7 @@ public class ServletContextWrapper implements ServletContext {
 
 		_classLoader = bundleWiring.getClassLoader();
 
-		_contextController = contextController;
+		_liferayContextController = liferayContextController;
 		_servletContextHelper = servletContextHelper;
 		_servletContextHelperDataContext = servletContextHelperDataContext;
 
@@ -160,8 +160,8 @@ public class ServletContextWrapper implements ServletContext {
 		ServletContextWrapper otherServletContextWrapper =
 			(ServletContextWrapper)other;
 
-		return _contextController.equals(
-			otherServletContextWrapper._contextController);
+		return _liferayContextController.equals(
+			otherServletContextWrapper._liferayContextController);
 	}
 
 	@Override
@@ -196,7 +196,7 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public String getContextPath() {
-		return _contextController.getFullContextPath();
+		return _liferayContextController.getFullContextPath();
 	}
 
 	@Override
@@ -231,14 +231,16 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public String getInitParameter(String name) {
-		Map<String, String> initParams = _contextController.getInitParams();
+		Map<String, String> initParams =
+			_liferayContextController.getInitParams();
 
 		return initParams.get(name);
 	}
 
 	@Override
 	public Enumeration<String> getInitParameterNames() {
-		Map<String, String> initParams = _contextController.getInitParams();
+		Map<String, String> initParams =
+			_liferayContextController.getInitParams();
 
 		return Collections.enumeration(initParams.keySet());
 	}
@@ -271,8 +273,9 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public RequestDispatcher getNamedDispatcher(String servletName) {
-		DispatchTargets dispatchTargets = _contextController.getDispatchTargets(
-			servletName, null, null, null, null, null, Match.EXACT);
+		DispatchTargets dispatchTargets =
+			_liferayContextController.getDispatchTargets(
+				servletName, null, null, null, null, null, Match.EXACT);
 
 		if (dispatchTargets == null) {
 			return null;
@@ -297,14 +300,14 @@ public class ServletContextWrapper implements ServletContext {
 			return null;
 		}
 
-		String fullContextPath = _contextController.getFullContextPath();
+		String fullContextPath = _liferayContextController.getFullContextPath();
 
 		if (path.startsWith(fullContextPath)) {
 			path = path.substring(fullContextPath.length());
 		}
 
-		DispatchTargets dispatchTargets = _contextController.getDispatchTargets(
-			path);
+		DispatchTargets dispatchTargets =
+			_liferayContextController.getDispatchTargets(path);
 
 		if (dispatchTargets == null) {
 			return null;
@@ -357,7 +360,7 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public String getServletContextName() {
-		return _contextController.getContextName();
+		return _liferayContextController.getContextName();
 	}
 
 	@Override
@@ -389,7 +392,7 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public int hashCode() {
-		return _contextController.hashCode();
+		return _liferayContextController.hashCode();
 	}
 
 	@Override
@@ -470,7 +473,8 @@ public class ServletContextWrapper implements ServletContext {
 			<ServletContextAttributeListener, ServletContextAttributeEvent>
 				biConsumer) {
 
-		EventListeners eventListeners = _contextController.getEventListeners();
+		EventListeners eventListeners =
+			_liferayContextController.getEventListeners();
 
 		List<ServletContextAttributeListener> servletContextAttributeListeners =
 			eventListeners.get(ServletContextAttributeListener.class);
@@ -492,7 +496,7 @@ public class ServletContextWrapper implements ServletContext {
 
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
-	private final ContextController _contextController;
+	private final LiferayContextController _liferayContextController;
 	private final ServletContext _servletContext;
 	private final ServletContextHelper _servletContextHelper;
 	private final ServletContextHelperDataContext

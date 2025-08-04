@@ -7,9 +7,11 @@ package com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.trac
 
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.registration.Registration;
 
 import org.osgi.framework.BundleContext;
@@ -26,11 +28,15 @@ public abstract class BaseServiceTrackerCustomizer
 	public BaseServiceTrackerCustomizer(
 		BundleContext bundleContext,
 		HttpServletEndpointController httpServletEndpointController,
-		LiferayContextController liferayContextController) {
+		LiferayContextController liferayContextController,
+		ServletContextHelperDataContext servletContextHelperDataContext,
+		long servletContextHelperServiceId) {
 
 		this.bundleContext = bundleContext;
 		this.httpServletEndpointController = httpServletEndpointController;
 		this.liferayContextController = liferayContextController;
+		this.servletContextHelperDataContext = servletContextHelperDataContext;
+		this.servletContextHelperServiceId = servletContextHelperServiceId;
 	}
 
 	@Override
@@ -55,8 +61,20 @@ public abstract class BaseServiceTrackerCustomizer
 		}
 	}
 
+	protected String[] sort(String[] values) {
+		if (values == null) {
+			return null;
+		}
+
+		Arrays.sort(values);
+
+		return values;
+	}
+
 	protected BundleContext bundleContext;
 	protected HttpServletEndpointController httpServletEndpointController;
 	protected LiferayContextController liferayContextController;
+	protected ServletContextHelperDataContext servletContextHelperDataContext;
+	protected long servletContextHelperServiceId;
 
 }

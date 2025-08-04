@@ -847,17 +847,17 @@ public class ScimUtil {
 			return null;
 		}
 
-		Map<String, String> imsMap = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 
 		for (MultiValuedComplexType multiValuedComplexType :
 				multiValuedComplexTypes) {
 
-			imsMap.put(
+			map.put(
 				multiValuedComplexType.getType(),
 				multiValuedComplexType.getValue());
 		}
 
-		return imsMap;
+		return map;
 	}
 
 	private static String _getScimProfileUrl(Contact contact) {

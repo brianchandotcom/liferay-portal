@@ -1,5 +1,4 @@
 dependencies {
-	compileInclude group: "com.nimbusds", name: "nimbus-jose-jwt", version: "9.40"
 	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "11.13"
 	compileInclude group: "io.netty", name: "netty-buffer", version: "4.1.119.Final"
 	compileInclude group: "io.netty", name: "netty-codec", version: "4.1.119.Final"
@@ -22,4 +21,5 @@ dependencies {
 	compileInclude group: "io.netty", name: "netty-transport-native-epoll", version: "4.1.119.Final"
 	compileInclude group: "io.netty", name: "netty-transport-native-kqueue", version: "4.1.119.Final"
 	compileInclude group: "io.netty", name: "netty-transport-native-unix-common", version: "4.1.119.Final"
+	compileOnly group: "com.nimbusds", name: "nimbus-jose-jwt", version: "9.40"
 }

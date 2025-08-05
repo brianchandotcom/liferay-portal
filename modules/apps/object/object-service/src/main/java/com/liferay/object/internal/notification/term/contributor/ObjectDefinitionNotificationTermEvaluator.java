@@ -234,8 +234,16 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return objectEntryFolder.getName();
 		}
 		else if (termName.equals("[%OBJECT_ENTRY_TITLE_FIELD%]")) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					_objectDefinition.getObjectDefinitionId());
+
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				_objectDefinition.getTitleObjectFieldId());
+				objectDefinition.getTitleObjectFieldId());
+
+			if (objectField == null) {
+				return null;
+			}
 
 			return _getObjectFieldValue(objectField, termValues);
 		}

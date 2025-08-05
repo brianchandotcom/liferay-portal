@@ -65,7 +65,7 @@ export function ObjectRelationshipInheritanceCheckbox({
 						<LearnMessage
 							className="alert-link"
 							resource="object-web"
-							resourceKey="relationships"
+							resourceKey="inheritance-relationships"
 						/>
 					</LearnResourcesContext.Provider>
 				</ClayPopover>

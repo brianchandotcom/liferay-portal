@@ -833,26 +833,28 @@ public class PortalImpl implements Portal {
 			String[] values = renderParameters.get(
 				actionResponse.getNamespace() + actionParameterName);
 
-			if (values == null) {
-				values = actionRequest.getParameterValues(actionParameterName);
-
-				if (values == null) {
-					values = new String[0];
-				}
-				else {
-					values = ArrayUtil.filter(
-						values,
-						s -> {
-							if (s == null) {
-								return false;
-							}
-
-							return true;
-						});
-				}
-
-				actionResponse.setRenderParameter(actionParameterName, values);
+			if (values != null) {
+				continue;
 			}
+
+			values = actionRequest.getParameterValues(actionParameterName);
+
+			if (values == null) {
+				values = new String[0];
+			}
+			else {
+				values = ArrayUtil.filter(
+					values,
+					s -> {
+						if (s == null) {
+							return false;
+						}
+
+						return true;
+					});
+			}
+
+			actionResponse.setRenderParameter(actionParameterName, values);
 		}
 	}
 

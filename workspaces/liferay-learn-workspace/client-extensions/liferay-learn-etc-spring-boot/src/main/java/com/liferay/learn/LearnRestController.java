@@ -174,7 +174,7 @@ public class LearnRestController extends BaseRestController {
 				get(
 					_getAuthorization(),
 					UriComponentsBuilder.fromPath(
-						"/o/c/quizquestions/"
+						"/o/c/quizquestions"
 					).queryParam(
 						"filter", "quizId eq '" + quizId + "'"
 					).queryParam(
@@ -428,7 +428,7 @@ public class LearnRestController extends BaseRestController {
 			get(
 				_getAuthorization(),
 				UriComponentsBuilder.fromPath(
-					"/o/c/userbadges/"
+					"/o/c/userbadges"
 				).queryParam(
 					"filter",
 					StringBundler.concat(
@@ -452,7 +452,7 @@ public class LearnRestController extends BaseRestController {
 				"r_userBadges_userId", userId
 			).toString(),
 			UriComponentsBuilder.fromPath(
-				"/o/c/userbadges/"
+				"/o/c/userbadges"
 			).build(
 			).toUri());
 	}

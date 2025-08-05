@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.constants;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -54,25 +55,36 @@ public class ContentPageEditorConstants {
 				}
 			).put(
 				"INPUTS",
-				ListUtil.fromArray(
-					HashMapBuilder.<String, Object>put(
-						"fragmentEntryKey", "form"
-					).put(
-						"icon", "forms"
-					).put(
-						"itemType", "form"
-					).put(
-						"languageKey", "form-container"
-					).build(),
-					HashMapBuilder.<String, Object>put(
-						"fragmentEntryKey", "formRelationship"
-					).put(
-						"icon", "form-extensions"
-					).put(
-						"itemType", "form-relationship"
-					).put(
-						"languageKey", "form-relationship"
-					).build())
+				() -> {
+					List<Map<String, Object>> inputsElementMapsList =
+						new LinkedList<>();
+
+					inputsElementMapsList.add(
+						HashMapBuilder.<String, Object>put(
+							"fragmentEntryKey", "form"
+						).put(
+							"icon", "forms"
+						).put(
+							"itemType", "form"
+						).put(
+							"languageKey", "form-container"
+						).build());
+
+					if (FeatureFlagManagerUtil.isEnabled("LPD-50377")) {
+						inputsElementMapsList.add(
+							HashMapBuilder.<String, Object>put(
+								"fragmentEntryKey", "formRelationship"
+							).put(
+								"icon", "form-extensions"
+							).put(
+								"itemType", "form-relationship"
+							).put(
+								"languageKey", "form-relationship"
+							).build());
+					}
+
+					return inputsElementMapsList;
+				}
 			).put(
 				"content-display",
 				ListUtil.fromArray(

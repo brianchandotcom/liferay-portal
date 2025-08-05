@@ -2686,9 +2686,11 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 						}
 
 						public static String getTestName(String testClassFilePath) {
-							Pattern pattern = Pattern.compile("(?:^|\\/)(\\w+)\\.java(?:#(\\w+))?");
+							Pattern pattern = Pattern.compile(".*(?:/|^)(\\w+)\\.java(?:#(\\w+))?");
 
 							Matcher matcher = pattern.matcher(testClassFilePath);
+
+							String testClass;
 
 							if (matcher.matches()) {
 								testClass = matcher.group(1);

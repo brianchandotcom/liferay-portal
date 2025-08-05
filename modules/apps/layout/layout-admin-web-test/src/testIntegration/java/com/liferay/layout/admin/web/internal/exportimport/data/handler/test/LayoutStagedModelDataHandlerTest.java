@@ -139,7 +139,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -783,7 +782,12 @@ public class LayoutStagedModelDataHandlerTest
 		LayoutTestUtil.addPortletToLayout(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry1.getPlid()),
 			AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			_getPreferenceMap(assetListEntry.getExternalReferenceCode(), null));
+			HashMapBuilder.put(
+				"assetListEntryExternalReferenceCode",
+				new String[] {assetListEntry.getExternalReferenceCode()}
+			).put(
+				"selectionStyle", new String[] {"asset-list"}
+			).build());
 
 		File file = _exportLayouts(
 			group1.getGroupId(), new long[0], getParameterMap());
@@ -2182,35 +2186,6 @@ public class LayoutStagedModelDataHandlerTest
 					Layout.class.getName(),
 					String.valueOf(layout.isPrivateLayout()))),
 			layout.getPlid());
-	}
-
-	private Map<String, String[]> _getPreferenceMap(
-		String assetListEntryExternalReferenceCode,
-		String assetListEntryGroupExternalReferenceCode) {
-
-		return HashMapBuilder.put(
-			"assetListEntryExternalReferenceCode",
-			() -> {
-				if (Validator.isNull(assetListEntryExternalReferenceCode)) {
-					return null;
-				}
-
-				return new String[] {assetListEntryExternalReferenceCode};
-			}
-		).put(
-			"assetListEntryGroupExternalReferenceCode",
-			() -> {
-				if (Validator.isNull(
-						assetListEntryGroupExternalReferenceCode)) {
-
-					return null;
-				}
-
-				return new String[] {assetListEntryGroupExternalReferenceCode};
-			}
-		).put(
-			"selectionStyle", new String[] {"asset-list"}
-		).build();
 	}
 
 	private InfoField _getTemplateEntryInfoField(

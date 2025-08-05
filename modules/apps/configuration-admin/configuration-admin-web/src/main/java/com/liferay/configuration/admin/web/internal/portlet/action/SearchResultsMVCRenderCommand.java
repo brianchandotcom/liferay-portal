@@ -87,6 +87,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 
 			for (ConfigurationScreen configurationScreen :
 					matchingConfigurationScreens) {
+
 				configurationEntries.add(
 					new ConfigurationScreenConfigurationEntry(
 						configurationScreen, locale));
@@ -164,7 +165,8 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		for (ConfigurationScreen configurationScreen :
 				_configurationEntryRetriever.getAllConfigurationScreens()) {
 
-			if (!Objects.equals(String.valueOf(scope), configurationScreen.getScope()) ||
+			if (!Objects.equals(
+					String.valueOf(scope), configurationScreen.getScope()) ||
 				!configurationScreen.isVisible()) {
 
 				continue;
@@ -174,8 +176,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 
 			String configurationScreenCategoryKey = StringUtil.toLowerCase(
 				_language.get(
-					locale,
-					"category." + configurationScreen.getCategoryKey()),
+					locale, "category." + configurationScreen.getCategoryKey()),
 				locale);
 			String configurationScreenKey = StringUtil.toLowerCase(
 				configurationScreen.getKey(), locale);

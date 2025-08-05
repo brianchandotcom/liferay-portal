@@ -76,6 +76,7 @@ const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
 					LAYOUT_DATA_ITEM_TYPES.dropZone,
 					LAYOUT_DATA_ITEM_TYPES.row,
 					LAYOUT_DATA_ITEM_TYPES.fragment,
+					LAYOUT_DATA_ITEM_TYPES.formRelationship,
 				].some((type) => type === child.type)
 			: false,
 	[LAYOUT_DATA_ITEM_TYPES.formStep]: (child: LayoutDataItem) =>

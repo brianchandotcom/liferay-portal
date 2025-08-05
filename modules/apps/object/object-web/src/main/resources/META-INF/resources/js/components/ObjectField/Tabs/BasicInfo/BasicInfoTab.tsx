@@ -101,6 +101,7 @@ export function BasicInfoTab({
 					dbObjectFieldRequired={dbObjectFieldRequired}
 					errors={errors}
 					handleChange={handleChange}
+					learnResources={learnResources}
 					modelBuilder={modelBuilder}
 					objectDefinition={objectDefinition}
 					objectFieldBusinessTypes={objectFieldBusinessTypes}

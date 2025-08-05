@@ -22,12 +22,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"servlet-context-name=",
-		"servlet-filter-name=Object Action Context Filter", "url-pattern=/o/c/*"
+		"servlet-context-name=", "servlet-filter-name=Object Context Filter",
+		"url-pattern=/o/c/*"
 	},
 	service = Filter.class
 )
-public class ObjectActionContextFilter extends BaseFilter {
+public class ObjectContextFilter extends BaseFilter {
 
 	@Override
 	protected Log getLog() {
@@ -51,6 +51,6 @@ public class ObjectActionContextFilter extends BaseFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectActionContextFilter.class);
+		ObjectContextFilter.class);
 
 }

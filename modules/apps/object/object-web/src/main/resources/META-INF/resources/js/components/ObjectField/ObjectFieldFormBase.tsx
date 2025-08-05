@@ -322,7 +322,7 @@ export default function ObjectFieldFormBase({
 		}
 
 		return (
-			!!values.relationshipType ||
+			values.businessType === 'Relationship' ||
 			(!Liferay.FeatureFlags['LPD-32050'] && values.localized) ||
 			values.state
 		);

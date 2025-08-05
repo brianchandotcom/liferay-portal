@@ -147,6 +147,9 @@ test(
 		const vocabularyName = getRandomString();
 		const globalSiteId = await getGlobalSiteId(apiHelpers);
 		const remoteGlobalSiteId = await getGlobalSiteId(remoteApiHelpers);
+		const publishStagingIframe = page.frameLocator(
+			'iframe[title="Staging"]'
+		);
 
 		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
 			groupId: globalSiteId,
@@ -169,17 +172,13 @@ test(
 		});
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: page
-				.frameLocator('iframe[title="Staging"]')
-				.getByRole('button', {name: 'Publish to Live'}),
+			target: publishStagingIframe.getByRole('button', {
+				name: 'Publish to Live',
+			}),
 			trigger: page.getByRole('menuitem', {name: 'Staging'}),
 		});
 
-		await page
-			.frameLocator('iframe[title="Staging"]')
-			.getByText('Successful')
-			.last()
-			.waitFor();
+		await publishStagingIframe.getByText('Successful').last().waitFor();
 		await page.waitForTimeout(200);
 
 		await page.getByLabel('close', {exact: true}).click();
@@ -204,31 +203,23 @@ test(
 			trigger: page.getByLabel('Options'),
 		});
 
-		const checkbox = page
-			.frameLocator('iframe[title="Staging"]')
-			.getByLabel(/Content\s+\d+\s+Deletions/i);
+		const contentCheckbox = publishStagingIframe.getByLabel(
+			/Content\s+\d+\s+Deletions/i
+		);
 		await expect(async () => {
-			await expect(checkbox).not.toBeChecked();
+			await expect(contentCheckbox).not.toBeChecked();
 		}).toPass();
-		await checkbox.check();
+		await contentCheckbox.check();
 
-		await page
-			.frameLocator('iframe[title="Staging"]')
-			.getByLabel('Replicate Individual')
-			.check();
+		await publishStagingIframe.getByLabel('Replicate Individual').check();
 
 		page.once('dialog', (dialog) => {
 			dialog.accept();
 		});
-		await page
-			.frameLocator('iframe[title="Staging"]')
+		await publishStagingIframe
 			.getByRole('button', {name: 'Publish to Live'})
 			.click();
-		await page
-			.frameLocator('iframe[title="Staging"]')
-			.getByText('Successful')
-			.last()
-			.waitFor();
+		await publishStagingIframe.getByText('Successful').last().waitFor();
 		await page.waitForTimeout(200);
 
 		await remotePage.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);

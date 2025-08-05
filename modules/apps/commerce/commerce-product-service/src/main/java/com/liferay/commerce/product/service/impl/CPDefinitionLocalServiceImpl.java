@@ -418,8 +418,8 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public CPDefinition addOrUpdateCPDefinition(
-			String externalReferenceCode, long userId, long groupId,
-			Map<Locale, String> nameMap,
+			String externalReferenceCode, long userId, long cpDefinitionId,
+			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
@@ -451,11 +451,15 @@ public class CPDefinitionLocalServiceImpl
 					externalReferenceCode, serviceContext.getCompanyId());
 
 			if (cProduct != null) {
+				if (cpDefinitionId == 0) {
+					cpDefinitionId = cProduct.getPublishedCPDefinitionId();
+				}
+
 				CPDefinition cpDefinition =
 					cpDefinitionLocalService.updateCPDefinition(
-						cProduct.getPublishedCPDefinitionId(), nameMap,
-						shortDescriptionMap, descriptionMap, urlTitleMap,
-						metaTitleMap, metaDescriptionMap, metaKeywordsMap,
+						cpDefinitionId, nameMap, shortDescriptionMap,
+						descriptionMap, urlTitleMap, metaTitleMap,
+						metaDescriptionMap, metaKeywordsMap,
 						ignoreSKUCombinations, shippable, freeShipping,
 						shipSeparately, shippingExtraPrice, width, height,
 						depth, weight, cpTaxCategoryId, taxExempt,
@@ -475,6 +479,9 @@ public class CPDefinitionLocalServiceImpl
 					deliverySubscriptionTypeSettingsUnicodeProperties,
 					deliveryMaxSubscriptionCycles);
 			}
+		}
+		else {
+			externalReferenceCode = null;
 		}
 
 		return cpDefinitionLocalService.addCPDefinition(
@@ -522,7 +529,7 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return cpDefinitionLocalService.addOrUpdateCPDefinition(
-			externalReferenceCode, userId, groupId, nameMap,
+			externalReferenceCode, userId, 0, groupId, nameMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 			metaDescriptionMap, metaKeywordsMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,

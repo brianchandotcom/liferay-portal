@@ -10,13 +10,13 @@ import React from 'react';
 
 export interface IChartEmptyStateProps {
 	children?: React.ReactNode;
-	description: string;
-	link: {
+	description?: string;
+	link?: {
 		title: string;
 		url: string;
 	};
-	show: boolean;
-	title: string;
+	show?: boolean;
+	title?: string;
 }
 
 const ChartEmptyState: React.FC<IChartEmptyStateProps> = ({
@@ -42,8 +42,8 @@ const ChartEmptyState: React.FC<IChartEmptyStateProps> = ({
 						title={title}
 					/>
 
-					<ClayLink href={link.url} target="_blank">
-						{link.title}
+					<ClayLink href={link?.url} target="_blank">
+						{link?.title}
 					</ClayLink>
 				</div>
 			)}

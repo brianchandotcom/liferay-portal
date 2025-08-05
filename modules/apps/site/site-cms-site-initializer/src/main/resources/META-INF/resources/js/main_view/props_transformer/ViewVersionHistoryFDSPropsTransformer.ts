@@ -6,6 +6,7 @@
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {navigate, sessionStorage, sub} from 'frontend-js-web';
 
+import deleteEntryAction from './actions/deleteEntryAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
 import {executeAsyncItemAction} from './utils/executeAsyncItemAction';
@@ -48,12 +49,14 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 			action,
 			event,
 			itemData,
+			loadData,
 		}: {
-			action: {data: {id: string}};
+			action: {data: {id: string}; href?: string};
 			event: Event;
 			itemData: {
 				actions: {
 					copy: {href: string; method: string};
+					delete: {href: string; method: string};
 				};
 				systemProperties: {
 					version: {
@@ -61,6 +64,7 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 					};
 				};
 			};
+			loadData: () => {};
 		}) {
 			if (action.data.id === 'copy') {
 				event?.preventDefault();
@@ -84,6 +88,27 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 					},
 					showToast: false,
 					url: itemData.actions.copy.href,
+				});
+			}
+			else if (action.data.id === 'delete') {
+				event?.preventDefault();
+
+				deleteEntryAction({
+					bodyHTML: sub(
+						Liferay.Language.get('delete-version-confirmation'),
+						`<strong>${sub(Liferay.Language.get('version-x'), itemData.systemProperties.version.number)}</strong>`,
+						additionalProps.objectEntryTitle
+					),
+					deleteAction: itemData.actions.delete,
+					loadData,
+					successMessage: sub(
+						Liferay.Language.get('delete-version-success-message'),
+						`<strong>${sub(Liferay.Language.get('version-x'), itemData.systemProperties.version.number)}</strong>`
+					),
+					title: sub(
+						Liferay.Language.get('delete-version-x'),
+						itemData.systemProperties.version.number
+					),
 				});
 			}
 		},

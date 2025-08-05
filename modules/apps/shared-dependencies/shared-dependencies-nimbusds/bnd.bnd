@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.shared.dependencies.nimbusds
 Bundle-Version: 1.0.3
 Import-Package:\
 	!com.google.crypto.tink.*,\
+	!com.google.errorprone.annotations.*,\
 	\
 	!javax.servlet.*,\
 	\

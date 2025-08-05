@@ -143,7 +143,7 @@ async function updateListTypeDefinitions(
 async function getObjectFieldSettingsByBusinessType(
 	objectRelationshipId: number,
 	setListTypeDefinitions: (value: ListTypeDefinition[]) => void,
-	setOneToManyObjectRelationship: (value: TObjectRelationship) => void,
+	setObjectRelationship: (value: TObjectRelationship) => void,
 	setReloadPicklistSingleSelect: (value: boolean) => void,
 	setSelectedOutputValue: (value: string) => void,
 	values: Partial<ObjectField>
@@ -176,7 +176,7 @@ async function getObjectFieldSettingsByBusinessType(
 			);
 
 		if (relationshipData.id) {
-			setOneToManyObjectRelationship(relationshipData);
+			setObjectRelationship(relationshipData);
 		}
 	}
 }
@@ -209,7 +209,7 @@ export default function ObjectFieldFormBase({
 	const [listTypeDefinitionsURL, setListTypeDefinitionsURL] =
 		useState<string>('');
 
-	const [oneToManyObjectRelationship, setOneToManyObjectRelationship] =
+	const [objectRelationship, setObjectRelationship] =
 		useState<TObjectRelationship>();
 	const [reloadPicklistSingleSelect, setReloadPicklistSingleSelect] =
 		useState(false);
@@ -305,11 +305,11 @@ export default function ObjectFieldFormBase({
 		}
 
 		if (
-			oneToManyObjectRelationship &&
-			oneToManyObjectRelationship.deletionType !== 'disassociate'
+			objectRelationship &&
+			objectRelationship.deletionType !== 'disassociate'
 		) {
 			return Liferay.FeatureFlags['LPD-34594']
-				? oneToManyObjectRelationship.edge
+				? objectRelationship.edge
 				: false;
 		}
 
@@ -395,7 +395,7 @@ export default function ObjectFieldFormBase({
 			await getObjectFieldSettingsByBusinessType(
 				objectRelationshipId as number,
 				setListTypeDefinitions,
-				setOneToManyObjectRelationship,
+				setObjectRelationship,
 				setReloadPicklistSingleSelect,
 				setSelectedOutputValue,
 				values

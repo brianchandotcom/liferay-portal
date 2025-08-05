@@ -181,8 +181,9 @@ public class FragmentEntryLinkLocalServiceTest {
 			_fragmentEntry.getHtml(), fragmentEntryLink.getHtml());
 
 		Assert.assertEquals(
-			_read("expected-editable-values-light-modified.json"),
-			fragmentEntryLink.getEditableValues());
+			_objectMapper.readTree(
+				_read("expected-editable-values-light-modified.json")),
+			_objectMapper.readTree(fragmentEntryLink.getEditableValues()));
 	}
 
 	@Test(
@@ -693,8 +694,9 @@ public class FragmentEntryLinkLocalServiceTest {
 			configuration, fragmentEntryLink.getConfiguration());
 
 		Assert.assertEquals(
-			_read("expected-editable-values-light-modified.json"),
-			fragmentEntryLink.getEditableValues());
+			_objectMapper.readTree(
+				_read("expected-editable-values-light-modified.json")),
+			_objectMapper.readTree(fragmentEntryLink.getEditableValues()));
 	}
 
 	@Test

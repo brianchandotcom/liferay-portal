@@ -678,8 +678,8 @@ public class PageSpecificationResourceTest
 
 		_modifyPageExperiences(contentPageSpecification.getPageExperiences());
 
-		SettingsTestUtil.modifySettings(
-			serviceContext, contentPageSpecification.getSettings());
+		_modifySettings(
+			contentPageSpecification, serviceContext, layout.isTypeUtility());
 
 		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
@@ -879,6 +879,33 @@ public class PageSpecificationResourceTest
 						dropZonePageElements.toArray(new PageElement[0]));
 				});
 		}
+	}
+
+	private void _modifySettings(
+			PageSpecification pageSpecification, ServiceContext serviceContext,
+			boolean typeUtility)
+		throws Exception {
+
+		if (!typeUtility) {
+			SettingsTestUtil.modifySettings(
+				serviceContext, pageSpecification.getSettings());
+
+			return;
+		}
+
+		pageSpecification.setSettings(
+			() -> new Settings() {
+				{
+					setMasterPageItemExternalReference(
+						() ->
+							SettingsTestUtil.getMasterPageItemExternalReference(
+								serviceContext));
+					setStyleBookItemExternalReference(
+						() ->
+							SettingsTestUtil.getStyleBookItemExternalReference(
+								serviceContext));
+				}
+			});
 	}
 
 	private void _testDeleteSiteSiteByExternalReferenceCodePageSpecification(
@@ -1135,8 +1162,8 @@ public class PageSpecificationResourceTest
 							}
 						}));
 
-		SettingsTestUtil.modifySettings(
-			serviceContext, contentPageSpecification.getSettings());
+		_modifySettings(
+			contentPageSpecification, serviceContext, layout.isTypeUtility());
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			contentPageSpecification,
@@ -1168,8 +1195,8 @@ public class PageSpecificationResourceTest
 					testGroup.getExternalReferenceCode(),
 					pageSpecificationExternalReferenceCode);
 
-		SettingsTestUtil.modifySettings(
-			serviceContext, pageSpecification.getSettings());
+		_modifySettings(
+			pageSpecification, serviceContext, layout.isTypeUtility());
 
 		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
 

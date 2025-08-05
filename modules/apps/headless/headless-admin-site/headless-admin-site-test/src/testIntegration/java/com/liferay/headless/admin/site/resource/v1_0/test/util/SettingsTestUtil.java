@@ -231,6 +231,22 @@ public class SettingsTestUtil {
 				actualSettings.getThemeSpritemapClientExtension()));
 	}
 
+	public static ItemExternalReference getMasterPageItemExternalReference(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
+				serviceContext, WorkflowConstants.STATUS_APPROVED);
+
+		return new ItemExternalReference() {
+			{
+				setExternalReferenceCode(
+					layoutPageTemplateEntry::getExternalReferenceCode);
+			}
+		};
+	}
+
 	public static Settings getSettings(ServiceContext serviceContext) {
 		return new Settings() {
 			{
@@ -247,9 +263,11 @@ public class SettingsTestUtil {
 					});
 				setJavascript(RandomTestUtil::randomString);
 				setMasterPageItemExternalReference(
-					() -> _getMasterPageItemExternalReference(serviceContext));
+					() -> SettingsTestUtil.getMasterPageItemExternalReference(
+						serviceContext));
 				setStyleBookItemExternalReference(
-					() -> _getStyleBookItemExternalReference(serviceContext));
+					() -> SettingsTestUtil.getStyleBookItemExternalReference(
+						serviceContext));
 				setThemeCSSClientExtension(() -> _getClientExtension());
 				setThemeName(() -> "classic_WAR_classictheme");
 				setThemeSettings(
@@ -261,6 +279,25 @@ public class SettingsTestUtil {
 						RandomTestUtil.randomString()
 					).build());
 				setThemeSpritemapClientExtension(() -> _getClientExtension());
+			}
+		};
+	}
+
+	public static ItemExternalReference getStyleBookItemExternalReference(
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			StyleBookEntryLocalServiceUtil.addStyleBookEntry(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(), false, null,
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), serviceContext);
+
+		return new ItemExternalReference() {
+			{
+				setExternalReferenceCode(
+					styleBookEntry::getExternalReferenceCode);
 			}
 		};
 	}
@@ -467,41 +504,6 @@ public class SettingsTestUtil {
 			).buildString());
 
 		return clientExtension;
-	}
-
-	private static ItemExternalReference _getMasterPageItemExternalReference(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
-				serviceContext, WorkflowConstants.STATUS_APPROVED);
-
-		return new ItemExternalReference() {
-			{
-				setExternalReferenceCode(
-					layoutPageTemplateEntry::getExternalReferenceCode);
-			}
-		};
-	}
-
-	private static ItemExternalReference _getStyleBookItemExternalReference(
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		StyleBookEntry styleBookEntry =
-			StyleBookEntryLocalServiceUtil.addStyleBookEntry(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(), false, null,
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(), serviceContext);
-
-		return new ItemExternalReference() {
-			{
-				setExternalReferenceCode(
-					styleBookEntry::getExternalReferenceCode);
-			}
-		};
 	}
 
 	private static UnicodeProperties _getThemeSettingsUnicodeProperties(

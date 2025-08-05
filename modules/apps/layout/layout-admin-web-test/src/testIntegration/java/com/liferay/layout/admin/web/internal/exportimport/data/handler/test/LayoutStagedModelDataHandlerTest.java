@@ -151,6 +151,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -173,6 +174,14 @@ public class LayoutStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@After
+	public void tearDown() throws Exception {
+		_groupLocalService.deleteGroup(stagingGroup);
+		_groupLocalService.deleteGroup(liveGroup);
+
+		super.tearDown();
+	}
 
 	@Test
 	public void testClientExtensionEntries() throws Exception {

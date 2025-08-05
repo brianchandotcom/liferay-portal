@@ -102,7 +102,7 @@ const ProductOptionRadio = ({
 		});
 
 		if (defaultProductOptionValue) {
-			handleChange(selectedProductOption);
+			handleChange(selectedProductOption, json);
 		}
 
 		return () =>
@@ -139,7 +139,7 @@ const ProductOptionRadio = ({
 	const DeliveryCatalogAPIServiceProvider =
 		ServiceProvider.DeliveryCatalogAPI('v1');
 
-	const handleChange = (value) => {
+	const handleChange = (value, json = '') => {
 		if (skuOptionsAtomState.updating) {
 			return;
 		}
@@ -163,7 +163,9 @@ const ProductOptionRadio = ({
 			(productOptionValue) => productOptionValue.key === valueArray[1]
 		);
 
-		let currentSkuOptions = skuOptionsAtomState[skuOptionsKey].slice();
+		let currentSkuOptions = json
+			? JSON.parse(json)
+			: skuOptionsAtomState[skuOptionsKey].slice();
 
 		const currentSkuOption = currentSkuOptions.filter(
 			(skuOption) => skuOption.skuOptionKey === productOption.key

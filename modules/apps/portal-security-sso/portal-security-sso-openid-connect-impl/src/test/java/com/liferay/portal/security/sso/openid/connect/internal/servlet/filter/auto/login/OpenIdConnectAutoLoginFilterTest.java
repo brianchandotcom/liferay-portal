@@ -40,7 +40,7 @@ public class OpenIdConnectAutoLoginFilterTest {
 	public void setUp() throws Exception {
 		_setUpOfflineOpenIdConnectionManager();
 		_setUpOpenIdConnectAuthenticationHandler();
-		_portal = _setUpPortal();
+		_setUpPortal();
 	}
 
 	@Test
@@ -122,28 +122,26 @@ public class OpenIdConnectAutoLoginFilterTest {
 			openIdConnectAuthenticationHandler);
 	}
 
-	private Portal _setUpPortal() {
-		Portal portal = Mockito.mock(Portal.class);
+	private void _setUpPortal() {
+		_portal = Mockito.mock(Portal.class);
 
 		Mockito.doAnswer(
 			invocation -> new String[] {
 				invocation.getArgument(0, String.class), StringPool.BLANK
 			}
 		).when(
-			portal
+			_portal
 		).stripURLAnchor(
 			Mockito.anyString(), Mockito.anyString()
 		);
 
 		PortalUtil portalUtil = new PortalUtil();
 
-		portalUtil.setPortal(portal);
-
-		return portal;
+		portalUtil.setPortal(_portal);
 	}
 
-	private static final OpenIdConnectAutoLoginFilter
-		_openIdConnectAutoLoginFilter = new OpenIdConnectAutoLoginFilter();
-	private static Portal _portal;
+	private final OpenIdConnectAutoLoginFilter _openIdConnectAutoLoginFilter =
+		new OpenIdConnectAutoLoginFilter();
+	private Portal _portal;
 
 }

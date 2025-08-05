@@ -12,7 +12,6 @@ import com.liferay.asset.kernel.service.AssetTagGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetLibrary;
@@ -690,14 +689,13 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		// group creation.
 
 		Role role = _roleLocalService.fetchRole(
-			testDepotEntryGroup.getCompanyId(),
-			DepotRolesConstants.CMS_CONSUMER);
+			testDepotEntryGroup.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		if (role == null) {
 			_roleLocalService.addRole(
 				null, TestPropsValues.getUserId(), null, 0,
-				DepotRolesConstants.CMS_CONSUMER, null, null,
-				RoleConstants.TYPE_DEPOT, null, null);
+				RoleConstants.SITE_MEMBER, null, null,
+				RoleConstants.TYPE_REGULAR, null, null);
 		}
 
 		GroupTestUtil.addGroup(

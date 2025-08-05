@@ -210,30 +210,21 @@ test.describe('Manage object fields through Model Builder', () => {
 		modelBuilderObjectDefinitionNodePage,
 		modelBuilderRightSidebarPage,
 	}) => {
-		const [objectDefinition] = createdEntities.objectDefinitions;
+		const {objectFields} = await mockObjectFields({
+			apiHelpers,
+			objectFieldBusinessTypes: ['text', 'integer'],
+		});
 
-		const objectFieldAPIClient =
-			await apiHelpers.buildRestClient(ObjectFieldAPI);
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
 
-		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
-			objectDefinition.externalReferenceCode,
-			{
-				DBType: 'Integer',
-				label: {
-					en_US: 'intField',
-				},
-
-				listTypeDefinitionId: 0,
-				localized: false,
-				name: 'intField',
-				objectFieldSettings: [],
-				readOnly: 'false',
-				readOnlyConditionExpression: '',
-				required: false,
-				state: false,
-				system: false,
-			}
-		);
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
 
@@ -258,7 +249,7 @@ test.describe('Manage object fields through Model Builder', () => {
 		await expect(
 			modelBuilderDiagramPage.objectDefinitionNodes
 				.filter({hasText: objectDefinition.name})
-				.getByText('intField')
+				.getByText('Integer', {exact: true})
 		).toBeHidden();
 	});
 
@@ -269,46 +260,26 @@ test.describe('Manage object fields through Model Builder', () => {
 		modelBuilderObjectDefinitionNodePage,
 		page,
 	}) => {
-		const {listTypeDefinitionIds} = createdEntities;
+		const {listTypeDefinition, objectFields} = await mockObjectFields({
+			apiHelpers,
+			objectFieldBusinessTypes: ['picklist'],
+		});
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
 		const draftObjectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
 				status: {code: 2},
 			});
 
-		createdEntities.objectDefinitions.push(draftObjectDefinition);
-
-		const listTypeDefinition =
-			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
-
-		listTypeDefinitionIds.push(listTypeDefinition.id);
-
-		let picklistFieldName = 'picklistField' + getRandomInt();
-
-		const objectFieldAPIClient =
-			await apiHelpers.buildRestClient(ObjectFieldAPI);
-
-		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
-			draftObjectDefinition.externalReferenceCode,
-			{
-				DBType: 'String',
-				businessType: 'Picklist',
-				externalReferenceCode: picklistFieldName,
-				indexed: true,
-				indexedAsKeyword: false,
-				indexedLanguageId: '',
-				label: {en_US: picklistFieldName},
-				listTypeDefinitionExternalReferenceCode:
-					listTypeDefinition.externalReferenceCode,
-				listTypeDefinitionId: listTypeDefinition.id,
-				localized: false,
-				name: picklistFieldName,
-				readOnly: 'false',
-				required: false,
-				state: false,
-				system: false,
-			}
-		);
+		apiHelpers.data.push({
+			id: draftObjectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
 
@@ -321,9 +292,9 @@ test.describe('Manage object fields through Model Builder', () => {
 			modelBuilderDiagramPage.objectDefinitionNodes
 		);
 
-		await page.getByText(picklistFieldName).click();
+		await page.getByText('Picklist', {exact: true}).click();
 
-		picklistFieldName = 'picklistField' + getRandomInt();
+		const picklistFieldName = 'picklistField' + getRandomInt();
 
 		await page
 			.getByPlaceholder('Text to translate...')
@@ -333,7 +304,7 @@ test.describe('Manage object fields through Model Builder', () => {
 			draftObjectDefinition.label['en_US']
 		);
 
-		await expect(page.getByText(picklistFieldName)).toBeVisible();
+		await expect(page.getByText(picklistFieldName, {exact: true})).toBeVisible();
 	});
 
 	test('can navigate to picklist portlet through manage picklist button', async ({
@@ -344,30 +315,26 @@ test.describe('Manage object fields through Model Builder', () => {
 		modelBuilderRightSidebarPage,
 		page,
 	}) => {
-		const {listTypeDefinitionIds, objectDefinitions} = createdEntities;
+		const {listTypeDefinition, objectFields} = await mockObjectFields({
+			apiHelpers,
+			objectFieldBusinessTypes: ['picklist'],
+		});
 
-		const [objectDefinition] = objectDefinitions;
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
-		const listTypeDefinition =
-			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
 
-		listTypeDefinitionIds.push(listTypeDefinition.id);
-
-		const objectFieldAPIClient =
-			await apiHelpers.buildRestClient(ObjectFieldAPI);
-
-		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
-			objectDefinition.externalReferenceCode,
-			createObjectFields(
-				'picklist',
-				[{label: 'picklistField', name: 'picklistField'}],
-				{
-					listTypeDefinitionExternalReferenceCode:
-						listTypeDefinition.externalReferenceCode,
-					listTypeDefinitionId: listTypeDefinition.id,
-				}
-			)[0]
-		);
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
 
@@ -380,7 +347,7 @@ test.describe('Manage object fields through Model Builder', () => {
 			modelBuilderDiagramPage.objectDefinitionNodes
 		);
 
-		await page.getByText('picklistField').click();
+		await page.getByText('Picklist', {exact: true}).click();
 
 		const newTabPagePromise = new Promise<Page>((resolve) =>
 			page.once('popup', resolve)

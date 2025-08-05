@@ -843,15 +843,7 @@ public class PortalImpl implements Portal {
 				values = new String[0];
 			}
 			else {
-				values = ArrayUtil.filter(
-					values,
-					s -> {
-						if (s == null) {
-							return false;
-						}
-
-						return true;
-					});
+				values = ArrayUtil.filter(values, s -> s != null);
 			}
 
 			actionResponse.setRenderParameter(actionParameterName, values);

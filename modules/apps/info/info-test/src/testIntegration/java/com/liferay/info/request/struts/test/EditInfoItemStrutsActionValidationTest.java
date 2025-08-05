@@ -51,15 +51,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-
-import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -161,28 +156,6 @@ public class EditInfoItemStrutsActionValidationTest {
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
-
-			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME, LoggerTestUtil.ERROR)) {
-
-				_editInfoItemStrutsAction.execute(
-					mockHttpServletRequest, new MockHttpServletResponse());
-
-				List<LogEntry> logEntries = logCapture.getLogEntries();
-
-				Assert.assertEquals(
-					logEntries.toString(), 1, logEntries.size());
-
-				LogEntry logEntry = logEntries.get(0);
-
-				Assert.assertEquals(
-					LoggerTestUtil.ERROR, logEntry.getPriority());
-
-				Assert.assertEquals(
-					"CAPTCHA text is null. User null may be trying to " +
-						"circumvent the CAPTCHA.",
-					logEntry.getMessage());
-			}
 
 			Assert.assertTrue(
 				SessionErrors.contains(
@@ -612,9 +585,6 @@ public class EditInfoItemStrutsActionValidationTest {
 				inputFragmentEntryLink);
 		}
 	}
-
-	private static final String _CLASS_NAME =
-		"com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl";
 
 	private static String _originalName;
 

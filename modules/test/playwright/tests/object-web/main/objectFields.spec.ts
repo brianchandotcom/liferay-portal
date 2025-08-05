@@ -5,6 +5,7 @@
 
 import {
 	ObjectDefinition,
+	ObjectDefinitionAPI,
 	ObjectFieldAPI,
 	ObjectRelationshipAPI,
 	ObjectValidationRuleAPI,
@@ -1093,6 +1094,66 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		).toBeDisabled();
 	});
 
+	test('cannot delete a custom object relationship field from a system object', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition2} =
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+				'L_USER'
+			);
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinition1.externalReferenceCode,
+				{
+					label: {
+						en_US: 'objectRelationshipLabel' + getRandomInt(),
+					},
+					name: 'objectRelationshipName' + getRandomInt(),
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition1.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition2.externalReferenceCode,
+					objectDefinitionId1: objectDefinition1.id,
+					objectDefinitionId2: objectDefinition2.id,
+					objectDefinitionName2: objectDefinition2.name,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
+
+		await objectFieldsPage.goto('User');
+
+		await expect(
+			page
+				.getByRole('row', {name: objectRelationship.label.en_US})
+				.getByRole('button', {name: 'Actions'})
+		).toBeHidden();
+	});
+
 	test('cannot delete an objectField that belongs to a unique composite key validation through Objects Admin UI', async ({
 		apiHelpers,
 		objectFieldsPage,
@@ -1178,6 +1239,36 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				`The object field "${integerFieldName}" cannot be deleted because it is used in a unique composite key validation. To remove this object field, you must first delete the associated unique composite key validation.`
 			)
 		).toBeVisible();
+	});
+
+	test('cannot delete system fields of system objects', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		await objectFieldsPage.goto('User');
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+				'L_USER'
+			);
+
+		const systemFields = objectDefinition.objectFields.filter((item) => {
+			if (item.system) {
+				return item;
+			}
+		});
+
+		for (const item of systemFields) {
+			await expect(
+				page
+					.getByRole('row', {name: item.label.en_US})
+					.getByRole('button', {name: 'Actions'})
+			).toBeHidden();
+		}
 	});
 
 	test('can only edit external reference code of custom fields through the UI', async ({

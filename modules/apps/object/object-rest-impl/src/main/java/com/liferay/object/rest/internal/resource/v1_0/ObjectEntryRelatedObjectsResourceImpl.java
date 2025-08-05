@@ -51,6 +51,27 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	}
 
 	@Override
+	public void
+			deleteByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				String currentExternalReferenceCode,
+				String objectRelationshipName,
+				String relatedExternalReferenceCode)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		defaultObjectEntryManager.deleteRelatedObjectEntry(
+			relatedExternalReferenceCode,
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName),
+			currentExternalReferenceCode);
+	}
+
+	@Override
 	public void deleteCurrentObjectEntry(
 			Long currentObjectEntryId, String objectRelationshipName,
 			Long relatedObjectEntryId)
@@ -85,8 +106,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 
 		if (objectRelationship.isEdge()) {
 			defaultObjectEntryManager.deleteRelatedObjectEntry(
-				relatedObjectDefinition, relatedObjectEntryId,
-				objectRelationship, currentObjectEntryId);
+				relatedObjectEntryId, objectRelationship, currentObjectEntryId);
 
 			return;
 		}
@@ -101,6 +121,39 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			contextUser.getUserId(),
 			objectRelationship.getObjectRelationshipId(), currentObjectEntryId,
 			relatedObjectEntryId);
+	}
+
+	@Override
+	public Page<Object>
+			getByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNamePage(
+				String currentExternalReferenceCode,
+				String objectRelationshipName, Pagination pagination)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		Page<ObjectEntry> page =
+			defaultObjectEntryManager.getRelatedObjectEntries(
+				_getDTOConverterContext(null), currentExternalReferenceCode,
+				objectRelationship, pagination);
+
+		return Page.of(
+			page.getActions(),
+			transform(
+				page.getItems(),
+				objectEntry -> _getRelatedObjectEntry(
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId2()),
+					objectEntry)),
+			pagination, page.getTotalCount());
 	}
 
 	@Override

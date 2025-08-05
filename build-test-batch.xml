@@ -3153,12 +3153,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							Matcher matcher = pattern.matcher(testClassFilePath);
 
-							if (matcher.find()) {
-								if (testClassFilePath.contains("#")) {
-									return matcher.group(1) + "." + matcher.group(2);
-								}
+							if (matcher.matches()) {
+								testClass = matcher.group(1);
 
-								return matcher.group(1);
+								if (matcher.group(2) != null) {
+									testClass = testClass + "." + matcher.group(2);
+								}
 							}
 
 							return null;

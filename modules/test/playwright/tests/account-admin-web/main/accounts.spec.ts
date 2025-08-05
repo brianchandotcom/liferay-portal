@@ -1629,3 +1629,46 @@ test('LPD-47589 Check delete and deactivate permissions work independently', asy
 
 	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
 });
+
+test(
+	'Phone number and phone extension should display as phone number and phone extension',
+	{tag: ['@LPD-61973']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		editAccountContactInformationPage,
+		editAccountContactPage,
+		editAccountPage,
+		editAccountPhonePage,
+		page,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: 'test',
+			type: 'business',
+		});
+
+		await accountsPage.goto();
+
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
+		await editAccountPage.contactLink.click();
+		await editAccountContactPage.contactInformationLink.click();
+		await editAccountContactInformationPage.addPhoneNumbersButton.click();
+
+		await expect(editAccountPhonePage.extensionLabel).toBeVisible();
+
+		await expect(editAccountPhonePage.numberLabel).toBeVisible();
+
+		await editAccountPhonePage.updatePhoneNumber('111-111-1111');
+
+		await expect(
+			page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
+
+		await expect(
+			editAccountContactInformationPage.phoneExtensionHeader
+		).toBeVisible();
+		await expect(
+			editAccountContactInformationPage.phoneNumberHeader
+		).toBeVisible();
+	}
+);

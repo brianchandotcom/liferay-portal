@@ -265,7 +265,7 @@ public class NotificationQueueEntryResourceImpl
 
 						NotificationHandler notificationHandler =
 							_notificationHandlerTracker.getNotificationHandler(
-								_portal.getClassName(classNameId));
+								_portal.fetchClassName(classNameId));
 
 						if (notificationHandler != null) {
 							return notificationHandler.getTriggerBy(

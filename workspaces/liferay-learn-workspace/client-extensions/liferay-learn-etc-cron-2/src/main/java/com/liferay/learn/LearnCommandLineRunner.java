@@ -33,7 +33,7 @@ public class LearnCommandLineRunner
 				"synchronizationStatus", "InProgress"
 			).toString(),
 			UriComponentsBuilder.fromPath(
-				"/o/c/p2s3examresultssynchronizations/"
+				"/o/c/p2s3examresultssynchronizations"
 			).build(
 			).toUri());
 	}

@@ -16,7 +16,7 @@
 	</ul>
 </nav>
 
-<div class="page-container d-flex">
+<div class="d-flex page-container">
 	<div class="main-container my-3">
 		<div class="header">
 			<div class="asset-info d-flex">
@@ -178,11 +178,6 @@
 		}
 	}
 
-	html {
-		scroll-behavior: smooth;
-		scroll-padding-top: 11.25rem;
-	}
-
 	.learn-breadcrumb {
 		align-items: center;
 		display: flex;
@@ -263,6 +258,11 @@
 		list-style: none;
 		margin: 0;
 		padding-left: 0;
+	}
+
+	html {
+		scroll-behavior: smooth;
+		scroll-padding-top: 11.25rem;
 	}
 
 	@media (max-width:1024px) {

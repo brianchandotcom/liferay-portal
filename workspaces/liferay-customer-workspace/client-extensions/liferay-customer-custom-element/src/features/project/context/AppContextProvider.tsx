@@ -266,7 +266,6 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 				query: getAccountSubscriptionGroups,
 				variables: {
 					filter: `accountKey eq '${accountKey}'`,
-					sort: 'name:asc',
 				},
 			});
 

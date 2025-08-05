@@ -81,7 +81,19 @@ const SideMenu = () => {
 
 	const accountSubscriptionGroupsMenuItem = useMemo(
 		() =>
-			activationSubscriptionGroups?.map(
+			activationSubscriptionGroups?.sort(
+				(a, b) => {
+					const aDisplayName = a.activationProductName
+						? a.activationProductName
+						: a.name;
+
+					const bDisplayName = b.activationProductName
+						? b.activationProductName
+						: b.name;
+
+					return aDisplayName.localeCompare(bDisplayName);
+				}
+			).map(
 				({activationProductName, name}, index) => {
 					const displayName = activationProductName
 						? activationProductName

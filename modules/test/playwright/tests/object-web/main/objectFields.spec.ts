@@ -304,7 +304,9 @@ test.describe('Manage object fields through Model Builder', () => {
 			draftObjectDefinition.label['en_US']
 		);
 
-		await expect(page.getByText(picklistFieldName, {exact: true})).toBeVisible();
+		await expect(
+			page.getByText(picklistFieldName, {exact: true})
+		).toBeVisible();
 	});
 
 	test('can navigate to picklist portlet through manage picklist button', async ({
@@ -1235,55 +1237,58 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		);
 	});
 
-	test('LPD-53450 can delete created custom fields in a System Object', async ({
-		apiHelpers,
-		objectFieldsPage,
-		page,
-	}) => {
-		const objectDefinitionField =
-			await apiHelpers.buildRestClient(ObjectFieldAPI);
+	test(
+		'can delete created custom fields in a System Object',
+		{tag: ['@LPD-53450']},
+		async ({apiHelpers, objectFieldsPage, page}) => {
+			const objectDefinitionField =
+				await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		const fieldName = 'Custom Field';
+			const fieldName = 'Custom Field';
 
-		const {items} = await apiHelpers.objectAdmin.getAllObjectDefinitions();
+			const {items} =
+				await apiHelpers.objectAdmin.getAllObjectDefinitions();
 
-		const systemObjectDefinition = items.find((item: ObjectDefinition) => {
-			return item.system === true;
-		});
+			const systemObjectDefinition = items.find(
+				(item: ObjectDefinition) => {
+					return item.system === true;
+				}
+			);
 
-		await objectDefinitionField.postObjectDefinitionObjectField(
-			systemObjectDefinition.id,
-			{
-				DBType: 'String',
-				businessType: 'Text',
-				indexed: true,
-				label: {en_US: fieldName},
-				localized: false,
-				name: 'customField',
-				readOnly: 'false',
-				required: false,
-				state: false,
-			}
-		);
+			await objectDefinitionField.postObjectDefinitionObjectField(
+				systemObjectDefinition.id,
+				{
+					DBType: 'String',
+					businessType: 'Text',
+					indexed: true,
+					label: {en_US: fieldName},
+					localized: false,
+					name: 'customField',
+					readOnly: 'false',
+					required: false,
+					state: false,
+				}
+			);
 
-		await objectFieldsPage.goto(systemObjectDefinition.label.en_US);
+			await objectFieldsPage.goto(systemObjectDefinition.label.en_US);
 
-		await page
-			.getByRole('row')
-			.filter({hasText: fieldName})
-			.getByRole('button', {name: 'Actions'})
-			.click();
+			await page
+				.getByRole('row')
+				.filter({hasText: fieldName})
+				.getByRole('button', {name: 'Actions'})
+				.click();
 
-		await objectFieldsPage.deleteObjectFieldOption.click();
+			await objectFieldsPage.deleteObjectFieldOption.click();
 
-		await page.getByRole('button', {name: 'Delete'}).click();
+			await page.getByRole('button', {name: 'Delete'}).click();
 
-		await expect(page.locator('.alert-success')).toBeVisible();
+			await expect(page.locator('.alert-success')).toBeVisible();
 
-		await expect(
-			page.getByRole('row').filter({hasText: fieldName})
-		).toHaveCount(0);
-	});
+			await expect(
+				page.getByRole('row').filter({hasText: fieldName})
+			).toHaveCount(0);
+		}
+	);
 
 	test('navigates to documentation from the "unsupported translations" alert link', async ({
 		apiHelpers,

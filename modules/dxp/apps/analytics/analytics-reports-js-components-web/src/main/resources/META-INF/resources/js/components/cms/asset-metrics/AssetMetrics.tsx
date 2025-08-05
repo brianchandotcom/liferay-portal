@@ -16,10 +16,6 @@ import {assetMetrics} from '../../../utils/metrics';
 import {AssetMetricsChart} from './AssetMetricsChart';
 import {AssetMetricsTableView} from './AssetMetricsTableView';
 
-type HistogramApiResponse = {
-	histograms: Histogram[];
-};
-
 export type Histogram = {
 	metricName: string;
 	metrics: {
@@ -91,8 +87,9 @@ const AssetMetrics = () => {
 
 			const endpoint = `/o/analytics-cms-rest/v1.0/object-entry-histogram-metric${queryParams}`;
 
-			const {data, error} =
-				await ApiHelper.get<HistogramApiResponse>(endpoint);
+			const {data, error} = await ApiHelper.get<{
+				histograms: Histogram[];
+			}>(endpoint);
 
 			if (error) {
 				console.error(error);

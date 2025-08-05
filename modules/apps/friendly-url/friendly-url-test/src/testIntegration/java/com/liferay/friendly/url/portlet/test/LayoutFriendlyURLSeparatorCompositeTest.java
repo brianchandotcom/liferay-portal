@@ -10,11 +10,14 @@ import com.liferay.friendly.url.test.util.configuration.manager.FriendlyURLSepar
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -29,6 +32,7 @@ import java.util.HashMap;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,6 +51,13 @@ public class LayoutFriendlyURLSeparatorCompositeTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() {
+		ReflectionTestUtil.setFieldValue(
+			FriendlyURLResolverRegistryUtil.class, "_urlSeparators",
+			_urlSeparators);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
@@ -58,6 +69,8 @@ public class LayoutFriendlyURLSeparatorCompositeTest {
 	@After
 	public void tearDown() throws Exception {
 		ServiceContextThreadLocal.popServiceContext();
+
+		_urlSeparators.remove();
 	}
 
 	@Test
@@ -118,6 +131,11 @@ public class LayoutFriendlyURLSeparatorCompositeTest {
 			urlSeparator,
 			layoutFriendlyURLSeparatorComposite.getURLSeparator());
 	}
+
+	private static final ThreadLocal<String[]> _urlSeparators =
+		new CentralizedThreadLocal<>(
+			FriendlyURLResolverRegistryUtil.class.getName() +
+				"._urlSeparators");
 
 	@DeleteAfterTestRun
 	private Group _group;

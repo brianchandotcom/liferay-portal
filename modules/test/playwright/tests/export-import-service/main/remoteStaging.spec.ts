@@ -16,6 +16,10 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {remotePageTest} from '../../../fixtures/remotePageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getGlobalSiteId from '../../../utils/getGlobalSiteId';
+import getRandomString from '../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
@@ -133,5 +137,103 @@ test(
 		await expect(
 			remotePage.getByText('WC WebContent Content')
 		).toBeVisible();
+	}
+);
+
+test(
+	'Can publish vocabulary deletion from the Global Site using remote staging',
+	{tag: ['@LPS-89981', '@LPS-88298']},
+	async ({apiHelpers, page, remoteApiHelpers, remotePage}) => {
+		const vocabularyName = getRandomString();
+		const globalSiteId = await getGlobalSiteId(apiHelpers);
+		const remoteGlobalSiteId = await getGlobalSiteId(remoteApiHelpers);
+
+		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
+			groupId: globalSiteId,
+			remoteGroupId: remoteGlobalSiteId,
+			remotePort,
+		});
+		await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
+			name: vocabularyName,
+			siteId: globalSiteId,
+		});
+
+		await page.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('menuitem', {name: 'Staging'}),
+			trigger: page.getByLabel('Options'),
+		});
+
+		page.once('dialog', (dialog) => {
+			dialog.accept();
+		});
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.frameLocator('iframe[title="Staging"]')
+				.getByRole('button', {name: 'Publish to Live'}),
+			trigger: page.getByRole('menuitem', {name: 'Staging'}),
+		});
+
+		await page
+			.frameLocator('iframe[title="Staging"]')
+			.getByText('Successful')
+			.last()
+			.waitFor();
+		await page.waitForTimeout(200);
+
+		await page.getByLabel('close', {exact: true}).click();
+
+		await remotePage.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
+		await expect(
+			remotePage.getByRole('menuitem', {name: vocabularyName})
+		).toBeVisible();
+
+		await page.getByLabel('Show Actions').first().click();
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+		await page
+			.frameLocator('iframe[title="Delete Vocabulary"]')
+			.getByLabel('Select All Items on the Page')
+			.check();
+		await page.getByRole('button', {name: 'Delete'}).click();
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Staging'}),
+			trigger: page.getByLabel('Options'),
+		});
+
+		const checkbox = page
+			.frameLocator('iframe[title="Staging"]')
+			.getByLabel(/Content\s+\d+\s+Deletions/i);
+		await expect(async () => {
+			await expect(checkbox).not.toBeChecked();
+		}).toPass();
+		await checkbox.check();
+
+		await page
+			.frameLocator('iframe[title="Staging"]')
+			.getByLabel('Replicate Individual')
+			.check();
+
+		page.once('dialog', (dialog) => {
+			dialog.accept();
+		});
+		await page
+			.frameLocator('iframe[title="Staging"]')
+			.getByRole('button', {name: 'Publish to Live'})
+			.click();
+		await page
+			.frameLocator('iframe[title="Staging"]')
+			.getByText('Successful')
+			.last()
+			.waitFor();
+		await page.waitForTimeout(200);
+
+		await remotePage.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
+		await expect(
+			remotePage.getByRole('menuitem', {name: vocabularyName})
+		).toBeHidden();
 	}
 );

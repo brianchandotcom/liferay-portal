@@ -75,6 +75,13 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			ObjectRelationship objectRelationship, long parentObjectEntryId)
 		throws Exception;
 
+	public void deleteRelatedObjectEntry(
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship,
+			ObjectDefinition parentObjectDefinition,
+			String parentExternalReferenceCode)
+		throws Exception;
+
 	public void disassociateRelatedModels(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,

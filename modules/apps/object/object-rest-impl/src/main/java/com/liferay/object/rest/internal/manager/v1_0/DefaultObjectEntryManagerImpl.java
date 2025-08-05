@@ -397,29 +397,31 @@ public class DefaultObjectEntryManagerImpl
 			ObjectRelationship objectRelationship, long parentObjectEntryId)
 		throws Exception {
 
+		_deleteRelateObjectEntry(
+			objectDefinition, _objectEntryService.getObjectEntry(objectEntryId),
+			objectRelationship, parentObjectEntryId);
+	}
+
+	@Override
+	public void deleteRelatedObjectEntry(
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship,
+			ObjectDefinition parentObjectDefinition,
+			String parentExternalReferenceCode)
+		throws Exception {
+
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(objectEntryId);
+			_objectEntryService.getObjectEntry(
+				parentExternalReferenceCode,
+				getGroupId(parentObjectDefinition, null),
+				parentObjectDefinition.getObjectDefinitionId());
 
-		_checkObjectEntryObjectDefinitionId(
-			objectDefinition, serviceBuilderObjectEntry);
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
-
-		if (!Objects.equals(
-				MapUtil.getLong(
-					serviceBuilderObjectEntry.getValues(),
-					objectField.getName()),
-				parentObjectEntryId)) {
-
-			throw new NoSuchObjectEntryException(
-				StringBundler.concat(
-					"No ObjectEntry exists with the key {",
-					objectField.getName(), "=", parentObjectEntryId,
-					", objectEntryId=", objectEntryId, "}"));
-		}
-
-		_objectEntryService.deleteObjectEntry(objectEntryId);
+		_deleteRelateObjectEntry(
+			objectDefinition,
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, getGroupId(objectDefinition, null),
+				objectDefinition.getObjectDefinitionId()),
+			objectRelationship, serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	@Override
@@ -1635,6 +1637,31 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext.getUserId(), serviceBuilderObjectEntry,
 			ServiceContextUtil.createServiceContext(
 				serviceBuilderObjectEntry.getObjectEntryId()));
+	}
+
+	private void _deleteRelateObjectEntry(
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry,
+			ObjectRelationship objectRelationship, long parentObjectEntryId)
+		throws Exception {
+
+		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		if (!Objects.equals(
+				MapUtil.getLong(objectEntry.getValues(), objectField.getName()),
+				parentObjectEntryId)) {
+
+			throw new NoSuchObjectEntryException(
+				StringBundler.concat(
+					"No ObjectEntry exists with the key {",
+					objectField.getName(), "=", parentObjectEntryId,
+					", objectEntryId=", objectEntry.getObjectEntryId(), "}"));
+		}
+
+		_objectEntryService.deleteObjectEntry(objectEntry.getObjectEntryId());
 	}
 
 	private void _disassociateRelatedModels(

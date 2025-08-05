@@ -51,6 +51,34 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	}
 
 	@Override
+	public void
+			deleteByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				String currentExternalReferenceCode,
+				String objectRelationshipName,
+				String relatedExternalReferenceCode)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		defaultObjectEntryManager.deleteRelatedObjectEntry(
+			relatedExternalReferenceCode,
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2()),
+			objectRelationship,
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1()),
+			currentExternalReferenceCode);
+	}
+
+	@Override
 	public void deleteCurrentObjectEntry(
 			Long currentObjectEntryId, String objectRelationshipName,
 			Long relatedObjectEntryId)

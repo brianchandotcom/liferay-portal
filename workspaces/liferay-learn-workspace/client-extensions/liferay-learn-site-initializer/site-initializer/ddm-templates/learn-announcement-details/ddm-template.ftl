@@ -1,4 +1,4 @@
-<div class="breadcrumb-container">
+<nav class="breadcrumb-container">
 	<ul aria-label="breadcrumb navigation" class="learn-breadcrumb" role="navigation">
 		<li>
 			<a href="/">
@@ -14,7 +14,7 @@
 			${ObjectField_title.getData()}
 		</li>
 	</ul>
-</div>
+</nav>
 
 <div class="page-container d-flex">
 	<div class="main-container my-3">
@@ -51,7 +51,7 @@
 				${ObjectField_content.getData()}
 			</#if>
 			<#if (.data_model["ObjectField_35642960#previewURL"].getData())?? && .data_model["ObjectField_35642960#previewURL"].getData() !="">
-				<img src="${.data_model["ObjectField_35642960#previewURL"].getData()}" />
+				<img alt="Image Preview" src="${.data_model["ObjectField_35642960#previewURL"].getData()}" />
 			</#if>
 		</div>
 	</div>
@@ -101,7 +101,6 @@
 	.admonion-container {
 		border-radius: var(--border-radius-lg);
 		margin-bottom: 1.5rem;
-		margin-right: 1rem;
 		padding: 1.5rem;
 
 		p {

@@ -90,9 +90,10 @@ public class SortTranslatorTest {
 
 	private void _assertSort(
 		String expectedFieldName, SortOrder expectedSortOrder,
-		List<SortBuilder<?>> sorts) {
+		List<SortBuilder<?>> sortBuilders) {
 
-		FieldSortBuilder fieldSortBuilder = (FieldSortBuilder)sorts.get(0);
+		FieldSortBuilder fieldSortBuilder = (FieldSortBuilder)sortBuilders.get(
+			0);
 
 		Assert.assertEquals(expectedFieldName, fieldSortBuilder.getFieldName());
 		Assert.assertEquals(expectedSortOrder, fieldSortBuilder.order());

@@ -101,7 +101,7 @@ public class SearchSolrQueryAssemblerImplTest {
 	}
 
 	private void _assertSort(
-		String expectedItem, SolrQuery.ORDER expectedOrder,
+		String expectedFieldName, SolrQuery.ORDER expectedOrder,
 		SearchSearchRequest searchSearchRequest) {
 
 		SolrQuery solrQuery = new SolrQuery();
@@ -112,7 +112,7 @@ public class SearchSolrQueryAssemblerImplTest {
 
 		SolrQuery.SortClause sort = sorts.get(0);
 
-		Assert.assertEquals(expectedItem, sort.getItem());
+		Assert.assertEquals(expectedFieldName, sort.getItem());
 		Assert.assertEquals(expectedOrder, sort.getOrder());
 	}
 

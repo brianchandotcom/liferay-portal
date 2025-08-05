@@ -7,7 +7,6 @@ package com.liferay.learn;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.time.OffsetDateTime;
@@ -223,10 +222,8 @@ public class ObjectActionExamResultsSynchronizationRestController
 				put(
 					_getAuthorization(), _getPayload(jsonObject1),
 					UriComponentsBuilder.fromPath(
-						StringBundler.concat(
-							"/o/c/p2s3examresults",
-							"/by-external-reference-code/",
-							jsonObject1.getLong("id"))
+						"/o/c/p2s3examresults/by-external-reference-code/" +
+							jsonObject1.getLong("id")
 					).build(
 					).toUri()));
 

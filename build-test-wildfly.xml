@@ -65,12 +65,4 @@
 
 		<lstopwatch action="total" name="setup.jboss" />
 	</target>
-
-	<target name="stop-wildfly-playwright">
-		<lstopwatch action="start" name="setup.jboss" />
-
-		<antcall target="stop-app-server" />
-
-		<lstopwatch action="total" name="setup.jboss" />
-	</target>
 </project>

@@ -219,10 +219,9 @@ public class UserManagerImpl implements UserManager {
 		catch (AbstractCharonException abstractCharonException) {
 			ReflectionUtil.throwException(abstractCharonException);
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			throw new CharonException(
-				"Unable to delete user with user ID " + userId,
-				portalException);
+				"Unable to delete user with user ID " + userId, exception);
 		}
 	}
 
@@ -239,9 +238,6 @@ public class UserManagerImpl implements UserManager {
 					CompanyThreadLocal.getCompanyId(),
 					userGroup.getUserGroupId()),
 				userGroup);
-		}
-		catch (AbstractCharonException abstractCharonException) {
-			return ReflectionUtil.throwException(abstractCharonException);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -273,9 +269,6 @@ public class UserManagerImpl implements UserManager {
 					CompanyThreadLocal.getCompanyId(),
 					GetterUtil.getLong(scimUser.getId())),
 				scimUser);
-		}
-		catch (AbstractCharonException abstractCharonException) {
-			return ReflectionUtil.throwException(abstractCharonException);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -1033,7 +1026,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	private ScimUser _getScimUser(long companyId, long userId)
-		throws AbstractCharonException {
+		throws Exception {
 
 		com.liferay.portal.kernel.model.User portalUser = null;
 

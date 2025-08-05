@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
@@ -477,19 +478,19 @@ public class BatchEnginePortletDataHandlerTest {
 			false, false, larFile1, group.getGroupId(), objectDefinition);
 
 		_assertObjectEntries(
-			objectDefinition.getObjectDefinitionId(), objectEntries);
+			false, objectDefinition.getObjectDefinitionId(), objectEntries);
 
 		_importLayouts(
 			false, false, larFile2, group.getGroupId(), objectDefinition);
 
 		_assertObjectEntries(
-			objectDefinition.getObjectDefinitionId(), objectEntries);
+			false, objectDefinition.getObjectDefinitionId(), objectEntries);
 
 		_importLayouts(
 			true, false, larFile2, group.getGroupId(), objectDefinition);
 
 		_assertObjectEntries(
-			objectDefinition.getObjectDefinitionId(), objectEntries[2]);
+			false, objectDefinition.getObjectDefinitionId(), objectEntries[2]);
 		_assertNull(
 			objectDefinition.getObjectDefinitionId(), objectEntries[0],
 			objectEntries[1]);
@@ -715,7 +716,8 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private void _assertObjectEntries(
-			long objectDefinitionId, ObjectEntry... objectEntries)
+			boolean empty, long objectDefinitionId,
+			ObjectEntry... objectEntries)
 		throws Exception {
 
 		for (ObjectEntry objectEntry : objectEntries) {
@@ -723,6 +725,14 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntryLocalService.getObjectEntry(
 					objectEntry.getExternalReferenceCode(),
 					objectEntry.getGroupId(), objectDefinitionId);
+
+			if (empty) {
+				Assert.assertEquals(
+					WorkflowConstants.STATUS_EMPTY,
+					importedObjectEntry.getStatus());
+
+				return;
+			}
 
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 				MapUtil.getLong(
@@ -963,7 +973,7 @@ public class BatchEnginePortletDataHandlerTest {
 			false, false, larFile, group.getGroupId(), objectDefinition);
 
 		_assertObjectEntries(
-			objectDefinition.getObjectDefinitionId(), objectEntries);
+			false, objectDefinition.getObjectDefinitionId(), objectEntries);
 	}
 
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA =

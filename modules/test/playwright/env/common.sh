@@ -660,7 +660,7 @@ function stop_app_server {
 	then
 		cd ${_PORTAL_PROJECT_DIR}
 
-		ant -f build-test-wildfly.xml stop-wildfly-playwright
+		ant -f build-test.xml stop-app-server
 	elif [[ "${APP_SERVER_TYPE}" == "tomcat" ]]
 	then
 		/bin/bash shutdown.sh &

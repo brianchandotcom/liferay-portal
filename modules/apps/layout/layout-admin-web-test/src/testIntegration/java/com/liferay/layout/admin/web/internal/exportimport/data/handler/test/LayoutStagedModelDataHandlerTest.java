@@ -6,10 +6,19 @@
 package com.liferay.layout.admin.web.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
@@ -23,12 +32,18 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.exportimport.kernel.service.ExportImportServiceUtil;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
@@ -46,8 +61,10 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -89,6 +106,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -121,6 +139,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -131,6 +150,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
@@ -143,8 +163,12 @@ import com.liferay.template.test.util.TemplateTestUtil;
 import jakarta.portlet.Portlet;
 import jakarta.portlet.PortletPreferences;
 
+import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -687,6 +711,196 @@ public class LayoutStagedModelDataHandlerTest
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layout);
+	}
+
+	@Test
+	@TestInfo("LPD-62221")
+	public void testImportDoesNotFailWithMissingMasterLayout()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		Layout masterLayout = _addMasterLayout(serviceContext);
+
+		String className = "com.liferay.journal.model.JournalArticle";
+
+		long classNameId = _portal.getClassNameId(className);
+		long classTypeId = _getClassTypeId(className, group.getGroupId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry1 = _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, serviceContext.getUserId(),
+			serviceContext.getScopeGroupId(), 0, null,
+			classNameId, classTypeId, RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, masterLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry2 = _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, serviceContext.getUserId(),
+			serviceContext.getScopeGroupId(), 0, null,
+			classNameId, classTypeId, RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, masterLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		JournalArticle journalArticle1 = _addJournalArticle(RandomTestUtil.randomString(), group);
+		JournalArticle journalArticle2 = _addJournalArticle(RandomTestUtil.randomString(), group);
+
+		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+				TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+				journalArticle1.getResourcePrimKey(),
+				layoutPageTemplateEntry1.getLayoutPageTemplateEntryId(),
+				AssetDisplayPageConstants.TYPE_SPECIFIC, new ServiceContext());
+
+		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+				TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+				journalArticle2.getResourcePrimKey(),
+				layoutPageTemplateEntry2.getLayoutPageTemplateEntryId(),
+				AssetDisplayPageConstants.TYPE_SPECIFIC, new ServiceContext());
+
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				group.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL,
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
+
+		_assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
+			assetListEntry.getAssetListEntryId(), assetEntry2.getEntryId(),
+			SegmentsEntryConstants.ID_DEFAULT, serviceContext);
+
+		Layout layout =
+			_layoutLocalService.getLayout(layoutPageTemplateEntry1.getPlid());
+
+		String portletId = LayoutTestUtil.addPortletToLayout(
+			layout, AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			_getPreferenceMap(
+				assetListEntry.getExternalReferenceCode(), null));
+
+		File file = _exportLayouts(group.getGroupId(), new long[] {}, getParameterMap());
+
+		Group group2 = GroupTestUtil.addGroup();
+		_importLayouts(file, group2.getGroupId(), getParameterMap());
+	}
+
+	protected File _exportLayouts(
+		long groupId, long[] layoutIds, Map<String, String[]> parameterMap)
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportLayoutSettingsMap(
+					user, groupId, false, layoutIds,
+					parameterMap);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					exportLayoutSettingsMap);
+
+		return ExportImportServiceUtil.exportLayoutsAsFile(
+			exportImportConfiguration);
+	}
+
+	public void _importLayouts(File file, long groupId,
+		Map<String, String[]> parameterMap)
+		throws Exception {
+
+			User user = TestPropsValues.getUser();
+
+			Map<String, Serializable> importLayoutSettingsMap =
+				ExportImportConfigurationSettingsMapFactoryUtil.
+					buildImportLayoutSettingsMap(
+						user, groupId, false, null,
+						parameterMap);
+
+			ExportImportConfiguration exportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					addExportImportConfiguration(
+						user.getUserId(), groupId,
+						StringPool.BLANK, StringPool.BLANK,
+						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+						importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
+						new ServiceContext());
+
+			ExportImportServiceUtil.importLayouts(
+				exportImportConfiguration, file);
+	}
+
+	private Map<String, String[]> _getPreferenceMap(
+		String assetListEntryExternalReferenceCode,
+		String assetListEntryGroupExternalReferenceCode) {
+
+		return HashMapBuilder.put(
+			"assetListEntryExternalReferenceCode",
+			() -> {
+				if (Validator.isNull(assetListEntryExternalReferenceCode)) {
+					return null;
+				}
+
+				return new String[] {assetListEntryExternalReferenceCode};
+			}
+		).put(
+			"assetListEntryGroupExternalReferenceCode",
+			() -> {
+				if (Validator.isNull(
+					assetListEntryGroupExternalReferenceCode)) {
+
+					return null;
+				}
+
+				return new String[] {assetListEntryGroupExternalReferenceCode};
+			}
+		).put(
+			"selectionStyle", new String[] {"asset-list"}
+		).build();
+	}
+
+	private AssetEntry _getAssetEntry(JournalArticle journalArticle)
+		throws Exception {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
+		return assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+	}
+
+	private long _getClassTypeId(String className, long groupId) {
+		InfoItemFormVariation infoItemFormVariation =
+			_getFirstInfoItemFormVariation(className, groupId);
+
+		return GetterUtil.getLong(infoItemFormVariation.getKey());
+	}
+
+	private InfoItemFormVariation _getFirstInfoItemFormVariation(
+		String className, long groupId) {
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class, className);
+
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
+			infoItemFormVariationsProvider.getInfoItemFormVariations(
+				groupId));
+
+		Assert.assertFalse(infoItemFormVariations.isEmpty());
+
+		infoItemFormVariations.sort(
+			Comparator.comparing(InfoItemFormVariation::getKey));
+
+		return infoItemFormVariations.get(0);
 	}
 
 	@Test
@@ -2377,6 +2591,13 @@ public class LayoutStagedModelDataHandlerTest
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
+
+	@Inject
+	private AssetListEntryAssetEntryRelLocalService _assetListEntryAssetEntryRelLocalService;
+
+	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Inject
@@ -2403,6 +2624,9 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Inject
 	private DLURLHelper _dlURLHelper;
+
+	@Inject
+	private ExportImportLocalService _exportImportLocalService;
 
 	@Inject
 	private FragmentCollectionContributorRegistry

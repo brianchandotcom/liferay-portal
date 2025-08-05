@@ -46,14 +46,7 @@ export function executeAsyncItemAction({
 	return fetch(url, requestOptions)
 		.then((response) => {
 			if (!response.ok) {
-				openToast({
-					message: errorMessage || DEFAULT_ERROR,
-					type: 'danger',
-				});
-
-				setActionItemLoading?.(false);
-
-				throw DEFAULT_ERROR;
+				throw new Error(DEFAULT_ERROR);
 			}
 
 			return response.json();
@@ -74,9 +67,7 @@ export function executeAsyncItemAction({
 		})
 		.catch(() => {
 			openToast({
-				message:
-					errorMessage ||
-					Liferay.Language.get('an-unexpected-error-occurred'),
+				message: errorMessage || DEFAULT_ERROR,
 				type: 'danger',
 			});
 

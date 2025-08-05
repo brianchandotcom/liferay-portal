@@ -28,12 +28,16 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -235,6 +239,29 @@ public class BatchEnginePortletDataHandlerTest {
 				batchEngineImportTask -> Objects.equals(
 					batchEngineImportTask.getTaskItemDelegateName(),
 					objectDefinition.getName())));
+	}
+
+	@Test
+	public void testExportImportObjectEntriesWithRelatedObjectEntries()
+		throws Exception {
+
+		_testExportImportObjectEntriesWithRelatedObjectEntries(
+			_stagingGroupHelper.fetchCompanyGroup(
+				TestPropsValues.getCompanyId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_testExportImportObjectEntriesWithRelatedObjectEntries(
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testExportImportObjectEntriesWithRelatedObjectEntries(
+			_stagingGroupHelper.fetchCompanyGroup(
+				TestPropsValues.getCompanyId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_testExportImportObjectEntriesWithRelatedObjectEntries(
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE,
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 	}
 
 	@Ignore("LPD-40798")
@@ -976,6 +1003,59 @@ public class BatchEnginePortletDataHandlerTest {
 			false, objectDefinition.getObjectDefinitionId(), objectEntries);
 	}
 
+	private void _testExportImportObjectEntriesWithRelatedObjectEntries(
+			Group group, String scope, String type)
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 = _addObjectDefinition(scope);
+		ObjectDefinition objectDefinition2 = _addObjectDefinition(scope);
+
+		ObjectEntry[] objectEntries1 = _addObjectEntries(
+			3, _getObjectEntryGroupId(group.getGroupId(), scope),
+			objectDefinition1);
+		ObjectEntry[] objectEntries2 = _addObjectEntries(
+			3, _getObjectEntryGroupId(group.getGroupId(), scope),
+			objectDefinition2);
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition1,
+				objectDefinition2,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				StringUtil.randomId(), type);
+
+		for (int i = 0; i < objectEntries1.length; i++) {
+			ObjectRelationshipTestUtil.relateObjectEntries(
+				objectEntries1[i].getPrimaryKey(),
+				objectEntries2[i].getPrimaryKey(), objectRelationship,
+				TestPropsValues.getUserId());
+		}
+
+		// TODO: Export both portlets at once after LPD-62165 is fixed
+
+		File larFile1 = _exportLayouts(
+			false, group.getGroupId(), false, new long[0], objectDefinition1);
+		File larFile2 = _exportLayouts(
+			false, group.getGroupId(), false, new long[0], objectDefinition2);
+
+		_deleteObjectEntries(objectEntries1);
+		_deleteObjectEntries(objectEntries2);
+
+		_importLayouts(
+			false, false, larFile2, group.getGroupId(), objectDefinition2);
+
+		_assertObjectEntries(
+			false, objectDefinition2.getObjectDefinitionId(), objectEntries2);
+		_assertObjectEntries(
+			true, objectDefinition1.getObjectDefinitionId(), objectEntries1);
+
+		_importLayouts(
+			false, false, larFile1, group.getGroupId(), objectDefinition1);
+
+		_assertObjectEntries(
+			false, objectDefinition1.getObjectDefinitionId(), objectEntries1);
+	}
+
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA =
 		"x" + RandomTestUtil.randomString();
 
@@ -1021,6 +1101,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
 	private SAXReader _saxReader;

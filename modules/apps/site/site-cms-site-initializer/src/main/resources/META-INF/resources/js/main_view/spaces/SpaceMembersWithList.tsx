@@ -341,7 +341,7 @@ export function SpaceMembersWithList({
 
 			<ul
 				aria-labelledby={listLabelId}
-				className="c-mt-3 c-p-0 members-list"
+				className="c-mt-3 c-p-0 list-unstyled members-list"
 			>
 				{selectedOption === SelectOptions.USERS ? (
 					<MembersListItem

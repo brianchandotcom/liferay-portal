@@ -92,7 +92,7 @@ const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 
 	return (
 		<ClayLayout.Row className="m-2 m-md-4">
-			<ClayLayout.Col className="col px-md-4 px-xl-9" lg={6}>
+			<ClayLayout.Col className="px-md-4 px-xl-9" lg={6}>
 				<NewSpaceFormSection
 					description={Liferay.Language.get(
 						'spaces-are-essential-for-organizing-defining-and-managing-your-content-and-files'
@@ -137,7 +137,7 @@ const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 				</NewSpaceFormSection>
 			</ClayLayout.Col>
 
-			<ClayLayout.Col className="col d-lg-flex d-none" lg={6}>
+			<ClayLayout.Col className="d-lg-flex d-none" lg={6}>
 				<div className="border overflow-hidden rounded-lg">
 					<img
 						alt=""

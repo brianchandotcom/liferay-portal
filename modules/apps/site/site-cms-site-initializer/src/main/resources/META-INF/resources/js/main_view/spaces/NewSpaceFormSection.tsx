@@ -60,6 +60,6 @@ export function NewSpaceFormSection({
 	return withForm ? (
 		<ClayForm onSubmit={onSubmit}>{pageContent}</ClayForm>
 	) : (
-		<ClayLayout.Container>{pageContent}</ClayLayout.Container>
+		<div>{pageContent}</div>
 	);
 }

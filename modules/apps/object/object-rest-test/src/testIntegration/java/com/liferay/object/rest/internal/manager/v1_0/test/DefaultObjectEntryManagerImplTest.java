@@ -6794,7 +6794,6 @@ public class DefaultObjectEntryManagerImplTest
 					"textObjectFieldName"
 				).build()),
 			ObjectDefinitionConstants.SCOPE_SITE);
-
 		ObjectEntryFolder objectEntryFolder =
 			ObjectEntryFolderTestUtil.addObjectEntryFolder(_group.getGroupId());
 
@@ -6835,9 +6834,11 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntryFolder.getObjectEntryFolderId());
 
 		_assertActions(
-			"subscribe", "unsubscribe", objectDefinition, objectEntry1.getId());
+			ListUtil.fromArray("subscribe"), ListUtil.fromArray("unsubscribe"),
+			objectDefinition, objectEntry1.getId());
 		_assertActions(
-			"subscribe", "unsubscribe", objectDefinition, objectEntry2.getId());
+			ListUtil.fromArray("subscribe"), ListUtil.fromArray("unsubscribe"),
+			objectDefinition, objectEntry2.getId());
 
 		_defaultObjectEntryManager.subscribeObjectEntry(
 			dtoConverterContext, objectEntry1.getExternalReferenceCode(),
@@ -6847,9 +6848,11 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinition, objectEntry2.getScopeKey());
 
 		_assertActions(
-			"unsubscribe", "subscribe", objectDefinition, objectEntry1.getId());
+			ListUtil.fromArray("unsubscribe"), ListUtil.fromArray("subscribe"),
+			objectDefinition, objectEntry1.getId());
 		_assertActions(
-			"unsubscribe", "subscribe", objectDefinition, objectEntry2.getId());
+			ListUtil.fromArray("unsubscribe"), ListUtil.fromArray("subscribe"),
+			objectDefinition, objectEntry2.getId());
 
 		Assert.assertTrue(
 			_subscriptionLocalService.isSubscribed(
@@ -8548,16 +8551,6 @@ public class DefaultObjectEntryManagerImplTest
 			actions2,
 			action2 -> Assert.assertFalse(
 				objectEntryActions.containsKey(action2)));
-	}
-
-	private void _assertActions(
-			String action1, String action2, ObjectDefinition objectDefinition,
-			long objectEntryId)
-		throws Exception {
-
-		_assertActions(
-			ListUtil.fromArray(action1), ListUtil.fromArray(action2),
-			objectDefinition, objectEntryId);
 	}
 
 	private void _assertAggregationFacetValue(

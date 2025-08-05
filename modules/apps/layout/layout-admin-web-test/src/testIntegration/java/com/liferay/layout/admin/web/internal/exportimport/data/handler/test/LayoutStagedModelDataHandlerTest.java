@@ -16,8 +16,8 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
@@ -165,6 +165,7 @@ import jakarta.portlet.PortletPreferences;
 
 import java.io.File;
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -718,55 +719,60 @@ public class LayoutStagedModelDataHandlerTest
 	public void testImportDoesNotFailWithMissingMasterLayout()
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
+				group1.getGroupId(), TestPropsValues.getUserId());
 
 		Layout masterLayout = _addMasterLayout(serviceContext);
 
 		String className = "com.liferay.journal.model.JournalArticle";
 
 		long classNameId = _portal.getClassNameId(className);
-		long classTypeId = _getClassTypeId(className, group.getGroupId());
+		long classTypeId = _getClassTypeId(className, group1.getGroupId());
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry1 = _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, serviceContext.getUserId(),
-			serviceContext.getScopeGroupId(), 0, null,
-			classNameId, classTypeId, RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, masterLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, serviceContext.getUserId(),
+				serviceContext.getScopeGroupId(), 0, null, classNameId,
+				classTypeId, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				masterLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry2 = _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, serviceContext.getUserId(),
-			serviceContext.getScopeGroupId(), 0, null,
-			classNameId, classTypeId, RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, masterLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, serviceContext.getUserId(),
+				serviceContext.getScopeGroupId(), 0, null, classNameId,
+				classTypeId, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				masterLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
 
-		JournalArticle journalArticle1 = _addJournalArticle(RandomTestUtil.randomString(), group);
-		JournalArticle journalArticle2 = _addJournalArticle(RandomTestUtil.randomString(), group);
+		JournalArticle journalArticle1 = _addJournalArticle(
+			RandomTestUtil.randomString(), group1);
+		JournalArticle journalArticle2 = _addJournalArticle(
+			RandomTestUtil.randomString(), group1);
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-				TestPropsValues.getUserId(), group.getGroupId(), classNameId,
-				journalArticle1.getResourcePrimKey(),
-				layoutPageTemplateEntry1.getLayoutPageTemplateEntryId(),
-				AssetDisplayPageConstants.TYPE_SPECIFIC, new ServiceContext());
+			TestPropsValues.getUserId(), group1.getGroupId(), classNameId,
+			journalArticle1.getResourcePrimKey(),
+			layoutPageTemplateEntry1.getLayoutPageTemplateEntryId(),
+			AssetDisplayPageConstants.TYPE_SPECIFIC, new ServiceContext());
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-				TestPropsValues.getUserId(), group.getGroupId(), classNameId,
-				journalArticle2.getResourcePrimKey(),
-				layoutPageTemplateEntry2.getLayoutPageTemplateEntryId(),
-				AssetDisplayPageConstants.TYPE_SPECIFIC, new ServiceContext());
-
+			TestPropsValues.getUserId(), group1.getGroupId(), classNameId,
+			journalArticle2.getResourcePrimKey(),
+			layoutPageTemplateEntry2.getLayoutPageTemplateEntryId(),
+			AssetDisplayPageConstants.TYPE_SPECIFIC, new ServiceContext());
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				group.getGroupId(), RandomTestUtil.randomString(),
+				group1.getGroupId(), RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_MANUAL,
-				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+				ServiceContextTestUtil.getServiceContext(group1.getGroupId()));
 
 		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
 
@@ -774,133 +780,17 @@ public class LayoutStagedModelDataHandlerTest
 			assetListEntry.getAssetListEntryId(), assetEntry2.getEntryId(),
 			SegmentsEntryConstants.ID_DEFAULT, serviceContext);
 
-		Layout layout =
-			_layoutLocalService.getLayout(layoutPageTemplateEntry1.getPlid());
+		LayoutTestUtil.addPortletToLayout(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry1.getPlid()),
+			AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			_getPreferenceMap(assetListEntry.getExternalReferenceCode(), null));
 
-		String portletId = LayoutTestUtil.addPortletToLayout(
-			layout, AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			_getPreferenceMap(
-				assetListEntry.getExternalReferenceCode(), null));
-
-		File file = _exportLayouts(group.getGroupId(), new long[] {}, getParameterMap());
+		File file = _exportLayouts(
+			group1.getGroupId(), new long[0], getParameterMap());
 
 		Group group2 = GroupTestUtil.addGroup();
+
 		_importLayouts(file, group2.getGroupId(), getParameterMap());
-	}
-
-	protected File _exportLayouts(
-		long groupId, long[] layoutIds, Map<String, String[]> parameterMap)
-		throws Exception {
-
-		User user = TestPropsValues.getUser();
-
-		Map<String, Serializable> exportLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactoryUtil.
-				buildExportLayoutSettingsMap(
-					user, groupId, false, layoutIds,
-					parameterMap);
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				addDraftExportImportConfiguration(
-					user.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportLayoutSettingsMap);
-
-		return ExportImportServiceUtil.exportLayoutsAsFile(
-			exportImportConfiguration);
-	}
-
-	public void _importLayouts(File file, long groupId,
-		Map<String, String[]> parameterMap)
-		throws Exception {
-
-			User user = TestPropsValues.getUser();
-
-			Map<String, Serializable> importLayoutSettingsMap =
-				ExportImportConfigurationSettingsMapFactoryUtil.
-					buildImportLayoutSettingsMap(
-						user, groupId, false, null,
-						parameterMap);
-
-			ExportImportConfiguration exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
-					addExportImportConfiguration(
-						user.getUserId(), groupId,
-						StringPool.BLANK, StringPool.BLANK,
-						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-						importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-						new ServiceContext());
-
-			ExportImportServiceUtil.importLayouts(
-				exportImportConfiguration, file);
-	}
-
-	private Map<String, String[]> _getPreferenceMap(
-		String assetListEntryExternalReferenceCode,
-		String assetListEntryGroupExternalReferenceCode) {
-
-		return HashMapBuilder.put(
-			"assetListEntryExternalReferenceCode",
-			() -> {
-				if (Validator.isNull(assetListEntryExternalReferenceCode)) {
-					return null;
-				}
-
-				return new String[] {assetListEntryExternalReferenceCode};
-			}
-		).put(
-			"assetListEntryGroupExternalReferenceCode",
-			() -> {
-				if (Validator.isNull(
-					assetListEntryGroupExternalReferenceCode)) {
-
-					return null;
-				}
-
-				return new String[] {assetListEntryGroupExternalReferenceCode};
-			}
-		).put(
-			"selectionStyle", new String[] {"asset-list"}
-		).build();
-	}
-
-	private AssetEntry _getAssetEntry(JournalArticle journalArticle)
-		throws Exception {
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				JournalArticle.class.getName());
-
-		return assetRendererFactory.getAssetEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-	}
-
-	private long _getClassTypeId(String className, long groupId) {
-		InfoItemFormVariation infoItemFormVariation =
-			_getFirstInfoItemFormVariation(className, groupId);
-
-		return GetterUtil.getLong(infoItemFormVariation.getKey());
-	}
-
-	private InfoItemFormVariation _getFirstInfoItemFormVariation(
-		String className, long groupId) {
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class, className);
-
-		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
-			infoItemFormVariationsProvider.getInfoItemFormVariations(
-				groupId));
-
-		Assert.assertFalse(infoItemFormVariations.isEmpty());
-
-		infoItemFormVariations.sort(
-			Comparator.comparing(InfoItemFormVariation::getKey));
-
-		return infoItemFormVariations.get(0);
 	}
 
 	@Test
@@ -2211,6 +2101,47 @@ public class LayoutStagedModelDataHandlerTest
 			html + " not contains " + content, html.contains(content));
 	}
 
+	private File _exportLayouts(
+			long groupId, long[] layoutIds, Map<String, String[]> parameterMap)
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportLayoutSettingsMap(
+					user, groupId, false, layoutIds, parameterMap);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					exportLayoutSettingsMap);
+
+		return ExportImportServiceUtil.exportLayoutsAsFile(
+			exportImportConfiguration);
+	}
+
+	private AssetEntry _getAssetEntry(JournalArticle journalArticle)
+		throws Exception {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
+		return assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+	}
+
+	private long _getClassTypeId(String className, long groupId) {
+		InfoItemFormVariation infoItemFormVariation =
+			_getFirstInfoItemFormVariation(className, groupId);
+
+		return GetterUtil.getLong(infoItemFormVariation.getKey());
+	}
+
 	private Layout _getExportImportLayout(Layout layout) throws Exception {
 		ExportImportThreadLocal.setPortletImportInProcess(true);
 
@@ -2225,6 +2156,24 @@ public class LayoutStagedModelDataHandlerTest
 			layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
 	}
 
+	private InfoItemFormVariation _getFirstInfoItemFormVariation(
+		String className, long groupId) {
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class, className);
+
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
+			infoItemFormVariationsProvider.getInfoItemFormVariations(groupId));
+
+		Assert.assertFalse(infoItemFormVariations.isEmpty());
+
+		infoItemFormVariations.sort(
+			Comparator.comparing(InfoItemFormVariation::getKey));
+
+		return infoItemFormVariations.get(0);
+	}
+
 	private List<FriendlyURLEntry> _getFriendlyURLEntries(Layout layout) {
 		return _friendlyURLEntryLocalService.getFriendlyURLEntries(
 			layout.getGroupId(),
@@ -2233,6 +2182,35 @@ public class LayoutStagedModelDataHandlerTest
 					Layout.class.getName(),
 					String.valueOf(layout.isPrivateLayout()))),
 			layout.getPlid());
+	}
+
+	private Map<String, String[]> _getPreferenceMap(
+		String assetListEntryExternalReferenceCode,
+		String assetListEntryGroupExternalReferenceCode) {
+
+		return HashMapBuilder.put(
+			"assetListEntryExternalReferenceCode",
+			() -> {
+				if (Validator.isNull(assetListEntryExternalReferenceCode)) {
+					return null;
+				}
+
+				return new String[] {assetListEntryExternalReferenceCode};
+			}
+		).put(
+			"assetListEntryGroupExternalReferenceCode",
+			() -> {
+				if (Validator.isNull(
+						assetListEntryGroupExternalReferenceCode)) {
+
+					return null;
+				}
+
+				return new String[] {assetListEntryGroupExternalReferenceCode};
+			}
+		).put(
+			"selectionStyle", new String[] {"asset-list"}
+		).build();
 	}
 
 	private InfoField _getTemplateEntryInfoField(
@@ -2257,6 +2235,29 @@ public class LayoutStagedModelDataHandlerTest
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	private void _importLayouts(
+			File file, long groupId, Map<String, String[]> parameterMap)
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildImportLayoutSettingsMap(
+					user, groupId, false, null, parameterMap);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					user.getUserId(), groupId, StringPool.BLANK,
+					StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
+		ExportImportServiceUtil.importLayouts(exportImportConfiguration, file);
 	}
 
 	private void _mapJournalArticleToContentDisplay(
@@ -2595,7 +2596,8 @@ public class LayoutStagedModelDataHandlerTest
 		_assetDisplayPageEntryLocalService;
 
 	@Inject
-	private AssetListEntryAssetEntryRelLocalService _assetListEntryAssetEntryRelLocalService;
+	private AssetListEntryAssetEntryRelLocalService
+		_assetListEntryAssetEntryRelLocalService;
 
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;

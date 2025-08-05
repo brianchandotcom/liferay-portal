@@ -520,7 +520,4 @@ public class LearnRestController extends BaseRestController {
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
-	@Value("${liferay.learn.dxp.site.group.id}")
-	private long _siteGroupId;
-
 }

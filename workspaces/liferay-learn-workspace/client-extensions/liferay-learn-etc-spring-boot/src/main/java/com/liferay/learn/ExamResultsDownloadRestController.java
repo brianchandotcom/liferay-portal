@@ -19,7 +19,6 @@ import org.apache.commons.csv.CSVPrinter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -136,8 +135,5 @@ public class ExamResultsDownloadRestController extends BaseRestController {
 			throw new IOException(exception);
 		}
 	}
-
-	@Value("${liferay.learn.dxp.site.group.id}")
-	private long _siteGroupId;
 
 }

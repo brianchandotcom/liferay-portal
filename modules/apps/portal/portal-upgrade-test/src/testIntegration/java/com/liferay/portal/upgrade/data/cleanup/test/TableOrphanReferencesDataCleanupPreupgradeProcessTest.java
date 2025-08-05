@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -79,6 +80,11 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcessTest
 						1, "PortletPreferences", "companyId", "Company",
 						_companyId2)));
 		};
+	}
+
+	@Override
+	protected String getLoggingClassName() {
+		return OrphanReferencesDataCleanupUtil.class.getName();
 	}
 
 	@Override

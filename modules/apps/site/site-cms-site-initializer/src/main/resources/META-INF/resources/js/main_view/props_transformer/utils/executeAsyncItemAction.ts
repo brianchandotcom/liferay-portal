@@ -49,7 +49,7 @@ export function executeAsyncItemAction({
 				throw new Error(DEFAULT_ERROR);
 			}
 
-			return response.json();
+			return response.status === 204 ? '' : response.json();
 		})
 		.then((responseData) => {
 			if (showToast) {

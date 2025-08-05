@@ -75,6 +75,7 @@ test(
 				'Video',
 				'Horizontal line',
 				'Text alignment',
+				'AI Creator',
 				'Source',
 			];
 
@@ -189,10 +190,27 @@ test(
 	}
 );
 
+test('Open AI Creator popover', async ({classicPage, page}) => {
+	const AICreatorButton = classicPage.toolbar.container.getByRole('button', {
+		name: 'Create AI Content',
+	});
+
+	await AICreatorButton.click();
+
+	await expect(page.getByText('Configure OpenAI')).toBeVisible();
+});
+
 test(
 	'Opening source editing disables all custom controls',
 	{tag: '@LPD-11235'},
 	async ({classicPage}) => {
+		const AICreatorButton = classicPage.toolbar.container.getByRole(
+			'button',
+			{
+				name: 'Create AI Content',
+			}
+		);
+
 		const imageButton = classicPage.toolbar.container.getByRole('button', {
 			name: 'Image',
 		});
@@ -205,11 +223,13 @@ test(
 
 		await sourceButton.click();
 
+		await expect(AICreatorButton).toBeDisabled();
 		await expect(imageButton).toBeDisabled();
 		await expect(videoButton).toBeDisabled();
 
 		await sourceButton.click();
 
+		await expect(AICreatorButton).toBeEnabled();
 		await expect(imageButton).toBeEnabled();
 		await expect(videoButton).toBeEnabled();
 	}

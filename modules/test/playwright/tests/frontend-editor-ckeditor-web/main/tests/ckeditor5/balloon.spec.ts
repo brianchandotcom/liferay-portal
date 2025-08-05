@@ -70,6 +70,7 @@ test(
 			'Video',
 			'Horizontal line',
 			'Text alignment',
+			'AI Creator',
 		];
 
 		const controls = await balloonPage.toolbar

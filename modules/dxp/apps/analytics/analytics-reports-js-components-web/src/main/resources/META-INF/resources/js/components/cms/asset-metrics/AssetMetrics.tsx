@@ -6,10 +6,11 @@
 import ClayButton from '@clayui/button';
 import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useEffect, useState} from 'react';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import React, {useContext, useState} from 'react';
 
 import {Context} from '../../../Context';
-import ApiHelper from '../../../apis/ApiHelper';
+import useFetch from '../../../hooks/useFetch';
 import {AssetTypes, MetricName, MetricType} from '../../../types/global';
 import {buildQueryString} from '../../../utils/buildQueryString';
 import {assetMetrics} from '../../../utils/metrics';
@@ -69,43 +70,31 @@ const AssetMetrics = () => {
 		filters,
 		objectEntryFolderExternalReferenceCode,
 	} = useContext(Context);
+
 	const [dropdownActive, setDropdownActive] = useState(false);
-	const [histograms, setHistograms] = useState<Histogram[]>([]);
 	const [selectedItem, setSelectedItem] = useState(dropdownItems[0]);
 
-	useEffect(() => {
-		async function fetchData() {
-			const selectedMetrics =
-				assetMetrics[
-					objectEntryFolderExternalReferenceCode as AssetTypes
-				];
+	const selectedMetrics =
+		assetMetrics[objectEntryFolderExternalReferenceCode as AssetTypes];
 
-			const queryParams = buildQueryString({
-				externalReferenceCode,
-				selectedMetrics,
-			});
-
-			const endpoint = `/o/analytics-cms-rest/v1.0/object-entry-histogram-metric${queryParams}`;
-
-			const {data, error} = await ApiHelper.get<{
-				histograms: Histogram[];
-			}>(endpoint);
-
-			if (error) {
-				console.error(error);
-			}
-
-			if (data) {
-				setHistograms(data.histograms);
-			}
-		}
-
-		fetchData();
-	}, [
+	const queryParams = buildQueryString({
 		externalReferenceCode,
-		filters.metric,
-		objectEntryFolderExternalReferenceCode,
-	]);
+		selectedMetrics,
+	});
+
+	const {data, loading} = useFetch<{
+		histograms: Histogram[];
+	}>(
+		`/o/analytics-cms-rest/v1.0/object-entry-histogram-metric${queryParams}`
+	);
+
+	if (loading) {
+		<ClayLoadingIndicator />;
+	}
+
+	if (!data) {
+		return null;
+	}
 
 	const metricName: Partial<{
 		[key in MetricType]: MetricName;
@@ -167,7 +156,7 @@ const AssetMetrics = () => {
 
 			<main className="mt-3">
 				{selectedItem.renderer({
-					histogram: histograms.find(
+					histogram: data.histograms.find(
 						({metricName: currentMetricName}) =>
 							currentMetricName === metricName[filters.metric]
 					) as Histogram,

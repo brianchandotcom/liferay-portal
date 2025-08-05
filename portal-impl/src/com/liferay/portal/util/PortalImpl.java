@@ -1095,43 +1095,42 @@ public class PortalImpl implements Portal {
 			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException {
 
+		if (Validator.isNotNull(friendlyURL)) {
+			return getPortletFriendlyURLMapperLayoutQueryStringComposite(
+				groupId, privateLayout, friendlyURL, params, requestContext);
+		}
+
 		Layout layout = null;
 
-		if (Validator.isNull(friendlyURL)) {
-			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)requestContext.get("request");
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
 
-			if (AuthLoginGroupSettingsUtil.isPromptEnabled(groupId) &&
-				!_isSignedIn(httpServletRequest) &&
-				!GetterUtil.getBoolean(
-					httpServletRequest.getAttribute(
-						NoSuchLayoutException.class.getName()))) {
+		if (AuthLoginGroupSettingsUtil.isPromptEnabled(groupId) &&
+			!_isSignedIn(httpServletRequest) &&
+			!GetterUtil.getBoolean(
+				httpServletRequest.getAttribute(
+					NoSuchLayoutException.class.getName()))) {
 
-				// Ensure that virtual layouts are merged. See LPS-42222.
+			// Ensure that virtual layouts are merged. See LPS-42222.
 
-				List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-					groupId, privateLayout,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				groupId, privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
 
-				if (!layouts.isEmpty()) {
-					layout = layouts.get(0);
-				}
-			}
-			else {
-				layout = LayoutServiceUtil.fetchFirstLayout(
-					groupId, privateLayout, true);
-			}
-
-			if (layout == null) {
-				throw new NoSuchLayoutException(
-					StringBundler.concat(
-						"{groupId=", groupId, ", privateLayout=", privateLayout,
-						"}"));
+			if (!layouts.isEmpty()) {
+				layout = layouts.get(0);
 			}
 		}
 		else {
-			return getPortletFriendlyURLMapperLayoutQueryStringComposite(
-				groupId, privateLayout, friendlyURL, params, requestContext);
+			layout = LayoutServiceUtil.fetchFirstLayout(
+				groupId, privateLayout, true);
+		}
+
+		if (layout == null) {
+			throw new NoSuchLayoutException(
+				StringBundler.concat(
+					"{groupId=", groupId, ", privateLayout=", privateLayout,
+					"}"));
 		}
 
 		return new LayoutQueryStringComposite(

@@ -242,7 +242,7 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
-	public void testExportImportObjectEntriesWithRelatedObjectEntries()
+	public void testExportImportCompanyGroupObjectEntriesWithRelatedObjectEntries()
 		throws Exception {
 
 		_testExportImportObjectEntriesWithRelatedObjectEntries(
@@ -251,16 +251,9 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_testExportImportObjectEntriesWithRelatedObjectEntries(
-			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_testExportImportObjectEntriesWithRelatedObjectEntries(
 			_stagingGroupHelper.fetchCompanyGroup(
 				TestPropsValues.getCompanyId()),
 			ObjectDefinitionConstants.SCOPE_COMPANY,
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-		_testExportImportObjectEntriesWithRelatedObjectEntries(
-			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 	}
 
@@ -383,6 +376,18 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportSiteObjectEntriesToSameSite() throws Exception {
 		_testExportImportObjectEntriesToSameGroup(
 			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
+	}
+
+	@Test
+	public void testExportImportSiteObjectEntriesWithRelatedObjectEntries()
+		throws Exception {
+
+		_testExportImportObjectEntriesWithRelatedObjectEntries(
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_testExportImportObjectEntriesWithRelatedObjectEntries(
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE,
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 	}
 
 	@Test

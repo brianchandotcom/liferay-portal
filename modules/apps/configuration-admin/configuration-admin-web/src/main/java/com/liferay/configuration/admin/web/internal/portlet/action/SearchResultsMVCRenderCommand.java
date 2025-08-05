@@ -70,7 +70,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 			Locale locale = renderRequest.getLocale();
 
 			SearchContext searchContext = _getSearchContext(
-				locale, renderRequest.getParameter("keywords"));
+				renderRequest.getParameter("keywords"), locale);
 
 			Hits hits = indexer.search(searchContext);
 
@@ -200,7 +200,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		return configurationScreens;
 	}
 
-	private SearchContext _getSearchContext(Locale locale, String keywords) {
+	private SearchContext _getSearchContext(String keywords, Locale locale) {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAndSearch(false);

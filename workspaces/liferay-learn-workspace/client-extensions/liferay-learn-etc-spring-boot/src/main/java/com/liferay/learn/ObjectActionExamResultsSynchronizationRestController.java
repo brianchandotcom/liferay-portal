@@ -284,9 +284,6 @@ public class ObjectActionExamResultsSynchronizationRestController
 	@Value("${liferay.oauth.application.external.reference.codes}")
 	private String _liferayOAuthApplicationExternalReferenceCodes;
 
-	@Value("${liferay.learn.dxp.site.group.id}")
-	private Long _siteGroupId;
-
 	@Value("${liferay.learn.webassessor.security.token}")
 	private String _webassessorSecurityToken;
 

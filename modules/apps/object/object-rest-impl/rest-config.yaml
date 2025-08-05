@@ -1,7 +1,7 @@
 apiDir: ../object-rest-api/src/main/java
 apiPackagePath: com.liferay.object.rest
 author: Javier Gamarra
-compatibilityVersion: 10
+compatibilityVersion: 11
 forcePredictableOperationId: true
 generateOpenAPI: false
 javaEEPackage: jakarta

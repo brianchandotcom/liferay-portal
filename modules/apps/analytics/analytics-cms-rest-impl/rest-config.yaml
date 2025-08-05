@@ -6,7 +6,7 @@ application:
     name: Liferay.Analytics.CMS.REST
 author: Rachael Koestartyo
 clientDir: ../analytics-cms-rest-client/src/main/java
-compatibilityVersion: 10
+compatibilityVersion: 11
 forcePredictableOperationId: true
 generateBatch: false
 javaEEPackage: jakarta

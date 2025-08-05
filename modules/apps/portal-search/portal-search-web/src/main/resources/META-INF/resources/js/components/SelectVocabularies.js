@@ -77,10 +77,10 @@ function VocabularyTree({
 			{(item) => (
 				<TreeView.Item
 					actions={
-						<div>
+						<div className="d-flex">
 							<ClayButton
 								aria-label={Liferay.Language.get('select-all')}
-								className="c-mr-1"
+								className="c-mr-1 quick-action-item"
 								displayType="secondary"
 								onClick={(event) => {
 									event.preventDefault();
@@ -104,7 +104,7 @@ function VocabularyTree({
 								aria-label={Liferay.Language.get(
 									'deselect-all'
 								)}
-								displayType="secondary"
+								displayType="secondary quick-action-item"
 								onClick={(event) => {
 									event.preventDefault();
 

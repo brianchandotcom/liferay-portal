@@ -8,6 +8,7 @@ package com.liferay.layout.content.page.editor.web.internal.manager.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.layout.manager.ContentManager;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -126,11 +127,8 @@ public class ContentManagerTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@Inject(
-		filter = "component.name=com.liferay.layout.content.page.editor.web.internal.manager.ContentManager",
-		type = Inject.NoType.class
-	)
-	private Object _contentManager;
+	@Inject
+	private ContentManager _contentManager;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

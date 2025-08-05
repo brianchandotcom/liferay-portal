@@ -2639,11 +2639,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 						import java.util.regex.Matcher;
 						import java.util.regex.Pattern;
 
-						public static File getPortalGitWorkingDirectory() {
-							return JenkinsResultsParserUtil.getGitWorkingDir(new File(project.getProperty("project.dir")));
-						}
-
-						public static void addProjectToMap(String projectName, String testName, Map projectTestMap){
+						public static void addProjectToMap(String projectName, String testName, Map projectTestMap) {
 							if (!projectTestMap.containsKey(projectName)) {
 								List testList = new ArrayList();
 
@@ -2662,7 +2658,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							}
 						}
 
-						public static void generateJunitReport(File baseDir, String testClassName, String testTaskName){
+						public static void generateJunitReport(File baseDir, String testClassName, String testTaskName) {
 							Map parameters = new HashMap();
 
 							parameters.put("test.class.name", testClassName);
@@ -2671,13 +2667,17 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							AntUtil.callMacrodef(project, "generate-backend-batch-junit-report-modules", parameters);
 						}
 
-						public static String getTestClassNameForTestResults(String testClass){
-							Pattern pattern = Pattern.compile("([^#]+)\\.java#.*");
+						public static File getPortalGitWorkingDirectory() {
+							return JenkinsResultsParserUtil.getGitWorkingDir(new File(project.getProperty("project.dir")));
+						}
+
+						public static String getTestClassNameForTestResults(String testClass) {
+							Pattern pattern = Pattern.compile("([^#]+)\\.java(#.*)?");
 
 							Matcher matcher = pattern.matcher(testClass);
 
 							if (matcher.matches()) {
-								testClass=matcher.group(1);
+								testClass = matcher.group(1);
 							}
 
 							testClass = testClass.replace("/", ".");
@@ -2686,11 +2686,15 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 						}
 
 						public static String getTestName(String testClassFilePath) {
-							Pattern pattern = Pattern.compile("([^\\/#]+)#?.*$");
+							Pattern pattern = Pattern.compile("(?:^|\\/)(\\w+)\\.java(?:#(\\w+))?");
 
 							Matcher matcher = pattern.matcher(testClassFilePath);
 
 							if (matcher.find()) {
+								if (testClassFilePath.contains("#")) {
+									return matcher.group(1) + "." + matcher.group(2);
+								}
+
 								return matcher.group(1);
 							}
 

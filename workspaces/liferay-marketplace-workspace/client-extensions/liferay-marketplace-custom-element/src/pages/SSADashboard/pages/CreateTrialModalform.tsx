@@ -171,10 +171,19 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 				return;
 			}
 
+			const consoleInviteEmailAddresses = Array.from(
+				new Set(
+					formData.emailAddress
+						? [
+								formData.emailAddress,
+								Liferay.ThemeDisplay.getUserEmailAddress(),
+							]
+						: [Liferay.ThemeDisplay.getUserEmailAddress()]
+				)
+			);
+
 			const trialSettings = {
-				...(formData.emailAddress
-					? {consoleInviteEmailAddresses: [formData.emailAddress]}
-					: {}),
+				consoleInviteEmailAddresses,
 				duration: formData.demoDuration,
 				projectId: formData.projectId,
 			};

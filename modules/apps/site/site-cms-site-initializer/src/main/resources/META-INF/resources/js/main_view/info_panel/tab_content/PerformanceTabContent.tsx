@@ -15,20 +15,15 @@ const PerformanceTabContent = () => {
 	const selectedAsset = useContext<IAssetTypeInfoPanelContext>(
 		AssetTypeInfoPanelContext
 	);
+	const {embedded} = selectedAsset?.objectEntries?.[0] ?? {};
 
 	return (
 		<CMSPerformance
-			depotEntryId={
-				(selectedAsset?.objectEntries?.[0]?.embedded.scopeId ?? 0) - 1
-			}
-			externalReferenceCode={
-				selectedAsset?.objectEntries?.[0]?.embedded
-					.externalReferenceCode ?? ''
-			}
+			externalReferenceCode={embedded?.externalReferenceCode}
 			objectEntryFolderExternalReferenceCode={
-				selectedAsset?.objectEntries?.[0]?.embedded
-					.objectEntryFolderExternalReferenceCode ?? ''
+				embedded?.objectEntryFolderExternalReferenceCode
 			}
+			scopeId={embedded?.scopeId}
 		/>
 	);
 };

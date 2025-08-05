@@ -13,24 +13,26 @@ import {AssetMetrics} from './components/cms/asset-metrics/AssetMetrics';
 
 import '../css/cms_performance.scss';
 interface ICMSPerformanceProps extends React.HTMLAttributes<HTMLElement> {
-	depotEntryId: number;
-	externalReferenceCode: string;
-	objectEntryFolderExternalReferenceCode: string;
+	externalReferenceCode?: string;
+	objectEntryFolderExternalReferenceCode?: string;
+	scopeId?: number;
 }
 
 const CMSPerformance: React.FC<ICMSPerformanceProps> = ({
-	depotEntryId,
 	externalReferenceCode,
 	objectEntryFolderExternalReferenceCode,
+	scopeId,
 }) => {
 	return (
 		<div className="cms-performance">
-			<CheckPermissions depotEntryId={String(depotEntryId)}>
+			<CheckPermissions scopeId={String(scopeId)}>
 				<ContextProvider
 					customState={{
-						depotEntryId,
-						externalReferenceCode,
-						objectEntryFolderExternalReferenceCode,
+						externalReferenceCode: String(externalReferenceCode),
+						objectEntryFolderExternalReferenceCode: String(
+							objectEntryFolderExternalReferenceCode
+						),
+						scopeId: String(scopeId),
 					}}
 				>
 					<GlobalFilters />

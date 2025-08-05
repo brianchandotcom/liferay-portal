@@ -166,15 +166,12 @@ type ConnectionInfoData = {
 };
 
 interface ICheckPermissions extends React.HTMLAttributes<HTMLElement> {
-	depotEntryId: string;
+	scopeId: string;
 }
 
-const CheckPermissions: React.FC<ICheckPermissions> = ({
-	children,
-	depotEntryId,
-}) => {
+const CheckPermissions: React.FC<ICheckPermissions> = ({children, scopeId}) => {
 	const queryString = buildQueryString({
-		depotEntryId,
+		depotEntryGroupId: scopeId,
 	});
 
 	const {data, loading} = useFetch<ConnectionInfoData>(

@@ -1,6 +1,4 @@
 .space-members-with-list {
-	padding: 24px;
-
 	.members-list {
 		max-height: 200px;
 		overflow-y: auto;
@@ -10,8 +8,6 @@
 		}
 
 		li {
-			list-style: none;
-
 			&:not(:last-child) {
 				margin-bottom: 8px;
 			}

@@ -242,6 +242,7 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
+	@TestInfo("LPD-61997")
 	public void testExportImportCompanyGroupObjectEntriesWithRelatedObjectEntries()
 		throws Exception {
 
@@ -379,6 +380,7 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
+	@TestInfo("LPD-61997")
 	public void testExportImportSiteObjectEntriesWithRelatedObjectEntries()
 		throws Exception {
 

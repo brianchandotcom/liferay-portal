@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetLibrary;
@@ -653,14 +652,13 @@ public class TaxonomyVocabularyResourceTest
 		// group creation.
 
 		Role role = _roleLocalService.fetchRole(
-			testDepotEntryGroup.getCompanyId(),
-			DepotRolesConstants.CMS_CONSUMER);
+			testDepotEntryGroup.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		if (role == null) {
 			_roleLocalService.addRole(
 				null, TestPropsValues.getUserId(), null, 0,
-				DepotRolesConstants.CMS_CONSUMER, null, null,
-				RoleConstants.TYPE_DEPOT, null, null);
+				RoleConstants.SITE_MEMBER, null, null,
+				RoleConstants.TYPE_REGULAR, null, null);
 		}
 
 		GroupTestUtil.addGroup(

@@ -17,7 +17,7 @@ const useUpdateUrlParams = () => {
 	const pageSize = searchParams.get('pageSize');
 
 	const serializedFilter = useMemo(() => {
-		return JSON.parse(searchParams.get('filter') as string) || '{}';
+		return JSON.parse(searchParams.get('filter') as string) || '';
 	}, [searchParams]);
 
 	const filterSchemaKey = searchParams.get('filterSchema');

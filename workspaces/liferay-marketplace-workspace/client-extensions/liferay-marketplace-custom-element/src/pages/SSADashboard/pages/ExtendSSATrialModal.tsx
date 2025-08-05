@@ -49,7 +49,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 		register,
 	} = useForm({
 		defaultValues: {
-			duration: 0,
+			duration: '' as unknown as number,
 			reason: '',
 		},
 		mode: 'onSubmit',
@@ -190,6 +190,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 				title: i18n.translate('failure'),
 				type: 'danger',
 			});
+			setSubmitting(false);
 		}
 	};
 

@@ -85,24 +85,32 @@
 	},
 	{
 		"actions": [
+			{
+				"actionId": "VIEW_COMMERCE_ORDERS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
+				"actionId": "ADD_COMMERCE_ORDER",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			}
 		],
 		"name": "SSA",
 		"type": 6
 	},
 	{
 		"actions": [
-		],
-		"name": "SSA Admin",
-		"type": 6
-	},
-	{
-		"actions": [
-		],
-		"name": "SSA",
-		"type": 6
-	},
-	{
-		"actions": [
+			{
+				"actionId": "VIEW_COMMERCE_ORDERS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
+				"actionId": "ADD_COMMERCE_ORDER",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			}
 		],
 		"name": "SSA Admin",
 		"type": 6

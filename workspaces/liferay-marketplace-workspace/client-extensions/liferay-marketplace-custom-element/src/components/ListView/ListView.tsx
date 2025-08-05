@@ -78,6 +78,8 @@ export type ListViewProps<T extends Record<string, any>> = {
 		| 'totalItems'
 	>;
 
+	onDataLoad?: (data: {items: T[]}) => void;
+
 	/**
 	 * The options for the pagination.
 	 *
@@ -103,10 +105,6 @@ export type ListViewProps<T extends Record<string, any>> = {
 	 * @default undefined
 	 */
 	transformData?: (response: APIResponse<T>) => APIResponse<T>;
-	onDataLoad?: (data: {
-		items: T[];
-		mutate: KeyedMutator<APIResponse<T>>;
-	}) => void;
 };
 
 function getMatchedOption(rawValue: string, field?: RendererFields) {
@@ -142,7 +140,6 @@ const ListView = <T extends Record<string, any>>({
 	const [searchParams] = useSearchParams();
 
 	const {filters, keywords, sort} = listViewContext;
-	const filterSchemaName = managementToolbarProps?.filterSchema ?? '';
 
 	const filterSchema = (filterSchemas as any)[
 		managementToolbarProps?.filterSchema ?? ''
@@ -266,9 +263,9 @@ const ListView = <T extends Record<string, any>>({
 
 	useEffect(() => {
 		if (response?.items && onDataLoad) {
-			onDataLoad({items: response.items, mutate});
+			onDataLoad({items: response.items});
 		}
-	}, [response?.items]);
+	}, [onDataLoad, response?.items]);
 
 	const {
 		actions = {},
@@ -320,11 +317,13 @@ const ListView = <T extends Record<string, any>>({
 			)}
 
 			{!items.length && (
-				<EmptyState
-					description={error?.message}
-					type={error ? 'EMPTY_SEARCH' : 'EMPTY_STATE'}
-					{...emptyStateProps}
-				/>
+				<>
+					<EmptyState
+						description={error?.message}
+						type={error ? 'EMPTY_SEARCH' : 'EMPTY_STATE'}
+						{...emptyStateProps}
+					/>
+				</>
 			)}
 			{!!items.length && (
 				<>
@@ -337,14 +336,14 @@ const ListView = <T extends Record<string, any>>({
 					/>
 
 					{paginationOptions.displayType && Pagination}
-					{children &&
-						children(response!, {
-							dispatch,
-							listViewContext,
-							mutate,
-						})}
 				</>
 			)}
+			{children &&
+				children(response!, {
+					dispatch,
+					listViewContext,
+					mutate,
+				})}
 		</>
 	);
 };

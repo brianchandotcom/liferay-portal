@@ -19,13 +19,13 @@ import {TRIAL_STATUS_LABEL} from '../constants';
 import {ExtendRequestStatus} from '../enums/SSATrials';
 
 type ExtendSSATrialModalProps = {
+	mutatePlacedOrder?: KeyedMutator<any>;
 	onClose: () => void;
 	order: PlacedOrder;
+	orderMutate?: KeyedMutator<any>;
 	ssaTrialExtendMutate: KeyedMutator<any>;
 	trialExtend: TrialExtend;
 	trialExtendCount: number;
-	orderMutate?: KeyedMutator<any>;
-	mutatePlacedOrder?: KeyedMutator<any>;
 };
 
 type DetailsProps = {

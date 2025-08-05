@@ -3137,10 +3137,6 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							if (matcher.matches()) {
 								testClass = matcher.group(1);
-
-								if (matcher.group(2) != null) {
-									testClass = testClass + "." + matcher.group(2);
-								}
 							}
 
 							testClass = testClass.replace("/", ".");
@@ -3159,6 +3155,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								if (matcher.group(2) != null) {
 									testClass = testClass + "." + matcher.group(2);
 								}
+								return testClass;
 							}
 
 							return null;

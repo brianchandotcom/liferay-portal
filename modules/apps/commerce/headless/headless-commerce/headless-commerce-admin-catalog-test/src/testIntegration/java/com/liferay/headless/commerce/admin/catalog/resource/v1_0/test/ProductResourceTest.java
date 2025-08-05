@@ -59,6 +59,8 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -368,6 +370,8 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	@Test
 	public void testPutProductByExternalReferenceCode() throws Exception {
 		testPatchProductByExternalReferenceCode();
+
+		_testPutProductWithFutureDisplayDate();
 	}
 
 	@Ignore
@@ -901,6 +905,39 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		Assert.assertEquals(
 			cpInstance.getStatus(), WorkflowConstants.STATUS_APPROVED);
+	}
+
+	private void _testPutProductWithFutureDisplayDate() throws Exception {
+		Product randomProduct = _randomProductWithSku();
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(Calendar.YEAR, 1);
+
+		randomProduct.setDisplayDate(calendar.getTime());
+
+		Product postProduct = productResource.postProduct(randomProduct);
+
+		Product putProduct = postProduct.clone();
+
+		putProduct.setName(
+			Collections.singletonMap(
+				"en_US", "_testPostProductWithFutureDisplayDate"));
+
+		putProduct = productResource.putProductByExternalReferenceCode(
+			postProduct.getExternalReferenceCode(), putProduct);
+
+		Product getProduct = productResource.getProduct(
+			putProduct.getProductId());
+
+		Assert.assertEquals(
+			String.valueOf(postProduct), postProduct.getId(),
+			putProduct.getId());
+		Assert.assertEquals(
+			String.valueOf(putProduct), putProduct.getId(), getProduct.getId());
+		Assert.assertEquals(
+			String.valueOf(putProduct), putProduct.getName(),
+			getProduct.getName());
 	}
 
 	@DeleteAfterTestRun

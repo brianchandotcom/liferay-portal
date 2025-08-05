@@ -6,6 +6,8 @@
 import {liferayConfig} from '../../liferay.config';
 import {ApiHelpers} from '../ApiHelpers';
 
+const portalURL = liferayConfig.environment.baseUrl;
+
 export class JSONWebServicesStagingApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -41,7 +43,6 @@ export class JSONWebServicesStagingApiHelper {
 		groupId: number | string;
 		unCheckedContent?: any;
 	}): Promise<void> {
-		const portalURL = liferayConfig.environment.baseUrl;
 		const serviceContext = JSON.stringify({});
 
 		const urlSearchParams = new URLSearchParams();
@@ -98,10 +99,7 @@ export class JSONWebServicesStagingApiHelper {
 		branchingPrivate = false,
 		branchingPublic = false,
 		groupId,
-		remoteAddress = liferayConfig.environment.baseUrl.substring(
-			7,
-			liferayConfig.environment.baseUrl.length - 5
-		),
+		remoteAddress = new URL(portalURL).hostname,
 		remoteGroupId,
 		remotePort,
 		secureConnection = false,
@@ -116,7 +114,6 @@ export class JSONWebServicesStagingApiHelper {
 		secureConnection?: boolean;
 		serviceContext?: Object;
 	}): Promise<void> {
-		const portalURL = liferayConfig.environment.baseUrl;
 		const serviceContextString = JSON.stringify(serviceContext);
 
 		const urlSearchParams = new URLSearchParams();

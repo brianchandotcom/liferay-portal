@@ -186,19 +186,7 @@ const AssetMetricsChart: React.FC<ICommonProps> = ({histogram, metricType}) => {
 				MetricsChartTooltip={AssetMetricsTooltip}
 				activeTabIndex={activeTabIndex}
 				emptyChartProps={{
-					description: Liferay.Language.get(
-						'check-back-later-to-see-if-your-data-sources-are-populated-with-data'
-					),
-					link: {
-						title: Liferay.Language.get(
-							'learn-more-about-visitors-behavior'
-						),
-						url: 'https://learn.liferay.com/w/dxp/content-authoring-and-management/content-dashboard/content-dashboard-interface',
-					},
-					show: !formattedData.combinedData.length,
-					title: Liferay.Language.get(
-						'there-is-no-data-for-visitors-behavior'
-					),
+					show: false,
 				}}
 				formattedData={formattedData}
 				legendAlign="text-right"

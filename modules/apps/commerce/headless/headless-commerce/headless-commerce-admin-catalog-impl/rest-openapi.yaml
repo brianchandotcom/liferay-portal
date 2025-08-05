@@ -1360,9 +1360,6 @@ components:
                 purchasable:
                     example: true
                     type: boolean
-                visible:
-                    example: true
-                    type: boolean
             type: object
         ProductConfigurationList:
             properties:

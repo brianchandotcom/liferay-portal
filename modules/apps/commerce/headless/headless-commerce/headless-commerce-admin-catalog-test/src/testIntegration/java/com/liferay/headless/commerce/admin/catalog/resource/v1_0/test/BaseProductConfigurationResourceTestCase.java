@@ -2734,14 +2734,6 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("visible", additionalAssertFieldName)) {
-				if (productConfiguration.getVisible() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -3135,17 +3127,6 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				if (!Objects.deepEquals(
 						productConfiguration1.getPurchasable(),
 						productConfiguration2.getPurchasable())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("visible", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						productConfiguration1.getVisible(),
-						productConfiguration2.getVisible())) {
 
 					return false;
 				}
@@ -3582,11 +3563,6 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("visible")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -3651,7 +3627,6 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				lowStockAction = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				purchasable = RandomTestUtil.randomBoolean();
-				visible = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

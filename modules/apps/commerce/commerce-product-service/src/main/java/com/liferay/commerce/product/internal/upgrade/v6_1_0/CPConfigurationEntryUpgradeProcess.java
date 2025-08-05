@@ -27,6 +27,10 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+
+		decimalFormat.setMinimumFractionDigits(0);
+
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -56,8 +60,6 @@ public class CPConfigurationEntryUpgradeProcess extends UpgradeProcess {
 
 					StringBundler sb = new StringBundler(
 						allowedOrderQuantitiesItems.length * 2);
-
-					DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 
 					for (String allowedOrderQuantitiesItem :
 							allowedOrderQuantitiesItems) {

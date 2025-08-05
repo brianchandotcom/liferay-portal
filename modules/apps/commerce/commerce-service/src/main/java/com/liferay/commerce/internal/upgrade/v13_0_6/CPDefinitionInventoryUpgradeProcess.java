@@ -27,6 +27,10 @@ public class CPDefinitionInventoryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+
+		decimalFormat.setMaximumFractionDigits(0);
+
 		String updateAllowedOrderQuantitiesSQL =
 			"update CPDefinitionInventory set allowedOrderQuantities = ? " +
 				"where CPDefinitionInventoryId = ?";
@@ -57,8 +61,6 @@ public class CPDefinitionInventoryUpgradeProcess extends UpgradeProcess {
 
 					StringBundler sb = new StringBundler(
 						allowedOrderQuantitiesItems.length * 2);
-
-					DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 
 					for (String allowedOrderQuantitiesItem :
 							allowedOrderQuantitiesItems) {

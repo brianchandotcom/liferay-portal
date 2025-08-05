@@ -11,6 +11,12 @@
 			"url": "https://learn.liferay.com/en/w/dxp/low-code/objects/creating-and-managing-objects/validations/expression-builder-validations-reference"
 		}
 	},
+	"inheritance-relationships": {
+		"en_US": {
+			"message": "Learn more about inheritance relationships.",
+			"url": "https://learn.liferay.com/w/dxp/low-code/objects/creating-and-managing-objects/relationships"
+		}
+	},
 	"localizing-object-definitions-and-entries": {
 		"en_US": {
 			"message": "Learn more.",
@@ -21,12 +27,6 @@
 		"en_US": {
 			"message": "Learn more.",
 			"url": "https://learn.liferay.com/w/dxp/low-code/objects/integrating-objects-with-third-party-services/managing-data-from-external-systems#proxy-object-limitations"
-		}
-	},
-	"relationships": {
-		"en_US": {
-			"message": "Learn more.",
-			"url": "https://learn.liferay.com/w/dxp/low-code/objects/creating-and-managing-objects/relationships"
 		}
 	}
 }

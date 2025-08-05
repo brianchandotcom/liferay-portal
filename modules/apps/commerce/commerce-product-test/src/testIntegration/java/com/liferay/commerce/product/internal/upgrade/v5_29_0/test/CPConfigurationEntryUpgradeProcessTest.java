@@ -67,7 +67,7 @@ public class CPConfigurationEntryUpgradeProcessTest {
 				commerceCatalog.getGroupId(),
 				masterCPConfigurationList.getCPConfigurationListId(), false,
 				RandomTestUtil.randomString(), 2, 1, 1, 2024, 0, 0, 0, 0, 0, 0,
-				0, true);
+				0, true, ServiceContextTestUtil.getServiceContext());
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
 			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
@@ -121,7 +121,7 @@ public class CPConfigurationEntryUpgradeProcessTest {
 				cpConfigurationEntry.getCPConfigurationEntryId());
 
 		Assert.assertEquals(
-			"1,001.00 78.00 2.00 333.00 0.00",
+			"1,001 78 2 333 0",
 			cpConfigurationEntry.getAllowedOrderQuantities());
 	}
 

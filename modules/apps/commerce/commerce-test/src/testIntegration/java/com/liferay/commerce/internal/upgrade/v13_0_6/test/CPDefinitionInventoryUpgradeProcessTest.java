@@ -78,7 +78,7 @@ public class CPDefinitionInventoryUpgradeProcessTest {
 				cpDefinitionInventory.getCPDefinitionInventoryId());
 
 		Assert.assertEquals(
-			"1,001.00 78.00 2.00 333.00 0.00",
+			"1,001 78 2 333 0",
 			cpDefinitionInventory.getAllowedOrderQuantities());
 	}
 

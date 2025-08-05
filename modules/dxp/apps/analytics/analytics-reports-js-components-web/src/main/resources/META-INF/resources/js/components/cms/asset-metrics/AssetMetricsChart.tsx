@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ColorType} from '@clayui/core/lib/typography/Text';
 import React, {useMemo, useState} from 'react';
 import {Line} from 'recharts';
 
@@ -136,6 +137,7 @@ export interface IMetricsChartLegendProps {
 		block?: boolean;
 		dataKey: string;
 		dotColor: string;
+		textColor?: ColorType;
 		title: string;
 		total?: string | number;
 		url?: string;
@@ -163,12 +165,14 @@ const AssetMetricsChart: React.FC<ICommonProps> = ({histogram, metricType}) => {
 			Dot: DashedDotIcon,
 			dataKey: MetricDataKey.Previous,
 			dotColor: prevMetricsChartData?.color ?? 'none',
+			textColor: 'secondary',
 			title: Liferay.Language.get('previous-period'),
 		},
 		{
 			Dot: CircleDot,
 			dataKey: MetricDataKey.Current,
 			dotColor: metricsChartData?.color ?? 'none',
+			textColor: 'secondary',
 			title: Liferay.Language.get('current-period'),
 		},
 	];

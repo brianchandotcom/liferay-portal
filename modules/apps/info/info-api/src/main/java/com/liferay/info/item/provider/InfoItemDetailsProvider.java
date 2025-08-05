@@ -7,7 +7,6 @@ package com.liferay.info.item.provider;
 
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemDetails;
-import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Jorge Ferrer
@@ -16,11 +15,10 @@ public interface InfoItemDetailsProvider<T> {
 
 	public InfoItemClassDetails getInfoItemClassDetails();
 
-	public InfoItemDetails getInfoItemDetails(T t);
-
-	public default InfoItemDetails getInfoItemDetails(long groupId, T t)
-		throws PortalException {
-		throw new UnsupportedOperationException();
+	public default InfoItemDetails getInfoItemDetails(long groupId, T t) {
+		return getInfoItemDetails(t);
 	}
+
+	public InfoItemDetails getInfoItemDetails(T t);
 
 }

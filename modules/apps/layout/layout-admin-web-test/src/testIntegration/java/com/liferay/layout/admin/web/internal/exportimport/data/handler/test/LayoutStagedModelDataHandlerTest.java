@@ -729,7 +729,22 @@ public class LayoutStagedModelDataHandlerTest
 		String className = "com.liferay.journal.model.JournalArticle";
 
 		long classNameId = _portal.getClassNameId(className);
-		long classTypeId = _getClassTypeId(className, group1.getGroupId());
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class, className);
+
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
+			infoItemFormVariationsProvider.getInfoItemFormVariations(
+				group1.getGroupId()));
+
+		infoItemFormVariations.sort(
+			Comparator.comparing(InfoItemFormVariation::getKey));
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariations.get(0);
+
+		long classTypeId = GetterUtil.getLong(infoItemFormVariation.getKey());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -2139,13 +2154,6 @@ public class LayoutStagedModelDataHandlerTest
 			journalArticle.getResourcePrimKey());
 	}
 
-	private long _getClassTypeId(String className, long groupId) {
-		InfoItemFormVariation infoItemFormVariation =
-			_getFirstInfoItemFormVariation(className, groupId);
-
-		return GetterUtil.getLong(infoItemFormVariation.getKey());
-	}
-
 	private Layout _getExportImportLayout(Layout layout) throws Exception {
 		ExportImportThreadLocal.setPortletImportInProcess(true);
 
@@ -2158,24 +2166,6 @@ public class LayoutStagedModelDataHandlerTest
 
 		return _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
-	}
-
-	private InfoItemFormVariation _getFirstInfoItemFormVariation(
-		String className, long groupId) {
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class, className);
-
-		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
-			infoItemFormVariationsProvider.getInfoItemFormVariations(groupId));
-
-		Assert.assertFalse(infoItemFormVariations.isEmpty());
-
-		infoItemFormVariations.sort(
-			Comparator.comparing(InfoItemFormVariation::getKey));
-
-		return infoItemFormVariations.get(0);
 	}
 
 	private List<FriendlyURLEntry> _getFriendlyURLEntries(Layout layout) {

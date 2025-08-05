@@ -4,6 +4,7 @@
  */
 
 import {Text} from '@clayui/core';
+import {ColorType} from '@clayui/core/lib/typography/Text';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React from 'react';
@@ -18,6 +19,7 @@ export interface IMetricsChartLegendProps {
 		block?: boolean;
 		dataKey: string;
 		dotColor: string;
+		textColor?: ColorType;
 		title: string;
 		total?: string | number;
 		url?: string;
@@ -34,10 +36,16 @@ const MetricsChartLegend: React.FC<IMetricsChartLegendProps> = ({
 	return (
 		<ul className={classNames('mb-3 metrics-chart__legend ml-5', align)}>
 			{legendItems.map(
-				(
-					{Dot, block = false, dataKey, dotColor, title, total, url},
-					index
-				) => {
+				({
+					Dot,
+					block = false,
+					dataKey,
+					dotColor,
+					textColor,
+					title,
+					total,
+					url,
+				}) => {
 					return (
 						<li
 							className={classNames('mb-2 mr-3 tab-focus', {
@@ -60,9 +68,9 @@ const MetricsChartLegend: React.FC<IMetricsChartLegendProps> = ({
 							{url ? (
 								<ClayLink
 									className={
-										index === 0
-											? 'text-dark'
-											: 'text-secondary'
+										textColor
+											? `text-${textColor}`
+											: `text-dark`
 									}
 									data-tooltip-align="top"
 									href={url}
@@ -82,9 +90,7 @@ const MetricsChartLegend: React.FC<IMetricsChartLegendProps> = ({
 								</ClayLink>
 							) : (
 								<Text
-									color={
-										index !== 0 ? 'secondary' : undefined
-									}
+									color={textColor ? textColor : undefined}
 									size={3}
 								>
 									{`${title}${total ? `: ${total}` : ''}`}

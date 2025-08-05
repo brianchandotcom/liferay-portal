@@ -64,6 +64,7 @@ const VisitorsBehaviorChart: React.FC<IVisitorsBehaviorChartProps> = ({
 			Dot: PublishedVersionDot,
 			dataKey: VisitorsBehaviorDataKey.PublishedVersionData,
 			dotColor: publishedVersionsChartData?.color ?? 'none',
+			textColor: 'secondary',
 			title: publishedVersionsChartData.title,
 			total: publishedVersionsChartData.total,
 		},

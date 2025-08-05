@@ -548,8 +548,6 @@ function start_app_server {
 		/bin/bash catalina.sh run &
 	elif [[ "${APP_SERVER_TYPE}" == "weblogic" ]]
 	then
-		echo "weblogic"
-
 		cd ${app_server_dir}/domains/liferay
 
 		/bin/bash startWeblogic.sh
@@ -665,13 +663,9 @@ function stop_app_server {
 		ant -f build-test-wildfly.xml stop-wildfly-playwright
 	elif [[ "${APP_SERVER_TYPE}" == "tomcat" ]]
 	then
-		cd ${app_server_dir}/bin
-
 		/bin/bash shutdown.sh &
 	elif [[ "${APP_SERVER_TYPE}" == "weblogic" ]]
 	then
-		echo "weblogic"
-
 		cd ${app_server_dir}/domains/liferay
 
 		/bin/bash startWeblogic.sh

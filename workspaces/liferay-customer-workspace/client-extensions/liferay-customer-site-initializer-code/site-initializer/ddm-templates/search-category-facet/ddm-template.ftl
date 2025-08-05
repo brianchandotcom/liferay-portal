@@ -36,7 +36,10 @@
 		<#assign displayableCategories = displayableCategories + [item] />
 	</#list>
 
-	<#assign panelId = stringUtil.replace(title, ' ', '') />
+	<#assign
+		displayableCategories = displayableCategories?sort_by("name")
+		panelId = stringUtil.replace(title, ' ', '')
+	/>
 
 	<@liferay_ui["panel-container"]
 		extended=true

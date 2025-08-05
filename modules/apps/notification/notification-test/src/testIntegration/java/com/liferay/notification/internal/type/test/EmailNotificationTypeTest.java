@@ -1211,6 +1211,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	public void testSendNotificationToSubscribers() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
+				true, true,
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -1221,19 +1222,13 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					).build()),
 				ObjectDefinitionConstants.SCOPE_SITE);
 
-		objectDefinition.setEnableObjectEntrySubscription(true);
-		objectDefinition.setEnableObjectEntryVersioning(true);
-
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectDefinition.getObjectDefinitionId(), "firstName");
 
-		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
-
-		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition);
-
-		_objectActionLocalService.addOrUpdateSubscriptionObjectActions(
-			objectDefinition);
+		objectDefinition =
+			_objectDefinitionLocalService.updateTitleObjectFieldId(
+				objectDefinition.getObjectDefinitionId(),
+				objectField.getObjectFieldId());
 
 		ObjectEntryFolder objectEntryFolder1 =
 			ObjectEntryFolderTestUtil.addObjectEntryFolder(group.getGroupId());

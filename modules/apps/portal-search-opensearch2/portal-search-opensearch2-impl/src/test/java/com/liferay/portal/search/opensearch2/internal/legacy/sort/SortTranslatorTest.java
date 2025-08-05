@@ -73,14 +73,14 @@ public class SortTranslatorTest {
 	}
 
 	private void _assertSort(
-		String expectedField, SortOrder expectedSortOrder,
+		String expectedFieldName, SortOrder expectedSortOrder,
 		List<SortOptions> sortOptionsList) {
 
 		SortOptions sortOptions = sortOptionsList.get(0);
 
 		FieldSort fieldSort = sortOptions.field();
 
-		Assert.assertEquals(expectedField, fieldSort.field());
+		Assert.assertEquals(expectedFieldName, fieldSort.field());
 		Assert.assertEquals(expectedSortOrder, fieldSort.order());
 	}
 

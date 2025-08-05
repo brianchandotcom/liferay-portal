@@ -273,20 +273,36 @@
 		}
 	}
 
-	function ${namespace}deselectCheckboxes(attribute, value, target) {
-		const selectedCheckboxes = document.querySelectorAll('input.facet-term:checked');
+	function ${namespace}deselectChildren(termId) {
+		const children = document.querySelectorAll(
+			'input.facet-term[data-parent-id="' + termId + '"]:checked'
+		);
 
-		selectedCheckboxes.forEach(selectedCheckbox => {
-			event.preventDefault();
+		children.forEach((child) => {
+			child.checked = false;
 
-			const selectedValue = selectedCheckbox.getAttribute(attribute);
+			const childTermId = child.getAttribute('data-term-id');
 
-			if (selectedValue === value) {
-				selectedCheckbox.checked = false;
-
-				${namespace}deselectCheckboxes(attribute, selectedValue, target);
-			}
+			${namespace}deselectChildren(childTermId);
 		});
+	}
+
+	function ${namespace}deselectParents(parentId) {
+		if (!parentId || parentId === '0') {
+			return;
+		}
+
+		const parentCheckbox = document.querySelector(
+			'input.facet-term[data-term-id="' + parentId + '"]:checked'
+		);
+
+		if (parentCheckbox) {
+			parentCheckbox.checked = false;
+
+			const grandParentId = parentCheckbox.getAttribute('data-parent-id');
+
+			${namespace}deselectParents(grandParentId);
+		}
 	}
 
 	function ${namespace}handleSelection(event) {
@@ -294,15 +310,15 @@
 
 		const checkbox = event.target;
 
-		const parentId = checkbox.getAttribute('data-parent-id');
+		if (checkbox.checked) {
+			const parentId = checkbox.getAttribute('data-parent-id');
 
-		if (checkbox.checked && parentId) {
-			${namespace}deselectCheckboxes('data-term-id', parentId, 'data-parent-id');
+			${namespace}deselectParents(parentId);
 		}
-		else if (!checkbox.checked) {
+		else {
 			const termId = checkbox.getAttribute('data-term-id');
 
-			${namespace}deselectCheckboxes('data-parent-id', termId, 'data-term-id');
+			${namespace}deselectChildren(termId);
 		}
 
 		Liferay.Search.FacetUtil.changeSelection(event);

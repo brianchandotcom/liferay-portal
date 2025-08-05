@@ -208,7 +208,7 @@ components:
                 externalReferenceCode:
                     type: string
                 type:
-                    enum: [AssetLibrary, Site]
+                    enum: [AssetLibrary, CMS, Site]
                     type: string
             type: object
         Status:

@@ -160,6 +160,40 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition publishObjectDefinition(
+			boolean enableObjectEntrySubscription,
+			boolean enableObjectEntryVersioning, boolean localized, String name,
+			List<ObjectField> objectFields, long objectFolderId, String scope,
+			long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				userId, objectFolderId, null, false, false, true, localized,
+				false, false, enableObjectEntrySubscription,
+				enableObjectEntryVersioning, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				name, null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(), objectFields);
+
+		return ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+	}
+
+	public static ObjectDefinition publishObjectDefinition(
+			boolean enableObjectEntrySubscription,
+			boolean enableObjectEntryVersioning, List<ObjectField> objectFields,
+			String scope)
+		throws Exception {
+
+		return publishObjectDefinition(
+			enableObjectEntrySubscription, enableObjectEntryVersioning,
+			FeatureFlagManagerUtil.isEnabled("LPD-32050"), getRandomName(),
+			objectFields, 0, scope, TestPropsValues.getUserId());
+	}
+
+	public static ObjectDefinition publishObjectDefinition(
 			boolean enableLocalization, List<ObjectField> objectFields)
 		throws Exception {
 
@@ -194,18 +228,9 @@ public class ObjectDefinitionTestUtil {
 			long objectFolderId, String scope, long userId)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				userId, objectFolderId, null, false, false, true, localized,
-				false, false, false, false, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				name, null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList(), objectFields);
-
-		return ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
-			userId, objectDefinition.getObjectDefinitionId());
+		return publishObjectDefinition(
+			false, false, localized, name, objectFields, objectFolderId, scope,
+			userId);
 	}
 
 	public static ObjectDefinition publishObjectDefinition(

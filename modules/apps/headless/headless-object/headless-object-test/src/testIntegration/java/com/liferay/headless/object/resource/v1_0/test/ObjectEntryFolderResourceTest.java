@@ -257,48 +257,45 @@ public class ObjectEntryFolderResourceTest
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		try {
-			User user = UserTestUtil.addUser();
+		User user = UserTestUtil.addUser();
 
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 
-			_addResourcePermission(ActionKeys.VIEW, user.getUserId());
+		_addResourcePermission(ActionKeys.VIEW, user.getUserId());
 
-			ObjectEntryFolder objectEntryFolder =
-				testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe_addObjectEntryFolder();
+		ObjectEntryFolder objectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe_addObjectEntryFolder();
 
-			_objectEntryFolderResource.setContextUser(user);
+		_objectEntryFolderResource.setContextUser(user);
 
-			AssertUtils.assertFailure(
-				PrincipalException.MustHavePermission.class,
-				StringBundler.concat(
-					"User ", user.getUserId(),
-					" must have SUBSCRIBE permission for ",
-					com.liferay.object.model.ObjectEntryFolder.class.getName(),
-					StringPool.SPACE, objectEntryFolder.getId()),
-				() ->
-					_objectEntryFolderResource.
-						postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe(
-							objectEntryFolder.getScopeKey(),
-							objectEntryFolder.getExternalReferenceCode()));
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", user.getUserId(),
+				" must have SUBSCRIBE permission for ",
+				com.liferay.object.model.ObjectEntryFolder.class.getName(),
+				StringPool.SPACE, objectEntryFolder.getId()),
+			() ->
+				_objectEntryFolderResource.
+					postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe(
+						objectEntryFolder.getScopeKey(),
+						objectEntryFolder.getExternalReferenceCode()));
 
-			_addResourcePermission(ActionKeys.SUBSCRIBE, user.getUserId());
+		_addResourcePermission(ActionKeys.SUBSCRIBE, user.getUserId());
 
-			_objectEntryFolderResource.
-				postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe(
-					objectEntryFolder.getScopeKey(),
-					objectEntryFolder.getExternalReferenceCode());
+		_objectEntryFolderResource.
+			postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe(
+				objectEntryFolder.getScopeKey(),
+				objectEntryFolder.getExternalReferenceCode());
 
-			Assert.assertTrue(
-				_subscriptionLocalService.isSubscribed(
-					TestPropsValues.getCompanyId(), user.getUserId(),
-					com.liferay.object.model.ObjectEntryFolder.class.getName(),
-					objectEntryFolder.getId()));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
+		Assert.assertTrue(
+			_subscriptionLocalService.isSubscribed(
+				TestPropsValues.getCompanyId(), user.getUserId(),
+				com.liferay.object.model.ObjectEntryFolder.class.getName(),
+				objectEntryFolder.getId()));
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 	}
 
 	@Override
@@ -312,59 +309,56 @@ public class ObjectEntryFolderResourceTest
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		try {
-			User user = UserTestUtil.addUser();
+		User user = UserTestUtil.addUser();
 
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 
-			_addResourcePermission(ActionKeys.VIEW, user.getUserId());
+		_addResourcePermission(ActionKeys.VIEW, user.getUserId());
 
-			ObjectEntryFolder objectEntryFolder =
-				testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe_addObjectEntryFolder();
+		ObjectEntryFolder objectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe_addObjectEntryFolder();
 
-			_subscriptionLocalService.addSubscription(
-				user.getUserId(), _testDepotEntry.getGroupId(),
+		_subscriptionLocalService.addSubscription(
+			user.getUserId(), _testDepotEntry.getGroupId(),
+			com.liferay.object.model.ObjectEntryFolder.class.getName(),
+			objectEntryFolder.getId());
+
+		_objectEntryFolderResource.setContextUser(user);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", user.getUserId(),
+				" must have SUBSCRIBE permission for ",
 				com.liferay.object.model.ObjectEntryFolder.class.getName(),
-				objectEntryFolder.getId());
+				StringPool.SPACE, objectEntryFolder.getId()),
+			() ->
+				_objectEntryFolderResource.
+					postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe(
+						objectEntryFolder.getScopeKey(),
+						objectEntryFolder.getExternalReferenceCode()));
 
-			_objectEntryFolderResource.setContextUser(user);
+		Assert.assertTrue(
+			_subscriptionLocalService.isSubscribed(
+				TestPropsValues.getCompanyId(), user.getUserId(),
+				com.liferay.object.model.ObjectEntryFolder.class.getName(),
+				objectEntryFolder.getId()));
 
-			AssertUtils.assertFailure(
-				PrincipalException.MustHavePermission.class,
-				StringBundler.concat(
-					"User ", user.getUserId(),
-					" must have SUBSCRIBE permission for ",
-					com.liferay.object.model.ObjectEntryFolder.class.getName(),
-					StringPool.SPACE, objectEntryFolder.getId()),
-				() ->
-					_objectEntryFolderResource.
-						postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe(
-							objectEntryFolder.getScopeKey(),
-							objectEntryFolder.getExternalReferenceCode()));
+		_addResourcePermission(ActionKeys.SUBSCRIBE, user.getUserId());
 
-			Assert.assertTrue(
-				_subscriptionLocalService.isSubscribed(
-					TestPropsValues.getCompanyId(), user.getUserId(),
-					com.liferay.object.model.ObjectEntryFolder.class.getName(),
-					objectEntryFolder.getId()));
+		_objectEntryFolderResource.
+			postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe(
+				objectEntryFolder.getScopeKey(),
+				objectEntryFolder.getExternalReferenceCode());
 
-			_addResourcePermission(ActionKeys.SUBSCRIBE, user.getUserId());
+		Assert.assertFalse(
+			_subscriptionLocalService.isSubscribed(
+				TestPropsValues.getCompanyId(), user.getUserId(),
+				com.liferay.object.model.ObjectEntryFolder.class.getName(),
+				objectEntryFolder.getId()));
 
-			_objectEntryFolderResource.
-				postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe(
-					objectEntryFolder.getScopeKey(),
-					objectEntryFolder.getExternalReferenceCode());
-
-			Assert.assertFalse(
-				_subscriptionLocalService.isSubscribed(
-					TestPropsValues.getCompanyId(), user.getUserId(),
-					com.liferay.object.model.ObjectEntryFolder.class.getName(),
-					objectEntryFolder.getId()));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 	}
 
 	@Override

@@ -171,7 +171,7 @@ public class TrialRestController extends BaseRestController {
 
 		Order order = _marketplaceService.getOrder(
 			trialExtensionRequestJSONObject.getLong(
-				"r_orderTrialExtensionRequest_commerceOrderId"));
+				"r_orderToTrialExtensionRequest_commerceOrderId"));
 
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
@@ -186,18 +186,20 @@ public class TrialRestController extends BaseRestController {
 			"trial-end-date",
 			trialEndDateZonedDateTime.format(DateTimeFormatter.ISO_INSTANT));
 
-		patch(
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server"),
-			new JSONObject(
-			).put(
-				"dueStatus", "Approved"
-			).toString(),
-			UriComponentsBuilder.fromPath(
-				"/o/c/trialextensionrequests/" + id
-			).build(
-			).toUri());
+		if (Objects.equals(dueStatusJSONObject.getString("key"), "Pending")) {
+			patch(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-marketplace-etc-spring-boot-oauth-application-" +
+						"headless-server"),
+				new JSONObject(
+				).put(
+					"dueStatus", "Approved"
+				).toString(),
+				UriComponentsBuilder.fromPath(
+					"/o/c/trialextensionrequests/" + id
+				).build(
+				).toUri());
+		}
 
 		_marketplaceService.updateOrder(
 			customFields, order.getId(), order.getOrderStatus());
@@ -305,11 +307,25 @@ public class TrialRestController extends BaseRestController {
 				).build());
 		}
 
-		PortalInstance portalInstance = _postPortalInstance(
-			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-			trialSettingsJSONObject.optString(
-				"projectId", String.valueOf(orderId)),
-			trialProvisioningContextJSONObject);
+		PortalInstance portalInstance;
+
+		try {
+			portalInstance = _postPortalInstance(
+				jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
+				trialSettingsJSONObject.optString(
+					"projectId", String.valueOf(orderId)),
+				trialProvisioningContextJSONObject);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Failed to create portal instance for order" + orderId,
+				exception);
+
+			_marketplaceService.updateOrder(
+				null, orderId, MarketplaceConstants.ORDER_STATUS_CANCELLED);
+
+			throw exception;
+		}
 
 		try {
 			_consoleService.setUpProject(

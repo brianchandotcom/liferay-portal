@@ -173,8 +173,6 @@ public class ConsoleService extends BaseService {
 			_inviteProject(emailAddress, projectId);
 		}
 
-		_inviteProject(_trialAdminEmailAddress, projectId);
-
 		_linkDXPWithProject(
 			dxpProjectUid, dxpVirtualInstanceId, jsonObject.getString("id"));
 
@@ -320,8 +318,5 @@ public class ConsoleService extends BaseService {
 	private String _consoleAuthURL;
 
 	private long _tokenExpirationMillis;
-
-	@Value("${liferay.marketplace.trial.admin.email.address}")
-	private String _trialAdminEmailAddress;
 
 }

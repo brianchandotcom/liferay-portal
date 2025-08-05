@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -53,8 +52,7 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					PortalInstancePool.getDefaultCompanyId());
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				OrphanReferencesDataCleanupUtil.class.getName(),
-				LoggerTestUtil.INFO)) {
+				getLoggingClassName(), LoggerTestUtil.INFO)) {
 
 			UnsafeRunnable<Exception> insertDataUnsafeRunnable =
 				getInsertDataUnsafeRunnable();
@@ -90,6 +88,8 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 
 	protected abstract UnsafeConsumer<LogCapture, Exception>
 		getLogAssertionUnsafeConsumer();
+
+	protected abstract String getLoggingClassName();
 
 	protected abstract UpgradeProcess getUpgradeProcess();
 

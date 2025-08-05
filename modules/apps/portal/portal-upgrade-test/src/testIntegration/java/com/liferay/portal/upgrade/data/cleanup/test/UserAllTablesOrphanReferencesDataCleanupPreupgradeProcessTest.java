@@ -13,14 +13,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,16 +104,18 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	}
 
 	@Override
+	protected String getLoggingClassName() {
+		return UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess.class.
+			getName();
+	}
+
+	@Override
 	protected UpgradeProcess getUpgradeProcess() {
 		return new UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess();
 	}
 
 	private User _adminUser;
 	private long _companyId;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
 	private long _userId;
 
 }

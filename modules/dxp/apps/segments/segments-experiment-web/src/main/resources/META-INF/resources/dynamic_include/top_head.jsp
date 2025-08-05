@@ -41,7 +41,7 @@ SegmentsExperiment segmentsExperiment = (SegmentsExperiment)request.getAttribute
 					if (window.Analytics) {
 						Analytics.send('ctaClicked', 'Page', {
 							elementId: element.id,
-							layoutExternalReferenceCode,
+							externalReferenceCode: layoutExternalReferenceCode,
 						});
 					}
 				});

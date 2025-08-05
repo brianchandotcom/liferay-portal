@@ -5,7 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.model.listener;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
@@ -14,6 +13,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,23 +23,22 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(service = ModelListener.class)
-public class DepotEntryModelListener extends BaseModelListener<DepotEntry> {
+public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
-	public void onBeforeRemove(DepotEntry depotEntry)
-		throws ModelListenerException {
-
+	public void onBeforeRemove(Group group) throws ModelListenerException {
 		try {
-			_onBeforeRemove(depotEntry);
+			_onBeforeRemove(group);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
 		}
 	}
 
-	private void _onBeforeRemove(DepotEntry depotEntry) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				depotEntry.getCompanyId(), "LPD-17564")) {
+	private void _onBeforeRemove(Group group) throws Exception {
+		if ((group == null) || (group.getType() != GroupConstants.TYPE_DEPOT) ||
+			!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564")) {
 
 			return;
 		}
@@ -48,8 +47,6 @@ public class DepotEntryModelListener extends BaseModelListener<DepotEntry> {
 				ObjectEntryFolderThreadLocal.
 					setForceDeleteSystemObjectEntryFolderWithSafeCloseable(
 						true)) {
-
-			Group group = depotEntry.getGroup();
 
 			_objectEntryFolderLocalService.
 				deleteObjectEntryFolderByExternalReferenceCode(

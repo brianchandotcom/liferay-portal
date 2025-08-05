@@ -167,6 +167,13 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			String objectRelationshipName, Pagination pagination)
 		throws Exception;
 
+	public Page<ObjectEntry> getObjectEntryRelatedObjectEntries(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			String objectRelationshipName, Pagination pagination,
+			ObjectDefinition relatedObjectDefinition)
+		throws Exception;
+
 	public Page<Object> getRelatedSystemObjectEntries(
 			ObjectDefinition objectDefinition, Long objectEntryId,
 			String objectRelationshipName, Pagination pagination)

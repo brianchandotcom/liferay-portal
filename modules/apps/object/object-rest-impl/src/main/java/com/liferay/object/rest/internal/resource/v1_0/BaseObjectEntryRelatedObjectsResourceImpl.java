@@ -107,6 +107,39 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 
 	@GET
 	@Operation(
+		operationId = "getByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNamePage"
+	)
+	@Parameters(
+		{
+			@Parameter(
+				in = ParameterIn.PATH, name = "currentExternalReferenceCode"
+			),
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipName"),
+			@Parameter(in = ParameterIn.QUERY, name = "fields"),
+			@Parameter(in = ParameterIn.QUERY, name = "nestedFields"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "restrictFields")
+		}
+	)
+	@Path(
+		"/by-external-reference-code/{currentExternalReferenceCode}/{objectRelationshipName}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(@Tag(name = "ObjectEntry"))
+	public abstract Page<Object>
+			getByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNamePage(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("currentExternalReferenceCode")
+				String currentExternalReferenceCode,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("objectRelationshipName")
+				String objectRelationshipName,
+				@Context Pagination pagination)
+		throws Exception;
+
+	@GET
+	@Operation(
 		operationId = "getObjectEntryObjectRelationshipNameRelatedObjectEntryPage"
 	)
 	@Parameters(

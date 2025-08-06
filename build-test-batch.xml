@@ -394,6 +394,101 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-gradle-module-dir-task-names">
+		<attribute name="gradle.task.names" />
+
+		<sequential>
+			<var name="gradle.module.dir.task.names" unset="true" />
+
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+					import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory.Module;
+
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
+					public File getParentModuleDir(File dir) {
+				        List moduleDirs = new ArrayList();
+
+						File currentDir = dir;
+
+						while ((currentDir != null) && !modulesDir.equals(currentDir.getParentFile())) {
+							moduleDirs.add(currentDir);
+
+							currentDir = currentDir.getParentFile();
+						}
+
+						Collections.reverse(moduleDirs);
+
+						for (File moduleDir : moduleDirs) {
+							if (isModuleDir(moduleDir)) {
+								return moduleDir;
+							}
+						}
+
+						return dir;
+					}
+
+					public boolean isModuleDir(File dir) {
+						Module module = Module.getModule(dir.toPath());
+
+						if ((module != null) && dir.equals(module.getFile())) {
+							return true;
+						}
+
+						return false;
+					}
+
+					File modulesDir = new File(project.getProperty("project.dir"), "modules");
+
+					Pattern pattern = Pattern.compile("(?<moduleDir>.+):(?<taskName>[^:]+)");
+
+					String gradleTaskNames = "@{gradle.task.names}";
+
+					Map map = new HashMap();
+
+					for (String gradleTaskName : gradleTaskNames.split("[,\\s]")) {
+						Matcher matcher = pattern.matcher(gradleTaskName);
+
+						if (!matcher.find()) {
+							continue;
+						}
+
+						String moduleDirString = matcher.group("moduleDir");
+
+						File moduleDir = getParentModuleDir(new File(project.getProperty("project.dir") + "/modules" + moduleDirString.replaceAll(":", "/")));
+
+						Set taskNames = map.get(moduleDir);
+
+						if (taskNames == null) {
+							taskNames = new HashSet();
+						}
+
+						taskNames.add(matcher.group("taskName"));
+
+						map.put(moduleDir, taskNames);
+					}
+
+					StringBuilder sb = new StringBuilder();
+
+					for (Map.Entry entry : map.entrySet()) {
+						sb.append(JenkinsResultsParserUtil.getPathRelativeTo(entry.getKey(), modulesDir.getParentFile()));
+						sb.append("=");
+						sb.append(JenkinsResultsParserUtil.join(" ", new ArrayList(entry.getValue())));
+						sb.append("|");
+					}
+
+					if (sb.length() > 0) {
+						sb.setLength(sb.length() - 1);
+					}
+
+					project.setProperty("gradle.module.dir.task.names", sb.toString());
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-release-dependency-modules">
 		<attribute default="false" name="post.startup.modules.only" />
 		<attribute default="false" name="pre.startup.modules.only" />

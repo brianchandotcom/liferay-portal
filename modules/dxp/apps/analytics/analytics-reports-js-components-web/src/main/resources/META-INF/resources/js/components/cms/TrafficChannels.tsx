@@ -10,10 +10,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {Context} from '../../Context';
 import ApiHelper from '../../apis/ApiHelper';
-import {AssetTypes, MetricName, MetricType} from '../../types/global';
 import {buildQueryString} from '../../utils/buildQueryString';
-import {assetMetrics} from '../../utils/metrics';
-import {MetricsTitle} from '../BaseOverviewMetrics';
 
 import './traffic_channel.scss';
 
@@ -23,33 +20,24 @@ type TrafficChannelsData = {
 	percentage: number;
 };
 
-type TrafficChannelsApiResponse = {
-	externalReferenceCode: string;
-	selectedMetrics: Array<{
-		metricType: string;
-		trafficChannels: Array<{
-			count: number;
-			name: string;
-		}>;
-	}>;
-	totalCount: number;
-};
+type TrafficChannelsApiResponse = Array<{
+	count: number;
+	name: string;
+}>;
 
 function mapData(
-	data: TrafficChannelsApiResponse | null,
-	selectedMetric: MetricType
+	data: TrafficChannelsApiResponse | null
 ): TrafficChannelsData[] {
 	if (!data) {
 		return [];
 	}
 
-	const {selectedMetrics, totalCount} = data;
-	const selectedMetricData = selectedMetrics.find(
-		(metric) => metric.metricType === selectedMetric
-	);
+	const totalCount = data.reduce((total, value) => {
+		return total + value.count;
+	}, 0);
 
-	return selectedMetricData
-		? selectedMetricData.trafficChannels.map((channel) => ({
+	return data
+		? data.map((channel) => ({
 				count: channel.count,
 				name: channel.name,
 				percentage: (channel.count / totalCount) * 100,
@@ -59,133 +47,37 @@ function mapData(
 
 async function fetchTrafficChannelsData(
 	externalReferenceCode: string,
-	selectedMetrics: MetricName[],
 	groupId?: string,
 	rangeKey?: string
 ): Promise<TrafficChannelsApiResponse | null> {
-	const mockedData: TrafficChannelsApiResponse = {
-		externalReferenceCode,
-		selectedMetrics: [
-			{
-				metricType: MetricType.Views,
-				trafficChannels: [
-					{
-						count: 10,
-						name: 'Direct',
-					},
-					{
-						count: 20,
-						name: 'Social',
-					},
-					{
-						count: 15,
-						name: 'Referrals',
-					},
-					{
-						count: 10,
-						name: 'Paid Search',
-					},
-					{
-						count: 30,
-						name: 'Email',
-					},
-					{
-						count: 35,
-						name: 'Others',
-					},
-				],
-			},
-			{
-				metricType: MetricType.Impressions,
-				trafficChannels: [
-					{
-						count: 15,
-						name: 'Direct',
-					},
-					{
-						count: 30,
-						name: 'Social',
-					},
-					{
-						count: 25,
-						name: 'Referrals',
-					},
-					{
-						count: 10,
-						name: 'Paid Search',
-					},
-					{
-						count: 20,
-						name: 'Email',
-					},
-					{
-						count: 30,
-						name: 'Others',
-					},
-				],
-			},
-			{
-				metricType: MetricType.Downloads,
-				trafficChannels: [
-					{
-						count: 25,
-						name: 'Direct',
-					},
-					{
-						count: 15,
-						name: 'Social',
-					},
-					{
-						count: 10,
-						name: 'Referrals',
-					},
-					{
-						count: 35,
-						name: 'Paid Search',
-					},
-					{
-						count: 30,
-						name: 'Email',
-					},
-					{
-						count: 15,
-						name: 'Others',
-					},
-				],
-			},
-		],
-		totalCount: 360,
-	};
-
-	const queryParams = buildQueryString(
+	const mockedData: TrafficChannelsApiResponse = [
 		{
-			externalReferenceCode,
-			groupId: groupId || '',
-			rangeKey: rangeKey || '',
-			selectedMetrics,
+			count: 10,
+			name: 'Direct',
 		},
 		{
-			shouldIgnoreParam: (value) => value === '',
-		}
-	);
-
-	const endpoint = `/o/analytics-cms-rest/endpoint${queryParams}`;
+			count: 20,
+			name: 'Social',
+		},
+		{
+			count: 15,
+			name: 'Referrals',
+		},
+		{
+			count: 10,
+			name: 'Paid Search',
+		},
+		{
+			count: 30,
+			name: 'Email',
+		},
+		{
+			count: 35,
+			name: 'Others',
+		},
+	];
 
 	return mockedData;
-
-	// const {data, error} =
-	// 	await ApiHelper.get<TrafficChannelsApiResponse>(endpoint);
-
-	// if (error) {
-	// 	console.error(error);
-	// }
-
-	// if (data) {
-	// 	return data;
-	// }
-
-	// return null;
-
 }
 
 const TrafficChannelsEntry = ({
@@ -255,36 +147,20 @@ const TrafficChannelsEntry = ({
 export function TrafficChannels() {
 	const [trafficData, setTrafficData] = useState<TrafficChannelsData[]>([]);
 
-	const {
-		externalReferenceCode,
-		filters,
-		objectEntryFolderExternalReferenceCode,
-	} = useContext(Context);
+	const {externalReferenceCode} = useContext(Context);
 
 	useEffect(() => {
 		async function fetchData() {
-			const selectedMetrics =
-				assetMetrics[
-					objectEntryFolderExternalReferenceCode as AssetTypes
-				];
-
-			const data = await fetchTrafficChannelsData(
-				externalReferenceCode,
-				selectedMetrics
-			);
+			const data = await fetchTrafficChannelsData(externalReferenceCode);
 
 			if (data) {
-				const mappedData = mapData(data, filters.metric);
+				const mappedData = mapData(data);
 				setTrafficData(mappedData);
 			}
 		}
 
 		fetchData();
-	}, [
-		objectEntryFolderExternalReferenceCode,
-		externalReferenceCode,
-		filters.metric,
-	]);
+	}, [externalReferenceCode]);
 
 	return (
 		<section aria-labelledby="traffic-channels-header" className="mt-3">
@@ -326,23 +202,23 @@ export function TrafficChannels() {
 					</div>
 
 					<div
-						aria-label={MetricsTitle[filters.metric]}
+						aria-label={Liferay.Language.get('views')}
 						role="columnheader"
 						style={{width: '35%'}}
 					>
 						<Text color="secondary" size={3} weight="semi-bold">
-							{MetricsTitle[filters.metric]}
+							{Liferay.Language.get('views')}
 						</Text>
 					</div>
 
 					<div
-						aria-label={`${Liferay.Language.get('%-of')} ${MetricsTitle[filters.metric]}`}
+						aria-label={`${Liferay.Language.get('%-of')} ${Liferay.Language.get('views')}`}
 						className="d-flex justify-content-end"
 						role="columnheader"
 						style={{width: '30%'}}
 					>
 						<Text color="secondary" size={3} weight="semi-bold">
-							{`${Liferay.Language.get('%-of')} ${MetricsTitle[filters.metric]}`}
+							{`${Liferay.Language.get('%-of')} ${Liferay.Language.get('views')}`}
 						</Text>
 					</div>
 				</header>

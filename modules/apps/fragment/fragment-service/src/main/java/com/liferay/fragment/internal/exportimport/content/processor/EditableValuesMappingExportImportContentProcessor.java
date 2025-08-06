@@ -229,8 +229,8 @@ public class EditableValuesMappingExportImportContentProcessor
 		long classNameId = editableJSONObject.getLong("classNameId");
 		long classPK = editableJSONObject.getLong("classPK");
 		String collectionFieldId = editableJSONObject.getString(
-			"collectionFieldId");
-		String mappedField = editableJSONObject.getString("mappedField");
+			"collectionFieldId", null);
+		String mappedField = editableJSONObject.getString("mappedField", null);
 
 		if (((classNameId == 0) || (classPK == 0)) &&
 			Validator.isNull(collectionFieldId) &&

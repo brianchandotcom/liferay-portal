@@ -222,7 +222,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		return TransformUtil.transform(
-			_getGroupConnectedDepotEntries(groupId, type, start, end),
+			_getDepotEntryGroupRels(groupId, type, start, end),
 			depotEntryGroupRel -> depotEntryLocalService.getDepotEntry(
 				depotEntryGroupRel.getDepotEntryId()));
 	}
@@ -325,7 +325,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		return _language.get(defaultLocale, "unnamed-asset-library");
 	}
 
-	private List<DepotEntryGroupRel> _getGroupConnectedDepotEntries(
+	private List<DepotEntryGroupRel> _getDepotEntryGroupRels(
 		long groupId, int type, int start, int end) {
 
 		if (type == DepotConstants.TYPE_ANY) {

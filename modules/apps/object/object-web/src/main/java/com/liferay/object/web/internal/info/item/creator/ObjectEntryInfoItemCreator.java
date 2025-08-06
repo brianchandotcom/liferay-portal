@@ -58,6 +58,9 @@ public class ObjectEntryInfoItemCreator
 		throws InfoFormException {
 
 		try {
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyy-MM-dd HH:mm");
+
 			ObjectEntryManager objectEntryManager =
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					_objectDefinition.getStorageType());
@@ -81,7 +84,7 @@ public class ObjectEntryInfoItemCreator
 							setExpirationDate(
 								() -> GetterUtil.getDate(
 									curProperties.get("expirationDate"),
-									_dateTimeFormatter, null));
+									dateFormat, null));
 							setFriendlyUrlPath(
 								() -> GetterUtil.getString(
 									curProperties.get("objectEntryFriendlyURL"),
@@ -94,7 +97,7 @@ public class ObjectEntryInfoItemCreator
 							setReviewDate(
 								() -> GetterUtil.getDate(
 									curProperties.get("reviewDate"),
-									_dateTimeFormatter, null));
+									dateFormat, null));
 							setStatus(
 								() -> new Status() {
 									{
@@ -128,9 +131,6 @@ public class ObjectEntryInfoItemCreator
 
 		return null;
 	}
-
-	private static final DateFormat _dateTimeFormatter =
-		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;
 	private final ObjectDefinition _objectDefinition;

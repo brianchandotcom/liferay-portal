@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -155,6 +156,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		SearchLocalizationHelper searchLocalizationHelper,
 		SharingModelResourcePermissionConfigurator
 			sharingModelResourcePermissionConfigurator,
+		SystemEventLocalService systemEventLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		ModelPreFilterContributor workflowStatusModelPreFilterContributor,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
@@ -192,6 +194,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_searchLocalizationHelper = searchLocalizationHelper;
 		_sharingModelResourcePermissionConfigurator =
 			sharingModelResourcePermissionConfigurator;
+		_systemEventLocalService = systemEventLocalService;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 		_workflowStatusModelPreFilterContributor =
@@ -503,7 +506,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					TrashHandler.class,
 					new ObjectEntryTrashHandler(
 						objectDefinition, _objectDefinitionLocalService,
-						_objectEntryService),
+						_objectEntryService, _systemEventLocalService),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"model.class.name", objectDefinition.getClassName()
 					).build()));
@@ -684,6 +687,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		new ConcurrentHashMap<>();
 	private final SharingModelResourcePermissionConfigurator
 		_sharingModelResourcePermissionConfigurator;
+	private final SystemEventLocalService _systemEventLocalService;
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;
 	private final UserLocalService _userLocalService;
 	private final WorkflowDefinitionLinkLocalService

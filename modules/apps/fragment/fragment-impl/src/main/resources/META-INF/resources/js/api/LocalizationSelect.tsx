@@ -78,15 +78,11 @@ export function LocalizationSelect({
 			const translated = new Set([
 				...Array.from(
 					element.querySelectorAll(
-						`[data-localizable="true"] [type="file"][name$="_${languageId}"]`
-					)
-				),
-				...Array.from(
-					element.querySelectorAll(
-						`[data-localizable="true"] [type="hidden"][name$="_${languageId}"]`
+						`[data-localizable="true"] [type="file"][name$="_${languageId}"], ` +
+							`[data-localizable="true"] [type="hidden"][name$="_${languageId}"]`
 					)
 				)
-					.filter((input) => input.getAttribute('value') !== null)
+					.filter((input) => hasValue(input as HTMLInputElement))
 					.map((input) => (input as HTMLInputElement).name),
 			]).size;
 
@@ -290,4 +286,12 @@ export function LocalizationSelect({
 			) : null}
 		</div>
 	);
+}
+
+function hasValue(input: HTMLInputElement) {
+	if (input.type === 'file') {
+		return Boolean(input.files?.length);
+	}
+
+	return Boolean(input.getAttribute('value')?.length);
 }

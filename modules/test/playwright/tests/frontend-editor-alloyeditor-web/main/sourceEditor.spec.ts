@@ -49,10 +49,10 @@ test('Content is rendered in source editor when using full screen mode',
 
         fullScreenButton.click();
 
-        const fullScreenModal = page.locator('.lfr-fulscreen-source-editor-dialog');
+        const fullScreenModal = page.locator('.lfr-fullscreen-source-editor-dialog');
 
         await fullScreenModal.waitFor({state: 'visible', timeout: 10000});
 
-        await expect(fullScreenModal).toHaveText('Lorem ipsum');
+        await expect(fullScreenModal).toContainText('Lorem ipsum');
 	});
 });

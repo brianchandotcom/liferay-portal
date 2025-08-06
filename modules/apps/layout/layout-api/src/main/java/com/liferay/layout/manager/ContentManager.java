@@ -7,6 +7,7 @@ package com.liferay.layout.manager;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -43,5 +44,11 @@ public interface ContentManager {
 	public List<String> getRestrictedItemIds(
 		HttpServletRequest httpServletRequest, LayoutStructure layoutStructure,
 		ThemeDisplay themeDisplay);
+
+	public void updateLayoutClassedModelUsage(
+		FragmentEntryLink fragmentEntryLink);
+
+	public void updateLayoutClassedModelUsage(
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel);
 
 }

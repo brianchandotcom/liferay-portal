@@ -60,6 +60,8 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.manager.ContentManager;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
@@ -99,6 +101,8 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -143,7 +147,6 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
- * @author Georgel Pop
  */
 @Component(service = ContentManager.class)
 public class ContentManagerImpl implements ContentManager {
@@ -355,6 +358,129 @@ public class ContentManagerImpl implements ContentManager {
 		}
 
 		return restrictedItemIds;
+	}
+
+	@Override
+	public void updateLayoutClassedModelUsage(
+		FragmentEntryLink fragmentEntryLink) {
+
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+			_portal.getClassNameId(FragmentEntryLink.class.getName()),
+			fragmentEntryLink.getPlid());
+
+		Set<LayoutDisplayPageObjectProvider<?>>
+			layoutDisplayPageObjectProviders =
+				getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
+					fragmentEntryLink);
+
+		for (LayoutDisplayPageObjectProvider<?>
+				layoutDisplayPageObjectProvider :
+					layoutDisplayPageObjectProviders) {
+
+			LayoutClassedModelUsage layoutClassedModelUsage =
+				_layoutClassedModelUsageLocalService.
+					fetchLayoutClassedModelUsage(
+						fragmentEntryLink.getGroupId(),
+						layoutDisplayPageObjectProvider.
+							getExternalReferenceCode(),
+						layoutDisplayPageObjectProvider.getClassNameId(),
+						layoutDisplayPageObjectProvider.getClassPK(),
+						String.valueOf(
+							fragmentEntryLink.getFragmentEntryLinkId()),
+						_portal.getClassNameId(
+							FragmentEntryLink.class.getName()),
+						fragmentEntryLink.getPlid());
+
+			if (layoutClassedModelUsage != null) {
+				continue;
+			}
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext == null) {
+				serviceContext = new ServiceContext();
+			}
+
+			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+				fragmentEntryLink.getGroupId(),
+				layoutDisplayPageObjectProvider.getExternalReferenceCode(),
+				layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(),
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				_portal.getClassNameId(FragmentEntryLink.class.getName()),
+				fragmentEntryLink.getPlid(), serviceContext);
+		}
+	}
+
+	@Override
+	public void updateLayoutClassedModelUsage(
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layoutPageTemplateStructureRel.
+						getLayoutPageTemplateStructureId());
+
+		if (layoutPageTemplateStructure == null) {
+			return;
+		}
+
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+			String.valueOf(
+				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
+			_portal.getClassNameId(LayoutPageTemplateStructure.class.getName()),
+			layoutPageTemplateStructure.getPlid());
+
+		Set<LayoutDisplayPageObjectProvider<?>>
+			layoutDisplayPageObjectProviders =
+				getLayoutMappedLayoutDisplayPageObjectProviders(
+					layoutPageTemplateStructureRel.getData());
+
+		for (LayoutDisplayPageObjectProvider<?>
+				layoutDisplayPageObjectProvider :
+					layoutDisplayPageObjectProviders) {
+
+			LayoutClassedModelUsage layoutClassedModelUsage =
+				_layoutClassedModelUsageLocalService.
+					fetchLayoutClassedModelUsage(
+						layoutPageTemplateStructure.getGroupId(),
+						layoutDisplayPageObjectProvider.
+							getExternalReferenceCode(),
+						layoutDisplayPageObjectProvider.getClassNameId(),
+						layoutDisplayPageObjectProvider.getClassPK(),
+						String.valueOf(
+							layoutPageTemplateStructure.
+								getLayoutPageTemplateStructureId()),
+						_portal.getClassNameId(
+							LayoutPageTemplateStructure.class.getName()),
+						layoutPageTemplateStructure.getPlid());
+
+			if (layoutClassedModelUsage != null) {
+				continue;
+			}
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext == null) {
+				serviceContext = new ServiceContext();
+			}
+
+			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+				layoutPageTemplateStructure.getGroupId(),
+				layoutDisplayPageObjectProvider.getExternalReferenceCode(),
+				layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(),
+				String.valueOf(
+					layoutPageTemplateStructure.
+						getLayoutPageTemplateStructureId()),
+				_portal.getClassNameId(
+					LayoutPageTemplateStructure.class.getName()),
+				layoutPageTemplateStructure.getPlid(), serviceContext);
+		}
 	}
 
 	private LiferayRenderRequest _createRenderRequest(

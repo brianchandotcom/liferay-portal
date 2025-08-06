@@ -456,7 +456,7 @@ public abstract class BaseEmailAddressResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/email-addresses/{emailAddressId}' -d $'{"emailAddress": ___, "externalReferenceCode": ___, "primary": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/email-addresses/{emailAddressId}' -d $'{"emailAddress": ___, "externalReferenceCode": ___, "id": ___, "primary": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the email address with the information sent in the request body. Fields not present in the request body are left unchanged."
@@ -491,7 +491,7 @@ public abstract class BaseEmailAddressResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/email-addresses/by-external-reference-code/{externalReferenceCode}' -d $'{"emailAddress": ___, "externalReferenceCode": ___, "primary": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/email-addresses/by-external-reference-code/{externalReferenceCode}' -d $'{"emailAddress": ___, "externalReferenceCode": ___, "id": ___, "primary": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the email address with the information sent in the request body. Fields not present in the request body are left unchanged."

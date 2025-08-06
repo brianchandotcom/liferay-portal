@@ -190,25 +190,6 @@ public class ContentManager {
 	public JSONArray getPageContentsJSONArray(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long plid,
-			List<String> restrictedItemIds, long segmentsExperienceId)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		LayoutStructure layoutStructure =
-			LayoutStructureUtil.getLayoutStructure(
-				themeDisplay.getScopeGroupId(), plid, segmentsExperienceId);
-
-		return _getPageContentsJSONArray(
-			httpServletRequest, httpServletResponse, plid, segmentsExperienceId,
-			layoutStructure, restrictedItemIds);
-	}
-
-	public JSONArray getPageContentsJSONArray(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long plid,
 			long segmentsExperienceId)
 		throws PortalException {
 

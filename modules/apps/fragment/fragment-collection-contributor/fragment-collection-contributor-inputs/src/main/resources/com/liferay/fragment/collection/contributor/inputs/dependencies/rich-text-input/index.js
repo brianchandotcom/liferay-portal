@@ -48,8 +48,16 @@ else {
 			`${fragmentEntryLinkNamespace}-rich-text-input`
 		);
 
+		const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+
+		let currentLanguageId = defaultLanguageId;
+
 		import('@liferay/fragment-impl/api').then(
-			({registerLocalizedInput, registerUnlocalizedInput}) => {
+			({
+				getTranslationInput,
+				registerLocalizedInput,
+				registerUnlocalizedInput,
+			}) => {
 				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
 				if (input.localizable) {
@@ -57,15 +65,64 @@ else {
 						changeTextDirection: false,
 						defaultLanguageId,
 						initialValues: input.valueI18n,
+						inputElement: wrapper,
 						inputName: input.name,
 						localizationInputsContainer: inputContainer,
 						namespace: fragmentNamespace,
 						onLocaleChange: ({languageId, value}) => {
+							currentLanguageId = languageId;
+
 							editorPromise.then((editor) => {
 								changeLanguageDirection(editor, languageId);
 
 								editor.setData(value);
 							});
+						},
+						onMarkAsTranslated: () => {
+							const defaultLanguageInput = getTranslationInput({
+								inputId: wrapper.id,
+								inputName: wrapper.name,
+								languageId: defaultLanguageId,
+								localizationInputsContainer: wrapper.parentNode,
+								namespace: fragmentNamespace,
+							});
+
+							editorPromise.then((editor) =>
+								editor.setData(defaultLanguageInput.value)
+							);
+
+							const translationInput = getTranslationInput({
+								inputId: wrapper.id,
+								inputName: wrapper.name,
+								languageId: currentLanguageId,
+								localizationInputsContainer: wrapper.parentNode,
+								namespace: fragmentNamespace,
+							});
+
+							translationInput.value = defaultLanguageInput.value;
+						},
+						onResetTranslation: () => {
+							const defaultLanguageInput = getTranslationInput({
+								inputId: wrapper.id,
+								inputName: wrapper.name,
+								languageId: defaultLanguageId,
+								localizationInputsContainer: wrapper.parentNode,
+								namespace: fragmentNamespace,
+							});
+
+							editorPromise.then((editor) =>
+								editor.setData(defaultLanguageInput.value)
+							);
+
+							const translationInput = getTranslationInput({
+								inputId: wrapper.id,
+								inputName: wrapper.name,
+								languageId: currentLanguageId,
+								localizationInputsContainer: wrapper.parentNode,
+								namespace: fragmentNamespace,
+							});
+
+							translationInput.removeAttribute('value');
 						},
 					});
 

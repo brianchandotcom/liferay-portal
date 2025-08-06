@@ -107,12 +107,13 @@ public class ObjectFieldSettingUtil {
 	public static String getTimeZoneId(
 		List<ObjectFieldSetting> objectFieldSettings, User user) {
 
-		if ((user == null) || ListUtil.isEmpty(objectFieldSettings) ||
-			!StringUtil.equals(
-				getValue(
-					ObjectFieldSettingConstants.NAME_TIME_STORAGE,
-					objectFieldSettings),
-				ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC)) {
+		if ((user == null) ||
+			(ListUtil.isNotEmpty(objectFieldSettings) &&
+			 !StringUtil.equals(
+				 getValue(
+					 ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+					 objectFieldSettings),
+				 ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC))) {
 
 			return null;
 		}

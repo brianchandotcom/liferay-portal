@@ -58,6 +58,16 @@ components:
                     type: number
                 valueKey:
                     type: string
+        ObjectEntryAcquisitionChannel:
+            properties:
+                name:
+                    type: string
+                percentage:
+                    format: double
+                    type: number
+                value:
+                    format: double
+                    type: number
         ObjectEntryHistogramMetric:
             properties:
                 histograms:
@@ -265,6 +275,38 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/InventoryAnalysis"
             tags: ["InventoryAnalysis"]
+    "/object-entry-acquisition-channels":
+        get:
+            operationId: getObjectEntryAcquisitionChannelsPage
+            parameters:
+                -   in: query
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: groupId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectEntryAcquisitionChannel"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectEntryAcquisitionChannel"
+                                type: array
+            tags: ["ObjectEntryAcquisitionChannel"]
     "/object-entry-histogram-metric":
         get:
             operationId: getObjectEntryHistogramMetric

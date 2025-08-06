@@ -16,6 +16,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.exportimport.test.rule.LazyReferencing;
+import com.liferay.exportimport.test.rule.LazyReferencingTestRule;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyVocabulary;
@@ -60,6 +62,8 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -70,6 +74,11 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class TaxonomyCategoryResourceTest
 	extends BaseTaxonomyCategoryResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LazyReferencingTestRule lazyReferencingTestRule =
+		LazyReferencingTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -251,6 +260,7 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	@FeatureFlag("LPD-47858")
+	@LazyReferencing
 	@Override
 	@Test
 	public void testPostAssetLibraryTaxonomyCategory() throws Exception {
@@ -261,6 +271,7 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	@FeatureFlag("LPD-47858")
+	@LazyReferencing
 	@Override
 	@Test
 	public void testPostSiteTaxonomyCategory() throws Exception {

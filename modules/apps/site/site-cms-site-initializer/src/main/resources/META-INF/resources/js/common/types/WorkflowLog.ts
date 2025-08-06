@@ -4,30 +4,33 @@
  */
 
 export interface WorkflowLog {
-    auditPerson: {
-      additionalName: string,
-      contentType: string,
-      familyName: string,
-      givenName: string,
-      id: number,
-      name: string,
-      profileURL: string
-    },
-    id: number,
-    person: {
-      additionalName: string,
-      contentType: string,
-      familyName: string,
-      givenName: string,
-      id: number,
-      name: string,
-      profileURL: string
-    },
-    role: {
-        id: number,
-    },
-    state: string,
-    stateLabel: string,
-    type: string,
-    workflowTaskId: number
-  }
+	auditPerson: {
+		additionalName: string;
+		contentType: string;
+		familyName: string;
+		givenName: string;
+		id: number;
+		image: string;
+		name: string;
+		profileURL: string;
+	};
+	dateCreated: string;
+	id: number;
+	person: {
+		additionalName: string;
+		contentType: string;
+		familyName: string;
+		givenName: string;
+		id: number;
+		image: string;
+		name: string;
+		profileURL: string;
+	};
+	role: {
+		id: number;
+	};
+	state: string;
+	stateLabel: string;
+	type: string;
+	workflowTaskId: number;
+}

@@ -4,6 +4,6 @@
  */
 
 export interface AssignableUser {
-    id: number,
-    name: string
+	id: number;
+	name: string;
 }

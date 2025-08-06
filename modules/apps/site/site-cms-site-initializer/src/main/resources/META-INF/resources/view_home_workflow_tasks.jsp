@@ -8,14 +8,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewWorkflowTasksDisplayContext viewWorkflowTasksDisplayContext = (ViewWorkflowTasksDisplayContext)request.getAttribute(ViewWorkflowTasksDisplayContext.class.getName());
+ViewHomeWorkflowTasksDisplayContext viewHomeWorkflowTasksDisplayContext = (ViewHomeWorkflowTasksDisplayContext)request.getAttribute(ViewHomeWorkflowTasksDisplayContext.class.getName());
 %>
 
-<div class="cms-section rounded-lg workflow-tasks-view">
-    <div>
+<div class="cms-section">
+	<div>
 		<react:component
 			module="{ViewWorkflowTasks} from site-cms-site-initializer"
-			props="<%= viewWorkflowTasksDisplayContext.getReactData() %>"
+			props="<%= viewHomeWorkflowTasksDisplayContext.getReactData() %>"
 		/>
 	</div>
 </div>

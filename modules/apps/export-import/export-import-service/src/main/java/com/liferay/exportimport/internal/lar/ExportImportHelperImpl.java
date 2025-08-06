@@ -1438,7 +1438,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return false;
 		}
 
-		if (importPortletDataAll || !portletDataHandler.isDataSiteLevel()) {
+		if (importPortletDataAll) {
 			return true;
 		}
 

@@ -104,7 +104,16 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 		],
 	],
 	[
-		'LongText' || 'Text',
+		'DateTime',
+		[
+			{
+				name: 'timeStorage',
+				value: 'convertToUTC',
+			},
+		],
+	],
+	[
+		'LongText',
 		[
 			{
 				name: 'showCounter',
@@ -113,11 +122,11 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 		],
 	],
 	[
-		'DateTime',
+		'Text',
 		[
 			{
-				name: 'timeStorage',
-				value: 'convertToUTC',
+				name: 'showCounter',
+				value: false,
 			},
 		],
 	],

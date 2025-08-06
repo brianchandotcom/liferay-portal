@@ -38,7 +38,7 @@ public class SitemapConfigurationManagerImpl
 
 	@Override
 	public Long[] getCompanySitemapObjectDefinitionIds(long companyId)
-		throws Exception {
+		throws ConfigurationException {
 
 		SitemapCompanyConfiguration sitemapCompanyConfiguration =
 			_configurationProvider.getCompanyConfiguration(

@@ -22,15 +22,11 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.data.cleanup.ConfigurationDataCleanupPreupgradeProcess;
 
-import java.sql.Connection;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,24 +44,22 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_connection = DataAccess.getConnection();
+	@Before
+	public void setUp() throws Exception {
+		connection = DataAccess.getConnection();
 
 		_originalCacheEnabled = ReflectionTestUtil.getAndSetFieldValue(
 			PortalInstancePool.class, "_cacheEnabled", false);
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			PortalInstancePool.class, "_cacheEnabled", _originalCacheEnabled);
 	}
 
 	@Test
 	public void testUpgrade() throws Exception {
-		connection = _connection;
-
 		_test(
 			"companyId", "Company", TestPropsValues.getCompanyId(),
 			_getNonexistentCompanyId());
@@ -142,14 +136,16 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 					StringBundler.concat(
 						"Deleted configuration ", existentConfigurationId,
 						". Reason: ", primaryKeyColumnName, " ", existentId,
-						" was not found in ", tableName, ".", primaryKeyColumnName)));
+						" was not found in ", tableName, ".",
+						primaryKeyColumnName)));
 
 			Assert.assertTrue(
 				logMessages.contains(
 					StringBundler.concat(
 						"Deleted configuration ", nonexistentConfigurationId,
 						". Reason: ", primaryKeyColumnName, " ", nonexistentId,
-						" was not found in ", tableName, ".", primaryKeyColumnName)));
+						" was not found in ", tableName, ".",
+						primaryKeyColumnName)));
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration(existentConfigurationId);
@@ -158,7 +154,6 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 		}
 	}
 
-	private static Connection _connection;
-	private static boolean _originalCacheEnabled;
+	private boolean _originalCacheEnabled;
 
 }

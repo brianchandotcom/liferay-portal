@@ -8,6 +8,7 @@ package com.liferay.saml.internal.servlet.filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import jakarta.servlet.Filter;
@@ -49,8 +50,8 @@ public class AssertionConsumerServiceSamlPortalFilter
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
+		httpServletRequest.setAttribute(SamlWebKeys.SAML_ACS_LOGIN, Boolean.TRUE);
 		httpServletRequest.setAttribute(WebKeys.LOGIN_REQUEST, Boolean.TRUE);
-		httpServletRequest.setAttribute("ACS_LOGIN", Boolean.TRUE);
 
 		filterChain.doFilter(httpServletRequest, httpServletResponse);
 	}

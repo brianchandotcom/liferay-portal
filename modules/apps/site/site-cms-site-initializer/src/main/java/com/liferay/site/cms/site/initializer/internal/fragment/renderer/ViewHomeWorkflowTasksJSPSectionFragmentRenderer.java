@@ -32,6 +32,7 @@ public class ViewHomeWorkflowTasksJSPSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new ViewHomeWorkflowTasksDisplayContext(
+			httpServletRequest,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}

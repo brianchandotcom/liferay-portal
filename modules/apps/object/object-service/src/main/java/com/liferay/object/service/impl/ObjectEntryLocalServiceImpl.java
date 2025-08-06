@@ -789,9 +789,17 @@ public class ObjectEntryLocalServiceImpl
 			long userId, long objectEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
+		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
+			objectEntryId);
+
+		if (objectEntry.isInTrash()) {
+			throw new ObjectEntryStatusException(
+				"Must not expire an object entry that is in the trash");
+		}
+
 		return updateStatus(
-			userId, objectEntryPersistence.findByPrimaryKey(objectEntryId),
-			WorkflowConstants.STATUS_EXPIRED, serviceContext);
+			userId, objectEntry, WorkflowConstants.STATUS_EXPIRED,
+			serviceContext);
 	}
 
 	@Override
@@ -6015,10 +6023,15 @@ public class ObjectEntryLocalServiceImpl
 			Map<String, Serializable> values)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
 			objectEntryId);
+
+		if (objectEntry.isInTrash()) {
+			throw new ObjectEntryStatusException(
+				"Must not update an object entry that is in the trash");
+		}
+
+		User user = _userLocalService.getUser(userId);
 
 		_validateObjectEntryFolderId(
 			objectEntry.getGroupId(), objectEntryFolderId);
@@ -7244,7 +7257,8 @@ public class ObjectEntryLocalServiceImpl
 			((status != null) && (status != WorkflowConstants.STATUS_DRAFT) &&
 			 !objectDefinition.isEnableObjectEntryVersioning())) {
 
-			throw new ObjectEntryStatusException("Draft status is not allowed");
+			throw new ObjectEntryStatusException(
+				"Draft status is not allowed", "draft-status-is-not-allowed");
 		}
 	}
 

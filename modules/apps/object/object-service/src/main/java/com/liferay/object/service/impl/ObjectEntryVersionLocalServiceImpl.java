@@ -7,10 +7,12 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.configuration.ObjectEntryVersionConfiguration;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
+import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.exception.RequiredObjectEntryVersionException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.service.base.ObjectEntryVersionLocalServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.util.comparator.ObjectEntryVersionCreateDateComparator;
 import com.liferay.object.util.comparator.ObjectEntryVersionVersionComparator;
 import com.liferay.portal.aop.AopService;
@@ -143,6 +145,8 @@ public class ObjectEntryVersionLocalServiceImpl
 	public ObjectEntryVersion deleteObjectEntryVersion(
 			long objectEntryId, int version)
 		throws PortalException {
+
+		_validateObjectEntryStatus(objectEntryId);
 
 		if (getObjectEntryVersionsCount(objectEntryId) == 1) {
 			throw new RequiredObjectEntryVersionException.MustHaveOneVersion(
@@ -319,6 +323,8 @@ public class ObjectEntryVersionLocalServiceImpl
 			long userId, ObjectEntryVersion objectEntryVersion)
 		throws PortalException {
 
+		_validateObjectEntryStatus(objectEntryVersion.getObjectEntryId());
+
 		if (objectEntryVersion.isDraft() || objectEntryVersion.isExpired() ||
 			objectEntryVersion.isPending()) {
 
@@ -353,6 +359,8 @@ public class ObjectEntryVersionLocalServiceImpl
 			ObjectEntry objectEntry, ObjectEntryVersion objectEntryVersion,
 			int version)
 		throws PortalException {
+
+		_validateObjectEntryStatus(objectEntry.getObjectEntryId());
 
 		User user = _userLocalService.getUser(objectEntry.getUserId());
 
@@ -411,6 +419,19 @@ public class ObjectEntryVersionLocalServiceImpl
 		return objectEntryVersionPersistence.update(objectEntryVersion);
 	}
 
+	private void _validateObjectEntryStatus(long objectEntryId)
+		throws PortalException {
+
+		ObjectEntry objectEntry = _objectEntryPersistence.fetchByPrimaryKey(
+			objectEntryId);
+
+		if (objectEntry.isInTrash()) {
+			throw new ObjectEntryStatusException(
+				"Object entry version operations are not allowed when the " +
+					"object entry is in trash");
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryVersionLocalServiceImpl.class);
 
@@ -422,6 +443,9 @@ public class ObjectEntryVersionLocalServiceImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ObjectEntryPersistence _objectEntryPersistence;
 
 	private volatile ObjectEntryVersionConfiguration
 		_objectEntryVersionConfiguration;

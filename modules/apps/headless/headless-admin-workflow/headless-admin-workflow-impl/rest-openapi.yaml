@@ -514,6 +514,10 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                workflowLogs:
+                    items:
+                        $ref: "#/components/schemas/WorkflowLog"
+                    type: array
             type: object
         WorkflowTaskAssignToMe:
             description:

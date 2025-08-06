@@ -76,6 +76,13 @@ public class TicketAttachmentsDownloadRestController
 
 			return new ResponseEntity<>(downloadURL, HttpStatus.OK);
 		}
+		catch (FileServerUnavailableException fileServerUnavailableException) {
+			_log.error(
+				fileServerUnavailableException, fileServerUnavailableException);
+
+			return new ResponseEntity<>(
+				"FILE_SERVER_UNAVAILABLE", HttpStatus.SERVICE_UNAVAILABLE);
+		}
 		catch (StorageException storageException) {
 			_log.error(storageException, storageException);
 
@@ -83,13 +90,6 @@ public class TicketAttachmentsDownloadRestController
 				return new ResponseEntity<>(
 					"FILE_NOT_FOUND_IN_STORAGE", HttpStatus.NOT_FOUND);
 			}
-
-			return new ResponseEntity<>(
-				"FILE_SERVER_UNAVAILABLE", HttpStatus.SERVICE_UNAVAILABLE);
-		}
-		catch (FileServerUnavailableException fileServerUnavailableException) {
-			_log.error(
-				fileServerUnavailableException, fileServerUnavailableException);
 
 			return new ResponseEntity<>(
 				"FILE_SERVER_UNAVAILABLE", HttpStatus.SERVICE_UNAVAILABLE);

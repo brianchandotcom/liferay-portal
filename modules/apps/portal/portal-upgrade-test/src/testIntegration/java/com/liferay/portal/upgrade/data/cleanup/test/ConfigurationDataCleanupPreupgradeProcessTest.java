@@ -68,7 +68,7 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 
 		_test(
 			"companyId", "Company", TestPropsValues.getCompanyId(),
-			_getNonexistingCompanyId());
+			_getNonexistentCompanyId());
 	}
 
 	@Test
@@ -77,60 +77,60 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 
 		_test(
 			"groupId", "Group_", TestPropsValues.getGroupId(),
-			_getNonexistingGroupId());
+			_getNonexistentGroupId());
 	}
 
-	private long _getNonexistingCompanyId() throws Exception {
+	private long _getNonexistentCompanyId() throws Exception {
 		Set<Long> companyIds = SetUtil.fromArray(
 			PortalInstancePool.getCompanyIds());
 
 		while (true) {
-			long nonexistingCompanyId = RandomTestUtil.randomLong();
+			long nonexistentCompanyId = RandomTestUtil.randomLong();
 
-			if (!companyIds.contains(nonexistingCompanyId)) {
-				return nonexistingCompanyId;
+			if (!companyIds.contains(nonexistentCompanyId)) {
+				return nonexistentCompanyId;
 			}
 		}
 	}
 
-	private long _getNonexistingGroupId() throws Exception {
+	private long _getNonexistentGroupId() throws Exception {
 		Set<Long> groupIds = SetUtil.fromArray(getGroupIds());
 
 		while (true) {
-			long nonexistingGroupId = RandomTestUtil.randomLong();
+			long nonexistentGroupId = RandomTestUtil.randomLong();
 
-			if (!groupIds.contains(nonexistingGroupId)) {
-				return nonexistingGroupId;
+			if (!groupIds.contains(nonexistentGroupId)) {
+				return nonexistentGroupId;
 			}
 		}
 	}
 
 	private void _test(
-			String entityIdName, String entityName, long existingEntityId,
-			long nonexistingEntityId)
+			String primaryKeyColumnName, String tableName, long existentId,
+			long nonexistentId)
 		throws Exception {
 
-		String existingConfigurationId = null;
-		String nonexistingConfigurationId = null;
+		String existentConfigurationId = null;
+		String nonexistentConfigurationId = null;
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ConfigurationDataCleanupPreupgradeProcess.class.getName(),
 				LoggerTestUtil.INFO)) {
 
-			existingConfigurationId =
+			existentConfigurationId =
 				ConfigurationTestUtil.createFactoryConfiguration(
 					ConfigurationDataCleanupPreupgradeProcessTest.class.
 						getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						entityIdName, existingEntityId
+						primaryKeyColumnName, existentId
 					).build());
 
-			nonexistingConfigurationId =
+			nonexistentConfigurationId =
 				ConfigurationTestUtil.createFactoryConfiguration(
 					ConfigurationDataCleanupPreupgradeProcessTest.class.
 						getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						entityIdName, nonexistingEntityId
+						primaryKeyColumnName, nonexistentId
 					).build());
 
 			upgrade();
@@ -146,21 +146,21 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 			Assert.assertFalse(
 				logMessages.contains(
 					StringBundler.concat(
-						"Deleted configuration ", existingConfigurationId,
-						". Reason: ", entityIdName, " ", existingEntityId,
-						" was not found in ", entityName, ".", entityIdName)));
+						"Deleted configuration ", existentConfigurationId,
+						". Reason: ", primaryKeyColumnName, " ", existentId,
+						" was not found in ", tableName, ".", primaryKeyColumnName)));
 
 			Assert.assertTrue(
 				logMessages.contains(
 					StringBundler.concat(
-						"Deleted configuration ", nonexistingConfigurationId,
-						". Reason: ", entityIdName, " ", nonexistingEntityId,
-						" was not found in ", entityName, ".", entityIdName)));
+						"Deleted configuration ", nonexistentConfigurationId,
+						". Reason: ", primaryKeyColumnName, " ", nonexistentId,
+						" was not found in ", tableName, ".", primaryKeyColumnName)));
 		}
 		finally {
-			ConfigurationTestUtil.deleteConfiguration(existingConfigurationId);
+			ConfigurationTestUtil.deleteConfiguration(existentConfigurationId);
 			ConfigurationTestUtil.deleteConfiguration(
-				nonexistingConfigurationId);
+				nonexistentConfigurationId);
 		}
 	}
 

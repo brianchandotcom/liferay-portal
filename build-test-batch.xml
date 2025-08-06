@@ -7351,62 +7351,37 @@ information. Make sure to commit in all format-javadoc results.
 					<propertyresource name="modules.test.class.group" />
 				</loadresource>
 
-				<beanshell>
-					<![CDATA[
-						import java.io.File;
+				<get-gradle-module-dir-task-names gradle.task.names="${modules.compile.task.groups}" />
 
-						import java.util.regex.Matcher;
-						import java.util.regex.Pattern;
-
-						String modulesCompileTaskGroupsString = project.getProperty("modules.compile.task.groups");
-
-						String[] modulesCompileTaskGroups = modulesCompileTaskGroupsString.split(" ");
-
-						StringBuilder sb = new StringBuilder();
-
-						Pattern pattern = Pattern.compile("(.*):.*");
-
-						for (String modulesCompileTaskGroup : modulesCompileTaskGroups) {
-
-							Matcher matcher = pattern.matcher(modulesCompileTaskGroup);
-
-							if (!matcher.find()) {
-								continue;
-							}
-
-							String modulesCompileTaskGroupPath = matcher.group(1);
-
-							modulesCompileTaskGroupDirPath = project.getProperty("project.dir") + "/modules" + modulesCompileTaskGroupPath.replace(":", "/");
-
-							File modulesCompileTaskGroupDir = new File(modulesCompileTaskGroupDirPath);
-
-							if (!modulesCompileTaskGroupDir.isDirectory()) {
-								continue;
-							}
-
-							File lfrBuildPortalFile = new File(modulesCompileTaskGroupDir, ".lfrbuild-portal");
-
-							if (lfrBuildPortalFile.exists()) {
-								continue;
-							}
-
-							sb.append(modulesCompileTaskGroup);
-
-							sb.append(" ");
-						}
-
-						project.setProperty("modules.compile.processed.task.groups", sb.toString());
-					]]>
-				</beanshell>
-
-				<for list="${modules.compile.processed.task.groups}" param="modules.compile.task.group" trim="true">
+				<for delimiter="|" list="${gradle.module.dir.task.names}" param="gradle.module.dir.task.name" trim="true">
 					<sequential>
-						<echo>Executing Gradle tasks: @{modules.compile.task.group}.</echo>
+						<local name="gradle.module.dir" />
+						<local name="gradle.task.name" />
 
-						<gradle-execute dir="modules" task="@{modules.compile.task.group}">
-							<arg value="--continue" />
-							<arg value="--parallel" />
-						</gradle-execute>
+						<propertyregex
+							input="@{gradle.module.dir.task.name}"
+							override="true"
+							property="gradle.module.dir"
+							regexp="([^=]+)=([^=]+)"
+							replace="\1"
+						/>
+
+						<propertyregex
+							input="@{gradle.module.dir.task.name}"
+							override="true"
+							property="gradle.task.name"
+							regexp="([^=]+)=([^=]+)"
+							replace="\2"
+						/>
+
+						<execute-gradle-task gradle.task.module.dir="${gradle.module.dir}" gradle.task.name="${gradle.task.name}">
+							<action>
+								<gradle-execute dir="${gradle.module.dir}" task="${gradle.task.name}">
+									<arg value="--continue" />
+									<arg value="--parallel" />
+								</gradle-execute>
+							</action>
+						</execute-gradle-task>
 					</sequential>
 				</for>
 			</test-action>

@@ -2301,6 +2301,14 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("workflowLogs", additionalAssertFieldName)) {
+				if (workflowTask.getWorkflowLogs() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -2594,6 +2602,17 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				if (!Objects.deepEquals(
 						workflowTask1.getWorkflowInstanceId(),
 						workflowTask2.getWorkflowInstanceId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("workflowLogs", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workflowTask1.getWorkflowLogs(),
+						workflowTask2.getWorkflowLogs())) {
 
 					return false;
 				}
@@ -3061,6 +3080,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 
 		if (entityFieldName.equals("workflowInstanceId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("workflowLogs")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

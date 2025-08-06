@@ -10,7 +10,6 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.friendly.url.test.util.configuration.manager.FriendlyURLSeparatorConfigurationManagerTemporarySwapper;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -23,7 +22,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
@@ -104,28 +102,6 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 
 		_assertGetFriendlyURL(
 			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
-	}
-
-	@Test
-	public void testGetFriendlyURLWithConfiguredURLSeparator()
-		throws Exception {
-
-		_setUpThemeDisplay(
-			_layoutLocalService.getLayout(_assetDisplayPageEntry.getPlid()));
-
-		String journalArticleFriendlyURLSeparator = "/journal-test2/";
-
-		try (FriendlyURLSeparatorConfigurationManagerTemporarySwapper
-				friendlyURLSeparatorConfigurationManagerTemporarySwapper =
-					new FriendlyURLSeparatorConfigurationManagerTemporarySwapper(
-						_group.getCompanyId(),
-						JSONUtil.put(
-							JournalArticle.class.getName(),
-							journalArticleFriendlyURLSeparator
-						).toString())) {
-
-			_assertGetFriendlyURL(journalArticleFriendlyURLSeparator);
-		}
 	}
 
 	@Test

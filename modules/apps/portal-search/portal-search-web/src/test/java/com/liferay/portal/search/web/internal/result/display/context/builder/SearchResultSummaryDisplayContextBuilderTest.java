@@ -49,8 +49,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,6 +61,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Lino Alves
@@ -70,6 +73,23 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_searchResultContributorServiceRegistration =
+			bundleContext.registerService(
+				SearchResultContributor.class,
+				Mockito.mock(SearchResultContributor.class), null);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		if (_searchResultContributorServiceRegistration != null) {
+			_searchResultContributorServiceRegistration.unregister();
+		}
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -85,110 +105,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	@After
 	public void tearDown() {
 		searchUtilMockedStatic.close();
-	}
-
-	@Test
-	public void testCheckViewURLWhenItDoesNotHaveAssetRenderer()
-		throws Exception {
-
-		_registerSearchResultContributor();
-
-		PortletURL portletURL = Mockito.mock(PortletURL.class);
-
-		Mockito.doReturn(
-			portletURL
-		).when(
-			portletURLFactory
-		).getPortletURL();
-
-		long entryClassPK = RandomTestUtil.randomLong();
-
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
-
-		String entryClassName = RandomTestUtil.randomString();
-
-		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			entryClassName);
-
-		String className = RandomTestUtil.randomString();
-		long classNameId = RandomTestUtil.randomLong();
-
-		_whenClassNameLocalServiceGetClassName(className, classNameId);
-
-		Document document = _createDocument(entryClassName, entryClassPK);
-
-		document.addKeyword(Field.CLASS_NAME_ID, classNameId);
-
-		long classPK = RandomTestUtil.randomLong();
-
-		document.addKeyword(Field.CLASS_PK, classPK);
-
-		build(document);
-
-		searchUtilMockedStatic.verify(
-			() -> SearchUtil.getSearchResultViewURL(
-				Mockito.any(), Mockito.any(), Mockito.eq(entryClassName),
-				Mockito.eq(entryClassPK), Mockito.eq(false), Mockito.isNull()),
-			Mockito.times(1));
-
-		searchUtilMockedStatic.verify(
-			() -> SearchUtil.getSearchResultViewURL(
-				Mockito.any(), Mockito.any(), Mockito.eq(className),
-				Mockito.eq(classPK), Mockito.eq(false), Mockito.isNull()),
-			Mockito.times(0));
-	}
-
-	@Test
-	public void testCheckViewURLWhenItHasAssetRenderer() throws Exception {
-		_registerSearchResultContributor();
-
-		PortletURL portletURL = Mockito.mock(PortletURL.class);
-
-		Mockito.doReturn(
-			portletURL
-		).when(
-			portletURLFactory
-		).getPortletURL();
-
-		long entryClassPK = RandomTestUtil.randomLong();
-
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
-
-		String entryClassName = RandomTestUtil.randomString();
-
-		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			entryClassName);
-
-		String className = RandomTestUtil.randomString();
-
-		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			className);
-
-		long classNameId = RandomTestUtil.randomLong();
-
-		_whenClassNameLocalServiceGetClassName(className, classNameId);
-
-		Document document = _createDocument(entryClassName, entryClassPK);
-
-		document.addKeyword(Field.CLASS_NAME_ID, classNameId);
-
-		long classPK = RandomTestUtil.randomLong();
-
-		document.addKeyword(Field.CLASS_PK, classPK);
-
-		build(document);
-
-		searchUtilMockedStatic.verify(
-			() -> SearchUtil.getSearchResultViewURL(
-				Mockito.any(), Mockito.any(), Mockito.eq(entryClassName),
-				Mockito.eq(entryClassPK), Mockito.eq(false), Mockito.isNull()),
-			Mockito.times(1));
-
-		searchUtilMockedStatic.verify(
-			() -> SearchUtil.getSearchResultViewURL(
-				Mockito.any(), Mockito.any(), Mockito.eq(className),
-				Mockito.eq(classPK), Mockito.eq(false), Mockito.isNull()),
-			Mockito.times(1));
 	}
 
 	@Test
@@ -438,6 +354,75 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_assertUserPortraitVisible(userId, searchResultSummaryDisplayContext);
 	}
 
+	@Test
+	public void testViewURL() throws Exception {
+		String className = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+
+		_whenClassNameLocalServiceGetClassName(className, classNameId);
+
+		long classPK = RandomTestUtil.randomLong();
+
+		String entryClassName = RandomTestUtil.randomString();
+
+		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			entryClassName);
+
+		long entryClassPK = RandomTestUtil.randomLong();
+
+		_whenSearchUtilGetSearchResultViewURL(entryClassName, entryClassPK);
+		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+
+		Document document = _createDocument(entryClassName, entryClassPK);
+
+		document.addKeyword(Field.CLASS_NAME_ID, classNameId);
+		document.addKeyword(Field.CLASS_PK, classPK);
+
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
+			build(document);
+
+		Assert.assertEquals(
+			entryClassName + entryClassPK,
+			searchResultSummaryDisplayContext.getViewURL());
+	}
+
+	@Test
+	public void testViewURLOfParentEntity() throws Exception {
+		String className = RandomTestUtil.randomString();
+
+		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			className);
+
+		long classNameId = RandomTestUtil.randomLong();
+
+		_whenClassNameLocalServiceGetClassName(className, classNameId);
+
+		long classPK = RandomTestUtil.randomLong();
+
+		_whenSearchUtilGetSearchResultViewURL(className, classPK);
+
+		String entryClassName = RandomTestUtil.randomString();
+
+		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			entryClassName);
+
+		long entryClassPK = RandomTestUtil.randomLong();
+
+		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+
+		Document document = _createDocument(entryClassName, entryClassPK);
+
+		document.addKeyword(Field.CLASS_NAME_ID, classNameId);
+		document.addKeyword(Field.CLASS_PK, classPK);
+
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
+			build(document);
+
+		Assert.assertEquals(
+			className + classPK,
+			searchResultSummaryDisplayContext.getViewURL());
+	}
+
 	protected SearchResultSummaryDisplayContext build(Document document)
 		throws Exception {
 
@@ -491,8 +476,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		PermissionChecker.class);
 	protected PortletURLFactory portletURLFactory = Mockito.mock(
 		PortletURLFactory.class);
-	protected SearchResultContributor searchResultContributor = Mockito.mock(
-		SearchResultContributor.class);
 	protected MockedStatic<SearchUtil> searchUtilMockedStatic =
 		Mockito.mockStatic(SearchUtil.class);
 	protected ThemeDisplay themeDisplay;
@@ -679,11 +662,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		return themeDisplay;
 	}
 
-	private void _registerSearchResultContributor() {
-		_bundleContext.registerService(
-			SearchResultContributor.class, searchResultContributor, null);
-	}
-
 	private void _ruinAssetRendererFactoryLookup() {
 		Mockito.doThrow(
 			RuntimeException.class
@@ -849,12 +827,24 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		);
 	}
 
+	private void _whenSearchUtilGetSearchResultViewURL(
+		String className, long classPK) {
+
+		searchUtilMockedStatic.when(
+			() -> SearchUtil.getSearchResultViewURL(
+				Mockito.any(), Mockito.any(), Mockito.eq(className),
+				Mockito.eq(classPK), Mockito.eq(false), Mockito.isNull())
+		).thenReturn(
+			className + classPK
+		);
+	}
+
 	private static final String _SUMMARY_CONTENT =
 		RandomTestUtil.randomString();
 
 	private static final String _SUMMARY_TITLE = RandomTestUtil.randomString();
 
-	private final BundleContext _bundleContext =
-		SystemBundleUtil.getBundleContext();
+	private static ServiceRegistration<SearchResultContributor>
+		_searchResultContributorServiceRegistration;
 
 }

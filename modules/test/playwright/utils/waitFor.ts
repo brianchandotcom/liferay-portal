@@ -6,6 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 export enum EEditorType {
+	ALLOYEDITOR = 'alloyeditor',
 	CKEDITOR4 = 'ckeditor4',
 	CKEDITOR5 = 'ckeditor5',
 }
@@ -24,12 +25,18 @@ export async function waitForEditor({
 
 		await container.locator('.ck-content').waitFor({state: 'visible'});
 	}
-	else {
+	else if (editorType === EEditorType.CKEDITOR4) {
 		const container = containerProp ?? page.locator('.cke');
 
 		await container
 			.frameLocator('iframe')
 			.locator('.cke_editable')
+			.waitFor({state: 'visible'});
+	} else {
+		const container = containerProp ?? page.locator('.alloy-editor-container');
+
+		await container
+			.locator('.ae-editable')
 			.waitFor({state: 'visible'});
 	}
 }

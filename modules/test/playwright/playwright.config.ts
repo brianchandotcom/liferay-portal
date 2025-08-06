@@ -62,6 +62,7 @@ import {config as friendlyURLConfig} from './tests/friendly-url-web/main/config'
 import {config as frontendCssCadminWebConfig} from './tests/frontend-css-cadmin-web/main/config';
 import {config as frontendDataSetAdminWebConfig} from './tests/frontend-data-set-admin-web/main/config';
 import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/main/config';
+import {config as frontendEditorAlloyEditorWebConfig} from './tests/frontend-editor-alloyeditor-web/main/config';
 import {config as frontendEditorCKEditorWebConfig} from './tests/frontend-editor-ckeditor-web/main/config';
 import {config as frontendJsBootstrapSupportWebConfig} from './tests/frontend-js-bootstrap-support-web/main/config';
 import {config as frontendJsComponentsWebConfig} from './tests/frontend-js-components-web/main/config';
@@ -225,6 +226,7 @@ export default defineConfig({
 		frontendCssCadminWebConfig,
 		frontendDataSetAdminWebConfig,
 		frontendDataSetWebConfig,
+		frontendEditorAlloyEditorWebConfig,
 		frontendEditorCKEditorWebConfig,
 		frontendJsBootstrapSupportWebConfig,
 		frontendJsComponentsWebConfig,

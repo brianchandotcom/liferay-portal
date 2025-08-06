@@ -31,22 +31,23 @@ export class PortletStagingPage {
 		);
 	}
 
-	private async openIframe() {
+	async openIframe() {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Staging'}),
 			trigger: this.page.getByLabel('Options'),
 		});
+
+		await this.publishStagingIframe
+			.getByRole('link', {name: 'New Publish Process'})
+			.waitFor();
 	}
 
-	private async closeIframe() {
+	async closeIframe() {
 		await this.page.getByLabel('close', {exact: true}).click();
 	}
 
 	async publishToLive() {
-		await this.openIframe();
-
-		await this.publishToLiveButton.waitFor();
 		this.page.once('dialog', async (dialog) => {
 			await dialog.accept();
 		});

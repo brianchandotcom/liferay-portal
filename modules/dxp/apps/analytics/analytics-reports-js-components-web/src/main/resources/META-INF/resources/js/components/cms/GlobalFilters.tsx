@@ -26,7 +26,6 @@ const GlobalFilters = () => {
 						RangeSelectors.Last7Days,
 						RangeSelectors.Last30Days,
 					]}
-					className="mr-3"
 					onChange={changeRangeSelectorFilter}
 					showDescription={false}
 					showIcon={true}

@@ -15,6 +15,12 @@ import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganiza
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 
+const notificationTemplateInfo = {
+	description: 'This is a description',
+	subject: 'Subject',
+	term: '[%CURRENT_USER_FIRST_NAME%]',
+};
+
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
@@ -24,12 +30,6 @@ export const test = mergeTests(
 	objectPagesTest,
 	usersAndOrganizationsPagesTest
 );
-
-const notificationTemplateInfo = {
-	description: 'This is a description',
-	subject: 'Subject',
-	term: '[%CURRENT_USER_FIRST_NAME%]',
-};
 
 test.describe('User notification template', () => {
 	test('can be created and saved correctly', async ({
@@ -174,5 +174,106 @@ test.describe('User notification template', () => {
 		await expect(page.getByLabel('textField', {exact: true})).toHaveValue(
 			objectFieldValue
 		);
+	});
+
+	test('LPD-57578 Support for User Groups in User Notification template', async ({
+		apiHelpers,
+		userNotificationTemplatePage,
+	}) => {
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'test@liferay.com'
+			);
+
+		const {id: idUserGroup1, name: nameUserGroup1} =
+			await apiHelpers.headlessAdminUser.postUserGroup();
+
+		const {id: idUserGroup2, name: nameUserGroup2} =
+			await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
+			idUserGroup1,
+			[user.id]
+		);
+
+		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
+			idUserGroup2,
+			[user.id]
+		);
+
+		await test.step('AC1: Display "User Group" option in the Recipient field.', async () => {
+			await userNotificationTemplatePage.goto();
+			await userNotificationTemplatePage.selectNotificationRecipient(
+				'User Group'
+			);
+		});
+
+		await test.step('AC2: Display existing user groups in the "User Group" field', async () => {
+			await userNotificationTemplatePage.page
+				.getByRole('combobox', {name: 'Select User Group'})
+				.click();
+			await expect(
+				userNotificationTemplatePage.page.getByText(nameUserGroup1)
+			).toBeVisible();
+			await expect(
+				userNotificationTemplatePage.page.getByText(nameUserGroup2)
+			).toBeVisible();
+		});
+
+		await test.step('AC3: Multi-Selection Support', async () => {
+			for (const userGroupName of [nameUserGroup1, nameUserGroup2]) {
+				await userNotificationTemplatePage.page
+					.getByLabel(userGroupName)
+					.click();
+				await expect(
+					userNotificationTemplatePage.page.getByLabel(
+						userGroupName,
+						{exact: true}
+					)
+				).toBeVisible();
+			}
+		});
+
+		await test.step('AC4: Support Search and Filtering', async () => {
+			userNotificationTemplatePage.page
+				.getByRole('textbox', {name: 'Search for a User Group.'})
+				.fill(nameUserGroup1);
+			await expect(
+				userNotificationTemplatePage.page.getByLabel(nameUserGroup1, {
+					exact: true,
+				})
+			).toBeVisible();
+			await expect(
+				userNotificationTemplatePage.page.getByLabel(nameUserGroup2, {
+					exact: true,
+				})
+			).not.toBeVisible();
+		});
+
+		const notificationTemplateName = getRandomString();
+
+		await userNotificationTemplatePage.basicInfoName.fill(
+			notificationTemplateName
+		);
+
+		await userNotificationTemplatePage.contentSubject.fill(
+			getRandomString()
+		);
+
+		await userNotificationTemplatePage.saveButton.click();
+
+		await userNotificationTemplatePage.page
+			.getByText(notificationTemplateName)
+			.click();
+
+		await test.step('AC5: Save User Group Selection', async () => {
+			for (const userGroupName of [nameUserGroup1, nameUserGroup2]) {
+				await expect(
+					userNotificationTemplatePage.page.getByRole('row', {
+						name: `${userGroupName} Remove`,
+					})
+				).toBeVisible();
+			}
+		});
 	});
 });

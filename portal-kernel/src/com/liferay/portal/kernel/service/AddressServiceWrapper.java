@@ -48,6 +48,15 @@ public class AddressServiceWrapper
 	}
 
 	@Override
+	public Address fetchAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _addressService.fetchAddressByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
 	public Address getAddress(long addressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

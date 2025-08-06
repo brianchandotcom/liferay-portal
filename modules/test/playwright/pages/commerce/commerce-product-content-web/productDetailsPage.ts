@@ -21,6 +21,7 @@ export class ProductDetailsPage {
 		fullDescription: string
 	) => Promise<Locator>;
 	readonly gtinField: (gtin: string) => Promise<Locator>;
+	readonly inStockQuantity: Locator;
 	readonly layoutsPage: CommerceLayoutsPage;
 	readonly mappedProductAddToCartButton: Locator;
 	readonly mappedProductCheckbox: Locator;
@@ -88,6 +89,9 @@ export class ProductDetailsPage {
 		this.gtinField = async (gtin: string) => {
 			return page.getByText(gtin);
 		};
+		this.inStockQuantity = page.locator(
+			'span[data-text-cp-instance-stock-quantity]'
+		);
 		this.layoutsPage = new CommerceLayoutsPage(page);
 		this.mappedProductAddToCartButton = page.getByRole('button', {
 			name: 'Add Selected Product(s) to',

@@ -16,6 +16,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		action: string
 	) => Promise<Locator>;
 	readonly editPaymentMethodFrame: FrameLocator;
+	readonly expandProductButton: Locator;
 	readonly headerDetailsTitle: Locator;
 	readonly orderDetailsEntryDescription: (
 		infoName: string
@@ -80,6 +81,9 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		this.editPaymentMethodFrame = page.frameLocator(
 			'iframe[title="Edit Payment Method"]'
 		);
+		this.expandProductButton = page
+			.locator('.autofit-col-toggle')
+			.getByRole('button');
 		this.headerDetailsTitle = page.getByTestId('headerDetailsTitle');
 		this.orderDetailsEntryDescription = async (infoName: string) => {
 			return page.locator(

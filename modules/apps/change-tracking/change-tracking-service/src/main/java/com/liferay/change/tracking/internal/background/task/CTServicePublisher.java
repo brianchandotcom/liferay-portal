@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -25,9 +26,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -349,58 +352,42 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			Map<Serializable, CTEntry> ctEntries, long ctCollectionId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
+		int processedCount = 0;
 
-		sb.append("select ");
-		sb.append(primaryKeyName);
-		sb.append(", mvccVersion from ");
-		sb.append(tableName);
-		sb.append(" where ctCollectionId = ");
-		sb.append(ctCollectionId);
-		sb.append(" and (");
-		sb.append(primaryKeyName);
-		sb.append(" in (");
+		List<Serializable> primaryKeys = new ArrayList<>(ctEntries.keySet());
 
-		int i = 0;
+		while (processedCount < primaryKeys.size()) {
+			int batchCount = processedCount;
 
-		for (Serializable serializable : ctEntries.keySet()) {
-			if (i == _BATCH_SIZE) {
-				sb.setStringAt(")", sb.index() - 1);
+			processedCount += _BATCH_SIZE;
 
-				sb.append(" or ");
-				sb.append(primaryKeyName);
-				sb.append(" in (");
-
-				i = 0;
+			if (processedCount > primaryKeys.size()) {
+				processedCount = primaryKeys.size();
 			}
 
-			sb.append(serializable);
-			sb.append(", ");
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						CTRowUtil.getUpdateMVCCVersionSQL(
+							ctCollectionId,
+							ListUtil.subList(
+								primaryKeys, batchCount, processedCount),
+							primaryKeyName, tableName));
+				ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			i++;
-		}
+				while (resultSet.next()) {
+					long pk = resultSet.getLong(1);
+					long mvccVersion = resultSet.getLong(2);
 
-		sb.setStringAt(")", sb.index() - 1);
+					CTEntry ctEntry = ctEntries.get(pk);
 
-		sb.append(")");
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString());
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				long pk = resultSet.getLong(1);
-				long mvccVersion = resultSet.getLong(2);
-
-				CTEntry ctEntry = ctEntries.get(pk);
-
-				_ctEntryLocalService.updateModelMvccVersion(
-					ctEntry.getCtEntryId(), mvccVersion);
+					_ctEntryLocalService.updateModelMvccVersion(
+						ctEntry.getCtEntryId(), mvccVersion);
+				}
 			}
 		}
 	}
 
-	private static final int _BATCH_SIZE = 1000;
+	private static final int _BATCH_SIZE = 50000;
 
 	private Map<Serializable, CTEntry> _additionCTEntries;
 	private final CTEntryLocalService _ctEntryLocalService;

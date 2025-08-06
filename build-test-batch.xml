@@ -394,6 +394,52 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="execute-gradle-task">
+		<attribute name="gradle.task.name" />
+		<attribute name="gradle.task.module.dir" />
+
+		<element name="action" />
+		<element name="action-fail" optional="true" />
+
+		<sequential>
+			<trycatch property="gradle.task.failure.message">
+				<try>
+					<beanshell>
+						project.setProperty("gradle.task.start.time", String.valueOf(System.currentTimeMillis()));
+					</beanshell>
+
+					<generate-backend-batch-junit-report-gradle-task
+						gradle.task.failure.count="1"
+						gradle.task.module.dir="@{gradle.task.module.dir}"
+						gradle.task.name="@{gradle.task.name}"
+						gradle.task.start.time="${gradle.task.start.time}"
+					/>
+
+					<action />
+
+					<generate-backend-batch-junit-report-gradle-task
+						gradle.task.failure.count="0"
+						gradle.task.module.dir="@{gradle.task.module.dir}"
+						gradle.task.name="@{gradle.task.name}"
+						gradle.task.start.time="${gradle.task.start.time}"
+					/>
+				</try>
+				<catch>
+					<generate-backend-batch-junit-report-gradle-task
+						gradle.task.failure.count="1"
+						gradle.task.failure.message="${gradle.task.failure.message}"
+						gradle.task.module.dir="@{gradle.task.module.dir}"
+						gradle.task.name="@{gradle.task.name}"
+						gradle.task.start.time="${gradle.task.start.time}"
+					/>
+				</catch>
+				<finally>
+					<action-fail />
+				</finally>
+			</trycatch>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-gradle-module-dir-task-names">
 		<attribute name="gradle.task.names" />
 

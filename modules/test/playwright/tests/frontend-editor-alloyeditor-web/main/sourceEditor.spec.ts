@@ -31,28 +31,34 @@ test.beforeEach(async ({ckeditorSamplePage, page, site}) => {
 	await waitForEditor({editorType: EEditorType.ALLOYEDITOR, page});
 });
 
-test('Content is rendered in source editor when using full screen mode',
-	{tag: ['@LPD-62410']}, 
-    async ({page}) => {
-	await test.step('Go to source mode and edit in full screen mode', async () => {
-        await page.locator('.ae-editable').click();
+test(
+	'Content is rendered in source editor when using full screen mode',
+	{tag: ['@LPD-62410']},
+	async ({page}) => {
+		await test.step('Go to source mode and edit in full screen mode', async () => {
+			await page.locator('.ae-editable').click();
 
-        const switchModeButton = page.locator('[id$="AlloyEditorSwitch"]');
+			const switchModeButton = page.locator('[id$="AlloyEditorSwitch"]');
 
-        await switchModeButton.waitFor({state: 'visible', timeout: 10000});
+			await switchModeButton.waitFor({state: 'visible', timeout: 10000});
 
-        switchModeButton.click();
+			switchModeButton.click();
 
-        const fullScreenButton = page.locator('[id$="AlloyEditorFullscreen"]');
+			const fullScreenButton = page.locator(
+				'[id$="AlloyEditorFullscreen"]'
+			);
 
-        await fullScreenButton.waitFor({state: 'visible', timeout: 10000});
+			await fullScreenButton.waitFor({state: 'visible', timeout: 10000});
 
-        fullScreenButton.click();
+			fullScreenButton.click();
 
-        const fullScreenModal = page.locator('.lfr-fullscreen-source-editor-dialog');
+			const fullScreenModal = page.locator(
+				'.lfr-fullscreen-source-editor-dialog'
+			);
 
-        await fullScreenModal.waitFor({state: 'visible', timeout: 10000});
+			await fullScreenModal.waitFor({state: 'visible', timeout: 10000});
 
-        await expect(fullScreenModal).toContainText('Lorem ipsum');
-	});
-});
+			await expect(fullScreenModal).toContainText('Lorem ipsum');
+		});
+	}
+);

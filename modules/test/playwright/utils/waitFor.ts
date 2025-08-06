@@ -32,12 +32,12 @@ export async function waitForEditor({
 			.frameLocator('iframe')
 			.locator('.cke_editable')
 			.waitFor({state: 'visible'});
-	} else {
-		const container = containerProp ?? page.locator('.alloy-editor-container');
+	}
+	else {
+		const container =
+			containerProp ?? page.locator('.alloy-editor-container');
 
-		await container
-			.locator('.ae-editable')
-			.waitFor({state: 'visible'});
+		await container.locator('.ae-editable').waitFor({state: 'visible'});
 	}
 }
 

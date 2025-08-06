@@ -6,6 +6,7 @@
 package com.liferay.object.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.ObjectEntryStatusException;
+import com.liferay.object.jaxrs.exception.mapper.util.ObjectExceptionMapperUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
@@ -32,9 +33,10 @@ public class ObjectEntryStatusExceptionMapper
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			_language.get(
-				_acceptLanguage.getPreferredLocale(),
-				"draft-status-is-not-allowed"));
+			ObjectExceptionMapperUtil.getTitle(
+				_acceptLanguage, null, _language,
+				objectEntryStatusException.getMessage(),
+				objectEntryStatusException.getMessageKey()));
 	}
 
 	@Context

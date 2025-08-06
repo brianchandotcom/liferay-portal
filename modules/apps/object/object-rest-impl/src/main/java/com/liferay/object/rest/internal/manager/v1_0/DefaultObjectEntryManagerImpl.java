@@ -22,6 +22,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.entry.folder.subscription.util.ObjectEntryFolderSubscriptionUtil;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
@@ -298,7 +299,8 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext, objectEntryId, version);
 
 		return _copyVersionedObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry);
+			dtoConverterContext, objectDefinition, objectEntry,
+			_objectEntryService.getObjectEntry(objectEntryId));
 	}
 
 	@Override
@@ -317,7 +319,10 @@ public class DefaultObjectEntryManagerImpl
 			scopeKey, version);
 
 		return _copyVersionedObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry);
+			dtoConverterContext, objectDefinition, objectEntry,
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
+				objectDefinition.getObjectDefinitionId()));
 	}
 
 	@Override
@@ -1675,8 +1680,14 @@ public class DefaultObjectEntryManagerImpl
 
 	private ObjectEntry _copyVersionedObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
+
+		if (serviceBuilderObjectEntry.isInTrash()) {
+			throw new ObjectEntryStatusException(
+				"Must not copy an object entry that is in the trash");
+		}
 
 		objectEntry.setExpirationDate(() -> null);
 		objectEntry.setExternalReferenceCode(() -> null);

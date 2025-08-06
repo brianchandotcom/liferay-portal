@@ -12,19 +12,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectEntryStatusException extends PortalException {
 
-	public ObjectEntryStatusException() {
+	public ObjectEntryStatusException(String message) {
+		super(message);
 	}
 
-	public ObjectEntryStatusException(String msg) {
-		super(msg);
+	public ObjectEntryStatusException(String message, String messageKey) {
+		super(message);
+
+		_messageKey = messageKey;
 	}
 
-	public ObjectEntryStatusException(String msg, Throwable throwable) {
-		super(msg, throwable);
+	public String getMessageKey() {
+		return _messageKey;
 	}
 
-	public ObjectEntryStatusException(Throwable throwable) {
-		super(throwable);
-	}
+	private String _messageKey;
 
 }

@@ -158,7 +158,7 @@ test(
 			remoteGroupId: remoteGlobalSiteId,
 			remotePort,
 		});
-		await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
+		const {id: vocabularyId} = await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
 			name: vocabularyName,
 			siteId: globalSiteId,
 		});
@@ -173,14 +173,7 @@ test(
 			remotePage.getByRole('menuitem', {name: vocabularyName})
 		).toBeVisible();
 
-		await page.getByLabel('Show Actions').first().click();
-		await page.getByRole('menuitem', {name: 'Delete'}).click();
-		await page
-			.frameLocator('iframe[title="Delete Vocabulary"]')
-			.getByLabel('Select All Items on the Page')
-			.check();
-		await page.getByRole('button', {name: 'Delete'}).click();
-		await page.getByRole('button', {name: 'Delete'}).click();
+		await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(vocabularyId);
 
 		await portletStagingPage.openIframe();
 

@@ -7875,15 +7875,61 @@ information. Make sure to commit in all format-javadoc results.
 					<propertyresource name="modules.test.class.group" />
 				</loadresource>
 
-				<for list="${modules.baseline.task.groups}" param="modules.baseline.task.group" trim="true">
-					<sequential>
-						<echo>Executing Gradle tasks: @{modules.baseline.task.group}.</echo>
+				<get-gradle-module-dir-task-names gradle.task.names="${modules.baseline.task.groups}" />
 
-						<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.baseline.task.group}">
-							<arg value="--continue" />
-							<arg value="--parallel" />
-							<arg value="-Dbaseline.ignoreFailures=true" />
-						</gradle-execute>
+				<for delimiter="|" list="${gradle.module.dir.task.names}" param="module.dir.task" trim="true">
+					<sequential>
+						<local name="gradle.module.dir" />
+						<local name="gradle.task.name" />
+
+						<propertyregex
+							input="@{gradle.module.dir.task.name}"
+							override="true"
+							property="gradle.module.dir"
+							regexp="([^=]+)=([^=]+)"
+							replace="\1"
+						/>
+
+						<propertyregex
+							input="@{gradle.module.dir.task.name}"
+							override="true"
+							property="gradle.task.name"
+							regexp="([^=]+)=([^=]+)"
+							replace="\2"
+						/>
+
+						<execute-gradle-task gradle.task.module.dir="${gradle.module.dir}" gradle.task.name="${gradle.task.name}">
+							<action>
+								<gradle-execute dir="${gradle.module.dir}" forcedcacheenabled="false" task="${gradle.task.name}">
+									<arg value="--continue" />
+									<arg value="--parallel" />
+									<arg value="-Dbaseline.ignoreFailures=true" />
+								</gradle-execute>
+							</action>
+							<action-fail>
+								<for param="baseline.log.file.path">
+									<fileset dir="${project.dir}/${gradle.module.dir}/">
+										<include name="**/build/reports/baseline/baseline.log" />
+									</fileset>
+									<sequential>
+										<local name="baseline.log.file.content" />
+
+										<loadfile
+											property="baseline.log.file.content"
+											srcfile="@{baseline.log.file.path}"
+										/>
+
+										<generate-backend-batch-junit-report-gradle-task
+											gradle.task.failure.count="1"
+											gradle.task.failure.message="${baseline.log.file.content}"
+											gradle.task.module.dir="${gradle.module.dir}"
+											gradle.task.name="${gradle.task.name}"
+											gradle.task.start.time="${gradle.task.start.time}"
+										/>
+									</sequential>
+								</for>
+							</action-fail>
+						</execute-gradle-task>
 					</sequential>
 				</for>
 

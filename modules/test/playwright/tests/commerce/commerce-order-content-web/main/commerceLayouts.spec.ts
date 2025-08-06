@@ -804,8 +804,6 @@ test(
 		pageEditorPage,
 		site,
 	}) => {
-		test.setTimeout(180000);
-
 		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
 		const displayPageTemplateName = getRandomString();
@@ -893,11 +891,10 @@ test(
 			channel.id
 		);
 
-		await page.waitForLoadState('networkidle');
-
 		await page.goto(
 			liferayConfig.environment.baseUrl +
-				`/web/${site.name}/order/${cart.id}`
+				`/web/${site.name}/order/${cart.id}`,
+			{waitUntil: 'networkidle'}
 		);
 
 		await expect(
@@ -930,7 +927,8 @@ test(
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +
-				`/web/${site.name}/order/${cart.id}`
+				`/web/${site.name}/order/${cart.id}`,
+			{waitUntil: 'networkidle'}
 		);
 
 		await expect(
@@ -958,6 +956,7 @@ test(
 		).toBeChecked();
 
 		await commerceLayoutsPage.saveButton.click();
+		await page.waitForLoadState('load');
 
 		await expect(
 			commerceLayoutsPage.infoBoxValue(paymentMethod2)
@@ -1271,18 +1270,10 @@ test(
 				type: 'business',
 			});
 
-			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-				account.id,
-				['demo.unprivileged@liferay.com']
-			);
 			user =
 				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
 					'demo.unprivileged@liferay.com'
 				);
-
-			const siteRole =
-				await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
 			const rolesResponse =
 				await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
 
@@ -1295,6 +1286,14 @@ test(
 				accountRoleBuyer[0].id,
 				user.emailAddress
 			);
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account.id,
+				['demo.unprivileged@liferay.com']
+			);
+
+			const siteRole =
+				await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
 			await apiHelpers.headlessAdminUser.assignUserToSite(
 				siteRole.id,
 				site.id,
@@ -1618,15 +1617,32 @@ test(
 				reorderCount: 1,
 				submitCount: 1,
 			});
-			await commerceLayoutsPage.orderActionsButton('Reorder').click();
+			try {
+				await commerceLayoutsPage.orderActionsButton('Reorder').click();
 
-			await expect(
-				page.getByRole('heading', {name: String(cart2.id)})
-			).toHaveCount(0);
+				await expect(
+					page.getByRole('heading', {name: String(cart2.id)})
+				).toHaveCount(0);
 
-			await commerceLayoutsPage.expectOrderActionButtons({
-				submitCount: 1,
-			});
+				await commerceLayoutsPage.expectOrderActionButtons({
+					submitCount: 1,
+				});
+			}
+			finally {
+				await performLogout(page);
+				await performLoginViaApi({page, screenName: 'test'});
+
+				const orders =
+					await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+				if (orders && orders.items) {
+					for (const order of orders.items) {
+						await apiHelpers.headlessCommerceAdminOrder.deleteOrder(
+							order.id
+						);
+					}
+				}
+			}
 		});
 	}
 );
@@ -2095,7 +2111,8 @@ test(
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +
-				`/web/${site.name}/order/${cart.id}`
+				`/web/${site.name}/order/${cart.id}`,
+			{waitUntil: 'networkidle'}
 		);
 
 		await expect(

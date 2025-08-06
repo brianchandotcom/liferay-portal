@@ -615,7 +615,7 @@ test('LPD-45736 Order items are split on the mini cart with quick add to cart wh
 	page,
 }) => {
 	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'admin',
+		name: getRandomString(),
 		type: 'business',
 	});
 

@@ -629,7 +629,7 @@ test(`LPD-29993 Users can view and download a product's attachments`, async ({
 	});
 
 	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'admin',
+		name: getRandomString(),
 		type: 'business',
 	});
 

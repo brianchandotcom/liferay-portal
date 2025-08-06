@@ -191,9 +191,4 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		).selectOption(region);
 		await this.submitModalButton.click();
 	}
-
-	async reorder() {
-		this.reorderButton.click();
-		this.checkoutButton.click();
-	}
 }

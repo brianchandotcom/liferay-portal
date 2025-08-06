@@ -592,7 +592,7 @@ test('LPD-28683 When clicking on order item without visibility the user is not r
 	pendingOrdersPage,
 }) => {
 	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'admin',
+		name: getRandomString(),
 		type: 'business',
 	});
 
@@ -669,54 +669,44 @@ test('LPD-28683 When clicking on order item without visibility the user is not r
 	await performLogout(page);
 	await performLoginViaApi({page, screenName: user.alternateName});
 
-	await page.goto(`/web/${site.name}`);
+	await page.goto(`/web/${site.name}`, {waitUntil: 'networkidle'});
 
-	try {
-		await commerceMiniCartPage.quickAddToCart(
-			product.items[0].skuFormatted
-		);
+	await commerceMiniCartPage.quickAddToCart(product.items[0].skuFormatted);
 
-		await expect(
-			await commerceMiniCartPage.priceField(
-				'$ 24.00',
-				commerceMiniCartPage.miniCartItemsContainer
-			)
-		).toBeVisible();
+	await expect(
+		await commerceMiniCartPage.priceField(
+			'$ 24.00',
+			commerceMiniCartPage.miniCartItemsContainer
+		)
+	).toBeVisible();
 
-		await apiHelpers.headlessCommerceAdminCatalog.deleteProductAccountGroup(
-			productAccountGroups.items[0].id
-		);
+	await apiHelpers.headlessCommerceAdminCatalog.deleteProductAccountGroup(
+		productAccountGroups.items[0].id
+	);
 
-		await commerceMiniCartPage.viewDetailsButton.click();
+	await commerceMiniCartPage.viewDetailsButton.click();
 
-		await expect(
-			page.getByText('One or more products are no longer available.')
-		).toBeVisible();
+	await expect(
+		page.getByText('One or more products are no longer available.')
+	).toBeVisible();
 
-		await pendingOrdersPage.errorMessageCloseButton.click();
-		await pendingOrdersPage.skuLink(product.items[0].skuFormatted).click();
+	await pendingOrdersPage.errorMessageCloseButton.click();
+	await pendingOrdersPage.skuLink(product.items[0].skuFormatted).click();
 
-		await expect(
-			await commerceThemeMiniumPage.goToMiniumLink(site.name)
-		).toBeVisible();
-	}
-	finally {
-		const orders =
-			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
-
-		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
-	}
+	await expect(
+		await commerceThemeMiniumPage.goToMiniumLink(site.name)
+	).toBeVisible();
 });
 
 test('LPD-26906 As a buyer, I can edit product options from the pending orders page', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminProductPage,
 	commerceMiniCartPage,
 	page,
 	pendingOrdersPage,
 }) => {
-	test.setTimeout(180000);
+	test.setTimeout(90000);
+
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		type: 'business',
 	});
@@ -727,61 +717,30 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
 			'demo.unprivileged@liferay.com'
 		);
-
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
 	);
 
-	const companyId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getCompanyId();
+	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Buyer';
 	});
 
-	const role = await apiHelpers.headlessAdminUser.postRole({
-		name: 'Buyer ' + getRandomString(),
-		rolePermissions: [
-			{
-				actionIds: ['MANAGE_ADDRESSES', 'VIEW_ADDRESSES'],
-				primaryKey: '0',
-				resourceName: 'com.liferay.account.model.AccountEntry',
-				scope: 3,
-			},
-			{
-				actionIds: ['VIEW'],
-				primaryKey: companyId,
-				resourceName: 'com.liferay.commerce.model.CommerceOrderType',
-				scope: 1,
-			},
-			{
-				actionIds: [
-					'ADD_COMMERCE_ORDER',
-					'CHECKOUT_OPEN_COMMERCE_ORDERS',
-					'MANAGE_COMMERCE_ORDER_DELIVERY_TERMS',
-					'MANAGE_COMMERCE_ORDER_PAYMENT_METHODS',
-					'MANAGE_COMMERCE_ORDER_PAYMENT_TERMS',
-					'MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS',
-					'VIEW_BILLING_ADDRESS',
-					'VIEW_COMMERCE_ORDERS',
-					'VIEW_OPEN_COMMERCE_ORDERS',
-				],
-				primaryKey: '0',
-				resourceName: 'com.liferay.commerce.order',
-				scope: 3,
-			},
-		],
-	});
-
-	await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
-		role.id,
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		accountRoleBuyer[0].id,
+		user.emailAddress
+	);
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
 		user.id
 	);
-
-	apiHelpers.data.push({
-		id: `${role.id}_${user.id}`,
-		type: 'roleUserAccountAssociation',
-	});
-
-	await apiHelpers.jsonWebServicesUser.addGroupUsers(site.id, [user.id]);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[user.emailAddress]
+	);
 
 	const option = await apiHelpers.headlessCommerceAdminCatalog.postOption(
 		'select',
@@ -842,15 +801,7 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 		],
 	});
 
-	await applicationsMenuPage.goToProducts();
-
-	await commerceAdminProductPage.managementToolbarSearchInput.fill(
-		productBundleName
-	);
-	await commerceAdminProductPage.managementToolbarSearchInput.press('Enter');
-	await commerceAdminProductPage
-		.managementToolbarItemLink(productBundleName)
-		.click();
+	await commerceAdminProductPage.gotoProduct(productBundleName);
 	await commerceAdminProductPage.generateSkus();
 
 	await expect(page.getByText('Showing 1 to 3 of 3 entries.')).toBeVisible();
@@ -859,97 +810,88 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 	await performLoginViaApi({page, screenName: user.alternateName});
 
 	await page.goto(
-		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}/catalog`
+		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}/catalog`,
+		{waitUntil: 'networkidle'}
 	);
 
-	await page.waitForLoadState('networkidle');
+	await commerceMiniCartPage.quickAddToCart('BLACK');
+	await commerceMiniCartPage.quickAddToCart('MIN55858');
+	await commerceMiniCartPage.quickAddToCart('MIN93016A');
 
-	try {
-		await commerceMiniCartPage.miniCartButton.waitFor();
-		await commerceMiniCartPage.miniCartButton.click();
-		await commerceMiniCartPage.searchProductsInput.fill('BLACK');
-		await commerceMiniCartPage.quickAddToCartSku('BLACK').click();
-		await commerceMiniCartPage.quickAddToCartButton.click();
-		await commerceMiniCartPage.searchProductsInput.fill('MIN55858');
-		await commerceMiniCartPage.quickAddToCartSku('MIN55858').click();
-		await commerceMiniCartPage.quickAddToCartButton.click();
-		await commerceMiniCartPage.searchProductsInput.fill('MIN93016A');
-		await commerceMiniCartPage.quickAddToCartSku('MIN93016A').click();
-		await commerceMiniCartPage.quickAddToCartButton.click();
+	await pendingOrdersPage.layoutsPage.pendingOrdersLink.click();
+	await page.getByLabel('View').click();
 
-		await pendingOrdersPage.layoutsPage.pendingOrdersLink.click();
-		await page.getByLabel('View').click();
+	await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
+	await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
+	await expect(page.getByText('$ 10.00').nth(1)).toBeVisible();
 
-		await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
-		await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
-		await expect(page.getByText('$ 10.00').nth(1)).toBeVisible();
+	await pendingOrdersPage.orderItemExpandButton(productBundleName).click();
 
-		await pendingOrdersPage
-			.orderItemExpandButton(productBundleName)
-			.click();
+	await expect(page.getByText('$ 10.00').nth(3)).toBeVisible();
 
-		await expect(page.getByText('$ 10.00').nth(3)).toBeVisible();
+	await (
+		await pendingOrdersPage.orderItemsTableRowLink('Brake Fluid')
+	).click();
 
-		await (
-			await pendingOrdersPage.orderItemsTableRowLink('Brake Fluid')
-		).click();
+	await pendingOrdersPage.editMenuItem.click();
 
-		await pendingOrdersPage.editMenuItem.click();
+	await commerceMiniCartPage.selectOption('48', 'Package Quantity');
+	await commerceMiniCartPage.miniCartSaveButton.click();
 
-		await commerceMiniCartPage.selectOption('48', 'Package Quantity');
-		await commerceMiniCartPage.miniCartSaveButton.click();
+	await expect(commerceMiniCartPage.miniCartSaveButton).toBeHidden();
 
-		await page.reload();
+	await page.waitForLoadState('load');
 
-		await (
-			await pendingOrdersPage.orderItemsTableRowLink(productBundleName)
-		).click();
+	await expect(
+		await pendingOrdersPage.orderItemsTableRowLink(productBundleName)
+	).toBeVisible();
 
-		await pendingOrdersPage.editMenuItem.click();
+	await (
+		await pendingOrdersPage.orderItemsTableRowLink(productBundleName)
+	).click();
 
-		await commerceMiniCartPage.selectOption('White', 'Color');
-		await commerceMiniCartPage.miniCartSaveButton.click();
+	await pendingOrdersPage.editMenuItem.click();
 
-		await page.reload();
+	await commerceMiniCartPage.selectOption('White', 'Color');
+	await commerceMiniCartPage.miniCartSaveButton.click();
 
-		await (
-			await pendingOrdersPage.orderItemsTableRowLink('Wheel Seal - Front')
-		).click();
+	await expect(commerceMiniCartPage.miniCartSaveButton).toBeHidden();
 
-		await expect(pendingOrdersPage.editMenuItem).toHaveCount(0);
+	await page.waitForLoadState('load');
 
-		await page.locator('body').click();
+	await expect(
+		await pendingOrdersPage.orderItemsTableRowLink('Wheel Seal - Front')
+	).toBeVisible();
 
-		await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
-		await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
-		await expect(page.getByText('$ 20.00').nth(1)).toBeVisible();
+	await (
+		await pendingOrdersPage.orderItemsTableRowLink('Wheel Seal - Front')
+	).click();
 
-		await pendingOrdersPage
-			.orderItemExpandButton(productBundleName)
-			.click();
+	await expect(pendingOrdersPage.editMenuItem).toHaveCount(0);
 
-		await expect(page.getByText('$ 20.00').nth(3)).toBeVisible();
+	await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
+	await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
+	await expect(page.getByText('$ 20.00').nth(1)).toBeVisible();
 
-		await commerceMiniCartPage.miniCartButton.click();
+	await pendingOrdersPage.table.click();
 
-		await expect(
-			commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 4\.00$/)
-		).toBeVisible();
-		await expect(
-			commerceMiniCartPage.miniCartItemPrice(
-				/^List Price\$ 80\.00Promotion Price\$ 72\.00$/
-			)
-		).toBeVisible();
-		await expect(
-			commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 20\.00$/)
-		).toBeVisible();
-	}
-	finally {
-		const orders =
-			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+	await pendingOrdersPage.orderItemExpandButton(productBundleName).click();
 
-		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
-	}
+	await expect(page.getByText('$ 20.00').nth(3)).toBeVisible();
+
+	await commerceMiniCartPage.miniCartButton.click();
+
+	await expect(
+		commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 4\.00$/)
+	).toBeVisible();
+	await expect(
+		commerceMiniCartPage.miniCartItemPrice(
+			/^List Price\$ 80\.00Promotion Price\$ 72\.00$/
+		)
+	).toBeVisible();
+	await expect(
+		commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 20\.00$/)
+	).toBeVisible();
 });
 
 test('LPD-3259 As a buyer with approval workflow, when I click review order in minicart, I get redirect to pending orders page', async ({
@@ -1030,8 +972,7 @@ test('LPD-3259 As a buyer with approval workflow, when I click review order in m
 	const sku = productSkus[0];
 
 	await performLogout(page);
-
-	await performLogin(page, 'demo.unprivileged');
+	await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 	await apiHelpers.headlessCommerceDeliveryCart.postCart(
 		{
@@ -1048,11 +989,12 @@ test('LPD-3259 As a buyer with approval workflow, when I click review order in m
 		channels.items[0].id
 	);
 
-	await page.goto(`/web/${site.name}`);
+	await page.goto(`/web/${site.name}`, {waitUntil: 'networkidle'});
 
-	await commerceMiniCartPage.miniCartButton.waitFor();
 	await commerceMiniCartPage.miniCartButton.click();
-	await commerceMiniCartPage.reviewOrderButton.waitFor();
+
+	await expect(commerceMiniCartPage.reviewOrderButton).toBeVisible();
+
 	await commerceMiniCartPage.reviewOrderButton.click();
 
 	await expect(pendingOrdersPage.orderItemsTable).toBeVisible();

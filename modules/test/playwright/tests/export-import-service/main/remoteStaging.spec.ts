@@ -144,57 +144,76 @@ test(
 	{tag: ['@LPS-89981', '@LPS-88298']},
 	async ({
 		apiHelpers,
+		configStagingPage,
 		page,
 		portletStagingPage,
 		remoteApiHelpers,
 		remotePage,
 	}) => {
-		const vocabularyName = getRandomString();
-		const globalSiteId = await getGlobalSiteId(apiHelpers);
-		const remoteGlobalSiteId = await getGlobalSiteId(remoteApiHelpers);
+		try {
+			const vocabularyName = getRandomString();
+			const globalSiteId = await getGlobalSiteId(apiHelpers);
+			const remoteGlobalSiteId = await getGlobalSiteId(remoteApiHelpers);
 
-		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
-			groupId: globalSiteId,
-			remoteGroupId: remoteGlobalSiteId,
-			remotePort,
-		});
-		const {id: vocabularyId} = await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
-			name: vocabularyName,
-			siteId: globalSiteId,
-		});
+			await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
+				groupId: globalSiteId,
+				remoteGroupId: remoteGlobalSiteId,
+				remotePort,
+			});
+			const {id: vocabularyId} =
+				await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary(
+					{
+						name: vocabularyName,
+						siteId: globalSiteId,
+					}
+				);
+			apiHelpers.data.push({
+				id: vocabularyId,
+				type: 'taxonomyVocabulary',
+			});
 
-		await page.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
+			await page.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
 
-		await portletStagingPage.openIframe();
-		await portletStagingPage.publishToLive();
+			await portletStagingPage.openIframe();
+			await portletStagingPage.publishToLive();
 
-		await remotePage.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
-		await expect(
-			remotePage.getByRole('menuitem', {name: vocabularyName})
-		).toBeVisible();
-
-		await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(vocabularyId);
-
-		await portletStagingPage.openIframe();
-
-		const contentCheckbox =
-			portletStagingPage.publishStagingIframe.getByLabel(
-				/Content\s+\d+\s+Deletions/i
+			await remotePage.goto(
+				`/group/global${PORTLET_URLS.categoriesAdmin}`
 			);
-		await expect(async () => {
-			await expect(contentCheckbox).not.toBeChecked();
-		}).toPass();
-		await contentCheckbox.check();
+			await expect(
+				remotePage.getByRole('menuitem', {name: vocabularyName})
+			).toBeVisible();
 
-		await portletStagingPage.publishStagingIframe
-			.getByLabel('Replicate Individual')
-			.check();
+			await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
+				vocabularyId
+			);
 
-		await portletStagingPage.publishToLive();
+			await portletStagingPage.openIframe();
 
-		await remotePage.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
-		await expect(
-			remotePage.getByRole('menuitem', {name: vocabularyName})
-		).toBeHidden();
+			const contentCheckbox =
+				portletStagingPage.publishStagingIframe.getByLabel(
+					/Content\s+\d+\s+Deletions/i
+				);
+			await expect(async () => {
+				await expect(contentCheckbox).not.toBeChecked();
+			}).toPass();
+			await contentCheckbox.check();
+
+			await portletStagingPage.publishStagingIframe
+				.getByLabel('Replicate Individual')
+				.check();
+
+			await portletStagingPage.publishToLive();
+
+			await remotePage.goto(
+				`/group/global${PORTLET_URLS.categoriesAdmin}`
+			);
+			await expect(
+				remotePage.getByRole('menuitem', {name: vocabularyName})
+			).toBeHidden();
+		}
+		finally {
+			await configStagingPage.disableStaging('/global');
+		}
 	}
 );

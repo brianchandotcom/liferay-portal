@@ -5,13 +5,18 @@
 
 import {test} from '@playwright/test';
 
+import {ConfigStagingPage} from '../pages/ConfigStagingPage';
 import {PortletStagingPage} from '../pages/PortletStagingPage';
 import {RemoteStagingPage} from '../pages/RemoteStagingPage';
 
 const remoteStagingPagesTest = test.extend<{
+	configStagingPage: ConfigStagingPage;
 	portletStagingPage: PortletStagingPage;
 	remoteStagingPage: RemoteStagingPage;
 }>({
+	configStagingPage: async ({page}, use) => {
+		await use(new ConfigStagingPage(page));
+	},
 	portletStagingPage: async ({page}, use) => {
 		await use(new PortletStagingPage(page));
 	},

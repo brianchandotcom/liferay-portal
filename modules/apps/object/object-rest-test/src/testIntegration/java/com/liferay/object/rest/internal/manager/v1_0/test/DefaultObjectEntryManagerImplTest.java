@@ -113,6 +113,7 @@ import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.constants.TreeConstants;
+import com.liferay.petra.function.UnsafeTriFunction;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -290,6 +291,46 @@ public class DefaultObjectEntryManagerImplTest
 			PermissionCheckerFactoryUtil.create(adminUser));
 
 		PrincipalThreadLocal.setName(adminUser.getUserId());
+
+		_objectDefinitionA = _addObjectDefinition();
+		_objectDefinitionAA = _addObjectDefinition();
+
+		_objectRelationshipA_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinitionA, _objectDefinitionAA,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectDefinitionB = _addObjectDefinition();
+
+		_objectRelationshipB_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinitionB, _objectDefinitionAA,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			List.of(_objectRelationshipA_AA, _objectRelationshipB_AA));
+
+		_objectRelationshipA_AA =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectRelationshipA_AA.getObjectRelationshipId());
+		_objectRelationshipB_AA =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectRelationshipB_AA.getObjectRelationshipId());
+
+		_objectEntryA = _addObjectEntry(
+			_objectDefinitionA, Collections.emptyMap());
+		_objectEntryB = _addObjectEntry(
+			_objectDefinitionB, Collections.emptyMap());
+
+		_objectRelationshipA_AAObjectField2 =
+			_objectFieldLocalService.getObjectField(
+				_objectRelationshipA_AA.getObjectFieldId2());
+		_objectRelationshipB_AAObjectField2 =
+			_objectFieldLocalService.getObjectField(
+				_objectRelationshipB_AA.getObjectFieldId2());
 	}
 
 	@AfterClass
@@ -6100,6 +6141,21 @@ public class DefaultObjectEntryManagerImplTest
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 	}
 
+	@Test
+	public void testGetRelatedObjectEntry() throws Exception {
+		_testGetRelatedObjectEntry(
+			(objectEntry1, objectEntry2, objectRelationship) ->
+				_defaultObjectEntryManager.getRelatedObjectEntry(
+					_simpleDTOConverterContext, objectEntry2.getId(),
+					objectRelationship, objectEntry1.getId()));
+		_testGetRelatedObjectEntry(
+			(objectEntry1, objectEntry2, objectRelationship) ->
+				_defaultObjectEntryManager.getRelatedObjectEntry(
+					_simpleDTOConverterContext,
+					objectEntry2.getExternalReferenceCode(), objectRelationship,
+					objectEntry1.getExternalReferenceCode(), null));
+	}
+
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetVersionedObjectEntries() throws Exception {
@@ -8138,6 +8194,69 @@ public class DefaultObjectEntryManagerImplTest
 			context.get("filter"), null, context.get("search"), sorts);
 	}
 
+	private static ObjectDefinition _addObjectDefinition() throws Exception {
+		return _addObjectDefinition(
+			List.of(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
+	private static ObjectDefinition _addObjectDefinition(
+			boolean enableObjectEntrySubscription,
+			List<ObjectField> objectFields, String scope)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				adminUser.getUserId(), 0, null, false, false, true, true, false,
+				false, enableObjectEntrySubscription, false, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(), objectFields);
+
+		return objectDefinitionLocalService.publishCustomObjectDefinition(
+			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
+	}
+
+	private static ObjectDefinition _addObjectDefinition(
+			List<ObjectField> objectFields, String scope)
+		throws Exception {
+
+		return _addObjectDefinition(false, objectFields, scope);
+	}
+
+	private static ObjectEntry _addObjectEntry(
+			ObjectDefinition objectDefinition, Map<String, Object> values)
+		throws Exception {
+
+		return _addObjectEntry(
+			objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = new HashMap<>(values);
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
+	private static ObjectEntry _addObjectEntry(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String scopeKey)
+		throws Exception {
+
+		return _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntry,
+			scopeKey);
+	}
+
 	private AccountEntry _addAccountEntry() throws Exception {
 		return _accountEntryLocalService.addAccountEntry(
 			StringPool.BLANK, adminUser.getUserId(), 0L,
@@ -8276,51 +8395,12 @@ public class DefaultObjectEntryManagerImplTest
 			false);
 	}
 
-	private ObjectDefinition _addObjectDefinition() throws Exception {
-		return _addObjectDefinition(
-			List.of(
-				new TextObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"textObjectFieldName"
-				).build()),
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-	}
-
-	private ObjectDefinition _addObjectDefinition(
-			boolean enableObjectEntrySubscription,
-			List<ObjectField> objectFields, String scope)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.addCustomObjectDefinition(
-				adminUser.getUserId(), 0, null, false, false, true, true, false,
-				false, enableObjectEntrySubscription, false, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionTestUtil.getRandomName(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList(), objectFields);
-
-		return objectDefinitionLocalService.publishCustomObjectDefinition(
-			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
-	}
-
 	private ObjectDefinition _addObjectDefinition(
 			List<ObjectField> objectFields)
 		throws Exception {
 
 		return _addObjectDefinition(
 			objectFields, ObjectDefinitionConstants.SCOPE_COMPANY);
-	}
-
-	private ObjectDefinition _addObjectDefinition(
-			List<ObjectField> objectFields, String scope)
-		throws Exception {
-
-		return _addObjectDefinition(false, objectFields, scope);
 	}
 
 	private ObjectDefinition _addObjectDefinition(String scope)
@@ -8354,30 +8434,6 @@ public class DefaultObjectEntryManagerImplTest
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-	}
-
-	private ObjectEntry _addObjectEntry(
-			ObjectDefinition objectDefinition, Map<String, Object> values)
-		throws Exception {
-
-		return _addObjectEntry(
-			objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = new HashMap<>(values);
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-	}
-
-	private ObjectEntry _addObjectEntry(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			String scopeKey)
-		throws Exception {
-
-		return _defaultObjectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, objectDefinition, objectEntry,
-			scopeKey);
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -9527,6 +9583,78 @@ public class DefaultObjectEntryManagerImplTest
 		}
 	}
 
+	private void _testGetRelatedObjectEntry(
+			UnsafeTriFunction
+				<ObjectEntry, ObjectEntry, ObjectRelationship, ObjectEntry,
+				 Exception> unsafeTriFunction)
+		throws Exception {
+
+		ObjectEntry objectEntryAA1 = _addObjectEntry(
+			_objectDefinitionAA, Collections.emptyMap());
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key {",
+				_objectRelationshipA_AAObjectField2.getName(), "=",
+				_objectEntryA.getId(), ", objectEntryId=",
+				objectEntryAA1.getId(), "}"),
+			() -> unsafeTriFunction.apply(
+				_objectEntryA, objectEntryAA1, _objectRelationshipA_AA));
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key {",
+				_objectRelationshipB_AAObjectField2.getName(), "=",
+				_objectEntryB.getId(), ", objectEntryId=",
+				objectEntryAA1.getId(), "}"),
+			() -> unsafeTriFunction.apply(
+				_objectEntryB, objectEntryAA1, _objectRelationshipB_AA));
+
+		Assert.assertNotNull(
+			_defaultObjectEntryManager.getObjectEntry(
+				dtoConverterContext, _objectDefinitionAA,
+				objectEntryAA1.getId()));
+
+		ObjectEntry objectEntryAA2 =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_createDTOConverterContext(), _objectDefinitionAA,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							_objectRelationshipA_AAObjectField2::getName,
+							_objectEntryA.getId()
+						).build();
+					}
+				},
+				_objectRelationshipLocalService.getObjectRelationship(
+					_objectRelationshipA_AA.getObjectRelationshipId()),
+				_objectEntryA.getId(), ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertNotNull(
+			unsafeTriFunction.apply(
+				_objectEntryA, objectEntryAA2, _objectRelationshipA_AA));
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key {",
+				_objectRelationshipB_AAObjectField2.getName(), "=",
+				_objectEntryB.getId(), ", objectEntryId=",
+				objectEntryAA2.getId(), "}"),
+			() -> unsafeTriFunction.apply(
+				_objectEntryB, objectEntryAA2, _objectRelationshipB_AA));
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key {",
+				"rootObjectEntryId=0, objectEntryId=", objectEntryAA2.getId(),
+				"}"),
+			() -> _defaultObjectEntryManager.getObjectEntry(
+				dtoConverterContext, _objectDefinitionAA,
+				objectEntryAA2.getId()));
+	}
+
 	private void _testUpdateObjectEntryWithAccountEntryRestricted2(
 			String actionId, Tree tree)
 		throws Exception {
@@ -9749,11 +9877,28 @@ public class DefaultObjectEntryManagerImplTest
 
 	private static DefaultObjectEntryManager _defaultObjectEntryManager;
 	private static Group _group;
+	private static ObjectDefinition _objectDefinitionA;
+	private static ObjectDefinition _objectDefinitionAA;
+	private static ObjectDefinition _objectDefinitionB;
+	private static ObjectEntry _objectEntryA;
+	private static ObjectEntry _objectEntryB;
 
 	@Inject(
 		filter = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
 	)
 	private static ObjectEntryManager _objectEntryManager;
+
+	@Inject
+	private static ObjectFieldLocalService _objectFieldLocalService;
+
+	private static ObjectRelationship _objectRelationshipA_AA;
+	private static ObjectField _objectRelationshipA_AAObjectField2;
+	private static ObjectRelationship _objectRelationshipB_AA;
+	private static ObjectField _objectRelationshipB_AAObjectField2;
+
+	@Inject
+	private static ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 
 	private static String _originalName;
 	private static PermissionChecker _originalPermissionChecker;
@@ -9859,9 +10004,6 @@ public class DefaultObjectEntryManagerImplTest
 	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
 
 	@Inject
-	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Inject
 	private ObjectFieldService _objectFieldService;
 
 	@Inject
@@ -9872,10 +10014,6 @@ public class DefaultObjectEntryManagerImplTest
 
 	private String _objectRelationshipERCObjectFieldName;
 	private String _objectRelationshipFieldName;
-
-	@Inject
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
 	private String _objectRelationshipName;
 
 	@Inject

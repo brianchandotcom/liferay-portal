@@ -198,13 +198,13 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 	@Inject
 	protected static DTOConverterRegistry dtoConverterRegistry;
 
+	@Inject
+	protected static ObjectDefinitionLocalService objectDefinitionLocalService;
+
 	protected ListTypeDefinition listTypeDefinition;
 
 	@Inject
 	protected ListTypeDefinitionLocalService listTypeDefinitionLocalService;
-
-	@Inject
-	protected ObjectDefinitionLocalService objectDefinitionLocalService;
 
 	@Inject
 	protected ObjectFieldLocalService objectFieldLocalService;

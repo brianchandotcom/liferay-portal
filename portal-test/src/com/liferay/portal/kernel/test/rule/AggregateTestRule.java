@@ -76,7 +76,8 @@ public class AggregateTestRule implements TestRule {
 		InitializeKernelUtilTestRule.class.getName(),
 		"com.liferay.portal.search.test.rule.logging.ExpectedLogMethodTestRule",
 		"com.liferay.portal.security.script.management.test.rule." +
-			"ScriptManagementConfigurationTestRule"
+			"ScriptManagementConfigurationTestRule",
+		"com.liferay.exportimport.test.rule.LazyReferencingTestRule"
 	};
 
 	private static final Comparator<TestRule> _testRuleComparator =

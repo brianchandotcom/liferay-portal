@@ -7,6 +7,7 @@ package com.liferay.object.internal.provider;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -15,6 +16,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -36,6 +38,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -80,7 +83,7 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 		}
 
 		List<ObjectEntry> objectEntries = _getApprovedObjectEntries(
-			objectDefinition);
+			layoutSet.getGroupId(), objectDefinition);
 
 		if (objectEntries.isEmpty()) {
 			return;
@@ -122,10 +125,21 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 	}
 
 	private List<ObjectEntry> _getApprovedObjectEntries(
-		ObjectDefinition objectDefinition) {
+		long groupId, ObjectDefinition objectDefinition) {
+
+		if (Objects.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+			return _objectEntryLocalService.getObjectEntries(
+				GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				objectDefinition.getObjectDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+		}
 
 		return _objectEntryLocalService.getObjectEntries(
-			0, objectDefinition.getObjectDefinitionId(),
+			groupId, objectDefinition.getObjectDefinitionId(),
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 	}

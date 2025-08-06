@@ -74,6 +74,39 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 
 	@GET
 	@Operation(
+		operationId = "getByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode"
+	)
+	@Parameters(
+		{
+			@Parameter(
+				in = ParameterIn.PATH, name = "currentExternalReferenceCode"
+			),
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipName"),
+			@Parameter(
+				in = ParameterIn.PATH, name = "relatedExternalReferenceCode"
+			)
+		}
+	)
+	@Path(
+		"/by-external-reference-code/{currentExternalReferenceCode}/{objectRelationshipName}/{relatedExternalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(@Tag(name = "ObjectEntry"))
+	public abstract Object
+			getByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("currentExternalReferenceCode")
+				String currentExternalReferenceCode,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("objectRelationshipName")
+				String objectRelationshipName,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("relatedExternalReferenceCode")
+				String relatedExternalReferenceCode)
+		throws Exception;
+
+	@GET
+	@Operation(
 		operationId = "getObjectEntryObjectRelationshipNameRelatedObjectEntryPage"
 	)
 	@Parameters(
@@ -99,6 +132,35 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 				@PathParam("objectRelationshipName")
 				String objectRelationshipName,
 				@Context Pagination pagination)
+		throws Exception;
+
+	@GET
+	@Operation(
+		operationId = "getObjectEntryObjectRelationshipNameRelatedObjectEntry"
+	)
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.PATH, name = "currentObjectEntryId"),
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipName"),
+			@Parameter(in = ParameterIn.PATH, name = "relatedObjectEntryId")
+		}
+	)
+	@Path(
+		"/{currentObjectEntryId}/{objectRelationshipName}/{relatedObjectEntryId}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(@Tag(name = "ObjectEntry"))
+	public abstract Object
+			getObjectEntryObjectRelationshipNameRelatedObjectEntry(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("currentObjectEntryId")
+				Long currentObjectEntryId,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("objectRelationshipName")
+				String objectRelationshipName,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("relatedObjectEntryId")
+				Long relatedObjectEntryId)
 		throws Exception;
 
 	@Consumes({"application/json", "application/xml"})

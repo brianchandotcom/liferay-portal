@@ -75,6 +75,14 @@ public class ViewContentsSectionDisplayContext
 				StringPool.BLANK, "info-circle-open", "show-details",
 				LanguageUtil.get(httpServletRequest, "show-details"), null,
 				null, "infoPanel"));
+
+		fdsActionDropdownItems.add(
+			3,
+			new FDSActionDropdownItem(
+				null, "share", "share",
+				LanguageUtil.get(httpServletRequest, "share"), "get", null,
+				"link"));
+
 		fdsActionDropdownItems.add(
 			4,
 			new FDSActionDropdownItem(
@@ -87,13 +95,6 @@ public class ViewContentsSectionDisplayContext
 				"view", "viewContent",
 				LanguageUtil.get(httpServletRequest, "view"), "get", null,
 				"modal"));
-
-		fdsActionDropdownItems.add(
-			3,
-			new FDSActionDropdownItem(
-				null, "share", "share",
-				LanguageUtil.get(httpServletRequest, "share"), "get", null,
-				"link"));
 
 		return fdsActionDropdownItems;
 	}

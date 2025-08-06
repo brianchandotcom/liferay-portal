@@ -2019,6 +2019,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="PortletId" return-type="Collection">
+			<finder-column name="portletId" />
+		</finder>
 		<finder name="G_N_P" return-type="Repository" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="name" />

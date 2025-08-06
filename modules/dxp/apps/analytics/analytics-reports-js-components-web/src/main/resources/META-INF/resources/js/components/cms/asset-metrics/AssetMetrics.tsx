@@ -488,7 +488,7 @@ const AssetMetrics = () => {
 	return (
 		<>
 			<div className="align-items-center d-flex justify-content-around mt-3">
-				<span className="text-3 text-nowrap text-secondary">
+				<span className="text-3 text-secondary">
 					{Liferay.Language.get(
 						'this-metric-calculates-the-total-number-of-times-an-asset-is-seen-by-visitors'
 					)}

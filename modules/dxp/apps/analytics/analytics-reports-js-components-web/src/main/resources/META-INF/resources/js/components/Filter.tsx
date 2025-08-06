@@ -95,6 +95,7 @@ const Filter: React.FC<IFilterProps> = ({
 			)}
 
 			{!loading &&
+				!!items.length &&
 				items.map(({description, label, value}) => (
 					<ClayDropdown.Item
 						active={value === active}

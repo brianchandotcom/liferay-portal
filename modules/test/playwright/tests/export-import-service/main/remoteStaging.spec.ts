@@ -150,6 +150,10 @@ test(
 		const publishStagingIframe = page.frameLocator(
 			'iframe[title="Staging"]'
 		);
+		const publishSuccessStatus = publishStagingIframe
+			.locator('[data-qa-id="row"]')
+			.first()
+			.getByText('Successful');
 
 		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
 			groupId: globalSiteId,
@@ -177,9 +181,7 @@ test(
 			}),
 			trigger: page.getByRole('menuitem', {name: 'Staging'}),
 		});
-
-		await publishStagingIframe.getByText('Successful').last().waitFor();
-		await page.waitForTimeout(200);
+		await publishSuccessStatus.waitFor();
 
 		await page.getByLabel('close', {exact: true}).click();
 
@@ -219,8 +221,7 @@ test(
 		await publishStagingIframe
 			.getByRole('button', {name: 'Publish to Live'})
 			.click();
-		await publishStagingIframe.getByText('Successful').last().waitFor();
-		await page.waitForTimeout(200);
+		await publishSuccessStatus.waitFor();
 
 		await remotePage.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
 		await expect(

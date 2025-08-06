@@ -16,7 +16,6 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {remotePageTest} from '../../../fixtures/remotePageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -153,13 +152,6 @@ test(
 		const vocabularyName = getRandomString();
 		const globalSiteId = await getGlobalSiteId(apiHelpers);
 		const remoteGlobalSiteId = await getGlobalSiteId(remoteApiHelpers);
-		const publishStagingIframe = page.frameLocator(
-			'iframe[title="Staging"]'
-		);
-		const publishSuccessStatus = publishStagingIframe
-			.locator('[data-qa-id="row"]')
-			.first()
-			.getByText('Successful');
 
 		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
 			groupId: globalSiteId,
@@ -173,6 +165,7 @@ test(
 
 		await page.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
 
+		await portletStagingPage.openIframe();
 		await portletStagingPage.publishToLive();
 
 		await remotePage.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
@@ -189,29 +182,22 @@ test(
 		await page.getByRole('button', {name: 'Delete'}).click();
 		await page.getByRole('button', {name: 'Delete'}).click();
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {name: 'Staging'}),
-			trigger: page.getByLabel('Options'),
-		});
+		await portletStagingPage.openIframe();
 
-		const contentCheckbox = publishStagingIframe.getByLabel(
-			/Content\s+\d+\s+Deletions/i
-		);
+		const contentCheckbox =
+			portletStagingPage.publishStagingIframe.getByLabel(
+				/Content\s+\d+\s+Deletions/i
+			);
 		await expect(async () => {
 			await expect(contentCheckbox).not.toBeChecked();
 		}).toPass();
 		await contentCheckbox.check();
 
-		await publishStagingIframe.getByLabel('Replicate Individual').check();
+		await portletStagingPage.publishStagingIframe
+			.getByLabel('Replicate Individual')
+			.check();
 
-		page.once('dialog', async (dialog) => {
-			await dialog.accept();
-		});
-		await publishStagingIframe
-			.getByRole('button', {name: 'Publish to Live'})
-			.click();
-		await publishSuccessStatus.waitFor();
+		await portletStagingPage.publishToLive();
 
 		await remotePage.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
 		await expect(

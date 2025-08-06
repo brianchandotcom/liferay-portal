@@ -477,12 +477,14 @@ export class ChangeTrackingPage {
 
 	async viewChanges({
 		changed,
+		click,
 		isVisible,
 		site,
 		title,
 		type,
 	}: {
 		changed?: string;
+		click?: boolean;
 		isVisible?: boolean;
 		site?: string;
 		title: string;
@@ -514,6 +516,10 @@ export class ChangeTrackingPage {
 		}
 		else if (isVisible === false) {
 			await expect(fdsRow).toBeHidden();
+		}
+
+		if (click === true) {
+			await fdsRow.getByRole('link', {name: title}).first().click();
 		}
 	}
 

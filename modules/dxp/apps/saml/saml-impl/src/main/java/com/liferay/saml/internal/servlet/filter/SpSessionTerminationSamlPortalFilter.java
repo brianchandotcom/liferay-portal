@@ -5,6 +5,7 @@
 
 package com.liferay.saml.internal.servlet.filter;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -84,8 +85,10 @@ public class SpSessionTerminationSamlPortalFilter extends BaseSamlPortalFilter {
 				_singleLogoutProfile.terminateSpSession(
 					httpServletRequest, httpServletResponse);
 
-				_singleLogoutProfile.terminateSsoSession(
-					httpServletRequest, httpServletResponse);
+				if (FeatureFlagManagerUtil.isEnabled("LPD-29737")) {
+					_singleLogoutProfile.terminateSsoSession(
+						httpServletRequest, httpServletResponse);
+				}
 
 				_singleLogoutProfile.logout(
 					httpServletRequest, httpServletResponse);

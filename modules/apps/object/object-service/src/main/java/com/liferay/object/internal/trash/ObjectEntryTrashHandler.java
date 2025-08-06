@@ -9,9 +9,13 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.trash.BaseTrashHandler;
 
 import jakarta.portlet.PortletRequest;
@@ -24,11 +28,27 @@ public class ObjectEntryTrashHandler extends BaseTrashHandler {
 	public ObjectEntryTrashHandler(
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
-		ObjectEntryService objectEntryService) {
+		ObjectEntryService objectEntryService,
+		SystemEventLocalService systemEventLocalService) {
 
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryService = objectEntryService;
+		_systemEventLocalService = systemEventLocalService;
+	}
+
+	@Override
+	public SystemEvent addDeletionSystemEvent(
+			long userId, long groupId, long classPK, String classUuid,
+			String referrerClassName)
+		throws PortalException {
+
+		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(classPK);
+
+		return _systemEventLocalService.addSystemEvent(
+			userId, groupId, objectEntry.getExternalReferenceCode(),
+			getSystemEventClassName(), classPK, classUuid, referrerClassName,
+			SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 	}
 
 	@Override
@@ -69,5 +89,6 @@ public class ObjectEntryTrashHandler extends BaseTrashHandler {
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryService _objectEntryService;
+	private final SystemEventLocalService _systemEventLocalService;
 
 }

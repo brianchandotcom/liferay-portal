@@ -79,7 +79,7 @@ public class SQLServerDBCTTest {
 	}
 
 	@Test
-	public void testDeleteCTCollectionWithOver60000CTEntries()
+	public void testDeleteCTCollectionWithOver65535CTEntries()
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -157,7 +157,7 @@ public class SQLServerDBCTTest {
 	}
 
 	@Test
-	public void testPublishCTCollectionWithOver60000CTEntries()
+	public void testPublishCTCollectionWithOver65535CTEntries()
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -182,7 +182,7 @@ public class SQLServerDBCTTest {
 
 	private static final int _BATCH_SIZE_HIBERNATE = 2001;
 
-	private static final int _BATCH_SIZE_QUERY_PROCESSOR = 60001;
+	private static final int _BATCH_SIZE_QUERY_PROCESSOR = 65536;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

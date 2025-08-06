@@ -34,8 +34,6 @@ import jakarta.servlet.http.HttpSessionListener;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.security.AccessController;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

@@ -63,18 +63,12 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
-	public void testUpgradeWithCompanyScopedConfigurations() throws Exception {
+	public void testUpgrade() throws Exception {
 		connection = _connection;
 
 		_test(
 			"companyId", "Company", TestPropsValues.getCompanyId(),
 			_getNonexistentCompanyId());
-	}
-
-	@Test
-	public void testUpgradeWithGroupScopedConfigurations() throws Exception {
-		connection = _connection;
-
 		_test(
 			"groupId", "Group_", TestPropsValues.getGroupId(),
 			_getNonexistentGroupId());

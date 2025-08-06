@@ -62,6 +62,26 @@ const config = {
 				test: /\.graphql$/
 			},
 			{
+				test: /\.css$/i,
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader',
+					{
+						loader: 'postcss-loader',
+						options: {
+							postcssOptions: {
+								ident: 'postcss',
+								plugins: () => [
+									NormalizeCharsetPlugin,
+									AutoprefixerPlugin
+								],
+								sourceMap: true
+							}
+						}
+					}
+				]
+			},
+			{
 				include: path.resolve(__dirname, 'src', 'main', 'css'),
 				test: /\.scss$/,
 				use: [

@@ -23,6 +23,7 @@
 				<p class="title">
 					<@liferay_ui["message"] key="announcement" />
 				</p>
+
 				<p class="date">
 					<#if (ObjectEntry_createDate.getData())??>
 						<#assign rawDate = ObjectEntry_createDate.getData()?datetime("M/d/yy h:mm a") />
@@ -30,7 +31,8 @@
 					</#if>
 				</p>
 			</div>
-			<div class="content-info">
+
+			<div class="content-info mt-2">
 				<h1>
 					<#if (ObjectField_title.getData())??>
 						${ObjectField_title.getData()}
@@ -46,6 +48,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="content mt-3" id="content">
 			<#if (ObjectField_content.getData())??>
 				${ObjectField_content.getData()}
@@ -55,6 +58,7 @@
 			</#if>
 		</div>
 	</div>
+
 	<div class="side-container">
 		<div class="table-of-contents"></div>
 	</div>
@@ -62,24 +66,27 @@
 
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
-		const contentDiv = document.getElementById("content");
-		const tocDiv = document.querySelector(".table-of-contents");
+		const contentContainer = document.getElementById("content");
+		const tocContainer = document.querySelector(".table-of-contents");
 
-		if (!contentDiv || !tocDiv) return;
+		if (!contentContainer || !tocContainer) {
+			return;
+		}
 
-		const headings = contentDiv.querySelectorAll("h3");
+		const headings = contentContainer.querySelectorAll("h3");
 
-		if (headings.length === 0) return;
+		if (headings.length === 0) {
+			return;
+		}
 
 		const tocList = document.createElement("ul");
 
 		headings.forEach((heading, index) => {
 			const headingId = "heading-" + index;
+			const link = document.createElement("a");
+			const listItem = document.createElement("li");
 
 			heading.id = headingId;
-
-			const listItem = document.createElement("li");
-			const link = document.createElement("a");
 
 			link.href = "#" + headingId;
 			link.textContent = heading.textContent;
@@ -93,7 +100,7 @@
 			tocList.appendChild(listItem);
 		});
 
-		tocDiv.appendChild(tocList);
+		tocContainer.appendChild(tocList);
 	});
 </script>
 
@@ -120,6 +127,14 @@
 
 		.admonion-title {
 			color: var(--color-state-error, #dA1414);
+		}
+	}
+
+	.admonion-type-info {
+	   background-color: #EFF2FA;
+
+		admonion-title {
+		  color: #4F6FB8;
 		}
 	}
 
@@ -167,7 +182,7 @@
 	}
 
 	.component-html img {
-		max-height: 334px;
+		border-radius: 10px;
 		width: 100%;
 	}
 
@@ -209,6 +224,7 @@
 		margin-top: 4rem;
 		position: sticky;
 		top: 12.5rem;
+		min-width: 256px;
 	}
 
 	.table-of-contents {
@@ -258,6 +274,10 @@
 		list-style: none;
 		margin: 0;
 		padding-left: 0;
+	}
+
+	h1, h2, h3 {
+	  color: var(--color-neutral-10, #282934);
 	}
 
 	html {

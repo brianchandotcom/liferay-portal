@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia García
  */
 @Component(service = RoleContributor.class)
-public class RegularRoleContributor implements RoleContributor {
+public class SiteRoleContributor implements RoleContributor {
 
 	@Override
 	public void contribute(RoleCollection roleCollection) {
@@ -52,7 +52,7 @@ public class RegularRoleContributor implements RoleContributor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RegularRoleContributor.class);
+		SiteRoleContributor.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

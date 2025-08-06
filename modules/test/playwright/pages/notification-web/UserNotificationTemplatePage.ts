@@ -37,7 +37,7 @@ export class UserNotificationTemplatePage {
 	}
 
 	async selectNotificationRecipient(
-		recipient: 'Definition of Terms' | 'Role' | 'User'
+		recipient: 'Definition of Terms' | 'Role' | 'User' | 'User Group'
 	) {
 		await this.page.getByRole('combobox').first().click();
 

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
@@ -346,6 +347,45 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			NotificationRecipientConstants.TYPE_USER);
 	}
 
+	@Test
+	public void testSendNotificationRecipientTypeUserGroup() throws Exception {
+		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();
+
+		UserGroup userGroup2 = UserGroupTestUtil.addUserGroup();
+
+		_userGroupLocalService.addUserUserGroup(
+			user1.getUserId(), userGroup1.getUserGroupId());
+
+		_userGroupLocalService.addUserUserGroup(
+			user2.getUserId(), userGroup1.getUserGroupId());
+
+		_userGroupLocalService.addUserUserGroup(
+			user1.getUserId(), userGroup2.getUserGroupId());
+
+		_userGroupLocalService.addUserUserGroup(
+			user2.getUserId(), userGroup2.getUserGroupId());
+
+		_testSendNotification(
+			Arrays.asList(
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"userGroupName", userGroup1.getName()),
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"userGroupName", userGroup2.getName())),
+			NotificationRecipientConstants.TYPE_USER_GROUP);
+
+		Assert.assertEquals(
+			1,
+			_userNotificationEventLocalService.getUserNotificationEventsCount(
+				user1.getUserId()));
+
+		Assert.assertEquals(
+			1,
+			_userNotificationEventLocalService.getUserNotificationEventsCount(
+				user2.getUserId()));
+	}
+
 	private User _addSiteRoleUser(Group group, Role siteRole) throws Exception {
 		resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(),
@@ -640,6 +680,9 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

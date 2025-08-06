@@ -6,8 +6,10 @@
 package com.liferay.change.tracking.web.internal.frontend.data.set.view.table;
 
 import com.liferay.change.tracking.web.internal.constants.PublicationsFDSNames;
+import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviorConstants;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.DateTimeFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -60,13 +62,28 @@ public class PublicationsChangesTableFDSView extends BaseTableFDSView {
 			"changeType", "changed",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"dateModified", "last-modified",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setSortable(
-				true
-			)
+			_addDateFDSTableSchemaField()
 		).build();
+	}
+
+	private DateTimeFDSTableSchemaField _addDateFDSTableSchemaField() {
+		DateTimeFDSTableSchemaField dateFDSTableSchemaField =
+			new DateTimeFDSTableSchemaField();
+
+		dateFDSTableSchemaField.setContentRenderer(
+			"dateTime"
+		).setFieldName(
+			"dateModified"
+		).setLabel(
+			"last-modified"
+		).setSortable(
+			true
+		);
+
+		dateFDSTableSchemaField.setTimeZoneBehavior(
+			FDSTimeZoneBehaviorConstants.APPLY_THEME_DISPLAY_TIME_ZONE);
+
+		return dateFDSTableSchemaField;
 	}
 
 	@Reference

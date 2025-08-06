@@ -56,7 +56,7 @@ public class ConfigurationDataCleanupPreupgradeProcess
 
 				String dictionary = resultSet.getString("dictionary");
 
-				long companyId = _extractId(dictionary, _companyIdPattern);
+				long companyId = _getPrimaryKey(dictionary, _companyIdPattern);
 
 				if (companyId != -1) {
 					if (!ArrayUtil.contains(companyIds, companyId)) {
@@ -68,7 +68,7 @@ public class ConfigurationDataCleanupPreupgradeProcess
 					continue;
 				}
 
-				long groupId = _extractId(dictionary, _groupIdPattern);
+				long groupId = _getPrimaryKey(dictionary, _groupIdPattern);
 
 				if ((groupId != -1) && !ArrayUtil.contains(groupIds, groupId)) {
 					_deleteConfiguration(
@@ -113,7 +113,7 @@ public class ConfigurationDataCleanupPreupgradeProcess
 		}
 	}
 
-	private long _extractId(String dictionary, Pattern pattern) {
+	private long _getPrimaryKey(String dictionary, Pattern pattern) {
 		Matcher matcher = pattern.matcher(dictionary);
 
 		if (matcher.find()) {

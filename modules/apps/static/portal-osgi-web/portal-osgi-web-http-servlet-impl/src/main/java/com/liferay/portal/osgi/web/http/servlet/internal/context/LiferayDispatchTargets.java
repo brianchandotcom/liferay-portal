@@ -5,9 +5,14 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.context;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.ServletException;
@@ -61,7 +66,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 		_matchingFilterRegistrations = matchingFilterRegistrations;
 		_servletName = servletName;
 		_requestURI = requestURI;
-		_servletPath = (servletPath == null) ? "" : servletPath;
+		_servletPath = GetterUtil.getString(servletPath);
 		_pathInfo = pathInfo;
 		_queryString = queryString;
 
@@ -121,16 +126,19 @@ public class LiferayDispatchTargets extends DispatchTargets {
 
 		if (_dispatcherType == DispatcherType.INCLUDE) {
 			requestAttributeSetter.setAttribute(
-				"jakarta.servlet.include.context_path",
+				JavaConstants.JAKARTA_SERVLET_INCLUDE_CONTEXT_PATH,
 				_liferayContextController.getFullContextPath());
 			requestAttributeSetter.setAttribute(
-				"jakarta.servlet.include.path_info", getPathInfo());
+				JavaConstants.JAKARTA_SERVLET_INCLUDE_PATH_INFO, getPathInfo());
 			requestAttributeSetter.setAttribute(
-				"jakarta.servlet.include.query_string", getQueryString());
+				JavaConstants.JAKARTA_SERVLET_INCLUDE_QUERY_STRING,
+				getQueryString());
 			requestAttributeSetter.setAttribute(
-				"jakarta.servlet.include.request_uri", getRequestURI());
+				JavaConstants.JAKARTA_SERVLET_INCLUDE_REQUEST_URI,
+				getRequestURI());
 			requestAttributeSetter.setAttribute(
-				"jakarta.servlet.include.servlet_path", getServletPath());
+				JavaConstants.JAKARTA_SERVLET_INCLUDE_SERVLET_PATH,
+				getServletPath());
 		}
 		else if (_dispatcherType == DispatcherType.FORWARD) {
 			if (!originalHttpServletRequest.isAsyncStarted() &&
@@ -140,19 +148,19 @@ public class LiferayDispatchTargets extends DispatchTargets {
 			}
 
 			requestAttributeSetter.setAttribute(
-				"jakarta.servlet.forward.context_path",
+				JavaConstants.JAKARTA_SERVLET_FORWARD_CONTEXT_PATH,
 				originalHttpServletRequest.getContextPath());
 			requestAttributeSetter.setAttribute(
-				"jakarta.servlet.forward.path_info",
+				JavaConstants.JAKARTA_SERVLET_FORWARD_PATH_INFO,
 				originalHttpServletRequest.getPathInfo());
 			requestAttributeSetter.setAttribute(
-				"jakarta.servlet.forward.query_string",
+				JavaConstants.JAKARTA_SERVLET_FORWARD_QUERY_STRING,
 				originalHttpServletRequest.getQueryString());
 			requestAttributeSetter.setAttribute(
-				"jakarta.servlet.forward.request_uri",
+				JavaConstants.JAKARTA_SERVLET_FORWARD_REQUEST_URI,
 				originalHttpServletRequest.getRequestURI());
 			requestAttributeSetter.setAttribute(
-				"jakarta.servlet.forward.servlet_path",
+				JavaConstants.JAKARTA_SERVLET_FORWARD_SERVLET_PATH,
 				originalHttpServletRequest.getServletPath());
 		}
 
@@ -290,11 +298,17 @@ public class LiferayDispatchTargets extends DispatchTargets {
 		String value = _string;
 
 		if (value == null) {
+			String queryString = StringPool.BLANK;
+
+			if (_queryString != null) {
+				queryString = StringPool.QUESTION + _queryString;
+			}
+
 			value = StringBundler.concat(
-				_SIMPLE_NAME, '[',
+				_SIMPLE_NAME, CharPool.OPEN_BRACKET,
 				_liferayContextController.getFullContextPath(), _requestURI,
-				(_queryString != null) ? '?' + _queryString : "", ", ",
-				_endpointRegistration, ']');
+				queryString, CharPool.COMMA, CharPool.SPACE,
+				_endpointRegistration, CharPool.CLOSE_BRACKET);
 
 			_string = value;
 		}
@@ -310,16 +324,17 @@ public class LiferayDispatchTargets extends DispatchTargets {
 		try {
 			Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
-			String[] parameters = queryString.split("&");
+			String[] parameters = StringUtil.split(
+				queryString, CharPool.AMPERSAND);
 
 			for (String parameter : parameters) {
-				int index = parameter.indexOf(61);
+				int index = parameter.indexOf(CharPool.EQUAL);
 
 				String name = parameter;
 
 				if (index > 0) {
 					name = URLDecoder.decode(
-						parameter.substring(0, index), "UTF-8");
+						parameter.substring(0, index), StringPool.UTF8);
 				}
 
 				String[] values = parameterMap.get(name);
@@ -332,7 +347,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 
 				if ((index > 0) && (parameter.length() > (index + 1))) {
 					value = URLDecoder.decode(
-						parameter.substring(index + 1), "UTF-8");
+						parameter.substring(index + 1), StringPool.UTF8);
 				}
 
 				values = Params.append(values, value);

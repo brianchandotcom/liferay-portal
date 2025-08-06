@@ -137,6 +137,17 @@ public class SQLServerDBCTTest {
 			_ctCollectionService.publishCTCollection(
 				TestPropsValues.getUserId(), _ctCollection.getCtCollectionId());
 		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			 Connection connection = DataAccess.getConnection();
+
+			 PreparedStatement preparedStatement = connection.prepareStatement(
+				 "select * from CTSChild where ctCollectionId = " +
+				 -_ctCollection.getCtCollectionId());
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertFalse(resultSet.next());
+		}
 	}
 
 	@Test

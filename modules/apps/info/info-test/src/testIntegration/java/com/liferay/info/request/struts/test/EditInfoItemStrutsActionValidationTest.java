@@ -6,6 +6,7 @@
 package com.liferay.info.request.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -28,6 +29,8 @@ import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCap
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -49,8 +52,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -144,12 +149,32 @@ public class EditInfoItemStrutsActionValidationTest {
 	public void testEditInfoItemStrutsActionCaptchaException()
 		throws Exception {
 
+		String captchaEnforceDisabled = PropsUtil.get(
+			"captcha.enforce.disabled");
+
 		try (MockInfoServiceRegistrationHolder
 				mockInfoServiceRegistrationHolder =
 					new MockInfoServiceRegistrationHolder(
 						InfoFieldSet.builder(
 						).build(),
-						_portal, _editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability);
+			CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CaptchaConfiguration.class.getName(),
+						new HashMapDictionaryBuilder(
+						).<String, Object>put(
+							"maxChallenges", "1"
+						).build());
+			ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					CaptchaConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"maxChallenges", "1"
+					).build())) {
+
+			PropsUtil.set("captcha.enforce.disabled", "false");
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -199,6 +224,9 @@ public class EditInfoItemStrutsActionValidationTest {
 			Assert.assertFalse(
 				SessionMessages.contains(
 					mockHttpServletRequest, InfoFormException.class));
+		}
+		finally {
+			PropsUtil.set("captcha.enforce.disabled", captchaEnforceDisabled);
 		}
 	}
 

@@ -6,9 +6,24 @@
 package com.liferay.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,7 +48,9 @@ import java.sql.Blob;
 
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -92,10 +109,14 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		buildDisplay(
-			new DisplayBuilderImpl<>(
-				displayContext, getResourceBundle(displayContext.getLocale()),
-				themeDisplay));
+		DisplayBuilder<T> displayBuilder = new DisplayBuilderImpl<>(
+			displayContext, getResourceBundle(displayContext.getLocale()),
+			themeDisplay);
+
+		displayBuilder.displaySectionHeader("metadata");
+
+		buildDisplay(displayBuilder);
+		buildStructureDisplay(displayBuilder);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -131,6 +152,149 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			displayBuilder.display(
 				CamelCaseUtil.fromCamelCase(entry.getKey()),
 				function.apply(model));
+		}
+	}
+
+	protected void buildStructureDisplay(DisplayBuilder<T> displayBuilder)
+		throws PortalException {
+
+		T model = displayBuilder.getModel();
+
+		Map<String, Function<T, Object>> attributeGetterFunctions =
+			model.getAttributeGetterFunctions();
+
+		if (attributeGetterFunctions.containsKey("DDMStructureId")) {
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.getStructure(
+					(Long)attributeGetterFunctions.get(
+						"DDMStructureId"
+					).apply(
+						model
+					));
+
+			DDMForm ddmForm = ddmStructure.getDDMForm();
+
+			DDMFormValues ddmFormValues =
+				DDMFieldLocalServiceUtil.getDDMFormValues(
+					ddmForm,
+					(Long)attributeGetterFunctions.get(
+						"id"
+					).apply(
+						model
+					));
+
+			if (ddmFormValues == null) {
+				return;
+			}
+
+			ddmFormValues.setDDMFormFieldValues(
+				DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
+					ddmForm.getDDMFormFields(),
+					ddmFormValues.getDDMFormFieldValuesMap(true)));
+
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				ddmFormValues.getDDMFormFieldValues();
+
+			List<DDMFormFieldValue> imageDDMFormFieldValues = new ArrayList<>();
+			List<DDMFormFieldValue> nonimageDDMFormFieldValues =
+				new ArrayList<>();
+
+			ddmFormFieldValues.forEach(
+				ddmFormFieldValue -> {
+					if (StringUtil.equals(
+							ddmFormFieldValue.getDDMFormField(
+							).getType(),
+							DDMFormFieldTypeConstants.IMAGE)) {
+
+						imageDDMFormFieldValues.add(ddmFormFieldValue);
+					}
+					else {
+						nonimageDDMFormFieldValues.add(ddmFormFieldValue);
+					}
+				});
+
+			if (!nonimageDDMFormFieldValues.isEmpty()) {
+				displayBuilder.displaySectionHeader("fields");
+
+				nonimageDDMFormFieldValues.forEach(
+					ddmFormFieldValue -> displayBuilder.display(
+						ddmFormFieldValue.getDDMFormField(
+						).getName(),
+						ddmFormFieldValue.getValue(
+						).getString(
+							displayBuilder.getLocale()
+						)));
+			}
+
+			if (!imageDDMFormFieldValues.isEmpty()) {
+				imageDDMFormFieldValues.forEach(
+					ddmFormFieldValue -> {
+						displayBuilder.displaySectionHeader("image");
+
+						String imageData = ddmFormFieldValue.getValue(
+						).getString(
+							displayBuilder.getLocale()
+						);
+
+						JSONObject jsonObject;
+
+						try {
+							jsonObject = JSONFactoryUtil.createJSONObject(
+								imageData);
+						}
+						catch (JSONException jsonException) {
+							throw new RuntimeException(jsonException);
+						}
+
+						try {
+							DLFileEntry dlFileEntry =
+								DLFileEntryLocalServiceUtil.getDLFileEntry(
+									jsonObject.getLong("fileEntryId"));
+
+							displayBuilder.display(
+								"mime-type", dlFileEntry.getMimeType()
+							).display(
+								"version", dlFileEntry.getVersion()
+							).display(
+								"size", dlFileEntry.getSize()
+							).display(
+								"download",
+								getDownloadLink(
+									displayBuilder.getDisplayContext(),
+									dlFileEntry.getVersion(),
+									dlFileEntry.getSize(),
+									dlFileEntry.getFileName()),
+								false
+							);
+						}
+						catch (PortalException portalException) {
+							throw new RuntimeException(portalException);
+						}
+					});
+			}
+		}
+	}
+
+	protected String getDownloadLink(
+		DisplayContext<?> displayContext, String version, long size,
+		String fileName) {
+
+		LinkTag linkTag = new LinkTag();
+
+		linkTag.setDisplayType("primary");
+		linkTag.setHref(displayContext.getDownloadURL(version, size, fileName));
+		linkTag.setIcon("download");
+		linkTag.setLabel("download");
+		linkTag.setSmall(true);
+		linkTag.setType("button");
+
+		try {
+			return linkTag.doTagAsString(
+				displayContext.getHttpServletRequest(),
+				displayContext.getHttpServletResponse());
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 

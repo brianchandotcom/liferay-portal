@@ -3,127 +3,167 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { AssignableUser } from '../types/AssignableUser';
-import { WorkflowTaskResponse } from '../types/WorkflowTaskResponse';
+import {AssignableUser} from '../types/AssignableUser';
+import {WorkflowTask} from '../types/WorkflowTask';
 import ApiHelper from './ApiHelper';
 
-export async function getWorkflowTasksAssignedToMe({page, pageSize} : {page: number, pageSize: number}): Promise<{items: WorkflowTaskResponse[], totalCount: number}> {
-    let fetchUrl = '/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-me/?';
+export async function getWorkflowTasksAssignedToMe({
+	page,
+	pageSize,
+}: {
+	page: number;
+	pageSize: number;
+}): Promise<{items: WorkflowTask[]; totalCount: number}> {
+	let fetchUrl =
+		'/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-me?nestedFields=workflowLogs&';
 
-    const pageParam = String(page);
-    const pageSizeParam = String(pageSize);
+	const pageParam = String(page);
+	const pageSizeParam = String(pageSize);
 
-    fetchUrl = fetchUrl + new URLSearchParams({
-        page: pageParam,
-        pageSize: pageSizeParam,
-    }).toString();
+	fetchUrl =
+		fetchUrl +
+		new URLSearchParams({
+			page: pageParam,
+			pageSize: pageSizeParam,
+		}).toString();
 
-    const {data, error} = await ApiHelper.get<{items: WorkflowTaskResponse[], totalCount: number}>(
-        fetchUrl
-    );
-    
+	const {data, error} = await ApiHelper.get<{
+		items: WorkflowTask[];
+		totalCount: number;
+	}>(fetchUrl);
 
-    if (data) {
-        const incompleteItems = data.items.filter((item) => !item.completed && item.name === 'review');
+	if (data) {
+		return {items: data.items, totalCount: data.totalCount};
+	}
 
-        return {items: incompleteItems, totalCount: incompleteItems.length};
-    }
-
-    throw new Error(error);
+	throw new Error(error);
 }
 
-export async function getWorkflowTasksAssignedToMyRoles({page, pageSize} : {page: number, pageSize: number}): Promise<{items: WorkflowTaskResponse[], totalCount: number}> {
-    let fetchUrl = '/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-my-roles/?'
+export async function getWorkflowTasksAssignedToMyRoles({
+	page,
+	pageSize,
+}: {
+	page: number;
+	pageSize: number;
+}): Promise<{items: WorkflowTask[]; totalCount: number}> {
+	let fetchUrl =
+		'/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-my-roles?nestedFields=workflowLogs&';
 
-    const pageParam = String(page);
-    const pageSizeParam = String(pageSize);
+	const pageParam = String(page);
+	const pageSizeParam = String(pageSize);
 
-    fetchUrl = fetchUrl + new URLSearchParams({
-        page: pageParam,
-        pageSize: pageSizeParam
-    }).toString();
+	fetchUrl =
+		fetchUrl +
+		new URLSearchParams({
+			page: pageParam,
+			pageSize: pageSizeParam,
+		}).toString();
 
-    const {data, error} = await ApiHelper.get<{items: WorkflowTaskResponse[], totalCount: number}>(
-        fetchUrl
-    );
+	const {data, error} = await ApiHelper.get<{
+		items: WorkflowTask[];
+		totalCount: number;
+	}>(fetchUrl);
 
-    if (data) {
-        const incompleteItems = data.items.filter((item) => !item.completed && item.name === 'review');
+	if (data) {
+		return {items: data.items, totalCount: data.totalCount};
+	}
 
-        return {items: incompleteItems, totalCount: incompleteItems.length};
-    }
-
-    throw new Error(error);
+	throw new Error(error);
 }
 
-export async function getAssignableUsers (workflowTaskId: number): Promise<AssignableUser[]> {
+export async function getAssignableUsers(
+	workflowTaskId: number
+): Promise<AssignableUser[]> {
+	const {data, error} = await ApiHelper.get<{items: AssignableUser[]}>(
+		`/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskId}/assignable-users`
+	);
 
-    const workflowTaskIdParam = String(workflowTaskId);
+	if (data) {
+		return data.items;
+	}
 
-    const fetchUrl = `/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskIdParam}/assignable-users`;
-
-    const {data, error} = await ApiHelper.get<{items: AssignableUser[]}>(
-        fetchUrl
-    );
-
-    if (data) {
-        return data.items;
-    }
-
-    throw new Error(error);
+	throw new Error(error);
 }
 
-export async function assignToUser ({assigneeId, comment = "", workflowTaskId}: {assigneeId: number, comment: string, workflowTaskId: number}) {
-    const fetchUrl = `/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskId}/assign-to-user`;
-
-    return await ApiHelper.post<{items: AssignableUser[]}>(
-        fetchUrl,
-        {
-            assigneeId,
-            comment,
-            workflowTaskId
-        }
-    );
+export async function assignToMe({
+	comment,
+	workflowTaskId,
+}: {
+	comment: string;
+	workflowTaskId: number;
+}) {
+	return await ApiHelper.post<WorkflowTask>(
+		`/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskId}/assign-to-me`,
+		{
+			comment,
+			workflowTaskId,
+		}
+	);
 }
 
-export async function updateDueDate ({comment, dueDate, workflowTaskId}: { comment: string, dueDate: string, workflowTaskId: number}) {
-    const fetchUrl = `/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskId}/update-due-date`;
-
-    return await ApiHelper.post<{items: AssignableUser[]}>(
-        fetchUrl,
-        {
-            comment,
-            dueDate,
-            workflowTaskId
-        }
-    );
+export async function assignToUser({
+	assigneeId,
+	comment,
+	workflowTaskId,
+}: {
+	assigneeId: number;
+	comment: string;
+	workflowTaskId: number;
+}) {
+	return await ApiHelper.post<WorkflowTask>(
+		`/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskId}/assign-to-user`,
+		{
+			assigneeId,
+			comment,
+			workflowTaskId,
+		}
+	);
 }
 
-export async function transitionWorkflowState({transitionName, workflowTaskId}: {transitionName: string, workflowTaskId: number}) {
-    const fetchUrl = `/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskId}/change-transition`;
-
-    return await ApiHelper.post<{items: AssignableUser[]}>(
-        fetchUrl,
-        {
-            transitionName,
-            workflowTaskId
-        }
-    );
+export async function updateDueDate({
+	comment,
+	dueDate,
+	workflowTaskId,
+}: {
+	comment: string;
+	dueDate: string;
+	workflowTaskId: number;
+}) {
+	return await ApiHelper.post<WorkflowTask>(
+		`/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskId}/update-due-date`,
+		{
+			comment,
+			dueDate,
+			workflowTaskId,
+		}
+	);
 }
 
-export async function getLatestWorkflowLogByTaskId({workflowTaskId}: {workflowTaskId: number}) {
+export async function transitionWorkflowState({
+	comment,
+	transitionName,
+	workflowTaskId,
+}: {
+	comment: string;
+	transitionName: string;
+	workflowTaskId: number;
+}) {
+	return await ApiHelper.post<WorkflowTask>(
+		`/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskId}/change-transition`,
+		{
+			comment,
+			transitionName,
+			workflowTaskId,
+		}
+	);
+}
 
-    const workflowTaskIdParam = String(workflowTaskId);
-
-    const fetchUrl = `/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskIdParam}/workflow-logs`;
-
-    const {data, error} = await ApiHelper.get<{items: AssignableUser[]}>(
-        fetchUrl
-    );
-
-    if (data) {
-        return data.items;
-    }
-
-    throw new Error(error);
+export async function getLatestWorkflowLogByTaskId({
+	workflowTaskId,
+}: {
+	workflowTaskId: number;
+}) {
+	return await ApiHelper.get<WorkflowTask[]>(
+		`/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskId}/workflow-logs`
+	);
 }

@@ -6,49 +6,57 @@
 import ClayButton from '@clayui/button';
 import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {dateUtils} from 'frontend-js-web';
+import ClayTable from '@clayui/table';
+import {createPortletURL, dateUtils} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {transitionWorkflowState} from '../../common/services/WorkflowService';
+import '../../../css/home/Home.scss';
 
-import '../../../css/workflow_tasks/WorkflowTasks.scss';
-import {WorkflowTaskResponse} from '../../common/types/WorkflowTaskResponse';
-import AssignToModal from './AssignToModal';
-import UpdateDueDateModal from './UpdateDueDateModal';
+import ClayTableCell from '@clayui/table/lib/Cell';
+
+import ViewWorkflowTasksActions from './ViewWorkflowTasksActions';
 import useFetchWorkflowTasks from './hooks/useFetchWorkflowTasks';
+import {WorkflowTask} from './types/WorkflowTask';
 
-export default function ViewWorkflowTasks(workflowProps) {
+export default function ViewWorkflowTasks({
+	myWorkflowTasksURL,
+}: {
+	myWorkflowTasksURL: string;
+}) {
 	const filterItems = [
 		{
-			label: 'Assigned To Me',
+			label: Liferay.Language.get('assigned-to-me'),
 			value: 'assigned-to-me',
 		},
 		{
-			label: 'Assigned To My Roles',
+			label: Liferay.Language.get('assigned-to-my-roles'),
 			value: 'assigned-to-my-roles',
 		},
 	];
 
-	const initialPaginationValues = {
-		delta: 10,
-		page: 1,
-	};
-
 	const [selectedItem, setSelectedItem] = useState({
-		label: 'Assigned To Me',
+		label: Liferay.Language.get('assigned-to-me'),
 		value: 'assigned-to-me',
 	});
 
-	const [workflowTasks, setWorkflowTasks] = useState<WorkflowTaskResponse[]>(
-		[]
-	);
+	interface WorkflowTasksProps {
+		items: WorkflowTask[];
+		totalCount: number;
+	}
+
+	const [workflowTasks, setWorkflowTasks] = useState<WorkflowTasksProps>({
+		items: [],
+		totalCount: 0,
+	});
+
+	const initialPaginationValues = {
+		delta: 8,
+		page: 1,
+	};
+
 	const [delta, setDelta] = useState(initialPaginationValues.delta);
 	const [page, setPage] = useState(initialPaginationValues.page);
-	const [totalCount, setTotalCount] = useState(0);
-	const [selectedWorkflowTask, setSelectedWorkflowTask] =
-		useState<WorkflowTaskResponse | null>(null);
 
 	const handlePageChange = (newPage: number) => {
 		setPage(newPage);
@@ -59,34 +67,23 @@ export default function ViewWorkflowTasks(workflowProps) {
 		setPage(1);
 	};
 
-	const assignedToModalProps = useModal({
-		onClose: () => setSelectedWorkflowTask(null),
-	});
-
-	const updateDueDateModalProps = useModal({
-		onClose: () => setSelectedWorkflowTask(null),
-	});
-
 	const {fetchWorkflowTasks} = useFetchWorkflowTasks({
 		delta,
 		page,
 		selectedItem,
-		setTotalCount,
 		setWorkflowTasks,
-		workflowProps,
 	});
 
 	useEffect(() => {
 		fetchWorkflowTasks();
 
 		return () => {
-			setTotalCount(0);
-			setWorkflowTasks([]);
+			setWorkflowTasks({items: [], totalCount: 0});
 		};
 	}, [delta, fetchWorkflowTasks, page, selectedItem.value]);
 
 	return (
-		<div className="d-flex flex-column workflow-tasks-view">
+		<div className="d-flex flex-column home-fragment-boarder">
 			<div className="align-items-center d-flex">
 				<h3 className="mb-4 ml-3 mr-auto mt-3">
 					{Liferay.Language.get('my-workflow-tasks')}
@@ -94,7 +91,7 @@ export default function ViewWorkflowTasks(workflowProps) {
 
 				<ClayDropdown
 					className="filter-dropdown mb-4 mt-3"
-					closeOnClickOutside
+					closeOnClick
 					hasLeftSymbols
 					trigger={
 						<ClayButton displayType="secondary" size="sm">
@@ -128,230 +125,101 @@ export default function ViewWorkflowTasks(workflowProps) {
 				<ClayButton
 					borderless
 					className="mb-4 mt-3"
-					onClick={() =>
-						window.open(workflowProps.myWorkflowTasksURL, '_blank')
-					}
+					onClick={() => window.open(myWorkflowTasksURL, '_blank')}
 				>
 					<ClayIcon symbol="shortcut" />
 				</ClayButton>
 			</div>
 
-			{totalCount > 0 ? (
+			{workflowTasks.totalCount > 0 ? (
 				<>
-					{workflowTasks.map(
-						(workflowTask: WorkflowTaskResponse, index) => (
-							<li
-								className={`${index % 2 === 0 ? 'bg-light' : ''} border-0 list-group-item list-group-item-flex`}
-								key={workflowTask.id}
-							>
-								<div className="autofit-col">
-									<div className="rounded-circle sticker sticker-secondary">
-										<span className="inline-item">
-											<img
-												className="avatar img-fluid logo-img mw-100 rounded-circle"
-												src="/image/user_portrait?img_id=0"
-											/>
-										</span>
-									</div>
-								</div>
-
-								<div className="autofit-col autofit-col-expand mt-1">
-									<p className="list-group-text text-3 text-dark">
-										{`${workflowTask?.auditUser} sent you ${workflowTask?.objectReviewed?.assetTitle} 
-									for ${workflowTask?.name} in the workflow.`}
-									</p>
-
-									<p className="text-3 text-secondary">
-										{dateUtils.fromNow(
-											new Date(workflowTask?.dateCreated)
-										)}
-									</p>
-								</div>
-
-								<div className="autofit-col">
-									<ClayDropdown
-										trigger={
-											<ClayButton
-												className="m-0"
-												displayType="unstyled"
-												size="sm"
-											>
-												<span>
-													<ClayIcon symbol="ellipsis-v" />
-												</span>
-											</ClayButton>
-										}
-									>
-										<ClayDropdown.Item
-											onClick={async () => {
-												try {
-													const res =
-														await transitionWorkflowState(
-															{
-																transitionName:
-																	'approve',
-																workflowTaskId:
-																	Number(
-																		workflowTask.id
-																	),
+					<ClayTable
+						borderedColumns={false}
+						borderless
+						tableVerticalAlignment="top"
+					>
+						<ClayTable.Body>
+							{workflowTasks.items.map(
+								(workflowTask: WorkflowTask, index) => {
+									return (
+										<ClayTable.Row key={index}>
+											<ClayTableCell>
+												<div className="c-mr-2 sticker sticker-circle sticker-lg sticker-secondary">
+													<span className="inline-item">
+														<img
+															className="avatar img-fluid logo-img mw-100 rounded-circle"
+															src={
+																workflowTask.auditUserImageURL
+																	? workflowTask.auditUserImageURL
+																	: '/image/user_portrait?img_id=0'
 															}
-														);
+														/>
+													</span>
+												</div>
+											</ClayTableCell>
 
-													if (res.error) {
-														throw res.error;
-													}
-													else {
-														Liferay.Util.openToast({
-															message:
-																'Workflow task approved successfully.',
-															type: 'success',
-														});
-														await fetchWorkflowTasks();
-													}
-												}
-												catch (error) {
-													Liferay.Util.openToast({
-														message:
-															'Error when approving workflow task.',
-														type: 'danger',
-													});
-													console.error(error);
-												}
-											}}
-										>
-											{Liferay.Language.get('approve')}
-										</ClayDropdown.Item>
+											<ClayTable.Cell expanded>
+												<p className="list-group-text text-3 text-dark">
+													{`${workflowTask.auditUser} sent you `}
 
-										<ClayDropdown.Item
-											onClick={async () => {
-												try {
-													const res =
-														await transitionWorkflowState(
+													<a
+														className="home-link"
+														href={createPortletURL(
+															myWorkflowTasksURL,
 															{
-																transitionName:
-																	'reject',
+																mvcPath:
+																	'/edit_workflow_task.jsp',
 																workflowTaskId:
-																	Number(
-																		workflowTask.id
-																	),
+																	workflowTask.workflowTaskId,
 															}
-														);
+														).toString()}
+													>
+														{
+															workflowTask.assetTitle
+														}
+													</a>
 
-													if (res.error) {
-														throw res.error;
+													{` for ${workflowTask.name} in the workflow.`}
+												</p>
+
+												<p className="text-3 text-secondary">
+													{dateUtils.fromNow(
+														new Date(
+															workflowTask?.assignedDate
+														)
+													)}
+												</p>
+											</ClayTable.Cell>
+
+											<ClayTable.Cell>
+												<ViewWorkflowTasksActions
+													filterType={
+														selectedItem.value
 													}
-													else {
-														Liferay.Util.openToast({
-															message:
-																'Workflow task rejected successfully.',
-															type: 'success',
-														});
-														await fetchWorkflowTasks();
+													loadData={
+														fetchWorkflowTasks
 													}
-												}
-												catch (error) {
-													Liferay.Util.openToast({
-														message:
-															'Error when rejecting workflow task.',
-														type: 'danger',
-													});
-													console.error(error);
-												}
-											}}
-										>
-											{Liferay.Language.get('reject')}
-										</ClayDropdown.Item>
+													workflowTask={workflowTask}
+												/>
+											</ClayTable.Cell>
+										</ClayTable.Row>
+									);
+								}
+							)}
+						</ClayTable.Body>
+					</ClayTable>
 
-										<ClayDropdown.Item
-											onClick={() => {
-												try {
-													setSelectedWorkflowTask(
-														workflowTask
-													);
-													assignedToModalProps.onOpenChange(
-														true
-													);
-												}
-												catch (error) {
-													console.error(error);
-												}
-											}}
-										>
-											{Liferay.Language.get(
-												'assign-to-...'
-											)}
-										</ClayDropdown.Item>
-
-										<ClayDropdown.Item
-											onClick={() => {
-												try {
-													setSelectedWorkflowTask(
-														workflowTask
-													);
-													updateDueDateModalProps.onOpenChange(
-														true
-													);
-												}
-												catch (error) {
-													console.error(error);
-												}
-											}}
-										>
-											{Liferay.Language.get(
-												'update-due-date'
-											)}
-										</ClayDropdown.Item>
-									</ClayDropdown>
-								</div>
-							</li>
-						)
-					)}
-
-					{selectedWorkflowTask && (
-						<>
-							<AssignToModal
-								fetchWorkflowTasks={fetchWorkflowTasks}
-								modalProps={{
-									observer: assignedToModalProps.observer,
-									onOpenChange:
-										assignedToModalProps.onOpenChange,
-									open: assignedToModalProps.open,
-								}}
-								workflowTaskId={Number(selectedWorkflowTask.id)}
-							/>
-							<UpdateDueDateModal
-								dateDue={selectedWorkflowTask.dateDue}
-								fetchWorkflowTasks={fetchWorkflowTasks}
-								modalProps={{
-									observer: updateDueDateModalProps.observer,
-									onOpenChange:
-										updateDueDateModalProps.onOpenChange,
-									open: updateDueDateModalProps.open,
-								}}
-								workflowTaskId={Number(selectedWorkflowTask.id)}
-							/>
-						</>
-					)}
 					<ClayPaginationBarWithBasicItems
 						active={page}
 						activeDelta={delta}
-						className="mt-3"
 						ellipsisBuffer={3}
-						ellipsisProps={{'aria-label': 'More', 'title': 'More'}}
-						labels={{
-							paginationResults: Liferay.Language.get(
-								'showing-x-to-x-of-x-results'
-							),
-							perPageItems: Liferay.Language.get('x-items'),
-							selectPerPageItems: Liferay.Language.get('x-items'),
-						}}
 						onActiveChange={(newPage: number) =>
 							handlePageChange(newPage)
 						}
 						onDeltaChange={(newDelta: number) =>
 							handleDeltaChange(newDelta)
 						}
-						totalItems={totalCount}
+						totalItems={workflowTasks.totalCount}
 					/>
 				</>
 			) : (

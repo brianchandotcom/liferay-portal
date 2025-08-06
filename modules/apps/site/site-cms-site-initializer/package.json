@@ -27,6 +27,7 @@
 		"@clayui/sticker": "3.139.0",
 		"@clayui/table": "3.112.0",
 		"@clayui/tabs": "3.142.2",
+		"@clayui/time-picker": "3.142.0",
 		"@clayui/toolbar": "3.142.0",
 		"@clayui/tooltip": "3.142.0",
 		"@liferay/analytics-reports-js-components-web": "*",

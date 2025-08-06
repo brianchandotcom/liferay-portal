@@ -72,12 +72,6 @@ public class ViewFilesSectionDisplayContext
 				LanguageUtil.get(httpServletRequest, "share"), "get", null,
 				"link"));
 		fdsActionDropdownItems.add(
-			4,
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "view", "view-file",
-				LanguageUtil.get(httpServletRequest, "view"), null, null,
-				null));
-		fdsActionDropdownItems.add(
 			5,
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "info-circle-open", "show-details",

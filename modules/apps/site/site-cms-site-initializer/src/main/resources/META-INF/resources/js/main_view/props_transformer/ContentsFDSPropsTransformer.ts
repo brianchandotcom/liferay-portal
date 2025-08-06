@@ -93,7 +93,7 @@ export default function ContentFDSPropsTransformer({
 				};
 			}
 
-			if (action?.data?.id === 'viewContent') {
+			if (action?.data?.id === 'view-content') {
 				return {
 					...action,
 					isVisible: (item: any) =>
@@ -101,6 +101,12 @@ export default function ContentFDSPropsTransformer({
 							item?.entryClassName !==
 								OBJECT_ENTRY_FOLDER_CLASSNAME
 						),
+				};
+			}
+			else if (action?.data?.id === 'view-file') {
+				return {
+					...action,
+					isVisible: () => false,
 				};
 			}
 

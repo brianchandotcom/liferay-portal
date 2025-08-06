@@ -10,12 +10,9 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -81,18 +78,6 @@ public class ViewContentsSectionDisplayContext
 				null, "share", "share",
 				LanguageUtil.get(httpServletRequest, "share"), "get", null,
 				"link"));
-		fdsActionDropdownItems.add(
-			4,
-			new FDSActionDropdownItem(
-				StringBundler.concat(
-					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-					GroupConstants.CMS_FRIENDLY_URL,
-					"/edit_content_item?objectEntryId={embedded.id}",
-					"&p_l_mode=read&p_p_state=", LiferayWindowState.POP_UP,
-					"&redirect=", themeDisplay.getURLCurrent()),
-				"view", "viewContent",
-				LanguageUtil.get(httpServletRequest, "view"), "get", null,
-				null));
 
 		return fdsActionDropdownItems;
 	}

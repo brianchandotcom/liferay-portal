@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -271,6 +272,19 @@ public abstract class BaseSectionDisplayContext {
 				"{actions.expire.href}", "time", "expire",
 				LanguageUtil.get(httpServletRequest, "expire"), "post",
 				"expire", "headless"),
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					GroupConstants.CMS_FRIENDLY_URL,
+					"/edit_content_item?objectEntryId={embedded.id}",
+					"&p_l_mode=read&p_p_state=", LiferayWindowState.POP_UP,
+					"&redirect=", themeDisplay.getURLCurrent()),
+				"view", "view-content",
+				LanguageUtil.get(httpServletRequest, "view"), "get", null,
+				"modal"),
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "view", "view-file",
+				LanguageUtil.get(httpServletRequest, "view"), null, null, null),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					themeDisplay.getPathFriendlyURLPublic(),

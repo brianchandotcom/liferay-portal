@@ -4,9 +4,11 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-components-web';
 
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import {EVENTS} from '../info_panel/util/constants';
+import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
@@ -71,6 +73,24 @@ export default function AllFDSPropsTransformer({
 						Boolean(item?.embedded?.file?.link?.href),
 				};
 			}
+			else if (action?.data?.id === 'view-content') {
+				return {
+					...action,
+					data: {
+						...action.data,
+						disableHeader: false,
+						size: 'full-screen',
+						title: 'View',
+					},
+					isVisible: (item: any) => Boolean(!item?.embedded?.file),
+				};
+			}
+			else if (action?.data?.id === 'view-file') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(item?.embedded?.file),
+				};
+			}
 
 			return action;
 		}),
@@ -79,12 +99,23 @@ export default function AllFDSPropsTransformer({
 			itemData,
 		}: {
 			action: any;
-			itemData: [];
+			itemData: any;
 		}) => {
 			if (action?.data?.id === 'show-details') {
 				Liferay.fire(EVENTS.ASSET_DATA, {items: [{...itemData}]});
 			}
+			else if (action?.data?.id === 'view-file') {
+				openModal({
+					containerProps: {
+						className: '',
+					},
+					contentComponent: () =>
+						FilePreviewerModalContent(itemData.embedded.file),
+					size: 'full-screen',
+				});
+			}
 		},
+
 		onSelectedItemsChange: (selectedItems: any[]) => {
 			Liferay.fire(EVENTS.ASSET_DATA, {items: selectedItems});
 		},

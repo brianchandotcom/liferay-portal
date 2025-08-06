@@ -101,6 +101,12 @@ export default function FilesFDSPropsTransformer({
 						),
 				};
 			}
+			else if (action?.data?.id === 'view-content') {
+				return {
+					...action,
+					isVisible: () => false,
+				};
+			}
 			else if (action?.data?.id === 'view-file') {
 				return {
 					...action,

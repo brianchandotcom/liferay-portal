@@ -248,7 +248,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 				for (Serializable primaryKey :
 						_modificationCTEntries.keySet()) {
 
-					preparedStatement.setLong(1, tempCTCollectionId);
+					preparedStatement.setLong(1, (Long)primaryKey);
 
 					preparedStatement.addBatch();
 				}

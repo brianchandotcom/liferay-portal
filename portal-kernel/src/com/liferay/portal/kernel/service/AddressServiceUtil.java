@@ -47,6 +47,14 @@ public class AddressServiceUtil {
 		getService().deleteAddress(addressId);
 	}
 
+	public static Address fetchAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchAddressByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static Address getAddress(long addressId) throws PortalException {
 		return getService().getAddress(addressId);
 	}

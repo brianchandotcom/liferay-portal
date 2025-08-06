@@ -118,18 +118,17 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 
 		_setUpThemeDisplay(layout);
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
-			true, RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), layout.getUuid(),
-			LocaleUtil.getSiteDefault(), null, false, false,
-			ServiceContextThreadLocal.getServiceContext());
-
 		_assertGetFriendlyURL(
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR, journalArticle);
+			JournalArticleConstants.CANONICAL_URL_SEPARATOR,
+			JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
+				true, RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), layout.getUuid(),
+				LocaleUtil.getSiteDefault(), null, false, false,
+				ServiceContextThreadLocal.getServiceContext()));
 	}
 
 	private void _assertGetFriendlyURL(String urlSeparator) throws Exception {

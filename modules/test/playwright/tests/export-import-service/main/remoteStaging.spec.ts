@@ -167,8 +167,8 @@ test(
 			trigger: page.getByLabel('Options'),
 		});
 
-		page.once('dialog', (dialog) => {
-			dialog.accept();
+		page.once('dialog', async (dialog) => {
+			await dialog.accept();
 		});
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -213,8 +213,8 @@ test(
 
 		await publishStagingIframe.getByLabel('Replicate Individual').check();
 
-		page.once('dialog', (dialog) => {
-			dialog.accept();
+		page.once('dialog', async (dialog) => {
+			await dialog.accept();
 		});
 		await publishStagingIframe
 			.getByRole('button', {name: 'Publish to Live'})

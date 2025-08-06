@@ -13,6 +13,7 @@ import com.liferay.customer.exception.TicketAttachmentNotFoundException;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.customer.service.GoogleCloudStorageService;
 import com.liferay.customer.service.TicketAttachmentService;
+import com.liferay.petra.function.UnsafeFunction;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,34 +42,30 @@ public class TicketAttachmentsDownloadRestController
 		@PathVariable("externalReferenceCode") String externalReferenceCode) {
 
 		return _getResponseEntity(
-			"Bearer " + jwt.getTokenValue(), externalReferenceCode);
+			jwt,
+			authorization -> _ticketAttachmentService.getTicketAttachment(
+				authorization, externalReferenceCode));
 	}
 
 	@GetMapping("/by-id/{id}/download")
 	public ResponseEntity<String> getByIdDownload(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") long id) {
 
-		return _getResponseEntity("Bearer " + jwt.getTokenValue(), id);
+		return _getResponseEntity(
+			jwt,
+			authorization -> _ticketAttachmentService.getTicketAttachment(
+				authorization, id));
 	}
 
 	private ResponseEntity<String> _getResponseEntity(
-		String bearerToken, Object identifier) {
+		Jwt jwt,
+		UnsafeFunction<String, TicketAttachment, Exception> unsafeFunction) {
 
 		try {
-			TicketAttachment ticketAttachment = null;
+			String authorization = "Bearer " + jwt.getTokenValue();
 
-			if (identifier instanceof Long) {
-				ticketAttachment = _ticketAttachmentService.getTicketAttachment(
-					bearerToken, (Long)identifier);
-			}
-			else if (identifier instanceof String) {
-				ticketAttachment = _ticketAttachmentService.getTicketAttachment(
-					bearerToken, (String)identifier);
-			}
-			else {
-				return new ResponseEntity<>(
-					"MISSING_IDENTIFIER", HttpStatus.BAD_REQUEST);
-			}
+			TicketAttachment ticketAttachment = unsafeFunction.apply(
+				authorization);
 
 			String downloadURL = _googleCloudStorageService.getDownloadURL(
 				ticketAttachment.getGCSBucketName(),

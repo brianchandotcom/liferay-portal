@@ -48,8 +48,6 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 
 	@Before
 	public void setUp() throws Exception {
-		connection = DataAccess.getConnection();
-
 		_originalCacheEnabled = ReflectionTestUtil.getAndSetFieldValue(
 			PortalInstancePool.class, "_cacheEnabled", false);
 	}
@@ -62,9 +60,14 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 
 	@Test
 	public void testUpgrade() throws Exception {
+		connection = DataAccess.getConnection();
+
 		_test(
 			"companyId", "Company", TestPropsValues.getCompanyId(),
 			_getNonexistentCompanyId());
+
+		connection = DataAccess.getConnection();
+
 		_test(
 			"groupId", "Group_", TestPropsValues.getGroupId(),
 			_getNonexistentGroupId());

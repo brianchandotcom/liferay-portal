@@ -325,7 +325,6 @@ export default function EditObjectDetails({
 									hasUpdateObjectDefinitionPermission
 								}
 								isApproved={isApproved}
-								isRootDescendantNode={isRootDescendantNode}
 								setValues={setValues}
 								sites={sites}
 								values={values}
@@ -346,7 +345,6 @@ export default function EditObjectDetails({
 								<AccountRestrictionContainer
 									errors={errors}
 									isApproved={isApproved}
-									isRootDescendantNode={isRootDescendantNode}
 									objectFields={objectFields}
 									setValues={setValues}
 									values={values}
@@ -369,7 +367,6 @@ export default function EditObjectDetails({
 								isEnableObjectEntrySchedule={
 									isEnableObjectEntrySchedule
 								}
-								isRootDescendantNode={isRootDescendantNode}
 								setValues={setValues}
 								values={values}
 							/>

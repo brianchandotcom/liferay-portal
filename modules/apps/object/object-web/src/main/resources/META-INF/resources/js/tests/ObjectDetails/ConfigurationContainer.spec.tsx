@@ -44,7 +44,6 @@ describe('The ConfigurationContainer component', () => {
 				<ConfigurationContainer
 					hasUpdateObjectDefinitionPermission
 					isEnableObjectEntrySchedule={isEnableObjectEntrySchedule}
-					isRootDescendantNode={false}
 					setValues={result.current.setValues}
 					values={result.current.values}
 				/>

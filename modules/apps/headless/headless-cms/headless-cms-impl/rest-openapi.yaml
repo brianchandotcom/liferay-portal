@@ -1,0 +1,143 @@
+components:
+    schemas:
+        DeleteAction:
+            allOf:
+                -   $ref: "#/components/schemas/DocumentBulkAction"
+        DocumentBulkAction:
+            discriminator:
+                mapping:
+                    CategoryAction: "#/components/schemas/CategoryAction"
+                    DeleteAction: "#/components/schemas/DeleteAction"
+                    MoveAction: "#/components/schemas/MoveAction"
+                    PermissionAction: "#/components/schemas/PermissionAction"
+                    StatusAction: "#/components/schemas/StatusAction"
+                    TagAction: "#/components/schemas/TagAction"
+                propertyName: type
+            properties:
+                action:
+                    enum:
+                        -   DeleteAction
+                        -   KeywordAction
+                        -   MoveAction
+                        -   PermissionAction
+                        -   StatusAction
+                        -   TaxonomyCategoryAction
+                    type: string
+                selectAll:
+                    type: boolean
+                selections:
+                    items:
+                        $ref: "#/components/schemas/Selection"
+                    type: array
+        KeywordBulkAction:
+            allOf:
+                -   $ref: "#/components/schemas/DocumentBulkAction"
+                -   properties:
+                        keywords:
+                            items:
+                                type: string
+                            type: array
+        MoveAction:
+            allOf:
+                -   $ref: "#/components/schemas/DocumentBulkAction"
+                -   properties:
+                        objectEntryFolderId:
+                            description:
+                                The object entry folder's ID.
+                            format: int64
+                            type: integer
+        PermissionAction:
+            allOf:
+                -   $ref: "#/components/schemas/DocumentBulkAction"
+                -   properties:
+                        permissions:
+                            items:
+                                type: permission
+                            type: array
+        Selection:
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                modelClassName:
+                    type: string
+        StatusAction:
+            allOf:
+                -   $ref: "#/components/schemas/DocumentBulkAction"
+                -   properties:
+                        status:
+                            format: int32
+                            type: integer
+        TaskReport:
+            properties:
+                action:
+                    type: string
+                author:
+                    type: string
+                dateCompletion:
+                    format: date-time
+                    type: string
+                dateCreated:
+                    format: date-time
+                    type: string
+                externalReferenceCode:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                numberOfItems:
+                    type: integer
+                result:
+                    type: string
+                type:
+                    type: string
+        TaxonomyCategoryBulkAction:
+            allOf:
+                -   $ref: "#/components/schemas/DocumentBulkAction"
+                -   properties:
+                        taxonomyCategoryIds:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+info:
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: ""
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/bulk-action":
+        post:
+            description:
+                Execute a bulk action
+            parameters:
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentBulkAction"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentBulkAction"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaskReport"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TaskReport"
+            tags: ["BulkAction"]

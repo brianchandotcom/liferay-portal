@@ -143,7 +143,13 @@ test(
 test(
 	'Can publish vocabulary deletion from the Global Site using remote staging',
 	{tag: ['@LPS-89981', '@LPS-88298']},
-	async ({apiHelpers, page, remoteApiHelpers, remotePage}) => {
+	async ({
+		apiHelpers,
+		page,
+		portletStagingPage,
+		remoteApiHelpers,
+		remotePage,
+	}) => {
 		const vocabularyName = getRandomString();
 		const globalSiteId = await getGlobalSiteId(apiHelpers);
 		const remoteGlobalSiteId = await getGlobalSiteId(remoteApiHelpers);
@@ -166,24 +172,8 @@ test(
 		});
 
 		await page.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
-		await clickAndExpectToBeVisible({
-			target: page.getByRole('menuitem', {name: 'Staging'}),
-			trigger: page.getByLabel('Options'),
-		});
 
-		page.once('dialog', async (dialog) => {
-			await dialog.accept();
-		});
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: publishStagingIframe.getByRole('button', {
-				name: 'Publish to Live',
-			}),
-			trigger: page.getByRole('menuitem', {name: 'Staging'}),
-		});
-		await publishSuccessStatus.waitFor();
-
-		await page.getByLabel('close', {exact: true}).click();
+		await portletStagingPage.publishToLive();
 
 		await remotePage.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
 		await expect(

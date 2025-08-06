@@ -26,7 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -94,8 +96,8 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 	}
 
 	private void _test(
-			String primaryKeyColumnName, String tableName, long existentId,
-			long nonexistentId)
+			String primaryKeyColumnName, String tableName,
+			long existentPrimaryKey, long nonexistentPrimaryKey)
 		throws Exception {
 
 		String existentConfigurationId = null;
@@ -110,7 +112,7 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 					ConfigurationDataCleanupPreupgradeProcessTest.class.
 						getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						primaryKeyColumnName, existentId
+						primaryKeyColumnName, existentPrimaryKey
 					).build());
 
 			nonexistentConfigurationId =
@@ -118,7 +120,7 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 					ConfigurationDataCleanupPreupgradeProcessTest.class.
 						getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						primaryKeyColumnName, nonexistentId
+						primaryKeyColumnName, nonexistentPrimaryKey
 					).build());
 
 			upgrade();
@@ -135,17 +137,17 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 				logMessages.contains(
 					StringBundler.concat(
 						"Deleted configuration ", existentConfigurationId,
-						". Reason: ", primaryKeyColumnName, " ", existentId,
-						" was not found in ", tableName, ".",
-						primaryKeyColumnName)));
+						". Reason: ", primaryKeyColumnName, " ",
+						existentPrimaryKey, " was not found in ", tableName,
+						".", primaryKeyColumnName)));
 
 			Assert.assertTrue(
 				logMessages.contains(
 					StringBundler.concat(
 						"Deleted configuration ", nonexistentConfigurationId,
-						". Reason: ", primaryKeyColumnName, " ", nonexistentId,
-						" was not found in ", tableName, ".",
-						primaryKeyColumnName)));
+						". Reason: ", primaryKeyColumnName, " ",
+						nonexistentPrimaryKey, " was not found in ", tableName,
+						".", primaryKeyColumnName)));
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration(existentConfigurationId);

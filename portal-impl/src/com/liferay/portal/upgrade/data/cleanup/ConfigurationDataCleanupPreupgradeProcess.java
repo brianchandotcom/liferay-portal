@@ -61,7 +61,7 @@ public class ConfigurationDataCleanupPreupgradeProcess
 				if (companyId != -1) {
 					if (!ArrayUtil.contains(companyIds, companyId)) {
 						_deleteConfiguration(
-							configurationId, companyId, "companyId", "Company",
+							configurationId, "companyId", "Company", companyId,
 							preparedStatement2);
 					}
 
@@ -72,7 +72,7 @@ public class ConfigurationDataCleanupPreupgradeProcess
 
 				if ((groupId != -1) && !ArrayUtil.contains(groupIds, groupId)) {
 					_deleteConfiguration(
-						configurationId, groupId, "groupId", "Group_",
+						configurationId, "groupId", "Group_", groupId,
 						preparedStatement2);
 				}
 			}
@@ -97,8 +97,9 @@ public class ConfigurationDataCleanupPreupgradeProcess
 	}
 
 	private void _deleteConfiguration(
-			String configurationId, long entityId, String entityIdName,
-			String entityName, PreparedStatement preparedStatement)
+			String configurationId, String primaryKeyColumnName,
+			String tableName, long primaryKey,
+			PreparedStatement preparedStatement)
 		throws Exception {
 
 		preparedStatement.setString(1, configurationId);
@@ -108,8 +109,8 @@ public class ConfigurationDataCleanupPreupgradeProcess
 			_log.info(
 				StringBundler.concat(
 					"Deleted configuration ", configurationId, ". Reason: ",
-					entityIdName, " ", entityId, " was not found in ",
-					entityName, ".", entityIdName));
+					primaryKeyColumnName, " ", primaryKey, " was not found in ",
+					tableName, ".", primaryKeyColumnName));
 		}
 	}
 

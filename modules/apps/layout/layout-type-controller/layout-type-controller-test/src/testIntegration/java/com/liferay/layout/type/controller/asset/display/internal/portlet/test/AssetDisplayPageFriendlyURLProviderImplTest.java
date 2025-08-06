@@ -21,7 +21,6 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
@@ -127,9 +126,7 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 			JournalArticleConstants.CANONICAL_URL_SEPARATOR, journalArticle);
 	}
 
-	private void _assertGetFriendlyURL(String urlSeparator)
-		throws PortalException {
-
+	private void _assertGetFriendlyURL(String urlSeparator) throws Exception {
 		Assert.assertEquals(
 			StringBundler.concat(
 				_portal.getGroupFriendlyURL(
@@ -145,7 +142,7 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 
 	private void _assertGetFriendlyURL(
 			String urlSeparator, JournalArticle journalArticle)
-		throws PortalException {
+		throws Exception {
 
 		Assert.assertEquals(
 			StringBundler.concat(

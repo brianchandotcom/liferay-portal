@@ -57,8 +57,10 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
+import com.liferay.layout.manager.ContentManager;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -141,9 +143,10 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
+ * @author Georgel Pop
  */
 @Component(service = ContentManager.class)
-public class ContentManager {
+public class ContentManagerImpl implements ContentManager {
 
 	public Set<LayoutDisplayPageObjectProvider<?>>
 		getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
@@ -1854,7 +1857,8 @@ public class ContentManager {
 		return false;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ContentManager.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentManagerImpl.class);
 
 	@Reference
 	private AssetHelper _assetHelper;
@@ -1918,6 +1922,10 @@ public class ContentManager {
 
 	@Reference
 	private LayoutLockManager _layoutLockManager;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private ListObjectReferenceFactoryRegistry

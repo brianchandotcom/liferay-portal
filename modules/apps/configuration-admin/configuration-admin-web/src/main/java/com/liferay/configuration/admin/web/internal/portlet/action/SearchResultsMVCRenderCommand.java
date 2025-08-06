@@ -114,9 +114,14 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 		List<ConfigurationEntry> configurationEntries = new ArrayList<>(
 			documents.length);
 
+		Map<String, ConfigurationModel> configurationModels =
+			_configurationModelRetriever.getConfigurationModels(
+				configurationScopeDisplayContext.getScope(),
+				configurationScopeDisplayContext.getScopePK());
+
 		for (Document document : documents) {
 			ConfigurationModel configurationModel = _getConfigurationModel(
-				configurationScopeDisplayContext, document);
+				configurationModels, document);
 
 			if ((configurationModel != null) &&
 				configurationModel.isGenerateUI()) {
@@ -131,13 +136,8 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private ConfigurationModel _getConfigurationModel(
-		ConfigurationScopeDisplayContext configurationScopeDisplayContext,
+		Map<String, ConfigurationModel> configurationModels,
 		Document document) {
-
-		Map<String, ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels(
-				configurationScopeDisplayContext.getScope(),
-				configurationScopeDisplayContext.getScopePK());
 
 		String configurationModelId = document.get(
 			FieldNames.CONFIGURATION_MODEL_ID);

@@ -323,15 +323,17 @@ public class AccountsSyncBusinessEventsRestController
 				zendeskTicketQuery);
 
 			for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
+				Set<String> tags = zendeskTicket.getTags();
+
 				Map<Long, String> customFields =
 					zendeskTicket.getCustomFields();
 
 				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
 
-				Set<String> tags = zendeskTicket.getTags();
-
 				if (associatedTicketsHeatTags.containsKey(
 						zendeskTicket.getZendeskTicketId())) {
+
+					tags.add("impacting_business_event");
 
 					String highestHeatTag = associatedTicketsHeatTags.get(
 						zendeskTicket.getZendeskTicketId());

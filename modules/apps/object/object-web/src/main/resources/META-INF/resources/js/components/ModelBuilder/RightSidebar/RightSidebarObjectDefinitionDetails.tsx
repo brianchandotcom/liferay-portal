@@ -82,11 +82,6 @@ export function RightSidebarObjectDefinitionDetails({
 			onSubmit: () => {},
 		});
 
-	const isRootDescendantNode =
-		!!values.rootObjectDefinitionExternalReferenceCode &&
-		values.externalReferenceCode !==
-			values.rootObjectDefinitionExternalReferenceCode;
-
 	useEffect(() => {
 		const makeFetch = async () => {
 			if (selectedObjectDefinitionNode) {
@@ -270,7 +265,6 @@ export function RightSidebarObjectDefinitionDetails({
 						selectedObjectDefinitionNode?.data
 							?.linkedObjectDefinition ?? false
 					}
-					isRootDescendantNode={isRootDescendantNode}
 					onSubmit={onSubmit}
 					setValues={setValues}
 					sites={sites}
@@ -286,7 +280,6 @@ export function RightSidebarObjectDefinitionDetails({
 							selectedObjectDefinitionNode?.data
 								?.linkedObjectDefinition ?? false
 						}
-						isRootDescendantNode={isRootDescendantNode}
 						objectFields={
 							(values?.objectFields as ObjectField[]) ?? []
 						}
@@ -308,7 +301,6 @@ export function RightSidebarObjectDefinitionDetails({
 						selectedObjectDefinitionNode?.data
 							?.linkedObjectDefinition ?? false
 					}
-					isRootDescendantNode={isRootDescendantNode}
 					onSubmit={onSubmit}
 					setValues={setValues}
 					values={values as ObjectDefinition}

@@ -12,7 +12,6 @@ interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
 	isEnableObjectEntrySchedule: boolean;
 	isLinkedObjectDefinition?: boolean;
-	isRootDescendantNode: boolean;
 	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
@@ -22,7 +21,6 @@ export function ConfigurationContainer({
 	hasUpdateObjectDefinitionPermission,
 	isEnableObjectEntrySchedule,
 	isLinkedObjectDefinition,
-	isRootDescendantNode,
 	onSubmit,
 	setValues,
 	values,
@@ -38,7 +36,7 @@ export function ConfigurationContainer({
 		<div className="lfr-objects__object-definition-details-configuration">
 			<ClayForm.Group>
 				<Toggle
-					disabled={disabled || isRootDescendantNode}
+					disabled={disabled}
 					label={sub(
 						Liferay.Language.get('show-widget-in-x'),
 						Liferay.Language.get('page-builder')

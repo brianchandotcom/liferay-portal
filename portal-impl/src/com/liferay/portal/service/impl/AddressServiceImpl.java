@@ -73,6 +73,24 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 	}
 
 	@Override
+	public Address fetchAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		Address address =
+			addressLocalService.fetchAddressByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		if (address != null) {
+			CommonPermissionUtil.check(
+				getPermissionChecker(), address.getClassNameId(),
+				address.getClassPK(), ActionKeys.VIEW);
+		}
+
+		return address;
+	}
+
+	@Override
 	public Address getAddress(long addressId) throws PortalException {
 		Address address = addressPersistence.findByPrimaryKey(addressId);
 

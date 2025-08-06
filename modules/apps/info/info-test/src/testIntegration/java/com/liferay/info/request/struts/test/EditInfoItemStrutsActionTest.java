@@ -477,7 +477,6 @@ public class EditInfoItemStrutsActionTest {
 			DateUtil.parseDate(
 				"yyyy-MM-dd'T'HH:mm", "2999-03-01T11:11", LocaleUtil.US),
 			objectEntry.getExpirationDate());
-
 		Assert.assertEquals(
 			DateUtil.parseDate(
 				"yyyy-MM-dd'T'HH:mm", "2100-03-01T11:11", LocaleUtil.US),

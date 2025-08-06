@@ -110,6 +110,7 @@ public class DataCleanupPreupgradeProcessSuite {
 			new ConfigurationDataCleanupPreupgradeProcess(),
 			new DDMStructureDataCleanupPreupgradeProcess(),
 			new DLFileEntryDataCleanupPreupgradeProcess(),
+			new NullUnicodeContentDataCleanupPreupgradeProcess(),
 			new QuartzJobDetailsDataCleanupPreupgradeProcess());
 
 }

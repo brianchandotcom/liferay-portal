@@ -22,7 +22,6 @@ export enum OrderStatus {
 	ON_HOLD = 'on-hold',
 	PENDING = 'pending',
 	PROCESSING = 'processing',
-	OPEN = 'open',
 }
 
 export enum OrderTypes {

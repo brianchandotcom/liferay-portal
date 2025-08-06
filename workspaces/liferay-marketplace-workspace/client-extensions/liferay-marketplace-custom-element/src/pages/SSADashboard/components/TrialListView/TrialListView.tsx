@@ -137,9 +137,9 @@ export default function TrialListView({
 							sortable: true,
 						},
 						{
-							id: 'id',
-							name: 'Order ID',
-							sortable: true,
+							id: 'customFields',
+							name: 'Solution Type',
+							render: () => <span>Blank Site</span>,
 						},
 						{
 							id: 'createDate',

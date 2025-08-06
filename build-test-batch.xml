@@ -557,6 +557,42 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="execute-gradle-task-rest-builder">
+		<attribute name="gradle.module.dir" />
+		<attribute name="gradle.task.name" />
+
+		<sequential>
+			<execute-gradle-task gradle.task.module.dir="@{gradle.module.dir}" gradle.task.name="@{gradle.task.name}">
+				<action>
+					<record-git-diffs-rest-builder gradle.module.dir="@{gradle.module.dir}">
+						<action>
+							<gradle-execute dir="@{gradle.module.dir}" forcedcacheenabled="false" task="@{gradle.task.name}">
+								<arg value="-DbuildREST.forceClientVersionDescription=false" />
+								<arg value="-Dskip.read.only=${build.rest.skip.read.only}" />
+								<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
+							</gradle-execute>
+						</action>
+					</record-git-diffs-rest-builder>
+				</action>
+				<action-fail>
+					<if>
+						<isset property="build.services.diffs" />
+						<then>
+							<generate-backend-batch-junit-report-gradle-task
+								gradle.task.failure.count="1"
+								gradle.task.failure.message="Detected build REST changes. See above build REST log for more information. Make sure to commit in all build REST results."
+								gradle.task.failure.stacktrace="${git.diffs}"
+								gradle.task.module.dir="@{gradle.module.dir}"
+								gradle.task.name="@{gradle.task.name}"
+								gradle.task.start.time="${gradle.task.start.time}"
+							/>
+						</then>
+					</if>
+				</action-fail>
+			</execute-gradle-task>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-gradle-module-dir-task-names">
 		<attribute name="gradle.task.names" />
 
@@ -1430,6 +1466,44 @@ app.server.type=@{app.server.type}]]></echo>
 				<arg value=":!*/packageinfo" />
 				<arg value=":!*/src/main/resources/service.properties" />
 				<arg value=":!*/src/service.properties" />
+			</exec>
+
+			<exec dir="@{gradle.module.dir}" executable="git">
+				<arg value="checkout" />
+				<arg value="--" />
+				<arg value="." />
+			</exec>
+
+			<loadfile
+				property="git.diffs"
+				srcfile="${tstamp}.diff"
+			/>
+
+			<delete file="${tstamp}.diff" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-git-diffs-rest-builder">
+		<attribute name="gradle.module.dir" />
+
+		<element name="action" />
+
+		<sequential>
+			<var name="git.diffs" unset="true" />
+
+			<action />
+
+			<local name="tstamp" />
+
+			<tstamp>
+				<format pattern="yyyyMMddkkmmssSSS" property="tstamp" />
+			</tstamp>
+
+			<exec dir="@{gradle.module.dir}" executable="git" output="${tstamp}.diff">
+				<arg value="diff" />
+				<arg value="--" />
+				<arg value="." />
+				<arg value=":!*/packageinfo" />
 			</exec>
 
 			<exec dir="@{gradle.module.dir}" executable="git">
@@ -9874,83 +9948,39 @@ ${output.content}</echo>
 					<arg value="--all" />
 				</exec>
 
-				<record action="start" name="${project.dir}/build.rest.output.txt" />
-
 				<if>
 					<isset property="modules.test.class.group" />
 					<then>
-						<loadresource property="modules.build.rest.tasks">
-							<filterchain>
-								<tokenfilter>
-									<replaceregex flags="g" pattern="(\S+ )" replace="\0," />
-								</tokenfilter>
-							</filterchain>
-							<propertyresource name="modules.test.class.group" />
-						</loadresource>
+						<get-gradle-module-dir-task-names gradle.task.names="${modules.test.class.group}" />
 
-						<for list="${modules.build.rest.tasks}" param="modules.build.rest.task" trim="true">
+						<for delimiter="|" list="${gradle.module.dir.task.names}" param="module.dir.task" trim="true">
 							<sequential>
-								<echo>Executing Gradle tasks: @{modules.build.rest.task}</echo>
+								<local name="gradle.module.dir" />
+								<local name="gradle.task.name" />
 
-								<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.build.rest.task}">
-									<arg value="-DbuildREST.forceClientVersionDescription=false" />
-									<arg value="-Dskip.read.only=${build.rest.skip.read.only}" />
-									<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
-								</gradle-execute>
+								<propertyregex
+									input="@{gradle.module.dir.task.name}"
+									override="true"
+									property="gradle.module.dir"
+									regexp="([^=]+)=([^=]+)"
+									replace="\1"
+								/>
+
+								<propertyregex
+									input="@{gradle.module.dir.task.name}"
+									override="true"
+									property="gradle.task.name"
+									regexp="([^=]+)=([^=]+)"
+									replace="\2"
+								/>
+
+								<execute-gradle-task-rest-builder gradle.module.dir="${gradle.module.dir}" gradle.task.name="${gradle.task.name}" />
 							</sequential>
 						</for>
 					</then>
 					<else>
-						<echo>Executing Gradle tasks: @{modules.build.rest.task}</echo>
-
-						<gradle-execute dir="modules" forcedcacheenabled="false" task="buildREST">
-							<arg value="-DbuildREST.forceClientVersionDescription=false" />
-							<arg value="-Dskip.read.only=${build.rest.skip.read.only}" />
-							<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
-						</gradle-execute>
+						<execute-gradle-task-rest-builder gradle.module.dir="modules" gradle.task.name="buildREST" />
 					</else>
-				</if>
-
-				<record action="stop" name="${project.dir}/build.rest.output.txt" />
-
-				<loadfile
-					property="build.rest.output.txt.content"
-					srcfile="${project.dir}/build.rest.output.txt"
-				/>
-
-				<delete file="${project.dir}/build.rest.output.txt" />
-
-				<if>
-					<contains string="${build.rest.output.txt.content}" substring="Writing " />
-					<then>
-						<exec executable="git" output="${project.dir}/build.rest.diff.txt">
-							<arg value="diff" />
-							<arg value="--" />
-							<arg value="." />
-							<arg value=":!*/packageinfo" />
-						</exec>
-
-						<loadfile
-							property="build.rest.diff.txt.content"
-							srcfile="${project.dir}/build.rest.diff.txt"
-						/>
-
-						<delete file="${project.dir}/build.rest.diff.txt" />
-
-						<if>
-							<isset property="build.rest.diff.txt.content" />
-							<then>
-								<echo>${build.rest.diff.txt.content}</echo>
-
-								<fail>
-.
-
-Detected build REST changes. See above build REST log for more
-information. Make sure to commit in all build REST results.
-								</fail>
-							</then>
-						</if>
-					</then>
 				</if>
 			</test-action>
 

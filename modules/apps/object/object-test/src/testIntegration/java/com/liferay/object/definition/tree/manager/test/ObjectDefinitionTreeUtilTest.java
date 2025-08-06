@@ -598,7 +598,7 @@ public class ObjectDefinitionTreeUtilTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinitionAAAAAA);
 
-		// Bind two object definition trees into one so that the height
+		// Bind object definition trees into one so that the height
 		// of the new tree exceeds the maximum height
 
 		TreeTestUtil.createObjectDefinitionTree(
@@ -644,6 +644,90 @@ public class ObjectDefinitionTreeUtilTest {
 				"C_A", "C_AA", "C_AAA", "C_AAAA", "C_AAAAA", "C_AAAAAA"
 			},
 			_objectEntryLocalService, _objectRelationshipLocalService);
+
+		TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			false,
+			LinkedHashMapBuilder.put(
+				"B", new String[] {"BB"}
+			).put(
+				"BB", new String[] {"BBB"}
+			).put(
+				"BBB", new String[] {"BBBB"}
+			).put(
+				"BBBB", new String[] {"BBBBB"}
+			).put(
+				"BBBBB", new String[0]
+			).build());
+
+		TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			false,
+			LinkedHashMapBuilder.put(
+				"D", new String[] {"DD"}
+			).put(
+				"DD", new String[] {"DDD"}
+			).put(
+				"DDD", new String[0]
+			).build());
+
+		ObjectDefinition objectDefinitionBBB =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_BBB");
+		ObjectDefinition objectDefinitionDDD =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_DDD");
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"The object relationship cannot be an edge in the root context " +
+				"because it would exceed the tree's maximum height",
+			() -> TreeTestUtil.bind(
+				_objectRelationshipLocalService,
+				objectDefinitionDDD.getObjectDefinitionId(),
+				objectDefinitionBBB.getObjectDefinitionId()));
+
+		ObjectDefinition objectDefinitionDD =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_DD");
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			objectDefinitionDD.getObjectDefinitionId(),
+			objectDefinitionBBB.getObjectDefinitionId());
+
+		TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			false,
+			LinkedHashMapBuilder.put(
+				"F", new String[] {"FF"}
+			).put(
+				"FF", new String[] {"FFF"}
+			).put(
+				"FFF", new String[0]
+			).build());
+
+		ObjectDefinition objectDefinitionF =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_F");
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"The object relationship cannot be an edge in the root context " +
+				"because it would exceed the tree's maximum height",
+			() -> TreeTestUtil.bind(
+				_objectRelationshipLocalService,
+				objectDefinitionBBB.getObjectDefinitionId(),
+				objectDefinitionF.getObjectDefinitionId()));
+
+		ObjectDefinition objectDefinitionFF =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_FF");
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			objectDefinitionBBB.getObjectDefinitionId(),
+			objectDefinitionFF.getObjectDefinitionId());
 	}
 
 	@Test

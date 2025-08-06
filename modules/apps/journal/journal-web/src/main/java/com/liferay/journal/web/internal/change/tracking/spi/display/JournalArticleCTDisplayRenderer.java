@@ -155,14 +155,24 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
-	protected void buildDisplay(DisplayBuilder<JournalArticle> displayBuilder) {
+	protected void buildDisplay(DisplayBuilder<JournalArticle> displayBuilder)
+		throws PortalException {
+
 		JournalArticle journalArticle = displayBuilder.getModel();
 
 		displayBuilder.display(
 			"name", journalArticle.getTitle(displayBuilder.getLocale())
 		).display(
+			"title", journalArticle.getTitle(displayBuilder.getLocale())
+		).display(
 			"description",
 			journalArticle.getDescription(displayBuilder.getLocale())
+		).display(
+			"friendly-url",
+			journalArticle.getFriendlyURLMap(
+			).get(
+				displayBuilder.getLocale()
+			)
 		).display(
 			"created-by",
 			() -> {

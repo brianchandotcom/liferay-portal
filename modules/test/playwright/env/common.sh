@@ -290,6 +290,10 @@ function get_absolute_dir {
 	echo $(cd -- $(dirname -- $1) &> /dev/null && pwd)
 }
 
+function get_app_server_dir {
+	find "${1}" -maxdepth 2 -type d -name "${APP_SERVER_TYPE}*[0-9]"
+}
+
 function get_client_extension_dir {
 	local clients_extension_name=${1}
 
@@ -423,10 +427,6 @@ function get_project_client_extension_workspace_portal_ext_properties_files {
 	then
 		get_client_extension_workspace_portal_ext_properties_files ${playwright_project_dir}/env/client-extensions.list
 	fi
-}
-
-function get_app_server_dir {
-	find "${1}" -maxdepth 2 -type d -name "${APP_SERVER_TYPE}*[0-9]"
 }
 
 function get_tomcat_portal_ext_properties_file {

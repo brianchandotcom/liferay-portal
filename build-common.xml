@@ -657,13 +657,16 @@ information.
 	<macrodef name="generate-backend-batch-junit-report-ant-target">
 		<attribute name="ant.target.failure.count" />
 		<attribute default="" name="ant.target.failure.message" />
+		<attribute default="" name="ant.target.failure.stacktrace" />
 		<attribute name="ant.target.file" />
 		<attribute name="ant.target.name" />
 		<attribute name="ant.target.start.time" />
 
 		<sequential>
 			<local name="ant.target.duration" />
-			<local name="ant.target.message.element" />
+			<local name="ant.target.failure.message" />
+			<local name="ant.target.failure.message.element" />
+			<local name="ant.target.failure.stacktrace" />
 
 			<beanshell>
 				<![CDATA[
@@ -673,29 +676,25 @@ information.
 				]]>
 			</beanshell>
 
+			<condition else="@{ant.target.failure.message}" property="ant.target.failure.message" value="@{ant.target.file} @{ant.target.name} could not be executed. Please check the logs for details.">
+				<equals arg1="@{ant.target.failure.message}" arg2="" />
+			</condition>
+
+			<antelope:stringutil property="ant.target.failure.stacktrace" string="@{ant.target.failure.stacktrace}">
+				<antelope:replace regex="&amp;" replacement="&amp;amp;" />
+				<antelope:replace regex="&apos;" replacement="&amp;apos;" />
+				<antelope:replace regex="&gt;" replacement="&amp;gt;" />
+				<antelope:replace regex="&lt;" replacement="&amp;lt;" />
+				<antelope:replace regex="&quot;" replacement="&amp;quot;" />
+			</antelope:stringutil>
+
 			<if>
 				<equals arg1="@{ant.target.failure.count}" arg2="0" />
 				<then>
-					<property name="ant.target.message.element" value="" />
+					<property name="ant.target.failure.message.element" value="" />
 				</then>
-				<elseif>
-					<equals arg1="@{ant.target.failure.message}" arg2="" />
-					<then>
-						<property name="ant.target.message.element"><![CDATA[<failure message="@{ant.target.file} @{ant.target.name} could not be executed. Please check the logs for details." />]]></property>
-					</then>
-				</elseif>
 				<else>
-					<local name="ant.target.failure.message" />
-
-					<antelope:stringutil property="ant.target.failure.message" string="@{ant.target.failure.message}">
-						<antelope:replace regex="&amp;" replacement="&amp;amp;" />
-						<antelope:replace regex="&apos;" replacement="&amp;apos;" />
-						<antelope:replace regex="&gt;" replacement="&amp;gt;" />
-						<antelope:replace regex="&lt;" replacement="&amp;lt;" />
-						<antelope:replace regex="&quot;" replacement="&amp;quot;" />
-					</antelope:stringutil>
-
-					<property name="ant.target.message.element"><![CDATA[<failure message="Detected build services changes. See below for more information. Make sure to commit in all build services results.">${ant.target.failure.message}</failure>]]></property>
+					<property name="ant.target.failure.message.element"><![CDATA[<failure message="${ant.target.failure.message}">${ant.target.failure.stacktrace}</failure>]]></property>
 				</else>
 			</if>
 
@@ -712,7 +711,7 @@ information.
 
 			<generate-backend-batch-junit-report
 				junit.failure.count="@{ant.target.failure.count}"
-				junit.failure.message.element="${ant.target.message.element}"
+				junit.failure.message.element="${ant.target.failure.message.element}"
 				test.class.duration="${ant.target.duration}"
 				test.class.file.name="${test.class.name}.@{ant.target.name}"
 				test.class.name="${test.class.name}"
@@ -725,13 +724,17 @@ information.
 	<macrodef name="generate-backend-batch-junit-report-gradle-task">
 		<attribute name="gradle.task.failure.count" />
 		<attribute default="" name="gradle.task.failure.message" />
+		<attribute default="" name="gradle.task.failure.stacktrace" />
 		<attribute name="gradle.task.module.dir" />
 		<attribute name="gradle.task.start.time" />
 		<attribute name="gradle.task.name" />
 
 		<sequential>
 			<local name="gradle.task.duration" />
-			<local name="gradle.task.message.element" />
+			<local name="gradle.task.name" />
+			<local name="gradle.task.failure.message" />
+			<local name="gradle.task.failure.message.element" />
+			<local name="gradle.task.failure.stacktrace" />
 
 			<beanshell>
 				<![CDATA[
@@ -741,38 +744,34 @@ information.
 				]]>
 			</beanshell>
 
-			<if>
-				<equals arg1="@{gradle.task.failure.count}" arg2="0" />
-				<then>
-					<property name="gradle.task.message.element" value="" />
-				</then>
-				<elseif>
-					<equals arg1="@{gradle.task.failure.message}" arg2="" />
-					<then>
-						<property name="gradle.task.message.element"><![CDATA[<failure message="@{gradle.task.module.dir} @{gradle.task.name} could not be executed. Please check the logs for details." />]]></property>
-					</then>
-				</elseif>
-				<else>
-					<antelope:stringutil property="gradle.task.failure.message" string="@{gradle.task.failure.message}">
-						<antelope:replace regex="&amp;" replacement="&amp;amp;" />
-						<antelope:replace regex="&apos;" replacement="&amp;apos;" />
-						<antelope:replace regex="&gt;" replacement="&amp;gt;" />
-						<antelope:replace regex="&lt;" replacement="&amp;lt;" />
-						<antelope:replace regex="&quot;" replacement="&amp;quot;" />
-					</antelope:stringutil>
-
-					<property name="gradle.task.message.element"><![CDATA[<failure message="Detected build services changes. See below for more information. Make sure to commit in all build services results.">${gradle.task.failure.message}</failure>]]></property>
-				</else>
-			</if>
-
-			<local name="gradle.task.name" />
-
 			<condition else="@{gradle.task.name}" property="gradle.task.name" value="assemble">
 				<or>
 					<contains string="@{gradle.task.name}" substring="assemble" />
 					<contains string="@{gradle.task.name}" substring="compileTestIntegrationJava" />
 				</or>
 			</condition>
+
+			<condition else="@{gradle.task.failure.message}" property="gradle.task.failure.message" value="@{gradle.task.module.dir} ${gradle.task.name} could not be executed. Please check the logs for details.">
+				<equals arg1="@{gradle.task.failure.message}" arg2="" />
+			</condition>
+
+			<antelope:stringutil property="gradle.task.failure.stacktrace" string="@{gradle.task.failure.stacktrace}">
+				<antelope:replace regex="&amp;" replacement="&amp;amp;" />
+				<antelope:replace regex="&apos;" replacement="&amp;apos;" />
+				<antelope:replace regex="&gt;" replacement="&amp;gt;" />
+				<antelope:replace regex="&lt;" replacement="&amp;lt;" />
+				<antelope:replace regex="&quot;" replacement="&amp;quot;" />
+			</antelope:stringutil>
+
+			<if>
+				<equals arg1="@{gradle.task.failure.count}" arg2="0" />
+				<then>
+					<property name="gradle.task.failure.message.element" value="" />
+				</then>
+				<else>
+					<property name="gradle.task.failure.message.element"><![CDATA[<failure message="${gradle.task.failure.message}">${gradle.task.failure.stacktrace}</failure>]]></property>
+				</else>
+			</if>
 
 			<local name="test.class.name" />
 
@@ -787,7 +786,7 @@ information.
 
 			<generate-backend-batch-junit-report
 				junit.failure.count="@{gradle.task.failure.count}"
-				junit.failure.message.element="${gradle.task.message.element}"
+				junit.failure.message.element="${gradle.task.failure.message.element}"
 				test.class.duration="${gradle.task.duration}"
 				test.class.name="${test.class.name}"
 				test.command.name="${gradle.task.name}"

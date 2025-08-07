@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -338,12 +339,28 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			}
 		}
 
-		String newContent = StringBundler.concat(
-			_generateProperties(portalPropertiesMap), "\n\n",
-			_generateProperties(propertiesMap), "\n\n",
-			_generateProperties(portalOSGiEnvironmentPropertiesMap));
+		StringBundler sb = new StringBundler(6);
 
-		newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
+		for (Map<String, List<String>> map :
+				Arrays.asList(
+					portalPropertiesMap, propertiesMap,
+					portalOSGiEnvironmentPropertiesMap)) {
+
+			if (map.isEmpty()) {
+				continue;
+			}
+
+			String propertiesString = _generateProperties(map);
+
+			if (Validator.isBlank(propertiesString)) {
+				continue;
+			}
+
+			sb.append(propertiesString);
+			sb.append("\n\n");
+		}
+
+		String newContent = StringUtil.replace(sb.toString(), "\n\n\n", "\n\n");
 
 		newContent = newContent.trim();
 

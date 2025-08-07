@@ -74,6 +74,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1420,12 +1421,35 @@ public class DefaultObjectEntryManagerImpl
 					Map<String, Object> nestedObjectEntry =
 						(Map<String, Object>)item;
 
-					long nestedObjectEntryId =
-						systemObjectDefinitionManager.upsertBaseModel(
-							String.valueOf(
-								nestedObjectEntry.get("externalReferenceCode")),
-							relatedObjectDefinition.getCompanyId(),
-							dtoConverterContext.getUser(), nestedObjectEntry);
+					long nestedObjectEntryId;
+
+					try {
+						nestedObjectEntryId =
+							systemObjectDefinitionManager.upsertBaseModel(
+								String.valueOf(
+									nestedObjectEntry.get(
+										"externalReferenceCode")),
+								relatedObjectDefinition.getCompanyId(),
+								dtoConverterContext.getUser(),
+								nestedObjectEntry);
+					}
+					catch (PortalException portalException) {
+						if (!LazyReferencingThreadLocal.isEnabled()) {
+							throw portalException;
+						}
+
+						BaseModel<?> baseModel =
+							systemObjectDefinitionManager.
+								getOrAddEmptyBaseModel(
+									String.valueOf(
+										nestedObjectEntry.get(
+											"externalReferenceCode")),
+									relatedObjectDefinition.getCompanyId(),
+									dtoConverterContext.getUser());
+
+						nestedObjectEntryId =
+							(long)baseModel.getPrimaryKeyObj();
+					}
 
 					_relateNestedObjectEntry(
 						objectDefinition, objectRelationship,

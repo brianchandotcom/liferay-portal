@@ -62,6 +62,13 @@ public class SegmentsExperimentAnalyticsTopHeadJSPDynamicInclude
 			throw new IOException(exception);
 		}
 
+		Layout layout = themeDisplay.getLayout();
+
+		httpServletRequest.setAttribute(
+			SegmentsExperimentWebKeys.
+				SEGMENTS_ANALYTICS_EXTERNAL_REFERENCE_CODE,
+			layout.getExternalReferenceCode());
+
 		SegmentsExperienceManager segmentsExperienceManager =
 			new SegmentsExperienceManager(_segmentsExperienceLocalService);
 
@@ -71,13 +78,6 @@ public class SegmentsExperimentAnalyticsTopHeadJSPDynamicInclude
 			_getSegmentsExperienceKey(
 				segmentsExperienceManager.getSegmentsExperienceId(
 					httpServletRequest)));
-
-		Layout layout = themeDisplay.getLayout();
-
-		httpServletRequest.setAttribute(
-			SegmentsExperimentWebKeys.
-				SEGMENTS_ANALYTICS_EXTERNAL_REFERENCE_CODE,
-			layout.getExternalReferenceCode());
 
 		super.include(httpServletRequest, httpServletResponse, key);
 	}

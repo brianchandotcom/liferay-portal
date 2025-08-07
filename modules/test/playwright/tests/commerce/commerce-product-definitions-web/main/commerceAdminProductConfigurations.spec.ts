@@ -333,7 +333,7 @@ test('LPD-43013 Configuration Entry form in side panel', async ({
 	).toBeVisible();
 
 	await commerceAdminProductConfigurationEntryPage.allowedOrderQuantitiesInput.fill(
-		'1,2'
+		'1 2'
 	);
 	await commerceAdminProductConfigurationEntryPage.backOrdersInput.click();
 	await commerceAdminProductConfigurationEntryPage.CPDefinitionInventoryEngineInput.selectOption(
@@ -404,7 +404,7 @@ test('LPD-43013 Configuration Entry form in side panel', async ({
 	).toBeVisible();
 	await expect(
 		commerceAdminProductConfigurationEntryPage.allowedOrderQuantitiesInput
-	).toHaveValue('1,2');
+	).toHaveValue('1 2');
 	await expect(
 		commerceAdminProductConfigurationEntryPage.backOrdersInput
 	).not.toBeChecked();
@@ -518,7 +518,7 @@ test('LPD-43013 Configuration Entry form in side panel for virtual products', as
 	).toBeVisible();
 
 	await commerceAdminProductConfigurationEntryPage.allowedOrderQuantitiesInput.fill(
-		'1,2'
+		'1 2'
 	);
 	await commerceAdminProductConfigurationEntryPage.backOrdersInput.click();
 
@@ -582,7 +582,7 @@ test('LPD-43013 Edit configuration template', async ({
 	await commerceAdminProductConfigurationListPage.nameInput.fill('Name1');
 	await commerceAdminProductConfigurationListPage.priorityInput.fill('2');
 	await commerceAdminProductConfigurationListPage.allowedOrderQuantitiesInput.fill(
-		'1,2'
+		'1 2'
 	);
 	await commerceAdminProductConfigurationListPage.backOrdersInput.click();
 	await commerceAdminProductConfigurationListPage.CPDefinitionInventoryEngineInput.selectOption(
@@ -657,7 +657,7 @@ test('LPD-43013 Edit configuration template', async ({
 	).toHaveValue('2.0');
 	await expect(
 		commerceAdminProductConfigurationListPage.allowedOrderQuantitiesInput
-	).toHaveValue('1,2');
+	).toHaveValue('1 2');
 	await expect(
 		commerceAdminProductConfigurationListPage.backOrdersInput
 	).not.toBeChecked();

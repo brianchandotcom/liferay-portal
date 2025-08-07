@@ -1044,17 +1044,17 @@ definition {
 
 		task ("Given allowed quantities, maximum quantity, minimum quantity and multiple quantity are configured for three products") {
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				allowedOrderQuantities = "1,2,6,8",
+				allowedOrderQuantities = "1, 2, 6, 8",
 				minOrderQuantity = 2,
 				productName = "U-Joint");
 
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				allowedOrderQuantities = "1,2,6,8",
+				allowedOrderQuantities = "1, 2, 6, 8",
 				maxOrderQuantity = 7,
 				productName = "Transmission Cooler Line Assembly");
 
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				allowedOrderQuantities = "1,3,6,9",
+				allowedOrderQuantities = "1, 3, 6, 9",
 				multipleOrderQuantity = 3,
 				productName = "Torque Converters");
 		}

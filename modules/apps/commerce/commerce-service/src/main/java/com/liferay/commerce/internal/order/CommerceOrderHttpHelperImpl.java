@@ -561,6 +561,10 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				if (commerceOrder.getCommerceAccountId() !=
 						accountEntry.getAccountEntryId()) {
 
+					httpSession.removeAttribute(
+						CommerceOrder.class.getName() + StringPool.POUND +
+							commerceOrder.getGroupId());
+
 					return null;
 				}
 			}

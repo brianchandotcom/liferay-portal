@@ -150,7 +150,7 @@ export function SpaceMembersInputWithSelect({
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend shrink>
 					<ClaySelectWithOption
-						className="form-control-select-secondary"
+						className="form-control form-control-select-secondary font-weight-semi-bold rounded-left"
 						id={selectId}
 						onChange={(event) => {
 							onSelectChange?.(

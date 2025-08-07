@@ -1063,7 +1063,7 @@ public abstract class BaseBulkActionResourceTestCase {
 				executeStatus = RandomTestUtil.randomString();
 				externalReferenceCode = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
-				numberOfItems = RandomTestUtil.randomInteger();
+				numberOfItems = RandomTestUtil.randomInt();
 				type = RandomTestUtil.randomString();
 			}
 		};

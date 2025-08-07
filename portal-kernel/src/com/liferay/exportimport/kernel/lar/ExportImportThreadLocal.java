@@ -16,6 +16,10 @@ public class ExportImportThreadLocal {
 		return _exportImportConfigurationId.get();
 	}
 
+	public static boolean isBatchImportInProcess() {
+		return _batchImportInProcess.get();
+	}
+
 	public static boolean isDataDeletionImportInProcess() {
 		if (isLayoutDataDeletionImportInProcess() ||
 			isPortletDataDeletionImportInProcess()) {
@@ -103,6 +107,10 @@ public class ExportImportThreadLocal {
 		return _stagingInProcessOnRemoteLive.get();
 	}
 
+	public static void setBatchImportInProcess(boolean batchImportInProcess) {
+		_batchImportInProcess.set(batchImportInProcess);
+	}
+
 	public static void setExportImportConfigurationId(
 		long exportImportConfigurationId) {
 
@@ -179,6 +187,10 @@ public class ExportImportThreadLocal {
 		_stagingInProcessOnRemoteLive.set(stagingInProcessOnRemoteLive);
 	}
 
+	private static final ThreadLocal<Boolean> _batchImportInProcess =
+		new CentralizedThreadLocal<>(
+			ExportImportThreadLocal.class + "._batchImportInProcess",
+			() -> Boolean.FALSE);
 	private static final ThreadLocal<Long> _exportImportConfigurationId =
 		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._exportImportConfigurationId",

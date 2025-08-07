@@ -15,6 +15,7 @@ import com.liferay.customer.service.NotificationQueueEntryService;
 import com.liferay.customer.service.TicketAttachmentService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StackTraceUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -98,10 +99,14 @@ public class TicketAttachmentsRestController extends BaseRestController {
 			_log.info("Cleaning up JSM large file attachments");
 		}
 
+		String[] jiraSupportProjects = {
+			_jiraSupportFLSProject, _jiraSupportHCProject
+		};
+
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("(project in (");
-		sb.append(_jiraSupportProjects);
+		sb.append(StringUtil.merge(jiraSupportProjects, ","));
 		sb.append(")) and (status = Closed) and (status changed to (Closed) ");
 		sb.append("after -8d) and (status changed to (Closed) before -7d)");
 
@@ -198,8 +203,11 @@ public class TicketAttachmentsRestController extends BaseRestController {
 	@Autowired
 	private JiraService _jiraService;
 
-	@Value("${liferay.customer.jira.support.projects}")
-	private String _jiraSupportProjects;
+	@Value("${liferay.customer.jira.support.fls.project}")
+	private String _jiraSupportFLSProject;
+
+	@Value("${liferay.customer.jira.support.hc.project}")
+	private String _jiraSupportHCProject;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

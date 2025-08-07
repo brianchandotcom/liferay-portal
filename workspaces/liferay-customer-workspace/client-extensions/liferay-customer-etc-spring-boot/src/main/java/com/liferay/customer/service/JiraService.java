@@ -6,6 +6,7 @@
 package com.liferay.customer.service;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
+import com.liferay.customer.model.JiraSupportIssue;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -14,6 +15,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -146,7 +149,7 @@ public class JiraService extends BaseService {
 					_getCredentials(),
 					UriComponentsBuilder.fromUriString(
 						StringBundler.concat(
-							_jiraURL, _URL_REST_API_2, "/issue/", issueKey)
+							_jiraURL, _URL_REST_API_3, "/issue/", issueKey)
 					).queryParam(
 						"expand", "renderedFields"
 					).build(
@@ -186,6 +189,51 @@ public class JiraService extends BaseService {
 			jql, pageSize, returnFields, _calculateStartAt(page, pageSize));
 
 		return _transformSearchResults(jsonObject);
+	}
+
+	public List<JiraSupportIssue> search(String jql, String[] returnFields)
+		throws Exception {
+
+		List<JiraSupportIssue> jiraSupportIssues = new ArrayList<>();
+
+		String nextPageToken = StringPool.BLANK;
+
+		while (true) {
+			JSONObject jsonObject = _search(
+				jql, 100, nextPageToken, returnFields,
+				_calculateStartAt(1, 100));
+
+			if (jsonObject == null) {
+				break;
+			}
+
+			JSONArray issuesJSONArray = jsonObject.getJSONArray("issues");
+
+			for (int i = 0; i < issuesJSONArray.length(); i++) {
+				JSONObject issueJSONObject = issuesJSONArray.getJSONObject(i);
+
+				String issueKey = issueJSONObject.getString("key");
+
+				String ticketURL = _jiraSupportHCPortalURL + "/" + issueKey;
+
+				if (issueKey.startsWith(_jiraSupportFLSProject)) {
+					ticketURL = _jiraSupportFLSPortalURL + "/" + issueKey;
+				}
+
+				JiraSupportIssue jiraSupportIssue = new JiraSupportIssue(
+					issueJSONObject, ticketURL);
+
+				jiraSupportIssues.add(jiraSupportIssue);
+			}
+
+			nextPageToken = jsonObject.optString("nextPageToken");
+
+			if (Validator.isNull(nextPageToken)) {
+				break;
+			}
+		}
+
+		return jiraSupportIssues;
 	}
 
 	@Cacheable("issues")
@@ -326,6 +374,116 @@ public class JiraService extends BaseService {
 		return _transformSearchResults(jsonObject);
 	}
 
+	public JSONObject searchAccountByExternalKey(String externalKey) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("objectSchema = \"Koroneiki\" and objectType = \"Account\" ");
+		sb.append("and \"External Key\" = \"");
+		sb.append(externalKey);
+		sb.append("\"");
+
+		JSONObject jsonObject = new JSONObject(
+		).put(
+			"qlQuery", sb.toString()
+		);
+
+		return new JSONObject(
+			post(
+				jsonObject.toString(),
+				HashMapBuilder.put(
+					HttpHeaders.AUTHORIZATION, _getCredentials()
+				).put(
+					HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+				).build(),
+				UriComponentsBuilder.fromUriString(
+					StringBundler.concat(
+						_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
+						_jiraWorkspaceId, "/v1/object/aql")
+				).build(
+				).toUri()));
+	}
+
+	public void updateAccountObject(String externalKey, String businessEvents) {
+		JSONObject accountJSONObject = searchAccountByExternalKey(externalKey);
+
+		JSONArray valuesJSONArray = accountJSONObject.getJSONArray("values");
+
+		JSONObject valueJSONObject = valuesJSONArray.getJSONObject(0);
+
+		String objectId = valueJSONObject.getString("id");
+
+		JSONArray objectTypeAttributesJSONArray =
+			accountJSONObject.getJSONArray("objectTypeAttributes");
+
+		for (int i = 0; i < objectTypeAttributesJSONArray.length(); i++) {
+			JSONObject objectTypeAttributeJSONObject =
+				objectTypeAttributesJSONArray.getJSONObject(i);
+
+			String name = objectTypeAttributeJSONObject.getString("name");
+
+			if (!name.equals("Business Events")) {
+				continue;
+			}
+
+			String objectTypeAttributeId =
+				objectTypeAttributeJSONObject.getString("id");
+
+			_updateAccountObjectAttributeValues(
+				objectId, objectTypeAttributeId, businessEvents);
+		}
+	}
+
+	public void updateJiraIssue(
+		String issueKey, String businessEvents, String[] addLabels,
+		String[] removeLabels) {
+
+		JSONArray labelsJSONArray = new JSONArray();
+
+		for (String label : addLabels) {
+			JSONObject addLabelJSONObject = new JSONObject();
+
+			addLabelJSONObject.put("add", label);
+
+			labelsJSONArray.put(addLabelJSONObject);
+		}
+
+		for (String label : removeLabels) {
+			JSONObject removeLabelJSONObject = new JSONObject();
+
+			removeLabelJSONObject.put("remove", label);
+
+			labelsJSONArray.put(removeLabelJSONObject);
+		}
+
+		JSONObject updateJSONObject = new JSONObject();
+
+		updateJSONObject.put("labels", labelsJSONArray);
+
+		if (Validator.isNotNull(businessEvents)) {
+			updateJSONObject.put(
+				_jiraSupportHCFieldBusinessEvent,
+				_transformADFTextArea(businessEvents));
+		}
+
+		JSONObject jsonObject = new JSONObject(
+		).put(
+			"update", updateJSONObject
+		);
+
+		put(
+			jsonObject.toString(),
+			HashMapBuilder.put(
+				HttpHeaders.AUTHORIZATION, _getCredentials()
+			).put(
+				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+			).build(),
+			UriComponentsBuilder.fromUriString(
+				StringBundler.concat(
+					_jiraURL, _URL_REST_API_3, "/issue/", issueKey)
+			).build(
+			).toUri());
+	}
+
 	private int _calculatePage(int startAt, int maxResults) {
 		return (startAt / maxResults) + 1;
 	}
@@ -392,7 +550,8 @@ public class JiraService extends BaseService {
 	}
 
 	private JSONObject _search(
-			String jql, int maxResults, String[] returnFields, int startAt)
+			String jql, int maxResults, String nextPageToken,
+			String[] returnFields, int startAt)
 		throws Exception {
 
 		try {
@@ -400,7 +559,7 @@ public class JiraService extends BaseService {
 				get(
 					_getCredentials(),
 					UriComponentsBuilder.fromUriString(
-						_jiraURL + _URL_REST_API_2 + "/search"
+						_jiraURL + _URL_REST_API_3 + "/search/jql"
 					).queryParam(
 						"expand", "renderedFields"
 					).queryParam(
@@ -409,6 +568,8 @@ public class JiraService extends BaseService {
 						"jql", jql
 					).queryParam(
 						"maxResults", maxResults
+					).queryParam(
+						"nextPageToken", nextPageToken
 					).queryParam(
 						"startAt", startAt
 					).build(
@@ -422,6 +583,50 @@ public class JiraService extends BaseService {
 		}
 
 		return null;
+	}
+
+	private JSONObject _search(
+			String jql, int maxResults, String[] returnFields, int startAt)
+		throws Exception {
+
+		return _search(
+			jql, maxResults, StringPool.BLANK, returnFields, startAt);
+	}
+
+	private JSONArray _transformADFTextArea(String text) {
+		return new JSONArray(
+		).put(
+			new JSONObject(
+			).put(
+				"set",
+				new JSONObject(
+				).put(
+					"type", "doc"
+				).put(
+					"version", 1
+				).put(
+					"content",
+					new JSONArray(
+					).put(
+						new JSONObject(
+						).put(
+							"type", "paragraph"
+						).put(
+							"content",
+							new JSONArray(
+							).put(
+								new JSONObject(
+								).put(
+									"text", text
+								).put(
+									"type", "text"
+								)
+							)
+						)
+					)
+				)
+			)
+		);
 	}
 
 	private JSONObject _transformIssue(JSONObject issueJSONObject) {
@@ -503,7 +708,7 @@ public class JiraService extends BaseService {
 				"organization",
 				_getAssetObjectFieldId(
 					issueFieldsJSONObject.optJSONArray(
-						_jiraSupportFieldOrganization))
+						_jiraSupportHCFieldOrganization))
 			).put(
 				"partnerPublishingDate",
 				issueFieldsJSONObject.optString(
@@ -563,6 +768,45 @@ public class JiraService extends BaseService {
 		);
 	}
 
+	private void _updateAccountObjectAttributeValues(
+		String objectId, String objectTypeAttributeId, String value) {
+
+		JSONObject jsonObject = new JSONObject(
+		).put(
+			"attributes",
+			new JSONArray(
+			).put(
+				new JSONObject(
+				).put(
+					"objectTypeAttributeId", objectTypeAttributeId
+				).put(
+					"objectAttributeValues",
+					new JSONArray(
+					).put(
+						new JSONObject(
+						).put(
+							"value", value
+						)
+					)
+				)
+			)
+		);
+
+		put(
+			jsonObject.toString(),
+			HashMapBuilder.put(
+				HttpHeaders.AUTHORIZATION, _getCredentials()
+			).put(
+				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+			).build(),
+			UriComponentsBuilder.fromUriString(
+				StringBundler.concat(
+					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
+					_jiraWorkspaceId, "/v1/object/", objectId)
+			).build(
+			).toUri());
+	}
+
 	private static final String _FIELD_AFFECTED_VERSION = "affectedVersion";
 
 	private static final String _FIELD_COMPONENTS = "components";
@@ -576,7 +820,7 @@ public class JiraService extends BaseService {
 	private static final String _JIRA_CLOUD_API_URL =
 		"https://api.atlassian.com";
 
-	private static final String _URL_REST_API_2 = "/rest/api/2";
+	private static final String _URL_REST_API_3 = "/rest/api/3";
 
 	private static final Log _log = LogFactory.getLog(JiraService.class);
 
@@ -652,10 +896,25 @@ public class JiraService extends BaseService {
 	@Value("${liferay.customer.jira.security.vulnerability.project}")
 	private String _jiraSecurityVulnerabilityProject;
 
-	@Value("${liferay.customer.jira.support.field.organization}")
-	private String _jiraSupportFieldOrganization;
+	@Value("${liferay.customer.jira.support.fls.portal.url}")
+	private String _jiraSupportFLSPortalURL;
+
+	@Value("${liferay.customer.jira.support.fls.project}")
+	private String _jiraSupportFLSProject;
+
+	@Value("${liferay.customer.jira.support.hc.field.business.event}")
+	private String _jiraSupportHCFieldBusinessEvent;
+
+	@Value("${liferay.customer.jira.support.hc.field.organization}")
+	private String _jiraSupportHCFieldOrganization;
+
+	@Value("${liferay.customer.jira.support.hc.portal.url}")
+	private String _jiraSupportHCPortalURL;
 
 	@Value("${liferay.customer.jira.url}")
 	private String _jiraURL;
+
+	@Value("${liferay.customer.jira.workspace.id}")
+	private String _jiraWorkspaceId;
 
 }

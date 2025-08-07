@@ -41,7 +41,7 @@ import {
 } from 'ckeditor5';
 import {sub} from 'frontend-js-web';
 
-import AiCreator from '../plugins/AiCreator';
+import AICreator from '../plugins/AICreator';
 import ItemSelector from '../plugins/ItemSelector';
 import {EEditorConfigPreset, EEditorVariant} from './types';
 
@@ -118,7 +118,7 @@ const getDefaultEditorConfig = ({
 
 	const advancedPlugins = [
 		...basicPlugins,
-		AiCreator,
+		AICreator,
 		Alignment,
 		BlockQuote,
 		Font,

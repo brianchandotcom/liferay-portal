@@ -31,7 +31,7 @@ const ON_CLICK_POPOVER_CONTENT = `
 </div>
 `;
 
-class AiCreator extends Plugin {
+class AICreator extends Plugin {
 	init() {
 		const editor = this.editor;
 
@@ -191,4 +191,4 @@ class AiCreator extends Plugin {
 	}
 }
 
-export default AiCreator;
+export default AICreator;

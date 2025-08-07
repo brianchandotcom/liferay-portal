@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
@@ -13,15 +14,17 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
 import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -34,14 +37,17 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 		DepotEntryService depotEntryService,
 		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService,
 		long groupId, HttpServletRequest httpServletRequest, Language language,
-		Portal portal) {
+		ModelResourcePermission<DepotEntry> depotEntryModelResourcePermission) {
 
 		_depotEntryService = depotEntryService;
 		_depotEntryGroupRelLocalService = depotEntryGroupRelLocalService;
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
-		_portal = portal;
+		_depotEntryModelResourcePermission = depotEntryModelResourcePermission;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAPIURL() {
@@ -90,7 +96,10 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 
 	public Map<String, Object> getHeaderProps() throws Exception {
 		return SpaceSummaryHeaderUtil.getSpaceSummaryHeaderProps(
-			_httpServletRequest, "view-all-sites", Collections.emptyMap(),
+			_httpServletRequest, "view-all-sites",
+			HashMapBuilder.<String, Object>put(
+				"hasConnectSitesPermission", _hasConnectSitesPermission()
+			).build(),
 			HashMapBuilder.<String, Object>put(
 				"action", "open-sites-modal"
 			).put(
@@ -127,12 +136,19 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 			StringPool.CLOSE_PARENTHESIS);
 	}
 
+	private boolean _hasConnectSitesPermission() throws Exception {
+		return _depotEntryModelResourcePermission.contains(
+			_themeDisplay.getPermissionChecker(), _groupId, ActionKeys.UPDATE);
+	}
+
 	private final DepotEntryGroupRelLocalService
 		_depotEntryGroupRelLocalService;
+	private final ModelResourcePermission<DepotEntry>
+		_depotEntryModelResourcePermission;
 	private final DepotEntryService _depotEntryService;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
-	private final Portal _portal;
+	private final ThemeDisplay _themeDisplay;
 
 }

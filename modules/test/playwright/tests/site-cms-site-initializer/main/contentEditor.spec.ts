@@ -142,7 +142,7 @@ test(
 
 		// Create new structure for Default space
 
-		await structureBuilderPage.createStructure();
+		await structureBuilderPage.goToCreateStructure();
 
 		await structureBuilderPage.selectSpaces(['Default']);
 

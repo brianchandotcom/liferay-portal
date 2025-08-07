@@ -43,7 +43,7 @@ const createStructure = async ({
 	page: StructureBuilderPage;
 	publish?: boolean;
 }) => {
-	await page.createStructure();
+	await page.goToCreateStructure();
 
 	await page.enableForAllSpaces();
 
@@ -81,7 +81,7 @@ test(
 
 		// Go to the Structure Builder
 
-		await structureBuilderPage.createStructure();
+		await structureBuilderPage.goToCreateStructure();
 
 		await structureBuilderPage.enableForAllSpaces();
 
@@ -317,7 +317,7 @@ test.describe('Frontend validations', () => {
 
 			// Go to the Structure Builder
 
-			await structureBuilderPage.createStructure();
+			await structureBuilderPage.goToCreateStructure();
 
 			// Add a Text field
 
@@ -449,7 +449,7 @@ test.describe('Frontend validations', () => {
 
 			// Go to the Structure Builder
 
-			await structureBuilderPage.createStructure();
+			await structureBuilderPage.goToCreateStructure();
 
 			// Add a Single Select field and check for blur error
 
@@ -501,7 +501,7 @@ test(
 
 		// Go to the Structure Builder
 
-		await structureBuilderPage.createStructure();
+		await structureBuilderPage.goToCreateStructure();
 
 		// Add a Single Select field and select it
 
@@ -805,7 +805,7 @@ test(
 
 		// Check with type file
 
-		await structureBuilderPage.createStructure('file');
+		await structureBuilderPage.goToCreateStructure('file');
 
 		await structureBuilderPage.changeStructureSettings({
 			label: getRandomString(),

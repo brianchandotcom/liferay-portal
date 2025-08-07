@@ -299,10 +299,6 @@ export class StructureBuilderPage {
 		}
 	}
 
-	async createStructure(type: StructureType = 'content') {
-		await this.goto({type});
-	}
-
 	async customizeExperience() {
 		await expect(async () => {
 			await this.customizeExperienceButton.click();
@@ -410,6 +406,10 @@ export class StructureBuilderPage {
 				timeout: 2000,
 			});
 		}).toPass();
+	}
+
+	async goToCreateStructure(type: StructureType = 'content') {
+		await this.goto({type});
 	}
 
 	async publishStructure() {

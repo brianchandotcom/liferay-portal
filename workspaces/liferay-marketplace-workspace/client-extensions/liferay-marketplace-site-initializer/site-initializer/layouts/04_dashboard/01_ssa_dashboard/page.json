@@ -9,8 +9,7 @@
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},
@@ -18,18 +17,15 @@
 			"actionIds": [
 				"VIEW"
 			],
-			"roleName": "SSA",
+			"roleName": "SSA User",
 			"scope": 4
 		},
 		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "SSA Admin",
+			"actionIds": [],
+			"roleName": "Site Member",
 			"scope": 4
 		}
 	],
-	"private": false,
 	"system": false,
 	"type": "content"
 }

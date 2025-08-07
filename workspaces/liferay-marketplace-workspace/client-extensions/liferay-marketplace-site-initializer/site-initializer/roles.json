@@ -66,20 +66,17 @@
 		"type": 6
 	},
 	{
-		"actions": [
-		],
+		"actions": [],
 		"name": "App Editor",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
+		"actions": [],
 		"name": "Invited Member",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
+		"actions": [],
 		"name": "Solution Publisher",
 		"type": 6
 	},
@@ -114,6 +111,10 @@
 		],
 		"name": "SSA Admin",
 		"type": 6
+	},
+	{
+		"name": "SSA User",
+		"type": 1
 	},
 	{
 		"actions": [

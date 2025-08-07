@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
+import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryAcquisitionChannel;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryHistogramMetric;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryMetric;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
@@ -21,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,6 +41,67 @@ public class AnalyticsCloudClient {
 
 	public AnalyticsCloudClient(Http http) {
 		_http = http;
+	}
+
+	public List<ObjectEntryAcquisitionChannel>
+			getObjectEntryAcquisitionChannels(
+				AnalyticsConfiguration analyticsConfiguration,
+				String externalReferenceCode, Long groupId, Integer rangeKey)
+		throws Exception {
+
+		try {
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			List<Long> groupIds = new ArrayList<>();
+
+			if (groupId != null) {
+				groupIds.add(groupId);
+			}
+
+			options.setLocation(
+				_getUrl(
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					externalReferenceCode, groupIds,
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					"/acquisition-channels", rangeKey, null));
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Response code " + response.getResponseCode());
+				}
+
+				throw new PortalException(
+					"Unable to get object entry acquisition channels");
+			}
+
+			ObjectMapper objectMapper = ObjectMapperHolder._objectMapper;
+
+			JsonNode jsonNode = objectMapper.readTree(content);
+
+			if (jsonNode == null) {
+				return null;
+			}
+
+			TypeFactory typeFactory = TypeFactory.defaultInstance();
+
+			ObjectReader objectReader = objectMapper.readerFor(
+				typeFactory.constructCollectionType(
+					List.class, ObjectEntryAcquisitionChannel.class));
+
+			return objectReader.readValue(jsonNode);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to get object entry acquisition channels", exception);
+		}
 	}
 
 	public ObjectEntryHistogramMetric getObjectEntryHistogramMetric(
@@ -209,9 +272,13 @@ public class AnalyticsCloudClient {
 			url = HttpComponentsUtil.addParameter(url, "rangeKey", rangeKey);
 		}
 
-		return HttpComponentsUtil.addParameter(
-			url, "selectedMetrics",
-			StringUtil.merge(selectedMetrics, StringPool.COMMA));
+		if (ArrayUtil.isNotEmpty(selectedMetrics)) {
+			return HttpComponentsUtil.addParameter(
+				url, "selectedMetrics",
+				StringUtil.merge(selectedMetrics, StringPool.COMMA));
+		}
+
+		return url;
 	}
 
 	private void _renameKey(JsonNode jsonNode, String newKey, String oldKey) {

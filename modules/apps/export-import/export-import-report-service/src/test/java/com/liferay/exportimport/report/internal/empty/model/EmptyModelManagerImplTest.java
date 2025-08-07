@@ -7,7 +7,9 @@ package com.liferay.exportimport.report.internal.empty.model;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
@@ -20,17 +22,22 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -43,6 +50,17 @@ public class EmptyModelManagerImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() {
+		_stagingGroupHelperUtilMockedStatic = Mockito.mockStatic(
+			StagingGroupHelperUtil.class);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_stagingGroupHelperUtilMockedStatic.close();
+	}
+
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
@@ -53,6 +71,8 @@ public class EmptyModelManagerImplTest {
 			_exportImportReportEntryLocalService);
 		ReflectionTestUtil.setFieldValue(
 			_emptyModelManager, "_groupLocalService", _groupLocalService);
+
+		_stagingGroupHelperUtilMockedStatic.reset();
 	}
 
 	@After
@@ -164,7 +184,9 @@ public class EmptyModelManagerImplTest {
 				_exportImportReportEntryLocalService
 			).addEmptyExportImportReportEntry(
 				0L, companyId, externalReferenceCode, classNameId,
-				exportImportConfigurationId
+				exportImportConfigurationId, User.class.getName(),
+				ExportImportReportEntryConstants.ORIGIN_STAGING,
+				ObjectDefinitionConstants.SCOPE_COMPANY, null
 			);
 		}
 	}
@@ -259,6 +281,21 @@ public class EmptyModelManagerImplTest {
 	public void testGetOrAddEmptyModelGroupScopedWithEnabledLazyReferencingAndAddingEmptyItem()
 		throws Exception {
 
+		StagingGroupHelper stagingGroupHelper = Mockito.mock(
+			StagingGroupHelper.class);
+
+		Mockito.when(
+			stagingGroupHelper.isCompanyGroup(_group)
+		).thenReturn(
+			false
+		);
+
+		_stagingGroupHelperUtilMockedStatic.when(
+			StagingGroupHelperUtil::getStagingGroupHelper
+		).thenReturn(
+			stagingGroupHelper
+		);
+
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
@@ -278,6 +315,20 @@ public class EmptyModelManagerImplTest {
 				companyId
 			);
 
+			String groupExternalReferenceCode = RandomTestUtil.randomString();
+
+			Mockito.when(
+				_group.getExternalReferenceCode()
+			).thenReturn(
+				groupExternalReferenceCode
+			);
+
+			Mockito.when(
+				_group.isCompany()
+			).thenReturn(
+				false
+			);
+
 			long groupId = RandomTestUtil.randomLong();
 
 			Mockito.when(
@@ -291,12 +342,12 @@ public class EmptyModelManagerImplTest {
 			ExportImportThreadLocal.setExportImportConfigurationId(
 				exportImportConfigurationId);
 
-			String externalReferenceCode = RandomTestUtil.randomString();
+			String userExternalReferenceCode = RandomTestUtil.randomString();
 
 			Assert.assertSame(
 				_user,
 				_emptyModelManager.getOrAddEmptyModel(
-					User.class, () -> _user, externalReferenceCode,
+					User.class, () -> _user, userExternalReferenceCode,
 					_toBiFunction(() -> null),
 					_toUnsafeBiFunction(
 						() -> {
@@ -317,6 +368,14 @@ public class EmptyModelManagerImplTest {
 			).getCompanyId();
 
 			Mockito.verify(
+				_group
+			).getExternalReferenceCode();
+
+			Mockito.verify(
+				_group
+			).isCompany();
+
+			Mockito.verify(
 				_groupLocalService
 			).fetchGroup(
 				groupId
@@ -325,8 +384,10 @@ public class EmptyModelManagerImplTest {
 			Mockito.verify(
 				_exportImportReportEntryLocalService
 			).addEmptyExportImportReportEntry(
-				groupId, companyId, externalReferenceCode, classNameId,
-				exportImportConfigurationId
+				groupId, companyId, userExternalReferenceCode, classNameId,
+				exportImportConfigurationId, User.class.getName(),
+				ExportImportReportEntryConstants.ORIGIN_STAGING,
+				ObjectDefinitionConstants.SCOPE_SITE, groupExternalReferenceCode
 			);
 		}
 	}
@@ -427,7 +488,9 @@ public class EmptyModelManagerImplTest {
 				_exportImportReportEntryLocalService
 			).addEmptyExportImportReportEntry(
 				0L, companyId, externalReferenceCode, classNameId,
-				exportImportConfigurationId
+				exportImportConfigurationId, User.class.getName(),
+				ExportImportReportEntryConstants.ORIGIN_STAGING,
+				ObjectDefinitionConstants.SCOPE_COMPANY, null
 			);
 		}
 	}
@@ -443,6 +506,9 @@ public class EmptyModelManagerImplTest {
 
 		return (externalReferenceCode, companyId) -> unsafeSupplier.get();
 	}
+
+	private static MockedStatic<StagingGroupHelperUtil>
+		_stagingGroupHelperUtilMockedStatic;
 
 	private final ClassNameLocalService _classNameLocalService = Mockito.mock(
 		ClassNameLocalService.class);

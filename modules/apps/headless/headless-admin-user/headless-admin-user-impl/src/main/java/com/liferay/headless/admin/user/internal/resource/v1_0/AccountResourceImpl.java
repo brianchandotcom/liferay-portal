@@ -319,7 +319,7 @@ public class AccountResourceImpl
 	public List<String> getNestedFields() {
 		return List.of(
 			"accountGroupBriefs", "accountRoles", "keywords", "logoBase64",
-			"taxonomyCategoryBriefs");
+			"postalAddresses", "taxonomyCategoryBriefs");
 	}
 
 	@NestedField(

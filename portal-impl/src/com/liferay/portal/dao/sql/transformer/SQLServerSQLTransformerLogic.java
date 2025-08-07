@@ -22,9 +22,9 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		Function[] functions = {
 			getAggregationFunction(), getBitwiseCheckFunction(),
-			getBooleanFunction(), getCastClobTextFunction(),
-			getCastDecimalFunction(), getCastLongFunction(),
-			getCastTextFunction(), getConcatFunction(),
+			getBitwiseOrFunction(), getBooleanFunction(),
+			getCastClobTextFunction(), getCastDecimalFunction(),
+			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
 			getDropTableIfExistsTextFunction(), getInstrFunction(),
 			getIntegerDivisionFunction(), getLengthFunction(), getModFunction(),
 			getNullDateFunction(), getSubstrFunction()

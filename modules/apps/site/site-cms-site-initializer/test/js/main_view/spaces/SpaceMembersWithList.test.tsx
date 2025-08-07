@@ -6,14 +6,17 @@
 import '@testing-library/jest-dom/extend-expect';
 import {act, render, screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {openToast} from 'frontend-js-components-web';
 import React from 'react';
 
+import AdminUserService from '../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService';
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 import {
 	UserAccount,
 	UserGroup,
 } from '../../../../src/main/resources/META-INF/resources/js/common/types/UserAccount';
+import {SPACE_MEMBER_ROLE_ID} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersPermissionSelect';
 import {SelectOptions} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersInputWithSelect';
 import {
 	SpaceMembersWithList,
@@ -22,9 +25,17 @@ import {
 import {mockFetch} from '../../__mocks__/frontend-js-web';
 
 jest.mock('frontend-js-web', () => ({
-	...((jest.requireActual('frontend-js-web') ?? {}) as any),
+	...(jest.requireActual('frontend-js-web') as any),
 	sub: (str: string, arg: string) => str.replace('x', arg),
 }));
+
+jest.mock('frontend-js-components-web', () => ({
+	openToast: jest.fn(),
+}));
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService'
+);
 
 describe('SpaceMembersWithList', () => {
 	const testSpace = {
@@ -32,18 +43,37 @@ describe('SpaceMembersWithList', () => {
 		name: 'Test Space',
 	};
 
+	const mockRoles = [
+		{
+			externalReferenceCode: '1',
+			id: SPACE_MEMBER_ROLE_ID,
+			name: 'Space Member',
+			name_i18n: {'en-US': 'Space Member'},
+		},
+		{
+			externalReferenceCode: '2',
+			id: 101,
+			name: 'Role 1',
+			name_i18n: {'en-US': 'Role 1'},
+		},
+	];
+
 	const testUsers = [
 		{
 			emailAddress: 'john.doe@example.com',
 			id: '1',
 			image: '/image/user_portrait',
+			imageId: '1',
 			name: 'John Doe',
+			roles: [{id: SPACE_MEMBER_ROLE_ID, name: 'Space Member'}],
 		},
 		{
 			emailAddress: 'jane.smith@example.com',
 			id: '2',
 			image: '/image/user_portrait',
+			imageId: '1',
 			name: 'Jane Smith',
+			roles: [{id: SPACE_MEMBER_ROLE_ID, name: 'Space Member'}],
 		},
 	] as UserAccount[];
 
@@ -58,10 +88,12 @@ describe('SpaceMembersWithList', () => {
 		{
 			id: '1',
 			name: 'Group 1',
+			roles: [{id: SPACE_MEMBER_ROLE_ID, name: 'Space Member'}],
 		},
 		{
 			id: '2',
 			name: 'Group 2',
+			roles: [{id: SPACE_MEMBER_ROLE_ID, name: 'Space Member'}],
 		},
 	] as UserGroup[];
 
@@ -85,6 +117,7 @@ describe('SpaceMembersWithList', () => {
 	let getSpaceUserGroupsSpy: jest.SpyInstance;
 	let getSpaceUsersSpy: jest.SpyInstance;
 	let intersectionObserverMock: jest.Mock;
+	const mockedOpenToast = openToast as jest.Mock;
 
 	beforeEach(() => {
 		getSpaceSpy = jest
@@ -96,6 +129,14 @@ describe('SpaceMembersWithList', () => {
 		getSpaceUserGroupsSpy = jest
 			.spyOn(SpaceService, 'getSpaceUserGroups')
 			.mockResolvedValue(testUserGroupsResponse);
+
+		jest.spyOn(AdminUserService, 'getUserRoles').mockResolvedValue({
+			items: mockRoles,
+			lastPage: 1,
+			page: 1,
+			pageSize: 1,
+			totalCount: mockRoles.length,
+		});
 
 		consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
 
@@ -120,12 +161,9 @@ describe('SpaceMembersWithList', () => {
 	});
 
 	afterEach(() => {
-		getSpaceSpy.mockClear();
-		getSpaceUsersSpy.mockClear();
-		getSpaceUserGroupsSpy.mockClear();
-		consoleErrorSpy.mockRestore();
-
-		jest.clearAllMocks();
+		jest.restoreAllMocks();
+		mockFetch.mockReset();
+		mockedOpenToast.mockClear();
 
 		const alerts = document.body.querySelectorAll('[role="alert"]');
 		alerts.forEach((alert) => alert.remove());
@@ -134,13 +172,12 @@ describe('SpaceMembersWithList', () => {
 	afterAll(() => {
 		window.ResizeObserver = ResizeObserverOriginal;
 		delete (global as any).IntersectionObserver;
-		jest.restoreAllMocks();
 	});
 
 	it('lists users from a space', async () => {
 		render(<SpaceMembersWithList {...props} />);
 
-		const usersList = screen.getByLabelText('who-has-access');
+		const usersList = await screen.findByLabelText('who-has-access');
 		expect(usersList).toBeInTheDocument();
 
 		await waitFor(() => {
@@ -176,13 +213,12 @@ describe('SpaceMembersWithList', () => {
 	});
 
 	it('loads more users when scrolling down', async () => {
-		jest.useFakeTimers();
-
 		const moreUsers = [
 			{
 				emailAddress: 'user3@example.com',
 				id: '3',
 				name: 'User Three',
+				roles: [{id: 1, name: 'Admin'}],
 			},
 		];
 		const moreUsersResponse = {
@@ -204,10 +240,6 @@ describe('SpaceMembersWithList', () => {
 
 		render(<SpaceMembersWithList {...props} />);
 
-		await act(async () => {
-			jest.runAllTimers();
-		});
-
 		await waitFor(() => {
 			expect(
 				within(screen.getByLabelText('who-has-access')).getAllByRole(
@@ -216,11 +248,10 @@ describe('SpaceMembersWithList', () => {
 			).toHaveLength(testUsers.length);
 		});
 
-		await act(async () => {
+		act(() => {
 			(intersectionObserverMock as any).mockCallback([
 				{isIntersecting: true},
 			]);
-			jest.runAllTimers();
 		});
 
 		await waitFor(() => {
@@ -239,12 +270,12 @@ describe('SpaceMembersWithList', () => {
 		});
 
 		expect(screen.queryByRole('status')).not.toBeInTheDocument();
-
-		jest.useRealTimers();
 	});
 
 	it('loads more user groups when scrolling down', async () => {
-		const moreGroups = [{id: '3', name: 'Group Three'}];
+		const moreGroups = [
+			{id: '3', name: 'Group Three', roles: [{id: 1, name: 'Admin'}]},
+		];
 		const moreGroupsResponse = {
 			items: moreGroups,
 			lastPage: 2,
@@ -302,8 +333,9 @@ describe('SpaceMembersWithList', () => {
 			);
 		});
 
+		expect(screen.getByText('no-members-yet')).toBeInTheDocument();
 		expect(
-			screen.getByText('this-space-has-no-user-yet')
+			screen.getByText('add-members-to-this-space')
 		).toBeInTheDocument();
 	});
 
@@ -321,8 +353,9 @@ describe('SpaceMembersWithList', () => {
 			render(<SpaceMembersWithList {...props} />);
 		});
 
+		expect(screen.getByText('no-members-yet')).toBeInTheDocument();
 		expect(
-			screen.getByText('this-space-has-no-user-yet')
+			screen.getByText('add-members-to-this-space')
 		).toBeInTheDocument();
 
 		await userEvent.selectOptions(
@@ -330,8 +363,9 @@ describe('SpaceMembersWithList', () => {
 			SelectOptions.GROUPS
 		);
 
+		expect(screen.getByText('no-members-yet')).toBeInTheDocument();
 		expect(
-			screen.getByText('this-space-has-no-group-yet')
+			screen.getByText('add-members-to-this-space')
 		).toBeInTheDocument();
 	});
 
@@ -359,22 +393,22 @@ describe('SpaceMembersWithList', () => {
 				await screen.findByRole('option', {name: /New User/})
 			);
 
+			expect(
+				within(screen.getByLabelText('who-has-access')).getByText(
+					'New User'
+				)
+			).toBeInTheDocument();
+
 			await waitFor(() => {
 				expect(linkSpy).toHaveBeenCalledWith({
 					spaceId: testSpace.id,
 					userId: newUser.id,
 				});
+			});
 
-				expect(
-					within(screen.getByLabelText('who-has-access')).getByText(
-						'New User'
-					)
-				).toBeInTheDocument();
-
-				const alert = screen.getByRole('alert');
-				expect(alert).toHaveTextContent(
-					`user-${newUser.name}-successfully-added-to-space`
-				);
+			expect(mockedOpenToast).toHaveBeenCalledWith({
+				message: `user-<strong>${newUser.name}</strong>-successfully-added-to-space`,
+				type: 'success',
 			});
 		});
 
@@ -403,13 +437,11 @@ describe('SpaceMembersWithList', () => {
 				await screen.findByRole('option', {name: /Fail User/})
 			);
 
-			await waitFor(() => {
-				expect(linkSpy).toHaveBeenCalled();
+			await waitFor(() => expect(linkSpy).toHaveBeenCalled());
 
-				const alert = screen.getByRole('alert');
-				expect(alert).toHaveTextContent(
-					`failed-to-add-user-${newUser.name}-to-space`
-				);
+			expect(mockedOpenToast).toHaveBeenCalledWith({
+				message: `failed-to-add-user-<strong>${newUser.name}</strong>-to-space`,
+				type: 'danger',
 			});
 		});
 	});
@@ -434,17 +466,18 @@ describe('SpaceMembersWithList', () => {
 			);
 			await userEvent.click(removeButton);
 
+			expect(userItem).not.toBeInTheDocument();
+
 			await waitFor(() => {
 				expect(unlinkSpy).toHaveBeenCalledWith({
 					spaceId: testSpace.id,
 					userId: testUsers[1].id,
 				});
-				expect(removeButton).not.toBeInTheDocument();
+			});
 
-				const alert = screen.getByRole('alert');
-				expect(alert).toHaveTextContent(
-					`user-${testUsers[1].name}-successfully-removed-from-space`
-				);
+			expect(mockedOpenToast).toHaveBeenCalledWith({
+				message: `user-<strong>${testUsers[1].name}</strong>-successfully-removed-from-space`,
+				type: 'success',
 			});
 		});
 
@@ -466,13 +499,11 @@ describe('SpaceMembersWithList', () => {
 			);
 			await userEvent.click(removeButton);
 
-			await waitFor(() => {
-				expect(unlinkSpy).toHaveBeenCalled();
+			await waitFor(() => expect(unlinkSpy).toHaveBeenCalled());
 
-				const alert = screen.getByRole('alert');
-				expect(alert).toHaveTextContent(
-					`unable-to-remove-user-${testUsers[1].name}-from-space`
-				);
+			expect(mockedOpenToast).toHaveBeenCalledWith({
+				message: `unable-to-remove-user-<strong>${testUsers[1].name}</strong>-from-space`,
+				type: 'danger',
 			});
 		});
 
@@ -502,13 +533,11 @@ describe('SpaceMembersWithList', () => {
 			);
 			await userEvent.click(removeButton);
 
-			await waitFor(() => {
-				expect(unlinkSpy).toHaveBeenCalled();
+			await waitFor(() => expect(unlinkSpy).toHaveBeenCalled());
 
-				const alert = screen.getByRole('alert');
-				expect(alert).toHaveTextContent(
-					`unable-to-remove-group-${testUserGroups[0].name}-from-space`
-				);
+			expect(mockedOpenToast).toHaveBeenCalledWith({
+				message: `unable-to-remove-group-<strong>${testUserGroups[0].name}</strong>-from-space`,
+				type: 'danger',
 			});
 		});
 	});
@@ -585,6 +614,89 @@ describe('SpaceMembersWithList', () => {
 			expect(
 				screen.queryByRole('button', {name: /remove/i})
 			).not.toBeInTheDocument();
+		});
+	});
+
+	describe('When updating member roles', () => {
+		it("updates a user's roles and shows a success toast", async () => {
+			const updateUserRolesSpy = jest
+				.spyOn(SpaceService, 'updateUserRoles')
+				.mockResolvedValue({
+					data: {
+						roleIds: [SPACE_MEMBER_ROLE_ID, 101],
+						spaceId: testSpace.id,
+						userId: testUsers[1].id,
+					},
+					error: null,
+				});
+
+			render(<SpaceMembersWithList {...props} />);
+
+			const userItem = await screen.findByText(testUsers[1].name);
+			const permissionSelect = within(userItem.closest('li')!).getByRole(
+				'button',
+				{
+					name: 'Space Member',
+				}
+			);
+
+			await userEvent.click(permissionSelect);
+
+			const roleCheckbox = await screen.findByLabelText('Role 1');
+			await userEvent.click(roleCheckbox);
+
+			await waitFor(() => {
+				expect(updateUserRolesSpy).toHaveBeenCalledWith({
+					roleIds: [SPACE_MEMBER_ROLE_ID, 101],
+					spaceId: testSpace.id,
+					userId: testUsers[1].id,
+				});
+			});
+
+			expect(mockedOpenToast).toHaveBeenCalledWith({
+				message: `<strong>${testUsers[1].name}</strong>-role-as-successfully-updated`,
+				type: 'success',
+			});
+
+			expect(
+				within(userItem.closest('li')!).getByRole('button', {
+					name: 'Space Member, Role 1',
+				})
+			).toBeInTheDocument();
+		});
+
+		it('shows an error toast and reverts roles when update fails', async () => {
+			const updateUserRolesSpy = jest
+				.spyOn(SpaceService, 'updateUserRoles')
+				.mockResolvedValue({
+					data: null,
+					error: 'Update failed',
+				});
+
+			render(<SpaceMembersWithList {...props} />);
+
+			const userItem = await screen.findByText(testUsers[1].name);
+			const permissionSelect = within(userItem.closest('li')!).getByRole(
+				'button',
+				{
+					name: 'Space Member',
+				}
+			);
+
+			await userEvent.click(permissionSelect);
+
+			const roleCheckbox = await screen.findByLabelText('Role 1');
+			await userEvent.click(roleCheckbox);
+
+			await waitFor(() => expect(updateUserRolesSpy).toHaveBeenCalled());
+
+			expect(mockedOpenToast).toHaveBeenCalledWith({
+				message: `unable-to-update-roles-for-user-<strong>${testUsers[1].name}</strong>`,
+				type: 'danger',
+			});
+
+			expect(permissionSelect).toHaveTextContent('Space Member');
+			expect(permissionSelect).not.toHaveTextContent('Role 1');
 		});
 	});
 });

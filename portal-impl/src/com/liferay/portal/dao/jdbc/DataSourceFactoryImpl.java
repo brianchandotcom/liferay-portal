@@ -47,6 +47,8 @@ import java.nio.file.Paths;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Arrays;
@@ -173,13 +175,17 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			_log.debug("Created data source " + dataSource.getClass());
 		}
 
-		if (Boolean.getBoolean("jdbc.data.source.anti.time.drift")) {
-			DBType dbType = DBManagerUtil.getDBType(
-				DialectDetector.getDialect(dataSource));
+		DBType dbType = DBManagerUtil.getDBType(
+			DialectDetector.getDialect(dataSource));
 
-			if (dbType == DBType.DB2) {
-				dataSource = new AntiTimeDriftDataSourceWrapper(dataSource);
-			}
+		if (Boolean.getBoolean("jdbc.data.source.anti.time.drift") &&
+			(dbType == DBType.DB2)) {
+
+			dataSource = new AntiTimeDriftDataSourceWrapper(dataSource);
+		}
+
+		if (dbType == DBType.SQLSERVER) {
+			_checkSqlServerReadCommittedSnapshot(dataSource);
 		}
 
 		return dataSource;
@@ -322,6 +328,38 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 				throw classNotFoundException;
 			}
+		}
+	}
+
+	private void _checkSqlServerReadCommittedSnapshot(DataSource dataSource) {
+		try (Connection connection = dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select name, is_read_committed_snapshot_on from " +
+					"sys.databases where name = db_name()");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				boolean readCommittedSnapshotOn = resultSet.getBoolean(
+					"is_read_committed_snapshot_on");
+
+				if (!readCommittedSnapshotOn) {
+					if (_log.isWarnEnabled()) {
+						String databaseName = resultSet.getString("name");
+
+						_log.warn(
+							StringBundler.concat(
+								"read_committed_snapshot is disabled for ",
+								"database '", databaseName,
+								"'. This may cause deadlock issues. Enable it ",
+								"with: alter database ", databaseName,
+								" set read_committed_snapshot on"));
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to check read_committed_snapshot setting", exception);
 		}
 	}
 

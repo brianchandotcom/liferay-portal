@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletConfigImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
 
 import jakarta.servlet.Servlet;
@@ -30,7 +31,6 @@ import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
 import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistration;
-import org.eclipse.equinox.http.servlet.internal.servlet.ServletConfigImpl;
 import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
 import org.osgi.framework.BundleContext;
@@ -141,11 +141,12 @@ public class ServletServiceTrackerCustomizer
 
 				servletRegistration.init(
 					new ServletConfigImpl(
-						servletDTO.name, servletDTO.initParams,
+						servletDTO.initParams,
 						new ServletContextWrapper(
 							serviceHolder.getBundle(), liferayContextController,
 							servletContextHelper,
-							servletContextHelperDataContext)));
+							servletContextHelperDataContext),
+						servletDTO.name));
 
 				Set<EndpointRegistration<?>> endpointRegistrations =
 					liferayContextController.getEndpointRegistrations();

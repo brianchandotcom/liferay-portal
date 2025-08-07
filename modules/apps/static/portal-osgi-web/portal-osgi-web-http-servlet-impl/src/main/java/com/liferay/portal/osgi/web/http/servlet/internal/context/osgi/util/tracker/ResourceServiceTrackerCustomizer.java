@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ResourceServlet;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletConfigImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
 
 import jakarta.servlet.ServletException;
@@ -26,7 +27,6 @@ import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
 import org.eclipse.equinox.http.servlet.internal.registration.ResourceRegistration;
-import org.eclipse.equinox.http.servlet.internal.servlet.ServletConfigImpl;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 
 import org.osgi.framework.Bundle;
@@ -148,10 +148,11 @@ public class ResourceServiceTrackerCustomizer
 		try {
 			resourceRegistration.init(
 				new ServletConfigImpl(
-					resourceRegistration.getName(), new HashMap<>(),
+					new HashMap<>(),
 					new ServletContextWrapper(
 						bundle, liferayContextController, servletContextHelper,
-						servletContextHelperDataContext)));
+						servletContextHelperDataContext),
+					resourceRegistration.getName()));
 		}
 		catch (ServletException servletException) {
 			if (_log.isDebugEnabled()) {

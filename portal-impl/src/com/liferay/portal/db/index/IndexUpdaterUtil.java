@@ -25,13 +25,12 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -299,7 +298,7 @@ public class IndexUpdaterUtil {
 	private static final DCLSingleton<ExecutorService>
 		_executorServiceDCLSingleton = new DCLSingleton<>();
 	private static final List<Future<?>> _futures =
-		Collections.synchronizedList(new ArrayList<Future<?>>());
+		new CopyOnWriteArrayList<>();
 	private static final Set<String> _processedServletContextNames =
 		ConcurrentHashMap.newKeySet();
 

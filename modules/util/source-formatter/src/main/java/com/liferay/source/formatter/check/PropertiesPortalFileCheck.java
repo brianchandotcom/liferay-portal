@@ -59,7 +59,8 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			 !shortFileName.equals("portal-upgrade-ext.properties")) ||
 			(!isPortalSource() && !isSubrepository() &&
 			 (shortFileName.equals("portal.properties") ||
-			  shortFileName.equals("portal-ext.properties")))) {
+			  shortFileName.equals("portal-ext.properties"))) ||
+			shortFileName.equals("IncorrectOrderingCheck.properties")) {
 
 			content = _sortPortalProperties(absolutePath, content);
 

@@ -21,7 +21,6 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -180,7 +179,7 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 
 		return _layoutClassedModelUsageLocalService.
 			fetchLayoutClassedModelUsage(
-				_group.getGroupId(), StringPool.BLANK,
+				_group.getGroupId(), _journalArticle.getExternalReferenceCode(),
 				_journalArticleClassNameId,
 				_journalArticle.getResourcePrimKey(),
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
@@ -243,6 +242,9 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 								"classPK",
 								String.valueOf(
 									journalArticle.getResourcePrimKey())
+							).put(
+								"externalReferenceCode",
+								_journalArticle.getExternalReferenceCode()
 							));
 					}
 
@@ -265,7 +267,8 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
-				fragmentEntryLink.getGroupId(), StringPool.BLANK,
+				fragmentEntryLink.getGroupId(),
+				_journalArticle.getExternalReferenceCode(),
 				_journalArticleClassNameId, classPK,
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				_fragmentEntryLinkClassNameId, fragmentEntryLink.getPlid());

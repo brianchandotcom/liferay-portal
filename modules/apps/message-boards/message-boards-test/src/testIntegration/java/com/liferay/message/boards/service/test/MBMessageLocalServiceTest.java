@@ -164,6 +164,37 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
+	public void testAddMessageUrlSubject() throws PortalException {
+		String subject = StringPool.DASH;
+		String body = StringPool.BLANK;
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			subject, body, "bbcode", inputStreamOVPs, false, 0.0, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		Assert.assertEquals(
+			subject + message.getMessageId(), message.getUrlSubject());
+
+		subject =
+			MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE + StringPool.DASH;
+
+		message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			subject, body, "bbcode", inputStreamOVPs, false, 0.0, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		Assert.assertEquals(
+			"re-" + message.getMessageId(), message.getUrlSubject());
+	}
+
+	@Test
 	public void testAddMessageWithEmptyBody() throws Exception {
 		User user = TestPropsValues.getUser();
 		String subject = StringUtil.randomString();

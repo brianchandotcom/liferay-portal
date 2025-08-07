@@ -77,14 +77,13 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 			ConfigurationScopeDisplayContext configurationScopeDisplayContext =
 				ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
-			List<ConfigurationEntry> configurationEntries =
-				_getConfigurationEntries(
-					configurationScopeDisplayContext, hits.getDocs(), locale,
-					searchContext);
-
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_ITERATOR,
-				new ConfigurationEntryIterator(configurationEntries));
+				new ConfigurationEntryIterator(
+					_getConfigurationEntries(
+						configurationScopeDisplayContext, hits.getDocs(),
+						locale, searchContext)));
+
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER,
 				_configurationEntryRetriever);

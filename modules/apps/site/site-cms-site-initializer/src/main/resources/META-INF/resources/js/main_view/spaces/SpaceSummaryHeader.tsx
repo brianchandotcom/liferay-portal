@@ -42,10 +42,11 @@ export default function SpaceSummaryHeader({
 	title,
 	url,
 }: SpaceSummaryHeaderProps) {
+	const loadData = () => window.location.reload();
+
 	const openMembersModal = (props: SpaceModalPropsType) => {
 		const {assetLibraryCreatorUserId, assetLibraryId} = props;
 
-		const loadData = () => window.location.reload();
 		const data: ManageMembersData = {
 			assetLibraryCreatorUserId,
 			assetLibraryId,
@@ -69,7 +70,10 @@ export default function SpaceSummaryHeader({
 			spaceModalProps?.action ===
 			SpaceSummaryHeaderActions.OPEN_SITES_MODAL
 		) {
-			return manageSitesAction({groupId: spaceModalProps.assetLibraryId});
+			return manageSitesAction({
+				groupId: spaceModalProps.assetLibraryId,
+				loadData,
+			});
 		}
 	};
 

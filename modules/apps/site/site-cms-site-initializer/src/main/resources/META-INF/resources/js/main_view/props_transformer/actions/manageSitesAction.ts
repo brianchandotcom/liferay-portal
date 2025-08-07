@@ -7,9 +7,16 @@ import {openModal} from 'frontend-js-components-web';
 
 import SpaceSitesModal from '../../spaces/SpaceSitesModal';
 
-export default function manageSitesAction({groupId}: {groupId: string}) {
+export default function manageSitesAction({
+	groupId,
+	loadData,
+}: {
+	groupId: string;
+	loadData: () => void;
+}) {
 	openModal({
 		contentComponent: () => SpaceSitesModal({groupId}),
+		onClose: loadData,
 		size: 'md',
 	});
 }

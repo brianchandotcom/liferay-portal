@@ -102,7 +102,7 @@ export default function AllSpacesFDSPropsTransformer({
 				manageMembersAction(data, loadData);
 			}
 			else if (action.data.id === 'view-sites') {
-				manageSitesAction({groupId: itemData.siteId});
+				manageSitesAction({groupId: itemData.siteId, loadData});
 			}
 		},
 	};

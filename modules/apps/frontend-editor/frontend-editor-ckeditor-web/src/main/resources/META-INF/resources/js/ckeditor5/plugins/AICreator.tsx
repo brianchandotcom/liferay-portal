@@ -6,16 +6,7 @@
 import {ButtonView, Command, Config, Plugin} from 'ckeditor5';
 
 import {LiferayEditorConfig} from '../utils/types';
-
-const aiCreatorIcon = `
-   	<svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="32.000000pt" height="32.000000pt" viewBox="0 0 32.000000 32.000000" preserveAspectRatio="xMidYMid meet">
-		<g transform="translate(0.000000,32.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-		<path d="M47 299 c-3 -11 -15 -23 -26 -26 -27 -7 -27 -19 0 -26 11 -3 23 -15 26 -26 3 -12 9 -21 13 -21 4 0 10 9 13 21 3 11 15 23 26 26 12 3 21 9 21 13 0 4 -9 10 -21 13 -11 3 -23 15 -26 26 -3 12 -9 21 -13 21 -4 0 -10 -9 -13 -21z"/>
-		<path d="M203 223 c-7 -32 -14 -39 -46 -46 -20 -5 -37 -13 -37 -17 0 -4 17 -12 37 -17 32 -7 39 -14 46 -46 11 -47 23 -47 34 0 7 32 14 39 46 46 20 5 37 13 37 17 0 4 -17 12 -37 17 -32 7 -39 14 -46 46 -5 20 -13 37 -17 37 -4 0 -12 -17 -17 -37z"/>
-		<path d="M78 59 c-17 -18 -17 -20 2 -39 20 -20 20 -20 40 0 l20 20 -20 20 c-23 23 -20 23 -42 -1z"/>
-		</g>
-	</svg>
-`;
+import getIcon from '../utils/getIcon';
 
 const ON_CLICK_POPOVER_CONTENT = `
 <div class="arrow"></div>
@@ -160,7 +151,7 @@ class AICreator extends Plugin {
 			const buttonView = new ButtonView();
 
 			buttonView.set({
-				icon: aiCreatorIcon,
+				icon: getIcon({symbol: 'stars'}),
 				label: Liferay.Language.get('ai-creator'),
 				tooltip: Liferay.Language.get('create-ai-content'),
 				withText: true,

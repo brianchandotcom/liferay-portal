@@ -5,8 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
+import moment from 'moment';
 import path from 'path';
 
+import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -24,6 +26,7 @@ import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest
 import getDataStructureDefinition from '../../journal-web/main/utils/getDataStructureDefinition';
 
 export const test = mergeTests(
+	accountSettingsPagesTest,
 	apiHelpersTest,
 	changeTrackingPagesTest,
 	dataApiHelpersTest,
@@ -475,4 +478,37 @@ test('LPD-61747 Discarding changes in a Publication containing a deletion change
 	await page.getByRole('button', {name: 'Discard'}).click();
 
 	await waitForAlert(page, 'Success:Your request completed successfully.');
+});
+
+test('User time zone from theme display is applied to publication FDS', async ({
+	accountSettingsPage,
+	changeTrackingPage,
+	page,
+}) => {
+	await test.step('Check date in different time zone', async () => {
+		await accountSettingsPage.goToDisplaySettings();
+
+		await accountSettingsPage.setTimeZone('Europe/Lisbon');
+
+		await changeTrackingPage.goto();
+
+		const utcTime = moment.utc();
+
+		// Add 1 hour offset to the UTC time
+
+		const timeZoneTime = utcTime.add(1, 'hours');
+
+		await expect(
+			page
+				.locator('[data-id*="dateCreated"]')
+				.getByText(timeZoneTime.format('MMM D, YYYY, h:mm'))
+				.first()
+		).toBeVisible();
+	});
+
+	await test.step('Revert to default UTC time zone', async () => {
+		await accountSettingsPage.goToDisplaySettings();
+
+		await accountSettingsPage.setTimeZone('UTC');
+	});
 });

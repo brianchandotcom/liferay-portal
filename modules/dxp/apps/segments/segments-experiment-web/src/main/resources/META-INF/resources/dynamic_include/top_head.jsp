@@ -19,7 +19,7 @@ SegmentsExperiment segmentsExperiment = (SegmentsExperiment)request.getAttribute
 			'[id^=analytics-targetable-collection]'
 		);
 
-		var layoutExternalReferenceCode =
+		var externalReferenceCode =
 			'<%= (String)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_ANALYTICS_EXTERNAL_REFERENCE_CODE) %>';
 
 		if (targetableCollectionElements.length) {
@@ -41,7 +41,7 @@ SegmentsExperiment segmentsExperiment = (SegmentsExperiment)request.getAttribute
 					if (window.Analytics) {
 						Analytics.send('ctaClicked', 'Page', {
 							elementId: element.id,
-							externalReferenceCode: layoutExternalReferenceCode,
+							externalReferenceCode,
 						});
 					}
 				});

@@ -651,8 +651,8 @@ public class StructuredContentResourceTest
 
 		super.testPostStructuredContentFolderStructuredContent();
 
-		_testPostStructuredContentFolderStructuredContentWithDisplayPage();
-		_testPostStructuredContentFolderStructuredContentWithMandatoryImageField();
+		_testPostStructuredContentFolderStructuredContentWithDisplayPageTemplate();
+		_testPostStructuredContentFolderStructuredContentWithImageContentField();
 	}
 
 	@Override
@@ -2632,7 +2632,7 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(1, jsonObject.getLong("totalItemsCount"));
 	}
 
-	private void _testPostStructuredContentFolderStructuredContentWithDisplayPage()
+	private void _testPostStructuredContentFolderStructuredContentWithDisplayPageTemplate()
 		throws Exception {
 
 		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
@@ -2659,7 +2659,7 @@ public class StructuredContentResourceTest
 				getMarkedAsDefault());
 	}
 
-	private void _testPostStructuredContentFolderStructuredContentWithMandatoryImageField()
+	private void _testPostStructuredContentFolderStructuredContentWithImageContentField()
 		throws Exception {
 
 		StructuredContent structuredContent = randomStructuredContent();

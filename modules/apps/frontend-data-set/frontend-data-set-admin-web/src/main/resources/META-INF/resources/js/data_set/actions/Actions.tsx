@@ -12,7 +12,6 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {
-	API_URL,
 	DEFAULT_FETCH_HEADERS,
 	OBJECT_RELATIONSHIP,
 } from '../../utils/constants';
@@ -23,6 +22,7 @@ import ActionForm from './components/ActionForm';
 import ActionList from './components/ActionList';
 
 import '../../../css/Actions.scss';
+import getDataSetResourceURL from '../../utils/getDataSetResourceURL';
 import sortItems from '../../utils/sortItems';
 import {IOrderable} from '../../utils/types';
 
@@ -152,7 +152,15 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 
 		const type = activeTab === 0 ? EActionType.ITEM : EActionType.CREATION;
 
-		const url = `${API_URL.ACTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_ACTIONS_ID} eq '${dataSet.id}') and (type eq '${type}')&nestedFields=${OBJECT_RELATIONSHIP.DATA_SET_ACTIONS}&sort=dateCreated:asc`;
+		const url = getDataSetResourceURL({
+			dataSetERC: dataSet.externalReferenceCode,
+			params: {
+				filter: `type eq '${type}'`,
+				nestedFields: OBJECT_RELATIONSHIP.DATA_SET_ACTIONS,
+				sort: 'dateCreated:asc',
+			},
+			relationship: OBJECT_RELATIONSHIP.DATA_SET_ACTIONS,
+		});
 
 		if (activeTab === 0) {
 			setActiveSection(SECTIONS.ITEM_ACTIONS);
@@ -217,7 +225,13 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 					onClick: ({processClose}: {processClose: Function}) => {
 						processClose();
 
-						const url = `${API_URL.ACTIONS}/${item.id}`;
+						const url = getDataSetResourceURL({
+							dataSetERC: dataSet.externalReferenceCode,
+							relatedResourceERC: String(
+								item.externalReferenceCode
+							),
+							relationship: OBJECT_RELATIONSHIP.DATA_SET_ACTIONS,
+						});
 
 						fetch(url, {
 							headers: DEFAULT_FETCH_HEADERS,
@@ -252,18 +266,17 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 		const actionTypeOrder =
 			activeTab === 0 ? 'itemActionsOrder' : 'creationActionsOrder';
 
-		const apiURL = API_URL.DATA_SETS;
+		const url = getDataSetResourceURL({
+			dataSetERC: dataSet.externalReferenceCode,
+		});
 
-		const response = await fetch(
-			`${apiURL}/by-external-reference-code/${dataSet.externalReferenceCode}`,
-			{
-				body: JSON.stringify({
-					[actionTypeOrder]: order,
-				}),
-				headers: DEFAULT_FETCH_HEADERS,
-				method: 'PATCH',
-			}
-		);
+		const response = await fetch(url, {
+			body: JSON.stringify({
+				[actionTypeOrder]: order,
+			}),
+			headers: DEFAULT_FETCH_HEADERS,
+			method: 'PATCH',
+		});
 
 		if (!response.ok) {
 			openDefaultFailureToast();
@@ -288,14 +301,17 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 	const updateActive = async (item: IAction) => {
 		setToogleActiveDisabled(true);
 
-		const response = await fetch(
-			`${API_URL.ACTIONS}/by-external-reference-code/${item.externalReferenceCode}`,
-			{
-				body: JSON.stringify({active: !item.active}),
-				headers: DEFAULT_FETCH_HEADERS,
-				method: 'PATCH',
-			}
-		);
+		const url = getDataSetResourceURL({
+			dataSetERC: dataSet.externalReferenceCode,
+			relatedResourceERC: item.externalReferenceCode,
+			relationship: OBJECT_RELATIONSHIP.DATA_SET_ACTIONS,
+		});
+
+		const response = await fetch(url, {
+			body: JSON.stringify({active: !item.active}),
+			headers: DEFAULT_FETCH_HEADERS,
+			method: 'PATCH',
+		});
 
 		if (!response.ok) {
 			openDefaultFailureToast();
@@ -328,6 +344,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 	useEffect(() => {
 		loadActions({activeTab: 0});
 
+		// eslint-disable-next-line react-compiler/react-compiler
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

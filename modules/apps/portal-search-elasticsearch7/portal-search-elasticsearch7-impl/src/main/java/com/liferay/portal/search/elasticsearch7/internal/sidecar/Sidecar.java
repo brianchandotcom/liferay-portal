@@ -12,7 +12,6 @@ import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.process.ProcessLog;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +32,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -391,19 +389,22 @@ public class Sidecar {
 
 		URL sidecarAgentBundleURL = _getBundleURL(SidecarAgent.class);
 
-		try {
-			URI sidecarAgentBundleURI = new URI(
-				sidecarAgentBundleURL.getProtocol(),
-				sidecarAgentBundleURL.getAuthority(),
-				sidecarAgentBundleURL.getPath(),
-				sidecarAgentBundleURL.getQuery(),
-				sidecarAgentBundleURL.getRef());
+		Path agentPath;
 
-			arguments.add("-javaagent:" + Path.of(sidecarAgentBundleURI));
+		try {
+			agentPath = Path.of(sidecarAgentBundleURL.toURI());
 		}
 		catch (URISyntaxException uriSyntaxException) {
-			ReflectionUtil.throwException(uriSyntaxException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(uriSyntaxException);
+			}
+
+			File file = new File(sidecarAgentBundleURL.getPath());
+
+			agentPath = file.toPath();
 		}
+
+		arguments.add("-javaagent:" + agentPath);
 
 		return arguments;
 	}

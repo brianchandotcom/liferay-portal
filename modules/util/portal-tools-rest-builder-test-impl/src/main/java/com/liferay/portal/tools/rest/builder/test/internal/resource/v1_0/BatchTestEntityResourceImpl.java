@@ -9,7 +9,6 @@ import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.util.LongWrapper;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.CompanyTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.BatchTestEntityResource;
@@ -174,13 +173,6 @@ public class BatchTestEntityResourceImpl
 	public BatchTestEntity putBatchTestEntityByExternalReferenceCode(
 			String externalReferenceCode, BatchTestEntity batchTestEntity)
 		throws Exception {
-
-		if (StringUtil.startsWith(
-				batchTestEntity.getExternalReferenceCode(), "FAIL_ON_UPSERT")) {
-
-			throw new UnsupportedOperationException(
-				"This is the error message");
-		}
 
 		BatchTestEntity existingBatchTestEntity = _fetchBatchTestEntity(
 			externalReferenceCode);

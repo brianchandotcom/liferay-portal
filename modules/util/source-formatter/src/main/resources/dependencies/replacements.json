@@ -111,9 +111,9 @@
 		]
 	},
 	{
-		"from": "regex:(?<prefixMethodName>AutoBatchPreparedStatementUtil\\.autoBatch\\(\\s*)(?<variableName>\\w+)\\.prepareStatement\\((?<messageVariable>[\\s\\S]+)\\)\\)",
+		"from": "regex:AutoBatchPreparedStatementUtil\\.autoBatch\\((?<space>\\s*)(?<variableName>\\w+)\\.prepareStatement\\((?<messageVariable>[\\s\\S]+)\\)\\)",
 		"issueKey": "LPD-8010",
-		"to": "${prefixMethodName}${variableName}, ${messageVariable})"
+		"to": "AutoBatchPreparedStatementUtil\\.autoBatch\\(${space}${variableName}, ${messageVariable})"
 	},
 	{
 		"classNames": [

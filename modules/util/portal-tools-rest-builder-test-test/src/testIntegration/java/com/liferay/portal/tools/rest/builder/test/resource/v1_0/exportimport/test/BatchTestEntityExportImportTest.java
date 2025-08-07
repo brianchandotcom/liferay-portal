@@ -6,6 +6,10 @@
 package com.liferay.portal.tools.rest.builder.test.resource.v1_0.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.action.ImportTaskPreAction;
+import com.liferay.batch.engine.context.ImportTaskContext;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -58,6 +62,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alejandro Tardín
@@ -434,8 +443,8 @@ public class BatchTestEntityExportImportTest {
 					}
 				});
 
-		String externalReferenceCode2 =
-			"FAIL_ON_UPSERT" + RandomTestUtil.randomString();
+		String externalReferenceCode2 = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
 
 		BatchTestEntity batchTestEntity2 =
 			_batchTestEntityResource.postBatchTestEntity(
@@ -508,6 +517,20 @@ public class BatchTestEntityExportImportTest {
 								new String[] {Boolean.TRUE.toString()}
 							).build()));
 
+		Bundle bundle = FrameworkUtil.getBundle(
+			BatchTestEntityExportImportTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		String errorMessage = RandomTestUtil.randomString();
+
+		ServiceRegistration<ImportTaskPreAction> serviceRegistration =
+			bundleContext.registerService(
+				ImportTaskPreAction.class,
+				new FailImportTaskPreAction(
+					errorMessage, externalReferenceCode2),
+				null);
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal.strategy." +
 					"OnErrorContinueBatchEngineImportStrategy",
@@ -515,6 +538,9 @@ public class BatchTestEntityExportImportTest {
 
 			_exportImportLocalService.importLayouts(
 				exportImportConfiguration, larFile);
+		}
+		finally {
+			serviceRegistration.unregister();
 		}
 
 		batchTestEntitiesPage =
@@ -553,7 +579,7 @@ public class BatchTestEntityExportImportTest {
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity.
 				class,
-			externalReferenceCode2, "This is the error message",
+			externalReferenceCode2, errorMessage,
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntries.get(1));
 	}
@@ -630,5 +656,38 @@ public class BatchTestEntityExportImportTest {
 
 	@Inject
 	private StagingGroupHelper _stagingGroupHelper;
+
+	private class FailImportTaskPreAction implements ImportTaskPreAction {
+
+		public FailImportTaskPreAction(
+			String errorMessage, String externalReferenceCode) {
+
+			_errorMessage = errorMessage;
+			_externalReferenceCode = externalReferenceCode;
+		}
+
+		@Override
+		public void run(
+			BatchEngineImportTask batchEngineImportTask,
+			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
+			ImportTaskContext importTaskContext, Object item) {
+
+			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity
+				batchTestEntity =
+					(com.liferay.portal.tools.rest.builder.test.dto.v1_0.
+						BatchTestEntity)item;
+
+			if (StringUtil.equals(
+					batchTestEntity.getExternalReferenceCode(),
+					_externalReferenceCode)) {
+
+				throw new UnsupportedOperationException(_errorMessage);
+			}
+		}
+
+		private final String _errorMessage;
+		private final String _externalReferenceCode;
+
+	}
 
 }

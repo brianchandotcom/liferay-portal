@@ -88,7 +88,10 @@ function VocabularyTree({
 									_handleSelect(item.children, true);
 								}}
 								onKeyDown={(event) => {
-									if (event.key === 'Enter') {
+									if (
+										event.key === 'Enter' ||
+										event.key === ' '
+									) {
 										event.preventDefault();
 
 										_handleSelect(item.children, true);
@@ -111,7 +114,10 @@ function VocabularyTree({
 									_handleSelect(item.children, false);
 								}}
 								onKeyDown={(event) => {
-									if (event.key === 'Enter') {
+									if (
+										event.key === 'Enter' ||
+										event.key === ' '
+									) {
 										event.preventDefault();
 
 										_handleSelect(item.children, false);

@@ -1,17 +1,14 @@
 components:
     schemas:
-        DeleteAction:
-            allOf:
-                -   $ref: "#/components/schemas/DocumentBulkAction"
-        DocumentBulkAction:
+        BulkAction:
             discriminator:
                 mapping:
-                    CategoryAction: "#/components/schemas/CategoryAction"
                     DeleteAction: "#/components/schemas/DeleteAction"
+                    KeywordAction: "#/components/schemas/TagAction"
                     MoveAction: "#/components/schemas/MoveAction"
                     PermissionAction: "#/components/schemas/PermissionAction"
                     StatusAction: "#/components/schemas/StatusAction"
-                    TagAction: "#/components/schemas/TagAction"
+                    TaxonomyCategoryAction: "#/components/schemas/CategoryAction"
                 propertyName: type
             properties:
                 action:
@@ -29,9 +26,12 @@ components:
                     items:
                         $ref: "#/components/schemas/Selection"
                     type: array
+        DeleteAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
         KeywordBulkAction:
             allOf:
-                -   $ref: "#/components/schemas/DocumentBulkAction"
+                -   $ref: "#/components/schemas/BulkAction"
                 -   properties:
                         keywords:
                             items:
@@ -39,7 +39,7 @@ components:
                             type: array
         MoveAction:
             allOf:
-                -   $ref: "#/components/schemas/DocumentBulkAction"
+                -   $ref: "#/components/schemas/BulkAction"
                 -   properties:
                         objectEntryFolderId:
                             description:
@@ -48,7 +48,7 @@ components:
                             type: integer
         PermissionAction:
             allOf:
-                -   $ref: "#/components/schemas/DocumentBulkAction"
+                -   $ref: "#/components/schemas/BulkAction"
                 -   properties:
                         permissions:
                             items:
@@ -63,7 +63,7 @@ components:
                     type: string
         StatusAction:
             allOf:
-                -   $ref: "#/components/schemas/DocumentBulkAction"
+                -   $ref: "#/components/schemas/BulkAction"
                 -   properties:
                         status:
                             format: int32
@@ -93,7 +93,7 @@ components:
                     type: string
         TaxonomyCategoryBulkAction:
             allOf:
-                -   $ref: "#/components/schemas/DocumentBulkAction"
+                -   $ref: "#/components/schemas/BulkAction"
                 -   properties:
                         taxonomyCategoryIds:
                             items:
@@ -127,10 +127,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DocumentBulkAction"
+                            $ref: "#/components/schemas/BulkAction"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/DocumentBulkAction"
+                            $ref: "#/components/schemas/BulkAction"
             responses:
                 200:
                     content:

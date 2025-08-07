@@ -188,7 +188,7 @@ public abstract class BaseProfile {
 
 			samlPeerEntityContext.setRole(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
 		}
-		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
 			if (Validator.isNotNull(
 					entityDescriptor.getIDPSSODescriptor(
 						SAMLConstants.SAML20P_NS))) {
@@ -304,9 +304,10 @@ public abstract class BaseProfile {
 			roleDescriptor = entityDescriptor.getIDPSSODescriptor(
 				SAMLConstants.SAML20P_NS);
 		}
-		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
 			if (Validator.isNotNull(
-					httpServletRequest.getAttribute(SamlWebKeys.SAML_ACS_LOGIN)) ||
+					httpServletRequest.getAttribute(
+						SamlWebKeys.SAML_ACS_LOGIN)) ||
 				Validator.isNotNull(
 					httpServletRequest.getAttribute(
 						SamlWebKeys.SAML_SP_IDP_CONNECTION))) {
@@ -334,9 +335,10 @@ public abstract class BaseProfile {
 			samlPeerEntityContext.setRole(
 				IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
 		}
-		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
 			if (Validator.isNotNull(
-					httpServletRequest.getAttribute(SamlWebKeys.SAML_ACS_LOGIN)) ||
+					httpServletRequest.getAttribute(
+						SamlWebKeys.SAML_ACS_LOGIN)) ||
 				Validator.isNotNull(
 					httpServletRequest.getAttribute(
 						SamlWebKeys.SAML_SP_IDP_CONNECTION))) {
@@ -391,7 +393,7 @@ public abstract class BaseProfile {
 			roleDescriptor = entityDescriptor.getSPSSODescriptor(
 				SAMLConstants.SAML20P_NS);
 		}
-		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
 			long companyId = CompanyThreadLocal.getCompanyId();
 
 			try {

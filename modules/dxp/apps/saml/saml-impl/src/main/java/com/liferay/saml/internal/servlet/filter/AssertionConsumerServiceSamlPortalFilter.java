@@ -50,7 +50,8 @@ public class AssertionConsumerServiceSamlPortalFilter
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		httpServletRequest.setAttribute(SamlWebKeys.SAML_ACS_LOGIN, Boolean.TRUE);
+		httpServletRequest.setAttribute(
+			SamlWebKeys.SAML_ACS_LOGIN, Boolean.TRUE);
 		httpServletRequest.setAttribute(WebKeys.LOGIN_REQUEST, Boolean.TRUE);
 
 		filterChain.doFilter(httpServletRequest, httpServletResponse);

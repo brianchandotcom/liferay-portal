@@ -194,7 +194,7 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 				return null;
 			}
 		}
-		else if (_samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+		else if (_samlProviderConfigurationHelper.isRoleMultirole()) {
 			String metadataXml = _fetchSamlSpIdpMetadataXml(
 				companyId, entityId);
 

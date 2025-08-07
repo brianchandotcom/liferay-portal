@@ -69,8 +69,8 @@ public class MetadataManagerUtil {
 						credentialResolver, localEntityManager),
 					encryptionCredential);
 			}
-			else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
-				return MetadataGeneratorUtil.buildIdpAndSpEntityDescriptor(
+			else if (samlProviderConfigurationHelper.isRoleMultirole()) {
+				return MetadataGeneratorUtil.buildMultiroleEntityDescriptor(
 					portalURL, localEntityId,
 					_isSignAuthnRequest(samlProviderConfigurationHelper),
 					_isWantAuthnRequestSigned(samlProviderConfigurationHelper),

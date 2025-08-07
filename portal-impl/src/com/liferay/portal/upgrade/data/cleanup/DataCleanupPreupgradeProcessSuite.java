@@ -5,6 +5,7 @@
 
 package com.liferay.portal.upgrade.data.cleanup;
 
+import com.liferay.portal.db.index.PrimaryKeyUpdaterUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
@@ -76,6 +77,18 @@ public class DataCleanupPreupgradeProcessSuite {
 
 	private final List<DataCleanupPreupgradeProcess>
 		_dataCleanupPreupgradeProcesses = ListUtil.fromArray(
+
+			// It must be first since it tries to recreate the missing primary
+			// keys, which means that future queries can benefit from it
+
+			new DataCleanupPreupgradeProcess() {
+
+				@Override
+				protected void doUpgrade() throws Exception {
+					PrimaryKeyUpdaterUtil.updateAllPrimaryKeys();
+				}
+
+			},
 
 			// Company, then user, then group, and then the rest for optimal
 			// performance since cleaning companies will remove its users,

@@ -6,13 +6,12 @@
  */
 
 import {Text} from '@clayui/core';
-import React, {useContext, useEffect, useState} from 'react';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import React, {useContext} from 'react';
 
 import {Context} from '../../Context';
-import ApiHelper from '../../apis/ApiHelper';
+import useFetch from '../../hooks/useFetch';
 import {buildQueryString} from '../../utils/buildQueryString';
-
-import './traffic_channel.scss';
 
 type TrafficChannelsData = {
 	count: number;
@@ -20,10 +19,13 @@ type TrafficChannelsData = {
 	percentage: number;
 };
 
-type TrafficChannelsApiResponse = Array<{
-	count: number;
-	name: string;
-}>;
+type TrafficChannelsApiResponse = {
+	items: {count: number; name: string}[];
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
 
 function mapData(
 	data: TrafficChannelsApiResponse | null
@@ -32,52 +34,17 @@ function mapData(
 		return [];
 	}
 
-	const totalCount = data.reduce((total, value) => {
+	const totalCount = data.items.reduce((total, value) => {
 		return total + value.count;
 	}, 0);
 
 	return data
-		? data.map((channel) => ({
+		? data.items.map((channel) => ({
 				count: channel.count,
 				name: channel.name,
 				percentage: (channel.count / totalCount) * 100,
 			}))
 		: [];
-}
-
-async function fetchTrafficChannelsData(
-	externalReferenceCode: string,
-	groupId?: string,
-	rangeKey?: string
-): Promise<TrafficChannelsApiResponse | null> {
-	const mockedData: TrafficChannelsApiResponse = [
-		{
-			count: 10,
-			name: 'Direct',
-		},
-		{
-			count: 20,
-			name: 'Social',
-		},
-		{
-			count: 15,
-			name: 'Referrals',
-		},
-		{
-			count: 10,
-			name: 'Paid Search',
-		},
-		{
-			count: 30,
-			name: 'Email',
-		},
-		{
-			count: 35,
-			name: 'Others',
-		},
-	];
-
-	return mockedData;
 }
 
 const TrafficChannelsEntry = ({
@@ -92,15 +59,15 @@ const TrafficChannelsEntry = ({
 	return (
 		<div
 			aria-label={`Traffic channel: ${name}`}
-			className="d-flex flex-row py-3 traffic-channel-item"
+			className="d-flex flex-row py-3 tab-focus traffic-channel-item"
 			role="row"
+			tabIndex={0}
 		>
 			<div
 				aria-label={`Channel name: ${name}`}
 				className="tab-focus traffic-channel-item__name"
 				role="cell"
 				style={{width: '35%'}}
-				tabIndex={0}
 			>
 				<Text size={3} weight="semi-bold">
 					{name}
@@ -114,7 +81,6 @@ const TrafficChannelsEntry = ({
 				className="d-flex flex-row tab-focus traffic-channel-item__chart"
 				role="cell"
 				style={{width: '40%'}}
-				tabIndex={0}
 			>
 				<div
 					aria-hidden="true"
@@ -134,7 +100,6 @@ const TrafficChannelsEntry = ({
 				className="d-flex justify-content-end tab-focus traffic-channel-item__percentage"
 				role="cell"
 				style={{width: '25%'}}
-				tabIndex={0}
 			>
 				<Text size={3} weight="semi-bold">
 					{`${percentage.toFixed(2)}%`}
@@ -145,25 +110,31 @@ const TrafficChannelsEntry = ({
 };
 
 export function TrafficChannels() {
-	const [trafficData, setTrafficData] = useState<TrafficChannelsData[]>([]);
-
 	const {externalReferenceCode} = useContext(Context);
+	const queryParams = buildQueryString({
+		externalReferenceCode,
+	});
 
-	useEffect(() => {
-		async function fetchData() {
-			const data = await fetchTrafficChannelsData(externalReferenceCode);
+	const endpoint = `/o/analytics-cms-rest/v1.0/object-entry-acquisition-channels${queryParams}`;
 
-			if (data) {
-				const mappedData = mapData(data);
-				setTrafficData(mappedData);
-			}
-		}
+	const {data, loading} = useFetch<TrafficChannelsApiResponse>(endpoint);
 
-		fetchData();
-	}, [externalReferenceCode]);
+	const mappedData = mapData(data);
+
+	if (loading) {
+		return <ClayLoadingIndicator />;
+	}
+
+	if (!data) {
+		return null;
+	}
 
 	return (
-		<section aria-labelledby="traffic-channels-header" className="mt-3">
+		<section
+			aria-labelledby="tab-focus traffic-channels-header"
+			className="mt-3"
+			tabIndex={0}
+		>
 			<header
 				className="py-2 text-uppercase w-100"
 				style={{borderBottom: '1px solid #dfe0e7'}}
@@ -184,8 +155,9 @@ export function TrafficChannels() {
 
 			<main
 				aria-label={Liferay.Language.get('traffic-channels-table')}
-				className="traffic-channels-table"
+				className="tab-focus traffic-channels-table"
 				role="table"
+				tabIndex={0}
 			>
 				<header
 					className="d-flex flex-row justify-content-between py-3"
@@ -223,7 +195,7 @@ export function TrafficChannels() {
 					</div>
 				</header>
 
-				{trafficData.map(({count, name, percentage}) => (
+				{mappedData.map(({count, name, percentage}) => (
 					<TrafficChannelsEntry
 						key={name}
 						name={name}

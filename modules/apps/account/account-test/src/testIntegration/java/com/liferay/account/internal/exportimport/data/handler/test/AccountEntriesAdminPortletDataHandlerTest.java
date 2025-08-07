@@ -161,6 +161,10 @@ public class AccountEntriesAdminPortletDataHandlerTest {
 							HashMapBuilder.put(
 								PortletDataHandlerKeys.PORTLET_DATA,
 								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+								new String[] {Boolean.TRUE.toString()}
 							).build()));
 
 		_exportImportLocalService.importLayouts(

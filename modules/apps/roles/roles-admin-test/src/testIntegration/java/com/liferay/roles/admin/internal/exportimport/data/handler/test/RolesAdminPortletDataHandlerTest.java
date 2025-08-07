@@ -137,6 +137,10 @@ public class RolesAdminPortletDataHandlerTest
 							HashMapBuilder.put(
 								PortletDataHandlerKeys.PORTLET_DATA,
 								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									RolesAdminPortletKeys.ROLES_ADMIN,
+								new String[] {Boolean.TRUE.toString()}
 							).build()));
 
 		_exportImportLocalService.importLayouts(

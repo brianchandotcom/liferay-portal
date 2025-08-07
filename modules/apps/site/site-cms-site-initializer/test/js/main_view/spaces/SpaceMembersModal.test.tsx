@@ -7,6 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
+import AdminUserService from '../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService';
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
 import {UserAccount} from '../../../../src/main/resources/META-INF/resources/js/common/types/UserAccount';
 import SpaceMembersModal from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersModal';
@@ -14,15 +15,20 @@ import SpaceMembersModal from '../../../../src/main/resources/META-INF/resources
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService'
 );
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService'
+);
 
 const mockUsers = [
 	{
 		id: '1',
 		name: 'John Doe',
+		roles: [{id: 1, name: 'Admin'}],
 	},
 	{
 		id: '2',
 		name: 'Jane Smith',
+		roles: [{id: 2, name: 'Contributor'}],
 	},
 ] as UserAccount[];
 
@@ -62,6 +68,13 @@ describe('SpaceMembersModal', () => {
 			lastPage: 1,
 			page: 1,
 			totalCount: 0,
+		});
+		jest.spyOn(AdminUserService, 'getUserRoles').mockResolvedValue({
+			items: [],
+			lastPage: 1,
+			page: 1,
+			totalCount: 0,
+			pageSize: 1,
 		});
 
 		getSpaceUsersSpy = jest
@@ -106,8 +119,9 @@ describe('SpaceMembersModal', () => {
 		render(<SpaceMembersModal {...props} />);
 
 		await waitFor(() => {
+			expect(screen.getByText('no-members-yet')).toBeInTheDocument();
 			expect(
-				screen.getByText('this-space-has-no-user-yet')
+				screen.getByText('add-members-to-this-space')
 			).toBeInTheDocument();
 		});
 	});

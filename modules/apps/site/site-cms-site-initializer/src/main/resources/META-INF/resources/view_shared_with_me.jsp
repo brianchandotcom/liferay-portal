@@ -13,6 +13,7 @@ ViewSharedWithMeSectionDisplayContext viewSharedWithMeSectionDisplayContext = (V
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
+		additionalProps="<%= viewSharedWithMeSectionDisplayContext.getAdditionalProps() %>"
 		apiURL="<%= viewSharedWithMeSectionDisplayContext.getAPIURL() %>"
 		emptyState="<%= viewSharedWithMeSectionDisplayContext.getEmptyState() %>"
 		fdsActionDropdownItems="<%= viewSharedWithMeSectionDisplayContext.getFDSActionDropdownItems() %>"

@@ -5,6 +5,7 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
+import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SharedItemRenderer from './cell_renderers/SharedItemRenderer';
 
@@ -12,9 +13,14 @@ const OBJECT_ENTRY_FOLDER_CLASSNAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
 export default function SharedWithMeFDSPropsTransformer({
+	additionalProps,
 	itemsActions = [],
 	...otherProps
 }: {
+	additionalProps: {
+		autocompleteURL: string;
+		collaboratorURLs: Record<string, string>;
+	};
 	itemsActions?: any[];
 	otherProps: any;
 }) {
@@ -57,8 +63,33 @@ export default function SharedWithMeFDSPropsTransformer({
 						),
 				};
 			}
+			else if (action?.data?.id === 'share') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(item?.shareable),
+				};
+			}
 
 			return action;
 		}),
+		onActionDropdownItemClick: ({
+			action,
+			itemData,
+		}: {
+			action: any;
+			itemData: any;
+		}) => {
+			if (action?.data?.id === 'share') {
+				const {autocompleteURL, collaboratorURLs} = additionalProps;
+
+				shareAction({
+					autocompleteURL,
+					collaboratorURL: collaboratorURLs[itemData.className],
+					creator: itemData.creator,
+					itemId: itemData.classPK,
+					title: itemData?.title,
+				});
+			}
+		},
 	};
 }

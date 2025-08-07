@@ -6,7 +6,10 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,6 +25,7 @@ import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,13 +35,50 @@ import java.util.Map;
 public class ViewSharedWithMeSectionDisplayContext {
 
 	public ViewSharedWithMeSectionDisplayContext(
-		HttpServletRequest httpServletRequest, Portal portal) {
+		HttpServletRequest httpServletRequest,
+		ObjectDefinitionService objectDefinitionService, Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
+		_objectDefinitionService = objectDefinitionService;
 		_portal = portal;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"autocompleteURL",
+			() -> StringBundler.concat(
+				"/o/search/v1.0/search?emptySearch=",
+				"true&entryClassNames=com.liferay.portal.kernel.model.User,",
+				"com.liferay.portal.kernel.model.UserGroup&nestedFields=",
+				"embedded")
+		).put(
+			"collaboratorURLs",
+			() -> {
+				Map<String, String> collaboratorURLs = new HashMap<>();
+
+				for (ObjectDefinition objectDefinition :
+						_objectDefinitionService.getCMSObjectDefinitions(
+							_themeDisplay.getCompanyId(),
+							_getObjectFolderExternalReferenceCodes())) {
+
+					collaboratorURLs.put(
+						objectDefinition.getClassName(),
+						StringBundler.concat(
+							"/o", objectDefinition.getRESTContextPath(),
+							"/{objectEntryId}/collaborators"));
+				}
+
+				collaboratorURLs.put(
+					ObjectEntryFolder.class.getName(),
+					"/o/headless-object/v1.0/object-entry-folders" +
+						"/{objectEntryFolderId}/collaborators");
+
+				return collaboratorURLs;
+			}
+		).build();
 	}
 
 	public String getAPIURL() {
@@ -63,6 +104,18 @@ public class ViewSharedWithMeSectionDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws PortalException {
 
+		ObjectDefinition basicDocumentObjectDefinition =
+			_objectDefinitionService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_BASIC_DOCUMENT", _themeDisplay.getCompanyId());
+
+		String basicDocumentClassName = StringPool.BLANK;
+
+		if (basicDocumentObjectDefinition != null) {
+			basicDocumentClassName =
+				basicDocumentObjectDefinition.getClassName();
+		}
+
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				StringBundler.concat(
@@ -75,6 +128,10 @@ public class ViewSharedWithMeSectionDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "view"), "get", null,
 				"modal"),
 			new FDSActionDropdownItem(
+				null, "share", "share",
+				LanguageUtil.get(_httpServletRequest, "share"), "get", null,
+				"link"),
+			new FDSActionDropdownItem(
 				StringBundler.concat(
 					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
 					GroupConstants.CMS_FRIENDLY_URL,
@@ -86,14 +143,6 @@ public class ViewSharedWithMeSectionDisplayContext {
 			new FDSActionDropdownItem(
 				ActionUtil.getBaseViewFolderURL(_themeDisplay) + "{classPK}",
 				"view", "actionLinkFolder",
-				LanguageUtil.get(_httpServletRequest, "view-folder"), "get",
-				null, null,
-				HashMapBuilder.<String, Object>put(
-					"className", ObjectEntryFolder.class.getName()
-				).build()),
-			new FDSActionDropdownItem(
-				ActionUtil.getBaseViewFolderURL(_themeDisplay) + "{classPK}",
-				"view", "viewFolder",
 				LanguageUtil.get(_httpServletRequest, "view-folder"), "get",
 				null, null,
 				HashMapBuilder.<String, Object>put(
@@ -113,7 +162,15 @@ public class ViewSharedWithMeSectionDisplayContext {
 		);
 	}
 
+	private String[] _getObjectFolderExternalReferenceCodes() {
+		return new String[] {
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
+		};
+	}
+
 	private final HttpServletRequest _httpServletRequest;
+	private final ObjectDefinitionService _objectDefinitionService;
 	private final Portal _portal;
 	private final ThemeDisplay _themeDisplay;
 

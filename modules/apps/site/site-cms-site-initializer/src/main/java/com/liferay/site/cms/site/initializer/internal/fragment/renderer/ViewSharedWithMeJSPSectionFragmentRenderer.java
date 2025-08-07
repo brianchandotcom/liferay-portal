@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewSharedWithMeSectionDisplayContext;
 
@@ -32,13 +33,16 @@ public class ViewSharedWithMeJSPSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new ViewSharedWithMeSectionDisplayContext(
-			httpServletRequest, _portal);
+			httpServletRequest, _objectDefinitionService, _portal);
 	}
 
 	@Override
 	protected String getJSPPath() {
 		return "/view_shared_with_me.jsp";
 	}
+
+	@Reference
+	private ObjectDefinitionService _objectDefinitionService;
 
 	@Reference
 	private Portal _portal;

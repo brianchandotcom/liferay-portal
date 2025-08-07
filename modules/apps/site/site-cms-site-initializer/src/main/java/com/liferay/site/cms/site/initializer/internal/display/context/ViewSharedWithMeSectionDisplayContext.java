@@ -6,7 +6,9 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -16,6 +18,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -79,7 +82,34 @@ public class ViewSharedWithMeSectionDisplayContext {
 					_themeDisplay.getURLCurrent()),
 				"pencil", "actionLinkEdit",
 				LanguageUtil.get(_httpServletRequest, "edit"), "get", null,
-				null)
+				null),
+			new FDSActionDropdownItem(
+				ActionUtil.getBaseViewFolderURL(_themeDisplay) + "{classPK}",
+				"view", "actionLinkFolder",
+				LanguageUtil.get(_httpServletRequest, "view-folder"), "get",
+				null, null,
+				HashMapBuilder.<String, Object>put(
+					"className", ObjectEntryFolder.class.getName()
+				).build()),
+			new FDSActionDropdownItem(
+				ActionUtil.getBaseViewFolderURL(_themeDisplay) + "{classPK}",
+				"view", "viewFolder",
+				LanguageUtil.get(_httpServletRequest, "view-folder"), "get",
+				null, null,
+				HashMapBuilder.<String, Object>put(
+					"className", ObjectEntryFolder.class.getName()
+				).build()),
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					"/o", GroupConstants.CMS_FRIENDLY_URL, "/download-folder/",
+					_portal.getClassNameId(ObjectEntryFolder.class),
+					"/{classPK}"),
+				"download", "download-folder",
+				LanguageUtil.get(_httpServletRequest, "download"), "get", null,
+				"link",
+				HashMapBuilder.<String, Object>put(
+					"className", ObjectEntryFolder.class.getName()
+				).build())
 		);
 	}
 

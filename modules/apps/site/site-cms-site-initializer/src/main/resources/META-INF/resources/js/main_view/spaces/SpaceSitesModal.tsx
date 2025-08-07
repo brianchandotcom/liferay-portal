@@ -5,7 +5,6 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
-import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import {openToast} from 'frontend-js-components-web';
@@ -145,55 +144,41 @@ const SitesSelector = ({
 
 	return (
 		<>
-			<ClayLayout.Row>
-				<ClayLayout.Col size={9}>
-					<FieldPicker
-						items={sites.map((site) => {
-							return {label: site.name, value: site.id};
-						})}
-						label={Liferay.Language.get('sites')}
-						name="siteSelector"
-						onSelectionChange={(value: string) => {
-							setSiteSelected(value);
-						}}
-						selectedKey={siteSelected}
-						title={Liferay.Language.get('select-a-site')}
-					/>
-				</ClayLayout.Col>
+			<div className="pt-4 px-4">
+				<div className="align-items-center autofit-row c-gap-3">
+					<div className="autofit-col autofit-col-expand">
+						<FieldPicker
+							items={sites.map((site) => {
+								return {label: site.name, value: site.id};
+							})}
+							label={Liferay.Language.get('site')}
+							name="siteSelector"
+							onSelectionChange={(value: string) => {
+								setSiteSelected(value);
+							}}
+							selectedKey={siteSelected}
+							title={Liferay.Language.get('select-a-site')}
+						/>
+					</div>
 
-				<ClayLayout.Col
-					className="align-items-center d-flex justify-content-end"
-					size={3}
-				>
-					<ClayButton onClick={connectSiteToSpace}>
-						{Liferay.Language.get('connect')}
-					</ClayButton>
-				</ClayLayout.Col>
-			</ClayLayout.Row>
-
-			<hr className="mb-4" />
+					<div className="autofit-col">
+						<ClayButton onClick={connectSiteToSpace}>
+							{Liferay.Language.get('connect')}
+						</ClayButton>
+					</div>
+				</div>
+			</div>
 		</>
 	);
 };
 
 const EmptyResult = ({
-	groupId,
 	hasConnectSitesPermission,
-	onSiteConnected,
 }: {
-	groupId: string;
 	hasConnectSitesPermission: boolean;
-	onSiteConnected?: Function;
 }) => {
 	return (
 		<>
-			{hasConnectSitesPermission && (
-				<SitesSelector
-					groupId={groupId}
-					onSiteConnected={onSiteConnected}
-				/>
-			)}
-
 			<div className="text-center">
 				<h2 className="font-weight-semi-bold text-4">
 					{Liferay.Language.get('no-sites-are-connected-yet')}
@@ -267,26 +252,26 @@ export default function SpaceSitesModal({
 				{Liferay.Language.get('all-sites')}
 			</ClayModal.Header>
 
+			{hasConnectSitesPermission && (
+				<ClayModal.Item>
+					<SitesSelector
+						groupId={groupId}
+						onSiteConnected={onSiteConnected}
+					/>
+				</ClayModal.Item>
+			)}
+
 			<ClayModal.Body>
 				{!connectedSites.length ? (
 					<EmptyResult
-						groupId={groupId}
 						hasConnectSitesPermission={hasConnectSitesPermission}
-						onSiteConnected={onSiteConnected}
 					/>
 				) : (
 					<>
 						{hasConnectSitesPermission && (
-							<>
-								<SitesSelector
-									groupId={groupId}
-									onSiteConnected={onSiteConnected}
-								/>
-
-								<label className="d-block" id={listLabelId}>
-									{Liferay.Language.get('connected-sites')}
-								</label>
-							</>
+							<label className="d-block" id={listLabelId}>
+								{Liferay.Language.get('connected-sites')}
+							</label>
 						)}
 
 						<ul

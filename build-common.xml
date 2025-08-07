@@ -751,7 +751,7 @@ information.
 				</or>
 			</condition>
 
-			<condition else="@{gradle.task.failure.message}" property="gradle.task.failure.message" value="@{gradle.task.module.dir} ${gradle.task.name} could not be executed. Please check the logs for details.">
+			<condition else="@{gradle.task.failure.message}" property="gradle.task.failure.message" value="@{gradle.task.module.dir} ${gradle.task.name} was not executed. Please check the logs for details.">
 				<equals arg1="@{gradle.task.failure.message}" arg2="" />
 			</condition>
 

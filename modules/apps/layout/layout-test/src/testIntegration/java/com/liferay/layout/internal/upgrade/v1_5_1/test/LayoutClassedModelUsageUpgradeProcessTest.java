@@ -42,6 +42,8 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -196,8 +198,11 @@ public class LayoutClassedModelUsageUpgradeProcessTest
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLink);
 
-		return _layoutClassedModelUsageLocalService.
-			updateLayoutClassedModelUsage(layoutClassedModelUsage);
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(_draftLayout.getPlid());
+
+		return layoutClassedModelUsages.get(0);
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink() throws Exception {

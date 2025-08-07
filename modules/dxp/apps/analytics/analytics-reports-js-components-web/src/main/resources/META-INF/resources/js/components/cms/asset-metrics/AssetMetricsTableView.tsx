@@ -10,27 +10,21 @@ import ClayPaginationBar from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useState} from 'react';
 
-import {MetricType} from '../../../types/global';
 import {formatDate} from '../../../utils/date';
 import {toThousands} from '../../../utils/math';
 import {ICommonProps} from './AssetMetrics';
 
 const AssetMetricsTableView: React.FC<ICommonProps> = ({
 	histogram,
-	metricType,
+	rangeSelector,
+	title,
 }) => {
 	const [delta, setDelta] = useState(10);
 	const [page, setPage] = useState(1);
 
-	const title: Partial<Record<MetricType, string>> = {
-		[MetricType.Views]: Liferay.Language.get('views'),
-		[MetricType.Impressions]: Liferay.Language.get('impressions'),
-		[MetricType.Downloads]: Liferay.Language.get('downloads'),
-	};
-
 	useEffect(() => {
 		setPage(1);
-	}, [metricType]);
+	}, [title]);
 
 	const formattedData = histogram.metrics.map((metric) => ({
 		date: formatDate(new Date(metric.valueKey), rangeSelector),
@@ -54,7 +48,7 @@ const AssetMetricsTableView: React.FC<ICommonProps> = ({
 						</ClayTable.Cell>
 
 						<ClayTable.Cell align="right" headingCell>
-							{title[metricType]}
+							{title}
 						</ClayTable.Cell>
 
 						<ClayTable.Cell align="right" headingCell>
@@ -91,7 +85,7 @@ const AssetMetricsTableView: React.FC<ICommonProps> = ({
 					}))}
 					trigger={
 						<ClayButton displayType="unstyled">
-							<span>{delta}</span>
+							<span className="mr-1">{delta}</span>
 
 							<span>{Liferay.Language.get('items')}</span>
 

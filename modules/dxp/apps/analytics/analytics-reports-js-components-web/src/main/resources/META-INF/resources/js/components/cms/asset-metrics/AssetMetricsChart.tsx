@@ -128,7 +128,11 @@ export interface IMetricsChartLegendProps {
 	onDatakeyChange: (dataKey: string | null) => void;
 }
 
-const AssetMetricsChart: React.FC<ICommonProps> = ({histogram, metricType}) => {
+const AssetMetricsChart: React.FC<ICommonProps> = ({
+	histogram,
+	rangeSelector,
+	title,
+}) => {
 	const [activeTabIndex, setActiveTabIndex] = useState(false);
 
 	const [activeLegendItem, setActiveLegendItem] = useState<string | null>(
@@ -136,8 +140,8 @@ const AssetMetricsChart: React.FC<ICommonProps> = ({histogram, metricType}) => {
 	);
 
 	const formattedData = useMemo(
-		() => formatData(histogram, metricType),
-		[metricType, histogram]
+		() => formatData(histogram, title),
+		[histogram, title]
 	);
 
 	const metricsChartData = formattedData.data[MetricDataKey.Current];
@@ -165,6 +169,7 @@ const AssetMetricsChart: React.FC<ICommonProps> = ({histogram, metricType}) => {
 			<span className="text-3 text-nowrap text-secondary">
 				{MetricsTitle[histogram.metricName as MetricName]}
 			</span>
+
 			<MetricsChart
 				MetricsChartTooltip={AssetMetricsTooltip}
 				activeTabIndex={activeTabIndex}
@@ -177,8 +182,8 @@ const AssetMetricsChart: React.FC<ICommonProps> = ({histogram, metricType}) => {
 				onChartBlur={() => setActiveTabIndex(false)}
 				onChartFocus={() => setActiveTabIndex(true)}
 				onDatakeyChange={(dataKey) => setActiveLegendItem(dataKey)}
-				rangeSelector={30 as any}
-				tooltipTitle={getTitle(metricType) as string}
+				rangeSelector={rangeSelector}
+				tooltipTitle={title}
 				xAxisDataKey="METRIC_DATA_KEY"
 			>
 				<Line

@@ -11,9 +11,9 @@ import React, {useContext, useState} from 'react';
 
 import {Context} from '../../../Context';
 import useFetch from '../../../hooks/useFetch';
-import {AssetTypes, MetricName, MetricType} from '../../../types/global';
+import {MetricName, MetricType} from '../../../types/global';
 import {buildQueryString} from '../../../utils/buildQueryString';
-import {assetMetrics} from '../../../utils/metrics';
+import {RangeSelectors} from '../../RangeSelectorsDropdown';
 import {AssetMetricsChart} from './AssetMetricsChart';
 import {AssetMetricsTableView} from './AssetMetricsTableView';
 
@@ -31,8 +31,27 @@ export type Histogram = {
 
 export interface ICommonProps {
 	histogram: Histogram;
+	metricName: MetricName;
 	metricType: MetricType;
+	rangeSelector: RangeSelectors;
+	title: string;
 }
+
+const metricName: Partial<{
+	[key in MetricType]: MetricName;
+}> = {
+	[MetricType.Views]: MetricName.Views,
+	[MetricType.Impressions]: MetricName.Impressions,
+	[MetricType.Downloads]: MetricName.Downloads,
+};
+
+const metricTitle: Partial<{
+	[key in MetricType]: string;
+}> = {
+	[MetricType.Views]: Liferay.Language.get('views'),
+	[MetricType.Impressions]: Liferay.Language.get('impressions'),
+	[MetricType.Downloads]: Liferay.Language.get('downloads'),
+};
 
 const renderComponent = (Component: React.ComponentType<ICommonProps>) => {
 	return (props: ICommonProps) => {
@@ -90,14 +109,6 @@ const AssetMetrics = () => {
 		return null;
 	}
 
-	const metricName: Partial<{
-		[key in MetricType]: MetricName;
-	}> = {
-		[MetricType.Views]: MetricName.Views,
-		[MetricType.Impressions]: MetricName.Impressions,
-		[MetricType.Downloads]: MetricName.Downloads,
-	};
-
 	return (
 		<>
 			<div className="align-items-center d-flex justify-content-around mt-3">
@@ -154,7 +165,10 @@ const AssetMetrics = () => {
 						({metricName: currentMetricName}) =>
 							currentMetricName === metricName[filters.metric]
 					) as Histogram,
+					metricName: metricName[filters.metric] as MetricName,
 					metricType: filters.metric,
+					rangeSelector: filters.rangeSelector.rangeKey,
+					title: metricTitle[filters.metric] as string,
 				})}
 			</main>
 		</>

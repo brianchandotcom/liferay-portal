@@ -174,9 +174,7 @@ const MetricsChart: React.FC<IMetricsChartProps> = ({
 						const firstLegend =
 							metricChartRef.current?.querySelector(
 								'.metrics-chart__legend li:first-child'
-							);
-
-						// @ts-ignore
+							) as HTMLElement;
 
 						firstLegend.focus();
 					}
@@ -191,12 +189,10 @@ const MetricsChart: React.FC<IMetricsChartProps> = ({
 						const firstTick =
 							metricChartRef.current?.querySelectorAll(
 								'.accessibility-tick-line'
-							)?.[0];
+							)?.[0] as HTMLElement;
 
 						if (firstTick) {
 							firstTick.classList.add('active');
-
-							// @ts-ignore
 
 							firstTick.focus();
 						}
@@ -240,6 +236,8 @@ const MetricsChart: React.FC<IMetricsChartProps> = ({
 								stroke: '#E7E7ED',
 							}}
 							dataKey={xAxisDataKey}
+
+							// eslint-disable-next-line react-compiler/react-compiler
 							tick={getAccessibleAxisX({
 								activeTabIndex,
 								changeTooltipProps: handleChangeTooltip,

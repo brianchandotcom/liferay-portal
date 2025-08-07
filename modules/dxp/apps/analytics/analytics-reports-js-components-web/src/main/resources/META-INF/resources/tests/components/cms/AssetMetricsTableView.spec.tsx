@@ -8,6 +8,7 @@ import {render, screen, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import {RangeSelectors} from '../../../js/components/RangeSelectorsDropdown';
 import {Histogram} from '../../../js/components/cms/asset-metrics/AssetMetrics';
 import {AssetMetricsTableView} from '../../../js/components/cms/asset-metrics/AssetMetricsTableView';
 import {MetricName, MetricType} from '../../../js/types/global';
@@ -93,34 +94,40 @@ const mockedChartData = {
 };
 
 interface IWrapperComponent {
+	metricName: MetricName;
 	metricType: MetricType;
+	title: string;
 }
 
-const WrapperComponent: React.FC<IWrapperComponent> = ({metricType}) => {
-	const metricName: Partial<{
-		[key in MetricType]: MetricName;
-	}> = {
-		[MetricType.Views]: MetricName.Views,
-		[MetricType.Impressions]: MetricName.Impressions,
-		[MetricType.Downloads]: MetricName.Downloads,
-	};
-
+const WrapperComponent: React.FC<IWrapperComponent> = ({
+	metricName,
+	metricType,
+	title,
+}) => {
 	const histogram = mockedChartData.histograms.find(
-		({metricName: currentMetricName}) =>
-			currentMetricName === metricName[metricType]
+		({metricName: currentMetricName}) => currentMetricName === metricName
 	);
 
 	return (
 		<AssetMetricsTableView
 			histogram={histogram as Histogram}
+			metricName={metricName}
 			metricType={metricType}
+			rangeSelector={RangeSelectors.Last30Days}
+			title={title}
 		/>
 	);
 };
 
 describe('TableView with different metrics', () => {
 	it('renders table correctly with metric "Views" and displays data', async () => {
-		render(<WrapperComponent metricType={MetricType.Views} />);
+		render(
+			<WrapperComponent
+				metricName={MetricName.Views}
+				metricType={MetricType.Views}
+				title="views"
+			/>
+		);
 
 		expect(screen.getByText('views')).toBeInTheDocument();
 
@@ -142,7 +149,13 @@ describe('TableView with different metrics', () => {
 	});
 
 	it('renders table correctly with metric "Impressions" and displays data', () => {
-		render(<WrapperComponent metricType={MetricType.Impressions} />);
+		render(
+			<WrapperComponent
+				metricName={MetricName.Impressions}
+				metricType={MetricType.Impressions}
+				title="impressions"
+			/>
+		);
 
 		expect(screen.getByText(/impressions/i)).toBeInTheDocument();
 
@@ -164,7 +177,13 @@ describe('TableView with different metrics', () => {
 	});
 
 	it('renders table correctly with metric "Downloads" and displays data', () => {
-		render(<WrapperComponent metricType={MetricType.Downloads} />);
+		render(
+			<WrapperComponent
+				metricName={MetricName.Downloads}
+				metricType={MetricType.Downloads}
+				title="downloads"
+			/>
+		);
 
 		expect(screen.getByText(/downloads/i)).toBeInTheDocument();
 
@@ -186,7 +205,13 @@ describe('TableView with different metrics', () => {
 	});
 
 	it('renders pagination component', () => {
-		render(<WrapperComponent metricType={MetricType.Views} />);
+		render(
+			<WrapperComponent
+				metricName={MetricName.Views}
+				metricType={MetricType.Views}
+				title="views"
+			/>
+		);
 
 		const paginationButton = screen.getByLabelText('Go to page, 1');
 
@@ -194,7 +219,13 @@ describe('TableView with different metrics', () => {
 	});
 
 	it('changes number of items displayed when selecting items per page', async () => {
-		render(<WrapperComponent metricType={MetricType.Views} />);
+		render(
+			<WrapperComponent
+				metricName={MetricName.Views}
+				metricType={MetricType.Views}
+				title="views"
+			/>
+		);
 
 		const itemsPerPageButton = screen.getByRole('button', {
 			name: /items per page/i,

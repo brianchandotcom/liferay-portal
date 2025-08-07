@@ -339,15 +339,15 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			FragmentEntryProcessorConstants.
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-		JSONObject elementTextJSONObject = editableJSONObject.getJSONObject(
+		JSONObject elementHTMLJSONObject = editableJSONObject.getJSONObject(
 			"element-html");
 
 		Assert.assertTrue(
 			Validator.isNotNull(
-				elementTextJSONObject.getString("defaultValue")));
+				elementHTMLJSONObject.getString("defaultValue")));
 
 		Assert.assertEquals(
-			expectedValue, elementTextJSONObject.getString(_languageId));
+			expectedValue, elementHTMLJSONObject.getString(_languageId));
 	}
 
 	private void _assertFragmentEntryLink(

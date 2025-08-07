@@ -5040,61 +5040,37 @@ public class ObjectEntryResourceTest {
 				objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		User user = GuestOrUserUtil.getGuestOrUser();
-
-		String languageId = user.getLanguageId();
-
 		try {
 
 			// Many to one relationship
-
-			user.setLanguageId("en_US");
-
-			user = _userLocalService.updateUser(user);
 
 			_testFilterObjectEntriesByRelatedLocalizedObjectEntries(
 				String.format(
 					"%s/%s eq '%s'", objectRelationship.getName(),
 					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1),
-				objectDefinition2, objectEntry2);
-
-			user.setLanguageId("es_ES");
-
-			user = _userLocalService.updateUser(user);
+				"en-US", objectDefinition2, objectEntry2);
 
 			_testFilterObjectEntriesByRelatedLocalizedObjectEntries(
 				String.format(
 					"%s/%s eq '%s'", objectRelationship.getName(),
 					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2),
-				objectDefinition2, objectEntry2);
+				"es-ES", objectDefinition2, objectEntry2);
 
 			// One to many relationship
-
-			user.setLanguageId("en_US");
-
-			user = _userLocalService.updateUser(user);
 
 			_testFilterObjectEntriesByRelatedLocalizedObjectEntries(
 				String.format(
 					"%s/%s eq '%s'", objectRelationship.getName(),
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_3),
-				objectDefinition1, objectEntry1);
-
-			user.setLanguageId("es_ES");
-
-			user = _userLocalService.updateUser(user);
+				"en-US", objectDefinition1, objectEntry1);
 
 			_testFilterObjectEntriesByRelatedLocalizedObjectEntries(
 				String.format(
 					"%s/%s eq '%s'", objectRelationship.getName(),
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_4),
-				objectDefinition1, objectEntry1);
+				"es-ES", objectDefinition1, objectEntry1);
 		}
 		finally {
-			user.setLanguageId(languageId);
-
-			_userLocalService.updateUser(user);
-
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				objectRelationship);
 
@@ -15116,14 +15092,17 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _testFilterObjectEntriesByRelatedLocalizedObjectEntries(
-			String filterString, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry)
+			String filterString, String languageId,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			objectDefinition.getRESTContextPath() + "?filter=" +
 				_escape(filterString),
+			HashMapBuilder.put(
+				"Accept-Language", languageId
+			).build(),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");

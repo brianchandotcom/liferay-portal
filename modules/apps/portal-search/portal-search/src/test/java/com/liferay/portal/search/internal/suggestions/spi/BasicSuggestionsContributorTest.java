@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -18,7 +19,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.asset.AssetURLViewProvider;
 import com.liferay.portal.search.constants.SearchContextAttributes;
@@ -35,9 +35,9 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.suggestions.Suggestion;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
-import com.liferay.portal.search.test.util.SearchHitsTestHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -81,9 +81,9 @@ public class BasicSuggestionsContributorTest {
 		int totalHits = 2;
 
 		_setUpAssetRendererFactoryRegistryUtil(
-			false, "Asset Renderer Title", "Asset Renderer Summary");
-
-		SearchHitsTestHelper searchHitsTestHelper = _setUpSearcher(totalHits);
+			false, "Asset Renderer Title", "Asset Renderer Summary",
+			"Class Name 2");
+		_setUpSearcher(totalHits);
 
 		SuggestionsContributorResults suggestionsContributorResults =
 			_getSuggestionsContributorResults();
@@ -95,38 +95,21 @@ public class BasicSuggestionsContributorTest {
 		List<Suggestion> suggestions =
 			suggestionsContributorResults.getSuggestions();
 
-		for (int i = 0; i < totalHits; i++) {
-			Suggestion suggestion = suggestions.get(i);
+		for (int i = 1; i < (totalHits + 1); i++) {
+			Suggestion suggestion = suggestions.get(i - 1);
 
 			Assert.assertEquals(
 				"Asset Renderer Summary",
 				suggestion.getAttribute("assetSearchSummary"));
-			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
+			Assert.assertEquals(
+				"Class Name 1_1", suggestion.getAttribute("assetURL"));
 			Assert.assertEquals(
 				HashMapBuilder.<String, Object>put(
-					Field.ENTRY_CLASS_NAME, _MODEL_LAYOUT + i
+					Field.ENTRY_CLASS_NAME, "Class Name 1"
 				).build(),
 				suggestion.getAttribute("fields"));
 			Assert.assertEquals(i, suggestion.getScore(), i);
 			Assert.assertEquals("Asset Renderer Title", suggestion.getText());
-
-			SearchHit searchHit = searchHitsTestHelper.getSearchHits(
-			).get(
-				i
-			);
-
-			Document document = searchHit.getDocument();
-
-			long classPK = GetterUtil.getLong(
-				document.getValue(Field.CLASS_PK));
-
-			Mockito.verify(
-				_assetURLViewProvider
-			).getAssetURLView(
-				Mockito.any(), Mockito.any(),
-				Mockito.eq(_MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY + i),
-				Mockito.eq(classPK), Mockito.any(), Mockito.any()
-			);
 		}
 	}
 
@@ -173,78 +156,19 @@ public class BasicSuggestionsContributorTest {
 		List<Suggestion> suggestions =
 			suggestionsContributorResults.getSuggestions();
 
-		for (int i = 0; i < totalHits; i++) {
-			Suggestion suggestion = suggestions.get(i);
+		for (int i = 1; i < (totalHits + 1); i++) {
+			Suggestion suggestion = suggestions.get(i - 1);
 
 			Assert.assertEquals(
 				null, suggestion.getAttribute("assetSearchSummary"));
 			Assert.assertEquals(
 				HashMapBuilder.<String, Object>put(
-					Field.ENTRY_CLASS_NAME, _MODEL_LAYOUT + i
+					Field.ENTRY_CLASS_NAME, "Class Name 1"
 				).build(),
 				suggestion.getAttribute("fields"));
 			Assert.assertEquals(i, suggestion.getScore(), i);
 			Assert.assertEquals("Document Title " + i, suggestion.getText());
 		}
-	}
-
-	@Test
-	public void testGetSuggestionWithoutAssetRenderer() throws Exception {
-		int totalHits = 2;
-
-		SearchHitsTestHelper searchHitsTestHelper = _setUpSearcher(totalHits);
-
-		ClassName classNameWithoutAssetRenderer =
-			searchHitsTestHelper.getClassNames(
-			).get(
-				0
-			);
-
-		_setUpAssetRendererFactoryRegistryUtil(
-			false, "Asset Renderer Title", "Asset Renderer Summary",
-			classNameWithoutAssetRenderer.getClassName());
-
-		SuggestionsContributorResults suggestionsContributorResults =
-			_getSuggestionsContributorResults();
-
-		Assert.assertEquals(
-			"testGetSuggestionWithoutAssetRenderer",
-			suggestionsContributorResults.getDisplayGroupName());
-
-		List<Suggestion> suggestions =
-			suggestionsContributorResults.getSuggestions();
-
-		for (int i = 0; i < totalHits; i++) {
-			Suggestion suggestion = suggestions.get(i);
-
-			Assert.assertEquals(
-				"Asset Renderer Summary",
-				suggestion.getAttribute("assetSearchSummary"));
-			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
-
-			Assert.assertEquals(
-				HashMapBuilder.<String, Object>put(
-					Field.ENTRY_CLASS_NAME, _MODEL_LAYOUT + i
-				).build(),
-				suggestion.getAttribute("fields"));
-			Assert.assertEquals(i, suggestion.getScore(), i);
-			Assert.assertEquals("Asset Renderer Title", suggestion.getText());
-		}
-
-		Mockito.verify(
-			_assetURLViewProvider, Mockito.times(1)
-		).getAssetURLView(
-			Mockito.any(), Mockito.any(), Mockito.eq(_MODEL_LAYOUT + "0"),
-			Mockito.eq(Long.valueOf(0)), Mockito.any(), Mockito.any()
-		);
-
-		Mockito.verify(
-			_assetURLViewProvider, Mockito.times(1)
-		).getAssetURLView(
-			Mockito.any(), Mockito.any(),
-			Mockito.eq(_MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY + "1"),
-			Mockito.anyLong(), Mockito.any(), Mockito.any()
-		);
 	}
 
 	@Test
@@ -358,10 +282,10 @@ public class BasicSuggestionsContributorTest {
 		Mockito.when(
 			_serviceTrackerMap.getService(Mockito.anyString())
 		).thenAnswer(
-			invocationOnMock -> {
+			invocation -> {
 				if (Objects.nonNull(classNameWithoutAssetRenderer) &&
 					Objects.equals(
-						invocationOnMock.getArgument(0),
+						invocation.getArgument(0),
 						classNameWithoutAssetRenderer)) {
 
 					return null;
@@ -373,13 +297,14 @@ public class BasicSuggestionsContributorTest {
 	}
 
 	private void _setUpAssetURLViewProvider() {
-		Mockito.doReturn(
-			RandomTestUtil.randomString()
-		).when(
-			_assetURLViewProvider
-		).getAssetURLView(
-			Mockito.any(), Mockito.any(), Mockito.anyString(),
-			Mockito.anyLong(), Mockito.any(), Mockito.any()
+		Mockito.when(
+			_assetURLViewProvider.getAssetURLView(
+				Mockito.any(), Mockito.any(), Mockito.anyString(),
+				Mockito.anyLong(), Mockito.any(), Mockito.any())
+		).thenAnswer(
+			invocation ->
+				invocation.getArgument(2, String.class) + StringPool.UNDERLINE +
+					invocation.getArgument(3)
 		);
 	}
 
@@ -432,29 +357,20 @@ public class BasicSuggestionsContributorTest {
 		).getKeywords();
 	}
 
-	private SearchHitsTestHelper _setUpSearcher(int totalHits)
-		throws Exception {
-
+	private void _setUpSearcher(int totalHits) throws Exception {
 		SearchResponse searchResponse = Mockito.mock(SearchResponse.class);
 
 		SearchHits searchHits = Mockito.mock(SearchHits.class);
 
-		SearchHitsTestHelper searchHitsTestHelper = new SearchHitsTestHelper();
+		List<SearchHit> searchHitsList = new ArrayList<>();
 
-		for (int i = 0; i < totalHits; i++) {
+		for (int i = 1; i < (totalHits + 1); i++) {
 			SearchHit searchHit = Mockito.mock(SearchHit.class);
-
-			Document document = Mockito.mock(Document.class);
 
 			ClassName className = Mockito.mock(ClassName.class);
 
-			searchHitsTestHelper.add(i, className);
-
-			long classNameId = RandomTestUtil.randomLong();
-			long classPK = RandomTestUtil.randomLong();
-
 			Mockito.doReturn(
-				_MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY + i
+				"Class Name " + i
 			).when(
 				className
 			).getClassName();
@@ -464,15 +380,41 @@ public class BasicSuggestionsContributorTest {
 			).when(
 				_classNameLocalService
 			).getClassName(
-				Mockito.eq(classNameId)
+				Mockito.eq(Long.valueOf(i))
+			);
+
+			Document document = Mockito.mock(Document.class);
+
+			Mockito.doReturn(
+				Long.valueOf(i)
+			).when(
+				document
+			).getValue(
+				Mockito.eq(Field.CLASS_NAME_ID)
 			);
 
 			Mockito.doReturn(
-				_MODEL_LAYOUT + i
+				Long.valueOf(i)
+			).when(
+				document
+			).getValue(
+				Mockito.eq(Field.CLASS_PK)
+			);
+
+			Mockito.doReturn(
+				"Class Name 1"
 			).when(
 				document
 			).getString(
 				Mockito.eq(Field.ENTRY_CLASS_NAME)
+			);
+
+			Mockito.doReturn(
+				Long.valueOf(1)
+			).when(
+				document
+			).getLong(
+				Mockito.eq(Field.ENTRY_CLASS_PK)
 			);
 
 			Mockito.doReturn(
@@ -481,22 +423,6 @@ public class BasicSuggestionsContributorTest {
 				document
 			).getString(
 				Mockito.startsWith("title")
-			);
-
-			Mockito.doReturn(
-				classNameId
-			).when(
-				document
-			).getValue(
-				Mockito.eq(Field.CLASS_NAME_ID)
-			);
-
-			Mockito.doReturn(
-				classPK
-			).when(
-				document
-			).getValue(
-				Mockito.eq(Field.CLASS_PK)
 			);
 
 			Mockito.doReturn(
@@ -511,11 +437,11 @@ public class BasicSuggestionsContributorTest {
 				searchHit
 			).getScore();
 
-			searchHitsTestHelper.add(i, searchHit);
+			searchHitsList.add(searchHit);
 		}
 
 		Mockito.doReturn(
-			searchHitsTestHelper.getSearchHits()
+			searchHitsList
 		).when(
 			searchHits
 		).getSearchHits();
@@ -539,8 +465,6 @@ public class BasicSuggestionsContributorTest {
 		).search(
 			Mockito.any()
 		);
-
-		return searchHitsTestHelper;
 	}
 
 	private void _setUpSearchRequestBuilderFactory() {
@@ -588,12 +512,6 @@ public class BasicSuggestionsContributorTest {
 		_suggestionsContributorConfiguration.setDisplayGroupName(
 			testName.getMethodName());
 	}
-
-	private static final String _MODEL_LAYOUT =
-		"com.liferay.portal.kernel.model.Layout_";
-
-	private static final String _MODEL_LAYOUT_PAGE_TEMPLATE_ENTRY =
-		"com.liferay.layout.page.template.model.LayoutPageTemplateEntry_";
 
 	@Mock
 	private AssetRendererFactory<?> _assetRendererFactory;

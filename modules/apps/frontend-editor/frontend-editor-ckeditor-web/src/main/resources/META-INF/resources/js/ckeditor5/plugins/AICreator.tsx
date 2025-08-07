@@ -4,9 +4,10 @@
  */
 
 import {ButtonView, Command, Config, Plugin} from 'ckeditor5';
+import {openModal} from 'frontend-js-components-web';
 
-import {LiferayEditorConfig} from '../utils/types';
 import getIcon from '../utils/getIcon';
+import {LiferayEditorConfig} from '../utils/types';
 
 const ON_CLICK_POPOVER_CONTENT = `
 <div class="arrow"></div>
@@ -124,7 +125,7 @@ class AICreator extends Plugin {
 				contentsLanguage
 			);
 
-			Liferay.Util.openModal({
+			openModal({
 				height: '550px',
 				onClose: () => closeModalHandler.detach(),
 				size: 'lg',

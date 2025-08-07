@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade.data.cleanup;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -15,7 +16,6 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -86,10 +86,9 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							StringBundler.concat(
-								String.valueOf(resultSet.getLong(3)),
+								resultSet.getLong(3),
 								" orphan entries from table ", sourceTableName,
-								" have been deleted because value ",
-								String.valueOf(userId),
+								" have been deleted because value ", userId,
 								" was not found in the origin table ",
 								targetTableName, " and column ",
 								targetColumnName));
@@ -110,11 +109,9 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							String.valueOf(resultSet.getLong(3)),
-							" orphan entries from table ", sourceTableName,
-							" have been updated to value ",
-							String.valueOf(newUserId), " because value ",
-							String.valueOf(userId),
+							resultSet.getLong(3), " orphan entries from table ",
+							sourceTableName, " have been updated to value ",
+							newUserId, " because value ", userId,
 							" was not found in the origin table ",
 							targetTableName, " and column ", targetColumnName));
 				}

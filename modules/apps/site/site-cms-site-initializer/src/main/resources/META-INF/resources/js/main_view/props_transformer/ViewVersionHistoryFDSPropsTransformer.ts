@@ -4,8 +4,10 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-components-web';
 import {navigate, sessionStorage, sub} from 'frontend-js-web';
 
+import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import deleteEntryAction from './actions/deleteEntryAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
@@ -66,6 +68,7 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 					expire: {href: string; method: string};
 					restore: {href: string; method: string};
 				};
+				file: any;
 				systemProperties: {
 					version: {
 						number: number;
@@ -144,6 +147,18 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 					),
 					url: itemData.actions.restore.href,
 				});
+			}
+			else if (action?.data?.id === 'view-file') {
+				if (itemData.file) {
+					openModal({
+						containerProps: {
+							className: '',
+						},
+						contentComponent: () =>
+							FilePreviewerModalContent(itemData.file),
+						size: 'full-screen',
+					});
+				}
 			}
 		},
 	};

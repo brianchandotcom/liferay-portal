@@ -6,7 +6,7 @@
 import React from 'react';
 
 import {Alignments, Weights} from '../../../types/global';
-import {formatTooltipDate} from '../../../utils/date';
+import {formatDate} from '../../../utils/date';
 import {toThousands} from '../../../utils/math';
 import ChartTooltip from '../../ChartTooltip';
 import {RangeSelectors} from '../../RangeSelectorsDropdown';
@@ -48,7 +48,7 @@ const AssetMetricsTooltip: React.FC<IAssetMetricsTooltipProps> = ({
 				},
 				{
 					align: Alignments.Right,
-					label: formatTooltipDate(payload.x as number, rangeSeletor),
+					label: formatDate(new Date(payload.x ?? 0), rangeSeletor),
 					width: 55,
 				},
 			],

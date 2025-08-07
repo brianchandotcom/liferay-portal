@@ -8,7 +8,7 @@ import {Line} from 'recharts';
 
 import {Context} from '../../../Context';
 import {Colors} from '../../../types/global';
-import {formatTooltipDate} from '../../../utils/date';
+import {formatDate} from '../../../utils/date';
 import {assetContent, metricNameByType} from '../../../utils/metrics';
 import {CircleDot, PublishedVersionDot} from '../../metrics/Dots';
 import MetricsChart, {DataKey} from '../../metrics/MetricsChart';
@@ -149,10 +149,12 @@ const VisitorsBehaviorChart: React.FC<IVisitorsBehaviorChartProps> = ({
 					)
 				)}
 				data-qa-tooltip-formatted-date={JSON.stringify(
-					formatTooltipDate(
-						formattedData.combinedData[0]?.[
-							VisitorsBehaviorDataKey.AxisX
-						] as number,
+					formatDate(
+						new Date(
+							formattedData.combinedData[0]?.[
+								VisitorsBehaviorDataKey.AxisX
+							] as number
+						),
 						filters.rangeSelector.rangeKey
 					)
 				)}

@@ -7,7 +7,7 @@ import React, {useContext, useMemo, useState} from 'react';
 import {Line} from 'recharts';
 
 import {Context} from '../../../Context';
-import {formatTooltipDate} from '../../../utils/date';
+import {formatDate} from '../../../utils/date';
 import {assetContent, metricNameByType} from '../../../utils/metrics';
 import {CircleDot, DiamondDot, DotProps, SquareDot} from '../../metrics/Dots';
 import MetricsChart, {DataKey} from '../../metrics/MetricsChart';
@@ -179,10 +179,12 @@ const InteractionsByPageChart: React.FC<IInteractionsByPageChartProps> = ({
 					)
 				)}
 				data-qa-tooltip-formatted-date={JSON.stringify(
-					formatTooltipDate(
-						formattedData.combinedData[0]?.[
-							InteractionsByPageDataKey.AxisX
-						] as number,
+					formatDate(
+						new Date(
+							formattedData.combinedData[0]?.[
+								InteractionsByPageDataKey.AxisX
+							] ?? 0
+						),
 						filters.rangeSelector.rangeKey
 					)
 				)}

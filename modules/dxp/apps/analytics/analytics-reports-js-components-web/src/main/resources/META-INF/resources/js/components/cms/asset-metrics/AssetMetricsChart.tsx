@@ -7,8 +7,8 @@ import {ColorType} from '@clayui/core/lib/typography/Text';
 import React, {useMemo, useState} from 'react';
 import {Line} from 'recharts';
 
-import {Colors, MetricName, MetricType} from '../../../types/global';
-import {formatTooltipDate, toUnix} from '../../../utils/date';
+import {Colors, MetricName} from '../../../types/global';
+import {formatDate, toUnix} from '../../../utils/date';
 import {CircleDot, DashedDotIcon, PreviousDot} from '../../metrics/Dots';
 import MetricsChart from '../../metrics/MetricsChart';
 import {formatter, getFillOpacity} from '../../metrics/utils';
@@ -34,24 +34,7 @@ type FormattedData = {
 	intervals: (number | null)[];
 };
 
-function getTitle(metricType: MetricType) {
-	const title: Partial<{
-		[key in MetricType]: string;
-	}> = {
-		[MetricType.Views]: Liferay.Language.get('views'),
-		[MetricType.Impressions]: Liferay.Language.get('impressions'),
-		[MetricType.Downloads]: Liferay.Language.get('downloads'),
-	};
-
-	return title[metricType];
-}
-
-export function formatData(
-	histogram: Histogram,
-	metricType: MetricType
-): FormattedData {
-	const title = getTitle(metricType) as string;
-
+export function formatData(histogram: Histogram, title: string): FormattedData {
 	const data = {
 		METRIC_DATA_KEY: {
 			color: Colors.Blue,
@@ -269,9 +252,9 @@ const AssetMetricsChart: React.FC<ICommonProps> = ({histogram, metricType}) => {
 					)
 				)}
 				data-qa-tooltip-formatted-date={JSON.stringify(
-					formatTooltipDate(
-						formattedData.combinedData[0]?.['x'] as number,
-						30 as any
+					formatDate(
+						new Date(formattedData.combinedData[0]?.['x'] ?? 0),
+						rangeSelector
 					)
 				)}
 				data-testid="metrics-chart-data"

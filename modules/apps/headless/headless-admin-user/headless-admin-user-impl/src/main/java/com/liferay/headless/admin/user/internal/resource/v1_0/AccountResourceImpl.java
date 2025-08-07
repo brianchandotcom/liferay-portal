@@ -1285,7 +1285,8 @@ public class AccountResourceImpl
 		if (accountContactInformation != null) {
 			UsersAdminUtil.updateAddresses(
 				AccountEntry.class.getName(), accountId,
-				_getContactAddresses(account, accountEntry));
+				_getContactAddresses(account, accountEntry),
+				AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS);
 			UsersAdminUtil.updateEmailAddresses(
 				AccountEntry.class.getName(), accountId,
 				_getEmailAddresses(account, accountEntry));

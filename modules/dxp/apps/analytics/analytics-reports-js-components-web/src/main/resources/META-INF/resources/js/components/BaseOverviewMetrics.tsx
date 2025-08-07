@@ -25,8 +25,8 @@ type Metrics = {
 type MetricData = {
 	metricType: MetricType;
 	trend: {
+		classification: TrendClassification;
 		percentage?: number;
-		trendClassification: TrendClassification;
 	};
 	value: number;
 };
@@ -117,7 +117,7 @@ const BaseOverviewMetrics: React.FC<IBaseOverviewMetrics> = ({
 								>
 									<Text
 										color={getStatsColor(
-											trend.trendClassification
+											trend.classification
 										)}
 										size={small ? 3 : 1}
 									>
@@ -137,7 +137,7 @@ const BaseOverviewMetrics: React.FC<IBaseOverviewMetrics> = ({
 								{small ? (
 									<Text
 										color={getStatsColor(
-											trend.trendClassification
+											trend.classification
 										)}
 									>
 										{`${getPercentage(trendPercentage)}%`}
@@ -150,7 +150,7 @@ const BaseOverviewMetrics: React.FC<IBaseOverviewMetrics> = ({
 											),
 											[
 												<span
-													className={`text-${getStatsColor(trend.trendClassification)}`}
+													className={`text-${getStatsColor(trend.classification)}`}
 													key="PERCENTAGE"
 												>
 													{`${getPercentage(

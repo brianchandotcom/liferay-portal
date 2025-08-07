@@ -16,8 +16,8 @@ import {TrendClassification} from '../../js/utils/metrics';
 type Metric = {
 	metricType: MetricType;
 	trend: {
+		classification: TrendClassification;
 		percentage: number;
-		trendClassification: TrendClassification;
 	};
 	value: number;
 };
@@ -29,8 +29,8 @@ const data: {
 	defaultMetric: {
 		metricType: MetricType.Impressions,
 		trend: {
+			classification: TrendClassification.Neutral,
 			percentage: 10,
-			trendClassification: TrendClassification.Neutral,
 		},
 		value: 1000,
 	},
@@ -38,16 +38,16 @@ const data: {
 		{
 			metricType: MetricType.Impressions,
 			trend: {
+				classification: TrendClassification.Neutral,
 				percentage: 10,
-				trendClassification: TrendClassification.Neutral,
 			},
 			value: 1000,
 		},
 		{
 			metricType: MetricType.Views,
 			trend: {
+				classification: TrendClassification.Negative,
 				percentage: -50,
-				trendClassification: TrendClassification.Negative,
 			},
 			value: 2000,
 		},
@@ -55,8 +55,8 @@ const data: {
 		{
 			metricType: MetricType.Downloads,
 			trend: {
+				classification: TrendClassification.Positive,
 				percentage: 100,
-				trendClassification: TrendClassification.Positive,
 			},
 			value: 3000,
 		},

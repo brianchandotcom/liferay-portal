@@ -54,12 +54,14 @@ public interface ExportImportReportEntryLocalService
 	 */
 	public ExportImportReportEntry addEmptyExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId);
+		long classNameId, long exportImportConfigurationId, String modelName,
+		int origin, String scope, String scopeKey);
 
 	public ExportImportReportEntry addErrorExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId, String error,
-		String errorStacktrace);
+		long classNameId, long classPK, long exportImportConfigurationId,
+		String error, String errorStacktrace, String modelName, int origin,
+		String scope, String scopeKey);
 
 	/**
 	 * Adds the export import report entry to the database. Also notifies the appropriate model listeners.

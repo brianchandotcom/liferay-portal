@@ -425,9 +425,6 @@ public class BatchTestEntityExportImportTest {
 					}
 				});
 
-		String externalReferenceCode2 =
-			"FAIL_ON_UPSERT" + RandomTestUtil.randomString();
-
 		CompanyTestEntity companyTestEntity2 =
 			_companyTestEntityResource.postCompanyTestEntity(
 				new CompanyTestEntity() {
@@ -436,6 +433,9 @@ public class BatchTestEntityExportImportTest {
 							RandomTestUtil.randomString());
 					}
 				});
+
+		String externalReferenceCode2 =
+			"FAIL_ON_UPSERT" + RandomTestUtil.randomString();
 
 		BatchTestEntity batchTestEntity2 =
 			_batchTestEntityResource.postBatchTestEntity(

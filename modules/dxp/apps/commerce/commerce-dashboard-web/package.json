@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/charts": "3.141.1",
+		"@clayui/charts": "3.141.2",
 		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0"

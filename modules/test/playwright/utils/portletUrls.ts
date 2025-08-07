@@ -20,6 +20,7 @@ export const PORTLET_URLS = {
 	cmsContents: 'web/cms/contents',
 	cmsEditCategory: 'web/cms/categorization/edit-category',
 	cmsFiles: 'web/cms/files',
+	cmsHome: 'web/cms/home',
 	cmsNewCategory: 'web/cms/categorization/new-category',
 	cmsNewVocabulary: 'web/cms/categorization/new-vocabulary',
 	cmsPicklistBuilder: 'web/cms/picklist-builder',

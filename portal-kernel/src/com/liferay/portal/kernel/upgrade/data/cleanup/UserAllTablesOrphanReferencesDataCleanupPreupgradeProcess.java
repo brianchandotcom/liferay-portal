@@ -143,7 +143,6 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 				sb.toString())) {
 
 			preparedStatement.setString(1, RoleConstants.ADMINISTRATOR);
-
 			preparedStatement.setLong(2, companyId);
 			preparedStatement.setLong(3, companyId);
 

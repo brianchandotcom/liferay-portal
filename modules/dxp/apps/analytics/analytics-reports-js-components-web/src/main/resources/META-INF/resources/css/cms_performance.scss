@@ -22,4 +22,36 @@
 			}
 		}
 	}
+
+	.traffic-channel-item {
+		gap: 10px;
+
+		&__chart {
+			background-color: #e2e4ea;
+			border-radius: 8px;
+			height: 24px;
+			overflow: hidden;
+			position: relative;
+			width: 100%;
+
+			&__bar {
+				background-color: #338fff;
+				border-radius: 8px;
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+			}
+
+			&__value {
+				align-items: center;
+				bottom: 0;
+				display: flex;
+				margin: auto;
+				position: absolute;
+				right: 8px;
+				top: 0px;
+			}
+		}
+	}
 }

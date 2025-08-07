@@ -20,7 +20,7 @@ public interface SamlProviderConfigurationHelper {
 
 	public boolean isRoleIdp();
 
-	public boolean isRoleIdpAndSp();
+	public boolean isRoleMultirole();
 
 	public boolean isRoleSp();
 

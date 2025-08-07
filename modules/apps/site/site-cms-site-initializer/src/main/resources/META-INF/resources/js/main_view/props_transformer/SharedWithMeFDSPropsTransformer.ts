@@ -8,9 +8,14 @@ import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SharedItemRenderer from './cell_renderers/SharedItemRenderer';
 
+const OBJECT_ENTRY_FOLDER_CLASSNAME =
+	'com.liferay.object.model.ObjectEntryFolder';
+
 export default function SharedWithMeFDSPropsTransformer({
+	itemsActions = [],
 	...otherProps
 }: {
+	itemsActions?: any[];
 	otherProps: any;
 }) {
 	return {
@@ -29,5 +34,31 @@ export default function SharedWithMeFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		itemsActions: itemsActions.map((action) => {
+			if (action?.data?.id === 'actionLink') {
+				return {
+					...action,
+					data: {
+						...action.data,
+						disableHeader: false,
+						size: 'full-screen',
+						title: 'View',
+					},
+					isVisible: () => false,
+				};
+			}
+			else if (action?.data?.id === 'actionLinkEdit') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(
+							item?.className !== OBJECT_ENTRY_FOLDER_CLASSNAME &&
+								item?.actionIds?.includes('UPDATE')
+						),
+				};
+			}
+
+			return action;
+		}),
 	};
 }

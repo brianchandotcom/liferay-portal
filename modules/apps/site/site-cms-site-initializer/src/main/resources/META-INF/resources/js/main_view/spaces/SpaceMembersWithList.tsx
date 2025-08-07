@@ -9,7 +9,14 @@ import LoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useId,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 
 import AdminUserService from '../../common/services/AdminUserService';
 import SpaceService from '../../common/services/SpaceService';
@@ -41,6 +48,7 @@ export function SpaceMembersWithList({
 	onHasSelectedMembersChange,
 	pageSize = DEFAULT_PAGE_SIZE,
 }: SpaceMembersWithListProps) {
+	const listLabelId = useId();
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
 	const [isFetchingMembers, setIsFetchingMembers] = useState(false);
 	const [selectedOption, setSelectedOption] = useState(SelectOptions.USERS);
@@ -100,8 +108,8 @@ export function SpaceMembersWithList({
 
 	useEffect(() => {
 		const hasMembers =
-			selectedUsers?.length > 1 || selectedUserGroups?.length;
-		onHasSelectedMembersChange?.(Boolean(hasMembers));
+			selectedUsers?.length > 1 || selectedUserGroups?.length > 1;
+		onHasSelectedMembersChange?.(hasMembers);
 	}, [onHasSelectedMembersChange, selectedUsers, selectedUserGroups]);
 
 	const loadMoreItems = useCallback(async () => {
@@ -419,7 +427,13 @@ export function SpaceMembersWithList({
 		[assetLibraryId, selectedOption, spacePermissionsRoles]
 	);
 
-	const listLabelId = useId();
+	const hasMembersSelected = useMemo(() => {
+		if (selectedOption === SelectOptions.USERS) {
+			return selectedUsers.length;
+		}
+
+		return selectedUserGroups.length;
+	}, [selectedOption, selectedUsers, selectedUserGroups]);
 
 	return (
 		<div className={classNames('space-members-with-list', className)}>
@@ -432,50 +446,65 @@ export function SpaceMembersWithList({
 				selectValue={selectedOption}
 			/>
 
-			<label className="d-block" id={listLabelId}>
-				{Liferay.Language.get('who-has-access')}
-			</label>
-
-			<ul
-				aria-labelledby={listLabelId}
-				className="c-mt-3 c-p-0 list-unstyled members-list"
-			>
-				{selectedOption === SelectOptions.USERS ? (
-					<MembersListItem
-						assetLibraryCreatorUserId={assetLibraryCreatorUserId}
-						currentUserId={currentUserId}
-						emptyMessage={Liferay.Language.get(
-							'this-space-has-no-user-yet'
+			{!hasMembersSelected ? (
+				<div className="c-p-4 c-pb-0 text-center c-ml-n4 c-mr-n4 border-top">
+					<p className="text-4 font-weight-semi-bold c-mb-1 c-mt-2">
+						{Liferay.Language.get('no-members-yet')}
+					</p>
+					<p className="c-m-0 text-secondary text-3">
+						{Liferay.Language.get('add-members-to-this-space')}
+					</p>
+				</div>
+			) : (
+				<>
+					<label className="d-block" id={listLabelId}>
+						{Liferay.Language.get('who-has-access')}
+					</label>
+					<ul
+						aria-labelledby={listLabelId}
+						className="c-mt-3 c-p-0 list-unstyled members-list"
+					>
+						{selectedOption === SelectOptions.USERS ? (
+							<MembersListItem
+								assetLibraryCreatorUserId={
+									assetLibraryCreatorUserId
+								}
+								currentUserId={currentUserId}
+								hasAssignMembersPermission={
+									hasAssignMembersPermission
+								}
+								itemType="user"
+								items={selectedUsers}
+								onRemoveItem={onRemoveItem}
+								onUpdateItemRoles={onUpdateItemRoles}
+								roles={spacePermissionsRoles}
+							/>
+						) : (
+							<MembersListItem
+								hasAssignMembersPermission={
+									hasAssignMembersPermission
+								}
+								itemType="group"
+								items={selectedUserGroups}
+								onRemoveItem={onRemoveItem}
+								onUpdateItemRoles={onUpdateItemRoles}
+								roles={spacePermissionsRoles}
+							/>
 						)}
-						hasAssignMembersPermission={hasAssignMembersPermission}
-						itemType="user"
-						items={selectedUsers}
-						onRemoveItem={onRemoveItem}
-						onUpdateItemRoles={onUpdateItemRoles}
-						roles={spacePermissionsRoles}
-					/>
-				) : (
-					<MembersListItem
-						emptyMessage={Liferay.Language.get(
-							'this-space-has-no-group-yet'
+
+						{isFetchingMembers && (
+							<li className="d-flex justify-content-center">
+								<LoadingIndicator
+									displayType="secondary"
+									size="sm"
+								/>
+							</li>
 						)}
-						hasAssignMembersPermission={hasAssignMembersPermission}
-						itemType="group"
-						items={selectedUserGroups}
-						onRemoveItem={onRemoveItem}
-						onUpdateItemRoles={onUpdateItemRoles}
-						roles={spacePermissionsRoles}
-					/>
-				)}
 
-				{isFetchingMembers && (
-					<li className="d-flex justify-content-center">
-						<LoadingIndicator displayType="secondary" size="sm" />
-					</li>
-				)}
-
-				<div ref={sentinelRef} />
-			</ul>
+						<div ref={sentinelRef} />
+					</ul>
+				</>
+			)}
 		</div>
 	);
 }

@@ -30,8 +30,10 @@ type EmailRecipients = {
 };
 
 type EmailNotificationRecipients = {
-	[key in 'roleName']?: string;
+	[key in EmailNotificationRecipientTypeOptions]?: string;
 };
+
+type EmailNotificationRecipientTypeOptions = 'roleName';
 
 type UserNotificationRecipients = {
 	[key in 'term' | 'userScreenName' | 'userGroupName' | 'roleName']?: string;

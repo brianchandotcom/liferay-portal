@@ -24,9 +24,9 @@ import React, {useEffect, useState} from 'react';
 import {NotificationTemplateError} from '../EditNotificationTemplate';
 import {
 	getCheckedChildren,
-	handleMultiSelectRoleItemsChange,
+	handleMultiSelectItemsChange,
 	uncheckMultiSelectItemChildrens,
-} from './rolesUtil';
+} from './multiSelectUtil';
 
 interface PrimaryRecipientProps {
 	emailNotificationRoles: MultiSelectItem[];
@@ -79,7 +79,8 @@ export function PrimaryRecipient({
 						...baseRoleElement,
 						children: getCheckedChildren(
 							recipient.to as EmailNotificationRecipients[],
-							baseRoleElement.children
+							baseRoleElement.children,
+							'roleName'
 						),
 					};
 				})
@@ -165,8 +166,10 @@ export function PrimaryRecipient({
 						)}
 						selectAllOption
 						setOptions={(items) => {
-							const newRecipients =
-								handleMultiSelectRoleItemsChange(items);
+							const newRecipients = handleMultiSelectItemsChange(
+								items,
+								'roleName'
+							);
 
 							setValues({
 								...values,

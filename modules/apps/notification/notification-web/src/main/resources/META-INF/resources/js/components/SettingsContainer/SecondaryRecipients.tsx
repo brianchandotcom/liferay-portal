@@ -19,9 +19,9 @@ import React, {useEffect, useState} from 'react';
 
 import {
 	getCheckedChildren,
-	handleMultiSelectRoleItemsChange,
+	handleMultiSelectItemsChange,
 	uncheckMultiSelectItemChildrens,
-} from './rolesUtil';
+} from './multiSelectUtil';
 
 interface SecondaryRecipientsProps {
 	emailNotificationRoles: MultiSelectItem[];
@@ -50,12 +50,13 @@ export function SecondaryRecipient({
 	const [ccRolesList, setCCRolesList] = useState<MultiSelectItem[]>([]);
 	const [recipient] = values.recipients as EmailRecipients[];
 
-	const handleRecipientRoleChange = (
+	const handleRecipientItemChange = (
 		items: MultiSelectItem[],
 		recipientKey: 'cc' | 'bcc',
-		setRoleList: (value: MultiSelectItem[]) => void
+		setItemList: (value: MultiSelectItem[]) => void,
+		type: EmailNotificationRecipientTypeOptions
 	) => {
-		const newRecipients = handleMultiSelectRoleItemsChange(items);
+		const newRecipients = handleMultiSelectItemsChange(items, type);
 
 		setValues({
 			...values,
@@ -67,7 +68,7 @@ export function SecondaryRecipient({
 			],
 		});
 
-		setRoleList(items);
+		setItemList(items);
 	};
 
 	const handleRecipientTypeChange = (
@@ -116,7 +117,8 @@ export function SecondaryRecipient({
 						...baseRoleElement,
 						children: getCheckedChildren(
 							recipient.cc as EmailNotificationRecipients[],
-							baseRoleElement.children
+							baseRoleElement.children,
+							'roleName'
 						),
 					};
 				})
@@ -149,7 +151,8 @@ export function SecondaryRecipient({
 						...baseRoleElement,
 						children: getCheckedChildren(
 							recipient.bcc as EmailNotificationRecipients[],
-							baseRoleElement.children
+							baseRoleElement.children,
+							'roleName'
 						),
 					};
 				})
@@ -237,10 +240,11 @@ export function SecondaryRecipient({
 										)}
 										selectAllOption
 										setOptions={(items) => {
-											handleRecipientRoleChange(
+											handleRecipientItemChange(
 												items,
 												'cc',
-												setCCRolesList
+												setCCRolesList,
+												'roleName'
 											);
 										}}
 									/>
@@ -343,10 +347,11 @@ export function SecondaryRecipient({
 										)}
 										selectAllOption
 										setOptions={(items) => {
-											handleRecipientRoleChange(
+											handleRecipientItemChange(
 												items,
 												'bcc',
-												setBCCRolesList
+												setBCCRolesList,
+												'roleName'
 											);
 										}}
 									/>

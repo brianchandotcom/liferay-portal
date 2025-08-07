@@ -8,10 +8,10 @@ import {MultiSelectItem} from '@liferay/object-js-components-web';
 
 import {
 	getCheckedChildren,
-	getUserNotificationRoles,
-	handleMultiSelectRoleItemsChange,
+	handleMultiSelectItemsChange,
 	uncheckMultiSelectItemChildrens,
-} from '../components/SettingsContainer/rolesUtil';
+} from '../components/SettingsContainer/multiSelectUtil';
+import {getUserNotificationRoles} from '../components/SettingsContainer/rolesUtil';
 
 it('Assert role names checked items', () => {
 	const children = [
@@ -53,7 +53,11 @@ it('Assert role names checked items', () => {
 		{roleName: 'Owner'},
 	];
 
-	const checkedChildren = getCheckedChildren(rolesNamesList, children);
+	const checkedChildren = getCheckedChildren(
+		rolesNamesList,
+		children,
+		'roleName'
+	);
 
 	expect(checkedChildren).toStrictEqual([
 		{
@@ -197,7 +201,10 @@ it('verify that handleMultiSelectRoleItemsChange generates new recipients in the
 		},
 	] as MultiSelectItem[];
 
-	const newRecipients = handleMultiSelectRoleItemsChange(itemsGroupMock);
+	const newRecipients = handleMultiSelectItemsChange(
+		itemsGroupMock,
+		'roleName'
+	);
 
 	expect(newRecipients).toStrictEqual([
 		{

@@ -6162,6 +6162,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectEntry objectEntry = _addObjectEntry(_objectDefinition1, null, 1);
 
+		_updateObjectEntryVersion(_objectDefinition1, objectEntry, 2);
+
 		_defaultObjectEntryManager.deleteObjectEntry(
 			dtoConverterContext, _objectDefinition1, objectEntry.getId());
 
@@ -6179,12 +6181,14 @@ public class DefaultObjectEntryManagerImplTest
 
 		Long objectEntryId = objectEntry.getId();
 
-		ObjectEntryVersion objectEntryVersion =
-			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntryId, 1);
+		ListUtil.isNotEmptyForEach(
+			_objectEntryVersionLocalService.getObjectEntryVersions(
+				objectEntryId),
+			objectEntryVersion -> Assert.assertEquals(
+				WorkflowConstants.STATUS_IN_TRASH,
+				objectEntryVersion.getStatus()));
 
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_IN_TRASH, objectEntryVersion.getStatus());
+		_assertObjectEntriesSize1(_objectDefinition1, 0);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
 			dtoConverterContext, _objectDefinition1, objectEntry.getId());

@@ -21,9 +21,7 @@
 	var analyticsCookiesConsentMode =
 		<%= (boolean)request.getAttribute(AnalyticsWebKeys.ANALYTICS_COOKIES_EXPLICIT_CONSENT_MODE) %>;
 	var analyticsExternalReferenceCode =
-		'<%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_EXTERNAL_REFERENCE_CODE) %>'	;
-
-
+		'<%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_EXTERNAL_REFERENCE_CODE) %>';
 
 	var cookieManagers = {
 		'cookie.onetrust': {
@@ -148,7 +146,8 @@
 					request.context.channelId = analyticsClientChannelId;
 					request.context.groupId =
 						themeDisplay.getScopeGroupIdOrLiveGroupId();
-					request.context.externalReferenceCode = analyticsExternalReferenceCode
+					request.context.externalReferenceCode =
+						analyticsExternalReferenceCode;
 
 					return request;
 				};
@@ -165,8 +164,7 @@
 				runMiddlewares();
 
 				Analytics.send('pageViewed', 'Page', {
-					externalReferenceCode: analyticsExternalReferenceCode
-
+					externalReferenceCode: analyticsExternalReferenceCode,
 				});
 
 				<c:if test="<%= FrontendSPAUtil.isEnabled(company.getCompanyId()) %>">
@@ -202,8 +200,8 @@
 
 									Analytics.send('pageViewed', 'Page', {
 										page: event.path,
-										externalReferenceCode: analyticsExternalReferenceCode,
-
+										externalReferenceCode:
+											analyticsExternalReferenceCode,
 									});
 								}
 							}

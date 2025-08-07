@@ -27,4 +27,5 @@ public class AnalyticsWebKeys {
 
 	public static final String ANALYTICS_EXTERNAL_REFERENCE_CODE =
 		"ANALYTICS_EXTERNAL_REFERENCE_CODE";
+
 }

@@ -146,7 +146,8 @@
 					request.context.channelId = analyticsClientChannelId;
 					request.context.groupId =
 						themeDisplay.getScopeGroupIdOrLiveGroupId();
-					request.context.layoutExternalReferenceCode = analyticsExternalReferenceCode;
+					request.context.layoutExternalReferenceCode =
+						analyticsExternalReferenceCode;
 
 					return request;
 				};

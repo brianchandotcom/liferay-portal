@@ -430,7 +430,7 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Test
-	@TestInfo("LPD-32929")
+	@TestInfo({"LPD-32929", "LPD-62474"})
 	public void testExportImportContentReference() throws Exception {
 		Locale locale = _portal.getSiteDefaultLocale(stagingGroup);
 
@@ -463,7 +463,7 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Test
-	@TestInfo("LPD-32929")
+	@TestInfo({"LPD-32929", "LPD-62474"})
 	public void testExportImportContentReferenceWithoutAssetEntry()
 		throws Exception {
 

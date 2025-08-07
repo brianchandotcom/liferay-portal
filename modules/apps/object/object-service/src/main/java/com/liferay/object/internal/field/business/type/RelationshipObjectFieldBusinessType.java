@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -136,7 +137,7 @@ public class RelationshipObjectFieldBusinessType
 			try {
 				if (objectDefinition.isUnmodifiableSystemObject()) {
 					return _getPrimaryKeyObj(
-						externalReferenceCode, objectDefinition, 0L);
+						externalReferenceCode, objectDefinition, 0L, userId);
 				}
 
 				ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
@@ -182,7 +183,8 @@ public class RelationshipObjectFieldBusinessType
 
 			try {
 				if (objectDefinition.isUnmodifiableSystemObject()) {
-					return _getPrimaryKeyObj(null, objectDefinition, valueLong);
+					return _getPrimaryKeyObj(
+						null, objectDefinition, valueLong, userId);
 				}
 
 				ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
@@ -238,7 +240,7 @@ public class RelationshipObjectFieldBusinessType
 
 			if (objectDefinition1.isUnmodifiableSystemObject()) {
 				return _getPrimaryKeyObj(
-					externalReferenceCode, objectDefinition1, 0L);
+					externalReferenceCode, objectDefinition1, 0L, userId);
 			}
 
 			long objectDefinition1GroupId = 0;
@@ -291,7 +293,7 @@ public class RelationshipObjectFieldBusinessType
 
 	private Object _getPrimaryKeyObj(
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			Long primaryKey)
+			Long primaryKey, long userId)
 		throws PortalException {
 
 		SystemObjectDefinitionManager systemObjectDefinitionManager =
@@ -305,8 +307,9 @@ public class RelationshipObjectFieldBusinessType
 		}
 
 		BaseModel<?> baseModel =
-			systemObjectDefinitionManager.getBaseModelByExternalReferenceCode(
-				externalReferenceCode, objectDefinition.getCompanyId());
+			systemObjectDefinitionManager.getOrAddEmptyBaseModel(
+				externalReferenceCode, objectDefinition.getCompanyId(),
+				_userLocalService.getUserById(userId));
 
 		return baseModel.getPrimaryKeyObj();
 	}
@@ -329,5 +332,8 @@ public class RelationshipObjectFieldBusinessType
 	@Reference
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

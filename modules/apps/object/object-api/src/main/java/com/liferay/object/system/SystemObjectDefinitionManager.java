@@ -82,6 +82,14 @@ public interface SystemObjectDefinitionManager {
 
 	public List<ObjectField> getObjectFields();
 
+	public default BaseModel<?> getOrAddEmptyBaseModel(
+			String externalReferenceCode, long companyId, User user)
+		throws PortalException {
+
+		return getBaseModelByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public default Page<?> getPage(
 			User user, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)

@@ -1,0 +1,81 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.customer.model;
+
+import com.liferay.customer.constants.JiraIssueConstants;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/**
+ * @author Jenny Chen
+ */
+public class JiraSupportIssue {
+
+	public JiraSupportIssue(JSONObject jsonObject, String ticketURL) {
+		_key = jsonObject.getString("key");
+
+		JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
+
+		JSONArray jsonArray = fieldsJSONObject.getJSONArray("labels");
+
+		List<String> labels = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			labels.add(jsonArray.getString(i));
+		}
+
+		_labels = labels.toArray(new String[0]);
+
+		JSONObject statusJSONObject = fieldsJSONObject.getJSONObject("status");
+
+		_status = statusJSONObject.getString("name");
+
+		_summary = fieldsJSONObject.getString("summary");
+
+		_ticketURL = ticketURL;
+	}
+
+	public String getKey() {
+		return _key;
+	}
+
+	public String[] getLabels() {
+		return _labels;
+	}
+
+	public String getStatus() {
+		return _status;
+	}
+
+	public String getSummary() {
+		return _summary;
+	}
+
+	public String getTicketURL() {
+		return _ticketURL;
+	}
+
+	public boolean isClosed() {
+		if (_status.equals(JiraIssueConstants.STATUS_CLOSED) ||
+			_status.equals(JiraIssueConstants.STATUS_SOLUTION_ACCEPTED)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private final String _key;
+	private final String[] _labels;
+	private final String _status;
+	private final String _summary;
+	private final String _ticketURL;
+
+}

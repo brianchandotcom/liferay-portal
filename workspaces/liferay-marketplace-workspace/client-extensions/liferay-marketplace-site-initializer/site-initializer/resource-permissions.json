@@ -33,6 +33,26 @@
 			"VIEW"
 		],
 		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TrialExtensionRequest$]",
+		"roleName": "SSA",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TrialExtensionRequest$]",
+		"roleName": "SSA Admin",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:UserAdditionalInfo$]",
 		"roleName": "Account Administrator (Regular)",
 		"scope": "1"
@@ -199,6 +219,15 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
+		"roleName": "SSA User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
 		"roleName": "Supplier",
 		"scope": "1"
 	},
@@ -255,6 +284,24 @@
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:RequestPublisherAccount$]",
 		"roleName": "Guest",
 		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TrialExtensionRequest$]",
+		"roleName": "SSA",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TrialExtensionRequest$]",
+		"roleName": "SSA Admin",
+		"scope": "3"
 	},
 	{
 		"actionIds": [

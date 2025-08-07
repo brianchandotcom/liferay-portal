@@ -21,7 +21,7 @@ String tabs1Names = "general";
 if (samlProviderConfigurationHelper.isRoleIdp()) {
 	tabs1Names += ",identity-provider,service-provider-connections";
 }
-else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+else if (samlProviderConfigurationHelper.isRoleMultirole()) {
 	tabs1Names += ",identity-provider,service-provider-connections,service-provider,identity-provider-connections";
 }
 else if (samlProviderConfigurationHelper.isRoleSp()) {

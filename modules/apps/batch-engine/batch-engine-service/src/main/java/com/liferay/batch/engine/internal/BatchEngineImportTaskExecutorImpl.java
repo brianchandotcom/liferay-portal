@@ -33,6 +33,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.SafeCloseable;
@@ -128,6 +129,8 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 
 		try (SafeCloseable safeCloseable2 = SearchContext.openBatchMode()) {
+			ExportImportThreadLocal.setBatchImportInProcess(true);
+
 			batchEngineImportTask.setExecuteStatus(
 				BatchEngineTaskExecuteStatus.STARTED.toString());
 			batchEngineImportTask.setStartTime(new Date());
@@ -166,6 +169,8 @@ public class BatchEngineImportTaskExecutorImpl
 				throwable);
 		}
 		finally {
+			ExportImportThreadLocal.setBatchImportInProcess(false);
+
 			file.delete();
 
 			// LPS-167011 Because of call to _updateBatchEngineImportTask when

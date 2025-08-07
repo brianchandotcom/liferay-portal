@@ -95,10 +95,6 @@ public class DataDefinitionUtil {
 		DataDefinitionField dataDefinitionField, DDMStructure ddmStructure,
 		String fieldName) {
 
-		if (isValidFieldName(fieldName)) {
-			return fieldName;
-		}
-
 		if (ddmStructure != null) {
 			String existingFieldName = _getExistingFieldName(
 				dataDefinitionField, ddmStructure);
@@ -110,6 +106,10 @@ public class DataDefinitionUtil {
 
 				fieldName = existingFieldName;
 			}
+		}
+
+		if (isValidFieldName(fieldName)) {
+			return fieldName;
 		}
 
 		return DDMFormFieldUtil.getDDMFormFieldName(fieldName);

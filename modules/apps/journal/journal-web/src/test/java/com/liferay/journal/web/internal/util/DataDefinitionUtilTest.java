@@ -50,6 +50,7 @@ public class DataDefinitionUtilTest {
 		_testUpdateDataDefinitionFields();
 		_testUpdateDataDefinitionFieldsWithExistingFieldName();
 		_testUpdateDataDefinitionFieldsWithExistingInvalidFieldName();
+		_testUpdateDataDefinitionFieldsWithExistingFieldNameAndExistingReference();
 	}
 
 	private DataDefinition _getDataDefinition() {
@@ -160,6 +161,27 @@ public class DataDefinitionUtilTest {
 
 		Assert.assertTrue(DataDefinitionUtil.isValidFieldName(newFieldName));
 		Assert.assertEquals(existingFieldName, newFieldName);
+	}
+
+	private void _testUpdateDataDefinitionFieldsWithExistingFieldNameAndExistingReference() {
+		String originalFieldName = _fieldName;
+
+		String existingFieldName = DDMFormFieldUtil.getDDMFormFieldName(
+			_fieldName);
+
+		_fieldName = DDMFormFieldUtil.getDDMFormFieldName(_fieldName);
+
+		DataDefinition dataDefinition = _getDataDefinition();
+
+		DataDefinitionUtil.updateDataDefinitionFields(
+			dataDefinition, _getDDMStructure(existingFieldName));
+
+		String newFieldName = _getDataDefinitionFieldName(dataDefinition);
+
+		Assert.assertTrue(DataDefinitionUtil.isValidFieldName(newFieldName));
+		Assert.assertEquals(existingFieldName, newFieldName);
+
+		_fieldName = originalFieldName;
 	}
 
 	private void _testUpdateDataDefinitionFieldsWithExistingInvalidFieldName() {

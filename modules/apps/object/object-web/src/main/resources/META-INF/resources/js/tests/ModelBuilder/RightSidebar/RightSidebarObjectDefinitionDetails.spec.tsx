@@ -17,20 +17,6 @@ import {objectDefinition} from './__mock__/objectDefinition';
 const OBJECT_DEFINITION_URL_REGEX =
 	/\/o\/object-admin\/v1\.0\/object-definitions\/by-external-reference-code\/.+/;
 
-let mockUseObjectFolderContextReturnValue = [
-	{
-		selectedObjectDefinitionNode: {
-			data: {externalReferenceCode: '1'},
-		},
-	},
-	jest.fn(),
-];
-
-const rightSidebarObjectDefinitionDetailsProps = {
-	companies: [],
-	sites: [],
-};
-
 const renderComponent = (customProps = {}) => {
 	fetchMock.get(OBJECT_DEFINITION_URL_REGEX, {
 		body: {...objectDefinition, ...customProps},
@@ -38,7 +24,8 @@ const renderComponent = (customProps = {}) => {
 
 	render(
 		<RightSidebarObjectDefinitionDetails
-			{...rightSidebarObjectDefinitionDetailsProps}
+			companies={[]}
+			sites={[]}
 		/>
 	);
 };
@@ -51,7 +38,16 @@ jest.mock('frontend-js-web', () => ({
 jest.mock(
 	'../../../components/ModelBuilder/ModelBuilderContext/objectFolderContext',
 	() => ({
-		useObjectFolderContext: () => mockUseObjectFolderContextReturnValue,
+		useObjectFolderContext: () => {
+			return [
+				{
+					selectedObjectDefinitionNode: {
+						data: {externalReferenceCode: '1'},
+					},
+				},
+				jest.fn(),
+			];
+		},
 	})
 );
 
@@ -72,14 +68,6 @@ afterAll(() => {
 
 afterEach(() => {
 	fetchMock.restore();
-	mockUseObjectFolderContextReturnValue = [
-		{
-			selectedObjectDefinitionNode: {
-				data: {externalReferenceCode: '1'},
-			},
-		},
-		jest.fn(),
-	];
 });
 
 describe('object definition configuration', () => {

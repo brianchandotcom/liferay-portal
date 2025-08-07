@@ -14,7 +14,7 @@ import {AccountRestrictionContainer} from './AccountRestrictionContainer';
 import {ConfigurationContainer} from './ConfigurationContainer';
 import {EntryDisplayContainer} from './EntryDisplayContainer';
 import {ExternalDataSourceContainer} from './ExternalDataSourceContainer';
-import {InharitanceObjectDefinitionAlert} from './InheritanceObjectDefinitionAlert';
+import {InheritanceObjectDefinitionAlert} from './InheritanceObjectDefinitionAlert';
 import {ObjectDataContainer} from './ObjectDataContainer';
 import {ScopeContainer} from './ScopeContainer';
 import {SeoContainer} from './SeoContainer';
@@ -249,7 +249,7 @@ export default function EditObjectDetails({
 			<div className="lfr-objects__object-definition-details">
 				<Sheet title={Liferay.Language.get('basic-information')}>
 					{isRootDescendantNode && (
-						<InharitanceObjectDefinitionAlert
+						<InheritanceObjectDefinitionAlert
 							learnResources={learnResources}
 						/>
 					)}

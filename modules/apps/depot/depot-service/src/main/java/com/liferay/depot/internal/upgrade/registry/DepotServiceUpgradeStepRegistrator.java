@@ -47,9 +47,9 @@ public class DepotServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.2.0", "2.3.0",
+			UpgradeProcessFactory.addColumns("DepotEntry", "type_ INTEGER"),
 			UpgradeProcessFactory.addColumns(
-				"DepotEntry", "type_ INTEGER", "DepotEntryGroupRel",
-				"type_ INTEGER"),
+				"DepotEntryGroupRel", "type_ INTEGER"),
 			UpgradeProcessFactory.runSQL(
 				"update DepotEntry set type_ = " +
 					DepotConstants.TYPE_ASSET_LIBRARY),

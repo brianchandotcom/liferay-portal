@@ -68,8 +68,9 @@ public abstract class BaseGlobJobProperty
 			Matcher matcher = _globClassMethodPattern.matcher(relativeGlob);
 
 			if (matcher.matches()) {
-				String testClassGlob = matcher.group("class");
-				String testClassMethodName = matcher.group("method");
+				String testClassGlob = matcher.group("testClassGlob");
+				String testClassMethodName = matcher.group(
+					"testClassMethodName");
 
 				relativeGlob = testClassGlob;
 
@@ -176,7 +177,7 @@ public abstract class BaseGlobJobProperty
 	}
 
 	private static final Pattern _globClassMethodPattern = Pattern.compile(
-		"(?<class>[^#]+)#(?<method>.+)");
+		"(?<testClassGlob>[^#]+)#(?<testClassMethodName>.+)");
 
 	private final Map<String, List<String>> _globTestClassMethodsMap =
 		new HashMap<>();

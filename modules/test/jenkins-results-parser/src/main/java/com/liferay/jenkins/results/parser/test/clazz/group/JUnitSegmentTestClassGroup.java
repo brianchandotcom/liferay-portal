@@ -51,15 +51,18 @@ public class JUnitSegmentTestClassGroup extends SegmentTestClassGroup {
 
 				JUnitTestClass jUnitTestClass = (JUnitTestClass)testClass;
 
-				List<String> testMethods = jUnitTestClass.getTestMethods();
+				List<String> testClassMethodNames =
+					jUnitTestClass.getTestClassMethodNames();
 
 				String classFileName = matcher.group("classFileName");
 
-				if ((testMethods != null) && !testMethods.isEmpty()) {
-					for (String testMethod : testMethods) {
+				if ((testClassMethodNames != null) &&
+					!testClassMethodNames.isEmpty()) {
+
+					for (String testClassMethodName : testClassMethodNames) {
 						sb.append(classFileName.replace(".java", ".class"));
 						sb.append("#");
-						sb.append(testMethod);
+						sb.append(testClassMethodName);
 						sb.append(",");
 					}
 				}

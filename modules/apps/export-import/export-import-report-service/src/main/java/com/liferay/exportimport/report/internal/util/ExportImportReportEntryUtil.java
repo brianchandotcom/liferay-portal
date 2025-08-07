@@ -30,6 +30,7 @@ public class ExportImportReportEntryUtil {
 			ObjectDefinition objectDefinition =
 				ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
 					objectEntry.getObjectDefinitionId());
+
 			if (objectDefinition != null) {
 				return objectDefinition.getName();
 			}
@@ -38,7 +39,8 @@ public class ExportImportReportEntryUtil {
 			return baseModel.getModelClassName();
 		}
 
-		return object.getClass().getName();
+		return object.getClass(
+		).getName();
 	}
 
 	public static int getOrigin() {

@@ -178,16 +178,16 @@ const SitesSelector = ({
 
 const EmptyResult = ({
 	groupId,
-	isAdmin,
+	hasConnectSitesPermission,
 	onSiteConnected,
 }: {
 	groupId: string;
-	isAdmin: boolean;
+	hasConnectSitesPermission: boolean;
 	onSiteConnected?: Function;
 }) => {
 	return (
 		<>
-			{isAdmin && (
+			{hasConnectSitesPermission && (
 				<SitesSelector
 					groupId={groupId}
 					onSiteConnected={onSiteConnected}
@@ -199,7 +199,7 @@ const EmptyResult = ({
 					{Liferay.Language.get('no-sites-are-connected-yet')}
 				</h2>
 
-				{isAdmin && (
+				{hasConnectSitesPermission && (
 					<p className="text-3">
 						{Liferay.Language.get('connect-sites-to-this-space')}
 					</p>
@@ -211,10 +211,10 @@ const EmptyResult = ({
 
 export default function SpaceSitesModal({
 	groupId,
-	isAdmin = true,
+	hasConnectSitesPermission = true,
 }: {
 	groupId: string;
-	isAdmin?: boolean;
+	hasConnectSitesPermission?: boolean;
 }) {
 	const [connectedSites, setConnectedSites] = useState<Site[]>([]);
 	const listLabelId = useId();
@@ -271,12 +271,12 @@ export default function SpaceSitesModal({
 				{!connectedSites.length ? (
 					<EmptyResult
 						groupId={groupId}
-						isAdmin={isAdmin}
+						hasConnectSitesPermission={hasConnectSitesPermission}
 						onSiteConnected={onSiteConnected}
 					/>
 				) : (
 					<>
-						{isAdmin && (
+						{hasConnectSitesPermission && (
 							<>
 								<SitesSelector
 									groupId={groupId}
@@ -313,7 +313,7 @@ export default function SpaceSitesModal({
 												{site.name}
 											</div>
 
-											{isAdmin && (
+											{hasConnectSitesPermission && (
 												<SiteActions
 													groupId={groupId}
 													onSiteChange={onSiteChange}

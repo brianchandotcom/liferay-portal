@@ -7,12 +7,17 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, render, screen} from '@testing-library/react';
 import React from 'react';
 
+import AdminUserService from '../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService';
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 import {
 	AddSpaceMembers,
 	AddSpaceMembersProps,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/AddSpaceMembers';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService'
+);
 
 const mockLearnResources = {
 	'site-cms-site-initializer': {
@@ -68,6 +73,13 @@ describe('AddSpaceMembers', () => {
 		getSpaceUserGroupsSpy = jest
 			.spyOn(SpaceService, 'getSpaceUserGroups')
 			.mockResolvedValue(testUserGroupsResponse);
+		jest.spyOn(AdminUserService, 'getUserRoles').mockResolvedValue({
+			items: [],
+			lastPage: 1,
+			page: 1,
+			totalCount: 0,
+			pageSize: 1,
+		});
 
 		global.IntersectionObserver = jest.fn().mockImplementation(() => ({
 			disconnect: jest.fn(),

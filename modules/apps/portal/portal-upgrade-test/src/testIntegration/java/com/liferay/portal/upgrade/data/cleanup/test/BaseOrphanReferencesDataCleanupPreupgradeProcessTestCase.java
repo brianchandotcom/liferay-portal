@@ -52,7 +52,7 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					PortalInstancePool.getDefaultCompanyId());
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				getLoggingClassName(), LoggerTestUtil.INFO)) {
+				getLoggerClassName(), LoggerTestUtil.INFO)) {
 
 			UnsafeRunnable<Exception> insertDataUnsafeRunnable =
 				getInsertDataUnsafeRunnable();
@@ -89,7 +89,7 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 	protected abstract UnsafeConsumer<LogCapture, Exception>
 		getLogAssertionUnsafeConsumer();
 
-	protected abstract String getLoggingClassName();
+	protected abstract String getLoggerClassName();
 
 	protected abstract UpgradeProcess getUpgradeProcess();
 

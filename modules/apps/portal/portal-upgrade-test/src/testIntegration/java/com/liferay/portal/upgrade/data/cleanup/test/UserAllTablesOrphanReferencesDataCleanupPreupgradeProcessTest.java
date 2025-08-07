@@ -98,7 +98,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	}
 
 	@Override
-	protected String getLoggingClassName() {
+	protected String getLoggerClassName() {
 		return UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess.class.
 			getName();
 	}

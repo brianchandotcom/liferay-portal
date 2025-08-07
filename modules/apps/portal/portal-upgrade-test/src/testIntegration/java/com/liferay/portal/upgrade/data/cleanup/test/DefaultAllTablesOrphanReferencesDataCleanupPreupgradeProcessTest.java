@@ -72,7 +72,7 @@ public class DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	}
 
 	@Override
-	protected String getLoggingClassName() {
+	protected String getLoggerClassName() {
 		return OrphanReferencesDataCleanupUtil.class.getName();
 	}
 

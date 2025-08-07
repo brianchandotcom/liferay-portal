@@ -15,13 +15,6 @@ import {formatDate} from '../../../utils/date';
 import {toThousands} from '../../../utils/math';
 import {ICommonProps} from './AssetMetrics';
 
-function formatDateForTable(dateStr: string): string {
-	const date = new Date(dateStr);
-	const formatted = formatDate(date);
-
-	return formatted.charAt(0).toUpperCase() + formatted.slice(1);
-}
-
 const AssetMetricsTableView: React.FC<ICommonProps> = ({
 	histogram,
 	metricType,
@@ -40,7 +33,7 @@ const AssetMetricsTableView: React.FC<ICommonProps> = ({
 	}, [metricType]);
 
 	const formattedData = histogram.metrics.map((metric) => ({
-		date: formatDateForTable(metric.valueKey),
+		date: formatDate(new Date(metric.valueKey), rangeSelector),
 		previous: toThousands(metric.previousValue),
 		value: toThousands(metric.value),
 	}));

@@ -7,27 +7,13 @@ import {dateUtils} from 'frontend-js-web';
 
 import {RangeSelectors} from '../components/RangeSelectorsDropdown';
 
-export function formatDate(date: Date) {
-	const options: Intl.DateTimeFormatOptions = {
-		day: 'numeric',
-		month: 'short',
-	};
-
-	return date.toLocaleDateString('en-US', options).toLowerCase();
-}
-
 export function toUnix(str: string) {
 	return new Date(str).getTime();
 }
 
-export function formatTooltipDate(
-	timestamp: number = 0,
-	rangeSelectors: RangeSelectors
-) {
-	const date = new Date(timestamp);
-
-	if (rangeSelectors === RangeSelectors.Last24Hours) {
-		return dateUtils.format(date, 'MMM D, h A');
+export function formatDate(date: Date, rangeSelector: RangeSelectors) {
+	if (rangeSelector === RangeSelectors.Last24Hours) {
+		return dateUtils.format(date, 'MMM d, h a');
 	}
 
 	return dateUtils.format(date, 'YYYY MMM D');

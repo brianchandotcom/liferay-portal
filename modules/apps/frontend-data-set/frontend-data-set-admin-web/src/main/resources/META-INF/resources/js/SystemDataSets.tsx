@@ -22,12 +22,9 @@ import {openModal} from 'frontend-js-components-web';
 import {fetch, navigate} from 'frontend-js-web';
 
 import Toggle from './components/Toggle';
-import {
-	API_URL,
-	DEFAULT_FETCH_HEADERS,
-	FDS_DEFAULT_PROPS,
-} from './utils/constants';
+import {DEFAULT_FETCH_HEADERS, FDS_DEFAULT_PROPS} from './utils/constants';
 import getAPIExplorerURL from './utils/getAPIExplorerURL';
+import getDataSetResourceURL from './utils/getDataSetResourceURL';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 import {IDataSet, ISystemDataSet} from './utils/types';
@@ -267,7 +264,11 @@ const SystemDataSets = ({
 			.map((systemDataSet) => `'${systemDataSet.name}'`)
 			.join(',');
 
-		return `${API_URL.DATA_SETS}?filter=externalReferenceCode in (${systemDataSetNames})`;
+		return getDataSetResourceURL({
+			params: {
+				filter: `externalReferenceCode in (${systemDataSetNames})`,
+			},
+		});
 	};
 
 	const getEditURL = (itemData: IDataSet) => {
@@ -333,14 +334,15 @@ const SystemDataSets = ({
 	}) => {
 		setToogleDisabled(true);
 
-		const response = await fetch(
-			`${API_URL.DATA_SETS}/by-external-reference-code/${itemData.externalReferenceCode}`,
-			{
-				body: JSON.stringify({active: !itemData.active}),
-				headers: DEFAULT_FETCH_HEADERS,
-				method: 'PATCH',
-			}
-		);
+		const url = getDataSetResourceURL({
+			dataSetERC: itemData.externalReferenceCode,
+		});
+
+		const response = await fetch(url, {
+			body: JSON.stringify({active: !itemData.active}),
+			headers: DEFAULT_FETCH_HEADERS,
+			method: 'PATCH',
+		});
 
 		if (!response.ok) {
 			openDefaultFailureToast();

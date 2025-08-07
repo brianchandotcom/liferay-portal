@@ -45,12 +45,17 @@ public class ExportImportReportEntryWrapper
 		attributes.put(
 			"classExternalReferenceCode", getClassExternalReferenceCode());
 		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put(
 			"exportImportConfigurationId", getExportImportConfigurationId());
 		attributes.put("error", getError());
 		attributes.put("errorStacktrace", getErrorStacktrace());
-		attributes.put("resolved", isResolved());
+		attributes.put("modelName", getModelName());
+		attributes.put("origin", getOrigin());
+		attributes.put("scope", getScope());
+		attributes.put("scopeKey", getScopeKey());
 		attributes.put("type", getType());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -107,6 +112,12 @@ public class ExportImportReportEntryWrapper
 			setClassNameId(classNameId);
 		}
 
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
+		}
+
 		Long exportImportConfigurationId = (Long)attributes.get(
 			"exportImportConfigurationId");
 
@@ -126,16 +137,40 @@ public class ExportImportReportEntryWrapper
 			setErrorStacktrace(errorStacktrace);
 		}
 
-		Boolean resolved = (Boolean)attributes.get("resolved");
+		String modelName = (String)attributes.get("modelName");
 
-		if (resolved != null) {
-			setResolved(resolved);
+		if (modelName != null) {
+			setModelName(modelName);
+		}
+
+		Integer origin = (Integer)attributes.get("origin");
+
+		if (origin != null) {
+			setOrigin(origin);
+		}
+
+		String scope = (String)attributes.get("scope");
+
+		if (scope != null) {
+			setScope(scope);
+		}
+
+		String scopeKey = (String)attributes.get("scopeKey");
+
+		if (scopeKey != null) {
+			setScopeKey(scopeKey);
 		}
 
 		Integer type = (Integer)attributes.get("type");
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -172,6 +207,16 @@ public class ExportImportReportEntryWrapper
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
+	}
+
+	/**
+	 * Returns the class pk of this export import report entry.
+	 *
+	 * @return the class pk of this export import report entry
+	 */
+	@Override
+	public long getClassPK() {
+		return model.getClassPK();
 	}
 
 	/**
@@ -245,6 +290,16 @@ public class ExportImportReportEntryWrapper
 	}
 
 	/**
+	 * Returns the model name of this export import report entry.
+	 *
+	 * @return the model name of this export import report entry
+	 */
+	@Override
+	public String getModelName() {
+		return model.getModelName();
+	}
+
+	/**
 	 * Returns the modified date of this export import report entry.
 	 *
 	 * @return the modified date of this export import report entry
@@ -265,6 +320,16 @@ public class ExportImportReportEntryWrapper
 	}
 
 	/**
+	 * Returns the origin of this export import report entry.
+	 *
+	 * @return the origin of this export import report entry
+	 */
+	@Override
+	public int getOrigin() {
+		return model.getOrigin();
+	}
+
+	/**
 	 * Returns the primary key of this export import report entry.
 	 *
 	 * @return the primary key of this export import report entry
@@ -275,13 +340,33 @@ public class ExportImportReportEntryWrapper
 	}
 
 	/**
-	 * Returns the resolved of this export import report entry.
+	 * Returns the scope of this export import report entry.
 	 *
-	 * @return the resolved of this export import report entry
+	 * @return the scope of this export import report entry
 	 */
 	@Override
-	public boolean getResolved() {
-		return model.getResolved();
+	public String getScope() {
+		return model.getScope();
+	}
+
+	/**
+	 * Returns the scope key of this export import report entry.
+	 *
+	 * @return the scope key of this export import report entry
+	 */
+	@Override
+	public String getScopeKey() {
+		return model.getScopeKey();
+	}
+
+	/**
+	 * Returns the status of this export import report entry.
+	 *
+	 * @return the status of this export import report entry
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -292,16 +377,6 @@ public class ExportImportReportEntryWrapper
 	@Override
 	public int getType() {
 		return model.getType();
-	}
-
-	/**
-	 * Returns <code>true</code> if this export import report entry is resolved.
-	 *
-	 * @return <code>true</code> if this export import report entry is resolved; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isResolved() {
-		return model.isResolved();
 	}
 
 	@Override
@@ -334,6 +409,16 @@ public class ExportImportReportEntryWrapper
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
+	}
+
+	/**
+	 * Sets the class pk of this export import report entry.
+	 *
+	 * @param classPK the class pk of this export import report entry
+	 */
+	@Override
+	public void setClassPK(long classPK) {
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -409,6 +494,16 @@ public class ExportImportReportEntryWrapper
 	}
 
 	/**
+	 * Sets the model name of this export import report entry.
+	 *
+	 * @param modelName the model name of this export import report entry
+	 */
+	@Override
+	public void setModelName(String modelName) {
+		model.setModelName(modelName);
+	}
+
+	/**
 	 * Sets the modified date of this export import report entry.
 	 *
 	 * @param modifiedDate the modified date of this export import report entry
@@ -429,6 +524,16 @@ public class ExportImportReportEntryWrapper
 	}
 
 	/**
+	 * Sets the origin of this export import report entry.
+	 *
+	 * @param origin the origin of this export import report entry
+	 */
+	@Override
+	public void setOrigin(int origin) {
+		model.setOrigin(origin);
+	}
+
+	/**
 	 * Sets the primary key of this export import report entry.
 	 *
 	 * @param primaryKey the primary key of this export import report entry
@@ -439,13 +544,33 @@ public class ExportImportReportEntryWrapper
 	}
 
 	/**
-	 * Sets whether this export import report entry is resolved.
+	 * Sets the scope of this export import report entry.
 	 *
-	 * @param resolved the resolved of this export import report entry
+	 * @param scope the scope of this export import report entry
 	 */
 	@Override
-	public void setResolved(boolean resolved) {
-		model.setResolved(resolved);
+	public void setScope(String scope) {
+		model.setScope(scope);
+	}
+
+	/**
+	 * Sets the scope key of this export import report entry.
+	 *
+	 * @param scopeKey the scope key of this export import report entry
+	 */
+	@Override
+	public void setScopeKey(String scopeKey) {
+		model.setScopeKey(scopeKey);
+	}
+
+	/**
+	 * Sets the status of this export import report entry.
+	 *
+	 * @param status the status of this export import report entry
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

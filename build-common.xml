@@ -676,7 +676,7 @@ information.
 				]]>
 			</beanshell>
 
-			<condition else="@{ant.target.failure.message}" property="ant.target.failure.message" value="@{ant.target.file} @{ant.target.name} could not be executed. Please check the logs for details.">
+			<condition else="@{ant.target.failure.message}" property="ant.target.failure.message" value="@{ant.target.file} @{ant.target.name} was not executed. Please check the logs for details.">
 				<equals arg1="@{ant.target.failure.message}" arg2="" />
 			</condition>
 
@@ -802,7 +802,7 @@ information.
 		<sequential>
 			<generate-backend-batch-junit-report
 				junit.failure.count="1"
-				junit.failure.message.element="&lt;failure message=&quot;@{test.task.name} could not be executed. Please check the logs for details.&quot; /&gt;"
+				junit.failure.message.element="&lt;failure message=&quot;@{test.task.name} was not executed. Please check the logs for details.&quot; /&gt;"
 				test.class.name="@{test.class.name}"
 				test.command.name="testRun"
 				test.results.dir="modules/test-results"

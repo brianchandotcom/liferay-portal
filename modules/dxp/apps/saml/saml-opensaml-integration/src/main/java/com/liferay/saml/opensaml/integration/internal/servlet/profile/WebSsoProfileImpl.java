@@ -1402,42 +1402,20 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			try {
-				SamlIdpSpConnection samlIdpSpConnection =
-					samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-						companyId, entityId);
-
-				return samlIdpSpConnection.getNameIdFormat();
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
+			return _fetchSamlIdpSPNameIdFormat(companyId, entityId);
 		}
 		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
 			String nameIdFormat = _fetchSamlIdpSPNameIdFormat(
 				companyId, entityId);
 
-			if (Validator.isNull(nameIdFormat)) {
-				nameIdFormat = _fetchSamlSpIdpNameIdFormat(companyId, entityId);
+			if (Validator.isNotNull(nameIdFormat)) {
+				return nameIdFormat;
 			}
 
-			return nameIdFormat;
+			return _fetchSamlSpIdpNameIdFormat(companyId, entityId);
 		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
-			try {
-				SamlSpIdpConnection samlSpIdpConnection =
-					samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-						companyId, entityId);
-
-				return samlSpIdpConnection.getNameIdFormat();
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
+			return _fetchSamlSpIdpNameIdFormat(companyId, entityId);
 		}
 
 		return null;

@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
-import com.liferay.saml.persistence.exception.NoSuchIdpSpConnectionException;
-import com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
@@ -169,62 +167,24 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 		return metadataXMLObject;
 	}
 
-	private String _getMetadataXml(String entityId) throws Exception {
+	private String _getMetadataXml(String entityId) {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		if (_samlProviderConfigurationHelper.isRoleIdp()) {
-			try {
-				SamlIdpSpConnection samlIdpSpConnection =
-					_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-						companyId, entityId);
-
-				if (!samlIdpSpConnection.isEnabled()) {
-					return null;
-				}
-
-				return samlIdpSpConnection.getMetadataXml();
-			}
-			catch (NoSuchIdpSpConnectionException
-						noSuchIdpSpConnectionException) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchIdpSpConnectionException);
-				}
-
-				return null;
-			}
+			return _fetchSamlIdpSPMetadataXml(companyId, entityId);
 		}
 		else if (_samlProviderConfigurationHelper.isRoleMultirole()) {
 			String metadataXml = _fetchSamlSpIdpMetadataXml(
 				companyId, entityId);
 
-			if (Validator.isNull(metadataXml)) {
-				metadataXml = _fetchSamlIdpSPMetadataXml(companyId, entityId);
+			if (Validator.isNotNull(metadataXml)) {
+				return metadataXml;
 			}
 
-			return metadataXml;
+			return _fetchSamlIdpSPMetadataXml(companyId, entityId);
 		}
 		else if (_samlProviderConfigurationHelper.isRoleSp()) {
-			try {
-				SamlSpIdpConnection samlSpIdpConnection =
-					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-						companyId, entityId);
-
-				if (!samlSpIdpConnection.isEnabled()) {
-					return null;
-				}
-
-				return samlSpIdpConnection.getMetadataXml();
-			}
-			catch (NoSuchSpIdpConnectionException
-						noSuchSpIdpConnectionException) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchSpIdpConnectionException);
-				}
-
-				return null;
-			}
+			return _fetchSamlSpIdpMetadataXml(companyId, entityId);
 		}
 
 		return null;

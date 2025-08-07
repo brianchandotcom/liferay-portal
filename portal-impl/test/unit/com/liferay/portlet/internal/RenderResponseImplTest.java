@@ -60,10 +60,6 @@ public class RenderResponseImplTest {
 		portalUtil.setPortal(new PortalImpl());
 
 		_setUpLanguageUtil();
-
-		_portletId = RandomTestUtil.randomString();
-
-		_portletTitle = RandomTestUtil.randomString();
 	}
 
 	@Test
@@ -82,11 +78,15 @@ public class RenderResponseImplTest {
 
 		PortletConfig portletConfig = Mockito.mock(PortletConfig.class);
 
+		_portletId = RandomTestUtil.randomString();
+
 		Mockito.when(
 			portletConfigFactory.get(_portletId)
 		).thenReturn(
 			portletConfig
 		);
+
+		_portletTitle = RandomTestUtil.randomString();
 
 		ResourceBundle testResourceBundle = new TestResourceBundle();
 

@@ -23,6 +23,7 @@ import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {nonRelationshipObjectFieldsInfo} from '../types';
 
 import './RightSidebarObjectDefinitionDetails.scss';
+import {InheritanceObjectDefinitionAlert} from '../../ObjectDetails/InheritanceObjectDefinitionAlert';
 import {SubscriptionsContainer} from '../../ObjectDetails/SubscriptionsContainer';
 
 interface RightSidebarObjectDefinitionDetailsProps {
@@ -61,8 +62,14 @@ export function RightSidebarObjectDefinitionDetails({
 		setNonRelationshipObjectFieldsInfo,
 	] = useState<nonRelationshipObjectFieldsInfo[]>();
 
-	const [{selectedObjectDefinitionNode, selectedObjectFolder}, dispatch] =
-		useObjectFolderContext();
+	const [
+		{
+			learnResourceContext,
+			selectedObjectDefinitionNode,
+			selectedObjectFolder,
+		},
+		dispatch,
+	] = useObjectFolderContext();
 
 	const [backEndErrors, setBackEndErrors] = useState<Error>({});
 
@@ -185,6 +192,11 @@ export function RightSidebarObjectDefinitionDetails({
 		}
 	};
 
+	const isRootDescendantNode =
+		!!values.rootObjectDefinitionExternalReferenceCode &&
+		values.externalReferenceCode !==
+			values.rootObjectDefinitionExternalReferenceCode;
+
 	const objectDefinitionNodeDetailsTitle = sub(
 		Liferay.Language.get('x-details'),
 		stringUtils.getLocalizableLabel({
@@ -219,6 +231,12 @@ export function RightSidebarObjectDefinitionDetails({
 				</div>
 			</div>
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
+				{isRootDescendantNode && (
+					<InheritanceObjectDefinitionAlert
+						learnResources={learnResourceContext}
+					/>
+				)}
+
 				<ObjectDataContainer
 					dbTableName={
 						selectedObjectDefinitionNode?.data?.dbTableName

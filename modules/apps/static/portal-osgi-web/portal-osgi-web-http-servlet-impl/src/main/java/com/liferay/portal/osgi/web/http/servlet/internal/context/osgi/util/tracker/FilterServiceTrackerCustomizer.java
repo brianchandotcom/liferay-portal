@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.FilterConfigImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
 
 import jakarta.servlet.DispatcherType;
@@ -25,7 +26,6 @@ import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.error.RegisteredFilterException;
 import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
-import org.eclipse.equinox.http.servlet.internal.servlet.FilterConfigImpl;
 import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
 import org.osgi.framework.BundleContext;

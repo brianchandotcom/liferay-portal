@@ -399,7 +399,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<attribute name="ant.target.file" />
 
 		<sequential>
-			<trycatch property="ant.target.failure.stacktrace">
+			<trycatch property="ant.target.failure">
 				<try>
 					<beanshell>
 						project.setProperty("ant.target.start.time", String.valueOf(System.currentTimeMillis()));
@@ -431,6 +431,8 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						replace="\2"
 					/>
 
+					<record action="start" name="${project.dir}/execute.ant.target.log" />
+
 					<record-git-diffs-build-services>
 						<action>
 							<ant antfile="${ant.target.file.name}" dir="${ant.target.dir}" target="@{ant.target.name}" />
@@ -445,6 +447,25 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					/>
 				</try>
 				<catch>
+					<record action="stop" name="${project.dir}/execute.ant.target.log" />
+
+					<local name="execute.ant.target.log" />
+
+					<loadfile
+						property="execute.ant.target.log"
+						srcfile="${project.dir}/execute.ant.target.log"
+					/>
+
+					<delete failonerror="false" file="${project.dir}/execute.ant.target.log" />
+
+					<get-console-log-failure-message console.log="${execute.ant.target.log}" />
+
+					<local name="ant.target.failure.stacktrace" />
+
+					<condition else="${ant.target.failure}" property="ant.target.failure.stacktrace" value="${console.log.failure.message}">
+						<isset property="console.log.failure.message" />
+					</condition>
+
 					<generate-backend-batch-junit-report-ant-target
 						ant.target.failure.count="1"
 						ant.target.failure.message="Detected build services compilation error. See below for more information."
@@ -455,6 +476,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					/>
 				</catch>
 				<finally>
+					<record action="stop" name="${project.dir}/execute.ant.target.log" />
+
+					<delete failonerror="false" file="${project.dir}/execute.ant.target.log" />
+
 					<if>
 						<isset property="git.diffs" />
 						<then>
@@ -481,9 +506,9 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<element name="action-fail" optional="true" />
 
 		<sequential>
-			<local name="gradle.task.failure.stacktrace" />
+			<local name="gradle.task.failure" />
 
-			<trycatch property="gradle.task.failure.stacktrace">
+			<trycatch property="gradle.task.failure">
 				<try>
 					<beanshell>
 						project.setProperty("gradle.task.start.time", String.valueOf(System.currentTimeMillis()));
@@ -496,6 +521,8 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						gradle.task.start.time="${gradle.task.start.time}"
 					/>
 
+					<record action="start" name="${project.dir}/execute.gradle.task.log" />
+
 					<action />
 
 					<generate-backend-batch-junit-report-gradle-task
@@ -506,9 +533,28 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					/>
 				</try>
 				<catch>
+					<record action="stop" name="${project.dir}/execute.gradle.task.log" />
+
+					<local name="execute.gradle.task.log" />
+
+					<loadfile
+						property="execute.gradle.task.log"
+						srcfile="${project.dir}/execute.gradle.task.log"
+					/>
+
+					<delete failonerror="false" file="${project.dir}/execute.gradle.task.log" />
+
+					<get-console-log-failure-message console.log="${execute.gradle.task.log}" />
+
+					<local name="gradle.task.failure.stacktrace" />
+
+					<condition else="${gradle.task.failure}" property="gradle.task.failure.stacktrace" value="${console.log.failure.message}">
+						<isset property="console.log.failure.message" />
+					</condition>
+
 					<generate-backend-batch-junit-report-gradle-task
 						gradle.task.failure.count="1"
-						gradle.task.failure.message="Detected gradle task error. See below for more information."
+						gradle.task.failure.message="@{gradle.task.module.dir} @{gradle.task.name} failed. Please check the logs for details."
 						gradle.task.failure.stacktrace="${gradle.task.failure.stacktrace}"
 						gradle.task.module.dir="@{gradle.task.module.dir}"
 						gradle.task.name="@{gradle.task.name}"
@@ -516,6 +562,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					/>
 				</catch>
 				<finally>
+					<record action="stop" name="${project.dir}/execute.gradle.task.log" />
+
+					<delete failonerror="false" file="${project.dir}/execute.gradle.task.log" />
+
 					<action-fail />
 				</finally>
 			</trycatch>
@@ -590,6 +640,46 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					</if>
 				</action-fail>
 			</execute-gradle-task>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-console-log-failure-message">
+		<attribute name="console.log" />
+
+		<sequential>
+			<var name="console.log.failure.message" unset="true" />
+
+			<local name="console.log" />
+
+			<property name="console.log" value="@{console.log}" />
+
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+					import com.liferay.jenkins.results.parser.failure.message.generator.CompileFailureMessageGenerator;
+					import com.liferay.jenkins.results.parser.failure.message.generator.ModulesCompilationFailureMessageGenerator;
+
+					String consoleLog = project.getProperty("console.log");
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(consoleLog)) {
+						return;
+					}
+
+					CompileFailureMessageGenerator compileFailureMessageGenerator = new CompileFailureMessageGenerator();
+
+					String failureMessage = compileFailureMessageGenerator.getMessage(consoleLog);
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(failureMessage)) {
+						ModulesCompilationFailureMessageGenerator modulesCompilationFailureMessageGenerator = new ModulesCompilationFailureMessageGenerator();
+
+						failureMessage = modulesCompilationFailureMessageGenerator.getMessage(consoleLog);
+					}
+
+					if (!JenkinsResultsParserUtil.isNullOrEmpty(failureMessage)) {
+						project.setProperty("console.log.failure.message", failureMessage);
+					}
+				]]>
+			</beanshell>
 		</sequential>
 	</macrodef>
 

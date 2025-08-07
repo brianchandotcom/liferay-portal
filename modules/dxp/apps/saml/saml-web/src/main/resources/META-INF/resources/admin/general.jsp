@@ -22,7 +22,7 @@ if (Validator.isNotNull(entityId)) {
 	keystoreIncorrectPassword = x509CertificateStatus.getStatus() == GeneralTabDefaultViewDisplayContext.X509CertificateStatus.Status.SAML_KEYSTORE_PASSWORD_INCORRECT;
 }
 
-boolean roleSp = StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_SP) || StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_BOTH);
+boolean roleSp = StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_SP) || StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_MULTIROLE);
 
 String samlRole = unicodeProperties.getProperty(PortletPropsKeys.SAML_ROLE, samlProviderConfiguration.role());
 
@@ -63,7 +63,7 @@ if (samlRoleIdpOptionDisabled) {
 
 		<aui:select disabled="<%= samlRoleIdpOptionDisabled %>" helpMessage="<%= samlRoleHelpMessage %>" label="saml-role" name='<%= "settings--" + PortletPropsKeys.SAML_ROLE + "--" %>' required="<%= !samlRoleIdpOptionDisabled %>">
 			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-29737") %>'>
-				<aui:option label="identity-and-service-provider" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_BOTH) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_BOTH %>" />
+				<aui:option label="identity-and-service-provider" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_MULTIROLE) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_MULTIROLE %>" />
 			</c:if>
 
 			<aui:option label="identity-provider" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IDP) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_IDP %>" />

@@ -1415,7 +1415,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				}
 			}
 		}
-		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
 			String nameIdFormat = _fetchSamlIdpSPNameIdFormat(
 				companyId, entityId);
 

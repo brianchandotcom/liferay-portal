@@ -96,14 +96,14 @@ public class SamlProviderConfigurationHelperImpl
 	}
 
 	@Override
-	public boolean isRoleIdpAndSp() {
+	public boolean isRoleMultirole() {
 		SamlProviderConfiguration samlProviderConfiguration =
 			getSamlProviderConfiguration();
 
 		String role = samlProviderConfiguration.role();
 
 		if (Validator.isNotNull(role) &&
-			role.equals(SamlProviderConfigurationKeys.SAML_ROLE_BOTH)) {
+			role.equals(SamlProviderConfigurationKeys.SAML_ROLE_MULTIROLE)) {
 
 			return true;
 		}

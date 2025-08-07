@@ -981,7 +981,7 @@ public class SingleLogoutProfileImpl
 			_processIdpLogoutRequest(
 				httpServletRequest, httpServletResponse, messageContext);
 		}
-		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
 			SAMLPeerEntityContext samlPeerEntityContext =
 				messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
@@ -1008,7 +1008,7 @@ public class SingleLogoutProfileImpl
 			_processIdpLogoutResponse(
 				httpServletRequest, httpServletResponse, messageContext);
 		}
-		else if (samlProviderConfigurationHelper.isRoleIdpAndSp()) {
+		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
 			SAMLPeerEntityContext samlPeerEntityContext =
 				messageContext.getSubcontext(SAMLPeerEntityContext.class);
 

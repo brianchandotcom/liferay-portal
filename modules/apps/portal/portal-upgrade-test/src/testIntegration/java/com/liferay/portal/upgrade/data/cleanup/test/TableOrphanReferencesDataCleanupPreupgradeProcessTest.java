@@ -63,19 +63,15 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcessTest
 
 			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
-			List<String> logMessages = new ArrayList<>();
-
-			for (LogEntry logEntry : logEntries) {
-				logMessages.add(logEntry.getMessage());
-			}
+			List<String> messages = logCapture.getMessages();
 
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					getExpectedMessage(
 						1, "PortletPreferences", "companyId", "Company",
 						_companyId1)));
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					getExpectedMessage(
 						1, "PortletPreferences", "companyId", "Company",
 						_companyId2)));

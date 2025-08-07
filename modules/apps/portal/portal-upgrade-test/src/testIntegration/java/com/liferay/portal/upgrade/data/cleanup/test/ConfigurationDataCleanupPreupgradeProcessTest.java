@@ -127,21 +127,17 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 
 			upgrade();
 
-			List<String> logMessages = new ArrayList<>();
-
-			for (LogEntry logEntry : logCapture.getLogEntries()) {
-				logMessages.add(logEntry.getMessage());
-			}
+			List<String> messages = logCapture.getMessages();
 
 			Assert.assertFalse(
-				logMessages.contains(
+				messages.contains(
 					StringBundler.concat(
 						"Deleted configuration ", existentConfigurationId,
 						" because ", existentPrimaryKey, " was not found in ",
 						tableName, ".", primaryKeyColumnName)));
 
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					StringBundler.concat(
 						"Deleted configuration ", nonexistentConfigurationId,
 						" because ", nonexistentPrimaryKey,

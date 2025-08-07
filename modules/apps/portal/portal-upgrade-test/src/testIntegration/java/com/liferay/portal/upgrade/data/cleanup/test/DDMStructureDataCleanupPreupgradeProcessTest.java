@@ -82,14 +82,14 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 							RandomTestUtil.nextLong(), ", '", structureId,
 							"')"));
 				},
-				logMessages -> {
+				messages -> {
 					Assert.assertTrue(
-						logMessages.contains(
+						messages.contains(
 							_getExpectedMessage(
 								1, "JournalArticle", "structureKey",
 								"DDMStructure", structureId)));
 					Assert.assertTrue(
-						logMessages.contains(
+						messages.contains(
 							_getExpectedMessage(
 								1, "JournalFeed", "structureKey",
 								"DDMStructure", structureId)));
@@ -132,14 +132,14 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 							RandomTestUtil.nextLong(), ", '", structureId,
 							"')"));
 				},
-				logMessages -> {
+				messages -> {
 					Assert.assertTrue(
-						logMessages.contains(
+						messages.contains(
 							_getExpectedMessage(
 								1, "JournalArticle", "structureKey",
 								"DDMStructure", structureId)));
 					Assert.assertTrue(
-						logMessages.contains(
+						messages.contains(
 							_getExpectedMessage(
 								1, "JournalFeed", "structureKey",
 								"DDMStructure", structureId)));
@@ -172,14 +172,14 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 						RandomTestUtil.nextLong(), ", ",
 						RandomTestUtil.nextLong(), ", ", structureId, ")"));
 			},
-			logMessages -> {
+			messages -> {
 				Assert.assertTrue(
-					logMessages.contains(
+					messages.contains(
 						_getExpectedMessage(
 							1, "JournalArticle", "structureId", "DDMStructure",
 							structureId)));
 				Assert.assertTrue(
-					logMessages.contains(
+					messages.contains(
 						_getExpectedMessage(
 							1, "JournalFeed", "structureId", "DDMStructure",
 							structureId)));
@@ -213,15 +213,7 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 
 			doUpgrade();
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			List<String> logMessages = new ArrayList<>();
-
-			for (LogEntry logEntry : logEntries) {
-				logMessages.add(logEntry.getMessage());
-			}
-
-			verifyUnsafeConsumer.accept(logMessages);
+			verifyUnsafeConsumer.accept(logCapture.getMessages());
 		}
 	}
 

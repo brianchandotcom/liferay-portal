@@ -78,16 +78,10 @@ public class QuartzJobDetailsDataCleanupPreupgradeProcessTest
 
 			upgrade();
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			List<String> logMessages = new ArrayList<>();
-
-			for (LogEntry logEntry : logEntries) {
-				logMessages.add(logEntry.getMessage());
-			}
+			List<String> messages = logCapture.getMessages();
 
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					StringBundler.concat(
 						"Deleted Quartz job detail for job ", jobName,
 						" from QUARTZ_JOB_DETAILS table because JOB_DATA ",

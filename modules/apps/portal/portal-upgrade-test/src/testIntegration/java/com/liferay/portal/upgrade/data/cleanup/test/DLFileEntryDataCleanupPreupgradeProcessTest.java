@@ -62,20 +62,14 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 
 			upgrade();
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			List<String> logMessages = new ArrayList<>();
-
-			for (LogEntry logEntry : logEntries) {
-				logMessages.add(logEntry.getMessage());
-			}
+			List<String> messages = logCapture.getMessages();
 
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					"Deleted document library file entry " + fileEntryId1 +
 						" because its name was null"));
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					StringBundler.concat(
 						"Deleted document library file entry ", fileEntryId2,
 						" because its name was ",

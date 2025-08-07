@@ -73,16 +73,10 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 		getLogAssertionUnsafeConsumer() {
 
 		return logCapture -> {
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			List<String> logMessages = new ArrayList<>();
-
-			for (LogEntry logEntry : logEntries) {
-				logMessages.add(logEntry.getMessage());
-			}
+			List<String> messages = logCapture.getMessages();
 
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					StringBundler.concat(
 						"1 orphan entries from table ",
 						dbInspector.normalizeName("Layout"),
@@ -92,7 +86,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 						dbInspector.normalizeName("User_"), " and column ",
 						dbInspector.normalizeName("userId"))));
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					StringBundler.concat(
 						"1 orphan entries from table ",
 						dbInspector.normalizeName("Users_Roles"),

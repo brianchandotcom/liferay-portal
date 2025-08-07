@@ -50,28 +50,22 @@ public class DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 		getLogAssertionUnsafeConsumer() {
 
 		return logCapture -> {
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			List<String> logMessages = new ArrayList<>();
-
-			for (LogEntry logEntry : logEntries) {
-				logMessages.add(logEntry.getMessage());
-			}
+			List<String> messages = logCapture.getMessages();
 
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					getExpectedMessage(
 						2, "Image", "companyId", "Company", _companyId1)));
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					getExpectedMessage(
 						1, "Image", "companyId", "Company", _companyId2)));
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					getExpectedMessage(
 						2, "Portlet", "companyId", "Company", _companyId1)));
 			Assert.assertTrue(
-				logMessages.contains(
+				messages.contains(
 					getExpectedMessage(
 						1, "Portlet", "companyId", "Company", _companyId2)));
 		};

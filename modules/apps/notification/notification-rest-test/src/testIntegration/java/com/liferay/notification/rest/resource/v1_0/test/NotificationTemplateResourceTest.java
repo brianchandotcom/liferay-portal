@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationRecipientConstants;
+import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
@@ -122,14 +123,17 @@ public class NotificationTemplateResourceTest
 				"to",
 				JSONUtil.putAll(
 					JSONUtil.put(
-						"roleName", RoleConstants.ORGANIZATION_ADMINISTRATOR),
-					JSONUtil.put("roleName", RoleConstants.ORGANIZATION_OWNER),
+						NotificationRecipientSettingConstants.NAME_ROLE_NAME,
+						RoleConstants.ORGANIZATION_ADMINISTRATOR),
 					JSONUtil.put(
-						"roleName",
+						NotificationRecipientSettingConstants.NAME_ROLE_NAME,
+						RoleConstants.ORGANIZATION_OWNER),
+					JSONUtil.put(
+						NotificationRecipientSettingConstants.NAME_ROLE_NAME,
 						AccountRoleConstants.
 							REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR),
 					JSONUtil.put(
-						"roleName",
+						NotificationRecipientSettingConstants.NAME_ROLE_NAME,
 						AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER))
 			).put(
 				"toType", NotificationRecipientConstants.TYPE_ROLE

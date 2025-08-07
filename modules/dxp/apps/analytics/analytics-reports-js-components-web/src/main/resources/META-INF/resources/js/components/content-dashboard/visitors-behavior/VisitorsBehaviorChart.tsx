@@ -153,7 +153,7 @@ const VisitorsBehaviorChart: React.FC<IVisitorsBehaviorChartProps> = ({
 						new Date(
 							formattedData.combinedData[0]?.[
 								VisitorsBehaviorDataKey.AxisX
-							] as number
+							] ?? 0
 						),
 						filters.rangeSelector.rangeKey
 					)

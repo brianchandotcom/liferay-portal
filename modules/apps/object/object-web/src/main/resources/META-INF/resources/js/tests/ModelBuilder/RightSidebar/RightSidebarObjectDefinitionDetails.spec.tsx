@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 
 // @ts-ignore
 
@@ -17,17 +17,12 @@ import {objectDefinition} from './__mock__/objectDefinition';
 const OBJECT_DEFINITION_URL_REGEX =
 	/\/o\/object-admin\/v1\.0\/object-definitions\/by-external-reference-code\/.+/;
 
-const renderComponent = (customProps = {}) => {
-	fetchMock.get(OBJECT_DEFINITION_URL_REGEX, {
+const renderComponent = async (customProps = {}) => {
+	await fetchMock.get(OBJECT_DEFINITION_URL_REGEX, {
 		body: {...objectDefinition, ...customProps},
 	});
 
-	render(
-		<RightSidebarObjectDefinitionDetails
-			companies={[]}
-			sites={[]}
-		/>
-	);
+	render(<RightSidebarObjectDefinitionDetails companies={[]} sites={[]} />);
 };
 
 jest.mock('frontend-js-web', () => ({
@@ -70,9 +65,68 @@ afterEach(() => {
 	fetchMock.restore();
 });
 
+describe('inheritance alert', () => {
+	it('is hidden when the object definition is the root', async () => {
+		const label = Math.random();
+
+		await renderComponent({
+			externalReferenceCode: '1',
+			label: {en_US: label},
+			rootObjectDefinitionExternalReferenceCode: '1',
+		});
+
+		await waitFor(async () => {
+			return expect(
+				await screen.findByText(`${label}-details`)
+			).toBeVisible();
+		});
+
+		const inheritanceObjectDefinitionAlert = screen.queryByText(
+			/inheritance-is-enabled-for-at-least-one-relationship/i
+		);
+
+		expect(inheritanceObjectDefinitionAlert).toBeNull();
+	});
+
+	it('is hidden when the object definition does not have a root object definition', async () => {
+		const label = Math.random();
+
+		await renderComponent({
+			externalReferenceCode: '1',
+			label: {en_US: label},
+			rootObjectDefinitionExternalReferenceCode: '',
+		});
+
+		await waitFor(async () => {
+			return expect(
+				await screen.findByText(`${label}-details`)
+			).toBeVisible();
+		});
+
+		const inheritanceObjectDefinitionAlert = screen.queryByText(
+			/inheritance-is-enabled-for-at-least-one-relationship/i
+		);
+
+		expect(inheritanceObjectDefinitionAlert).toBeNull();
+	});
+
+	it('is visible when the object definition is a descendant of another object definition', async () => {
+		await renderComponent({
+			externalReferenceCode: '1',
+			rootObjectDefinitionExternalReferenceCode: '2',
+		});
+
+		const inheritanceObjectDefinitionAlert = await screen.findByText(
+			/inheritance-is-enabled-for-at-least-one-relationship/i
+		);
+
+		expect(inheritanceObjectDefinitionAlert).toBeVisible();
+	});
+});
+
 describe('object definition configuration', () => {
 	it('enable account restriction is enabled by default', async () => {
-		renderComponent({storageType: 'salesforce'});
+		await renderComponent({storageType: 'salesforce'});
 
 		const accountRestrictionToggle = await screen.findByRole('switch', {
 			name: 'enable-account-restriction',
@@ -82,7 +136,7 @@ describe('object definition configuration', () => {
 	});
 
 	it('panel link is enabled by default', async () => {
-		renderComponent();
+		await renderComponent();
 
 		const panelLink = await screen.findByRole('combobox', {
 			name: 'panel-link',
@@ -92,7 +146,7 @@ describe('object definition configuration', () => {
 	});
 
 	it('scope is enabled by default', async () => {
-		renderComponent();
+		await renderComponent();
 
 		const scope = await screen.findByRole('combobox', {
 			name: 'scope',
@@ -102,7 +156,7 @@ describe('object definition configuration', () => {
 	});
 
 	it('show widget in page builder is enabled by default', async () => {
-		renderComponent();
+		await renderComponent();
 
 		const showWidgetToggle = await screen.findByRole('switch', {
 			name: 'show-widget-in-page-builder',
@@ -114,7 +168,7 @@ describe('object definition configuration', () => {
 
 describe('when the object definition is approved', () => {
 	it('enable account restriction is disabled', async () => {
-		renderComponent({
+		await renderComponent({
 			accountEntryRestricted: true,
 			status: {label: 'approved'},
 		});
@@ -127,7 +181,7 @@ describe('when the object definition is approved', () => {
 	});
 
 	it('panel link is enabled', async () => {
-		renderComponent({status: {label: 'approved'}});
+		await renderComponent({status: {label: 'approved'}});
 
 		const panelLink = await screen.findByRole('combobox', {
 			name: 'panel-link',
@@ -137,7 +191,7 @@ describe('when the object definition is approved', () => {
 	});
 
 	it('scope is disabled', async () => {
-		renderComponent({status: {label: 'approved'}});
+		await renderComponent({status: {label: 'approved'}});
 
 		const scope = await screen.findByRole('combobox', {
 			name: 'scope',
@@ -147,7 +201,7 @@ describe('when the object definition is approved', () => {
 	});
 
 	it('show widget in page builder is enabled', async () => {
-		renderComponent({status: {label: 'approved'}});
+		await renderComponent({status: {label: 'approved'}});
 
 		const showWidgetToggle = await screen.findByRole('switch', {
 			name: 'show-widget-in-page-builder',
@@ -159,7 +213,7 @@ describe('when the object definition is approved', () => {
 
 describe('when the object definition is a system object', () => {
 	it('enable account restriction is enabled', async () => {
-		renderComponent({system: true});
+		await renderComponent({system: true});
 
 		const accountRestrictionToggle = await screen.findByRole('switch', {
 			name: 'enable-account-restriction',
@@ -169,7 +223,7 @@ describe('when the object definition is a system object', () => {
 	});
 
 	it('panel link is disabled', async () => {
-		renderComponent({modifiable: false, system: true});
+		await renderComponent({modifiable: false, system: true});
 
 		const panelLink = await screen.findByRole('combobox', {
 			name: 'panel-link',
@@ -179,7 +233,7 @@ describe('when the object definition is a system object', () => {
 	});
 
 	it('scope is enabled', async () => {
-		renderComponent({system: true});
+		await renderComponent({system: true});
 
 		const scope = await screen.findByRole('combobox', {
 			name: 'scope',
@@ -189,7 +243,7 @@ describe('when the object definition is a system object', () => {
 	});
 
 	it('show widget in page builder is disabled', async () => {
-		renderComponent({modifiable: false, system: true});
+		await renderComponent({modifiable: false, system: true});
 
 		const showWidgetToggle = await screen.findByRole('switch', {
 			name: 'show-widget-in-page-builder',
@@ -201,7 +255,7 @@ describe('when the object definition is a system object', () => {
 
 describe('when the object definition has a root object definition', () => {
 	it('configurations are enabled', async () => {
-		renderComponent({
+		await renderComponent({
 			rootObjectDefinitionExternalReferenceCode: '1',
 			storageType: 'sugarcrm',
 		});
@@ -229,7 +283,7 @@ describe('when the object definition has a root object definition', () => {
 
 describe('when the object definition has storageType salesforce', () => {
 	it('enable account restriction is enabled', async () => {
-		renderComponent({storageType: 'salesforce'});
+		await renderComponent({storageType: 'salesforce'});
 
 		const accountRestrictionToggle = await screen.findByRole('switch', {
 			name: 'enable-account-restriction',
@@ -239,7 +293,7 @@ describe('when the object definition has storageType salesforce', () => {
 	});
 
 	it('panel link is enabled', async () => {
-		renderComponent({storageType: 'salesforce'});
+		await renderComponent({storageType: 'salesforce'});
 
 		const panelLink = await screen.findByRole('combobox', {
 			name: 'panel-link',
@@ -249,7 +303,7 @@ describe('when the object definition has storageType salesforce', () => {
 	});
 
 	it('scope is disabled', async () => {
-		renderComponent({storageType: 'salesforce'});
+		await renderComponent({storageType: 'salesforce'});
 
 		const scope = await screen.findByRole('combobox', {
 			name: 'scope',
@@ -259,7 +313,7 @@ describe('when the object definition has storageType salesforce', () => {
 	});
 
 	it('show widget in page builder is enabled', async () => {
-		renderComponent({storageType: 'salesforce'});
+		await renderComponent({storageType: 'salesforce'});
 
 		const showWidgetToggle = await screen.findByRole('switch', {
 			name: 'show-widget-in-page-builder',

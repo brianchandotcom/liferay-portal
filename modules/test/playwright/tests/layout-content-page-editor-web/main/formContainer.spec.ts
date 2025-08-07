@@ -67,11 +67,13 @@ const testWithCKEditor4 = mergeTests(
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
+		'LPD-11235': {enabled: false},
 		'LPD-17564': {enabled: true},
 		'LPD-21926': {enabled: true},
 		'LPD-32050': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	fragmentsPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
@@ -2811,7 +2813,13 @@ testWithCKEditor4.describe('Form Localization with CKEditor 4', () => {
 	testWithCKEditor4(
 		'Visualize text fields in RTL languages with CKEditor 4',
 		{tag: '@LPD-48787'},
-		async ({apiHelpers, page, pageEditorPage, site}) => {
+		async ({
+			apiHelpers,
+			localizationSelectPage,
+			page,
+			pageEditorPage,
+			site,
+		}) => {
 			const objectDefinitionAPIClient =
 				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
@@ -3012,16 +3020,18 @@ testWithCKEditor4.describe('Form Localization with CKEditor 4', () => {
 			await pageEditorPage.mapFormFragment(
 				localizableFormId,
 				'Localizable Fields Group',
-				'all',
-				{
-					addLocalizationSelect: true,
-				}
+				'all'
 			);
 
 			await pageEditorPage.mapFormFragment(
 				unlocalizableFormId,
 				'Unlocalizable Fields Group',
 				'all'
+			);
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Localization Select'
 			);
 
 			await pageEditorPage.publishPage();
@@ -3077,15 +3087,7 @@ testWithCKEditor4.describe('Form Localization with CKEditor 4', () => {
 
 			// Change the translation language
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Arabic (Saudi Arabia) Language',
-				}),
-				trigger: page.getByLabel(
-					'Select a language, current language:'
-				),
-			});
+			await localizationSelectPage.switchLanguage('ar-SA');
 
 			// Check the "dir" attribute after changing the translation language
 
@@ -5081,7 +5083,7 @@ test.describe('Form Localization', () => {
 					hasText: 'Description',
 				})
 				.locator('.ck-button')
-				.first();
+				.last();
 
 			await expect(richTextToolbarButton).toBeDisabled();
 
@@ -5764,16 +5766,18 @@ test.describe('Form Localization', () => {
 			await pageEditorPage.mapFormFragment(
 				localizableFormId,
 				'Localizable Fields Group',
-				'all',
-				{
-					addLocalizationSelect: true,
-				}
+				'all'
 			);
 
 			await pageEditorPage.mapFormFragment(
 				unlocalizableFormId,
 				'Unlocalizable Fields Group',
 				'all'
+			);
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Localization Select'
 			);
 
 			await pageEditorPage.publishPage();
@@ -10609,7 +10613,7 @@ test(
 				hasText: 'Rich Text (Read Only)',
 			})
 			.locator('.ck-button')
-			.first();
+			.last();
 
 		await expect(richTextToolbarButton).toBeDisabled();
 

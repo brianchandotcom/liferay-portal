@@ -79,7 +79,7 @@ test('Allows selecting specific repeatable field when mapping', async ({
 
 	const webContentOption = page
 		.frameLocator('iframe[title="Select"]')
-		.getByRole('menuitem', {name: 'Web Content'});
+		.getByRole('menuitem', {exact: true, name: 'Web Content'});
 
 	if (
 		await webContentOption.evaluate(
@@ -735,13 +735,13 @@ test(
 
 		await pageEditorPage.mapObjectAction({
 			entity: 'Potato Providers',
-			entry: String(firstObjectEntry.id),
+			entry: firstObjectEntry.externalReferenceCode,
 			fragmentId: firstButtonId,
 		});
 
 		await pageEditorPage.mapObjectAction({
 			entity: 'Potato Providers',
-			entry: String(secondObjectEntry.id),
+			entry: secondObjectEntry.externalReferenceCode,
 			fragmentId: secondButtonId,
 		});
 
@@ -778,7 +778,9 @@ test(
 		await buttons.last().click();
 
 		await expect(
-			page.getByRole('heading', {name: String(secondObjectEntry.id)})
+			page.getByRole('heading', {
+				name: secondObjectEntry.externalReferenceCode,
+			})
 		).toBeVisible();
 	}
 );

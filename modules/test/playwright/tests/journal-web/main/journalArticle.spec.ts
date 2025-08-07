@@ -928,7 +928,7 @@ baseTest(
 		await markAsTranslatedButton.click();
 
 		await expect(
-			page.getByRole('heading', {name: 'Mark "ca_ES" as Translated'})
+			page.getByRole('heading', {name: 'Mark ca_ES as Translated'})
 		).toBeVisible();
 
 		await page.getByRole('button', {name: 'Mark as Translated'}).click();

@@ -576,8 +576,6 @@ public class SharingEntryServiceTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			sharingEntries.toString(), 2, sharingEntries.size());
-		Assert.assertEquals(
 			Arrays.asList(sharingEntry1, sharingEntry2), sharingEntries);
 
 		sharingEntries = _sharingEntryService.getSharingEntries(
@@ -586,8 +584,6 @@ public class SharingEntryServiceTest {
 			OrderByComparatorFactoryUtil.create(
 				"SharingEntry", "createDate", false));
 
-		Assert.assertEquals(
-			sharingEntries.toString(), 2, sharingEntries.size());
 		Assert.assertEquals(
 			Arrays.asList(sharingEntry2, sharingEntry1), sharingEntries);
 	}

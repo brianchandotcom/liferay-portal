@@ -63,14 +63,14 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 		connection = DataAccess.getConnection();
 
 		_test(
-			"companyId", "Company", TestPropsValues.getCompanyId(),
-			_getNonexistentCompanyId());
+			TestPropsValues.getCompanyId(), _getNonexistentCompanyId(),
+			"companyId", "Company");
 
 		connection = DataAccess.getConnection();
 
 		_test(
-			"groupId", "Group_", TestPropsValues.getGroupId(),
-			_getNonexistentGroupId());
+			TestPropsValues.getGroupId(), _getNonexistentGroupId(), "groupId",
+			"Group_");
 	}
 
 	private long _getNonexistentCompanyId() throws Exception {
@@ -99,8 +99,8 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 	}
 
 	private void _test(
-			String primaryKeyColumnName, String tableName,
-			long existentPrimaryKey, long nonexistentPrimaryKey)
+			long existentPrimaryKey, long nonexistentPrimaryKey,
+			String primaryKeyColumnName, String tableName)
 		throws Exception {
 
 		String existentConfigurationId = null;
@@ -117,7 +117,6 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 					HashMapDictionaryBuilder.<String, Object>put(
 						primaryKeyColumnName, existentPrimaryKey
 					).build());
-
 			nonexistentConfigurationId =
 				ConfigurationTestUtil.createFactoryConfiguration(
 					ConfigurationDataCleanupPreupgradeProcessTest.class.
@@ -128,11 +127,9 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 
 			upgrade();
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
 			List<String> logMessages = new ArrayList<>();
 
-			for (LogEntry logEntry : logEntries) {
+			for (LogEntry logEntry : logCapture.getLogEntries()) {
 				logMessages.add(logEntry.getMessage());
 			}
 
@@ -140,17 +137,16 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 				logMessages.contains(
 					StringBundler.concat(
 						"Deleted configuration ", existentConfigurationId,
-						". Reason: ", primaryKeyColumnName, " ",
-						existentPrimaryKey, " was not found in ", tableName,
-						".", primaryKeyColumnName)));
+						" because ", existentPrimaryKey, " was not found in ",
+						tableName, ".", primaryKeyColumnName)));
 
 			Assert.assertTrue(
 				logMessages.contains(
 					StringBundler.concat(
 						"Deleted configuration ", nonexistentConfigurationId,
-						". Reason: ", primaryKeyColumnName, " ",
-						nonexistentPrimaryKey, " was not found in ", tableName,
-						".", primaryKeyColumnName)));
+						" because ", nonexistentPrimaryKey,
+						" was not found in ", tableName, ".",
+						primaryKeyColumnName)));
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration(existentConfigurationId);

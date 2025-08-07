@@ -52,11 +52,11 @@ public class ConfigurationDataCleanupPreupgradeProcess
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				String configurationId = resultSet.getString("configurationId");
-
 				String dictionary = resultSet.getString("dictionary");
 
 				long companyId = _getPrimaryKey(dictionary, _companyIdPattern);
+
+				String configurationId = resultSet.getString("configurationId");
 
 				if (companyId != -1) {
 					if (!ArrayUtil.contains(companyIds, companyId)) {
@@ -108,9 +108,9 @@ public class ConfigurationDataCleanupPreupgradeProcess
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Deleted configuration ", configurationId, ". Reason: ",
-					primaryKeyColumnName, " ", primaryKey, " was not found in ",
-					tableName, ".", primaryKeyColumnName));
+					"Deleted configuration ", configurationId, " because ",
+					primaryKey, " was not found in ", tableName, ".",
+					primaryKeyColumnName));
 		}
 	}
 

@@ -46,9 +46,9 @@ public class ExportImportLocalServiceImplTest {
 		).thenReturn(
 			new TestImportController(
 				() -> {
-					count.increment();
-
 					Assert.assertTrue(LazyReferencingThreadLocal.isEnabled());
+
+					count.increment();
 				})
 		);
 
@@ -78,9 +78,9 @@ public class ExportImportLocalServiceImplTest {
 		).thenReturn(
 			new TestImportController(
 				() -> {
-					count.increment();
-
 					Assert.assertTrue(LazyReferencingThreadLocal.isEnabled());
+
+					count.increment();
 				})
 		);
 

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -123,7 +124,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 			UsersAdminUtil.updateAddresses(
 				Organization.class.getName(), organization.getOrganizationId(),
-				addresses);
+				addresses, ListTypeConstants.ORGANIZATION_ADDRESS);
 
 			UsersAdminUtil.updateEmailAddresses(
 				Organization.class.getName(), organization.getOrganizationId(),
@@ -281,7 +282,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		if (addresses != null) {
 			UsersAdminUtil.updateAddresses(
 				Organization.class.getName(), organization.getOrganizationId(),
-				addresses);
+				addresses, ListTypeConstants.ORGANIZATION_ADDRESS);
 		}
 
 		if (emailAddresses != null) {
@@ -811,7 +812,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 		if (addresses != null) {
 			UsersAdminUtil.updateAddresses(
-				Organization.class.getName(), organizationId, addresses);
+				Organization.class.getName(), organizationId, addresses,
+				ListTypeConstants.ORGANIZATION_ADDRESS);
 		}
 
 		if (emailAddresses != null) {

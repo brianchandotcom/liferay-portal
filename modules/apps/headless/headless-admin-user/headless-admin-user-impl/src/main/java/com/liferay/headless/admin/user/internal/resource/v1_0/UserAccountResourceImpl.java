@@ -882,7 +882,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		UsersAdminUtil.updateAddresses(
 			Contact.class.getName(), user.getContactId(),
-			_getAddresses(null, userAccount));
+			_getAddresses(null, userAccount),
+			ListTypeConstants.CONTACT_ADDRESS);
 		UsersAdminUtil.updateEmailAddresses(
 			Contact.class.getName(), user.getContactId(),
 			_getServiceBuilderEmailAddresses(null, userAccount));
@@ -1061,7 +1062,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 			UsersAdminUtil.updateAddresses(
 				Contact.class.getName(), user.getContactId(),
-				_getAddresses(null, userAccount));
+				_getAddresses(null, userAccount),
+				ListTypeConstants.CONTACT_ADDRESS);
 			UsersAdminUtil.updateEmailAddresses(
 				Contact.class.getName(), user.getContactId(),
 				_getServiceBuilderEmailAddresses(null, userAccount));

@@ -133,6 +133,10 @@ public class OrganizationAdminPortletDataHandlerTest {
 							HashMapBuilder.put(
 								PortletDataHandlerKeys.PORTLET_DATA,
 								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									UsersAdminPortletKeys.ORGANIZATIONS_ADMIN,
+								new String[] {Boolean.TRUE.toString()}
 							).build()));
 
 		_exportImportLocalService.importLayouts(

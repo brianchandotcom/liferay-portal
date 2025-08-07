@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_4_x.UpgradeDB2;
 
@@ -57,9 +58,10 @@ public class UpgradeDB2Test {
 	}
 
 	@Test
-	public void testUpgradeAlterClobColumns() throws Exception {
-		new UpgradeDB2(
-		).upgrade();
+	public void testUpgrade() throws Exception {
+		UpgradeProcess upgradeProcess = new UpgradeDB2();
+
+		upgradeProcess.upgrade();
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(

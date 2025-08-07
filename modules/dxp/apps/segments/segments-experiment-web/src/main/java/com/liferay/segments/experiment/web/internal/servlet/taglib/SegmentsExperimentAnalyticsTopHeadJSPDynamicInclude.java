@@ -8,6 +8,7 @@ package com.liferay.segments.experiment.web.internal.servlet.taglib;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -70,6 +71,13 @@ public class SegmentsExperimentAnalyticsTopHeadJSPDynamicInclude
 			_getSegmentsExperienceKey(
 				segmentsExperienceManager.getSegmentsExperienceId(
 					httpServletRequest)));
+
+		Layout layout = themeDisplay.getLayout();
+
+		httpServletRequest.setAttribute(
+			SegmentsExperimentWebKeys.
+				SEGMENTS_ANALYTICS_EXTERNAL_REFERENCE_CODE,
+			layout.getExternalReferenceCode());
 
 		super.include(httpServletRequest, httpServletResponse, key);
 	}

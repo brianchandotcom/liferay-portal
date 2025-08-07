@@ -16,7 +16,6 @@ import {SpaceMembersPermissionSelect} from './SpaceMembersPermissionSelect';
 interface MembersListItemProps {
 	assetLibraryCreatorUserId?: string | number;
 	currentUserId?: string;
-	emptyMessage: string;
 	hasAssignMembersPermission: boolean;
 	itemType: 'user' | 'group';
 	items: (UserAccount | UserGroup)[];
@@ -28,7 +27,6 @@ interface MembersListItemProps {
 export function MembersListItem({
 	assetLibraryCreatorUserId,
 	currentUserId,
-	emptyMessage,
 	hasAssignMembersPermission,
 	itemType,
 	items,
@@ -36,12 +34,6 @@ export function MembersListItem({
 	onUpdateItemRoles,
 	roles,
 }: MembersListItemProps) {
-	if (!items || !items.length) {
-		return (
-			<li className="d-flex justify-content-center">{emptyMessage}</li>
-		);
-	}
-
 	return (
 		<>
 			{items.map((item) => {

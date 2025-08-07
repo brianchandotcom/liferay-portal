@@ -49,10 +49,10 @@ export enum EFDSVisualizationMode {
 
 export async function waitForFDS({
 	page,
-	visualizationMode,
+	visualizationMode = EFDSVisualizationMode.TABLE,
 }: {
 	page: Page;
-	visualizationMode: EFDSVisualizationMode;
+	visualizationMode?: EFDSVisualizationMode;
 }) {
 	if (visualizationMode === EFDSVisualizationMode.CARDS) {
 		await page.locator('.fds .cards-container').waitFor({state: 'visible'});
@@ -67,4 +67,30 @@ export async function waitForFDS({
 
 export async function waitForInputLocalized(page: Page, id: string) {
 	await page.evaluate(async (id) => await Liferay.componentReady(id), id);
+}
+
+/**
+ * This utility is just for modals that don't have content in iframe. If the
+ * content is in iframe, then we must wait until iframe content is loaded,
+ * and check something within that content.
+ */
+export async function waitForModal({
+	container: containerProp,
+	innerElement: innerElementProp,
+	page,
+}: {
+	container?: Locator;
+	innerElement?: Locator;
+	page: Page;
+}) {
+	const container = containerProp ?? page.locator('.modal');
+
+	const innerElement =
+		innerElementProp ?? container.getByRole('button').first();
+
+	await innerElement.waitFor({state: 'visible'});
+
+	// Wait until opening animation is complete.
+
+	await innerElement.scrollIntoViewIfNeeded();
 }

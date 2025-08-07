@@ -50,6 +50,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			).put(
 				"label", LocalizationUtil.getLocalizationMap(objectDefinition.getLabel())
 			).put(
+				"learnResources", LearnMessageUtil.getReactDataJSONObject("object-web")
+			).put(
 				"nonRelationshipObjectFieldsInfo", objectDefinitionsDetailsDisplayContext.getNonrelationshipObjectFieldsInfo()
 			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()

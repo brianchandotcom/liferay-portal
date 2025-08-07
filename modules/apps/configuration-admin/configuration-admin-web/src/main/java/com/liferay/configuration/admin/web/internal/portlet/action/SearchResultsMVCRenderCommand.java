@@ -79,19 +79,8 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 
 			List<ConfigurationEntry> configurationEntries =
 				_getConfigurationEntries(
-					configurationScopeDisplayContext, hits.getDocs(), locale);
-
-			List<ConfigurationScreen> matchingConfigurationScreens =
-				_getMatchingConfigurationScreens(
-					configurationScopeDisplayContext.getScope(), searchContext);
-
-			for (ConfigurationScreen configurationScreen :
-					matchingConfigurationScreens) {
-
-				configurationEntries.add(
-					new ConfigurationScreenConfigurationEntry(
-						configurationScreen, locale));
-			}
+					configurationScopeDisplayContext, hits.getDocs(), locale,
+					searchContext);
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_ITERATOR,
@@ -109,7 +98,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 
 	private List<ConfigurationEntry> _getConfigurationEntries(
 		ConfigurationScopeDisplayContext configurationScopeDisplayContext,
-		Document[] documents, Locale locale) {
+		Document[] documents, Locale locale, SearchContext searchContext) {
 
 		List<ConfigurationEntry> configurationEntries = new ArrayList<>(
 			documents.length);
@@ -130,6 +119,18 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 					new ConfigurationModelConfigurationEntry(
 						configurationModel, locale));
 			}
+		}
+
+		List<ConfigurationScreen> matchingConfigurationScreens =
+			_getMatchingConfigurationScreens(
+				configurationScopeDisplayContext.getScope(), searchContext);
+
+		for (ConfigurationScreen configurationScreen :
+				matchingConfigurationScreens) {
+
+			configurationEntries.add(
+				new ConfigurationScreenConfigurationEntry(
+					configurationScreen, locale));
 		}
 
 		return configurationEntries;

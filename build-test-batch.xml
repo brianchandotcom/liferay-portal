@@ -8139,27 +8139,45 @@ information. Make sure to commit in all format-javadoc results.
 								</gradle-execute>
 							</action>
 							<action-fail>
-								<for param="baseline.log.file.path">
-									<fileset dir="${project.dir}/${gradle.module.dir}/">
-										<include name="**/build/reports/baseline/baseline.log" />
-									</fileset>
-									<sequential>
-										<local name="baseline.log.file.content" />
+								<local name="baseline.log.files.content" />
 
-										<loadfile
-											property="baseline.log.file.content"
-											srcfile="@{baseline.log.file.path}"
-										/>
+								<beanshell>
+									<![CDATA[
+										import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+										File projectDir = new File(project.getProperty("project.dir"));
+
+										File baseDir = new File(projectDir, project.getProperty("gradle.module.dir"));
+
+										StringBuilder sb = new StringBuilder();
+
+										for (File baselineFile : JenkinsResultsParserUtil.findFiles(baseDir, "baseline.log")) {
+											sb.append("\n> ");
+											sb.append(JenkinsResultsParserUtil.getPathRelativeTo(baselineFile, projectDir));
+											sb.append("\n\n");
+											sb.append(JenkinsResultsParserUtil.read(baselineFile));
+											sb.append("\n");
+										}
+
+										if (sb.length() > 0) {
+											project.setProperty("baseline.log.files.content", sb.toString());
+										}
+									]]>
+								</beanshell>
+
+								<if>
+									<isset property="baseline.log.files.content" />
+									<then>
 										<generate-backend-batch-junit-report-gradle-task
 											gradle.task.failure.count="1"
-											gradle.task.failure.message="${baseline.log.file.content}"
+											gradle.task.failure.message="${gradle.module.dir} failed semantic versioning. Please see below for more details."
+											gradle.task.failure.stacktrace="${baseline.log.files.content}"
 											gradle.task.module.dir="${gradle.module.dir}"
 											gradle.task.name="${gradle.task.name}"
 											gradle.task.start.time="${gradle.task.start.time}"
 										/>
-									</sequential>
-								</for>
+									</then>
+								</if>
 							</action-fail>
 						</execute-gradle-task>
 					</sequential>

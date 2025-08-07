@@ -115,7 +115,7 @@ public class JournalArticleModelValidatorTest {
 		content = StringUtil.replace(
 			content, new String[] {"[$GROUP_ID]", "[$UUID]"},
 			new String[] {
-				fileEntry.getUuid(), String.valueOf(fileEntry.getGroupId())
+				String.valueOf(fileEntry.getGroupId()), fileEntry.getUuid()
 			});
 
 		ReflectionTestUtil.invoke(

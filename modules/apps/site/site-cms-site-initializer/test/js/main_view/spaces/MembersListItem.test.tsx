@@ -61,7 +61,6 @@ describe('MemberListItem', () => {
 
 	const props = {
 		currentUserId: testUserAccount.id,
-		emptyMessage: 'No users',
 		hasAssignMembersPermission: true,
 		onRemoveItem: jest.fn(),
 		onUpdateItemRoles: jest.fn(),
@@ -70,12 +69,6 @@ describe('MemberListItem', () => {
 
 	afterEach(() => {
 		jest.clearAllMocks();
-	});
-
-	it('renders default message when items is empty', () => {
-		render(<MembersListItem {...props} itemType="user" items={[]} />);
-
-		expect(screen.getByRole('listitem')).toHaveTextContent('No users');
 	});
 
 	it('renders correctly when items is user', () => {

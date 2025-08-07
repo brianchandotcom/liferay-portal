@@ -65,21 +65,15 @@ const dropdownItems: {
 ];
 
 const AssetMetrics = () => {
-	const {
-		externalReferenceCode,
-		filters,
-		objectEntryFolderExternalReferenceCode,
-	} = useContext(Context);
+	const {externalReferenceCode, filters} = useContext(Context);
 
 	const [dropdownActive, setDropdownActive] = useState(false);
 	const [selectedItem, setSelectedItem] = useState(dropdownItems[0]);
 
-	const selectedMetrics =
-		assetMetrics[objectEntryFolderExternalReferenceCode as AssetTypes];
-
 	const queryParams = buildQueryString({
 		externalReferenceCode,
-		selectedMetrics,
+		rangeKey: filters.rangeSelector.rangeKey,
+		selectedMetrics: metricName[filters.metric] as string,
 	});
 
 	const {data, loading} = useFetch<{

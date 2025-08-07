@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -347,6 +348,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			NotificationRecipientConstants.TYPE_USER);
 	}
 
+	@FeatureFlag("LPD-50091")
 	@Test
 	public void testSendNotificationRecipientTypeUserGroup() throws Exception {
 		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();

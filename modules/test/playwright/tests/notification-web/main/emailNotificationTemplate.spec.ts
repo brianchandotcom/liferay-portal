@@ -26,6 +26,8 @@ export const test = mergeTests(
 
 let objectDefinition: ObjectDefinition;
 
+let userGroups;
+
 const notificationTemplateInfo = {
 	bcc: 'test3@liferay.com',
 	cc: 'test2@liferay.com',
@@ -73,6 +75,14 @@ test.afterEach(async ({apiHelpers, notificationTemplatesPage, page}) => {
 		catch (error) {
 			throw new Error(error);
 		}
+	}
+
+	if (userGroups !== undefined) {
+		for (const userGroup of userGroups) {
+			await apiHelpers.headlessAdminUser.deleteUserGroup(userGroup.id);
+		}
+
+		userGroups = [];
 	}
 });
 
@@ -635,5 +645,154 @@ test.describe('Email notification template', () => {
 				.locator('.CodeMirror-lines')
 				.getByText(`{ObjectField_${objectFieldName}.getData()}`)
 		).toBeVisible();
+	});
+
+	test('LPD-57577: Verify User Groups are now supported for Email Notification Templates', async ({
+		apiHelpers,
+		emailNotificationTemplatePage,
+		notificationTemplatesPage,
+		page,
+	}) => {
+		const recipientUserGroupFields = [
+			emailNotificationTemplatePage.primaryRecipientUserGroups,
+			emailNotificationTemplatePage.secondaryRecipientUserGroupsBCC,
+			emailNotificationTemplatePage.secondaryRecipientUserGroupsCC,
+		];
+
+		userGroups = [
+			await apiHelpers.headlessAdminUser.postUserGroup(),
+			await apiHelpers.headlessAdminUser.postUserGroup(),
+		];
+
+		await test.step('AC1: User Group option is available', async () => {
+			await emailNotificationTemplatePage.goto();
+
+			await emailNotificationTemplatePage.primaryRecipientType.click();
+
+			expect(
+				await page.getByRole('option', {name: 'User Groups'})
+			).toBeVisible();
+
+			await page.getByRole('option', {name: 'User Groups'}).click();
+
+			await emailNotificationTemplatePage.secondaryRecipientTypeCC.click();
+
+			expect(
+				await page.getByRole('option', {name: 'User Groups'})
+			).toBeVisible();
+
+			await page.getByRole('option', {name: 'User Groups'}).click();
+
+			await emailNotificationTemplatePage.secondaryRecipientTypeBCC.click();
+
+			expect(
+				await page.getByRole('option', {name: 'User Groups'})
+			).toBeVisible();
+
+			await page.getByRole('option', {name: 'User Groups'}).click();
+		});
+
+		await test.step('AC2: Existing User Groups are displayed', async () => {
+			for (const recipientUserGroupField of recipientUserGroupFields) {
+				await recipientUserGroupField.click();
+
+				for (const userGroup of userGroups) {
+					await expect(
+						page.getByRole('menuitem', {name: userGroup.name})
+					).toBeVisible();
+				}
+
+				await page.keyboard.press('Escape');
+			}
+		});
+
+		await test.step('AC3: All selected User Groups will be displayed', async () => {
+			for (const recipientUserGroupField of recipientUserGroupFields) {
+				await recipientUserGroupField.click();
+
+				for (const userGroup of userGroups) {
+					await page
+						.getByRole('checkbox', {name: userGroup.name})
+						.check();
+				}
+
+				await page.keyboard.press('Escape');
+			}
+
+			for (const userGroup of userGroups) {
+				await expect(
+					await page.getByRole('row', {name: userGroup.name}).count()
+				).toBe(recipientUserGroupFields.length);
+			}
+		});
+
+		await test.step('AC4: Typing in the User Group selection field will filter results', async () => {
+			for (const recipientUserGroupField of recipientUserGroupFields) {
+				await recipientUserGroupField.click();
+
+				await page
+					.getByRole('textbox', {name: 'Search for a user group.'})
+					.fill('UserGroup');
+
+				for (const userGroup of userGroups) {
+					await expect(
+						await page.getByRole('checkbox', {name: userGroup.name})
+					).toBeVisible();
+				}
+
+				await page
+					.getByRole('textbox', {name: 'Search for a user group.'})
+					.fill('foobar');
+
+				for (const userGroup of userGroups) {
+					await expect(
+						await page.getByRole('checkbox', {name: userGroup.name})
+					).not.toBeVisible();
+				}
+
+				await page.keyboard.press('Escape');
+			}
+		});
+
+		await test.step('AC5: Verify User Group selections are saved', async () => {
+			const notificationTemplateName =
+				'Notification Template Name' + getRandomInt();
+
+			await emailNotificationTemplatePage.basicInfoName.fill(
+				notificationTemplateName
+			);
+
+			await emailNotificationTemplatePage.senderEmailAddress.fill(
+				'test@liferay.com'
+			);
+
+			await emailNotificationTemplatePage.senderName.fill('test user');
+
+			await emailNotificationTemplatePage.contentSubject.fill(
+				'Content subject'
+			);
+
+			await emailNotificationTemplatePage.saveButton.click();
+
+			await notificationTemplatesPage
+				.getFrontEndDatasetItemLocator(notificationTemplateName)
+				.click();
+
+			// We waitFor() a previously selected user group since the page can
+			// take 2+ seconds to render the entries, causing a race condition
+
+			await emailNotificationTemplatePage.page
+				.getByRole('row', {name: userGroups[0].name})
+				.first()
+				.waitFor();
+
+			for (const userGroup of userGroups) {
+				await expect(
+					await emailNotificationTemplatePage.page
+						.getByRole('row', {name: userGroup.name})
+						.count()
+				).toBe(recipientUserGroupFields.length);
+			}
+		});
 	});
 });

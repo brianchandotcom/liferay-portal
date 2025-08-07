@@ -32,6 +32,7 @@ export class EmailNotificationTemplatePage {
 	readonly notificationTemplatesPage: NotificationTemplatesPage;
 	readonly organizationRolesGroupTitle: Locator;
 	readonly primaryRecipientRoles: Locator;
+	readonly primaryRecipientUserGroups: Locator;
 	readonly primaryRecipientUserEmailAddress: Locator;
 	readonly primaryRecipientType: Locator;
 	readonly regularRolesGroupTitle: Locator;
@@ -41,6 +42,8 @@ export class EmailNotificationTemplatePage {
 	readonly saveButton: Locator;
 	readonly secondaryRecipientRolesBCC: Locator;
 	readonly secondaryRecipientRolesCC: Locator;
+	readonly secondaryRecipientUserGroupsBCC: Locator;
+	readonly secondaryRecipientUserGroupsCC: Locator;
 	readonly secondaryRecipientTypeBCC: Locator;
 	readonly secondaryRecipientTypeCC: Locator;
 	readonly secondaryRecipientsBCCInput: Locator;
@@ -71,6 +74,9 @@ export class EmailNotificationTemplatePage {
 			exact: true,
 		});
 		this.primaryRecipientRoles = page.getByLabel('Role' + 'Mandatory');
+		this.primaryRecipientUserGroups = page.getByLabel(
+			'User Group' + 'Mandatory'
+		);
 		this.primaryRecipientUserEmailAddress = page.locator(
 			'input[id="primaryRecipients"]'
 		);
@@ -91,6 +97,12 @@ export class EmailNotificationTemplatePage {
 			.last();
 		this.secondaryRecipientRolesCC = page
 			.getByLabel('Role', {exact: true})
+			.first();
+		this.secondaryRecipientUserGroupsBCC = page
+			.getByLabel('User Group', {exact: true})
+			.last();
+		this.secondaryRecipientUserGroupsCC = page
+			.getByLabel('User Group', {exact: true})
 			.first();
 		this.secondaryRecipientTypeBCC = page
 			.getByLabel('Type', {exact: true})

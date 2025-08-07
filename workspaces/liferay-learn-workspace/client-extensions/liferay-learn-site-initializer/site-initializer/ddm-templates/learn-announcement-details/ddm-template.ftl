@@ -53,6 +53,7 @@
 			<#if (ObjectField_content.getData())??>
 				${ObjectField_content.getData()}
 			</#if>
+
 			<#if (.data_model["ObjectField_35642960#previewURL"].getData())?? && .data_model["ObjectField_35642960#previewURL"].getData() !="">
 				<img alt="Image Preview" src="${.data_model["ObjectField_35642960#previewURL"].getData()}" />
 			</#if>

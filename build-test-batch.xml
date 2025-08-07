@@ -431,7 +431,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						replace="\2"
 					/>
 
-					<record-git-diffs-build-services gradle.module.dir="${ant.target.dir}">
+					<record-git-diffs-build-services>
 						<action>
 							<ant antfile="${ant.target.file.name}" dir="${ant.target.dir}" target="@{ant.target.name}" />
 						</action>
@@ -456,7 +456,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				</catch>
 				<finally>
 					<if>
-						<isset property="build.services.diffs" />
+						<isset property="git.diffs" />
 						<then>
 							<generate-backend-batch-junit-report-ant-target
 								ant.target.failure.count="1"
@@ -529,7 +529,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<sequential>
 			<execute-gradle-task gradle.task.module.dir="@{gradle.module.dir}" gradle.task.name="@{gradle.task.name}">
 				<action>
-					<record-git-diffs-build-services gradle.module.dir="@{gradle.module.dir}">
+					<record-git-diffs-build-services>
 						<action>
 							<gradle-execute dir="@{gradle.module.dir}" forcedcacheenabled="false" task="@{gradle.task.name}">
 								<arg value="-Dskip.read.only=${build.services.skip.read.only}" />
@@ -540,7 +540,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				</action>
 				<action-fail>
 					<if>
-						<isset property="build.services.diffs" />
+						<isset property="git.diffs" />
 						<then>
 							<generate-backend-batch-junit-report-gradle-task
 								gradle.task.failure.count="1"
@@ -564,7 +564,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<sequential>
 			<execute-gradle-task gradle.task.module.dir="@{gradle.module.dir}" gradle.task.name="@{gradle.task.name}">
 				<action>
-					<record-git-diffs-rest-builder gradle.module.dir="@{gradle.module.dir}">
+					<record-git-diffs-rest-builder>
 						<action>
 							<gradle-execute dir="@{gradle.module.dir}" forcedcacheenabled="false" task="@{gradle.task.name}">
 								<arg value="-DbuildREST.forceClientVersionDescription=false" />
@@ -576,7 +576,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				</action>
 				<action-fail>
 					<if>
-						<isset property="build.services.diffs" />
+						<isset property="git.diffs" />
 						<then>
 							<generate-backend-batch-junit-report-gradle-task
 								gradle.task.failure.count="1"
@@ -1443,8 +1443,6 @@ app.server.type=@{app.server.type}]]></echo>
 	</macrodef>
 
 	<macrodef name="record-git-diffs-build-services">
-		<attribute name="gradle.module.dir" />
-
 		<element name="action" />
 
 		<sequential>
@@ -1458,7 +1456,7 @@ app.server.type=@{app.server.type}]]></echo>
 				<format pattern="yyyyMMddkkmmssSSS" property="tstamp" />
 			</tstamp>
 
-			<exec dir="@{gradle.module.dir}" executable="git" output="${tstamp}.diff">
+			<exec executable="git" output="${tstamp}.diff">
 				<arg value="diff" />
 				<arg value="--" />
 				<arg value="." />
@@ -1468,7 +1466,7 @@ app.server.type=@{app.server.type}]]></echo>
 				<arg value=":!*/src/service.properties" />
 			</exec>
 
-			<exec dir="@{gradle.module.dir}" executable="git">
+			<exec executable="git">
 				<arg value="checkout" />
 				<arg value="--" />
 				<arg value="." />
@@ -1484,8 +1482,6 @@ app.server.type=@{app.server.type}]]></echo>
 	</macrodef>
 
 	<macrodef name="record-git-diffs-rest-builder">
-		<attribute name="gradle.module.dir" />
-
 		<element name="action" />
 
 		<sequential>
@@ -1499,14 +1495,14 @@ app.server.type=@{app.server.type}]]></echo>
 				<format pattern="yyyyMMddkkmmssSSS" property="tstamp" />
 			</tstamp>
 
-			<exec dir="@{gradle.module.dir}" executable="git" output="${tstamp}.diff">
+			<exec executable="git" output="${tstamp}.diff">
 				<arg value="diff" />
 				<arg value="--" />
 				<arg value="." />
 				<arg value=":!*/packageinfo" />
 			</exec>
 
-			<exec dir="@{gradle.module.dir}" executable="git">
+			<exec executable="git">
 				<arg value="checkout" />
 				<arg value="--" />
 				<arg value="." />

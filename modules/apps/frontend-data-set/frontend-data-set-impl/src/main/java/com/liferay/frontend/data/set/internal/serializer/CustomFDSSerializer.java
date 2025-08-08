@@ -31,6 +31,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -790,11 +791,14 @@ public class CustomFDSSerializer
 
 		try {
 			Page<ObjectEntry> relatedObjectEntriesPage =
-				defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
+				defaultObjectEntryManager.getRelatedObjectEntries(
 					new DefaultDTOConverterContext(
 						false, null, null, null, null,
 						LocaleUtil.getMostRelevantLocale(), null, null),
-					objectDefinition, objectEntry.getId(), relationshipName,
+					objectEntry.getId(),
+					_objectRelationshipLocalService.getObjectRelationship(
+						objectDefinition.getObjectDefinitionId(),
+						relationshipName),
 					Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 			objectEntries = relatedObjectEntriesPage.getItems();
@@ -1160,6 +1164,9 @@ public class CustomFDSSerializer
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference(
 		target = "(frontend.data.set.serializer.type=" + FDSSerializer.TYPE_SYSTEM + ")"

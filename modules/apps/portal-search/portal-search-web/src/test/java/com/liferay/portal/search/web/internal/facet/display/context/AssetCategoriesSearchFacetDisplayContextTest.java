@@ -360,31 +360,10 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 	public void testVocabularyInformationIsPopulated() throws Exception {
 		long categoryId = RandomTestUtil.randomLong();
 		long groupId = RandomTestUtil.randomLong();
+
+		AssetCategory assetCategory = _createAssetCategory(categoryId, groupId);
+
 		long vocabularyId = RandomTestUtil.randomLong();
-
-		String vocabularyTitle = RandomTestUtil.randomString();
-		String vocabularyExternalReferenceCode = RandomTestUtil.randomString();
-		String groupExternalReferenceCode = RandomTestUtil.randomString();
-
-		AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
-
-		Mockito.when(
-			assetCategory.getCategoryId()
-		).thenReturn(
-			categoryId
-		);
-
-		Mockito.when(
-			assetCategory.getGroupId()
-		).thenReturn(
-			groupId
-		);
-
-		Mockito.when(
-			assetCategory.getTitle(Mockito.any(Locale.class))
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
 
 		Mockito.when(
 			assetCategory.getVocabularyId()
@@ -392,27 +371,14 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 			vocabularyId
 		);
 
-		AssetCategoryLocalService assetCategoryLocalService = Mockito.mock(
-			AssetCategoryLocalService.class);
-
-		Mockito.when(
-			assetCategoryLocalService.fetchAssetCategory(categoryId)
-		).thenReturn(
-			assetCategory
-		);
-
 		AssetVocabulary assetVocabulary = Mockito.mock(AssetVocabulary.class);
 
-		Mockito.when(
-			assetVocabulary.getVocabularyId()
-		).thenReturn(
-			vocabularyId
-		);
+		String vocabularyExternalReferenceCode = RandomTestUtil.randomString();
 
 		Mockito.when(
-			assetVocabulary.getTitle(Mockito.any(Locale.class))
+			assetVocabulary.getExternalReferenceCode()
 		).thenReturn(
-			vocabularyTitle
+			vocabularyExternalReferenceCode
 		);
 
 		Mockito.when(
@@ -421,10 +387,18 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 			groupId
 		);
 
+		String vocabularyTitle = RandomTestUtil.randomString();
+
 		Mockito.when(
-			assetVocabulary.getExternalReferenceCode()
+			assetVocabulary.getTitle(Mockito.any(Locale.class))
 		).thenReturn(
-			vocabularyExternalReferenceCode
+			vocabularyTitle
+		);
+
+		Mockito.when(
+			assetVocabulary.getVocabularyId()
+		).thenReturn(
+			vocabularyId
 		);
 
 		AssetVocabularyLocalService assetVocabularyLocalService = Mockito.mock(
@@ -437,6 +411,8 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 		);
 
 		Group group = Mockito.mock(Group.class);
+
+		String groupExternalReferenceCode = RandomTestUtil.randomString();
 
 		Mockito.when(
 			group.getExternalReferenceCode()
@@ -476,15 +452,15 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 		);
 
 		Mockito.when(
-			facet.getFieldName()
-		).thenReturn(
-			"assetCategoryIds"
-		);
-
-		Mockito.when(
 			facet.getFacetCollector()
 		).thenReturn(
 			facetCollector
+		);
+
+		Mockito.when(
+			facet.getFieldName()
+		).thenReturn(
+			"assetCategoryIds"
 		);
 
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
@@ -495,10 +471,9 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 					groupLocalService, renderRequest);
 
 		assetCategoriesSearchFacetDisplayContextBuilder.
-			setAssetCategoryLocalService(assetCategoryLocalService);
+			setAssetCategoryLocalService(_assetCategoryLocalService);
 		assetCategoriesSearchFacetDisplayContextBuilder.
 			setAssetVocabularyLocalService(assetVocabularyLocalService);
-
 		assetCategoriesSearchFacetDisplayContextBuilder.
 			setAssetCategoryPermissionChecker(category -> true);
 		assetCategoriesSearchFacetDisplayContextBuilder.setDisplayStyle(
@@ -524,14 +499,12 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 					vocabularyExternalReferenceCode),
 			assetCategoriesSearchFacetDisplayContext.
 				getGroupVocabularyExternalReferenceCodes());
-
-		Assert.assertEquals(
-			ListUtil.fromArray(vocabularyTitle),
-			assetCategoriesSearchFacetDisplayContext.getVocabularyNames());
-
 		Assert.assertEquals(
 			ListUtil.fromArray(vocabularyId),
 			assetCategoriesSearchFacetDisplayContext.getVocabularyIds());
+		Assert.assertEquals(
+			ListUtil.fromArray(vocabularyTitle),
+			assetCategoriesSearchFacetDisplayContext.getVocabularyNames());
 	}
 
 	protected Group createGroup(long groupId, long stagingGroupId) {

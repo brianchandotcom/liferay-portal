@@ -5,7 +5,9 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewHomeQuickActionsDisplayContext;
@@ -13,6 +15,7 @@ import com.liferay.site.cms.site.initializer.internal.display.context.ViewHomeQu
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Christian Dorado
@@ -31,6 +34,8 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new ViewHomeQuickActionsDisplayContext(
+			_depotEntryLocalService, groupLocalService,
+			_objectDefinitionService,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}
@@ -39,5 +44,11 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 	protected String getJSPPath() {
 		return "/view_home_quick_actions.jsp";
 	}
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private ObjectDefinitionService _objectDefinitionService;
 
 }

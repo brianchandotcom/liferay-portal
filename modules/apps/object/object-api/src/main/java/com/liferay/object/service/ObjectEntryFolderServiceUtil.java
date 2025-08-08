@@ -107,6 +107,16 @@ public class ObjectEntryFolderServiceUtil {
 			groupId, companyId, parentObjectEntryFolderId);
 	}
 
+	public static ObjectEntryFolder getOrAddEmptyObjectEntryFolder(
+			String externalReferenceCode, long groupId, long companyId,
+			long userId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().getOrAddEmptyObjectEntryFolder(
+			externalReferenceCode, groupId, companyId, userId, serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -204,10 +204,9 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		}
 
 		Page<ObjectEntry> page =
-			defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
+			defaultObjectEntryManager.getRelatedObjectEntries(
 				_getDTOConverterContext(currentObjectEntryId),
-				_objectDefinition, currentObjectEntryId, objectRelationshipName,
-				pagination);
+				currentObjectEntryId, objectRelationship, pagination);
 
 		return Page.of(
 			page.getActions(),

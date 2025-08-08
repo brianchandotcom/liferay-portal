@@ -18,7 +18,6 @@ import com.liferay.configuration.admin.web.internal.search.FieldNames;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -123,7 +122,6 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 			if (!Objects.equals(
 					String.valueOf(configurationScopeDisplayContext.getScope()),
 					configurationScreen.getScope()) ||
-
 				!configurationScreen.isVisible()) {
 
 				continue;

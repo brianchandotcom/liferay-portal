@@ -395,7 +395,7 @@ test.describe('Manage object fields through Model Builder', () => {
 				apiHelpers,
 			});
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
 			objectFieldBusinessTypes: [
@@ -738,7 +738,7 @@ test.describe('Manage object fields through Model Builder', () => {
 		modelBuilderObjectDefinitionNodePage,
 		page,
 	}) => {
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Encrypted'],
 		});
 

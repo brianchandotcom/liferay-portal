@@ -66,7 +66,7 @@ test.describe('Localized object entries are saved correctly', () => {
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{
 					businessType: 'Attachment',
@@ -245,7 +245,7 @@ test.describe('Localized object entries are saved correctly', () => {
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{
 					businessType: 'Boolean',
@@ -392,7 +392,7 @@ test.describe('Localized object entries are saved correctly', () => {
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{
 					businessType: 'Date',
@@ -546,7 +546,7 @@ test.describe('Localized object entries are saved correctly', () => {
 				locale: 'ca_ES',
 			});
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
 			objectFieldBusinessTypes: [
@@ -755,7 +755,7 @@ test.describe('Localized object entries are saved correctly', () => {
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{
 					businessType: 'Encrypted',
@@ -864,7 +864,7 @@ test.describe('Localized object entries are saved correctly', () => {
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{
 					businessType: 'Decimal',
@@ -1202,7 +1202,7 @@ test.describe('Manage object entries through Page Templates', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const objectFields: ObjectField[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{
 					businessType: 'Boolean',
@@ -1563,7 +1563,7 @@ test.describe('Required localized object fields', () => {
 				apiHelpers,
 			});
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
 			objectFieldBusinessTypes: [

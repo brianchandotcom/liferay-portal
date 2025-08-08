@@ -1946,3 +1946,41 @@ baseTest(
 		}
 	}
 );
+
+baseTest(
+	'Journal Article Shows Wrong Display Date When Published After Draft',
+	{
+		tag: '@LPD-62472',
+	},
+	async ({journalEditArticlePage, journalPage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		baseTest.setTimeout(120000);
+
+		await journalEditArticlePage.saveAsDraftWithPermissions(
+			getRandomString()
+		);
+
+		await page.waitForTimeout(50000);
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+
+		await page.waitForTimeout(50000);
+
+		await page.getByRole('menuitem', {name: 'Publish'}).click();
+
+		await journalPage.changeView('table');
+
+		const firstDisplayDateTd = page
+			.locator('td.lfr-display-date-column')
+			.first();
+
+		const spanInsideTd = firstDisplayDateTd.locator('span');
+
+		await spanInsideTd.waitFor({state: 'visible'});
+
+		const displayDateText = await spanInsideTd.textContent();
+
+		expect(displayDateText).not.toBe('1 Minute ago');
+	}
+);

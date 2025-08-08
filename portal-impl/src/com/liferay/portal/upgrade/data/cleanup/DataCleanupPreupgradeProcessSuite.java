@@ -78,8 +78,8 @@ public class DataCleanupPreupgradeProcessSuite {
 	private final List<DataCleanupPreupgradeProcess>
 		_dataCleanupPreupgradeProcesses = ListUtil.fromArray(
 
-			// It must be first since it tries to recreate the missing primary
-			// keys, which means that future queries can benefit from it
+			// Recreate missing primary keys so that later upgrade processes can
+			// use them
 
 			new DataCleanupPreupgradeProcess() {
 

@@ -26,6 +26,35 @@ public class AssetDisplayPageUtil {
 
 	public static LayoutPageTemplateEntry
 		getAssetDisplayPageLayoutPageTemplateEntry(
+			long groupId, InfoItemReference infoItemReference) {
+
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry =
+			LayoutDisplayPageProviderRegistryUtil.
+				getLayoutDisplayPageProviderRegistry();
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(
+					infoItemReference.getClassName());
+
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				groupId, infoItemReference);
+
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			LayoutPageTemplateEntryServiceUtil.
+				fetchDefaultLayoutPageTemplateEntry(
+					groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+					layoutDisplayPageObjectProvider.getClassTypeId());
+
+		return _getAssetDisplayPage(
+			groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+			layoutDisplayPageObjectProvider.getClassPK(),
+			defaultLayoutPageTemplateEntry, layoutDisplayPageProvider);
+	}
+
+	public static LayoutPageTemplateEntry
+		getAssetDisplayPageLayoutPageTemplateEntry(
 			long groupId, long classNameId, long classPK, long classTypeId) {
 
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =

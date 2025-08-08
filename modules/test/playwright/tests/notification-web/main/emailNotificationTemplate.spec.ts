@@ -11,6 +11,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -20,6 +21,9 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-50091': {enabled: true},
+	}),
 	loginTest(),
 	notificationPagesTest
 );

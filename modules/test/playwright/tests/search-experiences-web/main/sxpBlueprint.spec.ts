@@ -47,6 +47,7 @@ test.describe('Blueprint table fields can toggle visibility', () => {
 		await test.step('Select all blueprint table fields to view', async () => {
 			for (const tableField of tableFieldsList) {
 				const tableFieldMenuItem = page.getByRole('menuitem', {
+					exact: true,
 					name: tableField,
 				});
 
@@ -81,7 +82,8 @@ test.describe('Blueprint table fields can toggle visibility', () => {
 			for (const tableField of tableFieldsList) {
 				await expect(
 					sxpBlueprintsAndElementsViewPage.blueprintElementTable.getByText(
-						tableField
+						tableField,
+						{exact: true}
 					)
 				).toBeVisible();
 			}
@@ -90,6 +92,7 @@ test.describe('Blueprint table fields can toggle visibility', () => {
 		await test.step('Toggle off blueprint table fields', async () => {
 			for (const tableField of tableFieldsList) {
 				const tableFieldMenuItem = page.getByRole('menuitem', {
+					exact: true,
 					name: tableField,
 				});
 

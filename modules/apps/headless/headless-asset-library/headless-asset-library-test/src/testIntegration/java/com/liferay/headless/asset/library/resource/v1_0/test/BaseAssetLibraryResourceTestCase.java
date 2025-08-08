@@ -1671,6 +1671,14 @@ public abstract class BaseAssetLibraryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (assetLibrary.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("userAccounts", additionalAssertFieldName)) {
 				if (assetLibrary.getUserAccounts() == null) {
 					valid = false;
@@ -1969,6 +1977,16 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			if (Objects.equals("sites", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						assetLibrary1.getSites(), assetLibrary2.getSites())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetLibrary1.getType(), assetLibrary2.getType())) {
 
 					return false;
 				}
@@ -2401,6 +2419,11 @@ public abstract class BaseAssetLibraryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("sites")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("type")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -261,6 +261,20 @@ public class AssetLibrarySerDes {
 			sb.append("]");
 		}
 
+		if (assetLibrary.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(assetLibrary.getType());
+
+			sb.append("\"");
+		}
+
 		if (assetLibrary.getUserAccounts() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -461,6 +475,13 @@ public class AssetLibrarySerDes {
 			map.put("sites", String.valueOf(assetLibrary.getSites()));
 		}
 
+		if (assetLibrary.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(assetLibrary.getType()));
+		}
+
 		if (assetLibrary.getUserAccounts() == null) {
 			map.put("userAccounts", null);
 		}
@@ -549,6 +570,9 @@ public class AssetLibrarySerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "sites")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "userAccounts")) {
@@ -679,6 +703,12 @@ public class AssetLibrarySerDes {
 					}
 
 					assetLibrary.setSites(sitesArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					assetLibrary.setType(
+						AssetLibrary.Type.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "userAccounts")) {

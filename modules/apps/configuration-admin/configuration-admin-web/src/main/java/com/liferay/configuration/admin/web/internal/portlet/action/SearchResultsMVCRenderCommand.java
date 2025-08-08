@@ -130,8 +130,6 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 				continue;
 			}
 
-			//Locale locale = searchContext.getLocale();
-
 			String configurationScreenCategoryKey = StringUtil.toLowerCase(
 				_language.get(
 					locale, "category." + configurationScreen.getCategoryKey()),

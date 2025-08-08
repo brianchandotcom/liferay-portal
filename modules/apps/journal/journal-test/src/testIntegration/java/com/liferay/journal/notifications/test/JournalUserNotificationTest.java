@@ -47,7 +47,6 @@ import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.Date;
@@ -181,13 +180,11 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		WorkflowDefinitionLink workflowDefinitionLink = null;
 
 		try {
-			String content = _getJsonFromFile(
-				"test-single-approver-workflow-definition.xml");
-
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				null, TestPropsValues.getCompanyId(), user.getUserId(),
 				"Url Constant Single Approver", "Url Constant Single Approver",
-				content.getBytes());
+				_getContentBytes(
+					"test-single-approver-workflow-definition.xml"));
 
 			workflowDefinitionLink =
 				_workflowDefinitionLinkLocalService.
@@ -340,13 +337,14 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		return previewURL;
 	}
 
-	private String _getJsonFromFile(String fileName) throws Exception {
+	private byte[] _getContentBytes(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
-		return WorkflowDefinitionContentUtil.toJSON(
-			StringUtil.read(
-				clazz.getClassLoader(),
-				"com/liferay/journal/dependencies/" + fileName));
+		String content = StringUtil.read(
+			clazz.getClassLoader(),
+			"com/liferay/journal/dependencies/" + fileName);
+
+		return content.getBytes();
 	}
 
 	private JournalFolder _folder;

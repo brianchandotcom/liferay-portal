@@ -189,7 +189,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		_setUpPermissionThreadLocal();
 		_createSingleApproverWorkflow();
 
-		_activateWorkflow(
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			_adminUser.getUserId(), group.getCompanyId(), group.getGroupId(),
 			JournalFolder.class.getName(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
@@ -211,10 +212,10 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		Assert.assertTrue(
 			mailMessageBody.contains(_getArticlePreviewURL(article)));
 
-		_deactivateWorkflow(
-			JournalFolder.class.getName(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			_adminUser.getUserId(), group.getCompanyId(), group.getGroupId(),
+			JournalFolder.class.getName(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, JournalArticleConstants.DDM_STRUCTURE_ID_ALL, null);
+
 
 		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 	}
@@ -259,17 +260,6 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			JournalFolder.class.getName(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL, "Single Approver", 1);
-	}
-
-	private void _activateWorkflow(
-			String className, long classPK, long typePK,
-			String workflowDefinitionName, int workflowDefinitionVersion)
-		throws Exception {
-
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-			_adminUser.getUserId(), group.getCompanyId(), group.getGroupId(),
-			className, classPK, typePK, workflowDefinitionName,
-			workflowDefinitionVersion);
 	}
 
 	private void _assertJournalArticleNotifications(
@@ -331,15 +321,6 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			JournalFolder.class.getName(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL, null);
-	}
-
-	private void _deactivateWorkflow(
-			String className, long classPK, long typePK)
-		throws Exception {
-
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-			_adminUser.getUserId(), group.getCompanyId(), group.getGroupId(),
-			className, classPK, typePK, null);
 	}
 
 	private String _getArticlePreviewURL(JournalArticle article)

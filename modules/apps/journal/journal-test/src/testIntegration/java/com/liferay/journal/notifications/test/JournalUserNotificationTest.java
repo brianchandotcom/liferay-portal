@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -43,7 +42,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.notifications.test.util.BaseUserNotificationTestCase;
-import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -188,7 +186,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				null, TestPropsValues.getCompanyId(), user.getUserId(),
-				_URL_CONSTANT_SINGLE_APPROVER, _URL_CONSTANT_SINGLE_APPROVER,
+				"Url Constant Single Approver", "Url Constant Single Approver",
 				content.getBytes());
 
 			workflowDefinitionLink =
@@ -198,7 +196,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 						group.getGroupId(), JournalFolder.class.getName(),
 						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 						JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
-						_URL_CONSTANT_SINGLE_APPROVER, 1);
+						"Url Constant Single Approver", 1);
 
 			article = JournalTestUtil.addArticle(
 				group.getGroupId(),
@@ -224,11 +222,11 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 			_workflowDefinitionManager.updateActive(
 				user.getCompanyId(), user.getUserId(),
-				_URL_CONSTANT_SINGLE_APPROVER, 1, false);
+				"Url Constant Single Approver", 1, false);
 
 			_workflowDefinitionManager.undeployWorkflowDefinition(
 				user.getCompanyId(), user.getUserId(),
-				_URL_CONSTANT_SINGLE_APPROVER, 1);
+				"Url Constant Single Approver", 1);
 		}
 	}
 
@@ -350,9 +348,6 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 				clazz.getClassLoader(),
 				"com/liferay/journal/dependencies/" + fileName));
 	}
-
-	private static final String _URL_CONSTANT_SINGLE_APPROVER =
-		"Url Constant Single Approver";
 
 	private JournalFolder _folder;
 

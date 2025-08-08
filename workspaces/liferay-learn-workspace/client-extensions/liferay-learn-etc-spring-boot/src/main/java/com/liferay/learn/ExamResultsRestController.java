@@ -107,18 +107,18 @@ public class ExamResultsRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, MultipartFile file)
 		throws IOException {
 
-		try (BufferedReader reader = new BufferedReader(
+		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(
 					file.getInputStream(), StandardCharsets.UTF_8));
-			CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader(
+			CSVParser csvParser = CSVFormat.DEFAULT.withFirstRecordAsHeader(
 			).parse(
-				reader
+				bufferedReader
 			)) {
 
 			JSONArray jsonArray = new JSONArray();
 
-			for (CSVRecord record : parser) {
-				String examName = record.get(6);
+			for (CSVRecord csvRecord : csvParser) {
+				String examName = csvRecord.get(6);
 
 				if (Objects.equals(
 						examName,
@@ -134,32 +134,32 @@ public class ExamResultsRestController extends BaseRestController {
 					"date",
 					OffsetDateTime.of(
 						LocalDateTime.parse(
-							record.get(10),
+							csvRecord.get(10),
 							DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm:ss")),
 						ZoneOffset.UTC
 					).format(
 						DateTimeFormatter.ISO_INSTANT
 					)
 				).put(
-					"email", record.get(2)
+					"email", csvRecord.get(2)
 				).put(
 					"examName", examName
 				).put(
-					"externalReferenceCode", record.get(0)
+					"externalReferenceCode", csvRecord.get(0)
 				).put(
-					"firstName", record.get(3)
+					"firstName", csvRecord.get(3)
 				).put(
-					"lastName", record.get(4)
+					"lastName", csvRecord.get(4)
 				).put(
 					"result",
 					new JSONObject(
 					).put(
-						"name", record.get(8)
+						"name", csvRecord.get(8)
 					).put(
-						"key", StringUtil.toLowerCase(record.get(8))
+						"key", StringUtil.toLowerCase(csvRecord.get(8))
 					)
 				).put(
-					"score", GetterUtil.getInteger(record.get(7))
+					"score", GetterUtil.getInteger(csvRecord.get(7))
 				).put(
 					"testName", examName
 				);

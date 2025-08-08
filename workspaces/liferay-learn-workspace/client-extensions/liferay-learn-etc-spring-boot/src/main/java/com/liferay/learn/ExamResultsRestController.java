@@ -58,7 +58,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 public class ExamResultsRestController extends BaseRestController {
 
-	@GetMapping("/export")
+	@GetMapping("/csv")
 	@ResponseBody
 	public ResponseEntity<StreamingResponseBody> getExamResultsCSV(
 			@AuthenticationPrincipal Jwt jwt,
@@ -84,9 +84,7 @@ public class ExamResultsRestController extends BaseRestController {
 		);
 	}
 
-	@PostMapping(
-		consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/import"
-	)
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/csv")
 	public ResponseEntity<String> postExamResultsCSV(
 		@AuthenticationPrincipal Jwt jwt,
 		@RequestParam("file") MultipartFile file) {

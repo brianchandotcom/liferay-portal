@@ -16,7 +16,7 @@ export async function postListTypeDefinitionListTypeEntries({
 	locale?: Locale;
 }): Promise<{
 	listTypeDefinition: ListTypeDefinition;
-	listTypeEntries: ListTypeDefinition[];
+	listTypeEntries: ListTypeEntry[];
 }> {
 	const listTypeDefinition =
 		await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
@@ -26,7 +26,7 @@ export async function postListTypeDefinitionListTypeEntries({
 		type: 'listTypeEntries',
 	});
 
-	const listTypeDefinitionEntries: LocalizedValue<string>[] = Array.from(
+	const listTypeEntries: LocalizedValue<string>[] = Array.from(
 		{length: listTypeEntriesLength},
 		() => {
 			const entry: LocalizedValue<string> = {
@@ -41,7 +41,7 @@ export async function postListTypeDefinitionListTypeEntries({
 		}
 	);
 
-	const listTypeEntry = listTypeDefinitionEntries.map(
+	const listTypeEntry = listTypeEntries.map(
 		async (listTypeDefinitionEntry) =>
 			await apiHelpers.listTypeAdmin.postListTypeEntry({
 				key: listTypeDefinitionEntry.en_US,

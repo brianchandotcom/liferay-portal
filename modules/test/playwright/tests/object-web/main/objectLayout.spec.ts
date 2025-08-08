@@ -5,6 +5,7 @@
 
 import {
 	ObjectDefinitionAPI,
+	ObjectField,
 	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
@@ -17,8 +18,9 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {generateObjectEntryValues} from './utils/generateObjectEntry';
+import {generateObjectFields} from './utils/generateObjectFields';
 import getRandomObjectFieldText from './utils/getRandomObjectFieldText';
-import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -157,10 +159,13 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 		const objectDefinitionLabel2 = 'ObjectDefinitionLabel' + getRandomInt();
 		const objectDefinitionName2 = 'ObjectDefinitionName' + getRandomInt();
 
-		const {objectEntry, objectFields} = await mockObjectFields({
-			apiHelpers,
-			objectEntryReturn: {format: 'API'},
+		const objectFields1: Partial<ObjectField>[] = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectEntry1 = await generateObjectEntryValues({
+			objectEntryFormat: 'UI',
+			objectFields: objectFields1,
 		});
 
 		const objectDefinitionAPIClient =
@@ -173,7 +178,7 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 					en_US: objectDefinitionLabel1,
 				},
 				name: objectDefinitionName1,
-				objectFields,
+				objectFields: objectFields1,
 				pluralLabel: {
 					en_US: objectDefinitionLabel1,
 				},
@@ -194,16 +199,18 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 
 		const {id: objectEntryId} =
 			await apiHelpers.objectEntry.postObjectEntry(
-				objectEntry,
+				objectEntry1,
 				applicationName
 			);
 
-		const {objectEntry: objectEntry2, objectFields: objectFields2} =
-			await mockObjectFields({
-				apiHelpers,
-				objectEntryReturn: {format: 'API'},
-				objectFieldBusinessTypes: ['Text'],
-			});
+		const objectFields2: Partial<ObjectField>[] = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectEntry2 = await generateObjectEntryValues({
+			objectEntryFormat: 'UI',
+			objectFields: objectFields2,
+		});
 
 		const {body: objectDefinition2} =
 			await objectDefinitionAPIClient.postObjectDefinition({
@@ -282,7 +289,7 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 		});
 
 		await objectLayoutsPage.addObjectLayoutObjectField(
-			objectFields[0].label.en_US
+			objectFields1[0].label.en_US
 		);
 
 		const objectLayoutRelTabName = getRandomString();

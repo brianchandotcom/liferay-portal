@@ -15,7 +15,8 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import {mockObjectFields} from './utils/mockObjectFields';
+import {generateObjectEntryValues} from './utils/generateObjectEntry';
+import {generateObjectFields} from './utils/generateObjectFields';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -242,13 +243,9 @@ test('assert that the user is able to use the ERC field in Sort, on the Custom V
 	const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 	const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
-	const {objectEntry, objectFields, titleObjectFieldName} =
-		await mockObjectFields({
-			apiHelpers,
-			objectEntryReturn: {format: 'API'},
-			objectFieldBusinessTypes: ['Text'],
-			titleObjectFieldName: 'Text',
-		});
+	const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		objectFieldBusinessTypes: ['Text'],
+	});
 
 	const objectDefinitionAPIClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -270,7 +267,6 @@ test('assert that the user is able to use the ERC field in Sort, on the Custom V
 			status: {
 				code: 0,
 			},
-			titleObjectFieldName,
 		});
 
 	apiHelpers.data.push({
@@ -287,7 +283,7 @@ test('assert that the user is able to use the ERC field in Sort, on the Custom V
 			name: {en_US: getRandomString()},
 			objectViewColumns: [
 				{
-					objectFieldName: titleObjectFieldName,
+					objectFieldName: objectFields[0].label['en_US'],
 					priority: 0,
 				},
 				{
@@ -304,6 +300,11 @@ test('assert that the user is able to use the ERC field in Sort, on the Custom V
 			],
 		}
 	);
+
+	const {objectEntry} = await generateObjectEntryValues({
+		objectEntryFormat: 'API',
+		objectFields,
+	});
 
 	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
 	const entry1 = 'Entry A';

@@ -10,11 +10,19 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.capability.InfoItemCapability;
+import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
+import com.liferay.info.test.util.model.MockObject;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
@@ -159,6 +167,59 @@ public class AssetDisplayPageUtilTest {
 	}
 
 	@Test
+	public void testGetAssetDisplayPageLayoutPageTemplateEntryWithUnsupportedInfoItemIdentifier()
+		throws Exception {
+
+		MockObject mockObject = new MockObject(
+			RandomTestUtil.randomLong(), false, true);
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(
+								InfoField.builder(
+								).infoFieldType(
+									TextInfoFieldType.INSTANCE
+								).namespace(
+									RandomTestUtil.randomString()
+								).name(
+									RandomTestUtil.randomString()
+								).build())
+						).build(),
+						mockObject, _portal, _displayPageInfoItemCapability)) {
+
+			InfoItemReference infoItemReference = new InfoItemReference(
+				MockObject.class.getName(),
+				new ERCInfoItemIdentifier(RandomTestUtil.randomString()));
+
+			Assert.assertNull(
+				AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
+					_group.getGroupId(), infoItemReference));
+
+			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+				DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+					_group.getGroupId(),
+					_portal.getClassNameId(MockObject.class.getName()), 0, true,
+					WorkflowConstants.STATUS_APPROVED);
+
+			Assert.assertNull(
+				AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
+					_group.getGroupId(), infoItemReference));
+
+			infoItemReference = new InfoItemReference(
+				MockObject.class.getName(),
+				new ClassPKInfoItemIdentifier(RandomTestUtil.randomLong()));
+
+			Assert.assertEquals(
+				defaultLayoutPageTemplateEntry,
+				AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
+					_group.getGroupId(), infoItemReference));
+		}
+	}
+
+	@Test
 	public void testHasAssetDisplayPageWithInfoItemIdentifier()
 		throws Exception {
 
@@ -294,6 +355,11 @@ public class AssetDisplayPageUtilTest {
 		_assetDisplayPageEntryLocalService;
 
 	private long _classNameId;
+
+	@Inject(
+		filter = "info.item.capability.key=" + DisplayPageInfoItemCapability.KEY
+	)
+	private InfoItemCapability _displayPageInfoItemCapability;
 
 	@DeleteAfterTestRun
 	private Group _group;

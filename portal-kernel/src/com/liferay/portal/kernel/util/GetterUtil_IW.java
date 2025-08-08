@@ -353,7 +353,7 @@ public class GetterUtil_IW {
 		return GetterUtil.getObject(value, defaultValue);
 	}
 
-	public <T, E> T getObject(T value,
+	public <T, E extends java.lang.Throwable> T getObject(T value,
 		com.liferay.petra.function.UnsafeSupplier<T, E> defaultValueUnsafeSupplier)
 		throws E {
 		return GetterUtil.getObject(value, defaultValueUnsafeSupplier);

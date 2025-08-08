@@ -92,7 +92,7 @@ public class ViewContentsSectionDisplayContext
 					"&redirect=", themeDisplay.getURLCurrent()),
 				"view", "viewContent",
 				LanguageUtil.get(httpServletRequest, "view"), "get", null,
-				"modal"));
+				null));
 
 		return fdsActionDropdownItems;
 	}

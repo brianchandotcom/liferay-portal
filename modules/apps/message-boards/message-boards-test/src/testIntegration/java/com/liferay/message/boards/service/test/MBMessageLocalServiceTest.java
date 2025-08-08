@@ -164,7 +164,7 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
-	public void testAddMessageUrlSubject() throws PortalException {
+	public void testAddMessageURLSubject() throws PortalException {
 		String subject = StringPool.DASH;
 		String body = StringPool.BLANK;
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =

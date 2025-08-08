@@ -68,6 +68,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Raymond Augé
  * @author Sampsa Sohlman
+ * @author Gregory Amerson
  */
 public class ConfigurationPersistenceManager
 	implements NotCachablePersistenceManager, PersistenceManager,
@@ -280,7 +281,9 @@ public class ConfigurationPersistenceManager
 		lock.lock();
 
 		try {
-			if (!InMemoryOnlyConfigurationThreadLocal.isInMemoryOnly()) {
+			if (!InMemoryOnlyConfigurationThreadLocal.isInMemoryOnly() &&
+				!isEphemeral(pid, newDictionary)) {
+
 				_storeInDatabase(pid, newDictionary);
 			}
 

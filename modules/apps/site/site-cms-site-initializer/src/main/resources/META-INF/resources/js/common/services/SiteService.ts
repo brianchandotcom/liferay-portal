@@ -25,7 +25,7 @@ async function disconnectSiteFromSpace(groupId: string, siteId: string) {
 	);
 }
 
-async function getConnectedSitesToSpace(groupId: string) {
+async function getConnectedSitesFromSpace(groupId: string) {
 	return await ApiHelper.get<{items: Site[]}>(
 		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/sites`
 	);
@@ -39,5 +39,5 @@ export default {
 	connectSiteToSpace,
 	disconnectSiteFromSpace,
 	getAllSites,
-	getConnectedSitesToSpace,
+	getConnectedSitesFromSpace,
 };

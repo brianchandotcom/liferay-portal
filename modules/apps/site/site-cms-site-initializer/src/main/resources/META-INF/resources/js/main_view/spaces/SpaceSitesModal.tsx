@@ -42,10 +42,11 @@ const SiteActions = ({
 
 		if (error) {
 			showErrorMessage(error);
+
+			return;
 		}
-		else {
-			onSiteDisconnected?.({site});
-		}
+
+		onSiteDisconnected?.({site});
 	};
 
 	const changeSearchable = async () => {
@@ -63,14 +64,14 @@ const SiteActions = ({
 		}
 	};
 
+	const isSearchableLabel = searchable
+		? Liferay.Language.get('yes')
+		: Liferay.Language.get('no');
+
 	return (
 		<div className="align-items-center d-flex">
 			<span className="mr-2 text-secondary">
-				{Liferay.Language.get('searchable-content')}:{' '}
-
-				{searchable
-					? Liferay.Language.get('yes')
-					: Liferay.Language.get('no')}
+				{`${Liferay.Language.get('searchable-content')}: ${isSearchableLabel}`}
 			</span>
 
 			<ClayDropDownWithItems
@@ -135,7 +136,7 @@ const SitesSelector = ({
 			const {data} = await SiteService.getAllSites();
 
 			if (data) {
-				setSites(data.items as Site[]);
+				setSites(data.items);
 			}
 		};
 
@@ -143,54 +144,30 @@ const SitesSelector = ({
 	}, []);
 
 	return (
-		<>
-			<div className="pt-4 px-4">
-				<div className="align-items-center autofit-row c-gap-3">
-					<div className="autofit-col autofit-col-expand">
-						<FieldPicker
-							items={sites.map((site) => {
-								return {label: site.name, value: site.id};
-							})}
-							label={Liferay.Language.get('site')}
-							name="siteSelector"
-							onSelectionChange={(value: string) => {
-								setSiteSelected(value);
-							}}
-							selectedKey={siteSelected}
-							title={Liferay.Language.get('select-a-site')}
-						/>
-					</div>
+		<div className="pt-4 px-4">
+			<div className="align-items-center autofit-row c-gap-3">
+				<div className="autofit-col autofit-col-expand">
+					<FieldPicker
+						items={sites.map((site) => {
+							return {label: site.name, value: site.id};
+						})}
+						label={Liferay.Language.get('site')}
+						name="siteSelector"
+						onSelectionChange={(value: string) => {
+							setSiteSelected(value);
+						}}
+						selectedKey={siteSelected}
+						title={Liferay.Language.get('select-a-site')}
+					/>
+				</div>
 
-					<div className="autofit-col">
-						<ClayButton onClick={connectSiteToSpace}>
-							{Liferay.Language.get('connect')}
-						</ClayButton>
-					</div>
+				<div className="autofit-col">
+					<ClayButton onClick={connectSiteToSpace}>
+						{Liferay.Language.get('connect')}
+					</ClayButton>
 				</div>
 			</div>
-		</>
-	);
-};
-
-const EmptyResult = ({
-	hasConnectSitesPermission,
-}: {
-	hasConnectSitesPermission: boolean;
-}) => {
-	return (
-		<>
-			<div className="text-center">
-				<h2 className="font-weight-semi-bold text-4">
-					{Liferay.Language.get('no-sites-are-connected-yet')}
-				</h2>
-
-				{hasConnectSitesPermission && (
-					<p className="text-3">
-						{Liferay.Language.get('connect-sites-to-this-space')}
-					</p>
-				)}
-			</div>
-		</>
+		</div>
 	);
 };
 
@@ -206,10 +183,11 @@ export default function SpaceSitesModal({
 
 	useEffect(() => {
 		const fetchConnectedSitesToSpace = async () => {
-			const {data} = await SiteService.getConnectedSitesToSpace(groupId);
+			const {data} =
+				await SiteService.getConnectedSitesFromSpace(groupId);
 
 			if (data) {
-				setConnectedSites(data.items as Site[]);
+				setConnectedSites(data.items);
 			}
 		};
 
@@ -263,9 +241,19 @@ export default function SpaceSitesModal({
 
 			<ClayModal.Body>
 				{!connectedSites.length ? (
-					<EmptyResult
-						hasConnectSitesPermission={hasConnectSitesPermission}
-					/>
+					<div className="text-center">
+						<h2 className="font-weight-semi-bold text-4">
+							{Liferay.Language.get('no-sites-are-connected-yet')}
+						</h2>
+
+						{hasConnectSitesPermission && (
+							<p className="text-3">
+								{Liferay.Language.get(
+									'connect-sites-to-this-space'
+								)}
+							</p>
+						)}
+					</div>
 				) : (
 					<>
 						{hasConnectSitesPermission && (

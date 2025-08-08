@@ -183,8 +183,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				null, TestPropsValues.getCompanyId(), user.getUserId(),
 				"Url Constant Single Approver", "Url Constant Single Approver",
-				_getContentBytes(
-					"test-single-approver-workflow-definition.xml"));
+				_getContentBytes("workflow-definition.xml"));
 
 			workflowDefinitionLink =
 				_workflowDefinitionLinkLocalService.

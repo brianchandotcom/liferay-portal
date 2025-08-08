@@ -17,12 +17,12 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -184,40 +184,64 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	public void testUserNotificationWithCustomNotificationMessage()
 		throws Exception {
 
-		_adminUser = UserTestUtil.addCompanyAdminUser(
-			CompanyLocalServiceUtil.getCompany(group.getCompanyId()));
-		_setUpPermissionThreadLocal();
-		_createSingleApproverWorkflow();
+		JournalArticle article = null;
+		WorkflowDefinitionLink workflowDefinitionLink = null;
 
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-			_adminUser.getUserId(), group.getCompanyId(), group.getGroupId(),
-			JournalFolder.class.getName(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
-			_URL_CONSTANT_SINGLE_APPROVER, 1);
+		try {
+			_adminUser = UserTestUtil.addCompanyAdminUser(
+				CompanyLocalServiceUtil.getCompany(group.getCompanyId()));
 
-		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			_setUpPermissionThreadLocal();
 
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_PENDING, article.getStatus());
+			String content = _getJsonFromFile(
+				"test-single-approver-workflow-definition.xml");
 
-		_assertJournalArticleNotificationsCount(1, _adminUser, 1);
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				null, _adminUser.getCompanyId(), _adminUser.getUserId(),
+				_URL_CONSTANT_SINGLE_APPROVER, _URL_CONSTANT_SINGLE_APPROVER,
+				content.getBytes());
 
-		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+			workflowDefinitionLink =
+				_workflowDefinitionLinkLocalService.
+					updateWorkflowDefinitionLink(
+						_adminUser.getUserId(), group.getCompanyId(),
+						group.getGroupId(), JournalFolder.class.getName(),
+						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
+						_URL_CONSTANT_SINGLE_APPROVER, 1);
 
-		String mailMessageBody = mailMessage.getBody();
+			article = JournalTestUtil.addArticle(
+				group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		Assert.assertTrue(
-			mailMessageBody.contains(_getArticlePreviewURL(article)));
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_PENDING, article.getStatus());
 
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-			_adminUser.getUserId(), group.getCompanyId(), group.getGroupId(),
-			JournalFolder.class.getName(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, JournalArticleConstants.DDM_STRUCTURE_ID_ALL, null);
+			_assertJournalArticleNotificationsCount(1, _adminUser, 1);
 
+			MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
 
-		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+			String mailMessageBody = mailMessage.getBody();
+
+			Assert.assertTrue(
+				mailMessageBody.contains(_getArticlePreviewURL(article)));
+		}
+		finally {
+			_journalArticleLocalService.deleteArticle(article);
+
+			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+				workflowDefinitionLink);
+
+			_workflowDefinitionManager.updateActive(
+				_adminUser.getCompanyId(), _adminUser.getUserId(),
+				_URL_CONSTANT_SINGLE_APPROVER, 1, false);
+
+			_workflowDefinitionManager.undeployWorkflowDefinition(
+				_adminUser.getCompanyId(), _adminUser.getUserId(),
+				_URL_CONSTANT_SINGLE_APPROVER, 1);
+
+			PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+		}
 	}
 
 	@Override
@@ -297,22 +321,6 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), userNotificationCount,
 			userNotificationEventsJSONObjects.size());
-	}
-
-	private void _createSingleApproverWorkflow() throws Exception {
-		try {
-			_workflowDefinitionManager.getWorkflowDefinition(
-				_adminUser.getCompanyId(), _URL_CONSTANT_SINGLE_APPROVER, 1);
-		}
-		catch (NoSuchModelException noSuchModelException) {
-			String content = _getJsonFromFile(
-				"test-single-approver-workflow-definition.xml");
-
-			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, _adminUser.getCompanyId(), _adminUser.getUserId(),
-				_URL_CONSTANT_SINGLE_APPROVER, _URL_CONSTANT_SINGLE_APPROVER,
-				content.getBytes());
-		}
 	}
 
 	private void _deactivateSingleApproverWorkflow() throws Exception {

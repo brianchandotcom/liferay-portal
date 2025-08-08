@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -179,28 +180,46 @@ public class DBResourceUtil {
 		return tableNames;
 	}
 
-	private static Map<String, String[]> _getTablesPrimaryKeyColumnNames(
+	private static Map<String, String[]>
+		_getTablesComposedPrimaryKeyColumnNames(String sql) {
+
+		Map<String, String[]> tablesPrimaryKeyColumnNames = new HashMap<>();
+
+		Matcher matcher = _composedPrimaryKeyPattern.matcher(sql);
+
+		while (matcher.find()) {
+			tablesPrimaryKeyColumnNames.put(
+				matcher.group(1),
+				StringUtil.split(
+					StringUtil.removeChar(matcher.group(2), CharPool.SPACE)));
+		}
+
+		return tablesPrimaryKeyColumnNames;
+	}
+
+	private static Map<String, String[]> _getTablesInlinedPrimaryKeyColumnNames(
 		String sql) {
 
 		Map<String, String[]> tablesPrimaryKeyColumnNames = new HashMap<>();
 
-		for (Pattern pattern :
-				new Pattern[] {
-					_composedPrimaryKeyPattern, _inlinedPrimaryKeyPattern
-				}) {
+		Matcher matcher = _inlinedPrimaryKeyPattern.matcher(sql);
 
-			Matcher matcher = pattern.matcher(sql);
-
-			while (matcher.find()) {
-				tablesPrimaryKeyColumnNames.put(
-					matcher.group(1),
-					StringUtil.split(
-						StringUtil.removeChar(
-							matcher.group(2), CharPool.SPACE)));
-			}
+		while (matcher.find()) {
+			tablesPrimaryKeyColumnNames.put(
+				matcher.group(1), new String[] {matcher.group(2)});
 		}
 
 		return tablesPrimaryKeyColumnNames;
+	}
+
+	private static Map<String, String[]> _getTablesPrimaryKeyColumnNames(
+		String sql) {
+
+		return HashMapBuilder.putAll(
+			_getTablesComposedPrimaryKeyColumnNames(sql)
+		).putAll(
+			_getTablesInlinedPrimaryKeyColumnNames(sql)
+		).build();
 	}
 
 	private static String _read(Bundle bundle, String path) {

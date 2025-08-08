@@ -27,6 +27,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import createUserWithPermissions from '../../../utils/createUserWithPermissions';
@@ -37,6 +38,7 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
 import {mockedObjectFields} from './dependencies/objectMockedFields';
 import {
 	getFDSDateFormat,
@@ -65,6 +67,8 @@ const test = mergeTests(
 	loginTest(),
 	objectPagesTest,
 	pageEditorPagesTest,
+	pagesAdminPagesTest,
+	templatesPageTest,
 	workflowPagesTest,
 	usersAndOrganizationsPagesTest
 );
@@ -687,6 +691,146 @@ test.describe('Manage object entries through Page Templates', () => {
 		await displayPageTemplatesPage.goto();
 
 		await displayPageTemplatesPage.deleteTemplate(objectDefinitionLabel);
+	});
+
+	test('verify it is possible to create a information template with an object as an item type and see its entries', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pagesAdminPage,
+		templatesPage,
+	}) => {
+		const {listTypeDefinition, objectEntry, objectFields} =
+			await mockObjectFields({
+				apiHelpers,
+				objectEntryReturn: {format: 'API'},
+				objectFieldBusinessTypes: [
+					'boolean',
+					'decimal',
+					'integer',
+					'longText',
+					'picklist',
+					'text',
+				],
+			});
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			objectEntry,
+			applicationName
+		);
+
+		const informationTemplateName = 'Object Template' + getRandomInt();
+
+		await test.step('create information template and add object fields', async () => {
+			await templatesPage.goto();
+
+			await templatesPage.createInformationTemplate({
+				itemType: objectDefinition.label['en_US'],
+				name: informationTemplateName,
+			});
+
+			for (const objectField of objectFields) {
+				await page
+					.getByRole('button', {name: objectField.label['en_US']})
+					.click();
+			}
+
+			await templatesPage.saveTemplate(informationTemplateName);
+		});
+
+		const pageTitle = getRandomString();
+
+		await test.step('create page template with HTML element linked to the informationTemplateName', async () => {
+			await pagesAdminPage.goto();
+
+			await pagesAdminPage.createNewPage({
+				name: pageTitle,
+			});
+
+			await pagesAdminPage.editPage(pageTitle);
+
+			await pageEditorPage.addFragment('Basic Components', 'HTML');
+
+			const htmlFragmentId = await pageEditorPage.getFragmentId('HTML');
+
+			await pageEditorPage.selectEditable(htmlFragmentId, 'element-html');
+
+			const {items} =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					applicationName
+				);
+
+			const objectEntryId = items[0].id;
+
+			await pageEditorPage.setMappedItem({
+				entity: objectDefinition.label['en_US'],
+				entry: objectEntryId.toString(),
+				entryLocator: page
+					.frameLocator('iframe[title="Select"]')
+					.getByText(objectEntryId.toString())
+					.first(),
+				field: informationTemplateName,
+			});
+
+			await pageEditorPage.waitForChangesSaved();
+
+			await pageEditorPage.publishPage();
+		});
+
+		await test.step('go to created page and assert object entries', async () => {
+			await page.goto(`/web/guest/${pageTitle}`);
+
+			const entries = Object.values(objectEntry)
+				.map((value) => {
+					if (typeof value === 'boolean') {
+						return value ? 'Yes' : 'No';
+					}
+
+					if (
+						typeof value === 'object' &&
+						value !== null &&
+						'key' in (value as object)
+					) {
+						return (value as {key: string}).key;
+					}
+
+					return String(value);
+				})
+				.join(' ');
+
+			await expect(page.getByText(entries)).toBeVisible();
+		});
+
+		await test.step('delete information template and page', async () => {
+			await templatesPage.goto();
+
+			await templatesPage.deleteInformationTemplate(
+				informationTemplateName
+			);
+
+			await pagesAdminPage.goto();
+
+			await pagesAdminPage.deletePage(pageTitle);
+		});
 	});
 });
 

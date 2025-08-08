@@ -29,6 +29,7 @@ public class ObjectRelationshipModelDocumentContributor
 		document.addText(Field.NAME, objectRelationship.getName());
 		document.addLocalizedKeyword(
 			"localized_label", objectRelationship.getLabelMap(), true, true);
+		document.addKeyword("edge", objectRelationship.isEdge());
 		document.addKeyword(
 			"objectDefinitionId", objectRelationship.getObjectDefinitionId1());
 		document.addKeyword(

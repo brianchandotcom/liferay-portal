@@ -9,5 +9,6 @@ clientDir: ../analytics-cms-rest-client/src/main/java
 compatibilityVersion: 11
 forcePredictableOperationId: true
 generateBatch: false
+generateGraphQL: false
 javaEEPackage: jakarta
 testDir: ../analytics-cms-rest-test/src/testIntegration/java

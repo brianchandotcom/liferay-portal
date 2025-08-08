@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.analytics.cms.rest.client.dto.v1_0.InventoryAnalysis;
+import com.liferay.analytics.cms.rest.client.dto.v1_0.ObjectEntryAcquisitionChannel;
 import com.liferay.analytics.cms.rest.client.http.HttpInvoker;
 import com.liferay.analytics.cms.rest.client.pagination.Page;
-import com.liferay.analytics.cms.rest.client.resource.v1_0.InventoryAnalysisResource;
-import com.liferay.analytics.cms.rest.client.serdes.v1_0.InventoryAnalysisSerDes;
+import com.liferay.analytics.cms.rest.client.resource.v1_0.ObjectEntryAcquisitionChannelResource;
+import com.liferay.analytics.cms.rest.client.serdes.v1_0.ObjectEntryAcquisitionChannelSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -72,7 +72,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseInventoryAnalysisResourceTestCase {
+public abstract class BaseObjectEntryAcquisitionChannelResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -93,20 +93,21 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_inventoryAnalysisResource.setContextCompany(testCompany);
+		_objectEntryAcquisitionChannelResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		inventoryAnalysisResource = InventoryAnalysisResource.builder(
-		).authentication(
-			_testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
+		objectEntryAcquisitionChannelResource =
+			ObjectEntryAcquisitionChannelResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
 	}
 
 	@After
@@ -119,24 +120,32 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		InventoryAnalysis inventoryAnalysis1 = randomInventoryAnalysis();
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel1 =
+			randomObjectEntryAcquisitionChannel();
 
-		String json = objectMapper.writeValueAsString(inventoryAnalysis1);
+		String json = objectMapper.writeValueAsString(
+			objectEntryAcquisitionChannel1);
 
-		InventoryAnalysis inventoryAnalysis2 = InventoryAnalysisSerDes.toDTO(
-			json);
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel2 =
+			ObjectEntryAcquisitionChannelSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(inventoryAnalysis1, inventoryAnalysis2));
+		Assert.assertTrue(
+			equals(
+				objectEntryAcquisitionChannel1,
+				objectEntryAcquisitionChannel2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		InventoryAnalysis inventoryAnalysis = randomInventoryAnalysis();
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel =
+			randomObjectEntryAcquisitionChannel();
 
-		String json1 = objectMapper.writeValueAsString(inventoryAnalysis);
-		String json2 = InventoryAnalysisSerDes.toJSON(inventoryAnalysis);
+		String json1 = objectMapper.writeValueAsString(
+			objectEntryAcquisitionChannel);
+		String json2 = ObjectEntryAcquisitionChannelSerDes.toJSON(
+			objectEntryAcquisitionChannel);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -164,28 +173,85 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		InventoryAnalysis inventoryAnalysis = randomInventoryAnalysis();
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel =
+			randomObjectEntryAcquisitionChannel();
 
-		String json = InventoryAnalysisSerDes.toJSON(inventoryAnalysis);
+		objectEntryAcquisitionChannel.setChannelName(regex);
+
+		String json = ObjectEntryAcquisitionChannelSerDes.toJSON(
+			objectEntryAcquisitionChannel);
 
 		Assert.assertFalse(json.contains(regex));
 
-		inventoryAnalysis = InventoryAnalysisSerDes.toDTO(json);
+		objectEntryAcquisitionChannel =
+			ObjectEntryAcquisitionChannelSerDes.toDTO(json);
+
+		Assert.assertEquals(
+			regex, objectEntryAcquisitionChannel.getChannelName());
 	}
 
 	@Test
-	public void testGetInventoryAnalysis() throws Exception {
-		Assert.assertTrue(false);
+	public void testGetObjectEntryAcquisitionChannelsPage() throws Exception {
+		Page<ObjectEntryAcquisitionChannel> page =
+			objectEntryAcquisitionChannelResource.
+				getObjectEntryAcquisitionChannelsPage(
+					RandomTestUtil.randomString(), null, null);
+
+		long totalCount = page.getTotalCount();
+
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel1 =
+			testGetObjectEntryAcquisitionChannelsPage_addObjectEntryAcquisitionChannel(
+				randomObjectEntryAcquisitionChannel());
+
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel2 =
+			testGetObjectEntryAcquisitionChannelsPage_addObjectEntryAcquisitionChannel(
+				randomObjectEntryAcquisitionChannel());
+
+		page =
+			objectEntryAcquisitionChannelResource.
+				getObjectEntryAcquisitionChannelsPage(null, null, null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			objectEntryAcquisitionChannel1,
+			(List<ObjectEntryAcquisitionChannel>)page.getItems());
+		assertContains(
+			objectEntryAcquisitionChannel2,
+			(List<ObjectEntryAcquisitionChannel>)page.getItems());
+		assertValid(
+			page,
+			testGetObjectEntryAcquisitionChannelsPage_getExpectedActions());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetObjectEntryAcquisitionChannelsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected ObjectEntryAcquisitionChannel
+			testGetObjectEntryAcquisitionChannelsPage_addObjectEntryAcquisitionChannel(
+				ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(
-		InventoryAnalysis inventoryAnalysis,
-		List<InventoryAnalysis> inventoryAnalysises) {
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel,
+		List<ObjectEntryAcquisitionChannel> objectEntryAcquisitionChannels) {
 
 		boolean contains = false;
 
-		for (InventoryAnalysis item : inventoryAnalysises) {
-			if (equals(inventoryAnalysis, item)) {
+		for (ObjectEntryAcquisitionChannel item :
+				objectEntryAcquisitionChannels) {
+
+			if (equals(objectEntryAcquisitionChannel, item)) {
 				contains = true;
 
 				break;
@@ -193,7 +259,8 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			inventoryAnalysises + " does not contain " + inventoryAnalysis,
+			objectEntryAcquisitionChannels + " does not contain " +
+				objectEntryAcquisitionChannel,
 			contains);
 	}
 
@@ -206,41 +273,56 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 	}
 
 	protected void assertEquals(
-		InventoryAnalysis inventoryAnalysis1,
-		InventoryAnalysis inventoryAnalysis2) {
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel1,
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel2) {
 
 		Assert.assertTrue(
-			inventoryAnalysis1 + " does not equal " + inventoryAnalysis2,
-			equals(inventoryAnalysis1, inventoryAnalysis2));
+			objectEntryAcquisitionChannel1 + " does not equal " +
+				objectEntryAcquisitionChannel2,
+			equals(
+				objectEntryAcquisitionChannel1,
+				objectEntryAcquisitionChannel2));
 	}
 
 	protected void assertEquals(
-		List<InventoryAnalysis> inventoryAnalysises1,
-		List<InventoryAnalysis> inventoryAnalysises2) {
+		List<ObjectEntryAcquisitionChannel> objectEntryAcquisitionChannels1,
+		List<ObjectEntryAcquisitionChannel> objectEntryAcquisitionChannels2) {
 
 		Assert.assertEquals(
-			inventoryAnalysises1.size(), inventoryAnalysises2.size());
+			objectEntryAcquisitionChannels1.size(),
+			objectEntryAcquisitionChannels2.size());
 
-		for (int i = 0; i < inventoryAnalysises1.size(); i++) {
-			InventoryAnalysis inventoryAnalysis1 = inventoryAnalysises1.get(i);
-			InventoryAnalysis inventoryAnalysis2 = inventoryAnalysises2.get(i);
+		for (int i = 0; i < objectEntryAcquisitionChannels1.size(); i++) {
+			ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel1 =
+				objectEntryAcquisitionChannels1.get(i);
+			ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel2 =
+				objectEntryAcquisitionChannels2.get(i);
 
-			assertEquals(inventoryAnalysis1, inventoryAnalysis2);
+			assertEquals(
+				objectEntryAcquisitionChannel1, objectEntryAcquisitionChannel2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<InventoryAnalysis> inventoryAnalysises1,
-		List<InventoryAnalysis> inventoryAnalysises2) {
+		List<ObjectEntryAcquisitionChannel> objectEntryAcquisitionChannels1,
+		List<ObjectEntryAcquisitionChannel> objectEntryAcquisitionChannels2) {
 
 		Assert.assertEquals(
-			inventoryAnalysises1.size(), inventoryAnalysises2.size());
+			objectEntryAcquisitionChannels1.size(),
+			objectEntryAcquisitionChannels2.size());
 
-		for (InventoryAnalysis inventoryAnalysis1 : inventoryAnalysises1) {
+		for (ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel1 :
+				objectEntryAcquisitionChannels1) {
+
 			boolean contains = false;
 
-			for (InventoryAnalysis inventoryAnalysis2 : inventoryAnalysises2) {
-				if (equals(inventoryAnalysis1, inventoryAnalysis2)) {
+			for (ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel2 :
+					objectEntryAcquisitionChannels2) {
+
+				if (equals(
+						objectEntryAcquisitionChannel1,
+						objectEntryAcquisitionChannel2)) {
+
 					contains = true;
 
 					break;
@@ -248,13 +330,14 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				inventoryAnalysises2 + " does not contain " +
-					inventoryAnalysis1,
+				objectEntryAcquisitionChannels2 + " does not contain " +
+					objectEntryAcquisitionChannel1,
 				contains);
 		}
 	}
 
-	protected void assertValid(InventoryAnalysis inventoryAnalysis)
+	protected void assertValid(
+			ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel)
 		throws Exception {
 
 		boolean valid = true;
@@ -262,18 +345,24 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"inventoryAnalysisItems", additionalAssertFieldName)) {
-
-				if (inventoryAnalysis.getInventoryAnalysisItems() == null) {
+			if (Objects.equals("channelName", additionalAssertFieldName)) {
+				if (objectEntryAcquisitionChannel.getChannelName() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("totalCount", additionalAssertFieldName)) {
-				if (inventoryAnalysis.getTotalCount() == null) {
+			if (Objects.equals("percentage", additionalAssertFieldName)) {
+				if (objectEntryAcquisitionChannel.getPercentage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("value", additionalAssertFieldName)) {
+				if (objectEntryAcquisitionChannel.getValue() == null) {
 					valid = false;
 				}
 
@@ -288,20 +377,20 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<InventoryAnalysis> page) {
+	protected void assertValid(Page<ObjectEntryAcquisitionChannel> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<InventoryAnalysis> page,
+		Page<ObjectEntryAcquisitionChannel> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<InventoryAnalysis> inventoryAnalysises =
-			page.getItems();
+		java.util.Collection<ObjectEntryAcquisitionChannel>
+			objectEntryAcquisitionChannels = page.getItems();
 
-		int size = inventoryAnalysises.size();
+		int size = objectEntryAcquisitionChannels.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -341,8 +430,8 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.analytics.cms.rest.dto.v1_0.InventoryAnalysis.
-						class)) {
+					com.liferay.analytics.cms.rest.dto.v1_0.
+						ObjectEntryAcquisitionChannel.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -391,22 +480,20 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 	}
 
 	protected boolean equals(
-		InventoryAnalysis inventoryAnalysis1,
-		InventoryAnalysis inventoryAnalysis2) {
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel1,
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel2) {
 
-		if (inventoryAnalysis1 == inventoryAnalysis2) {
+		if (objectEntryAcquisitionChannel1 == objectEntryAcquisitionChannel2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"inventoryAnalysisItems", additionalAssertFieldName)) {
-
+			if (Objects.equals("channelName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						inventoryAnalysis1.getInventoryAnalysisItems(),
-						inventoryAnalysis2.getInventoryAnalysisItems())) {
+						objectEntryAcquisitionChannel1.getChannelName(),
+						objectEntryAcquisitionChannel2.getChannelName())) {
 
 					return false;
 				}
@@ -414,10 +501,21 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("totalCount", additionalAssertFieldName)) {
+			if (Objects.equals("percentage", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						inventoryAnalysis1.getTotalCount(),
-						inventoryAnalysis2.getTotalCount())) {
+						objectEntryAcquisitionChannel1.getPercentage(),
+						objectEntryAcquisitionChannel2.getPercentage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("value", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectEntryAcquisitionChannel1.getValue(),
+						objectEntryAcquisitionChannel2.getValue())) {
 
 					return false;
 				}
@@ -481,13 +579,15 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_inventoryAnalysisResource instanceof EntityModelResource)) {
+		if (!(_objectEntryAcquisitionChannelResource instanceof
+				EntityModelResource)) {
+
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_inventoryAnalysisResource;
+			(EntityModelResource)_objectEntryAcquisitionChannelResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -521,7 +621,7 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		InventoryAnalysis inventoryAnalysis) {
+		ObjectEntryAcquisitionChannel objectEntryAcquisitionChannel) {
 
 		StringBundler sb = new StringBundler();
 
@@ -533,14 +633,63 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("inventoryAnalysisItems")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("channelName")) {
+			Object object = objectEntryAcquisitionChannel.getChannelName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
-		if (entityFieldName.equals("totalCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("percentage")) {
+			sb.append(
+				String.valueOf(objectEntryAcquisitionChannel.getPercentage()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("value")) {
+			sb.append(String.valueOf(objectEntryAcquisitionChannel.getValue()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -585,30 +734,40 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected InventoryAnalysis randomInventoryAnalysis() throws Exception {
-		return new InventoryAnalysis() {
+	protected ObjectEntryAcquisitionChannel
+			randomObjectEntryAcquisitionChannel()
+		throws Exception {
+
+		return new ObjectEntryAcquisitionChannel() {
 			{
-				totalCount = RandomTestUtil.randomLong();
+				channelName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				percentage = RandomTestUtil.randomDouble();
+				value = RandomTestUtil.randomDouble();
 			}
 		};
 	}
 
-	protected InventoryAnalysis randomIrrelevantInventoryAnalysis()
+	protected ObjectEntryAcquisitionChannel
+			randomIrrelevantObjectEntryAcquisitionChannel()
 		throws Exception {
 
-		InventoryAnalysis randomIrrelevantInventoryAnalysis =
-			randomInventoryAnalysis();
+		ObjectEntryAcquisitionChannel
+			randomIrrelevantObjectEntryAcquisitionChannel =
+				randomObjectEntryAcquisitionChannel();
 
-		return randomIrrelevantInventoryAnalysis;
+		return randomIrrelevantObjectEntryAcquisitionChannel;
 	}
 
-	protected InventoryAnalysis randomPatchInventoryAnalysis()
+	protected ObjectEntryAcquisitionChannel
+			randomPatchObjectEntryAcquisitionChannel()
 		throws Exception {
 
-		return randomInventoryAnalysis();
+		return randomObjectEntryAcquisitionChannel();
 	}
 
-	protected InventoryAnalysisResource inventoryAnalysisResource;
+	protected ObjectEntryAcquisitionChannelResource
+		objectEntryAcquisitionChannelResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -807,15 +966,16 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseInventoryAnalysisResourceTestCase.class);
+		LogFactoryUtil.getLog(
+			BaseObjectEntryAcquisitionChannelResourceTestCase.class);
 
 	private static Format _format;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private
-		com.liferay.analytics.cms.rest.resource.v1_0.InventoryAnalysisResource
-			_inventoryAnalysisResource;
+	private com.liferay.analytics.cms.rest.resource.v1_0.
+		ObjectEntryAcquisitionChannelResource
+			_objectEntryAcquisitionChannelResource;
 
 }

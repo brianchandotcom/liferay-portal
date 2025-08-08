@@ -177,16 +177,6 @@ public abstract class BaseConnectionInfoResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
-	@Test
-	public void testGraphQLGetConnectionInfo() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetConnectionInfoNotFound() throws Exception {
-		Assert.assertTrue(true);
-	}
-
 	protected void assertContains(
 		ConnectionInfo connectionInfo, List<ConnectionInfo> connectionInfos) {
 

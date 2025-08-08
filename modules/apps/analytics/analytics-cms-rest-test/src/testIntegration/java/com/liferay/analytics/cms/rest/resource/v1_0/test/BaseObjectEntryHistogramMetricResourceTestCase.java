@@ -187,18 +187,6 @@ public abstract class BaseObjectEntryHistogramMetricResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
-	@Test
-	public void testGraphQLGetObjectEntryHistogramMetric() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetObjectEntryHistogramMetricNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
 	protected void assertContains(
 		ObjectEntryHistogramMetric objectEntryHistogramMetric,
 		List<ObjectEntryHistogramMetric> objectEntryHistogramMetrics) {

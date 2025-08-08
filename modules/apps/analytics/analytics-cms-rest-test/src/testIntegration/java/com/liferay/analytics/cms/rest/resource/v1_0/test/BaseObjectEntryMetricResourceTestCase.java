@@ -200,49 +200,6 @@ public abstract class BaseObjectEntryMetricResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@Test
-	public void testGraphQLGetObjectEntryMetric() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetObjectEntryMetricNotFound() throws Exception {
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"objectEntryMetric",
-						new HashMap<String, Object>() {
-							{
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace analyticsCms_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"analyticsCms_v1_0",
-						new GraphQLField(
-							"objectEntryMetric",
-							new HashMap<String, Object>() {
-								{
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
 	protected void assertContains(
 		ObjectEntryMetric objectEntryMetric,
 		List<ObjectEntryMetric> objectEntryMetrics) {

@@ -6,6 +6,7 @@
 package com.liferay.list.type.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.exception.NoSuchListTypeEntryException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -155,25 +156,41 @@ public class ListTypeEntryServiceTest {
 
 	@Test
 	public void testGetOrAddEmptyListTypeEntry() throws Exception {
+
+		// Lazy referencing disabled
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			role, _listTypeDefinition.getModelClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.UPDATE);
+
+		User user = UserTestUtil.addUser();
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
+
+		_setUser(user);
+
+		long userId1 = user.getUserId();
+
+		String key = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			NoSuchListTypeEntryException.class,
+			StringBundler.concat(
+				"No ListTypeEntry exists with the key {listTypeDefinitionId=",
+				_listTypeDefinition.getListTypeDefinitionId(), ", key=", key,
+				"}"),
+			() -> _listTypeEntryService.getOrAddEmptyListTypeEntry(
+				userId1, _listTypeDefinition.getListTypeDefinitionId(), key));
+
+		// Lazy referencing enabled
+
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			// With permissions
-
-			Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-			RoleTestUtil.addResourcePermission(
-				role, _listTypeDefinition.getModelClassName(),
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(TestPropsValues.getCompanyId()),
-				ActionKeys.UPDATE);
-
-			User user = UserTestUtil.addUser();
-
-			UserLocalServiceUtil.addRoleUser(
-				role.getRoleId(), user.getUserId());
-
-			_setUser(user);
 
 			ListTypeEntry listTypeEntry =
 				_listTypeEntryService.getOrAddEmptyListTypeEntry(
@@ -198,6 +215,8 @@ public class ListTypeEntryServiceTest {
 				() -> _listTypeEntryService.getOrAddEmptyListTypeEntry(
 					userId, _listTypeDefinition.getListTypeDefinitionId(),
 					RandomTestUtil.randomString()));
+
+			// Without permissions, existing list type entry
 
 			AssertUtils.assertFailure(
 				PrincipalException.MustHavePermission.class,

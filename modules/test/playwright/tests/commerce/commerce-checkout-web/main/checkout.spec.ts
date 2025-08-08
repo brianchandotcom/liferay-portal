@@ -60,7 +60,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 
@@ -196,7 +195,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 
@@ -409,7 +407,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 
@@ -724,7 +721,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 
@@ -1200,9 +1196,7 @@ test(
 
 		await test.step('Create a Channel via API, link the channel to the site, add two shipping options and two payment methods', async () => {
 			const channel =
-				await apiHelpers.headlessCommerceAdminChannel.postChannel({
-					name: getRandomString(),
-				});
+				await apiHelpers.headlessCommerceAdminChannel.postChannel({});
 
 			await commerceAdminChannelsPage.goto();
 			await (
@@ -1665,7 +1659,6 @@ test(
 		await test.step('Create a Channel and Warehouse', async () => {
 			channel = await apiHelpers.headlessCommerceAdminChannel.postChannel(
 				{
-					name: getRandomString(),
 					siteGroupId: site.id,
 				}
 			);

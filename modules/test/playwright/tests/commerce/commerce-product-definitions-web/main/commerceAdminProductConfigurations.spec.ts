@@ -63,7 +63,6 @@ test('LPD-41420 Verify configuration list eligibility management is available', 
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 
@@ -148,7 +147,6 @@ test('LPD-41420 Verify configuration list eligibility management save button cle
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 

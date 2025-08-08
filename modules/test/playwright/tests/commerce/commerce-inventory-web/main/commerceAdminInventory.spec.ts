@@ -11,7 +11,6 @@ import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
-import getRandomString from '../../../../utils/getRandomString';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -30,7 +29,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 

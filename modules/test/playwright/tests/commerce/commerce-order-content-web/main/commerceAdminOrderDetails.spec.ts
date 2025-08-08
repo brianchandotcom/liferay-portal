@@ -44,7 +44,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 
@@ -199,7 +198,6 @@ test('LPD-26244 Split order items are shown on admin order details page when sho
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 
@@ -336,7 +334,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 
@@ -958,7 +955,6 @@ test('LPD-30856 Can update order status by deleting unshipped items', async ({
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 

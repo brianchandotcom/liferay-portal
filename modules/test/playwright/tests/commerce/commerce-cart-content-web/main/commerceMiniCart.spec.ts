@@ -53,7 +53,6 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 	});
 
 	await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'Mini Cart Channel',
 		siteGroupId: site.id,
 	});
 

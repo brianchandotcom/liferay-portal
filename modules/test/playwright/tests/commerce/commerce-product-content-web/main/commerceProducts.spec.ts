@@ -102,7 +102,6 @@ test('COMMERCE-12809 As a buyer, I want to be able to verify the included and ex
 		});
 
 		await apiHelpers.headlessCommerceAdminChannel.postChannel({
-			name: 'ProductDetailsSite',
 			siteGroupId: site.id,
 		});
 
@@ -348,7 +347,6 @@ test('COMMERCE-8153 Verify the visibility rules', async ({
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'ProductDetailsSite',
 		siteGroupId: site.id,
 	});
 
@@ -524,7 +522,6 @@ test('LPD-33807 Mapped product add to cart', async ({
 	});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'DiagramSite',
 		siteGroupId: site.id,
 	});
 
@@ -805,7 +802,6 @@ test('LPD-33075 Verify buyers can view the SKU of a product on the product card 
 	);
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 
@@ -865,7 +861,6 @@ test('LPD-3424 Can click AddToButton button multiple times on Diagram Product Di
 	);
 
 	await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 
@@ -948,7 +943,6 @@ test('LPD-37780 Friendly URLs history for products', async ({
 	});
 
 	await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 

@@ -61,7 +61,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: 'Edit pending order Channel',
 				siteGroupId: site.id,
 			});
 
@@ -206,7 +205,6 @@ test('LPD-13627 Edit pending order item with UOM', async ({
 	});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'Edit pending order Channel',
 		siteGroupId: site.id,
 	});
 
@@ -291,7 +289,6 @@ test('LPD-13627 Edit pending order item without UOM', async ({
 	});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'Edit pending order Channel',
 		siteGroupId: site.id,
 	});
 
@@ -512,7 +509,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: 'Channel',
 				siteGroupId: site.id,
 			});
 
@@ -1014,7 +1010,6 @@ test('LPD-33783 Pending orders table displays correct fields', async ({
 	});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'Pending order Channel',
 		siteGroupId: site.id,
 	});
 
@@ -1261,7 +1256,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 

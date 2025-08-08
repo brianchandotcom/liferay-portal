@@ -2269,7 +2269,6 @@ test(
 
 			channel = await apiHelpers.headlessCommerceAdminChannel.postChannel(
 				{
-					name: getRandomString(),
 					siteGroupId: site.id,
 				}
 			);

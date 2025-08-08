@@ -39,7 +39,6 @@ test('LPD-44010 Check no delete dropdown in order admin page without delete perm
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 

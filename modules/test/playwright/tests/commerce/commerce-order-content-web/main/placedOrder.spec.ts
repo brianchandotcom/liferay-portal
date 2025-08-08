@@ -72,7 +72,6 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 	});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 
@@ -211,7 +210,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 
@@ -340,7 +338,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
@@ -838,7 +835,6 @@ test('LPD-32095 A user can search orders by account name', async ({
 	};
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 
@@ -1011,7 +1007,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 
@@ -1178,7 +1173,6 @@ test('LPD-33783 Placed orders table displays correct fields', async ({
 	});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'Placed order Channel',
 		siteGroupId: site.id,
 	});
 
@@ -1244,7 +1238,6 @@ test('LPD-33658 Assert date and time are displayed as order date', async ({
 	});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 
@@ -1379,7 +1372,6 @@ test('LPD-33658 Global Settings for order date configuration', async ({
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 
@@ -1790,7 +1782,6 @@ test('LPD-41398 Local date format', async ({
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 
@@ -2015,7 +2006,6 @@ test(
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
 				siteGroupId: site.id,
 			});
 

@@ -98,6 +98,10 @@ components:
                         $ref: "#/components/schemas/Site"
                     readOnly: true
                     type: array
+                type:
+                    default: AssetLibrary
+                    enum: [AssetLibrary, Space]
+                    type: string
                 userAccounts:
                     description:
                         The asset library's associated users.

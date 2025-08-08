@@ -321,7 +321,6 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
-	@Ignore("LPD-40798")
 	@Test
 	public void testExportImportSiteObjectEntriesToOtherSite()
 		throws Exception {

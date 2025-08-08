@@ -13,6 +13,8 @@ import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.headless.asset.library.client.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.client.dto.v1_0.MimeTypeLimit;
 import com.liferay.headless.asset.library.client.dto.v1_0.Settings;
+import com.liferay.headless.asset.library.client.pagination.Page;
+import com.liferay.headless.asset.library.client.pagination.Pagination;
 import com.liferay.headless.asset.library.client.problem.Problem;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -67,6 +69,31 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 			Assert.assertNull(problem.getTitle());
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetAssetLibrariesPage() throws Exception {
+		super.testGetAssetLibrariesPage();
+
+		Page<AssetLibrary> page = assetLibraryResource.getAssetLibrariesPage(
+			null, null, "type eq 'Space'", Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		AssetLibrary randomAssetLibrary = randomAssetLibrary();
+
+		randomAssetLibrary.setType(AssetLibrary.Type.SPACE);
+
+		AssetLibrary assetLibrary = testGetAssetLibrariesPage_addAssetLibrary(
+			randomAssetLibrary);
+
+		page = assetLibraryResource.getAssetLibrariesPage(
+			null, null, "type eq 'Space'", Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assetLibraryResource.deleteAssetLibrary(assetLibrary.getId());
 	}
 
 	@Override
@@ -139,6 +166,16 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 				}
 			});
 		_testPostAssetLibrary(new MimeTypeLimit[0]);
+
+		AssetLibrary randomAssetLibrary = randomAssetLibrary();
+
+		randomAssetLibrary.setType(AssetLibrary.Type.SPACE);
+
+		AssetLibrary postedAssetLibrary = assetLibraryResource.postAssetLibrary(
+			randomAssetLibrary);
+
+		Assert.assertEquals(
+			AssetLibrary.Type.SPACE, postedAssetLibrary.getType());
 	}
 
 	@Override

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.product.internal.upgrade.v5_29_0.test;
+package com.liferay.commerce.product.internal.upgrade.v6_1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
@@ -104,7 +104,6 @@ public class CPConfigurationEntryUpgradeProcessTest {
 		cpConfigurationEntry.setShippingExtraPrice(1.0);
 		cpConfigurationEntry.setShipSeparately(true);
 		cpConfigurationEntry.setTaxExempt(true);
-		cpConfigurationEntry.setVisible(true);
 		cpConfigurationEntry.setWeight(1.0);
 		cpConfigurationEntry.setWidth(1.0);
 
@@ -133,7 +132,7 @@ public class CPConfigurationEntryUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.commerce.product.internal.upgrade.v5_29_0." +
+		"com.liferay.commerce.product.internal.upgrade.v6_1_0." +
 			"CPConfigurationEntryUpgradeProcess";
 
 	@Inject

@@ -175,7 +175,7 @@ public class ExamResultsRestController extends BaseRestController {
 				).toUri());
 		}
 		catch (Exception exception) {
-			throw exception;
+			throw new IOException(exception);
 		}
 	}
 

@@ -765,7 +765,7 @@ export default function ObjectFieldFormBase({
 							}
 						>
 							{Liferay.Language.get(
-								'the-mandatory-setting-is-not-available-for-relationships-with-inheritance-enabled'
+								'the-relationship-field-cannot-be-mandatory-when-inheritance-is-enabled'
 							)}
 							&nbsp;
 							{learnResources && (

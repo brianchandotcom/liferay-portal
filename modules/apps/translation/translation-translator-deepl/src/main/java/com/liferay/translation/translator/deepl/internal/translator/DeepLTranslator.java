@@ -5,6 +5,7 @@
 
 package com.liferay.translation.translator.deepl.internal.translator;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.url.URLBuilder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -74,7 +76,7 @@ public class DeepLTranslator extends BaseTranslator {
 			deepLTranslatorConfiguration);
 
 		String targetLanguageCode = StringUtil.toUpperCase(
-			getLanguageCode(translatorPacket.getTargetLanguageId()));
+			_getLanguageCode(true, translatorPacket.getTargetLanguageId()));
 
 		if (!supportedLanguageCodes.contains(targetLanguageCode)) {
 			throw new TranslatorException(
@@ -89,7 +91,8 @@ public class DeepLTranslator extends BaseTranslator {
 			deepLTranslatorConfiguration, translatorPacket.getFieldsMap(),
 			translatorPacket.getHTMLMap(),
 			StringUtil.toUpperCase(
-				getLanguageCode(translatorPacket.getSourceLanguageId())),
+				_getLanguageCode(
+					false, translatorPacket.getSourceLanguageId())),
 			targetLanguageCode);
 
 		return new TranslatorPacket() {
@@ -122,20 +125,66 @@ public class DeepLTranslator extends BaseTranslator {
 		};
 	}
 
+	private String _getLanguageCode(boolean targetLanguage, String languageId) {
+		List<String> parts = com.liferay.petra.string.StringUtil.split(
+			languageId, CharPool.UNDERLINE);
+
+		String firstPart = parts.get(0);
+
+		// AWS, Azure, DeepL, and GoogleCloud all expect ISO-639 language codes.
+		// ISO-639:1989 renamed "in" to "id." See LPD-23561.
+
+		if (firstPart.equals("in")) {
+			return "id";
+		}
+
+		String secondPart = parts.get(1);
+
+		if (secondPart.equals("ES")) {
+			return "es";
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(firstPart);
+
+		if (targetLanguage) {
+			if (firstPart.equals("en") || firstPart.equals("pt")) {
+				sb.append(CharPool.DASH);
+				sb.append(secondPart);
+			}
+			else if (firstPart.equals("zh")) {
+				sb.append(CharPool.DASH);
+
+				if (secondPart.equals("TW")) {
+					sb.append("HANT");
+				}
+				else {
+					sb.append("HANS");
+				}
+			}
+		}
+
+		return sb.toString();
+	}
+
 	private List<String> _getSupportedLanguageCodes(
 			DeepLTranslatorConfiguration deepLTranslatorConfiguration)
 		throws PortalException {
 
 		Http.Options options = new Http.Options();
 
-		options.addPart("type", "target");
 		options.setMethod(Http.Method.GET);
 
 		return JSONUtil.toList(
 			_jsonFactory.createJSONArray(
 				_invoke(
 					deepLTranslatorConfiguration.authKey(), options,
-					deepLTranslatorConfiguration.validateLanguageURL())),
+					URLBuilder.create(
+						deepLTranslatorConfiguration.validateLanguageURL()
+					).addParameter(
+						"type", "target"
+					).build())),
 			jsonObject -> jsonObject.getString("language"), _log);
 	}
 

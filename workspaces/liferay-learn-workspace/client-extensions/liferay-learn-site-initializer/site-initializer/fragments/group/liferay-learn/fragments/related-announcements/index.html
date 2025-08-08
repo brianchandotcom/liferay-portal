@@ -1,6 +1,6 @@
 [#assign assetEntry = (request.getAttribute("LIFERAY_SHARED_LAYOUT_ASSET_ENTRY"))! /]
 
-[#assign announcementId = assetEntry.classPK! /]
+[#assign announcementId = assetEntry.classPK!/]
 
 [#assign currentAnnouncement = restClient.get("/c/p2s3learnannouncements/${announcementId}") /]
 [#assign categoryIds = [] /]
@@ -10,46 +10,30 @@
 [/#list]
 
 [#if (categoryIds?size > 0)]
-  [#assign announcementsResponse = restClient.get("/c/p2s3learnannouncements?fields=id,title,description,dateCreated,taxonomyCategoryBriefs") /]
+  [#assign filterExpression = "taxonomyCategoryIds in (" + categoryIds?join(",") + ") and id ne '" + announcementId?string + "'"]
+  
+  [#assign relatedAnnouncementsResponse = restClient.get(
+  "/c/p2s3learnannouncements?fields=id,title,description,dateCreated,taxonomyCategoryBriefs&pageSize=3&sort=dateCreated:desc&filter=" + filterExpression?url("UTF-8")
+  )]
 
-  [#assign announcements = announcementsResponse.items![] /]
-  [#assign related = [] /]
+  [#assign relatedAnnouncements = relatedAnnouncementsResponse.items![]]
 
-  [#list announcements as item]
-    [#if (item.id != announcementId?number)]
-      [#assign itemCategoryIds = [] /]
-
-      [#list item.taxonomyCategoryBriefs![] as cat]
-        [#assign itemCategoryIds += [cat.taxonomyCategoryId?c] /]
-      [/#list]
-
-      [#if (categoryIds?filter(id -> itemCategoryIds?seq_contains(id))?size > 0)]
-        [#assign related += [item] /]
-      [/#if]
-    [/#if]
-  [/#list]
-
-  [#if (related?size > 0)]
+  [#if (relatedAnnouncements?size > 0)]
     <div class="related-announcements-container">
       <h5>[@liferay_ui["message"] key="related-announcements" /]</h5>
-      
-      <div class="d-flex related-cards-container">
-        [#list related?sort_by("dateCreated")?reverse as item]
-          [#if (item_index < 3)]
-            <a href="/l/${item.id}" class="related-card-link">
-              <div class="related-card">
-                <h6 class="related-card-title">${item.title}</h6>
-
-                <p class="related-card-description">${item.description}</p>
-
-                [#if item.dateCreated??]
-                  <p class="related-card-date">
-                      [@liferay_ui["message"] key="published" /]: ${item.dateCreated?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'")?string("MMM. d, yyyy")}
-                  </p>
-                [/#if]
-              </div>
-            </a>
-          [/#if]
+      <div class="related-cards-container d-flex">
+        [#list relatedAnnouncements as item]
+          <a href="/l/${item.id}" class="related-card-link">
+            <div class="related-card">
+              <h6 class="related-card-title">${item.title}</h6>
+              <p class="related-card-description">${item.description}</p>
+              [#if item.dateCreated??]
+                <p class="related-card-date">
+                  [@liferay_ui["message"] key="published" /]: ${item.dateCreated?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'")?string("MMM. d, yyyy")}
+                </p>
+              [/#if]
+            </div>
+          </a>
         [/#list]
       </div>
     </div>

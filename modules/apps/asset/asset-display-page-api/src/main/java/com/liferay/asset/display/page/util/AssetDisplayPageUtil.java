@@ -92,6 +92,28 @@ public class AssetDisplayPageUtil {
 	}
 
 	public static boolean hasAssetDisplayPage(
+		long groupId, InfoItemReference infoItemReference) {
+
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry =
+			LayoutDisplayPageProviderRegistryUtil.
+				getLayoutDisplayPageProviderRegistry();
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(
+					infoItemReference.getClassName());
+
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				groupId, infoItemReference);
+
+		return hasAssetDisplayPage(
+			groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+			layoutDisplayPageObjectProvider.getClassPK(),
+			layoutDisplayPageObjectProvider.getClassTypeId());
+	}
+
+	public static boolean hasAssetDisplayPage(
 		long groupId, long classNameId, long classPK, long classTypeId) {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

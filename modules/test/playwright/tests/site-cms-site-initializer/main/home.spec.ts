@@ -55,15 +55,21 @@ test(
 
 		const site = await apiHelpers.headlessSite.getSiteByERC('L_GUEST');
 
+		const blogPost1 = await apiHelpers.headlessDelivery.postBlog(site.id);
+
+		createdEntities.blogPosts = [blogPost1];
+
+		const blogPost2 = await apiHelpers.headlessDelivery.postBlog(site.id);
+
+		createdEntities.blogPosts.push(blogPost2);
+
+		const blogPost3 = await apiHelpers.headlessDelivery.postBlog(site.id);
+
+		createdEntities.blogPosts.push(blogPost3);
+
 		await homePage.goto();
 
 		await test.step('Verify workflow task assign to me action', async () => {
-			const blogPost1 = await apiHelpers.headlessDelivery.postBlog(
-				site.id
-			);
-
-			createdEntities.blogPosts = [blogPost1];
-
 			await homePage.workflowTaskFilterButton.click();
 			await homePage.assignedToMyRolesMenuItem.click();
 
@@ -78,12 +84,6 @@ test(
 		});
 
 		await test.step('Verify workflow task assign to... action', async () => {
-			const blogPost2 = await apiHelpers.headlessDelivery.postBlog(
-				site.id
-			);
-
-			createdEntities.blogPosts.push(blogPost2);
-
 			await homePage.workflowTaskFilterButton.click();
 			await homePage.assignedToMyRolesMenuItem.click();
 
@@ -98,12 +98,18 @@ test(
 		});
 
 		await test.step('Verify workflow task approve action', async () => {
-			const blogPost3 = await apiHelpers.headlessDelivery.postBlog(
-				site.id
-			);
+			await expect(page.getByText(blogPost1.headline)).toBeVisible();
+			await homePage.approveWorkflowTask(blogPost1.headline);
+			await expect(page.getByText(blogPost1.headline)).toBeHidden();
+		});
 
-			createdEntities.blogPosts.push(blogPost3);
+		await test.step('Verify workflow task reject action', async () => {
+			await expect(page.getByText(blogPost2.headline)).toBeVisible();
+			await homePage.rejectWorkflowTask(blogPost2.headline);
+			await expect(page.getByText(blogPost2.headline)).toBeHidden();
+		});
 
+		await test.step('Verify workflow task update due date action', async () => {
 			await homePage.workflowTaskFilterButton.click();
 			await homePage.assignedToMyRolesMenuItem.click();
 
@@ -115,50 +121,6 @@ test(
 			await homePage.assignedToMeMenuItem.click();
 
 			await expect(page.getByText(blogPost3.headline)).toBeVisible();
-			await homePage.approveWorkflowTask(blogPost3.headline);
-			await expect(page.getByText(blogPost3.headline)).toBeHidden();
-		});
-
-		await test.step('Verify workflow task reject action', async () => {
-			const blogPost4 = await apiHelpers.headlessDelivery.postBlog(
-				site.id
-			);
-
-			createdEntities.blogPosts.push(blogPost4);
-
-			await homePage.workflowTaskFilterButton.click();
-			await homePage.assignedToMyRolesMenuItem.click();
-
-			await expect(page.getByText(blogPost4.headline)).toBeVisible();
-			await homePage.assignToMe(blogPost4.headline);
-			await expect(page.getByText(blogPost4.headline)).toBeHidden();
-
-			await homePage.workflowTaskFilterButton.click();
-			await homePage.assignedToMeMenuItem.click();
-
-			await expect(page.getByText(blogPost4.headline)).toBeVisible();
-			await homePage.rejectWorkflowTask(blogPost4.headline);
-			await expect(page.getByText(blogPost4.headline)).toBeHidden();
-		});
-
-		await test.step('Verify workflow task update due date action', async () => {
-			const blogPost5 = await apiHelpers.headlessDelivery.postBlog(
-				site.id
-			);
-
-			createdEntities.blogPosts.push(blogPost5);
-
-			await homePage.workflowTaskFilterButton.click();
-			await homePage.assignedToMyRolesMenuItem.click();
-
-			await expect(page.getByText(blogPost5.headline)).toBeVisible();
-			await homePage.assignToMe(blogPost5.headline);
-			await expect(page.getByText(blogPost5.headline)).toBeHidden();
-
-			await homePage.workflowTaskFilterButton.click();
-			await homePage.assignedToMeMenuItem.click();
-
-			await expect(page.getByText(blogPost5.headline)).toBeVisible();
 
 			const now = new Date();
 
@@ -166,10 +128,10 @@ test(
 
 			const dueDate = '01/01/' + nextYear;
 
-			await homePage.updateDueDate(dueDate, blogPost5.headline);
+			await homePage.updateDueDate(dueDate, blogPost3.headline);
 
 			const workflowTaskRow = page.getByRole('row', {
-				name: blogPost5.headline,
+				name: blogPost3.headline,
 			});
 			await workflowTaskRow.getByRole('button').click();
 			await page.getByRole('menuitem', {name: 'Update Due Date'}).click();

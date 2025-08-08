@@ -14,9 +14,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;

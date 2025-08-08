@@ -17,12 +17,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.data.cleanup.ConfigurationDataCleanupPreupgradeProcess;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

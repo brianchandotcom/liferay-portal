@@ -74,14 +74,11 @@ public class AssetDisplayPageUtil {
 			LayoutDisplayPageProviderRegistryUtil.
 				getLayoutDisplayPageProviderRegistry();
 
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(
-					PortalUtil.getClassName(classNameId));
-
 		return _getAssetDisplayPage(
 			groupId, classNameId, classPK, defaultLayoutPageTemplateEntry,
-			layoutDisplayPageProvider);
+			layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(
+					PortalUtil.getClassName(classNameId)));
 	}
 
 	public static boolean hasAssetDisplayPage(

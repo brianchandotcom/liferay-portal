@@ -137,20 +137,25 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'view-content') {
-				event?.preventDefault();
+				if (!itemData.file) {
+					event?.preventDefault();
 
-				openModal({
-					containerProps: {
-						className: '',
-					},
-					size: 'full-screen',
-					title: sub(
-						Liferay.Language.get('x-version-x'),
-						itemData.title,
-						`${sub(Liferay.Language.get('version-x'), itemData.systemProperties.version.number)}`
-					),
-					url: formatActionURL(itemData, action.href),
-				});
+					openModal({
+						containerProps: {
+							className: '',
+						},
+						size: 'full-screen',
+						title: sub(
+							Liferay.Language.get('x-version-x'),
+							itemData.title,
+							`${sub(
+								Liferay.Language.get('version-x'),
+								itemData.systemProperties.version.number
+							)}`
+						),
+						url: formatActionURL(itemData, action.href),
+					});
+				}
 			}
 			else if (action?.data?.id === 'view-file') {
 				if (itemData.file) {

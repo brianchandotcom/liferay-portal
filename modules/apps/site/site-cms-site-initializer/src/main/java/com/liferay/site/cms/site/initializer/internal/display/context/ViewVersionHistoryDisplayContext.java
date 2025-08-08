@@ -68,16 +68,11 @@ public class ViewVersionHistoryDisplayContext {
 					"&p_l_mode=read&p_p_state=", LiferayWindowState.POP_UP,
 					"&redirect=", _themeDisplay.getURLCurrent()),
 				"view", "view-content",
-				LanguageUtil.get(_httpServletRequest, "view"), null, null, null,
-				HashMapBuilder.<String, Object>put(
-					"objectEntryFolderExternalReferenceCode", "L_CONTENTS"
-				).build()),
+				LanguageUtil.get(_httpServletRequest, "view"), null, null,
+				null),
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "view", "view-file",
-				_language.get(_httpServletRequest, "view"), null, null, null,
-				HashMapBuilder.<String, Object>put(
-					"objectEntryFolderExternalReferenceCode", "L_FILES"
-				).build()),
+				_language.get(_httpServletRequest, "view"), null, null, null),
 			new FDSActionDropdownItem(
 				"{actions.restore.href}", "restore", "restore",
 				_language.get(_httpServletRequest, "restore"), "put", "restore",

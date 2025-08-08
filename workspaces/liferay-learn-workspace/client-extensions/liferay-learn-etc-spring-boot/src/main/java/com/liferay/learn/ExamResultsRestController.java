@@ -129,42 +129,42 @@ public class ExamResultsRestController extends BaseRestController {
 							"Certification Exam (2024)";
 				}
 
-				JSONObject jsonObject = new JSONObject(
-				).put(
-					"date",
-					OffsetDateTime.of(
-						LocalDateTime.parse(
-							csvRecord.get(10),
-							DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm:ss")),
-						ZoneOffset.UTC
-					).format(
-						DateTimeFormatter.ISO_INSTANT
-					)
-				).put(
-					"email", csvRecord.get(2)
-				).put(
-					"examName", examName
-				).put(
-					"externalReferenceCode", csvRecord.get(0)
-				).put(
-					"firstName", csvRecord.get(3)
-				).put(
-					"lastName", csvRecord.get(4)
-				).put(
-					"result",
+				jsonArray.put(
 					new JSONObject(
 					).put(
-						"name", csvRecord.get(8)
+						"date",
+						OffsetDateTime.of(
+							LocalDateTime.parse(
+								csvRecord.get(10),
+								DateTimeFormatter.ofPattern(
+									"yyyy-MM-dd H:mm:ss")),
+							ZoneOffset.UTC
+						).format(
+							DateTimeFormatter.ISO_INSTANT
+						)
 					).put(
-						"key", StringUtil.toLowerCase(csvRecord.get(8))
-					)
-				).put(
-					"score", GetterUtil.getInteger(csvRecord.get(7))
-				).put(
-					"testName", examName
-				);
-
-				jsonArray.put(jsonObject);
+						"email", csvRecord.get(2)
+					).put(
+						"examName", examName
+					).put(
+						"externalReferenceCode", csvRecord.get(0)
+					).put(
+						"firstName", csvRecord.get(3)
+					).put(
+						"lastName", csvRecord.get(4)
+					).put(
+						"result",
+						new JSONObject(
+						).put(
+							"name", csvRecord.get(8)
+						).put(
+							"key", StringUtil.toLowerCase(csvRecord.get(8))
+						)
+					).put(
+						"score", GetterUtil.getInteger(csvRecord.get(7))
+					).put(
+						"testName", examName
+					));
 			}
 
 			return post(

@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,41 +24,29 @@ public class ContentPageEditorConstants {
 		layoutElementMapsListMap =
 			LinkedHashMapBuilder.<String, List<Map<String, Object>>>put(
 				"layout-elements",
-				() -> {
-					List<Map<String, Object>> layoutElementMapsList =
-						new ArrayList<>();
-
-					layoutElementMapsList.add(
-						HashMapBuilder.<String, Object>put(
-							"fragmentEntryKey", "container"
-						).put(
-							"icon", "container"
-						).put(
-							"itemType", "container"
-						).put(
-							"languageKey", "container"
-						).build());
-
-					layoutElementMapsList.add(
-						HashMapBuilder.<String, Object>put(
-							"fragmentEntryKey", "row"
-						).put(
-							"icon", "table"
-						).put(
-							"itemType", "row"
-						).put(
-							"languageKey", "grid"
-						).build());
-
-					return layoutElementMapsList;
-				}
+				() -> ListUtil.fromArray(
+					HashMapBuilder.<String, Object>put(
+						"fragmentEntryKey", "container"
+					).put(
+						"icon", "container"
+					).put(
+						"itemType", "container"
+					).put(
+						"languageKey", "container"
+					).build(),
+					HashMapBuilder.<String, Object>put(
+						"fragmentEntryKey", "row"
+					).put(
+						"icon", "table"
+					).put(
+						"itemType", "row"
+					).put(
+						"languageKey", "grid"
+					).build())
 			).put(
 				"INPUTS",
 				() -> {
-					List<Map<String, Object>> inputsElementMapsList =
-						new ArrayList<>();
-
-					inputsElementMapsList.add(
+					List<Map<String, Object>> list = ListUtil.fromArray(
 						HashMapBuilder.<String, Object>put(
 							"fragmentEntryKey", "form"
 						).put(
@@ -71,7 +58,7 @@ public class ContentPageEditorConstants {
 						).build());
 
 					if (FeatureFlagManagerUtil.isEnabled("LPD-50377")) {
-						inputsElementMapsList.add(
+						list.add(
 							HashMapBuilder.<String, Object>put(
 								"fragmentEntryKey", "formRelationship"
 							).put(
@@ -83,7 +70,7 @@ public class ContentPageEditorConstants {
 							).build());
 					}
 
-					return inputsElementMapsList;
+					return list;
 				}
 			).put(
 				"content-display",

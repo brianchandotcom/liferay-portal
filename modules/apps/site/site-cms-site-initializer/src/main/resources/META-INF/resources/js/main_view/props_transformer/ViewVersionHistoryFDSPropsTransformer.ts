@@ -51,6 +51,18 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 					isVisible: (item: any) => Boolean(item?.file?.link?.href),
 				};
 			}
+			else if (action?.data?.id === 'view-content') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(!item?.file?.link?.href),
+				};
+			}
+			else if (action?.data?.id === 'view-file') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(item?.file?.link?.href),
+				};
+			}
 
 			return action;
 		}),
@@ -60,9 +72,23 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 			itemData,
 			loadData,
 		}: {
-			action: any;
+			action: {data: {id: string; successMessage: string}; href: string};
 			event: Event;
-			itemData: any;
+			itemData: {
+				actions: {
+					copy: {href: string; method: string};
+					delete: {href: string; method: string};
+					expire: {href: string; method: string};
+					restore: {href: string; method: string};
+				};
+				file: any;
+				systemProperties: {
+					version: {
+						number: number;
+					};
+				};
+				title: string;
+			};
 			loadData: () => {};
 		}) {
 			if (action.data.id === 'copy') {
@@ -137,34 +163,30 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'view-content') {
-				if (!itemData.file) {
-					event?.preventDefault();
+				event?.preventDefault();
 
-					openModal({
-						containerProps: {
-							className: '',
-						},
-						size: 'full-screen',
-						title: sub(
-							Liferay.Language.get('x-version-x'),
-							itemData.title,
-							`${sub(
-								Liferay.Language.get('version-x'),
-								itemData.systemProperties.version.number
-							)}`
-						),
-						url: formatActionURL(itemData, action.href),
-					});
-				}
+				openModal({
+					containerProps: {
+						className: '',
+					},
+					size: 'full-screen',
+					title: sub(
+						Liferay.Language.get('x-version-x'),
+						itemData.title,
+						`${sub(
+							Liferay.Language.get('version-x'),
+							itemData.systemProperties.version.number
+						)}`
+					),
+					url: formatActionURL(itemData, action.href),
+				});
 			}
 			else if (action?.data?.id === 'view-file') {
-				if (itemData.file) {
-					openModal({
-						contentComponent: () =>
-							FilePreviewerModalContent(itemData.file),
-						size: 'full-screen',
-					});
-				}
+				openModal({
+					contentComponent: () =>
+						FilePreviewerModalContent(itemData.file),
+					size: 'full-screen',
+				});
 			}
 		},
 	};

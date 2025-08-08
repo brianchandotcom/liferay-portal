@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ConfigurationOverridePropertiesUtil;
 import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
+import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -211,7 +212,9 @@ public class ConfigurationPersistenceManagerTest {
 	public void testEphemeralConfiguration() throws Exception {
 		_assertConfiguration(
 			false, false,
-			Collections.singletonMap(".persistenceManager.storagePolicy", "ephemeral"));
+			Collections.singletonMap(
+				ReloadablePersistenceManager.STORAGE_POLICY_KEY,
+				ReloadablePersistenceManager.STORAGE_POLICY_EPHEMERAL_VALUE));
 	}
 
 	@Test

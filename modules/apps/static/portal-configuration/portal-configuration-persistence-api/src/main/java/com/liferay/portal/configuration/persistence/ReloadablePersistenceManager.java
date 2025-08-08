@@ -27,7 +27,8 @@ public interface ReloadablePersistenceManager extends PersistenceManager {
 
 		if ((dictionary != null) &&
 			Objects.equals(
-				dictionary.get(".persistenceManager.storagePolicy"), "ephemeral")) {
+				dictionary.get(STORAGE_POLICY_KEY),
+				STORAGE_POLICY_EPHEMERAL_VALUE)) {
 
 			return true;
 		}
@@ -36,5 +37,9 @@ public interface ReloadablePersistenceManager extends PersistenceManager {
 	}
 
 	public void reload(String pid) throws IOException;
+
+	public String STORAGE_POLICY_EPHEMERAL_VALUE = "ephemeral";
+
+	public String STORAGE_POLICY_KEY = ".persistenceManager.storagePolicy";
 
 }

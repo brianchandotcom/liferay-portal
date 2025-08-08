@@ -7,107 +7,367 @@ import '@testing-library/jest-dom/extend-expect';
 
 // eslint-disable-next-line
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor, within} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 import SiteService from '../../../../src/main/resources/META-INF/resources/js/common/services/SiteService';
+import {Site} from '../../../../src/main/resources/META-INF/resources/js/common/types/Site';
 import SpaceSitesModal from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceSitesModal';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/common/services/SiteService'
 );
 
-const mockGetConnectedSitesToSpace =
-	SiteService.getConnectedSitesToSpace as jest.MockedFunction<
-		typeof SiteService.getConnectedSitesToSpace
+jest.mock('frontend-js-components-web', () => ({
+	openToast: jest.fn(),
+}));
+
+const mockGetConnectedSitesFromSpace =
+	SiteService.getConnectedSitesFromSpace as jest.MockedFunction<
+		typeof SiteService.getConnectedSitesFromSpace
 	>;
 
 const mockGetAllSites = SiteService.getAllSites as jest.MockedFunction<
 	typeof SiteService.getAllSites
 >;
 
+const mockConnectSiteToSpace =
+	SiteService.connectSiteToSpace as jest.MockedFunction<
+		typeof SiteService.connectSiteToSpace
+	>;
+
+const mockDisconnectSiteFromSpace =
+	SiteService.disconnectSiteFromSpace as jest.MockedFunction<
+		typeof SiteService.disconnectSiteFromSpace
+	>;
+
+const mockedOpenToast = openToast as jest.Mock;
+
+const mockConnectedSites: Site[] = [
+	{
+		externalReferenceCode: '1',
+		id: '1',
+		logo: 'logo1.png',
+		name: 'Connected Site 1',
+		searchable: true,
+	},
+	{
+		externalReferenceCode: '2',
+		id: '2',
+		logo: 'logo2.png',
+		name: 'Connected Site 2',
+		searchable: false,
+	},
+];
+
+const mockUnconnectedSite: Site = {
+	externalReferenceCode: '3',
+	id: '3',
+	logo: 'logo3.png',
+	name: 'Unconnected Site 3',
+	searchable: true,
+};
+
 const DEFAULT_PROPS = {
 	groupId: '123',
-	isAdmin: true,
+	hasConnectSitesPermission: true,
 };
+
+const errorMessage = 'Connection failed';
 
 const renderComponent = (props = DEFAULT_PROPS) => {
 	return render(<SpaceSitesModal {...props} />);
+};
+
+const assertErrorToast = async () => {
+	await waitFor(() => {
+		expect(mockedOpenToast).toHaveBeenCalledTimes(1);
+
+		expect(mockedOpenToast).toHaveBeenCalledWith({
+			message: errorMessage,
+			type: 'danger',
+		});
+	});
 };
 
 describe('SpaceSitesModal', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 
-		mockGetConnectedSitesToSpace.mockResolvedValue({
-			data: {
-				items: [
-					{
-						id: '1',
-						logo: 'logo1.png',
-						name: 'Site 1',
-						searchable: true,
-					},
-					{
-						id: '2',
-						logo: 'logo2.png',
-						name: 'Site 2',
-						searchable: false,
-					},
-				],
-			},
-		} as any);
+		mockGetConnectedSitesFromSpace.mockResolvedValue({
+			data: {items: mockConnectedSites},
+			error: null,
+		});
 
 		mockGetAllSites.mockResolvedValue({
-			data: {
-				items: [
-					{
-						id: '1',
-						logo: 'logo1.png',
-						name: 'Site 1',
-						searchable: true,
-					},
-					{
-						id: '2',
-						logo: 'logo2.png',
-						name: 'Site 2',
-						searchable: false,
-					},
-					{
-						id: '3',
-						logo: 'logo1.png',
-						name: 'Site 3',
-						searchable: true,
-					},
-					{
-						id: '4',
-						logo: 'logo2.png',
-						name: 'Site 4',
-						searchable: false,
-					},
-				],
-			},
-		} as any);
+			data: {items: mockConnectedSites},
+			error: null,
+		});
+
+		mockConnectSiteToSpace.mockImplementation(
+			async (_groupId, siteId, searchable) => ({
+				data: {
+					externalReferenceCode: '2',
+					id: siteId,
+					logo: 'logo2.png',
+					name: 'Connected Site 2',
+					searchable: !!JSON.parse(searchable || 'false'),
+				},
+				error: null,
+			})
+		);
+		mockDisconnectSiteFromSpace.mockResolvedValue({
+			data: null,
+			error: null,
+		});
 	});
 
 	afterEach(() => {
 		jest.restoreAllMocks();
+		mockedOpenToast.mockClear();
 	});
 
 	it('renders the modal header', async () => {
-		renderComponent();
+		const {container} = renderComponent();
 
 		expect(screen.getByText('all-sites')).toBeInTheDocument();
 
 		await waitFor(() => {
-			expect(screen.getByText('Site 1')).toBeInTheDocument();
-			expect(screen.getByText('Site 2')).toBeInTheDocument();
+			expect(mockGetConnectedSitesFromSpace).toHaveBeenCalledWith(
+				DEFAULT_PROPS.groupId
+			);
+		});
+
+		expect(await screen.findByText('Connected Site 1')).toBeInTheDocument();
+		expect(await screen.findByText('Connected Site 2')).toBeInTheDocument();
+
+		await checkAccessibility({bestPractices: true, context: container});
+	});
+
+	it('displays an empty state message when no sites are connected', async () => {
+		mockGetConnectedSitesFromSpace.mockResolvedValue({
+			data: {items: []},
+			error: null,
+		});
+
+		renderComponent();
+
+		expect(
+			await screen.findByText('no-sites-are-connected-yet')
+		).toBeInTheDocument();
+	});
+
+	describe('when hasConnectSitesPermission is true', () => {
+		it('allows connecting a new site', async () => {
+			mockGetAllSites.mockResolvedValue({
+				data: {items: [mockUnconnectedSite]},
+				error: null,
+			});
+
+			renderComponent();
+
+			await waitFor(() => {
+				expect(mockGetAllSites).toHaveBeenCalled();
+			});
+
+			await userEvent.click(screen.getByRole('combobox', {name: 'site'}));
+
+			await userEvent.click(
+				await screen.findByRole('option', {
+					name: mockUnconnectedSite.name,
+				})
+			);
+
+			await userEvent.click(
+				screen.getByRole('button', {name: 'connect'})
+			);
+
+			await waitFor(() => {
+				expect(mockConnectSiteToSpace).toHaveBeenCalledWith(
+					DEFAULT_PROPS.groupId,
+					'3'
+				);
+			});
+
+			expect(
+				await screen.findByText(mockUnconnectedSite.name)
+			).toBeInTheDocument();
+		});
+
+		it('shows an error toast if connecting a site fails', async () => {
+			mockGetAllSites.mockResolvedValue({
+				data: {items: [mockUnconnectedSite]},
+				error: null,
+			});
+
+			mockConnectSiteToSpace.mockResolvedValue({
+				data: null,
+				error: errorMessage,
+			});
+
+			renderComponent();
+
+			await userEvent.click(screen.getByRole('combobox', {name: 'site'}));
+
+			await userEvent.click(
+				await screen.findByRole('option', {
+					name: mockUnconnectedSite.name,
+				})
+			);
+
+			await userEvent.click(
+				screen.getByRole('button', {name: 'connect'})
+			);
+
+			await assertErrorToast();
+		});
+
+		it('allows disconnecting a site', async () => {
+			renderComponent();
+
+			const site1Row = (
+				await screen.findByText('Connected Site 1')
+			).closest('li')!;
+			const actionsButton = within(site1Row).getByRole('button', {
+				name: 'site-actions',
+			});
+
+			await userEvent.click(actionsButton);
+			await userEvent.click(
+				await screen.findByRole('menuitem', {name: 'disconnect'})
+			);
+
+			await waitFor(() => {
+				expect(mockDisconnectSiteFromSpace).toHaveBeenCalledWith(
+					DEFAULT_PROPS.groupId,
+					'1'
+				);
+			});
+
+			expect(
+				screen.queryByText('Connected Site 1')
+			).not.toBeInTheDocument();
+		});
+
+		it('shows an error toast if disconnecting a site fails', async () => {
+			mockDisconnectSiteFromSpace.mockResolvedValue({
+				data: null,
+				error: errorMessage,
+			});
+
+			renderComponent();
+
+			const site1Row = (
+				await screen.findByText('Connected Site 1')
+			).closest('li')!;
+			const actionsButton = within(site1Row).getByRole('button', {
+				name: 'site-actions',
+			});
+
+			await userEvent.click(actionsButton);
+			await userEvent.click(
+				await screen.findByRole('menuitem', {name: 'disconnect'})
+			);
+
+			await assertErrorToast();
+		});
+
+		it('allows changing a site to be unsearchable', async () => {
+			renderComponent();
+
+			const site1Row = (
+				await screen.findByText('Connected Site 1')
+			).closest('li')!;
+
+			expect(
+				within(site1Row).getByText(/searchable-content: yes/)
+			).toBeInTheDocument();
+
+			const actionsButton = within(site1Row).getByRole('button', {
+				name: 'site-actions',
+			});
+			await userEvent.click(actionsButton);
+			await userEvent.click(
+				await screen.findByRole('menuitem', {name: 'make-unsearchable'})
+			);
+
+			await waitFor(() => {
+				expect(mockConnectSiteToSpace).toHaveBeenCalledWith(
+					DEFAULT_PROPS.groupId,
+					'1',
+					'false'
+				);
+			});
+
+			await waitFor(() => {
+				expect(
+					within(site1Row).getByText(/searchable-content: no/)
+				).toBeInTheDocument();
+			});
+		});
+
+		it('shows an error toast if changing a site to be unsearchable fails', async () => {
+			mockConnectSiteToSpace.mockResolvedValue({
+				data: null,
+				error: errorMessage,
+			});
+
+			renderComponent();
+
+			const site1Row = (
+				await screen.findByText('Connected Site 1')
+			).closest('li')!;
+
+			expect(
+				within(site1Row).getByText(/searchable-content: yes/)
+			).toBeInTheDocument();
+
+			const actionsButton = within(site1Row).getByRole('button', {
+				name: 'site-actions',
+			});
+			await userEvent.click(actionsButton);
+			await userEvent.click(
+				await screen.findByRole('menuitem', {name: 'make-unsearchable'})
+			);
+
+			await assertErrorToast();
 		});
 	});
 
-	it('checks the accessibility of the modal', async () => {
-		const {container} = renderComponent();
+	describe('without connect permissions', () => {
+		const propsWithoutPermission = {
+			...DEFAULT_PROPS,
+			hasConnectSitesPermission: false,
+		};
 
-		await checkAccessibility({bestPractices: true, context: container});
+		it('does not render the site selector', async () => {
+			renderComponent(propsWithoutPermission);
+
+			await waitFor(() => {
+				expect(
+					screen.getByText('Connected Site 1')
+				).toBeInTheDocument();
+			});
+
+			expect(
+				screen.queryByRole('combobox', {name: 'site'})
+			).not.toBeInTheDocument();
+			expect(
+				screen.queryByRole('button', {name: 'connect'})
+			).not.toBeInTheDocument();
+		});
+
+		it('does not render site actions', async () => {
+			renderComponent(propsWithoutPermission);
+
+			const site1Row = (
+				await screen.findByText('Connected Site 1')
+			).closest('li')!;
+			expect(
+				within(site1Row).queryByRole('button', {name: 'site-actions'})
+			).not.toBeInTheDocument();
+		});
 	});
 });

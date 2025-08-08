@@ -30,13 +30,13 @@ public class CPDefinitionInventoryImpl extends CPDefinitionInventoryBaseImpl {
 		allowedOrderQuantitiesString = allowedOrderQuantitiesString.replaceAll(
 			StringPool.COMMA, StringPool.BLANK);
 
-		String[] allowedOrderQuantities = StringUtil.split(
-			allowedOrderQuantitiesString, StringPool.SPACE);
+		BigDecimal[] allowedOrderQuantities = TransformUtil.transform(
+			StringUtil.split(allowedOrderQuantitiesString, StringPool.SPACE),
+			BigDecimal::new, BigDecimal.class);
 
 		Arrays.sort(allowedOrderQuantities);
 
-		return TransformUtil.transform(
-			allowedOrderQuantities, BigDecimal::new, BigDecimal.class);
+		return allowedOrderQuantities;
 	}
 
 }

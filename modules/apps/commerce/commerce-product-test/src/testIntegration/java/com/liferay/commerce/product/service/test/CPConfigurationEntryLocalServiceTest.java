@@ -390,7 +390,7 @@ public class CPConfigurationEntryLocalServiceTest {
 				_cpConfigurationList.getCPConfigurationListId(), 0,
 				"701.78 2,333.00", true, 0, "cpde", 1.0, true, true, true, 1.0,
 				"lowstoc", BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE,
-				BigDecimal.ONE, true, true, 1.0, true, true, true, 1.0, 1.0);
+				BigDecimal.ONE, true, true, 1.0, true, true, 1.0, 1.0);
 
 		Assert.assertEquals(
 			"701.78 2,333.00",
@@ -423,7 +423,6 @@ public class CPConfigurationEntryLocalServiceTest {
 				cpConfigurationEntry.getShippingExtraPrice(),
 				cpConfigurationEntry.isShipSeparately(),
 				cpConfigurationEntry.isTaxExempt(),
-				cpConfigurationEntry.isVisible(),
 				cpConfigurationEntry.getWeight(),
 				cpConfigurationEntry.getWidth()));
 
@@ -455,7 +454,6 @@ public class CPConfigurationEntryLocalServiceTest {
 				cpConfigurationEntry.getShippingExtraPrice(),
 				cpConfigurationEntry.isShipSeparately(),
 				cpConfigurationEntry.isTaxExempt(),
-				cpConfigurationEntry.isVisible(),
 				cpConfigurationEntry.getWeight(),
 				cpConfigurationEntry.getWidth()));
 	}

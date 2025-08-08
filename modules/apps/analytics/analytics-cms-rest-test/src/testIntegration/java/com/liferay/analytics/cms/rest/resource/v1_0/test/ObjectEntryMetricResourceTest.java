@@ -196,31 +196,6 @@ public class ObjectEntryMetricResourceTest
 		}
 	}
 
-	@Override
-	@Test
-	public void testGraphQLGetObjectEntryMetricNotFound() throws Exception {
-		Assert.assertEquals(
-			"Bad Request",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"objectEntryMetric", Collections.emptyMap(),
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-		Assert.assertEquals(
-			"Bad Request",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"analyticsCms_v1_0",
-						new GraphQLField(
-							"objectEntryMetric", Collections.emptyMap(),
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
 	@Inject
 	private Http _http;
 

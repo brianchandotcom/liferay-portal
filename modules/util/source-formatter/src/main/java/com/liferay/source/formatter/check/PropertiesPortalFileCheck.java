@@ -360,9 +360,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			sb.append("\n\n");
 		}
 
-		String newContent = StringUtil.replace(sb.toString(), "\n\n\n", "\n\n");
-
-		newContent = newContent.trim();
+		String newContent = StringUtil.trimTrailing(sb.toString());
 
 		if (!StringUtil.equals(content, newContent)) {
 			return newContent;

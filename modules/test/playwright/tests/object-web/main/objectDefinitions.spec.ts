@@ -521,7 +521,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 		modelBuilderRightSidebarPage,
 		page,
 	}) => {
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
 		});
 

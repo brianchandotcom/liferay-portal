@@ -243,7 +243,7 @@ test('assert that the user is able to use the ERC field in Sort, on the Custom V
 	const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 	const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
-	const objectFields: Partial<ObjectField>[] = generateObjectFields({
+	const objectFields = generateObjectFields({
 		objectFieldBusinessTypes: ['Text'],
 	});
 

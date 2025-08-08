@@ -121,7 +121,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 	let _objectField: ObjectField;
 
 	test.beforeEach(async ({apiHelpers, site, viewObjectEntriesPage}) => {
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{
 					businessType: 'Text',
@@ -568,7 +568,7 @@ test.describe('Manage object entries through Page Templates', () => {
 				apiHelpers,
 			});
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
 			objectFieldBusinessTypes: [
@@ -866,7 +866,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				apiHelpers,
 			});
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
 			objectFieldBusinessTypes: [
@@ -1005,7 +1005,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
 			objectFieldBusinessTypes: ['MultiselectPicklist'],
@@ -1270,7 +1270,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 	}) => {
 		const ATTACHMENT_FILE_NAME = 'astronaut.png';
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Attachment'],
 		});
 
@@ -1618,7 +1618,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{
 					businessType: 'Text',
@@ -1801,7 +1801,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		let objectEntryB;
 
 		await test.step('Setup', async () => {
-			const objectFields: Partial<ObjectField>[] = generateObjectFields({
+			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: [
 					{
 						businessType: 'Text',
@@ -2017,7 +2017,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{
 					businessType: 'Text',
@@ -2067,7 +2067,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 					apiHelpers,
 				});
 
-			const objectFields: Partial<ObjectField>[] = generateObjectFields({
+			const objectFields = generateObjectFields({
 				listTypeDefinitionExternalReferenceCode:
 					listTypeDefinition.externalReferenceCode,
 				objectFieldBusinessTypes: [
@@ -2538,7 +2538,7 @@ test.describe('Manage object entries through Workflow', () => {
 			const objectDefinitionName =
 				'ObjectDefinitionName' + getRandomInt();
 
-			const objectFields: Partial<ObjectField>[] = generateObjectFields({
+			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['DateTime'],
 			});
 

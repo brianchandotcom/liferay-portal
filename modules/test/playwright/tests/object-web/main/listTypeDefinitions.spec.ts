@@ -260,7 +260,7 @@ test.describe('ensure picklist translation', () => {
 				locale: 'pt_BR',
 			});
 
-		const objectFields: Partial<ObjectField>[] = generateObjectFields({
+		const objectFields = generateObjectFields({
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
 			objectFieldBusinessTypes: ['MultiselectPicklist'],

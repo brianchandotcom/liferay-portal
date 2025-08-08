@@ -60,6 +60,7 @@ export function UserNotificationSettings({
 		);
 
 		setRolesList([roles]);
+		setUserGroupList([]);
 		setUserList([]);
 	};
 
@@ -98,8 +99,9 @@ export function UserNotificationSettings({
 			value: 'usersList',
 		} as MultiSelectItem;
 
-		setUserList([users]);
 		setRolesList([]);
+		setUserGroupList([]);
+		setUserList([users]);
 	};
 
 	const getUserGroups = async () => {
@@ -129,9 +131,9 @@ export function UserNotificationSettings({
 			value: 'userGroupList',
 		} as MultiSelectItem;
 
-		setUserList([]);
 		setRolesList([]);
 		setUserGroupList([userGroups]);
+		setUserList([]);
 	};
 
 	const handleMultiSelectItemsChange = (items: MultiSelectItem[]) => {

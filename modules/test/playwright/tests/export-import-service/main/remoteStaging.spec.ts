@@ -23,6 +23,7 @@ import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
+import {safeTeardown} from './utils/safeTeardown';
 
 const remotePort = '9080';
 const remotePage = remotePageTest(remotePort);
@@ -142,14 +143,17 @@ test(
 test(
 	'Can publish vocabulary deletion from the Global Site using remote staging',
 	{tag: ['@LPS-89981', '@LPS-88298']},
-	async ({
-		apiHelpers,
-		configStagingPage,
-		page,
-		portletStagingPage,
-		remoteApiHelpers,
-		remotePage,
-	}) => {
+	async (
+		{
+			apiHelpers,
+			configStagingPage,
+			page,
+			portletStagingPage,
+			remoteApiHelpers,
+			remotePage,
+		},
+		testInfo
+	) => {
 		try {
 			const vocabularyName = getRandomString();
 			const globalSiteId = await getGlobalSiteId(apiHelpers);
@@ -213,7 +217,10 @@ test(
 			).toBeHidden();
 		}
 		finally {
-			await configStagingPage.disableStaging('/global');
+			await safeTeardown(
+				async () => await configStagingPage.disableStaging('/global'),
+				testInfo.timeout * 0.5
+			);
 		}
 	}
 );

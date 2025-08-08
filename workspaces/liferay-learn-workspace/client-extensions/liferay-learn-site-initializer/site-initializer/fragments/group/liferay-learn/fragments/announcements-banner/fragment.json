@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Unauthenticated Top Banner",
+	"name": "Announcements Banner",
 	"type": "component"
 }

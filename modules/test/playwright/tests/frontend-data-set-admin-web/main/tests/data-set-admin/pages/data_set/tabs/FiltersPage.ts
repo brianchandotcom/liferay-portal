@@ -116,7 +116,7 @@ export class FiltersPage {
 		};
 		this.newDateRangeFilterForm = {
 			...this.newFilterForm,
-			datePicker: page.getByRole('dialog', {name: 'Choose date'}),
+			datePicker: page.getByRole('dialog', {name: 'Select date'}),
 			fromDatePickerTrigger: page
 				.locator('div')
 				.filter({hasText: /^From$/})

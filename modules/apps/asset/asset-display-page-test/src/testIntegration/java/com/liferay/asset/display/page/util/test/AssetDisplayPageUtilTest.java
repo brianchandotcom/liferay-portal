@@ -391,7 +391,7 @@ public class AssetDisplayPageUtilTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), _classNameId,
 			journalArticle.getResourcePrimKey(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			AssetDisplayPageConstants.TYPE_SPECIFIC, new ServiceContext());
+			AssetDisplayPageConstants.TYPE_SPECIFIC, _serviceContext);
 
 		Assert.assertEquals(
 			layoutPageTemplateEntry,

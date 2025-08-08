@@ -74,6 +74,77 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 		);
 	});
 
+	test('can view Entries with Custom Layout Created', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+				titleObjectFieldName: 'textField',
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const iframe = page.frameLocator('iframe');
+
+		const blockName = getRandomString();
+
+		await test.step('create layout and set it as default', async () => {
+			await objectLayoutsPage.goto(objectDefinition.name);
+
+			const objectLayoutName = getRandomString();
+
+			await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+			await objectLayoutsPage.createObjectLayoutContent({
+				objectLayoutBlockName: blockName,
+				objectLayoutName,
+				objectLayoutTabName: getRandomString(),
+			});
+
+			await objectLayoutsPage.addObjectLayoutObjectField('textField');
+
+			await iframe.getByRole('button', {name: 'Save'}).first().click();
+		});
+
+		await test.step('add object entry and assert that blockname is visible', async () => {
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry();
+
+			await viewObjectEntriesPage.fillObjectEntry({
+				objectFieldBusinessType: 'Text',
+				objectFieldLabel: 'textField',
+				objectFieldValue: 'Entry A',
+			});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(page);
+
+			await viewObjectEntriesPage.backButton.click();
+
+			await page.waitForLoadState('networkidle');
+
+			await page
+				.getByRole('row', {name: 'Entry A'})
+				.getByRole('link')
+				.click();
+
+			await expect(
+				page.locator('label').filter({hasText: blockName})
+			).toBeVisible();
+
+			await expect(page.getByLabel('textField')).toBeVisible();
+		});
+	});
+
 	test('can view relationship child entry when selected', async ({
 		apiHelpers,
 		objectLayoutsPage,

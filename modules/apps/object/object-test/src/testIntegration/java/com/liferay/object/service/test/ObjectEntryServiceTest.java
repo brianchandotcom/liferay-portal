@@ -16,6 +16,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -766,25 +767,44 @@ public class ObjectEntryServiceTest {
 
 	@Test
 	public void testGetOrAddEmptyObjectEntry() throws Exception {
+
+		// Lazy referencing disabled
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			role, _objectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		User user = UserTestUtil.addUser();
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
+
+		_setUser(user);
+
+		long userId1 = user.getUserId();
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key {externalReferenceCode=",
+				externalReferenceCode, ", groupId=", _group.getGroupId(),
+				", companyId=", _group.getCompanyId(), ", objectDefinitionId=",
+				_objectDefinition.getObjectDefinitionId(), "}"),
+			() -> _objectEntryService.getOrAddEmptyObjectEntry(
+				externalReferenceCode, _group.getGroupId(), userId1,
+				_objectDefinition.getObjectDefinitionId()));
+
+		// Lazy referencing enabled
+
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			// With permissions
-
-			Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-			RoleTestUtil.addResourcePermission(
-				role, _objectDefinition.getResourceName(),
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(TestPropsValues.getCompanyId()),
-				ObjectActionKeys.ADD_OBJECT_ENTRY);
-
-			User user = UserTestUtil.addUser();
-
-			UserLocalServiceUtil.addRoleUser(
-				role.getRoleId(), user.getUserId());
-
-			_setUser(user);
 
 			ObjectEntry objectEntry =
 				_objectEntryService.getOrAddEmptyObjectEntry(
@@ -796,30 +816,32 @@ public class ObjectEntryServiceTest {
 
 			user = UserTestUtil.addUser();
 
-			long userId = user.getUserId();
-
 			_setUser(user);
+
+			long userId2 = user.getUserId();
 
 			AssertUtils.assertFailure(
 				PrincipalException.MustHavePermission.class,
 				StringBundler.concat(
-					"User ", userId,
+					"User ", userId2,
 					" must have ADD_OBJECT_ENTRY permission for ",
 					_objectDefinition.getResourceName(), " ",
 					_group.getGroupId()),
 				() -> _objectEntryService.getOrAddEmptyObjectEntry(
-					RandomTestUtil.randomString(), _group.getGroupId(), userId,
+					RandomTestUtil.randomString(), _group.getGroupId(), userId2,
 					_objectDefinition.getObjectDefinitionId()));
+
+			// Without permissions, existing object entry
 
 			AssertUtils.assertFailure(
 				PrincipalException.MustHavePermission.class,
 				StringBundler.concat(
-					"User ", userId, " must have VIEW permission for ",
+					"User ", userId2, " must have VIEW permission for ",
 					objectEntry.getModelClassName(), " ",
 					objectEntry.getObjectEntryId()),
 				() -> _objectEntryService.getOrAddEmptyObjectEntry(
 					objectEntry.getExternalReferenceCode(),
-					objectEntry.getGroupId(), userId,
+					objectEntry.getGroupId(), userId2,
 					objectEntry.getObjectDefinitionId()));
 		}
 	}

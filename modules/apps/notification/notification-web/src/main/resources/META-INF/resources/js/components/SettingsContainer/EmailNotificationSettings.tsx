@@ -34,11 +34,14 @@ const RECIPIENT_OPTIONS = [
 		label: Liferay.Language.get('roles'),
 		value: 'role',
 	},
-	{
+] as LabelValueObject[];
+
+if (Liferay.FeatureFlags['LPD-50091']) {
+	RECIPIENT_OPTIONS.push({
 		label: Liferay.Language.get('user-groups'),
 		value: 'user-group',
-	},
-] as LabelValueObject[];
+	});
+}
 
 const SUBSCRIBERS_OPTION = {
 	label: Liferay.Language.get('subscribers'),

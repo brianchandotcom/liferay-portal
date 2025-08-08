@@ -235,6 +235,17 @@ public class EmailNotificationType extends BaseNotificationType {
 	public void sendNotification(NotificationContext notificationContext)
 		throws PortalException {
 
+		NotificationTemplate notificationTemplate =
+			notificationContext.getNotificationTemplate();
+
+		if (Objects.equals(
+				notificationTemplate.getRecipientType(),
+				NotificationRecipientConstants.TYPE_USER_GROUP) &&
+			!FeatureFlagManagerUtil.isEnabled("LPD-50091")) {
+
+			return;
+		}
+
 		long groupId = 0;
 
 		User user = userLocalService.getUser(notificationContext.getUserId());
@@ -262,9 +273,6 @@ public class EmailNotificationType extends BaseNotificationType {
 		}
 
 		notificationContext.setUserLocale(userLocale);
-
-		NotificationTemplate notificationTemplate =
-			notificationContext.getNotificationTemplate();
 
 		String body = _formatBody(
 			notificationTemplate.getBodyMap(), userGroup, notificationContext);

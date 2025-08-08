@@ -253,42 +253,46 @@ export function PrimaryRecipient({
 				</div>
 			)}
 
-			{recipient.toType === 'user-group' && (
-				<div className="lfr__notification-template-email-notification-settings-multiple-select">
-					<MultipleSelect
-						disabled={values.system}
-						error={errors.to}
-						id="primaryRecipientUserGroups"
-						label={Liferay.Language.get('user-group')}
-						options={toUserGroupsList}
-						placeholder={Liferay.Language.get('select-user-group')}
-						required
-						search
-						searchPlaceholder={Liferay.Language.get(
-							'search-for-a-user-group'
-						)}
-						selectAllOption
-						setOptions={(items) => {
-							const newRecipients = handleMultiSelectItemsChange(
-								items,
-								'userGroupName'
-							);
+			{recipient.toType === 'user-group' &&
+				Liferay.FeatureFlags['LPD-50091'] && (
+					<div className="lfr__notification-template-email-notification-settings-multiple-select">
+						<MultipleSelect
+							disabled={values.system}
+							error={errors.to}
+							id="primaryRecipientUserGroups"
+							label={Liferay.Language.get('user-group')}
+							options={toUserGroupsList}
+							placeholder={Liferay.Language.get(
+								'select-user-group'
+							)}
+							required
+							search
+							searchPlaceholder={Liferay.Language.get(
+								'search-for-a-user-group'
+							)}
+							selectAllOption
+							setOptions={(items) => {
+								const newRecipients =
+									handleMultiSelectItemsChange(
+										items,
+										'userGroupName'
+									);
 
-							setValues({
-								...values,
-								recipients: [
-									{
-										...recipient,
-										to: newRecipients,
-									},
-								],
-							});
+								setValues({
+									...values,
+									recipients: [
+										{
+											...recipient,
+											to: newRecipients,
+										},
+									],
+								});
 
-							setToUserGroupsList(items);
-						}}
-					/>
-				</div>
-			)}
+								setToUserGroupsList(items);
+							}}
+						/>
+					</div>
+				)}
 
 			<>
 				<ClayForm.Group className="ml-1 row">

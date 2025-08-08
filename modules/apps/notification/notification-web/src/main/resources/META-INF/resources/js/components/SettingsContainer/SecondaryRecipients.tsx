@@ -338,34 +338,35 @@ export function SecondaryRecipient({
 								</div>
 							)}
 
-							{recipient.ccType === 'user-group' && (
-								<div className="lfr__notification-template-email-notification-settings-multiple-select">
-									<MultipleSelect
-										disabled={values.system}
-										id="secondaryRecipientUserGroupsCC"
-										label={Liferay.Language.get(
-											'user-group'
-										)}
-										options={ccUserGroupsList}
-										placeholder={Liferay.Language.get(
-											'select-user-group'
-										)}
-										search
-										searchPlaceholder={Liferay.Language.get(
-											'search-for-a-user-group'
-										)}
-										selectAllOption
-										setOptions={(items) => {
-											handleRecipientItemChange(
-												items,
-												'cc',
-												setCCUserGroupsList,
-												'userGroupName'
-											);
-										}}
-									/>
-								</div>
-							)}
+							{recipient.ccType === 'user-group' &&
+								Liferay.FeatureFlags['LPD-50091'] && (
+									<div className="lfr__notification-template-email-notification-settings-multiple-select">
+										<MultipleSelect
+											disabled={values.system}
+											id="secondaryRecipientUserGroupsCC"
+											label={Liferay.Language.get(
+												'user-group'
+											)}
+											options={ccUserGroupsList}
+											placeholder={Liferay.Language.get(
+												'select-user-group'
+											)}
+											search
+											searchPlaceholder={Liferay.Language.get(
+												'search-for-a-user-group'
+											)}
+											selectAllOption
+											setOptions={(items) => {
+												handleRecipientItemChange(
+													items,
+													'cc',
+													setCCUserGroupsList,
+													'userGroupName'
+												);
+											}}
+										/>
+									</div>
+								)}
 						</div>
 					</div>
 				</ClayPanel.Body>
@@ -476,34 +477,35 @@ export function SecondaryRecipient({
 								</div>
 							)}
 
-							{recipient.bccType === 'user-group' && (
-								<div className="lfr__notification-template-email-notification-settings-multiple-select">
-									<MultipleSelect
-										disabled={values.system}
-										id="secondaryRecipientUserGroupsBCC"
-										label={Liferay.Language.get(
-											'user-group'
-										)}
-										options={bccUserGroupsList}
-										placeholder={Liferay.Language.get(
-											'select-user-group'
-										)}
-										search
-										searchPlaceholder={Liferay.Language.get(
-											'search-for-a-user-group'
-										)}
-										selectAllOption
-										setOptions={(items) => {
-											handleRecipientItemChange(
-												items,
-												'bcc',
-												setBCCUserGroupsList,
-												'userGroupName'
-											);
-										}}
-									/>
-								</div>
-							)}
+							{recipient.bccType === 'user-group' &&
+								Liferay.FeatureFlags['LPD-50091'] && (
+									<div className="lfr__notification-template-email-notification-settings-multiple-select">
+										<MultipleSelect
+											disabled={values.system}
+											id="secondaryRecipientUserGroupsBCC"
+											label={Liferay.Language.get(
+												'user-group'
+											)}
+											options={bccUserGroupsList}
+											placeholder={Liferay.Language.get(
+												'select-user-group'
+											)}
+											search
+											searchPlaceholder={Liferay.Language.get(
+												'search-for-a-user-group'
+											)}
+											selectAllOption
+											setOptions={(items) => {
+												handleRecipientItemChange(
+													items,
+													'bcc',
+													setBCCUserGroupsList,
+													'userGroupName'
+												);
+											}}
+										/>
+									</div>
+								)}
 						</div>
 					</div>
 				</ClayPanel.Body>

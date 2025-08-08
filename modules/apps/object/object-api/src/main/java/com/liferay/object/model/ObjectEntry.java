@@ -53,6 +53,8 @@ public interface ObjectEntry
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public boolean isRootDescendantNode();
+
 	public String getModelClassName();
 
 	public long getNonzeroGroupId()

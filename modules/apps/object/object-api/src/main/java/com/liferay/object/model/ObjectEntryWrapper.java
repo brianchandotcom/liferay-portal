@@ -619,6 +619,11 @@ public class ObjectEntryWrapper
 		return model.isPending();
 	}
 
+	@Override
+	public boolean isRootDescendantNode() {
+		return model.isRootDescendantNode();
+	}
+
 	/**
 	 * Returns <code>true</code> if this object entry is scheduled.
 	 *

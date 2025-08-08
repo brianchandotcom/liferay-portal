@@ -7,6 +7,7 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.petra.lang.SafeCloseable;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -64,29 +66,42 @@ public class ObjectEntryFolderServiceTest {
 
 	@Test
 	public void testGetOrAddEmptyObjectEntryFolder() throws Exception {
+
+		// Lazy referencing disabled
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			role, ObjectEntryFolderConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			ActionKeys.ADD_FOLDER);
+
+		User user = UserTestUtil.addUser();
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
+
+		_setUser(user);
+
+		long userId1 = user.getUserId();
+
+		Group group = GroupTestUtil.addGroup();
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryFolderException.class, null,
+			() -> _objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
+				RandomTestUtil.randomString(), group.getGroupId(),
+				TestPropsValues.getCompanyId(), userId1,
+				ServiceContextTestUtil.getServiceContext()));
+
+		// Lazy referencing enabled
+
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			// With permissions
 
-			Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-			RoleTestUtil.addResourcePermission(
-				role, ObjectEntryFolderConstants.RESOURCE_NAME,
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(TestPropsValues.getCompanyId()),
-				ActionKeys.ADD_FOLDER);
-
-			User user = UserTestUtil.addUser();
-
-			UserLocalServiceUtil.addRoleUser(
-				role.getRoleId(), user.getUserId());
-
-			_setUser(user);
-
-			Group group = GroupTestUtil.addGroup();
-
-			ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolder =
 				_objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
 					RandomTestUtil.randomString(), group.getGroupId(),
 					TestPropsValues.getCompanyId(), user.getUserId(),
@@ -111,16 +126,18 @@ public class ObjectEntryFolderServiceTest {
 					TestPropsValues.getCompanyId(), userId,
 					ServiceContextTestUtil.getServiceContext()));
 
+			// Without permissions, existing object entry folder
+
 			AssertUtils.assertFailure(
 				PrincipalException.MustHavePermission.class,
 				StringBundler.concat(
 					"User ", userId, " must have VIEW permission for ",
 					ObjectEntryFolderConstants.RESOURCE_NAME, " ",
-					objectEntryFolder.getObjectEntryFolderId()),
+					_objectEntryFolder.getObjectEntryFolderId()),
 				() -> _objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
-					objectEntryFolder.getExternalReferenceCode(),
-					objectEntryFolder.getGroupId(),
-					objectEntryFolder.getCompanyId(), userId,
+					_objectEntryFolder.getExternalReferenceCode(),
+					_objectEntryFolder.getGroupId(),
+					_objectEntryFolder.getCompanyId(), userId,
 					ServiceContextTestUtil.getServiceContext()));
 		}
 	}
@@ -133,6 +150,9 @@ public class ObjectEntryFolderServiceTest {
 	}
 
 	private User _adminUser;
+
+	@DeleteAfterTestRun
+	private ObjectEntryFolder _objectEntryFolder;
 
 	@Inject
 	private ObjectEntryFolderService _objectEntryFolderService;

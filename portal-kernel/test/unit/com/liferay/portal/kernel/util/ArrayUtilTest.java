@@ -301,10 +301,10 @@ public class ArrayUtilTest {
 				new String[] {"A", "A"}, new String[] {"B", "B"}));
 		Assert.assertTrue(
 			ArrayUtil.equalsIgnoreCase(
-				new String[] {"a", "A"}, new String[] {"A", "a"}));
+				new String[] {"A", "B"}, new String[] {"A", "B"}));
 		Assert.assertTrue(
 			ArrayUtil.equalsIgnoreCase(
-				new String[] {"A", "B"}, new String[] {"A", "B"}));
+				new String[] {"a", "A"}, new String[] {"A", "a"}));
 		Assert.assertTrue(
 			ArrayUtil.equalsIgnoreCase(
 				new String[] {"a", "b"}, new String[] {"a", "b"}));

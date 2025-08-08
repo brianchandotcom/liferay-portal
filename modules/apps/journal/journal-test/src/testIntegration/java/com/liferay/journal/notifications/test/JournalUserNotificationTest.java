@@ -29,14 +29,9 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -188,23 +183,18 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		WorkflowDefinitionLink workflowDefinitionLink = null;
 
 		try {
-			_adminUser = UserTestUtil.addCompanyAdminUser(
-				CompanyLocalServiceUtil.getCompany(group.getCompanyId()));
-
-			_setUpPermissionThreadLocal();
-
 			String content = _getJsonFromFile(
 				"test-single-approver-workflow-definition.xml");
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, _adminUser.getCompanyId(), _adminUser.getUserId(),
+				null, TestPropsValues.getCompanyId(), user.getUserId(),
 				_URL_CONSTANT_SINGLE_APPROVER, _URL_CONSTANT_SINGLE_APPROVER,
 				content.getBytes());
 
 			workflowDefinitionLink =
 				_workflowDefinitionLinkLocalService.
 					updateWorkflowDefinitionLink(
-						_adminUser.getUserId(), group.getCompanyId(),
+						user.getUserId(), group.getCompanyId(),
 						group.getGroupId(), JournalFolder.class.getName(),
 						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 						JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
@@ -217,7 +207,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_PENDING, article.getStatus());
 
-			_assertJournalArticleNotificationsCount(1, _adminUser, 1);
+			_assertJournalArticleNotificationsCount(1, user, 1);
 
 			MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
 
@@ -233,14 +223,12 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 				workflowDefinitionLink);
 
 			_workflowDefinitionManager.updateActive(
-				_adminUser.getCompanyId(), _adminUser.getUserId(),
+				user.getCompanyId(), user.getUserId(),
 				_URL_CONSTANT_SINGLE_APPROVER, 1, false);
 
 			_workflowDefinitionManager.undeployWorkflowDefinition(
-				_adminUser.getCompanyId(), _adminUser.getUserId(),
+				user.getCompanyId(), user.getUserId(),
 				_URL_CONSTANT_SINGLE_APPROVER, 1);
-
-			PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 		}
 	}
 
@@ -363,31 +351,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 				"com/liferay/journal/dependencies/" + fileName));
 	}
 
-	private void _setUpPermissionThreadLocal() throws Exception {
-		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(
-			new SimplePermissionChecker() {
-				{
-					init(_adminUser);
-				}
-
-				@Override
-				public boolean hasOwnerPermission(
-					long companyId, String name, String primKey, long ownerId,
-					String actionId) {
-
-					return true;
-				}
-
-			});
-	}
-
 	private static final String _URL_CONSTANT_SINGLE_APPROVER =
 		"Url Constant Single Approver";
-
-	@DeleteAfterTestRun
-	private User _adminUser;
 
 	private JournalFolder _folder;
 
@@ -397,19 +362,11 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	@Inject
 	private JournalFolderLocalService _journalFolderLocalService;
 
-	private PermissionChecker _permissionChecker;
-
 	@Inject
 	private Portal _portal;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 	@Inject
 	private WorkflowDefinitionLinkLocalService

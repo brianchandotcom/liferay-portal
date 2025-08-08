@@ -11,6 +11,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -21,7 +22,6 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -230,24 +230,15 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			ListUtil.isNotEmptyForEach(
 				imageDDMFormFieldValues,
 				ddmFormFieldValue -> {
-					displayBuilder.displaySectionHeader("image");
-
-					String imageData = ddmFormFieldValue.getValue(
-					).getString(
-						displayBuilder.getLocale()
-					);
-
-					JSONObject jsonObject;
-
 					try {
-						jsonObject = JSONFactoryUtil.createJSONObject(
-							imageData);
-					}
-					catch (JSONException jsonException) {
-						throw new RuntimeException(jsonException);
-					}
+						displayBuilder.displaySectionHeader("image");
 
-					try {
+						Value value = ddmFormFieldValue.getValue();
+
+						JSONObject jsonObject =
+							JSONFactoryUtil.createJSONObject(
+								value.getString(displayBuilder.getLocale()));
+
 						DLFileEntry dlFileEntry =
 							DLFileEntryLocalServiceUtil.getDLFileEntry(
 								jsonObject.getLong("fileEntryId"));
@@ -262,22 +253,22 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 							"download",
 							getDownloadLink(
 								displayBuilder.getDisplayContext(),
-								dlFileEntry.getVersion(),
-								dlFileEntry.getSize(),
+								dlFileEntry.getVersion(), dlFileEntry.getSize(),
 								dlFileEntry.getFileName()),
 							false
 						);
 					}
-					catch (PortalException portalException) {
-						throw new RuntimeException(portalException);
+					catch (Exception exception) {
+						ReflectionUtil.throwException(exception);
 					}
 				});
 		}
 	}
 
 	protected String getDownloadLink(
-		DisplayContext<?> displayContext, String version, long size,
-		String fileName) {
+			DisplayContext<?> displayContext, String version, long size,
+			String fileName)
+		throws Exception {
 
 		LinkTag linkTag = new LinkTag();
 
@@ -288,14 +279,9 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		linkTag.setSmall(true);
 		linkTag.setType("button");
 
-		try {
-			return linkTag.doTagAsString(
-				displayContext.getHttpServletRequest(),
-				displayContext.getHttpServletResponse());
-		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
-		}
+		return linkTag.doTagAsString(
+			displayContext.getHttpServletRequest(),
+			displayContext.getHttpServletResponse());
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {

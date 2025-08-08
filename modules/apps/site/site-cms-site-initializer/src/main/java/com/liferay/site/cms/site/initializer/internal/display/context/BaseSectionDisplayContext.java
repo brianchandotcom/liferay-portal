@@ -168,13 +168,7 @@ public abstract class BaseSectionDisplayContext {
 		return sb.toString();
 	}
 
-	public List<DropdownItem> getBulkActionDropdownItems() {
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				"#", "document", "sampleBulkAction",
-				LanguageUtil.get(httpServletRequest, "label"), null, null,
-				null));
-	}
+	public abstract List<DropdownItem> getBulkActionDropdownItems();
 
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {

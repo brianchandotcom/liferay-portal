@@ -136,13 +136,13 @@ public abstract class BaseSectionDisplayContext {
 						objectDefinition.getClassName(),
 						StringBundler.concat(
 							"/o", objectDefinition.getRESTContextPath(),
-							"/{objectEntryId}/collaborators"));
+							"/{entryId}/collaborators"));
 				}
 
 				collaboratorURLs.put(
 					ObjectEntryFolder.class.getName(),
-					"/o/headless-object/v1.0/object-entry-folders" +
-						"/{objectEntryFolderId}/collaborators");
+					"/o/headless-object/v1.0/object-entry-folders/{entryId}" +
+						"/collaborators");
 
 				return collaboratorURLs;
 			}

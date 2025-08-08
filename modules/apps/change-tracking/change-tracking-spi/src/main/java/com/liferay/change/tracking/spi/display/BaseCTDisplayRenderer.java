@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -226,52 +227,51 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 						)));
 			}
 
-			if (!imageDDMFormFieldValues.isEmpty()) {
-				imageDDMFormFieldValues.forEach(
-					ddmFormFieldValue -> {
-						displayBuilder.displaySectionHeader("image");
+			ListUtil.isNotEmptyForEach(
+				imageDDMFormFieldValues,
+				ddmFormFieldValue -> {
+					displayBuilder.displaySectionHeader("image");
 
-						String imageData = ddmFormFieldValue.getValue(
-						).getString(
-							displayBuilder.getLocale()
+					String imageData = ddmFormFieldValue.getValue(
+					).getString(
+						displayBuilder.getLocale()
+					);
+
+					JSONObject jsonObject;
+
+					try {
+						jsonObject = JSONFactoryUtil.createJSONObject(
+							imageData);
+					}
+					catch (JSONException jsonException) {
+						throw new RuntimeException(jsonException);
+					}
+
+					try {
+						DLFileEntry dlFileEntry =
+							DLFileEntryLocalServiceUtil.getDLFileEntry(
+								jsonObject.getLong("fileEntryId"));
+
+						displayBuilder.display(
+							"mime-type", dlFileEntry.getMimeType()
+						).display(
+							"version", dlFileEntry.getVersion()
+						).display(
+							"size", dlFileEntry.getSize()
+						).display(
+							"download",
+							getDownloadLink(
+								displayBuilder.getDisplayContext(),
+								dlFileEntry.getVersion(),
+								dlFileEntry.getSize(),
+								dlFileEntry.getFileName()),
+							false
 						);
-
-						JSONObject jsonObject;
-
-						try {
-							jsonObject = JSONFactoryUtil.createJSONObject(
-								imageData);
-						}
-						catch (JSONException jsonException) {
-							throw new RuntimeException(jsonException);
-						}
-
-						try {
-							DLFileEntry dlFileEntry =
-								DLFileEntryLocalServiceUtil.getDLFileEntry(
-									jsonObject.getLong("fileEntryId"));
-
-							displayBuilder.display(
-								"mime-type", dlFileEntry.getMimeType()
-							).display(
-								"version", dlFileEntry.getVersion()
-							).display(
-								"size", dlFileEntry.getSize()
-							).display(
-								"download",
-								getDownloadLink(
-									displayBuilder.getDisplayContext(),
-									dlFileEntry.getVersion(),
-									dlFileEntry.getSize(),
-									dlFileEntry.getFileName()),
-								false
-							);
-						}
-						catch (PortalException portalException) {
-							throw new RuntimeException(portalException);
-						}
-					});
-			}
+					}
+					catch (PortalException portalException) {
+						throw new RuntimeException(portalException);
+					}
+				});
 		}
 	}
 

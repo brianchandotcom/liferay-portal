@@ -28,8 +28,8 @@ const SiteActions = ({
 	site,
 }: {
 	groupId: string;
-	onSiteChange?: Function;
-	onSiteDisconnected?: Function;
+	onSiteChange: (site: Site) => void;
+	onSiteDisconnected: (site: Site) => void;
 	site: Site;
 }) => {
 	const {searchable} = site;
@@ -46,7 +46,7 @@ const SiteActions = ({
 			return;
 		}
 
-		onSiteDisconnected?.({site});
+		onSiteDisconnected?.(site);
 	};
 
 	const changeSearchable = async () => {
@@ -57,7 +57,7 @@ const SiteActions = ({
 		);
 
 		if (data) {
-			onSiteChange?.({site: data});
+			onSiteChange(data);
 		}
 		else if (error) {
 			showErrorMessage(error);
@@ -107,7 +107,7 @@ const SitesSelector = ({
 	onSiteConnected,
 }: {
 	groupId: string;
-	onSiteConnected?: Function;
+	onSiteConnected: (site: Site) => void;
 }) => {
 	const [sites, setSites] = useState<Site[]>([]);
 	const [siteSelected, setSiteSelected] = useState<string>();
@@ -120,7 +120,7 @@ const SitesSelector = ({
 			);
 
 			if (data) {
-				onSiteConnected?.({site: data});
+				onSiteConnected(data);
 			}
 			else if (error) {
 				showErrorMessage(
@@ -194,7 +194,7 @@ export default function SpaceSitesModal({
 		fetchConnectedSitesToSpace();
 	}, [groupId]);
 
-	const onSiteConnected = ({site}: {site: Site}) => {
+	const onSiteConnected = (site: Site) => {
 		setConnectedSites((currentConnectedSites) => {
 			if (
 				currentConnectedSites.some(
@@ -208,7 +208,7 @@ export default function SpaceSitesModal({
 		});
 	};
 
-	const onSiteDisconnected = ({site}: {site: Site}) => {
+	const onSiteDisconnected = (site: Site) => {
 		setConnectedSites((currentConnectedSites) =>
 			currentConnectedSites.filter(
 				(currentSite) => currentSite.id !== site.id
@@ -216,7 +216,7 @@ export default function SpaceSitesModal({
 		);
 	};
 
-	const onSiteChange = ({site}: {site: Site}) => {
+	const onSiteChange = (site: Site) => {
 		setConnectedSites((currentConnectedSites) =>
 			currentConnectedSites.map((currentSite) =>
 				currentSite.id === site.id ? site : currentSite

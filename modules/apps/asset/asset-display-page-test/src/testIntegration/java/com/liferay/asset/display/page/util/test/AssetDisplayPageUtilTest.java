@@ -305,6 +305,57 @@ public class AssetDisplayPageUtilTest {
 	}
 
 	@Test
+	public void testHasAssetDisplayPageWithUnsupportedInfoItemIdentifier()
+		throws Exception {
+
+		MockObject mockObject = new MockObject(
+			RandomTestUtil.randomLong(), false, true);
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(
+								InfoField.builder(
+								).infoFieldType(
+									TextInfoFieldType.INSTANCE
+								).namespace(
+									RandomTestUtil.randomString()
+								).name(
+									RandomTestUtil.randomString()
+								).build())
+						).build(),
+						mockObject, _portal, _displayPageInfoItemCapability)) {
+
+			InfoItemReference infoItemReference = new InfoItemReference(
+				MockObject.class.getName(),
+				new ERCInfoItemIdentifier(RandomTestUtil.randomString()));
+
+			Assert.assertFalse(
+				AssetDisplayPageUtil.hasAssetDisplayPage(
+					_group.getGroupId(), infoItemReference));
+
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(),
+				_portal.getClassNameId(MockObject.class.getName()), 0, true,
+				WorkflowConstants.STATUS_APPROVED);
+
+			Assert.assertFalse(
+				AssetDisplayPageUtil.hasAssetDisplayPage(
+					_group.getGroupId(), infoItemReference));
+
+			infoItemReference = new InfoItemReference(
+				MockObject.class.getName(),
+				new ClassPKInfoItemIdentifier(RandomTestUtil.randomLong()));
+
+			Assert.assertTrue(
+				AssetDisplayPageUtil.hasAssetDisplayPage(
+					_group.getGroupId(), infoItemReference));
+		}
+	}
+
+	@Test
 	public void testViewNondefaultAssetDisplayPageEntry() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),

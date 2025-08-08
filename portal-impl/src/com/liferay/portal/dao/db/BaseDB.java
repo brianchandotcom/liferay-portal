@@ -992,9 +992,9 @@ public abstract class BaseDB implements DB {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							StringBundler.concat(
-								"Cannot recreate primary key for table ",
+								"Unable to recreate primary key for table ",
 								tableName, " because column ", columnName,
-								" does not exist yet"));
+								" does not exist"));
 					}
 
 					return;

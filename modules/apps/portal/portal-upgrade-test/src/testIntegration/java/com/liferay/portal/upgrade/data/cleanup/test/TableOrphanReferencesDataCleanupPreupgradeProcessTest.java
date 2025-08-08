@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;

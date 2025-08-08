@@ -5,6 +5,11 @@
 
 package com.liferay.change.tracking.spi.display;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -21,6 +26,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -37,8 +44,10 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -270,6 +279,56 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(locale, getClass());
+	}
+
+	protected String renderDisplayPagePreview(
+			AssetDisplayPageFriendlyURLProvider
+				assetDisplayPageFriendlyURLProvider,
+			DisplayContext<T> displayContext)
+		throws PortalException {
+
+		T model = displayContext.getModel();
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				model.getModelClass());
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			model.getModelClassName(), (Long)model.getPrimaryKeyObj());
+
+		if (AssetDisplayPageUtil.hasAssetDisplayPage(
+				assetEntry.getGroupId(), assetEntry)) {
+
+			HttpServletRequest httpServletRequest =
+				displayContext.getHttpServletRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				new ClassPKInfoItemIdentifier(assetEntry.getClassPK());
+
+			String previewURL =
+				assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					new InfoItemReference(
+						assetEntry.getClassName(), classPKInfoItemIdentifier),
+					themeDisplay);
+
+			previewURL = HttpComponentsUtil.addParameter(
+				previewURL, "p_l_mode", Constants.PREVIEW);
+
+			previewURL = HttpComponentsUtil.addParameter(
+				previewURL, "previewCTCollectionId",
+				assetEntry.getCtCollectionId());
+
+			return StringBundler.concat(
+				"<iframe frameborder=\"0\" onload=\"this.style.height = ",
+				"(this.contentWindow.document.body.scrollHeight+20) + 'px';\" ",
+				"src=\"", previewURL, "\" width=\"100%\"></iframe>");
+		}
+
+		return null;
 	}
 
 	protected interface DisplayBuilder<T> {

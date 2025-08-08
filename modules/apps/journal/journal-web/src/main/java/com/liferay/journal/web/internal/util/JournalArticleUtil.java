@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -329,6 +330,17 @@ public class JournalArticleUtil {
 					WorkflowConstants.STATUS_DRAFT, article.getStatus())) {
 
 				serviceContext.setModelPermissions(null);
+			}
+
+			if (article.isDraft() && (version == 1.0)) {
+				Calendar calendar = CalendarFactoryUtil.getCalendar(
+					serviceContext.getTimeZone());
+
+				displayDateMinute = calendar.get(Calendar.MINUTE);
+				displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
+				displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);
+				displayDateMonth = calendar.get(Calendar.MONTH);
+				displayDateYear = calendar.get(Calendar.YEAR);
 			}
 
 			if (actionName.equals("/journal/update_article")) {

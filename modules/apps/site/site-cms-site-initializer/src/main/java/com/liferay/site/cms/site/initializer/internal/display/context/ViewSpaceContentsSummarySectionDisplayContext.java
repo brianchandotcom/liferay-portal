@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -22,6 +23,7 @@ import com.liferay.site.cms.site.initializer.internal.util.SpaceSummaryHeaderUti
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,6 +59,11 @@ public class ViewSpaceContentsSummarySectionDisplayContext
 			super.getAPIURL(), "page", CMSSpaceConstants.SPACE_SUMMARY_PAGE,
 			"pageSize", CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE, "sort",
 			"dateModified:desc");
+	}
+
+	@Override
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		return List.of();
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {

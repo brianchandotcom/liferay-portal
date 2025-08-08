@@ -39,8 +39,9 @@ public class ExportImportReportEntryUtil {
 			return baseModel.getModelClassName();
 		}
 
-		return object.getClass(
-		).getName();
+		Class<?> clazz = object.getClass();
+
+		return clazz.getName();
 	}
 
 	public static int getOrigin() {

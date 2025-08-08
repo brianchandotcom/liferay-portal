@@ -31,8 +31,8 @@
 	margin-bottom: 0.5rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
 }
 
 .related-card-link {

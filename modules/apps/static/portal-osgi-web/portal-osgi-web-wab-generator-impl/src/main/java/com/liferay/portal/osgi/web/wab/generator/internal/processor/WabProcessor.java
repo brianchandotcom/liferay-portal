@@ -347,6 +347,9 @@ public class WabProcessor {
 				if (!name.contains("/") &&
 					name.endsWith(".client-extension-config.json")) {
 
+					// TODO read .client-extension-config.json file into object
+					// TODO add .persistenceManager.storagePolicy=ephemeral
+
 					Files.copy(
 						zipFile.getInputStream(zipEntry),
 						osgiInfConfiguratorPath.resolve(name));

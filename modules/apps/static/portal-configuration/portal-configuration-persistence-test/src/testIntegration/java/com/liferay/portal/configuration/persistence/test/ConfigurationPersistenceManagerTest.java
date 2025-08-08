@@ -14,7 +14,6 @@ import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -25,8 +24,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
 
@@ -207,6 +208,13 @@ public class ConfigurationPersistenceManagerTest {
 	}
 
 	@Test
+	public void testEphemeralConfiguration() throws Exception {
+		_assertConfiguration(
+			false, false,
+			Collections.singletonMap(".persistenceManager.storagePolicy", "ephemeral"));
+	}
+
+	@Test
 	public void testGetConfiguration() throws Exception {
 		_assertConfiguration(false, true);
 	}
@@ -235,6 +243,14 @@ public class ConfigurationPersistenceManagerTest {
 	private void _assertConfiguration(boolean factory, boolean shouldBeStored)
 		throws Exception {
 
+		_assertConfiguration(factory, shouldBeStored, new Hashtable<>());
+	}
+
+	private void _assertConfiguration(
+			boolean factory, boolean shouldBeStored,
+			Map<String, Object> additionalProperties)
+		throws Exception {
+
 		Configuration configuration = null;
 
 		if (factory) {
@@ -249,8 +265,17 @@ public class ConfigurationPersistenceManagerTest {
 
 		String pid = configuration.getPid();
 
-		ConfigurationTestUtil.saveConfiguration(
-			configuration, MapUtil.singletonDictionary("foo", "bar"));
+		Dictionary<String, Object> newProperties = new Hashtable<>();
+
+		newProperties.put("foo", "bar");
+
+		for (Map.Entry<String, Object> entry :
+				additionalProperties.entrySet()) {
+
+			newProperties.put(entry.getKey(), entry.getValue());
+		}
+
+		ConfigurationTestUtil.saveConfiguration(configuration, newProperties);
 
 		Assert.assertTrue(_persistenceManager.exists(pid));
 

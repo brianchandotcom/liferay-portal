@@ -1,0 +1,35 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "none",
+					"description": "To edit the banner, select \"Show\".  *Before publishing, please, set it back to \"Hide\" for smooth page transitions.*",
+					"label": "Show Announcements Banner",
+					"name": "showAnnouncementsBanner",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Hide",
+								"value": ""
+							},
+							{
+								"label": "Show",
+								"value": "flex"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": " ",
+					"label": "Set Announcements Button Link",
+					"name": "setButtonLink",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

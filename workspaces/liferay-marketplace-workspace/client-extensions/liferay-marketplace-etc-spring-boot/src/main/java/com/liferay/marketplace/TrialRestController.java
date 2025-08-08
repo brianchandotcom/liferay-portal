@@ -307,7 +307,7 @@ public class TrialRestController extends BaseRestController {
 				).build());
 		}
 
-		PortalInstance portalInstance;
+		PortalInstance portalInstance = null;
 
 		try {
 			portalInstance = _postPortalInstance(
@@ -318,7 +318,7 @@ public class TrialRestController extends BaseRestController {
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Failed to create portal instance for order" + orderId,
+				"Unable to provision portal instance for order " + orderId,
 				exception);
 
 			_marketplaceService.updateOrder(

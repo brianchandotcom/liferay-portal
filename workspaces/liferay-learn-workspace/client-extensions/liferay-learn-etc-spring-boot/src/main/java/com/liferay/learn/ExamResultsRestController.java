@@ -95,10 +95,12 @@ public class ExamResultsRestController extends BaseRestController {
 			return ResponseEntity.ok(_process(jwt, file));
 		}
 		catch (Exception exception) {
+			_log.error(exception);
+
 			return ResponseEntity.status(
 				HttpStatus.INTERNAL_SERVER_ERROR
 			).body(
-				"Error to import CSV"
+				"Unable to import CSV"
 			);
 		}
 	}
@@ -175,8 +177,6 @@ public class ExamResultsRestController extends BaseRestController {
 				).toUri());
 		}
 		catch (Exception exception) {
-			_log.error("Unable to import CSV ", exception);
-
 			throw exception;
 		}
 	}

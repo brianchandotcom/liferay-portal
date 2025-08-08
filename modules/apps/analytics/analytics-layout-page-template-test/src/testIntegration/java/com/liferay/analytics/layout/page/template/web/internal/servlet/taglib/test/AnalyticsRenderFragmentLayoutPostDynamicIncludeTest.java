@@ -205,7 +205,8 @@ public class AnalyticsRenderFragmentLayoutPostDynamicIncludeTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"<script type=\"text/javascript\">\nwindow.onload = ",
-				"function() {Analytics.track(\"model.resource.",
+				"function() {window.Analytics && ",
+				"window.Analytics.track(\"model.resource.",
 				MockObject.class.getCanonicalName(), " Viewed\", {'classPK': ",
 				mockObjectLayoutDisplayPageObjectProvider.getClassPK(),
 				", 'title': '", HtmlUtil.escapeJS(title),

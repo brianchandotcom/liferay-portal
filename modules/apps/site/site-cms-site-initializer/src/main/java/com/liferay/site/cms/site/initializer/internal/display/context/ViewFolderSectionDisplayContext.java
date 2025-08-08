@@ -171,6 +171,11 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 				"{embedded.file.link.href}", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), "get", null,
 				"link"));
+		fdsActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				null, "share", "share",
+				LanguageUtil.get(httpServletRequest, "share"), "get", null,
+				"link"));
 
 		if (!Objects.equals(
 				getRootObjectEntryFolderExternalReferenceCode(),

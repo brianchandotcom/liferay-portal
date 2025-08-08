@@ -156,71 +156,84 @@ test(
 	) => {
 		try {
 			const vocabularyName = getRandomString();
-			const globalSiteId = await getGlobalSiteId(apiHelpers);
-			const remoteGlobalSiteId = await getGlobalSiteId(remoteApiHelpers);
+			let vocabularyId;
 
-			await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
-				groupId: globalSiteId,
-				remoteGroupId: remoteGlobalSiteId,
-				remotePort,
+			await test.step('Setup remote staging and create vocabulary', async () => {
+				const globalSiteId = await getGlobalSiteId(apiHelpers);
+				const remoteGlobalSiteId =
+					await getGlobalSiteId(remoteApiHelpers);
+				await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
+					groupId: globalSiteId,
+					remoteGroupId: remoteGlobalSiteId,
+					remotePort,
+				});
+
+				const {id} =
+					await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary(
+						{
+							name: vocabularyName,
+							siteId: globalSiteId,
+						}
+					);
+				apiHelpers.data.push({
+					id,
+					type: 'taxonomyVocabulary',
+				});
+
+				vocabularyId = id;
 			});
-			const {id: vocabularyId} =
-				await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary(
-					{
-						name: vocabularyName,
-						siteId: globalSiteId,
-					}
+
+			await test.step('Publish vocabulary and verify on remote site', async () => {
+				await page.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
+				await portletStagingPage.openIframe();
+				await portletStagingPage.publishToLive();
+
+				await remotePage.goto(
+					`/group/global${PORTLET_URLS.categoriesAdmin}`
 				);
-			apiHelpers.data.push({
-				id: vocabularyId,
-				type: 'taxonomyVocabulary',
+				await expect(
+					remotePage.getByRole('menuitem', {name: vocabularyName})
+				).toBeVisible();
 			});
 
-			await page.goto(`/group/global${PORTLET_URLS.categoriesAdmin}`);
-
-			await portletStagingPage.openIframe();
-			await portletStagingPage.publishToLive();
-
-			await remotePage.goto(
-				`/group/global${PORTLET_URLS.categoriesAdmin}`
-			);
-			await expect(
-				remotePage.getByRole('menuitem', {name: vocabularyName})
-			).toBeVisible();
-
-			await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
-				vocabularyId
-			);
-
-			await portletStagingPage.openIframe();
-
-			const contentCheckbox =
-				portletStagingPage.publishStagingIframe.getByLabel(
-					/Content\s+\d+\s+Deletions/i
+			await test.step('Delete vocabulary, publish deletion and verify removal on remote site', async () => {
+				await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
+					vocabularyId
 				);
-			await expect(async () => {
-				await expect(contentCheckbox).not.toBeChecked();
-			}).toPass();
-			await contentCheckbox.check();
 
-			await portletStagingPage.publishStagingIframe
-				.getByLabel('Replicate Individual')
-				.check();
+				await portletStagingPage.openIframe();
 
-			await portletStagingPage.publishToLive();
+				const contentCheckbox =
+					portletStagingPage.publishStagingIframe.getByLabel(
+						/Content\s+\d+\s+Deletions/i
+					);
+				await expect(async () => {
+					await expect(contentCheckbox).not.toBeChecked();
+				}).toPass();
+				await contentCheckbox.check();
 
-			await remotePage.goto(
-				`/group/global${PORTLET_URLS.categoriesAdmin}`
-			);
-			await expect(
-				remotePage.getByRole('menuitem', {name: vocabularyName})
-			).toBeHidden();
+				await portletStagingPage.publishStagingIframe
+					.getByLabel('Replicate Individual')
+					.check();
+
+				await portletStagingPage.publishToLive();
+
+				await remotePage.goto(
+					`/group/global${PORTLET_URLS.categoriesAdmin}`
+				);
+				await expect(
+					remotePage.getByRole('menuitem', {name: vocabularyName})
+				).toBeHidden();
+			});
 		}
 		finally {
-			await safeTeardown(
-				async () => await configStagingPage.disableStaging('/global'),
-				testInfo.timeout * 0.5
-			);
+			await test.step('Teardown: Disabling staging on global site', async () => {
+				await safeTeardown(
+					async () =>
+						await configStagingPage.disableStaging('/global'),
+					testInfo.timeout * 0.5
+				);
+			});
 		}
 	}
 );

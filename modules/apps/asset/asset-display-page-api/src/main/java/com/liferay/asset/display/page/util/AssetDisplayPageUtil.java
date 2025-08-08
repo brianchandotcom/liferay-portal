@@ -37,9 +37,17 @@ public class AssetDisplayPageUtil {
 				getLayoutDisplayPageProviderByClassName(
 					infoItemReference.getClassName());
 
+		if (layoutDisplayPageProvider == null) {
+			return null;
+		}
+
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				groupId, infoItemReference);
+
+		if (layoutDisplayPageObjectProvider == null) {
+			return null;
+		}
 
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.
@@ -103,9 +111,17 @@ public class AssetDisplayPageUtil {
 				getLayoutDisplayPageProviderByClassName(
 					infoItemReference.getClassName());
 
+		if (layoutDisplayPageProvider == null) {
+			return false;
+		}
+
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				groupId, infoItemReference);
+
+		if (layoutDisplayPageObjectProvider == null) {
+			return false;
+		}
 
 		return hasAssetDisplayPage(
 			groupId, layoutDisplayPageObjectProvider.getClassNameId(),
@@ -136,7 +152,9 @@ public class AssetDisplayPageUtil {
 			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
 				groupId, classNameId, classPK);
 
-		if (assetDisplayPageEntry == null) {
+		if ((assetDisplayPageEntry == null) ||
+			(layoutDisplayPageProvider == null)) {
+
 			return defaultLayoutPageTemplateEntry;
 		}
 

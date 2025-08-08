@@ -17,6 +17,8 @@ import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvid
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.MimeTypeLimit;
 import com.liferay.headless.asset.library.dto.v1_0.Settings;
+import com.liferay.headless.asset.library.internal.odata.entity.v1_0.AssetLibraryEntityModel;
+import com.liferay.headless.asset.library.internal.util.AssetLibraryUtil;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -45,6 +48,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -201,6 +206,11 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		return _toAssetLibrary(
 			_depotEntryService.getGroupDepotEntry(
 				_getGroupIdByExternalReferenceCode(externalReferenceCode)));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _assetLibraryEntityModel;
 	}
 
 	@Override
@@ -382,10 +392,12 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				unicodeProperties, serviceContext);
 		}
 
-		AssetLibrary.Type assetLibraryType = assetLibrary.getType();
-
 		DepotEntry depotEntry = _depotEntryService.addDepotEntry(
-			nameMap, descriptionMap, assetLibraryType.ordinal(),
+			nameMap, descriptionMap,
+			AssetLibraryUtil.getDepotEntryType(
+				GetterUtil.getObject(
+					assetLibrary.getType(),
+					() -> AssetLibrary.Type.ASSET_LIBRARY)),
 			serviceContext);
 
 		group = depotEntry.getGroup();
@@ -691,6 +703,9 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		_dlSizeLimitConfigurationProvider.updateGroupSizeLimit(
 			groupId, 0L, 0L, mimeTypeSizeLimits);
 	}
+
+	private static final AssetLibraryEntityModel _assetLibraryEntityModel =
+		new AssetLibraryEntityModel();
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.asset.library.internal.dto.v1_0.converter.AssetLibraryDTOConverter)"

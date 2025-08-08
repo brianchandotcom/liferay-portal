@@ -237,6 +237,9 @@ export function UserNotificationSettings({
 					if (value === 'role') {
 						getUserRoles();
 					}
+					else if (value === 'user-group') {
+						getUserGroups();
+					}
 				}}
 				selectedKey={values.recipientType}
 			/>

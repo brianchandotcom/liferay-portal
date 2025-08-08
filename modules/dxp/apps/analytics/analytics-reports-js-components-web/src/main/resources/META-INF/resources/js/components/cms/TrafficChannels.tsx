@@ -122,7 +122,7 @@ export function TrafficChannels() {
 	const mappedData = mapData(data);
 
 	if (loading) {
-		return <ClayLoadingIndicator />;
+		return <ClayLoadingIndicator data-testid="loading" />;
 	}
 
 	if (!data) {

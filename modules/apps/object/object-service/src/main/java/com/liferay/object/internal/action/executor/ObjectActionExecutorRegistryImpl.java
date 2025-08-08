@@ -48,7 +48,7 @@ public class ObjectActionExecutorRegistryImpl
 		if (objectActionExecutor == null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"No object action executor found with companyId ",
+					"No object action executor found with company ID ",
 					companyId, " and key ", objectActionExecutorKey));
 		}
 

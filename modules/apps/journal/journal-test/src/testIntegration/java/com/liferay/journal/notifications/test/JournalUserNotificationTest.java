@@ -177,10 +177,12 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		JournalArticle article = null;
 		WorkflowDefinitionLink workflowDefinitionLink = null;
 
+		String name = StringUtil.randomString();
+
 		try {
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				null, TestPropsValues.getCompanyId(), user.getUserId(),
-				"Url Constant Single Approver", "Url Constant Single Approver",
+				StringUtil.randomString(), name,
 				_getContentBytes("workflow-definition.xml"));
 
 			workflowDefinitionLink =
@@ -189,8 +191,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 						user.getUserId(), group.getCompanyId(),
 						group.getGroupId(), JournalFolder.class.getName(),
 						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-						JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
-						"Url Constant Single Approver", 1);
+						JournalArticleConstants.DDM_STRUCTURE_ID_ALL, name, 1);
 
 			article = JournalTestUtil.addArticle(
 				group.getGroupId(),
@@ -215,12 +216,10 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 				workflowDefinitionLink);
 
 			_workflowDefinitionManager.updateActive(
-				user.getCompanyId(), user.getUserId(),
-				"Url Constant Single Approver", 1, false);
+				user.getCompanyId(), user.getUserId(), name, 1, false);
 
 			_workflowDefinitionManager.undeployWorkflowDefinition(
-				user.getCompanyId(), user.getUserId(),
-				"Url Constant Single Approver", 1);
+				user.getCompanyId(), user.getUserId(), name, 1);
 		}
 	}
 

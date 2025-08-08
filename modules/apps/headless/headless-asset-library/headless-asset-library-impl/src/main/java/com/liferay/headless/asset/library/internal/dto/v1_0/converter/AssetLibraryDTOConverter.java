@@ -115,6 +115,7 @@ public class AssetLibraryDTOConverter
 								group.getGroupId())));
 				setSettings(() -> _toSettings(group));
 				setSiteId(group::getGroupId);
+				setType(() -> _assetLibraryTypes[depotEntry.getType()]);
 			}
 		};
 	}
@@ -163,6 +164,11 @@ public class AssetLibraryDTOConverter
 			}
 		};
 	}
+
+	private static final AssetLibrary.Type[] _assetLibraryTypes =
+		new AssetLibrary.Type[] {
+			AssetLibrary.Type.ASSET_LIBRARY, AssetLibrary.Type.SPACE
+		};
 
 	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;

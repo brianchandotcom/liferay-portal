@@ -13,15 +13,29 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -179,6 +193,93 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 	}
 
 	@Test
+	@TestInfo("LPD-62555")
+	public void testGetOrAddEmptyBaseModel() throws Exception {
+
+		// Lazy referencing disabled
+
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		User user1 = TestPropsValues.getUser();
+
+		_setUser(user1);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			PortalException.class,
+			StringBundler.concat(
+				NoSuchOrganizationException.class.getName(),
+				": No Organization exists with the key {",
+				"externalReferenceCode=", externalReferenceCode, ", companyId=",
+				TestPropsValues.getCompanyId(), "}"),
+			() ->
+				_organizationSystemObjectDefinitionManager.
+					getOrAddEmptyBaseModel(
+						externalReferenceCode, TestPropsValues.getCompanyId(),
+						user1));
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			// With permissions
+
+			Organization organization =
+				(Organization)
+					_organizationSystemObjectDefinitionManager.
+						getOrAddEmptyBaseModel(
+							RandomTestUtil.randomString(),
+							TestPropsValues.getCompanyId(), user1);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, organization.getStatus());
+
+			// Without permissions
+
+			User user2 = UserTestUtil.addUser();
+
+			_setUser(user2);
+
+			AssertUtils.assertFailure(
+				PortalException.class,
+				StringBundler.concat(
+					PrincipalException.MustHavePermission.class.getName(),
+					": User ", user2.getUserId(), " must have ",
+					PortletKeys.PORTAL, ",", PortletKeys.PORTAL,
+					",ADD_ORGANIZATION permission for null "),
+				() ->
+					_organizationSystemObjectDefinitionManager.
+						getOrAddEmptyBaseModel(
+							RandomTestUtil.randomString(),
+							TestPropsValues.getCompanyId(), user2));
+
+			// Without permissions, existing organization
+
+			AssertUtils.assertFailure(
+				PortalException.class,
+				StringBundler.concat(
+					PrincipalException.MustHavePermission.class.getName(),
+					": User ", user2.getUserId(),
+					" must have VIEW permission for ",
+					Organization.class.getName(), " ",
+					organization.getOrganizationId()),
+				() ->
+					_organizationSystemObjectDefinitionManager.
+						getOrAddEmptyBaseModel(
+							organization.getExternalReferenceCode(),
+							TestPropsValues.getCompanyId(), user2));
+		}
+
+		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(originalName);
+	}
+
+	@Test
 	public void testGetters() throws Exception {
 		Assert.assertEquals(
 			"L_ORGANIZATION",
@@ -248,6 +349,13 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 		}
 
 		return labelMap;
+	}
+
+	private void _setUser(User user) throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
 	}
 
 	@Inject

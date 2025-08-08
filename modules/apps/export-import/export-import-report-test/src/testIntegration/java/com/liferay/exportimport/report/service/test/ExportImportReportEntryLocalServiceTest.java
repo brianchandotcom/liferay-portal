@@ -78,11 +78,11 @@ public class ExportImportReportEntryLocalServiceTest {
 		Assert.assertEquals(scope, exportImportReportEntry.getScope());
 		Assert.assertEquals(scopeKey, exportImportReportEntry.getScopeKey());
 		Assert.assertEquals(
-			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
-			exportImportReportEntry.getStatus());
-		Assert.assertEquals(
 			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntry.getType());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
+			exportImportReportEntry.getStatus());
 
 		Assert.assertEquals(
 			count + 1, _exportImportReportEntryPersistence.countAll());
@@ -131,11 +131,11 @@ public class ExportImportReportEntryLocalServiceTest {
 		Assert.assertEquals(scope, exportImportReportEntry.getScope());
 		Assert.assertEquals(scopeKey, exportImportReportEntry.getScopeKey());
 		Assert.assertEquals(
-			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
-			exportImportReportEntry.getStatus());
-		Assert.assertEquals(
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntry.getType());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
+			exportImportReportEntry.getStatus());
 
 		Assert.assertEquals(
 			count + 1, _exportImportReportEntryPersistence.countAll());

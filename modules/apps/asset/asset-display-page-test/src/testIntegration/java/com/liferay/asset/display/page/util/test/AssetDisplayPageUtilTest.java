@@ -7,6 +7,7 @@ package com.liferay.asset.display.page.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.info.item.ERCInfoItemIdentifier;
@@ -15,6 +16,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -157,6 +159,91 @@ public class AssetDisplayPageUtilTest {
 	}
 
 	@Test
+	public void testHasAssetDisplayPageWithInfoItemIdentifier()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, false, true, false,
+				false, false, false, false, null,
+				RandomTestUtil.randomLocaleStringMap(),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				RandomTestUtil.randomLocaleStringMap(), true,
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				ListUtil.fromArray(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), "text")));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"text", RandomTestUtil.randomString()
+			).build(),
+			_serviceContext);
+
+		InfoItemReference infoItemReference = new InfoItemReference(
+			objectDefinition.getClassName(),
+			new ERCInfoItemIdentifier(objectEntry.getExternalReferenceCode()));
+
+		Assert.assertFalse(
+			AssetDisplayPageUtil.hasAssetDisplayPage(
+				_group.getGroupId(), infoItemReference));
+
+		long classNameId = _portal.getClassNameId(
+			objectDefinition.getClassName());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(), classNameId, 0, true,
+				WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertTrue(
+			AssetDisplayPageUtil.hasAssetDisplayPage(
+				_group.getGroupId(), infoItemReference));
+
+		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+
+		Assert.assertFalse(
+			AssetDisplayPageUtil.hasAssetDisplayPage(
+				_group.getGroupId(), infoItemReference));
+
+		layoutPageTemplateEntry =
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(), classNameId, 0, false,
+				WorkflowConstants.STATUS_APPROVED);
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+				objectEntry.getObjectEntryId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				AssetDisplayPageConstants.TYPE_SPECIFIC, _serviceContext);
+
+		Assert.assertTrue(
+			AssetDisplayPageUtil.hasAssetDisplayPage(
+				_group.getGroupId(), infoItemReference));
+
+		_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
+			assetDisplayPageEntry);
+
+		Assert.assertFalse(
+			AssetDisplayPageUtil.hasAssetDisplayPage(
+				_group.getGroupId(), infoItemReference));
+	}
+
+	@Test
 	public void testViewNondefaultAssetDisplayPageEntry() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -210,6 +297,10 @@ public class AssetDisplayPageUtilTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

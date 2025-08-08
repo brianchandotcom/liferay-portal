@@ -10,6 +10,7 @@ import {EVENTS} from '../info_panel/util/constants';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
+import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
@@ -26,10 +27,16 @@ const OBJECT_ENTRY_FOLDER_CLASSNAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
 export default function FolderFDSPropsTransformer({
+	additionalProps,
 	creationMenu,
 	itemsActions = [],
 	...otherProps
 }: {
+	additionalProps: {
+		autocompleteURL: string;
+		cmsGroupId?: number;
+		collaboratorURLs: Record<string, string>;
+	};
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;
@@ -67,7 +74,7 @@ export default function FolderFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
-		infoPanelComponent: () => AssetTypeInfoPanel(otherProps),
+		infoPanelComponent: () => AssetTypeInfoPanel({additionalProps}),
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'download') {
 				return {
@@ -94,10 +101,21 @@ export default function FolderFDSPropsTransformer({
 			itemData,
 		}: {
 			action: any;
-			itemData: [];
+			itemData: any;
 		}) => {
 			if (action?.data?.id === 'show-details') {
 				Liferay.fire(EVENTS.ASSET_DATA, {items: [{...itemData}]});
+			}
+			else if (action?.data?.id === 'share') {
+				const {autocompleteURL, collaboratorURLs} = additionalProps;
+
+				shareAction({
+					autocompleteURL,
+					collaboratorURL: collaboratorURLs[itemData.entryClassName],
+					creator: itemData.embedded.creator,
+					itemId: itemData.embedded.id,
+					title: itemData.embedded?.title,
+				});
 			}
 		},
 		onSelectedItemsChange: (selectedItems: any[]) => {

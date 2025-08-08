@@ -367,25 +367,36 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		_userGroupLocalService.addUserUserGroup(
 			user2.getUserId(), userGroup2.getUserGroupId());
 
-		_testSendNotification(
-			Arrays.asList(
-				NotificationRecipientSettingUtil.
-					createNotificationRecipientSetting(
-						"userGroupName", userGroup1.getName()),
-				NotificationRecipientSettingUtil.
-					createNotificationRecipientSetting(
-						"userGroupName", userGroup2.getName())),
-			NotificationRecipientConstants.TYPE_USER_GROUP);
+		try {
+			_testSendNotification(
+				Arrays.asList(
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"userGroupName", userGroup1.getName()),
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"userGroupName", userGroup2.getName())),
+				NotificationRecipientConstants.TYPE_USER_GROUP);
 
-		Assert.assertEquals(
-			1,
-			_userNotificationEventLocalService.getUserNotificationEventsCount(
-				user1.getUserId()));
+			Assert.assertEquals(
+				1,
+				_userNotificationEventLocalService.
+					getUserNotificationEventsCount(user1.getUserId()));
 
-		Assert.assertEquals(
-			1,
-			_userNotificationEventLocalService.getUserNotificationEventsCount(
-				user2.getUserId()));
+			Assert.assertEquals(
+				1,
+				_userNotificationEventLocalService.
+					getUserNotificationEventsCount(user2.getUserId()));
+		}
+		finally {
+			_userGroupLocalService.setUserUserGroups(
+				user1.getUserId(), new long[0]);
+			_userGroupLocalService.setUserUserGroups(
+				user2.getUserId(), new long[0]);
+
+			_userGroupLocalService.deleteUserGroup(userGroup1);
+			_userGroupLocalService.deleteUserGroup(userGroup2);
+		}
 	}
 
 	private User _addSiteRoleUser(Group group, Role siteRole) throws Exception {

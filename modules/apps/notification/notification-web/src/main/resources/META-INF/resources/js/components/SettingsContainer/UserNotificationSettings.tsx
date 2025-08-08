@@ -38,7 +38,7 @@ const RECIPIENT_OPTIONS = [
 		label: Liferay.Language.get('user'),
 		value: 'user',
 	},
-	{
+	Liferay.FeatureFlags['LPD-50091'] && {
 		label: Liferay.Language.get('user-group'),
 		value: 'user-group',
 	},

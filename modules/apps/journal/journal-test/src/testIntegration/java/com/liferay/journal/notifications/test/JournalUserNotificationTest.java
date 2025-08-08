@@ -173,9 +173,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	}
 
 	@Test
-	public void testUserNotificationWithCustomNotificationMessage()
-		throws Exception {
-
+	public void testUserNotificationWithArticlePreviewURL() throws Exception {
 		JournalArticle article = null;
 		WorkflowDefinitionLink workflowDefinitionLink = null;
 

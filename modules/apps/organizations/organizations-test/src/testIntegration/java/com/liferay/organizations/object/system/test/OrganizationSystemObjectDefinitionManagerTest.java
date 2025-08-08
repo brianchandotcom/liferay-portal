@@ -13,15 +13,29 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -31,6 +45,7 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -54,6 +69,21 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 		_organizationSystemObjectDefinitionManager =
 			_systemObjectDefinitionManagerRegistry.
 				getSystemObjectDefinitionManager("Organization");
+
+		_originalName = PrincipalThreadLocal.getName();
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		_user = TestPropsValues.getUser();
+
+		_setUser(_user);
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -179,6 +209,81 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 	}
 
 	@Test
+	@TestInfo("LPD-62555")
+	public void testGetOrAddEmptyBaseModel() throws Exception {
+
+		// Lazy referencing disabled
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			PortalException.class,
+			StringBundler.concat(
+				NoSuchOrganizationException.class.getName(),
+				": No Organization exists with the key {",
+				"externalReferenceCode=", externalReferenceCode, ", companyId=",
+				TestPropsValues.getCompanyId(), "}"),
+			() ->
+				_organizationSystemObjectDefinitionManager.
+					getOrAddEmptyBaseModel(
+						externalReferenceCode, TestPropsValues.getCompanyId(),
+						_user));
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			// With permissions
+
+			Organization organization =
+				(Organization)
+					_organizationSystemObjectDefinitionManager.
+						getOrAddEmptyBaseModel(
+							RandomTestUtil.randomString(),
+							TestPropsValues.getCompanyId(), _user);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, organization.getStatus());
+
+			// Without permissions
+
+			User user = UserTestUtil.addUser();
+
+			_setUser(user);
+
+			AssertUtils.assertFailure(
+				PortalException.class,
+				StringBundler.concat(
+					PrincipalException.MustHavePermission.class.getName(),
+					": User ", user.getUserId(), " must have ",
+					PortletKeys.PORTAL, ",", PortletKeys.PORTAL,
+					",ADD_ORGANIZATION permission for null "),
+				() ->
+					_organizationSystemObjectDefinitionManager.
+						getOrAddEmptyBaseModel(
+							RandomTestUtil.randomString(),
+							TestPropsValues.getCompanyId(), user));
+
+			// Without permissions, existing organization
+
+			AssertUtils.assertFailure(
+				PortalException.class,
+				StringBundler.concat(
+					PrincipalException.MustHavePermission.class.getName(),
+					": User ", user.getUserId(),
+					" must have VIEW permission for ",
+					Organization.class.getName(), " ",
+					organization.getOrganizationId()),
+				() ->
+					_organizationSystemObjectDefinitionManager.
+						getOrAddEmptyBaseModel(
+							organization.getExternalReferenceCode(),
+							TestPropsValues.getCompanyId(), user));
+		}
+	}
+
+	@Test
 	public void testGetters() throws Exception {
 		Assert.assertEquals(
 			"L_ORGANIZATION",
@@ -203,7 +308,7 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 
 	private long _addBaseModel(Map<String, Object> values) throws Exception {
 		return _organizationSystemObjectDefinitionManager.addBaseModel(
-			TestPropsValues.getUser(), values);
+			_user, values);
 	}
 
 	private void _assertCount(int count) throws Exception {
@@ -250,6 +355,13 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 		return labelMap;
 	}
 
+	private void _setUser(User user) throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+	}
+
 	@Inject
 	private Language _language;
 
@@ -261,9 +373,13 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 
 	private SystemObjectDefinitionManager
 		_organizationSystemObjectDefinitionManager;
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+
+	private User _user;
 
 }

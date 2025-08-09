@@ -87,10 +87,10 @@ public class ExamResultsRestController extends BaseRestController {
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/csv")
 	public ResponseEntity<String> postExamResultsCSV(
 		@AuthenticationPrincipal Jwt jwt,
-		@RequestParam("file") MultipartFile file) {
+		@RequestParam("file") MultipartFile multipartFile) {
 
 		try {
-			return ResponseEntity.ok(_process(jwt, file));
+			return ResponseEntity.ok(_process(jwt, multipartFile));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -104,12 +104,12 @@ public class ExamResultsRestController extends BaseRestController {
 	}
 
 	private String _process(
-			@AuthenticationPrincipal Jwt jwt, MultipartFile file)
+			@AuthenticationPrincipal Jwt jwt, MultipartFile multipartFile)
 		throws IOException {
 
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(
-					file.getInputStream(), StandardCharsets.UTF_8));
+					multipartFile.getInputStream(), StandardCharsets.UTF_8));
 			CSVParser csvParser = CSVFormat.DEFAULT.withFirstRecordAsHeader(
 			).parse(
 				bufferedReader

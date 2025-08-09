@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -159,6 +160,12 @@ public class ServiceBuilderModulesBatchTestClassGroup
 				portalGitWorkingDirectory.getModuleDirsList(
 					excludesPathMatchers, includesPathMatchers));
 		}
+
+		File portalImplBuildFile = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			"portal-impl/build.xml");
+
+		addTestClass(TestClassFactory.newTestClass(this, portalImplBuildFile));
 
 		addTestClasses(moduleDirsList);
 	}

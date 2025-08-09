@@ -278,6 +278,22 @@ public class TestClassFactory {
 			else if (batchTestClassGroup instanceof
 						ServiceBuilderModulesBatchTestClassGroup) {
 
+				if ((testClassFile == null) && jsonObject.has("file")) {
+					testClassFile = new File(jsonObject.getString("file"));
+				}
+
+				String testClassFileName = testClassFile.getName();
+
+				if (testClassFileName.endsWith(".xml")) {
+					if (jsonObject != null) {
+						return new ServiceBuilderAntTargetTestClass(
+							batchTestClassGroup, jsonObject);
+					}
+
+					return new ServiceBuilderAntTargetTestClass(
+						batchTestClassGroup, testClassFile);
+				}
+
 				if (jsonObject != null) {
 					return new ServiceBuilderModulesTestClass(
 						batchTestClassGroup, jsonObject);
@@ -295,7 +311,6 @@ public class TestClassFactory {
 
 				return new TCKTestClass(batchTestClassGroup, testClassFile);
 			}
-
 			if (jsonObject != null) {
 				return new BatchTestClass(batchTestClassGroup, jsonObject);
 			}

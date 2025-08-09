@@ -19,7 +19,7 @@ import org.json.JSONObject;
 /**
  * @author Kenji Heigel
  */
-public class SemVerModulesAxisTestClassGroup extends AxisTestClassGroup {
+public class SemVerModulesAxisTestClassGroup extends ModulesAxisTestClassGroup {
 
 	@Override
 	public List<DownstreamBuildReport> getCachedDownstreamBuildReports() {

@@ -66,29 +66,11 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 	}
 
 	@Override
-	public JSONObject getJSONObject() {
-		JSONObject jsonObject = super.getJSONObject();
-
-		if (_testPropertiesFile != null) {
-			jsonObject.put(
-				"test_properties_file", String.valueOf(_testPropertiesFile));
-		}
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				_testrayMainComponentName)) {
-
-			jsonObject.put(
-				"testray_main_component_name", _testrayMainComponentName);
-		}
-
-		return jsonObject;
-	}
-
-	@Override
 	public String getName() {
 		return getTestTaskName();
 	}
 
+	@Override
 	public String getTestrayMainComponentName() {
 		return _testrayMainComponentName;
 	}
@@ -169,6 +151,10 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 	@Override
 	protected List<File> getModulesProjectDirs() {
 		return Collections.singletonList(getModuleBaseDir());
+	}
+
+	protected File getTestPropertiesFile() {
+		return _testPropertiesFile;
 	}
 
 	private File _getAppBaseDir() {

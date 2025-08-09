@@ -26,9 +26,41 @@ public abstract class ModulesTestClass extends BaseTestClass {
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		jsonObject.put("task_name", _taskName);
+		jsonObject.put("task_name", getTaskName());
+
+		File testPropertiesFile = getTestPropertiesFile();
+
+		if ((testPropertiesFile != null) && testPropertiesFile.exists()) {
+			jsonObject.put(
+				"test_properties_file", String.valueOf(testPropertiesFile));
+		}
+
+		String testrayMainComponentName = getTestrayMainComponentName();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayMainComponentName)) {
+			jsonObject.put(
+				"testray_main_component_name", testrayMainComponentName);
+		}
 
 		return jsonObject;
+	}
+
+	public String getModulePath() {
+		String modulePath = getName();
+
+		if (modulePath.startsWith("modules")) {
+			modulePath = modulePath.substring(7);
+		}
+
+		return modulePath;
+	}
+
+	public String getTaskName() {
+		return _taskName;
+	}
+
+	public String getTestrayMainComponentName() {
+		return _testrayMainComponentName;
 	}
 
 	protected ModulesTestClass(
@@ -40,7 +72,26 @@ public abstract class ModulesTestClass extends BaseTestClass {
 		_taskName = taskName;
 
 		if (this instanceof JSUnitModulesTestClass) {
+			_testPropertiesFile = null;
+			_testrayMainComponentName = null;
+
 			return;
+		}
+
+		File testPropertiesBaseDir = getTestPropertiesBaseDir(
+			getTestClassFile());
+
+		if ((testPropertiesBaseDir != null) && testPropertiesBaseDir.exists()) {
+			_testPropertiesFile = new File(
+				testPropertiesBaseDir, "test.properties");
+
+			_testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getProperties(_testPropertiesFile),
+				"testray.main.component.name");
+		}
+		else {
+			_testPropertiesFile = null;
+			_testrayMainComponentName = null;
 		}
 
 		for (File modulesProjectDir : getModulesProjectDirs()) {
@@ -60,6 +111,17 @@ public abstract class ModulesTestClass extends BaseTestClass {
 		super(batchTestClassGroup, jsonObject);
 
 		_taskName = jsonObject.getString("task_name");
+
+		if (jsonObject.has("test_properties_file")) {
+			_testPropertiesFile = new File(
+				jsonObject.getString("test_properties_file"));
+		}
+		else {
+			_testPropertiesFile = null;
+		}
+
+		_testrayMainComponentName = jsonObject.optString(
+			"testray_main_component_name");
 	}
 
 	protected File getModuleBaseDir() {
@@ -82,10 +144,12 @@ public abstract class ModulesTestClass extends BaseTestClass {
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 	}
 
-	protected String getTaskName() {
-		return _taskName;
+	protected File getTestPropertiesFile() {
+		return _testPropertiesFile;
 	}
 
 	private final String _taskName;
+	private final File _testPropertiesFile;
+	private final String _testrayMainComponentName;
 
 }

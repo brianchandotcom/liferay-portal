@@ -105,7 +105,7 @@ public class ExamResultsRestController extends BaseRestController {
 
 	private String _process(
 			@AuthenticationPrincipal Jwt jwt, MultipartFile multipartFile)
-		throws IOException {
+		throws Exception {
 
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(
@@ -173,9 +173,6 @@ public class ExamResultsRestController extends BaseRestController {
 					"/o/c/p2s3examresults/batch?createStrategy=UPSERT"
 				).build(
 				).toUri());
-		}
-		catch (Exception exception) {
-			throw new IOException(exception);
 		}
 	}
 

@@ -387,9 +387,9 @@ public class Sidecar {
 
 		// Apply agent to load modified classes
 
-		URL sidecarAgentBundleURL = _getBundleURL(SidecarAgent.class);
+		Path agentPath = null;
 
-		Path agentPath;
+		URL sidecarAgentBundleURL = _getBundleURL(SidecarAgent.class);
 
 		try {
 			agentPath = Path.of(sidecarAgentBundleURL.toURI());

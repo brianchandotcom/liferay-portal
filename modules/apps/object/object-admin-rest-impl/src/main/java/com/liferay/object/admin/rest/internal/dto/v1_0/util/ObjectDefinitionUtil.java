@@ -29,6 +29,7 @@ import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.util.comparator.ObjectFieldCreateDateComparator;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -221,7 +222,8 @@ public class ObjectDefinitionUtil {
 						serviceBuilderObjectDefinition.
 							getObjectDefinitionSettings(),
 						objectDefinitionSetting -> _toObjectDefinitionSetting(
-							groupLocalService, objectDefinitionSetting),
+							groupLocalService, objectDefinitionLocalService,
+							objectDefinitionSetting),
 						ObjectDefinitionSetting.class));
 				setObjectFields(
 					() -> TransformUtil.transformToArray(
@@ -349,8 +351,18 @@ public class ObjectDefinitionUtil {
 		};
 	}
 
+	private static String _getValue(
+		UnsafeFunction<String, String, Exception> unsafeFunction,
+		String value) {
+
+		return StringUtil.merge(
+			TransformUtil.transform(
+				value.split("\\s*,\\s*"), unsafeFunction, String.class));
+	}
+
 	private static ObjectDefinitionSetting _toObjectDefinitionSetting(
 		GroupLocalService groupLocalService,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		com.liferay.object.model.ObjectDefinitionSetting
 			serviceBuilderObjectDefinitionSetting) {
 
@@ -372,6 +384,16 @@ public class ObjectDefinitionUtil {
 								NAME_ACCEPTED_GROUP_EXTERNAL_REFERENCE_CODES;
 						}
 
+						if (StringUtil.equals(
+								ObjectDefinitionSettingConstants.
+									NAME_ROOT_OBJECT_DEFINITION_IDS,
+								serviceBuilderObjectDefinitionSetting.
+									getName())) {
+
+							return ObjectDefinitionSettingConstants.
+								NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES;
+						}
+
 						return serviceBuilderObjectDefinitionSetting.getName();
 					});
 				setValue(
@@ -382,21 +404,37 @@ public class ObjectDefinitionUtil {
 								serviceBuilderObjectDefinitionSetting.
 									getName())) {
 
-							String groupIds = String.valueOf(
+							return _getValue(
+								groupId -> {
+									Group group = groupLocalService.getGroup(
+										GetterUtil.getLong(groupId));
+
+									return group.getExternalReferenceCode();
+								},
 								serviceBuilderObjectDefinitionSetting.
 									getValue());
+						}
 
-							return StringUtil.merge(
-								TransformUtil.transform(
-									groupIds.split("\\s*,\\s*"),
-									groupId -> {
-										Group group =
-											groupLocalService.getGroup(
-												GetterUtil.getLong(groupId));
+						if (StringUtil.equals(
+								ObjectDefinitionSettingConstants.
+									NAME_ROOT_OBJECT_DEFINITION_IDS,
+								serviceBuilderObjectDefinitionSetting.
+									getName())) {
 
-										return group.getExternalReferenceCode();
-									},
-									String.class));
+							return _getValue(
+								rootObjectDefinitionId -> {
+									com.liferay.object.model.ObjectDefinition
+										objectDefinition =
+											objectDefinitionLocalService.
+												getObjectDefinition(
+													GetterUtil.getLong(
+														rootObjectDefinitionId));
+
+									return objectDefinition.
+										getExternalReferenceCode();
+								},
+								serviceBuilderObjectDefinitionSetting.
+									getValue());
 						}
 
 						return serviceBuilderObjectDefinitionSetting.getValue();

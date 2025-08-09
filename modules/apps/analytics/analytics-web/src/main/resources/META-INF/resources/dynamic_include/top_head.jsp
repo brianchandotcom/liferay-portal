@@ -144,10 +144,10 @@
 				var dxpMiddleware = function (request) {
 					request.context.canonicalUrl = themeDisplay.getCanonicalURL();
 					request.context.channelId = analyticsClientChannelId;
-					request.context.layoutExternalReferenceCode =
-						analyticsExternalReferenceCode;
 					request.context.groupId =
 						themeDisplay.getScopeGroupIdOrLiveGroupId();
+					request.context.layoutExternalReferenceCode =
+						analyticsExternalReferenceCode;
 
 					return request;
 				};

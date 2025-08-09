@@ -8,8 +8,6 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
-import com.liferay.jenkins.results.parser.test.clazz.TestClass;
-import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,16 +66,7 @@ public class CompileModulesBatchTestClassGroup
 					excludesPathMatchers, includesPathMatchers));
 		}
 
-		for (File moduleDir : moduleDirsList) {
-			TestClass testClass = TestClassFactory.newTestClass(
-				this, moduleDir);
-
-			if (!testClass.hasTestClassMethods()) {
-				continue;
-			}
-
-			addTestClass(testClass);
-		}
+		addTestClasses(moduleDirsList);
 	}
 
 }

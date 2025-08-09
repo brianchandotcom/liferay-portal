@@ -180,12 +180,12 @@ public class DBResourceUtil {
 		return tableNames;
 	}
 
-	private static Map<String, String[]>
-		_getTablesComposedPrimaryKeyColumnNames(String sql) {
+	private static Map<String, String[]> _getTablesPrimaryKeyColumnNames(
+		Pattern pattern, String sql) {
 
 		Map<String, String[]> tablesPrimaryKeyColumnNames = new HashMap<>();
 
-		Matcher matcher = _composedPrimaryKeyPattern.matcher(sql);
+		Matcher matcher = pattern.matcher(sql);
 
 		while (matcher.find()) {
 			tablesPrimaryKeyColumnNames.put(
@@ -197,28 +197,13 @@ public class DBResourceUtil {
 		return tablesPrimaryKeyColumnNames;
 	}
 
-	private static Map<String, String[]> _getTablesInlinedPrimaryKeyColumnNames(
-		String sql) {
-
-		Map<String, String[]> tablesPrimaryKeyColumnNames = new HashMap<>();
-
-		Matcher matcher = _inlinedPrimaryKeyPattern.matcher(sql);
-
-		while (matcher.find()) {
-			tablesPrimaryKeyColumnNames.put(
-				matcher.group(1), new String[] {matcher.group(2)});
-		}
-
-		return tablesPrimaryKeyColumnNames;
-	}
-
 	private static Map<String, String[]> _getTablesPrimaryKeyColumnNames(
 		String sql) {
 
 		return HashMapBuilder.putAll(
-			_getTablesComposedPrimaryKeyColumnNames(sql)
+			_getTablesPrimaryKeyColumnNames(_composedPrimaryKeyPattern, sql)
 		).putAll(
-			_getTablesInlinedPrimaryKeyColumnNames(sql)
+			_getTablesPrimaryKeyColumnNames(_inlinedPrimaryKeyPattern, sql)
 		).build();
 	}
 

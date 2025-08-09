@@ -254,14 +254,14 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		for (CheckInfo checkInfo : checkInfos) {
 			String checkName = checkInfo.getName();
 
-			String documentationlink = _getDocumentationLink(
+			String documentationLink = _getDocumentationLink(
 				rootFolderLocation, documentationChecksDir, checkInfo);
 
-			if (documentationlink != null) {
+			if (documentationLink != null) {
 				sb.append("[");
 				sb.append(checkName);
 				sb.append("](");
-				sb.append(documentationlink);
+				sb.append(documentationLink);
 				sb.append(") | ");
 			}
 			else {

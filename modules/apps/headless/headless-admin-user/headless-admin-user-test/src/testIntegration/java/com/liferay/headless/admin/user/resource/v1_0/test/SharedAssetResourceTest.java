@@ -114,9 +114,8 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 		super.testGetMyUserAccountSharedAssetsSharedWithMePage();
 
 		Page<SharedAsset> page =
-			sharedAssetResource.
-				getMyUserAccountSharedAssetsSharedWithMePage(
-					null, null, null, Pagination.of(1, 10), null);
+			sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
+				null, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -150,8 +149,8 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 			StringPool.TRUE);
 
 		_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
-			assetLibraryDepotEntry.getGroupId(),
-			objectDefinition, randomSharedAsset());
+			assetLibraryDepotEntry.getGroupId(), objectDefinition,
+			randomSharedAsset());
 
 		DepotEntry spaceDepotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
@@ -168,31 +167,24 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 			spaceDepotEntry.getGroupId(), objectDefinition,
 			randomSharedAsset());
 
-		page =
-			sharedAssetResource.
-				getMyUserAccountSharedAssetsSharedWithMePage(
-					null, null, null, Pagination.of(1, 10), null);
+		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
+			null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 4, page.getTotalCount());
 
-		page =
-			sharedAssetResource.
-				getMyUserAccountSharedAssetsSharedWithMePage(
-					null, null, "(spaceDepotEntry eq false)",
-					Pagination.of(1, 10), null);
+		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
+			null, null, "(spaceDepotEntry eq false)", Pagination.of(1, 10),
+			null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		page =
-			sharedAssetResource.
-				getMyUserAccountSharedAssetsSharedWithMePage(
-					null, null, "(spaceDepotEntry eq true)",
-					Pagination.of(1, 10), null);
+		page = sharedAssetResource.getMyUserAccountSharedAssetsSharedWithMePage(
+			null, null, "(spaceDepotEntry eq true)", Pagination.of(1, 10),
+			null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_depotEntryLocalService.deleteDepotEntry(assetLibraryDepotEntry);
 		_depotEntryLocalService.deleteDepotEntry(spaceDepotEntry);

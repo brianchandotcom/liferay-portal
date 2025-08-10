@@ -49,7 +49,8 @@ public class SharingEntryModelDocumentContributor
 			"localized_title", _getTitleMap(sharingEntry), true);
 		document.addKeyword(
 			"sharingEntryId", String.valueOf(sharingEntry.getSharingEntryId()));
-		document.addKeyword("space", _isSpace(sharingEntry.getGroupId()));
+		document.addKeyword(
+			"spaceDepotEntry", _isSpaceDepotEntry(sharingEntry.getGroupId()));
 		document.addKeyword(
 			"toUserGroupId", String.valueOf(sharingEntry.getToUserGroupId()));
 		document.addKeyword(
@@ -68,7 +69,7 @@ public class SharingEntryModelDocumentContributor
 		return sharingEntryInterpreter.getTitleMap(sharingEntry);
 	}
 
-	private boolean _isSpace(long groupId) {
+	private boolean _isSpaceDepotEntry(long groupId) {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
 		if (group == null) {

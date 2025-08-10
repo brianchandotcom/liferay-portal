@@ -121,7 +121,6 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 				new HashMap<>(), DepotConstants.TYPE_ASSET_LIBRARY,
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _user.getUserId()));
-
 		DepotEntry spaceDepotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -178,16 +177,16 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 			page =
 				sharedAssetResource.
 					getMyUserAccountSharedAssetsSharedWithMePage(
-						null, null, "(space eq false)", Pagination.of(1, 10),
-						null);
+						null, null, "(spaceDepotEntry eq false)",
+						Pagination.of(1, 10), null);
 
 			Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
 			page =
 				sharedAssetResource.
 					getMyUserAccountSharedAssetsSharedWithMePage(
-						null, null, "(space eq true)", Pagination.of(1, 10),
-						null);
+						null, null, "(spaceDepotEntry eq true)",
+						Pagination.of(1, 10), null);
 
 			Assert.assertEquals(2, page.getTotalCount());
 		}

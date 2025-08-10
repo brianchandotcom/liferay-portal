@@ -54,15 +54,6 @@ public class TestClassGroupFactory {
 				(JUnitBatchTestClassGroup)batchTestClassGroup);
 		}
 
-		if (batchTestClassGroup instanceof PlaywrightBatchTestClassGroup) {
-			return new PlaywrightAxisTestClassGroup(batchTestClassGroup);
-		}
-
-		if (batchTestClassGroup instanceof PluginsGulpBatchTestClassGroup) {
-			return new PluginsGulpAxisTestClassGroup(
-				(PluginsGulpBatchTestClassGroup)batchTestClassGroup);
-		}
-
 		if (batchTestClassGroup instanceof ModulesBatchTestClassGroup) {
 			if (batchTestClassGroup instanceof
 					SemVerModulesBatchTestClassGroup) {
@@ -73,6 +64,15 @@ public class TestClassGroupFactory {
 
 			return new ModulesAxisTestClassGroup(
 				(ModulesBatchTestClassGroup)batchTestClassGroup);
+		}
+
+		if (batchTestClassGroup instanceof PlaywrightBatchTestClassGroup) {
+			return new PlaywrightAxisTestClassGroup(batchTestClassGroup);
+		}
+
+		if (batchTestClassGroup instanceof PluginsGulpBatchTestClassGroup) {
+			return new PluginsGulpAxisTestClassGroup(
+				(PluginsGulpBatchTestClassGroup)batchTestClassGroup);
 		}
 
 		return new AxisTestClassGroup(batchTestClassGroup);

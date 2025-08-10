@@ -87,13 +87,6 @@ public class TestrayFactory {
 					testrayBuild, topLevelBuildReport, axisTestClassGroup,
 					testClass);
 			}
-			else if (axisTestClassGroup instanceof
-						PlaywrightAxisTestClassGroup) {
-
-				return new PlaywrightBatchBuildTestrayCaseResult(
-					testrayBuild, topLevelBuildReport, axisTestClassGroup,
-					testClass, testClassMethod);
-			}
 			else if (axisTestClassGroup instanceof ModulesAxisTestClassGroup) {
 				if (testClass instanceof ServiceBuilderAntTargetTestClass) {
 					return new AntTargetBatchBuildTestrayCaseResult(
@@ -104,6 +97,13 @@ public class TestrayFactory {
 				return new ModulesBatchBuildTestrayCaseResult(
 					testrayBuild, topLevelBuildReport, axisTestClassGroup,
 					testClass);
+			}
+			else if (axisTestClassGroup instanceof
+						PlaywrightAxisTestClassGroup) {
+
+				return new PlaywrightBatchBuildTestrayCaseResult(
+					testrayBuild, topLevelBuildReport, axisTestClassGroup,
+					testClass, testClassMethod);
 			}
 		}
 

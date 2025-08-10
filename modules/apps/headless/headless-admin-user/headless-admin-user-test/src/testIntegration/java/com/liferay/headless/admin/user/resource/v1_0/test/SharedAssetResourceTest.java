@@ -113,6 +113,16 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 		super.testGetMyUserAccountSharedAssetsSharedWithMePage();
 
+		Page<SharedAsset> page =
+			sharedAssetResource.
+				getMyUserAccountSharedAssetsSharedWithMePage(
+					null, null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
+			randomSharedAsset());
+
 		DepotEntry assetLibraryDepotEntry =
 			_depotEntryLocalService.addDepotEntry(
 				HashMapBuilder.put(
@@ -121,13 +131,6 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 				new HashMap<>(), DepotConstants.TYPE_ASSET_LIBRARY,
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _user.getUserId()));
-		DepotEntry spaceDepotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			new HashMap<>(), DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), _user.getUserId()));
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -140,16 +143,6 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 					).build()),
 				ObjectDefinitionConstants.SCOPE_DEPOT);
 
-		Page<SharedAsset> page =
-			sharedAssetResource.
-				getMyUserAccountSharedAssetsSharedWithMePage(
-					null, null, null, Pagination.of(1, 10), null);
-
-		long totalCount = page.getTotalCount();
-
-		testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
-			randomSharedAsset());
-
 		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
 			objectDefinition.getUserId(),
 			objectDefinition.getObjectDefinitionId(),
@@ -159,6 +152,15 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 		_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
 			assetLibraryDepotEntry.getGroupId(),
 			objectDefinition, randomSharedAsset());
+
+		DepotEntry spaceDepotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			new HashMap<>(), DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), _user.getUserId()));
+
 		_testGetMyUserAccountSharedAssetsSharedWithMePage_addSharedAsset(
 			spaceDepotEntry.getGroupId(), objectDefinition,
 			randomSharedAsset());

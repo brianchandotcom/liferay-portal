@@ -21,6 +21,7 @@ ViewSpaceContentsSummarySectionDisplayContext viewSpaceContentsSummarySectionDis
 
 	<div class="cms-fds-fluid cms-section custom-empty-state">
 		<frontend-data-set:headless-display
+			additionalProps="<%= viewSpaceContentsSummarySectionDisplayContext.getAdditionalProps() %>"
 			apiURL="<%= viewSpaceContentsSummarySectionDisplayContext.getAPIURL() %>"
 			creationMenu="<%= viewSpaceContentsSummarySectionDisplayContext.getCreationMenu() %>"
 			emptyState="<%= viewSpaceContentsSummarySectionDisplayContext.getEmptyState() %>"

@@ -185,7 +185,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		}
 
 		if (dbType == DBType.SQLSERVER) {
-			_checkSqlServerReadCommittedSnapshot(dataSource);
+			_checkSQLServer(dataSource);
 		}
 
 		return dataSource;
@@ -331,35 +331,31 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		}
 	}
 
-	private void _checkSqlServerReadCommittedSnapshot(DataSource dataSource) {
+	private void _checkSQLServer(DataSource dataSource) {
 		try (Connection connection = dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select name, is_read_committed_snapshot_on from " +
 					"sys.databases where name = db_name()");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			if (resultSet.next()) {
-				boolean readCommittedSnapshotOn = resultSet.getBoolean(
-					"is_read_committed_snapshot_on");
+			if (!resultSet.next() ||
+				resultSet.getBoolean("is_read_committed_snapshot_on") ||
+				!_log.isWarnEnabled()) {
 
-				if (!readCommittedSnapshotOn) {
-					if (_log.isWarnEnabled()) {
-						String databaseName = resultSet.getString("name");
-
-						_log.warn(
-							StringBundler.concat(
-								"read_committed_snapshot is disabled for ",
-								"database '", databaseName,
-								"'. This may cause deadlock issues. Enable it ",
-								"with: alter database ", databaseName,
-								" set read_committed_snapshot on"));
-					}
-				}
+				return;
 			}
+
+			String name = resultSet.getString("name");
+
+			_log.warn(
+				StringBundler.concat(
+					"SQL Server may have deadlocks because ",
+					"\"read_committed_snapshot\" is disabled for database \"",
+					name, "\". To enable, execute: alter database ", name,
+					" set read_committed_snapshot on"));
 		}
 		catch (Exception exception) {
-			_log.error(
-				"Unable to check read_committed_snapshot setting", exception);
+			_log.error("Unable to check SQL Server", exception);
 		}
 	}
 

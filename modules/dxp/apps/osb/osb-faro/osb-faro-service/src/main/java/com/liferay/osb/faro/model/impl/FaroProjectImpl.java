@@ -16,10 +16,22 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.InetAddress;
 
+import java.util.Date;
+
 /**
  * @author Matthew Kong
  */
 public class FaroProjectImpl extends FaroProjectBaseImpl {
+
+	@Override
+	public Date getLastAnniversaryDate() throws Exception {
+		if (_subscriptionJSONObject == null) {
+			_subscriptionJSONObject = JSONFactoryUtil.createJSONObject(
+				getSubscription());
+		}
+
+		return new Date(_subscriptionJSONObject.getLong("lastAnniversaryDate"));
+	}
 
 	@Override
 	public String getProjectId() {
@@ -108,5 +120,7 @@ public class FaroProjectImpl extends FaroProjectBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FaroProjectImpl.class);
+
+	private JSONObject _subscriptionJSONObject;
 
 }

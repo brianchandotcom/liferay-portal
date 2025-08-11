@@ -69,16 +69,16 @@ public class AnalyticsMessageDataCleanupPreupgradeProcessTest
 
 	@Test
 	public void testUpgradeWithContent() throws Exception {
+		runSQL(
+			StringBundler.concat(
+				"insert into AnalyticsMessage (mvccVersion, ctCollectionId, ",
+				"analyticsMessageId, companyId) values (0, 0, ",
+				RandomTestUtil.nextLong(), ", ",
+				CompanyThreadLocal.getCompanyId(), ")"));
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				AnalyticsMessageDataCleanupPreupgradeProcess.class.getName(),
 				LoggerTestUtil.INFO)) {
-
-			runSQL(
-				StringBundler.concat(
-					"insert into AnalyticsMessage (mvccVersion, ",
-					"ctCollectionId, analyticsMessageId, companyId) values ",
-					"(0, 0, ", RandomTestUtil.nextLong(), ", ",
-					CompanyThreadLocal.getCompanyId(), ")"));
 
 			upgrade();
 

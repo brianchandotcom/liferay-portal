@@ -5,17 +5,26 @@
 
 package com.liferay.roles.admin.internal.security.permission.contributor;
 
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.contributor.RoleCollection;
 import com.liferay.portal.kernel.security.permission.contributor.RoleContributor;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.Collection;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +48,7 @@ public class SiteRoleContributor implements RoleContributor {
 			Group group = _groupLocalService.getGroup(
 				roleCollection.getGroupId());
 
-			if (group.isCMS()) {
+			if (group.isCMS() && _isDepotMember(group, roleCollection)) {
 				Role role = _roleLocalService.getRole(
 					roleCollection.getCompanyId(), RoleConstants.SITE_MEMBER);
 
@@ -51,6 +60,48 @@ public class SiteRoleContributor implements RoleContributor {
 		}
 	}
 
+	private boolean _isDepotMember(Group group, RoleCollection roleCollection)
+		throws PortalException {
+
+		User user = roleCollection.getUser();
+
+		if (group.getCompanyId() != user.getCompanyId()) {
+			return false;
+		}
+
+		if (ListUtil.exists(user.getGroups(), Group::isDepot)) {
+			return true;
+		}
+
+		UserBag userBag = roleCollection.getUserBag();
+
+		Collection<Role> roles = userBag.getRoles();
+
+		List<UserGroupRole> userGroupRoles =
+			_userGroupRoleLocalService.getUserGroupRoles(user.getUserId());
+
+		for (String roleName : _ASSET_LIBRARY_ROLES) {
+			Role role = _roleLocalService.fetchRole(
+				group.getCompanyId(), roleName);
+
+			if (roles.contains(role) ||
+				ListUtil.exists(
+					userGroupRoles,
+					userGroupRole ->
+						userGroupRole.getRoleId() == role.getRoleId())) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final String[] _ASSET_LIBRARY_ROLES = {
+		DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+		DepotRolesConstants.ASSET_LIBRARY_OWNER
+	};
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteRoleContributor.class);
 
@@ -59,5 +110,8 @@ public class SiteRoleContributor implements RoleContributor {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

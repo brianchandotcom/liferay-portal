@@ -60,9 +60,7 @@ public class AnalyticsMessageDataCleanupPreupgradeProcessTest
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		if (_connection != null) {
-			_connection.close();
-		}
+		DataAccess.cleanUp(_connection);
 
 		if (_safeCloseable != null) {
 			_safeCloseable.close();

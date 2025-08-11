@@ -26,15 +26,11 @@ public class NullUnicodeContentDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
 
-		if (dbInspector.hasTable("DDMContent") &&
-			dbInspector.hasColumn("DDMContent", "data_")) {
-
+		if (dbInspector.hasColumn("DDMContent", "data_")) {
 			_cleanUp("data_", dbInspector, "DDMContent");
 		}
 
-		if (dbInspector.hasTable("JournalArticle") &&
-			dbInspector.hasColumn("JournalArticle", "content")) {
-
+		if (dbInspector.hasColumn("JournalArticle", "content")) {
 			_cleanUp("content", dbInspector, "JournalArticle");
 		}
 	}

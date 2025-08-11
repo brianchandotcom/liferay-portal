@@ -4,6 +4,8 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
+import path from 'path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
@@ -19,6 +21,7 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import getRandomString from '../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {stagingPageTest} from '../../export-import-web/main/fixtures/stagingPageTest';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
@@ -138,6 +141,99 @@ test(
 		);
 
 		await stagingConfigurationPage.enableLocalStaging({});
+	}
+);
+
+test(
+	'Verify that the admin could configure staging to ignore previews and thumbnails during the local staging publish process',
+	{tag: ['@LPS-189191', '@LPS-190360']},
+	async ({apiHelpers, instanceSettingsPage, page}) => {
+		const siteName = getRandomString();
+		const layoutName = getRandomString();
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: siteName,
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {type: 'content'},
+			title: layoutName,
+		});
+
+		await instanceSettingsPage.goToInstanceSetting(
+			'Infrastructure',
+			'Export/Import, Staging'
+		);
+
+		await instanceSettingsPage.checkRadioSetting(
+			true,
+			'Include Thumbnails And Previews During Staging'
+		);
+
+		await apiHelpers.jsonWebServicesStaging.enableLocalStaging({
+			groupId: site.id,
+		});
+
+		await page.waitForTimeout(2000);
+
+		const stagingSite =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				`${site.friendlyUrlPath}-staging`
+			);
+
+		await apiHelpers.headlessDelivery.postDocument(
+			stagingSite.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/Document.jpg')
+			),
+			{
+				fileName: 'Document.jpg',
+				title: 'Document.jpg',
+			}
+		);
+
+		await page.goto(
+			`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
+		);
+
+		await page.getByRole('button', {name: 'Publish to Live'}).click();
+
+		const publishToLiveIframe = page.frameLocator(
+			'iframe[title="Publish to Live"]'
+		);
+		await page
+			.frameLocator('iframe[title="Publish to Live"]')
+			.getByRole('link', {name: 'Switch to Advanced Publish'})
+			.click();
+
+		const documentsAndMedia = publishToLiveIframe
+			.locator(
+				'[id="_com_liferay_exportimport_web_portlet_ExportImportPortlet_selectContents"] ul'
+			)
+			.filter({hasText: 'Documents and Media '});
+		await documentsAndMedia.getByRole('button', {name: 'Change'}).click();
+		await documentsAndMedia.getByLabel('Previews and Thumbnails').check();
+
+		await publishToLiveIframe
+			.getByRole('button', {name: 'Publish to Live'})
+			.click();
+
+		await expect(
+			await publishToLiveIframe.getByText('Successful')
+		).toBeVisible();
+		await page.goto(
+			`/group${stagingSite.friendlyUrlPath}${PORTLET_URLS.documentLibrary}`
+		);
+
+		expect(
+			await page
+				.locator('.card')
+				.filter({has: page.getByRole('link', {name: 'Document.jpg'})})
+				.locator('img')
+		).toBeVisible();
 	}
 );
 

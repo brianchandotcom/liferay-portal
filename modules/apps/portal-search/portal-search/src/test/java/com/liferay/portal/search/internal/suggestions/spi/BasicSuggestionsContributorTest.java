@@ -363,8 +363,6 @@ public class BasicSuggestionsContributorTest {
 		List<SearchHit> searchHitsList = new ArrayList<>();
 
 		for (int i = 1; i <= totalHits; i++) {
-			SearchHit searchHit = Mockito.mock(SearchHit.class);
-
 			ClassName className = Mockito.mock(ClassName.class);
 
 			Mockito.doReturn(
@@ -384,6 +382,30 @@ public class BasicSuggestionsContributorTest {
 			Document document = Mockito.mock(Document.class);
 
 			Mockito.doReturn(
+				Long.valueOf(1)
+			).when(
+				document
+			).getLong(
+				Mockito.eq(Field.ENTRY_CLASS_PK)
+			);
+
+			Mockito.doReturn(
+				"Class Name 1"
+			).when(
+				document
+			).getString(
+				Mockito.eq(Field.ENTRY_CLASS_NAME)
+			);
+
+			Mockito.doReturn(
+				"Document Title " + i
+			).when(
+				document
+			).getString(
+				Mockito.startsWith("title")
+			);
+
+			Mockito.doReturn(
 				Long.valueOf(i)
 			).when(
 				document
@@ -399,29 +421,7 @@ public class BasicSuggestionsContributorTest {
 				Mockito.eq(Field.CLASS_PK)
 			);
 
-			Mockito.doReturn(
-				"Class Name 1"
-			).when(
-				document
-			).getString(
-				Mockito.eq(Field.ENTRY_CLASS_NAME)
-			);
-
-			Mockito.doReturn(
-				Long.valueOf(1)
-			).when(
-				document
-			).getLong(
-				Mockito.eq(Field.ENTRY_CLASS_PK)
-			);
-
-			Mockito.doReturn(
-				"Document Title " + i
-			).when(
-				document
-			).getString(
-				Mockito.startsWith("title")
-			);
+			SearchHit searchHit = Mockito.mock(SearchHit.class);
 
 			Mockito.doReturn(
 				document

@@ -57,6 +57,9 @@ public interface DepotEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DepotEntry fetchGroupDepotEntry(long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DepotEntry> getCurrentAndGroupConnectedDepotEntries(
 			long groupId, int type, int start, int end)
 		throws PortalException;

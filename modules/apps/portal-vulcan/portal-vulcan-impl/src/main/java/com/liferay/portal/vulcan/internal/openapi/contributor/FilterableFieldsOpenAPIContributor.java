@@ -33,7 +33,7 @@ import io.swagger.v3.oas.models.parameters.Parameter;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 
 import java.util.AbstractMap;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -69,11 +69,11 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			return;
 		}
 
-		Map<String, List<String>> schemaNameFilterableFieldNames =
+		Map<String, Map<String, String>> schemaNameFilterableFieldNames =
 			new HashMap<>();
 
 		for (Schema schema : schemas.values()) {
-			List<String> filterableFieldNames = _getFilterableFieldNames(
+			Map<String, String> filterableFieldNames = _getFilterableFieldNames(
 				openAPIContext, schema);
 
 			schema.addExtension("x-filterable", filterableFieldNames);
@@ -244,7 +244,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		return null;
 	}
 
-	private List<String> _getFilterableFieldNames(
+	private Map<String, String> _getFilterableFieldNames(
 			OpenAPIContext openAPIContext, Schema schema)
 		throws Exception {
 
@@ -252,10 +252,10 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			openAPIContext, schema);
 
 		if (MapUtil.isEmpty(entityFieldsMap)) {
-			return new ArrayList<>();
+			return Collections.emptyMap();
 		}
 
-		List<String> filterableFieldNames = new ArrayList<>();
+		Map<String, String> filterableFieldMapping = new HashMap<>();
 
 		Set<EntityField> visitedEntityFields = new HashSet<>();
 
@@ -274,7 +274,10 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			EntityField entityField = entry1.getValue();
 
 			if (!(entityField instanceof ComplexEntityField)) {
-				filterableFieldNames.add(fieldName);
+				filterableFieldMapping.put(
+					fieldName,
+					entityField.getType(
+					).name());
 
 				continue;
 			}
@@ -299,11 +302,12 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			}
 		}
 
-		return ListUtil.sort(filterableFieldNames);
+		return filterableFieldMapping;
 	}
 
 	private void _setXFilterable(
-		Map<String, List<String>> filterableFieldNames, Operation operation) {
+		Map<String, Map<String, String>> filterableFieldNames,
+		Operation operation) {
 
 		if (operation == null) {
 			return;

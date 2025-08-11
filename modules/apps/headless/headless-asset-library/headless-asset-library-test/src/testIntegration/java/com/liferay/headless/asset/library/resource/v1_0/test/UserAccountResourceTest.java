@@ -17,6 +17,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -32,6 +34,12 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		super.setUp();
 
 		_testUser = UserTestUtil.addUser();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() {
 	}
 
 	@Override

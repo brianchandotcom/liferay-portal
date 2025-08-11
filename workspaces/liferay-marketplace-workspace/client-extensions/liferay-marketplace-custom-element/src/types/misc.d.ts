@@ -41,6 +41,7 @@ type ContactSales = {
 };
 
 type DefaultProperties = {
+	accountExternalReferenceCode: string;
 	accountId: string;
 	analyticsCloudURL: string;
 	cloudConsoleURL: string;

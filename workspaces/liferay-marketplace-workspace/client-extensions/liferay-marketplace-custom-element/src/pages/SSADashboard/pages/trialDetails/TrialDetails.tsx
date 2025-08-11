@@ -73,7 +73,7 @@ const TrialDetails = () => {
 				<DropDown
 					className="align-items-center cursor-pointer d-flex h-100"
 					trigger={
-						<ClayButton displayType="secondary">
+						<ClayButton size="sm">
 							{i18n.translate('manage-trial')}
 
 							<ClayIcon

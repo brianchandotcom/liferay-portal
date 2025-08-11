@@ -27,7 +27,7 @@ export const EXTEND_OPTIONS = [
 
 export const EXTEND_TRIAL_STATUS_LABEL = {
 	'Approved': 'Approved',
-	'AutoApproved': 'Auto  Approved',
+	'AutoApproved': 'Auto Approved',
 	'Pending': 'Request Pending',
 	'Rejected': 'Rejected',
 	'extension-expired': 'Extension Expired',

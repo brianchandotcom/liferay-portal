@@ -10,8 +10,8 @@ import com.liferay.headless.asset.library.dto.v1_0.UserAccount;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -41,8 +41,7 @@ public class UserAccountDTOConverter
 	public UserAccount toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		User user = _userLocalService.getUser(
-			(Long)dtoConverterContext.getId());
+		User user = _userService.getUserById((Long)dtoConverterContext.getId());
 
 		return new UserAccount() {
 			{
@@ -72,7 +71,7 @@ public class UserAccountDTOConverter
 									"assetLibraryId"));
 
 							return TransformUtil.transformToArray(
-								_roleLocalService.getUserGroupRoles(
+								_roleService.getUserGroupRoles(
 									user.getUserId(), assetLibraryId),
 								role -> _toRole(role), Role.class);
 						}));
@@ -97,9 +96,9 @@ public class UserAccountDTOConverter
 	private Portal _portal;
 
 	@Reference
-	private RoleLocalService _roleLocalService;
+	private RoleService _roleService;
 
 	@Reference
-	private UserLocalService _userLocalService;
+	private UserService _userService;
 
 }

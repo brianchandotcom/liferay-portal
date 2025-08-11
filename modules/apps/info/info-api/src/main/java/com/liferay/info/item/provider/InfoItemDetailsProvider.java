@@ -7,6 +7,7 @@ package com.liferay.info.item.provider;
 
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemIdentifier;
 
 /**
  * @author Jorge Ferrer
@@ -15,7 +16,10 @@ public interface InfoItemDetailsProvider<T> {
 
 	public InfoItemClassDetails getInfoItemClassDetails();
 
-	public default InfoItemDetails getInfoItemDetails(long groupId, T t) {
+	public default InfoItemDetails getInfoItemDetails(
+		long groupId,
+		Class<? extends InfoItemIdentifier> infoItemIdentifierClass, T t) {
+
 		return getInfoItemDetails(t);
 	}
 

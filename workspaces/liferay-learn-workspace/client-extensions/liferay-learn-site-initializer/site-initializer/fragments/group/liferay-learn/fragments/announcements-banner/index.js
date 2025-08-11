@@ -9,6 +9,11 @@ const publicSiteNavigationContainer = document.querySelector(
 
 const announcementsBanner = document.querySelector('.announcements-banner');
 const BANNER_CLOSED_SESSION_KEY = 'bannerWasClosed';
+const isInEditMode = document.body.classList.contains('has-edit-mode-menu');
+
+if (isInEditMode) {
+	announcementsBanner.style.display = 'flex';
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 	const userClosedBanner = sessionStorage.getItem(BANNER_CLOSED_SESSION_KEY);

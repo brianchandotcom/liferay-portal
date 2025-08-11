@@ -5,8 +5,15 @@
 
 package com.liferay.osb.faro.service.impl;
 
+import com.liferay.osb.faro.model.FaroProjectUsage;
 import com.liferay.osb.faro.service.base.FaroProjectUsageLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -19,4 +26,38 @@ import org.osgi.service.component.annotations.Component;
 )
 public class FaroProjectUsageLocalServiceImpl
 	extends FaroProjectUsageLocalServiceBaseImpl {
+
+	public FaroProjectUsage addFaroProjectUsage(
+		long companyId, long userId, long faroProjectId,
+		long knownIndividualsCount, long pageViewsCount) {
+
+		long faroProjectUsageId = counterLocalService.increment();
+
+		FaroProjectUsage faroProjectUsage = faroProjectUsagePersistence.create(
+			faroProjectUsageId);
+
+		faroProjectUsage.setCompanyId(companyId);
+		faroProjectUsage.setUserId(userId);
+
+		long now = System.currentTimeMillis();
+
+		faroProjectUsage.setCreateTime(now);
+		faroProjectUsage.setModifiedTime(now);
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(new Date(now));
+
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		faroProjectUsage.setFaroProjectId(faroProjectId);
+		faroProjectUsage.setKnownIndividualsCount(knownIndividualsCount);
+		faroProjectUsage.setMonthDateKey(dateFormat.format(calendar.getTime()));
+		faroProjectUsage.setPageViewsCount(pageViewsCount);
+
+		return faroProjectUsagePersistence.update(faroProjectUsage);
+	}
+
 }

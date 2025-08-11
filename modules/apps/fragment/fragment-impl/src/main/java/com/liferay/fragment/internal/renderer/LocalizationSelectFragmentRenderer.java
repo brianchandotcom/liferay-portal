@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -174,6 +175,11 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 							fragmentEntryLink.getEditableValues(),
 							LocaleUtil.getMostRelevantLocale(),
 							"allowLocalizationManagement"))
+				).put(
+					"autoTranslateURL",
+					PortalUtil.getPortalURL(httpServletRequest) +
+						PortalUtil.getPathModule() +
+							"/translation/auto_translate"
 				).put(
 					"autoTranslationEnabled",
 					() -> {

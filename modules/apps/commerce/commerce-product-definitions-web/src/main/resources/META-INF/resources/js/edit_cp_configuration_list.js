@@ -193,10 +193,6 @@ export default function (context) {
 									formData.get(
 										`${context.namespace}purchasable`
 									) === 'on',
-								visible:
-									formData.get(
-										`${context.namespace}visible`
-									) === 'on',
 							}),
 							headers: fetchParams.headers,
 							method: 'PATCH',

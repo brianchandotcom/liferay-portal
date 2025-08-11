@@ -7,7 +7,6 @@ package com.liferay.ai.creator.openai.web.internal.editor.configuration;
 
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
 import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortletKeys;
-import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -34,8 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"editor.config.key=rich_text", "editor.name=ckeditor_classic",
-		"editor.name=ckeditor5_classic",
-		"jakarta.portlet.name=" + JournalPortletKeys.JOURNAL
+		"editor.name=ckeditor5_classic"
 	},
 	service = EditorConfigContributor.class
 )

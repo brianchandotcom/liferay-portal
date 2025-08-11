@@ -5,18 +5,29 @@
 
 import {LanguagePicker} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {openConfirmModal} from '@liferay/layout-js-components-web';
-import React, {Key, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+	Key,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 
 import './LocalizationSelect.scss';
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {fetch, sub} from 'frontend-js-web';
 
 const EVENT_TRANSLATION_STATUS = 'localizationSelect:updateTranslationStatus';
 
 type Props = {
 	allowLocalizationManagement: boolean;
+	autoTranslateURL: string;
+	autoTranslationEnabled: boolean;
 	defaultLanguageId: Liferay.Language.Locale;
 	editMode: boolean;
 	hideLanguageLabel: boolean;
@@ -35,6 +46,8 @@ type Translations = {
 
 export function LocalizationSelect({
 	allowLocalizationManagement,
+	autoTranslateURL,
+	autoTranslationEnabled,
 	defaultLanguageId,
 	editMode,
 	hideLanguageLabel,
@@ -42,6 +55,9 @@ export function LocalizationSelect({
 	size,
 }: Props) {
 	const [active, setActive] = useState(false);
+	const [autoTranslating, setAutoTranslating] = useState(false);
+	const [relatedLocaleId, setRelatedLocaleId] =
+		useState<Liferay.Language.Locale | null>(null);
 	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
 	const [translations, setTranslations] = useState<Translations>({});
 	const [form, setForm] = useState<HTMLFormElement>();
@@ -59,6 +75,133 @@ export function LocalizationSelect({
 	const selectedLocaleLabel = useMemo(() => {
 		return locales.find(({id}) => id === selectedLocaleId)?.label;
 	}, [locales, selectedLocaleId]);
+
+	const autoTranslate = useCallback(async () => {
+
+		// Show a warning if there's any existing translation to the target language id
+
+		// Take related language as source if it's present, otherwise take default
+
+		const sourceLanguageId = relatedLocaleId || defaultLanguageId;
+
+		// Get all inputs for auto translatable types in source language and prepare data
+
+		const autoTranslatableTypes = [
+			{isHtml: false, type: 'text'},
+			{isHtml: false, type: 'long-text'},
+			{isHtml: true, type: 'html'},
+		];
+
+		const fields: Record<string, string> = {};
+		const html: Record<string, boolean> = {};
+
+		// We will store whether the target language has any existing translation or not
+
+		let hasTranslation = false;
+
+		for (const {isHtml, type} of autoTranslatableTypes) {
+			const element = form || document;
+
+			const inputs = element.querySelectorAll<HTMLInputElement>(
+				`[data-localizable="true"][data-field-type="${type}"] [type="hidden"][name$="_${sourceLanguageId}"]`
+			);
+
+			const translated = element.querySelectorAll<HTMLInputElement>(
+				`[data-localizable="true"][data-field-type="${type}"] [type="hidden"][name$="_${selectedLocaleId}"]`
+			);
+
+			if (translated.length) {
+				hasTranslation = true;
+			}
+
+			for (const input of inputs) {
+
+				// Remove language suffix from name
+
+				const name = input.name.replace(/_[a-z]{2}_[A-Z]{2}$/, '');
+
+				fields[name] = input.value;
+				html[name] = isHtml;
+			}
+		}
+
+		if (
+			hasTranslation &&
+			!(await openConfirmModal({
+				buttonLabel: Liferay.Language.get('continue'),
+				center: true,
+				onCloseFocusElement: dropdownTrigger,
+				status: 'warning',
+				text: sub(
+					Liferay.Language.get(
+						'an-existing-x-translation-is-already-available'
+					),
+					selectedLocaleLabel
+				),
+				title: Liferay.Language.get('content-override'),
+			}))
+		) {
+			return;
+		}
+
+		// Perform auto translate
+
+		setAutoTranslating(true);
+
+		const response = await fetch(autoTranslateURL, {
+			body: JSON.stringify({
+				fields,
+				html,
+				sourceLanguageId,
+				targetLanguageId: selectedLocaleId,
+			}),
+			method: 'POST',
+		}).then((response) => response.json());
+
+		setAutoTranslating(false);
+
+		if (response.error) {
+			openToast({
+				message: response.error.message,
+				type: 'danger',
+			});
+
+			return;
+		}
+
+		openToast({
+			message: sub(
+				Liferay.Language.get(
+					'x-translation-has-been-successfully-received'
+				),
+				selectedLocaleLabel
+			),
+			type: 'success',
+		});
+
+		// Fire event with translated values
+
+		const normalizedFields = Object.fromEntries(
+			Object.entries(response.fields).map(([key, value]) => [
+				key,
+				Liferay.Util.unescapeHTML(value as string),
+			])
+		);
+
+		Liferay.fire('localizationSelect:autoTranslate', {
+			fields: normalizedFields,
+			formId: form?.id,
+			languageId: selectedLocaleId,
+		});
+	}, [
+		autoTranslateURL,
+		defaultLanguageId,
+		dropdownTrigger,
+		form,
+		relatedLocaleId,
+		selectedLocaleId,
+		selectedLocaleLabel,
+	]);
 
 	useEffect(() => {
 		const form = containerRef.current?.closest(
@@ -137,9 +280,16 @@ export function LocalizationSelect({
 			formId?: string;
 			languageId: Liferay.Language.Locale;
 		}) => {
+
+			// If event is sent from another form, we will store the language as related
+
 			if (formId && formId !== form?.id) {
+				setRelatedLocaleId(languageId);
+
 				return;
 			}
+
+			// Otherwise, store it as selected
 
 			if (selectedLocaleId !== languageId) {
 				setSelectedLocaleId(languageId);
@@ -212,9 +362,21 @@ export function LocalizationSelect({
 					}
 				>
 					<ClayDropDown.ItemList>
-						<ClayDropDown.Item disabled symbolLeft="stars">
-							{Liferay.Language.get('auto-translate')}
-						</ClayDropDown.Item>
+						{autoTranslationEnabled ? (
+							<ClayDropDown.Item
+								disabled={autoTranslating}
+								onClick={autoTranslate}
+								symbolLeft="stars"
+							>
+								<div className="align-items-center d-flex justify-content-between">
+									{Liferay.Language.get('auto-translate')}
+
+									{autoTranslating ? (
+										<ClayLoadingIndicator className="m-0" />
+									) : null}
+								</div>
+							</ClayDropDown.Item>
+						) : null}
 
 						<ClayDropDown.Item
 							onClick={async () => {

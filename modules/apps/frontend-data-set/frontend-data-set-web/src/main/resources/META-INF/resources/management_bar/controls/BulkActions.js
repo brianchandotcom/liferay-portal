@@ -15,6 +15,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
 import {getOpenedSidePanel} from '../../utils/sidePanels';
+import ViewsContext from '../../views/ViewsContext';
 import InfoPanelToggleButton from './InfoPanelToggleButton';
 import SelectionCheckbox from './SelectionCheckbox';
 
@@ -49,13 +50,29 @@ function BulkActions({
 		actionParameterName,
 		allItemsSelectedActive,
 		onBulkActionItemClick,
+		searchParam,
 		showBulkActionsManagementBar,
 		showBulkActionsManagementBarActions,
 		showInfoPanel,
 	} = useContext(FrontendDataSetContext);
 
+	const [{filters}] = useContext(ViewsContext);
+
 	const [currentSidePanelActionPayload, setCurrentSidePanelActionPayload] =
 		useState(null);
+
+	function getActiveFilters(filters) {
+		return filters
+			.filter((item) => item.active)
+			.map((item) => {
+				return {
+					id: item.id,
+					multiple: item.multiple,
+					odataFilterString: item.odataFilterString,
+					selectedItemsLabel: item.selectedItemsLabel,
+				};
+			});
+	}
 
 	function handleActionClick(
 		actionDefinition,
@@ -93,8 +110,14 @@ function BulkActions({
 				loadData,
 				namespace,
 				selectedData: {
+					...(allItemsSelectedActive && {
+						filters: getActiveFilters(filters),
+					}),
 					items: allItemsSelectedActive ? [] : selectedItems,
 					keyValues: allItemsSelectedActive ? [] : selectedItemsValue,
+					...(allItemsSelectedActive && {
+						searchQuery: searchParam,
+					}),
 					selectAll: allItemsSelectedActive,
 				},
 			});
@@ -112,6 +135,12 @@ function BulkActions({
 							allItemsSelectedActive
 								? []
 								: selectedItemsValue.join(','),
+						...(allItemsSelectedActive && {
+							filters: getActiveFilters(filters),
+						}),
+						...(allItemsSelectedActive && {
+							searchQuery: searchParam,
+						}),
 						selectAll: allItemsSelectedActive,
 					},
 					url: href || form.action,

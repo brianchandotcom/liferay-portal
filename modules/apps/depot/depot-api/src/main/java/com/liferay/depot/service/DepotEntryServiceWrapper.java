@@ -45,6 +45,13 @@ public class DepotEntryServiceWrapper
 	}
 
 	@Override
+	public DepotEntry fetchGroupDepotEntry(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryService.fetchGroupDepotEntry(groupId);
+	}
+
+	@Override
 	public java.util.List<DepotEntry> getCurrentAndGroupConnectedDepotEntries(
 			long groupId, int type, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

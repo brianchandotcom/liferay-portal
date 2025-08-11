@@ -216,6 +216,26 @@
 			<finder-column name="faroProjectId" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="FaroProjectUsage" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="faroProjectUsageId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createTime" type="long" />
+		<column name="modifiedTime" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="faroProjectId" type="long" />
+		<column name="knownIndividualsCount" type="long" />
+		<column name="monthDateKey" type="String" />
+		<column name="pageViewsCount" type="long" />
+	</entity>
 	<entity local-service="true" name="FaroUser" remote-service="false">
 
 		<!-- PK fields -->

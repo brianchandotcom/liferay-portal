@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.model.SegmentsExperience;
@@ -453,6 +454,51 @@ public class FragmentLayoutStructureItemImporter
 				html, js, configuration, jsonObject.toString(),
 				StringUtil.randomId(), position, fragmentKey, type,
 				serviceContext);
+
+		JSONObject restoredEditableValuesJSONObject =
+			JSONFactoryUtil.createJSONObject();
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
+
+		String editableValues = fragmentEntryLink.getEditableValues();
+
+		if (editableValues.contains(_NAMESPACE_PLACEHOLDER)) {
+			String fragmentEntryLinkNamespace =
+				fragmentEntryLink.getNamespace();
+
+			JSONObject restoredJSONObject = JSONFactoryUtil.createJSONObject();
+
+			for (String key : editableValuesJSONObject.keySet()) {
+				Object value = editableValuesJSONObject.get(key);
+
+				if (!(value instanceof JSONObject valueJSONObject)) {
+					restoredEditableValuesJSONObject.put(key, value);
+
+					continue;
+				}
+
+				for (String curKey : valueJSONObject.keySet()) {
+					restoredJSONObject.put(
+						StringUtil.replace(
+							curKey, _NAMESPACE_PLACEHOLDER,
+							fragmentEntryLinkNamespace),
+						valueJSONObject.get(curKey));
+				}
+
+				restoredEditableValuesJSONObject.put(key, restoredJSONObject);
+			}
+		}
+
+		if (SetUtil.isEmpty(restoredEditableValuesJSONObject.keySet())) {
+			restoredEditableValuesJSONObject = editableValuesJSONObject;
+		}
+
+		fragmentEntryLink.setEditableValues(
+			String.valueOf(restoredEditableValuesJSONObject));
+
+		fragmentEntryLink =
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				fragmentEntryLink);
 
 		List<Object> widgetInstances = (List<Object>)definitionMap.get(
 			"widgetInstances");
@@ -852,6 +898,7 @@ public class FragmentLayoutStructureItemImporter
 		fragmentEntryLink.setHtml(processedHTML);
 		fragmentEntryLink.setConfiguration(configuration);
 		fragmentEntryLink.setEditableValues(editableValues);
+		fragmentEntryLink.setNamespace(_NAMESPACE_PLACEHOLDER);
 		fragmentEntryLink.setRendererKey(rendererKey);
 		fragmentEntryLink.setType(type);
 
@@ -1409,6 +1456,8 @@ public class FragmentLayoutStructureItemImporter
 
 		return jsonObject;
 	}
+
+	private static final String _NAMESPACE_PLACEHOLDER = "[namespace]";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentLayoutStructureItemImporter.class);

@@ -88,7 +88,9 @@ export default function SpaceSummaryHeader({
 		<div className="align-items-center d-flex justify-content-between">
 			<h2 className="font-weight-semi-bold m-0 text-4">{title}</h2>
 
-			{spaceModalProps ? (
+			{url ? (
+				<ClayLink href={url}>{label}</ClayLink>
+			) : (
 				<ClayButton
 					displayType="link"
 					onClick={getActionCallback}
@@ -96,8 +98,6 @@ export default function SpaceSummaryHeader({
 				>
 					{label}
 				</ClayButton>
-			) : (
-				<ClayLink href={url}>{label}</ClayLink>
 			)}
 		</div>
 	);

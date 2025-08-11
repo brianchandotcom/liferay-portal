@@ -35,6 +35,7 @@ import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembershipChang
 import com.liferay.osb.faro.engine.client.model.IndividualTransformation;
 import com.liferay.osb.faro.engine.client.model.Interest;
 import com.liferay.osb.faro.engine.client.model.PageVisited;
+import com.liferay.osb.faro.engine.client.model.ProjectUsageMetric;
 import com.liferay.osb.faro.engine.client.model.Provider;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
@@ -423,6 +424,9 @@ public interface ContactsEngineClient {
 		List<OrderByField> orderByFields);
 
 	public PageVisited getPageVisited(FaroProject faroProject, String id);
+
+	public Results<ProjectUsageMetric> getProjectUsageMetrics(
+		FaroProject faroProject, Date sinceDate);
 
 	public long getReportsExportCSVCount(
 			FaroProject faroProject, String path,

@@ -12,6 +12,14 @@ export default class HeadlessAdminUser {
 		);
 	}
 
+	static async getAccountByExternalReferenceCode(
+		externalReferenceCode: string
+	) {
+		return fetcher<Account>(
+			`/o/headless-admin-user/v1.0/accounts/by-external-reference-code/${externalReferenceCode}`
+		);
+	}
+
 	static async getAccountPostalAddresses(accountId: string | number) {
 		return fetcher<APIResponse<AccountPostalAddresses>>(
 			`/o/headless-admin-user/v1.0/accounts/${accountId}/postal-addresses`

@@ -4,8 +4,8 @@
  */
 
 import {format} from 'date-fns';
-import {useState} from 'react';
-import {useOutletContext} from 'react-router-dom';
+import {useMemo, useState} from 'react';
+import {Link} from 'react-router-dom';
 
 import ListView, {ListViewProps} from '../../../../components/ListView';
 import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
@@ -19,8 +19,10 @@ import {
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import {Action} from '../../../../utils/constants';
+import {safeJSONParse} from '../../../../utils/util';
+import {useSSADashboardOutlet} from '../../SSADashboardOutlet';
 import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
-import CreateTrialModalForm from '../../pages/CreateTrialModalform';
+import CreateTrialModalForm from '../../pages/CreateTrialModalForm';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
 
@@ -47,9 +49,8 @@ export default function TrialListView({
 	listViewProps,
 	managementToolbarProps,
 }: TrialsListViewProps) {
-	const {ssaTrialExtend} = useOutletContext<any>();
-	const {marketplaceUserAccount, myUserAccount, properties} =
-		useMarketplaceContext();
+	const {ssaAccount, ssaTrialExtend} = useSSADashboardOutlet();
+	const {marketplaceUserAccount, myUserAccount} = useMarketplaceContext();
 	const [items, setItems] = useState<PlacedOrder[]>([]);
 
 	const handleDataLoad = ({items}: {items: PlacedOrder[]}) => {
@@ -60,28 +61,30 @@ export default function TrialListView({
 		(item) => item.orderStatusInfo.label === OrderStatus.PROCESSING
 	);
 
-	const resource = `/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${properties?.accountId}/placed-orders?${new URLSearchParams(
+	const resource = `/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${ssaAccount.id}/placed-orders?${new URLSearchParams(
 		{
 			nestedFields: 'placedOrderItems',
 			sort: 'createDate:desc',
 		}
 	)}`;
 
-	const defaultFilters = marketplaceUserAccount.isSSAAdmin
-		? SearchBuilder.eq(
+	const searchBuilder = useMemo(
+		() =>
+			new SearchBuilder().eq(
 				'orderTypeExternalReferenceCode',
 				OrderTypes.SSA_SAAS
-			)
-		: new SearchBuilder()
-				.eq('author', myUserAccount?.name)
-				.and()
-				.eq('orderTypeExternalReferenceCode', OrderTypes.SSA_SAAS)
-				.build();
+			),
+		[]
+	);
+
+	if (!marketplaceUserAccount.isSSAAdmin) {
+		searchBuilder.and().eq('author', myUserAccount?.name);
+	}
 
 	return (
 		<>
 			<ListView<PlacedOrder>
-				defaultFilters={{filter: defaultFilters}}
+				defaultFilters={{filter: searchBuilder.build()}}
 				emptyStateProps={{title: i18n.translate('no-trials-yet')}}
 				id="ssa-trials"
 				managementToolbarProps={{
@@ -97,20 +100,20 @@ export default function TrialListView({
 						{
 							id: 'placedOrderItems',
 							name: 'Project ID',
-							render: (_, {customFields, id}) => {
-								return (
-									<span className="font-weight-semi-bold ml-2">
-										{(customFields &&
-											JSON.parse(
-												customFields[
-													OrderCustomFields
-														.TRIAL_SETTINGS
-												]
-											)?.projectId) ??
-											id}
-									</span>
-								);
-							},
+							render: (_, {customFields, id}) => (
+								<Link
+									className="font-weight-semi-bold ml-2"
+									to={`/details/${id}`}
+								>
+									{customFields &&
+										safeJSONParse(
+											customFields[
+												OrderCustomFields.TRIAL_SETTINGS
+											],
+											{projectId: id}
+										).projectId}
+								</Link>
+							),
 						},
 						{
 							id: 'author',

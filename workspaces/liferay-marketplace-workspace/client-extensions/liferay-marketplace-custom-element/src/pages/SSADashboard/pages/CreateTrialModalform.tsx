@@ -20,6 +20,7 @@ import zodSchema from '../../../schema/zod';
 import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessCommerceDeliveryCatalog from '../../../services/rest/HeadlessCommerceDeliveryCatalog';
 import ProductPurchaseSSATrial from '../../ProductPurchase/services/ProductPurchaseSSATrial';
+import {useSSADashboardOutlet} from '../SSADashboardOutlet';
 import {FieldGroup} from '../components/SSAForm/FieldGroup';
 
 export type FormFields = {
@@ -47,6 +48,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 	modal,
 	mutate,
 }) => {
+	const {ssaAccount} = useSSADashboardOutlet();
 	const [errors, setErrors] = useState<ValidationErrors>({});
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submitSuccessful, setSubmittingSuccessful] = useState(false);
@@ -60,14 +62,13 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 		site: '',
 	});
 
-	const {channel, properties} = useMarketplaceContext();
+	const {properties} = useMarketplaceContext();
 	const [product, setProduct] = useState<DeliveryProduct | null>(null);
-	const {accountId} = properties;
 
 	useEffect(() => {
 		const fetchProduct = async () => {
 			const product = await HeadlessCommerceDeliveryCatalog.getProduct(
-				channel.channelId,
+				Liferay.CommerceContext.commerceChannelId,
 				properties.productId,
 				new URLSearchParams({
 					'accountId': '-1',
@@ -80,19 +81,15 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 		};
 
 		fetchProduct();
-	}, [channel, properties]);
+	}, [properties]);
 
 	const productPurchase = useMemo(() => {
-		if (!accountId || !channel || !product) {
+		if (!ssaAccount || !product) {
 			return null;
 		}
 
-		return new ProductPurchaseSSATrial(
-			{id: Number(accountId)} as Account,
-			channel,
-			product
-		);
-	}, [accountId, channel, product]);
+		return new ProductPurchaseSSATrial(ssaAccount, product);
+	}, [product, ssaAccount]);
 
 	const isTestTrial = formData.objective === 'Test';
 
@@ -109,27 +106,6 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 			}));
 		}
 	}, [isTestTrial]);
-
-	const validateProjectId = useCallback(
-		async (projectId: string) => {
-			try {
-				return trialOAuth2.checkDomainAvailability(projectId);
-			}
-			catch (error: any) {
-				console.error(error.message);
-
-				if (error.status === 409) {
-					setErrors((prevErrors) => ({
-						...prevErrors,
-						projectId: 'Project ID already exists',
-					}));
-				}
-
-				return false;
-			}
-		},
-		[setErrors]
-	);
 
 	const onChange = ({label, value}: {label: string; value: string}) => {
 		setFormData((prevData) => ({
@@ -161,11 +137,19 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 				return;
 			}
 
-			const isProjectIdAvailable = await validateProjectId(
-				formData.projectId
-			);
+			try {
+				await trialOAuth2.checkDomainAvailability(formData.projectId);
+			}
+			catch (error: any) {
+				console.error(error.message);
 
-			if (!isProjectIdAvailable) {
+				if (error.status === 409) {
+					setErrors((prevErrors) => ({
+						...prevErrors,
+						projectId: 'Project ID already exists',
+					}));
+				}
+
 				setIsSubmitting(false);
 
 				return;
@@ -188,44 +172,46 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 				projectId: formData.projectId,
 			};
 
-			const createdOrder = await productPurchase?.createOrder({
+			const order = await productPurchase?.createOrder({
 				customFields: {
 					[OrderCustomFields.TRIAL_SETTINGS]:
 						JSON.stringify(trialSettings),
 				},
 			} as Cart);
 
-			if (createdOrder) {
-				mutate(
-					(orders: any) => ({
-						...orders,
-						items: [
-							{
-								...createdOrder,
-								orderStatusInfo: {
-									code: 10,
-									label: Status.PROCESSING,
-									label_i18n: Status.PROCESSING,
-								},
-							},
-							...orders.items,
-						],
-					}),
-					{revalidate: false}
-				);
-
-				setErrors({});
-
-				Liferay.Util.openToast({
-					message: 'Trial is being provisioned.',
-					title: i18n.translate('success'),
-					type: 'success',
-				});
-				setOrder(createdOrder);
-				setIsSubmitting(false);
-
-				setSubmittingSuccessful(true);
+			if (!order) {
+				return setIsSubmitting(false);
 			}
+
+			mutate(
+				(orders: any) => ({
+					...orders,
+					items: [
+						{
+							...order,
+							orderStatusInfo: {
+								code: 10,
+								label: Status.PROCESSING,
+								label_i18n: Status.PROCESSING,
+							},
+						},
+						...orders.items,
+					],
+				}),
+				{revalidate: false}
+			);
+
+			setErrors({});
+
+			Liferay.Util.openToast({
+				message: 'Trial is being provisioned.',
+				title: i18n.translate('success'),
+				type: 'success',
+			});
+			setOrder(order);
+			setIsSubmitting(false);
+
+			setSubmittingSuccessful(true);
 		}
 		catch (error) {
 			console.error(error);
@@ -239,7 +225,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 
 			modal.onClose();
 		}
-	}, [formData, modal, mutate, productPurchase, validateProjectId]);
+	}, [formData, modal, mutate, productPurchase]);
 
 	useEffect(() => {
 		if (items && order && submitSuccessful) {

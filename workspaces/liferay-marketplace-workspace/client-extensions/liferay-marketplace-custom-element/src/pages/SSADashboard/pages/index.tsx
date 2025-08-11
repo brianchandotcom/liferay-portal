@@ -5,47 +5,35 @@
 
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
-import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import Modal from '../../../components/Modal';
 import Page from '../../../components/Page';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
-import {OrderStatus, OrderTypes} from '../../../enums/Order';
+import {OrderTypes, OrderWorkflowStatusCode} from '../../../enums/Order';
 import {usePlacedOrders} from '../../../hooks/data/usePlacedOrder';
-import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
-import {Action} from '../../../utils/constants';
+import {useSSADashboardOutlet} from '../SSADashboardOutlet';
 import TrialListView from '../components/TrialListView/TrialListView';
-import {ExtendRequestStatus} from '../enums/SSATrials';
-import ExpireSSAModal from './ExpireSSAModal';
-import ExtendRequestModal from './ExtendRequestModal';
-import ExtendSSATrialModal from './ExtendSSATrialModal';
+import useSSAActions from '../useSSAActions';
 
 export default function SaaSTrials() {
-	const {marketplaceUserAccount, myUserAccount, properties} =
-		useMarketplaceContext();
-
-	const modal = useModal();
-	const modalContext = useModalContext();
-	const navigate = useNavigate();
+	const {marketplaceUserAccount, myUserAccount} = useMarketplaceContext();
+	const {ssaAccount} = useSSADashboardOutlet();
+	const actions = useSSAActions();
 	const createTrialFormModal = useModal();
-
-	const {selectedAccountId, ssaTrialExtend, ssaTrialExtendMutate} =
-		useOutletContext<any>();
-
-	const accountId = properties.accountId;
+	const modal = useModal();
 
 	const {
 		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
 	} = usePlacedOrders({
-		accountId,
+		accountId: ssaAccount.id,
 		filter: new SearchBuilder()
 			.eq('author', myUserAccount?.name)
 			.and()
 			.eq('orderTypeExternalReferenceCode', OrderTypes.SSA_SAAS)
 			.and()
-			.ne('orderStatusInfo/code', 0, {
+			.lambda('orderStatus', OrderWorkflowStatusCode.IN_PROGRESS, {
 				unquote: true,
 			})
 			.build(),
@@ -58,157 +46,6 @@ export default function SaaSTrials() {
 	const canCreateTrial = isSSAAdmin
 		? true
 		: SSATrialsInProgress.totalCount < 3;
-
-	const actions: Action[] = [
-		{
-			name: i18n.translate('details'),
-			onClick: (order: Order) => navigate(`details/${order.id}`),
-		},
-		{
-			disabled: (order: Order) =>
-				order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS,
-			name: i18n.translate('go-to-trial'),
-			onClick: (order: Order) =>
-				window.open(
-					`https://${
-						order?.customFields?.['trial-virtual-host'] as string
-					}`
-				),
-		},
-		{
-			hidden: (order: Order) => {
-				if (isSSAAdmin) {
-					const ssaTrialsExtendRequests = ssaTrialExtend.items;
-					const extendRequests = ssaTrialsExtendRequests?.filter(
-						(extend: TrialExtend) => {
-							return (
-								extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-								Number(order.id)
-							);
-						}
-					) as TrialExtend[];
-
-					if (extendRequests && extendRequests?.length > 0) {
-						return (
-							extendRequests[0]?.dueStatus.key !==
-							ExtendRequestStatus.PENDING
-						);
-					}
-				}
-
-				return true;
-			},
-			name: i18n.translate('view-request'),
-			onClick: (order: PlacedOrder, orderMutate) => {
-				const ssaTrialsExtendRequests = ssaTrialExtend.items;
-				const extendRequests = ssaTrialsExtendRequests?.filter(
-					(extend: TrialExtend) => {
-						return (
-							extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-							Number(order.id)
-						);
-					}
-				) as TrialExtend[];
-
-				const extendRequestsCount = extendRequests?.filter(
-					(extend: TrialExtend) => {
-						return (
-							extend.dueStatus?.key ===
-								ExtendRequestStatus.APPROVED ||
-							extend.dueStatus?.key ===
-								ExtendRequestStatus.AUTO_APPROVED
-						);
-					}
-				) as TrialExtend[];
-
-				if (!extendRequests) {
-					return;
-				}
-
-				modalContext.onOpenModal({
-					body: (
-						<ExtendRequestModal
-							onClose={modalContext.onClose}
-							order={order}
-							orderMutate={orderMutate}
-							ssaTrialExtendMutate={ssaTrialExtendMutate}
-							trialExtend={extendRequests[0]}
-							trialExtendCount={extendRequestsCount?.length}
-						/>
-					),
-					center: true,
-				});
-			},
-		},
-		{
-			disabled: (order: Order) => {
-				const ssaTrialsExtendRequests = ssaTrialExtend.items;
-				const extendRequests = ssaTrialsExtendRequests?.filter(
-					(extend: TrialExtend) => {
-						return (
-							extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-							Number(order.id)
-						);
-					}
-				) as TrialExtend[];
-
-				if (!extendRequests) {
-					return true;
-				}
-
-				return (
-					order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS ||
-					extendRequests[0]?.dueStatus.key ===
-						ExtendRequestStatus.PENDING
-				);
-			},
-			name: i18n.translate('extend-trial'),
-			onClick: (order: PlacedOrder, orderMutate: any) => {
-				const ssaTrialsExtendRequests = ssaTrialExtend.items;
-				const extendRequests = ssaTrialsExtendRequests?.filter(
-					(extend: TrialExtend) => {
-						return (
-							extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-							Number(order.id)
-						);
-					}
-				) as TrialExtend[];
-
-				modalContext.onOpenModal({
-					body: (
-						<ExtendSSATrialModal
-							accountId={selectedAccountId}
-							firstExtendRequest={!extendRequests?.length}
-							onClose={modalContext.onClose}
-							order={order}
-							orderMutate={orderMutate}
-							ssaTrialExtendMutate={ssaTrialExtendMutate}
-						/>
-					),
-					header: `Extend ${order.id} Trial`,
-				});
-			},
-		},
-		{
-			disabled: (order: Order) =>
-				order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS,
-			name: i18n.translate('expire-trial'),
-			onClick: (order: Order, mutate) => {
-				modalContext.onOpenModal({
-					body: (
-						<ExpireSSAModal
-							accountId={selectedAccountId}
-							mutate={mutate}
-							onClose={modalContext.onClose}
-							order={order}
-						/>
-					),
-					header: `Expire ${order.id} Trial`,
-					status: undefined,
-				});
-			},
-		},
-	];
 
 	return (
 		<>
@@ -238,7 +75,7 @@ export default function SaaSTrials() {
 					isSortable
 					managementToolbarProps={{
 						searchVisible: true,
-						visible: isSSAAdmin ? true : false,
+						visible: isSSAAdmin,
 					}}
 				/>
 			</Page>

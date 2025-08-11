@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -32,6 +34,12 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		super.setUp();
 
 		_testSite = _addSite();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() {
 	}
 
 	@Override

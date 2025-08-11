@@ -7172,11 +7172,11 @@ public class ObjectEntryResourceTest {
 			).put(
 				"keywords", JSONUtil.putAll("tag1", "tag2")
 			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
-			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+			_objectDefinition2.getRESTContextPath() + StringPool.SLASH +
 				jsonObject.getString("id"),
 			Http.Method.GET);
 
@@ -7189,11 +7189,11 @@ public class ObjectEntryResourceTest {
 			JSONUtil.put(
 				"keywords", JSONUtil.putAll("tag1", "tag2", "tag3")
 			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
-			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+			_objectDefinition2.getRESTContextPath() + StringPool.SLASH +
 				jsonObject.getString("id"),
 			Http.Method.GET);
 

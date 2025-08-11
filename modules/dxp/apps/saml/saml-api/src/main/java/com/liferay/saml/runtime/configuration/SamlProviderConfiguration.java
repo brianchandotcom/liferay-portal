@@ -106,7 +106,7 @@ public interface SamlProviderConfiguration {
 		},
 		optionValues = {
 			SamlProviderConfigurationKeys.SAML_ROLE_IDP,
-			SamlProviderConfigurationKeys.SAML_ROLE_MULTIROLE,
+			SamlProviderConfigurationKeys.SAML_MULTIROLE,
 			SamlProviderConfigurationKeys.SAML_ROLE_SP
 		},
 		required = false

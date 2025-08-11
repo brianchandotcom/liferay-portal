@@ -46,6 +46,7 @@ import com.liferay.osb.faro.engine.client.model.IndividualTransformation;
 import com.liferay.osb.faro.engine.client.model.Interest;
 import com.liferay.osb.faro.engine.client.model.PageVisited;
 import com.liferay.osb.faro.engine.client.model.PagedModel;
+import com.liferay.osb.faro.engine.client.model.ProjectUsageMetric;
 import com.liferay.osb.faro.engine.client.model.Provider;
 import com.liferay.osb.faro.engine.client.model.Rels;
 import com.liferay.osb.faro.engine.client.model.Results;
@@ -2308,6 +2309,22 @@ public class ContactsEngineClientImpl
 	@Override
 	public PageVisited getPageVisited(FaroProject faroProject, String id) {
 		return get(faroProject, Rels.PAGE_VISITED, id, PageVisited.class);
+	}
+
+	@Override
+	public Results<ProjectUsageMetric> getProjectUsageMetrics(
+		FaroProject faroProject, Date sinceDate) {
+
+		PagedModel<?, ProjectUsageMetric> pagedModel = get(
+			faroProject, Rels.PROJECT_USAGE_METRICS,
+			new ParameterizedTypeReference
+				<EntityModelPagedModel<ProjectUsageMetric>>() {
+			},
+			HashMapBuilder.<String, Object>put(
+				"createDate", sinceDate
+			).build());
+
+		return pagedModel.getResults();
 	}
 
 	@Override

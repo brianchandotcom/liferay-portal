@@ -44,7 +44,6 @@ export class CommerceAdminProductConfigurationListPage {
 	readonly shippableInput: Locator;
 	readonly shipSeparatelyInput: Locator;
 	readonly taxExemptInput: Locator;
-	readonly visibleInput: Locator;
 	readonly weightInput: Locator;
 	readonly widthInput: Locator;
 
@@ -112,7 +111,6 @@ export class CommerceAdminProductConfigurationListPage {
 		this.shippableInput = page.getByTestId('shippableInput');
 		this.shipSeparatelyInput = page.getByTestId('shipSeparatelyInput');
 		this.taxExemptInput = page.getByTestId('taxExemptInput');
-		this.visibleInput = page.getByTestId('visibleInput');
 		this.weightInput = page.getByTestId('weightInput');
 		this.widthInput = page.getByTestId('widthInput');
 	}

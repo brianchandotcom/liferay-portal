@@ -507,7 +507,7 @@ test.describe('Comments Panel', () => {
 
 test.describe('Schedule Panel', () => {
 	test(
-		'The content with errors in the schedule fields cannot be published and the error persists when the panel is closed',
+		'Do not allow publishing if there are errors in the fields',
 		{tag: '@LPD-62099'},
 		async ({contentsPage, page}) => {
 
@@ -519,7 +519,7 @@ test.describe('Schedule Panel', () => {
 
 			await contentsPage.openSidePanel('Schedule');
 
-			const title = 'My Content';
+			const title = getRandomString();
 
 			await page.getByPlaceholder('New Basic Web Content').fill(title);
 

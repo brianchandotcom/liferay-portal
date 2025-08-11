@@ -11,6 +11,8 @@ import ClayLink from '@clayui/link';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
+export const EVENT_VALIDATE_FORM = 'contentEditor:validateForm';
+
 export default function ContentEditorManagementBar({
 	backURL,
 	headerTitle,
@@ -56,6 +58,9 @@ export default function ContentEditorManagementBar({
 						displayType="primary"
 						form={formId}
 						name="redirect"
+						onClick={(event) => {
+							Liferay.fire(EVENT_VALIDATE_FORM, {event});
+						}}
 						size="sm"
 						type="submit"
 						value={backURL}

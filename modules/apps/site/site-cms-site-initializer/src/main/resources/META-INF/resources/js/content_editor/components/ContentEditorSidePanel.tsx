@@ -16,6 +16,8 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 
+import focusInvalidElement from '../../common/utils/focusInvalidElement';
+import {EVENT_VALIDATE_FORM} from './ContentEditorManagementBar';
 import CommentsPanel from './panels/CommentsPanel';
 import GeneralPanel from './panels/GeneralPanel';
 import SchedulePanel from './panels/SchedulePanel';
@@ -163,7 +165,36 @@ export default function ContentEditorSidePanel(props: Props) {
 }
 
 function SidePanel(props: SidePanelProps) {
+	const [hasError, setHasError] = useState<boolean>(false);
 	const [panel, setPanel] = useState<React.Key | null>(null);
+
+	useEffect(() => {
+		const validateScheduleFields = ({event}: {event: MouseEvent}) => {
+			const hasError = Object.values(props.fields).some(
+				(field) => field.error && field.serverValue
+			);
+
+			if (hasError) {
+				event.preventDefault();
+
+				setPanel(Liferay.Language.get('schedule'));
+				setHasError(true);
+			}
+		};
+
+		Liferay.on(EVENT_VALIDATE_FORM, validateScheduleFields);
+
+		return () => {
+			Liferay.detach(EVENT_VALIDATE_FORM, validateScheduleFields);
+		};
+	}, [props.fields]);
+
+	useEffect(() => {
+		if (hasError) {
+			focusInvalidElement();
+			setHasError(false);
+		}
+	}, [hasError]);
 
 	return (
 		<VerticalBar

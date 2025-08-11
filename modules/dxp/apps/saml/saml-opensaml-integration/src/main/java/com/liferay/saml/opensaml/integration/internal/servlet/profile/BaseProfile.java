@@ -182,13 +182,7 @@ public abstract class BaseProfile {
 
 		RoleDescriptor roleDescriptor = null;
 
-		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			roleDescriptor = entityDescriptor.getSPSSODescriptor(
-				SAMLConstants.SAML20P_NS);
-
-			samlPeerEntityContext.setRole(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
-		}
-		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
+		if (samlProviderConfigurationHelper.isMultirole()) {
 			if (Validator.isNotNull(
 					entityDescriptor.getIDPSSODescriptor(
 						SAMLConstants.SAML20P_NS))) {
@@ -209,6 +203,12 @@ public abstract class BaseProfile {
 				samlPeerEntityContext.setRole(
 					SPSSODescriptor.DEFAULT_ELEMENT_NAME);
 			}
+		}
+		else if (samlProviderConfigurationHelper.isRoleIdp()) {
+			roleDescriptor = entityDescriptor.getSPSSODescriptor(
+				SAMLConstants.SAML20P_NS);
+
+			samlPeerEntityContext.setRole(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
 		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
 			roleDescriptor = entityDescriptor.getIDPSSODescriptor(
@@ -300,11 +300,7 @@ public abstract class BaseProfile {
 
 		samlProtocolContext.setProtocol(SAMLConstants.SAML20P_NS);
 
-		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			roleDescriptor = entityDescriptor.getIDPSSODescriptor(
-				SAMLConstants.SAML20P_NS);
-		}
-		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
+		if (samlProviderConfigurationHelper.isMultirole()) {
 			if (Validator.isNotNull(
 					httpServletRequest.getAttribute(
 						SamlWebKeys.SAML_ACS_LOGIN)) ||
@@ -320,6 +316,10 @@ public abstract class BaseProfile {
 					SAMLConstants.SAML20P_NS);
 			}
 		}
+		else if (samlProviderConfigurationHelper.isRoleIdp()) {
+			roleDescriptor = entityDescriptor.getIDPSSODescriptor(
+				SAMLConstants.SAML20P_NS);
+		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
 			roleDescriptor = entityDescriptor.getSPSSODescriptor(
 				SAMLConstants.SAML20P_NS);
@@ -328,14 +328,7 @@ public abstract class BaseProfile {
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
-		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			samlPeerEntityContext.setRole(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
-		}
-		else if (samlProviderConfigurationHelper.isRoleSp()) {
-			samlPeerEntityContext.setRole(
-				IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
-		}
-		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
+		if (samlProviderConfigurationHelper.isMultirole()) {
 			if (Validator.isNotNull(
 					httpServletRequest.getAttribute(
 						SamlWebKeys.SAML_ACS_LOGIN)) ||
@@ -350,6 +343,13 @@ public abstract class BaseProfile {
 				samlPeerEntityContext.setRole(
 					SPSSODescriptor.DEFAULT_ELEMENT_NAME);
 			}
+		}
+		else if (samlProviderConfigurationHelper.isRoleIdp()) {
+			samlPeerEntityContext.setRole(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
+		}
+		else if (samlProviderConfigurationHelper.isRoleSp()) {
+			samlPeerEntityContext.setRole(
+				IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
 		}
 
 		samlSelfEntityContext.setEntityId(entityDescriptor.getEntityID());
@@ -389,11 +389,7 @@ public abstract class BaseProfile {
 
 		RoleDescriptor roleDescriptor = null;
 
-		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			roleDescriptor = entityDescriptor.getSPSSODescriptor(
-				SAMLConstants.SAML20P_NS);
-		}
-		else if (samlProviderConfigurationHelper.isRoleMultirole()) {
+		if (samlProviderConfigurationHelper.isMultirole()) {
 			long companyId = CompanyThreadLocal.getCompanyId();
 
 			try {
@@ -427,6 +423,10 @@ public abstract class BaseProfile {
 					_log.debug(exception);
 				}
 			}
+		}
+		else if (samlProviderConfigurationHelper.isRoleIdp()) {
+			roleDescriptor = entityDescriptor.getSPSSODescriptor(
+				SAMLConstants.SAML20P_NS);
 		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
 			roleDescriptor = entityDescriptor.getIDPSSODescriptor(

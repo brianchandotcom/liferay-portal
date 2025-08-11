@@ -116,7 +116,7 @@ public class TrialRestController extends BaseRestController {
 		for (PortalInstance portalInstance : portalInstancePage.getItems()) {
 			String virtualHost = portalInstance.getVirtualHost();
 
-			if (virtualHost.startsWith(projectPrefix)) {
+			if (virtualHost.equals(projectPrefix + "." + _trialSSADXPDomain)) {
 				return ResponseEntity.status(
 					HttpStatus.CONFLICT
 				).build();

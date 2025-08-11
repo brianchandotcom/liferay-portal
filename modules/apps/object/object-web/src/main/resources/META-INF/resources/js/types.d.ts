@@ -296,7 +296,9 @@ interface ObjectField {
 	listTypeDefinitionId?: number;
 	localized: boolean;
 	name: string;
+	objectDefinitionExternalReferenceCode1: string;
 	objectFieldSettings?: ObjectFieldSetting[];
+	objectRelationshipExternalReferenceCode?: string;
 	readOnly: ReadOnlyFieldValue;
 	readOnlyConditionExpression: string;
 	relationshipId?: number;

@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -111,9 +113,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		_userGroupLocalService = _mockUserGroupLocalService();
 		_userLocalService = _mockUserLocalService();
 
+		ClassNameLocalService classNameLocalService =
+			_mockClassNameLocalService();
+
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_classNameLocalService",
-			_mockClassNameLocalService());
+			classNameLocalService);
+
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_companyLocalService",
 			_mockCompanyLocalService(_company));
@@ -135,6 +141,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				_createDefaultUserFieldExpressionHandler(
 					_userLocalService, _prefsProps),
 				_createMembershipsUserFieldExpressionHandler(
+					classNameLocalService, _expandoValueLocalService,
 					_userGroupLocalService, _userLocalService)));
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_userFieldExpressionResolverRegistry",
@@ -432,9 +439,18 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("emailAddress");
 
-		User user = _defaultUserResolver.resolveUser(
-			new UserResolverSAMLContextImpl(_messageContext),
-			new ServiceContext());
+		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
+
+		User user = null;
+
+		try {
+			user = _defaultUserResolver.resolveUser(
+				new UserResolverSAMLContextImpl(_messageContext),
+				ServiceContextThreadLocal.getServiceContext());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		Mockito.verify(
 			_userGroupLocalService, Mockito.times(1)
@@ -495,6 +511,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 	private MembershipsUserFieldExpressionHandler
 		_createMembershipsUserFieldExpressionHandler(
+			ClassNameLocalService classNameLocalService,
+			ExpandoValueLocalService expandoValueLocalService,
 			UserGroupLocalService userGroupLocalService,
 			UserLocalService userLocalService) {
 
@@ -502,6 +520,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			membershipsUserFieldExpressionHandler =
 				new MembershipsUserFieldExpressionHandler();
 
+		ReflectionTestUtil.setFieldValue(
+			membershipsUserFieldExpressionHandler, "_classNameLocalService",
+			classNameLocalService);
+		ReflectionTestUtil.setFieldValue(
+			membershipsUserFieldExpressionHandler, "_expandoValueLocalService",
+			expandoValueLocalService);
 		ReflectionTestUtil.setFieldValue(
 			membershipsUserFieldExpressionHandler, "_processingIndex", 100);
 		ReflectionTestUtil.setFieldValue(
@@ -986,8 +1010,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	private UserGroupLocalService _mockUserGroupLocalService()
 		throws Exception {
 
-		UserGroupLocalService userGroupLocalService = Mockito.mock(
-			UserGroupLocalService.class);
+		UserGroupLocalService userGroupLocalService = getMockPortalService(
+			UserGroupLocalServiceUtil.class, UserGroupLocalService.class);
 
 		UserGroup existingUserGroup = new UserGroupImpl();
 

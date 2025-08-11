@@ -80,14 +80,16 @@ const scheduleTest = mergeTests(
 	})
 );
 
+let contentPageName: string;
 let displayPageId: string;
+let informationTemplateName: string;
 let siteLanguage = 'en';
 
-test.afterEach(async ({apiHelpers, page}) => {
-	if (siteLanguage !== 'en') {
-		await page.goto('en');
+test.afterEach(async ({apiHelpers, page, pagesAdminPage, templatesPage}) => {
+	if (contentPageName) {
+		await pagesAdminPage.goto();
 
-		siteLanguage = 'en';
+		await pagesAdminPage.deletePage(contentPageName);
 	}
 
 	if (displayPageId) {
@@ -98,6 +100,18 @@ test.afterEach(async ({apiHelpers, page}) => {
 		);
 
 		displayPageId = '';
+	}
+
+	if (informationTemplateName) {
+		await templatesPage.goto();
+
+		await templatesPage.deleteInformationTemplate(informationTemplateName);
+	}
+
+	if (siteLanguage !== 'en') {
+		await page.goto('en');
+
+		siteLanguage = 'en';
 	}
 });
 
@@ -738,7 +752,7 @@ test.describe('Manage object entries through Page Templates', () => {
 			applicationName
 		);
 
-		const informationTemplateName = 'Object Template' + getRandomInt();
+		informationTemplateName = 'Object Template' + getRandomInt();
 
 		await test.step('create information template and add object fields', async () => {
 			await templatesPage.goto();
@@ -757,16 +771,16 @@ test.describe('Manage object entries through Page Templates', () => {
 			await templatesPage.saveTemplate(informationTemplateName);
 		});
 
-		const pageTitle = getRandomString();
+		contentPageName = getRandomString();
 
 		await test.step('create page template with HTML element linked to the informationTemplateName', async () => {
 			await pagesAdminPage.goto();
 
 			await pagesAdminPage.createNewPage({
-				name: pageTitle,
+				name: contentPageName,
 			});
 
-			await pagesAdminPage.editPage(pageTitle);
+			await pagesAdminPage.editPage(contentPageName);
 
 			await pageEditorPage.addFragment('Basic Components', 'HTML');
 
@@ -797,7 +811,7 @@ test.describe('Manage object entries through Page Templates', () => {
 		});
 
 		await test.step('go to created page and assert object entries', async () => {
-			await page.goto(`/web/guest/${pageTitle}`);
+			await page.goto(`/web/guest/${contentPageName}`);
 
 			const entries = Object.values(objectEntry)
 				.map((value) => {
@@ -818,18 +832,6 @@ test.describe('Manage object entries through Page Templates', () => {
 				.join(' ');
 
 			await expect(page.getByText(entries)).toBeVisible();
-		});
-
-		await test.step('delete information template and page', async () => {
-			await templatesPage.goto();
-
-			await templatesPage.deleteInformationTemplate(
-				informationTemplateName
-			);
-
-			await pagesAdminPage.goto();
-
-			await pagesAdminPage.deletePage(pageTitle);
 		});
 	});
 });

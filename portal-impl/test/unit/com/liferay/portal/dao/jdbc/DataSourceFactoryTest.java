@@ -56,6 +56,16 @@ public class DataSourceFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
+
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
+
 		_dbManagerUtilMockedStatic.when(
 			() -> DBManagerUtil.getDBType(Mockito.any())
 		).thenReturn(
@@ -67,16 +77,6 @@ public class DataSourceFactoryTest {
 		).thenReturn(
 			null
 		);
-
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
-
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
 
 		_tempDir = FileUtil.createTempFolder();
 	}

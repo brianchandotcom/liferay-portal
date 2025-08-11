@@ -64,6 +64,7 @@ import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.Scope;
 import com.liferay.object.rest.dto.v1_0.ValidationRequest;
 import com.liferay.object.rest.dto.v1_0.ValidationResponse;
+import com.liferay.object.rest.dto.v1_0.util.ScopeUtil;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
@@ -7457,10 +7458,44 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetObjectEntryWithTaxonomyCategories() throws Exception {
-		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
-		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		Group group1 = _groupLocalService.getGroup(depotEntry.getGroupId());
+
+		AssetVocabulary assetVocabulary1 =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				UserLocalServiceUtil.getGuestUserId(
+					TestPropsValues.getCompanyId()),
+				group1.getGroupId(), RandomTestUtil.randomString(),
+				new ServiceContext());
+
+		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory(
+			group1.getGroupId(), assetVocabulary1.getVocabularyId());
+
+		Group group2 = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.CMS);
+
+		AssetVocabulary assetVocabulary2 =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				UserLocalServiceUtil.getGuestUserId(
+					TestPropsValues.getCompanyId()),
+				group2.getGroupId(), RandomTestUtil.randomString(),
+				new ServiceContext());
+
+		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory(
+			group2.getGroupId(), assetVocabulary2.getVocabularyId());
+
+		Group group3 = _groupLocalService.fetchGroup(_testGroupId);
+
+		TaxonomyCategory taxonomyCategory3 = _addTaxonomyCategory(
+			group3.getGroupId(), _assetVocabulary.getVocabularyId());
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -7468,7 +7503,8 @@ public class ObjectEntryResourceTest {
 			).put(
 				"taxonomyCategoryIds",
 				JSONUtil.putAll(
-					taxonomyCategory1.getId(), taxonomyCategory2.getId())
+					taxonomyCategory1.getId(), taxonomyCategory2.getId(),
+					taxonomyCategory3.getId())
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
@@ -7478,31 +7514,9 @@ public class ObjectEntryResourceTest {
 				jsonObject.getString("id"),
 			Http.Method.GET);
 
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"taxonomyCategoryExternalReferenceCode",
-					taxonomyCategory1.getExternalReferenceCode()
-				).put(
-					"taxonomyCategoryId",
-					Long.valueOf(taxonomyCategory1.getId())
-				).put(
-					"taxonomyCategoryName", taxonomyCategory1.getName()
-				),
-				JSONUtil.put(
-					"taxonomyCategoryExternalReferenceCode",
-					taxonomyCategory2.getExternalReferenceCode()
-				).put(
-					"taxonomyCategoryId",
-					Long.valueOf(taxonomyCategory2.getId())
-				).put(
-					"taxonomyCategoryName", taxonomyCategory2.getName()
-				)
-			).toString(),
-			jsonObject.getJSONArray(
-				"taxonomyCategoryBriefs"
-			).toString(),
-			JSONCompareMode.NON_EXTENSIBLE);
+		_assertTaxonomyCategories(
+			jsonObject.getJSONArray("taxonomyCategoryBriefs"), false,
+			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3);
 	}
 
 	@Test
@@ -7530,37 +7544,9 @@ public class ObjectEntryResourceTest {
 				"?nestedFields=embeddedTaxonomyCategory"),
 			Http.Method.GET);
 
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"embeddedTaxonomyCategory",
-					_toEmbeddedTaxonomyCategoryJSONObject(taxonomyCategory1)
-				).put(
-					"taxonomyCategoryExternalReferenceCode",
-					taxonomyCategory1.getExternalReferenceCode()
-				).put(
-					"taxonomyCategoryId",
-					Long.valueOf(taxonomyCategory1.getId())
-				).put(
-					"taxonomyCategoryName", taxonomyCategory1.getName()
-				),
-				JSONUtil.put(
-					"embeddedTaxonomyCategory",
-					_toEmbeddedTaxonomyCategoryJSONObject(taxonomyCategory2)
-				).put(
-					"taxonomyCategoryExternalReferenceCode",
-					taxonomyCategory2.getExternalReferenceCode()
-				).put(
-					"taxonomyCategoryId",
-					Long.valueOf(taxonomyCategory2.getId())
-				).put(
-					"taxonomyCategoryName", taxonomyCategory2.getName()
-				)
-			).toString(),
-			jsonObject.getJSONArray(
-				"taxonomyCategoryBriefs"
-			).toString(),
-			JSONCompareMode.NON_EXTENSIBLE);
+		_assertTaxonomyCategories(
+			jsonObject.getJSONArray("taxonomyCategoryBriefs"), true,
+			taxonomyCategory1, taxonomyCategory2);
 	}
 
 	@Test
@@ -8065,40 +8051,9 @@ public class ObjectEntryResourceTest {
 				jsonObject.getString("id"),
 			Http.Method.PATCH);
 
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"taxonomyCategoryExternalReferenceCode",
-					taxonomyCategory1.getExternalReferenceCode()
-				).put(
-					"taxonomyCategoryId",
-					Long.valueOf(taxonomyCategory1.getId())
-				).put(
-					"taxonomyCategoryName", taxonomyCategory1.getName()
-				),
-				JSONUtil.put(
-					"taxonomyCategoryExternalReferenceCode",
-					taxonomyCategory2.getExternalReferenceCode()
-				).put(
-					"taxonomyCategoryId",
-					Long.valueOf(taxonomyCategory2.getId())
-				).put(
-					"taxonomyCategoryName", taxonomyCategory2.getName()
-				),
-				JSONUtil.put(
-					"taxonomyCategoryExternalReferenceCode",
-					taxonomyCategory3.getExternalReferenceCode()
-				).put(
-					"taxonomyCategoryId",
-					Long.valueOf(taxonomyCategory3.getId())
-				).put(
-					"taxonomyCategoryName", taxonomyCategory3.getName()
-				)
-			).toString(),
-			jsonObject.getJSONArray(
-				"taxonomyCategoryBriefs"
-			).toString(),
-			JSONCompareMode.NON_EXTENSIBLE);
+		_assertTaxonomyCategories(
+			jsonObject.getJSONArray("taxonomyCategoryBriefs"), false,
+			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3);
 	}
 
 	@Test
@@ -14140,8 +14095,16 @@ public class ObjectEntryResourceTest {
 	}
 
 	private TaxonomyCategory _addTaxonomyCategory() throws Exception {
+		return _addTaxonomyCategory(
+			_testGroupId, _assetVocabulary.getVocabularyId());
+	}
+
+	private TaxonomyCategory _addTaxonomyCategory(
+			long groupId, long taxonomyVocabularyId)
+		throws Exception {
+
 		return _taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-			_assetVocabulary.getVocabularyId(),
+			taxonomyVocabularyId,
 			new TaxonomyCategory() {
 				{
 					dateCreated = RandomTestUtil.nextDate();
@@ -14154,7 +14117,7 @@ public class ObjectEntryResourceTest {
 					name = StringUtil.toLowerCase(
 						RandomTestUtil.randomString());
 					numberOfTaxonomyCategories = RandomTestUtil.randomInt();
-					siteId = _testGroupId;
+					siteId = groupId;
 					taxonomyCategoryUsageCount = RandomTestUtil.randomInt();
 					taxonomyVocabularyId = RandomTestUtil.randomLong();
 				}
@@ -14498,6 +14461,24 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			expectedExternalReferenceCode,
 			relatedJSONObject.getString("externalReferenceCode"));
+	}
+
+	private void _assertTaxonomyCategories(
+			JSONArray jsonArray1, boolean withEmbeddedTaxonomyCategory,
+			TaxonomyCategory... taxonomyCategories)
+		throws Exception {
+
+		JSONArray jsonArray2 = _jsonFactory.createJSONArray();
+
+		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
+			jsonArray2.put(
+				_toTaxonomyCategoryJSONObject(
+					taxonomyCategory, withEmbeddedTaxonomyCategory));
+		}
+
+		JSONAssert.assertEquals(
+			jsonArray2.toString(), jsonArray1.toString(),
+			JSONCompareMode.NON_EXTENSIBLE);
 	}
 
 	private JSONObject _cloneJSONObject(
@@ -18633,6 +18614,38 @@ public class ObjectEntryResourceTest {
 		fileEntry.setName(fileName);
 
 		return JSONFactoryUtil.createJSONObject(fileEntry.toString());
+	}
+
+	private JSONObject _toTaxonomyCategoryJSONObject(
+			TaxonomyCategory taxonomyCategory,
+			boolean withEmbeddedTaxonomyCategory)
+		throws Exception {
+
+		Scope scope = ScopeUtil.toScope(taxonomyCategory.getSiteId());
+
+		JSONObject jsonObject = JSONUtil.put(
+			"scope",
+			JSONUtil.put(
+				"externalReferenceCode", scope.getExternalReferenceCode()
+			).put(
+				"type", scope.getTypeAsString()
+			)
+		).put(
+			"taxonomyCategoryExternalReferenceCode",
+			taxonomyCategory.getExternalReferenceCode()
+		).put(
+			"taxonomyCategoryId", Long.valueOf(taxonomyCategory.getId())
+		).put(
+			"taxonomyCategoryName", taxonomyCategory.getName()
+		);
+
+		if (!withEmbeddedTaxonomyCategory) {
+			return jsonObject;
+		}
+
+		return jsonObject.put(
+			"embeddedTaxonomyCategory",
+			_toEmbeddedTaxonomyCategoryJSONObject(taxonomyCategory));
 	}
 
 	private ValidationResponse _validate(

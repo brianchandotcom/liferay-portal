@@ -39,7 +39,13 @@ const FiltersDropdown = () => {
 		<ClayDropDown
 			active={active}
 			className="filters-dropdown"
-			onActiveChange={setActive}
+			onActiveChange={(active) => {
+				setActive(active);
+
+				if(active) {					
+					setActiveFilter(null);
+				}
+			}}
 			trigger={
 				<Button
 					aria-expanded={active}

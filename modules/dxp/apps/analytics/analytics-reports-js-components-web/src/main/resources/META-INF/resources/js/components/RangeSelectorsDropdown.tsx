@@ -231,7 +231,7 @@ const DefaultView: React.FC<IView> = ({
 				return (
 					<ClayDropdown.Item
 						active={item.value === activeRangeSelector.rangeKey}
-						data-testid={`range-selector-dropdown-item-${item.value}`}
+						data-testid={`filter-item-${item.value}`}
 						key={item.value}
 						onClick={() => {
 							onChange({

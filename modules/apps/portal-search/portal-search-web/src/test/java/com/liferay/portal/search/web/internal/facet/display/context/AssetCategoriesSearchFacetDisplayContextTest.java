@@ -291,73 +291,7 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 	}
 
 	@Test
-	public void testSelectionOfNonexistentTerms() throws Exception {
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			RandomTestUtil.randomString());
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
-
-		Assert.assertEquals("0", facetDisplayContext.getParameterValue());
-		Assert.assertFalse(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testUnauthorized() throws Exception {
-		long assetCategoryId = RandomTestUtil.randomLong();
-
-		_setUpAssetCategoryUnauthorized(assetCategoryId);
-
-		int frequency = RandomTestUtil.randomInt();
-
-		setUpOneTermCollector(assetCategoryId, frequency);
-
-		String facetParam = StringPool.BLANK;
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
-
-		Assert.assertEquals(
-			facetParam, facetDisplayContext.getParameterValue());
-		Assert.assertTrue(facetDisplayContext.isNothingSelected());
-		Assert.assertTrue(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testUnauthorizedWithPreviousSelection() throws Exception {
-		long assetCategoryId = RandomTestUtil.randomLong();
-
-		_setUpAssetCategoryUnauthorized(assetCategoryId);
-
-		String facetParam = String.valueOf(assetCategoryId);
-
-		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
-			facetParam);
-
-		List<BucketDisplayContext> bucketDisplayContexts =
-			facetDisplayContext.getBucketDisplayContexts();
-
-		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
-
-		Assert.assertEquals(
-			facetParam, facetDisplayContext.getParameterValue());
-		Assert.assertFalse(facetDisplayContext.isNothingSelected());
-		Assert.assertFalse(facetDisplayContext.isRenderNothing());
-	}
-
-	@Test
-	public void testVocabularyInformationIsPopulated() throws Exception {
+	public void testPopulateVocabularyInformation() throws Exception {
 		long categoryId = RandomTestUtil.randomLong();
 		long groupId = RandomTestUtil.randomLong();
 
@@ -505,6 +439,72 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 		Assert.assertEquals(
 			ListUtil.fromArray(vocabularyTitle),
 			assetCategoriesSearchFacetDisplayContext.getVocabularyNames());
+	}
+
+	@Test
+	public void testSelectionOfNonexistentTerms() throws Exception {
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			RandomTestUtil.randomString());
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
+
+		Assert.assertEquals("0", facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
+	}
+
+	@Test
+	public void testUnauthorized() throws Exception {
+		long assetCategoryId = RandomTestUtil.randomLong();
+
+		_setUpAssetCategoryUnauthorized(assetCategoryId);
+
+		int frequency = RandomTestUtil.randomInt();
+
+		setUpOneTermCollector(assetCategoryId, frequency);
+
+		String facetParam = StringPool.BLANK;
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
+
+		Assert.assertEquals(
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertTrue(facetDisplayContext.isNothingSelected());
+		Assert.assertTrue(facetDisplayContext.isRenderNothing());
+	}
+
+	@Test
+	public void testUnauthorizedWithPreviousSelection() throws Exception {
+		long assetCategoryId = RandomTestUtil.randomLong();
+
+		_setUpAssetCategoryUnauthorized(assetCategoryId);
+
+		String facetParam = String.valueOf(assetCategoryId);
+
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			facetParam);
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
+
+		Assert.assertEquals(
+			facetParam, facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 	}
 
 	protected Group createGroup(long groupId, long stagingGroupId) {

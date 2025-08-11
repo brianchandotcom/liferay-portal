@@ -29,8 +29,8 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 			getCastClobTextFunction(), getCastDecimalFunction(),
 			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
 			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
-			getNullDateFunction(), _getCaseWhenThenFunction(),
-			_getLikeFunction(), _getSelectFunction()
+			getNullDateFunction(), getTruncateTableFunction(),
+			_getCaseWhenThenFunction(), _getLikeFunction(), _getSelectFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
@@ -59,6 +59,11 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		return matcher.replaceAll(
 			"BEGIN\nDECLARE CONTINUE HANDLER FOR SQLSTATE '42704'\nBEGIN " +
 				"END;\nEXECUTE IMMEDIATE 'DROP TABLE $1';\nEND");
+	}
+
+	@Override
+	protected String replaceTruncateTable(Matcher matcher) {
+		return matcher.replaceAll("truncate table $1 IMMEDIATE");
 	}
 
 	private Function<String, String> _getCaseWhenThenFunction() {

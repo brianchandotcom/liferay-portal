@@ -427,7 +427,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	}
 
 	private boolean _isCloud() {
-		if (_frequenciesVisible && _displayStyle.equals("cloud")) {
+		if (_displayStyle.equals("cloud") && _frequenciesVisible) {
 			return true;
 		}
 

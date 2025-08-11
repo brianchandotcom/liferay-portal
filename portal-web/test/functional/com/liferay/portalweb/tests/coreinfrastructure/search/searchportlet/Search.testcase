@@ -1144,7 +1144,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Portlet#HEADER",
-			value1 = "Búsquedas");
+			value1 = "Buscar");
 
 		AssertTextEquals.assertPartialText(
 			key_navItem = "Conexiones",

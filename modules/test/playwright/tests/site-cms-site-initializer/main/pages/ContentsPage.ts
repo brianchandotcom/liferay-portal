@@ -10,7 +10,7 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
-type SidePanelName = 'General' | 'Comments';
+type SidePanelName = 'General' | 'Comments' | 'Schedule';
 
 export class ContentsPage {
 	readonly page: Page;
@@ -22,7 +22,7 @@ export class ContentsPage {
 		this.page = page;
 
 		this.newButton = page.getByLabel('New');
-		this.publishButton = page.getByText('Publish');
+		this.publishButton = page.getByText('Publish', {exact: true});
 	}
 
 	async goto() {

@@ -9647,9 +9647,8 @@ public class DefaultObjectEntryManagerImplTest
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
 			StringBundler.concat(
-				"No ObjectEntry exists with the key {",
-				"rootObjectEntryId=0, objectEntryId=", objectEntryAA2.getId(),
-				"}"),
+				"No ObjectEntry exists with the key {objectEntryId=",
+				objectEntryAA2.getId(), ", rootObjectEntryId=0}"),
 			() -> _defaultObjectEntryManager.getObjectEntry(
 				dtoConverterContext, _objectDefinitionAA,
 				objectEntryAA2.getId()));

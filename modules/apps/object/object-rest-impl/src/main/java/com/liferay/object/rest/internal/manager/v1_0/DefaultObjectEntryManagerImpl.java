@@ -1547,9 +1547,8 @@ public class DefaultObjectEntryManagerImpl
 		if (objectEntry.isRootDescendantNode()) {
 			throw new NoSuchObjectEntryException(
 				StringBundler.concat(
-					"No ObjectEntry exists with the key {",
-					"rootObjectEntryId=0, objectEntryId=",
-					objectEntry.getObjectEntryId(), "}"));
+					"No ObjectEntry exists with the key {objectEntryId=",
+					objectEntry.getObjectEntryId(), ", rootObjectEntryId=0}"));
 		}
 	}
 

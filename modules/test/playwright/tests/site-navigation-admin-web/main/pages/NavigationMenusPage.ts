@@ -125,16 +125,6 @@ export class NavigationMenusPage {
 		);
 	}
 
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(
-			`/group${siteUrl || '/guest'}${PORTLET_URLS.navigationMenus}`
-		);
-	}
-
-	async gotoGlobalSiteNavigationMenuPortlet() {
-		await this.page.goto(`/group/global${PORTLET_URLS.navigationMenus}`);
-	}
-
 	async addBlogItem(name: string) {
 		await this.addMenuItemButton.click();
 
@@ -154,23 +144,24 @@ export class NavigationMenusPage {
 		);
 	}
 
-	async changeBlogItem(current: string, next: string) {
-		await this.page.getByText(current, {exact: true}).click();
+	async addChildPage(parentPage: string, childPage: string) {
+		await this.page.getByText(parentPage).hover();
 
-		await this.page.getByLabel('Item', {exact: true}).click();
+		await this.page
+			.getByRole('button', {name: 'View ' + parentPage + ' Options'})
+			.click();
 
-		await this.page.waitForSelector('iframe', {state: 'attached'});
+		await this.page.getByRole('menuitem', {name: 'Add Child'}).hover();
 
-		await this.blogsModal.getByRole('button', {name: next}).click();
+		await this.page.waitForTimeout(500);
 
-		await this.page.waitForSelector('iframe', {state: 'detached'});
+		await this.page.getByRole('menuitem', {name: 'Page'}).click();
 
-		await this.saveButton.click();
+		await this.pagesModal.getByText(childPage, {exact: true}).click();
 
-		await waitForAlert(
-			this.page,
-			'Success:Your request completed successfully.'
-		);
+		await this.selectButton.click();
+
+		await waitForAlert(this.page, 'Success:1 Page was added to this menu.');
 	}
 
 	async addDocumentImageItem(imageName: string) {
@@ -193,33 +184,6 @@ export class NavigationMenusPage {
 			.click();
 
 		await this.documentsModal.getByText(imageName).click();
-	}
-
-	async changeDocumentImageItem(current: string, next: string) {
-		await this.page.getByText(current, {exact: true}).click();
-
-		await this.page.getByLabel('Item', {exact: true}).click();
-
-		await this.documentsModal
-			.getByRole('link', {name: 'Sites and Libraries'})
-			.click();
-
-		await this.documentsModal
-			.getByRole('link', {name: 'Liferay DXP'})
-			.click();
-
-		await this.documentsModal
-			.getByRole('link', {name: 'Provided by Liferay'})
-			.click();
-
-		await this.documentsModal.getByText(next).click();
-
-		await this.saveButton.click();
-
-		await waitForAlert(
-			this.page,
-			'Success:Your request completed successfully.'
-		);
 	}
 
 	async addNavigationMenuToGlobalSite(navigationMenuName: string) {
@@ -253,26 +217,6 @@ export class NavigationMenusPage {
 		await this.selectButton.click();
 
 		await waitForAlert(this.page, 'Success');
-	}
-
-	async addChildPage(parentPage: string, childPage: string) {
-		await this.page.getByText(parentPage).hover();
-
-		await this.page
-			.getByRole('button', {name: 'View ' + parentPage + ' Options'})
-			.click();
-
-		await this.page.getByRole('menuitem', {name: 'Add Child'}).hover();
-
-		await this.page.waitForTimeout(500);
-
-		await this.page.getByRole('menuitem', {name: 'Page'}).click();
-
-		await this.pagesModal.getByText(childPage, {exact: true}).click();
-
-		await this.selectButton.click();
-
-		await waitForAlert(this.page, 'Success:1 Page was added to this menu.');
 	}
 
 	async addSubmenuItem(submenuName: string) {
@@ -391,6 +335,52 @@ export class NavigationMenusPage {
 		await displayPageTemplatesPage.markAsDefault(templateName);
 	}
 
+	async changeBlogItem(current: string, next: string) {
+		await this.page.getByText(current, {exact: true}).click();
+
+		await this.page.getByLabel('Item', {exact: true}).click();
+
+		await this.page.waitForSelector('iframe', {state: 'attached'});
+
+		await this.blogsModal.getByRole('button', {name: next}).click();
+
+		await this.page.waitForSelector('iframe', {state: 'detached'});
+
+		await this.saveButton.click();
+
+		await waitForAlert(
+			this.page,
+			'Success:Your request completed successfully.'
+		);
+	}
+
+	async changeDocumentImageItem(current: string, next: string) {
+		await this.page.getByText(current, {exact: true}).click();
+
+		await this.page.getByLabel('Item', {exact: true}).click();
+
+		await this.documentsModal
+			.getByRole('link', {name: 'Sites and Libraries'})
+			.click();
+
+		await this.documentsModal
+			.getByRole('link', {name: 'Liferay DXP'})
+			.click();
+
+		await this.documentsModal
+			.getByRole('link', {name: 'Provided by Liferay'})
+			.click();
+
+		await this.documentsModal.getByText(next).click();
+
+		await this.saveButton.click();
+
+		await waitForAlert(
+			this.page,
+			'Success:Your request completed successfully.'
+		);
+	}
+
 	async createNavigationMenu(menuName: string) {
 		await this.addButton.click();
 
@@ -426,6 +416,16 @@ export class NavigationMenusPage {
 		await waitForAlert(this.page);
 
 		return randomValue;
+	}
+
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.navigationMenus}`
+		);
+	}
+
+	async gotoGlobalSiteNavigationMenuPortlet() {
+		await this.page.goto(`/group/global${PORTLET_URLS.navigationMenus}`);
 	}
 
 	async openAddCategoryModal() {

@@ -29,21 +29,12 @@ export class NavigationMenuWidgetPage {
 		);
 	}
 
-	async openConfigurationModal(menuItemName: string) {
-		await this.page.getByRole('menuitem', {name: menuItemName}).hover();
+	async saveAndCloseConfigurationModal() {
+		await this.saveConfigurationModalButton.click();
 
-		await this.page
-			.locator(
-				'#portlet-topper-toolbar_com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet'
-			)
-			.getByLabel('Options')
-			.click();
+		await this.page.waitForTimeout(500);
 
-		await this.page
-			.getByRole('menuitem', {exact: true, name: 'Configuration'})
-			.click();
-
-		await this.page.waitForTimeout(1500);
+		await this.closeConfigurationModalButton.click();
 	}
 
 	async selectCustomNavigationMenu(navigationMenuName: string) {
@@ -71,11 +62,20 @@ export class NavigationMenuWidgetPage {
 			.click();
 	}
 
-	async saveAndCloseConfigurationModal() {
-		await this.saveConfigurationModalButton.click();
+	async openConfigurationModal(menuItemName: string) {
+		await this.page.getByRole('menuitem', {name: menuItemName}).hover();
 
-		await this.page.waitForTimeout(500);
+		await this.page
+			.locator(
+				'#portlet-topper-toolbar_com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet'
+			)
+			.getByLabel('Options')
+			.click();
 
-		await this.closeConfigurationModalButton.click();
+		await this.page
+			.getByRole('menuitem', {exact: true, name: 'Configuration'})
+			.click();
+
+		await this.page.waitForTimeout(1500);
 	}
 }

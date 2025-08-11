@@ -47,62 +47,6 @@ export const test = mergeTests(
 );
 
 test(
-	'Select page as root menu item for Navigation Menu widget',
-	{
-		tag: '@LPD-50258',
-	},
-	async ({apiHelpers, page, site, widgetPagePage}) => {
-		const parentLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			groupId: site.id,
-			title: getRandomString(),
-		});
-
-		const childLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			groupId: site.id,
-			parentLayoutId: parentLayout.layoutId,
-			title: getRandomString(),
-		});
-
-		await widgetPagePage.goto(parentLayout, site.friendlyUrlPath);
-
-		await widgetPagePage.clickOnAction('Menu Display', 'Configuration');
-
-		const configurationIFrame = page.frameLocator(
-			'iframe[title*="Menu Display"]'
-		);
-
-		await configurationIFrame
-			.getByLabel('Start with Menu Items In')
-			.selectOption('Select Parent');
-
-		await configurationIFrame
-			.getByRole('button', {name: 'Menu Item'})
-			.click();
-
-		await configurationIFrame
-			.frameLocator('iframe[title="Select Site Navigation Menu Item"]')
-			.getByText('Pages Hierarchy')
-			.click();
-		await configurationIFrame
-			.frameLocator('iframe[title="Select Site Navigation Menu Item"]')
-			.getByText(parentLayout.nameCurrentValue)
-			.click();
-
-		await widgetPagePage.saveAndClose('Menu Display');
-
-		await expect(
-			page.getByRole('menuitem', {name: childLayout.nameCurrentValue})
-		).toBeVisible();
-
-		await widgetPagePage.clickOnAction('Menu Display', 'Configuration');
-
-		await expect(
-			configurationIFrame.getByText(parentLayout.nameCurrentValue)
-		).toBeVisible();
-	}
-);
-
-test(
 	'Add URL type Navigation Menu Item with "open in a new tab" checkbox unchecked',
 	{
 		tag: '@LPD-50258',
@@ -206,120 +150,6 @@ test(
 );
 
 test(
-	'View default selected navigation',
-	{
-		tag: '@LPD-50258',
-	},
-	async ({apiHelpers, navigationMenuWidgetPage, site, widgetPagePage}) => {
-		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			groupId: site.id,
-			title: getRandomString(),
-		});
-
-		await widgetPagePage.goto(layout, site.friendlyUrlPath);
-
-		await navigationMenuWidgetPage.openConfigurationModal(
-			layout.nameCurrentValue
-		);
-
-		await expect(
-			navigationMenuWidgetPage.menuDisplayModal.getByLabel(
-				'Select Navigation'
-			)
-		).toBeChecked();
-
-		await expect(
-			navigationMenuWidgetPage.navigationSelector.locator(
-				'option:checked'
-			)
-		).toHaveText('Pages Hierarchy');
-	}
-);
-
-test(
-	'View warning message in preview window when no navigation available',
-	{
-		tag: '@LPD-50258',
-	},
-	async ({
-		apiHelpers,
-		displayPageTemplatesPage,
-		navigationMenuWidgetPage,
-		page,
-		pageEditorPage,
-		site,
-	}) => {
-		const className =
-			await apiHelpers.jsonWebServicesClassName.fetchClassName(
-				'com.liferay.journal.model.JournalArticle'
-			);
-
-		const displayPageTemplateName = getRandomString();
-
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
-			{
-				classNameId: className.classNameId,
-				classTypeId: String(
-					await getBasicWebContentStructureId(apiHelpers)
-				),
-				groupId: site.id,
-				name: displayPageTemplateName,
-			}
-		);
-
-		displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-		displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-		await pageEditorPage.addWidget('Content Management', 'Menu Display');
-
-		await page
-			.locator('ul')
-			.filter({hasText: 'Menu Display'})
-			.getByLabel('Options')
-			.click();
-
-		await page
-			.getByRole('menuitem', {exact: true, name: 'Configuration'})
-			.click();
-
-		await expect(
-			navigationMenuWidgetPage.menuDisplayModal.getByLabel(
-				'Select Navigation'
-			)
-		).toBeChecked();
-
-		await navigationMenuWidgetPage.navigationSelector.selectOption('1');
-
-		await expect(
-			navigationMenuWidgetPage.menuDisplayModal.getByRole('alert')
-		).toHaveText(
-			'Warning:There is no Primary Navigation available for the current site.'
-		);
-
-		await page.waitForTimeout(300);
-
-		await navigationMenuWidgetPage.navigationSelector.selectOption('2');
-
-		await expect(
-			navigationMenuWidgetPage.menuDisplayModal.getByRole('alert')
-		).toHaveText(
-			'Warning:There is no Secondary Navigation available for the current site.'
-		);
-
-		await page.waitForTimeout(300);
-
-		await navigationMenuWidgetPage.navigationSelector.selectOption('3');
-
-		await expect(
-			navigationMenuWidgetPage.menuDisplayModal.getByRole('alert')
-		).toHaveText(
-			'Warning:There is no Social Navigation available for the current site.'
-		);
-	}
-);
-
-test(
 	'Cannot view global Navigation Menu in Navigation Menu Widget without permission',
 	{
 		tag: '@LPD-50258',
@@ -411,6 +241,89 @@ test(
 				.getByRole('button', {name: 'Delete'})
 				.click();
 		}
+	}
+);
+
+test(
+	'Configure Display Template of Navigation Menu Widget',
+	{
+		tag: '@LPD-50258',
+	},
+	async ({
+		apiHelpers,
+		navigationMenuWidgetPage,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layoutName1 = getRandomString();
+
+		const layout1 = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: layoutName1,
+		});
+
+		await widgetPagePage.goto(layout1, site.friendlyUrlPath);
+
+		await navigationMenuWidgetPage.openConfigurationModal(layoutName1);
+
+		await navigationMenuWidgetPage.selectDisplayTemplate(
+			'Split Button Dropdowns'
+		);
+
+		await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
+
+		await expect(page.getByRole('link', {name: layoutName1})).toBeVisible();
+
+		const layoutName2 = getRandomString();
+
+		const layout2 = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: layoutName2,
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection(layoutName2, 'General');
+
+		const newLayoutName = getRandomString();
+
+		await pageConfigurationPage.fillName(newLayoutName);
+
+		await pageConfigurationPage.save();
+
+		await widgetPagePage.goto(layout2, site.friendlyUrlPath);
+
+		await widgetPagePage.addPortlet('Blogs');
+
+		await page.locator('header').filter({hasText: 'Blogs'}).hover();
+
+		await page
+			.locator(
+				'#portlet-topper-toolbar_com_liferay_blogs_web_portlet_BlogsPortlet'
+			)
+			.getByLabel('Options')
+			.click();
+
+		await page
+			.getByRole('menuitem', {name: 'Look and Feel Configuration'})
+			.click();
+
+		const lookAndFeelIFrame = page.frameLocator(
+			'iframe[title="Look and Feel Configuration"]'
+		);
+
+		await lookAndFeelIFrame.getByLabel('Use Custom Title').check();
+
+		await lookAndFeelIFrame
+			.locator(
+				'[id="_com_liferay_portlet_configuration_css_web_portlet_PortletConfigurationCSSPortlet_customTitle"]'
+			)
+			.fill('Blogs Custom');
+
+		await lookAndFeelIFrame.getByRole('button', {name: 'Save'}).click();
 	}
 );
 
@@ -714,85 +627,126 @@ test(
 );
 
 test(
-	'Configure Display Template of Navigation Menu Widget',
+	'Select Navigation Menu from parent Site',
 	{
 		tag: '@LPD-50258',
 	},
 	async ({
 		apiHelpers,
 		navigationMenuWidgetPage,
+		navigationMenusPage,
 		page,
-		pageConfigurationPage,
-		pagesAdminPage,
 		site,
 		widgetPagePage,
 	}) => {
-		const layoutName1 = getRandomString();
+		let childSiteId: string;
 
-		const layout1 = await apiHelpers.jsonWebServicesLayout.addLayout({
+		try {
+
+			// Create Navigation Menu
+
+			await navigationMenusPage.goto(site.friendlyUrlPath);
+
+			const navigationMenuName = getRandomString();
+
+			await navigationMenusPage.createNavigationMenu(navigationMenuName);
+
+			// Create Navigation Menu Items
+
+			const urlItemName = getRandomString();
+
+			await navigationMenusPage.addURLItem(urlItemName);
+
+			const childSiteName = getRandomString();
+
+			const childSite = await apiHelpers.headlessSite.createSite({
+				name: childSiteName,
+				parentSiteKey: site.name,
+			});
+
+			childSiteId = childSite.id;
+
+			const layoutName = getRandomString();
+
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				externalReferenceCode: getRandomString(),
+				groupId: childSite.id,
+				title: layoutName,
+			});
+
+			await widgetPagePage.goto(layout, childSite.friendlyUrlPath);
+
+			await navigationMenuWidgetPage.openConfigurationModal(
+				layout.nameCurrentValue
+			);
+
+			await navigationMenuWidgetPage.selectCustomNavigationMenu(
+				navigationMenuName
+			);
+
+			await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
+
+			await expect(page.getByText(urlItemName)).toBeVisible();
+		}
+		finally {
+			await apiHelpers.headlessSite.deleteSite(childSiteId);
+		}
+	}
+);
+
+test(
+	'Select page as root menu item for Navigation Menu widget',
+	{
+		tag: '@LPD-50258',
+	},
+	async ({apiHelpers, page, site, widgetPagePage}) => {
+		const parentLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
-			title: layoutName1,
+			title: getRandomString(),
 		});
 
-		await widgetPagePage.goto(layout1, site.friendlyUrlPath);
-
-		await navigationMenuWidgetPage.openConfigurationModal(layoutName1);
-
-		await navigationMenuWidgetPage.selectDisplayTemplate(
-			'Split Button Dropdowns'
-		);
-
-		await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
-
-		await expect(page.getByRole('link', {name: layoutName1})).toBeVisible();
-
-		const layoutName2 = getRandomString();
-
-		const layout2 = await apiHelpers.jsonWebServicesLayout.addLayout({
+		const childLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
-			title: layoutName2,
+			parentLayoutId: parentLayout.layoutId,
+			title: getRandomString(),
 		});
 
-		await pagesAdminPage.goto(site.friendlyUrlPath);
+		await widgetPagePage.goto(parentLayout, site.friendlyUrlPath);
 
-		await pageConfigurationPage.goToSection(layoutName2, 'General');
+		await widgetPagePage.clickOnAction('Menu Display', 'Configuration');
 
-		const newLayoutName = getRandomString();
-
-		await pageConfigurationPage.fillName(newLayoutName);
-
-		await pageConfigurationPage.save();
-
-		await widgetPagePage.goto(layout2, site.friendlyUrlPath);
-
-		await widgetPagePage.addPortlet('Blogs');
-
-		await page.locator('header').filter({hasText: 'Blogs'}).hover();
-
-		await page
-			.locator(
-				'#portlet-topper-toolbar_com_liferay_blogs_web_portlet_BlogsPortlet'
-			)
-			.getByLabel('Options')
-			.click();
-
-		await page
-			.getByRole('menuitem', {name: 'Look and Feel Configuration'})
-			.click();
-
-		const lookAndFeelIFrame = page.frameLocator(
-			'iframe[title="Look and Feel Configuration"]'
+		const configurationIFrame = page.frameLocator(
+			'iframe[title*="Menu Display"]'
 		);
 
-		await lookAndFeelIFrame.getByLabel('Use Custom Title').check();
+		await configurationIFrame
+			.getByLabel('Start with Menu Items In')
+			.selectOption('Select Parent');
 
-		await lookAndFeelIFrame
-			.locator(
-				'[id="_com_liferay_portlet_configuration_css_web_portlet_PortletConfigurationCSSPortlet_customTitle"]'
-			)
-			.fill('Blogs Custom');
+		await configurationIFrame
+			.getByRole('button', {name: 'Menu Item'})
+			.click();
 
-		await lookAndFeelIFrame.getByRole('button', {name: 'Save'}).click();
+		await configurationIFrame
+			.frameLocator('iframe[title="Select Site Navigation Menu Item"]')
+			.getByText('Pages Hierarchy')
+			.click();
+		await configurationIFrame
+			.frameLocator('iframe[title="Select Site Navigation Menu Item"]')
+			.getByText(parentLayout.nameCurrentValue)
+			.click();
+
+		await widgetPagePage.saveAndClose('Menu Display');
+
+		await expect(
+			page.getByRole('menuitem', {name: childLayout.nameCurrentValue})
+		).toBeVisible();
+
+		await widgetPagePage.clickOnAction('Menu Display', 'Configuration');
+
+		await expect(
+			configurationIFrame.getByText(parentLayout.nameCurrentValue)
+		).toBeVisible();
 	}
 );
 
@@ -883,290 +837,6 @@ test(
 		await expect(page.getByRole('link', {name: layoutName3})).toBeVisible();
 
 		await expect(page.getByRole('link', {name: layoutName4})).toBeVisible();
-	}
-);
-
-test(
-	'View custom field of Navigation Menu',
-	{
-		tag: '@LPD-50258',
-	},
-	async ({
-		addCustomFieldPage,
-		apiHelpers,
-		navigationMenuWidgetPage,
-		navigationMenusPage,
-		page,
-		site,
-		templatesPage,
-		viewAttributesPage,
-		widgetPagePage,
-	}) => {
-		try {
-
-			// Create Custom Field for Navigation Menu Items
-
-			const customFieldName = 'Subtitle';
-
-			const customField: TCustomField = {
-				fieldName: customFieldName,
-				fieldType: 'inputField',
-				resource: 'Site Navigation Menu Item',
-			};
-
-			await addCustomFieldPage.addCustomField(customField);
-
-			// Create layout
-
-			const layoutName = getRandomString();
-
-			const submenuItemName = getRandomString();
-
-			const urlItemName = getRandomString();
-
-			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-				externalReferenceCode: getRandomString(),
-				groupId: site.id,
-				title: layoutName,
-			});
-
-			// Create Navigation Menu
-
-			await navigationMenusPage.goto(site.friendlyUrlPath);
-
-			const navigationMenuName = getRandomString();
-
-			await navigationMenusPage.createNavigationMenu(navigationMenuName);
-
-			// Create Navigation Menu Items
-
-			await navigationMenusPage.addPageItem([layoutName]);
-
-			await navigationMenusPage.addSubmenuItem(submenuItemName);
-
-			await navigationMenusPage.addURLItem(urlItemName);
-
-			// Fill the Custom Fields of the Navigation Menu Items and store its value
-
-			const value1 =
-				await navigationMenusPage.fillNavagationMenuItemCustomField(
-					layoutName,
-					customFieldName
-				);
-
-			const value2 =
-				await navigationMenusPage.fillNavagationMenuItemCustomField(
-					submenuItemName,
-					customFieldName
-				);
-
-			const value3 =
-				await navigationMenusPage.fillNavagationMenuItemCustomField(
-					urlItemName,
-					customFieldName
-				);
-
-			// Create Widget Template with a custom template script
-
-			await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
-
-			const widgetTemplateName = getRandomString();
-
-			await templatesPage.createWidgetTemplate(
-				widgetTemplateName,
-				'Menu Display Template'
-			);
-
-			await templatesPage.editTemplate(widgetTemplateName);
-
-			await templatesPage.importInformationTemplate(
-				__dirname,
-				'custom_field_template.ftl'
-			);
-
-			await templatesPage.saveTemplate(widgetTemplateName);
-
-			// Use the created Navigation Menu in the Navigation Menu Widget and apply the created Widget Template
-
-			await widgetPagePage.goto(layout, site.friendlyUrlPath);
-
-			await navigationMenuWidgetPage.openConfigurationModal(
-				layout.nameCurrentValue
-			);
-
-			await navigationMenuWidgetPage.selectCustomNavigationMenu(
-				navigationMenuName
-			);
-
-			await navigationMenuWidgetPage.selectDisplayTemplate(
-				widgetTemplateName
-			);
-
-			await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
-
-			// Verify that the changes where applied
-
-			await expect.soft(page.getByText(value1)).toBeVisible();
-
-			await expect.soft(page.getByText(value2)).toBeVisible();
-
-			await expect.soft(page.getByText(value3)).toBeVisible();
-		}
-		finally {
-			await viewAttributesPage.goto('Site Navigation Menu Item');
-
-			await page.getByLabel('Select All Items on the Page').check();
-
-			await page.getByRole('button', {name: 'Delete'}).click();
-		}
-	}
-);
-
-test(
-	'Select Navigation Menu from parent Site',
-	{
-		tag: '@LPD-50258',
-	},
-	async ({
-		apiHelpers,
-		navigationMenuWidgetPage,
-		navigationMenusPage,
-		page,
-		site,
-		widgetPagePage,
-	}) => {
-		let childSiteId: string;
-
-		try {
-
-			// Create Navigation Menu
-
-			await navigationMenusPage.goto(site.friendlyUrlPath);
-
-			const navigationMenuName = getRandomString();
-
-			await navigationMenusPage.createNavigationMenu(navigationMenuName);
-
-			// Create Navigation Menu Items
-
-			const urlItemName = getRandomString();
-
-			await navigationMenusPage.addURLItem(urlItemName);
-
-			const childSiteName = getRandomString();
-
-			const childSite = await apiHelpers.headlessSite.createSite({
-				name: childSiteName,
-				parentSiteKey: site.name,
-			});
-
-			childSiteId = childSite.id;
-
-			const layoutName = getRandomString();
-
-			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-				externalReferenceCode: getRandomString(),
-				groupId: childSite.id,
-				title: layoutName,
-			});
-
-			await widgetPagePage.goto(layout, childSite.friendlyUrlPath);
-
-			await navigationMenuWidgetPage.openConfigurationModal(
-				layout.nameCurrentValue
-			);
-
-			await navigationMenuWidgetPage.selectCustomNavigationMenu(
-				navigationMenuName
-			);
-
-			await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
-
-			await expect(page.getByText(urlItemName)).toBeVisible();
-		}
-		finally {
-			await apiHelpers.headlessSite.deleteSite(childSiteId);
-		}
-	}
-);
-
-test(
-	'Show the same amount of levels with the number of levels to display',
-	{
-		tag: '@LPD-50258',
-	},
-	async ({
-		apiHelpers,
-		navigationMenuWidgetPage,
-		page,
-		site,
-		widgetPagePage,
-	}) => {
-		const layoutName = getRandomString();
-
-		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			externalReferenceCode: getRandomString(),
-			groupId: site.id,
-			title: layoutName,
-		});
-
-		const childLayoutName = getRandomString();
-
-		const childLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			externalReferenceCode: getRandomString(),
-			groupId: site.id,
-			parentLayoutId: layout.layoutId,
-			title: childLayoutName,
-		});
-
-		const grandChildLayoutName = getRandomString();
-
-		const grandChildLayout =
-			await apiHelpers.jsonWebServicesLayout.addLayout({
-				externalReferenceCode: getRandomString(),
-				groupId: site.id,
-				parentLayoutId: childLayout.layoutId,
-				title: grandChildLayoutName,
-			});
-
-		const greatGrandChildLayoutName = getRandomString();
-
-		await apiHelpers.jsonWebServicesLayout.addLayout({
-			externalReferenceCode: getRandomString(),
-			groupId: site.id,
-			parentLayoutId: grandChildLayout.layoutId,
-			title: greatGrandChildLayoutName,
-		});
-
-		await widgetPagePage.goto(layout, site.friendlyUrlPath);
-
-		await navigationMenuWidgetPage.openConfigurationModal(
-			layout.nameCurrentValue
-		);
-
-		await navigationMenuWidgetPage.menuDisplayModal
-			.getByLabel('Levels to Display')
-			.selectOption('2');
-
-		await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
-
-		await page.getByRole('menuitem', {name: layoutName}).hover();
-
-		await expect(
-			page.getByRole('menuitem', {name: layoutName})
-		).toBeVisible();
-
-		await expect(
-			page.getByRole('menuitem', {name: childLayoutName})
-		).toBeVisible();
-
-		await expect(
-			page.getByRole('menuitem', {name: grandChildLayoutName})
-		).not.toBeVisible();
-
-		await expect(
-			page.getByRole('menuitem', {name: greatGrandChildLayoutName})
-		).not.toBeVisible();
 	}
 );
 
@@ -1326,5 +996,335 @@ test(
 		await expect(
 			page.getByRole('heading', {name: greatGrandChildLayoutName})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Show the same amount of levels with the number of levels to display',
+	{
+		tag: '@LPD-50258',
+	},
+	async ({
+		apiHelpers,
+		navigationMenuWidgetPage,
+		page,
+		site,
+		widgetPagePage,
+	}) => {
+		const layoutName = getRandomString();
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			externalReferenceCode: getRandomString(),
+			groupId: site.id,
+			title: layoutName,
+		});
+
+		const childLayoutName = getRandomString();
+
+		const childLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			externalReferenceCode: getRandomString(),
+			groupId: site.id,
+			parentLayoutId: layout.layoutId,
+			title: childLayoutName,
+		});
+
+		const grandChildLayoutName = getRandomString();
+
+		const grandChildLayout =
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				externalReferenceCode: getRandomString(),
+				groupId: site.id,
+				parentLayoutId: childLayout.layoutId,
+				title: grandChildLayoutName,
+			});
+
+		const greatGrandChildLayoutName = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			externalReferenceCode: getRandomString(),
+			groupId: site.id,
+			parentLayoutId: grandChildLayout.layoutId,
+			title: greatGrandChildLayoutName,
+		});
+
+		await widgetPagePage.goto(layout, site.friendlyUrlPath);
+
+		await navigationMenuWidgetPage.openConfigurationModal(
+			layout.nameCurrentValue
+		);
+
+		await navigationMenuWidgetPage.menuDisplayModal
+			.getByLabel('Levels to Display')
+			.selectOption('2');
+
+		await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
+
+		await page.getByRole('menuitem', {name: layoutName}).hover();
+
+		await expect(
+			page.getByRole('menuitem', {name: layoutName})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menuitem', {name: childLayoutName})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menuitem', {name: grandChildLayoutName})
+		).not.toBeVisible();
+
+		await expect(
+			page.getByRole('menuitem', {name: greatGrandChildLayoutName})
+		).not.toBeVisible();
+	}
+);
+
+test(
+	'View custom field of Navigation Menu',
+	{
+		tag: '@LPD-50258',
+	},
+	async ({
+		addCustomFieldPage,
+		apiHelpers,
+		navigationMenuWidgetPage,
+		navigationMenusPage,
+		page,
+		site,
+		templatesPage,
+		viewAttributesPage,
+		widgetPagePage,
+	}) => {
+		try {
+
+			// Create Custom Field for Navigation Menu Items
+
+			const customFieldName = 'Subtitle';
+
+			const customField: TCustomField = {
+				fieldName: customFieldName,
+				fieldType: 'inputField',
+				resource: 'Site Navigation Menu Item',
+			};
+
+			await addCustomFieldPage.addCustomField(customField);
+
+			// Create layout
+
+			const layoutName = getRandomString();
+
+			const submenuItemName = getRandomString();
+
+			const urlItemName = getRandomString();
+
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				externalReferenceCode: getRandomString(),
+				groupId: site.id,
+				title: layoutName,
+			});
+
+			// Create Navigation Menu
+
+			await navigationMenusPage.goto(site.friendlyUrlPath);
+
+			const navigationMenuName = getRandomString();
+
+			await navigationMenusPage.createNavigationMenu(navigationMenuName);
+
+			// Create Navigation Menu Items
+
+			await navigationMenusPage.addPageItem([layoutName]);
+
+			await navigationMenusPage.addSubmenuItem(submenuItemName);
+
+			await navigationMenusPage.addURLItem(urlItemName);
+
+			// Fill the Custom Fields of the Navigation Menu Items and store its value
+
+			const value1 =
+				await navigationMenusPage.fillNavagationMenuItemCustomField(
+					layoutName,
+					customFieldName
+				);
+
+			const value2 =
+				await navigationMenusPage.fillNavagationMenuItemCustomField(
+					submenuItemName,
+					customFieldName
+				);
+
+			const value3 =
+				await navigationMenusPage.fillNavagationMenuItemCustomField(
+					urlItemName,
+					customFieldName
+				);
+
+			// Create Widget Template with a custom template script
+
+			await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
+
+			const widgetTemplateName = getRandomString();
+
+			await templatesPage.createWidgetTemplate(
+				widgetTemplateName,
+				'Menu Display Template'
+			);
+
+			await templatesPage.editTemplate(widgetTemplateName);
+
+			await templatesPage.importInformationTemplate(
+				__dirname,
+				'custom_field_template.ftl'
+			);
+
+			await templatesPage.saveTemplate(widgetTemplateName);
+
+			// Use the created Navigation Menu in the Navigation Menu Widget and apply the created Widget Template
+
+			await widgetPagePage.goto(layout, site.friendlyUrlPath);
+
+			await navigationMenuWidgetPage.openConfigurationModal(
+				layout.nameCurrentValue
+			);
+
+			await navigationMenuWidgetPage.selectCustomNavigationMenu(
+				navigationMenuName
+			);
+
+			await navigationMenuWidgetPage.selectDisplayTemplate(
+				widgetTemplateName
+			);
+
+			await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
+
+			// Verify that the changes where applied
+
+			await expect.soft(page.getByText(value1)).toBeVisible();
+
+			await expect.soft(page.getByText(value2)).toBeVisible();
+
+			await expect.soft(page.getByText(value3)).toBeVisible();
+		}
+		finally {
+			await viewAttributesPage.goto('Site Navigation Menu Item');
+
+			await page.getByLabel('Select All Items on the Page').check();
+
+			await page.getByRole('button', {name: 'Delete'}).click();
+		}
+	}
+);
+
+test(
+	'View default selected navigation',
+	{
+		tag: '@LPD-50258',
+	},
+	async ({apiHelpers, navigationMenuWidgetPage, site, widgetPagePage}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await widgetPagePage.goto(layout, site.friendlyUrlPath);
+
+		await navigationMenuWidgetPage.openConfigurationModal(
+			layout.nameCurrentValue
+		);
+
+		await expect(
+			navigationMenuWidgetPage.menuDisplayModal.getByLabel(
+				'Select Navigation'
+			)
+		).toBeChecked();
+
+		await expect(
+			navigationMenuWidgetPage.navigationSelector.locator(
+				'option:checked'
+			)
+		).toHaveText('Pages Hierarchy');
+	}
+);
+
+test(
+	'View warning message in preview window when no navigation available',
+	{
+		tag: '@LPD-50258',
+	},
+	async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		navigationMenuWidgetPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const className =
+			await apiHelpers.jsonWebServicesClassName.fetchClassName(
+				'com.liferay.journal.model.JournalArticle'
+			);
+
+		const displayPageTemplateName = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+			{
+				classNameId: className.classNameId,
+				classTypeId: String(
+					await getBasicWebContentStructureId(apiHelpers)
+				),
+				groupId: site.id,
+				name: displayPageTemplateName,
+			}
+		);
+
+		displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addWidget('Content Management', 'Menu Display');
+
+		await page
+			.locator('ul')
+			.filter({hasText: 'Menu Display'})
+			.getByLabel('Options')
+			.click();
+
+		await page
+			.getByRole('menuitem', {exact: true, name: 'Configuration'})
+			.click();
+
+		await expect(
+			navigationMenuWidgetPage.menuDisplayModal.getByLabel(
+				'Select Navigation'
+			)
+		).toBeChecked();
+
+		await navigationMenuWidgetPage.navigationSelector.selectOption('1');
+
+		await expect(
+			navigationMenuWidgetPage.menuDisplayModal.getByRole('alert')
+		).toHaveText(
+			'Warning:There is no Primary Navigation available for the current site.'
+		);
+
+		await page.waitForTimeout(300);
+
+		await navigationMenuWidgetPage.navigationSelector.selectOption('2');
+
+		await expect(
+			navigationMenuWidgetPage.menuDisplayModal.getByRole('alert')
+		).toHaveText(
+			'Warning:There is no Secondary Navigation available for the current site.'
+		);
+
+		await page.waitForTimeout(300);
+
+		await navigationMenuWidgetPage.navigationSelector.selectOption('3');
+
+		await expect(
+			navigationMenuWidgetPage.menuDisplayModal.getByRole('alert')
+		).toHaveText(
+			'Warning:There is no Social Navigation available for the current site.'
+		);
 	}
 );

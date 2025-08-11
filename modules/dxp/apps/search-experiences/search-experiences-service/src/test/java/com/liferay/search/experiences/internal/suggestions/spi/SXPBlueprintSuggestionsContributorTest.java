@@ -87,7 +87,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 		int totalHits = 2;
 
 		_setUpAssetRendererFactoryRegistryUtil(
-			"Asset Renderer Title", "Asset Renderer Summary", "Class Name 2");
+			"Class Name 2", "Asset Renderer Title", "Asset Renderer Summary");
 		_setUpSearcher(totalHits);
 		_setUpSuggestionsContributorConfiguration("testField");
 
@@ -242,11 +242,11 @@ public class SXPBlueprintSuggestionsContributorTest {
 			String title, String summary)
 		throws Exception {
 
-		_setUpAssetRendererFactoryRegistryUtil(title, summary, null);
+		_setUpAssetRendererFactoryRegistryUtil(null, title, summary);
 	}
 
 	private void _setUpAssetRendererFactoryRegistryUtil(
-			String title, String summary, String classNameWithoutAssetRenderer)
+			String className, String title, String summary)
 		throws Exception {
 
 		AssetRenderer<?> assetRenderer = Mockito.mock(AssetRenderer.class);
@@ -279,10 +279,8 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_serviceTrackerMap.getService(Mockito.anyString())
 		).thenAnswer(
 			invocation -> {
-				if (Objects.nonNull(classNameWithoutAssetRenderer) &&
-					Objects.equals(
-						invocation.getArgument(0),
-						classNameWithoutAssetRenderer)) {
+				if (Objects.nonNull(className) &&
+					Objects.equals(invocation.getArgument(0), className)) {
 
 					return null;
 				}

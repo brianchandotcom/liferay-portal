@@ -28,7 +28,7 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
 			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
 			getNullDateFunction(), _getEscapeFunction(),
-			_getNotEqualsBlankStringFunction()
+			getTruncateTableFunction(), _getNotEqualsBlankStringFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {

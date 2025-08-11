@@ -225,6 +225,18 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 			Pattern.CASE_INSENSITIVE);
 	}
 
+	protected Function<String, String> getTruncateTableFunction() {
+		Pattern pattern = getTruncateTablePattern();
+
+		return (String sql) -> replaceTruncateTable(pattern.matcher(sql));
+	}
+
+	protected Pattern getTruncateTablePattern() {
+		return Pattern.compile(
+			"TRUNCATE\\s+TABLE\\s+([a-zA-Z_][\\w.]*)",
+			Pattern.CASE_INSENSITIVE);
+	}
+
 	protected String replaceAggregation(Matcher matcher) {
 		return matcher.replaceAll("$2($3)");
 	}
@@ -271,6 +283,10 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected String replaceSubstr(Matcher matcher) {
 		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
+	}
+
+	protected String replaceTruncateTable(Matcher matcher) {
+		return matcher.replaceAll("truncate table $1");
 	}
 
 	protected void setFunctions(Function... functions) {

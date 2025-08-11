@@ -47,6 +47,12 @@ public class DepotEntryServiceUtil {
 		return getService().deleteDepotEntry(depotEntryId);
 	}
 
+	public static DepotEntry fetchGroupDepotEntry(long groupId)
+		throws PortalException {
+
+		return getService().fetchGroupDepotEntry(groupId);
+	}
+
 	public static List<DepotEntry> getCurrentAndGroupConnectedDepotEntries(
 			long groupId, int type, int start, int end)
 		throws PortalException {

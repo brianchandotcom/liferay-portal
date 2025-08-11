@@ -81,8 +81,8 @@ public class BasicSuggestionsContributorTest {
 		int totalHits = 2;
 
 		_setUpAssetRendererFactoryRegistryUtil(
-			false, "Asset Renderer Title", "Asset Renderer Summary",
-			"Class Name 2");
+			false, "Class Name 2", "Asset Renderer Title",
+			"Asset Renderer Summary");
 		_setUpSearcher(totalHits);
 
 		SuggestionsContributorResults suggestionsContributorResults =
@@ -228,12 +228,12 @@ public class BasicSuggestionsContributorTest {
 		throws Exception {
 
 		_setUpAssetRendererFactoryRegistryUtil(
-			assetRendererFactoryNull, title, summary, null);
+			assetRendererFactoryNull, null, title, summary);
 	}
 
 	private void _setUpAssetRendererFactoryRegistryUtil(
-			boolean assetRendererFactoryNull, String title, String summary,
-			String classNameWithoutAssetRenderer)
+			boolean assetRendererFactoryNull, String className, String title,
+			String summary)
 		throws Exception {
 
 		ReflectionTestUtil.setFieldValue(
@@ -283,10 +283,8 @@ public class BasicSuggestionsContributorTest {
 			_serviceTrackerMap.getService(Mockito.anyString())
 		).thenAnswer(
 			invocation -> {
-				if (Objects.nonNull(classNameWithoutAssetRenderer) &&
-					Objects.equals(
-						invocation.getArgument(0),
-						classNameWithoutAssetRenderer)) {
+				if (Objects.nonNull(className) &&
+					Objects.equals(invocation.getArgument(0), className)) {
 
 					return null;
 				}

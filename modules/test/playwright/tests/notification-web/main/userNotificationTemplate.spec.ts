@@ -184,26 +184,8 @@ test.describe('User notification template', () => {
 		apiHelpers,
 		userNotificationTemplatePage,
 	}) => {
-		const user =
-			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-				'test@liferay.com'
-			);
-
-		const {id: idUserGroup1, name: nameUserGroup1} =
-			await apiHelpers.headlessAdminUser.postUserGroup();
-
-		const {id: idUserGroup2, name: nameUserGroup2} =
-			await apiHelpers.headlessAdminUser.postUserGroup();
-
-		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
-			idUserGroup1,
-			[user.id]
-		);
-
-		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
-			idUserGroup2,
-			[user.id]
-		);
+		const userGroup1 = await apiHelpers.headlessAdminUser.postUserGroup();
+		const userGroup2 = await apiHelpers.headlessAdminUser.postUserGroup();
 
 		await test.step('AC1: Display "User Group" option in the Recipient field.', async () => {
 			await userNotificationTemplatePage.goto();
@@ -217,15 +199,15 @@ test.describe('User notification template', () => {
 				.getByRole('combobox', {name: 'Select User Group'})
 				.click();
 			await expect(
-				userNotificationTemplatePage.page.getByText(nameUserGroup1)
+				userNotificationTemplatePage.page.getByText(userGroup1.name)
 			).toBeVisible();
 			await expect(
-				userNotificationTemplatePage.page.getByText(nameUserGroup2)
+				userNotificationTemplatePage.page.getByText(userGroup2.name)
 			).toBeVisible();
 		});
 
 		await test.step('AC3: Multi-Selection Support', async () => {
-			for (const userGroupName of [nameUserGroup1, nameUserGroup2]) {
+			for (const userGroupName of [userGroup1.name, userGroup2.name]) {
 				await userNotificationTemplatePage.page
 					.getByLabel(userGroupName)
 					.click();
@@ -241,14 +223,14 @@ test.describe('User notification template', () => {
 		await test.step('AC4: Support Search and Filtering', async () => {
 			userNotificationTemplatePage.page
 				.getByRole('textbox', {name: 'Search for a User Group.'})
-				.fill(nameUserGroup1);
+				.fill(userGroup1.name);
 			await expect(
-				userNotificationTemplatePage.page.getByLabel(nameUserGroup1, {
+				userNotificationTemplatePage.page.getByLabel(userGroup1.name, {
 					exact: true,
 				})
 			).toBeVisible();
 			await expect(
-				userNotificationTemplatePage.page.getByLabel(nameUserGroup2, {
+				userNotificationTemplatePage.page.getByLabel(userGroup2.name, {
 					exact: true,
 				})
 			).not.toBeVisible();
@@ -271,7 +253,7 @@ test.describe('User notification template', () => {
 			.click();
 
 		await test.step('AC5: Save User Group Selection', async () => {
-			for (const userGroupName of [nameUserGroup1, nameUserGroup2]) {
+			for (const userGroupName of [userGroup1.name, userGroup2.name]) {
 				await expect(
 					userNotificationTemplatePage.page.getByRole('row', {
 						name: `${userGroupName} Remove`,

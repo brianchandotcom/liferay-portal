@@ -6,10 +6,7 @@
 package com.liferay.change.tracking.web.internal.frontend.data.set.view.table;
 
 import com.liferay.change.tracking.web.internal.constants.PublicationsFDSNames;
-import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviorConstants;
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
-import com.liferay.frontend.data.set.view.table.DateTimeFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -26,7 +23,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + PublicationsFDSNames.PUBLICATIONS_HISTORY,
 	service = FDSView.class
 )
-public class PublicationsHistoryTableFDSView extends BaseTableFDSView {
+public class PublicationsHistoryTableFDSView
+	extends BasePublicationsFDSTableView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -43,7 +41,7 @@ public class PublicationsHistoryTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			_addDateFDSTableSchemaField()
+			addDateFDSTableSchemaField("datePublished", "published-date")
 		).add(
 			"ownerName", "published-by"
 		).add(
@@ -51,26 +49,6 @@ public class PublicationsHistoryTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"customPublicationHistoryStatusRenderer")
 		).build();
-	}
-
-	private DateTimeFDSTableSchemaField _addDateFDSTableSchemaField() {
-		DateTimeFDSTableSchemaField dateFDSTableSchemaField =
-			new DateTimeFDSTableSchemaField();
-
-		dateFDSTableSchemaField.setContentRenderer(
-			"dateTime"
-		).setFieldName(
-			"datePublished"
-		).setLabel(
-			"published-date"
-		).setSortable(
-			true
-		);
-
-		dateFDSTableSchemaField.setTimeZoneBehavior(
-			FDSTimeZoneBehaviorConstants.APPLY_THEME_DISPLAY_TIME_ZONE);
-
-		return dateFDSTableSchemaField;
 	}
 
 	@Reference

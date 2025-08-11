@@ -8,7 +8,6 @@ package com.liferay.change.tracking.web.internal.frontend.data.set.view.table;
 
 import com.liferay.change.tracking.web.internal.constants.PublicationsFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -25,7 +24,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + PublicationsFDSNames.PUBLICATIONS_TIMELINE_HISTORY,
 	service = FDSView.class
 )
-public class PublicationsTimelineHistoryTableFDSView extends BaseTableFDSView {
+public class PublicationsTimelineHistoryTableFDSView
+	extends BasePublicationsFDSTableView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -66,14 +66,8 @@ public class PublicationsTimelineHistoryTableFDSView extends BaseTableFDSView {
 			"ctCollectionStatusUserName", "published-by",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"ctCollectionStatusDate", "published-date",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setLocalizeLabel(
-				true
-			).setSortable(
-				true
-			)
+			addDateFDSTableSchemaField(
+				"ctCollectionStatusDate", "published-date")
 		).build();
 	}
 

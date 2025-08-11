@@ -37,9 +37,10 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -2329,25 +2330,24 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition1, "externalReferenceCode",
-			RandomTestUtil.randomString());
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).toString(),
+			_getEndpoint(_objectDefinition1, 0), Http.Method.POST);
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
 			null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
 			Http.Method.GET);
 
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+		JSONArray itemsJSONArray = jsonObject2.getJSONArray("items");
 
-		jsonObject = itemsJSONArray.getJSONObject(0);
+		jsonObject2 = itemsJSONArray.getJSONObject(0);
 
-		Assert.assertEquals(
-			objectEntry.getObjectEntryId(), jsonObject.getInt("id"));
-
-		JSONObject creatorJSONObject = jsonObject.getJSONObject("creator");
+		Assert.assertEquals(jsonObject1.getInt("id"), jsonObject2.getInt("id"));
 
 		Assert.assertEquals(
-			objectEntry.getUserName(), creatorJSONObject.getString("name"));
+			jsonObject1.getString("creator"), jsonObject2.getString("creator"));
 	}
 
 	@Test
@@ -3442,9 +3442,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		Document document = _addRandomDocument();
 
-		return ObjectEntryTestUtil.addObjectEntry(
-			groupId, objectDefinition,
-			HashMapBuilder.<String, Serializable>put(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
 				"attachmentField", document.getId()
 			).put(
 				"booleanField", RandomTestUtil.randomBoolean()
@@ -3466,7 +3465,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"longTextField", RandomTestUtil.randomString()
 			).put(
 				"multiselectPicklistField",
-				(Serializable)TransformUtil.transform(
+				TransformUtil.transform(
 					multiselectPicklistFieldValue, ListTypeValue::name)
 			).put(
 				"picklistField", listTypeValue.name()
@@ -3478,7 +3477,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"textField", textFieldValue
 			).put(
 				"textUniqueField", textUniqueFieldValue
-			).build());
+			).toString(),
+			_getEndpoint(objectDefinition, groupId), Http.Method.POST);
+
+		return _objectEntryLocalService.getObjectEntry(jsonObject.getInt("id"));
 	}
 
 	private ObjectDefinition _addObjectDefinition(int index, String scope)
@@ -3853,6 +3855,21 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			Http.Method.PATCH);
 	}
 
+	private String _getEndpoint(
+		ObjectDefinition objectDefinition, Object scopeKey) {
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		if (objectScopeProvider.isGroupAware()) {
+			return StringBundler.concat(
+				objectDefinition.getRESTContextPath(), "/scopes/", scopeKey);
+		}
+
+		return objectDefinition.getRESTContextPath();
+	}
+
 	private void _publishAPIApplication(
 			String apiApplicationExternalReferenceCode)
 		throws Exception {
@@ -4087,6 +4104,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private ObjectRelationship _objectRelationship1;
 	private ObjectRelationship _objectRelationship2;
+
+	@Inject
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

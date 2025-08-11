@@ -50,6 +50,12 @@
 									},
 									"fragmentFields": [
 									],
+									"fragmentStyle": {
+										"marginBottom": "3",
+										"marginLeft": "3",
+										"marginRight": "3",
+										"marginTop": "3"
+									},
 									"indexed": true
 								},
 								"type": "Fragment"

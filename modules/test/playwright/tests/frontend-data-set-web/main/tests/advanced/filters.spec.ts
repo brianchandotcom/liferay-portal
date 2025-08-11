@@ -371,8 +371,10 @@ test(
 
 				expect(page.getByRole('checkbox', {name: 'Blue'})).toBeChecked;
 				expect(page.getByRole('checkbox', {name: 'Green'})).toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Red'})).not.toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Yellow'})).toBeChecked;
+				expect(page.getByRole('checkbox', {name: 'Red'})).not
+					.toBeChecked;
+				expect(page.getByRole('checkbox', {name: 'Yellow'}))
+					.toBeChecked;
 			});
 
 			await test.step('Click on clear filters button', async () => {
@@ -399,10 +401,14 @@ test(
 					.getByRole('menuitem', {name: 'Color'})
 					.click();
 
-				expect(page.getByRole('checkbox', {name: 'Blue'})).not.toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Green'})).not.toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Red'})).not.toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Yellow'})).not.toBeChecked;
+				expect(page.getByRole('checkbox', {name: 'Blue'})).not
+					.toBeChecked;
+				expect(page.getByRole('checkbox', {name: 'Green'})).not
+					.toBeChecked;
+				expect(page.getByRole('checkbox', {name: 'Red'})).not
+					.toBeChecked;
+				expect(page.getByRole('checkbox', {name: 'Yellow'})).not
+					.toBeChecked;
 			});
 		});
 	}

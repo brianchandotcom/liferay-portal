@@ -15,7 +15,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.UserGroupRoleService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,6 +69,61 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				this::_toRole));
 	}
 
+	@Override
+	public Page<Role>
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+				String assetLibraryExternalReferenceCode,
+				String userExternalReferenceCode, Role[] roles)
+		throws Exception {
+
+		Group group = _getGroup(assetLibraryExternalReferenceCode);
+		User user = _userService.getUserByExternalReferenceCode(
+			userExternalReferenceCode, contextCompany.getCompanyId());
+
+		return putAssetLibraryUserAccountUserRolesPage(
+			group.getGroupId(), user.getUserId(), roles);
+	}
+
+	@Override
+	public Page<Role> putAssetLibraryUserAccountUserRolesPage(
+			Long assetLibraryId, Long userId, Role[] roles)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		if (!_groupService.hasUserGroup(userId, assetLibraryId)) {
+			throw new NoSuchUserException(
+				"No user exists with user group ID " + userId);
+		}
+
+		long[] roleIdsArray = ListUtil.toLongArray(
+			_roleService.getUserGroupRoles(userId, assetLibraryId),
+			com.liferay.portal.kernel.model.Role.ROLE_ID_ACCESSOR);
+
+		_userGroupRoleService.deleteUserGroupRoles(
+			userId, assetLibraryId, roleIdsArray);
+
+		long[] roleIds = new long[0];
+
+		for (Role role : roles) {
+			com.liferay.portal.kernel.model.Role persistedRole =
+				_roleService.getRole(
+					contextCompany.getCompanyId(), role.getName());
+
+			roleIds = ArrayUtil.append(roleIds, persistedRole.getRoleId());
+		}
+
+		_userGroupRoleService.addUserGroupRoles(
+			userId, assetLibraryId, roleIds);
+
+		return Page.of(
+			transform(
+				_roleService.getUserGroupRoles(userId, assetLibraryId),
+				this::_toRole));
+	}
+
 	private Group _getGroup(String externalReferenceCode) throws Exception {
 		Group group = _groupService.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
@@ -97,6 +155,9 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Reference
 	private RoleService _roleService;
+
+	@Reference
+	private UserGroupRoleService _userGroupRoleService;
 
 	@Reference
 	private UserService _userService;

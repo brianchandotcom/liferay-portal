@@ -80,6 +80,7 @@ public class AssetDisplayPageUtilTest {
 	@Before
 	public void setUp() throws Exception {
 		_classNameId = _portal.getClassNameId(JournalArticle.class.getName());
+
 		_group = GroupTestUtil.addGroup();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(

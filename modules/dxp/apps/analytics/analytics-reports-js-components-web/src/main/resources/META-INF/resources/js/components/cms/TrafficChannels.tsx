@@ -12,6 +12,7 @@ import React, {useContext} from 'react';
 import {Context} from '../../Context';
 import useFetch from '../../hooks/useFetch';
 import {buildQueryString} from '../../utils/buildQueryString';
+import Title from '../Title';
 
 type TrafficChannelsData = {
 	count: number;
@@ -27,19 +28,11 @@ type TrafficChannelsApiResponse = {
 	totalCount: number;
 };
 
-function mapData(
-	data: TrafficChannelsApiResponse | null
-): TrafficChannelsData[] {
-	if (!data) {
-		return [];
-	}
-
-	const totalCount = data.items.reduce((total, value) => {
-		return total + value.count;
-	}, 0);
+function mapData(data: TrafficChannelsApiResponse): TrafficChannelsData[] {
+	const {items, totalCount} = data;
 
 	return data
-		? data.items.map((channel) => ({
+		? items.map((channel) => ({
 				count: channel.count,
 				name: channel.name,
 				percentage: (channel.count / totalCount) * 100,
@@ -58,13 +51,13 @@ const TrafficChannelsEntry = ({
 }) => {
 	return (
 		<div
-			aria-label={`Traffic channel: ${name}`}
+			aria-label={`${Liferay.Language.get('traffic-channels')}: ${Liferay.Language.get(name)}`}
 			className="d-flex flex-row py-3 tab-focus traffic-channel-item"
 			role="row"
 			tabIndex={0}
 		>
 			<div
-				aria-label={`Channel name: ${name}`}
+				aria-label={Liferay.Language.get(name)}
 				className="tab-focus traffic-channel-item__name"
 				role="cell"
 				style={{width: '35%'}}
@@ -75,9 +68,7 @@ const TrafficChannelsEntry = ({
 			</div>
 
 			<div
-				aria-label={`Volume: ${volume}, Percentage: ${percentage.toFixed(
-					2
-				)}%`}
+				aria-label={`${Liferay.Language.get('volume')}: ${volume}`}
 				className="d-flex flex-row tab-focus traffic-channel-item__chart"
 				role="cell"
 				style={{width: '40%'}}
@@ -119,8 +110,6 @@ export function TrafficChannels() {
 
 	const {data, loading} = useFetch<TrafficChannelsApiResponse>(endpoint);
 
-	const mappedData = mapData(data);
-
 	if (loading) {
 		return <ClayLoadingIndicator data-testid="loading" />;
 	}
@@ -129,32 +118,38 @@ export function TrafficChannels() {
 		return null;
 	}
 
+	const mappedData = mapData(data);
+
 	return (
 		<section
-			aria-labelledby="tab-focus traffic-channels-header"
-			className="mt-3"
+			aria-labelledby="traffic-channels-header"
+			className="mt-3 tab-focus"
 			tabIndex={0}
 		>
 			<header
 				className="py-2 text-uppercase w-100"
 				style={{borderBottom: '1px solid #dfe0e7'}}
 			>
-				<Text color="secondary" size={3} weight="semi-bold">
-					{Liferay.Language.get('views-by-traffic-channels')}
-				</Text>
+				<Title
+					value={Liferay.Language.get('views-by-traffic-channels')}
+				/>
 			</header>
 
 			<section
-				aria-labelledby="top-five-traffic-channels"
+				aria-labelledby={Liferay.Language.get(
+					'this-metric-calculates-the-top-five-traffic-channels-that-generated-the-highest-number-of-views-for-the-asset'
+				)}
 				className="pt-3"
 			>
 				<Text color="secondary" size={3} weight="normal">
-					{Liferay.Language.get('top-five-traffic-channels')}
+					{Liferay.Language.get(
+						'this-metric-calculates-the-top-five-traffic-channels-that-generated-the-highest-number-of-views-for-the-asset'
+					)}
 				</Text>
 			</section>
 
 			<main
-				aria-label={Liferay.Language.get('traffic-channels-table')}
+				aria-label={Liferay.Language.get('traffic-channels')}
 				className="tab-focus traffic-channels-table"
 				role="table"
 				tabIndex={0}
@@ -169,7 +164,7 @@ export function TrafficChannels() {
 						style={{width: '35%'}}
 					>
 						<Text color="secondary" size={3} weight="semi-bold">
-							{Liferay.Language.get('traffic-channel')}
+							{Liferay.Language.get('traffic-channels')}
 						</Text>
 					</div>
 

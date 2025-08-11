@@ -27,7 +27,7 @@
 		gap: 10px;
 
 		&__chart {
-			background-color: #e2e4ea;
+			background-color: $cadmin-light-d1;
 			border-radius: 8px;
 			height: 24px;
 			overflow: hidden;
@@ -35,7 +35,7 @@
 			width: 100%;
 
 			&__bar {
-				background-color: #338fff;
+				background-color: $cadmin-blue-l1;
 				border-radius: 8px;
 				height: 100%;
 				left: 0;

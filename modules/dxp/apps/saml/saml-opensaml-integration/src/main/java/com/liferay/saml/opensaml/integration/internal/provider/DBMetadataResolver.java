@@ -170,10 +170,7 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 	private String _getMetadataXml(String entityId) {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
-		if (_samlProviderConfigurationHelper.isRoleIdp()) {
-			return _fetchSamlIdpSPMetadataXml(companyId, entityId);
-		}
-		else if (_samlProviderConfigurationHelper.isRoleMultirole()) {
+		if (_samlProviderConfigurationHelper.isMultirole()) {
 			String metadataXml = _fetchSamlSpIdpMetadataXml(
 				companyId, entityId);
 
@@ -181,6 +178,9 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 				return metadataXml;
 			}
 
+			return _fetchSamlIdpSPMetadataXml(companyId, entityId);
+		}
+		else if (_samlProviderConfigurationHelper.isRoleIdp()) {
 			return _fetchSamlIdpSPMetadataXml(companyId, entityId);
 		}
 		else if (_samlProviderConfigurationHelper.isRoleSp()) {

@@ -69,6 +69,23 @@ else {
 						inputName: input.name,
 						localizationInputsContainer: inputContainer,
 						namespace: fragmentNamespace,
+						onAutoTranslate: ({languageId, value}) => {
+							editorPromise.then((editor) => {
+								changeLanguageDirection(editor, languageId);
+
+								editor.setData(value);
+							});
+
+							const translationInput = getTranslationInput({
+								inputId: wrapper.id,
+								inputName: input.name,
+								languageId,
+								localizationInputsContainer: wrapper.parentNode,
+								namespace: fragmentNamespace,
+							});
+
+							translationInput.value = value;
+						},
 						onLocaleChange: ({languageId, value}) => {
 							currentLanguageId = languageId;
 
@@ -81,7 +98,7 @@ else {
 						onMarkAsTranslated: () => {
 							const defaultLanguageInput = getTranslationInput({
 								inputId: wrapper.id,
-								inputName: wrapper.name,
+								inputName: input.name,
 								languageId: defaultLanguageId,
 								localizationInputsContainer: wrapper.parentNode,
 								namespace: fragmentNamespace,
@@ -93,7 +110,7 @@ else {
 
 							const translationInput = getTranslationInput({
 								inputId: wrapper.id,
-								inputName: wrapper.name,
+								inputName: input.name,
 								languageId: currentLanguageId,
 								localizationInputsContainer: wrapper.parentNode,
 								namespace: fragmentNamespace,
@@ -104,7 +121,7 @@ else {
 						onResetTranslation: () => {
 							const defaultLanguageInput = getTranslationInput({
 								inputId: wrapper.id,
-								inputName: wrapper.name,
+								inputName: input.name,
 								languageId: defaultLanguageId,
 								localizationInputsContainer: wrapper.parentNode,
 								namespace: fragmentNamespace,
@@ -116,7 +133,7 @@ else {
 
 							const translationInput = getTranslationInput({
 								inputId: wrapper.id,
-								inputName: wrapper.name,
+								inputName: input.name,
 								languageId: currentLanguageId,
 								localizationInputsContainer: wrapper.parentNode,
 								namespace: fragmentNamespace,

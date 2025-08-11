@@ -82,7 +82,7 @@ public class SamlProviderResourceImpl extends BaseSamlProviderResourceImpl {
 
 		String role = samlProviderConfiguration.role();
 
-		if (SamlProviderConfigurationKeys.SAML_ROLE_MULTIROLE.equals(role)) {
+		if (SamlProviderConfigurationKeys.SAML_MULTIROLE.equals(role)) {
 			samlProvider.setIdp(() -> _getIdp(samlProviderConfiguration));
 			samlProvider.setRole(() -> SamlProvider.Role.MULTIROLE);
 			samlProvider.setSp(() -> _getSp(samlProviderConfiguration));

@@ -79,8 +79,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
-			assetLibraryId);
+		DepotEntry depotEntry = _getGroupDepotEntry(assetLibraryId);
 
 		_depotEntryService.deleteDepotEntry(depotEntry.getDepotEntryId());
 	}
@@ -117,8 +116,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
-			assetLibraryId);
+		DepotEntry depotEntry = _getGroupDepotEntry(assetLibraryId);
 
 		_depotEntryPinService.deleteDepotEntryPin(
 			contextUser.getUserId(), depotEntry.getDepotEntryId());
@@ -190,8 +188,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _toAssetLibrary(
-			_depotEntryService.getGroupDepotEntry(assetLibraryId));
+		return _toAssetLibrary(_getGroupDepotEntry(assetLibraryId));
 	}
 
 	@Override
@@ -222,8 +219,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
-			assetLibraryId);
+		DepotEntry depotEntry = _getGroupDepotEntry(assetLibraryId);
 
 		Group group = depotEntry.getGroup();
 
@@ -344,8 +340,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
-			assetLibraryId);
+		DepotEntry depotEntry = _getGroupDepotEntry(assetLibraryId);
 
 		_depotEntryPinService.addDepotEntryPin(
 			contextUser.getUserId(), depotEntry.getDepotEntryId());
@@ -456,6 +451,19 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		}
 
 		return depotAppCustomizationMap;
+	}
+
+	private DepotEntry _getGroupDepotEntry(Long assetLibraryId)
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryService.fetchGroupDepotEntry(
+			assetLibraryId);
+
+		if (depotEntry != null) {
+			return depotEntry;
+		}
+
+		return _depotEntryService.getDepotEntry(assetLibraryId);
 	}
 
 	private long _getGroupIdByExternalReferenceCode(

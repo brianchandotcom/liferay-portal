@@ -584,6 +584,20 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 							ActionKeys.VIEW, depotEntry, "getAssetLibrary");
 					}
 				).put(
+					"connect-sites",
+					() -> {
+						if (!_depotEntryModelResourcePermission.contains(
+								PermissionThreadLocal.getPermissionChecker(),
+								depotEntry.getDepotEntryId(),
+								ActionKeys.UPDATE)) {
+
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.VIEW, depotEntry, "getAssetLibrary");
+					}
+				).put(
 					"create",
 					addAction(
 						DepotActionKeys.ADD_DEPOT_ENTRY, depotEntry,
@@ -618,6 +632,20 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 								PermissionThreadLocal.getPermissionChecker(),
 								depotEntry.getGroupId(),
 								ActionKeys.ASSIGN_MEMBERS)) {
+
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.VIEW, depotEntry, "getAssetLibrary");
+					}
+				).put(
+					"view-sites",
+					() -> {
+						if (_depotEntryModelResourcePermission.contains(
+								PermissionThreadLocal.getPermissionChecker(),
+								depotEntry.getDepotEntryId(),
+								ActionKeys.UPDATE)) {
 
 							return null;
 						}
@@ -671,6 +699,10 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	@Reference
 	private DepotAppCustomizationLocalService
 		_depotAppCustomizationLocalService;
+
+	@Reference(target = "(model.class.name=com.liferay.depot.model.DepotEntry)")
+	private ModelResourcePermission<DepotEntry>
+		_depotEntryModelResourcePermission;
 
 	@Reference
 	private DepotEntryPinLocalService _depotEntryPinLocalService;

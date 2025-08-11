@@ -95,7 +95,7 @@ public class BasicSuggestionsContributorTest {
 		List<Suggestion> suggestions =
 			suggestionsContributorResults.getSuggestions();
 
-		for (int i = 1; i < (totalHits + 1); i++) {
+		for (int i = 1; i <= totalHits; i++) {
 			Suggestion suggestion = suggestions.get(i - 1);
 
 			Assert.assertEquals(
@@ -156,7 +156,7 @@ public class BasicSuggestionsContributorTest {
 		List<Suggestion> suggestions =
 			suggestionsContributorResults.getSuggestions();
 
-		for (int i = 1; i < (totalHits + 1); i++) {
+		for (int i = 1; i <= totalHits; i++) {
 			Suggestion suggestion = suggestions.get(i - 1);
 
 			Assert.assertEquals(
@@ -362,7 +362,7 @@ public class BasicSuggestionsContributorTest {
 
 		List<SearchHit> searchHitsList = new ArrayList<>();
 
-		for (int i = 1; i < (totalHits + 1); i++) {
+		for (int i = 1; i <= totalHits; i++) {
 			SearchHit searchHit = Mockito.mock(SearchHit.class);
 
 			ClassName className = Mockito.mock(ClassName.class);

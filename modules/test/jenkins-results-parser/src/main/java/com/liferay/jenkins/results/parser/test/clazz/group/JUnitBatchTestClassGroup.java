@@ -744,17 +744,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
-			List<String> testClassMethodList = getTestClassMethods(
+			List<String> testClassMethods = getTestClassMethods(
 				javaTestClassFile, getGlobTestClassMethodsMap());
 
 			TestClass testClass = null;
 
-			if ((testClassMethodList != null) &&
-				!testClassMethodList.isEmpty()) {
-
+			if ((testClassMethods != null) && !testClassMethods.isEmpty()) {
 				testClass = TestClassFactory.newTestClass(
-					batchTestClassGroup, javaTestClassFile,
-					testClassMethodList);
+					batchTestClassGroup, javaTestClassFile, testClassMethods);
 			}
 			else {
 				testClass = TestClassFactory.newTestClass(

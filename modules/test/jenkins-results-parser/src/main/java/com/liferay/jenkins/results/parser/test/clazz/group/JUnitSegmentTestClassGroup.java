@@ -54,20 +54,23 @@ public class JUnitSegmentTestClassGroup extends SegmentTestClassGroup {
 				List<String> testClassMethodNames =
 					jUnitTestClass.getTestClassMethodNames();
 
-				String classFileName = matcher.group("classFileName");
+				String testClassFileName = matcher.group("testClassFileName");
+
+				testClassFileName = testClassFileName.replace(
+					".java", ".class");
 
 				if ((testClassMethodNames != null) &&
 					!testClassMethodNames.isEmpty()) {
 
 					for (String testClassMethodName : testClassMethodNames) {
-						sb.append(classFileName.replace(".java", ".class"));
+						sb.append(testClassFileName);
 						sb.append("#");
 						sb.append(testClassMethodName);
 						sb.append(",");
 					}
 				}
 				else {
-					sb.append(classFileName.replace(".java", ".class"));
+					sb.append(testClassFileName);
 
 					sb.append(",");
 				}
@@ -100,6 +103,6 @@ public class JUnitSegmentTestClassGroup extends SegmentTestClassGroup {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		".*/(?<classFileName>com/.*)");
+		".*/(?<testClassFileName>com/.*)");
 
 }

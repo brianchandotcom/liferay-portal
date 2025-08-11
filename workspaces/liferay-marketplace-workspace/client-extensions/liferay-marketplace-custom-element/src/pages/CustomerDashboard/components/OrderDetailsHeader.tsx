@@ -34,6 +34,7 @@ const OrderDetailsHeader: React.FC<OrderDetailsProps> = ({
 			<img
 				alt="App Icon"
 				className="order-details-publisher-icon"
+				draggable={false}
 				src={image}
 			/>
 

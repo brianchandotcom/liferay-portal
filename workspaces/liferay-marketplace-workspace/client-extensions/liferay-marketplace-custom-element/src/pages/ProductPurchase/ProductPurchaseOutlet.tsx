@@ -14,7 +14,6 @@ import {
 
 import Loading from '../../components/Loading';
 import ProductPurchase from '../../components/ProductPurchase';
-import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {SolutionTypes} from '../../enums/Product';
 import useProductPurchaseCart from '../../hooks/useProductPurchaseCart';
 import i18n from '../../i18n';
@@ -59,7 +58,6 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	solutionTypeSpecificationValue,
 }) => {
 	const [isSubmitting, setSubmitting] = useState(false);
-	const {channel} = useMarketplaceContext();
 	const {accounts, selectedAccount, setSelectedAccount} = useAccounts();
 	const {pathname} = useLocation();
 	const navigate = useNavigate();
@@ -108,7 +106,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 			const _productPurchase =
 				ProductPurchase instanceof ProductPurchaseService
 					? ProductPurchase
-					: new ProductPurchase(selectedAccount, channel, product);
+					: new ProductPurchase(selectedAccount, product);
 
 			const order = await _productPurchase.createOrder(cart, cartOptions);
 

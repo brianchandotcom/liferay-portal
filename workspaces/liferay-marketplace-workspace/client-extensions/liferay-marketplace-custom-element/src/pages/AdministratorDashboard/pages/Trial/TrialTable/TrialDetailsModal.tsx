@@ -96,7 +96,7 @@ const TrialDetails: React.FC<TrialDetailsProps> = ({order}) => {
 				},
 				{
 					title: 'Console Invited Email Addresses',
-					value: trialSettings.consoleInviteEmailAddresses.join(
+					value: trialSettings.consoleInviteEmailAddresses?.join(
 						', \n'
 					),
 				},

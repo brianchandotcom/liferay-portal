@@ -35,7 +35,6 @@ const TrialStatus = ({trialStatus}: TrialStatusProps) => {
 
 	return (
 		<>
-			{' '}
 			<ClayIcon
 				className={classNames('mr-2 trial-status-icon', {
 					'trial-status-icon-completed': [
@@ -52,6 +51,7 @@ const TrialStatus = ({trialStatus}: TrialStatusProps) => {
 				})}
 				symbol="circle"
 			/>
+
 			<span className="trial-status-text">
 				{
 					TRIAL_STATUS_LABEL[

@@ -69,15 +69,12 @@ const CustomView: React.FC<
 				`/o/object-admin/v1.0/object-views/${objectViewId}`
 			);
 
-			const objectFields =
-				await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
-					objectDefinitionExternalReferenceCode
-				);
-
 			const objectDefinition =
 				await API.getObjectDefinitionByExternalReferenceCode(
 					objectDefinitionExternalReferenceCode
 				);
+
+			const {objectFields} = objectDefinition;
 
 			const objectView = {
 				defaultObjectView,

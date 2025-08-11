@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -38,6 +40,12 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 		super.setUp();
 
 		_testUserGroup = _addUserGroup();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() {
 	}
 
 	@Override

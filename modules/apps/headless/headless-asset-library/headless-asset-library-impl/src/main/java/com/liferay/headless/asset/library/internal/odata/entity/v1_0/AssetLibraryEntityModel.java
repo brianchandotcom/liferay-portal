@@ -5,7 +5,6 @@
 
 package com.liferay.headless.asset.library.internal.odata.entity.v1_0;
 
-import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.internal.util.AssetLibraryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -23,8 +22,7 @@ public class AssetLibraryEntityModel implements EntityModel {
 				"type", EntityField.Type.STRING, locale -> "type",
 				locale -> "type",
 				value -> String.valueOf(
-					AssetLibraryUtil.getDepotEntryType(
-						AssetLibrary.Type.create((String)value)))));
+					AssetLibraryUtil.getDepotEntryType((String)value))));
 	}
 
 	@Override

@@ -123,6 +123,7 @@ public class JUnitTestClass extends BaseTestClass {
 		return getTestTaskName();
 	}
 
+	@Override
 	public String getTestClassName() {
 		return JenkinsResultsParserUtil.combine(
 			_getPackageName(), ".", _getClassName());

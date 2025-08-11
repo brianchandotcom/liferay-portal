@@ -44,6 +44,8 @@ public interface TestClass extends Comparable<TestClass>, WeightedItem {
 
 	public List<TestClassMethod> getTestClassMethods();
 
+	public String getTestClassName();
+
 	public TestHistory getTestHistory();
 
 	public String getTestTaskName();

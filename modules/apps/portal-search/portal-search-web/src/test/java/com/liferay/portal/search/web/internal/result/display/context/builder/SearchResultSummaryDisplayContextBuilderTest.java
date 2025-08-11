@@ -775,19 +775,19 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private void _whenClassNameLocalServiceGetClassName(
-			String entryClassName, long classNameId)
+			String className, long classNameId)
 		throws Exception {
 
-		ClassName className = Mockito.mock(ClassName.class);
+		ClassName classNameMock = Mockito.mock(ClassName.class);
 
 		Mockito.doReturn(
-			entryClassName
-		).when(
 			className
+		).when(
+			classNameMock
 		).getClassName();
 
 		Mockito.doReturn(
-			className
+			classNameMock
 		).when(
 			classNameLocalService
 		).getClassName(

@@ -15,79 +15,56 @@ import React from 'react';
 import ApiHelper from '../../../js/apis/ApiHelper';
 import {TrafficChannels} from '../../../js/components/cms/TrafficChannels';
 
+const mockData = {
+	data: {
+		items: [
+			{
+				count: 10,
+				name: 'Direct',
+			},
+			{
+				count: 20,
+				name: 'Social',
+			},
+			{
+				count: 15,
+				name: 'Referrals',
+			},
+			{
+				count: 10,
+				name: 'Paid Search',
+			},
+			{
+				count: 30,
+				name: 'Email',
+			},
+			{
+				count: 35,
+				name: 'Others',
+			},
+		],
+		totalCount: 120,
+	},
+	error: null,
+};
+
 describe('TrafficChannels', () => {
 	it('renders', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-			data: {
-				items: [
-					{
-						count: 10,
-						name: 'Direct',
-					},
-					{
-						count: 20,
-						name: 'Social',
-					},
-					{
-						count: 15,
-						name: 'Referrals',
-					},
-					{
-						count: 10,
-						name: 'Paid Search',
-					},
-					{
-						count: 30,
-						name: 'Email',
-					},
-					{
-						count: 35,
-						name: 'Others',
-					},
-				],
-			},
-			error: null,
-		});
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
 
 		const {getByText} = render(<TrafficChannels />);
 
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
 
-		expect(getByText('top-five-traffic-channels')).toBeTruthy();
+		expect(
+			getByText(
+				'this-metric-calculates-the-top-five-traffic-channels-that-generated-the-highest-number-of-views-for-the-asset'
+			)
+		).toBeTruthy();
 	});
 
 	it('renders 5 traffic channels and others', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-			data: {
-				items: [
-					{
-						count: 10,
-						name: 'Direct',
-					},
-					{
-						count: 20,
-						name: 'Social',
-					},
-					{
-						count: 15,
-						name: 'Referrals',
-					},
-					{
-						count: 10,
-						name: 'Paid Search',
-					},
-					{
-						count: 30,
-						name: 'Email',
-					},
-					{
-						count: 35,
-						name: 'Others',
-					},
-				],
-			},
-			error: null,
-		});
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
 		render(<TrafficChannels />);
 
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
@@ -126,6 +103,7 @@ describe('TrafficChannels', () => {
 						name: 'Others',
 					},
 				],
+				totalCount: 60,
 			},
 			error: null,
 		});
@@ -144,37 +122,7 @@ describe('TrafficChannels', () => {
 	});
 
 	it('is accessible via keyboard navigation', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-			data: {
-				items: [
-					{
-						count: 10,
-						name: 'Direct',
-					},
-					{
-						count: 20,
-						name: 'Social',
-					},
-					{
-						count: 15,
-						name: 'Referrals',
-					},
-					{
-						count: 10,
-						name: 'Paid Search',
-					},
-					{
-						count: 30,
-						name: 'Email',
-					},
-					{
-						count: 35,
-						name: 'Others',
-					},
-				],
-			},
-			error: null,
-		});
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
 
 		render(<TrafficChannels />);
 

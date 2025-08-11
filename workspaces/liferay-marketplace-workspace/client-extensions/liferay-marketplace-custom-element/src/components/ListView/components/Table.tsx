@@ -13,6 +13,7 @@ import {KeyedMutator} from 'swr';
 
 import {Action, SortDirection, SortOption} from '../../../utils/constants';
 import {Sort} from '../hooks/ListViewContext';
+import {ClayButtonWithIcon} from '@clayui/button';
 
 export type Column<
 	T extends Record<string, any>,
@@ -116,7 +117,14 @@ const Table = <T extends Record<string, any>>({
 								}
 							},
 						}))}
-						trigger={<ClayIcon symbol="ellipsis-v" />}
+						trigger={
+							<ClayButtonWithIcon
+								onClick={(event) => event.stopPropagation()}
+								displayType="unstyled"
+								aria-label="actions"
+								symbol="ellipsis-v"
+							/>
+						}
 					>
 						{(item, index) => (
 							<ClayDropDown.Item

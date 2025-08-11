@@ -64,7 +64,7 @@ public class NullUnicodeContentDataCleanupPreupgradeProcess
 
 			int rowCount = preparedStatement.executeUpdate();
 
-			if ((rowCount > 0) && _log.isInfoEnabled()) {
+			if (_log.isInfoEnabled() && (rowCount > 0)) {
 				_log.info(
 					StringBundler.concat(
 						"Table ", dbInspector.normalizeName(tableName), ", ",

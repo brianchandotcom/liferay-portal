@@ -604,30 +604,6 @@ public class DisplayPageTemplateFolderResourceTest
 		return parentLayoutPageTemplateCollectionId;
 	}
 
-	private DisplayPageTemplateFolder
-			_putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				String siteExternalReferenceCode,
-				String displayPageTemplateFolderExternalReferenceCode,
-				DisplayPageTemplateFolder displayPageTemplateFolder)
-		throws Exception {
-
-		if (LazyReferencingThreadLocal.isEnabled()) {
-			return _toDisplayPageTemplateFolder(
-				_displayPageTemplateFolderResource.
-					putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-						siteExternalReferenceCode,
-						displayPageTemplateFolderExternalReferenceCode,
-						_toDisplayPageTemplateFolder(
-							displayPageTemplateFolder)));
-		}
-
-		return displayPageTemplateFolderResource.
-			putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				siteExternalReferenceCode,
-				displayPageTemplateFolderExternalReferenceCode,
-				displayPageTemplateFolder);
-	}
-
 	private void
 			_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 				String displayPageTemplateFolderExternalReferenceCode,
@@ -765,10 +741,11 @@ public class DisplayPageTemplateFolderResourceTest
 		}
 
 		DisplayPageTemplateFolder putDisplayPageTemplateFolder =
-			_putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				testGroup.getExternalReferenceCode(),
-				displayPageTemplateFolder.getExternalReferenceCode(),
-				displayPageTemplateFolder);
+			displayPageTemplateFolderResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplateFolder.getExternalReferenceCode(),
+					displayPageTemplateFolder);
 
 		assertEquals(displayPageTemplateFolder, putDisplayPageTemplateFolder);
 		assertValid(putDisplayPageTemplateFolder);
@@ -831,10 +808,11 @@ public class DisplayPageTemplateFolderResourceTest
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			_putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				testGroup.getExternalReferenceCode(),
-				putDisplayPageTemplateFolder.getExternalReferenceCode(),
-				putDisplayPageTemplateFolder);
+			_displayPageTemplateFolderResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					testGroup.getExternalReferenceCode(),
+					putDisplayPageTemplateFolder.getExternalReferenceCode(),
+					_toDisplayPageTemplateFolder(putDisplayPageTemplateFolder));
 
 			List<LayoutPageTemplateCollection>
 				parentLayoutPageTemplateCollections = new ArrayList<>();

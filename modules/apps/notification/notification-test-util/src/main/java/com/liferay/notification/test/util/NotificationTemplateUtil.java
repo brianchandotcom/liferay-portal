@@ -44,6 +44,14 @@ public class NotificationTemplateUtil {
 			RandomTestUtil.randomString(), type);
 	}
 
+	public static NotificationContext createNotificationContext(String type)
+		throws Exception {
+
+		return createNotificationContext(
+			TestPropsValues.getUser(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), type);
+	}
+
 	public static NotificationContext createNotificationContext(User user) {
 		return createNotificationContext(
 			user, null, NotificationConstants.TYPE_USER_NOTIFICATION);

@@ -293,7 +293,13 @@ const zodSchema = {
 			.min(1, 'Please enter a valid number (1-60)')
 			.max(60, 'Please enter a valid number (1-60)'),
 		emailAddress: z
-			.array(z.object({value: z.string()}))
+			.array(
+				z.object({
+					key: z.string(),
+					label: z.string(),
+					value: z.string(),
+				})
+			)
 			.refine(
 				(emails) =>
 					emails.every(
@@ -302,7 +308,7 @@ const zodSchema = {
 					),
 				{message: 'One or more email addresses are invalid'}
 			)
-			.or(z.literal('')),
+			.optional(),
 		objective: z.string().refine((val) => ['Test', 'Trial'].includes(val), {
 			message: 'Select an Option',
 		}),

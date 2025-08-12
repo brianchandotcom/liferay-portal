@@ -19,10 +19,14 @@ import Form from '../../../components/MarketplaceForm';
 import Modal from '../../../components/Modal';
 import Select from '../../../components/Select/Select';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-import {OrderCustomFields, OrderStatus as Status} from '../../../enums/Order';
+import {
+	OrderCustomFields,
+	OrderStatus as Status,
+	OrderWorkflowStatusCode,
+} from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
-import zodSchema from '../../../schema/zod';
+import zodSchema, {z} from '../../../schema/zod';
 import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessCommerceDeliveryCatalog from '../../../services/rest/HeadlessCommerceDeliveryCatalog';
 import ProductPurchaseSSATrial from '../../ProductPurchase/services/ProductPurchaseSSATrial';
@@ -38,13 +42,7 @@ type CreateTrialModalFormProps = {
 	mutate: any;
 };
 
-export type FormFields = {
-	demoDuration: string;
-	emailAddress: Item[];
-	objective: string;
-	projectId: string;
-	site: string;
-};
+export type FormFields = z.infer<typeof zodSchema.ssaTrialForm>;
 
 type Item = {
 	key: string;
@@ -109,11 +107,10 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 		watch,
 	} = useForm<FormFields>({
 		defaultValues: {
-			demoDuration: '',
+			demoDuration: 0,
 			emailAddress: [],
 			objective: '',
 			projectId: '',
-			site: '',
 		},
 		resolver: zodResolver(zodSchema.ssaTrialForm),
 	});
@@ -126,7 +123,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 
 	useEffect(() => {
 		if (isTestTrial) {
-			setValue('demoDuration', '1');
+			setValue('demoDuration', 1);
 			clearErrors('demoDuration');
 		}
 	}, [isTestTrial, setValue, clearErrors]);
@@ -140,37 +137,32 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 				console.error(error.message);
 
 				if (error.status === 409) {
-					setError('projectId', {
+					return setError('projectId', {
 						message: 'Project ID already exists',
 					});
 				}
-				else {
-					Liferay.Util.openToast({
-						message: i18n.translate('an-unexpected-error-occurred'),
-						type: 'danger',
-					});
-				}
 
-				return;
+				return Liferay.Util.openToast({
+					message: i18n.translate('an-unexpected-error-occurred'),
+					type: 'danger',
+				});
 			}
 
-			const emails: string[] = [
-				Liferay.ThemeDisplay.getUserEmailAddress(),
+			const consoleInviteEmailAddresses = [
+				...new Set([
+					Liferay.ThemeDisplay.getUserEmailAddress(),
+					...(data.emailAddress as any[]).map(({value}) => value),
+				]),
 			];
-
-			data.emailAddress.forEach((email: any) => emails.push(email.value));
-
-			const trialSettings = {
-				consoleInviteEmailAddresses: emails,
-				duration: data.demoDuration,
-				projectId: data.projectId,
-			};
 
 			try {
 				const order = await productPurchase?.createOrder({
 					customFields: {
-						[OrderCustomFields.TRIAL_SETTINGS]:
-							JSON.stringify(trialSettings),
+						[OrderCustomFields.TRIAL_SETTINGS]: JSON.stringify({
+							consoleInviteEmailAddresses,
+							duration: data.demoDuration,
+							projectId: data.projectId,
+						}),
 					},
 				} as Cart);
 
@@ -185,7 +177,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 							{
 								...order,
 								orderStatusInfo: {
-									code: 10,
+									code: OrderWorkflowStatusCode.PROCESSING,
 									label: Status.PROCESSING,
 									label_i18n: Status.PROCESSING,
 								},
@@ -193,7 +185,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 							...orders.items,
 						],
 					}),
-					{revalidate: false}
+					{revalidate: true}
 				);
 
 				Liferay.Util.openToast({
@@ -239,6 +231,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 
 			if (!inProgress) {
 				setSubmittingSuccessful(false);
+
 				modal.onClose();
 			}
 		}
@@ -271,7 +264,9 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 						)}
 					</p>
 				</div>
+
 				<hr className="mt-4" />
+
 				<div className="d-flex justify-content-end">
 					<Button displayType="secondary" onClick={modal.onClose}>
 						{i18n.translate('go-to-ssa-trial-listing')}
@@ -288,113 +283,110 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 			title={i18n.translate('add-new-trial')}
 			visible={modal.open}
 		>
-			<ClayForm.Group>
-				<div className="mb-3 pr-2 w-100">
-					<SectionTitle title={i18n.translate('main')} />
+			<ClayForm.Group className="mb-3 pr-2 w-100">
+				{Label(i18n.translate('project-id'))}
 
-					{Label(i18n.translate('project-id'))}
+				<ClayInput.Group
+					className={classNames({
+						'has-error': errors.projectId,
+					})}
+				>
+					<ClayInput.GroupItem prepend>
+						<ClayInput
+							{...register('projectId')}
+							className="custom-input mb-0"
+							maxLength={25}
+							required
+							type="text"
+						/>
+					</ClayInput.GroupItem>
 
-					<ClayInput.Group
-						className={classNames({
-							'has-error': errors.projectId,
-						})}
-					>
-						<ClayInput.GroupItem prepend>
-							<ClayInput
-								{...register('projectId')}
-								className="custom-input mb-0"
-								maxLength={25}
-								required
-								type="text"
-							/>
-						</ClayInput.GroupItem>
+					<ClayInput.GroupItem append shrink>
+						<ClayInput.GroupText>
+							.saas.demo.lxc.liferay.com
+						</ClayInput.GroupText>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
 
-						<ClayInput.GroupItem append shrink>
-							<ClayInput.GroupText>
-								.saas.demo.lxc.liferay.com
-							</ClayInput.GroupText>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
-					{errors.projectId && (
-						<p className="field-base-feedback text-danger">
-							{errors.projectId?.message}
-						</p>
-					)}
+				{errors.projectId && (
+					<p className="field-base-feedback text-danger">
+						{errors.projectId?.message}
+					</p>
+				)}
 
-					<small className="mt-0 text-black-50">
-						{`${projectId?.length}/25`}
-					</small>
+				<small className="mt-0 text-black-50">
+					{`${projectId?.length}/25`}
+				</small>
+			</ClayForm.Group>
 
-					<div className="mb-3 mt-2 pr-2 w-100">
-						{Label(i18n.translate('solution'))}
+			<ClayForm.Group className="mb-3 mt-2 pr-2 w-100">
+				{Label(i18n.translate('solution'))}
 
+				<Input
+					disabled
+					name="site"
+					placeholder={i18n.translate('blank-site')}
+				/>
+			</ClayForm.Group>
+
+			<ClayForm.Group className="mb-3">
+				<SectionTitle title="Usage" />
+
+				<div className="d-flex">
+					<div className="pr-2 w-100">
+						{Label(i18n.translate('objective'))}
+
+						<Select
+							{...register('objective')}
+							defaultOptionLabel="Select an option"
+							errors={errors}
+							name="objective"
+							options={[
+								{
+									key: 'Test',
+									name: 'Test',
+								},
+								{
+									key: 'Trial',
+									name: 'Trial',
+								},
+							]}
+						/>
+					</div>
+
+					<div className="pr-2 w-100">
+						{Label(i18n.translate('duration-days'))}
 						<Input
-							disabled
-							name="site"
-							placeholder={i18n.translate('blank-site')}
+							{...register('demoDuration')}
+							disabled={isTestTrial}
+							errorMessage={errors.demoDuration?.message}
+							max={60}
+							min={1}
+							type="number"
 						/>
 					</div>
 				</div>
-
-				<div className="mb-3">
-					<SectionTitle title="Usage" />
-
-					<div className="d-flex">
-						<div className="pr-2 w-100">
-							{Label(i18n.translate('objective'))}
-
-							<Select
-								{...register('objective')}
-								defaultOptionLabel="Select an option"
-								errors={errors}
-								name="objective"
-								options={[
-									{
-										key: 'Test',
-										name: 'Test',
-									},
-									{
-										key: 'Trial',
-										name: 'Trial',
-									},
-								]}
-							/>
-						</div>
-
-						<div className="pr-2 w-100">
-							{Label(i18n.translate('duration-days'))}
-							<Input
-								{...register('demoDuration')}
-								disabled={isTestTrial}
-								errorMessage={errors.demoDuration?.message}
-								max={60}
-								min={1}
-								type="number"
-							/>
-						</div>
-					</div>
-				</div>
-
-				<div className="mb-3 pr-2 w-100">
-					<SectionTitle title={i18n.translate('additional-admin')} />
-
-					{Label(i18n.translate('email-address'))}
-
-					<MultiSelect
-						className="bg-white marketplace-form-select"
-						id="allowed-email-domains"
-						items={emails}
-						onItemsChange={(values: Item[]) => {
-							setValue('emailAddress', values);
-						}}
-					/>
-					{errors.emailAddress && (
-						<p className="text-danger">
-							{errors.emailAddress?.message}
-						</p>
-					)}
-				</div>
 			</ClayForm.Group>
+
+			<div className="mb-3 pr-2 w-100">
+				<SectionTitle title={i18n.translate('additional-admin')} />
+
+				{Label(i18n.translate('email-address'))}
+
+				<MultiSelect
+					className="bg-white marketplace-form-select"
+					id="allowed-email-domains"
+					items={emails}
+					onItemsChange={(values: Item[]) => {
+						setValue('emailAddress', values);
+					}}
+				/>
+				{errors.emailAddress && (
+					<p className="text-danger">
+						{errors.emailAddress?.message}
+					</p>
+				)}
+			</div>
 
 			<hr />
 

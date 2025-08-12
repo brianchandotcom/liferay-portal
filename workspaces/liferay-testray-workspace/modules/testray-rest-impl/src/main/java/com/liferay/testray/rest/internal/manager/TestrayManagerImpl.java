@@ -647,7 +647,10 @@ public class TestrayManagerImpl implements TestrayManager {
 				"r_buildToCaseDetail_c_buildId eq '", testrayBuildId,
 				"' and r_caseToCaseDetails_c_caseId eq '", testrayCaseId,
 				"' and name eq '",
-				propertiesMap.get("testray.testcase.detail.name"), "'"),
+				StringUtil.replace(
+					propertiesMap.get("testray.testcase.detail.name"), '\'',
+					"''"),
+				"'"),
 			"", new String[] {"objectEntryId"}, "CaseDetail", testrayCache,
 			userId);
 
@@ -665,29 +668,14 @@ public class TestrayManagerImpl implements TestrayManager {
 			).put(
 				"dueStatus",
 				() -> {
-					String testrayTestDetailStatus = propertiesMap.get(
-						"testray.testcase.detail.status");
+					String testrayTestDetailStatus = GetterUtil.getString(
+						propertiesMap.get("testray.testcase.detail.status"));
 
-					if (testrayTestDetailStatus.equals("blocked")) {
-						return "BLOCKED";
-					}
-					else if (testrayTestDetailStatus.equals("dnr")) {
-						return "DIDNOTRUN";
-					}
-					else if (testrayTestDetailStatus.equals("failed")) {
+					if (testrayTestDetailStatus.equals("FAILED")) {
 						return "FAILED";
 					}
-					else if (testrayTestDetailStatus.equals("incomplete")) {
-						return "INCOMPLETE";
-					}
-					else if (testrayTestDetailStatus.equals("in-progress")) {
-						return "INPROGRESS";
-					}
-					else if (testrayTestDetailStatus.equals("passed")) {
+					else if (testrayTestDetailStatus.equals("PASSED")) {
 						return "PASSED";
-					}
-					else if (testrayTestDetailStatus.equals("test-fix")) {
-						return "TESTFIX";
 					}
 
 					return "UNTESTED";

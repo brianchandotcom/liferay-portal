@@ -20,7 +20,7 @@ interface MembersListItemProps {
 	itemType: 'user' | 'group';
 	items: (UserAccount | UserGroup)[];
 	onRemoveItem: (item: UserAccount | UserGroup) => Promise<void>;
-	onUpdateItemRoles: (item: UserAccount | UserGroup, roles: number[]) => void;
+	onUpdateItemRoles: (item: UserAccount | UserGroup, roles: string[]) => void;
 	roles: Role[];
 }
 
@@ -42,7 +42,7 @@ export function MembersListItem({
 					isUser &&
 					String(assetLibraryCreatorUserId) === String(item.id);
 
-				const memberRoles = item.roles.map((r) => r.id);
+				const memberRoles = item.roles.map((r) => r.name);
 				const selectedRoles = memberRoles.length ? memberRoles : [];
 
 				const renderGroupCount = () => {

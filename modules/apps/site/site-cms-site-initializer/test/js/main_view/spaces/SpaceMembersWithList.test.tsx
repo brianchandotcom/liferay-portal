@@ -16,7 +16,7 @@ import {
 	UserAccount,
 	UserGroup,
 } from '../../../../src/main/resources/META-INF/resources/js/common/types/UserAccount';
-import {SPACE_MEMBER_ROLE_ID} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersPermissionSelect';
+import {SPACE_MEMBER_ROLE_NAME} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersPermissionSelect';
 import {SelectOptions} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersInputWithSelect';
 import {
 	SpaceMembersWithList,
@@ -46,8 +46,8 @@ describe('SpaceMembersWithList', () => {
 	const mockRoles = [
 		{
 			externalReferenceCode: '1',
-			id: SPACE_MEMBER_ROLE_ID,
-			name: 'Space Member',
+			id: 100,
+			name: SPACE_MEMBER_ROLE_NAME,
 			name_i18n: {'en-US': 'Space Member'},
 		},
 		{
@@ -65,7 +65,7 @@ describe('SpaceMembersWithList', () => {
 			image: '/image/user_portrait',
 			imageId: '1',
 			name: 'John Doe',
-			roles: [{id: SPACE_MEMBER_ROLE_ID, name: 'Space Member'}],
+			roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
 		},
 		{
 			emailAddress: 'jane.smith@example.com',
@@ -73,7 +73,7 @@ describe('SpaceMembersWithList', () => {
 			image: '/image/user_portrait',
 			imageId: '1',
 			name: 'Jane Smith',
-			roles: [{id: SPACE_MEMBER_ROLE_ID, name: 'Space Member'}],
+			roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
 		},
 	] as UserAccount[];
 
@@ -88,12 +88,12 @@ describe('SpaceMembersWithList', () => {
 		{
 			id: '1',
 			name: 'Group 1',
-			roles: [{id: SPACE_MEMBER_ROLE_ID, name: 'Space Member'}],
+			roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
 		},
 		{
 			id: '2',
 			name: 'Group 2',
-			roles: [{id: SPACE_MEMBER_ROLE_ID, name: 'Space Member'}],
+			roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
 		},
 	] as UserGroup[];
 
@@ -623,7 +623,7 @@ describe('SpaceMembersWithList', () => {
 				.spyOn(SpaceService, 'updateUserRoles')
 				.mockResolvedValue({
 					data: {
-						roleIds: [SPACE_MEMBER_ROLE_ID, 101],
+						roleNames: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
 						spaceId: testSpace.id,
 						userId: testUsers[1].id,
 					},
@@ -647,7 +647,7 @@ describe('SpaceMembersWithList', () => {
 
 			await waitFor(() => {
 				expect(updateUserRolesSpy).toHaveBeenCalledWith({
-					roleIds: [SPACE_MEMBER_ROLE_ID, 101],
+					roleIds: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
 					spaceId: testSpace.id,
 					userId: testUsers[1].id,
 				});

@@ -20,23 +20,30 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -58,6 +65,35 @@ public class DisplayPageTemplateFolderResourceTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_displayPageTemplateFolderResource.setContextAcceptLanguage(
+			new AcceptLanguage() {
+
+				@Override
+				public List<Locale> getLocales() {
+					return Arrays.asList(LocaleUtil.getDefault());
+				}
+
+				@Override
+				public String getPreferredLanguageId() {
+					return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+				}
+
+				@Override
+				public Locale getPreferredLocale() {
+					return LocaleUtil.getDefault();
+				}
+
+			});
+
+		_displayPageTemplateFolderResource.setContextUser(
+			TestPropsValues.getUser());
+	}
 
 	@Override
 	@Test
@@ -770,14 +806,20 @@ public class DisplayPageTemplateFolderResourceTest
 			setParentDisplayPageTemplateFolderExternalReferenceCode(
 				parentDisplayPageTemplateFolder.getExternalReferenceCode());
 
-		_assertProblemException(
-			"BAD_REQUEST", null,
-			() ->
-				displayPageTemplateFolderResource.
-					putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-						testGroup.getExternalReferenceCode(),
-						putDisplayPageTemplateFolder.getExternalReferenceCode(),
-						putDisplayPageTemplateFolder));
+		try {
+			_displayPageTemplateFolderResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					testGroup.getExternalReferenceCode(),
+					putDisplayPageTemplateFolder.getExternalReferenceCode(),
+					_toDisplayPageTemplateFolder(putDisplayPageTemplateFolder));
+
+			Assert.fail();
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(unsupportedOperationException);
+			}
+		}
 
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
@@ -811,6 +853,9 @@ public class DisplayPageTemplateFolderResourceTest
 				parentLayoutPageTemplateCollections);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DisplayPageTemplateFolderResourceTest.class);
 
 	@Inject
 	private DisplayPageTemplateFolderResource

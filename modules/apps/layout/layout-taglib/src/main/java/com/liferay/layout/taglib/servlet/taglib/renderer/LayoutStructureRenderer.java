@@ -1718,9 +1718,10 @@ public class LayoutStructureRenderer {
 		if (Validator.isNotNull(style)) {
 			jspWriter.write(" style=\"");
 			jspWriter.write(style);
+			jspWriter.write(StringPool.QUOTE);
 		}
 
-		jspWriter.write("\">");
+		jspWriter.write(StringPool.GREATER_THAN);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

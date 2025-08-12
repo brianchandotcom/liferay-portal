@@ -63,7 +63,7 @@ public class LayoutClassedModelUsageStagedModelDataHandlerTest
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		super.setUp();
+		super.tearDown();
 
 		_classNameLocalService.deleteClassName(
 			_classNameLocalService.getClassName(_CLASS_NAME));

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade.data.cleanup.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -12,7 +13,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +30,7 @@ public class OrphanReferencesDataCleanupUtil {
 	public static void cleanUpTable(
 			Connection connection, String sourceAdditionalWhereClause,
 			String sourceColumnName, String sourceTableName,
-			String targetColumnName, String targetTableName)
+			String[] targetColumnNames, String targetTableName)
 		throws Exception {
 
 		List<String> excludedTableNames = getNormalizedExcludedTableNames(
@@ -46,7 +46,7 @@ public class OrphanReferencesDataCleanupUtil {
 					sourceTableName,
 					getWhereClause(
 						connection, sourceAdditionalWhereClause,
-						sourceColumnName, sourceTableName, targetColumnName,
+						sourceColumnName, sourceTableName, targetColumnNames,
 						targetTableName),
 					" group by ", sourceColumnName));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
@@ -54,7 +54,7 @@ public class OrphanReferencesDataCleanupUtil {
 					"delete from ", sourceTableName,
 					getWhereClause(
 						connection, sourceAdditionalWhereClause,
-						sourceColumnName, sourceTableName, targetColumnName,
+						sourceColumnName, sourceTableName, targetColumnNames,
 						targetTableName)));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
@@ -69,9 +69,10 @@ public class OrphanReferencesDataCleanupUtil {
 					_log, resultSet.getLong(2), sourceTableName,
 					StringBundler.concat(
 						sourceColumnName, StringPool.SPACE,
-						String.valueOf(resultSet.getObject(1)),
-						" was not found in ", targetTableName,
-						StringPool.PERIOD, targetColumnName));
+						resultSet.getObject(1), " was not found in column",
+						(targetColumnNames.length > 1) ? "s " : " ",
+						String.join(", ", targetColumnNames), " from table ",
+						targetTableName));
 			}
 		}
 	}
@@ -95,7 +96,7 @@ public class OrphanReferencesDataCleanupUtil {
 	public static String getWhereClause(
 			Connection connection, String sourceAdditionalWhereClause,
 			String sourceColumnName, String sourceTableName,
-			String targetColumnName, String targetTableName)
+			String[] targetColumnNames, String targetTableName)
 		throws Exception {
 
 		String additionalNullCheck = "";
@@ -110,11 +111,30 @@ public class OrphanReferencesDataCleanupUtil {
 			additionalNullCheck = " and " + sourceColumnName + " != ''";
 		}
 
+		StringBundler sb = new StringBundler(
+			(8 * targetColumnNames.length) + 4);
+
+		sb.append("not exists (select 1 from ");
+		sb.append(targetTableName);
+		sb.append(" where ");
+
+		for (String targetColumnName : targetColumnNames) {
+			sb.append(targetTableName);
+			sb.append(StringPool.PERIOD);
+			sb.append(targetColumnName);
+			sb.append(" = ");
+			sb.append(sourceTableName);
+			sb.append(StringPool.PERIOD);
+			sb.append(sourceColumnName);
+			sb.append(" or ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+		sb.append(")");
+
 		return StringBundler.concat(
-			" where not exists (select 1 from ", targetTableName, " where ",
-			targetTableName, StringPool.PERIOD, targetColumnName, " = ",
-			sourceTableName, StringPool.PERIOD, sourceColumnName, ") and ",
-			sourceColumnName, " is not null", additionalNullCheck,
+			" where ", sb, " and ", sourceColumnName, " is not null",
+			additionalNullCheck,
 			(sourceAdditionalWhereClause != null) ?
 				" and " + sourceAdditionalWhereClause : "");
 	}

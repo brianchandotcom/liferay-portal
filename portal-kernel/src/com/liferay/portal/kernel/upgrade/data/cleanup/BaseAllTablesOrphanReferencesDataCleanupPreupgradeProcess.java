@@ -23,13 +23,24 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 	public BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 		String targetColumnName, String targetTableName) {
 
-		_targetColumnName = targetColumnName;
+		_targetTableName = targetTableName;
+
+		_sourceColumnName = targetColumnName;
+		_targetColumnNames = new String[] {targetColumnName};
+	}
+
+	public BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
+		String sourceColumnName, String[] targetColumnNames,
+		String targetTableName) {
+
+		_sourceColumnName = sourceColumnName;
+		_targetColumnNames = targetColumnNames;
 		_targetTableName = targetTableName;
 	}
 
 	protected abstract void cleanUp(
 			String sourceColumnName, String sourceTableName,
-			String targetColumnName, String targetTableName)
+			String[] targetColumnNames, String targetTableName)
 		throws Exception;
 
 	@Override
@@ -46,17 +57,22 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 			return;
 		}
 
-		String targetColumnName = dbInspector.normalizeName(_targetColumnName);
+		String[] targetColumnNames = new String[_targetColumnNames.length];
 
-		if (!dbInspector.hasColumn(targetTableName, targetColumnName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Table ", targetTableName, " does not have column ",
-						targetColumnName));
+		for (int i = 0; i < _targetColumnNames.length; i++) {
+			targetColumnNames[i] = dbInspector.normalizeName(
+				_targetColumnNames[i]);
+
+			if (!dbInspector.hasColumn(targetTableName, targetColumnNames[i])) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Table ", targetTableName, " does not have column ",
+							targetColumnNames[i]));
+				}
+
+				return;
 			}
-
-			return;
 		}
 
 		List<String> excludedTableNames =
@@ -69,35 +85,49 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 
 		Collections.sort(tableNames);
 
+		String sourceColumnName = dbInspector.normalizeName(_sourceColumnName);
+
 		for (String sourceTableName : tableNames) {
 			if (excludedTableNames.contains(sourceTableName) ||
-				!dbInspector.hasColumn(sourceTableName, targetColumnName)) {
+				!dbInspector.hasColumn(sourceTableName, sourceColumnName)) {
 
 				continue;
 			}
 
+			boolean compatibleTypes = true;
+
 			boolean numericSourceColumn = dbInspector.isNumeric(
-				sourceTableName, targetColumnName);
-			boolean numericTargetColumn = dbInspector.isNumeric(
-				targetTableName, targetColumnName);
+				sourceTableName, sourceColumnName);
 
-			if ((numericSourceColumn && !numericTargetColumn) ||
-				(!numericSourceColumn && numericTargetColumn)) {
+			for (String targetColumnName : targetColumnNames) {
+				boolean numericTargetColumn = dbInspector.isNumeric(
+					targetTableName, targetColumnName);
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Table ", sourceTableName, " and column ",
-							targetColumnName,
-							" has an incompatible type with table ",
-							targetTableName, " and column ", targetColumnName));
+				if ((numericSourceColumn && !numericTargetColumn) ||
+					(!numericSourceColumn && numericTargetColumn)) {
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Table ", sourceTableName, " and column ",
+								sourceColumnName,
+								" has an incompatible type with table ",
+								targetTableName, " and column ",
+								targetColumnName));
+					}
+
+					compatibleTypes = false;
+
+					break;
 				}
+			}
 
+			if (!compatibleTypes) {
 				continue;
 			}
 
 			cleanUp(
-				targetColumnName, sourceTableName, targetColumnName,
+				sourceColumnName, sourceTableName, targetColumnNames,
 				targetTableName);
 		}
 	}
@@ -105,7 +135,8 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess.class);
 
-	private final String _targetColumnName;
+	private final String _sourceColumnName;
+	private final String[] _targetColumnNames;
 	private final String _targetTableName;
 
 }

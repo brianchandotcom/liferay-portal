@@ -12,7 +12,7 @@ import SearchBuilder from '../../../core/SearchBuilder';
 import {AccountType} from '../../../enums/Account';
 import {MarketplaceCategory} from '../../../enums/Categories';
 import {orderTypeLabel} from '../../../enums/Order';
-import {PartnershipType, ProductType} from '../../../enums/Product';
+import {ProductType} from '../../../enums/Product';
 import useListTypeDefinition from '../../../hooks/useListTypeDefinition';
 import useModalContext from '../../../hooks/useModalContext';
 import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
@@ -38,7 +38,7 @@ const lowCodeConfigurationsPublishedFilter = new SearchBuilder()
 	.build();
 
 const partnershipIntegrationFilter = new SearchBuilder()
-	.lambda('specificationValues', PartnershipType.TECHNOLOGY_PARTNERSHIP)
+	.lambda('specificationValues', AccountType.TECHNOLOGY_PARTNER)
 	.build();
 
 const supportingQuartelyReleaseFilter = baseSearchBuilder.clone().build();
@@ -193,7 +193,7 @@ const useKPI = () => {
 					metrics: {
 						connectorQuartelyRelease,
 						lowCodeConfigurationsPublished,
-						partnerShipIntegration,
+						partnershipIntegration,
 						supportingQuartelyRelease,
 					},
 				},
@@ -204,7 +204,7 @@ const useKPI = () => {
 				connectorQuartelyRelease: connectorQuartelyReleaseFilter,
 				lowCodeConfigurationsPublished:
 					lowCodeConfigurationsPublishedFilter,
-				partnerShipIntegration: partnershipIntegrationFilter,
+				partnershipIntegration: partnershipIntegrationFilter,
 				supportingQuartelyRelease: supportingQuartelyReleaseFilter,
 			}),
 			marketplaceOAuth2.getMarketplaceProjectsKPI(),
@@ -245,7 +245,7 @@ const useKPI = () => {
 						),
 					...getAnnualTargetValues(
 						kpiPartnershipIntegration,
-						partnerShipIntegration.totalCount
+						partnershipIntegration.totalCount
 					),
 					colors: ['#FFB46E', '#FFE9D4'],
 					title: 'Technology Partnership With Integrations',

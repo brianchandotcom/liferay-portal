@@ -209,7 +209,3 @@ export const ProductWorkflowStatusLabel = {
 export function getOfferingTypes(type: ProductType) {
 	return offeringTypes[type as keyof typeof offeringTypes];
 }
-
-export enum PartnershipType {
-	TECHNOLOGY_PARTNERSHIP = 'Technology Partnership',
-}

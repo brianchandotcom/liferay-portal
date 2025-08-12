@@ -1,11 +1,5 @@
 @import 'atlas-variables';
 
-.dropdown-menu {
-	max-height: none;
-	max-width: none;
-	padding: 0;
-}
-
 .task-status {
 	margin: 0;
 	max-height: 36.25rem !important;
@@ -56,6 +50,12 @@
 }
 
 .task-status-dropdown {
+	&.dropdown-menu {
+		max-height: none;
+		max-width: none;
+		padding: 0;
+	}
+
 	.dropdown-toggle {
 		border-bottom-left-radius: unset;
 		border-left: unset;

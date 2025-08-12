@@ -293,8 +293,15 @@ const zodSchema = {
 			.min(1, 'Please enter a valid number (1-60)')
 			.max(60, 'Please enter a valid number (1-60)'),
 		emailAddress: z
-			.string()
-			.email({message: 'Please enter a valid email'})
+			.array(z.object({value: z.string()}))
+			.refine(
+				(emails) =>
+					emails.every(
+						(error) =>
+							z.string().email().safeParse(error.value).success
+					),
+				{message: 'One or more email addresses are invalid'}
+			)
 			.or(z.literal('')),
 		objective: z.string().refine((val) => ['Test', 'Trial'].includes(val), {
 			message: 'Select an Option',

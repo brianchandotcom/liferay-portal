@@ -113,16 +113,20 @@ test(
 		const itemsSelectorCheckbox = page.locator(
 			'input[name="items-selector"]'
 		);
+		let sentFilters: Array<object>;
 		let sentItems: Array<number>;
 		let sentKeyValues: Array<number>;
+		let sentSearchQuery: string;
 		let sentSelectAll: boolean;
 
 		await page.route('/o/c/fdssamples/', async (route, request) => {
 			if (request.method() === 'POST') {
 				const postData = request.postDataJSON();
 
+				sentFilters = postData.filters;
 				sentItems = postData.items;
 				sentKeyValues = postData.keyValues;
+				sentSearchQuery = postData.searchQuery;
 				sentSelectAll = postData.selectAll;
 			}
 
@@ -165,8 +169,10 @@ test(
 				.getByRole('menuitem', {name: 'test'})
 				.click();
 
+			expect(sentFilters).toBeUndefined();
 			expect(sentItems).toHaveLength(19);
 			expect(sentKeyValues).toHaveLength(19);
+			expect(sentSearchQuery).toBeUndefined();
 			expect(sentSelectAll).toBe(false);
 
 			expect(
@@ -177,6 +183,18 @@ test(
 		});
 
 		await test.step('With Select All flag active, requests sent the flag instead of selected items', async () => {
+			await test.step('Enter a search term', async () => {
+				await fdsSamplePage.selectionToolbar.clearButton.click();
+
+				await fdsSamplePage.managementToolbar.searchInput.fill(
+					'Sample'
+				);
+
+				await fdsSamplePage.managementToolbar.container
+					.getByRole('button', {name: 'Search'})
+					.click();
+			});
+
 			await itemsSelectorCheckbox.click();
 
 			await fdsSamplePage.selectAllCheckbox.click();
@@ -188,8 +206,17 @@ test(
 				.getByRole('menuitem', {name: 'test'})
 				.click();
 
+			expect(sentFilters).toEqual([
+				{
+					id: 'color',
+					multiple: true,
+					odataFilterString: "color in ('Blue', 'Green', 'Yellow')",
+					selectedItemsLabel: 'Blue, Green, Yellow',
+				},
+			]);
 			expect(sentItems).toEqual([]);
 			expect(sentKeyValues).toEqual([]);
+			expect(sentSearchQuery).toEqual('Sample');
 			expect(sentSelectAll).toBe(true);
 
 			expect(

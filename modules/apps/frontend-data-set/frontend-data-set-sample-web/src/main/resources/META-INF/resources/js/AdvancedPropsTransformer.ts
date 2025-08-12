@@ -129,7 +129,7 @@ export default function propsTransformer({
 		onBulkActionItemClick({
 			action,
 			loadData,
-			selectedData: {items, keyValues, selectAll},
+			selectedData: {filters, items, keyValues, searchQuery, selectAll},
 		}: any) {
 			if (action.data.id === 'sampleBulkAction') {
 				openModal({
@@ -163,7 +163,13 @@ export default function propsTransformer({
 
 			if (action.data.id === 'testBulkAction') {
 				fetch(action.href, {
-					body: JSON.stringify({items, keyValues, selectAll}),
+					body: JSON.stringify({
+						filters,
+						items,
+						keyValues,
+						searchQuery,
+						selectAll,
+					}),
 					headers: DEFAULT_FETCH_HEADERS,
 					method: action.data.method,
 				});

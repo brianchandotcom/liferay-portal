@@ -496,13 +496,17 @@ public class MirrorsGetTask extends Task {
 
 			List<URL> urls = new ArrayList<>();
 
-			String mirrorsHostname = _getMirrorsHostname();
+			if (_tryLocalNetwork) {
+				String mirrorsHostname = _getMirrorsHostname();
+				URL nexusTomcatURL = _getNexusTomcatURL();
 
-			if (_tryLocalNetwork && !mirrorsHostname.isEmpty()) {
-				urls.add(_getMirrorsURL());
+				if (nexusTomcatURL != null) {
+					urls.add(nexusTomcatURL);
+				}
+				else if (!mirrorsHostname.isEmpty()) {
+					urls.add(_getMirrorsURL());
+				}
 			}
-
-			urls.add(_getNexusTomcatURL());
 
 			URL localURL = _getLocalURL();
 			URL remoteURL = _getRemoteURL();

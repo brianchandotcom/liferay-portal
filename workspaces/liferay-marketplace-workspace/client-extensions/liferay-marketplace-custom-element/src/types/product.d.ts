@@ -67,6 +67,7 @@ type DeliverySKU = {
 	customFields?: CustomField[];
 	externalReferenceCode: string;
 	id: number;
+	neverExpire?: boolean;
 	price: {price: number; priceFormatted: string};
 	purchasable: boolean;
 	sku: string;

@@ -25,7 +25,22 @@
 <#assign
 	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=productSpecifications")
 	productSpecifications = product.productSpecifications![]
+	catalogName = product.catalogName
 />
+
+<#if catalogName?has_content>
+	<#assign
+		publisherDetailsResponse = restClient.get("/c/publisherdetailses?filter=publisherName eq '${catalogName}'")
+		redirectPath = "/e/publisher-details/?????"
+	/>
+
+	<#if publisherDetailsResponse?has_content>
+		<#assign publisherPage = publisherDetailsResponse.items />
+			<#if publisherPage?has_content>
+				<#assign publisherDetail = publisherPage[0] />
+			</#if>
+	</#if>
+</#if>
 
 <div>
 	<#if productSpecifications?has_content>
@@ -33,9 +48,15 @@
 
 		<#if developerNames?has_content>
 			<#list developerNames as developerName>
-				<a class="bg-neutral-8" href="/?developer-name=${developerName.value}">
-					${developerName.value}
-				</a>
+				<#if publisherDetail?has_content>
+					<a class="bg-neutral-8" href="${redirectPath}/${publisherDetail.id}">
+						${developerName.value}
+					</a>
+				<#else>
+					<a class="bg-neutral-8" 	href="/?developer-name=${developerName.value}">
+						${developerName.value}
+					</a>
+				</#if>
 			</#list>
 		</#if>
 	</#if>

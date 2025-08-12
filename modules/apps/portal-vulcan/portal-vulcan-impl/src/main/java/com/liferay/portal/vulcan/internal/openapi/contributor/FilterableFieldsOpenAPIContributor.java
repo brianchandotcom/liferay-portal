@@ -283,14 +283,17 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 				String type = String.valueOf(internalEntityField.getType());
 
 				filterableFieldMapping.put(
-					fieldName, StringBundler.concat("[", type, "]"));
+					fieldName,
+					StringBundler.concat(
+						"[", StringUtil.toLowerCase(type), "]"));
 
 				continue;
 			}
 			else if (!(entityField instanceof ComplexEntityField)) {
 				String type = String.valueOf(entityField.getType());
 
-				filterableFieldMapping.put(fieldName, type);
+				filterableFieldMapping.put(
+					fieldName, StringUtil.toLowerCase(type));
 
 				continue;
 			}

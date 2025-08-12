@@ -71,6 +71,94 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 		await page.keyboard.press('Escape');
 	});
 
+	await test.step('Check that the Item Actions dropdown displays icons for Table, List, and Cards views', async () => {
+		await test.step('Check Table view actions dropdown items has icons', async () => {
+			const dropdownId =
+				await itemActionButton.getAttribute('aria-controls');
+
+			await itemActionButton.click();
+
+			const dropdownMenu = page.locator(`#${dropdownId}`);
+
+			await dropdownMenu.filter({has: page.getByRole('menu')}).waitFor();
+
+			const menuItems = dropdownMenu.getByRole('menuitem');
+
+			for (const menuItem of await menuItems.all()) {
+				await expect(menuItem.locator('.lexicon-icon')).toBeVisible();
+			}
+
+			await page.keyboard.press('Escape');
+		});
+
+		await test.step('Check List view actions dropdown items has icons', async () => {
+			await fdsSamplePage.changeVisualizationMode({
+				page,
+				visualizationMode: EFDSVisualizationMode.LIST,
+			});
+
+			const listItemActionButton = fdsSamplePage.list.items
+				.first()
+				.getByRole('button', {
+					exact: true,
+					name: 'Actions',
+				});
+
+			await listItemActionButton.click();
+
+			const dropdownMenu = page.locator(
+				`#${await listItemActionButton.getAttribute('aria-controls')}`
+			);
+
+			await dropdownMenu.filter({has: page.getByRole('menu')}).waitFor();
+
+			const menuItems = dropdownMenu.getByRole('menuitem');
+
+			for (const menuItem of await menuItems.all()) {
+				await expect(menuItem.locator('.lexicon-icon')).toBeVisible();
+			}
+
+			await page.keyboard.press('Escape');
+		});
+
+		await test.step('Check Cards view action dropdown items has icons', async () => {
+			await fdsSamplePage.changeVisualizationMode({
+				page,
+				visualizationMode: EFDSVisualizationMode.CARDS,
+			});
+
+			const cardItemActionButton = fdsSamplePage.cards.items
+				.first()
+				.getByLabel('More actions');
+
+			await expect(cardItemActionButton).toBeVisible();
+
+			await cardItemActionButton.click();
+
+			const dropdownId =
+				await cardItemActionButton.getAttribute('aria-controls');
+
+			const dropdownMenu = page.locator(`#${dropdownId}`);
+
+			await dropdownMenu.filter({has: page.getByRole('menu')}).waitFor();
+
+			const menuItems = dropdownMenu.getByRole('menuitem');
+
+			for (const menuItem of await menuItems.all()) {
+				await expect(menuItem.locator('.lexicon-icon')).toBeVisible();
+			}
+
+			await page.keyboard.press('Escape');
+		});
+
+		await test.step('Switch back to Table view', async () => {
+			await fdsSamplePage.changeVisualizationMode({
+				page,
+				visualizationMode: EFDSVisualizationMode.TABLE,
+			});
+		});
+	});
+
 	await test.step('Side Panel action opens a side panel with content title', async () => {
 		await fdsSamplePage.clickItemAction(
 			sidePanelActionLabelWithContentTitle

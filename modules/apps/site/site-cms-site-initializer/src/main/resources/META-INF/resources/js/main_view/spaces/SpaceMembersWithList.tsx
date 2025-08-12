@@ -27,8 +27,6 @@ import {
 	SelectOptions,
 	SpaceMembersInputWithSelect,
 } from './SpaceMembersInputWithSelect';
-import {SPACE_MEMBER_ROLE_ID} from './SpaceMembersPermissionSelect';
-
 export interface SpaceMembersWithListProps {
 	assetLibraryCreatorUserId: string;
 	assetLibraryId: string;
@@ -211,13 +209,9 @@ export function SpaceMembersWithList({
 	const onAutocompleteItemSelected = async (
 		item: UserAccount | UserGroup
 	) => {
-		const defaultRole = spacePermissionsRoles.find(
-			(role) => role.id === SPACE_MEMBER_ROLE_ID
-		);
-
-		const itemWithRoles = {
+		const itemWithEmptyRoles = {
 			...item,
-			roles: defaultRole ? [defaultRole] : [],
+			roles: [],
 		};
 
 		if (selectedOption === SelectOptions.USERS) {
@@ -225,7 +219,10 @@ export function SpaceMembersWithList({
 				return;
 			}
 
-			setSelectedUsers([itemWithRoles as UserAccount, ...selectedUsers]);
+			setSelectedUsers([
+				itemWithEmptyRoles as UserAccount,
+				...selectedUsers,
+			]);
 
 			const {error} = await SpaceService.linkUserToSpace({
 				spaceId: assetLibraryId,
@@ -261,7 +258,7 @@ export function SpaceMembersWithList({
 		}
 
 		setSelectedUserGroups([
-			itemWithRoles as UserGroup,
+			itemWithEmptyRoles as UserGroup,
 			...selectedUserGroups,
 		]);
 
@@ -357,12 +354,12 @@ export function SpaceMembersWithList({
 	};
 
 	const onUpdateItemRoles = useCallback(
-		async (itemToUpdate: UserAccount | UserGroup, newRoles: number[]) => {
+		async (itemToUpdate: UserAccount | UserGroup, newRoles: string[]) => {
 			const isUser = selectedOption === SelectOptions.USERS;
 			const originalRoles = itemToUpdate.roles;
 
 			const newRoleObjects = spacePermissionsRoles.filter((role) =>
-				newRoles.includes(role.id)
+				newRoles.includes(role.name)
 			);
 
 			const stateUpdater = isUser
@@ -375,7 +372,7 @@ export function SpaceMembersWithList({
 
 			setStateUpdater((current) =>
 				current.map((item) =>
-					item.id === itemToUpdate.id
+					item.name === itemToUpdate.name
 						? {...item, roles: newRoleObjects}
 						: item
 				)

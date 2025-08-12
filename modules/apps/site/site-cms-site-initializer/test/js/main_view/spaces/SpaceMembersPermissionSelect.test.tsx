@@ -11,15 +11,15 @@ import React from 'react';
 import {Role} from '../../../../src/main/resources/META-INF/resources/js/common/types/Role';
 import {
 	HIDDEN_MEMBER_ROLES,
-	SPACE_MEMBER_ROLE_ID,
+	SPACE_MEMBER_ROLE_NAME,
 	SpaceMembersPermissionSelect,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersPermissionSelect';
 
 const mockRoles: Role[] = [
 	{
 		externalReferenceCode: 'space-member-external-reference-code',
-		id: SPACE_MEMBER_ROLE_ID,
-		name: 'Space Member',
+		id: 100,
+		name: SPACE_MEMBER_ROLE_NAME,
 		name_i18n: {'en-US': 'Space Member US'},
 	},
 	{
@@ -37,14 +37,14 @@ const mockRoles: Role[] = [
 	{
 		externalReferenceCode:
 			'hidden-asset-library-owner-external-reference-code',
-		id: HIDDEN_MEMBER_ROLES[0],
-		name: 'Asset Library Owner',
+		id: 103,
+		name: HIDDEN_MEMBER_ROLES[0],
 		name_i18n: {'en-US': 'Asset Library Owner US'},
 	},
 	{
 		externalReferenceCode: 'hidden-cms-consumer-external-reference-code',
-		id: HIDDEN_MEMBER_ROLES[1],
-		name: 'CMS Consumer',
+		id: 104,
+		name: HIDDEN_MEMBER_ROLES[1],
 		name_i18n: {'en-US': 'CMS Consumer US'},
 	},
 ];
@@ -55,7 +55,7 @@ describe('SpaceMembersPermissionSelect', () => {
 	const props = {
 		onChange: mockOnChange,
 		roles: mockRoles,
-		selectedRoles: [SPACE_MEMBER_ROLE_ID],
+		selectedRoles: [SPACE_MEMBER_ROLE_NAME],
 	};
 
 	afterEach(() => {
@@ -84,7 +84,7 @@ describe('SpaceMembersPermissionSelect', () => {
 		render(
 			<SpaceMembersPermissionSelect
 				{...props}
-				selectedRoles={[SPACE_MEMBER_ROLE_ID, 101]}
+				selectedRoles={[SPACE_MEMBER_ROLE_NAME, 'Role 1']}
 			/>
 		);
 
@@ -108,21 +108,24 @@ describe('SpaceMembersPermissionSelect', () => {
 		await userEvent.click(screen.getByRole('button'));
 		await userEvent.click(screen.getByLabelText('Role 1 US'));
 
-		expect(mockOnChange).toHaveBeenCalledWith([SPACE_MEMBER_ROLE_ID, 101]);
+		expect(mockOnChange).toHaveBeenCalledWith([
+			SPACE_MEMBER_ROLE_NAME,
+			'Role 1',
+		]);
 	});
 
 	it('calls onChange without the role when a checkbox is unchecked', async () => {
 		render(
 			<SpaceMembersPermissionSelect
 				{...props}
-				selectedRoles={[SPACE_MEMBER_ROLE_ID, 101]}
+				selectedRoles={[SPACE_MEMBER_ROLE_NAME, 'Role 1']}
 			/>
 		);
 
 		await userEvent.click(screen.getByRole('button'));
 		await userEvent.click(screen.getByLabelText('Role 1 US'));
 
-		expect(mockOnChange).toHaveBeenCalledWith([SPACE_MEMBER_ROLE_ID]);
+		expect(mockOnChange).toHaveBeenCalledWith([SPACE_MEMBER_ROLE_NAME]);
 	});
 
 	it('uses the default role name when i18n translation is not available', async () => {
@@ -134,14 +137,17 @@ describe('SpaceMembersPermissionSelect', () => {
 		render(
 			<SpaceMembersPermissionSelect
 				{...props}
-				selectedRoles={[SPACE_MEMBER_ROLE_ID, 101]}
+				selectedRoles={[SPACE_MEMBER_ROLE_NAME, 'Role 1']}
 			/>
 		);
 
-		const triggerText = screen.getByTitle('Space Member, Role 1');
-		expect(triggerText).toHaveTextContent('Space Member, Role 1');
+		const triggerText = screen.getByTitle('Asset Library Member, Role 1');
+		expect(triggerText).toHaveTextContent('Asset Library Member, Role 1');
 
 		await userEvent.click(screen.getByRole('button'));
+		expect(
+			screen.getByLabelText('Asset Library Member')
+		).toBeInTheDocument();
 		expect(screen.getByLabelText('Role 1')).toBeInTheDocument();
 	});
 });

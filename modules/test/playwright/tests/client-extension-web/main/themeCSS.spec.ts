@@ -126,7 +126,7 @@ test('ThemeCSS client extension supports frontend token definition JSON file upl
 
 	await uploadAndValidateFile(
 		'frontend-token-definition.json',
-		'The frontend token definition JSON file was uploaded and contributed 1 token categories, 1 token sets, and 2 tokens.',
+		'The frontend token definition JSON file was uploaded and contributed 1 token categories, 1 token sets, and 3 tokens.',
 		page,
 		editThemeCSSClientExtensionsPage
 	);
@@ -157,7 +157,7 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 
 		await uploadAndValidateFile(
 			'frontend-token-definition.json',
-			'The frontend token definition JSON file was uploaded and contributed 1 token categories, 1 token sets, and 2 tokens.',
+			'The frontend token definition JSON file was uploaded and contributed 1 token categories, 1 token sets, and 3 tokens.',
 			page,
 			editThemeCSSClientExtensionsPage
 		);

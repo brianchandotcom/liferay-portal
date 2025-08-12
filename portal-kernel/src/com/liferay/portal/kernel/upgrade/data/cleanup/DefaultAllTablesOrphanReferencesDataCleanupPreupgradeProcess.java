@@ -22,12 +22,12 @@ public class DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 	@Override
 	protected void cleanUp(
 			String sourceColumnName, String sourceTableName,
-			String targetColumnName, String targetTableName)
+			String[] targetColumnNames, String targetTableName)
 		throws Exception {
 
 		OrphanReferencesDataCleanupUtil.cleanUpTable(
 			connection, null, sourceColumnName, sourceTableName,
-			targetColumnName, targetTableName);
+			targetColumnNames, targetTableName);
 	}
 
 }

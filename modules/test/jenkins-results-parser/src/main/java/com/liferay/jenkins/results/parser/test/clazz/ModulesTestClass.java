@@ -5,8 +5,10 @@
 
 package com.liferay.jenkins.results.parser.test.clazz;
 
+import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 
 import java.io.File;
@@ -14,6 +16,7 @@ import java.io.File;
 import java.nio.file.Path;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -21,6 +24,53 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class ModulesTestClass extends BaseTestClass {
+
+	public DownstreamBuildReport getCachedDownstreamBuildReport() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			return null;
+		}
+
+		if (_cachedTestClassReportSearched) {
+			getCachedTestClassReport();
+		}
+
+		return _cachedDownstreamBuildReport;
+	}
+
+	public TestClassReport getCachedTestClassReport() {
+		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+			_cachedTestClassReportSearched) {
+
+			return _cachedTestClassReport;
+		}
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		for (DownstreamBuildReport cachedDownstreamBuildReport :
+				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+
+			for (TestClassReport testClassReport :
+					cachedDownstreamBuildReport.getTestClassReports()) {
+
+				if (!Objects.equals(
+						getTestClassName(),
+						testClassReport.getTestClassName())) {
+
+					continue;
+				}
+
+				_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
+
+				_cachedTestClassReport = testClassReport;
+
+				break;
+			}
+		}
+
+		_cachedTestClassReportSearched = true;
+
+		return _cachedTestClassReport;
+	}
 
 	@Override
 	public JSONObject getJSONObject() {
@@ -162,6 +212,9 @@ public abstract class ModulesTestClass extends BaseTestClass {
 		return _testPropertiesFile;
 	}
 
+	private DownstreamBuildReport _cachedDownstreamBuildReport;
+	private TestClassReport _cachedTestClassReport;
+	private boolean _cachedTestClassReportSearched;
 	private final String _taskName;
 	private final File _testPropertiesFile;
 	private final String _testrayMainComponentName;

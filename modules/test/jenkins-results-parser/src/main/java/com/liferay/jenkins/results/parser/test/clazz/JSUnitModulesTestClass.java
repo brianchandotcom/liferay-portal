@@ -23,6 +23,7 @@ import org.json.JSONObject;
  */
 public class JSUnitModulesTestClass extends ModulesTestClass {
 
+	@Override
 	public DownstreamBuildReport getCachedDownstreamBuildReport() {
 		if (!_cachedTestClassReportSearched) {
 			getCachedTestClassReport();
@@ -31,6 +32,7 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 		return _cachedDownstreamBuildReport;
 	}
 
+	@Override
 	public TestClassReport getCachedTestClassReport() {
 		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
 			_cachedTestClassReportSearched) {

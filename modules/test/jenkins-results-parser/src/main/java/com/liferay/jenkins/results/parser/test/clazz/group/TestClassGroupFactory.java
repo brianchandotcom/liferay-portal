@@ -55,13 +55,6 @@ public class TestClassGroupFactory {
 		}
 
 		if (batchTestClassGroup instanceof ModulesBatchTestClassGroup) {
-			if (batchTestClassGroup instanceof
-					SemVerModulesBatchTestClassGroup) {
-
-				return new SemVerModulesAxisTestClassGroup(
-					(SemVerModulesBatchTestClassGroup)batchTestClassGroup);
-			}
-
 			return new ModulesAxisTestClassGroup(
 				(ModulesBatchTestClassGroup)batchTestClassGroup);
 		}
@@ -100,13 +93,6 @@ public class TestClassGroupFactory {
 		}
 
 		if (batchTestClassGroup instanceof ModulesBatchTestClassGroup) {
-			if (batchTestClassGroup instanceof
-					SemVerModulesBatchTestClassGroup) {
-
-				return new SemVerModulesAxisTestClassGroup(
-					jsonObject, segmentTestClassGroup);
-			}
-
 			return new ModulesAxisTestClassGroup(
 				jsonObject, segmentTestClassGroup);
 		}

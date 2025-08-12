@@ -46,6 +46,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -149,7 +150,7 @@ public class ObjectDefinitionResourceTest
 		super.testGetObjectDefinition();
 
 		ObjectDefinition objectDefinition =
-			testGetObjectDefinitionsPage_addObjectDefinition(
+			objectDefinitionResource.postObjectDefinition(
 				randomObjectDefinition());
 
 		String objectDefinitionPluralName = StringUtil.lowerCaseFirstLetter(
@@ -158,6 +159,8 @@ public class ObjectDefinitionResourceTest
 		Assert.assertEquals(
 			"/o/c/" + objectDefinitionPluralName,
 			objectDefinition.getRestContextPath());
+
+		_testGetObjectDefinitionWithRootObjectDefinitionExternalReferenceCodes();
 	}
 
 	@Override
@@ -1773,6 +1776,50 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setSystem(true);
 
 		return objectDefinition;
+	}
+
+	private void _testGetObjectDefinitionWithRootObjectDefinitionExternalReferenceCodes()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionA =
+			objectDefinitionResource.postObjectDefinition(
+				randomObjectDefinition());
+
+		ObjectDefinition objectDefinitionAA =
+			objectDefinitionResource.postObjectDefinition(
+				randomObjectDefinition());
+
+		TreeTestUtil.bind(
+			objectDefinitionA.getId(), objectDefinitionAA.getId(),
+			_objectRelationshipLocalService);
+
+		ObjectDefinition objectDefinitionB =
+			objectDefinitionResource.postObjectDefinition(
+				randomObjectDefinition());
+
+		TreeTestUtil.bind(
+			objectDefinitionB.getId(), objectDefinitionAA.getId(),
+			_objectRelationshipLocalService);
+
+		objectDefinitionAA = objectDefinitionResource.getObjectDefinition(
+			objectDefinitionAA.getId());
+
+		Assert.assertEquals(
+			new ObjectDefinitionSetting[] {
+				new ObjectDefinitionSetting() {
+					{
+						setName(
+							ObjectDefinitionSettingConstants.
+								NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES);
+						setValue(
+							StringBundler.concat(
+								objectDefinitionA.getExternalReferenceCode(),
+								",",
+								objectDefinitionB.getExternalReferenceCode()));
+					}
+				}
+			},
+			objectDefinitionAA.getObjectDefinitionSettings());
 	}
 
 	private void _testPostObjectDefinitionBatch() throws Exception {

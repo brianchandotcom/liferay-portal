@@ -888,13 +888,13 @@ test(
 	'Site selection modal when editing user should not allow XSS',
 	{tag: '@LPD-62301'},
 	async ({apiHelpers, editUserPage, page, usersAndOrganizationsPage}) => {
-		const name = "<img src=x onerror=alert(origin)>";
+		const name = '<img src=x onerror=alert(origin)>';
 		const site = await apiHelpers.headlessSite.createSite({
-			name: name,
+			name,
 		});
-		
+
 		apiHelpers.data.push({id: site.id, type: 'site'});
-		
+
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
 		await usersAndOrganizationsPage.goto();
@@ -910,7 +910,7 @@ test(
 
 		await editUserPage.selectSiteSearchBar.fill(site.name);
 		await editUserPage.selectSiteSearchBarButton.click();
-		
+
 		let alertTriggered = false;
 
 		page.on('dialog', async (dialog) => {
@@ -919,7 +919,7 @@ test(
 				await dialog.dismiss();
 			}
 		});
-		
+
 		await editUserPage.selectSiteFrameSiteLink(site.name).click();
 		expect(alertTriggered).toBe(false);
 	}

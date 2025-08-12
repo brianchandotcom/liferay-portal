@@ -498,18 +498,16 @@ export class EditUserPage {
 		this.selectSiteButton = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectSiteLink'
 		);
-		this.selectSiteFrame = page.frameLocator(
-			'iframe[title="Select Site"]'
-		);
-		this.selectSiteFrameSiteLink = (name) => 
+		this.selectSiteFrame = page.frameLocator('iframe[title="Select Site"]');
+		this.selectSiteFrameSiteLink = (name) =>
 			this.selectSiteFrame.getByRole('link', {
-				name: name
-			}
-		);
+				name,
+			});
 		this.selectSiteSearchBar =
 			this.selectSiteFrame.getByPlaceholder('Search for');
-		this.selectSiteSearchBarButton =
-			this.selectSiteFrame.getByRole('button', {
+		this.selectSiteSearchBarButton = this.selectSiteFrame.getByRole(
+			'button',
+			{
 				name: 'Search for',
 			}
 		);

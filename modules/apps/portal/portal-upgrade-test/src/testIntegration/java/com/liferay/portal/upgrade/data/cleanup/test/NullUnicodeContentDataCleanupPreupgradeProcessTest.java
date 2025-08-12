@@ -61,6 +61,9 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 	public static void tearDownClass() throws Exception {
 		try {
 			_db.alterTableDropColumn(_connection, "JournalArticle", "content");
+			_db.runSQL("delete from JournalArticle where id_ = " + _journalId);
+			_db.runSQL(
+				"delete from DDMContent where contentId = " + _contentId);
 		}
 		finally {
 			DataAccess.cleanUp(_connection);
@@ -77,24 +80,24 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 			content = "N" + content;
 		}
 
-		long contentId = RandomTestUtil.nextLong();
+		_contentId = RandomTestUtil.nextLong();
 
 		runSQL(
 			_connection,
 			StringBundler.concat(
 				"insert into DDMContent (",
 				"mvccVersion, ctCollectionId, contentId, groupId, data_) ",
-				"values (0, 0, ", contentId, ", ", RandomTestUtil.nextLong(),
+				"values (0, 0, ", _contentId, ", ", RandomTestUtil.nextLong(),
 				", ", content, ")"));
 
-		long journalId = RandomTestUtil.nextLong();
+		_journalId = RandomTestUtil.nextLong();
 
 		runSQL(
 			_connection,
 			StringBundler.concat(
 				"insert into JournalArticle (",
 				"mvccVersion, ctCollectionId, id_, groupId, content) values (",
-				"0, 0, ", journalId, ", ", RandomTestUtil.nextLong(), ", ",
+				"0, 0, ", _journalId, ", ", RandomTestUtil.nextLong(), ", ",
 				content, ")"));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -124,7 +127,7 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 			try (PreparedStatement preparedStatement =
 					_connection.prepareStatement(
 						"select data_ from DDMContent where contentId = " +
-							contentId);
+							_contentId);
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				Assert.assertTrue(resultSet.next());
@@ -135,7 +138,7 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 			try (PreparedStatement preparedStatement =
 					_connection.prepareStatement(
 						"select content from JournalArticle where id_ = " +
-							journalId);
+							_journalId);
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				Assert.assertTrue(resultSet.next());
@@ -146,7 +149,9 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 	}
 
 	private static Connection _connection;
+	private static long _contentId;
 	private static DB _db;
 	private static DBInspector _dbInspector;
+	private static long _journalId;
 
 }

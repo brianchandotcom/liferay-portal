@@ -284,15 +284,18 @@ public class NotificationQueueEntryResourceTest
 
 		return new NotificationQueueEntry() {
 			{
-				recipients = Arrays.asList(
-					Map.of(
+				recipients = new Object[] {
+					HashMapBuilder.<String, Object>put(
 						NotificationRecipientSettingConstants.NAME_FROM,
-						"[%CURRENT_USER_EMAIL_ADDRESS%]",
-						NotificationRecipientSettingConstants.NAME_TO,
-						"[%CURRENT_USER_EMAIL_ADDRESS%]",
+						"[%CURRENT_USER_EMAIL_ADDRESS%]"
+					).put(
 						NotificationRecipientSettingConstants.NAME_FROM_NAME,
-						RandomTestUtil.randomString())
-				).toArray();
+						"[%CURRENT_USER_FIRST_NAME%]"
+					).put(
+						NotificationRecipientSettingConstants.NAME_TO,
+						"[%CURRENT_USER_EMAIL_ADDRESS%]"
+					).build()
+				};
 				subject = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				type = NotificationConstants.TYPE_EMAIL;
 			}

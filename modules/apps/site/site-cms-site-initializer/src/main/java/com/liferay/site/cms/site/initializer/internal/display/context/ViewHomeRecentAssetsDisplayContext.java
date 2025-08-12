@@ -5,17 +5,92 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Christian Dorado
  */
-public class ViewHomeRecentAssetsDisplayContext {
+public class ViewHomeRecentAssetsDisplayContext
+	extends BaseSectionDisplayContext {
 
-	public ViewHomeRecentAssetsDisplayContext(ThemeDisplay themeDisplay) {
-		_themeDisplay = themeDisplay;
+	public ViewHomeRecentAssetsDisplayContext(
+		DepotEntryLocalService depotEntryLocalService,
+		GroupLocalService groupLocalService,
+		HttpServletRequest httpServletRequest, Language language,
+		ObjectDefinitionService objectDefinitionService,
+		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
+		ModelResourcePermission<ObjectEntryFolder>
+			objectEntryFolderModelResourcePermission,
+		Portal portal) {
+
+		super(
+			depotEntryLocalService, groupLocalService, httpServletRequest,
+			language, objectDefinitionService,
+			objectDefinitionSettingLocalService,
+			objectEntryFolderModelResourcePermission, portal);
 	}
 
-	private final ThemeDisplay _themeDisplay;
+	@Override
+	public String getAPIURL() {
+		return HttpComponentsUtil.addParameters(
+			super.getAPIURL(), "sort", "dateModified:desc");
+	}
+
+	public String getAssetsAllURL() throws PortalException {
+		return PortalUtil.getLayoutFullURL(
+			LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+				themeDisplay.getScopeGroupId(), false, "/all"),
+			themeDisplay);
+	}
+
+	@Override
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"image", "/states/cms_empty_state.svg"
+		).put(
+			"title", LanguageUtil.get(httpServletRequest, "no-assets-yet")
+		).build();
+	}
+
+	@Override
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		List<FDSActionDropdownItem> fdsActionDropdownItems =
+			super.getFDSActionDropdownItems();
+
+		fdsActionDropdownItems.add(
+			1,
+			new FDSActionDropdownItem(
+				"{embedded.file.link.href}", "download", "download",
+				LanguageUtil.get(httpServletRequest, "download"), "get", null,
+				"link"));
+
+		return fdsActionDropdownItems;
+	}
+
+	@Override
+	protected String getCMSSectionFilterString() {
+		return appendStatus(
+			"cmsKind eq 'object' and (cmsSection eq 'contents' or cmsSection " +
+				"eq 'files')");
+	}
 
 }

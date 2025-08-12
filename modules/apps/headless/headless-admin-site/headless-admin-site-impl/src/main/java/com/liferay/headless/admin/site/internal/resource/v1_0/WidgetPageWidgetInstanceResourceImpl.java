@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Objects;
@@ -114,10 +116,18 @@ public class WidgetPageWidgetInstanceResourceImpl
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, contextHttpServletRequest,
+				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser);
+
 		return Page.of(
 			transform(
 				layoutTypePortlet.getPortletIds(),
-				portletId -> _toWidgetPageWidgetInstance(layout, portletId)));
+				portletId -> _toWidgetPageWidgetInstance(
+					dtoConverterContext, layout, portletId)));
 	}
 
 	@Override
@@ -285,23 +295,41 @@ public class WidgetPageWidgetInstanceResourceImpl
 	}
 
 	private WidgetPageWidgetInstance _toWidgetPageWidgetInstance(
-		Layout layout, String portletId) {
+			DTOConverterContext dtoConverterContext, Layout layout,
+			String portletId)
+		throws Exception {
 
-		return new WidgetPageWidgetInstance() {
-			{
-				setExternalReferenceCode(() -> portletId);
-				setParentSectionId(
-					() -> LayoutUtil.getParentSectionId(layout, portletId));
-				setPosition(() -> LayoutUtil.getPosition(layout, portletId));
-				setWidgetInstanceId(
-					() -> PortletIdCodec.decodeInstanceId(portletId));
-				setWidgetName(
-					() -> PortletIdCodec.decodePortletName(portletId));
-			}
-		};
+		dtoConverterContext.setAttribute("portletId", portletId);
+
+		return _widgetPageWidgetInstanceDTOConverter.toDTO(
+			dtoConverterContext, layout);
+	}
+
+	private WidgetPageWidgetInstance _toWidgetPageWidgetInstance(
+			Layout layout, String portletId)
+		throws Exception {
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, contextHttpServletRequest,
+				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser);
+
+		return _toWidgetPageWidgetInstance(
+			dtoConverterContext, layout, portletId);
 	}
 
 	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.WidgetPageWidgetInstanceDTOConverter)"
+	)
+	private DTOConverter<Layout, WidgetPageWidgetInstance>
+		_widgetPageWidgetInstanceDTOConverter;
 
 }

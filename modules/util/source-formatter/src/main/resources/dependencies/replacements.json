@@ -5547,11 +5547,17 @@
 	{
 		"from": "PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX",
 		"issueKey": "LPS-202918",
+		"newImports": [
+			"com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants"
+		],
 		"to": "PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX"
 	},
 	{
 		"from": "PortletDisplayTemplateManager.ENTRIES",
 		"issueKey": "LPS-202918",
+		"newImports": [
+			"com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants"
+		],
 		"to": "PortletDisplayTemplateConstants.ENTRIES"
 	},
 	{

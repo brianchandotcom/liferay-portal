@@ -43,8 +43,9 @@ public class EntriesCheckerTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_journalArticleLocalServiceUtilMockedStatic.close();
-		_languageUtilMockedStatic.close();
 		_journalArticlePermissionMockedStatic.close();
+
+		_languageUtilMockedStatic.close();
 	}
 
 	@Test

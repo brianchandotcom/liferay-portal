@@ -10,6 +10,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.ExpectedLog;
+import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedType;
 
 import java.util.Collections;
 import java.util.List;
@@ -169,6 +172,30 @@ public class LocaleUtilTest {
 		Assert.assertSame(
 			LocaleUtil.fromLanguageId("it_IT", false),
 			LocaleUtil.fromLanguageId("it_IT", false));
+	}
+
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "invalid is a not a valid language id",
+				expectedType = ExpectedType.EXACT
+			),
+			@ExpectedLog(
+				expectedLog = "invalid- is a not a valid language id",
+				expectedType = ExpectedType.EXACT
+			),
+			@ExpectedLog(
+				expectedLog = "invalid_ is a not a valid language id",
+				expectedType = ExpectedType.EXACT
+			)
+		},
+		level = "WARN", loggerClass = LocaleUtil.class
+	)
+	@Test
+	public void testFromLanguageIdValidationWithInvalidInput() {
+		Assert.assertNull(LocaleUtil.fromLanguageId("invalid", true, false));
+		Assert.assertNull(LocaleUtil.fromLanguageId("invalid-", true, false));
+		Assert.assertNull(LocaleUtil.fromLanguageId("invalid_", true, false));
 	}
 
 	@Test

@@ -17,11 +17,11 @@ import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
+import {Comment} from '../services/CommentService';
 import {EVENT_VALIDATE_FORM} from './ContentEditorManagementBar';
 import CommentsPanel from './panels/CommentsPanel';
 import GeneralPanel from './panels/GeneralPanel';
 import SchedulePanel from './panels/SchedulePanel';
-import {Comment} from './services/CommentService';
 
 type Props = {
 	addCommentURL: string;

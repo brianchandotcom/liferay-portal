@@ -5,7 +5,7 @@
 
 import {objectToFormData} from 'frontend-js-web';
 
-import ApiHelper, {RequestResult} from '../../../common/services/ApiHelper';
+import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 
 export type Comment = {
 	author: {

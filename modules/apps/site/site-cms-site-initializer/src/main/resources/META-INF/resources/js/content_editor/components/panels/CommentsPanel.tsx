@@ -17,7 +17,7 @@ import {openToast} from 'frontend-js-components-web';
 import {Ratings} from 'ratings-taglib';
 import React, {useRef, useState} from 'react';
 
-import CommentService, {Comment} from '../services/CommentService';
+import CommentService, {Comment} from '../../services/CommentService';
 
 type Status = 'default' | 'edit' | 'reply';
 

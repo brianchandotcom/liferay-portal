@@ -12,7 +12,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import CommentsPanel from '../../../../../src/main/resources/META-INF/resources/js/content_editor/components/panels/CommentsPanel';
-import {Comment} from '../../../../../src/main/resources/META-INF/resources/js/content_editor/components/services/CommentService';
+import {Comment} from '../../../../../src/main/resources/META-INF/resources/js/content_editor/services/CommentService';
 import {mockFetch} from '../../../__mocks__/frontend-js-web';
 
 jest.mock('@ckeditor/ckeditor5-react', () => ({

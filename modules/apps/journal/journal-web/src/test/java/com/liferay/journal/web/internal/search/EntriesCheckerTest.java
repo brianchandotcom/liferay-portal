@@ -6,7 +6,9 @@
 package com.liferay.journal.web.internal.search;
 
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -20,13 +22,14 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
 
+import org.apache.commons.lang3.RandomUtils;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -42,6 +45,7 @@ public class EntriesCheckerTest {
 
 	@AfterClass
 	public static void tearDownClass() {
+		_journalFolderLocalServiceUtilMockedStatic.close();
 		_journalArticleLocalServiceUtilMockedStatic.close();
 		_journalArticlePermissionMockedStatic.close();
 
@@ -51,9 +55,11 @@ public class EntriesCheckerTest {
 	@Test
 	public void testGetRowCheckBoxForNoJournalArticlePermissions() {
 		EntriesChecker entriesChecker = new EntriesChecker(
-			_getLiferayPortletRequest(), _getLiferayPortletResponse());
+			_getLiferayPortletRequest(),
+			Mockito.mock(LiferayPortletResponse.class));
 
 		JournalArticle mockArticle = Mockito.mock(JournalArticle.class);
+		JournalFolder mockJournalFolder = Mockito.mock(JournalFolder.class);
 
 		Mockito.when(
 			mockArticle.getArticleId()
@@ -61,11 +67,25 @@ public class EntriesCheckerTest {
 			_ARTICLE_ID
 		);
 
+		_journalFolderLocalServiceUtilMockedStatic.when(
+			() -> JournalFolderLocalServiceUtil.fetchFolder(Mockito.anyLong())
+		).thenReturn(
+			mockJournalFolder
+		);
+
 		_journalArticleLocalServiceUtilMockedStatic.when(
 			() -> JournalArticleLocalServiceUtil.fetchArticle(
-				_SCOPE_GROUP_ID, _ARTICLE_ID)
+				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			mockArticle
+		);
+
+		_journalArticlePermissionMockedStatic.when(
+			() -> JournalArticlePermission.contains(
+				Mockito.any(PermissionChecker.class),
+				Mockito.any(JournalArticle.class), Mockito.anyString())
+		).thenReturn(
+			false
 		);
 
 		_languageUtilMockedStatic.when(
@@ -73,15 +93,6 @@ public class EntriesCheckerTest {
 				Mockito.any(Locale.class), Mockito.eq("select"))
 		).thenReturn(
 			"Select (mocked)"
-		);
-
-		_journalArticlePermissionMockedStatic.when(
-			() -> JournalArticlePermission.contains(
-				ArgumentMatchers.any(PermissionChecker.class),
-				ArgumentMatchers.any(JournalArticle.class),
-				ArgumentMatchers.anyString())
-		).thenReturn(
-			false
 		);
 
 		String rowCheckBox = entriesChecker.getRowCheckBox(
@@ -119,26 +130,18 @@ public class EntriesCheckerTest {
 		return liferayPortletRequest;
 	}
 
-	private LiferayPortletResponse _getLiferayPortletResponse() {
-		return Mockito.mock(LiferayPortletResponse.class);
-	}
-
-	private PermissionChecker _getPermissionChecker() {
-		return Mockito.mock(PermissionChecker.class);
-	}
-
 	private ThemeDisplay _getThemeDisplay() {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setPermissionChecker(_getPermissionChecker());
-		themeDisplay.setScopeGroupId(_SCOPE_GROUP_ID);
+		themeDisplay.setPermissionChecker(
+			Mockito.mock(PermissionChecker.class));
 
 		return themeDisplay;
 	}
 
-	private static final String _ARTICLE_ID = "1234";
-
-	private static final long _SCOPE_GROUP_ID = 0;
+	private static final String _ARTICLE_ID = String.valueOf(
+		RandomUtils.secure(
+		).randomLong());
 
 	private static final MockedStatic<JournalArticleLocalServiceUtil>
 		_journalArticleLocalServiceUtilMockedStatic = Mockito.mockStatic(
@@ -146,6 +149,9 @@ public class EntriesCheckerTest {
 	private static final MockedStatic<JournalArticlePermission>
 		_journalArticlePermissionMockedStatic = Mockito.mockStatic(
 			JournalArticlePermission.class);
+	private static final MockedStatic<JournalFolderLocalServiceUtil>
+		_journalFolderLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			JournalFolderLocalServiceUtil.class);
 	private static final MockedStatic<LanguageUtil> _languageUtilMockedStatic =
 		Mockito.mockStatic(LanguageUtil.class);
 

@@ -78,16 +78,23 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 
 	protected String getExpectedMessage(
 			long count, String sourceColumnName, String sourceTableName,
-			String targetColumnName, String targetTableName, long targetValue)
+			String[] targetColumnNames, String targetTableName,
+			long targetValue)
 		throws Exception {
+
+		for (int i = 0; i < targetColumnNames.length; i++) {
+			targetColumnNames[i] = dbInspector.normalizeName(
+				targetColumnNames[i]);
+		}
 
 		return StringBundler.concat(
 			"Table ", dbInspector.normalizeName(sourceTableName), ", ", count,
-			(count == 1) ? " row " : " rows ", "deleted because ",
+			(count > 1) ? " rows " : " row ", "deleted because ",
 			dbInspector.normalizeName(sourceColumnName), StringPool.SPACE,
-			targetValue, " was not found in ",
-			dbInspector.normalizeName(targetTableName), StringPool.PERIOD,
-			dbInspector.normalizeName(targetColumnName));
+			targetValue, " was not found in column",
+			(targetColumnNames.length > 1) ? "s " : " ",
+			String.join(", ", targetColumnNames), " from table ",
+			dbInspector.normalizeName(targetTableName));
 	}
 
 	protected abstract UnsafeRunnable<Exception> getInsertDataUnsafeRunnable();

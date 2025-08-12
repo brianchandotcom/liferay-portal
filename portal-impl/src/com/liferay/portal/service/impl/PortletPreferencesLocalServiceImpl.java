@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
@@ -943,13 +944,27 @@ public class PortletPreferencesLocalServiceImpl
 
 			serviceContext.setAttribute("revisionInProgress", hasWorkflowTask);
 
+			Layout layout = _layoutLocalService.getLayout(
+				layoutRevision.getPlid());
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			String typeSettings = null;
+
+			if (draftLayout != null) {
+				typeSettings = draftLayout.getTypeSettings();
+			}
+			else {
+				typeSettings = layoutRevision.getTypeSettings();
+			}
+
 			layoutRevision = _layoutRevisionLocalService.updateLayoutRevision(
 				serviceContext.getUserId(),
 				layoutRevision.getLayoutRevisionId(),
 				layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
 				layoutRevision.getTitle(), layoutRevision.getDescription(),
 				layoutRevision.getKeywords(), layoutRevision.getRobots(),
-				layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
+				typeSettings, layoutRevision.getIconImage(),
 				layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
 				layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 				serviceContext);
@@ -1153,6 +1168,9 @@ public class PortletPreferencesLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesLocalServiceImpl.class);
+
+	@BeanReference(type = LayoutLocalService.class)
+	private LayoutLocalService _layoutLocalService;
 
 	@BeanReference(type = LayoutPersistence.class)
 	private LayoutPersistence _layoutPersistence;

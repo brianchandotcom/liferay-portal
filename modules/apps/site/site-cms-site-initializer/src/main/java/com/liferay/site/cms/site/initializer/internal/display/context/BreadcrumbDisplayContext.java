@@ -13,18 +13,15 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
-
-import jakarta.portlet.ActionRequest;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -67,25 +64,12 @@ public class BreadcrumbDisplayContext {
 				),
 				JSONUtil.put(
 					"href",
-					PortletURLBuilder.create(
-						PortalUtil.getControlPanelPortletURL(
-							_httpServletRequest,
-							"com_liferay_portlet_configuration_web_portlet_" +
-								"PortletConfigurationPortlet",
-							ActionRequest.RENDER_PHASE)
-					).setMVCPath(
-						"/edit_permissions.jsp"
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).setParameter(
-						"modelResource", DepotEntry.class.getName()
-					).setParameter(
-						"modelResourceDescription", group.getDescriptiveName()
-					).setParameter(
-						"resourcePrimKey", group.getClassPK()
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString()
+					PermissionsURLTag.doTag(
+						StringPool.BLANK, DepotEntry.class.getName(),
+						group.getName(), null,
+						String.valueOf(group.getClassPK()),
+						LiferayWindowState.POP_UP.toString(), null,
+						_httpServletRequest)
 				).put(
 					"label",
 					LanguageUtil.get(_httpServletRequest, "permissions")

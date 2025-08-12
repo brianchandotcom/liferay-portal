@@ -7463,13 +7463,6 @@ public class DefaultObjectEntryManagerImplTest
 		while (iterator.hasNext()) {
 			Node node = iterator.next();
 
-			serviceBuilderObjectEntry = _objectEntryLocalService.getObjectEntry(
-				node.getPrimaryKey());
-
-			ObjectDefinition objectDefinition =
-				objectDefinitionLocalService.fetchObjectDefinition(
-					serviceBuilderObjectEntry.getObjectDefinitionId());
-
 			Edge edge = node.getEdge();
 
 			ObjectRelationship objectRelationship =
@@ -7479,12 +7472,12 @@ public class DefaultObjectEntryManagerImplTest
 			Node parentNode = node.getParentNode();
 
 			_defaultObjectEntryManager.updateRelatedObjectEntry(
-				_simpleDTOConverterContext, objectDefinition,
-				node.getPrimaryKey(),
+				_simpleDTOConverterContext,
 				_defaultObjectEntryManager.getRelatedObjectEntry(
 					_simpleDTOConverterContext, node.getPrimaryKey(),
 					objectRelationship, parentNode.getPrimaryKey()),
-				objectRelationship, parentNode.getPrimaryKey());
+				node.getPrimaryKey(), objectRelationship,
+				parentNode.getPrimaryKey());
 		}
 
 		// Users cannot delete object entries from accounts that they do not
@@ -7687,8 +7680,51 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testUpdateRelatedObjectEntry() throws Exception {
-		_testUpdateRelatedObjectEntry(false);
-		_testUpdateRelatedObjectEntry(true);
+
+		// Partial update
+
+		_testUpdateRelatedObjectEntry(
+			_objectEntryA, _objectRelationshipA_AA,
+			_objectRelationshipA_AAObjectField2,
+			_objectRelationshipB_AAObjectField2,
+			(objectEntry, serviceBuilderObjectEntry) ->
+				_defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
+					_createDTOConverterContext(), objectEntry,
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					_objectRelationshipA_AA,
+					_objectEntryA.getId()));
+		_testUpdateRelatedObjectEntry(
+			_objectEntryA, _objectRelationshipA_AA,
+			_objectRelationshipA_AAObjectField2,
+			_objectRelationshipB_AAObjectField2,
+			(objectEntry, serviceBuilderObjectEntry) ->
+				_defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
+					_createDTOConverterContext(),
+					serviceBuilderObjectEntry.getExternalReferenceCode(),
+					objectEntry, _objectRelationshipA_AA,
+					_objectEntryA.getExternalReferenceCode(), null));
+
+		// Update
+
+		_testUpdateRelatedObjectEntry(
+			_objectEntryA, _objectRelationshipA_AA,
+			_objectRelationshipA_AAObjectField2,
+			_objectRelationshipB_AAObjectField2,
+			(objectEntry, serviceBuilderObjectEntry) ->
+				_defaultObjectEntryManager.updateRelatedObjectEntry(
+					_createDTOConverterContext(), objectEntry,
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					_objectRelationshipA_AA, _objectEntryA.getId()));
+		_testUpdateRelatedObjectEntry(
+			_objectEntryA, _objectRelationshipA_AA,
+			_objectRelationshipA_AAObjectField2,
+			_objectRelationshipB_AAObjectField2,
+			(objectEntry, serviceBuilderObjectEntry) ->
+				_defaultObjectEntryManager.updateRelatedObjectEntry(
+					_createDTOConverterContext(),
+					serviceBuilderObjectEntry.getExternalReferenceCode(),
+					objectEntry, _objectRelationshipA_AA,
+					_objectEntryA.getExternalReferenceCode(), null));
 	}
 
 	@Rule
@@ -9598,13 +9634,6 @@ public class DefaultObjectEntryManagerImplTest
 		while (iterator.hasNext()) {
 			Node node = iterator.next();
 
-			serviceBuilderObjectEntry = _objectEntryLocalService.getObjectEntry(
-				node.getPrimaryKey());
-
-			ObjectDefinition objectDefinition =
-				objectDefinitionLocalService.fetchObjectDefinition(
-					serviceBuilderObjectEntry.getObjectDefinitionId());
-
 			Edge edge = node.getEdge();
 
 			ObjectRelationship objectRelationship =
@@ -9620,16 +9649,22 @@ public class DefaultObjectEntryManagerImplTest
 					" permission for ", _rootObjectDefinition.getClassName(),
 					StringPool.SPACE, rootNode.getPrimaryKey()),
 				() -> _defaultObjectEntryManager.updateRelatedObjectEntry(
-					_simpleDTOConverterContext, objectDefinition,
-					node.getPrimaryKey(),
+					_simpleDTOConverterContext,
 					_defaultObjectEntryManager.getRelatedObjectEntry(
 						_simpleDTOConverterContext, node.getPrimaryKey(),
 						objectRelationship, parentNode.getPrimaryKey()),
-					objectRelationship, parentNode.getPrimaryKey()));
+					node.getPrimaryKey(), objectRelationship,
+					parentNode.getPrimaryKey()));
 		}
 	}
 
-	private void _testUpdateRelatedObjectEntry(boolean partialUpdate)
+	private void _testUpdateRelatedObjectEntry(
+			ObjectEntry objectEntryA, ObjectRelationship objectRelationshipA_AA,
+			ObjectField objectRelationshipA_AAObjectField2,
+			ObjectField objectRelationshipB_AAObjectField2,
+			UnsafeBiFunction
+				<ObjectEntry, com.liferay.object.model.ObjectEntry, ObjectEntry,
+				 Exception> unsafeBiFunction)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntryAA =
@@ -9640,7 +9675,7 @@ public class DefaultObjectEntryManagerImplTest
 					_objectEntryA.getId()
 				).build());
 
-		ObjectEntry objectEntryAA = new ObjectEntry() {
+		ObjectEntry objectEntry = new ObjectEntry() {
 			{
 				properties = HashMapBuilder.<String, Object>put(
 					_objectRelationshipA_AAObjectField2::getName,
@@ -9652,37 +9687,27 @@ public class DefaultObjectEntryManagerImplTest
 			}
 		};
 
-		if (partialUpdate) {
-			objectEntryAA =
-				_defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
-					_createDTOConverterContext(), _objectDefinitionAA,
-					objectEntryAA,
-					serviceBuilderObjectEntryAA.getObjectEntryId(),
-					_objectRelationshipA_AA, _objectEntryA.getId());
-		}
-		else {
-			objectEntryAA = _defaultObjectEntryManager.updateRelatedObjectEntry(
-				_createDTOConverterContext(), _objectDefinitionAA,
-				serviceBuilderObjectEntryAA.getObjectEntryId(), objectEntryAA,
-				_objectRelationshipA_AA, _objectEntryA.getId());
-		}
+		objectEntry = unsafeBiFunction.apply(
+			objectEntry, serviceBuilderObjectEntryAA);
 
 		Assert.assertEquals(
-			GetterUtil.getLong(_objectEntryA.getId()),
-			GetterUtil.getLong(
-				objectEntryAA.getPropertyValue(
-					_objectRelationshipA_AAObjectField2.getName())));
+			objectEntryA.getId(),
+			objectEntry.getPropertyValue(
+				objectRelationshipA_AAObjectField2.getName()));
 		Assert.assertEquals(
 			0L,
-			objectEntryAA.getPropertyValue(
-				_objectRelationshipB_AAObjectField2.getName()));
+			objectEntry.getPropertyValue(
+				objectRelationshipB_AAObjectField2.getName()));
 
 		serviceBuilderObjectEntryAA = _objectEntryLocalService.getObjectEntry(
-			objectEntryAA.getId());
+			objectEntry.getId());
 
 		Assert.assertEquals(
-			GetterUtil.getLong(_objectEntryA.getId()),
+			GetterUtil.getLong(objectEntryA.getId()),
 			serviceBuilderObjectEntryAA.getRootObjectEntryId());
+
+		_objectEntryLocalService.deleteObjectEntry(
+			serviceBuilderObjectEntryAA.getObjectEntryId());
 	}
 
 	private void _updateAndAssertObjectEntryWithPicklistObjectField(

@@ -163,7 +163,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				onSelect: (selectedItem) => {
 					if (selectedItem) {
 						const entityId = selectedItem.groupid;
-						const entityName = selectedItem.groupdescriptivename;
+						const entityName = A.Escape.html(selectedItem.groupdescriptivename);
 						const label = Liferay.Util.sub(
 							'<liferay-ui:message key="remove-x" />',
 							entityName

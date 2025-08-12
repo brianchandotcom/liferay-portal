@@ -11,13 +11,13 @@ import React, {useCallback, useMemo, useState} from 'react';
 
 import {Role} from '../../common/types/Role';
 
-export const SPACE_MEMBER_ROLE_ID = 20397;
-export const HIDDEN_MEMBER_ROLES = [20398, 20399]; // [Asset Library Owner, CMS Consumer]
+export const SPACE_MEMBER_ROLE_NAME = 'Asset Library Member';
+export const HIDDEN_MEMBER_ROLES = ['Asset Library Owner', 'CMS Consumer'];
 
 interface SpaceMembersPermissionSelectProps {
-	onChange: (selectedRoles: number[]) => void;
+	onChange: (selectedRoles: string[]) => void;
 	roles: Role[];
-	selectedRoles: number[];
+	selectedRoles: string[];
 }
 
 export function SpaceMembersPermissionSelect({
@@ -27,14 +27,15 @@ export function SpaceMembersPermissionSelect({
 }: SpaceMembersPermissionSelectProps) {
 	const [active, setActive] = useState(false);
 	const roles = useMemo(
-		() => rawRoles.filter((role) => !HIDDEN_MEMBER_ROLES.includes(role.id)),
+		() =>
+			rawRoles.filter((role) => !HIDDEN_MEMBER_ROLES.includes(role.name)),
 		[rawRoles]
 	);
 
 	const getRoleName = useCallback(
-		(roleId: number) => {
+		(roleName: string) => {
 			const currentLang = Liferay.ThemeDisplay.getBCP47LanguageId();
-			const roleFound = roles.find((role) => role.id === roleId);
+			const roleFound = roles.find((role) => role.name === roleName);
 
 			return roleFound?.name_i18n[currentLang] || roleFound?.name;
 		},
@@ -42,10 +43,10 @@ export function SpaceMembersPermissionSelect({
 	);
 
 	const handleCheckboxChange = useCallback(
-		(roleId: number) => {
-			const newSelectedRoles = selectedRoles.includes(roleId)
-				? selectedRoles.filter((id) => id !== roleId)
-				: [...selectedRoles, roleId];
+		(roleName: string) => {
+			const newSelectedRoles = selectedRoles.includes(roleName)
+				? selectedRoles.filter((name) => name !== roleName)
+				: [...selectedRoles, roleName];
 
 			onChange(newSelectedRoles);
 		},
@@ -55,8 +56,8 @@ export function SpaceMembersPermissionSelect({
 	const triggerText = useMemo(
 		() =>
 			roles
-				.filter((role) => selectedRoles.includes(role.id))
-				.map((role) => getRoleName(role.id))
+				.filter((role) => selectedRoles.includes(role.name))
+				.map((role) => getRoleName(role.name))
 				.join(', '),
 		[getRoleName, roles, selectedRoles]
 	);
@@ -90,10 +91,10 @@ export function SpaceMembersPermissionSelect({
 				{roles.map((role) => (
 					<ClayDropDown.Item key={role.id}>
 						<ClayCheckbox
-							checked={selectedRoles.includes(role.id)}
-							disabled={role.id === SPACE_MEMBER_ROLE_ID}
-							label={getRoleName(role.id)}
-							onChange={() => handleCheckboxChange(role.id)}
+							checked={selectedRoles.includes(role.name)}
+							disabled={role.name === SPACE_MEMBER_ROLE_NAME}
+							label={getRoleName(role.name)}
+							onChange={() => handleCheckboxChange(role.name)}
 						/>
 					</ClayDropDown.Item>
 				))}

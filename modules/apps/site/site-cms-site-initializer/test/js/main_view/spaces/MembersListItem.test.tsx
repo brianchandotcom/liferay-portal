@@ -10,7 +10,7 @@ import React from 'react';
 
 import {MembersListItem} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/MemberListItem';
 import {
-	SPACE_MEMBER_ROLE_ID,
+	SPACE_MEMBER_ROLE_NAME,
 	SpaceMembersPermissionSelect,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersPermissionSelect';
 
@@ -32,8 +32,8 @@ describe('MemberListItem', () => {
 	const mockRoles = [
 		{
 			externalReferenceCode: 'space-member-external-reference-code',
-			id: SPACE_MEMBER_ROLE_ID,
-			name: 'Space Member',
+			id: 100,
+			name: SPACE_MEMBER_ROLE_NAME,
 			name_i18n: {'en-US': 'Space Member US'},
 		},
 		{
@@ -239,8 +239,10 @@ describe('MemberListItem', () => {
 		const onUpdateItemRoles = jest.fn();
 
 		(SpaceMembersPermissionSelect as jest.Mock).mockImplementation(
-			({onChange}: {onChange: (roles: number[]) => void}) => (
-				<button onClick={() => onChange([SPACE_MEMBER_ROLE_ID, 101])}>
+			({onChange}: {onChange: (roles: string[]) => void}) => (
+				<button
+					onClick={() => onChange([SPACE_MEMBER_ROLE_NAME, 'Role 1'])}
+				>
 					Change Role
 				</button>
 			)
@@ -260,8 +262,8 @@ describe('MemberListItem', () => {
 		);
 
 		expect(onUpdateItemRoles).toHaveBeenCalledWith(testUserAccount, [
-			SPACE_MEMBER_ROLE_ID,
-			101,
+			SPACE_MEMBER_ROLE_NAME,
+			'Role 1',
 		]);
 	});
 });

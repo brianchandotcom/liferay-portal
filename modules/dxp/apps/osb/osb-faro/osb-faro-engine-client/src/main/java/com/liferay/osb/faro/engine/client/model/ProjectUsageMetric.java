@@ -25,10 +25,12 @@ public class ProjectUsageMetric {
 		return _embeddedResources;
 	}
 
+	@JsonProperty("knownIndividuals")
 	public long getKnownIndividualsCount() {
 		return _knownIndividualsCount;
 	}
 
+	@JsonProperty("pageViews")
 	public long getPageViewsCount() {
 		return _pageViewsCount;
 	}

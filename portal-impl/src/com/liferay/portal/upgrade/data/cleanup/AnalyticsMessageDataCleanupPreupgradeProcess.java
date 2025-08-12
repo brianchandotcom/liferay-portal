@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 
-import java.sql.PreparedStatement;
-
 /**
  * @author Luis Ortiz
  */
@@ -22,22 +20,18 @@ public class AnalyticsMessageDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
 
-		if (!dbInspector.hasTable("AnalyticsMessage")) {
+		if (!dbInspector.hasTable("AnalyticsMessage") ||
+			!hasRows("AnalyticsMessage")) {
+
 			return;
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"delete from AnalyticsMessage")) {
+		runSQL("truncate table AnalyticsMessage");
 
-			int rowCount = preparedStatement.executeUpdate();
-
-			if (rowCount > 0) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Deleted content of table " +
-							dbInspector.normalizeName("AnalyticsMessage"));
-				}
-			}
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Deleted content of table " +
+					dbInspector.normalizeName("AnalyticsMessage"));
 		}
 	}
 

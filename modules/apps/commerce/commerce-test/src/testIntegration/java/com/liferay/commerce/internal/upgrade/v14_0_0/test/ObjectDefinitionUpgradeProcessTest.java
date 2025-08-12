@@ -28,8 +28,11 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -53,6 +56,10 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.Collections;
 import java.util.List;
@@ -219,13 +226,20 @@ public class ObjectDefinitionUpgradeProcessTest {
 				).build()),
 			ObjectDefinitionConstants.SCOPE_COMPANY, _user.getUserId());
 
-		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, _objectDefinition1,
+			_objectDefinition2,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			StringUtil.randomId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectRelationshipLocalService, _objectDefinition1,
 			_objectDefinition2,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
 
 		_objectField = _objectFieldLocalService.getObjectField(
-			_objectRelationship.getObjectFieldId2());
+			_objectRelationship2.getObjectFieldId2());
 	}
 
 	@Test
@@ -276,6 +290,17 @@ public class ObjectDefinitionUpgradeProcessTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
+		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
+			_user.getUserId(), _objectRelationship1.getObjectRelationshipId(),
+			(long)modelAttributes.get("publishedCPDefinitionId"),
+			objectEntry.getObjectEntryId(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertManyToManyObjectRelationshipFieldValue(
+			"CPDefinitionId",
+			(long)modelAttributes.get("publishedCPDefinitionId"),
+			_objectRelationship1.getDBTableName());
+
 		_assertOneToManyObjectRelationshipFieldValue(
 			(long)modelAttributes.get("publishedCPDefinitionId"),
 			_objectDefinition2, _objectField.getName(),
@@ -302,15 +327,43 @@ public class ObjectDefinitionUpgradeProcessTest {
 		Assert.assertEquals(
 			"CProductId", _objectDefinition1.getPKObjectFieldName());
 
+		_assertManyToManyObjectRelationshipFieldValue(
+			"CProductId", (long)modelAttributes.get("CProductId"),
+			_objectRelationship1.getDBTableName());
+
 		_objectDefinition2 = _objectDefinitionLocalService.getObjectDefinition(
 			_objectDefinition2.getObjectDefinitionId());
 
 		_objectField = _objectFieldLocalService.getObjectField(
-			_objectRelationship.getObjectFieldId2());
+			_objectRelationship2.getObjectFieldId2());
 
 		_assertOneToManyObjectRelationshipFieldValue(
 			(long)modelAttributes.get("CProductId"), _objectDefinition2,
 			_objectField.getName(), objectEntry.getObjectEntryId());
+	}
+
+	private void _assertManyToManyObjectRelationshipFieldValue(
+			String columnName, long primaryKey, String tableName)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			Assert.assertTrue(dbInspector.hasColumn(tableName, columnName));
+
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(*) from ", tableName, " where ", columnName,
+					" = ?"));
+
+			preparedStatement.setLong(1, primaryKey);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			Assert.assertNotNull(resultSet.next());
+
+			Assert.assertEquals(1L, resultSet.getInt(1));
+		}
 	}
 
 	private void _assertOneToManyObjectRelationshipFieldValue(
@@ -378,7 +431,10 @@ public class ObjectDefinitionUpgradeProcessTest {
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@DeleteAfterTestRun
-	private ObjectRelationship _objectRelationship;
+	private ObjectRelationship _objectRelationship1;
+
+	@DeleteAfterTestRun
+	private ObjectRelationship _objectRelationship2;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

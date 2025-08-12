@@ -362,8 +362,8 @@ export class ChangeTrackingPage {
 		await this.page.getByLabel('show-available-locales').click();
 
 		await this.page
-			.getByRole('option', {
-				name: `${language} language: Translated`,
+			.getByRole('menuitem', {
+				name: `${language} Translated`,
 			})
 			.click();
 	}

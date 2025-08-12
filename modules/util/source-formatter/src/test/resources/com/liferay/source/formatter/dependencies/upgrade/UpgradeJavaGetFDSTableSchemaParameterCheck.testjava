@@ -9,7 +9,30 @@ public class UpgradeJavaGetFDSTableSchemaParameterCheck extends BaseTableFDSView
 
 	@Override
 	public FDSTableSchema getFDSTableSchema() {
-		return null;
+		FDSTableSchemaBuilder fDSTableSchemaBuilder =
+			_fDSTableSchemaBuilderFactory.create();
+
+		FDSTableSchemaField invoiceIdField = fDSTableSchemaBuilder.add(
+			"invoiceId", "invoice-id-field");
+
+		invoiceIdField.setContentRenderer("link");
+		invoiceIdField.setSortable(true);
+
+		fDSTableSchemaBuilder.add(
+			"createdBy", "invoice-created-by");
+		fDSTableSchemaBuilder.add(
+			"documentDate", "invoice-document-date");
+		fDSTableSchemaBuilder.add(
+			"dueDate", "invoice-due-date");
+		fDSTableSchemaBuilder.add(
+			"invoiceTotal", "invoice-total");
+
+		FDSTableSchemaField statusField = fDSTableSchemaBuilder.add(
+			"status", "invoice-status");
+
+		statusField.setContentRenderer("label");
+
+		return fDSTableSchemaBuilder.build();
 	}
 
 }

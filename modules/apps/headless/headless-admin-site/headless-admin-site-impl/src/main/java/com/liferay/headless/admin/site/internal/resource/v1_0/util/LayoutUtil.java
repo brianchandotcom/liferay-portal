@@ -611,7 +611,7 @@ public class LayoutUtil {
 
 		return LayoutServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			typeSettingsUnicodeProperties.toString());
+			unicodeProperties.toString());
 	}
 
 	private static long _getFaviconFileEntryId(

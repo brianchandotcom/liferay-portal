@@ -189,9 +189,9 @@ public class OrphanReferencesDataCleanupUtilTest {
 			"Table ", _dbInspector.normalizeName(sourceTableName), ", ", count,
 			(count == 1) ? " row " : " rows ", "deleted because ",
 			_dbInspector.normalizeName(sourceColumnName), StringPool.SPACE,
-			targetValue, " was not found in ",
-			_dbInspector.normalizeName(targetTableName), StringPool.PERIOD,
-			_dbInspector.normalizeName(targetColumnName));
+			targetValue, " was not found in column ",
+			_dbInspector.normalizeName(targetColumnName), " from table ",
+			_dbInspector.normalizeName(targetTableName));
 	}
 
 	private void _testCleanUpTables(
@@ -213,7 +213,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 				_connection, sourceAdditionalWhereClause,
 				_dbInspector.normalizeName(sourceColumnName),
 				_dbInspector.normalizeName(sourceTableName),
-				_dbInspector.normalizeName(targetColumnName),
+				new String[] {_dbInspector.normalizeName(targetColumnName)},
 				_dbInspector.normalizeName(targetTableName));
 
 			assertUnsafeConsumer.accept(logCapture);

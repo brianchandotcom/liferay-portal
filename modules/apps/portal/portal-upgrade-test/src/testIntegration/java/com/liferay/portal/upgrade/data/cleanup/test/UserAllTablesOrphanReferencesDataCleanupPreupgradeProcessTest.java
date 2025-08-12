@@ -105,18 +105,18 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 						dbInspector.normalizeName("userId"), " to value ",
 						_adminUser.getUserId(), " because ",
 						dbInspector.normalizeName("userId"), StringPool.SPACE,
-						_userId, " was not found in ",
-						dbInspector.normalizeName("User_"), StringPool.PERIOD,
-						dbInspector.normalizeName("userId"))));
+						_userId, " was not found in column ",
+						dbInspector.normalizeName("userId"), " from table ",
+						dbInspector.normalizeName("User_"))));
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
 						"Table ", dbInspector.normalizeName("Users_Roles"),
 						", 1 row deleted because ",
 						dbInspector.normalizeName("userId"), StringPool.SPACE,
-						_userId, " was not found in ",
-						dbInspector.normalizeName("User_"), StringPool.PERIOD,
-						dbInspector.normalizeName("userId"))));
+						_userId, " was not found in column ",
+						dbInspector.normalizeName("userId"), " from table ",
+						dbInspector.normalizeName("User_"))));
 			Assert.assertTrue(
 				messages.contains("No admin user found for company 0"));
 

@@ -15,6 +15,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationImplementation project(":apps:fragment:fragment-api")
 	testIntegrationImplementation project(":apps:journal:journal-api")
+	testIntegrationImplementation project(":apps:journal:journal-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-test-util")

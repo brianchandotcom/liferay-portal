@@ -757,6 +757,13 @@ public class DisplayPageTemplateFolderResourceTest
 			setParentDisplayPageTemplateFolderExternalReferenceCode(
 				parentDisplayPageTemplateFolderExternalReferenceCode);
 
+		if (Validator.isNull(
+				parentDisplayPageTemplateFolderExternalReferenceCode)) {
+
+			displayPageTemplateFolder.setParentDisplayPageTemplateFolder(
+				() -> null);
+		}
+
 		DisplayPageTemplateFolder putDisplayPageTemplateFolder =
 			_putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 				testGroup.getExternalReferenceCode(),

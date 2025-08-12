@@ -16,7 +16,7 @@ function CharacterThresholdInput({index, onBlur, onChange, touched, value}) {
 				'has-error': typeof value !== undefined && value < 0 && touched,
 			})}
 		>
-			<label htmlFor={`character-threshold-${index}`}>
+			<label htmlFor={`characterThreshold${index}`}>
 				{Liferay.Language.get('character-threshold')}
 
 				<ClayTooltipProvider>
@@ -35,7 +35,7 @@ function CharacterThresholdInput({index, onBlur, onChange, touched, value}) {
 
 			<ClayInput
 				aria-label={Liferay.Language.get('character-threshold')}
-				id={`character-threshold-${index}`}
+				id={`characterThreshold${index}`}
 				min="0"
 				onBlur={onBlur}
 				onChange={onChange}

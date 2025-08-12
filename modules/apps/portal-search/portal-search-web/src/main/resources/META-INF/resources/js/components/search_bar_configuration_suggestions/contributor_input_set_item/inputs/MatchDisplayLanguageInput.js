@@ -11,7 +11,7 @@ import React from 'react';
 function MatchDisplayLanguageInput({index, onChange, value}) {
 	return (
 		<ClayInput.GroupItem>
-			<label htmlFor={`match-display-language-${index}`}>
+			<label htmlFor={`matchDisplayLanguage${index}`}>
 				{Liferay.Language.get('match-display-language')}
 
 				<ClayTooltipProvider>
@@ -30,7 +30,7 @@ function MatchDisplayLanguageInput({index, onChange, value}) {
 
 			<ClaySelect
 				aria-label={Liferay.Language.get('match-display-language')}
-				id={`match-display-language-${index}`}
+				id={`matchDisplayLanguage${index}`}
 				onChange={onChange}
 				value={value}
 			>

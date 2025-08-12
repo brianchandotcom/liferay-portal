@@ -120,7 +120,7 @@ function SXPBlueprintSelectorInput({
 				})}
 			>
 				<ClayForm.Group className="c-mb-0 w-100">
-					<label htmlFor={`sxpBlueprint-${index}`}>
+					<label htmlFor={`sxpBlueprint${index}`}>
 						<span>
 							{Liferay.Language.get('blueprint')}
 
@@ -164,7 +164,7 @@ function SXPBlueprintSelectorInput({
 						<ClayInput.GroupItem append shrink>
 							<ClayButton
 								displayType="secondary"
-								id={`sxpBlueprint-${index}`}
+								id={`sxpBlueprint${index}`}
 								onClick={_handleClickSelect}
 							>
 								{Liferay.Language.get('select')}

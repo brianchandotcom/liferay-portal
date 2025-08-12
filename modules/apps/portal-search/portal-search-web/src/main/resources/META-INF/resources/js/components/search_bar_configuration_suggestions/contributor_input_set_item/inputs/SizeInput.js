@@ -17,7 +17,7 @@ function SizeInput({index, onBlur, onChange, touched, value}) {
 				'has-error': (!value || value < 0) && touched,
 			})}
 		>
-			<label htmlFor={`size-${index}`}>
+			<label htmlFor={`size${index}`}>
 				<span>
 					{Liferay.Language.get('size')}
 
@@ -40,7 +40,7 @@ function SizeInput({index, onBlur, onChange, touched, value}) {
 
 			<ClayInput
 				aria-label={Liferay.Language.get('size')}
-				id={`size-${index}`}
+				id={`size${index}`}
 				min="0"
 				onBlur={onBlur}
 				onChange={onChange}

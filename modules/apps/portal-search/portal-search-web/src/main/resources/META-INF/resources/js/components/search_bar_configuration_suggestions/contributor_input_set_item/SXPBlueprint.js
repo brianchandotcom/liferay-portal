@@ -105,7 +105,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 				/>
 
 				<ClayInput.GroupItem>
-					<label htmlFor={`include-asset-url-${index}`}>
+					<label htmlFor={`includeAssetURL${index}`}>
 						{Liferay.Language.get('include-asset-url')}
 
 						<ClayTooltipProvider>
@@ -124,7 +124,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 
 					<ClaySelect
 						aria-label={Liferay.Language.get('include-asset-url')}
-						id={`include-asset-url-${index}`}
+						id={`includeAssetURL${index}`}
 						onChange={_handleChangeAttribute('includeAssetURL')}
 						value={value.attributes?.includeAssetURL}
 					>
@@ -141,7 +141,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem>
-					<label htmlFor={`include-asset-summary-${index}`}>
+					<label htmlFor={`includeAssetSummary${index}`}>
 						{Liferay.Language.get('include-asset-summary')}
 
 						<ClayTooltipProvider>
@@ -162,7 +162,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 						aria-label={Liferay.Language.get(
 							'include-asset-summary'
 						)}
-						id={`include-asset-summary-${index}`}
+						id={`includeAssetSummary${index}`}
 						onChange={_handleChangeAttribute(
 							'includeAssetSearchSummary'
 						)}

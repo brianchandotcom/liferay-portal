@@ -37,7 +37,7 @@ export default function TimeRangeInput({index, onChange, value}) {
 
 	return (
 		<ClayInput.GroupItem>
-			<label htmlFor={`time-range-${index}`}>
+			<label htmlFor={`timeRange${index}`}>
 				{Liferay.Language.get('time-range')}
 
 				<ClayTooltipProvider>
@@ -57,7 +57,7 @@ export default function TimeRangeInput({index, onChange, value}) {
 					<Picker
 						active={activeDropdown}
 						aria-label={Liferay.Language.get('time-range')}
-						id={`time-range-${index}`}
+						id={`timeRange${index}`}
 						items={TIME_RANGE_TYPES}
 						onActiveChange={setActiveDropdown}
 						onSelectionChange={onChange}

@@ -57,7 +57,7 @@ function FieldsInput({
 				'has-error': isRequired && !items.length && touched,
 			})}
 		>
-			<label htmlFor={`fields-${index}`}>
+			<label htmlFor={`fields${index}`}>
 				{Liferay.Language.get('fields')}
 
 				<ClayTooltipProvider>
@@ -74,7 +74,7 @@ function FieldsInput({
 
 			<ClayMultiSelect
 				aria-label={Liferay.Language.get('fields')}
-				id={`fields-${index}`}
+				id={`fields${index}`}
 				items={items}
 				onBlur={_handleBlur}
 				onChange={setValue}

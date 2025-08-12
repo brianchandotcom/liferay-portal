@@ -234,7 +234,7 @@ export default function ContentTypesInput({index, onBlur, onChange, value}) {
 			)}
 
 			<ClayInput.GroupItem>
-				<label htmlFor={`content-types-${index}`}>
+				<label htmlFor={`contentTypes${index}`}>
 					{Liferay.Language.get('content-types')}
 
 					<ClayTooltipProvider>
@@ -253,7 +253,7 @@ export default function ContentTypesInput({index, onBlur, onChange, value}) {
 					<ClayButton
 						aria-label={Liferay.Language.get('content-types')}
 						displayType="secondary"
-						id={`content-types-${index}`}
+						id={`contentTypes${index}`}
 						onClick={_handleOpen}
 						size="sm"
 					>

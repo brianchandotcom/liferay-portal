@@ -148,7 +148,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 
 			<div className="c-mb-3 form-group-autofit">
 				<ClayInput.GroupItem>
-					<label htmlFor={`activity-${index}`}>
+					<label htmlFor={`activity${index}`}>
 						<span>
 							{Liferay.Language.get('activity')}
 
@@ -164,7 +164,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 						)}
 						className="form-control form-control-select"
 						displayType="unstyled"
-						id={`activity-${index}`}
+						id={`activity${index}`}
 						onClick={_handleActivityDropdownClick}
 						ref={alignElementRef}
 					>

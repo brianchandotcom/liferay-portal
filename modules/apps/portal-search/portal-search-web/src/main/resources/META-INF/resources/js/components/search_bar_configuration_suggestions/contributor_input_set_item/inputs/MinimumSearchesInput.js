@@ -17,7 +17,7 @@ function MinimumSearchesInput({index, onBlur, onChange, touched, value}) {
 				'has-error': (!value || value < 0) && touched,
 			})}
 		>
-			<label htmlFor={`minimum-searches-${index}`}>
+			<label htmlFor={`minimumSearches${index}`}>
 				<span>
 					{Liferay.Language.get('minimum-searches')}
 
@@ -40,7 +40,7 @@ function MinimumSearchesInput({index, onBlur, onChange, touched, value}) {
 
 			<ClayInput
 				aria-label={Liferay.Language.get('minimum-searches')}
-				id={`minimum-searches-${index}`}
+				id={`minimumSearches${index}`}
 				min="0"
 				onBlur={onBlur}
 				onChange={onChange}

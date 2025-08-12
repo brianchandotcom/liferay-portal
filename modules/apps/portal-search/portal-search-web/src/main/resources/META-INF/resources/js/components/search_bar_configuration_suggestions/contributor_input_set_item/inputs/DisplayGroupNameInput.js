@@ -16,7 +16,7 @@ function DisplayGroupNameInput({index, onBlur, onChange, touched, value}) {
 				'has-error': !value && touched,
 			})}
 		>
-			<label htmlFor={`display-group-name-${index}`}>
+			<label htmlFor={`displayGroupName${index}`}>
 				<span>
 					{Liferay.Language.get('display-group-name')}
 
@@ -39,7 +39,7 @@ function DisplayGroupNameInput({index, onBlur, onChange, touched, value}) {
 
 			<ClayInput
 				aria-label={Liferay.Language.get('display-group-name')}
-				id={`display-group-name-${index}`}
+				id={`displayGroupName${index}`}
 				onBlur={onBlur}
 				onChange={onChange}
 				required

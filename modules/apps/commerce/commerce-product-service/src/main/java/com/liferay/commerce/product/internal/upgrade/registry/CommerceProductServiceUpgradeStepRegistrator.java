@@ -42,6 +42,7 @@ import com.liferay.commerce.product.internal.upgrade.v5_26_0.util.CPConfiguratio
 import com.liferay.commerce.product.internal.upgrade.v5_4_0.CommercePermissionUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v5_5_0.util.CPInstanceUnitOfMeasureTable;
 import com.liferay.commerce.product.internal.upgrade.v6_1_0.CPConfigurationEntryUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v6_2_0.CPDefinitionLocalizationUpgradeProcess;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -676,6 +677,9 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 		registry.register(
 			"6.0.0", "6.1.0", new CPConfigurationEntryUpgradeProcess());
+
+		registry.register(
+			"6.1.0", "6.2.0", new CPDefinitionLocalizationUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

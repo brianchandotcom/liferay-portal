@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -70,11 +71,11 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			return;
 		}
 
-		Map<String, Map<String, String>> schemaNameFilterableFieldNames =
+		Map<String, Map<String, Object>> schemaNameFilterableFieldNames =
 			new HashMap<>();
 
 		for (Schema schema : schemas.values()) {
-			Map<String, String> filterableFieldNames = _getFilterableFieldNames(
+			Map<String, Object> filterableFieldNames = _getFilterableFieldNames(
 				openAPIContext, schema);
 
 			schema.addExtension("x-filterable", filterableFieldNames);
@@ -245,7 +246,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		return null;
 	}
 
-	private Map<String, String> _getFilterableFieldNames(
+	private Map<String, Object> _getFilterableFieldNames(
 			OpenAPIContext openAPIContext, Schema schema)
 		throws Exception {
 
@@ -256,7 +257,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			return Collections.emptyMap();
 		}
 
-		Map<String, String> filterableFieldMapping = new HashMap<>();
+		Map<String, Object> filterableFieldMapping = new HashMap<>();
 
 		Set<EntityField> visitedEntityFields = new HashSet<>();
 
@@ -280,12 +281,15 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 				EntityField internalEntityField =
 					collectionEntityField.getEntityField();
 
-				String type = String.valueOf(internalEntityField.getType());
-
 				filterableFieldMapping.put(
 					fieldName,
-					StringBundler.concat(
-						"[", StringUtil.toLowerCase(type), "]"));
+					HashMapBuilder.put(
+						"items",
+						StringUtil.toLowerCase(
+							String.valueOf(internalEntityField.getType()))
+					).put(
+						"type", "array"
+					).build());
 
 				continue;
 			}
@@ -322,7 +326,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 	}
 
 	private void _setXFilterable(
-		Map<String, Map<String, String>> filterableFieldNames,
+		Map<String, Map<String, Object>> filterableFieldNames,
 		Operation operation) {
 
 		if (operation == null) {

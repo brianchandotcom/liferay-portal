@@ -5,19 +5,35 @@
 
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
 import Nav from '@clayui/nav';
 import ClaySticker from '@clayui/sticker';
+import {openConfirmModal, openModal} from 'frontend-js-components-web';
+import {navigate} from 'frontend-js-web';
 import React, {ComponentProps} from 'react';
 
+import ApiHelper from '../services/ApiHelper';
+import {
+	displayErrorToast,
+	displayRequestSuccessToast,
+} from '../utils/toastUtil';
 import SpaceSticker from './SpaceSticker';
+
+interface ActionDropdownItemProps {
+	confirmationMessage?: string;
+	href?: string;
+	redirect?: string;
+	size?: 'full-screen' | 'lg' | 'md' | 'sm';
+	target?: 'asyncDelete' | 'link' | 'modal';
+}
 
 interface Props
 	extends Pick<
 		React.ComponentProps<typeof ClaySticker>,
 		'displayType' | 'size'
 	> {
-	actionItems?: ComponentProps<typeof ClayDropDownWithItems>['items'];
+	actionItems?: ComponentProps<typeof ClayDropDownWithItems>['items'] &
+		ActionDropdownItemProps;
 	breadcrumbItems: BreadcrumbItem[];
 	hideSpace?: boolean;
 }
@@ -27,6 +43,69 @@ export interface BreadcrumbItem {
 	href?: string;
 	label: string;
 	onClick?: () => void;
+}
+
+function ActionDropdownItem({
+	confirmationMessage,
+	href = '',
+	label,
+	redirect,
+	size = 'full-screen',
+	target = 'link',
+	...props
+}: {label: string} & ActionDropdownItemProps) {
+	const handleTargetAction = async (event: any) => {
+		if (target === 'modal') {
+			event.preventDefault();
+
+			openModal({
+				size,
+				title: label,
+				url: href,
+			});
+		}
+		else if (target === 'asyncDelete') {
+			event.preventDefault();
+
+			const {error} = await ApiHelper.delete(href);
+
+			if (!error) {
+				displayRequestSuccessToast();
+
+				if (redirect) {
+					navigate(redirect);
+				}
+			}
+			else {
+				displayErrorToast(error);
+			}
+		}
+		else {
+			navigate(href);
+		}
+	};
+
+	const handleClick = (event: any) => {
+		if (confirmationMessage) {
+			openConfirmModal({
+				message: confirmationMessage,
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						handleTargetAction(event);
+					}
+				},
+			});
+		}
+		else {
+			handleTargetAction(event);
+		}
+	};
+
+	return (
+		<ClayDropDown.Item onClick={handleClick} {...props}>
+			{label}
+		</ClayDropDown.Item>
+	);
 }
 
 export default function Breadcrumb({
@@ -58,8 +137,13 @@ export default function Breadcrumb({
 
 			{actionItems && (
 				<div className="autofit-col">
-					<ClayDropDownWithItems
-						items={actionItems}
+					<ClayDropDown
+						hasLeftSymbols={actionItems.some(
+							({symbolLeft}) => !!symbolLeft
+						)}
+						hasRightSymbols={actionItems.some(
+							({symbolRight}) => !!symbolRight
+						)}
 						trigger={
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get(
@@ -70,7 +154,11 @@ export default function Breadcrumb({
 								symbol="ellipsis-v"
 							/>
 						}
-					/>
+					>
+						<ClayDropDown.ItemList items={actionItems}>
+							{(item: any) => <ActionDropdownItem {...item} />}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
 				</div>
 			)}
 		</Nav>

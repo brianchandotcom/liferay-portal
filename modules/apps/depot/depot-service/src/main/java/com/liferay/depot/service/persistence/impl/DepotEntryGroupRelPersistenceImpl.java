@@ -3811,7 +3811,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 * @return the matching depot entry group rels
 	 */
 	@Override
-	public List<DepotEntryGroupRel> findByTGI_T(long toGroupId, long type) {
+	public List<DepotEntryGroupRel> findByTGI_T(long toGroupId, int type) {
 		return findByTGI_T(
 			toGroupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -3831,7 +3831,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type, int start, int end) {
+		long toGroupId, int type, int start, int end) {
 
 		return findByTGI_T(toGroupId, type, start, end, null);
 	}
@@ -3852,7 +3852,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type, int start, int end,
+		long toGroupId, int type, int start, int end,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
 		return findByTGI_T(
@@ -3876,7 +3876,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type, int start, int end,
+		long toGroupId, int type, int start, int end,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
@@ -3993,7 +3993,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public DepotEntryGroupRel findByTGI_T_First(
-			long toGroupId, long type,
+			long toGroupId, int type,
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws NoSuchEntryGroupRelException {
 
@@ -4029,7 +4029,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public DepotEntryGroupRel fetchByTGI_T_First(
-		long toGroupId, long type,
+		long toGroupId, int type,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
 		List<DepotEntryGroupRel> list = findByTGI_T(
@@ -4053,7 +4053,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public DepotEntryGroupRel findByTGI_T_Last(
-			long toGroupId, long type,
+			long toGroupId, int type,
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws NoSuchEntryGroupRelException {
 
@@ -4089,7 +4089,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public DepotEntryGroupRel fetchByTGI_T_Last(
-		long toGroupId, long type,
+		long toGroupId, int type,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
 		int count = countByTGI_T(toGroupId, type);
@@ -4120,7 +4120,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public DepotEntryGroupRel[] findByTGI_T_PrevAndNext(
-			long depotEntryGroupRelId, long toGroupId, long type,
+			long depotEntryGroupRelId, long toGroupId, int type,
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws NoSuchEntryGroupRelException {
 
@@ -4156,7 +4156,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 	protected DepotEntryGroupRel getByTGI_T_PrevAndNext(
 		Session session, DepotEntryGroupRel depotEntryGroupRel, long toGroupId,
-		long type, OrderByComparator<DepotEntryGroupRel> orderByComparator,
+		int type, OrderByComparator<DepotEntryGroupRel> orderByComparator,
 		boolean previous) {
 
 		StringBundler sb = null;
@@ -4275,7 +4275,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 * @param type the type
 	 */
 	@Override
-	public void removeByTGI_T(long toGroupId, long type) {
+	public void removeByTGI_T(long toGroupId, int type) {
 		for (DepotEntryGroupRel depotEntryGroupRel :
 				findByTGI_T(
 					toGroupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -4293,7 +4293,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	 * @return the number of matching depot entry group rels
 	 */
 	@Override
-	public int countByTGI_T(long toGroupId, long type) {
+	public int countByTGI_T(long toGroupId, int type) {
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DepotEntryGroupRel.class)) {
@@ -5369,7 +5369,7 @@ public class DepotEntryGroupRelPersistenceImpl
 		_finderPathWithPaginationFindByTGI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTGI_T",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			},
@@ -5377,12 +5377,12 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByTGI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTGI_T",
-			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"toGroupId", "type_"}, true);
 
 		_finderPathCountByTGI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTGI_T",
-			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"toGroupId", "type_"}, false);
 
 		DepotEntryGroupRelUtil.setPersistence(this);

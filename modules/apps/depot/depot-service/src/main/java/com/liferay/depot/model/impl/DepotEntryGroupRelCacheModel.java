@@ -195,7 +195,7 @@ public class DepotEntryGroupRelCacheModel
 
 		toGroupId = objectInput.readLong();
 
-		type = objectInput.readLong();
+		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -238,7 +238,7 @@ public class DepotEntryGroupRelCacheModel
 
 		objectOutput.writeLong(toGroupId);
 
-		objectOutput.writeLong(type);
+		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -256,7 +256,7 @@ public class DepotEntryGroupRelCacheModel
 	public long depotEntryId;
 	public boolean searchable;
 	public long toGroupId;
-	public long type;
+	public int type;
 	public long lastPublishDate;
 
 }

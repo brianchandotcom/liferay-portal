@@ -1039,7 +1039,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @return the matching depot entry group rels
 	 */
 	public java.util.List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type);
+		long toGroupId, int type);
 
 	/**
 	 * Returns a range of all the depot entry group rels where toGroupId = &#63; and type = &#63;.
@@ -1055,7 +1055,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @return the range of matching depot entry group rels
 	 */
 	public java.util.List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type, int start, int end);
+		long toGroupId, int type, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the depot entry group rels where toGroupId = &#63; and type = &#63;.
@@ -1072,7 +1072,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @return the ordered range of matching depot entry group rels
 	 */
 	public java.util.List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type, int start, int end,
+		long toGroupId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
 			orderByComparator);
 
@@ -1092,7 +1092,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @return the ordered range of matching depot entry group rels
 	 */
 	public java.util.List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type, int start, int end,
+		long toGroupId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
 			orderByComparator,
 		boolean useFinderCache);
@@ -1107,7 +1107,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
 	 */
 	public DepotEntryGroupRel findByTGI_T_First(
-			long toGroupId, long type,
+			long toGroupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
 				orderByComparator)
 		throws NoSuchEntryGroupRelException;
@@ -1121,7 +1121,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @return the first matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
 	 */
 	public DepotEntryGroupRel fetchByTGI_T_First(
-		long toGroupId, long type,
+		long toGroupId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
 			orderByComparator);
 
@@ -1135,7 +1135,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
 	 */
 	public DepotEntryGroupRel findByTGI_T_Last(
-			long toGroupId, long type,
+			long toGroupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
 				orderByComparator)
 		throws NoSuchEntryGroupRelException;
@@ -1149,7 +1149,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @return the last matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
 	 */
 	public DepotEntryGroupRel fetchByTGI_T_Last(
-		long toGroupId, long type,
+		long toGroupId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
 			orderByComparator);
 
@@ -1164,7 +1164,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @throws NoSuchEntryGroupRelException if a depot entry group rel with the primary key could not be found
 	 */
 	public DepotEntryGroupRel[] findByTGI_T_PrevAndNext(
-			long depotEntryGroupRelId, long toGroupId, long type,
+			long depotEntryGroupRelId, long toGroupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
 				orderByComparator)
 		throws NoSuchEntryGroupRelException;
@@ -1175,7 +1175,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @param toGroupId the to group ID
 	 * @param type the type
 	 */
-	public void removeByTGI_T(long toGroupId, long type);
+	public void removeByTGI_T(long toGroupId, int type);
 
 	/**
 	 * Returns the number of depot entry group rels where toGroupId = &#63; and type = &#63;.
@@ -1184,7 +1184,7 @@ public interface DepotEntryGroupRelPersistence
 	 * @param type the type
 	 * @return the number of matching depot entry group rels
 	 */
-	public int countByTGI_T(long toGroupId, long type);
+	public int countByTGI_T(long toGroupId, int type);
 
 	/**
 	 * Caches the depot entry group rel in the entity cache if it is enabled.

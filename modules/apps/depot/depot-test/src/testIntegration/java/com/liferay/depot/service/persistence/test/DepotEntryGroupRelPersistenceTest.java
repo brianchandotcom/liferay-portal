@@ -143,7 +143,7 @@ public class DepotEntryGroupRelPersistenceTest {
 
 		newDepotEntryGroupRel.setToGroupId(RandomTestUtil.nextLong());
 
-		newDepotEntryGroupRel.setType(RandomTestUtil.nextLong());
+		newDepotEntryGroupRel.setType(RandomTestUtil.nextInt());
 
 		newDepotEntryGroupRel.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -273,9 +273,9 @@ public class DepotEntryGroupRelPersistenceTest {
 	@Test
 	public void testCountByTGI_T() throws Exception {
 		_persistence.countByTGI_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
-		_persistence.countByTGI_T(0L, 0L);
+		_persistence.countByTGI_T(0L, 0);
 	}
 
 	@Test
@@ -643,7 +643,7 @@ public class DepotEntryGroupRelPersistenceTest {
 
 		depotEntryGroupRel.setToGroupId(RandomTestUtil.nextLong());
 
-		depotEntryGroupRel.setType(RandomTestUtil.nextLong());
+		depotEntryGroupRel.setType(RandomTestUtil.nextInt());
 
 		depotEntryGroupRel.setLastPublishDate(RandomTestUtil.nextDate());
 

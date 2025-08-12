@@ -39,7 +39,7 @@ create table DepotEntryGroupRel (
 	depotEntryId LONG,
 	searchable BOOLEAN,
 	toGroupId LONG,
-	type_ LONG,
+	type_ INTEGER,
 	lastPublishDate DATE null,
 	primary key (depotEntryGroupRelId, ctCollectionId)
 );

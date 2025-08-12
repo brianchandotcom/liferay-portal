@@ -1334,7 +1334,7 @@ public class DepotEntryGroupRelUtil {
 	 * @return the matching depot entry group rels
 	 */
 	public static List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type) {
+		long toGroupId, int type) {
 
 		return getPersistence().findByTGI_T(toGroupId, type);
 	}
@@ -1353,7 +1353,7 @@ public class DepotEntryGroupRelUtil {
 	 * @return the range of matching depot entry group rels
 	 */
 	public static List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type, int start, int end) {
+		long toGroupId, int type, int start, int end) {
 
 		return getPersistence().findByTGI_T(toGroupId, type, start, end);
 	}
@@ -1373,7 +1373,7 @@ public class DepotEntryGroupRelUtil {
 	 * @return the ordered range of matching depot entry group rels
 	 */
 	public static List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type, int start, int end,
+		long toGroupId, int type, int start, int end,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
 		return getPersistence().findByTGI_T(
@@ -1396,7 +1396,7 @@ public class DepotEntryGroupRelUtil {
 	 * @return the ordered range of matching depot entry group rels
 	 */
 	public static List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, long type, int start, int end,
+		long toGroupId, int type, int start, int end,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
@@ -1414,7 +1414,7 @@ public class DepotEntryGroupRelUtil {
 	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
 	 */
 	public static DepotEntryGroupRel findByTGI_T_First(
-			long toGroupId, long type,
+			long toGroupId, int type,
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws com.liferay.depot.exception.NoSuchEntryGroupRelException {
 
@@ -1431,7 +1431,7 @@ public class DepotEntryGroupRelUtil {
 	 * @return the first matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
 	 */
 	public static DepotEntryGroupRel fetchByTGI_T_First(
-		long toGroupId, long type,
+		long toGroupId, int type,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
 		return getPersistence().fetchByTGI_T_First(
@@ -1448,7 +1448,7 @@ public class DepotEntryGroupRelUtil {
 	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
 	 */
 	public static DepotEntryGroupRel findByTGI_T_Last(
-			long toGroupId, long type,
+			long toGroupId, int type,
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws com.liferay.depot.exception.NoSuchEntryGroupRelException {
 
@@ -1465,7 +1465,7 @@ public class DepotEntryGroupRelUtil {
 	 * @return the last matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
 	 */
 	public static DepotEntryGroupRel fetchByTGI_T_Last(
-		long toGroupId, long type,
+		long toGroupId, int type,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
 		return getPersistence().fetchByTGI_T_Last(
@@ -1483,7 +1483,7 @@ public class DepotEntryGroupRelUtil {
 	 * @throws NoSuchEntryGroupRelException if a depot entry group rel with the primary key could not be found
 	 */
 	public static DepotEntryGroupRel[] findByTGI_T_PrevAndNext(
-			long depotEntryGroupRelId, long toGroupId, long type,
+			long depotEntryGroupRelId, long toGroupId, int type,
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws com.liferay.depot.exception.NoSuchEntryGroupRelException {
 
@@ -1497,7 +1497,7 @@ public class DepotEntryGroupRelUtil {
 	 * @param toGroupId the to group ID
 	 * @param type the type
 	 */
-	public static void removeByTGI_T(long toGroupId, long type) {
+	public static void removeByTGI_T(long toGroupId, int type) {
 		getPersistence().removeByTGI_T(toGroupId, type);
 	}
 
@@ -1508,7 +1508,7 @@ public class DepotEntryGroupRelUtil {
 	 * @param type the type
 	 * @return the number of matching depot entry group rels
 	 */
-	public static int countByTGI_T(long toGroupId, long type) {
+	public static int countByTGI_T(long toGroupId, int type) {
 		return getPersistence().countByTGI_T(toGroupId, type);
 	}
 

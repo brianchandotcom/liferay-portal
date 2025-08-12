@@ -144,7 +144,7 @@ public class DepotEntryGroupRelWrapper
 			setToGroupId(toGroupId);
 		}
 
-		Long type = (Long)attributes.get("type");
+		Integer type = (Integer)attributes.get("type");
 
 		if (type != null) {
 			setType(type);
@@ -298,7 +298,7 @@ public class DepotEntryGroupRelWrapper
 	 * @return the type of this depot entry group rel
 	 */
 	@Override
-	public long getType() {
+	public int getType() {
 		return model.getType();
 	}
 
@@ -503,7 +503,7 @@ public class DepotEntryGroupRelWrapper
 	 * @param type the type of this depot entry group rel
 	 */
 	@Override
-	public void setType(long type) {
+	public void setType(int type) {
 		model.setType(type);
 	}
 

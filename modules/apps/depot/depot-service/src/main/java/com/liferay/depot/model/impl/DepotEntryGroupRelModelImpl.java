@@ -72,7 +72,7 @@ public class DepotEntryGroupRelModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"ddmStructuresAvailable", Types.BOOLEAN},
 		{"depotEntryId", Types.BIGINT}, {"searchable", Types.BOOLEAN},
-		{"toGroupId", Types.BIGINT}, {"type_", Types.BIGINT},
+		{"toGroupId", Types.BIGINT}, {"type_", Types.INTEGER},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
@@ -94,12 +94,12 @@ public class DepotEntryGroupRelModelImpl
 		TABLE_COLUMNS_MAP.put("depotEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("searchable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("toGroupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("type_", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryGroupRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmStructuresAvailable BOOLEAN,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG,type_ LONG,lastPublishDate DATE null,primary key (depotEntryGroupRelId, ctCollectionId))";
+		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryGroupRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmStructuresAvailable BOOLEAN,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG,type_ INTEGER,lastPublishDate DATE null,primary key (depotEntryGroupRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntryGroupRel";
 
@@ -388,7 +388,7 @@ public class DepotEntryGroupRelModelImpl
 					DepotEntryGroupRel::setToGroupId);
 			attributeSetterBiConsumers.put(
 				"type",
-				(BiConsumer<DepotEntryGroupRel, Long>)
+				(BiConsumer<DepotEntryGroupRel, Integer>)
 					DepotEntryGroupRel::setType);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
@@ -725,12 +725,12 @@ public class DepotEntryGroupRelModelImpl
 
 	@JSON
 	@Override
-	public long getType() {
+	public int getType() {
 		return _type;
 	}
 
 	@Override
-	public void setType(long type) {
+	public void setType(int type) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -743,8 +743,9 @@ public class DepotEntryGroupRelModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public long getOriginalType() {
-		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("type_"));
+	public int getOriginalType() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	@JSON
@@ -884,7 +885,7 @@ public class DepotEntryGroupRelModelImpl
 		depotEntryGroupRelImpl.setToGroupId(
 			this.<Long>getColumnOriginalValue("toGroupId"));
 		depotEntryGroupRelImpl.setType(
-			this.<Long>getColumnOriginalValue("type_"));
+			this.<Integer>getColumnOriginalValue("type_"));
 		depotEntryGroupRelImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 
@@ -1110,7 +1111,7 @@ public class DepotEntryGroupRelModelImpl
 	private long _depotEntryId;
 	private boolean _searchable;
 	private long _toGroupId;
-	private long _type;
+	private int _type;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {

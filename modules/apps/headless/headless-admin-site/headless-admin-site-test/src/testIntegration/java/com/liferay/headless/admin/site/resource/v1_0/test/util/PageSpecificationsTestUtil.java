@@ -427,7 +427,8 @@ public class PageSpecificationsTestUtil {
 
 	public static WidgetPageSpecification getWidgetPageSpecification(
 		CustomField[] customFields, String externalReferenceCode,
-		Settings settings, PageSpecification.Status status) {
+		Settings settings, PageSpecification.Status status,
+		WidgetPageSection[] widgetPageSections) {
 
 		WidgetPageSpecification widgetPageSpecification =
 			new WidgetPageSpecification() {
@@ -440,6 +441,7 @@ public class PageSpecificationsTestUtil {
 		widgetPageSpecification.setExternalReferenceCode(externalReferenceCode);
 		widgetPageSpecification.setSettings(settings);
 		widgetPageSpecification.setStatus(status);
+		widgetPageSpecification.setWidgetPageSections(widgetPageSections);
 
 		return widgetPageSpecification;
 	}

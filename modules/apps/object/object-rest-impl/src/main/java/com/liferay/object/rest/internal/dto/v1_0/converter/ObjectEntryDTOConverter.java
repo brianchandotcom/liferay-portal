@@ -1075,6 +1075,10 @@ public class ObjectEntryDTOConverter
 				return null;
 			}
 
+			if (serializable instanceof List) {
+				return serializable;
+			}
+
 			return (Serializable)TransformUtil.transformToList(
 				StringUtil.split(
 					(String)serializable, StringPool.COMMA_AND_SPACE),
@@ -1087,6 +1091,10 @@ public class ObjectEntryDTOConverter
 
 			if (objectField.getListTypeDefinitionId() == 0) {
 				return null;
+			}
+
+			if (serializable instanceof ListEntry) {
+				return serializable;
 			}
 
 			return _getListEntry(

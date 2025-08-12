@@ -5,7 +5,6 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -270,27 +269,13 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					_objectDefinition.getStorageType()));
 
-		ObjectEntry currentObjectEntry =
-			defaultObjectEntryManager.getObjectEntry(
-				_objectDefinition.getCompanyId(), _getDTOConverterContext(null),
-				currentExternalReferenceCode, _objectDefinition, null);
-
-		ObjectRelationship objectRelationship =
+		return defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
+			_getDTOConverterContext(null), relatedExternalReferenceCode,
+			objectEntry,
 			_objectRelationshipLocalService.getObjectRelationship(
 				_objectDefinition.getObjectDefinitionId(),
-				objectRelationshipName);
-
-		ObjectEntry relatedObjectEntry =
-			defaultObjectEntryManager.getObjectEntry(
-				_objectDefinition.getCompanyId(), _getDTOConverterContext(null),
-				relatedExternalReferenceCode,
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId2()),
-				null);
-
-		return patchCurrentObjectEntry(
-			currentObjectEntry.getId(), objectEntry, objectRelationshipName,
-			relatedObjectEntry.getId());
+				objectRelationshipName),
+			currentExternalReferenceCode, null);
 	}
 
 	@Override
@@ -304,17 +289,35 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					_objectDefinition.getStorageType()));
 
-		ObjectRelationship objectRelationship =
+		return defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
+			_getDTOConverterContext(currentObjectEntryId), objectEntry,
+			relatedObjectEntryId,
 			_objectRelationshipLocalService.getObjectRelationship(
 				_objectDefinition.getObjectDefinitionId(),
-				objectRelationshipName);
+				objectRelationshipName),
+			currentObjectEntryId);
+	}
+
+	@Override
+	public Object
+			patchScopeScopeKeyByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				String scopeKey, String currentExternalReferenceCode,
+				ObjectEntry objectEntry, String objectRelationshipName,
+				String relatedExternalReferenceCode)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
-			_getDTOConverterContext(null),
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId2()),
-			objectEntry, relatedObjectEntryId, objectRelationship,
-			currentObjectEntryId);
+			_getDTOConverterContext(null), relatedExternalReferenceCode,
+			objectEntry,
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName),
+			currentExternalReferenceCode, scopeKey);
 	}
 
 	@Override
@@ -384,30 +387,18 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				String relatedExternalReferenceCode)
 		throws Exception {
 
-		com.liferay.object.model.ObjectEntry currentObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				currentExternalReferenceCode,
-				ObjectDefinitionConstants.GROUP_ID_DEFAULT,
-				_objectDefinition.getObjectDefinitionId());
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
-		ObjectRelationship objectRelationship =
+		return defaultObjectEntryManager.updateRelatedObjectEntry(
+			_getDTOConverterContext(null), relatedExternalReferenceCode,
+			objectEntry,
 			_objectRelationshipLocalService.getObjectRelationship(
 				_objectDefinition.getObjectDefinitionId(),
-				objectRelationshipName);
-
-		ObjectDefinition relatedObjectDefinition =
-			ObjectRelationshipUtil.getRelatedObjectDefinition(
-				_objectDefinition, objectRelationship);
-
-		com.liferay.object.model.ObjectEntry relatedObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				relatedExternalReferenceCode,
-				ObjectDefinitionConstants.GROUP_ID_DEFAULT,
-				relatedObjectDefinition.getObjectDefinitionId());
-
-		return putCurrentObjectEntry(
-			currentObjectEntry.getObjectEntryId(), objectEntry,
-			objectRelationshipName, relatedObjectEntry.getObjectEntryId());
+				objectRelationshipName),
+			currentExternalReferenceCode, null);
 	}
 
 	@Override
@@ -432,9 +423,8 @@ public class ObjectEntryRelatedObjectsResourceImpl
 
 		if (objectRelationship.isEdge()) {
 			return defaultObjectEntryManager.updateRelatedObjectEntry(
-				_getDTOConverterContext(currentObjectEntryId),
-				relatedObjectDefinition, relatedObjectEntryId, objectEntry,
-				objectRelationship, currentObjectEntryId);
+				_getDTOConverterContext(currentObjectEntryId), objectEntry,
+				relatedObjectEntryId, objectRelationship, currentObjectEntryId);
 		}
 
 		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
@@ -450,6 +440,28 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				_getDTOConverterContext(currentObjectEntryId),
 				objectRelationship, currentObjectEntryId,
 				relatedObjectEntryId));
+	}
+
+	@Override
+	public Object
+			putScopeScopeKeyByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				String scopeKey, String currentExternalReferenceCode,
+				ObjectEntry objectEntry, String objectRelationshipName,
+				String relatedExternalReferenceCode)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.updateRelatedObjectEntry(
+			_getDTOConverterContext(null), relatedExternalReferenceCode,
+			objectEntry,
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName),
+			currentExternalReferenceCode, scopeKey);
 	}
 
 	private void _checkCurrentObjectEntry(

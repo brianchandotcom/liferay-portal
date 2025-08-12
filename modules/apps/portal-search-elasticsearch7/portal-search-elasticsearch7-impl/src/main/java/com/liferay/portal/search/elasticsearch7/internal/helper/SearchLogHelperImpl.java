@@ -13,8 +13,8 @@ import java.io.IOException;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.impl.Log4JLogger;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.Logger;
 
 import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.bulk.BulkResponse;

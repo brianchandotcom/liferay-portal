@@ -25,10 +25,15 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
@@ -370,6 +375,47 @@ public class LayoutUtil {
 			pageSpecification.
 				getSiteTemplatePageSpecificationExternalReferenceCode(),
 			layoutSetPrototype.getGroupId(), privateLayout);
+	}
+
+	public static String getParentSectionId(Layout layout, String portletId) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		return layoutTypePortlet.getColumn(portletId);
+	}
+
+	public static Integer getPosition(Layout layout, String portletId) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		List<String> columns = layoutTypePortlet.getColumns();
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		for (String columnId : columns) {
+			String columnValue = typeSettingsUnicodeProperties.getProperty(
+				columnId, StringPool.BLANK);
+
+			List<String> portletIds = ListUtil.fromString(
+				columnValue, StringPool.COMMA);
+
+			int position = portletIds.indexOf(portletId);
+
+			if (position >= 0) {
+				return position;
+			}
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Position for portlet cannot be obtained since portlet ",
+					portletId, " cannot be found in layout ",
+					layout.getPlid()));
+		}
+
+		return null;
 	}
 
 	public static boolean isPublished(Layout layout) {
@@ -918,5 +964,7 @@ public class LayoutUtil {
 				layout, pageExperience, segmentsExperience, serviceContext);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(LayoutUtil.class);
 
 }

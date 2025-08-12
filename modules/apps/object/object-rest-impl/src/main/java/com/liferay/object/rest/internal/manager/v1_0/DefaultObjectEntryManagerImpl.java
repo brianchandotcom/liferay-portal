@@ -1098,20 +1098,45 @@ public class DefaultObjectEntryManagerImpl
 
 	@Override
 	public ObjectEntry partialUpdateRelatedObjectEntry(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			DTOConverterContext dtoConverterContext, ObjectEntry objectEntry,
 			long objectEntryId, ObjectRelationship objectRelationship,
 			long parentObjectEntryId)
 		throws Exception {
 
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+
 		return updateRelatedObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntryId,
+			dtoConverterContext,
 			ObjectEntryManagerUtil.partialUpdateObjectEntry(
 				getRelatedObjectEntry(
 					dtoConverterContext, objectEntryId, objectRelationship,
 					parentObjectEntryId),
-				objectDefinition.getObjectDefinitionId(), objectEntry),
-			objectRelationship, parentObjectEntryId);
+				objectDefinition2.getObjectDefinitionId(), objectEntry),
+			objectEntryId, objectRelationship, parentObjectEntryId);
+	}
+
+	@Override
+	public ObjectEntry partialUpdateRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectEntry objectEntry,
+			ObjectRelationship objectRelationship,
+			String parentExternalReferenceCode, String scopeKey)
+		throws Exception {
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+
+		return updateRelatedObjectEntry(
+			dtoConverterContext, externalReferenceCode,
+			ObjectEntryManagerUtil.partialUpdateObjectEntry(
+				getRelatedObjectEntry(
+					dtoConverterContext, externalReferenceCode,
+					objectRelationship, parentExternalReferenceCode, scopeKey),
+				objectDefinition2.getObjectDefinitionId(), objectEntry),
+			objectRelationship, parentExternalReferenceCode, scopeKey);
 	}
 
 	@Override
@@ -1220,26 +1245,46 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	public ObjectEntry updateRelatedObjectEntry(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId,
-			ObjectEntry objectEntry, ObjectRelationship objectRelationship,
+			DTOConverterContext dtoConverterContext, ObjectEntry objectEntry,
+			long objectEntryId, ObjectRelationship objectRelationship,
 			long parentObjectEntryId)
 		throws Exception {
 
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
-
-		properties.put(objectField.getName(), parentObjectEntryId);
-
-		_checkParentObjectEntry(
-			_objectEntryService.getObjectEntry(objectEntryId), objectField,
+		return _updateRelatedObjectEntry(
+			dtoConverterContext, objectEntry, objectEntryId, objectRelationship,
 			parentObjectEntryId);
+	}
 
-		return _updateObjectEntry(
-			objectRelationship.getObjectFieldId2(), dtoConverterContext,
-			objectDefinition, objectEntry, objectEntryId, false, true);
+	@Override
+	public ObjectEntry updateRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectEntry objectEntry,
+			ObjectRelationship objectRelationship,
+			String parentExternalReferenceCode, String scopeKey)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry parentServiceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				parentExternalReferenceCode,
+				getGroupId(
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId1()),
+					scopeKey),
+				objectRelationship.getObjectDefinitionId1());
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode,
+				getGroupId(
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId2()),
+					scopeKey),
+				objectRelationship.getObjectDefinitionId2());
+
+		return _updateRelatedObjectEntry(
+			dtoConverterContext, objectEntry,
+			serviceBuilderObjectEntry.getObjectEntryId(), objectRelationship,
+			parentServiceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	@Override
@@ -3047,6 +3092,42 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
 				serviceBuilderObjectEntry, scopeKey));
+	}
+
+	private ObjectEntry _updateRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext, ObjectEntry objectEntry,
+			long objectEntryId, ObjectRelationship objectRelationship,
+			long parentObjectEntryId)
+		throws Exception {
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		properties.put(objectField.getName(), parentObjectEntryId);
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(objectEntryId);
+
+		if (!Objects.equals(
+				MapUtil.getLong(
+					serviceBuilderObjectEntry.getValues(),
+					objectField.getName()),
+				parentObjectEntryId)) {
+
+			throw new NoSuchObjectEntryException(
+				String.format(
+					"No ObjectEntry exists with the key {%s=%s, " +
+						"objectEntryId=%s}",
+					objectField.getName(), parentObjectEntryId, objectEntryId));
+		}
+
+		return _updateObjectEntry(
+			objectRelationship.getObjectFieldId2(), dtoConverterContext,
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2()),
+			objectEntry, objectEntryId, false, true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -71,17 +71,17 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			return;
 		}
 
-		Map<String, Map<String, Object>> schemaNameFilterableFieldNames =
+		Map<String, Map<String, Object>> schemaNameFilterableFieldMapping =
 			new HashMap<>();
 
 		for (Schema schema : schemas.values()) {
-			Map<String, Object> filterableFieldNames = _getFilterableFieldNames(
-				openAPIContext, schema);
+			Map<String, Object> filterableFieldMapping =
+				_getFilterableFieldMapping(openAPIContext, schema);
 
-			schema.addExtension("x-filterable", filterableFieldNames);
+			schema.addExtension("x-filterable", filterableFieldMapping);
 
-			schemaNameFilterableFieldNames.put(
-				schema.getName(), filterableFieldNames);
+			schemaNameFilterableFieldMapping.put(
+				schema.getName(), filterableFieldMapping);
 		}
 
 		Paths paths = openAPI.getPaths();
@@ -92,17 +92,21 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 
 		for (PathItem pathItem : paths.values()) {
 			_setXFilterable(
-				schemaNameFilterableFieldNames, pathItem.getDelete());
-			_setXFilterable(schemaNameFilterableFieldNames, pathItem.getGet());
-			_setXFilterable(schemaNameFilterableFieldNames, pathItem.getHead());
+				schemaNameFilterableFieldMapping, pathItem.getDelete());
 			_setXFilterable(
-				schemaNameFilterableFieldNames, pathItem.getOptions());
+				schemaNameFilterableFieldMapping, pathItem.getGet());
 			_setXFilterable(
-				schemaNameFilterableFieldNames, pathItem.getPatch());
-			_setXFilterable(schemaNameFilterableFieldNames, pathItem.getPost());
-			_setXFilterable(schemaNameFilterableFieldNames, pathItem.getPut());
+				schemaNameFilterableFieldMapping, pathItem.getHead());
 			_setXFilterable(
-				schemaNameFilterableFieldNames, pathItem.getTrace());
+				schemaNameFilterableFieldMapping, pathItem.getOptions());
+			_setXFilterable(
+				schemaNameFilterableFieldMapping, pathItem.getPatch());
+			_setXFilterable(
+				schemaNameFilterableFieldMapping, pathItem.getPost());
+			_setXFilterable(
+				schemaNameFilterableFieldMapping, pathItem.getPut());
+			_setXFilterable(
+				schemaNameFilterableFieldMapping, pathItem.getTrace());
 		}
 	}
 
@@ -246,7 +250,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		return null;
 	}
 
-	private Map<String, Object> _getFilterableFieldNames(
+	private Map<String, Object> _getFilterableFieldMapping(
 			OpenAPIContext openAPIContext, Schema schema)
 		throws Exception {
 
@@ -326,7 +330,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 	}
 
 	private void _setXFilterable(
-		Map<String, Map<String, Object>> filterableFieldNames,
+		Map<String, Map<String, Object>> filterableFieldMapping,
 		Operation operation) {
 
 		if (operation == null) {
@@ -366,7 +370,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		}
 
 		schema.addExtension(
-			"x-filterable", filterableFieldNames.get(tags.get(0)));
+			"x-filterable", filterableFieldMapping.get(tags.get(0)));
 	}
 
 	private BundleContext _bundleContext;

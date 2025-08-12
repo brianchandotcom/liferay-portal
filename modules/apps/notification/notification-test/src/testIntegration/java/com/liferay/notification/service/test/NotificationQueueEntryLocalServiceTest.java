@@ -73,15 +73,15 @@ public class NotificationQueueEntryLocalServiceTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_notificationRecipientSettings = Arrays.asList(
-			NotificationTemplateUtil.createNotificationRecipientSetting(
+			NotificationRecipientSettingUtil.createNotificationRecipientSetting(
 				"bcc", "bcc@liferay.com"),
-			NotificationTemplateUtil.createNotificationRecipientSetting(
+			NotificationRecipientSettingUtil.createNotificationRecipientSetting(
 				"cc", "cc@liferay.com"),
-			NotificationTemplateUtil.createNotificationRecipientSetting(
+			NotificationRecipientSettingUtil.createNotificationRecipientSetting(
 				"from", "from@liferay.com"),
-			NotificationTemplateUtil.createNotificationRecipientSetting(
+			NotificationRecipientSettingUtil.createNotificationRecipientSetting(
 				"fromName", "From Name"),
-			NotificationTemplateUtil.createNotificationRecipientSetting(
+			NotificationRecipientSettingUtil.createNotificationRecipientSetting(
 				"to", "to@liferay.com"));
 	}
 
@@ -97,20 +97,24 @@ public class NotificationQueueEntryLocalServiceTest {
 			"From is null",
 			() -> _addNotificationQueueEntry(
 				Arrays.asList(
-					NotificationTemplateUtil.createNotificationRecipientSetting(
-						"fromName", "From Name"),
-					NotificationTemplateUtil.createNotificationRecipientSetting(
-						"to", "to@liferay.com"))));
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"fromName", "From Name"),
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"to", "to@liferay.com"))));
 		AssertUtils.assertFailure(
 			NotificationRecipientSettingValueException.FromNameMustNotBeNull.
 				class,
 			"From name is null",
 			() -> _addNotificationQueueEntry(
 				Arrays.asList(
-					NotificationTemplateUtil.createNotificationRecipientSetting(
-						"from", "from@liferay.com"),
-					NotificationTemplateUtil.createNotificationRecipientSetting(
-						"to", "to@liferay.com"))));
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"from", "from@liferay.com"),
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"to", "to@liferay.com"))));
 
 		User user = TestPropsValues.getUser();
 
@@ -125,10 +129,12 @@ public class NotificationQueueEntryLocalServiceTest {
 			"To is null",
 			() -> _addNotificationQueueEntry(
 				Arrays.asList(
-					NotificationTemplateUtil.createNotificationRecipientSetting(
-						"from", "from@liferay.com"),
-					NotificationTemplateUtil.createNotificationRecipientSetting(
-						"fromName", "From Name"))));
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"from", "from@liferay.com"),
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"fromName", "From Name"))));
 
 		String body = StringUtil.randomString();
 		String subject = StringUtil.randomString();

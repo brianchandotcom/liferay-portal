@@ -54,10 +54,8 @@ function ActionDropdownItem({
 	target = 'link',
 	...props
 }: {label: string} & ActionDropdownItemProps) {
-	const handleTargetAction = async (event: any) => {
+	const handleTargetAction = async () => {
 		if (target === 'modal') {
-			event.preventDefault();
-
 			openModal({
 				size,
 				title: label,
@@ -65,8 +63,6 @@ function ActionDropdownItem({
 			});
 		}
 		else if (target === 'asyncDelete') {
-			event.preventDefault();
-
 			const {error} = await ApiHelper.delete(href);
 
 			if (!error) {
@@ -85,19 +81,19 @@ function ActionDropdownItem({
 		}
 	};
 
-	const handleClick = (event: any) => {
+	const handleClick = () => {
 		if (confirmationMessage) {
 			openConfirmModal({
 				message: confirmationMessage,
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
-						handleTargetAction(event);
+						handleTargetAction();
 					}
 				},
 			});
 		}
 		else {
-			handleTargetAction(event);
+			handleTargetAction();
 		}
 	};
 
@@ -155,8 +151,10 @@ export default function Breadcrumb({
 							/>
 						}
 					>
-						<ClayDropDown.ItemList items={actionItems}>
-							{(item: any) => <ActionDropdownItem {...item} />}
+						<ClayDropDown.ItemList>
+							{actionItems.map((item: any, i) => (
+								<ActionDropdownItem key={i} {...item} />
+							))}
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
 				</div>

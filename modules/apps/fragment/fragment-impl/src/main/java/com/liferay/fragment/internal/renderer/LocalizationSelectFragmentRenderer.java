@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
+import com.liferay.translation.translator.Translator;
+import com.liferay.translation.translator.TranslatorRegistry;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -173,6 +175,19 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 							LocaleUtil.getMostRelevantLocale(),
 							"allowLocalizationManagement"))
 				).put(
+					"autoTranslationEnabled",
+					() -> {
+						Translator translator =
+							_translatorRegistry.getCompanyTranslator(
+								themeDisplay.getCompanyId());
+
+						if (translator != null) {
+							return true;
+						}
+
+						return false;
+					}
+				).put(
 					"defaultLanguageId",
 					LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
 				).put(
@@ -244,5 +259,8 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.fragment.impl)")
 	private ServletContext _servletContext;
+
+	@Reference
+	private TranslatorRegistry _translatorRegistry;
 
 }

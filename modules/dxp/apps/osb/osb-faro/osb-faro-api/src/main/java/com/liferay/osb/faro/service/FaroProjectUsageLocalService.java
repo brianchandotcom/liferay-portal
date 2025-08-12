@@ -69,7 +69,7 @@ public interface FaroProjectUsageLocalService
 
 	public FaroProjectUsage addFaroProjectUsage(
 		long companyId, long userId, long faroProjectId,
-		long knownIndividualsCount, long pageViewsCount);
+		long knownIndividualsCount, String monthDateKey, long pageViewsCount);
 
 	/**
 	 * Creates a new faro project usage with the primary key. Does not add the faro project usage to the database.
@@ -85,6 +85,8 @@ public interface FaroProjectUsageLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void deleteFaroProjectUsage();
 
 	/**
 	 * Deletes the faro project usage from the database. Also notifies the appropriate model listeners.

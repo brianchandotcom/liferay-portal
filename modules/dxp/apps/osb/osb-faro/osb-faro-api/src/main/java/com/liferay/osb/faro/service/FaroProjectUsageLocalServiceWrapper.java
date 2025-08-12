@@ -50,11 +50,11 @@ public class FaroProjectUsageLocalServiceWrapper
 	@Override
 	public com.liferay.osb.faro.model.FaroProjectUsage addFaroProjectUsage(
 		long companyId, long userId, long faroProjectId,
-		long knownIndividualsCount, long pageViewsCount) {
+		long knownIndividualsCount, String monthDateKey, long pageViewsCount) {
 
 		return _faroProjectUsageLocalService.addFaroProjectUsage(
 			companyId, userId, faroProjectId, knownIndividualsCount,
-			pageViewsCount);
+			monthDateKey, pageViewsCount);
 	}
 
 	/**
@@ -81,6 +81,11 @@ public class FaroProjectUsageLocalServiceWrapper
 
 		return _faroProjectUsageLocalService.createPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public void deleteFaroProjectUsage() {
+		_faroProjectUsageLocalService.deleteFaroProjectUsage();
 	}
 
 	/**

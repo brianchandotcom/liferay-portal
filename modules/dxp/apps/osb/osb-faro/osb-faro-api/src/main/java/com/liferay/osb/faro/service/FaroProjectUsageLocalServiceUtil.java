@@ -55,11 +55,11 @@ public class FaroProjectUsageLocalServiceUtil {
 
 	public static FaroProjectUsage addFaroProjectUsage(
 		long companyId, long userId, long faroProjectId,
-		long knownIndividualsCount, long pageViewsCount) {
+		long knownIndividualsCount, String monthDateKey, long pageViewsCount) {
 
 		return getService().addFaroProjectUsage(
 			companyId, userId, faroProjectId, knownIndividualsCount,
-			pageViewsCount);
+			monthDateKey, pageViewsCount);
 	}
 
 	/**
@@ -82,6 +82,10 @@ public class FaroProjectUsageLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteFaroProjectUsage() {
+		getService().deleteFaroProjectUsage();
 	}
 
 	/**

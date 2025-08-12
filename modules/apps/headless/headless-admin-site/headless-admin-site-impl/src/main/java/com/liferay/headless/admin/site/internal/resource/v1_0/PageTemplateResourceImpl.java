@@ -549,6 +549,30 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			groupId, layoutPageTemplateCollectionId, pageTemplate);
 	}
 
+	private long _getLayoutPlid(
+			ContentPageTemplate contentPageTemplate, long groupId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			_portal.getSiteDefaultLocale(groupId),
+			contentPageTemplate.getName());
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+		serviceContext.setAttribute(
+			"layout.page.template.entry.type",
+			LayoutPageTemplateEntryTypeConstants.BASIC);
+
+		Layout layout = LayoutUtil.addContentLayout(
+			_cetManager, groupId, contentPageTemplate.getPageSpecifications(),
+			true, nameMap, nameMap, nameMap, null, LayoutConstants.TYPE_CONTENT,
+			null, true, true, Collections.emptyMap(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		return layout.getPlid();
+	}
+
 	private LayoutPageTemplateCollection _getOrAddLayoutPageTemplateCollection(
 			long groupId, PageTemplate pageTemplate)
 		throws Exception {
@@ -583,30 +607,6 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		}
 
 		return layoutPageTemplateCollection;
-	}
-
-	private long _getLayoutPlid(
-			ContentPageTemplate contentPageTemplate, long groupId,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		Map<Locale, String> nameMap = Collections.singletonMap(
-			_portal.getSiteDefaultLocale(groupId),
-			contentPageTemplate.getName());
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-		serviceContext.setAttribute(
-			"layout.page.template.entry.type",
-			LayoutPageTemplateEntryTypeConstants.BASIC);
-
-		Layout layout = LayoutUtil.addContentLayout(
-			_cetManager, groupId, contentPageTemplate.getPageSpecifications(),
-			true, nameMap, nameMap, nameMap, null, LayoutConstants.TYPE_CONTENT,
-			null, true, true, Collections.emptyMap(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		return layout.getPlid();
 	}
 
 	private ServiceContext _getServiceContext(

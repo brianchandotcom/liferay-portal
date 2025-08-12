@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade.data.cleanup;
 
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 
 /**
@@ -14,12 +15,14 @@ public class FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 	extends BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess {
 
 	public FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
-		String sourceAdditionalWhereClause, String sourceColumnName,
+		String sourceAdditionalWhereClause,
+		String[] sourceAdditionalColumnNamesCheck, String sourceColumnName,
 		String[] targetColumnNames, String targetTableName) {
 
 		super(sourceColumnName, targetColumnNames, targetTableName);
 
 		_sourceAdditionalWhereClause = sourceAdditionalWhereClause;
+		_sourceAdditionalColumnNamesCheck = sourceAdditionalColumnNamesCheck;
 	}
 
 	@Override
@@ -28,11 +31,24 @@ public class FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 			String[] targetColumnNames, String targetTableName)
 		throws Exception {
 
+		DBInspector dbInspector = new DBInspector(connection);
+
+		for (String sourceAdditionalColumnName :
+				_sourceAdditionalColumnNamesCheck) {
+
+			if (!dbInspector.hasColumn(
+					sourceTableName, sourceAdditionalColumnName)) {
+
+				return;
+			}
+		}
+
 		OrphanReferencesDataCleanupUtil.cleanUpTable(
 			connection, _sourceAdditionalWhereClause, sourceColumnName,
 			sourceTableName, targetColumnNames, targetTableName);
 	}
 
+	private final String[] _sourceAdditionalColumnNamesCheck;
 	private final String _sourceAdditionalWhereClause;
 
 }

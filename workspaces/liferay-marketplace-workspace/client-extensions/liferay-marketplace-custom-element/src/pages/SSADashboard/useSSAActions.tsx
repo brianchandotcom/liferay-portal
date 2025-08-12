@@ -17,6 +17,15 @@ import ExpireSSAModal from './pages/ExpireSSAModal';
 import ExtendRequestModal from './pages/ExtendRequestModal';
 import ExtendSSATrialModal from './pages/ExtendSSATrialModal';
 
+const getOrderExtendRequests =
+	(trialExtendRequests: APIResponse<TrialExtend>['items']) =>
+	(order: PlacedOrder) =>
+		trialExtendRequests.filter(
+			(item) =>
+				item.r_orderToTrialExtensionRequest_commerceOrderId ===
+				Number(order.id)
+		);
+
 const useSSAActions = () => {
 	const {marketplaceUserAccount} = useMarketplaceContext();
 
@@ -27,18 +36,21 @@ const useSSAActions = () => {
 		useSSADashboardOutlet();
 
 	return useMemo(() => {
-		const ssaTrialsExtendRequests = ssaTrialExtend?.items ?? [];
+		const _getOrderExtendRequests = getOrderExtendRequests(
+			ssaTrialExtend?.items ?? []
+		);
 
 		return [
 			{
 				name: i18n.translate('details'),
-				onClick: (order: Order) => navigate(`details/${order.id}`),
+				onClick: (order: PlacedOrder) =>
+					navigate(`details/${order.id}`),
 			},
 			{
-				disabled: (order: Order) =>
+				disabled: (order: PlacedOrder) =>
 					order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS,
 				name: i18n.translate('go-to-trial'),
-				onClick: (order: Order) =>
+				onClick: (order: PlacedOrder) =>
 					window.open(
 						`https://${
 							order?.customFields?.[
@@ -48,50 +60,23 @@ const useSSAActions = () => {
 					),
 			},
 			{
-				hidden: (order: Order) => {
-					if (marketplaceUserAccount.isSSAAdmin) {
-						const extendRequests = ssaTrialsExtendRequests?.filter(
-							(extend: TrialExtend) => {
-								return (
-									extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-									Number(order.id)
-								);
-							}
-						) as TrialExtend[];
-
-						if (extendRequests && extendRequests?.length > 0) {
-							return (
-								extendRequests[0]?.dueStatus.key !==
-								ExtendRequestStatus.PENDING
-							);
-						}
+				hidden: (order: PlacedOrder) => {
+					if (!marketplaceUserAccount.isSSAAdmin) {
+						return true;
 					}
 
-					return true;
+					const extendRequests = _getOrderExtendRequests(order);
+
+					return (
+						extendRequests[0]?.dueStatus?.key !==
+						ExtendRequestStatus.PENDING
+					);
 				},
 				name: i18n.translate('view-request'),
 				onClick: (order: PlacedOrder, orderMutate) => {
-					const extendRequests = ssaTrialsExtendRequests?.filter(
-						(extend: TrialExtend) => {
-							return (
-								extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-								Number(order.id)
-							);
-						}
-					) as TrialExtend[];
+					const extendRequests = _getOrderExtendRequests(order);
 
-					const extendRequestsCount = extendRequests?.filter(
-						(extend: TrialExtend) => {
-							return (
-								extend.dueStatus?.key ===
-									ExtendRequestStatus.APPROVED ||
-								extend.dueStatus?.key ===
-									ExtendRequestStatus.AUTO_APPROVED
-							);
-						}
-					) as TrialExtend[];
-
-					if (!extendRequests) {
+					if (!extendRequests.length) {
 						return;
 					}
 
@@ -103,7 +88,17 @@ const useSSAActions = () => {
 								orderMutate={orderMutate}
 								ssaTrialExtendMutate={ssaTrialExtendMutate}
 								trialExtend={extendRequests[0]}
-								trialExtendCount={extendRequestsCount?.length}
+								trialExtendCount={
+									extendRequests.filter(
+										({dueStatus}: TrialExtend) =>
+											[
+												ExtendRequestStatus.APPROVED,
+												ExtendRequestStatus.AUTO_APPROVED,
+											].includes(
+												dueStatus?.key as ExtendRequestStatus
+											)
+									).length
+								}
 							/>
 						),
 						center: true,
@@ -111,15 +106,8 @@ const useSSAActions = () => {
 				},
 			},
 			{
-				disabled: (order: Order) => {
-					const extendRequests = ssaTrialsExtendRequests?.filter(
-						(extend: TrialExtend) => {
-							return (
-								extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-								Number(order.id)
-							);
-						}
-					) as TrialExtend[];
+				disabled: (order: PlacedOrder) => {
+					const extendRequests = _getOrderExtendRequests(order);
 
 					if (!extendRequests) {
 						return true;
@@ -133,15 +121,8 @@ const useSSAActions = () => {
 					);
 				},
 				name: i18n.translate('extend-trial'),
-				onClick: (order: PlacedOrder, orderMutate: any) => {
-					const extendRequests = ssaTrialsExtendRequests?.filter(
-						(extend: TrialExtend) => {
-							return (
-								extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-								Number(order.id)
-							);
-						}
-					) as TrialExtend[];
+				onClick: (order: PlacedOrder, orderMutate) => {
+					const extendRequests = _getOrderExtendRequests(order);
 
 					modalContext.onOpenModal({
 						body: (
@@ -159,10 +140,10 @@ const useSSAActions = () => {
 				},
 			},
 			{
-				disabled: (order: Order) =>
+				disabled: (order: PlacedOrder) =>
 					order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS,
 				name: i18n.translate('expire-trial'),
-				onClick: (order: Order, mutate) => {
+				onClick: (order: PlacedOrder, mutate) => {
 					modalContext.onOpenModal({
 						body: (
 							<ExpireSSAModal

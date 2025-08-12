@@ -35,9 +35,11 @@ const displaySystemErrorToast = () => {
 	});
 };
 
-const displayErrorToast = () => {
+const displayErrorToast = (errorMessage?: string) => {
 	openToast({
-		message: Liferay.Language.get('an-unexpected-error-occurred'),
+		message:
+			errorMessage ||
+			Liferay.Language.get('an-unexpected-error-occurred'),
 		title: Liferay.Language.get('error'),
 		type: 'danger',
 	});

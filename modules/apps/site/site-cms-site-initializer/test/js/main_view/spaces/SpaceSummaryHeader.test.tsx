@@ -28,15 +28,15 @@ describe('SpaceSummaryHeader', () => {
 	const defaultProps = {
 		label: 'View All',
 		title: 'Recent Content',
-		url: '/some-url',
+		url: '',
 	};
 
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
 
-	it('renders a title and a link when no modal props are provided', () => {
-		render(<SpaceSummaryHeader {...defaultProps} />);
+	it('renders a title and a link when a url is provided', () => {
+		render(<SpaceSummaryHeader {...defaultProps} url="/some-url" />);
 
 		expect(
 			screen.getByRole('heading', {name: defaultProps.title})
@@ -44,11 +44,11 @@ describe('SpaceSummaryHeader', () => {
 
 		const link = screen.getByRole('link', {name: defaultProps.label});
 		expect(link).toBeInTheDocument();
-		expect(link).toHaveAttribute('href', defaultProps.url);
+		expect(link).toHaveAttribute('href', '/some-url');
 		expect(screen.queryByRole('button')).not.toBeInTheDocument();
 	});
 
-	it('renders a button instead of a link when modal props are provided', () => {
+	it('renders a button instead of a link when modal props are provided and url is null', () => {
 		const props = {
 			...defaultProps,
 			spaceModalProps: {

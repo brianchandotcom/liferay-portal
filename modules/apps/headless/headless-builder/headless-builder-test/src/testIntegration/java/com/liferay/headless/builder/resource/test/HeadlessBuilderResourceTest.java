@@ -56,8 +56,13 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
@@ -97,6 +102,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -193,6 +199,24 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_addAggregationObjectField(
 			_siteScopedObjectDefinition2,
 			_siteScopedObjectRelationship2.getName());
+
+		_originalName = PrincipalThreadLocal.getName();
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		_user = TestPropsValues.getUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -4087,6 +4111,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private ObjectRelationship _objectRelationship1;
 	private ObjectRelationship _objectRelationship2;
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
@@ -4105,6 +4131,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	private ObjectDefinition _siteScopedObjectDefinition3;
 	private ObjectRelationship _siteScopedObjectRelationship1;
 	private ObjectRelationship _siteScopedObjectRelationship2;
+	private User _user;
 
 	private enum ListTypeValue {
 

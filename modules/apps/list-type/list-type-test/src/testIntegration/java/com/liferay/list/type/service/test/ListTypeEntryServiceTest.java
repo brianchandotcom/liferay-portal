@@ -72,7 +72,10 @@ public class ListTypeEntryServiceTest {
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+
 		_user = TestPropsValues.getUser();
+
+		_setUser(_user);
 	}
 
 	@After

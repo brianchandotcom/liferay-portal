@@ -6,14 +6,251 @@
 package com.liferay.headless.asset.library.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.headless.asset.library.client.dto.v1_0.Role;
+import com.liferay.headless.asset.library.client.pagination.Page;
+import com.liferay.headless.asset.library.client.problem.Problem;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import org.junit.Ignore;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  */
-@Ignore
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class RoleResourceTest extends BaseRoleResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Override
+	@Test
+	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage()
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		Role randomRole1 = randomRole();
+
+		roleResource.
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+				testDepotEntryGroup.getExternalReferenceCode(),
+				user.getExternalReferenceCode(), new Role[] {randomRole1});
+
+		_assertGetAssetLibraryUserAccountUserRolesPage(
+			Arrays.asList(randomRole1));
+
+		Role randomRole2 = randomRole();
+
+		roleResource.
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+				testDepotEntryGroup.getExternalReferenceCode(),
+				user.getExternalReferenceCode(),
+				new Role[] {randomRole1, randomRole2});
+
+		_assertGetAssetLibraryUserAccountUserRolesPage(
+			Arrays.asList(randomRole1, randomRole2));
+
+		Role randomRole3 = new Role() {
+			{
+				name = RandomTestUtil.randomString();
+			}
+		};
+
+		try {
+			roleResource.
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+					testDepotEntryGroup.getExternalReferenceCode(),
+					user.getExternalReferenceCode(), new Role[] {randomRole3});
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+		}
+
+		_assertGetAssetLibraryUserAccountUserRolesPage(
+			Arrays.asList(randomRole1, randomRole2));
+	}
+
+	@Override
+	@Test
+	public void testPutAssetLibraryUserAccountUserRolesPage() throws Exception {
+		Role randomRole1 = randomRole();
+
+		roleResource.putAssetLibraryUserAccountUserRolesPage(
+			testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId(),
+			new Role[] {randomRole1});
+
+		_assertGetAssetLibraryUserAccountUserRolesPage(
+			Arrays.asList(randomRole1));
+
+		Role randomRole2 = randomRole();
+
+		roleResource.putAssetLibraryUserAccountUserRolesPage(
+			testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId(),
+			new Role[] {randomRole1, randomRole2});
+
+		_assertGetAssetLibraryUserAccountUserRolesPage(
+			Arrays.asList(randomRole1, randomRole2));
+
+		Role randomRole3 = new Role() {
+			{
+				name = RandomTestUtil.randomString();
+			}
+		};
+
+		try {
+			roleResource.putAssetLibraryUserAccountUserRolesPage(
+				testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId(),
+				new Role[] {randomRole3});
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+		}
+
+		_assertGetAssetLibraryUserAccountUserRolesPage(
+			Arrays.asList(randomRole1, randomRole2));
+	}
+
+	@Override
+	protected Role randomRole() throws Exception {
+		long roleId = RoleTestUtil.addGroupRole(testGroup.getGroupId());
+
+		com.liferay.portal.kernel.model.Role role = _roleLocalService.fetchRole(
+			roleId);
+
+		_roles.add(role);
+
+		return new Role() {
+			{
+				externalReferenceCode = role.getExternalReferenceCode();
+				id = role.getRoleId();
+				name = role.getName();
+				roleType = role.getType();
+			}
+		};
+	}
+
+	@Override
+	protected Role
+			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage_addRole(
+				String assetLibraryExternalReferenceCode,
+				String userExternalReferenceCode, Role role)
+		throws Exception {
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			assetLibraryExternalReferenceCode, TestPropsValues.getCompanyId());
+		User user = _userLocalService.getUserByExternalReferenceCode(
+			userExternalReferenceCode, TestPropsValues.getCompanyId());
+
+		_userGroupRoleService.addUserGroupRoles(
+			user.getUserId(), group.getGroupId(), new long[] {role.getId()});
+
+		return role;
+	}
+
+	@Override
+	protected String
+			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage_getUserExternalReferenceCode()
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		return user.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Role testGetAssetLibraryUserAccountUserRolesPage_addRole(
+			Long assetLibraryId, Long userId, Role role)
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
+			assetLibraryId);
+
+		_userGroupRoleService.addUserGroupRoles(
+			userId, depotEntry.getGroupId(), new long[] {role.getId()});
+
+		return role;
+	}
+
+	@Override
+	protected Long testGetAssetLibraryUserAccountUserRolesPage_getUserId()
+		throws Exception {
+
+		return TestPropsValues.getUserId();
+	}
+
+	private void _assertGetAssetLibraryUserAccountUserRolesPage(
+			List<Role> expectedRoles)
+		throws Exception {
+
+		Page<Role> rolesPage =
+			roleResource.getAssetLibraryUserAccountUserRolesPage(
+				testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId());
+
+		Collection<Role> items = rolesPage.getItems();
+
+		Assert.assertEquals(
+			items.toString(), expectedRoles.size(), items.size());
+
+		for (Role role : expectedRoles) {
+			Assert.assertTrue(items.contains(role));
+		}
+	}
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@DeleteAfterTestRun
+	private List<com.liferay.portal.kernel.model.Role> _roles =
+		new ArrayList<>();
+
+	@Inject
+	private UserGroupRoleService _userGroupRoleService;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
 }

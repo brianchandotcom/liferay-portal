@@ -24,6 +24,20 @@ public class ModulesBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult {
 
 	@Override
+	public BuildReport getBuildReport() {
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			DownstreamBuildReport cachedDownstreamBuildReport =
+				_modulesTestClass.getCachedDownstreamBuildReport();
+
+			if (cachedDownstreamBuildReport != null) {
+				return cachedDownstreamBuildReport;
+			}
+		}
+
+		return super.getBuildReport();
+	}
+
+	@Override
 	public String getComponentName() {
 		String componentName = _modulesTestClass.getTestrayMainComponentName();
 
@@ -150,6 +164,17 @@ public class ModulesBatchBuildTestrayCaseResult
 	public TestClassReport getTestClassReport() {
 		if (_testClassReport != null) {
 			return _testClassReport;
+		}
+
+		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+			TestClassReport cachedTestClassReport =
+				_modulesTestClass.getCachedTestClassReport();
+
+			if (cachedTestClassReport != null) {
+				_testClassReport = cachedTestClassReport;
+
+				return _testClassReport;
+			}
 		}
 
 		DownstreamBuildReport downstreamBuildReport =

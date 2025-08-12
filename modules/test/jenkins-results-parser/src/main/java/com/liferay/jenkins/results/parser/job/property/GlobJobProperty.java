@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public interface GlobJobProperty extends JobProperty {
 
-	public Map<String, List<String>> getGlobTestClassMethodsMap();
+	public Map<String, List<String>> getGlobTestClassMethodNamesMap();
 
 	public List<PathMatcher> getPathMatchers();
 

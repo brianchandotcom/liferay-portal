@@ -337,8 +337,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return topLevelJobName + batchJobSuffix;
 	}
 
-	public Map<String, List<String>> getGlobTestClassMethodsMap() {
-		return _globTestClassMethodsMap;
+	public Map<String, List<String>> getGlobTestClassMethodNamesMap() {
+		return _globTestClassMethodNamesMap;
 	}
 
 	@Override
@@ -675,13 +675,14 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				continue;
 			}
 
-			Map<String, List<String>> globTestClassMethodsMap =
-				globJobProperty.getGlobTestClassMethodsMap();
+			Map<String, List<String>> globTestClassMethodNamesMap =
+				globJobProperty.getGlobTestClassMethodNamesMap();
 
-			if ((globTestClassMethodsMap != null) &&
-				!globTestClassMethodsMap.isEmpty()) {
+			if ((globTestClassMethodNamesMap != null) &&
+				!globTestClassMethodNamesMap.isEmpty()) {
 
-				_globTestClassMethodsMap.putAll(globTestClassMethodsMap);
+				_globTestClassMethodNamesMap.putAll(
+					globTestClassMethodNamesMap);
 			}
 
 			for (PathMatcher globPathMatcher : globPathMatchers) {
@@ -1596,7 +1597,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private final Map<String, Long> _averageTestOverheadDurations =
 		new HashMap<>();
 	private BatchHistory _batchHistory;
-	private final Map<String, List<String>> _globTestClassMethodsMap =
+	private final Map<String, List<String>> _globTestClassMethodNamesMap =
 		new HashMap<>();
 	private final List<JobProperty> _jobProperties = new ArrayList<>();
 	private final List<SegmentTestClassGroup> _segmentTestClassGroups =

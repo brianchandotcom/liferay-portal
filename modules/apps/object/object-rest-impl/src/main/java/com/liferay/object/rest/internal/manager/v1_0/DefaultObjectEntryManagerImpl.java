@@ -1553,6 +1553,7 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
+		objectEntry.setExpirationDate(() -> null);
 		objectEntry.setExternalReferenceCode(() -> null);
 		objectEntry.setId(() -> null);
 

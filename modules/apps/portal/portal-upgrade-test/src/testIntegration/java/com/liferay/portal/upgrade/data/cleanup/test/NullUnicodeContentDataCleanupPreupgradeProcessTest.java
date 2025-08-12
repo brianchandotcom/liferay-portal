@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -48,7 +49,22 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 	public static void setUpClass() throws Exception {
 		_connection = DataAccess.getConnection();
 
+		_db = DBManagerUtil.getDB();
+
 		_dbInspector = new DBInspector(_connection);
+
+		_db.alterTableAddColumn(
+			_connection, "JournalArticle", "content", "TEXT null");
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		try {
+			_db.alterTableDropColumn(_connection, "JournalArticle", "content");
+		}
+		finally {
+			DataAccess.cleanUp(_connection);
+		}
 	}
 
 	@Test
@@ -57,39 +73,35 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 
 		String content = "'" + cleanContent + "\\u0000'";
 
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.SQLSERVER) {
+		if (_db.getDBType() == DBType.SQLSERVER) {
 			content = "N" + content;
 		}
+
+		long contentId = RandomTestUtil.nextLong();
+
+		runSQL(
+			_connection,
+			StringBundler.concat(
+				"insert into DDMContent (",
+				"mvccVersion, ctCollectionId, contentId, groupId, data_) ",
+				"values (0, 0, ", contentId, ", ", RandomTestUtil.nextLong(),
+				", ", content, ")"));
+
+		long journalId = RandomTestUtil.nextLong();
+
+		runSQL(
+			_connection,
+			StringBundler.concat(
+				"insert into JournalArticle (",
+				"mvccVersion, ctCollectionId, id_, groupId, content) values (",
+				"0, 0, ", journalId, ", ", RandomTestUtil.nextLong(), ", ",
+				content, ")"));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				NullUnicodeContentDataCleanupPreupgradeProcess.class.getName(),
 				LoggerTestUtil.INFO)) {
 
-			connection = _connection;
-
-			long contentId = RandomTestUtil.nextLong();
-
-			runSQL(
-				StringBundler.concat(
-					"insert into DDMContent (",
-					"mvccVersion, ctCollectionId, contentId, groupId, data_) ",
-					"values (0, 0, ", contentId, ", ",
-					RandomTestUtil.nextLong(), ", ", content, ")"));
-
-			alterTableAddColumn("JournalArticle", "content", "TEXT null");
-
-			long journalId = RandomTestUtil.nextLong();
-
-			runSQL(
-				StringBundler.concat(
-					"insert into JournalArticle (",
-					"mvccVersion, ctCollectionId, id_, groupId, content) ",
-					"values (0, 0, ", journalId, ", ",
-					RandomTestUtil.nextLong(), ", ", content, ")"));
-
-			doUpgrade();
+			upgrade();
 
 			List<String> messages = logCapture.getMessages();
 
@@ -131,12 +143,10 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 				Assert.assertEquals(cleanContent, resultSet.getString(1));
 			}
 		}
-		finally {
-			alterTableDropColumn("JournalArticle", "content");
-		}
 	}
 
 	private static Connection _connection;
+	private static DB _db;
 	private static DBInspector _dbInspector;
 
 }

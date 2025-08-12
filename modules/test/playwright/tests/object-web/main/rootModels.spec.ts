@@ -20,6 +20,7 @@ import performLogin, {
 	userData,
 } from '../../../utils/performLogin';
 import {pushToApiHelpersData} from '../../../utils/pushToApiHelpersData';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -653,6 +654,205 @@ test.describe('Manage root models elements through Objects Admin', () => {
 				.click();
 
 			await page.getByRole('button', {name: 'Done'}).click();
+		}
+		finally {
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			for (const objectRelationship of objectRelationships) {
+				await objectRelationshipAPIClient.putObjectRelationship(
+					objectRelationship.id,
+					{
+						...objectRelationship,
+						edge: false,
+					}
+				);
+			}
+		}
+	});
+
+	test('cannot select inheritance relationships object field in object layout and object view', async ({
+		apiHelpers,
+		editObjectViewPage,
+		objectLayoutsPage,
+		objectViewPage,
+		page,
+	}) => {
+		const objectRelationships: ObjectRelationship[] = [];
+
+		try {
+			const parentObjectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: parentObjectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const childObjectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: childObjectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const {body: objectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					parentObjectDefinition.externalReferenceCode,
+					{
+						edge: false,
+						label: {
+							en_US: 'objectRelationship',
+						},
+						name:
+							'objectRelationship' +
+							Math.floor(Math.random() * 99),
+						objectDefinitionExternalReferenceCode1:
+							parentObjectDefinition.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							childObjectDefinition.externalReferenceCode,
+						objectDefinitionId1: parentObjectDefinition.id,
+						objectDefinitionId2: childObjectDefinition.id,
+						objectDefinitionName2: childObjectDefinition.name,
+						type: 'oneToMany',
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			const {body: inheritanceObjectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					parentObjectDefinition.externalReferenceCode,
+					{
+						edge: true,
+						label: {
+							en_US: 'inheritanceObjectRelationship',
+						},
+						name:
+							'articleObjectRelationship' +
+							Math.floor(Math.random() * 99),
+						objectDefinitionExternalReferenceCode1:
+							parentObjectDefinition.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							childObjectDefinition.externalReferenceCode,
+						objectDefinitionId1: parentObjectDefinition.id,
+						objectDefinitionId2: childObjectDefinition.id,
+						objectDefinitionName2: childObjectDefinition.name,
+						type: 'oneToMany',
+					}
+				);
+
+			objectRelationships.push(inheritanceObjectRelationship);
+
+			apiHelpers.data.push({
+				id: inheritanceObjectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			await test.step('inheritance relationship field is omitted in object layout', async () => {
+				await objectLayoutsPage.goto(
+					childObjectDefinition.label['en_US']
+				);
+
+				const objectLayoutName = getRandomString();
+
+				await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+				await objectLayoutsPage.createObjectLayoutContent({
+					objectLayoutBlockName: getRandomString(),
+					objectLayoutName,
+					objectLayoutTabName: getRandomString(),
+				});
+
+				await objectLayoutsPage.fieldSelect.waitFor({state: 'visible'});
+
+				await expect(
+					objectLayoutsPage.iframeLocator.getByRole('option', {
+						name: 'inheritanceObjectRelationship',
+					})
+				).toBeHidden();
+
+				await objectLayoutsPage.iframeLocator
+					.getByRole('option')
+					.filter({hasText: 'objectRelationship'})
+					.click();
+
+				await objectLayoutsPage.saveAddFieldButton.click();
+
+				await objectLayoutsPage.setObjectLayoutAsDefault();
+
+				await objectLayoutsPage.saveUpdateLayoutButton.click();
+
+				await waitForAlert(
+					page,
+					'Success:The object layout was updated successfully'
+				);
+			});
+
+			await test.step('inheritance relationship field is omitted in object view', async () => {
+				await objectViewPage.goto(childObjectDefinition.label['en_US']);
+
+				const objectViewName = getRandomString();
+
+				await objectViewPage.createObjectView(objectViewName);
+
+				await page.getByRole('link', {name: objectViewName}).click();
+
+				await editObjectViewPage.sidePanel
+					.getByLabel('Mark as Default')
+					.click();
+
+				await editObjectViewPage.viewBuilderTab.click();
+
+				await editObjectViewPage.addColumnButton.click();
+
+				await editObjectViewPage.addColumnsModal
+					.getByText('objectRelationship')
+					.check();
+
+				await expect(
+					page.getByText('inheritanceObjectRelationship', {
+						exact: true,
+					})
+				).toBeHidden();
+
+				await editObjectViewPage.addColumnsModal
+					.getByRole('button', {name: 'Save'})
+					.click();
+
+				await editObjectViewPage.filtersTab.click();
+
+				await editObjectViewPage.newFilterButton.click();
+
+				await editObjectViewPage.filterBy.click();
+
+				await expect(
+					editObjectViewPage.sidePanel.getByRole('option', {
+						name: 'inheritanceObjectRelationship',
+					})
+				).toBeHidden();
+
+				await editObjectViewPage.sidePanel
+					.getByRole('option', {name: 'objectRelationship'})
+					.click();
+
+				await editObjectViewPage.saveFilter.click();
+
+				await editObjectViewPage.saveButton.last().click();
+
+				await waitForAlert(page, 'Modifications saved successfully');
+			});
 		}
 		finally {
 			const objectRelationshipAPIClient =

@@ -13,6 +13,7 @@ export class EditObjectViewPage {
 	readonly filterType: Locator;
 	readonly filterValue: Locator;
 	readonly filtersTab: Locator;
+	readonly markAsDefaultButton: Locator;
 	readonly newFilterButton: Locator;
 	readonly saveButton: Locator;
 	readonly saveFilter: Locator;
@@ -34,6 +35,7 @@ export class EditObjectViewPage {
 		this.filterValue = this.sidePanel
 			.getByLabel('New Filter')
 			.locator('input[type="text"]');
+		this.markAsDefaultButton = this.sidePanel.getByLabel('Mark as Default');
 		this.newFilterButton = this.sidePanel.getByRole('button', {
 			name: 'New Filter',
 		});

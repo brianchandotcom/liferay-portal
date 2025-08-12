@@ -199,7 +199,7 @@
 													],
 													"customCSS": ".[$FRAGMENT_CLASS$] a:hover {\n    text-decoration: none;\n    \n}\n\n\n.signed-in .signin{\n   display:none;\n}",
 													"fragment": {
-														"key": "DIALECT-dialect-text",
+														"key": "dialect-text",
 														"siteKey": "[$GROUP_ID$]"
 													},
 													"fragmentConfig": {
@@ -291,7 +291,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "DIALECT-dialect-text",
+										"key": "dialect-text",
 										"siteKey": "[$GROUP_ID$]"
 									},
 									"fragmentConfig": {
@@ -557,7 +557,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "DIALECT-dialect-text",
+																"key": "dialect-text",
 																"siteKey": "[$GROUP_ID$]"
 															},
 															"fragmentConfig": {
@@ -663,7 +663,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "DIALECT-dialect-text",
+																"key": "dialect-text",
 																"siteKey": "[$GROUP_ID$]"
 															},
 															"fragmentConfig": {
@@ -769,7 +769,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "DIALECT-dialect-text",
+																"key": "dialect-text",
 																"siteKey": "[$GROUP_ID$]"
 															},
 															"fragmentConfig": {
@@ -875,7 +875,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "DIALECT-dialect-text",
+																"key": "dialect-text",
 																"siteKey": "[$GROUP_ID$]"
 															},
 															"fragmentConfig": {
@@ -907,7 +907,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "DIALECT-dialect-text",
+																"key": "dialect-text",
 																"siteKey": "[$GROUP_ID$]"
 															},
 															"fragmentConfig": {
@@ -967,7 +967,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "DIALECT-dialect-button",
+																		"key": "dialect-button",
 																		"siteKey": "[$GROUP_ID$]"
 																	},
 																	"fragmentConfig": {
@@ -1008,7 +1008,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "DIALECT-dialect-button",
+																		"key": "dialect-button",
 																		"siteKey": "[$GROUP_ID$]"
 																	},
 																	"fragmentConfig": {
@@ -1167,7 +1167,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "DIALECT-dialect-button",
+																"key": "dialect-button",
 																"siteKey": "[$GROUP_ID$]"
 															},
 															"fragmentConfig": {
@@ -1198,7 +1198,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "DIALECT-dialect-button",
+																"key": "dialect-button",
 																"siteKey": "[$GROUP_ID$]"
 															},
 															"fragmentConfig": {
@@ -1261,7 +1261,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "DIALECT-dialect-text",
+														"key": "dialect-text",
 														"siteKey": "[$GROUP_ID$]"
 													},
 													"fragmentConfig": {

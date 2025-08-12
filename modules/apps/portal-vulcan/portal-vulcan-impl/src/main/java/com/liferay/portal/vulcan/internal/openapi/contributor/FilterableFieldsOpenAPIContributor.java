@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -273,7 +274,22 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 
 			EntityField entityField = entry1.getValue();
 
-			if (!(entityField instanceof ComplexEntityField)) {
+			if (entityField instanceof CollectionEntityField) {
+				CollectionEntityField collectionEntityField =
+					(CollectionEntityField)entityField;
+
+				filterableFieldMapping.put(
+					fieldName,
+					StringBundler.concat(
+						"[",
+						collectionEntityField.getEntityField(
+						).getType(
+						).name(),
+						"]"));
+
+				continue;
+			}
+			else if (!(entityField instanceof ComplexEntityField)) {
 				filterableFieldMapping.put(
 					fieldName,
 					entityField.getType(

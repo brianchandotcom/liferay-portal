@@ -105,8 +105,8 @@ public interface SamlProviderConfiguration {
 			"service-provider"
 		},
 		optionValues = {
-			SamlProviderConfigurationKeys.SAML_ROLE_IDP,
 			SamlProviderConfigurationKeys.SAML_MULTIROLE,
+			SamlProviderConfigurationKeys.SAML_ROLE_IDP,
 			SamlProviderConfigurationKeys.SAML_ROLE_SP
 		},
 		required = false

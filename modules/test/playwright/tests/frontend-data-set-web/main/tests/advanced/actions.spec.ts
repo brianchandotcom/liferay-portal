@@ -85,7 +85,9 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 			const menuItems = dropdownMenu.getByRole('menuitem');
 
 			for (const menuItem of await menuItems.all()) {
-				await expect(menuItem.locator('.lexicon-icon')).toBeVisible();
+				await expect
+					.soft(menuItem.locator('.lexicon-icon'))
+					.toBeVisible();
 			}
 
 			await page.keyboard.press('Escape');
@@ -115,7 +117,9 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 			const menuItems = dropdownMenu.getByRole('menuitem');
 
 			for (const menuItem of await menuItems.all()) {
-				await expect(menuItem.locator('.lexicon-icon')).toBeVisible();
+				await expect
+					.soft(menuItem.locator('.lexicon-icon'))
+					.toBeVisible();
 			}
 
 			await page.keyboard.press('Escape');
@@ -145,7 +149,9 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 			const menuItems = dropdownMenu.getByRole('menuitem');
 
 			for (const menuItem of await menuItems.all()) {
-				await expect(menuItem.locator('.lexicon-icon')).toBeVisible();
+				await expect
+					.soft(menuItem.locator('.lexicon-icon'))
+					.toBeVisible();
 			}
 
 			await page.keyboard.press('Escape');

@@ -7,6 +7,8 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {DisplayPageTemplatesPage} from '../../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
+import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
@@ -42,6 +44,9 @@ export class NavigationMenusPage {
 	readonly submenuModal: FrameLocator;
 	readonly urlModal: FrameLocator;
 	readonly vocabulariesModal: FrameLocator;
+
+	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly productMenuPage: ProductMenuPage;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -123,6 +128,9 @@ export class NavigationMenusPage {
 		this.vocabulariesModal = page.frameLocator(
 			'iframe[title="Select Vocabularies"]'
 		);
+
+		this.applicationsMenuPage = new ApplicationsMenuPage(this.page);
+		this.productMenuPage = new ProductMenuPage(this.page);
 	}
 
 	async addBlogItem(name: string) {
@@ -425,7 +433,17 @@ export class NavigationMenusPage {
 	}
 
 	async gotoGlobalSiteNavigationMenuPortlet() {
-		await this.page.goto(`/group/global${PORTLET_URLS.navigationMenus}`);
+		await this.applicationsMenuPage.goToApplicationsMenu();
+
+		await this.applicationsMenuPage.goToGlobalSite();
+
+		await this.productMenuPage.openProductMenuIfClosed();
+
+		await this.productMenuPage.siteBuilderButton.click();
+
+		await this.productMenuPage.page
+			.getByRole('menuitem', {name: 'Navigation Menus'})
+			.click();
 	}
 
 	async openAddCategoryModal() {

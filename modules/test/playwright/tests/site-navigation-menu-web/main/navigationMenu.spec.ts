@@ -14,7 +14,9 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
+import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import getRandomString from '../../../utils/getRandomString';
 import performLoginViaApi, {performLogout} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -24,6 +26,7 @@ import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTes
 import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdminPagesTest';
 import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
 import {navigationMenusPagesTest} from './../../site-navigation-admin-web/main/fixtures/navigationMenusPagesTest';
+import {NavigationMenusPage} from './../../site-navigation-admin-web/main/pages/NavigationMenusPage';
 import {navigationMenuWidgetPagesTest} from './fixtures/navigationMenuWidgetPagesTest';
 
 export const test = mergeTests(
@@ -40,11 +43,30 @@ export const test = mergeTests(
 	navigationMenusPagesTest,
 	pagesAdminPagesTest,
 	pagesPagesTest,
+	productMenuPageTest,
 	templatesPageTest,
 	pageViewModePagesTest,
 	sitesAdminPagesTest,
 	navigationMenuWidgetPagesTest
 );
+
+async function deleteGlobalNavigationMenus(
+	navigationMenusPage: NavigationMenusPage,
+	productMenuPage: ProductMenuPage
+) {
+	await navigationMenusPage.gotoGlobalSiteNavigationMenuPortlet();
+
+	await productMenuPage.page
+		.getByLabel('Select All Items on the Page')
+		.check();
+
+	await productMenuPage.page.getByRole('button', {name: 'Delete'}).click();
+
+	await productMenuPage.page
+		.getByLabel('Delete Navigation Menus')
+		.getByRole('button', {name: 'Delete'})
+		.click();
+}
 
 test(
 	'Add URL type Navigation Menu Item with "open in a new tab" checkbox unchecked',
@@ -159,6 +181,7 @@ test(
 		navigationMenuWidgetPage,
 		navigationMenusPage,
 		page,
+		productMenuPage,
 		site,
 		widgetPagePage,
 	}) => {
@@ -226,20 +249,10 @@ test(
 		finally {
 			await performLoginViaApi(page, 'test');
 
-			await page.waitForTimeout(1500);
-
-			await navigationMenusPage.gotoGlobalSiteNavigationMenuPortlet();
-
-			await page.waitForTimeout(1500);
-
-			await page.getByLabel('Select All Items on the Page').check();
-
-			await page.getByRole('button', {name: 'Delete'}).click();
-
-			await page
-				.getByLabel('Delete Navigation Menus-')
-				.getByRole('button', {name: 'Delete'})
-				.click();
+			await deleteGlobalNavigationMenus(
+				navigationMenusPage,
+				productMenuPage
+			);
 		}
 	}
 );
@@ -337,6 +350,7 @@ test(
 		navigationMenuWidgetPage,
 		navigationMenusPage,
 		page,
+		productMenuPage,
 		site,
 		widgetPagePage,
 	}) => {
@@ -381,20 +395,10 @@ test(
 			expect(page.url()).toContain(PORTLET_URLS.navigationMenus);
 		}
 		finally {
-			await page.waitForTimeout(1500);
-
-			await navigationMenusPage.gotoGlobalSiteNavigationMenuPortlet();
-
-			await page.waitForTimeout(1500);
-
-			await page.getByLabel('Select All Items on the Page').check();
-
-			await page.getByRole('button', {name: 'Delete'}).click();
-
-			await page
-				.getByLabel('Delete Navigation Menus')
-				.getByRole('button', {name: 'Delete'})
-				.click();
+			await deleteGlobalNavigationMenus(
+				navigationMenusPage,
+				productMenuPage
+			);
 		}
 	}
 );

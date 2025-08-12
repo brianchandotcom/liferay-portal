@@ -26,54 +26,30 @@ const useSSAActions = () => {
 	const {selectedAccountId, ssaTrialExtend, ssaTrialExtendMutate} =
 		useSSADashboardOutlet();
 
-	return useMemo(
-		() =>
-			[
-				{
-					name: i18n.translate('details'),
-					onClick: (order: Order) => navigate(`details/${order.id}`),
-				},
-				{
-					disabled: (order: Order) =>
-						order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS,
-					name: i18n.translate('go-to-trial'),
-					onClick: (order: Order) =>
-						window.open(
-							`https://${
-								order?.customFields?.[
-									'trial-virtual-host'
-								] as string
-							}`
-						),
-				},
-				{
-					hidden: (order: Order) => {
-						if (marketplaceUserAccount.isSSAAdmin) {
-							const ssaTrialsExtendRequests =
-								ssaTrialExtend.items;
-							const extendRequests =
-								ssaTrialsExtendRequests?.filter(
-									(extend: TrialExtend) => {
-										return (
-											extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-											Number(order.id)
-										);
-									}
-								) as TrialExtend[];
+	return useMemo(() => {
+		const ssaTrialsExtendRequests = ssaTrialExtend?.items ?? [];
 
-							if (extendRequests && extendRequests?.length > 0) {
-								return (
-									extendRequests[0]?.dueStatus.key !==
-									ExtendRequestStatus.PENDING
-								);
-							}
-						}
-
-						return true;
-					},
-					name: i18n.translate('view-request'),
-					onClick: (order: PlacedOrder, orderMutate) => {
-						const ssaTrialsExtendRequests = ssaTrialExtend.items;
+		return [
+			{
+				name: i18n.translate('details'),
+				onClick: (order: Order) => navigate(`details/${order.id}`),
+			},
+			{
+				disabled: (order: Order) =>
+					order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS,
+				name: i18n.translate('go-to-trial'),
+				onClick: (order: Order) =>
+					window.open(
+						`https://${
+							order?.customFields?.[
+								'trial-virtual-host'
+							] as string
+						}`
+					),
+			},
+			{
+				hidden: (order: Order) => {
+					if (marketplaceUserAccount.isSSAAdmin) {
 						const extendRequests = ssaTrialsExtendRequests?.filter(
 							(extend: TrialExtend) => {
 								return (
@@ -83,117 +59,133 @@ const useSSAActions = () => {
 							}
 						) as TrialExtend[];
 
-						const extendRequestsCount = extendRequests?.filter(
-							(extend: TrialExtend) => {
-								return (
-									extend.dueStatus?.key ===
-										ExtendRequestStatus.APPROVED ||
-									extend.dueStatus?.key ===
-										ExtendRequestStatus.AUTO_APPROVED
-								);
-							}
-						) as TrialExtend[];
-
-						if (!extendRequests) {
-							return;
-						}
-
-						modalContext.onOpenModal({
-							body: (
-								<ExtendRequestModal
-									onClose={modalContext.onClose}
-									order={order}
-									orderMutate={orderMutate}
-									ssaTrialExtendMutate={ssaTrialExtendMutate}
-									trialExtend={extendRequests[0]}
-									trialExtendCount={
-										extendRequestsCount?.length
-									}
-								/>
-							),
-							center: true,
-						});
-					},
-				},
-				{
-					disabled: (order: Order) => {
-						const ssaTrialsExtendRequests = ssaTrialExtend.items;
-						const extendRequests = ssaTrialsExtendRequests?.filter(
-							(extend: TrialExtend) => {
-								return (
-									extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-									Number(order.id)
-								);
-							}
-						) as TrialExtend[];
-
-						if (!extendRequests) {
-							return true;
-						}
-
-						return (
-							order.orderStatusInfo.label !==
-								OrderStatus.IN_PROGRESS ||
-							extendRequests[0]?.dueStatus.key ===
+						if (extendRequests && extendRequests?.length > 0) {
+							return (
+								extendRequests[0]?.dueStatus.key !==
 								ExtendRequestStatus.PENDING
-						);
-					},
-					name: i18n.translate('extend-trial'),
-					onClick: (order: PlacedOrder, orderMutate: any) => {
-						const ssaTrialsExtendRequests = ssaTrialExtend.items;
-						const extendRequests = ssaTrialsExtendRequests?.filter(
-							(extend: TrialExtend) => {
-								return (
-									extend.r_orderToTrialExtensionRequest_commerceOrderId ===
-									Number(order.id)
-								);
-							}
-						) as TrialExtend[];
+							);
+						}
+					}
 
-						modalContext.onOpenModal({
-							body: (
-								<ExtendSSATrialModal
-									accountId={selectedAccountId}
-									firstExtendRequest={!extendRequests?.length}
-									onClose={modalContext.onClose}
-									order={order}
-									orderMutate={orderMutate}
-									ssaTrialExtendMutate={ssaTrialExtendMutate}
-								/>
-							),
-							header: `Extend ${order.id} Trial`,
-						});
-					},
+					return true;
 				},
-				{
-					disabled: (order: Order) =>
-						order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS,
-					name: i18n.translate('expire-trial'),
-					onClick: (order: Order, mutate) => {
-						modalContext.onOpenModal({
-							body: (
-								<ExpireSSAModal
-									accountId={selectedAccountId}
-									mutate={mutate}
-									onClose={modalContext.onClose}
-									order={order}
-								/>
-							),
-							header: `Expire ${order.id} Trial`,
-							status: undefined,
-						});
-					},
+				name: i18n.translate('view-request'),
+				onClick: (order: PlacedOrder, orderMutate) => {
+					const extendRequests = ssaTrialsExtendRequests?.filter(
+						(extend: TrialExtend) => {
+							return (
+								extend.r_orderToTrialExtensionRequest_commerceOrderId ===
+								Number(order.id)
+							);
+						}
+					) as TrialExtend[];
+
+					const extendRequestsCount = extendRequests?.filter(
+						(extend: TrialExtend) => {
+							return (
+								extend.dueStatus?.key ===
+									ExtendRequestStatus.APPROVED ||
+								extend.dueStatus?.key ===
+									ExtendRequestStatus.AUTO_APPROVED
+							);
+						}
+					) as TrialExtend[];
+
+					if (!extendRequests) {
+						return;
+					}
+
+					modalContext.onOpenModal({
+						body: (
+							<ExtendRequestModal
+								onClose={modalContext.onClose}
+								order={order}
+								orderMutate={orderMutate}
+								ssaTrialExtendMutate={ssaTrialExtendMutate}
+								trialExtend={extendRequests[0]}
+								trialExtendCount={extendRequestsCount?.length}
+							/>
+						),
+						center: true,
+					});
 				},
-			] as Action[],
-		[
-			marketplaceUserAccount.isSSAAdmin,
-			modalContext,
-			navigate,
-			selectedAccountId,
-			ssaTrialExtend.items,
-			ssaTrialExtendMutate,
-		]
-	);
+			},
+			{
+				disabled: (order: Order) => {
+					const extendRequests = ssaTrialsExtendRequests?.filter(
+						(extend: TrialExtend) => {
+							return (
+								extend.r_orderToTrialExtensionRequest_commerceOrderId ===
+								Number(order.id)
+							);
+						}
+					) as TrialExtend[];
+
+					if (!extendRequests) {
+						return true;
+					}
+
+					return (
+						order.orderStatusInfo.label !==
+							OrderStatus.IN_PROGRESS ||
+						extendRequests[0]?.dueStatus.key ===
+							ExtendRequestStatus.PENDING
+					);
+				},
+				name: i18n.translate('extend-trial'),
+				onClick: (order: PlacedOrder, orderMutate: any) => {
+					const extendRequests = ssaTrialsExtendRequests?.filter(
+						(extend: TrialExtend) => {
+							return (
+								extend.r_orderToTrialExtensionRequest_commerceOrderId ===
+								Number(order.id)
+							);
+						}
+					) as TrialExtend[];
+
+					modalContext.onOpenModal({
+						body: (
+							<ExtendSSATrialModal
+								accountId={selectedAccountId}
+								firstExtendRequest={!extendRequests?.length}
+								onClose={modalContext.onClose}
+								order={order}
+								orderMutate={orderMutate}
+								ssaTrialExtendMutate={ssaTrialExtendMutate}
+							/>
+						),
+						header: `Extend ${order.id} Trial`,
+					});
+				},
+			},
+			{
+				disabled: (order: Order) =>
+					order.orderStatusInfo.label !== OrderStatus.IN_PROGRESS,
+				name: i18n.translate('expire-trial'),
+				onClick: (order: Order, mutate) => {
+					modalContext.onOpenModal({
+						body: (
+							<ExpireSSAModal
+								accountId={selectedAccountId}
+								mutate={mutate}
+								onClose={modalContext.onClose}
+								order={order}
+							/>
+						),
+						header: `Expire ${order.id} Trial`,
+						status: undefined,
+					});
+				},
+			},
+		] as Action[];
+	}, [
+		marketplaceUserAccount.isSSAAdmin,
+		modalContext,
+		navigate,
+		selectedAccountId,
+		ssaTrialExtend?.items,
+		ssaTrialExtendMutate,
+	]);
 };
 
 export default useSSAActions;

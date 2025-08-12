@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
@@ -13,7 +14,6 @@ import {KeyedMutator} from 'swr';
 
 import {Action, SortDirection, SortOption} from '../../../utils/constants';
 import {Sort} from '../hooks/ListViewContext';
-import {ClayButtonWithIcon} from '@clayui/button';
 
 export type Column<
 	T extends Record<string, any>,
@@ -119,9 +119,9 @@ const Table = <T extends Record<string, any>>({
 						}))}
 						trigger={
 							<ClayButtonWithIcon
-								onClick={(event) => event.stopPropagation()}
-								displayType="unstyled"
 								aria-label="actions"
+								displayType="unstyled"
+								onClick={(event) => event.stopPropagation()}
 								symbol="ellipsis-v"
 							/>
 						}

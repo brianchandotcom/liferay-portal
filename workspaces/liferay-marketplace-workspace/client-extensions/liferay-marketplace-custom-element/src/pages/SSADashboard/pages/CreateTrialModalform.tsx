@@ -26,6 +26,7 @@ import zodSchema from '../../../schema/zod';
 import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessCommerceDeliveryCatalog from '../../../services/rest/HeadlessCommerceDeliveryCatalog';
 import ProductPurchaseSSATrial from '../../ProductPurchase/services/ProductPurchaseSSATrial';
+import {useSSADashboardOutlet} from '../SSADashboardOutlet';
 
 type CreateTrialModalFormProps = {
 	items?: PlacedOrder[];
@@ -67,8 +68,8 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 	modal,
 	mutate,
 }) => {
-	const {channel, properties} = useMarketplaceContext();
-	const {accountId} = properties;
+	const {properties} = useMarketplaceContext();
+	const {ssaAccount} = useSSADashboardOutlet();
 
 	const [order, setOrder] = useState<any>();
 	const [product, setProduct] = useState<DeliveryProduct | null>(null);
@@ -96,7 +97,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 		}
 
 		return new ProductPurchaseSSATrial(ssaAccount, product);
-	}, [product, ssaAccount]);
+	}, [ssaAccount, product]);
 
 	const {
 		clearErrors,
@@ -130,64 +131,59 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 		}
 	}, [isTestTrial, setValue, clearErrors]);
 
-	const validateProjectId = useCallback(
-		async (projectId: string) => {
+	const onSubmit = useCallback(
+		async (data: FormFields) => {
 			try {
-				return await trialOAuth2.checkDomainAvailability(projectId);
+				await trialOAuth2.checkDomainAvailability(data.projectId);
 			}
 			catch (error: any) {
+				console.error(error.message);
+
 				if (error.status === 409) {
 					setError('projectId', {
 						message: 'Project ID already exists',
-						type: 'manual',
 					});
-
-					return false;
 				}
 				else {
 					Liferay.Util.openToast({
 						message: i18n.translate('an-unexpected-error-occurred'),
 						type: 'danger',
 					});
-
-					return false;
 				}
+
+				return;
 			}
-		},
-		[setError]
-	);
 
-	const onSubmit = async (data: FormFields) => {
-		const isAvailable = await validateProjectId(data.projectId);
-		if (!isAvailable) {
-			return;
-		}
+			const emails: string[] = [
+				Liferay.ThemeDisplay.getUserEmailAddress(),
+			];
 
-		const emails: string[] = [Liferay.ThemeDisplay.getUserEmailAddress()];
+			data.emailAddress.forEach((email: any) => emails.push(email.value));
 
-		data.emailAddress.forEach((email: any) => emails.push(email.value));
+			const trialSettings = {
+				consoleInviteEmailAddresses: emails,
+				duration: data.demoDuration,
+				projectId: data.projectId,
+			};
 
-		const trialSettings = {
-			consoleInviteEmailAddresses: emails,
-			duration: data.demoDuration,
-			projectId: data.projectId,
-		};
+			try {
+				const order = await productPurchase?.createOrder({
+					customFields: {
+						[OrderCustomFields.TRIAL_SETTINGS]:
+							JSON.stringify(trialSettings),
+					},
+				} as Cart);
 
-		try {
-			const createdOrder = await productPurchase?.createOrder({
-				customFields: {
-					[OrderCustomFields.TRIAL_SETTINGS]:
-						JSON.stringify(trialSettings),
-				},
-			} as Cart);
+				if (!order) {
+					return;
+				}
 
-			if (createdOrder) {
 				mutate(
-					(orders: any) => ({
+					(orders: APIResponse<PlacedOrder>) => ({
 						...orders,
 						items: [
 							{
-								...createdOrder,
+								...order,
 								orderStatusInfo: {
 									code: 10,
 									label: Status.PROCESSING,
@@ -206,49 +202,32 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 					type: 'success',
 				});
 
-				setOrder(createdOrder);
+				setOrder(order);
+				setSubmittingSuccessful(true);
+
+				Liferay.Util.openToast({
+					message: 'Trial is being provisioned.',
+					title: i18n.translate('success'),
+					type: 'success',
+				});
+
+				setOrder(order);
+
 				setSubmittingSuccessful(true);
 			}
+			catch (error) {
+				console.error(error);
 
-			mutate(
-				(orders: any) => ({
-					...orders,
-					items: [
-						{
-							...order,
-							orderStatusInfo: {
-								code: 10,
-								label: Status.PROCESSING,
-								label_i18n: Status.PROCESSING,
-							},
-						},
-						...orders.items,
-					],
-				}),
-				{revalidate: false}
-			);
+				Liferay.Util.openToast({
+					message: i18n.translate('an-unexpected-error-occurred'),
+					type: 'danger',
+				});
 
-			setErrors({});
-
-			Liferay.Util.openToast({
-				message: 'Trial is being provisioned.',
-				title: i18n.translate('success'),
-				type: 'success',
-			});
-			setOrder(order);
-			setIsSubmitting(false);
-
-			setSubmittingSuccessful(true);
-		}
-		catch (error) {
-			console.error(error);
-			Liferay.Util.openToast({
-				message: i18n.translate('an-unexpected-error-occurred'),
-				type: 'danger',
-			});
-			modal.onClose();
-		}
-	};
+				modal.onClose();
+			}
+		},
+		[modal, mutate, productPurchase, setError]
+	);
 
 	useEffect(() => {
 		if (items && order && submitSuccessful) {

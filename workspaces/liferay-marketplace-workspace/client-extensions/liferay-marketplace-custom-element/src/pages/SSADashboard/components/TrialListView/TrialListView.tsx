@@ -22,7 +22,7 @@ import {Action} from '../../../../utils/constants';
 import {safeJSONParse} from '../../../../utils/util';
 import {useSSADashboardOutlet} from '../../SSADashboardOutlet';
 import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
-import CreateTrialModalForm from '../../pages/CreateTrialModalForm';
+import CreateTrialModalForm from '../../pages/CreateTrialModalform';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
 

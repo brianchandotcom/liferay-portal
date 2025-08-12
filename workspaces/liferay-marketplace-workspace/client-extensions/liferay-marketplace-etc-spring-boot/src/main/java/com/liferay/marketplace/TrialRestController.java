@@ -109,14 +109,17 @@ public class TrialRestController extends BaseRestController {
 				orderTypeExternalReferenceCode)
 		throws Exception {
 
+		JSONObject jsonObject = _getTrialProvisioningContextJSONObject(
+			orderTypeExternalReferenceCode);
+
 		Page<PortalInstance> portalInstancePage = _getPortalInstancesPage(
-			_getTrialProvisioningContextJSONObject(
-				orderTypeExternalReferenceCode));
+			jsonObject);
+
+		String virtualHost =
+			projectPrefix + "." + jsonObject.getString("domain");
 
 		for (PortalInstance portalInstance : portalInstancePage.getItems()) {
-			String virtualHost = portalInstance.getVirtualHost();
-
-			if (virtualHost.startsWith(projectPrefix)) {
+			if (Objects.equals(virtualHost, portalInstance.getVirtualHost())) {
 				return ResponseEntity.status(
 					HttpStatus.CONFLICT
 				).build();

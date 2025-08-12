@@ -153,6 +153,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 						toggleItemInlineEdit,
 					});
 				},
+				symbolLeft: action.icon,
 			})),
 			description: getLocalizedValue(item, schema.description)?.value,
 			href: (schema.link && item[schema.link]) || null,

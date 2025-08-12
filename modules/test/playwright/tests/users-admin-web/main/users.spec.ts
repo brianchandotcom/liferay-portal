@@ -883,3 +883,44 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Site selection modal when editing user should not allow XSS',
+	{tag: '@LPD-62301'},
+	async ({apiHelpers, editUserPage, page, usersAndOrganizationsPage}) => {
+		const name = "<img src=x onerror=alert(origin)>";
+		const site = await apiHelpers.headlessSite.createSite({
+			name: name,
+		});
+		
+		apiHelpers.data.push({id: site.id, type: 'site'});
+		
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await usersAndOrganizationsPage.goto();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+
+		await editUserPage.membershipsLink.click();
+		await editUserPage.selectSiteButton.click();
+
+		await editUserPage.selectSiteSearchBar.fill(site.name);
+		await editUserPage.selectSiteSearchBarButton.click();
+		
+		let alertTriggered = false;
+
+		page.on('dialog', async (dialog) => {
+			if (dialog.type() === 'alert') {
+				alertTriggered = true;
+				await dialog.dismiss();
+			}
+		});
+		
+		await editUserPage.selectSiteFrameSiteLink(site.name).click();
+		expect(alertTriggered).toBe(false);
+	}
+);

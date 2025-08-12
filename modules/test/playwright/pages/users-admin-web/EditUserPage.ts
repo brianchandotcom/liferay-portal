@@ -48,6 +48,12 @@ export class EditUserPage {
 	readonly membershipsLink: Locator;
 	readonly membershipsNoAccountsMessage: Locator;
 	readonly membershipsNoUserGroupsMessage: Locator;
+	readonly membershipsSiteTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly membershipsSiteTable: Locator;
 	readonly membershipsUserGroupsTableRow: (
 		colPosition: number,
 		value: string,
@@ -116,6 +122,11 @@ export class EditUserPage {
 	readonly selectRegularRolesFrameCloseButton: Locator;
 	readonly selectRegularRolesSearchInput: Locator;
 	readonly selectRegularRolesTable: DataTablePage;
+	readonly selectSiteButton: Locator;
+	readonly selectSiteFrame: FrameLocator;
+	readonly selectSiteFrameSiteLink: (name: string) => Locator;
+	readonly selectSiteSearchBar: Locator;
+	readonly selectSiteSearchBarButton: Locator;
 	readonly selectSiteRolesButton: Locator;
 	readonly selectSiteRolesChooseButton: (name: string) => Promise<Locator>;
 	readonly selectSiteRolesFrame: FrameLocator;
@@ -275,6 +286,21 @@ export class EditUserPage {
 		);
 		this.membershipsNoUserGroupsMessage = page.getByText(
 			'This user does not belong to a user group.'
+		);
+		this.membershipsSiteTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean
+		) => {
+			return await searchTableRowByValue(
+				this.membershipsSiteTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
+		this.membershipsSiteTable = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_groupsSearchContainer'
 		);
 		this.membershipsUserGroupsTableRow = async (
 			colPosition: number,
@@ -468,6 +494,24 @@ export class EditUserPage {
 			this.selectRegularRolesFrame.locator(
 				'#_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_rolesSearchContainer'
 			)
+		);
+		this.selectSiteButton = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectSiteLink'
+		);
+		this.selectSiteFrame = page.frameLocator(
+			'iframe[title="Select Site"]'
+		);
+		this.selectSiteFrameSiteLink = (name) => 
+			this.selectSiteFrame.getByRole('link', {
+				name: name
+			}
+		);
+		this.selectSiteSearchBar =
+			this.selectSiteFrame.getByPlaceholder('Search for');
+		this.selectSiteSearchBarButton =
+			this.selectSiteFrame.getByRole('button', {
+				name: 'Search for',
+			}
 		);
 		this.selectSiteRolesButton = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectSiteRoleLink'

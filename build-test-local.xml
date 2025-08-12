@@ -384,7 +384,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<replaceregexp
 			file="${project.dir}/test.properties"
 			flags="g"
-			match="(test\.batch\.class\.names\.includes\[modules-integration-\*\]=)(.*?\n)*?\n"
+			match="(test\.batch\.class\.names\.includes\.modules\[modules-integration-\*\]=)(.*?\n)*?\n"
 			replace="\1\\\\${line.separator}${line.separator}"
 		/>
 
@@ -533,7 +533,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 							<replaceregexp
 								file="${project.dir}/test.properties"
 								flags="g"
-								match="(test\.batch\.class\.names\.includes\[modules-integration-\*\]=\\\n)"
+								match="(test\.batch\.class\.names\.includes\.modules\[modules-integration-\*\]=\\\n)"
 								replace="\1        **/testIntegration/**/${testcase.file.name}.java,\\\\${line.separator}"
 							/>
 						</then>

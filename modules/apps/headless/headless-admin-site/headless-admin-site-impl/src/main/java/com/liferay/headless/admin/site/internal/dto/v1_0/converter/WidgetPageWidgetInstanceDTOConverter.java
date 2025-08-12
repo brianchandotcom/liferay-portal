@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -28,11 +29,6 @@ public class WidgetPageWidgetInstanceDTOConverter
 	}
 
 	@Override
-	public WidgetPageWidgetInstance toDTO(Layout layout) {
-		return null;
-	}
-
-	@Override
 	public WidgetPageWidgetInstance toDTO(
 			DTOConverterContext dtoConverterContext, Layout layout)
 		throws Exception {
@@ -40,7 +36,14 @@ public class WidgetPageWidgetInstanceDTOConverter
 		String portletId = GetterUtil.getString(
 			dtoConverterContext.getAttribute("portletId"), null);
 
-		if (portletId == null) {
+		if ((portletId == null) || !layout.isTypePortlet()) {
+			return null;
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		if (!layoutTypePortlet.hasPortletId(portletId)) {
 			return null;
 		}
 
@@ -56,6 +59,11 @@ public class WidgetPageWidgetInstanceDTOConverter
 					() -> PortletIdCodec.decodePortletName(portletId));
 			}
 		};
+	}
+
+	@Override
+	public WidgetPageWidgetInstance toDTO(Layout layout) {
+		return null;
 	}
 
 }

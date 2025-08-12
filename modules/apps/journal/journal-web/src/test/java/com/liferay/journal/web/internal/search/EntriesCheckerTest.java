@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -21,8 +22,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
-
-import org.apache.commons.lang3.RandomUtils;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -140,8 +139,7 @@ public class EntriesCheckerTest {
 	}
 
 	private static final String _ARTICLE_ID = String.valueOf(
-		RandomUtils.secure(
-		).randomLong());
+		RandomTestUtil.randomLong());
 
 	private static final MockedStatic<JournalArticleLocalServiceUtil>
 		_journalArticleLocalServiceUtilMockedStatic = Mockito.mockStatic(

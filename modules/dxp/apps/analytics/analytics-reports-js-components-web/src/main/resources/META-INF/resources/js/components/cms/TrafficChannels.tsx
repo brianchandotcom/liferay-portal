@@ -7,6 +7,7 @@
 
 import {Text} from '@clayui/core';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import {Context} from '../../Context';
@@ -179,13 +180,19 @@ export function TrafficChannels() {
 					</div>
 
 					<div
-						aria-label={`${Liferay.Language.get('%-of')} ${Liferay.Language.get('views')}`}
+						aria-label={sub(Liferay.Language.get('x-of-x'), [
+							'%',
+							Liferay.Language.get('views'),
+						])}
 						className="d-flex justify-content-end"
 						role="columnheader"
 						style={{width: '30%'}}
 					>
 						<Text color="secondary" size={3} weight="semi-bold">
-							{`${Liferay.Language.get('%-of')} ${Liferay.Language.get('views')}`}
+							{sub(Liferay.Language.get('x-of-x'), [
+								'%',
+								Liferay.Language.get('views'),
+							])}
 						</Text>
 					</div>
 				</header>

@@ -13,6 +13,8 @@ import com.liferay.osb.faro.constants.FaroUserConstants;
 import com.liferay.osb.faro.contacts.model.constants.JSONConstants;
 import com.liferay.osb.faro.contacts.service.ContactsCardTemplateLocalService;
 import com.liferay.osb.faro.contacts.service.ContactsLayoutTemplateLocalService;
+import com.liferay.osb.faro.engine.client.model.ProjectUsageMetric;
+import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.model.Workspace;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.exception.EmailAddressDomainException;
@@ -45,11 +47,13 @@ import com.liferay.osb.faro.web.internal.model.display.main.FaroSubscriptionDisp
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.osb.faro.web.internal.util.TimeZoneUtil;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,6 +65,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -101,6 +106,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ExecutorService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -646,6 +652,73 @@ public class ProjectController extends BaseFaroController {
 		}
 	}
 
+	@DELETE
+	@Path("/usage/reset")
+	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
+	public void resetProjectUsageMetricDisplays() throws Exception {
+		ExecutorService executorService =
+			_portalExecutorManager.getPortalExecutor(
+				ProjectController.class.getName());
+
+		executorService.submit(
+			new CompanyInheritableThreadLocalCallable<>(
+				() -> {
+					Map<String, Map<String, List<ProjectUsageMetric>>>
+						projectUsageMetricsMap = new HashMap<>();
+
+					_faroProjectUsageLocalService.deleteFaroProjectUsage();
+
+					for (FaroProject faroProject :
+							_faroProjectLocalService.getFaroProjects(
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+						List<ProjectUsageMetric> projectUsages =
+							_getProjectUsageMetrics(
+								faroProject, projectUsageMetricsMap);
+
+						for (ProjectUsageMetric projectUsageMetric :
+								projectUsages) {
+
+							_faroProjectUsageLocalService.addFaroProjectUsage(
+								faroProject.getCompanyId(), 0,
+								faroProject.getFaroProjectId(),
+								projectUsageMetric.getKnownIndividualsCount(),
+								_getMonthDateKey(
+									projectUsageMetric.getCreateDate()),
+								projectUsageMetric.getPageViewsCount(),
+								projectUsageMetric.getCreateDate());
+						}
+
+						FaroSubscriptionDisplay faroSubscriptionDisplay =
+							JSONUtil.readValue(
+								faroProject.getSubscription(),
+								FaroSubscriptionDisplay.class);
+
+						faroSubscriptionDisplay.setCounts(
+							faroProject, _faroProjectUsageLocalService);
+
+						_faroProjectLocalService.updateSubscription(
+							faroProject.getFaroProjectId(),
+							JSONUtil.writeValueAsString(
+								faroSubscriptionDisplay));
+
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Usage reset finished successfully for " +
+									faroProject.getFaroProjectId());
+						}
+					}
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Usage reset finished successfully for all the " +
+								"faro projects");
+					}
+
+					return null;
+				}));
+	}
+
 	@Path("/{groupId}/send-created-workspace-email")
 	@POST
 	@RolesAllowed(StringPool.BLANK)
@@ -1028,6 +1101,16 @@ public class ProjectController extends BaseFaroController {
 			resourceBundle, "invalid-incident-report-email-addresses");
 	}
 
+	private String _getMonthDateKey(Date date) {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(date);
+
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+		return _dateFormat.format(calendar.getTime());
+	}
+
 	private ProjectDisplay _getProjectDisplay(FaroProject faroProject)
 		throws Exception {
 
@@ -1212,6 +1295,47 @@ public class ProjectController extends BaseFaroController {
 			_dateFormat.format(new Date(faroProject.getLastAccessTime())),
 			_dateFormat.format(faroProject.getLastAnniversaryDate()), offline,
 			usageMetrics, faroProject.getWeDeployKey());
+	}
+
+	private List<ProjectUsageMetric> _getProjectUsageMetrics(
+		FaroProject faroProject,
+		Map<String, Map<String, List<ProjectUsageMetric>>>
+			projectUsageMetricsMap) {
+
+		Map<String, List<ProjectUsageMetric>> projectUsageMetrics =
+			projectUsageMetricsMap.get(faroProject.getServerLocation());
+
+		if (projectUsageMetrics == null) {
+			projectUsageMetrics = new HashMap<>();
+
+			try {
+				Results<ProjectUsageMetric> results =
+					contactsEngineClient.getProjectUsageMetrics(
+						faroProject, null);
+
+				for (ProjectUsageMetric projectUsageMetric :
+						results.getItems()) {
+
+					projectUsageMetrics.putIfAbsent(
+						projectUsageMetric.getProjectId(),
+						new ArrayList<ProjectUsageMetric>());
+
+					List<ProjectUsageMetric> list = projectUsageMetrics.get(
+						projectUsageMetric.getProjectId());
+
+					list.add(projectUsageMetric);
+				}
+
+				projectUsageMetricsMap.put(
+					faroProject.getServerLocation(), projectUsageMetrics);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
+		}
+
+		return projectUsageMetrics.getOrDefault(
+			faroProject.getProjectId(), Collections.emptyList());
 	}
 
 	private String _getTimeZoneIdErrorMessage(User user) {
@@ -1451,6 +1575,9 @@ public class ProjectController extends BaseFaroController {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private PortalExecutorManager _portalExecutorManager;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

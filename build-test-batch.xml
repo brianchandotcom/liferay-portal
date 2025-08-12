@@ -3130,18 +3130,18 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							return JenkinsResultsParserUtil.getGitWorkingDir(new File(project.getProperty("project.dir")));
 						}
 
-						public static String getTestClassNameForTestResults(String testClass) {
+						public static String getTestClassNameForTestResults(String testClassName) {
 							Pattern pattern = Pattern.compile("([^#]+)\\.java(#.*)?");
 
-							Matcher matcher = pattern.matcher(testClass);
+							Matcher matcher = pattern.matcher(testClassName);
 
 							if (matcher.matches()) {
-								testClass = matcher.group(1);
+								testClassName = matcher.group(1);
 							}
 
-							testClass = testClass.replace("/", ".");
+							testClassName = testClassName.replace("/", ".");
 
-							return testClass;
+							return testClassName;
 						}
 
 						public static String getTestName(String testClassFilePath) {
@@ -3149,16 +3149,16 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							Matcher matcher = pattern.matcher(testClassFilePath);
 
-							String testClass;
+							String testName;
 
 							if (matcher.matches()) {
-								testClass = matcher.group(1);
+								testName = matcher.group(1);
 
 								if (matcher.group(2) != null) {
-									testClass = testClass + "." + matcher.group(2);
+									testName = testName + "." + matcher.group(2);
 								}
 
-								return testClass;
+								return testName;
 							}
 
 							return null;
@@ -3197,7 +3197,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								return;
 							}
 
-							Set testClassSet = new HashSet();
+							Set testClassNameSet = new HashSet();
 
 							Pattern pattern = Pattern.compile("(TEST_CLASS_GROUP_\\d+=)(.*)");
 
@@ -3206,20 +3206,20 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							if (matcher.find()) {
 								String testClassGroupIndex = matcher.group(1);
 
-								String testClasses = matcher.group(2);
+								String testClassNames = matcher.group(2);
 
-								String[] testClassList = testClasses.split(",");
+								String[] testClassNamesList = testClassNames.split(",");
 
-								for (int i=0; i < testClassList.length; i++) {
-									String testClassName = testClassList[i];
+								for (int i=0; i < testClassNamesList.length; i++) {
+									String testClassName = testClassNamesList[i];
 
 									int hashIndex = testClassName.indexOf('#');
 
 									if (hashIndex != -1) {
-										testClassSet.add(testClassName.substring(0, hashIndex));
+										testClassNameSet.add(testClassName.substring(0, hashIndex));
 									}
 									else{
-										testClassSet.add(testClassName);
+										testClassNameSet.add(testClassName);
 									}
 								}
 
@@ -3227,12 +3227,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 								sb.append(testClassGroupIndex);
 
-								for (String testClass : testClassSet) {
-									sb.append(testClass);
+								for (String testClassName : testClassNameSet) {
+									sb.append(testClassName);
 									sb.append(",");
 								}
 
-								if (testClassSet.size() > 0) {
+								if (testClassNameSet.size() > 0) {
 									sb.deleteCharAt(sb.length() - 1);
 								}
 
@@ -3244,16 +3244,16 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 						String testClassGroup = project.getProperty("test.class.group");
 
-						String[] testClassList = testClassGroup.split(",");
+						String[] testClassPathList = testClassGroup.split(",");
 
 						Map projectTestMap = new HashMap();
 
 						File baseDir = getPortalGitWorkingDirectory();
 
-						for (String testClass : testClassList) {
-							testClass = testClass.replaceAll("\\.class", "\\.java");
+						for (String testClassPath : testClassPathList) {
+							testClassPath = testClassPath.replaceAll("\\.class", "\\.java");
 
-							String testClassName = getTestClassNameForTestResults(testClass);
+							String testClassName = getTestClassNameForTestResults(testClassPath);
 
 							File testClassFile = JenkinsResultsParserUtil.getFileFromPathSnippet(projectDir, testClassName);
 
@@ -3263,7 +3263,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							generateJunitReport(baseDir, testClassName, testTaskName);
 
-							String testName = getTestName(testClass);
+							String testName = getTestName(testClassPath);
 
 							addProjectToMap(testProjectName, testName, projectTestMap);
 						}

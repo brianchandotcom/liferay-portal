@@ -3117,6 +3117,24 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition4, _group.getGroupKey(), 2));
 
+		// Expired Version
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_EXPIRED,
+			_defaultObjectEntryManager.expireObjectEntryByVersion(
+				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				_objectDefinition4, _group.getGroupKey(), 2));
+
+		ObjectEntry copyObjectEntry =
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				_objectDefinition4, _group.getGroupKey(), 2);
+
+		Status status = copyObjectEntry.getStatus();
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, status.getCode());
+
 		// Status
 
 		_objectDefinition4.setEnableObjectEntryDraft(true);
@@ -3125,12 +3143,10 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition4);
 
-		ObjectEntry copyObjectEntry =
-			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition4, objectEntry.getId(),
-				1);
+		copyObjectEntry = _defaultObjectEntryManager.copyObjectEntryByVersion(
+			dtoConverterContext, _objectDefinition4, objectEntry.getId(), 1);
 
-		Status status = copyObjectEntry.getStatus();
+		status = copyObjectEntry.getStatus();
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, status.getCode());

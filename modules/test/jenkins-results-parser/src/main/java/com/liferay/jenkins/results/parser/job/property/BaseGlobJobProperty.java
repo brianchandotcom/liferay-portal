@@ -29,8 +29,8 @@ import java.util.regex.Pattern;
 public abstract class BaseGlobJobProperty
 	extends BaseTestDirJobProperty implements GlobJobProperty {
 
-	public Map<String, List<String>> getGlobTestClassMethodsMap() {
-		return _globTestClassMethodsMap;
+	public Map<String, List<String>> getGlobTestClassMethodNamesMap() {
+		return _globTestClassMethodNamesMap;
 	}
 
 	@Override
@@ -76,13 +76,13 @@ public abstract class BaseGlobJobProperty
 
 				List<String> testClassMethodNames;
 
-				if (_globTestClassMethodsMap.containsKey(testClassGlob)) {
-					testClassMethodNames = _globTestClassMethodsMap.get(
+				if (_globTestClassMethodNamesMap.containsKey(testClassGlob)) {
+					testClassMethodNames = _globTestClassMethodNamesMap.get(
 						testClassGlob);
 
 					testClassMethodNames.add(testClassMethodName);
 
-					_globTestClassMethodsMap.replace(
+					_globTestClassMethodNamesMap.replace(
 						relativeGlob, testClassMethodNames);
 				}
 				else {
@@ -90,7 +90,7 @@ public abstract class BaseGlobJobProperty
 
 					testClassMethodNames.add(testClassMethodName);
 
-					_globTestClassMethodsMap.put(
+					_globTestClassMethodNamesMap.put(
 						relativeGlob, testClassMethodNames);
 				}
 			}
@@ -179,7 +179,7 @@ public abstract class BaseGlobJobProperty
 	private static final Pattern _globClassMethodPattern = Pattern.compile(
 		"(?<testClassGlob>[^#]+)#(?<testClassMethodName>.+)");
 
-	private final Map<String, List<String>> _globTestClassMethodsMap =
+	private final Map<String, List<String>> _globTestClassMethodNamesMap =
 		new HashMap<>();
 
 }

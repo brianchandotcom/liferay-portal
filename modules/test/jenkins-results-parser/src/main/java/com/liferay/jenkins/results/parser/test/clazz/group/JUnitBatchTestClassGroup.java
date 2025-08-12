@@ -207,11 +207,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return jsonObject;
 	}
 
-	public List<String> getTestClassMethods(
-		File file, Map<String, List<String>> globTestClassMethodsMap) {
+	public List<String> getTestClassMethodNames(
+		File file, Map<String, List<String>> globTestClassMethodNamesMap) {
 
 		for (Map.Entry<String, List<String>> globTestClassMethodEntry :
-				globTestClassMethodsMap.entrySet()) {
+				globTestClassMethodNamesMap.entrySet()) {
 
 			String glob = globTestClassMethodEntry.getKey();
 
@@ -219,7 +219,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				_getWorkingDirectory() + "/", glob);
 
 			if (pathMatcher.matches(file.toPath())) {
-				return globTestClassMethodsMap.get(glob);
+				return globTestClassMethodNamesMap.get(glob);
 			}
 		}
 
@@ -744,14 +744,17 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
-			List<String> testClassMethods = getTestClassMethods(
-				javaTestClassFile, getGlobTestClassMethodsMap());
+			List<String> testClassMethodNames = getTestClassMethodNames(
+				javaTestClassFile, getGlobTestClassMethodNamesMap());
 
 			TestClass testClass = null;
 
-			if ((testClassMethods != null) && !testClassMethods.isEmpty()) {
+			if ((testClassMethodNames != null) &&
+				!testClassMethodNames.isEmpty()) {
+
 				testClass = TestClassFactory.newTestClass(
-					batchTestClassGroup, javaTestClassFile, testClassMethods);
+					batchTestClassGroup, javaTestClassFile,
+					testClassMethodNames);
 			}
 			else {
 				testClass = TestClassFactory.newTestClass(

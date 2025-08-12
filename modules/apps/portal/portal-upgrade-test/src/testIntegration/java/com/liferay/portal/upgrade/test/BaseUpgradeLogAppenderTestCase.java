@@ -305,8 +305,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			upgradeProcess.upgrade();
 
 			OrphanReferencesDataCleanupUtil.cleanUpTable(
-				connection, null, "companyId", "Portlet", "companyId",
-				"Company");
+				connection, null, "companyId", "Portlet",
+				new String[] {"companyId"}, "Company");
 
 			_appender.stop();
 
@@ -325,9 +325,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 					"Table ", dbInspector.normalizeName("Portlet"),
 					", 1 row deleted because ",
 					dbInspector.normalizeName("companyId"), StringPool.SPACE,
-					randomCompanyId, " was not found in ",
-					dbInspector.normalizeName("Company"), StringPool.PERIOD,
-					dbInspector.normalizeName("companyId")));
+					randomCompanyId, " was not found in column ",
+					dbInspector.normalizeName("companyId"), " from table ",
+					dbInspector.normalizeName("Company")));
 		}
 		finally {
 			_db.runSQL(

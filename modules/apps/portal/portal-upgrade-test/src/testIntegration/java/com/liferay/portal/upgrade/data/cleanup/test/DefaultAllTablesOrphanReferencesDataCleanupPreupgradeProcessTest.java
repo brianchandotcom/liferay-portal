@@ -69,23 +69,23 @@ public class DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			Assert.assertTrue(
 				messages.contains(
 					getExpectedMessage(
-						2, "companyId", "Image", "companyId", "Company",
-						_companyId1)));
+						2, "companyId", "Image", new String[] {"companyId"},
+						"Company", _companyId1)));
 			Assert.assertTrue(
 				messages.contains(
 					getExpectedMessage(
-						1, "companyId", "Image", "companyId", "Company",
-						_companyId2)));
+						1, "companyId", "Image", new String[] {"companyId"},
+						"Company", _companyId2)));
 			Assert.assertTrue(
 				messages.contains(
 					getExpectedMessage(
-						2, "companyId", "Portlet", "companyId", "Company",
-						_companyId1)));
+						2, "companyId", "Portlet", new String[] {"companyId"},
+						"Company", _companyId1)));
 			Assert.assertTrue(
 				messages.contains(
 					getExpectedMessage(
-						1, "companyId", "Portlet", "companyId", "Company",
-						_companyId2)));
+						1, "companyId", "Portlet", new String[] {"companyId"},
+						"Company", _companyId2)));
 
 			messages = logCapture2.getMessages();
 

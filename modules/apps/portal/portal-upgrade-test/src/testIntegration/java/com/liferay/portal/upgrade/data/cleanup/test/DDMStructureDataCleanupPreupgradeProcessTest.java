@@ -192,11 +192,11 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 
 		return StringBundler.concat(
 			"Table ", _dbInspector.normalizeName(sourceTableName), ", ", count,
-			(count == 1) ? " row " : " rows ", "deleted because ",
+			(count > 1) ? " rows " : " row ", "deleted because ",
 			_dbInspector.normalizeName(sourceColumnName), StringPool.SPACE,
-			targetValue, " was not found in ",
-			_dbInspector.normalizeName(targetTableName), StringPool.PERIOD,
-			_dbInspector.normalizeName(targetColumnName));
+			targetValue, " was not found in column ",
+			_dbInspector.normalizeName(targetColumnName), " from table ",
+			_dbInspector.normalizeName(targetTableName));
 	}
 
 	private void _test(

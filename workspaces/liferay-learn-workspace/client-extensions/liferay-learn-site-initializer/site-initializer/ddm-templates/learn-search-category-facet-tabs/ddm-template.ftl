@@ -2,21 +2,26 @@
 	<#assign
 		sortedTaxonomyCategories = []
 		totalCount = 0
+		knowledgeBaseFrequency = 0 
+		knowledgeBaseIds = []
 	/>
 
 	<#list entries as entry>
 		<#assign label = entry.bucketText?upper_case />
 		<#if label == "OFFICIAL DOCUMENTATION">
 			<#assign sortedTaxonomyCategories = [entry] + sortedTaxonomyCategories />
-		<#elseif label == "HOW TO">
-			<#assign sortedTaxonomyCategories += [entry] />
+		<#elseif label == "HOW TO" || label == "TROUBLESHOOTING" || label == "REFERENCE">
+			<#assign 
+				knowledgeBaseFrequency += entry.getFrequency() 
+				knowledgeBaseIds += [entry.getFilterValue()]
+			/>
 		</#if>
 	</#list>
-
+		
 	<#list assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts() as bucketDisplayContext>
 		<#assign totalCount = totalCount + bucketDisplayContext.getCount() />
 	</#list>
-
+	
 	<ul class="learn-category-facet-tabs list-unstyled tab-list" id="tab-list">
 		<li class="facet-value">
 			<@clay.button
@@ -27,7 +32,7 @@
 			>
 				<span class="term-text">${languageUtil.get(locale, "all-results", "All Results")}</span>
 
-				<#if entry.isFrequencyVisible()>
+				<#if totalCount?has_content && totalCount gt 0>
 					<span class="term-count">${totalCount}</span>
 				</#if>
 			</@clay.button>
@@ -54,106 +59,82 @@
 				</@clay.button>
 			</li>
 		</#list>
-	</ul>
+		
+		<#assign selectedIds = (request.getParameterValues("resource-type")![])?join(",") />
 
-	<div class="dropdown learn-category-facet-tabs tab-list" id="tab-list-mobile">
-		<button
-			aria-expanded="false"
-			aria-haspopup="true"
-			class="btn btn-unstyled d-inline-block selected-tab-btn"
-			data-toggle="liferay-dropdown"
-			displayType="button"
-			id="dropdownAlignment1"
-		>
-			<div class="d-flex facet-value-mobile justify-content-center opacity-75">
-				<#assign facetCount = 0 />
-				<#list entries as entry>
-					<#if entry.isSelected()>
-						<#assign facetCount++ />
+		<li class="facet-value">
+			<@clay.button
+				cssClass="btn-unstyled facet-term tab-btn term-name text-center  ${(selectedIds?contains(knowledgeBaseIds?join(',')))?then('selected-tab-btn', '')}"
+				data\-term\-ids="${knowledgeBaseIds?join(',')}"
+				displayType="link"
+				onClick="${namespace}updateSelection(event)"
+			>
+				<span class="term-text">${languageUtil.get(locale, "knowledge-base", "Knowledge Base")}</span>
 
-						<span class="term-text">${entry.getBucketText()}</span>
-						<#if entry.isFrequencyVisible()>
-							<span class="term-count">${entry.getFrequency()}</span>
-						</#if>
-					</#if>
-				</#list>
-				<#if facetCount == 0>
-					<span class="term-text">${languageUtil.get(locale, "all-results", "All Results")}</span>
-					<span class="term-count">${totalCount}</span>
+				<#if knowledgeBaseFrequency gt 0>
+					<span class="term-count">${knowledgeBaseFrequency}</span>
 				</#if>
-			</div>
-		</button>
-
-		<ul
-			aria-labelledby="dropdownAlignment1"
-			class="dropdown-menu"
-			x-placement="bottom-start"
-		>
-			<li class="align-items-center d-flex position-relative ${assetCategoriesSearchFacetDisplayContext.isNothingSelected()?then('selected-item-mobile-tab', '')}">
-				<@clay.button
-					cssClass="dropdown-item facet-clear nav-link rounded"
-					displayType="link"
-					onClick="${namespace}updateSelection(event)"
-					value="clear"
-				>
-					<span class="term-text">${languageUtil.get(locale, "all-results", "All Results")}</span>
-					<#if entry.isFrequencyVisible()>
-						<span class="term-count">${totalCount}</span>
-					</#if>
-				</@clay.button>
-			</li>
-
-			<#list sortedTaxonomyCategories as entry>
-				<li class="align-items-center d-flex ${(entry.isSelected())?then('selected-item-mobile-tab', '')}">
-					<@clay.button
-						cssClass="dropdown-item facet-clear nav-link rounded"
-						data\-term\-id="${entry.getFilterValue()}"
-						displayType="link"
-						onClick="${namespace}updateSelection(event)"
-					>
-						<span class="term-text">${htmlUtil.escape(entry.getBucketText())}</span>
-						<#if entry.isFrequencyVisible()>
-							<span class="term-count">${entry.getFrequency()}</span>
-						</#if>
-					</@clay.button>
-				</li>
-			</#list>
-		</ul>
-	</div>
+  			</@clay.button>
+		</li>
+	</ul>
 </#if>
 
 <@liferay_aui.script>
 	function handleStyleTabs(event) {
 		const buttons = document.querySelectorAll('.tab-btn');
-
-		buttons.forEach(button => {
-			button.classList.remove('selected-tab-btn');
-		});
+		
+		buttons.forEach(button => button.classList.remove('selected-tab-btn'));
 
 		const targetButton = event.currentTarget;
-
+		
 		if (targetButton.classList.contains('tab-btn')) {
 			targetButton.classList.add('selected-tab-btn');
 		}
 	}
 
-	function ${namespace}updateSelection(event) {
+  	function ${namespace}updateSelection(event) {
+  
+		event.preventDefault();
+
 		handleStyleTabs(event);
 
 		const form = event.currentTarget.form;
-
-		if (form) {
-			Liferay.Search.FacetUtil.selectTerms(form, []);
-
-			if (event.target.value === "clear") {
-				Liferay.Search.FacetUtil.clearSelections(event);
-			}
-			else {
-				Liferay.Search.FacetUtil.changeSelection(event);
-			}
+		
+		if (!form) {
+			return;
 		}
+
+		const dataTermIds = event.currentTarget.getAttribute('data-term-ids');
+		const dataTermId = event.currentTarget.getAttribute('data-term-id');
+		
+		const params = new URLSearchParams(window.location.search);
+		
+		params.delete('resource-type');
+
+		if (event.currentTarget.value === 'clear') {
+			const newUrlClear = window.location.pathname + '?' + params.toString();
+
+			window.location.href = newUrlClear;
+
+			return;
+		}
+
+		if (dataTermIds) {
+			const ids = dataTermIds.split(',');
+
+			ids.forEach(id => {
+				params.append('resource-type', id.trim());
+			});
+
+		} else if (dataTermId) {
+			params.append('resource-type', dataTermId);
+		}
+
+		const newUrl = window.location.pathname + '?' + params.toString();
+	
+		window.location.href = newUrl;
 	}
-</@>
+</@liferay_aui.script>
 
 <style>
 	.learn-category-facet-tabs .facet-term-unselected .term-text {

@@ -53,8 +53,6 @@ public interface ObjectEntry
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public boolean isRootDescendantNode();
-
 	public String getModelClassName();
 
 	public long getNonzeroGroupId()
@@ -77,6 +75,8 @@ public interface ObjectEntry
 	public java.util.Map<String, String> getURLTitleMap();
 
 	public java.util.Map<String, java.io.Serializable> getValues();
+
+	public boolean isRootDescendantNode();
 
 	public void setTransientValues(
 		java.util.Map<String, java.io.Serializable> values);

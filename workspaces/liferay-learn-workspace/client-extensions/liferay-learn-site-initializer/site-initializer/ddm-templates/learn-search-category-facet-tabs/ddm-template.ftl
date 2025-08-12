@@ -32,7 +32,7 @@
 			>
 				<span class="term-text">${languageUtil.get(locale, "all-results", "All Results")}</span>
 
-				<#if totalCount?has_content && totalCount gt 0>
+				<#if totalCount?has_content>
 					<span class="term-count">${totalCount}</span>
 				</#if>
 			</@clay.button>
@@ -71,7 +71,7 @@
 			>
 				<span class="term-text">${languageUtil.get(locale, "knowledge-base", "Knowledge Base")}</span>
 
-				<#if knowledgeBaseFrequency gt 0>
+				<#if knowledgeBaseFrequency?has_content>
 					<span class="term-count">${knowledgeBaseFrequency}</span>
 				</#if>
   			</@clay.button>

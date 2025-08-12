@@ -28,12 +28,21 @@ public class WidgetPageWidgetInstanceDTOConverter
 	}
 
 	@Override
+	public WidgetPageWidgetInstance toDTO(Layout layout) {
+		return null;
+	}
+
+	@Override
 	public WidgetPageWidgetInstance toDTO(
 			DTOConverterContext dtoConverterContext, Layout layout)
 		throws Exception {
 
 		String portletId = GetterUtil.getString(
-			dtoConverterContext.getAttribute("portletId"));
+			dtoConverterContext.getAttribute("portletId"), null);
+
+		if (portletId == null) {
+			return null;
+		}
 
 		return new WidgetPageWidgetInstance() {
 			{

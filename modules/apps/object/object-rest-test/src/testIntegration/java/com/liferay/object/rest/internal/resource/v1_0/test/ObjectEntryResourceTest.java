@@ -13,6 +13,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
@@ -127,6 +128,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -9638,6 +9640,90 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPostObjectEntryWithTaxonomyCategories() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), company.getGroupId(),
+				RandomTestUtil.randomString(), new ServiceContext());
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			_objectDefinition1.getClassName());
+
+		assetVocabulary.setSettings(
+			StringBundler.concat(
+				"multiValued=false\nrequiredClassNameIds=", classNameId,
+				":0\nselectedClassNameIds=", classNameId, ":0"));
+
+		assetVocabulary = _assetVocabularyLocalService.updateAssetVocabulary(
+			assetVocabulary);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				String.format(
+					"Please select at least one category for <em>%s</em>.",
+					assetVocabulary.getName())
+			).put(
+				"type", "AssetCategoryException"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory(
+			assetVocabulary.getGroupId(), assetVocabulary.getVocabularyId());
+		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory(
+			assetVocabulary.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				String.format(
+					"You cannot select more than one category for <em>%s</em>.",
+					assetVocabulary.getName())
+			).put(
+				"type", "AssetCategoryException"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"taxonomyCategoryIds",
+					JSONUtil.putAll(
+						taxonomyCategory1.getId(), taxonomyCategory2.getId())
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"taxonomyCategoryIds",
+				JSONUtil.putAll(taxonomyCategory1.getId())
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				jsonObject.getLong("id")));
+
+		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
+	}
+
+	@Test
 	public void testPostRelatedObjectEntryInDifferentCompany()
 		throws Exception {
 
@@ -18790,6 +18876,12 @@ public class ObjectEntryResourceTest {
 	private static long _testGroupId;
 	private static final TestObjectEntryModelListener
 		_testObjectEntryModelListener = new TestObjectEntryModelListener();
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

@@ -6,6 +6,8 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -28,7 +30,10 @@ public class PreupgradeVerifyProcessSuiteTest {
 
 	@Test
 	public void testVerifyExceptionMessages() {
-		try (MockedConstruction<PreupgradeVerifyCompanyUsers>
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.verify.PreupgradeVerifyProcessSuite",
+				LoggerTestUtil.OFF);
+			MockedConstruction<PreupgradeVerifyCompanyUsers>
 				mockedConstruction1 = _mockConstruction(
 					PreupgradeVerifyCompanyUsers.class);
 			MockedConstruction<PreupgradeVerifyDatabaseCharacterSet>

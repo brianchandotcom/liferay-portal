@@ -85,7 +85,8 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"description",
 			LanguageUtil.get(
-				httpServletRequest, "click-new-to-create-your-first-asset")
+				httpServletRequest,
+				"click-new-or-drag-and-drop-your-files-here")
 		).put(
 			"image", "/states/cms_empty_state.svg"
 		).put(

@@ -146,7 +146,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		String rootObjectEntryFolderExternalReferenceCode =
 			getRootObjectEntryFolderExternalReferenceCode();
 
-		String description = "click-new-to-create-your-first-asset";
+		String description = "click-new-or-drag-and-drop-your-files-here";
 		String image = "/states/cms_empty_state.svg";
 		String title = "no-assets-yet";
 
@@ -162,7 +162,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 					rootObjectEntryFolderExternalReferenceCode,
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)) {
 
-			description = "click-new-to-create-your-first-file";
+			description = "click-new-or-drag-and-drop-your-files-here";
 			image = "/states/cms_empty_state_files.svg";
 			title = "no-files-yet";
 		}

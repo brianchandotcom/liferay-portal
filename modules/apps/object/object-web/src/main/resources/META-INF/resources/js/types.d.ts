@@ -212,6 +212,7 @@ interface ObjectDefinition {
 	modifiable?: boolean;
 	name: string;
 	objectActions: [];
+	objectDefinitionSettings?: NameValueObject[];
 	objectFields: ObjectField[];
 	objectFolderExternalReferenceCode: string;
 	objectLayouts: [];

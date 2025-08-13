@@ -589,34 +589,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		);
 	}
 
-	private LayoutSet _mockLayoutSet(Group group) throws PortalException {
-		LayoutSet layoutSet = Mockito.mock(LayoutSet.class);
-
-		long companyId = group.getCompanyId();
-
-		Mockito.when(
-			layoutSet.getCompanyId()
-		).thenReturn(
-			companyId
-		);
-
-		long groupId = group.getGroupId();
-
-		Mockito.when(
-			layoutSet.getGroupId()
-		).thenReturn(
-			groupId
-		);
-
-		Mockito.when(
-			layoutSet.getGroup()
-		).thenReturn(
-			group
-		);
-
-		return layoutSet;
-	}
-
 	private void _mockPortal(String currentURL, String pathProxy)
 		throws PortalException {
 
@@ -683,9 +655,27 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		Group group = _mockGroup(true, companyId, groupId, null);
 
-		_mockLayoutLocalService(groupId, publicLayout, privateLayout);
+		_mockLayoutLocalService(groupId, publicLayout, privateLayout);6
 
-		LayoutSet layoutSet = _mockLayoutSet(group);
+		LayoutSet layoutSet = Mockito.mock(LayoutSet.class);
+
+		Mockito.when(
+			layoutSet.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
+		Mockito.when(
+			layoutSet.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Mockito.when(
+			layoutSet.getGroup()
+		).thenReturn(
+			group
+		);
 
 		_setUpPortalInstancesMockedStatic(layoutSet);
 

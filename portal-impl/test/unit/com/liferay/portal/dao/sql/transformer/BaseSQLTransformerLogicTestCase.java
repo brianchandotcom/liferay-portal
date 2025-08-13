@@ -185,6 +185,13 @@ public abstract class BaseSQLTransformerLogicTestCase {
 		Assert.assertEquals(sql, sqlTransformer.transform(sql));
 	}
 
+	@Test
+	public void testTruncateTable() {
+		Assert.assertEquals(
+			getTruncateTableTransformedSQL(),
+			sqlTransformer.transform(getTruncateTableOriginalSQL()));
+	}
+
 	protected String getAggregationOriginalSQL() {
 		return "select foo from Foo order by AGGREGATION_STRING_MIN(foo)";
 	}
@@ -312,6 +319,14 @@ public abstract class BaseSQLTransformerLogicTestCase {
 
 	protected String getSubstrTransformedSQL() {
 		return getSubstrOriginalSQL();
+	}
+
+	protected String getTruncateTableOriginalSQL() {
+		return "truncate table Foo";
+	}
+
+	protected String getTruncateTableTransformedSQL() {
+		return getTruncateTableOriginalSQL();
 	}
 
 	protected SQLTransformer sqlTransformer;

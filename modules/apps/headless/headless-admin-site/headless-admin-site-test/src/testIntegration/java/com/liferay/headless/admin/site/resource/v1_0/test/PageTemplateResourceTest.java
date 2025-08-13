@@ -1363,7 +1363,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 											null, null,
 											widgetPageSpecification.
 												getSettings(),
-											PageSpecification.Status.APPROVED)
+											PageSpecification.Status.APPROVED,
+											widgetPageSpecification.
+												getWidgetPageSections())
 								});
 							setType(Type.WIDGET_PAGE_TEMPLATE);
 						}
@@ -1538,10 +1540,15 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
 				pageTemplate, testGroup.getExternalReferenceCode()));
 
+		WidgetPageTemplateSettings widgetPageTemplateSettings =
+			(WidgetPageTemplateSettings)pageTemplate.getPageTemplateSettings();
+
 		WidgetPageSpecification widgetPageSpecification =
 			PageSpecificationsTestUtil.getWidgetPageSpecification(
 				null, pageTemplate.getExternalReferenceCode(), null,
-				PageSpecification.Status.APPROVED);
+				PageSpecification.Status.APPROVED,
+				PageSpecificationsTestUtil.getWidgetPageSections(
+					widgetPageTemplateSettings.getLayoutTemplateId()));
 
 		pageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -1705,13 +1712,18 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		PageTemplate pageTemplate = _getWidgetPageTemplate(testGroup);
 
+		WidgetPageTemplateSettings widgetPageTemplateSettings =
+			(WidgetPageTemplateSettings)pageTemplate.getPageTemplateSettings();
+
 		WidgetPageSpecification widgetPageSpecification =
 			PageSpecificationsTestUtil.getWidgetPageSpecification(
 				null, pageTemplate.getExternalReferenceCode(),
 				SettingsTestUtil.getSettings(
 					ServiceContextTestUtil.getServiceContext(
 						testGroup.getGroupId(), TestPropsValues.getUserId())),
-				PageSpecification.Status.APPROVED);
+				PageSpecification.Status.APPROVED,
+				PageSpecificationsTestUtil.getWidgetPageSections(
+					widgetPageTemplateSettings.getLayoutTemplateId()));
 
 		pageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {widgetPageSpecification});

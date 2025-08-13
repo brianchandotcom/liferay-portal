@@ -432,7 +432,8 @@ public class PageSpecificationsTestUtil {
 			getWidgetPageSpecification(
 				getCustomFields(),
 				widgetPageSpecification.getExternalReferenceCode(), null,
-				PageSpecification.Status.APPROVED)
+				PageSpecification.Status.APPROVED,
+				widgetPageSpecification.getWidgetPageSections())
 		};
 	}
 

@@ -78,7 +78,11 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							hasObjectDefinitionUpdateResourcePermission:
 								!!newObjectDefinition.actions.update,
 							isTreeStructure:
-								!!newObjectDefinition.rootObjectDefinitionExternalReferenceCode,
+								!!newObjectDefinition.objectDefinitionSettings?.some(
+									(setting) =>
+										setting.name ===
+										'rootObjectDefinitionExternalReferenceCodes'
+								),
 							objectDefinitionId: newObjectDefinition.id,
 							objectDefinitionName: newObjectDefinition.name,
 							objectDefinitionPermissionsURL,
@@ -1071,7 +1075,11 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							hasObjectDefinitionUpdateResourcePermission:
 								objectDefinition.hasObjectDefinitionUpdateResourcePermission,
 							isTreeStructure:
-								!!objectDefinition.rootObjectDefinitionExternalReferenceCode,
+								!!objectDefinition.objectDefinitionSettings?.some(
+									(setting) =>
+										setting.name ===
+										'rootObjectDefinitionExternalReferenceCodes'
+								),
 							objectDefinitionId: objectDefinition.id,
 							objectDefinitionName: objectDefinition.name,
 							objectDefinitionPermissionsURL,

@@ -55,7 +55,7 @@ public class ViewContentsSectionDisplayContextTest
 			getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 10,
+			fdsActionDropdownItems.toString(), 11,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
@@ -71,22 +71,25 @@ public class ViewContentsSectionDisplayContextTest
 			fdsActionDropdownItems.get(3), "share", "share", "share", "get",
 			"item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(4), "view", "viewContent", "view", "get",
-			"item");
-		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(5), "pencil", "actionLink", "edit",
+			fdsActionDropdownItems.get(4), "pencil", "actionLink", "edit",
 			"get", "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(6), "time", "expire", "expire", "post",
+			fdsActionDropdownItems.get(5), "time", "expire", "expire", "post",
 			"item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(7), "date-time", "version-history",
+			fdsActionDropdownItems.get(6), "view", "view-content", "view",
+			"get", "item");
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(7), "view", "view-file", "view", null,
+			"item");
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(8), "date-time", "version-history",
 			"view-history", "get", "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(8), "password-policies", "permissions",
+			fdsActionDropdownItems.get(9), "password-policies", "permissions",
 			"permissions", "get", "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(9), "trash", "delete", "delete",
+			fdsActionDropdownItems.get(10), "trash", "delete", "delete",
 			"delete", "item");
 	}
 

@@ -38,8 +38,8 @@ public interface ReloadablePersistenceManager extends PersistenceManager {
 
 	public void reload(String pid) throws IOException;
 
-	public String STORAGE_POLICY_VALUE_EPHEMERAL = "ephemeral";
-
 	public String STORAGE_POLICY_KEY = ".persistenceManager.storagePolicy";
+
+	public String STORAGE_POLICY_VALUE_EPHEMERAL = "ephemeral";
 
 }

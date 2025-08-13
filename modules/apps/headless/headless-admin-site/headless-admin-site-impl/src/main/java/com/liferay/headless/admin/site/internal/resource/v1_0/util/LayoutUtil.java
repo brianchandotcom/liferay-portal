@@ -314,10 +314,14 @@ public class LayoutUtil {
 
 		_setExpandoBridgeAttributes(widgetPageSpecification, serviceContext);
 
-		return LayoutServiceUtil.addLayout(
-			externalReferenceCode, groupId, false, parentLayoutId, nameMap,
-			null, null, null, null, LayoutConstants.TYPE_PORTLET, typeSettings,
-			hiddenFromNavigation, friendlyURLMap, 0, serviceContext);
+		return _updatePortletLayout(
+			LayoutServiceUtil.addLayout(
+				externalReferenceCode, groupId, false, parentLayoutId, nameMap,
+				null, null, null, null, LayoutConstants.TYPE_PORTLET,
+				typeSettings, hiddenFromNavigation, friendlyURLMap, 0,
+				serviceContext),
+			serviceContext, typeSettingsUnicodeProperties,
+			widgetPageSpecification);
 	}
 
 	public static Layout getLayoutPrototypeLayout(

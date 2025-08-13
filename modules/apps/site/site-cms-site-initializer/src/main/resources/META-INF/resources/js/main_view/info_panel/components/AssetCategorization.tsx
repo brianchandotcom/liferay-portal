@@ -48,7 +48,12 @@ export default function AssetCategorization({
 			setObjectEntry(data);
 		}
 		else if (error) {
-			console.error(error);
+			if (keywords?.length) {
+				console.error('Failed to update asset tags.', error);
+			}
+			else {
+				console.error(error);
+			}
 		}
 	};
 

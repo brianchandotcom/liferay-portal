@@ -56,6 +56,8 @@ public interface ObjectField extends ObjectFieldModel, PersistedModel {
 
 	public java.util.List<ObjectFieldSetting> getObjectFieldSettings();
 
+	public ObjectRelationship getObjectRelationship();
+
 	public String getSortableDBColumnName();
 
 	public boolean hasInsertValues();

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
@@ -70,6 +71,11 @@ public class PageSpecificationDTOConverter
 
 		if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
 			return _toContentPageSpecification(dtoConverterContext, layout);
+		}
+
+		if (dtoConverterContext == null) {
+			dtoConverterContext = new DefaultDTOConverterContext(
+				null, null, null, null, null);
 		}
 
 		return _toWidgetPageSpecification(dtoConverterContext, layout);

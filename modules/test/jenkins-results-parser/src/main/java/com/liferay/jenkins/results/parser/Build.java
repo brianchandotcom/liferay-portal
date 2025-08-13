@@ -177,6 +177,8 @@ public interface Build {
 
 	public boolean hasMaximumInvocationCount();
 
+	public boolean isBuildCachingEnabled();
+
 	public boolean isBuildModified();
 
 	public boolean isCompareToUpstream();

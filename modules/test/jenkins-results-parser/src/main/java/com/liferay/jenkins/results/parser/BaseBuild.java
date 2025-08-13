@@ -1531,6 +1531,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public boolean isBuildCachingEnabled() {
+		Job job = getJob();
+
+		if (job == null) {
+			return false;
+		}
+
+		return job.isBuildCachingEnabled();
+	}
+
+	@Override
 	public boolean isBuildModified() {
 		return _isDifferent(_status, _previousStatus);
 	}

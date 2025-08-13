@@ -28,10 +28,12 @@ const renderComponent = ({isSubscribed = false} = {}) => {
 		<ContentEditorSidePanel
 			addCommentURL="addCommentURL"
 			comments={[]}
+			contentAPIURL="contentAPIURL"
 			deleteCommentURL="deleteCommentURL"
 			editCommentURL="editCommentURL"
 			editorConfig={{}}
 			expirationDate={EXPIRATION_DATE}
+			groupId="21000"
 			id="contentId"
 			isSubscribed={isSubscribed}
 			reviewDate={REVIEW_DATE}

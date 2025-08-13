@@ -580,20 +580,18 @@ public class ProjectController extends BaseFaroController {
 
 			if (startDateString != null) {
 				startDate = _dateFormat.parse(startDateString);
+			}
 
-				if (lastAnniversaryDate.getTime() > startDate.getTime()) {
-					startDate = lastAnniversaryDate;
-				}
+			if ((startDate == null) ||
+				(lastAnniversaryDate.getTime() > startDate.getTime())) {
+
+				startDate = lastAnniversaryDate;
 			}
 
 			Date endDate = null;
 
 			if (endDateString != null) {
 				endDate = _dateFormat.parse(endDateString);
-
-				if (lastAnniversaryDate.getTime() > endDate.getTime()) {
-					endDate = lastAnniversaryDate;
-				}
 			}
 
 			projectUsageMetricDisplays.add(

@@ -1074,21 +1074,23 @@ public class PageSpecificationResourceTest
 			Layout layout, ServiceContext serviceContext)
 		throws Exception {
 
-		PageSpecification pageSpecification =
-			pageSpecificationResource.
-				getSiteSiteByExternalReferenceCodePageSpecification(
-					testGroup.getExternalReferenceCode(),
-					layout.getExternalReferenceCode());
+		WidgetPageSpecification widgetPageSpecification =
+			(WidgetPageSpecification)
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode());
 
 		SettingsTestUtil.modifySettings(
-			serviceContext, pageSpecification.getSettings());
+			serviceContext, widgetPageSpecification.getSettings());
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
-			pageSpecification,
+			widgetPageSpecification,
 			() -> PageSpecificationsTestUtil.getWidgetPageSpecification(
-				null, null, pageSpecification.getSettings(), null));
+				null, null, widgetPageSpecification.getSettings(), null,
+				widgetPageSpecification.getWidgetPageSections()));
 
-		pageSpecification.setStatus(PageSpecification.Status.DRAFT);
+		widgetPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
 		_assertProblemException(
 			"BAD_REQUEST",
@@ -1096,7 +1098,8 @@ public class PageSpecificationResourceTest
 				pageSpecificationResource.
 					patchSiteSiteByExternalReferenceCodePageSpecification(
 						testGroup.getExternalReferenceCode(),
-						layout.getExternalReferenceCode(), pageSpecification));
+						layout.getExternalReferenceCode(),
+						widgetPageSpecification));
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodePageSpecification(

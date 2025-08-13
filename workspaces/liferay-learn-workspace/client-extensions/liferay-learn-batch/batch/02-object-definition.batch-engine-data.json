@@ -2924,6 +2924,76 @@
 				},
 				{
 					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "LESSON_DURATION_MINUTES",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Lesson Duration Minutes"
+					},
+					"localized": false,
+					"name": "lessonDurationMinutes",
+					"objectFieldSettings": [
+						{
+							"name": "objectRelationshipName",
+							"value": "lesson"
+						},
+						{
+							"name": "function",
+							"value": "SUM"
+						},
+						{
+							"name": "objectFieldName",
+							"value": "durationMinutes"
+						},
+						{
+							"name": "filters",
+							"value": []
+						}
+					],
+					"readOnly": "true",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "LESSONS",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Lessons"
+					},
+					"localized": false,
+					"name": "lessons",
+					"objectFieldSettings": [
+						{
+							"name": "function",
+							"value": "COUNT"
+						},
+						{
+							"name": "objectRelationshipName",
+							"value": "lesson"
+						},
+						{
+							"name": "filters",
+							"value": []
+						}
+					],
+					"readOnly": "true",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "NAME",
 					"indexed": true,
@@ -2959,6 +3029,76 @@
 				},
 				{
 					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "QUIZ_DURATION_MINUTES",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Quiz Duration Minutes"
+					},
+					"localized": false,
+					"name": "quizDurationMinutes",
+					"objectFieldSettings": [
+						{
+							"name": "objectRelationshipName",
+							"value": "quiz"
+						},
+						{
+							"name": "function",
+							"value": "SUM"
+						},
+						{
+							"name": "objectFieldName",
+							"value": "durationMinutes"
+						},
+						{
+							"name": "filters",
+							"value": []
+						}
+					],
+					"readOnly": "true",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "QUIZZES",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Quizzes"
+					},
+					"localized": false,
+					"name": "quizzes",
+					"objectFieldSettings": [
+						{
+							"name": "function",
+							"value": "COUNT"
+						},
+						{
+							"name": "objectRelationshipName",
+							"value": "Quiz"
+						},
+						{
+							"name": "filters",
+							"value": []
+						}
+					],
+					"readOnly": "true",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "TITLE",
 					"indexed": true,
@@ -2977,6 +3117,97 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Module Create / Edit"
+					},
+					"objectDefinitionExternalReferenceCode": "P2S3_MODULE",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Module Information"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Main"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "name",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "position",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "title",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "description",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "introduction",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							],
+							"objectRelationshipId": 0,
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "Lessons"
+							},
+							"objectLayoutBoxes": [],
+							"objectRelationshipExternalReferenceCode": "P2S3_MODULE_TO_P2S3_LESSONS",
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "Quizzes"
+							},
+							"objectLayoutBoxes": [],
+							"objectRelationshipExternalReferenceCode": "P2S3_MODULE_TO_P2S3_QUIZZES",
+							"priority": 0
+						}
+					]
+				}
+			],
 			"objectRelationships": [
 				{
 					"deletionType": "disassociate",

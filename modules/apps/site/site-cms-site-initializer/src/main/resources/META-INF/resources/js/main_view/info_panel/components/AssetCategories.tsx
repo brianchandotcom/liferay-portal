@@ -15,17 +15,16 @@ import {
 	IGroupedTaxonomies,
 	ITaxonomyCategoryFacade,
 } from '../../../structure_builder/types/AssetType';
+import {Categorization} from '../services/ObjectEntryService';
 
 const AssetCategories = ({
 	cmsGroupId,
 	objectEntry,
 	updateObjectEntry,
 }: {
-	cmsGroupId?: string | null;
+	cmsGroupId: string;
 	objectEntry: IAssetObjectEntry;
-	updateObjectEntry: (
-		object: Pick<IAssetObjectEntry, 'keywords' | 'taxonomyCategoryIds'>
-	) => Promise<any>;
+	updateObjectEntry: (object: Categorization) => Promise<void>;
 }) => {
 	const [groupedTaxonomies, setGroupedTaxonomies] = useState(
 		{} as IGroupedTaxonomies

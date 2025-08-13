@@ -22,6 +22,7 @@ import com.liferay.jenkins.results.parser.PortalWorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.QAWebsitesWorkspaceGitRepository;
+import com.liferay.jenkins.results.parser.TestSuiteJob;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.Workspace;
 import com.liferay.jenkins.results.parser.WorkspaceGitRepository;
@@ -45,6 +46,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -920,7 +922,19 @@ public class TestrayImporter {
 		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
 		List<Callable<Void>> callables = new ArrayList<>();
 
+		String testSuiteName = _topLevelBuildReport.getTestSuiteName();
+
 		for (Job job : _jobs) {
+			if (job instanceof TestSuiteJob) {
+				TestSuiteJob testSuiteJob = (TestSuiteJob)job;
+
+				if (!Objects.equals(
+						testSuiteName, testSuiteJob.getTestSuiteName())) {
+
+					continue;
+				}
+			}
+
 			axisTestClassGroups.addAll(job.getAxisTestClassGroups());
 			axisTestClassGroups.addAll(job.getDependentAxisTestClassGroups());
 

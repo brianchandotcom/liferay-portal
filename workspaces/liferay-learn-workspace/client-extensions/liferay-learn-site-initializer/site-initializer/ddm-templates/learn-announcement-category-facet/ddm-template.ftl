@@ -249,14 +249,16 @@
 	}
 
 	document.addEventListener('DOMContentLoaded', () => {
-		const panel = document.getElementById('${namespace}facetAssetCategoriesPanel');
-		const panelBody = panel.querySelector('.panel-collapse');
-		const panelHeaderButton = panel.querySelector('.panel-header .btn');
+		const facetAssetCategoriesPanel = document.getElementById('${namespace}facetAssetCategoriesPanel');
+
+		const panelBody = facetAssetCategoriesPanel.querySelector('.panel-collapse');
+		const panelHeaderButton = facetAssetCategoriesPanel.querySelector('.panel-header .btn');
 
 		if (window.innerWidth <= 768) {
 			if (panelBody) {
 				panelBody.classList.remove('show');
 			}
+
 			if (panelHeaderButton) {
 				panelHeaderButton.classList.add('collapsed');
 				panelHeaderButton.setAttribute('aria-expanded', 'false');

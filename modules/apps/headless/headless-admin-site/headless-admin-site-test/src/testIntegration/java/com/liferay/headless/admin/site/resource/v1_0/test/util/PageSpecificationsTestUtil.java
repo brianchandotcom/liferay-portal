@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -17,8 +18,11 @@ import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
+import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -26,7 +30,9 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -39,12 +45,15 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -374,7 +383,9 @@ public class PageSpecificationsTestUtil {
 				getWidgetPageSpecification(
 					getCustomFields(),
 					publishedPageSpecificationExternalReferenceCode, null,
-					PageSpecification.Status.APPROVED)
+					PageSpecification.Status.APPROVED,
+					getWidgetPageSections(
+						PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID))
 			};
 		}
 
@@ -423,6 +434,32 @@ public class PageSpecificationsTestUtil {
 				widgetPageSpecification.getExternalReferenceCode(), null,
 				PageSpecification.Status.APPROVED)
 		};
+	}
+
+	public static WidgetPageSection[] getWidgetPageSections(
+		String layoutTemplateId) {
+
+		List<String> columns = new ArrayList<>();
+
+		if (Objects.equals(layoutTemplateId, "1_column")) {
+			columns.add("column-1");
+		}
+		else if (Objects.equals(layoutTemplateId, "2_columns_ii")) {
+			columns.add("column-1");
+			columns.add("column-2");
+		}
+
+		return TransformUtil.transformToArray(
+			columns,
+			column -> new WidgetPageSection() {
+				{
+					setCustomizable(() -> Boolean.FALSE);
+					setId(() -> column);
+					setWidgetPageWidgetInstances(
+						() -> _getWidgetPageWidgetInstances(column));
+				}
+			},
+			WidgetPageSection.class);
 	}
 
 	public static WidgetPageSpecification getWidgetPageSpecification(
@@ -727,6 +764,39 @@ public class PageSpecificationsTestUtil {
 		}
 
 		return expectedCustomFields;
+	}
+
+	private static WidgetPageWidgetInstance[] _getWidgetPageWidgetInstances(
+		String column) {
+
+		List<WidgetPageWidgetInstance> widgetPageWidgetInstances =
+			new ArrayList<>();
+
+		for (int i = 0; i < RandomTestUtil.randomInt(0, 3); i++) {
+			WidgetPageWidgetInstance widgetPageWidgetInstance =
+				new WidgetPageWidgetInstance();
+
+			String widgetName = AssetPublisherPortletKeys.ASSET_PUBLISHER;
+
+			if (RandomTestUtil.randomBoolean()) {
+				widgetName = JournalContentPortletKeys.JOURNAL_CONTENT;
+			}
+
+			String widgetInstanceId = RandomTestUtil.randomString();
+
+			widgetPageWidgetInstance.setExternalReferenceCode(
+				PortletIdCodec.encode(widgetName, widgetInstanceId));
+
+			widgetPageWidgetInstance.setParentSectionId(column);
+			widgetPageWidgetInstance.setPosition(i);
+			widgetPageWidgetInstance.setWidgetName(widgetName);
+			widgetPageWidgetInstance.setWidgetInstanceId(widgetInstanceId);
+
+			widgetPageWidgetInstances.add(widgetPageWidgetInstance);
+		}
+
+		return widgetPageWidgetInstances.toArray(
+			new WidgetPageWidgetInstance[0]);
 	}
 
 	private static boolean _isPublished(Layout draftLayout) {

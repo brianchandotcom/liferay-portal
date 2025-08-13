@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useEffect, useState} from 'react';
+import {ClayInput} from '@clayui/form';
+import React, {ComponentProps, useEffect, useState} from 'react';
 
 import {IAssetObjectEntry} from '../../../structure_builder/types/AssetType';
 import ObjectEntryService, {
@@ -12,13 +13,19 @@ import ObjectEntryService, {
 import AssetCategories from './AssetCategories';
 import AssetTags from './AssetTags';
 
+export type CategorizationInputSize = ComponentProps<
+	typeof ClayInput
+>['sizing'];
+
 export default function AssetCategorization({
 	cmsGroupId,
 	getObjectEntryURL,
+	inputSize,
 	updateObjectEntryURL,
 }: {
 	cmsGroupId: string;
 	getObjectEntryURL: string;
+	inputSize?: CategorizationInputSize;
 	updateObjectEntryURL: string;
 }) {
 	const [objectEntry, setObjectEntry] = useState<IAssetObjectEntry | null>(
@@ -67,12 +74,14 @@ export default function AssetCategorization({
 		<>
 			<AssetCategories
 				cmsGroupId={cmsGroupId}
+				inputSize={inputSize}
 				objectEntry={objectEntry}
 				updateObjectEntry={updateObjectEntry}
 			/>
 
 			<AssetTags
 				cmsGroupId={cmsGroupId}
+				inputSize={inputSize}
 				objectEntry={objectEntry}
 				updateObjectEntry={updateObjectEntry}
 			/>

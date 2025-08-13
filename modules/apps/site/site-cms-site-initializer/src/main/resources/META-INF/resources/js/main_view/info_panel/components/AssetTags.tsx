@@ -12,13 +12,16 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import {IAssetObjectEntry} from '../../../structure_builder/types/AssetType';
 import {Categorization} from '../services/ObjectEntryService';
+import {CategorizationInputSize} from './AssetCategorization';
 
 const AssetTags = ({
 	cmsGroupId,
+	inputSize,
 	objectEntry,
 	updateObjectEntry,
 }: {
 	cmsGroupId: string;
+	inputSize?: CategorizationInputSize;
 	objectEntry: IAssetObjectEntry;
 	updateObjectEntry: (object: Categorization) => Promise<void>;
 }) => {
@@ -154,6 +157,7 @@ const AssetTags = ({
 					menuTrigger="focus"
 					onChange={setValue}
 					placeholder={sub(Liferay.Language.get('add-x'), 'tag')}
+					sizing={inputSize}
 					value={value}
 				>
 					{!items.length ? (

@@ -123,28 +123,24 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 						", 1 entries updated because ",
 						_dbInspector.normalizeName("content"),
 						" had invalid characters")));
+		}
 
-			try (PreparedStatement preparedStatement =
-					_connection.prepareStatement(
-						"select data_ from DDMContent where contentId = " +
-							_contentId);
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select data_ from DDMContent where contentId = " + _contentId);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-				Assert.assertTrue(resultSet.next());
+			Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(cleanContent, resultSet.getString(1));
-			}
+			Assert.assertEquals(cleanContent, resultSet.getString(1));
+		}
 
-			try (PreparedStatement preparedStatement =
-					_connection.prepareStatement(
-						"select content from JournalArticle where id_ = " +
-							_journalId);
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select content from JournalArticle where id_ = " + _journalId);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-				Assert.assertTrue(resultSet.next());
+			Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(cleanContent, resultSet.getString(1));
-			}
+			Assert.assertEquals(cleanContent, resultSet.getString(1));
 		}
 	}
 

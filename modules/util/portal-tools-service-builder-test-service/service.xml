@@ -503,7 +503,7 @@
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="RedundantIndexEntry" remote-service="false">

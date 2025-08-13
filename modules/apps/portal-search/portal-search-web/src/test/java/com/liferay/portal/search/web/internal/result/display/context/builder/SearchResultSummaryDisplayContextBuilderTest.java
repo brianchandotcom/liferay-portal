@@ -355,7 +355,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testViewURL() throws Exception {
+	public void testViewURL1() throws Exception {
 		String className = RandomTestUtil.randomString();
 		long classNameId = RandomTestUtil.randomLong();
 
@@ -385,7 +385,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testViewURLOfParentEntity() throws Exception {
+	public void testViewURL2() throws Exception {
 		String className = RandomTestUtil.randomString();
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(

@@ -5,7 +5,7 @@
 
 package com.liferay.object.internal.security.permission.resource;
 
-import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -102,7 +102,7 @@ public class ObjectEntryFolderModelResourcePermission
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference(
-		target = "(resource.name=" + ObjectEntryFolderConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + ObjectConstants.RESOURCE_NAME_OBJECT_ENTRY_FOLDER + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

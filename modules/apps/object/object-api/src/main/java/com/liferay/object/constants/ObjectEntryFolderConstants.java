@@ -19,7 +19,4 @@ public class ObjectEntryFolderConstants {
 
 	public static final long PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT = 0;
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.object.model.ObjectEntryFolder";
-
 }

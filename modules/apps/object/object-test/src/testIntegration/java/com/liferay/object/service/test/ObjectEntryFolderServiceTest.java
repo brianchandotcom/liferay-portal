@@ -6,7 +6,7 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderService;
@@ -72,7 +72,7 @@ public class ObjectEntryFolderServiceTest {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		RoleTestUtil.addResourcePermission(
-			role, ObjectEntryFolderConstants.RESOURCE_NAME,
+			role, ObjectConstants.RESOURCE_NAME_OBJECT_ENTRY_FOLDER,
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
 			ActionKeys.ADD_FOLDER);
@@ -119,7 +119,7 @@ public class ObjectEntryFolderServiceTest {
 				PrincipalException.MustHavePermission.class,
 				StringBundler.concat(
 					"User ", userId, " must have ADD_FOLDER permission for ",
-					ObjectEntryFolderConstants.RESOURCE_NAME, " ",
+					ObjectConstants.RESOURCE_NAME_OBJECT_ENTRY_FOLDER, " ",
 					group.getGroupId()),
 				() -> _objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
 					RandomTestUtil.randomString(), group.getGroupId(),
@@ -132,7 +132,7 @@ public class ObjectEntryFolderServiceTest {
 				PrincipalException.MustHavePermission.class,
 				StringBundler.concat(
 					"User ", userId, " must have VIEW permission for ",
-					ObjectEntryFolderConstants.RESOURCE_NAME, " ",
+					ObjectConstants.RESOURCE_NAME_OBJECT_ENTRY_FOLDER, " ",
 					_objectEntryFolder.getObjectEntryFolderId()),
 				() -> _objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
 					_objectEntryFolder.getExternalReferenceCode(),

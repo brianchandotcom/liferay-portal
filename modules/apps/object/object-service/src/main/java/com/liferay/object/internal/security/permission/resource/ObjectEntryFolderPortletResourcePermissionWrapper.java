@@ -5,7 +5,7 @@
 
 package com.liferay.object.internal.security.permission.resource;
 
-import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Mario Gomes
  */
 @Component(
-	property = "resource.name=" + ObjectEntryFolderConstants.RESOURCE_NAME,
+	property = "resource.name=" + ObjectConstants.RESOURCE_NAME_OBJECT_ENTRY_FOLDER,
 	service = PortletResourcePermission.class
 )
 public class ObjectEntryFolderPortletResourcePermissionWrapper
@@ -29,7 +29,7 @@ public class ObjectEntryFolderPortletResourcePermissionWrapper
 	@Override
 	protected PortletResourcePermission doGetPortletResourcePermission() {
 		return PortletResourcePermissionFactory.create(
-			ObjectEntryFolderConstants.RESOURCE_NAME,
+			ObjectConstants.RESOURCE_NAME_OBJECT_ENTRY_FOLDER,
 			new ObjectEntryFolderPortletResourcePermissionLogic());
 	}
 

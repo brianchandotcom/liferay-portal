@@ -174,53 +174,45 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Test
 	public void testUserNotificationWithArticlePreviewURL() throws Exception {
-		JournalArticle article = null;
-		WorkflowDefinitionLink workflowDefinitionLink = null;
-
 		String name = StringUtil.randomString();
 
-		try {
-			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(), user.getUserId(),
-				StringUtil.randomString(), name,
-				_getContentBytes("workflow-definition.xml"));
+		_workflowDefinitionManager.deployWorkflowDefinition(
+			null, TestPropsValues.getCompanyId(), user.getUserId(),
+			StringUtil.randomString(), name,
+			_getContentBytes("workflow-definition.xml"));
 
-			workflowDefinitionLink =
-				_workflowDefinitionLinkLocalService.
-					updateWorkflowDefinitionLink(
-						user.getUserId(), group.getCompanyId(),
-						group.getGroupId(), JournalFolder.class.getName(),
-						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-						JournalArticleConstants.DDM_STRUCTURE_ID_ALL, name, 1);
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+				user.getUserId(), group.getCompanyId(), group.getGroupId(),
+				JournalFolder.class.getName(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.DDM_STRUCTURE_ID_ALL, name, 1);
 
-			article = JournalTestUtil.addArticle(
-				group.getGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		JournalArticle article = JournalTestUtil.addArticle(
+			group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_PENDING, article.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, article.getStatus());
 
-			_assertJournalArticleNotificationsCount(1, user, 1);
+		_assertJournalArticleNotificationsCount(1, user, 1);
 
-			MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
 
-			String mailMessageBody = mailMessage.getBody();
+		String body = mailMessage.getBody();
 
-			Assert.assertTrue(
-				mailMessageBody.contains(_getArticlePreviewURL(article)));
-		}
-		finally {
-			_journalArticleLocalService.deleteArticle(article);
+		Assert.assertTrue(body.contains(_getArticlePreviewURL(article)));
 
-			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-				workflowDefinitionLink);
+		_journalArticleLocalService.deleteArticle(article);
 
-			_workflowDefinitionManager.updateActive(
-				user.getCompanyId(), user.getUserId(), name, 1, false);
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			workflowDefinitionLink);
 
-			_workflowDefinitionManager.undeployWorkflowDefinition(
-				user.getCompanyId(), user.getUserId(), name, 1);
-		}
+		_workflowDefinitionManager.updateActive(
+			user.getCompanyId(), user.getUserId(), name, 1, false);
+
+		_workflowDefinitionManager.undeployWorkflowDefinition(
+			user.getCompanyId(), user.getUserId(), name, 1);
 	}
 
 	@Override

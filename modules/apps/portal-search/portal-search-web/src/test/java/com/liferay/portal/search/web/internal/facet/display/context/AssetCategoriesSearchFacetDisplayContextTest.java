@@ -370,15 +370,15 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 		TermCollector termCollector = Mockito.mock(TermCollector.class);
 
 		Mockito.when(
-			termCollector.getTerm()
-		).thenReturn(
-			String.valueOf(assetCategoryId)
-		);
-
-		Mockito.when(
 			termCollector.getFrequency()
 		).thenReturn(
 			1
+		);
+
+		Mockito.when(
+			termCollector.getTerm()
+		).thenReturn(
+			String.valueOf(assetCategoryId)
 		);
 
 		Mockito.when(

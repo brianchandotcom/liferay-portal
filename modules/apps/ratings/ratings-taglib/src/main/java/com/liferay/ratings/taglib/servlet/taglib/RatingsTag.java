@@ -279,10 +279,13 @@ public class RatingsTag extends IncludeTag {
 			List<? extends PersistedModel> persistedModels =
 				persistedResourcedModelLocalService.getPersistedModel(_classPK);
 
-			persistedModel = persistedModels.get(0);
+			if (!persistedModels.isEmpty()) {
+				persistedModel = persistedModels.get(0);
+			}
 		}
-		else {
-			persistedModel = persistedModelLocalService.getPersistedModel(
+
+		if (persistedModel == null) {
+			persistedModel = persistedModelLocalService.fetchPersistedModel(
 				_classPK);
 		}
 

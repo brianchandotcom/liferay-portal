@@ -99,8 +99,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		_assertAttributesAndParameters(
 			_getDynamicServletRequest(
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong()),
-			null, null, null, null);
-		_assertSetPermissionChecker(0);
+			null, null, null, null, 0);
 	}
 
 	@Test
@@ -111,9 +110,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		_assertAttributesAndParameters(
 			_getDynamicServletRequest(RandomTestUtil.randomString(), 0L), null,
-			null, null, null);
-
-		_assertSetPermissionChecker(0);
+			null, null, null, 0);
 	}
 
 	@Test
@@ -130,8 +127,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
-				layout.getCompanyId(), layout.getGroupId(), layout, null));
-		_assertSetPermissionChecker(1);
+				layout.getCompanyId(), layout.getGroupId(), layout, null),
+			1);
 	}
 
 	@Test
@@ -166,8 +163,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
-				layout.getCompanyId(), layout.getGroupId(), layout, null));
-		_assertSetPermissionChecker(1);
+				layout.getCompanyId(), layout.getGroupId(), layout, null),
+			1);
 	}
 
 	@Test
@@ -196,8 +193,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
-				layout.getCompanyId(), layout.getGroupId(), layout, null));
-		_assertSetPermissionChecker(1);
+				layout.getCompanyId(), layout.getGroupId(), layout, null),
+			1);
 	}
 
 	@Test
@@ -232,8 +229,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				companyId, virtualHostGroupLayout.getGroupId(),
-				virtualHostGroupLayout, null));
-		_assertSetPermissionChecker(1);
+				virtualHostGroupLayout, null),
+			1);
 	}
 
 	@Test
@@ -272,8 +269,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getLayoutSet(
 				virtualHostGroupLayout.getCompanyId(),
 				virtualHostGroupLayout.getGroupId(), virtualHostGroupLayout,
-				null));
-		_assertSetPermissionChecker(2);
+				null),
+			2);
 	}
 
 	@Test
@@ -306,8 +303,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
-				layout.getCompanyId(), layout.getGroupId(), layout, null));
-		_assertSetPermissionChecker(2);
+				layout.getCompanyId(), layout.getGroupId(), layout, null),
+			2);
 	}
 
 	@Test
@@ -330,8 +327,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
-				layout.getCompanyId(), layout.getGroupId(), layout, null));
-		_assertSetPermissionChecker(1);
+				layout.getCompanyId(), layout.getGroupId(), layout, null),
+			1);
 	}
 
 	@Test
@@ -354,8 +351,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
-				layout.getCompanyId(), layout.getGroupId(), layout, null));
-		_assertSetPermissionChecker(1);
+				layout.getCompanyId(), layout.getGroupId(), layout, null),
+			1);
 	}
 
 	@Test
@@ -385,8 +382,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			null, null, null,
 			_getLayoutSet(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(), null,
-				null));
-		_assertSetPermissionChecker(2);
+				null),
+			2);
 	}
 
 	@Test
@@ -398,8 +395,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		_assertAttributesAndParameters(
 			_getDynamicServletRequest(
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong()),
-			null, null, null, null);
-		_assertSetPermissionChecker(0);
+			null, null, null, null, 0);
 	}
 
 	@Test
@@ -416,8 +412,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
-				layout.getCompanyId(), layout.getGroupId(), layout, null));
-		_assertSetPermissionChecker(1);
+				layout.getCompanyId(), layout.getGroupId(), layout, null),
+			1);
 	}
 
 	@Test
@@ -435,8 +431,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
-				layout.getCompanyId(), layout.getGroupId(), null, layout));
-		_assertSetPermissionChecker(1);
+				layout.getCompanyId(), layout.getGroupId(), null, layout),
+			1);
 	}
 
 	@Test
@@ -454,13 +450,14 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
-				layout.getCompanyId(), layout.getGroupId(), layout, null));
-		_assertSetPermissionChecker(1);
+				layout.getCompanyId(), layout.getGroupId(), layout, null),
+			1);
 	}
 
 	private void _assertAttributesAndParameters(
 		DynamicServletRequest dynamicServletRequest, String groupId,
-		String languageId, String layoutId, LayoutSet layoutSet) {
+		String languageId, String layoutId, LayoutSet layoutSet,
+		int wantedNumberOfInvocations) {
 
 		_commonStatusLayoutUtilityPageEntryRequestContributor.
 			addAttributesAndParameters(dynamicServletRequest);
@@ -479,9 +476,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		_portalInstancesMockedStatic.verify(
 			() -> PortalInstances.getCompanyId(dynamicServletRequest));
-	}
 
-	private void _assertSetPermissionChecker(int wantedNumberOfInvocations) {
 		_permissionThreadLocalMockedStatic.verify(
 			() -> PermissionThreadLocal.setPermissionChecker(
 				_permissionChecker),

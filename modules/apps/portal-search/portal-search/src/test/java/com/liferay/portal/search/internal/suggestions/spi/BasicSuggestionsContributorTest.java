@@ -379,6 +379,8 @@ public class BasicSuggestionsContributorTest {
 				Mockito.eq(Long.valueOf(i))
 			);
 
+			SearchHit searchHit = Mockito.mock(SearchHit.class);
+
 			Document document = Mockito.mock(Document.class);
 
 			Mockito.doReturn(
@@ -420,8 +422,6 @@ public class BasicSuggestionsContributorTest {
 			).getValue(
 				Mockito.eq(Field.CLASS_PK)
 			);
-
-			SearchHit searchHit = Mockito.mock(SearchHit.class);
 
 			Mockito.doReturn(
 				document

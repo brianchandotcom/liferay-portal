@@ -715,9 +715,7 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Test
 	@TestInfo("LPD-62221")
-	public void testImportDoesNotFailWithMissingMasterLayout()
-		throws Exception {
-
+	public void testImportLayoutWithMissingMasterLayout() throws Exception {
 		Group group1 = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =

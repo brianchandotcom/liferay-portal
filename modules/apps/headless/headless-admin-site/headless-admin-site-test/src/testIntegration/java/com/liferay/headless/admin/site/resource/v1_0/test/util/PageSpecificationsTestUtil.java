@@ -293,10 +293,9 @@ public class PageSpecificationsTestUtil {
 			expectedWidgetPageSpecification.getSettings(),
 			actualWidgetPageSpecification.getSettings());
 
-		Assert.assertTrue(
-			Objects.deepEquals(
-				expectedWidgetPageSpecification.getWidgetPageSections(),
-				actualWidgetPageSpecification.getWidgetPageSections()));
+		Assert.assertArrayEquals(
+			expectedWidgetPageSpecification.getWidgetPageSections(),
+			actualWidgetPageSpecification.getWidgetPageSections());
 	}
 
 	public static ContentPageSpecification getContentPageSpecification(

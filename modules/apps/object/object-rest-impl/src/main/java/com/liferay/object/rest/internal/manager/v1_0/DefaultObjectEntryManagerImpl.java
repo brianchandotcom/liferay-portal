@@ -2008,7 +2008,6 @@ public class DefaultObjectEntryManagerImpl
 					if (!FeatureFlagManagerUtil.isEnabled(
 							serviceBuilderObjectEntry.getCompanyId(),
 							"LPD-17564") ||
-						latestObjectEntryVersion ||
 						objectEntryVersion.isExpired() ||
 						objectEntryVersion.isDraft() ||
 						objectEntryVersion.isPending()) {

@@ -37,13 +37,8 @@ function getObjectFieldBaseProperties(): objectFieldBaseProperties {
 	};
 }
 
-type SupportedObjectFieldBusinessType = Exclude<
-	ObjectField['businessType'],
-	'Aggregation' | 'Formula'
->;
-
 function getObjectFieldSpecificProperties(
-	objectFieldBusinessType: SupportedObjectFieldBusinessType,
+	objectFieldBusinessType: ObjectField['businessType'],
 	listTypeDefinitionExternalReferenceCode: string
 ): {
 	['DBType']: ObjectField['DBType'];
@@ -191,7 +186,7 @@ function generateObjectFieldProperties({
 }: {
 	additionalSettings?: Partial<ObjectField>;
 	listTypeDefinitionExternalReferenceCode?: string;
-	objectFieldBusinessType: SupportedObjectFieldBusinessType;
+	objectFieldBusinessType: ObjectField['businessType'];
 }): Partial<ObjectField> {
 	const objectFieldBaseProperties = getObjectFieldBaseProperties();
 	const objectFieldLabel = `${objectFieldBusinessType}${getRandomInt()}`;
@@ -215,9 +210,9 @@ export function generateObjectFields({
 }: {
 	listTypeDefinitionExternalReferenceCode?: string;
 	objectFieldBusinessTypes: (
-		| SupportedObjectFieldBusinessType
+		| ObjectField['businessType']
 		| (Partial<objectFieldBaseProperties> & {
-				businessType: SupportedObjectFieldBusinessType;
+				businessType: ObjectField['businessType'];
 		  })
 	)[];
 }) {

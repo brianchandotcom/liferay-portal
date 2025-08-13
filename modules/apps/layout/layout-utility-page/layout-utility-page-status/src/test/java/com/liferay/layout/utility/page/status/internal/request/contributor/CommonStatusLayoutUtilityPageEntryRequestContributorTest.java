@@ -549,9 +549,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		);
 	}
 
-	private Layout _mockLayout(long companyId, long groupId)
-		throws PortalException {
-
+	private Layout _mockLayout(long companyId, long groupId) {
 		Layout layout = Mockito.mock(Layout.class);
 
 		Mockito.when(

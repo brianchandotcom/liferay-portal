@@ -15,6 +15,7 @@ import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -268,17 +269,13 @@ public class ConfigurationPersistenceManagerTest {
 
 		String pid = configuration.getPid();
 
-		Dictionary<String, Object> newProperties = new Hashtable<>();
-
-		newProperties.put("foo", "bar");
-
-		for (Map.Entry<String, Object> entry :
-				additionalProperties.entrySet()) {
-
-			newProperties.put(entry.getKey(), entry.getValue());
-		}
-
-		ConfigurationTestUtil.saveConfiguration(configuration, newProperties);
+		ConfigurationTestUtil.saveConfiguration(
+			configuration,
+			HashMapDictionaryBuilder.putAll(
+				additionalProperties
+			).put(
+				"foo", "bar"
+			).build());
 
 		Assert.assertTrue(_persistenceManager.exists(pid));
 

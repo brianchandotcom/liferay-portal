@@ -571,13 +571,13 @@ public class DisplayPageTemplateFolderResourceTest
 				parentLayoutPageTemplateCollections)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId());
-
 		long parentLayoutPageTemplateCollectionId =
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId());
 
 		for (int i = 0; i < count; i++) {
 			LayoutPageTemplateCollection parentLayoutPageTemplateCollection =

@@ -516,8 +516,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 				groupId, dynamicServletRequest.getParameter("groupId"));
 			Assert.assertEquals(
 				layoutId, dynamicServletRequest.getParameter("layoutId"));
-			Assert.assertEquals(
-				_layoutSet,
+			Assert.assertNull(
 				dynamicServletRequest.getAttribute(
 					WebKeys.VIRTUAL_HOST_LAYOUT_SET));
 
@@ -733,10 +732,9 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		_mockLayoutLocalService(groupId, publicLayout, privateLayout);
 
-		_layoutSet = _mockLayoutSet(group);
+		_mockLayoutSet(group);
 
-		dynamicServletRequest.setAttribute(
-			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _layoutSet);
+		dynamicServletRequest.removeAttribute(WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 	}
 
 	private void _setUpPermissionCheckerFactory() {
@@ -767,7 +765,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		_commonStatusLayoutUtilityPageEntryRequestContributor;
 	private GroupLocalService _groupLocalService;
 	private LayoutService _layoutService;
-	private LayoutSet _layoutSet;
 	private PermissionChecker _permissionChecker;
 	private PermissionCheckerFactory _permissionCheckerFactory;
 	private Portal _portal;

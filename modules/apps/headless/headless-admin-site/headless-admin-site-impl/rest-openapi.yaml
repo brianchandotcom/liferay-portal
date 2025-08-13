@@ -3205,295 +3205,293 @@ components:
                             # @review
                             description:
                                 The widget instance's look and feel configuration.
-                            items:
-                                properties:
-                                    advancedStylingConfig:
-                                        properties:
-                                            customCSS:
-                                                type: string
-                                            customCSSClassNames:
-                                                type: string
-                                        type: object
-                                    backgroundStylesConfig:
-                                        properties:
-                                            backgroundColor:
-                                                example: "#FF0D0D"
-                                                type: string
-                                        type: object
-                                    borderStylesConfig:
-                                        properties:
-                                            borderColor:
-                                                properties:
-                                                    bottom:
-                                                        example: "#FF0D0D"
-                                                        type: string
-                                                    left:
-                                                        example: "#FF0D0D"
-                                                        type: string
-                                                    right:
-                                                        example: "#FF0D0D"
-                                                        type: string
-                                                    sameForAll:
-                                                        type: boolean
-                                                    top:
-                                                        example: "#FF0D0D"
-                                                        type: string
-                                                type: object
-                                            borderStyle:
-                                                properties:
-                                                    bottom:
-                                                        enum:
-                                                            -   Dashed
-                                                            -   Doubled
-                                                            -   Dotted
-                                                            -   Groove
-                                                            -   Hidden
-                                                            -   Dotted
-                                                            -   Inset
-                                                            -   Outset
-                                                            -   Ridge
-                                                            -   Solid
-                                                        type: string
-                                                    left:
-                                                        enum:
-                                                            -   Dashed
-                                                            -   Doubled
-                                                            -   Dotted
-                                                            -   Groove
-                                                            -   Hidden
-                                                            -   Dotted
-                                                            -   Inset
-                                                            -   Outset
-                                                            -   Ridge
-                                                            -   Solid
-                                                        type: string
-                                                    right:
-                                                        enum:
-                                                            -   Dashed
-                                                            -   Doubled
-                                                            -   Dotted
-                                                            -   Groove
-                                                            -   Hidden
-                                                            -   Dotted
-                                                            -   Inset
-                                                            -   Outset
-                                                            -   Ridge
-                                                            -   Solid
-                                                        type: string
-                                                    sameForAll:
-                                                        type: boolean
-                                                    top:
-                                                        enum:
-                                                            -   Dashed
-                                                            -   Doubled
-                                                            -   Dotted
-                                                            -   Groove
-                                                            -   Hidden
-                                                            -   Dotted
-                                                            -   Inset
-                                                            -   Outset
-                                                            -   Ridge
-                                                            -   Solid
-                                                        type: string
-                                                type: object
-                                            borderWidth:
-                                                properties:
-                                                    bottom:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                    left:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                    right:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                    sameForAll:
-                                                        type: boolean
-                                                    top:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                type: object
-                                        type: object
-                                    generalConfig:
-                                        properties:
-                                            applicationDecorator:
-                                                enum: [Barebone, Borderless, Decorate]
-                                                type: string
-                                            customTitle_i18n:
-                                                additionalProperties:
+                            properties:
+                                advancedStylingConfig:
+                                    properties:
+                                        customCSS:
+                                            type: string
+                                        customCSSClassNames:
+                                            type: string
+                                    type: object
+                                backgroundStylesConfig:
+                                    properties:
+                                        backgroundColor:
+                                            example: "#FF0D0D"
+                                            type: string
+                                    type: object
+                                borderStylesConfig:
+                                    properties:
+                                        borderColor:
+                                            properties:
+                                                bottom:
+                                                    example: "#FF0D0D"
                                                     type: string
-                                                # @review
-                                                description:
-                                                    The localized custom titles.
-                                                type: object
-                                            useCustomTitle:
-                                                # @review
-                                                description:
-                                                    Whether to use a custom title.
-                                                type: boolean
-                                        type: object
-                                    marginAndPaddingConfig:
-                                        properties:
-                                            margin:
-                                                properties:
-                                                    bottom:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                    left:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                    right:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                    sameForAll:
-                                                        type: boolean
-                                                    top:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                type: object
-                                            padding:
-                                                properties:
-                                                    bottom:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                    left:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                    right:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                    sameForAll:
-                                                        type: boolean
-                                                    top:
-                                                        properties:
-                                                            unit:
-                                                                enum:
-                                                                    -   Emphasis
-                                                                    -   Percentage
-                                                                    -   Pixel
-                                                                type: string
-                                                            value:
-                                                                type: string
-                                                        type: object
-                                                type: object
-                                        type: object
-                                    textStylesConfig:
-                                        properties:
-                                            alignment:
-                                                enum: [Center, Justify, Left, Right]
+                                                left:
+                                                    example: "#FF0D0D"
+                                                    type: string
+                                                right:
+                                                    example: "#FF0D0D"
+                                                    type: string
+                                                sameForAll:
+                                                    type: boolean
+                                                top:
+                                                    example: "#FF0D0D"
+                                                    type: string
+                                            type: object
+                                        borderStyle:
+                                            properties:
+                                                bottom:
+                                                    enum:
+                                                        -   Dashed
+                                                        -   Doubled
+                                                        -   Dotted
+                                                        -   Groove
+                                                        -   Hidden
+                                                        -   Dotted
+                                                        -   Inset
+                                                        -   Outset
+                                                        -   Ridge
+                                                        -   Solid
+                                                    type: string
+                                                left:
+                                                    enum:
+                                                        -   Dashed
+                                                        -   Doubled
+                                                        -   Dotted
+                                                        -   Groove
+                                                        -   Hidden
+                                                        -   Dotted
+                                                        -   Inset
+                                                        -   Outset
+                                                        -   Ridge
+                                                        -   Solid
+                                                    type: string
+                                                right:
+                                                    enum:
+                                                        -   Dashed
+                                                        -   Doubled
+                                                        -   Dotted
+                                                        -   Groove
+                                                        -   Hidden
+                                                        -   Dotted
+                                                        -   Inset
+                                                        -   Outset
+                                                        -   Ridge
+                                                        -   Solid
+                                                    type: string
+                                                sameForAll:
+                                                    type: boolean
+                                                top:
+                                                    enum:
+                                                        -   Dashed
+                                                        -   Doubled
+                                                        -   Dotted
+                                                        -   Groove
+                                                        -   Hidden
+                                                        -   Dotted
+                                                        -   Inset
+                                                        -   Outset
+                                                        -   Ridge
+                                                        -   Solid
+                                                    type: string
+                                            type: object
+                                        borderWidth:
+                                            properties:
+                                                bottom:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                                left:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                                right:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                                sameForAll:
+                                                    type: boolean
+                                                top:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                            type: object
+                                    type: object
+                                generalConfig:
+                                    properties:
+                                        applicationDecorator:
+                                            enum: [Barebone, Borderless, Decorate]
+                                            type: string
+                                        customTitle_i18n:
+                                            additionalProperties:
                                                 type: string
-                                            bold:
-                                                type: boolean
-                                            color:
-                                                example: "#FF0D0D"
-                                                type: string
-                                            font:
-                                                enum: [Arial, Georgia, Tahoma, TimesNewRoman, TrebuchetMS, Verdana]
-                                                type: string
-                                            italic:
-                                                type: boolean
-                                            letterSpacing:
-                                                type: string
-                                            lineHeight:
-                                                type: string
-                                            size:
-                                                type: string
-                                            textDecoration:
-                                                enum: [None, Overline, Strikethrough, Underline]
-                                                type: string
-                                            wordSpacing:
-                                                type: string
-                                        type: object
-                                type: object
-                            type: array
+                                            # @review
+                                            description:
+                                                The localized custom titles.
+                                            type: object
+                                        useCustomTitle:
+                                            # @review
+                                            description:
+                                                Whether to use a custom title.
+                                            type: boolean
+                                    type: object
+                                marginAndPaddingConfig:
+                                    properties:
+                                        margin:
+                                            properties:
+                                                bottom:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                                left:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                                right:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                                sameForAll:
+                                                    type: boolean
+                                                top:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                            type: object
+                                        padding:
+                                            properties:
+                                                bottom:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                                left:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                                right:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                                sameForAll:
+                                                    type: boolean
+                                                top:
+                                                    properties:
+                                                        unit:
+                                                            enum:
+                                                                -   Emphasis
+                                                                -   Percentage
+                                                                -   Pixel
+                                                            type: string
+                                                        value:
+                                                            type: string
+                                                    type: object
+                                            type: object
+                                    type: object
+                                textStylesConfig:
+                                    properties:
+                                        alignment:
+                                            enum: [Center, Justify, Left, Right]
+                                            type: string
+                                        bold:
+                                            type: boolean
+                                        color:
+                                            example: "#FF0D0D"
+                                            type: string
+                                        font:
+                                            enum: [Arial, Georgia, Tahoma, TimesNewRoman, TrebuchetMS, Verdana]
+                                            type: string
+                                        italic:
+                                            type: boolean
+                                        letterSpacing:
+                                            type: string
+                                        lineHeight:
+                                            type: string
+                                        size:
+                                            type: string
+                                        textDecoration:
+                                            enum: [None, Overline, Strikethrough, Underline]
+                                            type: string
+                                        wordSpacing:
+                                            type: string
+                                    type: object
+                            type: object
             # @review
             description:
                 A widget instance in a widget page.

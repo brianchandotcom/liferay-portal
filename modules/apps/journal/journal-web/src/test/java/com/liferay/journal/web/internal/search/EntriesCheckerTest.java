@@ -44,39 +44,35 @@ public class EntriesCheckerTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		_journalFolderLocalServiceUtilMockedStatic.close();
 		_journalArticleLocalServiceUtilMockedStatic.close();
 		_journalArticlePermissionMockedStatic.close();
+		_journalFolderLocalServiceUtilMockedStatic.close();
 
 		_languageUtilMockedStatic.close();
 	}
 
 	@Test
 	public void testGetRowCheckBoxForNoJournalArticlePermissions() {
+		String journalArticleId = String.valueOf(RandomTestUtil.randomLong());
+
 		EntriesChecker entriesChecker = new EntriesChecker(
 			_getLiferayPortletRequest(),
 			Mockito.mock(LiferayPortletResponse.class));
 
-		JournalArticle mockArticle = Mockito.mock(JournalArticle.class);
+		JournalArticle mockJournalArticle = Mockito.mock(JournalArticle.class);
 		JournalFolder mockJournalFolder = Mockito.mock(JournalFolder.class);
 
 		Mockito.when(
-			mockArticle.getArticleId()
+			mockJournalArticle.getArticleId()
 		).thenReturn(
-			_ARTICLE_ID
-		);
-
-		_journalFolderLocalServiceUtilMockedStatic.when(
-			() -> JournalFolderLocalServiceUtil.fetchFolder(Mockito.anyLong())
-		).thenReturn(
-			mockJournalFolder
+			journalArticleId
 		);
 
 		_journalArticleLocalServiceUtilMockedStatic.when(
 			() -> JournalArticleLocalServiceUtil.fetchArticle(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
-			mockArticle
+			mockJournalArticle
 		);
 
 		_journalArticlePermissionMockedStatic.when(
@@ -87,6 +83,12 @@ public class EntriesCheckerTest {
 			false
 		);
 
+		_journalFolderLocalServiceUtilMockedStatic.when(
+			() -> JournalFolderLocalServiceUtil.fetchFolder(Mockito.anyLong())
+		).thenReturn(
+			mockJournalFolder
+		);
+
 		_languageUtilMockedStatic.when(
 			() -> LanguageUtil.get(
 				Mockito.any(Locale.class), Mockito.eq("select"))
@@ -95,7 +97,7 @@ public class EntriesCheckerTest {
 		);
 
 		String rowCheckBox = entriesChecker.getRowCheckBox(
-			_getHttpServletRequest(), false, false, _ARTICLE_ID);
+			_getHttpServletRequest(), false, false, journalArticleId);
 
 		Assert.assertNotNull(rowCheckBox);
 		Assert.assertFalse(rowCheckBox.isEmpty());
@@ -137,9 +139,6 @@ public class EntriesCheckerTest {
 
 		return themeDisplay;
 	}
-
-	private static final String _ARTICLE_ID = String.valueOf(
-		RandomTestUtil.randomLong());
 
 	private static final MockedStatic<JournalArticleLocalServiceUtil>
 		_journalArticleLocalServiceUtilMockedStatic = Mockito.mockStatic(

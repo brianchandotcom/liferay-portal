@@ -1053,9 +1053,9 @@ public class BatchEnginePortletDataHandlerTest {
 			false, false, larFile2, group.getGroupId(), objectDefinition2);
 
 		_assertObjectEntries(
-			false, objectDefinition2.getObjectDefinitionId(), objectEntries2);
-		_assertObjectEntries(
 			true, objectDefinition1.getObjectDefinitionId(), objectEntries1);
+		_assertObjectEntries(
+			false, objectDefinition2.getObjectDefinitionId(), objectEntries2);
 
 		_importLayouts(
 			false, false, larFile1, group.getGroupId(), objectDefinition1);

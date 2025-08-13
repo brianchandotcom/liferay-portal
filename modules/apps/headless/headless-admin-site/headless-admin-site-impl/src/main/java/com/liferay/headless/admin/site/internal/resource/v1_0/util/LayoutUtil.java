@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
@@ -610,6 +612,22 @@ public class LayoutUtil {
 		).build();
 
 		if (typeSettingsUnicodeProperties != null) {
+			String layoutTemplateId = GetterUtil.getString(
+				typeSettingsUnicodeProperties.remove(
+					LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID),
+				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			if (!Objects.equals(
+					layoutTemplateId,
+					layoutTypePortlet.getLayoutTemplateId())) {
+
+				layoutTypePortlet.setLayoutTemplateId(
+					serviceContext.getUserId(), layoutTemplateId);
+			}
+
 			unicodeProperties.putAll(typeSettingsUnicodeProperties);
 		}
 

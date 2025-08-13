@@ -34,9 +34,7 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 
 	@Override
 	public TestClassReport getCachedTestClassReport() {
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
-			_cachedTestClassReportSearched) {
-
+		if (!isBuildCachingEnabled() || _cachedTestClassReportSearched) {
 			return _cachedTestClassReport;
 		}
 

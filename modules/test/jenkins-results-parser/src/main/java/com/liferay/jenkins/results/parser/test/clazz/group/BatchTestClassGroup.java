@@ -212,7 +212,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		List<DownstreamBuildReport> cachedDownstreamBuildReports =
 			new ArrayList<>();
 
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
+		if (!isBuildCachingEnabled() ||
 			!JenkinsResultsParserUtil.isCloudCINode()) {
 
 			return cachedDownstreamBuildReports;
@@ -505,6 +505,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return testTaskHistory.getTestTaskName();
+	}
+
+	public boolean isBuildCachingEnabled() {
+		Job job = getJob();
+
+		return job.isBuildCachingEnabled();
 	}
 
 	public boolean isTestAnalyticsCloud() {

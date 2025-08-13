@@ -25,9 +25,7 @@ public class JSUnitAxisTestClassGroup extends AxisTestClassGroup {
 
 	@Override
 	public List<DownstreamBuildReport> getCachedDownstreamBuildReports() {
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
-			!isResultsCached()) {
-
+		if (!isBuildCachingEnabled() || !isResultsCached()) {
 			return null;
 		}
 

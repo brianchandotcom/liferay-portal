@@ -26,7 +26,7 @@ import org.json.JSONObject;
 public abstract class ModulesTestClass extends BaseTestClass {
 
 	public DownstreamBuildReport getCachedDownstreamBuildReport() {
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (!isBuildCachingEnabled()) {
 			return null;
 		}
 
@@ -38,9 +38,7 @@ public abstract class ModulesTestClass extends BaseTestClass {
 	}
 
 	public TestClassReport getCachedTestClassReport() {
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
-			_cachedTestClassReportSearched) {
-
+		if (!isBuildCachingEnabled() || _cachedTestClassReportSearched) {
 			return _cachedTestClassReport;
 		}
 

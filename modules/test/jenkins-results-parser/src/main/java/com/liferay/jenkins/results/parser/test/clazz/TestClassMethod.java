@@ -28,6 +28,10 @@ public class TestClassMethod {
 		return _testClass;
 	}
 
+	public boolean isBuildCachingEnabled() {
+		return _testClass.isBuildCachingEnabled();
+	}
+
 	public boolean isIgnored() {
 		return _ignored;
 	}

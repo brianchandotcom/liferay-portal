@@ -95,6 +95,8 @@ public interface Job {
 
 	public int getTimeoutMinutes(JenkinsMaster jenkinsMaster);
 
+	public boolean isBuildCachingEnabled();
+
 	public boolean isDownstreamEnabled();
 
 	public boolean isJUnitTestsModifiedOnly();

@@ -6,7 +6,6 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.DownstreamBuildReport;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -51,9 +50,7 @@ public class JUnitAxisTestClassGroup extends AxisTestClassGroup {
 
 	@Override
 	public List<DownstreamBuildReport> getCachedDownstreamBuildReports() {
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
-			!isResultsCached()) {
-
+		if (!isBuildCachingEnabled() || !isResultsCached()) {
 			return null;
 		}
 
@@ -90,7 +87,7 @@ public class JUnitAxisTestClassGroup extends AxisTestClassGroup {
 
 	@Override
 	public boolean isResultsCached() {
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (!isBuildCachingEnabled()) {
 			return false;
 		}
 

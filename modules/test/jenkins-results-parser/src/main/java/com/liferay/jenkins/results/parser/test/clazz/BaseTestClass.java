@@ -230,6 +230,13 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
+	public boolean isBuildCachingEnabled() {
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		return batchTestClassGroup.isBuildCachingEnabled();
+	}
+
+	@Override
 	public boolean isIgnored() {
 		return false;
 	}

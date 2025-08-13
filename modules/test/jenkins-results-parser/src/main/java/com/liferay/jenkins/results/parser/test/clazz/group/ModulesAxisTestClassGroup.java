@@ -5,7 +5,6 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.test.clazz.ModulesTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -40,7 +39,7 @@ public class ModulesAxisTestClassGroup extends AxisTestClassGroup {
 			return _resultsCached;
 		}
 
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (!isBuildCachingEnabled()) {
 			_resultsCached = false;
 
 			return _resultsCached;

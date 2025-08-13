@@ -124,9 +124,7 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public List<DownstreamBuildReport> getCachedDownstreamBuildReports() {
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
-			!isResultsCached()) {
-
+		if (!isBuildCachingEnabled() || !isResultsCached()) {
 			return null;
 		}
 
@@ -229,8 +227,12 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return null;
 	}
 
+	public boolean isBuildCachingEnabled() {
+		return _batchTestClassGroup.isBuildCachingEnabled();
+	}
+
 	public boolean isResultsCached() {
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (!isBuildCachingEnabled()) {
 			return false;
 		}
 

@@ -52,6 +52,8 @@ public interface TestClass extends Comparable<TestClass>, WeightedItem {
 
 	public boolean hasTestClassMethods();
 
+	public boolean isBuildCachingEnabled();
+
 	public boolean isIgnored();
 
 	public void setAxisTestClassGroup(AxisTestClassGroup axisTestClassGroup);

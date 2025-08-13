@@ -21,9 +21,7 @@ import org.json.JSONObject;
 public class PlaywrightTestClassMethod extends TestClassMethod {
 
 	public DownstreamBuildReport getCachedDownstreamBuildReport() {
-		if (JenkinsResultsParserUtil.isBuildCachingEnabled() &&
-			!_cachedTestReportSearched) {
-
+		if (isBuildCachingEnabled() && !_cachedTestReportSearched) {
 			getCachedTestReport();
 		}
 
@@ -31,9 +29,7 @@ public class PlaywrightTestClassMethod extends TestClassMethod {
 	}
 
 	public TestReport getCachedTestReport() {
-		if (!JenkinsResultsParserUtil.isBuildCachingEnabled() ||
-			_cachedTestReportSearched) {
-
+		if (!isBuildCachingEnabled() || _cachedTestReportSearched) {
 			return _cachedTestReport;
 		}
 

@@ -819,6 +819,29 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public boolean isBuildCachingEnabled() {
+		String buildCachingEnabled = System.getenv("BUILD_CACHING_ENABLED");
+
+		if (Objects.equals(buildCachingEnabled, "true")) {
+			return true;
+		}
+
+		try {
+			buildCachingEnabled = JenkinsResultsParserUtil.getBuildProperty(
+				"build.caching.enabled", getJobName(), getTestSuiteName());
+
+			if (Objects.equals(buildCachingEnabled, "true")) {
+				return true;
+			}
+		}
+		catch (IOException ioException) {
+			return false;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isDownstreamEnabled() {
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.downstream.enabled");

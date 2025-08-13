@@ -1785,6 +1785,36 @@ public class ObjectEntryLocalServiceImpl
 				RestoreEntryException.INVALID_STATUS);
 		}
 
+		if (objectEntry.getObjectEntryFolderId() !=
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			ObjectEntryFolder objectEntryFolder =
+				_objectEntryFolderPersistence.fetchByPrimaryKey(
+					objectEntry.getObjectEntryFolderId());
+
+			while ((objectEntryFolder != null) &&
+				   (objectEntryFolder.getStatus() ==
+					   WorkflowConstants.STATUS_IN_TRASH)) {
+
+				objectEntryFolder =
+					_objectEntryFolderPersistence.fetchByPrimaryKey(
+						objectEntryFolder.getParentObjectEntryFolderId());
+			}
+
+			if (objectEntryFolder == null) {
+				objectEntry.setObjectEntryFolderId(
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+			}
+			else {
+				objectEntry.setObjectEntryFolderId(
+					objectEntryFolder.getObjectEntryFolderId());
+			}
+
+			objectEntry = objectEntryPersistence.update(objectEntry);
+		}
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());

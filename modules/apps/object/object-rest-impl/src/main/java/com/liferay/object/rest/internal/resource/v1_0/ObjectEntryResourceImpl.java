@@ -882,6 +882,25 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public ObjectEntry putByExternalReferenceCodeRestore(
+			String externalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981")) {
+			throw new UnsupportedOperationException();
+		}
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.restoreObjectEntry(
+			_getDTOConverterContext(null), externalReferenceCode,
+			_objectDefinition, null);
+	}
+
+	@Override
 	public ObjectEntry putObjectEntry(
 			Long objectEntryId, ObjectEntry objectEntry)
 		throws Exception {
@@ -990,6 +1009,25 @@ public class ObjectEntryResourceImpl
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			externalReferenceCode, objectActionName, _objectDefinition,
 			scopeKey);
+	}
+
+	@Override
+	public ObjectEntry putScopeScopeKeyByExternalReferenceCodeRestore(
+			String scopeKey, String externalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981")) {
+			throw new UnsupportedOperationException();
+		}
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.restoreObjectEntry(
+			_getDTOConverterContext(null), externalReferenceCode,
+			_objectDefinition, scopeKey);
 	}
 
 	@Override

@@ -80,6 +80,9 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 			}
 
 			for (ConsentCookieType optionalConsentCookieType : cookiesBannerConfigurationDisplayContext.getOptionalConsentCookieTypes()) {
+				if (optionalConsentCookieType.isHideFromEndUser()) {
+					continue;
+				}
 			%>
 
 				<clay:content-row

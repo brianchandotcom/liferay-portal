@@ -13,8 +13,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collection;
@@ -47,9 +45,8 @@ public class ObjectActionExecutorRegistryImpl
 
 		if (objectActionExecutor == null) {
 			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"No object action executor found with companyId ",
-					companyId, " and key ", objectActionExecutorKey));
+				"No object action executor found with key " +
+					objectActionExecutorKey);
 		}
 
 		return objectActionExecutor;
@@ -66,62 +63,45 @@ public class ObjectActionExecutorRegistryImpl
 			return Collections.<ObjectActionExecutor>emptyList();
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unfiltered list " + objectActionExecutorsCollection);
-		}
+		return ListUtil.sort(
+			ListUtil.filter(
+				ListUtil.fromCollection(objectActionExecutorsCollection),
+				objectActionExecutor -> {
+					boolean companyAllowed = true;
 
-		List<ObjectActionExecutor> filteredObjectActionExecutorsCollection =
-			ListUtil.sort(
-				ListUtil.filter(
-					ListUtil.fromCollection(objectActionExecutorsCollection),
-					objectActionExecutor -> {
-						boolean companyAllowed = true;
+					if (objectActionExecutor instanceof CompanyScoped) {
+						CompanyScoped objectActionExecutorCompanyScoped =
+							(CompanyScoped)objectActionExecutor;
 
-						if (objectActionExecutor instanceof CompanyScoped) {
-							CompanyScoped objectActionExecutorCompanyScoped =
-								(CompanyScoped)objectActionExecutor;
+						companyAllowed =
+							objectActionExecutorCompanyScoped.isAllowedCompany(
+								companyId);
+					}
 
-							companyAllowed =
-								objectActionExecutorCompanyScoped.
-									isAllowedCompany(companyId);
-						}
+					boolean objectDefinitionAllowed = true;
 
-						boolean objectDefinitionAllowed = true;
+					if (objectActionExecutor instanceof
+							ObjectDefinitionScoped) {
 
-						if (objectActionExecutor instanceof
-								ObjectDefinitionScoped) {
+						ObjectDefinitionScoped
+							objectActionExecutorObjectDefinitionScoped =
+								(ObjectDefinitionScoped)objectActionExecutor;
 
-							ObjectDefinitionScoped
-								objectActionExecutorObjectDefinitionScoped =
-									(ObjectDefinitionScoped)
-										objectActionExecutor;
+						objectDefinitionAllowed =
+							objectActionExecutorObjectDefinitionScoped.
+								isAllowedObjectDefinition(objectDefinitionName);
+					}
 
-							objectDefinitionAllowed =
-								objectActionExecutorObjectDefinitionScoped.
-									isAllowedObjectDefinition(
-										objectDefinitionName);
-						}
+					return companyAllowed && objectDefinitionAllowed;
+				}),
+			(ObjectActionExecutor objectActionExecutor1,
+			 ObjectActionExecutor objectActionExecutor2) -> {
 
-						return companyAllowed && objectDefinitionAllowed;
-					}),
-				(ObjectActionExecutor objectActionExecutor1,
-				 ObjectActionExecutor objectActionExecutor2) -> {
+				String key1 = objectActionExecutor1.getKey();
+				String key2 = objectActionExecutor2.getKey();
 
-					String key1 = objectActionExecutor1.getKey();
-					String key2 = objectActionExecutor2.getKey();
-
-					return key1.compareTo(key2);
-				});
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Filtered list for companyId ", companyId,
-					" and objectDefinitionName ", objectDefinitionName, ": ",
-					filteredObjectActionExecutorsCollection));
-		}
-
-		return filteredObjectActionExecutorsCollection;
+				return key1.compareTo(key2);
+			});
 	}
 
 	@Override
@@ -149,13 +129,6 @@ public class ObjectActionExecutorRegistryImpl
 							getAllowedCompanyId());
 				}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Registering object action executor with key ", key,
-							" and class ", objectActionExecutor.getClass()));
-				}
-
 				emitter.emit(key);
 			});
 	}
@@ -168,9 +141,6 @@ public class ObjectActionExecutorRegistryImpl
 	private String _getCompanyScopedKey(String key, long company) {
 		return StringBundler.concat(key, StringPool.POUND, company);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectActionExecutorRegistryImpl.class);
 
 	private ServiceTrackerMap<String, ObjectActionExecutor> _serviceTrackerMap;
 

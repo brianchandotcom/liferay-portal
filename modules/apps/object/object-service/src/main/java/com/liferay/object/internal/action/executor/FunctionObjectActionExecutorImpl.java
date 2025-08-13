@@ -17,8 +17,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,17 +61,8 @@ public class FunctionObjectActionExecutorImpl
 	protected void activate(Map<String, Object> properties) throws Exception {
 		_allowedObjectDefinitionNames = StringUtil.asList(
 			properties.get("allowedObjectDefinitionNames"));
-
 		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Activating FunctionObjectActionExecutorImpl for company ",
-					_companyId, " with properties ", properties));
-		}
-
 		_functionObjectActionExecutorImplConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FunctionObjectActionExecutorImplConfiguration.class,
@@ -98,9 +87,6 @@ public class FunctionObjectActionExecutorImpl
 			_functionObjectActionExecutorImplConfiguration.resourcePath(),
 			userId);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FunctionObjectActionExecutorImpl.class);
 
 	private List<String> _allowedObjectDefinitionNames;
 	private long _companyId;

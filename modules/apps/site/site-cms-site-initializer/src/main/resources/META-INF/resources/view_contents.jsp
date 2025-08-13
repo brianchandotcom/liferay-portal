@@ -23,7 +23,7 @@ ViewContentsSectionDisplayContext viewContentsSectionDisplayContext = (ViewConte
 		id="<%= CMSSiteInitializerFDSNames.CONTENTS_SECTION %>"
 		itemsPerPage="<%= 20 %>"
 		propsTransformer="{ContentsFDSPropsTransformer} from site-cms-site-initializer"
-		selectedItemsKey="id"
+		selectedItemsKey="embedded.id"
 		selectionType="multiple"
 		style="fluid"
 	/>

@@ -132,7 +132,6 @@ public class DisplayPageTemplateResourceTest
 				}
 
 			});
-
 		_displayPageTemplateResource.setContextUser(TestPropsValues.getUser());
 	}
 
@@ -1009,7 +1008,6 @@ public class DisplayPageTemplateResourceTest
 				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					displayPageTemplateFolder.getExternalReferenceCode(),
 					testGroup.getGroupId()));
-
 		Assert.assertNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
@@ -1028,7 +1026,6 @@ public class DisplayPageTemplateResourceTest
 			Assert.assertEquals(
 				displayPageTemplateFolder.getExternalReferenceCode(),
 				addedDisplayPageTemplateFolder.getExternalReferenceCode());
-
 			Assert.assertEquals(
 				parentDisplayPageTemplateFolder.getExternalReferenceCode(),
 				addedDisplayPageTemplateFolder.
@@ -1039,7 +1036,6 @@ public class DisplayPageTemplateResourceTest
 					fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 						displayPageTemplateFolder.getExternalReferenceCode(),
 						testGroup.getGroupId()));
-
 			Assert.assertNotNull(
 				_layoutPageTemplateCollectionLocalService.
 					fetchLayoutPageTemplateCollectionByExternalReferenceCode(

@@ -90,7 +90,6 @@ public class DisplayPageTemplateFolderResourceTest
 				}
 
 			});
-
 		_displayPageTemplateFolderResource.setContextUser(
 			TestPropsValues.getUser());
 	}

@@ -983,7 +983,7 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "P2S3_PERSONAS",
 					"localized": false,
-					"name": "persona",
+					"name": "audience",
 					"readOnly": "false",
 					"required": true,
 					"state": false,
@@ -1659,6 +1659,81 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Create / Edit External Media"
+					},
+					"objectDefinitionExternalReferenceCode": "P2S3_EXTERNAL_MEDIA",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "External Media"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Main Information"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "name",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "durationMinutes",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "title",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "url",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "description",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							],
+							"objectRelationshipId": 0,
+							"priority": 0
+						}
+					]
+				}
+			],
 			"objectRelationships": [
 				{
 					"deletionType": "disassociate",

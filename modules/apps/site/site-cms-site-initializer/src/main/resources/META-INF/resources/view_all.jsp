@@ -23,7 +23,7 @@ ViewAllSectionDisplayContext viewAllSectionDisplayContext = (ViewAllSectionDispl
 		id="<%= CMSSiteInitializerFDSNames.ALL_SECTION %>"
 		itemsPerPage="<%= 20 %>"
 		propsTransformer="{AllFDSPropsTransformer} from site-cms-site-initializer"
-		selectedItemsKey="id"
+		selectedItemsKey="embedded.id"
 		selectionType="multiple"
 		style="fluid"
 	/>

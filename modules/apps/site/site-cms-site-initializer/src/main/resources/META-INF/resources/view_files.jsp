@@ -23,7 +23,7 @@ ViewFilesSectionDisplayContext viewFilesSectionDisplayContext = (ViewFilesSectio
 		id="<%= CMSSiteInitializerFDSNames.FILES_SECTION %>"
 		itemsPerPage="<%= 20 %>"
 		propsTransformer="{FilesFDSPropsTransformer} from site-cms-site-initializer"
-		selectedItemsKey="id"
+		selectedItemsKey="embedded.id"
 		selectionType="multiple"
 		style="fluid"
 	/>

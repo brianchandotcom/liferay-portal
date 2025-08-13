@@ -1,15 +1,13 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR
+ * LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.web.internal.frontend.data.set.view.table;
 
 import com.liferay.change.tracking.web.internal.constants.PublicationsFDSNames;
-import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviorConstants;
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
-import com.liferay.frontend.data.set.view.table.DateTimeFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -20,13 +18,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Noor Najjar
+ * @author Cheryl Tang
  */
 @Component(
-	property = "frontend.data.set.name=" + PublicationsFDSNames.PUBLICATIONS_CHANGES,
+	property = "frontend.data.set.name=" + PublicationsFDSNames.PUBLICATIONS_TIMELINE_HISTORY,
 	service = FDSView.class
 )
-public class PublicationsChangesTableFDSView extends BaseTableFDSView {
+public class TimelineHistoryPublicationsTableFDSView
+	extends BasePublicationsTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -39,22 +38,8 @@ public class PublicationsChangesTableFDSView extends BaseTableFDSView {
 				"view-change"
 			).setContentRenderer(
 				"actionLink"
-			).setSortable(
+			).setLocalizeLabel(
 				true
-			)
-		).add(
-			"ownerName", "user",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
-		).add(
-			"siteName", "site",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
-		).add(
-			"typeName", "type",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
-		).add(
-			"status", "status",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status"
 			).setSortable(
 				true
 			)
@@ -62,28 +47,28 @@ public class PublicationsChangesTableFDSView extends BaseTableFDSView {
 			"changeType", "changed",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			_addDateFDSTableSchemaField()
+			"ctCollectionName", "publication",
+			fdsTableSchemaField -> fdsTableSchemaField.setLocalizeLabel(
+				true
+			).setSortable(
+				true
+			)
+		).add(
+			"ctCollectionStatus", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status"
+			).setLocalizeLabel(
+				true
+			).setSortable(
+				true
+			)
+		).add(
+			"ctCollectionStatusUserName", "published-by",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			addDateFDSTableSchemaField(
+				"ctCollectionStatusDate", "published-date")
 		).build();
-	}
-
-	private DateTimeFDSTableSchemaField _addDateFDSTableSchemaField() {
-		DateTimeFDSTableSchemaField dateFDSTableSchemaField =
-			new DateTimeFDSTableSchemaField();
-
-		dateFDSTableSchemaField.setContentRenderer(
-			"dateTime"
-		).setFieldName(
-			"dateModified"
-		).setLabel(
-			"last-modified"
-		).setSortable(
-			true
-		);
-
-		dateFDSTableSchemaField.setTimeZoneBehavior(
-			FDSTimeZoneBehaviorConstants.APPLY_THEME_DISPLAY_TIME_ZONE);
-
-		return dateFDSTableSchemaField;
 	}
 
 	@Reference

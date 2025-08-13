@@ -6,10 +6,7 @@
 package com.liferay.change.tracking.web.internal.frontend.data.set.view.table;
 
 import com.liferay.change.tracking.web.internal.constants.PublicationsFDSNames;
-import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviorConstants;
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
-import com.liferay.frontend.data.set.view.table.DateTimeFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -20,13 +17,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author David Truong
+ * @author Pei-Jung Lan
  */
 @Component(
-	property = "frontend.data.set.name=" + PublicationsFDSNames.PUBLICATIONS_SCHEDULED,
+	property = "frontend.data.set.name=" + PublicationsFDSNames.PUBLICATIONS_HISTORY,
 	service = FDSView.class
 )
-public class PublicationsScheduledTableFDSView extends BaseTableFDSView {
+public class HistoryPublicationsTableFDSView
+	extends BasePublicationsTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -43,38 +41,14 @@ public class PublicationsScheduledTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"description", "description"
+			addDateFDSTableSchemaField("datePublished", "published-date")
 		).add(
-			_addDateFDSTableSchemaField("dateScheduled", "publishing")
+			"ownerName", "published-by"
 		).add(
-			_addDateFDSTableSchemaField("dateModified", "last-modified")
-		).add(
-			_addDateFDSTableSchemaField("dateCreated", "create-date")
-		).add(
-			"ownerName", "owner"
+			"status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"customPublicationHistoryStatusRenderer")
 		).build();
-	}
-
-	private DateTimeFDSTableSchemaField _addDateFDSTableSchemaField(
-		String fieldName, String label) {
-
-		DateTimeFDSTableSchemaField dateFDSTableSchemaField =
-			new DateTimeFDSTableSchemaField();
-
-		dateFDSTableSchemaField.setContentRenderer(
-			"dateTime"
-		).setFieldName(
-			fieldName
-		).setLabel(
-			label
-		).setSortable(
-			true
-		);
-
-		dateFDSTableSchemaField.setTimeZoneBehavior(
-			FDSTimeZoneBehaviorConstants.APPLY_THEME_DISPLAY_TIME_ZONE);
-
-		return dateFDSTableSchemaField;
 	}
 
 	@Reference

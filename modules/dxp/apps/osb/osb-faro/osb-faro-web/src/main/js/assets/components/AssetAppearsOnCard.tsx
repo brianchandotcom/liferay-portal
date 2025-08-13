@@ -30,7 +30,6 @@ export enum Accessor {
 }
 
 export enum EmptyStateLink {
-	Asset = URLConstants.AssetsCustomAssetsListDocumentation,
 	Blog = URLConstants.AssetsAppearsBlogsOnDocumentation,
 	Document = URLConstants.AssetsAppearsDocumentsAndMediaOnDocumentation,
 	Form = URLConstants.AssetsAppearsFormsOnDocumentation,

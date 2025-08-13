@@ -49,8 +49,8 @@ public class DataDefinitionUtilTest {
 	public void testUpdateDataDefinitionFields() {
 		_testUpdateDataDefinitionFields();
 		_testUpdateDataDefinitionFieldsWithExistingFieldName();
-		_testUpdateDataDefinitionFieldsWithExistingInvalidFieldName();
 		_testUpdateDataDefinitionFieldsWithExistingFieldNameAndExistingReference();
+		_testUpdateDataDefinitionFieldsWithExistingInvalidFieldName();
 	}
 
 	private DataDefinition _getDataDefinition() {

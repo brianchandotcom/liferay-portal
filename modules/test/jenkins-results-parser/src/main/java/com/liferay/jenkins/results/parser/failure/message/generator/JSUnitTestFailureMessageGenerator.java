@@ -46,11 +46,13 @@ public class JSUnitTestFailureMessageGenerator
 		sb.append(packageFailureList.size());
 		sb.append(" failures");
 
-		int i = 0;
+		for (int i = 0; i < packageFailureList.size(); i++) {
+			if (i > 7) {
+				break;
+			}
 
-		while (i <= 7) {
-			sb.append("\n* " + packageFailureList.get(i));
-			i++;
+			sb.append("\n* ");
+			sb.append(packageFailureList.get(i));
 		}
 
 		return sb.toString();

@@ -171,41 +171,6 @@ public class PageSpecificationDTOConverter
 			PageExperience.class);
 	}
 
-	private WidgetPageSection[] _getWidgetPageSections(
-		DTOConverterContext dtoConverterContext, Layout layout) {
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		return TransformUtil.transformToArray(
-			layoutTypePortlet.getColumns(),
-			column -> new WidgetPageSection() {
-				{
-					setCustomizable(
-						() -> layoutTypePortlet.isColumnCustomizable(column));
-					setId(() -> column);
-					setWidgetPageWidgetInstances(
-						() -> _getWidgetPageWidgetInstances(
-							column, dtoConverterContext, layout));
-				}
-			},
-			WidgetPageSection.class);
-	}
-
-	private WidgetPageWidgetInstance[] _getWidgetPageWidgetInstances(
-		String column, DTOConverterContext dtoConverterContext, Layout layout) {
-
-		return TransformUtil.transformToArray(
-			StringUtil.split(layout.getTypeSettingsProperty(column)),
-			portletId -> {
-				dtoConverterContext.setAttribute("portletId", portletId);
-
-				return _widgetPageWidgetInstanceDTOConverter.toDTO(
-					dtoConverterContext, layout);
-			},
-			WidgetPageWidgetInstance.class);
-	}
-
 	private Settings _getSettings(Layout layout) throws Exception {
 		long classNameId = _portal.getClassNameId(Layout.class.getName());
 		UnicodeProperties unicodeProperties =
@@ -359,6 +324,41 @@ public class PageSpecificationDTOConverter
 						ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP));
 			}
 		};
+	}
+
+	private WidgetPageSection[] _getWidgetPageSections(
+		DTOConverterContext dtoConverterContext, Layout layout) {
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		return TransformUtil.transformToArray(
+			layoutTypePortlet.getColumns(),
+			column -> new WidgetPageSection() {
+				{
+					setCustomizable(
+						() -> layoutTypePortlet.isColumnCustomizable(column));
+					setId(() -> column);
+					setWidgetPageWidgetInstances(
+						() -> _getWidgetPageWidgetInstances(
+							column, dtoConverterContext, layout));
+				}
+			},
+			WidgetPageSection.class);
+	}
+
+	private WidgetPageWidgetInstance[] _getWidgetPageWidgetInstances(
+		String column, DTOConverterContext dtoConverterContext, Layout layout) {
+
+		return TransformUtil.transformToArray(
+			StringUtil.split(layout.getTypeSettingsProperty(column)),
+			portletId -> {
+				dtoConverterContext.setAttribute("portletId", portletId);
+
+				return _widgetPageWidgetInstanceDTOConverter.toDTO(
+					dtoConverterContext, layout);
+			},
+			WidgetPageWidgetInstance.class);
 	}
 
 	private PageSpecification _toContentPageSpecification(

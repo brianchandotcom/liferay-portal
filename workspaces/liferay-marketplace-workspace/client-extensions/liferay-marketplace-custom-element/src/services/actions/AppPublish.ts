@@ -104,6 +104,7 @@ export default class AppPublish extends BaseAppPublish {
 		for (const productOptionValue of productOptionValues) {
 			const sku = await HeadlessCommerceAdminCatalogImpl.createProductSKU(
 				{
+					neverExpire: true,
 					published: true,
 					purchasable: true,
 					sku: productOptionValue.name.en_US,

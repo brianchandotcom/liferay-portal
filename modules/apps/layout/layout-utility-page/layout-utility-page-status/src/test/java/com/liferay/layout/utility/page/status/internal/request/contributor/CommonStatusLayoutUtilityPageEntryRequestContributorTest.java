@@ -9,7 +9,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -79,7 +78,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 	public static void tearDownClass() {
 		_i18nServletMockedStatic.close();
 		_permissionThreadLocalMockedStatic.close();
-		_portalInstancePoolMockedStatic.close();
 	}
 
 	@Before
@@ -764,9 +762,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 	private static final MockedStatic<PermissionThreadLocal>
 		_permissionThreadLocalMockedStatic = Mockito.mockStatic(
 			PermissionThreadLocal.class);
-	private static final MockedStatic<PortalInstancePool>
-		_portalInstancePoolMockedStatic = Mockito.mockStatic(
-			PortalInstancePool.class);
 
 	private CommonStatusLayoutUtilityPageEntryRequestContributor
 		_commonStatusLayoutUtilityPageEntryRequestContributor;

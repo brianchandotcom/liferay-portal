@@ -224,7 +224,7 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="ObjectEntry" remote-service="true" uuid="true">
+	<entity local-service="true" name="ObjectEntry" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- External reference code -->
 

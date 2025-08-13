@@ -11,17 +11,16 @@ import {fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {IAssetObjectEntry} from '../../../structure_builder/types/AssetType';
+import {Categorization} from '../services/ObjectEntryService';
 
 const AssetTags = ({
 	cmsGroupId,
 	objectEntry,
 	updateObjectEntry,
 }: {
-	cmsGroupId?: string | null;
+	cmsGroupId: string;
 	objectEntry: IAssetObjectEntry;
-	updateObjectEntry: (
-		object: Pick<IAssetObjectEntry, 'keywords' | 'taxonomyCategoryIds'>
-	) => Promise<any>;
+	updateObjectEntry: (object: Categorization) => Promise<void>;
 }) => {
 	const [keywords, setKeywords] = useState([] as string[]);
 	const [networkStatus, setNetworkStatus] = useState(4);
@@ -79,7 +78,7 @@ const AssetTags = ({
 					throw new Error();
 				}
 
-				await refetch();
+				refetch();
 
 				await addKeyword(keyword);
 			}

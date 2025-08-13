@@ -79,7 +79,7 @@ export default class HeadlessCommerceAdminCatalog {
 				name: {en_US: name},
 				productConfiguration: {
 					allowBackOrder: true,
-					maxOrderQuantity: 1,
+					maxOrderQuantity: 99,
 				},
 				productSpecifications,
 				productStatus,

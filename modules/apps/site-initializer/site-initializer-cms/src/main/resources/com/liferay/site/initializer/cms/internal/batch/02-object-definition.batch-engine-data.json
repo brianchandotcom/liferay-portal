@@ -349,15 +349,15 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "BULK_ACTION_ITEM_EXTERNAL_REFERENCE_CODE",
+					"externalReferenceCode": "ASSET_EXTERNAL_REFERENCE_CODE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Bulk Action Item External Reference Code"
+						"en_US": "Asset External Reference Code"
 					},
 					"localized": false,
-					"name": "bulkActionItemExternalReferenceCode",
+					"name": "assetExternalReferenceCode",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -366,52 +366,18 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
-					"externalReferenceCode": "BULK_ACTION_ITEM_ID",
+					"externalReferenceCode": "ASSET_ID",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Bulk Action Item ID"
+						"en_US": "Asset ID"
 					},
 					"localized": false,
-					"name": "bulkActionItemID",
+					"name": "assetID",
 					"required": false,
 					"state": false,
 					"system": true,
 					"type": "Long"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "BULK_ACTION_ITEM_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Bulk Action Item Name"
-					},
-					"localized": false,
-					"name": "bulkActionItemName",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "BULK_ACTION_ITEM_TYPE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Bulk Action Item Type"
-					},
-					"localized": false,
-					"name": "bulkActionItemType",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
 				},
 				{
 					"DBType": "String",
@@ -462,6 +428,40 @@
 					"state": false,
 					"system": true,
 					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": false,
+					"name": "name",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Type"
+					},
+					"localized": false,
+					"name": "type",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
 				}
 			],
 			"panelCategoryKey": "",

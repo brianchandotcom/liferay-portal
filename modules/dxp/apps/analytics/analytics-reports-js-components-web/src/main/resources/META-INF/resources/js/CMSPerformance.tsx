@@ -9,9 +9,11 @@ import {ContextProvider} from './Context';
 import {CheckPermissions} from './components/cms/CheckPermissions';
 import GlobalFilters from './components/cms/GlobalFilters';
 import OverviewMetrics from './components/cms/OverviewMetrics';
+import {TopPagesMetrics} from './components/cms/TopPagesMetrics';
 import {AssetMetrics} from './components/cms/asset-metrics/AssetMetrics';
 
 import '../css/cms_performance.scss';
+
 interface ICMSPerformanceProps extends React.HTMLAttributes<HTMLElement> {
 	externalReferenceCode?: string;
 	objectEntryFolderExternalReferenceCode?: string;
@@ -40,6 +42,8 @@ const CMSPerformance: React.FC<ICMSPerformanceProps> = ({
 					<OverviewMetrics />
 
 					<AssetMetrics />
+
+					<TopPagesMetrics />
 				</ContextProvider>
 			</CheckPermissions>
 		</div>

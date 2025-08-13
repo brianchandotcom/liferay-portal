@@ -7,7 +7,6 @@ enum URLConstants {
 	AssetsAppearsFormsOnDocumentation = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/forms-analytics#asset-appears-on',
 	AssetsAppearsWebContentOnDocumentation = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/web-content-analytics#asset-appears-on',
 	AssetsBlogsListDocumentation = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/blogs-analytics',
-	AssetsCustomAssetsListDocumentation = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/tracking-custom-assets',
 	AssetsDefinitionDocumentation = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics',
 	AssetsDocumentsAndMediaListDocumentation = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/documents-and-media-analytics',
 	AssetsFormsListDocumentation = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/forms-analytics',

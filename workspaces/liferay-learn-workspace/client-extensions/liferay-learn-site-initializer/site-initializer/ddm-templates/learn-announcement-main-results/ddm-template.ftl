@@ -1,103 +1,59 @@
 <#assign
-	announcementCategoryItems = []
-	announcementCategoryMap = {}
-	getAnnouncementImagesType = restClient.get("/c/p2s3announcementimagetypes/?fields=id%2Cimage&nestedFields=r_p2S3AnnouncementImageType_c_p2s3AnnouncementImageType")
-	searchResults = searchContainer.getResults()
-
-	getFirstAssetVocabularyId = searchResults?first!searchResults.get(0)!searchResults[0]
-
-	getAnnouncementCategoriesList = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${getFirstAssetVocabularyId.assetVocabularyIds!first_result.getAssetVocabularyIds()}/taxonomy-categories?fields=id%2Cname")
+	announcementImageTypes = restClient.get("/c/p2s3announcementimagetypes/?fields=id,image.link.href&nestedFields=r_p2S3AnnouncementImageType_c_p2s3AnnouncementImageType")
+	announcementImageTypesMap = {}
 />
 
-<#list getAnnouncementCategoriesList.items as dataCategories>
-	<#assign announcementCategory = {
-		"id": dataCategories.id,
-		"name": dataCategories.name
-	}>
-	<#assign announcementCategoryItems = announcementCategoryItems + [announcementCategory] />
-</#list>
+<#if announcementImageTypes?has_content && announcementImageTypes.items?has_content>
+	<#list announcementImageTypes.items as announcementImageType>
+		<#assign announcementImageTypesMap = announcementImageTypesMap + {announcementImageType.id : announcementImageType.image.link.href} />
+	</#list>
+</#if>
 
-<#list announcementCategoryItems as category>
-	<#assign announcementCategoryMap = announcementCategoryMap + {(category.id) : category.name} />
+<#assign entriesMap = {} />
+<#list entries as entry>
+	<#assign entriesMap = entriesMap + {(entry.classPK) : entry.getViewURL()} />
 </#list>
 
 <#assign
-	announcementImageTypeList = []
-	imageMap = {}
+	taxonomyVocabylaryId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getCompanyGroupId()}/taxonomy-vocabularies/by-external-reference-code/ANNOUCEMENT-TYPES?fields=id").id!0
+
+	taxonomyCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabylaryId}/taxonomy-categories?fields=id,name")
+	taxonomyCategoriesMap = {}
 />
 
-<#list getAnnouncementImagesType.items as dataImages>
-	<#assign imageCategory = {
-		"id": dataImages.id,
-		"image": dataImages.image.link.href
-	}>
-	<#assign announcementImageTypeList = announcementImageTypeList + [imageCategory] />
-</#list>
+<#if taxonomyCategories?has_content && taxonomyCategories.items?has_content>
+	<#list taxonomyCategories.items as taxonomyCategory>
+		<#assign taxonomyCategoriesMap = taxonomyCategoriesMap + {taxonomyCategory.id : taxonomyCategory.name} />
+	</#list>
+</#if>
 
-<#list announcementImageTypeList as img>
-	<#assign imageMap = imageMap + {(img.id) : img.image} />
-</#list>
-
-<#assign entryMap = {} />
-<#list entries as e>
-	<#assign entryMap = entryMap + {(e.classPK) : e.getViewURL()} />
-</#list>
-
-<#list searchResults?sort_by("modified")?reverse as search>
+<#function getValue contentString end start>
 	<#assign
-		announcementRelationField = "r_p2S3AnnouncementImageType_c_p2s3AnnouncementImageTypeId:"
-		contentString = search.objectEntryContent?string
+		startIndex = contentString?index_of(start)
+		substring = contentString?substring(startIndex + start?length)
 
-		keyStartIndex = contentString?index_of(announcementRelationField)
+		endIndex = substring?index_of(end)
 	/>
 
-	<#if keyStartIndex != -1>
-			<#assign
-				valueStartIndex = keyStartIndex + announcementRelationField?length
+	<#return substring?substring(0, endIndex)?trim />
+</#function>
 
-				substringAfterKey = contentString?substring(valueStartIndex)?trim
+<#assign searchResults = searchContainer.getResults() />
 
-				endIndex = substringAfterKey?index_of(",")
-			/>
+<#list searchResults as search>	
+	<#assign
+		contentString = search.objectEntryContent?string
 
-			<#if endIndex == -1>
-					<#assign imageTypeId = substringAfterKey />
-			<#else>
-					<#assign imageTypeId = substringAfterKey?substring(0, endIndex)?trim />
-			</#if>
-	<#else>
-			<#assign imageTypeId = "" />
-	</#if>
-
-	<#assign descriptionStart = contentString?index_of("description: ") />
-
-	<#if descriptionStart != -1>
-			<#assign
-				descriptionSubstring = contentString?substring(descriptionStart + 12)
-
-				nextKey = descriptionSubstring?index_of("image:")
-			/>
-
-			<#if nextKey != -1>
-					<#assign description = descriptionSubstring?substring(0, nextKey)?trim />
-			<#else>
-					<#assign description = descriptionSubstring?trim />
-			</#if>
-
-			<#if description?ends_with(",")>
-					<#assign description = description?substring(0, description?length - 1)?trim />
-			</#if>
-	<#else>
-			<#assign description = "" />
-	</#if>
+		announcementImageTypeId = getValue(contentString, ", title:" , "r_p2S3AnnouncementImageType_c_p2s3AnnouncementImageTypeId:"?trim)
+	/>
 
 	<div class="announcement-main-container">
 		<div class="announcement-group-container">
 			<div class="announcement-group-top">
 				<div class="announcement-categories">
 					<#list search.getValues("assetCategoryIds") as taxonomyCategoryId>
-						<#if announcementCategoryMap[taxonomyCategoryId]??>
-							<span>${announcementCategoryMap[taxonomyCategoryId]}</span>
+						<#if taxonomyCategoriesMap[taxonomyCategoryId]??>
+							<span>${taxonomyCategoriesMap[taxonomyCategoryId]}</span>
 						</#if>
 					</#list>
 				</div>
@@ -116,19 +72,19 @@
 			</div>
 
 			<div class="announcement-description">
-				<span>${description}</span>
+				<span>${getValue(contentString, ", image:" , "description:"?trim)}</span>
 			</div>
 
 			<div class="announcement-button">
-				<a href="${entryMap[search.entryClassPK]!""}&highlight=${htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()?url('ISO-8859-1'))}">
+				<a href="${entriesMap[search.entryClassPK]!""}">
 					${languageUtil.get(locale, "read-more", "Read More")}
 				</a>
 			</div>
 		</div>
 
 		<div class="announcement-image-container">
-			<#if imageTypeId?has_content && imageMap[imageTypeId]?has_content>
-				<img alt="Announcement Image" src="${imageMap[imageTypeId]}" />
+			<#if announcementImageTypeId?has_content && announcementImageTypesMap[announcementImageTypeId]?has_content>
+				<img alt="Announcement Image" src="${announcementImageTypesMap[announcementImageTypeId]}" />
 			</#if>
 		</div>
 	</div>

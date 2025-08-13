@@ -19,7 +19,9 @@ import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
@@ -600,18 +603,15 @@ public class LayoutUtil {
 			layout.getDescriptionMap(), layout.getRobotsMap(), friendlyURLMap,
 			widgetPageSpecification, serviceContext);
 
-		if (typeSettingsUnicodeProperties == null) {
-			return layout;
-		}
-
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		unicodeProperties.putAll(typeSettingsUnicodeProperties);
+		if (typeSettingsUnicodeProperties != null) {
+			unicodeProperties.putAll(typeSettingsUnicodeProperties);
+		}
 
-		return LayoutServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			unicodeProperties.toString());
+		return _updatePortletLayout(
+			layout, serviceContext, unicodeProperties, widgetPageSpecification);
 	}
 
 	private static long _getFaviconFileEntryId(
@@ -963,6 +963,62 @@ public class LayoutUtil {
 			SegmentsExperienceUtil.updateSegmentsExperience(
 				layout, pageExperience, segmentsExperience, serviceContext);
 		}
+	}
+
+	private static Layout _updatePortletLayout(
+			Layout layout, ServiceContext serviceContext,
+			UnicodeProperties unicodeProperties,
+			WidgetPageSpecification widgetPageSpecification)
+		throws Exception {
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		WidgetPageSection[] widgetPageSections =
+			widgetPageSpecification.getWidgetPageSections();
+
+		List<String> columns = layoutTypePortlet.getColumns();
+
+		if (widgetPageSections.length != columns.size()) {
+			throw new UnsupportedOperationException();
+		}
+
+		for (WidgetPageSection widgetPageSection : widgetPageSections) {
+			if (!columns.contains(widgetPageSection.getId())) {
+				throw new UnsupportedOperationException();
+			}
+
+			for (WidgetPageWidgetInstance widgetPageWidgetInstance :
+					widgetPageSection.getWidgetPageWidgetInstances()) {
+
+				String portletId = PortletIdCodec.encode(
+					widgetPageWidgetInstance.getWidgetName(),
+					widgetPageWidgetInstance.getWidgetInstanceId());
+
+				if (!layoutTypePortlet.hasPortletId(portletId)) {
+					layoutTypePortlet.addPortletId(
+						serviceContext.getUserId(), portletId,
+						widgetPageWidgetInstance.getParentSectionId(),
+						widgetPageWidgetInstance.getPosition());
+				}
+				else if (!Objects.equals(
+							widgetPageWidgetInstance.getParentSectionId(),
+							getParentSectionId(layout, portletId)) ||
+						 !Objects.equals(
+							 widgetPageWidgetInstance.getPosition(),
+							 getPosition(layout, portletId))) {
+
+					layoutTypePortlet.movePortletId(
+						serviceContext.getUserId(), portletId,
+						widgetPageWidgetInstance.getParentSectionId(),
+						widgetPageWidgetInstance.getPosition());
+				}
+			}
+		}
+
+		return LayoutServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			unicodeProperties.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutUtil.class);

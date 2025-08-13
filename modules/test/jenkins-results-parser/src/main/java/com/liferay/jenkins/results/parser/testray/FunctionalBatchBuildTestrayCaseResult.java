@@ -41,7 +41,7 @@ public class FunctionalBatchBuildTestrayCaseResult
 
 	@Override
 	public BuildReport getBuildReport() {
-		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (_functionalTestClass.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
 				_functionalTestClass.getCachedDownstreamBuildReport();
 
@@ -130,7 +130,7 @@ public class FunctionalBatchBuildTestrayCaseResult
 
 	@Override
 	public TestReport getTestReport() {
-		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (_functionalTestClass.isBuildCachingEnabled()) {
 			TestReport cachedTestReport =
 				_functionalTestClass.getCachedTestReport();
 

@@ -25,7 +25,7 @@ public class ModulesBatchBuildTestrayCaseResult
 
 	@Override
 	public BuildReport getBuildReport() {
-		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (_modulesTestClass.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
 				_modulesTestClass.getCachedDownstreamBuildReport();
 
@@ -166,7 +166,7 @@ public class ModulesBatchBuildTestrayCaseResult
 			return _testClassReport;
 		}
 
-		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (_modulesTestClass.isBuildCachingEnabled()) {
 			TestClassReport cachedTestClassReport =
 				_modulesTestClass.getCachedTestClassReport();
 

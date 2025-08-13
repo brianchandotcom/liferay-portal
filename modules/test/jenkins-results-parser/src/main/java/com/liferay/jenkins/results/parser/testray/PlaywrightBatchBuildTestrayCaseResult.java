@@ -47,7 +47,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 	@Override
 	public BuildReport getBuildReport() {
-		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (_playwrightTestClassMethod.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
 				_playwrightTestClassMethod.getCachedDownstreamBuildReport();
 
@@ -193,7 +193,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 	@Override
 	public TestReport getTestReport() {
-		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (_playwrightTestClassMethod.isBuildCachingEnabled()) {
 			TestReport cachedTestReport =
 				_playwrightTestClassMethod.getCachedTestReport();
 

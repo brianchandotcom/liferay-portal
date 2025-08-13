@@ -25,7 +25,7 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 	@Override
 	public BuildReport getBuildReport() {
-		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (_serviceBuilderAntTargetTestClass.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
 				_serviceBuilderAntTargetTestClass.
 					getCachedDownstreamBuildReport();
@@ -170,7 +170,7 @@ public class AntTargetBatchBuildTestrayCaseResult
 			return _testClassReport;
 		}
 
-		if (JenkinsResultsParserUtil.isBuildCachingEnabled()) {
+		if (_serviceBuilderAntTargetTestClass.isBuildCachingEnabled()) {
 			TestClassReport cachedTestClassReport =
 				_serviceBuilderAntTargetTestClass.getCachedTestClassReport();
 

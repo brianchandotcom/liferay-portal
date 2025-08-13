@@ -607,8 +607,8 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.subscribeObjectEntry(
-			_getDTOConverterContext(null), externalReferenceCode,
-			_objectDefinition, null);
+			externalReferenceCode, _objectDefinition, null,
+			contextUser.getUserId());
 	}
 
 	@Override
@@ -626,8 +626,8 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.unsubscribeObjectEntry(
-			_getDTOConverterContext(null), externalReferenceCode,
-			_objectDefinition, null);
+			externalReferenceCode, _objectDefinition, null,
+			contextUser.getUserId());
 	}
 
 	@Override
@@ -795,8 +795,8 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.subscribeObjectEntry(
-			_getDTOConverterContext(null), externalReferenceCode,
-			_objectDefinition, scopeKey);
+			externalReferenceCode, _objectDefinition, scopeKey,
+			contextUser.getUserId());
 	}
 
 	@Override
@@ -814,8 +814,8 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.unsubscribeObjectEntry(
-			_getDTOConverterContext(null), externalReferenceCode,
-			_objectDefinition, scopeKey);
+			externalReferenceCode, _objectDefinition, scopeKey,
+			contextUser.getUserId());
 	}
 
 	@Override

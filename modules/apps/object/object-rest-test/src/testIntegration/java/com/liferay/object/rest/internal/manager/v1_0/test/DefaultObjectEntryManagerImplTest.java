@@ -6903,11 +6903,11 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinition, objectEntry2.getId());
 
 		_defaultObjectEntryManager.subscribeObjectEntry(
-			dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-			objectDefinition, objectEntry1.getScopeKey());
+			objectEntry1.getExternalReferenceCode(), objectDefinition,
+			objectEntry1.getScopeKey(), adminUser.getUserId());
 		_defaultObjectEntryManager.subscribeObjectEntry(
-			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
-			objectDefinition, objectEntry2.getScopeKey());
+			objectEntry2.getExternalReferenceCode(), objectDefinition,
+			objectEntry2.getScopeKey(), adminUser.getUserId());
 
 		_assertActions(
 			ListUtil.fromArray("unsubscribe"), ListUtil.fromArray("subscribe"),
@@ -6930,11 +6930,6 @@ public class DefaultObjectEntryManagerImplTest
 		Role role = _addRoleUser(
 			new String[] {ActionKeys.VIEW}, objectDefinition, _user);
 
-		DTOConverterContext dtoConverterContext =
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user);
-
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
@@ -6943,8 +6938,8 @@ public class DefaultObjectEntryManagerImplTest
 				objectDefinition.getClassName(), StringPool.SPACE,
 				objectEntry1.getId()),
 			() -> _defaultObjectEntryManager.subscribeObjectEntry(
-				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				objectDefinition, objectEntry1.getScopeKey()));
+				objectEntry1.getExternalReferenceCode(), objectDefinition,
+				objectEntry1.getScopeKey(), _user.getUserId()));
 
 		_resourcePermissionLocalService.addResourcePermission(
 			companyId, objectDefinition.getClassName(),
@@ -6952,11 +6947,11 @@ public class DefaultObjectEntryManagerImplTest
 			role.getRoleId(), ActionKeys.SUBSCRIBE);
 
 		_defaultObjectEntryManager.subscribeObjectEntry(
-			dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-			objectDefinition, objectEntry1.getScopeKey());
+			objectEntry1.getExternalReferenceCode(), objectDefinition,
+			objectEntry1.getScopeKey(), _user.getUserId());
 		_defaultObjectEntryManager.subscribeObjectEntry(
-			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
-			objectDefinition, objectEntry2.getScopeKey());
+			objectEntry2.getExternalReferenceCode(), objectDefinition,
+			objectEntry2.getScopeKey(), _user.getUserId());
 
 		Assert.assertTrue(
 			_subscriptionLocalService.isSubscribed(
@@ -7036,9 +7031,8 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionA, Collections.emptyMap());
 
 		_defaultObjectEntryManager.subscribeObjectEntry(
-			_simpleDTOConverterContext,
 			rootObjectEntry.getExternalReferenceCode(), objectDefinitionA,
-			rootObjectEntry.getScopeKey());
+			rootObjectEntry.getScopeKey(), adminUser.getUserId());
 
 		Assert.assertTrue(
 			_subscriptionLocalService.isSubscribed(
@@ -7046,9 +7040,8 @@ public class DefaultObjectEntryManagerImplTest
 				objectDefinitionA.getClassName(), rootObjectEntry.getId()));
 
 		_defaultObjectEntryManager.unsubscribeObjectEntry(
-			_simpleDTOConverterContext,
 			rootObjectEntry.getExternalReferenceCode(), objectDefinitionA,
-			rootObjectEntry.getScopeKey());
+			rootObjectEntry.getScopeKey(), adminUser.getUserId());
 
 		Assert.assertFalse(
 			_subscriptionLocalService.isSubscribed(
@@ -7066,9 +7059,8 @@ public class DefaultObjectEntryManagerImplTest
 		AssertUtils.assertFailure(
 			UnsupportedOperationException.class, null,
 			() -> _defaultObjectEntryManager.subscribeObjectEntry(
-				_simpleDTOConverterContext,
 				childObjectEntry.getExternalReferenceCode(), objectDefinitionAA,
-				childObjectEntry.getScopeKey()));
+				childObjectEntry.getScopeKey(), adminUser.getUserId()));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			objectDefinitionLocalService,

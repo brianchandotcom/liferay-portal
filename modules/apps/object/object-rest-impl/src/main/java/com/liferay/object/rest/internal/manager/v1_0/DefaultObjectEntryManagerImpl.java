@@ -1142,9 +1142,8 @@ public class DefaultObjectEntryManagerImpl
 
 	@Override
 	public void subscribeObjectEntry(
-			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			String scopeKey)
+			String scopeKey, long userId)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -1153,16 +1152,14 @@ public class DefaultObjectEntryManagerImpl
 				objectDefinition.getObjectDefinitionId());
 
 		_objectEntryService.subscribeObjectEntry(
-			dtoConverterContext.getUserId(),
-			getGroupId(objectDefinition, scopeKey),
+			userId, getGroupId(objectDefinition, scopeKey),
 			serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	@Override
 	public void unsubscribeObjectEntry(
-			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			String scopeKey)
+			String scopeKey, long userId)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -1171,8 +1168,7 @@ public class DefaultObjectEntryManagerImpl
 				objectDefinition.getObjectDefinitionId());
 
 		_objectEntryService.unsubscribeObjectEntry(
-			dtoConverterContext.getUserId(),
-			serviceBuilderObjectEntry.getObjectEntryId());
+			userId, serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	@Override

@@ -218,15 +218,13 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 		throws Exception;
 
 	public void subscribeObjectEntry(
-			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			String scopeKey)
+			String scopeKey, long userId)
 		throws Exception;
 
 	public void unsubscribeObjectEntry(
-			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			String scopeKey)
+			String scopeKey, long userId)
 		throws Exception;
 
 	public ObjectEntry updateObjectEntry(

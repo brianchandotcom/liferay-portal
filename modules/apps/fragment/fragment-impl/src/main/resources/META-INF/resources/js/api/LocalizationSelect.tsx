@@ -46,6 +46,9 @@ export function LocalizationSelect({
 	const [translations, setTranslations] = useState<Translations>({});
 	const [form, setForm] = useState<HTMLFormElement>();
 
+	const [dropdownTrigger, setDropdownTrigger] =
+		useState<HTMLButtonElement | null>();
+
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const onSelectedLocaleChange = (localeId: Liferay.Language.Locale) => {
@@ -197,6 +200,7 @@ export function LocalizationSelect({
 							)}
 							displayType="secondary"
 							monospaced
+							ref={setDropdownTrigger}
 							size={size === 'small' ? 'sm' : 'regular'}
 							symbol="ellipsis-v"
 							title={Liferay.Language.get('localization-actions')}
@@ -217,6 +221,7 @@ export function LocalizationSelect({
 												'mark-as-translated'
 											),
 										center: true,
+										onCloseFocusElement: dropdownTrigger,
 										status: 'info',
 										text: sub(
 											Liferay.Language.get(
@@ -253,6 +258,7 @@ export function LocalizationSelect({
 										buttonLabel:
 											Liferay.Language.get('delete'),
 										center: true,
+										onCloseFocusElement: dropdownTrigger,
 										status: 'danger',
 										text: sub(
 											Liferay.Language.get(

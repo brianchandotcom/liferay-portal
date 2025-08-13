@@ -1014,146 +1014,114 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private void _testExportImportObjectEntriesWithRelatedObjectEntries(
+			boolean childFirst, Group group, String scope, String type)
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 = _addObjectDefinition(scope);
+		ObjectDefinition objectDefinition2 = _addObjectDefinition(scope);
+
+		ObjectEntry[] objectEntries1 = _addObjectEntries(
+			3, _getObjectEntryGroupId(group.getGroupId(), scope),
+			objectDefinition1);
+		ObjectEntry[] objectEntries2 = _addObjectEntries(
+			3, _getObjectEntryGroupId(group.getGroupId(), scope),
+			objectDefinition2);
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition1,
+				objectDefinition2,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				StringUtil.randomId(), type);
+
+		for (int i = 0; i < objectEntries1.length; i++) {
+			ObjectRelationshipTestUtil.relateObjectEntries(
+				objectEntries1[i].getPrimaryKey(),
+				objectEntries2[i].getPrimaryKey(), objectRelationship,
+				TestPropsValues.getUserId());
+		}
+
+		// TODO: Export both portlets at once after LPD-62165 is fixed
+
+		File larFile1 = _exportLayouts(
+			false, group.getGroupId(), false, new long[0], objectDefinition1);
+		File larFile2 = _exportLayouts(
+			false, group.getGroupId(), false, new long[0], objectDefinition2);
+
+		_deleteObjectEntries(objectEntries1);
+		_deleteObjectEntries(objectEntries2);
+
+		if (childFirst) {
+			_importLayouts(
+				false, false, larFile2, group.getGroupId(), objectDefinition2);
+
+			_assertObjectEntries(
+				true, objectDefinition1.getObjectDefinitionId(),
+				objectEntries1);
+			_assertObjectEntries(
+				false, objectDefinition2.getObjectDefinitionId(),
+				objectEntries2);
+
+			_importLayouts(
+				false, false, larFile1, group.getGroupId(), objectDefinition1);
+
+			_assertObjectEntries(
+				false, objectDefinition1.getObjectDefinitionId(),
+				objectEntries1);
+		}
+		else {
+			_importLayouts(
+				false, false, larFile1, group.getGroupId(), objectDefinition1);
+
+			_assertObjectEntries(
+				false, objectDefinition1.getObjectDefinitionId(),
+				objectEntries1);
+
+			if (Objects.equals(
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY, type)) {
+
+				_assertObjectEntries(
+					true, objectDefinition2.getObjectDefinitionId(),
+					objectEntries2);
+			}
+			else if (Objects.equals(
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY, type)) {
+
+				for (ObjectEntry objectEntry : objectEntries2) {
+					AssertUtils.assertFailure(
+						NoSuchObjectEntryException.class,
+						String.format(
+							"No ObjectEntry exists with the key {" +
+								"externalReferenceCode=%s, groupId=%s, " +
+									"companyId=%s, objectDefinitionId=%s}",
+							objectEntry.getExternalReferenceCode(),
+							objectEntry.getGroupId(),
+							objectEntry.getCompanyId(),
+							objectDefinition2.getObjectDefinitionId()),
+						() -> _objectEntryLocalService.getObjectEntry(
+							objectEntry.getExternalReferenceCode(),
+							objectEntry.getGroupId(),
+							objectDefinition2.getObjectDefinitionId()));
+				}
+			}
+
+			_importLayouts(
+				false, false, larFile2, group.getGroupId(), objectDefinition2);
+
+			_assertObjectEntries(
+				false, objectDefinition2.getObjectDefinitionId(),
+				objectEntries2);
+		}
+	}
+
+	private void _testExportImportObjectEntriesWithRelatedObjectEntries(
 			Group group, String scope, String type)
 		throws Exception {
 
-		_testExportImportObjectEntriesWithRelatedObjectEntriesChildFirst(
-			group, scope, type);
-		_testExportImportObjectEntriesWithRelatedObjectEntriesParentFirst(
-			group, scope, type);
-	}
-
-	private void
-			_testExportImportObjectEntriesWithRelatedObjectEntriesChildFirst(
-				Group group, String scope, String type)
-		throws Exception {
-
-		ObjectDefinition objectDefinition1 = _addObjectDefinition(scope);
-		ObjectDefinition objectDefinition2 = _addObjectDefinition(scope);
-
-		ObjectEntry[] objectEntries1 = _addObjectEntries(
-			3, _getObjectEntryGroupId(group.getGroupId(), scope),
-			objectDefinition1);
-		ObjectEntry[] objectEntries2 = _addObjectEntries(
-			3, _getObjectEntryGroupId(group.getGroupId(), scope),
-			objectDefinition2);
-
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, objectDefinition1,
-				objectDefinition2,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				StringUtil.randomId(), type);
-
-		for (int i = 0; i < objectEntries1.length; i++) {
-			ObjectRelationshipTestUtil.relateObjectEntries(
-				objectEntries1[i].getPrimaryKey(),
-				objectEntries2[i].getPrimaryKey(), objectRelationship,
-				TestPropsValues.getUserId());
-		}
-
-		// TODO: Export both portlets at once after LPD-62165 is fixed
-
-		File larFile1 = _exportLayouts(
-			false, group.getGroupId(), false, new long[0], objectDefinition1);
-		File larFile2 = _exportLayouts(
-			false, group.getGroupId(), false, new long[0], objectDefinition2);
-
-		_deleteObjectEntries(objectEntries1);
-		_deleteObjectEntries(objectEntries2);
-
-		_importLayouts(
-			false, false, larFile2, group.getGroupId(), objectDefinition2);
-
-		_assertObjectEntries(
-			true, objectDefinition1.getObjectDefinitionId(), objectEntries1);
-		_assertObjectEntries(
-			false, objectDefinition2.getObjectDefinitionId(), objectEntries2);
-
-		_importLayouts(
-			false, false, larFile1, group.getGroupId(), objectDefinition1);
-
-		_assertObjectEntries(
-			false, objectDefinition1.getObjectDefinitionId(), objectEntries1);
-	}
-
-	private void
-			_testExportImportObjectEntriesWithRelatedObjectEntriesParentFirst(
-				Group group, String scope, String type)
-		throws Exception {
-
-		ObjectDefinition objectDefinition1 = _addObjectDefinition(scope);
-		ObjectDefinition objectDefinition2 = _addObjectDefinition(scope);
-
-		ObjectEntry[] objectEntries1 = _addObjectEntries(
-			3, _getObjectEntryGroupId(group.getGroupId(), scope),
-			objectDefinition1);
-		ObjectEntry[] objectEntries2 = _addObjectEntries(
-			3, _getObjectEntryGroupId(group.getGroupId(), scope),
-			objectDefinition2);
-
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, objectDefinition1,
-				objectDefinition2,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				StringUtil.randomId(), type);
-
-		for (int i = 0; i < objectEntries1.length; i++) {
-			ObjectRelationshipTestUtil.relateObjectEntries(
-				objectEntries1[i].getPrimaryKey(),
-				objectEntries2[i].getPrimaryKey(), objectRelationship,
-				TestPropsValues.getUserId());
-		}
-
-		// TODO: Export both portlets at once after LPD-62165 is fixed
-
-		File larFile1 = _exportLayouts(
-			false, group.getGroupId(), false, new long[0], objectDefinition1);
-		File larFile2 = _exportLayouts(
-			false, group.getGroupId(), false, new long[0], objectDefinition2);
-
-		_deleteObjectEntries(objectEntries1);
-		_deleteObjectEntries(objectEntries2);
-
-		_importLayouts(
-			false, false, larFile1, group.getGroupId(), objectDefinition1);
-
-		_assertObjectEntries(
-			false, objectDefinition1.getObjectDefinitionId(), objectEntries1);
-
-		if (Objects.equals(
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, type)) {
-
-			_assertObjectEntries(
-				true, objectDefinition2.getObjectDefinitionId(),
-				objectEntries2);
-		}
-		else if (Objects.equals(
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, type)) {
-
-			for (ObjectEntry objectEntry : objectEntries2) {
-				AssertUtils.assertFailure(
-					NoSuchObjectEntryException.class,
-					String.format(
-						"No ObjectEntry exists with the key {" +
-							"externalReferenceCode=%s, groupId=%s, " +
-								"companyId=%s, objectDefinitionId=%s}",
-						objectEntry.getExternalReferenceCode(),
-						objectEntry.getGroupId(), objectEntry.getCompanyId(),
-						objectDefinition2.getObjectDefinitionId()),
-					() -> _objectEntryLocalService.getObjectEntry(
-						objectEntry.getExternalReferenceCode(),
-						objectEntry.getGroupId(),
-						objectDefinition2.getObjectDefinitionId()));
-			}
-		}
-
-		_importLayouts(
-			false, false, larFile2, group.getGroupId(), objectDefinition2);
-
-		_assertObjectEntries(
-			false, objectDefinition2.getObjectDefinitionId(), objectEntries2);
+		_testExportImportObjectEntriesWithRelatedObjectEntries(
+			false, group, scope, type);
+		_testExportImportObjectEntriesWithRelatedObjectEntries(
+			true, group, scope, type);
 	}
 
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA =

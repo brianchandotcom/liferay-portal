@@ -115,6 +115,11 @@ public class DB2SQLTransformerLogicTest
 		return "select NULL from Foo";
 	}
 
+	@Override
+	protected String getTruncateTableTransformedSQL() {
+		return getTruncateTableOriginalSQL() + " IMMEDIATE";
+	}
+
 	private void _testReplaceQuestionMark(String sql) {
 		Assert.assertEquals(
 			StringUtil.replace(

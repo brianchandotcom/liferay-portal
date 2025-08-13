@@ -1093,7 +1093,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return _updateObjectEntry(
 			0L, dtoConverterContext, objectDefinition, existingObjectEntry,
-			objectEntryId, true);
+			objectEntryId, true, false);
 	}
 
 	@Override
@@ -1107,8 +1107,9 @@ public class DefaultObjectEntryManagerImpl
 		return updateRelatedObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntryId,
 			ObjectEntryManagerUtil.partialUpdateObjectEntry(
-				getObjectEntry(
-					dtoConverterContext, objectDefinition, objectEntryId),
+				getRelatedObjectEntry(
+					dtoConverterContext, objectEntryId, objectRelationship,
+					parentObjectEntryId),
 				objectDefinition.getObjectDefinitionId(), objectEntry),
 			objectRelationship, parentObjectEntryId);
 	}
@@ -1179,7 +1180,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return _updateObjectEntry(
 			0L, dtoConverterContext, objectDefinition, objectEntry,
-			objectEntryId, false);
+			objectEntryId, false, false);
 	}
 
 	@Override
@@ -1238,7 +1239,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return _updateObjectEntry(
 			objectRelationship.getObjectFieldId2(), dtoConverterContext,
-			objectDefinition, objectEntry, objectEntryId, false);
+			objectDefinition, objectEntry, objectEntryId, false, true);
 	}
 
 	@Override
@@ -1536,10 +1537,13 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private void _checkRootDescendantNode(
-			com.liferay.object.model.ObjectEntry objectEntry)
+			com.liferay.object.model.ObjectEntry objectEntry,
+			boolean skipCheckRootDescendantNode)
 		throws Exception {
 
-		if (objectEntry.isRootDescendantNode()) {
+		if (objectEntry.isRootDescendantNode() &&
+			!skipCheckRootDescendantNode) {
+
 			throw new NoSuchObjectEntryException(
 				StringBundler.concat(
 					"No ObjectEntry exists with the key {objectEntryId=",
@@ -1653,7 +1657,7 @@ public class DefaultObjectEntryManagerImpl
 
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
-		_checkRootDescendantNode(serviceBuilderObjectEntry);
+		_checkRootDescendantNode(serviceBuilderObjectEntry, false);
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
 			(serviceBuilderObjectEntry.getStatus() ==
@@ -1940,7 +1944,7 @@ public class DefaultObjectEntryManagerImpl
 		throws Exception {
 
 		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
-		_checkRootDescendantNode(objectEntry);
+		_checkRootDescendantNode(objectEntry, false);
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntry);
@@ -3000,7 +3004,8 @@ public class DefaultObjectEntryManagerImpl
 			long allowedRelationshipObjectFieldId,
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			long objectEntryId, boolean partialUpdate)
+			long objectEntryId, boolean partialUpdate,
+			boolean skipCheckRootDescendantNode)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -3008,7 +3013,8 @@ public class DefaultObjectEntryManagerImpl
 
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
-		_checkRootDescendantNode(serviceBuilderObjectEntry);
+		_checkRootDescendantNode(
+			serviceBuilderObjectEntry, skipCheckRootDescendantNode);
 
 		validateReadOnlyObjectFields(
 			serviceBuilderObjectEntry.getExternalReferenceCode(),

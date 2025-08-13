@@ -165,6 +165,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -276,6 +277,22 @@ public class DefaultObjectEntryManagerImplTest
 		_defaultObjectEntryManager =
 			(DefaultObjectEntryManager)_objectEntryManager;
 		_group = GroupTestUtil.addGroup();
+
+		_originalName = PrincipalThreadLocal.getName();
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		_simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
+
+		adminUser = TestPropsValues.getUser();
+
+		_simpleDTOConverterContext = new DefaultDTOConverterContext(
+			false, Collections.emptyMap(), dtoConverterRegistry, null,
+			LocaleUtil.getDefault(), null, adminUser);
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
 
 		_objectDefinitionA = _addObjectDefinition();
 		_objectDefinitionAA = _addObjectDefinition();
@@ -7425,20 +7442,49 @@ public class DefaultObjectEntryManagerImplTest
 		_addResourcePermission(
 			ActionKeys.UPDATE, _rootObjectDefinition, _buyerRole);
 
-		TreeTestUtil.forEachNodeObjectEntry(
-			tree.iterator(), _objectEntryLocalService,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
+		Iterator<Node> iterator = tree.iterator();
 
-				_defaultObjectEntryManager.updateObjectEntry(
-					_simpleDTOConverterContext, objectDefinition,
-					objectEntry.getObjectEntryId(),
-					_defaultObjectEntryManager.getObjectEntry(
-						_simpleDTOConverterContext, objectDefinition,
-						objectEntry.getObjectEntryId()));
-			});
+		Node rootNode = iterator.next();
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(rootNode.getPrimaryKey());
+
+		ObjectDefinition rootObjectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				serviceBuilderObjectEntry.getObjectDefinitionId());
+
+		_defaultObjectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, rootObjectDefinition,
+			rootNode.getPrimaryKey(),
+			_defaultObjectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, rootObjectDefinition,
+				rootNode.getPrimaryKey()));
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			serviceBuilderObjectEntry = _objectEntryLocalService.getObjectEntry(
+				node.getPrimaryKey());
+
+			ObjectDefinition objectDefinition =
+				objectDefinitionLocalService.fetchObjectDefinition(
+					serviceBuilderObjectEntry.getObjectDefinitionId());
+
+			Edge edge = node.getEdge();
+			Node parentNode = node.getParentNode();
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					edge.getObjectRelationshipId());
+
+			_defaultObjectEntryManager.updateRelatedObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				node.getPrimaryKey(),
+				_defaultObjectEntryManager.getRelatedObjectEntry(
+					_simpleDTOConverterContext, node.getPrimaryKey(),
+					objectRelationship, parentNode.getPrimaryKey()),
+				objectRelationship, parentNode.getPrimaryKey());
+		}
 
 		// Users cannot delete object entries from accounts that they do not
 		// belong to
@@ -9524,35 +9570,65 @@ public class DefaultObjectEntryManagerImplTest
 			String actionId, Tree tree)
 		throws Exception {
 
-		Node rootNode = tree.getRootNode();
+		Iterator<Node> iterator = tree.iterator();
 
-		TreeTestUtil.forEachNodeObjectEntry(
-			tree.iterator(), _objectEntryLocalService,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
+		Node rootNode = iterator.next();
 
-				AssertUtils.assertFailure(
-					PrincipalException.MustHavePermission.class,
-					StringBundler.concat(
-						"User ", _user.getUserId(), " must have ", actionId,
-						" permission for ",
-						_rootObjectDefinition.getClassName(), StringPool.SPACE,
-						rootNode.getPrimaryKey()),
-					() -> _defaultObjectEntryManager.updateObjectEntry(
-						_simpleDTOConverterContext, objectDefinition,
-						objectEntry.getObjectEntryId(),
-						_defaultObjectEntryManager.getObjectEntry(
-							_simpleDTOConverterContext, objectDefinition,
-							objectEntry.getObjectEntryId())));
-			});
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(rootNode.getPrimaryKey());
+
+		ObjectDefinition rootObjectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				serviceBuilderObjectEntry.getObjectDefinitionId());
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have ", actionId,
+				" permission for ", _rootObjectDefinition.getClassName(),
+				StringPool.SPACE, serviceBuilderObjectEntry.getObjectEntryId()),
+			() -> _defaultObjectEntryManager.updateObjectEntry(
+				_simpleDTOConverterContext, rootObjectDefinition,
+				rootNode.getPrimaryKey(),
+				_defaultObjectEntryManager.getObjectEntry(
+					_simpleDTOConverterContext, rootObjectDefinition,
+					rootNode.getPrimaryKey())));
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			serviceBuilderObjectEntry = _objectEntryLocalService.getObjectEntry(
+				node.getPrimaryKey());
+
+			ObjectDefinition objectDefinition =
+				objectDefinitionLocalService.fetchObjectDefinition(
+					serviceBuilderObjectEntry.getObjectDefinitionId());
+
+			Edge edge = node.getEdge();
+			Node parentNode = node.getParentNode();
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					edge.getObjectRelationshipId());
+
+			AssertUtils.assertFailure(
+				PrincipalException.MustHavePermission.class,
+				StringBundler.concat(
+					"User ", _user.getUserId(), " must have ", actionId,
+					" permission for ", _rootObjectDefinition.getClassName(),
+					StringPool.SPACE, rootNode.getPrimaryKey()),
+				() -> _defaultObjectEntryManager.updateRelatedObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					node.getPrimaryKey(),
+					_defaultObjectEntryManager.getRelatedObjectEntry(
+						_simpleDTOConverterContext, node.getPrimaryKey(),
+						objectRelationship, parentNode.getPrimaryKey()),
+					objectRelationship, parentNode.getPrimaryKey()));
+		}
 	}
 
 	private void _testUpdateRelatedObjectEntry(boolean partialUpdate)
 		throws Exception {
-
-		// Update related object entry
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntryAA =
 			ObjectEntryTestUtil.addObjectEntry(
@@ -9605,38 +9681,6 @@ public class DefaultObjectEntryManagerImplTest
 		Assert.assertEquals(
 			GetterUtil.getLong(_objectEntryA.getId()),
 			serviceBuilderObjectEntryAA.getRootObjectEntryId());
-
-		// Update object entry
-
-		if (partialUpdate) {
-			objectEntryAA = _defaultObjectEntryManager.partialUpdateObjectEntry(
-				_createDTOConverterContext(), _objectDefinitionAA,
-				objectEntryAA.getId(), objectEntryAA);
-		}
-		else {
-			objectEntryAA = _defaultObjectEntryManager.updateObjectEntry(
-				_createDTOConverterContext(), _objectDefinitionAA,
-				objectEntryAA.getId(), objectEntryAA);
-		}
-
-		Assert.assertEquals(
-			GetterUtil.getLong(_objectEntryA.getId()),
-			GetterUtil.getLong(
-				objectEntryAA.getPropertyValue(
-					_objectRelationshipA_AAObjectField2.getName())));
-		Assert.assertEquals(
-			0L,
-			objectEntryAA.getPropertyValue(
-				_objectRelationshipB_AAObjectField2.getName()));
-
-		serviceBuilderObjectEntryAA = _objectEntryLocalService.getObjectEntry(
-			objectEntryAA.getId());
-
-		Assert.assertEquals(
-			GetterUtil.getLong(_objectEntryA.getId()),
-			serviceBuilderObjectEntryAA.getRootObjectEntryId());
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntryAA.getId());
 	}
 
 	private void _updateAndAssertObjectEntryWithPicklistObjectField(

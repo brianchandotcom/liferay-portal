@@ -5961,7 +5961,7 @@ public class ObjectEntryResourceTest {
 				LoggerTestUtil.ERROR)) {
 
 			Assert.assertEquals(
-				405,
+				404,
 				HTTPTestUtil.invokeToHttpCode(
 					null,
 					_objectDefinition1.getRESTContextPath() +

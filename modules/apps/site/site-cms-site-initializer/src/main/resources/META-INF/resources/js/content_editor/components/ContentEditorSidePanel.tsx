@@ -19,6 +19,7 @@ import React, {useEffect, useState} from 'react';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import {Comment} from '../services/CommentService';
 import {EVENT_VALIDATE_FORM} from './ContentEditorManagementBar';
+import CategorizationPanel from './panels/CategorizationPanel';
 import CommentsPanel from './panels/CommentsPanel';
 import GeneralPanel from './panels/GeneralPanel';
 import SchedulePanel from './panels/SchedulePanel';
@@ -26,10 +27,12 @@ import SchedulePanel from './panels/SchedulePanel';
 type Props = {
 	addCommentURL: string;
 	comments: Comment[];
+	contentAPIURL: string;
 	deleteCommentURL: string;
 	editCommentURL: string;
 	editorConfig: LiferayEditorConfig;
 	expirationDate: string;
+	groupId: string;
 	id: string;
 	isSubscribed: boolean;
 	reviewDate: string;
@@ -80,6 +83,12 @@ const items: Item[] = [
 		icon: 'date-time',
 		id: 'schedule',
 		title: Liferay.Language.get('schedule'),
+	},
+	{
+		component: CategorizationPanel,
+		icon: 'categories',
+		id: 'categorization',
+		title: Liferay.Language.get('categorization'),
 	},
 	{
 		component: CommentsPanel,

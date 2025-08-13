@@ -22,7 +22,7 @@ public class ScopeUtil {
 		return new Scope() {
 			{
 				setExternalReferenceCode(group::getExternalReferenceCode);
-				setType(() -> _getScopeType(group));
+				setType(() -> _getType(group));
 			}
 		};
 	}
@@ -31,7 +31,7 @@ public class ScopeUtil {
 		return toScope(GroupLocalServiceUtil.fetchGroup(groupId));
 	}
 
-	private static Scope.Type _getScopeType(Group group) {
+	private static Scope.Type _getType(Group group) {
 		if (group.isCMS()) {
 			return Scope.Type.CMS;
 		}

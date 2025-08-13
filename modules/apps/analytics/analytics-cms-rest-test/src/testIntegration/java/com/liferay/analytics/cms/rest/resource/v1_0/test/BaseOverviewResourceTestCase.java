@@ -178,28 +178,8 @@ public abstract class BaseOverviewResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetContentOverview() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetContentOverviewNotFound() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetFileOverview() throws Exception {
 		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetFileOverview() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetFileOverviewNotFound() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	protected void assertContains(Overview overview, List<Overview> overviews) {

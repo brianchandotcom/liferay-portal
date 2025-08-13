@@ -40,7 +40,7 @@ public class ScopeUtilTest {
 	}
 
 	@Test
-	public void testToScopeAssetLibrary() throws Exception {
+	public void testToScopeTypeAssetLibrary() throws Exception {
 		Mockito.when(
 			_group.isDepot()
 		).thenReturn(
@@ -51,7 +51,7 @@ public class ScopeUtilTest {
 	}
 
 	@Test
-	public void testToScopeCMS() throws Exception {
+	public void testToScopeTypeCMS() throws Exception {
 		Mockito.when(
 			_group.isCMS()
 		).thenReturn(
@@ -67,7 +67,7 @@ public class ScopeUtilTest {
 	}
 
 	@Test
-	public void testToScopeSite() throws Exception {
+	public void testToScopeTypeSite() throws Exception {
 		Mockito.when(
 			_group.isSite()
 		).thenReturn(

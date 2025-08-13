@@ -63,7 +63,9 @@ public interface CookiesConsentConfiguration {
 	)
 	public LocalizedValuesMap functionalCookiesDescription();
 
-	@ExtendedAttributeDefinition(requiredInput = true)
+	@ExtendedAttributeDefinition(
+		featureFlagKey = "LPD-51356", requiredInput = true
+	)
 	@Meta.AD(deflt = "false", name = "hide-from-end-user", required = false)
 	public boolean functionalCookiesHideFromEndUser();
 
@@ -78,7 +80,9 @@ public interface CookiesConsentConfiguration {
 	)
 	public LocalizedValuesMap performanceCookiesDescription();
 
-	@ExtendedAttributeDefinition(requiredInput = true)
+	@ExtendedAttributeDefinition(
+		featureFlagKey = "LPD-51356", requiredInput = true
+	)
 	@Meta.AD(deflt = "false", name = "hide-from-end-user", required = false)
 	public boolean performanceCookiesHideFromEndUser();
 
@@ -93,7 +97,9 @@ public interface CookiesConsentConfiguration {
 	)
 	public LocalizedValuesMap personalizationCookiesDescription();
 
-	@ExtendedAttributeDefinition(requiredInput = true)
+	@ExtendedAttributeDefinition(
+		featureFlagKey = "LPD-51356", requiredInput = true
+	)
 	@Meta.AD(deflt = "false", name = "hide-from-end-user", required = false)
 	public boolean personalizationCookiesHideFromEndUser();
 

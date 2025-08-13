@@ -80,7 +80,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 			}
 
 			for (ConsentCookieType optionalConsentCookieType : cookiesBannerConfigurationDisplayContext.getOptionalConsentCookieTypes()) {
-				if (optionalConsentCookieType.isHideFromEndUser()) {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-51356") && optionalConsentCookieType.isHideFromEndUser()) {
 					continue;
 				}
 			%>

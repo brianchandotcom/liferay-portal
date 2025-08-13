@@ -361,8 +361,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenClassNameLocalServiceGetClassName(className, classNameId);
 
-		long classPK = RandomTestUtil.randomLong();
-
 		String entryClassName = RandomTestUtil.randomString();
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
@@ -376,7 +374,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		Document document = _createDocument(entryClassName, entryClassPK);
 
 		document.addKeyword(Field.CLASS_NAME_ID, classNameId);
-		document.addKeyword(Field.CLASS_PK, classPK);
+		document.addKeyword(Field.CLASS_PK, RandomTestUtil.randomLong());
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(document);

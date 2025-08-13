@@ -147,7 +147,7 @@ public class FeatureFlagManagerUtil {
 								servicePropertiesFunction.apply(enabled)));
 					},
 					MapUtil.singletonDictionary(
-						"featureFlagKey", featureFlagKey));
+						"feature.flag.key", featureFlagKey));
 		}
 
 		@Override

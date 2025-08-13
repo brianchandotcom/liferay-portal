@@ -55,7 +55,7 @@ public class BatchEnginePortletDataHandlerRegistry {
 					_serviceTracker.close();
 				}
 			},
-			MapUtil.singletonDictionary("featureFlagKey", "LPD-35914"));
+			MapUtil.singletonDictionary("feature.flag.key", "LPD-35914"));
 	}
 
 	@Deactivate

@@ -464,6 +464,19 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	@Override
+	public ObjectEntry restoreObjectEntryFromTrash(
+			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		_checkPermission(
+			ActionKeys.DELETE, objectEntry.getObjectDefinitionId(),
+			objectEntry);
+
+		return objectEntryLocalService.restoreObjectEntryFromTrash(
+			userId, objectEntry, serviceContext);
+	}
+
+	@Override
 	public void subscribeObjectEntry(
 			long userId, long groupId, long objectEntryId)
 		throws PortalException {

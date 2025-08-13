@@ -110,6 +110,7 @@ import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.base.ObjectEntryLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectEntryFolderPersistence;
+import com.liferay.object.service.persistence.ObjectEntryVersionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
@@ -254,8 +255,12 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.exception.TrashEntryException;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.TrashEntryLocalService;
+import com.liferay.trash.service.TrashVersionLocalService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1688,7 +1693,7 @@ public class ObjectEntryLocalServiceImpl
 			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (objectEntry.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+		if (objectEntry.isInTrash()) {
 			throw new TrashEntryException();
 		}
 
@@ -1768,6 +1773,51 @@ public class ObjectEntryLocalServiceImpl
 
 		return _updateObjectEntry(
 			objectEntryId, true, serviceContext, userId, values);
+	}
+
+	@Override
+	public ObjectEntry restoreObjectEntryFromTrash(
+			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (!objectEntry.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
+		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
+			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+
+		objectEntry = updateStatus(
+			userId, objectEntry, trashEntry.getStatus(), serviceContext);
+
+		for (TrashVersion trashVersion :
+				_trashVersionLocalService.getVersions(
+					trashEntry.getEntryId())) {
+
+			ObjectEntryVersion objectEntryVersion =
+				_objectEntryVersionPersistence.findByPrimaryKey(
+					trashVersion.getClassPK());
+
+			objectEntryVersion.setStatus(trashVersion.getStatus());
+
+			_objectEntryVersionPersistence.update(objectEntryVersion);
+		}
+
+		_trashEntryLocalService.deleteEntry(
+			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+
+		if (objectDefinition.isEnableComments()) {
+			_commentManager.restoreDiscussionFromTrash(
+				objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId());
+		}
+
+		return objectEntry;
 	}
 
 	@Override
@@ -2114,7 +2164,11 @@ public class ObjectEntryLocalServiceImpl
 			String objectActionTriggerKey =
 				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE;
 
-			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			if (originalObjectEntry.isInTrash()) {
+				objectActionTriggerKey =
+					ObjectActionTriggerConstants.KEY_ON_AFTER_ADD;
+			}
+			else if (objectEntry.isInTrash()) {
 				objectActionTriggerKey =
 					ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE;
 			}
@@ -7150,6 +7204,9 @@ public class ObjectEntryLocalServiceImpl
 	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
 
 	@Reference
+	private ObjectEntryVersionPersistence _objectEntryVersionPersistence;
+
+	@Reference
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
 	@Reference
@@ -7231,6 +7288,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;
+
+	@Reference
+	private TrashVersionLocalService _trashVersionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

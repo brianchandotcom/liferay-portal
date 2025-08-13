@@ -636,7 +636,9 @@ public class BatchTestEntityExportImportTest {
 			Assert.assertTrue(errorStacktrace.contains(expectedError));
 		}
 
-		Assert.assertFalse(exportImportReportEntry.isResolved());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
+			exportImportReportEntry.getStatus());
 		Assert.assertEquals(expectedType, exportImportReportEntry.getType());
 	}
 

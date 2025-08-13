@@ -55,14 +55,18 @@ public class BaseCookiesBannerDisplayContext {
 		_optionalConsentCookieTypes = ListUtil.fromArray(
 			new ConsentCookieType(
 				cookiesConsentConfiguration.functionalCookiesDescription(),
+				cookiesConsentConfiguration.functionalCookiesHideFromEndUser(),
 				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
 				cookiesConsentConfiguration.functionalCookiesPrechecked()),
 			new ConsentCookieType(
 				cookiesConsentConfiguration.performanceCookiesDescription(),
+				cookiesConsentConfiguration.performanceCookiesHideFromEndUser(),
 				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
 				cookiesConsentConfiguration.performanceCookiesPrechecked()),
 			new ConsentCookieType(
 				cookiesConsentConfiguration.personalizationCookiesDescription(),
+				cookiesConsentConfiguration.
+					personalizationCookiesHideFromEndUser(),
 				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
 				cookiesConsentConfiguration.
 					personalizationCookiesPrechecked()));
@@ -79,7 +83,7 @@ public class BaseCookiesBannerDisplayContext {
 			new ConsentCookieType(
 				cookiesConsentConfiguration.
 					strictlyNecessaryCookiesDescription(),
-				CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true));
+				false, CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true));
 
 		return _requiredConsentCookieTypes;
 	}

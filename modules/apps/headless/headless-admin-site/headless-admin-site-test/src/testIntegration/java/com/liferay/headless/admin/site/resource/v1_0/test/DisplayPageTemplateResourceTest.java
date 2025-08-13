@@ -1289,29 +1289,6 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplate.getKey(), postDisplayPageTemplate.getKey());
 	}
 
-	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecificationsNull()
-		throws Exception {
-
-		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
-
-		DisplayPageTemplate displayPageTemplate =
-			displayPageTemplateResource.
-				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-					testGroup.getExternalReferenceCode(),
-					randomDisplayPageTemplate());
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				getLayoutPageTemplateEntryByExternalReferenceCode(
-					displayPageTemplate.getExternalReferenceCode(),
-					testGroup.getGroupId());
-
-		PageSpecificationsTestUtil.assertPageSpecifications(
-			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
-			displayPageTemplate.getPageSpecifications());
-	}
-
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications()
 		throws Exception {
 
@@ -1357,6 +1334,29 @@ public class DisplayPageTemplateResourceTest
 				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 					testGroup.getExternalReferenceCode(), displayPageTemplate),
 			draftContentPageSpecification, publishedContentPageSpecification);
+	}
+
+	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecificationsNull()
+		throws Exception {
+
+		DisplayPageTemplateResource displayPageTemplateResource =
+			_getDisplayPageTemplateResource();
+
+		DisplayPageTemplate displayPageTemplate =
+			displayPageTemplateResource.
+				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					randomDisplayPageTemplate());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					displayPageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			displayPageTemplate.getPageSpecifications());
 	}
 
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithParentFolder()

@@ -212,10 +212,10 @@ public class ConfigurationPersistenceManagerTest {
 	@Test
 	public void testEphemeralConfiguration() throws Exception {
 		_assertConfiguration(
-			false, false,
 			Collections.singletonMap(
 				ReloadablePersistenceManager.STORAGE_POLICY_KEY,
-				ReloadablePersistenceManager.STORAGE_POLICY_VALUE_EPHEMERAL));
+				ReloadablePersistenceManager.STORAGE_POLICY_VALUE_EPHEMERAL),
+			false, false);
 	}
 
 	@Test
@@ -247,12 +247,12 @@ public class ConfigurationPersistenceManagerTest {
 	private void _assertConfiguration(boolean factory, boolean shouldBeStored)
 		throws Exception {
 
-		_assertConfiguration(factory, shouldBeStored, new Hashtable<>());
+		_assertConfiguration(new Hashtable<>(), factory, shouldBeStored);
 	}
 
 	private void _assertConfiguration(
-			boolean factory, boolean shouldBeStored,
-			Map<String, Object> additionalProperties)
+			Map<String, Object> additionalProperties, boolean factory,
+			boolean shouldBeStored)
 		throws Exception {
 
 		Configuration configuration = null;

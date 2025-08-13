@@ -256,7 +256,12 @@ describe('when the object definition is a system object', () => {
 describe('when the object definition has a root object definition', () => {
 	it('configurations are enabled', async () => {
 		await renderComponent({
-			rootObjectDefinitionExternalReferenceCode: '1',
+			objectDefinitionSettings: [
+				{
+					name: 'rootObjectDefinitionExternalReferenceCodes',
+					value: '1',
+				},
+			],
 			storageType: 'sugarcrm',
 		});
 

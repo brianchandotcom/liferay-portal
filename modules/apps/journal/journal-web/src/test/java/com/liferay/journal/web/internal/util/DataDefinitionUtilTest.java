@@ -50,7 +50,7 @@ public class DataDefinitionUtilTest {
 		_testUpdateDataDefinitionFields();
 		_testUpdateDataDefinitionFieldsWithExistingFieldName();
 		_testUpdateDataDefinitionFieldsWithExistingFieldNameAndExistingReference();
-		_testUpdateDataDefinitionFieldsWithExistingInvalidFieldName();
+		_testUpdateDataDefinitionFieldsWithExistingLegacyFieldNameAndExistingReference();
 	}
 
 	private DataDefinition _getDataDefinition() {
@@ -184,7 +184,7 @@ public class DataDefinitionUtilTest {
 		_fieldName = originalFieldName;
 	}
 
-	private void _testUpdateDataDefinitionFieldsWithExistingInvalidFieldName() {
+	private void _testUpdateDataDefinitionFieldsWithExistingLegacyFieldNameAndExistingReference() {
 		DataDefinition dataDefinition = _getDataDefinition();
 
 		DataDefinitionUtil.updateDataDefinitionFields(
@@ -192,7 +192,7 @@ public class DataDefinitionUtilTest {
 
 		String newFieldName = _getDataDefinitionFieldName(dataDefinition);
 
-		Assert.assertTrue(DataDefinitionUtil.isValidFieldName(newFieldName));
+		Assert.assertEquals(_fieldName, newFieldName);
 	}
 
 	private String _fieldName;

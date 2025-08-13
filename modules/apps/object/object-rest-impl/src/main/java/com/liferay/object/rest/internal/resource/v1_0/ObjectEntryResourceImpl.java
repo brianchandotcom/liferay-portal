@@ -6,9 +6,9 @@
 package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
-import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.ObjectEntryValidationException;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationshipModel;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.ValidationError;
 import com.liferay.object.rest.dto.v1_0.ValidationRequest;
@@ -54,7 +54,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Javier Gamarra
@@ -361,24 +360,10 @@ public class ObjectEntryResourceImpl
 	@Override
 	public List<String> getNestedFields() {
 		return transform(
-			_objectRelationshipLocalService.getAllObjectRelationships(
-				_objectDefinition.getObjectDefinitionId()),
-			objectRelationship -> {
-				if (Objects.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) ||
-					(Objects.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
-					 Objects.equals(
-						 objectRelationship.getObjectDefinitionId2(),
-						 _objectDefinition.getObjectDefinitionId()))) {
-
-					return objectRelationship.getName();
-				}
-
-				return null;
-			});
+			_objectRelationshipLocalService.
+				getObjectRelationshipsByObjectDefinitionId2(
+					_objectDefinition.getObjectDefinitionId()),
+			ObjectRelationshipModel::getName);
 	}
 
 	@Override

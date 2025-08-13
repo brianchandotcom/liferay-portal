@@ -119,7 +119,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				}
 
 			});
-
 		_pageTemplateResource.setContextUser(TestPropsValues.getUser());
 	}
 

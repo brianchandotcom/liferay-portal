@@ -129,7 +129,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null));
 		_assertSetPermissionChecker(1);
 	}
@@ -165,7 +165,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null));
 		_assertSetPermissionChecker(1);
 	}
@@ -195,7 +195,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null));
 		_assertSetPermissionChecker(1);
 	}
@@ -230,7 +230,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT, companyId),
 			String.valueOf(group.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				companyId, virtualHostGroupLayout.getGroupId(),
 				virtualHostGroupLayout, null));
 		_assertSetPermissionChecker(1);
@@ -269,7 +269,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 				_PATH_CONTEXT, virtualHostGroupLayout.getCompanyId()),
 			String.valueOf(virtualHostGroupLayout.getGroupId()), languageId,
 			String.valueOf(virtualHostGroupLayout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				virtualHostGroupLayout.getCompanyId(),
 				virtualHostGroupLayout.getGroupId(), virtualHostGroupLayout,
 				null));
@@ -305,7 +305,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null));
 		_assertSetPermissionChecker(2);
 	}
@@ -329,7 +329,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null));
 		_assertSetPermissionChecker(1);
 	}
@@ -353,7 +353,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null));
 		_assertSetPermissionChecker(1);
 	}
@@ -383,7 +383,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		_assertAttributesAndParameters(
 			_getDynamicServletRequest(_PATH_CONTEXT, group.getCompanyId()),
 			null, null, null,
-			_setupLayoutSet(
+			_getLayoutSet(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(), null,
 				null));
 		_assertSetPermissionChecker(2);
@@ -415,7 +415,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(null, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null));
 		_assertSetPermissionChecker(1);
 	}
@@ -434,7 +434,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 				RandomTestUtil.randomString(), layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), null, layout));
 		_assertSetPermissionChecker(1);
 	}
@@ -453,7 +453,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 				RandomTestUtil.randomString(), layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
-			_setupLayoutSet(
+			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null));
 		_assertSetPermissionChecker(1);
 	}
@@ -648,7 +648,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			"_userLocalService", _userLocalService);
 	}
 
-	private LayoutSet _setupLayoutSet(
+	private LayoutSet _getLayoutSet(
 			long companyId, long groupId, Layout privateLayout,
 			Layout publicLayout)
 		throws PortalException {

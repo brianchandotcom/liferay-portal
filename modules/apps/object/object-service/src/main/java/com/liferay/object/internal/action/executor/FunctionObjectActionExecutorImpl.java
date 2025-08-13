@@ -70,8 +70,8 @@ public class FunctionObjectActionExecutorImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Activating for company ", _companyId, " with properties ",
-					properties));
+					"Activating FunctionObjectActionExecutorImpl for company ",
+					_companyId, " with properties ", properties));
 		}
 
 		_functionObjectActionExecutorImplConfiguration =

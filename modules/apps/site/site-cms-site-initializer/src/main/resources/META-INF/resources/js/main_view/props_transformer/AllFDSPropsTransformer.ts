@@ -11,6 +11,7 @@ import {EVENTS} from '../info_panel/util/constants';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
+import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
@@ -24,11 +25,17 @@ const ACTIONS = {
 };
 
 export default function AllFDSPropsTransformer({
+	additionalProps,
 	creationMenu,
 	itemsActions = [],
 	views,
 	...otherProps
 }: {
+	additionalProps: {
+		autocompleteURL: string;
+		cmsGroupId?: number;
+		collaboratorURLs: Record<string, string>;
+	};
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;
@@ -67,7 +74,7 @@ export default function AllFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
-		infoPanelComponent: () => AssetTypeInfoPanel(otherProps),
+		infoPanelComponent: () => AssetTypeInfoPanel({additionalProps}),
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'download') {
 				return {
@@ -115,6 +122,17 @@ export default function AllFDSPropsTransformer({
 					contentComponent: () =>
 						FilePreviewerModalContent(itemData.embedded.file),
 					size: 'full-screen',
+				});
+			}
+			else if (action?.data?.id === 'share') {
+				const {autocompleteURL, collaboratorURLs} = additionalProps;
+
+				shareAction({
+					autocompleteURL,
+					collaboratorURL: collaboratorURLs[itemData.entryClassName],
+					creator: itemData.embedded.creator,
+					itemId: itemData.embedded.id,
+					title: itemData.embedded?.title,
 				});
 			}
 		},

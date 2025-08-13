@@ -396,7 +396,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 			String parameter = parameterList.get(0);
 
-			if (!parameter.equals("\"featureFlagKey\"")) {
+			if (!parameter.equals("\"feature.flag.key\"")) {
 				continue;
 			}
 
@@ -454,7 +454,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 	private static final Pattern _featureFlagPattern3 = Pattern.compile(
 		"\"featureFlag\": \"(.+?)\"");
 	private static final Pattern _featureFlagPattern4 = Pattern.compile(
-		"\"featureFlagKey=([A-Z]+-\\d+)\"");
+		"\"feature\\.flag\\.key=([A-Z]+-\\d+)\"");
 	private static final Pattern _featureFlagPattern5 = Pattern.compile(
 		"featureFlagKey = \"([A-Z]+-\\d+)\"");
 	private static final Pattern _featureFlagsPattern = Pattern.compile(

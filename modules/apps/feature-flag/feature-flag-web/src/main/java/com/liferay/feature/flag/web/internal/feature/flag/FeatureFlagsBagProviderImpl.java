@@ -204,7 +204,7 @@ public class FeatureFlagsBagProviderImpl
 	private List<String> _getFeatureFlagKeys(
 		ServiceReference<?> serviceReference) {
 
-		Object value = serviceReference.getProperty("featureFlagKey");
+		Object value = serviceReference.getProperty("feature.flag.key");
 
 		if (value == null) {
 			return null;

@@ -64,7 +64,7 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 					_log.error(exception);
 				}
 			},
-			MapUtil.singletonDictionary("featureFlagKey", "LPD-35914"));
+			MapUtil.singletonDictionary("feature.flag.key", "LPD-35914"));
 	}
 
 	@Activate

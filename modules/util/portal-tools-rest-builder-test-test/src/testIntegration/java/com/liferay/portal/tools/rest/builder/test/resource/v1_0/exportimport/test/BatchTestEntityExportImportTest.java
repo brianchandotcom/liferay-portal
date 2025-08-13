@@ -246,7 +246,7 @@ public class BatchTestEntityExportImportTest {
 
 	@Test
 	@TestInfo("LPD-49899")
-	public void testExportImportEmptyRelatedEntry() throws Exception {
+	public void testExportImportEmptyRelatedEntity() throws Exception {
 		Page<BatchTestEntity> batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
 
@@ -403,7 +403,7 @@ public class BatchTestEntityExportImportTest {
 
 	@Test
 	@TestInfo("LPD-49899")
-	public void testExportImportErrorRelatedEntry() throws Exception {
+	public void testExportImportErrorRelatedEntity() throws Exception {
 		Page<BatchTestEntity> batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
 

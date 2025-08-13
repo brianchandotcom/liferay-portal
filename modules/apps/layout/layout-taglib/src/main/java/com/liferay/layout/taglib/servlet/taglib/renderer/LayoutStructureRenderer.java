@@ -582,13 +582,18 @@ public class LayoutStructureRenderer {
 
 				ColTag colTag = new ColTag();
 
-				int numberOfColumns =
-					collectionStyledLayoutStructureItem.getNumberOfColumns();
+				if (Validator.isNull(
+						collectionStyledLayoutStructureItem.getListStyle())) {
 
-				colTag.setCssClass(
-					ResponsiveLayoutStructureUtil.getColumnCssClass(
-						collectionStyledLayoutStructureItem,
-						i % numberOfColumns));
+					int numberOfColumns =
+						collectionStyledLayoutStructureItem.
+							getNumberOfColumns();
+
+					colTag.setCssClass(
+						ResponsiveLayoutStructureUtil.getColumnCssClass(
+							collectionStyledLayoutStructureItem,
+							i % numberOfColumns));
+				}
 
 				colTag.setPageContext(_pageContext);
 

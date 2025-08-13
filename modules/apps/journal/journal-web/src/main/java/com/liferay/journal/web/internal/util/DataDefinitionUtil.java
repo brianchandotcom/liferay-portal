@@ -100,11 +100,7 @@ public class DataDefinitionUtil {
 				dataDefinitionField, ddmStructure);
 
 			if (existingFieldName != null) {
-				if (isValidFieldName(existingFieldName)) {
-					return existingFieldName;
-				}
-
-				fieldName = existingFieldName;
+				return existingFieldName;
 			}
 		}
 

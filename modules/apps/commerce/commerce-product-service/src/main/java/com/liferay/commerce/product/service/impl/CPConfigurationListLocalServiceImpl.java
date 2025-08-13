@@ -29,12 +29,14 @@ import com.liferay.commerce.product.service.base.CPConfigurationListLocalService
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -348,42 +350,62 @@ public class CPConfigurationListLocalServiceImpl
 						CPConfigurationListRelTable
 							accountEntryCPConfigurationListRel =
 								CPConfigurationListRelTable.INSTANCE.as(
-									"-accountEntryCPConfigurationListRel");
+									"accountEntryCPConfigurationListRel");
 
 						orderByExpressions.add(
-							accountEntryCPConfigurationListRel.classPK.
-								descending());
+							DSLFunctionFactoryUtil.caseWhenThen(
+								accountEntryCPConfigurationListRel.classPK.
+									isNull(),
+								DSLFunctionFactoryUtil.castText(new Scalar<>(0))
+							).elseEnd(
+								DSLFunctionFactoryUtil.castText(new Scalar<>(1))
+							).descending());
 					}
 
 					if (accountGroupIds.length > 0) {
 						CPConfigurationListRelTable
 							accountGroupCPConfigurationListRel =
 								CPConfigurationListRelTable.INSTANCE.as(
-									"-accountGroupCPConfigurationListRel");
+									"accountGroupCPConfigurationListRel");
 
 						orderByExpressions.add(
-							accountGroupCPConfigurationListRel.classPK.
-								descending());
+							DSLFunctionFactoryUtil.caseWhenThen(
+								accountGroupCPConfigurationListRel.classPK.
+									isNull(),
+								DSLFunctionFactoryUtil.castText(new Scalar<>(0))
+							).elseEnd(
+								DSLFunctionFactoryUtil.castText(new Scalar<>(1))
+							).descending());
 					}
 
 					if (commerceChannelId > 0) {
 						CommerceChannelRelTable commerceChannelRel =
 							CommerceChannelRelTable.INSTANCE.as(
-								"-CommerceChannelRel");
+								"CommerceChannelRel");
 
 						orderByExpressions.add(
-							commerceChannelRel.commerceChannelId.descending());
+							DSLFunctionFactoryUtil.caseWhenThen(
+								commerceChannelRel.commerceChannelId.isNull(),
+								DSLFunctionFactoryUtil.castText(new Scalar<>(0))
+							).elseEnd(
+								DSLFunctionFactoryUtil.castText(new Scalar<>(1))
+							).descending());
 					}
 
 					if (commerceOrderTypeId > 0) {
 						CPConfigurationListRelTable
 							commerceOrderTypeCPConfigurationListRel =
 								CPConfigurationListRelTable.INSTANCE.as(
-									"-commerceOrderTypeCPConfigurationListRel");
+									"commerceOrderTypeCPConfigurationListRel");
 
 						orderByExpressions.add(
-							commerceOrderTypeCPConfigurationListRel.classPK.
-								descending());
+							DSLFunctionFactoryUtil.caseWhenThen(
+								commerceOrderTypeCPConfigurationListRel.classPK.
+									isNull(),
+								DSLFunctionFactoryUtil.castText(new Scalar<>(0))
+							).elseEnd(
+								DSLFunctionFactoryUtil.castText(new Scalar<>(1))
+							).descending());
 					}
 
 					return orderByStep.orderBy(

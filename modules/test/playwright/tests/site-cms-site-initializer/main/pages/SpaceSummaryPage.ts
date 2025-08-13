@@ -11,6 +11,8 @@ export class SpaceSummaryPage {
 	readonly page: Page;
 	readonly viewAllContentLink: Locator;
 	readonly viewAllFilesLink: Locator;
+	readonly viewAllSitesLink: Locator;
+	readonly closeButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -22,11 +24,30 @@ export class SpaceSummaryPage {
 		this.viewAllFilesLink = this.page.getByRole('link', {
 			name: 'View All Files',
 		});
+
+		this.viewAllSitesLink = this.page.getByRole('button', {
+			name: 'View All Sites',
+		});
+
+		this.closeButton = this.page.getByLabel('close', {exact: true});
 	}
 
 	async goto(spaceName: string) {
 		await this.page.goto(PORTLET_URLS.cms);
 		await this.page.getByRole('menuitem', {name: spaceName}).click();
 		await this.viewAllContentLink.waitFor();
+	}
+
+	async connectSite(siteName: string) {
+		await this.viewAllSitesLink.click();
+
+		this.page.getByRole('dialog').waitFor();
+		await this.page.getByLabel('Site', {exact: true}).click();
+		await this.page.getByRole('option', {name: siteName}).click();
+		await this.page.getByRole('button', {name: 'Connect'}).click();
+
+		this.page.getByLabel('Connected Sites').getByText(siteName).waitFor();
+
+		await this.closeButton.click();
 	}
 }

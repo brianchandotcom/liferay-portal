@@ -47,7 +47,7 @@ public class ScopeUtilTest {
 			true
 		);
 
-		_assertScope(Scope.Type.ASSET_LIBRARY, ScopeUtil.toScope(_group));
+		_assertScope(ScopeUtil.toScope(_group), Scope.Type.ASSET_LIBRARY);
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class ScopeUtilTest {
 			true
 		);
 
-		_assertScope(Scope.Type.CMS, ScopeUtil.toScope(_group));
+		_assertScope(ScopeUtil.toScope(_group), Scope.Type.CMS);
 	}
 
 	@Test
@@ -74,15 +74,15 @@ public class ScopeUtilTest {
 			true
 		);
 
-		_assertScope(Scope.Type.SITE, ScopeUtil.toScope(_group));
+		_assertScope(ScopeUtil.toScope(_group), Scope.Type.SITE);
 	}
 
 	@Test
 	public void testToScopeTypeNull() throws Exception {
-		_assertScope(null, ScopeUtil.toScope(_group));
+		_assertScope(ScopeUtil.toScope(_group), null);
 	}
 
-	private void _assertScope(Scope.Type scopeType, Scope scope) {
+	private void _assertScope(Scope scope, Scope.Type scopeType) {
 		Assert.assertEquals(
 			_EXTERNAL_REFERENCE_CODE, scope.getExternalReferenceCode());
 		Assert.assertEquals(scopeType, scope.getType());

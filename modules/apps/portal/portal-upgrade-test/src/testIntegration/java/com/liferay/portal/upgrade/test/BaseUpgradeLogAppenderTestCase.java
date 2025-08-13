@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -282,26 +281,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		long randomCompanyId = RandomTestUtil.nextLong();
 
 		try (Connection connection = DataAccess.getConnection()) {
-			_db.runSQL("drop index IX_D1846D13 on PortalPreferences");
-
-			long ownerId = RandomTestUtil.nextLong();
-			long ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
-			long portletPreferencesId1 = RandomTestUtil.nextLong();
-
-			_db.runSQL(
-				StringBundler.concat(
-					"insert into PortalPreferences (mvccVersion, ",
-					"portalPreferencesId, companyId, ownerId, ownerType) ",
-					"values (0, ", portletPreferencesId1, ", ", randomCompanyId,
-					", ", ownerId, ", ", ownerType, ")"));
-
-			_db.runSQL(
-				StringBundler.concat(
-					"insert into PortalPreferences (mvccVersion, ",
-					"portalPreferencesId, companyId, ownerId, ownerType) ",
-					"values (0, ", RandomTestUtil.nextLong(), ", ",
-					randomCompanyId, ", ", ownerId, ", ", ownerType, ")"));
-
 			_db.runSQL(
 				StringBundler.concat(
 					"insert into Portlet (mvccVersion, id_, companyId, ",
@@ -311,21 +290,22 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.start();
 
-			TestDataCleanupPreupgradeProcess dataCleanupPreupgradeProcess =
+			UpgradeProcess upgradeProcess =
 				new TestDataCleanupPreupgradeProcess();
 
-			dataCleanupPreupgradeProcess.upgrade();
+			upgradeProcess.upgrade();
+
+			upgradeProcess =
+				new TestDeleteDuplicateUniqueFinderRowsUpgradeProcess(
+					RandomTestUtil.randomString(),
+					new String[] {RandomTestUtil.randomString()},
+					RandomTestUtil.randomString());
+
+			upgradeProcess.upgrade();
 
 			OrphanReferencesDataCleanupUtil.cleanUpTable(
 				connection, null, "companyId", "Portlet", "companyId",
 				"Company");
-
-			UpgradeProcess upgradeProcess =
-				new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
-					"PortalPreferences", new String[] {"ownerType", "ownerId"},
-					"portalPreferencesId asc");
-
-			upgradeProcess.upgrade();
 
 			_appender.stop();
 
@@ -337,16 +317,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				"upgrade.report.data.clean.up", _CLEANUP_WARNING_MESSAGE);
 			_assertLogContextDiagnostics(
 				"upgrade.report.data.clean.up",
-				StringBundler.concat(
-					"Deleted row from table PortalPreferences due to ",
-					"duplicate values in finder columns ownerType, ownerId: ",
-					"{", dbInspector.normalizeName("mvccVersion"), "=0, ",
-					dbInspector.normalizeName("portalPreferencesId"), "=",
-					portletPreferencesId1, ", ",
-					dbInspector.normalizeName("companyId"), "=",
-					randomCompanyId, ", ", dbInspector.normalizeName("ownerId"),
-					"=", ownerId, ", ", dbInspector.normalizeName("ownerType"),
-					"=", PortletKeys.PREFS_OWNER_TYPE_COMPANY, "}"));
+				_DELETE_DUPLICATES_FINDER_WARNING_MESSAGE);
 			_assertLogContextDiagnostics(
 				"upgrade.report.data.clean.up",
 				StringBundler.concat(
@@ -358,14 +329,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 					dbInspector.normalizeName("companyId")));
 		}
 		finally {
-			_db.runSQL(
-				"create unique index IX_D1846D13 on PortalPreferences " +
-					"(ownerType, ownerId)");
-
-			_db.runSQL(
-				"delete from PortalPreferences where companyId = " +
-					randomCompanyId);
-
 			_db.runSQL(
 				"delete from Portlet where companyId = " + randomCompanyId);
 
@@ -1368,6 +1331,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private static final String _CLEANUP_WARNING_MESSAGE =
 		RandomTestUtil.randomString();
 
+	private static final String _DELETE_DUPLICATES_FINDER_WARNING_MESSAGE =
+		RandomTestUtil.randomString();
+
 	private static DB _db;
 	private static Appender _logContextAppender;
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
@@ -1404,17 +1370,53 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		@Override
 		protected void doUpgrade() throws Exception {
-			if (_log.isInfoEnabled()) {
-				_log.info(_CLEANUP_INFO_MESSAGE);
-			}
+			LogEvent logEvent = Log4jLogEvent.newBuilder(
+			).setLoggerName(
+				TestDataCleanupPreupgradeProcess.class.getName()
+			).setLevel(
+				Level.WARN
+			).setMessage(
+				new SimpleMessage(_CLEANUP_WARNING_MESSAGE)
+			).build();
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(_CLEANUP_WARNING_MESSAGE);
-			}
+			_appender.append(logEvent);
+
+			logEvent = Log4jLogEvent.newBuilder(
+			).setLoggerName(
+				TestDataCleanupPreupgradeProcess.class.getName()
+			).setLevel(
+				Level.INFO
+			).setMessage(
+				new SimpleMessage(_CLEANUP_INFO_MESSAGE)
+			).build();
+
+			_appender.append(logEvent);
 		}
 
-		private static final Log _log = LogFactoryUtil.getLog(
-			TestDataCleanupPreupgradeProcess.class);
+	}
+
+	private class TestDeleteDuplicateUniqueFinderRowsUpgradeProcess
+		extends DeleteDuplicateUniqueFinderRowsUpgradeProcess {
+
+		public TestDeleteDuplicateUniqueFinderRowsUpgradeProcess(
+			String tableName, String[] columnNames, String orderByClause) {
+
+			super(tableName, columnNames, orderByClause);
+		}
+
+		@Override
+		protected void doUpgrade() throws Exception {
+			LogEvent logEvent = Log4jLogEvent.newBuilder(
+			).setLoggerName(
+				DeleteDuplicateUniqueFinderRowsUpgradeProcess.class.getName()
+			).setLevel(
+				Level.WARN
+			).setMessage(
+				new SimpleMessage(_DELETE_DUPLICATES_FINDER_WARNING_MESSAGE)
+			).build();
+
+			_appender.append(logEvent);
+		}
 
 	}
 

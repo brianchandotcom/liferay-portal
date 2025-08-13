@@ -13,8 +13,11 @@ import com.liferay.customer.service.NotificationQueueEntryService;
 import com.liferay.customer.service.TicketAttachmentService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StackTraceUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -175,13 +178,8 @@ public class TicketAttachmentsCompleteUploadRestController
 							).put(
 								"content",
 								new JSONArray(
-								).put(
-									new JSONObject(
-									).put(
-										"text", commentBody
-									).put(
-										"type", "text"
-									)
+								).putAll(
+									_getCommentBodyJSONArray(commentBody)
 								)
 							)
 						)
@@ -270,8 +268,62 @@ public class TicketAttachmentsCompleteUploadRestController
 		return sb.toString();
 	}
 
+	private JSONArray _getCommentBodyJSONArray(String commentBody) {
+		String[] commentStrings = commentBody.split(_REGEX);
+
+		Matcher matcher = _pattern.matcher(commentBody);
+
+		JSONArray jsonArray = new JSONArray();
+
+		for (String string : commentStrings) {
+			if (Validator.isNotNull(string)) {
+				jsonArray.put(
+					new JSONObject(
+					).put(
+						"text", string
+					).put(
+						"type", "text"
+					));
+			}
+
+			if (matcher.find()) {
+				String link = matcher.group(1);
+
+				jsonArray.put(
+					new JSONObject(
+					).put(
+						"type", "text"
+					).put(
+						"text", link
+					).put(
+						"marks",
+						new JSONArray(
+						).put(
+							new JSONObject(
+							).put(
+								"type", "link"
+							).put(
+								"attrs",
+								new JSONObject(
+								).put(
+									"href", link
+								)
+							)
+						)
+					));
+			}
+		}
+
+		return jsonArray;
+	}
+
+	private static final String _REGEX =
+		"((?:https?:\\/\\/|www\\.)[^\\s()]+\\b)";
+
 	private static final Log _log = LogFactory.getLog(
 		TicketAttachmentsCompleteUploadRestController.class);
+
+	private static final Pattern _pattern = Pattern.compile(_REGEX);
 
 	@Value("${liferay.customer.portal.url}")
 	private String _customerPortalURL;

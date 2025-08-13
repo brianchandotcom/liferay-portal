@@ -832,6 +832,33 @@
 			},
 			"modifiable": true,
 			"name": "P2S3Course",
+			"objectActions": [
+				{
+					"active": true,
+					"errorMessage": {
+						"en_US": "Error while create course students role"
+					},
+					"label": {
+						"en_US": "Inherit and Cascade Permissions"
+					},
+					"name": "fixCourseStudentsRole",
+					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
+					"objectActionTriggerKey": "standalone",
+					"parameters": {
+					}
+				},
+				{
+					"active": true,
+					"label": {
+						"en_US": "Inherit and Cascade Permissions"
+					},
+					"name": "setCourseStudentsRole",
+					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					}
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Clob",
@@ -1000,6 +1027,123 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Course Create / Edit"
+					},
+					"objectDefinitionExternalReferenceCode": "P2S3_COURSE",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Course Information"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Main"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "name",
+													"priority": 0,
+													"size": 8
+												},
+												{
+													"objectFieldName": "position",
+													"priority": 0,
+													"size": 4
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "level",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "audience",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "title",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "description",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "image",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "introduction",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Categorization"
+									},
+									"objectLayoutRows": [],
+									"priority": 0,
+									"type": "categorization"
+								}
+							],
+							"objectRelationshipId": 0,
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "Modules"
+							},
+							"objectLayoutBoxes": [],
+							"objectRelationshipExternalReferenceCode": "P2S3_COURSE_TO_P2S3_MODULES",
+							"priority": 0
+						}
+					]
+				}
+			],
 			"objectRelationships": [
 				{
 					"deletionType": "disassociate",

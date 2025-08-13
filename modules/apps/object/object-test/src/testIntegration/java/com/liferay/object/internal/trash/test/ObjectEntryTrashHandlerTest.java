@@ -92,7 +92,7 @@ public class ObjectEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			0L, objectDefinition.getObjectDefinitionId(),
 			Collections.emptyMap());
 
-		_assertDeletionSystemEvent(0L, objectEntry);
+		_testAddDeletionSystemEvent(0L, objectEntry);
 	}
 
 	@Test
@@ -102,15 +102,14 @@ public class ObjectEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		baseModel = addBaseModelWithWorkflow(
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-		_assertDeletionSystemEvent(group.getGroupId(), (ObjectEntry)baseModel);
+		_testAddDeletionSystemEvent(group.getGroupId(), (ObjectEntry)baseModel);
 	}
 
 	@Override
 	@Test
 	public void testTrashAndRestoreWithApprovedStatus() throws Exception {
 
-		// TODO: Implement this after the ObjectEntryTrashHandler
-		//  supports restoring (LPD-59712)
+		// TODO LPD-59712
 
 	}
 
@@ -119,8 +118,7 @@ public class ObjectEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	public void testTrashAndRestoreWithApprovedStatusRestoreStatus()
 		throws Exception {
 
-		// TODO: Implement this after the ObjectEntryTrashHandler
-		//  supports restoring (LPD-59712)
+		// TODO LPD-59712
 
 	}
 
@@ -187,7 +185,7 @@ public class ObjectEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
-	private void _assertDeletionSystemEvent(
+	private void _testAddDeletionSystemEvent(
 			long groupId, ObjectEntry objectEntry)
 		throws Exception {
 

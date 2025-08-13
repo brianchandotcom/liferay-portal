@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -184,8 +186,10 @@ public class PageTemplateDTOConverter
 		return new WidgetPageTemplateSettings() {
 			{
 				setLayoutTemplateId(
-					() -> unicodeProperties.getProperty(
-						LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+					() -> GetterUtil.getString(
+						unicodeProperties.getProperty(
+							LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID),
+						PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID));
 
 				setNavigationSettings(
 					() -> new NavigationSettings() {

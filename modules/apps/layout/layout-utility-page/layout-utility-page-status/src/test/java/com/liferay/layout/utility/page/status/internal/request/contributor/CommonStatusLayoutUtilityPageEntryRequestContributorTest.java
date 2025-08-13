@@ -506,6 +506,40 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		return new DynamicServletRequest(mockHttpServletRequest);
 	}
 
+	private LayoutSet _getLayoutSet(
+			long companyId, long groupId, Layout privateLayout,
+			Layout publicLayout)
+		throws PortalException {
+
+		Group group = _mockGroup(true, companyId, groupId, null);
+
+		_mockLayoutLocalService(groupId, publicLayout, privateLayout);
+
+		LayoutSet layoutSet = Mockito.mock(LayoutSet.class);
+
+		Mockito.when(
+			layoutSet.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
+		Mockito.when(
+			layoutSet.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Mockito.when(
+			layoutSet.getGroup()
+		).thenReturn(
+			group
+		);
+
+		_setUpPortalInstancesMockedStatic(layoutSet);
+
+		return layoutSet;
+	}
+
 	private Group _mockGroup(
 		boolean active, long companyId, long groupId, String friendlyURL) {
 
@@ -646,40 +680,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		ReflectionTestUtil.setFieldValue(
 			_commonStatusLayoutUtilityPageEntryRequestContributor,
 			"_userLocalService", _userLocalService);
-	}
-
-	private LayoutSet _getLayoutSet(
-			long companyId, long groupId, Layout privateLayout,
-			Layout publicLayout)
-		throws PortalException {
-
-		Group group = _mockGroup(true, companyId, groupId, null);
-
-		_mockLayoutLocalService(groupId, publicLayout, privateLayout);6
-
-		LayoutSet layoutSet = Mockito.mock(LayoutSet.class);
-
-		Mockito.when(
-			layoutSet.getCompanyId()
-		).thenReturn(
-			companyId
-		);
-
-		Mockito.when(
-			layoutSet.getGroupId()
-		).thenReturn(
-			groupId
-		);
-
-		Mockito.when(
-			layoutSet.getGroup()
-		).thenReturn(
-			group
-		);
-
-		_setUpPortalInstancesMockedStatic(layoutSet);
-
-		return layoutSet;
 	}
 
 	private void _setUpPermissionCheckerFactory() {

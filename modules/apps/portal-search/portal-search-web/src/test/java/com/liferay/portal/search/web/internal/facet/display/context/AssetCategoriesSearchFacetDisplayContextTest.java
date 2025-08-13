@@ -365,6 +365,8 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 			group
 		);
 
+		FacetCollector facetCollector = Mockito.mock(FacetCollector.class);
+
 		TermCollector termCollector = Mockito.mock(TermCollector.class);
 
 		Mockito.when(
@@ -378,8 +380,6 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 		).thenReturn(
 			1
 		);
-
-		FacetCollector facetCollector = Mockito.mock(FacetCollector.class);
 
 		Mockito.when(
 			facetCollector.getTermCollectors()

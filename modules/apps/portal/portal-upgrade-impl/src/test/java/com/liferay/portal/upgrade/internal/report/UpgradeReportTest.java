@@ -6,8 +6,8 @@
 package com.liferay.portal.upgrade.internal.report;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DuplicateUniqueFinderRowsCleaner;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.upgrade.DeleteDuplicateUniqueFinderRowsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -56,7 +56,7 @@ public class UpgradeReportTest {
 			_upgradeRecorder.getDataCleanUpMessages()
 		).thenReturn(
 			HashMapBuilder.<String, Map<String, Integer>>put(
-				DeleteDuplicateUniqueFinderRowsUpgradeProcess.class.getName(),
+				DuplicateUniqueFinderRowsCleaner.class.getName(),
 				HashMapBuilder.put(
 					"Deleted row from TestTable due to duplicate values", 1
 				).build()
@@ -98,7 +98,7 @@ public class UpgradeReportTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"Class name: ",
-				DeleteDuplicateUniqueFinderRowsUpgradeProcess.class.getName(),
+				DuplicateUniqueFinderRowsCleaner.class.getName(),
 				"\n\tDeleted row from TestTable due to duplicate values\n"),
 			dataCleanUp.get(
 				0

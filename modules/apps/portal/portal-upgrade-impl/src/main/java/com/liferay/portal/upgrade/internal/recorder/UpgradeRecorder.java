@@ -339,8 +339,7 @@ public class UpgradeRecorder {
 	}
 
 	private static final String[] _DATA_CLEAN_UP_CLASS_NAMES = {
-		"com.liferay.portal.kernel.upgrade." +
-			"DeleteDuplicateUniqueFinderRowsUpgradeProcess"
+		"com.liferay.portal.kernel.dao.db.DuplicateUniqueFinderRowsCleaner"
 	};
 
 	private static final String[] _FILTERED_CLASS_NAMES = {

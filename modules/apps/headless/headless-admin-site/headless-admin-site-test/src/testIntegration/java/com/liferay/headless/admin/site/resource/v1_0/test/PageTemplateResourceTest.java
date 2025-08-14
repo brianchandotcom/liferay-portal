@@ -72,6 +72,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1337,14 +1338,50 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				layoutPageTemplateEntry.getExternalReferenceCode());
 
-		PageSpecification[] pageSpecifications =
-			pageTemplate.getPageSpecifications();
+		String layoutTemplateId = "1_column";
+		WidgetPageTemplateSettings widgetPageTemplateSettings =
+			(WidgetPageTemplateSettings)pageTemplate.getPageTemplateSettings();
 
-		Assert.assertEquals(
-			Arrays.toString(pageSpecifications), 1, pageSpecifications.length);
+		if (Objects.equals(
+				layoutTemplateId,
+				widgetPageTemplateSettings.getLayoutTemplateId())) {
+
+			layoutTemplateId = "2_columns_ii";
+		}
+
+		widgetPageTemplateSettings.setLayoutTemplateId(layoutTemplateId);
+
+		PageSpecification[] patchPageSpecifications =
+			PageSpecificationsTestUtil.getWidgetPageSpecifications(
+				null, layoutTemplateId,
+				pageTemplate.getExternalReferenceCode());
+
+		pageTemplate =
+			pageTemplateResource.
+				patchSiteSiteByExternalReferenceCodePageTemplate(
+					testGroup.getExternalReferenceCode(),
+					pageTemplate.getExternalReferenceCode(),
+					new WidgetPageTemplate() {
+						{
+							setPageSpecifications(
+								() -> patchPageSpecifications);
+							setPageTemplateSettings(widgetPageTemplateSettings);
+							setType(Type.WIDGET_PAGE_TEMPLATE);
+						}
+					});
 
 		WidgetPageSpecification widgetPageSpecification =
-			(WidgetPageSpecification)pageSpecifications[0];
+			(WidgetPageSpecification)patchPageSpecifications[0];
+
+		_assertWidgetPageSpecifications(
+			pageTemplate.getPageSpecifications(), widgetPageSpecification);
+
+		WidgetPageTemplateSettings patchWidgetPageTemplateSettings =
+			(WidgetPageTemplateSettings)pageTemplate.getPageTemplateSettings();
+
+		Assert.assertEquals(
+			layoutTemplateId,
+			patchWidgetPageTemplateSettings.getLayoutTemplateId());
 
 		SettingsTestUtil.modifySettings(
 			serviceContext, widgetPageSpecification.getSettings());

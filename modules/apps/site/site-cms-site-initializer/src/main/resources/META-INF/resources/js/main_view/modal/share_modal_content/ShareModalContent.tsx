@@ -71,7 +71,7 @@ function CollaboratorListItem({
 			className="border-0 c-px-0 c-py-1 list-group-item list-group-item-flex"
 			key={`collaborator-${user.id}`}
 		>
-			<div className="autofit-col">
+			<div className="autofit-col pl-0">
 				<ClaySticker displayType="secondary" shape="circle" size="sm">
 					{type === COLLABORATOR_TYPE.USER ? (
 						'image' in user && user.image ? (
@@ -145,7 +145,7 @@ function CollaboratorListItem({
 				)}
 			</div>
 
-			<div className="autofit-col dropdown-options">
+			<div className="autofit-col p-0">
 				<div className="d-flex">
 					<ExpirationDateSelector
 						dateExpired={dateExpired}
@@ -498,7 +498,7 @@ export default function ShareModalContent({
 										className="border-0 c-px-0 c-py-1 list-group-item list-group-item-flex"
 										key={`listItem-creator-${creator.id}`}
 									>
-										<div className="autofit-col">
+										<div className="autofit-col pl-0">
 											<ClaySticker
 												displayType="secondary"
 												shape="circle"

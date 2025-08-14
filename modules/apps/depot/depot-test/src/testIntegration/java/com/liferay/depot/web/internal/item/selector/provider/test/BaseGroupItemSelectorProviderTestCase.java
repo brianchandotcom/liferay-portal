@@ -5,22 +5,17 @@
 
 package com.liferay.depot.web.internal.item.selector.provider.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,23 +23,12 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
- * @author Cristina González
+ * @author Roberto Díaz
  */
-@RunWith(Arquillian.class)
-public class GroupItemSelectorProviderImplTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+public abstract class BaseGroupItemSelectorProviderTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -58,7 +42,7 @@ public class GroupItemSelectorProviderImplTest {
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntry.getDepotEntryId(), _group.getGroupId());
 
-		List<Group> groups = _groupItemSelectorProvider.getGroups(
+		List<Group> groups = getGroupItemSelectorProvider().getGroups(
 			_group.getCompanyId(), _group.getGroupId(), null, 0, 20);
 
 		Assert.assertEquals(groups.toString(), 1, groups.size());
@@ -73,7 +57,7 @@ public class GroupItemSelectorProviderImplTest {
 
 		Assert.assertEquals(
 			1,
-			_groupItemSelectorProvider.getGroupsCount(
+			getGroupItemSelectorProvider().getGroupsCount(
 				_group.getCompanyId(), _group.getGroupId(), null));
 	}
 
@@ -90,7 +74,7 @@ public class GroupItemSelectorProviderImplTest {
 
 		Assert.assertEquals(
 			1,
-			_groupItemSelectorProvider.getGroupsCount(
+			getGroupItemSelectorProvider().getGroupsCount(
 				stagingGroup.getCompanyId(), stagingGroup.getGroupId(), null));
 	}
 
@@ -105,7 +89,7 @@ public class GroupItemSelectorProviderImplTest {
 
 		Group stagingGroup = _group.getStagingGroup();
 
-		List<Group> groups = _groupItemSelectorProvider.getGroups(
+		List<Group> groups = getGroupItemSelectorProvider().getGroups(
 			stagingGroup.getCompanyId(), stagingGroup.getGroupId(), null, 0,
 			20);
 
@@ -114,15 +98,20 @@ public class GroupItemSelectorProviderImplTest {
 
 	@Test
 	public void testGetIcon() {
-		Assert.assertEquals("books", _groupItemSelectorProvider.getIcon());
+		Assert.assertEquals("books", getGroupItemSelectorProvider().getIcon());
 	}
 
 	@Test
 	public void testGetLabel() {
 		Assert.assertEquals(
-			"Asset Library",
-			_groupItemSelectorProvider.getLabel(LocaleUtil.US));
+			getLabel(), getGroupItemSelectorProvider().getLabel(LocaleUtil.US));
 	}
+
+	protected abstract int getDepotType();
+
+	protected abstract GroupItemSelectorProvider getGroupItemSelectorProvider();
+
+	protected abstract String getLabel();
 
 	private DepotEntry _addDepotEntry() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
@@ -130,8 +119,7 @@ public class GroupItemSelectorProviderImplTest {
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			DepotConstants.TYPE_ASSET_LIBRARY,
-			ServiceContextTestUtil.getServiceContext());
+			getDepotType(), ServiceContextTestUtil.getServiceContext());
 
 		_depotEntries.add(depotEntry);
 
@@ -149,11 +137,5 @@ public class GroupItemSelectorProviderImplTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject(
-		filter = "component.name=com.liferay.depot.web.internal.item.selector.provider.DepotGroupItemSelectorProvider",
-		type = GroupItemSelectorProvider.class
-	)
-	private GroupItemSelectorProvider _groupItemSelectorProvider;
 
 }

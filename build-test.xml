@@ -1668,6 +1668,8 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 						<beanshell>
 							<![CDATA[
+								import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
 								import java.io.File;
 
 								import org.json.JSONObject;

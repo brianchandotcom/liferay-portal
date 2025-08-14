@@ -13,7 +13,8 @@ const openGenericFDSDeleteConfirmationModal = (
 	deleteMethod: any,
 	deleteURL: any,
 	itemName: string,
-	loadData: any
+	loadData: any,
+	displayCustomSuccessToast?: () => void
 ) => {
 	openModal({
 		bodyHTML,
@@ -40,7 +41,12 @@ const openGenericFDSDeleteConfirmationModal = (
 							method: deleteMethod,
 						})
 							.then(() => {
-								displayRequestSuccessToast();
+								if (displayCustomSuccessToast) {
+									displayCustomSuccessToast();
+								}
+								else {
+									displayRequestSuccessToast();
+								}
 
 								loadData();
 							})

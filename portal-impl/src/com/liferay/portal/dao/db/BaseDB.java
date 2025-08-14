@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1590,6 +1591,8 @@ public abstract class BaseDB implements DB {
 
 			String sql = null;
 
+			ThrowableCollector throwableCollector = new ThrowableCollector();
+
 			while ((sql = unsyncBufferedReader.readLine()) != null) {
 				if (Validator.isNull(sql)) {
 					continue;
@@ -1612,12 +1615,21 @@ public abstract class BaseDB implements DB {
 				try {
 					runSQL(connection, sql);
 				}
+				catch (SQLException sqlException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(sqlException.getMessage() + ": " + sql);
+					}
+
+					throwableCollector.collect(sqlException);
+				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(exception.getMessage() + ": " + sql);
 					}
 				}
 			}
+
+			throwableCollector.rethrow();
 		}
 	}
 

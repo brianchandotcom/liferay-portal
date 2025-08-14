@@ -1847,6 +1847,17 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectEntryId());
 		}
 
+		try {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+
+			_restoreRelatedModelsFromTrash(
+				objectEntry.getGroupId(), objectEntry.getObjectDefinitionId(),
+				objectEntry.getObjectEntryId());
+		}
+		finally {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
+		}
+
 		return objectEntry;
 	}
 
@@ -5403,6 +5414,36 @@ public class ObjectEntryLocalServiceImpl
 					setStrictObjectReindexWithSafeCloseable(true)) {
 
 			indexer.reindex(objectEntry);
+		}
+	}
+
+	private void _restoreRelatedModelsFromTrash(
+			long groupId, long objectDefinitionId, long objectEntryId)
+		throws PortalException {
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipPersistence.findByObjectDefinitionId1(
+					objectDefinitionId)) {
+
+			ObjectDefinition objectDefinition2 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId2());
+
+			if (!objectDefinition2.isApproved()) {
+				continue;
+			}
+
+			ObjectRelatedModelsProvider objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						objectDefinition2.getClassName(),
+						objectDefinition2.getCompanyId(),
+						objectRelationship.getType());
+
+			objectRelatedModelsProvider.restoreRelatedModelsFromTrash(
+				PrincipalThreadLocal.getUserId(), groupId,
+				objectRelationship.getObjectRelationshipId(), objectEntryId,
+				objectRelationship.getDeletionType());
 		}
 	}
 

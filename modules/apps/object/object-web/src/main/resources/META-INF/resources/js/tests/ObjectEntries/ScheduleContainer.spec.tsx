@@ -135,6 +135,14 @@ describe('ScheduleContainer component', () => {
 		);
 	});
 
+	it('displays panel with default displayType', async () => {
+		const {container} = renderScheduleContainer();
+
+		expect(
+			container.querySelector('.panel.panel-default')
+		).toBeInTheDocument();
+	});
+
 	it('shows required error on blur when no value is provided', async () => {
 		const {container} = renderScheduleContainer();
 

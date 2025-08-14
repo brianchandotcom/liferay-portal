@@ -73,24 +73,9 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 
 	await test.step('Check that the Item Actions dropdown displays icons for Table, List, and Cards views', async () => {
 		await test.step('Check Table view actions dropdown items has icons', async () => {
-			const dropdownId =
-				await itemActionButton.getAttribute('aria-controls');
-
-			await itemActionButton.click();
-
-			const dropdownMenu = page.locator(`#${dropdownId}`);
-
-			await dropdownMenu.filter({has: page.getByRole('menu')}).waitFor();
-
-			const menuItems = dropdownMenu.getByRole('menuitem');
-
-			for (const menuItem of await menuItems.all()) {
-				await expect
-					.soft(menuItem.locator('.lexicon-icon'))
-					.toBeVisible();
-			}
-
-			await page.keyboard.press('Escape');
+			await fdsSamplePage.checkDropdownMenuIconsAreVisible(
+				itemActionButton
+			);
 		});
 
 		await test.step('Check List view actions dropdown items has icons', async () => {
@@ -99,30 +84,14 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 				visualizationMode: EFDSVisualizationMode.LIST,
 			});
 
-			const listItemActionButton = fdsSamplePage.list.items
-				.first()
-				.getByRole('button', {
-					exact: true,
-					name: 'Actions',
-				});
+			const listItemActionButton =
+				fdsSamplePage.list.itemActionButtons.first();
 
-			await listItemActionButton.click();
+			await expect(listItemActionButton).toBeVisible();
 
-			const dropdownMenu = page.locator(
-				`#${await listItemActionButton.getAttribute('aria-controls')}`
+			await fdsSamplePage.checkDropdownMenuIconsAreVisible(
+				listItemActionButton
 			);
-
-			await dropdownMenu.filter({has: page.getByRole('menu')}).waitFor();
-
-			const menuItems = dropdownMenu.getByRole('menuitem');
-
-			for (const menuItem of await menuItems.all()) {
-				await expect
-					.soft(menuItem.locator('.lexicon-icon'))
-					.toBeVisible();
-			}
-
-			await page.keyboard.press('Escape');
 		});
 
 		await test.step('Check Cards view action dropdown items has icons', async () => {
@@ -131,30 +100,14 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 				visualizationMode: EFDSVisualizationMode.CARDS,
 			});
 
-			const cardItemActionButton = fdsSamplePage.cards.items
-				.first()
-				.getByLabel('More actions');
+			const cardItemActionButton =
+				fdsSamplePage.cards.itemActionButtons.first();
 
 			await expect(cardItemActionButton).toBeVisible();
 
-			await cardItemActionButton.click();
-
-			const dropdownId =
-				await cardItemActionButton.getAttribute('aria-controls');
-
-			const dropdownMenu = page.locator(`#${dropdownId}`);
-
-			await dropdownMenu.filter({has: page.getByRole('menu')}).waitFor();
-
-			const menuItems = dropdownMenu.getByRole('menuitem');
-
-			for (const menuItem of await menuItems.all()) {
-				await expect
-					.soft(menuItem.locator('.lexicon-icon'))
-					.toBeVisible();
-			}
-
-			await page.keyboard.press('Escape');
+			await fdsSamplePage.checkDropdownMenuIconsAreVisible(
+				cardItemActionButton
+			);
 		});
 
 		await test.step('Switch back to Table view', async () => {

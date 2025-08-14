@@ -94,23 +94,20 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 	public void testAddAttributesAndParametersWithDefaultVirtualHostAndWithoutCurrentURL()
 		throws PortalException {
 
-		_mockPortal(null, null);
-
 		_testAddAttributesAndParameters(
+			null,
 			_getDynamicServletRequest(
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong()),
-			null, null, null, null, 0);
+			null, null, null, null, null, 0);
 	}
 
 	@Test
 	public void testAddAttributesAndParametersWithoutVirtualHostAndWithoutCurrentURL()
 		throws PortalException {
 
-		_mockPortal(null, null);
-
 		_testAddAttributesAndParameters(
-			_getDynamicServletRequest(RandomTestUtil.randomString(), 0L), null,
-			null, null, null, 0);
+			null, _getDynamicServletRequest(RandomTestUtil.randomString(), 0L),
+			null, null, null, null, null, 0);
 	}
 
 	@Test
@@ -120,15 +117,14 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		Layout layout = _mockLayout(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
 
-		_mockPortal(null, RandomTestUtil.randomString());
-
 		_testAddAttributesAndParameters(
+			null,
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null),
-			1);
+			RandomTestUtil.randomString(), 1);
 	}
 
 	@Test
@@ -151,20 +147,17 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 				groupFriendlyURL),
 			groupFriendlyURL);
 
-		_mockPortal(
+		_testAddAttributesAndParameters(
 			StringBundler.concat(
 				_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				StringPool.SLASH, RandomTestUtil.randomString(), "/test/test"),
-			_PATH_PROXY);
-
-		_testAddAttributesAndParameters(
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null),
-			1);
+			_PATH_PROXY, 1);
 	}
 
 	@Test
@@ -181,20 +174,17 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		_mockGroupLocalService(layout.getCompanyId(), null, groupFriendlyURL);
 
-		_mockPortal(
+		_testAddAttributesAndParameters(
 			StringBundler.concat(
 				_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				StringPool.SLASH, RandomTestUtil.randomString(), "/test/test"),
-			_PATH_PROXY);
-
-		_testAddAttributesAndParameters(
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null),
-			1);
+			_PATH_PROXY, 1);
 	}
 
 	@Test
@@ -216,21 +206,19 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		_mockGroupLocalService(companyId, group, groupFriendlyURL);
 
 		_mockLayoutLocalService(groupId, layout, null);
-		_mockPortal(
+
+		_testAddAttributesAndParameters(
 			StringBundler.concat(
 				_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				groupFriendlyURL, "/test/test"),
-			_PATH_PROXY);
-
-		_testAddAttributesAndParameters(
 			_getDynamicServletRequest(_PATH_CONTEXT, companyId),
 			String.valueOf(group.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				companyId, virtualHostGroupLayout.getGroupId(),
 				virtualHostGroupLayout, null),
-			1);
+			_PATH_PROXY, 1);
 	}
 
 	@Test
@@ -254,14 +242,11 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		_mockLayoutLocalService(group.getGroupId(), null, null);
 
-		_mockPortal(
+		_testAddAttributesAndParameters(
 			StringBundler.concat(
 				_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				groupFriendlyURL, "/test/test"),
-			_PATH_PROXY);
-
-		_testAddAttributesAndParameters(
 			_getDynamicServletRequest(
 				_PATH_CONTEXT, virtualHostGroupLayout.getCompanyId()),
 			String.valueOf(virtualHostGroupLayout.getGroupId()), languageId,
@@ -270,7 +255,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 				virtualHostGroupLayout.getCompanyId(),
 				virtualHostGroupLayout.getGroupId(), virtualHostGroupLayout,
 				null),
-			2);
+			_PATH_PROXY, 2);
 	}
 
 	@Test
@@ -291,20 +276,17 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		_mockGroupLocalService(layout.getCompanyId(), group, groupFriendlyURL);
 
-		_mockPortal(
+		_testAddAttributesAndParameters(
 			StringBundler.concat(
 				_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				groupFriendlyURL, "/test/test"),
-			_PATH_PROXY);
-
-		_testAddAttributesAndParameters(
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null),
-			2);
+			_PATH_PROXY, 2);
 	}
 
 	@Test
@@ -316,19 +298,16 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		Layout layout = _mockLayout(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
 
-		_mockPortal(
+		_testAddAttributesAndParameters(
 			StringBundler.concat(
 				_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
 				StringPool.SLASH + RandomTestUtil.randomString()),
-			_PATH_PROXY);
-
-		_testAddAttributesAndParameters(
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null),
-			1);
+			_PATH_PROXY, 1);
 	}
 
 	@Test
@@ -340,19 +319,16 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		Layout layout = _mockLayout(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
 
-		_mockPortal(
+		_testAddAttributesAndParameters(
 			StringBundler.concat(
 				_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
 				StringPool.SLASH),
-			_PATH_PROXY);
-
-		_testAddAttributesAndParameters(
 			_getDynamicServletRequest(_PATH_CONTEXT, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null),
-			1);
+			_PATH_PROXY, 1);
 	}
 
 	@Test
@@ -370,32 +346,28 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		_mockGroupLocalService(group.getCompanyId(), group, groupFriendlyURL);
 
-		_mockPortal(
+		_testAddAttributesAndParameters(
 			StringBundler.concat(
 				_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				groupFriendlyURL, "/test/test"),
-			_PATH_PROXY);
-
-		_testAddAttributesAndParameters(
 			_getDynamicServletRequest(_PATH_CONTEXT, group.getCompanyId()),
 			null, null, null,
 			_getLayoutSet(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(), null,
 				null),
-			2);
+			_PATH_PROXY, 2);
 	}
 
 	@Test
 	public void testAddAttributesAndParametersWithVirtualHostWithoutLayoutsAndWithoutCurrentURL()
 		throws PortalException {
 
-		_mockPortal(null, null);
-
 		_testAddAttributesAndParameters(
+			null,
 			_getDynamicServletRequest(
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong()),
-			null, null, null, null, 0);
+			null, null, null, null, null, 0);
 	}
 
 	@Test
@@ -405,15 +377,13 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		Layout layout = _mockLayout(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
 
-		_mockPortal(null, RandomTestUtil.randomString());
-
 		_testAddAttributesAndParameters(
-			_getDynamicServletRequest(null, layout.getCompanyId()),
+			null, _getDynamicServletRequest(null, layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null),
-			1);
+			RandomTestUtil.randomString(), 1);
 	}
 
 	@Test
@@ -423,16 +393,15 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		Layout layout = _mockLayout(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
 
-		_mockPortal(null, null);
-
 		_testAddAttributesAndParameters(
+			null,
 			_getDynamicServletRequest(
 				RandomTestUtil.randomString(), layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), null, layout),
-			1);
+			null, 1);
 	}
 
 	@Test
@@ -442,16 +411,15 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		Layout layout = _mockLayout(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
 
-		_mockPortal(null, null);
-
 		_testAddAttributesAndParameters(
+			null,
 			_getDynamicServletRequest(
 				RandomTestUtil.randomString(), layout.getCompanyId()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()),
 			_getLayoutSet(
 				layout.getCompanyId(), layout.getGroupId(), layout, null),
-			1);
+			null, 1);
 	}
 
 	private DynamicServletRequest _getDynamicServletRequest(
@@ -674,9 +642,13 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 	}
 
 	private void _testAddAttributesAndParameters(
-		DynamicServletRequest dynamicServletRequest, String groupId,
-		String languageId, String layoutId, LayoutSet layoutSet,
-		int wantedNumberOfInvocations) {
+			String currentURL, DynamicServletRequest dynamicServletRequest,
+			String groupId, String languageId, String layoutId,
+			LayoutSet layoutSet, String pathProxy,
+			int wantedNumberOfInvocations)
+		throws PortalException {
+
+		_mockPortal(currentURL, pathProxy);
 
 		_commonStatusLayoutUtilityPageEntryRequestContributor.
 			addAttributesAndParameters(dynamicServletRequest);

@@ -11,6 +11,8 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.asset.library.client.dto.v1_0.Role;
 import com.liferay.headless.asset.library.client.pagination.Page;
 import com.liferay.headless.asset.library.client.problem.Problem;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -32,7 +34,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -75,48 +76,14 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		User user = TestPropsValues.getUser();
 
-		Role randomRole1 = randomRole();
-
-		roleResource.
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
-				testDepotEntryGroup.getExternalReferenceCode(),
-				user.getExternalReferenceCode(), new Role[] {randomRole1});
-
-		_assertGetAssetLibraryUserAccountRolesPage(Arrays.asList(randomRole1));
-
-		Role randomRole2 = randomRole();
-
-		roleResource.
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
-				testDepotEntryGroup.getExternalReferenceCode(),
-				user.getExternalReferenceCode(),
-				new Role[] {randomRole1, randomRole2});
-
-		_assertGetAssetLibraryUserAccountRolesPage(
-			Arrays.asList(randomRole1, randomRole2));
-
-		Role randomRole3 = new Role() {
-			{
-				name = RandomTestUtil.randomString();
-			}
-		};
-
-		try {
-			roleResource.
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
-					testDepotEntryGroup.getExternalReferenceCode(),
-					user.getExternalReferenceCode(), new Role[] {randomRole3});
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-		}
-
-		_assertGetAssetLibraryUserAccountRolesPage(
-			Arrays.asList(randomRole1, randomRole2));
+		_testPutRolesPage(
+			() -> roleResource.getAssetLibraryUserAccountRolesPage(
+				testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId()),
+			roles ->
+				roleResource.
+					putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
+						testDepotEntryGroup.getExternalReferenceCode(),
+						user.getExternalReferenceCode(), roles));
 	}
 
 	@Override
@@ -124,136 +91,36 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage()
 		throws Exception {
 
-		Role randomRole1 = randomRole();
-
-		roleResource.
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
-				testDepotEntryGroup.getExternalReferenceCode(),
-				_userGroup.getExternalReferenceCode(),
-				new Role[] {randomRole1});
-
-		_assertGetAssetLibraryUserGroupRolesPage(Arrays.asList(randomRole1));
-
-		Role randomRole2 = randomRole();
-
-		roleResource.
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
-				testDepotEntryGroup.getExternalReferenceCode(),
-				_userGroup.getExternalReferenceCode(),
-				new Role[] {randomRole1, randomRole2});
-
-		_assertGetAssetLibraryUserGroupRolesPage(
-			Arrays.asList(randomRole1, randomRole2));
-
-		Role randomRole3 = new Role() {
-			{
-				name = RandomTestUtil.randomString();
-			}
-		};
-
-		try {
-			roleResource.
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
-					testDepotEntryGroup.getExternalReferenceCode(),
-					_userGroup.getExternalReferenceCode(),
-					new Role[] {randomRole3});
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-		}
-
-		_assertGetAssetLibraryUserGroupRolesPage(
-			Arrays.asList(randomRole1, randomRole2));
+		_testPutRolesPage(
+			() -> roleResource.getAssetLibraryUserGroupRolesPage(
+				testDepotEntry.getDepotEntryId(), _userGroup.getUserGroupId()),
+			roles ->
+				roleResource.
+					putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
+						testDepotEntryGroup.getExternalReferenceCode(),
+						_userGroup.getExternalReferenceCode(), roles));
 	}
 
 	@Override
 	@Test
 	public void testPutAssetLibraryUserAccountRolesPage() throws Exception {
-		Role randomRole1 = randomRole();
-
-		roleResource.putAssetLibraryUserAccountRolesPage(
-			testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId(),
-			new Role[] {randomRole1});
-
-		_assertGetAssetLibraryUserAccountRolesPage(Arrays.asList(randomRole1));
-
-		Role randomRole2 = randomRole();
-
-		roleResource.putAssetLibraryUserAccountRolesPage(
-			testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId(),
-			new Role[] {randomRole1, randomRole2});
-
-		_assertGetAssetLibraryUserAccountRolesPage(
-			Arrays.asList(randomRole1, randomRole2));
-
-		Role randomRole3 = new Role() {
-			{
-				name = RandomTestUtil.randomString();
-			}
-		};
-
-		try {
-			roleResource.putAssetLibraryUserAccountRolesPage(
+		_testPutRolesPage(
+			() -> roleResource.getAssetLibraryUserAccountRolesPage(
+				testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId()),
+			roles -> roleResource.putAssetLibraryUserAccountRolesPage(
 				testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId(),
-				new Role[] {randomRole3});
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-		}
-
-		_assertGetAssetLibraryUserAccountRolesPage(
-			Arrays.asList(randomRole1, randomRole2));
+				roles));
 	}
 
 	@Override
 	@Test
 	public void testPutAssetLibraryUserGroupRolesPage() throws Exception {
-		Role randomRole1 = randomRole();
-
-		roleResource.putAssetLibraryUserGroupRolesPage(
-			testDepotEntryGroup.getGroupId(), _userGroup.getUserGroupId(),
-			new Role[] {randomRole1});
-
-		_assertGetAssetLibraryUserGroupRolesPage(Arrays.asList(randomRole1));
-
-		Role randomRole2 = randomRole();
-
-		roleResource.putAssetLibraryUserGroupRolesPage(
-			testDepotEntryGroup.getGroupId(), _userGroup.getUserGroupId(),
-			new Role[] {randomRole1, randomRole2});
-
-		_assertGetAssetLibraryUserGroupRolesPage(
-			Arrays.asList(randomRole1, randomRole2));
-
-		Role randomRole3 = new Role() {
-			{
-				name = RandomTestUtil.randomString();
-			}
-		};
-
-		try {
-			roleResource.putAssetLibraryUserGroupRolesPage(
+		_testPutRolesPage(
+			() -> roleResource.getAssetLibraryUserGroupRolesPage(
+				testDepotEntry.getDepotEntryId(), _userGroup.getUserGroupId()),
+			roles -> roleResource.putAssetLibraryUserGroupRolesPage(
 				testDepotEntryGroup.getGroupId(), _userGroup.getUserGroupId(),
-				new Role[] {randomRole3});
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-		}
-
-		_assertGetAssetLibraryUserGroupRolesPage(
-			Arrays.asList(randomRole1, randomRole2));
+				roles));
 	}
 
 	@Override
@@ -354,7 +221,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 	@Override
 	protected Role testGetAssetLibraryUserGroupRolesPage_addRole(
-		Long assetLibraryId, Long userGroupId, Role role)
+			Long assetLibraryId, Long userGroupId, Role role)
 		throws Exception {
 
 		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
@@ -373,38 +240,58 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		return _userGroup.getUserGroupId();
 	}
 
-	private void _assertGetAssetLibraryUserAccountRolesPage(
-			List<Role> expectedRoles)
+	private void _assertRolesPage(
+			Role[] expectedRoles,
+			UnsafeSupplier<Page<Role>, Exception> unsafeSupplier)
 		throws Exception {
 
-		Page<Role> rolesPage = roleResource.getAssetLibraryUserAccountRolesPage(
-			testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId());
+		Page<Role> rolesPage = unsafeSupplier.get();
 
 		Collection<Role> items = rolesPage.getItems();
 
 		Assert.assertEquals(
-			items.toString(), expectedRoles.size(), items.size());
+			items.toString(), expectedRoles.length, items.size());
 
 		for (Role role : expectedRoles) {
 			Assert.assertTrue(items.contains(role));
 		}
 	}
 
-	private void _assertGetAssetLibraryUserGroupRolesPage(
-			List<Role> expectedRoles)
+	private void _testPutRolesPage(
+			UnsafeSupplier<Page<Role>, Exception> unsafeSupplier,
+			UnsafeConsumer<Role[], Exception> unsafeBiConsumer)
 		throws Exception {
 
-		Page<Role> rolesPage = roleResource.getAssetLibraryUserGroupRolesPage(
-			testDepotEntry.getDepotEntryId(), _userGroup.getUserGroupId());
+		Role randomRole1 = randomRole();
 
-		Collection<Role> items = rolesPage.getItems();
+		unsafeBiConsumer.accept(new Role[] {randomRole1});
 
-		Assert.assertEquals(
-			items.toString(), expectedRoles.size(), items.size());
+		_assertRolesPage(new Role[] {randomRole1}, unsafeSupplier);
 
-		for (Role role : expectedRoles) {
-			Assert.assertTrue(items.contains(role));
+		Role randomRole2 = randomRole();
+
+		unsafeBiConsumer.accept(new Role[] {randomRole1, randomRole2});
+
+		_assertRolesPage(new Role[] {randomRole1, randomRole2}, unsafeSupplier);
+
+		Role randomRole3 = new Role() {
+			{
+				name = RandomTestUtil.randomString();
+			}
+		};
+
+		try {
+			unsafeBiConsumer.accept(new Role[] {randomRole3});
+
+			Assert.fail();
 		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+
+		_assertRolesPage(new Role[] {randomRole1, randomRole2}, unsafeSupplier);
 	}
 
 	@Inject

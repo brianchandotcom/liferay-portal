@@ -5,7 +5,6 @@
 
 package com.liferay.depot.web.internal.item.selector.provider;
 
-import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
@@ -26,14 +25,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
+ * @author Roberto Díaz
  */
-@Component(service = GroupItemSelectorProvider.class)
-public class DepotGroupItemSelectorProvider
+public abstract class BaseGroupItemSelectorProvider
 	implements GroupItemSelectorProvider {
 
 	/**
@@ -42,14 +40,14 @@ public class DepotGroupItemSelectorProvider
 	@Deprecated
 	@Override
 	public String getEmptyResultsMessage() {
-		return "no-asset-libraries-were-found";
+		return getEmptyResultsMessageKey();
 	}
 
 	@Override
 	public String getEmptyResultsMessage(Locale locale) {
 		return ResourceBundleUtil.getString(
 			ResourceBundleUtil.getBundle(locale, getClass()),
-			"no-asset-libraries-were-found");
+			getEmptyResultsMessageKey());
 	}
 
 	@Override
@@ -60,9 +58,8 @@ public class DepotGroupItemSelectorProvider
 			List<Group> groups = new ArrayList<>();
 
 			for (DepotEntry depotEntry :
-					_depotEntryService.getCurrentAndGroupConnectedDepotEntries(
-						_getGroupId(groupId), DepotConstants.TYPE_ANY, start,
-						end)) {
+					depotEntryService.getCurrentAndGroupConnectedDepotEntries(
+						_getGroupId(groupId), getDepotType(), start, end)) {
 
 				groups.add(depotEntry.getGroup());
 			}
@@ -79,8 +76,8 @@ public class DepotGroupItemSelectorProvider
 	@Override
 	public int getGroupsCount(long companyId, long groupId, String keywords) {
 		try {
-			return _depotEntryService.getGroupConnectedDepotEntriesCount(
-				_getGroupId(groupId), DepotConstants.TYPE_ANY);
+			return depotEntryService.getGroupConnectedDepotEntriesCount(
+				_getGroupId(groupId), getDepotType());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -90,36 +87,53 @@ public class DepotGroupItemSelectorProvider
 	}
 
 	@Override
-	public String getGroupType() {
-		return "depot";
-	}
-
-	@Override
 	public String getIcon() {
 		return "books";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "asset-library");
+		return language.get(locale, getLabelKey());
 	}
 
+	protected abstract int getDepotType();
+
+	protected abstract String getEmptyResultsMessageKey();
+
+	protected abstract String getLabelKey();
+
+	@Reference
+	protected DepotEntryService depotEntryService;
+
+	@Reference
+	protected GroupService groupService;
+
+	@Reference
+	protected Language language;
+
+	@Reference
+	protected LayoutPageTemplateEntryLocalService
+		layoutPageTemplateEntryLocalService;
+
+	@Reference
+	protected LayoutPrototypeService layoutPrototypeService;
+
 	private long _getGroupId(long groupId) throws PortalException {
-		Group group = _groupService.getGroup(groupId);
+		Group group = groupService.getGroup(groupId);
 
 		if (group.isLayoutPrototype()) {
 			LayoutPrototype layoutPrototype =
-				_layoutPrototypeService.getLayoutPrototype(group.getClassPK());
+				layoutPrototypeService.getLayoutPrototype(group.getClassPK());
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
+				layoutPageTemplateEntryLocalService.
 					fetchFirstLayoutPageTemplateEntry(
 						layoutPrototype.getLayoutPrototypeId());
 
 			if ((layoutPageTemplateEntry != null) &&
 				(layoutPageTemplateEntry.getGroupId() > 0)) {
 
-				group = _groupService.getGroup(
+				group = groupService.getGroup(
 					layoutPageTemplateEntry.getGroupId());
 			}
 		}
@@ -128,22 +142,6 @@ public class DepotGroupItemSelectorProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DepotGroupItemSelectorProvider.class);
-
-	@Reference
-	private DepotEntryService _depotEntryService;
-
-	@Reference
-	private GroupService _groupService;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private LayoutPrototypeService _layoutPrototypeService;
+		BaseGroupItemSelectorProvider.class);
 
 }

@@ -61,17 +61,20 @@ function BulkActions({
 	const [currentSidePanelActionPayload, setCurrentSidePanelActionPayload] =
 		useState(null);
 
-	function getActiveFilters(filters) {
-		return filters
-			.filter((item) => item.active)
-			.map((item) => {
-				return {
-					id: item.id,
-					multiple: item.multiple,
-					odataFilterString: item.odataFilterString,
-					selectedItemsLabel: item.selectedItemsLabel,
-				};
-			});
+	function getAdditionalData(filters, searchParam) {
+		return {
+			filters: filters
+				.filter((item) => item.active)
+				.map((item) => {
+					return {
+						id: item.id,
+						multiple: item.multiple,
+						odataFilterString: item.odataFilterString,
+						selectedItemsLabel: item.selectedItemsLabel,
+					};
+				}),
+			searchQuery: searchParam,
+		};
 	}
 
 	function handleActionClick(
@@ -110,15 +113,11 @@ function BulkActions({
 				loadData,
 				namespace,
 				selectedData: {
-					...(allItemsSelectedActive && {
-						filters: getActiveFilters(filters),
-					}),
 					items: allItemsSelectedActive ? [] : selectedItems,
 					keyValues: allItemsSelectedActive ? [] : selectedItemsValue,
-					...(allItemsSelectedActive && {
-						searchQuery: searchParam,
-					}),
 					selectAll: allItemsSelectedActive,
+					...(allItemsSelectedActive &&
+						getAdditionalData(filters, searchParam)),
 				},
 			});
 		}
@@ -135,13 +134,9 @@ function BulkActions({
 							allItemsSelectedActive
 								? []
 								: selectedItemsValue.join(','),
-						...(allItemsSelectedActive && {
-							filters: getActiveFilters(filters),
-						}),
-						...(allItemsSelectedActive && {
-							searchQuery: searchParam,
-						}),
 						selectAll: allItemsSelectedActive,
+						...(allItemsSelectedActive &&
+							getAdditionalData(filters, searchParam)),
 					},
 					url: href || form.action,
 				});

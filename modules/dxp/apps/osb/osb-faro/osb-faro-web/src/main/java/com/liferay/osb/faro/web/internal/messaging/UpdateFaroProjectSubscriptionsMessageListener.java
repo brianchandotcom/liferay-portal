@@ -20,7 +20,6 @@ import com.liferay.osb.faro.web.internal.constants.FaroMessageDestinationNames;
 import com.liferay.osb.faro.web.internal.messaging.destination.creator.DestinationCreator;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroSubscriptionDisplay;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -216,7 +215,7 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 		}
 
 		ProjectUsageMetric projectUsageMetric = projectUsageMetrics.get(
-			_getProjectId(faroProject.getWeDeployKey()));
+			faroProject.getProjectId());
 
 		_faroProjectUsageLocalService.addFaroProjectUsage(
 			faroProject.getCompanyId(), 0, faroProject.getFaroProjectId(),
@@ -234,16 +233,6 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		return dateFormat.format(calendar.getTime());
-	}
-
-	private String _getProjectId(String weDeployKey) {
-		int indexOf = weDeployKey.indexOf(StringPool.PERIOD);
-
-		if (indexOf > -1) {
-			return weDeployKey.substring(0, indexOf);
-		}
-
-		return weDeployKey;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1069,8 +1069,7 @@ public class ProjectController extends BaseFaroController {
 		}
 
 		return projectUsageMetrics.getOrDefault(
-			_getProjectId(faroProject.getWeDeployKey()),
-			Collections.emptyList());
+			faroProject.getProjectId(), Collections.emptyList());
 	}
 
 	private String _getFriendlyURLErrorMessage(int type) {
@@ -1232,16 +1231,6 @@ public class ProjectController extends BaseFaroController {
 		projectDisplay.setStateStartDate((Date)globalStateMap.get("startDate"));
 
 		return projectDisplay;
-	}
-
-	private String _getProjectId(String weDeployKey) {
-		int indexOf = weDeployKey.indexOf(StringPool.PERIOD);
-
-		if (indexOf > -1) {
-			return weDeployKey.substring(0, indexOf);
-		}
-
-		return weDeployKey;
 	}
 
 	private ProjectUsageMetricDisplay _getProjectUsageMetricDisplay(

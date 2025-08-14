@@ -130,7 +130,7 @@ export default function ScheduleContainer({
 				collapsable
 				defaultExpanded
 				displayTitle={Liferay.Language.get('schedule')}
-				displayType="secondary"
+				displayType="default"
 			>
 				<div className="lfr-object__entries-schedule-panel-description">
 					<Text size={3}>

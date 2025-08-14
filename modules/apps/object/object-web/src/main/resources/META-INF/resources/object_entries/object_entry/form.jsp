@@ -46,7 +46,7 @@ portletDisplay.setURLBack(backURL);
 					<clay:panel
 						collapsable="<%= true %>"
 						displayTitle='<%= LanguageUtil.get(request, "seo") %>'
-						displayType="secondary"
+						displayType="default"
 						expanded="<%= true %>"
 					>
 						<div class="panel-body">

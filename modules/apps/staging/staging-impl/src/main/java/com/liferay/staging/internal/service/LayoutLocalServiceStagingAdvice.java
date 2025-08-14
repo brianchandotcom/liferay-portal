@@ -10,6 +10,7 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.portal.deploy.hot.ServiceBag;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
@@ -68,6 +70,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -416,25 +419,27 @@ public class LayoutLocalServiceStagingAdvice {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(BundleContext bundleContext) {
 		AopInvocationHandler aopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
 				_layoutLocalService, AopInvocationHandler.class);
 
-		Object target = aopInvocationHandler.getTarget();
-
-		aopInvocationHandler.setTarget(
-			ProxyUtil.newProxyInstance(
+		ServiceBag<?> serviceBag = new ServiceBag(
+			aopInvocationHandler, LayoutLocalService.class,
+			(ServiceWrapper<?>)ProxyUtil.newProxyInstance(
 				AggregateClassLoader.getAggregateClassLoader(
 					PortalClassLoaderUtil.getClassLoader(),
 					LayoutLocalServiceStagingAdvice.class.getClassLoader()),
 				new Class<?>[] {
 					IdentifiableOSGiService.class, LayoutLocalService.class,
-					BaseLocalService.class
+					BaseLocalService.class, ServiceWrapper.class
 				},
-				new LayoutLocalServiceStagingInvocationHandler(this, target)));
+				new LayoutLocalServiceStagingInvocationHandler(
+					this, aopInvocationHandler.getTarget())),
+			bundleContext,
+			bundleContext.getServiceReference(LayoutLocalService.class));
 
-		_closeable = () -> aopInvocationHandler.setTarget(target);
+		_closeable = serviceBag::replace;
 	}
 
 	@Deactivate
@@ -737,11 +742,21 @@ public class LayoutLocalServiceStagingAdvice {
 		public Object invoke(Object proxy, Method method, Object[] arguments)
 			throws Throwable {
 
+			String methodName = method.getName();
+
+			if (methodName.equals("getWrappedService")) {
+				return _targetObject;
+			}
+
+			if (methodName.equals("setWrappedService")) {
+				_targetObject = arguments[0];
+
+				return null;
+			}
+
 			if (!StagingAdvicesThreadLocal.isEnabled()) {
 				return _invoke(method, arguments);
 			}
-
-			String methodName = method.getName();
 
 			if (!_layoutLocalServiceStagingAdviceMethodNames.contains(
 					methodName)) {
@@ -916,7 +931,7 @@ public class LayoutLocalServiceStagingAdvice {
 
 		private final LayoutLocalServiceStagingAdvice
 			_layoutLocalServiceStagingAdvice;
-		private final Object _targetObject;
+		private volatile Object _targetObject;
 
 	}
 

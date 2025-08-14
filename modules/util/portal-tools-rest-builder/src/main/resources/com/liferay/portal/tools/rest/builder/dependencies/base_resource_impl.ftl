@@ -817,7 +817,7 @@ public abstract class Base${schemaName}ResourceImpl
 										<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 											${schemaVarName}
 										<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
-											null
+											(MultipartBody)null
 										<#else>
 											${javaMethodParameter.parameterName}
 										</#if>
@@ -1268,7 +1268,7 @@ public abstract class Base${schemaName}ResourceImpl
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 							${schemaVarName}
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
-							null
+							(MultipartBody)null
 						<#else>
 							<@castParameters
 								type = javaMethodParameter.parameterType
@@ -1309,7 +1309,7 @@ public abstract class Base${schemaName}ResourceImpl
 								value = "${javaMethodSignature.parentSchemaName?uncap_first}Id"
 							/>
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
-							null
+							(MultipartBody)null
 						<#else>
 							<@castParameters
 								type = javaMethodParameter.parameterType
@@ -1855,7 +1855,7 @@ public abstract class Base${schemaName}ResourceImpl
 		<#elseif freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && properties?keys?seq_contains("externalReferenceCode") && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
 			${schemaVarName}.getExternalReferenceCode()
 		<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
-			null
+			(MultipartBody)null
 		<#else>
 			<@castParameters
 				type = javaMethodParameter.parameterType

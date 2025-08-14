@@ -205,9 +205,9 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 			Results<ProjectUsageMetric> results =
 				_contactsEngineClient.getProjectUsageMetrics(faroProject, date);
 
-			for (ProjectUsageMetric usageMetric : results.getItems()) {
+			for (ProjectUsageMetric projectUsageMetric : results.getItems()) {
 				projectUsageMetrics.put(
-					usageMetric.getProjectId(), usageMetric);
+					projectUsageMetric.getProjectId(), projectUsageMetric);
 			}
 
 			projectUsageMetricsMap.put(

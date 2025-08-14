@@ -103,7 +103,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 
 		writer.write("<div class=\"table-responsive\"><table class=\"");
 		writer.write("publications-render-table table table-autofit ");
-		writer.write("table-nowrap\">");
+		writer.write("table-nowrap table-striped\">");
 
 		HttpServletRequest httpServletRequest =
 			displayContext.getHttpServletRequest();

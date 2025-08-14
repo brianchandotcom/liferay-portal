@@ -1239,7 +1239,10 @@ export default function ChangeTrackingRenderView({
 					state.contentType === CONTENT_TYPE_PARENTS ||
 					state.contentType === CONTENT_TYPE_CHILDREN
 				}
-				striped={state.contentType !== CONTENT_TYPE_WORKFLOW}
+				striped={
+					state.contentType !== CONTENT_TYPE_WORKFLOW &&
+					state.view !== VIEW_SPLIT
+				}
 			>
 				<ClayTable.Head>{renderToolbar()}</ClayTable.Head>
 

@@ -74,7 +74,7 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 
 			_trigger = _triggerFactory.createTrigger(
 				clazz.getName(), clazz.getName(), new Date(), null,
-				"0 0 0 * * ?");
+				"0 0 1 * * ?");
 
 			_schedulerEngineHelper.schedule(
 				_trigger, StorageType.PERSISTED, null,

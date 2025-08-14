@@ -1,13 +1,14 @@
 <#if entries?has_content>
 	<#assign
-		sortedTaxonomyCategories = []
-		totalCount = 0
 		knowledgeBaseFrequency = 0 
 		knowledgeBaseIds = []
+		sortedTaxonomyCategories = []
+		totalCount = 0
 	/>
 
 	<#list entries as entry>
 		<#assign label = entry.bucketText?upper_case />
+
 		<#if label == "OFFICIAL DOCUMENTATION">
 			<#assign sortedTaxonomyCategories = [entry] + sortedTaxonomyCategories />
 		<#elseif label == "HOW TO" || label == "TROUBLESHOOTING" || label == "REFERENCE">
@@ -60,7 +61,7 @@
 			</li>
 		</#list>
 		
-		<#assign selectedIds = (request.getParameterValues("resource-type")![])?join(",") />
+		<#assign selectedIds = (paramUtil.getParameterValues(request, "resource-type")![])?join(",") />
 
 		<li class="facet-value">
 			<@clay.button
@@ -74,7 +75,7 @@
 				<#if knowledgeBaseFrequency?has_content>
 					<span class="term-count">${knowledgeBaseFrequency}</span>
 				</#if>
-  			</@clay.button>
+			</@clay.button>
 		</li>
 	</ul>
 </#if>
@@ -92,8 +93,7 @@
 		}
 	}
 
-  	function ${namespace}updateSelection(event) {
-  
+	function ${namespace}updateSelection(event) {
 		event.preventDefault();
 
 		handleStyleTabs(event);

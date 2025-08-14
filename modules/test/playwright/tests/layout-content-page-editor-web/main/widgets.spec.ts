@@ -6,23 +6,23 @@
 import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../../fixtures/loginTest';
-import {masterPagesPagesTest} from '../../../../fixtures/masterPagesPagesTest';
-import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
-import {pageManagementSiteTest} from '../../../../fixtures/pageManagementSiteTest';
-import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
-import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
-import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../../../utils/getRandomString';
-import {performLogout} from '../../../../utils/performLogin';
-import {waitForAlert} from '../../../../utils/waitForAlert';
-import {getObjectERC} from '../../../setup/page-management-site/main/utils/getObjectERC';
-import getFormContainerDefinition from '../utils/getFormContainerDefinition';
-import getPageDefinition from '../utils/getPageDefinition';
-import getWidgetDefinition from '../utils/getWidgetDefinition';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {performLogout} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
+import getFormContainerDefinition from './utils/getFormContainerDefinition';
+import getPageDefinition from './utils/getPageDefinition';
+import getWidgetDefinition from './utils/getWidgetDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,

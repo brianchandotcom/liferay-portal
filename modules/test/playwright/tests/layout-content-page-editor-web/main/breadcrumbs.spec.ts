@@ -5,16 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
-import getRandomString from '../../../../utils/getRandomString';
-import getContainerDefinition from '../utils/getContainerDefinition';
-import getFragmentDefinition from '../utils/getFragmentDefinition';
-import getGridDefinition from '../utils/getGridDefinition';
-import getPageDefinition from '../utils/getPageDefinition';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import getRandomString from '../../../utils/getRandomString';
+import getContainerDefinition from './utils/getContainerDefinition';
+import getFragmentDefinition from './utils/getFragmentDefinition';
+import getGridDefinition from './utils/getGridDefinition';
+import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,

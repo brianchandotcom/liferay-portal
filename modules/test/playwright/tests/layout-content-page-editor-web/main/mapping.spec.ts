@@ -9,30 +9,30 @@ import {
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {collectionsPagesTest} from '../../../../fixtures/collectionsPagesTest';
-import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
-import {pageManagementSiteTest} from '../../../../fixtures/pageManagementSiteTest';
-import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
-import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../../../utils/getRandomString';
-import addApprovedStructuredContent from '../../../../utils/structured-content/addApprovedStructuredContent';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import addApprovedStructuredContent from '../../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId, {
 	getWebContentStructureId,
-} from '../../../../utils/structured-content/getBasicWebContentStructureId';
-import {waitForAlert} from '../../../../utils/waitForAlert';
+} from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	ANIMALS_COLLECTION_NAME,
 	ANIMAL_DDM_STRUCTURE_KEY,
-} from '../../../setup/page-management-site/main/constants/animals';
-import {getObjectERC} from '../../../setup/page-management-site/main/utils/getObjectERC';
-import getCollectionDefinition from '../utils/getCollectionDefinition';
-import getFragmentDefinition from '../utils/getFragmentDefinition';
-import getPageDefinition from '../utils/getPageDefinition';
+} from '../../setup/page-management-site/main/constants/animals';
+import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
+import getCollectionDefinition from './utils/getCollectionDefinition';
+import getFragmentDefinition from './utils/getFragmentDefinition';
+import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,

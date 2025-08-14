@@ -1022,6 +1022,8 @@ public class LayoutUtil {
 			throw new UnsupportedOperationException();
 		}
 
+		List<String> portletIds = layoutTypePortlet.getPortletIds();
+
 		for (WidgetPageSection widgetPageSection : widgetPageSections) {
 			boolean customizable = GetterUtil.getBoolean(
 				typeSettingsUnicodeProperties.get(
@@ -1059,7 +1061,14 @@ public class LayoutUtil {
 						widgetPageWidgetInstance.getParentSectionId(),
 						widgetPageWidgetInstance.getPosition());
 				}
+
+				portletIds.remove(portletId);
 			}
+		}
+
+		for (String portletId : portletIds) {
+			layoutTypePortlet.removePortletId(
+				serviceContext.getUserId(), portletId);
 		}
 
 		return LayoutServiceUtil.updateLayout(

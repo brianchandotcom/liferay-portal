@@ -5742,6 +5742,10 @@ public class ObjectEntryLocalServiceImpl
 			boolean skipModelListener)
 		throws PortalException {
 
+		if (objectEntry.isInTrash()) {
+			return;
+		}
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());

@@ -199,57 +199,37 @@ async function updateSpace(externalReferenceCode: string, body: any) {
 }
 
 async function updateUserRoles(payload: {
-	roleIds: number[];
+	roleNames: string[];
 	spaceId: string;
 	userId: string;
-}): Promise<{
-	data: {
-		roleIds: number[];
-		spaceId: string;
-		userId: string;
-	} | null;
-	error: string | null;
-}> {
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			if (Math.random() > 0.5) {
-				resolve({data: payload, error: null});
-			}
-			else {
-				resolve({
-					data: null,
-					error: 'An unexpected error occurred while updating roles.',
-				});
-			}
-		}, 300);
-	});
+}) {
+	const {roleNames, spaceId, userId} = payload;
+
+	const body = roleNames.map((roleName) => ({
+		name: roleName,
+	}));
+
+	return await ApiHelper.put(
+		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-accounts/${userId}/roles`,
+		body
+	);
 }
 
 async function updateUserGroupRoles(payload: {
-	roleIds: number[];
+	roleNames: string[];
 	spaceId: string;
 	userGroupId: string;
-}): Promise<{
-	data: {
-		roleIds: number[];
-		spaceId: string;
-		userGroupId: string;
-	} | null;
-	error: string | null;
-}> {
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			if (Math.random() > 0.5) {
-				resolve({data: payload, error: null});
-			}
-			else {
-				resolve({
-					data: null,
-					error: 'An unexpected error occurred while updating roles.',
-				});
-			}
-		}, 300);
-	});
+}) {
+	const {roleNames, spaceId, userGroupId} = payload;
+
+	const body = roleNames.map((roleName) => ({
+		name: roleName,
+	}));
+
+	return await ApiHelper.put(
+		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups/${userGroupId}/roles`,
+		body
+	);
 }
 
 export default {

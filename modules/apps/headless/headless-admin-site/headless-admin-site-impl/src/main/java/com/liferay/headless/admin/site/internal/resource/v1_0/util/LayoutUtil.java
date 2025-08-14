@@ -603,8 +603,11 @@ public class LayoutUtil {
 			layout.getDescriptionMap(), layout.getRobotsMap(), friendlyURLMap,
 			widgetPageSpecification, serviceContext);
 
-		UnicodeProperties unicodeProperties =
-			layout.getTypeSettingsProperties();
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
+			true
+		).fastLoad(
+			layout.getTypeSettings()
+		).build();
 
 		if (typeSettingsUnicodeProperties != null) {
 			unicodeProperties.putAll(typeSettingsUnicodeProperties);

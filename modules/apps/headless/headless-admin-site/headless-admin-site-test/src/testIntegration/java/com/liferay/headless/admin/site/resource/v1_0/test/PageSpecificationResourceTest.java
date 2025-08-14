@@ -700,7 +700,9 @@ public class PageSpecificationResourceTest
 			PageSpecification.Type.WIDGET_PAGE_SPECIFICATION,
 			widgetPageSpecification.getType());
 
-		Assert.assertNull(widgetPageSpecification.getWidgetPageSections());
+		Assert.assertTrue(
+			ArrayUtil.isNotEmpty(
+				widgetPageSpecification.getWidgetPageSections()));
 	}
 
 	private ContentPageSpecification _getContentPageSpecification(

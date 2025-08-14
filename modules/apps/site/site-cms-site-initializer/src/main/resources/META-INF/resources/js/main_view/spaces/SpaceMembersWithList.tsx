@@ -444,11 +444,12 @@ export function SpaceMembersWithList({
 			/>
 
 			{!hasMembersSelected ? (
-				<div className="c-p-4 c-pb-0 text-center c-ml-n4 c-mr-n4 border-top">
-					<p className="text-4 font-weight-semi-bold c-mb-1 c-mt-2">
+				<div className="border-top c-ml-n4 c-mr-n4 c-p-4 c-pb-0 text-center">
+					<p className="c-mb-1 c-mt-2 font-weight-semi-bold text-4">
 						{Liferay.Language.get('no-members-yet')}
 					</p>
-					<p className="c-m-0 text-secondary text-3">
+
+					<p className="c-m-0 text-3 text-secondary">
 						{Liferay.Language.get('add-members-to-this-space')}
 					</p>
 				</div>

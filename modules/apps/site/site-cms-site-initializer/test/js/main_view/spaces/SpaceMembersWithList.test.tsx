@@ -16,8 +16,8 @@ import {
 	UserAccount,
 	UserGroup,
 } from '../../../../src/main/resources/META-INF/resources/js/common/types/UserAccount';
-import {SPACE_MEMBER_ROLE_NAME} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersPermissionSelect';
 import {SelectOptions} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersInputWithSelect';
+import {SPACE_MEMBER_ROLE_NAME} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersPermissionSelect';
 import {
 	SpaceMembersWithList,
 	SpaceMembersWithListProps,

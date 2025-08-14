@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.io.Serializable;
@@ -467,14 +466,14 @@ public class PageSpecificationsTestUtil {
 	}
 
 	public static PageSpecification[] getWidgetPageSpecifications(
+		CustomField[] customFields, String layoutTemplateId,
 		String publishedPageSpecificationExternalReferenceCode) {
 
 		return new PageSpecification[] {
 			getWidgetPageSpecification(
-				getCustomFields(),
-				publishedPageSpecificationExternalReferenceCode, null,
-				PageSpecification.Status.APPROVED,
-				getWidgetPageSections(PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID))
+				customFields, publishedPageSpecificationExternalReferenceCode,
+				new Settings(), PageSpecification.Status.APPROVED,
+				getWidgetPageSections(layoutTemplateId))
 		};
 	}
 

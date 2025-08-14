@@ -872,6 +872,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		else {
 			randomSitePage.setPageSpecifications(
 				PageSpecificationsTestUtil.getWidgetPageSpecifications(
+					PageSpecificationsTestUtil.getCustomFields(), "1_column",
 					randomSitePage.getExternalReferenceCode()));
 		}
 

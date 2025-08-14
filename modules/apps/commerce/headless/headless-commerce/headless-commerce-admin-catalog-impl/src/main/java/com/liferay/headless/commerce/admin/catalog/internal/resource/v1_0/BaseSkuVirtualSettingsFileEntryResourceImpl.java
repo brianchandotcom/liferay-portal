@@ -437,7 +437,7 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			skuVirtualSettingsFileEntryUnsafeFunction =
 				skuVirtualSettingsFileEntry -> patchSkuVirtualSettingsFileEntry(
-					skuVirtualSettingsFileEntry.getId(), null);
+					skuVirtualSettingsFileEntry.getId(), (MultipartBody)null);
 		}
 
 		if (skuVirtualSettingsFileEntryUnsafeFunction == null) {

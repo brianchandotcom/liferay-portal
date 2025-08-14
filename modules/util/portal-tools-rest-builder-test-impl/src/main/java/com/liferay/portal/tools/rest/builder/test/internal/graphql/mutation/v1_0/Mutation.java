@@ -855,6 +855,50 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public MultipartTestEntity createMultipartTestEntity(
+			@GraphQLName("multipartTestEntity") MultipartTestEntity
+				multipartTestEntity)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_multipartTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			multipartTestEntityResource ->
+				multipartTestEntityResource.postMultipartTestEntity(
+					multipartTestEntity));
+	}
+
+	@GraphQLField
+	@GraphQLName(
+		description = "null", value = "postMultipartTestEntityMultipartBody"
+	)
+	public MultipartTestEntity createMultipartTestEntity(
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_multipartTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			multipartTestEntityResource ->
+				multipartTestEntityResource.postMultipartTestEntity(
+					multipartBody));
+	}
+
+	@GraphQLField
+	public Response createMultipartTestEntityBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_multipartTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			multipartTestEntityResource ->
+				multipartTestEntityResource.postMultipartTestEntityBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
 	@GraphQLName(
 		description = "null",
 		value = "putMultipartTestEntityMultipartTestEntityIdMultipartBody"

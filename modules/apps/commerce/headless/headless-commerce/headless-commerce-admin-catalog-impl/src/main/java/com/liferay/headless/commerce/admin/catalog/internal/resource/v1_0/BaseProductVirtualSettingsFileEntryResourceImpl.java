@@ -440,7 +440,8 @@ public abstract class BaseProductVirtualSettingsFileEntryResourceImpl
 			productVirtualSettingsFileEntryUnsafeFunction =
 				productVirtualSettingsFileEntry ->
 					patchProductVirtualSettingsFileEntry(
-						productVirtualSettingsFileEntry.getId(), null);
+						productVirtualSettingsFileEntry.getId(),
+						(MultipartBody)null);
 		}
 
 		if (productVirtualSettingsFileEntryUnsafeFunction == null) {

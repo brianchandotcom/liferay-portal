@@ -355,6 +355,21 @@ public class ServletDataImpl implements ServletData {
 							MultipartTestEntityResourceImpl.class,
 							"patchMultipartTestEntity"));
 					put(
+						"mutation#createMultipartTestEntity",
+						new ObjectValuePair<>(
+							MultipartTestEntityResourceImpl.class,
+							"postMultipartTestEntity"));
+					put(
+						"mutation#createMultipartTestEntity",
+						new ObjectValuePair<>(
+							MultipartTestEntityResourceImpl.class,
+							"postMultipartTestEntity"));
+					put(
+						"mutation#createMultipartTestEntityBatch",
+						new ObjectValuePair<>(
+							MultipartTestEntityResourceImpl.class,
+							"postMultipartTestEntityBatch"));
+					put(
 						"mutation#updateMultipartTestEntity",
 						new ObjectValuePair<>(
 							MultipartTestEntityResourceImpl.class,

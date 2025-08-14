@@ -556,6 +556,60 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testPostMultipartTestEntity() throws Exception {
+		MultipartTestEntity randomMultipartTestEntity =
+			randomMultipartTestEntity();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		MultipartTestEntity postMultipartTestEntity =
+			testPostMultipartTestEntity_addMultipartTestEntity(
+				randomMultipartTestEntity, multipartFiles);
+
+		assertEquals(randomMultipartTestEntity, postMultipartTestEntity);
+		assertValid(postMultipartTestEntity);
+
+		assertValid(postMultipartTestEntity, multipartFiles);
+	}
+
+	protected MultipartTestEntity
+			testPostMultipartTestEntity_addMultipartTestEntity(
+				MultipartTestEntity multipartTestEntity,
+				Map<String, File> multipartFiles)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostFormDataMultipartTestEntity() throws Exception {
+		MultipartTestEntity randomMultipartTestEntity =
+			randomMultipartTestEntity();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		MultipartTestEntity postMultipartTestEntity =
+			testPostFormDataMultipartTestEntity_addMultipartTestEntity(
+				randomMultipartTestEntity, multipartFiles);
+
+		assertEquals(randomMultipartTestEntity, postMultipartTestEntity);
+		assertValid(postMultipartTestEntity);
+
+		assertValid(postMultipartTestEntity, multipartFiles);
+	}
+
+	protected MultipartTestEntity
+			testPostFormDataMultipartTestEntity_addMultipartTestEntity(
+				MultipartTestEntity multipartTestEntity,
+				Map<String, File> multipartFiles)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutMultipartTestEntity() throws Exception {
 		MultipartTestEntity postMultipartTestEntity =
 			testPutMultipartTestEntity_addMultipartTestEntity();

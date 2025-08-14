@@ -587,7 +587,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 							_parseLong(
 								(String)parameters.get(
 									"knowledgeBaseArticleId")),
-							null);
+							(MultipartBody)null);
 			}
 			else {
 				throw new NotSupportedException(

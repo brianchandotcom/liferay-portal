@@ -21,8 +21,8 @@ export class FDSSamplePage {
 	};
 	readonly cards: {
 		container: Locator;
-		items: Locator;
 		itemActionButtons: Locator;
+		items: Locator;
 	};
 	readonly customViewsActionsButton: Locator;
 	readonly customViewsDeleteAlert: Locator;
@@ -57,7 +57,7 @@ export class FDSSamplePage {
 		container: Locator;
 		firstColumnHeader: Locator;
 		headerCells: Locator;
-		itemActionsCells: Locator;
+		itemActionButtons: Locator;
 		manageColumnsVisibilityButton: Locator;
 	};
 	readonly toggleInfoPanelButton: Locator;
@@ -150,7 +150,12 @@ export class FDSSamplePage {
 			container: tableContainer,
 			firstColumnHeader: headerCells.nth(1),
 			headerCells,
-			itemActionsCells: tableContainer.locator('.cell-item-actions'),
+			itemActionButtons: tableContainer
+				.locator('.cell-item-actions')
+				.getByRole('button', {
+					exact: true,
+					name: 'Actions',
+				}),
 			manageColumnsVisibilityButton: tableContainer.getByTitle(
 				'Manage Columns Visibility'
 			),

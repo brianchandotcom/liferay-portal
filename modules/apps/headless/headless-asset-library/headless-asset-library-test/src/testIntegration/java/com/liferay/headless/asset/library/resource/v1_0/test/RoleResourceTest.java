@@ -13,8 +13,11 @@ import com.liferay.headless.asset.library.client.pagination.Page;
 import com.liferay.headless.asset.library.client.problem.Problem;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -22,6 +25,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -33,6 +37,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,6 +56,17 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroupLocalService.addGroupUserGroup(
+			testDepotEntry.getGroupId(), _userGroup);
+	}
 
 	@Override
 	@Test
@@ -105,6 +121,57 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 	@Override
 	@Test
+	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage()
+		throws Exception {
+
+		Role randomRole1 = randomRole();
+
+		roleResource.
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
+				testDepotEntryGroup.getExternalReferenceCode(),
+				_userGroup.getExternalReferenceCode(),
+				new Role[] {randomRole1});
+
+		_assertGetAssetLibraryUserGroupRolesPage(Arrays.asList(randomRole1));
+
+		Role randomRole2 = randomRole();
+
+		roleResource.
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
+				testDepotEntryGroup.getExternalReferenceCode(),
+				_userGroup.getExternalReferenceCode(),
+				new Role[] {randomRole1, randomRole2});
+
+		_assertGetAssetLibraryUserGroupRolesPage(
+			Arrays.asList(randomRole1, randomRole2));
+
+		Role randomRole3 = new Role() {
+			{
+				name = RandomTestUtil.randomString();
+			}
+		};
+
+		try {
+			roleResource.
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
+					testDepotEntryGroup.getExternalReferenceCode(),
+					_userGroup.getExternalReferenceCode(),
+					new Role[] {randomRole3});
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+
+		_assertGetAssetLibraryUserGroupRolesPage(
+			Arrays.asList(randomRole1, randomRole2));
+	}
+
+	@Override
+	@Test
 	public void testPutAssetLibraryUserAccountRolesPage() throws Exception {
 		Role randomRole1 = randomRole();
 
@@ -143,6 +210,49 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		}
 
 		_assertGetAssetLibraryUserAccountRolesPage(
+			Arrays.asList(randomRole1, randomRole2));
+	}
+
+	@Override
+	@Test
+	public void testPutAssetLibraryUserGroupRolesPage() throws Exception {
+		Role randomRole1 = randomRole();
+
+		roleResource.putAssetLibraryUserGroupRolesPage(
+			testDepotEntryGroup.getGroupId(), _userGroup.getUserGroupId(),
+			new Role[] {randomRole1});
+
+		_assertGetAssetLibraryUserGroupRolesPage(Arrays.asList(randomRole1));
+
+		Role randomRole2 = randomRole();
+
+		roleResource.putAssetLibraryUserGroupRolesPage(
+			testDepotEntryGroup.getGroupId(), _userGroup.getUserGroupId(),
+			new Role[] {randomRole1, randomRole2});
+
+		_assertGetAssetLibraryUserGroupRolesPage(
+			Arrays.asList(randomRole1, randomRole2));
+
+		Role randomRole3 = new Role() {
+			{
+				name = RandomTestUtil.randomString();
+			}
+		};
+
+		try {
+			roleResource.putAssetLibraryUserGroupRolesPage(
+				testDepotEntryGroup.getGroupId(), _userGroup.getUserGroupId(),
+				new Role[] {randomRole3});
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+
+		_assertGetAssetLibraryUserGroupRolesPage(
 			Arrays.asList(randomRole1, randomRole2));
 	}
 
@@ -194,6 +304,34 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
+	protected Role
+			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage_addRole(
+				String assetLibraryExternalReferenceCode,
+				String userGroupExternalReferenceCode, Role role)
+		throws Exception {
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			assetLibraryExternalReferenceCode, TestPropsValues.getCompanyId());
+		UserGroup userGroup =
+			_userGroupLocalService.getUserGroupByExternalReferenceCode(
+				userGroupExternalReferenceCode, TestPropsValues.getCompanyId());
+
+		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(
+			userGroup.getUserGroupId(), group.getGroupId(),
+			new long[] {role.getId()});
+
+		return role;
+	}
+
+	@Override
+	protected String
+			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage_getUserGroupExternalReferenceCode()
+		throws Exception {
+
+		return _userGroup.getExternalReferenceCode();
+	}
+
+	@Override
 	protected Role testGetAssetLibraryUserAccountRolesPage_addRole(
 			Long assetLibraryId, Long userAccountId, Role role)
 		throws Exception {
@@ -214,12 +352,50 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		return TestPropsValues.getUserId();
 	}
 
+	@Override
+	protected Role testGetAssetLibraryUserGroupRolesPage_addRole(
+		Long assetLibraryId, Long userGroupId, Role role)
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
+			assetLibraryId);
+
+		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(
+			userGroupId, depotEntry.getGroupId(), new long[] {role.getId()});
+
+		return role;
+	}
+
+	@Override
+	protected Long testGetAssetLibraryUserGroupRolesPage_getUserGroupId()
+		throws Exception {
+
+		return _userGroup.getUserGroupId();
+	}
+
 	private void _assertGetAssetLibraryUserAccountRolesPage(
 			List<Role> expectedRoles)
 		throws Exception {
 
 		Page<Role> rolesPage = roleResource.getAssetLibraryUserAccountRolesPage(
 			testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId());
+
+		Collection<Role> items = rolesPage.getItems();
+
+		Assert.assertEquals(
+			items.toString(), expectedRoles.size(), items.size());
+
+		for (Role role : expectedRoles) {
+			Assert.assertTrue(items.contains(role));
+		}
+	}
+
+	private void _assertGetAssetLibraryUserGroupRolesPage(
+			List<Role> expectedRoles)
+		throws Exception {
+
+		Page<Role> rolesPage = roleResource.getAssetLibraryUserGroupRolesPage(
+			testDepotEntry.getDepotEntryId(), _userGroup.getUserGroupId());
 
 		Collection<Role> items = rolesPage.getItems();
 
@@ -243,6 +419,15 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	@DeleteAfterTestRun
 	private List<com.liferay.portal.kernel.model.Role> _roles =
 		new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private UserGroup _userGroup;
+
+	@Inject
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Inject
 	private UserGroupRoleService _userGroupRoleService;

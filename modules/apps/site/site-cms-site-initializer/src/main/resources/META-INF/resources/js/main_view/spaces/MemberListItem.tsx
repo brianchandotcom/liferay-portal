@@ -6,9 +6,9 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import cx from 'classnames';
 import {sub} from 'frontend-js-web';
 import React from 'react';
-import cx from 'classnames';
 
 import {Role} from '../../common/types/Role';
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';

@@ -221,7 +221,7 @@ export class ViewObjectEntriesPage {
 		await this.page
 			.locator('div')
 			.filter({hasText: new RegExp(`^${fieldLabel}$`)})
-			.getByLabel('Choose date')
+			.getByLabel('Select date')
 			.click();
 
 		await this.page

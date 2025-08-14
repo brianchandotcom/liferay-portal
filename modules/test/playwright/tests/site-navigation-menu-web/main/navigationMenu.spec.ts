@@ -24,9 +24,9 @@ import getBasicWebContentStructureId from '../../../utils/structured-content/get
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdminPagesTest';
+import {navigationMenusPagesTest} from '../../site-navigation-admin-web/main/fixtures/navigationMenusPagesTest';
+import {NavigationMenusPage} from '../../site-navigation-admin-web/main/pages/NavigationMenusPage';
 import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
-import {navigationMenusPagesTest} from './../../site-navigation-admin-web/main/fixtures/navigationMenusPagesTest';
-import {NavigationMenusPage} from './../../site-navigation-admin-web/main/pages/NavigationMenusPage';
 import {navigationMenuWidgetPagesTest} from './fixtures/navigationMenuWidgetPagesTest';
 
 export const test = mergeTests(
@@ -1146,19 +1146,19 @@ test(
 			// Fill the Custom Fields of the Navigation Menu Items and store its value
 
 			const value1 =
-				await navigationMenusPage.fillNavagationMenuItemCustomField(
+				await navigationMenusPage.fillNavigationMenuItemCustomField(
 					layoutName,
 					customFieldName
 				);
 
 			const value2 =
-				await navigationMenusPage.fillNavagationMenuItemCustomField(
+				await navigationMenusPage.fillNavigationMenuItemCustomField(
 					submenuItemName,
 					customFieldName
 				);
 
 			const value3 =
-				await navigationMenusPage.fillNavagationMenuItemCustomField(
+				await navigationMenusPage.fillNavigationMenuItemCustomField(
 					urlItemName,
 					customFieldName
 				);

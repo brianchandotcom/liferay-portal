@@ -396,7 +396,7 @@ export class NavigationMenusPage {
 		await waitForAlert(this.page);
 	}
 
-	async fillNavagationMenuItemCustomField(
+	async fillNavigationMenuItemCustomField(
 		menuItemName: string,
 		customFieldName: string
 	): Promise<string> {

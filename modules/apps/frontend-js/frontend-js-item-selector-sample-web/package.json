@@ -3,7 +3,7 @@
 		"@clayui/alert": "3.130.0",
 		"@clayui/button": "3.137.0",
 		"@clayui/form": "3.142.0",
-		"@clayui/list": "3.142.0",
+		"@clayui/list": "3.142.2",
 		"@clayui/modal": "3.142.0",
 		"@clayui/sticker": "3.139.0",
 		"@liferay/frontend-data-set-web": "*",

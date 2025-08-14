@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 
+import dateFormat from '../../common/utils/dateFormat';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import {EVENTS} from '../info_panel/util/constants';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
@@ -33,6 +34,7 @@ export default function FilesFDSPropsTransformer({
 	additionalProps,
 	creationMenu,
 	itemsActions = [],
+	views,
 	...otherProps
 }: {
 	additionalProps: {
@@ -43,6 +45,7 @@ export default function FilesFDSPropsTransformer({
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;
+	views: IView[];
 }) {
 	return {
 		...otherProps,
@@ -155,5 +158,17 @@ export default function FilesFDSPropsTransformer({
 		onSelectedItemsChange: (selectedItems: any[]) => {
 			Liferay.fire(EVENTS.ASSET_DATA, {items: selectedItems});
 		},
+		views: views.map((view) => {
+			if (view.name === 'cards') {
+				view.setItemComponentProps = ({item, props}) => {
+					return {
+						...props,
+						description: dateFormat(item.dateModified),
+					};
+				};
+			}
+
+			return view;
+		}),
 	};
 }

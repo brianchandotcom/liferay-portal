@@ -23,8 +23,8 @@ test(
 	async ({journalEditArticlePage, page, systemSettingsPage}) => {
 		await test.step('Enable Third Party Cookies', async () => {
 			await systemSettingsPage.goToSystemSetting(
-				'Cookies',
-				'Preference Handling'
+				'Privacy',
+				'Cookie Manager'
 			);
 
 			const enabledButton = page.getByLabel('Enabled');

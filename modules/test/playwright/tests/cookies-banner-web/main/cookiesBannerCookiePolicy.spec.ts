@@ -16,10 +16,7 @@ test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
 	systemSettingsPage,
 }) => {
 	await test.step('Enable Preference Handling Cookies', async () => {
-		await systemSettingsPage.goToSystemSetting(
-			'Cookies',
-			'Preference Handling'
-		);
+		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
 
 		const enabledButton = page.getByLabel('Enabled');
 

@@ -23,6 +23,23 @@ import {
 	uncheckMultiSelectItemChildrens,
 } from './multiSelectUtil';
 
+type RecipientItemChangeOptions = {
+	items: MultiSelectItem[];
+	recipientKey: 'cc' | 'bcc';
+	setItemList: (value: MultiSelectItem[]) => void;
+	type: EmailNotificationRecipientTypeOptions;
+};
+
+type RecipientTypeChangeOptions = {
+	newRecipientTypeValue: string;
+	recipientKey: 'cc' | 'bcc';
+	recipientTypeKey: 'ccType' | 'bccType';
+	roleList: MultiSelectItem[];
+	setRoleList: (value: MultiSelectItem[]) => void;
+	setUserGroupList: (value: MultiSelectItem[]) => void;
+	userGroupList: MultiSelectItem[];
+};
+
 interface SecondaryRecipientsProps {
 	emailNotificationRoles: MultiSelectItem[];
 	emailNotificationUserGroups: MultiSelectItem[];
@@ -58,12 +75,12 @@ export function SecondaryRecipient({
 	);
 	const [recipient] = values.recipients as EmailRecipients[];
 
-	const handleRecipientItemChange = (
-		items: MultiSelectItem[],
-		recipientKey: 'cc' | 'bcc',
-		setItemList: (value: MultiSelectItem[]) => void,
-		type: EmailNotificationRecipientTypeOptions
-	) => {
+	const handleRecipientItemChange = ({
+		items,
+		recipientKey,
+		setItemList,
+		type,
+	}: RecipientItemChangeOptions) => {
 		const newRecipients = handleMultiSelectItemsChange(items, type);
 
 		setValues({
@@ -79,15 +96,15 @@ export function SecondaryRecipient({
 		setItemList(items);
 	};
 
-	const handleRecipientTypeChange = (
-		newRecipientTypeValue: string,
-		recipientKey: 'cc' | 'bcc',
-		roleList: MultiSelectItem[],
-		recipientTypeKey: 'ccType' | 'bccType',
-		setRoleList: (value: MultiSelectItem[]) => void,
-		setUserGroupList: (value: MultiSelectItem[]) => void,
-		userGroupList: MultiSelectItem[]
-	) => {
+	const handleRecipientTypeChange = ({
+		newRecipientTypeValue,
+		recipientKey,
+		recipientTypeKey,
+		roleList,
+		setRoleList,
+		setUserGroupList,
+		userGroupList,
+	}: RecipientTypeChangeOptions) => {
 		if (newRecipientTypeValue !== 'role') {
 			const newRoleList = uncheckMultiSelectItemChildrens(roleList);
 			setRoleList(newRoleList);
@@ -246,15 +263,15 @@ export function SecondaryRecipient({
 								items={recipientOptions}
 								label={Liferay.Language.get('type')}
 								onSelectionChange={(value) => {
-									handleRecipientTypeChange(
-										value as string,
-										'cc',
-										ccRolesList,
-										'ccType',
-										setCCRolesList,
-										setCCUserGroupsList,
-										ccUserGroupsList
-									);
+									handleRecipientTypeChange({
+										newRecipientTypeValue: value,
+										recipientKey: 'cc',
+										recipientTypeKey: 'ccType',
+										roleList: ccRolesList,
+										setRoleList: setCCRolesList,
+										setUserGroupList: setCCUserGroupsList,
+										userGroupList: ccUserGroupsList,
+									} as RecipientTypeChangeOptions);
 								}}
 								selectedKey={recipient.ccType}
 							/>
@@ -309,12 +326,12 @@ export function SecondaryRecipient({
 										)}
 										selectAllOption
 										setOptions={(items) => {
-											handleRecipientItemChange(
+											handleRecipientItemChange({
 												items,
-												'cc',
-												setCCRolesList,
-												'roleName'
-											);
+												recipientKey: 'cc',
+												setItemList: setCCRolesList,
+												type: 'roleName',
+											} as RecipientItemChangeOptions);
 										}}
 									/>
 
@@ -357,12 +374,13 @@ export function SecondaryRecipient({
 											)}
 											selectAllOption
 											setOptions={(items) => {
-												handleRecipientItemChange(
+												handleRecipientItemChange({
 													items,
-													'cc',
-													setCCUserGroupsList,
-													'userGroupName'
-												);
+													recipientKey: 'cc',
+													setItemList:
+														setCCUserGroupsList,
+													type: 'userGroupName',
+												} as RecipientItemChangeOptions);
 											}}
 										/>
 									</div>
@@ -385,15 +403,15 @@ export function SecondaryRecipient({
 								items={recipientOptions}
 								label={Liferay.Language.get('type')}
 								onSelectionChange={(value) => {
-									handleRecipientTypeChange(
-										value as string,
-										'bcc',
-										bccRolesList,
-										'bccType',
-										setBCCRolesList,
-										setBCCUserGroupsList,
-										bccUserGroupsList
-									);
+									handleRecipientTypeChange({
+										newRecipientTypeValue: value,
+										recipientKey: 'bcc',
+										recipientTypeKey: 'bccType',
+										roleList: bccRolesList,
+										setRoleList: setBCCRolesList,
+										setUserGroupList: setBCCUserGroupsList,
+										userGroupList: bccUserGroupsList,
+									} as RecipientTypeChangeOptions);
 								}}
 								selectedKey={recipient.bccType}
 							/>
@@ -448,12 +466,12 @@ export function SecondaryRecipient({
 										)}
 										selectAllOption
 										setOptions={(items) => {
-											handleRecipientItemChange(
+											handleRecipientItemChange({
 												items,
-												'bcc',
-												setBCCRolesList,
-												'roleName'
-											);
+												recipientKey: 'bcc',
+												setItemList: setBCCRolesList,
+												type: 'roleName',
+											} as RecipientItemChangeOptions);
 										}}
 									/>
 
@@ -496,12 +514,13 @@ export function SecondaryRecipient({
 											)}
 											selectAllOption
 											setOptions={(items) => {
-												handleRecipientItemChange(
+												handleRecipientItemChange({
 													items,
-													'bcc',
-													setBCCUserGroupsList,
-													'userGroupName'
-												);
+													recipientKey: 'bcc',
+													setItemList:
+														setBCCUserGroupsList,
+													type: 'userGroupName',
+												} as RecipientItemChangeOptions);
 											}}
 										/>
 									</div>

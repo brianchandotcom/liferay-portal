@@ -9709,13 +9709,23 @@ public class DefaultObjectEntryManagerImplTest
 	private void _testUpdateRelatedObjectEntry(boolean partialUpdate)
 		throws Exception {
 
+		// Update related object entry
+
+		ObjectEntry objectEntry =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_createDTOConverterContext(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							_companyObjectRelationshipA_AAObjectField2::getName,
+							_companyObjectEntryA.getId()
+						).build();
+					}
+				},
+				_companyObjectEntryA.getId(), _companyObjectRelationshipA_AA);
+
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntryAA =
-			ObjectEntryTestUtil.addObjectEntry(
-				_companyObjectDefinitionAA,
-				HashMapBuilder.<String, Serializable>put(
-					_companyObjectRelationshipA_AAObjectField2.getName(),
-					_companyObjectEntryA.getId()
-				).build());
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
 
 		ObjectEntry objectEntryAA = new ObjectEntry() {
 			{
@@ -9735,7 +9745,8 @@ public class DefaultObjectEntryManagerImplTest
 					_createDTOConverterContext(), _companyObjectDefinitionAA,
 					objectEntryAA,
 					serviceBuilderObjectEntryAA.getObjectEntryId(),
-					_companyObjectRelationshipA_AA, _companyObjectEntryA.getId());
+					_companyObjectRelationshipA_AA,
+					_companyObjectEntryA.getId());
 		}
 		else {
 			objectEntryAA = _defaultObjectEntryManager.updateRelatedObjectEntry(
@@ -9745,10 +9756,9 @@ public class DefaultObjectEntryManagerImplTest
 		}
 
 		Assert.assertEquals(
-			GetterUtil.getLong(_companyObjectEntryA.getId()),
-			GetterUtil.getLong(
-				objectEntryAA.getPropertyValue(
-					_companyObjectRelationshipA_AAObjectField2.getName())));
+			_companyObjectEntryA.getId(),
+			objectEntryAA.getPropertyValue(
+				_companyObjectRelationshipA_AAObjectField2.getName()));
 		Assert.assertEquals(
 			0L,
 			objectEntryAA.getPropertyValue(

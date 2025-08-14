@@ -5,10 +5,11 @@
 
 import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
+import React from 'react';
 
 import formatActionURL from '../../common/utils/formatActionURL';
+import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
-import {EVENTS} from '../info_panel/util/constants';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
@@ -75,7 +76,9 @@ export default function AllFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
-		infoPanelComponent: () => AssetTypeInfoPanel({additionalProps}),
+		infoPanelComponent: (items: {items: ISearchAssetObjectEntry[]}) => (
+			<AssetTypeInfoPanel {...(otherProps as any)} {...items} />
+		),
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'download') {
 				return {
@@ -108,10 +111,7 @@ export default function AllFDSPropsTransformer({
 			event: Event;
 			itemData: any;
 		}) => {
-			if (action?.data?.id === 'show-details') {
-				Liferay.fire(EVENTS.ASSET_DATA, {items: [{...itemData}]});
-			}
-			else if (action?.data?.id === 'view-content') {
+			if (action?.data?.id === 'view-content') {
 				event?.preventDefault();
 
 				openModal({
@@ -144,10 +144,6 @@ export default function AllFDSPropsTransformer({
 					title: itemData.embedded?.title,
 				});
 			}
-		},
-
-		onSelectedItemsChange: (selectedItems: any[]) => {
-			Liferay.fire(EVENTS.ASSET_DATA, {items: selectedItems});
 		},
 		views: transformViewsItemsProps(views),
 	};

@@ -5,17 +5,19 @@
 
 import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
+import React from 'react';
 
+import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import formatActionURL from '../../common/utils/formatActionURL';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
-import {EVENTS} from '../info_panel/util/constants';
+import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
+import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
-import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 import transformViewsItemsProps from './utils/transformViewsItemProps';
@@ -23,12 +25,13 @@ import transformViewsItemsProps from './utils/transformViewsItemProps';
 const ACTIONS = {
 	createAsset: createAssetAction,
 	createFolder: createFolderAction,
+	uploadMultipleFiles: multipleFilesUploadAction,
 };
 
 const OBJECT_ENTRY_FOLDER_CLASSNAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
-export default function ContentFDSPropsTransformer({
+export default function FolderFDSPropsTransformer({
 	additionalProps,
 	creationMenu,
 	itemsActions = [],
@@ -72,18 +75,18 @@ export default function ContentFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: SpaceRenderer,
-					name: 'spaceTableCellRenderer',
-					type: 'internal',
-				} as IInternalRenderer,
-				{
 					component: TypeRenderer,
 					name: 'typeTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 			],
 		},
-		infoPanelComponent: () => AssetTypeInfoPanel({additionalProps}),
+		infoPanelComponent: (items: {items: ISearchAssetObjectEntry[]}) => (
+			<AssetTypeInfoPanel
+				additionalProps={additionalProps as any}
+				{...items}
+			/>
+		),
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'actionLink') {
 				return {
@@ -95,20 +98,28 @@ export default function ContentFDSPropsTransformer({
 						),
 				};
 			}
+			else if (action?.data?.id === 'download') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(item?.embedded?.file?.link?.href),
+				};
+			}
 			else if (action?.data?.id === 'view-content') {
 				return {
 					...action,
 					isVisible: (item: any) =>
 						Boolean(
 							item?.entryClassName !==
-								OBJECT_ENTRY_FOLDER_CLASSNAME
+								OBJECT_ENTRY_FOLDER_CLASSNAME &&
+								!item?.embedded?.file
 						),
 				};
 			}
 			else if (action?.data?.id === 'view-file') {
 				return {
 					...action,
-					isVisible: () => false,
+					isVisible: (item: any) => Boolean(item?.embedded?.file),
 				};
 			}
 
@@ -134,9 +145,6 @@ export default function ContentFDSPropsTransformer({
 					title: itemData.embedded?.title,
 				});
 			}
-			else if (action?.data?.id === 'show-details') {
-				Liferay.fire(EVENTS.ASSET_DATA, {items: [{...itemData}]});
-			}
 			else if (action?.data?.id === 'view-content') {
 				event?.preventDefault();
 
@@ -146,9 +154,19 @@ export default function ContentFDSPropsTransformer({
 					url: formatActionURL(itemData, action.href),
 				});
 			}
-		},
-		onSelectedItemsChange: (selectedItems: any[]) => {
-			Liferay.fire(EVENTS.ASSET_DATA, {items: selectedItems});
+			else if (action?.data?.id === 'view-file') {
+				openModal({
+					containerProps: {
+						className: '',
+					},
+					contentComponent: () =>
+						FilePreviewerModalContent({
+							file: itemData.embedded.file,
+							headerName: itemData.embedded.title,
+						}),
+					size: 'full-screen',
+				});
+			}
 		},
 		views: transformViewsItemsProps(views),
 	};

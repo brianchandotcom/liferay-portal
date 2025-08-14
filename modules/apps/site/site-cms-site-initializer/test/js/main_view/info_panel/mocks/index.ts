@@ -55,6 +55,7 @@ export const DOCUMENT_OBJECT_ENTRY = {
 				label: '591.pdf',
 			},
 			name: '591.pdf',
+			previewURL: '',
 			thumbnailURL:
 				'/documents/38365/38367/591.pdf/c3c0a482-7021-f28e-08b0-4ab38587ca57?version=1.0&t=1751034460199&documentThumbnail=1',
 		},

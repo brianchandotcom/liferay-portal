@@ -45,19 +45,16 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 	const sidePanelActionTitle = 'Side Panel Title Provided by Action';
 	const sidePanelContentTitle = 'Side Panel Title Provided by Page';
 
-	const itemActionsCell = fdsSamplePage.table.itemActionsCells.first();
-
-	const itemActionButton = itemActionsCell.getByRole('button', {
-		exact: true,
-		name: 'Actions',
-	});
-
 	await test.step('Check that the Item Actions dropdown is present in table row', async () => {
-		await expect(itemActionButton).toBeVisible();
+		const tableItemActionButton =
+			fdsSamplePage.table.itemActionButtons.first();
 
-		const dropdownId = await itemActionButton.getAttribute('aria-controls');
+		await expect(tableItemActionButton).toBeVisible();
 
-		await itemActionButton.click();
+		const dropdownId =
+			await tableItemActionButton.getAttribute('aria-controls');
+
+		await tableItemActionButton.click();
 
 		await page
 			.locator(`#${dropdownId}`)
@@ -73,8 +70,13 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 
 	await test.step('Check that the Item Actions dropdown displays icons for Table, List, and Cards views', async () => {
 		await test.step('Check Table view actions dropdown items has icons', async () => {
+			const tableItemActionButton =
+				fdsSamplePage.table.itemActionButtons.first();
+
+			await expect(tableItemActionButton).toBeVisible();
+
 			await fdsSamplePage.checkDropdownMenuIconsAreVisible(
-				itemActionButton
+				tableItemActionButton
 			);
 		});
 

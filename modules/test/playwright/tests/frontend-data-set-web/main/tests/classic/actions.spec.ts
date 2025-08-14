@@ -79,12 +79,7 @@ test('Check behavior of conditional item actions', async ({
 			await fdsSamplePage.table.bodyRows.count()
 		).toBeGreaterThanOrEqual(3);
 
-		const itemActionsCell = fdsSamplePage.table.itemActionsCells.first();
-
-		const itemActionButton = itemActionsCell.getByRole('button', {
-			exact: true,
-			name: 'Actions',
-		});
+		const itemActionButton = fdsSamplePage.table.itemActionButtons.first();
 
 		await expect(itemActionButton).toBeVisible();
 

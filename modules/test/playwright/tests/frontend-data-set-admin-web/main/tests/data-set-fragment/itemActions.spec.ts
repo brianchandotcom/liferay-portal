@@ -783,7 +783,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 			});
 		});
 
-		await test.step('Checkt that the Item Actions is present in table row', async () => {
+		await test.step('Check that the Item Actions is present in table row', async () => {
 			const itemActionsCell =
 				dataSetFragmentPage.table.itemActionsCells.first();
 

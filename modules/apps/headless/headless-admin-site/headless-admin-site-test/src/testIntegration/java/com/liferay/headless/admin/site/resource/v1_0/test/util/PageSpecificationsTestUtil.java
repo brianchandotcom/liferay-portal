@@ -351,6 +351,15 @@ public class PageSpecificationsTestUtil {
 			draftContentPageSpecificationExternalReferenceCode, null, status);
 	}
 
+	public static PageSpecification[] getContentPageSpecifications(
+		String publishedPageSpecificationExternalReferenceCode) {
+
+		return _getContentPageSpecifications(
+			getCustomFields(), RandomTestUtil.randomString(), null,
+			getCustomFields(), publishedPageSpecificationExternalReferenceCode,
+			null);
+	}
+
 	public static CustomField[] getCustomFields() {
 		return new CustomField[] {
 			_getCustomField(_EXPANDO_ATTRIBUTE_NAMES[0], (String)null),
@@ -363,32 +372,6 @@ public class PageSpecificationsTestUtil {
 		throws Exception {
 
 		return new ExpandoTableAutocloseable();
-	}
-
-	public static PageSpecification[] getPageSpecificationsWithCustomFields(
-		String publishedPageSpecificationExternalReferenceCode,
-		PageSpecification.Type type) {
-
-		PageSpecification[] pageSpecifications;
-
-		if (type == PageSpecification.Type.CONTENT_PAGE_SPECIFICATION) {
-			pageSpecifications = _getContentPageSpecifications(
-				getCustomFields(), RandomTestUtil.randomString(), null,
-				getCustomFields(),
-				publishedPageSpecificationExternalReferenceCode, null);
-		}
-		else {
-			pageSpecifications = new PageSpecification[] {
-				getWidgetPageSpecification(
-					getCustomFields(),
-					publishedPageSpecificationExternalReferenceCode, null,
-					PageSpecification.Status.APPROVED,
-					getWidgetPageSections(
-						PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID))
-			};
-		}
-
-		return pageSpecifications;
 	}
 
 	public static PageSpecification[] getPatchPageSpecifications(
@@ -481,6 +464,18 @@ public class PageSpecificationsTestUtil {
 		widgetPageSpecification.setWidgetPageSections(widgetPageSections);
 
 		return widgetPageSpecification;
+	}
+
+	public static PageSpecification[] getWidgetPageSpecifications(
+		String publishedPageSpecificationExternalReferenceCode) {
+
+		return new PageSpecification[] {
+			getWidgetPageSpecification(
+				getCustomFields(),
+				publishedPageSpecificationExternalReferenceCode, null,
+				PageSpecification.Status.APPROVED,
+				getWidgetPageSections(PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID))
+		};
 	}
 
 	public static void testPostSiteSiteByExternalReferenceCodePageSpecification(

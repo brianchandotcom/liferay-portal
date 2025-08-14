@@ -4106,6 +4106,37 @@
 			"name": "P2S3QuizQuestion",
 			"objectFields": [
 				{
+					"businessType": "Aggregation",
+					"externalReferenceCode": "ANSWERS",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Answers"
+					},
+					"localized": false,
+					"name": "answers",
+					"objectFieldSettings": [
+						{
+							"name": "function",
+							"value": "COUNT"
+						},
+						{
+							"name": "objectRelationshipName",
+							"value": "quizAnswers"
+						},
+						{
+							"name": "filters",
+							"value": []
+						}
+					],
+					"readOnly": "true",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "NAME",
@@ -4186,14 +4217,14 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
-					"externalReferenceCode": "TOTAL_SCORE",
+					"externalReferenceCode": "QUESTION_TOTAL_SCORE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Total Score"
+						"en_US": "Question Total Score"
 					},
 					"localized": false,
-					"name": "totalScore",
+					"name": "questionTotalScore",
 					"readOnly": "false",
 					"required": true,
 					"state": false,
@@ -4202,6 +4233,84 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Question Create / Edit"
+					},
+					"objectDefinitionExternalReferenceCode": "P2S3_QUIZ_QUESTION",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Question Information"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Main"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "name",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "questionType",
+													"priority": 0,
+													"size": 4
+												},
+												{
+													"objectFieldName": "position",
+													"priority": 0,
+													"size": 4
+												},
+												{
+													"objectFieldName": "questionTotalScore",
+													"priority": 0,
+													"size": 4
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "question",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							],
+							"objectRelationshipId": 0,
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "Answers"
+							},
+							"objectLayoutBoxes": [],
+							"objectRelationshipExternalReferenceCode": "P2S3_QUIZ_QUESTION_TO_P2S3_QUIZ_ANSWERS",
+							"priority": 0
+						}
+					]
+				}
+			],
 			"objectRelationships": [
 				{
 					"deletionType": "disassociate",

@@ -171,18 +171,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				_roleService.getUserGroupRoles(userAccountId, assetLibraryId),
 				com.liferay.portal.kernel.model.Role.ROLE_ID_ACCESSOR));
 
-		long[] roleIds = new long[0];
-
-		for (Role role : roles) {
-			com.liferay.portal.kernel.model.Role persistedRole =
-				_roleService.getRole(
-					contextCompany.getCompanyId(), role.getName());
-
-			roleIds = ArrayUtil.append(roleIds, persistedRole.getRoleId());
-		}
-
 		_userGroupRoleService.addUserGroupRoles(
-			userAccountId, assetLibraryId, roleIds);
+			userAccountId, assetLibraryId, _getRoleIds(roles));
 
 		return Page.of(
 			transform(
@@ -214,18 +204,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		_userGroupGroupRoleService.deleteUserGroupGroupRoles(
 			userGroupId, assetLibraryId, roleIdsArray);
 
-		long[] roleIds = new long[0];
-
-		for (Role role : roles) {
-			com.liferay.portal.kernel.model.Role persistedRole =
-				_roleService.getRole(
-					contextCompany.getCompanyId(), role.getName());
-
-			roleIds = ArrayUtil.append(roleIds, persistedRole.getRoleId());
-		}
-
 		_userGroupGroupRoleService.addUserGroupGroupRoles(
-			userGroupId, assetLibraryId, roleIds);
+			userGroupId, assetLibraryId, _getRoleIds(roles));
 
 		return Page.of(
 			transform(
@@ -245,6 +225,20 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		}
 
 		return group;
+	}
+
+	private long[] _getRoleIds(Role[] roles) throws Exception {
+		long[] roleIds = new long[0];
+
+		for (Role role : roles) {
+			com.liferay.portal.kernel.model.Role persistedRole =
+				_roleService.getRole(
+					contextCompany.getCompanyId(), role.getName());
+
+			roleIds = ArrayUtil.append(roleIds, persistedRole.getRoleId());
+		}
+
+		return roleIds;
 	}
 
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)

@@ -974,6 +974,12 @@ public class LayoutUtil {
 			WidgetPageSpecification widgetPageSpecification)
 		throws Exception {
 
+		if (widgetPageSpecification == null) {
+			return LayoutServiceUtil.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), unicodeProperties.toString());
+		}
+
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 

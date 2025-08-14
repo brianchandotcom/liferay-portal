@@ -6,11 +6,14 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 
 /**
  * @author Luis Ortiz
@@ -77,11 +80,23 @@ public class JournalDataCleanupPreupgradeProcess
 		// Then delete Layout related data
 
 		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				StringBundler.concat(
-					"classNameId = (select classNameId from ClassName_ where ",
-					"value = '", Layout.class.getName(), "')"),
-				"classPK", "Layout", "plid", "Layout"));
+			new UpgradeProcess() {
+
+				@Override
+				protected void doUpgrade() throws Exception {
+					DBInspector dbInspector = new DBInspector(connection);
+
+					OrphanReferencesDataCleanupUtil.cleanUpSameTable(
+						StringBundler.concat(
+							"classNameId = (select classNameId from ",
+							"ClassName_ where value = '",
+							Layout.class.getName(), "')"),
+						connection, dbInspector.normalizeName("classPK"),
+						dbInspector.normalizeName("Layout"),
+						dbInspector.normalizeName("plid"));
+				}
+
+			});
 
 		upgrade(
 			new DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess(

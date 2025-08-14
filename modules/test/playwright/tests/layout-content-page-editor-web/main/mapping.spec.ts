@@ -616,6 +616,7 @@ test(
 				status: {
 					code: 0,
 				},
+				titleObjectFieldName: 'name',
 			});
 
 		apiHelpers.data.push({
@@ -735,13 +736,13 @@ test(
 
 		await pageEditorPage.mapObjectAction({
 			entity: 'Potato Providers',
-			entry: firstObjectEntry.externalReferenceCode,
+			entry: firstObjectEntry.name,
 			fragmentId: firstButtonId,
 		});
 
 		await pageEditorPage.mapObjectAction({
 			entity: 'Potato Providers',
-			entry: secondObjectEntry.externalReferenceCode,
+			entry: secondObjectEntry.name,
 			fragmentId: secondButtonId,
 		});
 
@@ -779,7 +780,7 @@ test(
 
 		await expect(
 			page.getByRole('heading', {
-				name: secondObjectEntry.externalReferenceCode,
+				name: secondObjectEntry.name,
 			})
 		).toBeVisible();
 	}

@@ -1456,9 +1456,45 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getUuid()));
 	}
 
+	private void _testPutSiteSiteByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification()
+		throws Exception {
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		SitePage randomSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
+
+		randomSitePage.setPageSpecifications(
+			PageSpecificationsTestUtil.getWidgetPageSpecifications(
+				null, "1_column", randomSitePage.getExternalReferenceCode()));
+
+		SitePage sitePage =
+			sitePageResource.postByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(), randomSitePage);
+
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)sitePage.getPageSettings();
+
+		widgetPageSettings.setLayoutTemplateId("2_columns_ii");
+
+		sitePage.setPageSpecifications(
+			() -> PageSpecificationsTestUtil.getWidgetPageSpecifications(
+				null, "2_columns_ii", sitePage.getExternalReferenceCode()));
+
+		SitePage putSitePage =
+			sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(), sitePage);
+
+		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
+			sitePage.getPageSpecifications(),
+			putSitePage.getPageSpecifications());
+	}
+
 	private void _testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications()
 		throws Exception {
 
+		_testPutSiteSiteByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification();
 		_testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,

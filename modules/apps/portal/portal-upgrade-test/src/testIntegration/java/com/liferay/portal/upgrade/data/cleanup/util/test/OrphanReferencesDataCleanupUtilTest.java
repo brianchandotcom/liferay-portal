@@ -147,11 +147,11 @@ public class OrphanReferencesDataCleanupUtilTest {
 	}
 
 	@Test
-	public void testCleanUpTablesExcludedTable() throws Exception {
+	public void testCleanUpTableExcludedTable() throws Exception {
 		long auditEventId = RandomTestUtil.nextLong();
 		long companyId = RandomTestUtil.nextLong();
 
-		_testCleanUpTables(
+		_testCleanUpTable(
 			logCapture -> {
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -171,10 +171,10 @@ public class OrphanReferencesDataCleanupUtilTest {
 	}
 
 	@Test
-	public void testCleanUpTablesWithoutWhereClause() throws Exception {
+	public void testCleanUpTableWithoutWhereClause() throws Exception {
 		long companyId = RandomTestUtil.nextLong();
 
-		_testCleanUpTables(
+		_testCleanUpTable(
 			logCapture -> {
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -214,12 +214,12 @@ public class OrphanReferencesDataCleanupUtilTest {
 	}
 
 	@Test
-	public void testCleanUpTablesWithWhereClause() throws Exception {
+	public void testCleanUpTableWithWhereClause() throws Exception {
 		long companyId = RandomTestUtil.nextLong();
 		long ownerType1 = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
 		long ownerType2 = PortletKeys.PREFS_OWNER_TYPE_GROUP;
 
-		_testCleanUpTables(
+		_testCleanUpTable(
 			logCapture -> {
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -314,7 +314,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 		}
 	}
 
-	private void _testCleanUpTables(
+	private void _testCleanUpTable(
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
 			UnsafeRunnable<Exception> initializeDataUnsafeRunnable,

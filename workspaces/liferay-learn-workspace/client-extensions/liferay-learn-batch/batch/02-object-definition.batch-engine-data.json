@@ -4196,6 +4196,23 @@
 					"unique": false
 				},
 				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "QUESTION_TOTAL_SCORE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Question Total Score"
+					},
+					"localized": false,
+					"name": "questionTotalScore",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "Integer",
+					"unique": false
+				},
+				{
 					"DBType": "String",
 					"businessType": "Picklist",
 					"externalReferenceCode": "QUESTION_TYPE",
@@ -4212,23 +4229,6 @@
 					"required": true,
 					"state": false,
 					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "QUESTION_TOTAL_SCORE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Question Total Score"
-					},
-					"localized": false,
-					"name": "questionTotalScore",
-					"readOnly": "false",
-					"required": true,
-					"state": false,
-					"type": "Integer",
 					"unique": false
 				}
 			],

@@ -1352,10 +1352,10 @@ public class PortletPreferencesLocalServiceTest
 			UnicodeProperties typeSettingsUnicodeProperties =
 				draftLayout.getTypeSettingsProperties();
 
-			String property = RandomTestUtil.randomString();
-			String valueProperty = RandomTestUtil.randomString();
+			String propertyKey = RandomTestUtil.randomString();
+			String propertyValue = RandomTestUtil.randomString();
 
-			typeSettingsUnicodeProperties.setProperty(property, valueProperty);
+			typeSettingsUnicodeProperties.setProperty(propertyKey, propertyValue);
 
 			_layoutLocalService.updateLayout(
 				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
@@ -1382,13 +1382,13 @@ public class PortletPreferencesLocalServiceTest
 			Assert.assertTrue(
 				layoutRevision.getTypeSettings(
 				).contains(
-					property + "=" + valueProperty
+					propertyKey + "=" + propertyValue
 				));
 
 			Assert.assertTrue(
 				updatedLayout.getTypeSettings(
 				).contains(
-					property + "=" + valueProperty
+					propertyKey + "=" + propertyValue
 				));
 		}
 		finally {

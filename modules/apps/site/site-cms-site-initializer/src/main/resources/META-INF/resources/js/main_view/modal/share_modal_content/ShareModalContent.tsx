@@ -90,18 +90,27 @@ function CollaboratorListItem({
 			</div>
 
 			<div className="autofit-col autofit-col-expand">
-				<div className="align-items-center d-flex">
-					<span className="text-3 text-truncate text-weight-semi-bold">
-						{user.name}
-					</span>
-
-					{toBeShared && (
-						<span className="inline-item inline-item-after label label-inverse-light">
-							<span className="label-item label-item-expand">
-								{Liferay.Language.get('to-be-shared')}
-							</span>
+				<div className="align-items-center d-flex justify-content-between">
+					<div className="d-flex text-truncate">
+						<span className="text-3 text-truncate text-weight-semi-bold">
+							{user.name}
 						</span>
-					)}
+
+						{toBeShared && (
+							<span className="inline-item inline-item-after label label-inverse-light">
+								<span className="label-item label-item-expand text-nowrap">
+									{Liferay.Language.get('to-be-shared')}
+								</span>
+							</span>
+						)}
+					</div>
+
+					<div>
+						<PermissionSelector
+							actionIds={actionIds}
+							onChange={handleChangeUserProperties}
+						/>
+					</div>
 				</div>
 
 				{error ? (
@@ -136,14 +145,7 @@ function CollaboratorListItem({
 				)}
 			</div>
 
-			<div className="autofit-col">
-				<PermissionSelector
-					actionIds={actionIds}
-					onChange={handleChangeUserProperties}
-				/>
-			</div>
-
-			<div className="autofit-col">
+			<div className="autofit-col dropdown-options">
 				<div className="d-flex">
 					<ExpirationDateSelector
 						dateExpired={dateExpired}

@@ -6,6 +6,16 @@ html#{$cadmin-selector} {
 			max-height: 368px;
 		}
 
+		.list-group-item {
+			.autofit-col.dropdown-options {
+				padding: 0;
+			}
+
+			.autofit-col:first-of-type {
+				padding-left: 0;
+			}
+		}
+
 		.permissions-picker {
 			height: 24px;
 		}

@@ -5,6 +5,7 @@
 
 import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {InventoryAnalysisDataType} from './InventoryAnalysisCard';
@@ -106,7 +107,9 @@ const PaginatedTable: React.FC<IPaginatedTable> = ({
 					items={[
 						{
 							id: 'title',
-							name: Liferay.Language.get('structure-label'),
+							name: Liferay.Language.get(
+								currentStructureTypeLabel
+							),
 							width: '200px',
 						},
 						{
@@ -138,7 +141,10 @@ const PaginatedTable: React.FC<IPaginatedTable> = ({
 							<Cell width="10%">
 								<Text size={3} weight="semi-bold">
 									{row['title'] ||
-										`No ${currentStructureTypeLabel}`}
+										sub(
+											Liferay.Language.get('no-x'),
+											currentStructureTypeLabel
+										)}
 								</Text>
 							</Cell>
 

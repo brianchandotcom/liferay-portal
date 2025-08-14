@@ -766,20 +766,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		};
 	}
 
-	private PageSpecification.Type _getPageSpecificationType(
-		SitePage.Type type) {
-
-		PageSpecification.Type pageSpecificationType =
-			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION;
-
-		if (type == SitePage.Type.WIDGET_PAGE) {
-			pageSpecificationType =
-				PageSpecification.Type.WIDGET_PAGE_SPECIFICATION;
-		}
-
-		return pageSpecificationType;
-	}
-
 	private SitePage _getRandomSitePage(
 			ServiceContext serviceContext, SitePage.Type type)
 		throws Exception {
@@ -878,12 +864,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage randomSitePage = _getRandomSitePage(type);
 
-		PageSpecification[] pageSpecifications =
-			PageSpecificationsTestUtil.getPageSpecificationsWithCustomFields(
-				randomSitePage.getExternalReferenceCode(),
-				_getPageSpecificationType(type));
-
-		randomSitePage.setPageSpecifications(pageSpecifications);
+		if (type == SitePage.Type.CONTENT_PAGE) {
+			randomSitePage.setPageSpecifications(
+				PageSpecificationsTestUtil.getContentPageSpecifications(
+					randomSitePage.getExternalReferenceCode()));
+		}
+		else {
+			randomSitePage.setPageSpecifications(
+				PageSpecificationsTestUtil.getWidgetPageSpecifications(
+					randomSitePage.getExternalReferenceCode()));
+		}
 
 		SitePageResource sitePageResource = _getSitePageResource(
 			"pageSpecifications");
@@ -894,7 +884,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		PageSpecificationsTestUtil.assertCustomFields(
 			TransformUtil.transform(
-				pageSpecifications,
+				randomSitePage.getPageSpecifications(),
 				pageSpecification -> pageSpecification.getCustomFields(),
 				CustomField[].class),
 			testGroup.getGroupId(), postSitePage.getPageSpecifications());

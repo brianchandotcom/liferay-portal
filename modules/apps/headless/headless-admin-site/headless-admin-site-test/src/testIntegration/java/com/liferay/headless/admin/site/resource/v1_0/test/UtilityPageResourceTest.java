@@ -861,11 +861,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 									setPageSpecifications(
 										() ->
 											PageSpecificationsTestUtil.
-												getPageSpecificationsWithCustomFields(
+												getContentPageSpecifications(
 													pageSpecification.
-														getExternalReferenceCode(),
-													PageSpecification.Type.
-														CONTENT_PAGE_SPECIFICATION));
+														getExternalReferenceCode()));
 								}
 							}));
 		}
@@ -947,11 +945,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			UtilityPage utilityPage = randomUtilityPage();
 
 			utilityPage.setPageSpecifications(
-				() ->
-					PageSpecificationsTestUtil.
-						getPageSpecificationsWithCustomFields(
-							RandomTestUtil.randomString(),
-							PageSpecification.Type.CONTENT_PAGE_SPECIFICATION));
+				() -> PageSpecificationsTestUtil.getContentPageSpecifications(
+					RandomTestUtil.randomString()));
 
 			_assertProblemException(
 				"BAD_REQUEST",
@@ -1050,11 +1045,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			PageSpecification pageSpecification = pageSpecifications[0];
 
 			utilityPage.setPageSpecifications(
-				() ->
-					PageSpecificationsTestUtil.
-						getPageSpecificationsWithCustomFields(
-							pageSpecification.getExternalReferenceCode(),
-							PageSpecification.Type.CONTENT_PAGE_SPECIFICATION));
+				() -> PageSpecificationsTestUtil.getContentPageSpecifications(
+					pageSpecification.getExternalReferenceCode()));
 
 			_assertProblemException(
 				"BAD_REQUEST",

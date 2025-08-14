@@ -1773,6 +1773,35 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		_assertWidgetPageSpecifications(
 			putPageTemplate.getPageSpecifications(), widgetPageSpecification);
 
+		String layoutTemplateId = "1_column";
+
+		if (Objects.equals(
+				layoutTemplateId,
+				widgetPageTemplateSettings.getLayoutTemplateId())) {
+
+			layoutTemplateId = "2_columns_ii";
+		}
+
+		widgetPageTemplateSettings.setLayoutTemplateId(layoutTemplateId);
+		widgetPageSpecification.setWidgetPageSections(
+			PageSpecificationsTestUtil.getWidgetPageSections(layoutTemplateId));
+
+		putPageTemplate =
+			pageTemplateResource.putSiteSiteByExternalReferenceCodePageTemplate(
+				testGroup.getExternalReferenceCode(),
+				pageTemplate.getExternalReferenceCode(), pageTemplate);
+
+		_assertWidgetPageSpecifications(
+			putPageTemplate.getPageSpecifications(), widgetPageSpecification);
+
+		WidgetPageTemplateSettings putWidgetPageTemplateSettings =
+			(WidgetPageTemplateSettings)
+				putPageTemplate.getPageTemplateSettings();
+
+		Assert.assertEquals(
+			layoutTemplateId,
+			putWidgetPageTemplateSettings.getLayoutTemplateId());
+
 		widgetPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
 				ServiceContextTestUtil.getServiceContext(

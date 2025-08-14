@@ -57,7 +57,7 @@ export const testFlagsEnabled = mergeTests(
 	webContentDisplayPageTest
 );
 
-test('Check if local staging can be enabled', async ({
+test('check if local staging can be enabled', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	stagingConfigurationPage,
@@ -78,7 +78,7 @@ test('Check if local staging can be enabled', async ({
 });
 
 test(
-	'Validate friendlyURL with special characters',
+	'validate friendlyURL with special characters',
 	{tag: ['@LPS-89116']},
 	async ({
 		apiHelpers,
@@ -145,7 +145,7 @@ test(
 );
 
 test(
-	'Verify that the admin could configure staging to ignore previews and thumbnails during the local staging publish process',
+	'verify that the admin could configure staging to ignore previews and thumbnails during the local staging publish process',
 	{tag: ['@LPS-189191', '@LPS-190360']},
 	async ({apiHelpers, instanceSettingsPage, page}) => {
 		const site = await apiHelpers.headlessSite.createSite({
@@ -235,7 +235,7 @@ test(
 );
 
 test(
-	'Verify if information about staging system settings are present',
+	'verify if information about staging system settings are present',
 	{tag: ['@LPS-123156']},
 	async ({instanceSettingsPage}) => {
 		await instanceSettingsPage.goToInstanceSetting(
@@ -270,7 +270,7 @@ test(
 );
 
 testFlagsEnabled(
-	'Check if local staging with page-scoped Web Content can be enabled',
+	'check if local staging with page-scoped Web Content can be enabled',
 	{tag: ['@LPS-83147']},
 	async ({apiHelpers, page, webContentDisplayPage, widgetPagePage}) => {
 		const siteName = getRandomString();

@@ -924,8 +924,9 @@ public class ObjectEntryDTOConverter
 				List<?> relatedModels =
 					objectRelatedModelsProvider.getRelatedModels(
 						relatedObjectDefinitionGroupId,
-						objectRelationship.getObjectRelationshipId(),
-						primaryKey, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+						objectRelationship.getObjectRelationshipId(), null,
+						primaryKey, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						null);
 
 				if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 					SystemObjectDefinitionManager

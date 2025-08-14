@@ -700,6 +700,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 											serviceRegistration) {
 
 								return new ObjectEntryRelatedObjectsResourceImpl(
+									_entityModelProvider,
 									_objectDefinitionLocalService,
 									_objectEntryLocalService,
 									_objectEntryManagerRegistry,

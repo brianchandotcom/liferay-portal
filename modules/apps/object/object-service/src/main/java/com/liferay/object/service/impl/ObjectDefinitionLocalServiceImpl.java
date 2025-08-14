@@ -3143,55 +3143,70 @@ public class ObjectDefinitionLocalServiceImpl
 				invalidObjectDefinitionSettingsNames);
 		}
 
-		if (!StringUtil.equals(
-				objectDefinition.getScope(),
-				ObjectDefinitionConstants.SCOPE_DEPOT)) {
+		for (Map.Entry<String, String> objectDefinitionSettingsValue :
+				objectDefinitionSettingsValuesMap.entrySet()) {
 
-			throw new ObjectDefinitionSettingNameException.NotAllowedNames(
-				objectDefinition.getShortName(),
-				objectDefinitionSettingsValuesMap.keySet());
-		}
+			if (StringUtil.equals(
+					ObjectDefinitionSettingConstants.
+						NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES,
+					objectDefinitionSettingsValue.getKey())) {
 
-		String acceptAllGroups = objectDefinitionSettingsValuesMap.get(
-			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
-
-		if ((acceptAllGroups != null) &&
-			!acceptAllGroups.equals(StringPool.TRUE)) {
-
-			throw new ObjectDefinitionSettingValueException.InvalidValue(
-				objectDefinition.getShortName(),
-				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
-				acceptAllGroups);
-		}
-
-		if (objectDefinitionSettingsValuesMap.containsKey(
-				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS)) {
-
-			if (acceptAllGroups != null) {
-				throw new ObjectDefinitionSettingNameException.NotAllowedNames(
-					objectDefinition.getShortName(),
-					Set.of(
-						ObjectDefinitionSettingConstants.
-							NAME_ACCEPTED_GROUP_IDS));
+				continue;
 			}
 
-			ObjectScopeProvider objectScopeProvider =
-				_objectScopeProviderRegistry.getObjectScopeProvider(
-					objectDefinition.getScope());
+			if (!StringUtil.equals(
+					objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_DEPOT)) {
 
-			String acceptedGroupIds = objectDefinitionSettingsValuesMap.get(
-				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
+				throw new ObjectDefinitionSettingNameException.NotAllowedNames(
+					objectDefinition.getShortName(),
+					objectDefinitionSettingsValuesMap.keySet());
+			}
 
-			for (String acceptedGroupId : acceptedGroupIds.split("\\s*,\\s*")) {
-				if (!objectScopeProvider.isValidGroupId(
-						GetterUtil.getLong(acceptedGroupId))) {
+			String acceptAllGroups = objectDefinitionSettingsValuesMap.get(
+				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
 
-					throw new ObjectDefinitionSettingValueException.
-						InvalidValue(
+			if ((acceptAllGroups != null) &&
+				!acceptAllGroups.equals(StringPool.TRUE)) {
+
+				throw new ObjectDefinitionSettingValueException.InvalidValue(
+					objectDefinition.getShortName(),
+					ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+					acceptAllGroups);
+			}
+
+			if (objectDefinitionSettingsValuesMap.containsKey(
+					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS)) {
+
+				if (acceptAllGroups != null) {
+					throw new ObjectDefinitionSettingNameException.
+						NotAllowedNames(
 							objectDefinition.getShortName(),
-							ObjectDefinitionSettingConstants.
-								NAME_ACCEPTED_GROUP_IDS,
-							acceptedGroupId);
+							Set.of(
+								ObjectDefinitionSettingConstants.
+									NAME_ACCEPTED_GROUP_IDS));
+				}
+
+				ObjectScopeProvider objectScopeProvider =
+					_objectScopeProviderRegistry.getObjectScopeProvider(
+						objectDefinition.getScope());
+
+				String acceptedGroupIds = objectDefinitionSettingsValuesMap.get(
+					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
+
+				for (String acceptedGroupId :
+						acceptedGroupIds.split("\\s*,\\s*")) {
+
+					if (!objectScopeProvider.isValidGroupId(
+							GetterUtil.getLong(acceptedGroupId))) {
+
+						throw new ObjectDefinitionSettingValueException.
+							InvalidValue(
+								objectDefinition.getShortName(),
+								ObjectDefinitionSettingConstants.
+									NAME_ACCEPTED_GROUP_IDS,
+								acceptedGroupId);
+					}
 				}
 			}
 		}
@@ -3305,7 +3320,9 @@ public class ObjectDefinitionLocalServiceImpl
 				new LinkedHashMap<>());
 	private final Set<String> _allowedObjectDefinitionSettingNames = Set.of(
 		ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
-		ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
+		ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+		ObjectDefinitionSettingConstants.
+			NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

@@ -94,7 +94,6 @@ import com.liferay.object.rest.dto.v1_0.util.ScopeUtil;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
-import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -294,45 +293,98 @@ public class DefaultObjectEntryManagerImplTest
 
 		PrincipalThreadLocal.setName(adminUser.getUserId());
 
-		_objectDefinitionA = _addObjectDefinition();
-		_objectDefinitionAA = _addObjectDefinition();
+		_companyObjectDefinitionA = _addObjectDefinition();
+		_companyObjectDefinitionAA = _addObjectDefinition();
 
-		_objectRelationshipA_AA =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinitionA, _objectDefinitionAA,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_companyObjectRelationshipA_AA = TreeTestUtil.bind(
+			_companyObjectDefinitionA.getObjectDefinitionId(),
+			_companyObjectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
-		_objectDefinitionB = _addObjectDefinition();
+		_companyObjectDefinitionB = _addObjectDefinition();
 
-		_objectRelationshipB_AA =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinitionB, _objectDefinitionAA,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_companyObjectRelationshipB_AA = TreeTestUtil.bind(
+			_companyObjectDefinitionB.getObjectDefinitionId(),
+			_companyObjectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService,
-			List.of(_objectRelationshipA_AA, _objectRelationshipB_AA));
+		_companyObjectEntryA = _addObjectEntry(
+			_companyObjectDefinitionA, Collections.emptyMap());
+		_companyObjectEntryB = _addObjectEntry(
+			_companyObjectDefinitionB, Collections.emptyMap());
 
-		_objectRelationshipA_AA =
-			_objectRelationshipLocalService.getObjectRelationship(
-				_objectRelationshipA_AA.getObjectRelationshipId());
-		_objectRelationshipB_AA =
-			_objectRelationshipLocalService.getObjectRelationship(
-				_objectRelationshipB_AA.getObjectRelationshipId());
-
-		_objectEntryA = _addObjectEntry(
-			_objectDefinitionA, Collections.emptyMap());
-		_objectEntryB = _addObjectEntry(
-			_objectDefinitionB, Collections.emptyMap());
-
-		_objectRelationshipA_AAObjectField2 =
+		_companyObjectRelationshipA_AAObjectField2 =
 			_objectFieldLocalService.getObjectField(
-				_objectRelationshipA_AA.getObjectFieldId2());
-		_objectRelationshipB_AAObjectField2 =
+				_companyObjectRelationshipA_AA.getObjectFieldId2());
+		_companyObjectRelationshipB_AAObjectField2 =
 			_objectFieldLocalService.getObjectField(
-				_objectRelationshipB_AA.getObjectFieldId2());
+				_companyObjectRelationshipB_AA.getObjectFieldId2());
+
+		_siteObjectDefinitionA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"textObjectFieldName"
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+		_siteObjectDefinitionAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"textObjectFieldName"
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		_siteObjectRelationshipA_AA = TreeTestUtil.bind(
+			_siteObjectDefinitionA.getObjectDefinitionId(),
+			_siteObjectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_siteObjectDefinitionB =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"textObjectFieldName"
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		_siteObjectRelationshipB_AA = TreeTestUtil.bind(
+			_siteObjectDefinitionB.getObjectDefinitionId(),
+			_siteObjectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_siteObjectEntryA = _addObjectEntry(
+			_siteObjectDefinitionA,
+			new ObjectEntry() {
+				{
+					properties = new HashMap<>(Collections.emptyMap());
+				}
+			},
+			_group.getGroupKey());
+		_siteObjectEntryB = _addObjectEntry(
+			_siteObjectDefinitionB,
+			new ObjectEntry() {
+				{
+					properties = new HashMap<>(Collections.emptyMap());
+				}
+			},
+			_group.getGroupKey());
+
+		_siteObjectRelationshipA_AAObjectField2 =
+			_objectFieldLocalService.getObjectField(
+				_siteObjectRelationshipA_AA.getObjectFieldId2());
+		_siteObjectRelationshipB_AAObjectField2 =
+			_objectFieldLocalService.getObjectField(
+				_siteObjectRelationshipB_AA.getObjectFieldId2());
 	}
 
 	@AfterClass
@@ -1156,14 +1208,12 @@ public class DefaultObjectEntryManagerImplTest
 
 		_defaultObjectEntryManager.addRelatedObjectEntry(
 			_simpleDTOConverterContext,
-			objectDefinitionLocalService.getObjectDefinition(
-				childNode.getPrimaryKey()),
 			new ObjectEntry() {
 				{
 					properties = new HashMap<>();
 				}
 			},
-			objectRelationship, objectEntry.getId(), null);
+			objectEntry.getId(), objectRelationship);
 
 		_user = _addUser();
 
@@ -1178,14 +1228,12 @@ public class DefaultObjectEntryManagerImplTest
 
 		_defaultObjectEntryManager.addRelatedObjectEntry(
 			_simpleDTOConverterContext,
-			objectDefinitionLocalService.getObjectDefinition(
-				childNode.getPrimaryKey()),
 			new ObjectEntry() {
 				{
 					properties = new HashMap<>();
 				}
 			},
-			objectRelationship, objectEntry.getId(), null);
+			objectEntry.getId(), objectRelationship);
 
 		_removeResourcePermission(
 			ActionKeys.UPDATE, _rootObjectDefinition, _buyerRole);
@@ -2976,79 +3024,37 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testAddRelatedObjectEntry() throws Exception {
-
-		// Add related object entry
-
-		ObjectEntry objectEntryAA =
-			_defaultObjectEntryManager.addRelatedObjectEntry(
-				_createDTOConverterContext(), _objectDefinitionAA,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							_objectRelationshipA_AAObjectField2::getName,
-							RandomTestUtil.randomInt()
-						).put(
-							_objectRelationshipB_AAObjectField2::getName,
-							RandomTestUtil.randomInt()
-						).build();
-					}
-				},
-				_objectRelationshipLocalService.getObjectRelationship(
-					_objectRelationshipA_AA.getObjectRelationshipId()),
-				_objectEntryA.getId(), ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		Assert.assertEquals(
-			GetterUtil.getLong(_objectEntryA.getId()),
-			GetterUtil.getLong(
-				objectEntryAA.getPropertyValue(
-					_objectRelationshipA_AAObjectField2.getName())));
-		Assert.assertEquals(
-			0L,
-			objectEntryAA.getPropertyValue(
-				_objectRelationshipB_AAObjectField2.getName()));
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.getObjectEntry(objectEntryAA.getId());
-
-		Assert.assertEquals(
-			GetterUtil.getLong(_objectEntryA.getId()),
-			serviceBuilderObjectEntry.getRootObjectEntryId());
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntryAA.getId());
-
-		// Add object entry
-
-		objectEntryAA = _defaultObjectEntryManager.addObjectEntry(
-			_createDTOConverterContext(), _objectDefinitionAA,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						_objectRelationshipA_AAObjectField2::getName,
-						RandomTestUtil.randomInt()
-					).put(
-						_objectRelationshipB_AAObjectField2::getName,
-						RandomTestUtil.randomInt()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		Assert.assertEquals(
-			0L,
-			objectEntryAA.getPropertyValue(
-				_objectRelationshipA_AAObjectField2.getName()));
-		Assert.assertEquals(
-			0L,
-			objectEntryAA.getPropertyValue(
-				_objectRelationshipB_AAObjectField2.getName()));
-
-		serviceBuilderObjectEntry = _objectEntryLocalService.getObjectEntry(
-			objectEntryAA.getId());
-
-		Assert.assertEquals(
-			0L, serviceBuilderObjectEntry.getRootObjectEntryId());
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntryAA.getId());
+		_testAddRelatedObjectEntry(
+			_companyObjectDefinitionAA, _companyObjectEntryA,
+			_companyObjectRelationshipA_AA,
+			_companyObjectRelationshipA_AAObjectField2,
+			_companyObjectRelationshipB_AAObjectField2,
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			(objectEntry1, objectEntry2, objectRelationship) ->
+				_defaultObjectEntryManager.addRelatedObjectEntry(
+					_createDTOConverterContext(), objectEntry2,
+					objectEntry1.getId(), objectRelationship));
+		_testAddRelatedObjectEntry(
+			_companyObjectDefinitionAA, _companyObjectEntryA,
+			_companyObjectRelationshipA_AA,
+			_companyObjectRelationshipA_AAObjectField2,
+			_companyObjectRelationshipB_AAObjectField2,
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			(objectEntry1, objectEntry2, objectRelationship) ->
+				_defaultObjectEntryManager.addRelatedObjectEntry(
+					_createDTOConverterContext(),
+					objectEntry1.getExternalReferenceCode(), objectEntry2,
+					objectRelationship, null));
+		_testAddRelatedObjectEntry(
+			_siteObjectDefinitionAA, _siteObjectEntryA,
+			_siteObjectRelationshipA_AA,
+			_siteObjectRelationshipA_AAObjectField2,
+			_siteObjectRelationshipB_AAObjectField2, _group.getGroupKey(),
+			(objectEntry1, objectEntry2, objectRelationship) ->
+				_defaultObjectEntryManager.addRelatedObjectEntry(
+					_createDTOConverterContext(),
+					objectEntry1.getExternalReferenceCode(), objectEntry2,
+					objectRelationship, _group.getGroupKey()));
 	}
 
 	@Test
@@ -9162,6 +9168,75 @@ public class DefaultObjectEntryManagerImplTest
 			WorkflowConstants.STATUS_APPROVED, objectEntry);
 	}
 
+	private void _testAddRelatedObjectEntry(
+			ObjectDefinition objectDefinitionAA, ObjectEntry objectEntryA,
+			ObjectRelationship objectRelationshipA_AA,
+			ObjectField objectRelationshipA_AAObjectField2,
+			ObjectField objectRelationshipB_AAObjectField2, String scopeKey,
+			UnsafeTriFunction
+				<ObjectEntry, ObjectEntry, ObjectRelationship, ObjectEntry,
+				 Exception> unsafeTriFunction)
+		throws Exception {
+
+		// Add object entry
+
+		ObjectEntry objectEntry = new ObjectEntry() {
+			{
+				properties = HashMapBuilder.<String, Object>put(
+					objectRelationshipA_AAObjectField2::getName,
+					RandomTestUtil.randomInt()
+				).put(
+					objectRelationshipB_AAObjectField2::getName,
+					RandomTestUtil.randomInt()
+				).build();
+			}
+		};
+
+		ObjectEntry objectEntryAA = _defaultObjectEntryManager.addObjectEntry(
+			_createDTOConverterContext(), objectDefinitionAA, objectEntry,
+			scopeKey);
+
+		Assert.assertEquals(
+			0L,
+			objectEntryAA.getPropertyValue(
+				objectRelationshipA_AAObjectField2.getName()));
+		Assert.assertEquals(
+			0L,
+			objectEntryAA.getPropertyValue(
+				objectRelationshipB_AAObjectField2.getName()));
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntryAA.getId());
+
+		Assert.assertEquals(
+			0L, serviceBuilderObjectEntry.getRootObjectEntryId());
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAA.getId());
+
+		// Add related object entry
+
+		objectEntryAA = unsafeTriFunction.apply(
+			objectEntryA, objectEntry, objectRelationshipA_AA);
+
+		Assert.assertEquals(
+			objectEntryA.getId(),
+			objectEntryAA.getPropertyValue(
+				objectRelationshipA_AAObjectField2.getName()));
+		Assert.assertEquals(
+			0L,
+			objectEntryAA.getPropertyValue(
+				objectRelationshipB_AAObjectField2.getName()));
+
+		serviceBuilderObjectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntryAA.getId());
+
+		Assert.assertEquals(
+			GetterUtil.getLong(objectEntryA.getId()),
+			serviceBuilderObjectEntry.getRootObjectEntryId());
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAA.getId());
+	}
+
 	private void _testDeleteObjectEntryWithAccountEntryRestricted2(
 			String actionId, Tree tree)
 		throws Exception {
@@ -9220,10 +9295,10 @@ public class DefaultObjectEntryManagerImplTest
 		throws Exception {
 
 		ObjectEntry objectEntryAA1 = _addObjectEntry(
-			_objectDefinitionAA, Collections.emptyMap());
+			_companyObjectDefinitionAA, Collections.emptyMap());
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_createDTOConverterContext(), _objectDefinitionAA,
+			_createDTOConverterContext(), _companyObjectDefinitionAA,
 			objectEntryAA1.getId());
 
 		Assert.assertNull(
@@ -9231,31 +9306,31 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectEntry objectEntryAA2 =
 			_defaultObjectEntryManager.addRelatedObjectEntry(
-				_createDTOConverterContext(), _objectDefinitionAA,
+				_createDTOConverterContext(),
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
-							_objectRelationshipA_AAObjectField2::getName,
-							_objectEntryA.getId()
+							_companyObjectRelationshipA_AAObjectField2::getName,
+							_companyObjectEntryA.getId()
 						).build();
 					}
 				},
-				_objectRelationshipLocalService.getObjectRelationship(
-					_objectRelationshipA_AA.getObjectRelationshipId()),
-				_objectEntryA.getId(), ObjectDefinitionConstants.SCOPE_COMPANY);
+				_companyObjectEntryA.getId(), _companyObjectRelationshipA_AA);
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
 			StringBundler.concat(
 				"No ObjectEntry exists with the key {",
-				_objectRelationshipB_AAObjectField2.getName(), "=",
-				_objectEntryB.getId(), ", objectEntryId=",
+				_companyObjectRelationshipB_AAObjectField2.getName(), "=",
+				_companyObjectEntryB.getId(), ", objectEntryId=",
 				objectEntryAA2.getId(), "}"),
 			() -> unsafeTriConsumer.accept(
-				_objectEntryB, objectEntryAA2, _objectRelationshipB_AA));
+				_companyObjectEntryB, objectEntryAA2,
+				_companyObjectRelationshipB_AA));
 
 		unsafeTriConsumer.accept(
-			_objectEntryA, objectEntryAA2, _objectRelationshipA_AA);
+			_companyObjectEntryA, objectEntryAA2,
+			_companyObjectRelationshipA_AA);
 
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(objectEntryAA2.getId()));
@@ -9331,7 +9406,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectEntry objectEntryA_AA =
 			_defaultObjectEntryManager.addRelatedObjectEntry(
-				_simpleDTOConverterContext, _objectDefinitionAA,
+				_simpleDTOConverterContext,
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
@@ -9339,13 +9414,11 @@ public class DefaultObjectEntryManagerImplTest
 						).build();
 					}
 				},
-				_objectRelationshipLocalService.getObjectRelationship(
-					_objectRelationshipA_AA.getObjectRelationshipId()),
-				_objectEntryA.getId(), null);
+				_companyObjectEntryA.getId(), _companyObjectRelationshipA_AA);
 
 		ObjectEntry objectEntryB_AA =
 			_defaultObjectEntryManager.addRelatedObjectEntry(
-				_simpleDTOConverterContext, _objectDefinitionAA,
+				_simpleDTOConverterContext,
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
@@ -9353,12 +9426,10 @@ public class DefaultObjectEntryManagerImplTest
 						).build();
 					}
 				},
-				_objectRelationshipLocalService.getObjectRelationship(
-					_objectRelationshipB_AA.getObjectRelationshipId()),
-				_objectEntryB.getId(), null);
+				_companyObjectEntryB.getId(), _companyObjectRelationshipB_AA);
 
 		ObjectEntry objectEntryAA = _defaultObjectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, _objectDefinitionAA,
+			_simpleDTOConverterContext, _companyObjectDefinitionAA,
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
@@ -9370,18 +9441,19 @@ public class DefaultObjectEntryManagerImplTest
 
 		_user = _addUser();
 
-		_addRoleUser(new String[] {ActionKeys.VIEW}, _objectDefinitionA, _user);
+		_addRoleUser(
+			new String[] {ActionKeys.VIEW}, _companyObjectDefinitionA, _user);
 
 		Page<ObjectEntry> objectEntryPage = unsafeBiFunction.apply(
-			_objectEntryA, _objectRelationshipA_AA);
+			_companyObjectEntryA, _companyObjectRelationshipA_AA);
 
 		assertEquals(
 			(List<ObjectEntry>)objectEntryPage.getItems(),
 			List.of(objectEntryA_AA));
 
 		objectEntryPage = _objectEntryManager.getObjectEntries(
-			TestPropsValues.getCompanyId(), _objectDefinitionAA, null, null,
-			_createDTOConverterContext(), (String)null, null, null, null);
+			TestPropsValues.getCompanyId(), _companyObjectDefinitionAA, null,
+			null, _createDTOConverterContext(), (String)null, null, null, null);
 
 		assertEquals(
 			(List<ObjectEntry>)objectEntryPage.getItems(),
@@ -9391,30 +9463,30 @@ public class DefaultObjectEntryManagerImplTest
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have VIEW permission for ",
-				_objectDefinitionB.getClassName(), StringPool.SPACE,
-				_objectEntryB.getId()),
+				_companyObjectDefinitionB.getClassName(), StringPool.SPACE,
+				_companyObjectEntryB.getId()),
 			() -> unsafeBiFunction.apply(
-				_objectEntryB, _objectRelationshipB_AA));
+				_companyObjectEntryB, _companyObjectRelationshipB_AA));
 
 		// User with permission to view object definition AA
 
 		_user = _addUser();
 
 		_addRoleUser(
-			new String[] {ActionKeys.VIEW}, _objectDefinitionAA, _user);
+			new String[] {ActionKeys.VIEW}, _companyObjectDefinitionAA, _user);
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have VIEW permission for ",
-				_objectDefinitionA.getClassName(), StringPool.SPACE,
-				_objectEntryA.getId()),
+				_companyObjectDefinitionA.getClassName(), StringPool.SPACE,
+				_companyObjectEntryA.getId()),
 			() -> unsafeBiFunction.apply(
-				_objectEntryA, _objectRelationshipA_AA));
+				_companyObjectEntryA, _companyObjectRelationshipA_AA));
 
 		objectEntryPage = _objectEntryManager.getObjectEntries(
-			TestPropsValues.getCompanyId(), _objectDefinitionAA, null, null,
-			_createDTOConverterContext(), (String)null, null, null, null);
+			TestPropsValues.getCompanyId(), _companyObjectDefinitionAA, null,
+			null, _createDTOConverterContext(), (String)null, null, null, null);
 
 		assertEquals(
 			(List<ObjectEntry>)objectEntryPage.getItems(),
@@ -9424,37 +9496,38 @@ public class DefaultObjectEntryManagerImplTest
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have VIEW permission for ",
-				_objectDefinitionB.getClassName(), StringPool.SPACE,
-				_objectEntryB.getId()),
+				_companyObjectDefinitionB.getClassName(), StringPool.SPACE,
+				_companyObjectEntryB.getId()),
 			() -> unsafeBiFunction.apply(
-				_objectEntryB, _objectRelationshipB_AA));
+				_companyObjectEntryB, _companyObjectRelationshipB_AA));
 
 		// User with permission to view object definition B
 
 		_user = _addUser();
 
-		_addRoleUser(new String[] {ActionKeys.VIEW}, _objectDefinitionB, _user);
+		_addRoleUser(
+			new String[] {ActionKeys.VIEW}, _companyObjectDefinitionB, _user);
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have VIEW permission for ",
-				_objectDefinitionA.getClassName(), StringPool.SPACE,
-				_objectEntryA.getId()),
+				_companyObjectDefinitionA.getClassName(), StringPool.SPACE,
+				_companyObjectEntryA.getId()),
 			() -> _defaultObjectEntryManager.getRelatedObjectEntries(
-				_createDTOConverterContext(), _objectEntryA.getId(),
-				_objectRelationshipA_AA, null));
+				_createDTOConverterContext(), _companyObjectEntryA.getId(),
+				_companyObjectRelationshipA_AA, null));
 
 		objectEntryPage = _objectEntryManager.getObjectEntries(
-			TestPropsValues.getCompanyId(), _objectDefinitionAA, null, null,
-			_createDTOConverterContext(), (String)null, null, null, null);
+			TestPropsValues.getCompanyId(), _companyObjectDefinitionAA, null,
+			null, _createDTOConverterContext(), (String)null, null, null, null);
 
 		assertEquals(
 			(List<ObjectEntry>)objectEntryPage.getItems(),
 			Collections.emptyList());
 
 		objectEntryPage = unsafeBiFunction.apply(
-			_objectEntryB, _objectRelationshipB_AA);
+			_companyObjectEntryB, _companyObjectRelationshipB_AA);
 
 		assertEquals(
 			(List<ObjectEntry>)objectEntryPage.getItems(),
@@ -9464,28 +9537,30 @@ public class DefaultObjectEntryManagerImplTest
 
 		_user = _addUser();
 
-		_addRoleUser(new String[] {ActionKeys.VIEW}, _objectDefinitionA, _user);
 		_addRoleUser(
-			new String[] {ActionKeys.VIEW}, _objectDefinitionAA, _user);
-		_addRoleUser(new String[] {ActionKeys.VIEW}, _objectDefinitionB, _user);
+			new String[] {ActionKeys.VIEW}, _companyObjectDefinitionA, _user);
+		_addRoleUser(
+			new String[] {ActionKeys.VIEW}, _companyObjectDefinitionAA, _user);
+		_addRoleUser(
+			new String[] {ActionKeys.VIEW}, _companyObjectDefinitionB, _user);
 
 		objectEntryPage = unsafeBiFunction.apply(
-			_objectEntryA, _objectRelationshipA_AA);
+			_companyObjectEntryA, _companyObjectRelationshipA_AA);
 
 		assertEquals(
 			(List<ObjectEntry>)objectEntryPage.getItems(),
 			List.of(objectEntryA_AA));
 
 		objectEntryPage = _objectEntryManager.getObjectEntries(
-			TestPropsValues.getCompanyId(), _objectDefinitionAA, null, null,
-			_createDTOConverterContext(), (String)null, null, null, null);
+			TestPropsValues.getCompanyId(), _companyObjectDefinitionAA, null,
+			null, _createDTOConverterContext(), (String)null, null, null, null);
 
 		assertEquals(
 			(List<ObjectEntry>)objectEntryPage.getItems(),
 			List.of(objectEntryAA));
 
 		objectEntryPage = unsafeBiFunction.apply(
-			_objectEntryB, _objectRelationshipB_AA);
+			_companyObjectEntryB, _companyObjectRelationshipB_AA);
 
 		assertEquals(
 			(List<ObjectEntry>)objectEntryPage.getItems(),
@@ -9503,67 +9578,69 @@ public class DefaultObjectEntryManagerImplTest
 		throws Exception {
 
 		ObjectEntry objectEntryAA1 = _addObjectEntry(
-			_objectDefinitionAA, Collections.emptyMap());
+			_companyObjectDefinitionAA, Collections.emptyMap());
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
 			StringBundler.concat(
 				"No ObjectEntry exists with the key {",
-				_objectRelationshipA_AAObjectField2.getName(), "=",
-				_objectEntryA.getId(), ", objectEntryId=",
+				_companyObjectRelationshipA_AAObjectField2.getName(), "=",
+				_companyObjectEntryA.getId(), ", objectEntryId=",
 				objectEntryAA1.getId(), "}"),
 			() -> unsafeTriFunction.apply(
-				_objectEntryA, objectEntryAA1, _objectRelationshipA_AA));
+				_companyObjectEntryA, objectEntryAA1,
+				_companyObjectRelationshipA_AA));
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
 			StringBundler.concat(
 				"No ObjectEntry exists with the key {",
-				_objectRelationshipB_AAObjectField2.getName(), "=",
-				_objectEntryB.getId(), ", objectEntryId=",
+				_companyObjectRelationshipB_AAObjectField2.getName(), "=",
+				_companyObjectEntryB.getId(), ", objectEntryId=",
 				objectEntryAA1.getId(), "}"),
 			() -> unsafeTriFunction.apply(
-				_objectEntryB, objectEntryAA1, _objectRelationshipB_AA));
+				_companyObjectEntryB, objectEntryAA1,
+				_companyObjectRelationshipB_AA));
 
 		Assert.assertNotNull(
 			_defaultObjectEntryManager.getObjectEntry(
-				dtoConverterContext, _objectDefinitionAA,
+				dtoConverterContext, _companyObjectDefinitionAA,
 				objectEntryAA1.getId()));
 
 		ObjectEntry objectEntryAA2 =
 			_defaultObjectEntryManager.addRelatedObjectEntry(
-				_createDTOConverterContext(), _objectDefinitionAA,
+				_createDTOConverterContext(),
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
-							_objectRelationshipA_AAObjectField2::getName,
-							_objectEntryA.getId()
+							_companyObjectRelationshipA_AAObjectField2::getName,
+							_companyObjectEntryA.getId()
 						).build();
 					}
 				},
-				_objectRelationshipLocalService.getObjectRelationship(
-					_objectRelationshipA_AA.getObjectRelationshipId()),
-				_objectEntryA.getId(), ObjectDefinitionConstants.SCOPE_COMPANY);
+				_companyObjectEntryA.getId(), _companyObjectRelationshipA_AA);
 
 		Assert.assertNotNull(
 			unsafeTriFunction.apply(
-				_objectEntryA, objectEntryAA2, _objectRelationshipA_AA));
+				_companyObjectEntryA, objectEntryAA2,
+				_companyObjectRelationshipA_AA));
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
 			StringBundler.concat(
 				"No ObjectEntry exists with the key {",
-				_objectRelationshipB_AAObjectField2.getName(), "=",
-				_objectEntryB.getId(), ", objectEntryId=",
+				_companyObjectRelationshipB_AAObjectField2.getName(), "=",
+				_companyObjectEntryB.getId(), ", objectEntryId=",
 				objectEntryAA2.getId(), "}"),
 			() -> unsafeTriFunction.apply(
-				_objectEntryB, objectEntryAA2, _objectRelationshipB_AA));
+				_companyObjectEntryB, objectEntryAA2,
+				_companyObjectRelationshipB_AA));
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
 			StringBundler.concat(
 				"No ObjectEntry exists with the key {objectEntryId=",
 				objectEntryAA2.getId(), ", rootObjectEntryId=0}"),
 			() -> _defaultObjectEntryManager.getObjectEntry(
-				dtoConverterContext, _objectDefinitionAA,
+				dtoConverterContext, _companyObjectDefinitionAA,
 				objectEntryAA2.getId()));
 	}
 
@@ -9634,19 +9711,19 @@ public class DefaultObjectEntryManagerImplTest
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntryAA =
 			ObjectEntryTestUtil.addObjectEntry(
-				_objectDefinitionAA,
+				_companyObjectDefinitionAA,
 				HashMapBuilder.<String, Serializable>put(
-					_objectRelationshipA_AAObjectField2.getName(),
-					_objectEntryA.getId()
+					_companyObjectRelationshipA_AAObjectField2.getName(),
+					_companyObjectEntryA.getId()
 				).build());
 
 		ObjectEntry objectEntryAA = new ObjectEntry() {
 			{
 				properties = HashMapBuilder.<String, Object>put(
-					_objectRelationshipA_AAObjectField2::getName,
+					_companyObjectRelationshipA_AAObjectField2::getName,
 					RandomTestUtil.randomInt()
 				).put(
-					_objectRelationshipB_AAObjectField2::getName,
+					_companyObjectRelationshipB_AAObjectField2::getName,
 					RandomTestUtil.randomInt()
 				).build();
 			}
@@ -9655,33 +9732,33 @@ public class DefaultObjectEntryManagerImplTest
 		if (partialUpdate) {
 			objectEntryAA =
 				_defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
-					_createDTOConverterContext(), _objectDefinitionAA,
+					_createDTOConverterContext(), _companyObjectDefinitionAA,
 					objectEntryAA,
 					serviceBuilderObjectEntryAA.getObjectEntryId(),
-					_objectRelationshipA_AA, _objectEntryA.getId());
+					_companyObjectRelationshipA_AA, _companyObjectEntryA.getId());
 		}
 		else {
 			objectEntryAA = _defaultObjectEntryManager.updateRelatedObjectEntry(
-				_createDTOConverterContext(), _objectDefinitionAA,
+				_createDTOConverterContext(), _companyObjectDefinitionAA,
 				serviceBuilderObjectEntryAA.getObjectEntryId(), objectEntryAA,
-				_objectRelationshipA_AA, _objectEntryA.getId());
+				_companyObjectRelationshipA_AA, _companyObjectEntryA.getId());
 		}
 
 		Assert.assertEquals(
-			GetterUtil.getLong(_objectEntryA.getId()),
+			GetterUtil.getLong(_companyObjectEntryA.getId()),
 			GetterUtil.getLong(
 				objectEntryAA.getPropertyValue(
-					_objectRelationshipA_AAObjectField2.getName())));
+					_companyObjectRelationshipA_AAObjectField2.getName())));
 		Assert.assertEquals(
 			0L,
 			objectEntryAA.getPropertyValue(
-				_objectRelationshipB_AAObjectField2.getName()));
+				_companyObjectRelationshipB_AAObjectField2.getName()));
 
 		serviceBuilderObjectEntryAA = _objectEntryLocalService.getObjectEntry(
 			objectEntryAA.getId());
 
 		Assert.assertEquals(
-			GetterUtil.getLong(_objectEntryA.getId()),
+			GetterUtil.getLong(_companyObjectEntryA.getId()),
 			serviceBuilderObjectEntryAA.getRootObjectEntryId());
 	}
 
@@ -9748,13 +9825,17 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntry.getScopeKey());
 	}
 
+	private static ObjectDefinition _companyObjectDefinitionA;
+	private static ObjectDefinition _companyObjectDefinitionAA;
+	private static ObjectDefinition _companyObjectDefinitionB;
+	private static ObjectEntry _companyObjectEntryA;
+	private static ObjectEntry _companyObjectEntryB;
+	private static ObjectRelationship _companyObjectRelationshipA_AA;
+	private static ObjectField _companyObjectRelationshipA_AAObjectField2;
+	private static ObjectRelationship _companyObjectRelationshipB_AA;
+	private static ObjectField _companyObjectRelationshipB_AAObjectField2;
 	private static DefaultObjectEntryManager _defaultObjectEntryManager;
 	private static Group _group;
-	private static ObjectDefinition _objectDefinitionA;
-	private static ObjectDefinition _objectDefinitionAA;
-	private static ObjectDefinition _objectDefinitionB;
-	private static ObjectEntry _objectEntryA;
-	private static ObjectEntry _objectEntryB;
 
 	@Inject(
 		filter = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
@@ -9764,11 +9845,6 @@ public class DefaultObjectEntryManagerImplTest
 	@Inject
 	private static ObjectFieldLocalService _objectFieldLocalService;
 
-	private static ObjectRelationship _objectRelationshipA_AA;
-	private static ObjectField _objectRelationshipA_AAObjectField2;
-	private static ObjectRelationship _objectRelationshipB_AA;
-	private static ObjectField _objectRelationshipB_AAObjectField2;
-
 	@Inject
 	private static ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
@@ -9777,6 +9853,15 @@ public class DefaultObjectEntryManagerImplTest
 	private static PermissionChecker _originalPermissionChecker;
 	private static DateFormat _simpleDateFormat;
 	private static DTOConverterContext _simpleDTOConverterContext;
+	private static ObjectDefinition _siteObjectDefinitionA;
+	private static ObjectDefinition _siteObjectDefinitionAA;
+	private static ObjectDefinition _siteObjectDefinitionB;
+	private static ObjectEntry _siteObjectEntryA;
+	private static ObjectEntry _siteObjectEntryB;
+	private static ObjectRelationship _siteObjectRelationshipA_AA;
+	private static ObjectField _siteObjectRelationshipA_AAObjectField2;
+	private static ObjectRelationship _siteObjectRelationshipB_AA;
+	private static ObjectField _siteObjectRelationshipB_AAObjectField2;
 
 	private Role _accountAdministratorRole;
 

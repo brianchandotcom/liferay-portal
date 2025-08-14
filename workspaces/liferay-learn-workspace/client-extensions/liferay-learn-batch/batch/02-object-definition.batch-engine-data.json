@@ -2501,6 +2501,33 @@
 			},
 			"modifiable": true,
 			"name": "P2S3LearningPath",
+			"objectActions": [
+				{
+					"active": true,
+					"label": {
+						"en_US": "Cascade Permissions"
+					},
+					"name": "setCourseStudentsRole",
+					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					}
+				},
+				{
+					"active": true,
+					"errorMessage": {
+						"en_US": "Error while create course students role"
+					},
+					"label": {
+						"en_US": "Cascade Permissions"
+					},
+					"name": "fixCourseStudentsRole",
+					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
+					"objectActionTriggerKey": "standalone",
+					"parameters": {
+					}
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Clob",
@@ -2633,6 +2660,23 @@
 					"unique": false
 				},
 				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "POSITION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Position"
+					},
+					"localized": false,
+					"name": "position",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "Integer",
+					"unique": false
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "TITLE",
@@ -2652,6 +2696,128 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Learning Path Create / Edit"
+					},
+					"objectDefinitionExternalReferenceCode": "P2S3_LEARNING_PATH",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Learning Path Information"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Main"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "name",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "level",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "persona",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "title",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "description",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "image",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "content",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "position",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Categorization"
+									},
+									"objectLayoutRows": [],
+									"priority": 0,
+									"type": "categorization"
+								}
+							],
+							"objectRelationshipId": 0,
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "Steps"
+							},
+							"objectLayoutBoxes": [],
+							"objectRelationshipExternalReferenceCode": "P2S3_LEARNING_PATH_TO_P2S3_LEARNING_PATH_STEPS",
+							"priority": 0
+						}
+					]
+				}
+			],
 			"objectRelationships": [
 				{
 					"deletionType": "disassociate",

@@ -26,6 +26,7 @@ import getBasicWebContentStructureId from '../../../utils/structured-content/get
 import {stagingPageTest} from '../../export-import-web/main/fixtures/stagingPageTest';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
+import { portletPublishToLivePageTest } from './fixtures/portletPublishToLivePageTest';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -34,8 +35,9 @@ export const test = mergeTests(
 	instanceSettingsPagesTest,
 	pageViewModePagesTest,
 	pagesAdminPagesTest,
-	productMenuPageTest,
 	pageEditorPagesTest,
+	productMenuPageTest,
+	portletPublishToLivePageTest,
 	stagingConfigurationPageTest,
 	webContentDisplayPageTest,
 	uiElementsPageTest,
@@ -52,6 +54,7 @@ export const testFlagsEnabled = mergeTests(
 	dataApiHelpersTest,
 	loginTest(),
 	portletConfigurationPermissionsPageTest,
+	portletPublishToLivePageTest,
 	stagingPageTest,
 	test,
 	webContentDisplayPageTest
@@ -147,7 +150,7 @@ test(
 test(
 	'verify that the admin could configure staging to ignore previews and thumbnails during the local staging publish process',
 	{tag: ['@LPS-189191', '@LPS-190360']},
-	async ({apiHelpers, instanceSettingsPage, page}) => {
+	async ({apiHelpers, instanceSettingsPage, page, portletPublishToLivePage}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
 		});
@@ -195,17 +198,9 @@ test(
 			`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
 		);
 
-		await page.getByRole('button', {name: 'Publish to Live'}).click();
+		await portletPublishToLivePage.goToPortletAdvancedStagings();
 
-		const publishToLiveIframe = page.frameLocator(
-			'iframe[title="Publish to Live"]'
-		);
-		await page
-			.frameLocator('iframe[title="Publish to Live"]')
-			.getByRole('link', {name: 'Switch to Advanced Publish'})
-			.click();
-
-		const documentsAndMedia = publishToLiveIframe
+		const documentsAndMedia = portletPublishToLivePage.publishToLiveIframe
 			.locator(
 				'[id="_com_liferay_exportimport_web_portlet_ExportImportPortlet_selectContents"] ul'
 			)
@@ -213,13 +208,14 @@ test(
 		await documentsAndMedia.getByRole('button', {name: 'Change'}).click();
 		await documentsAndMedia.getByLabel('Previews and Thumbnails').check();
 
-		await publishToLiveIframe
+		await portletPublishToLivePage.publishToLiveIframe
 			.getByRole('button', {name: 'Publish to Live'})
 			.click();
 
 		await expect(
-			await publishToLiveIframe.getByText('Successful')
+			portletPublishToLivePage.publishToLiveSuccessStatus
 		).toBeVisible();
+
 		await page.goto(
 			`/group${stagingSite.friendlyUrlPath}${PORTLET_URLS.documentLibrary}`
 		);

@@ -24,12 +24,9 @@ export class PortletPublishToLivePage {
 			.first()
 			.getByText('Successful');
 
-		this.publishToLiveButton = this.page.getByRole(
-			'button',
-			{
-				name: 'Publish to Live',
-			}
-		);
+		this.publishToLiveButton = this.page.getByRole('button', {
+			name: 'Publish to Live',
+		});
 
 		this.publishToLiveIframeButton = this.publishToLiveIframe.getByRole(
 			'button',

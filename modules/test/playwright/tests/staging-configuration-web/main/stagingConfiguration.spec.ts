@@ -25,8 +25,8 @@ import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {stagingPageTest} from '../../export-import-web/main/fixtures/stagingPageTest';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
+import {portletPublishToLivePageTest} from './fixtures/portletPublishToLivePageTest';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
-import { portletPublishToLivePageTest } from './fixtures/portletPublishToLivePageTest';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -150,7 +150,12 @@ test(
 test(
 	'verify that the admin could configure staging to ignore previews and thumbnails during the local staging publish process',
 	{tag: ['@LPS-189191', '@LPS-190360']},
-	async ({apiHelpers, instanceSettingsPage, page, portletPublishToLivePage}) => {
+	async ({
+		apiHelpers,
+		instanceSettingsPage,
+		page,
+		portletPublishToLivePage,
+	}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
 		});

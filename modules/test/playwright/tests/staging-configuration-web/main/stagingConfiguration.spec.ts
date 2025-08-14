@@ -148,11 +148,8 @@ test(
 	'Verify that the admin could configure staging to ignore previews and thumbnails during the local staging publish process',
 	{tag: ['@LPS-189191', '@LPS-190360']},
 	async ({apiHelpers, instanceSettingsPage, page}) => {
-		const siteName = getRandomString();
-		const layoutName = getRandomString();
-
 		const site = await apiHelpers.headlessSite.createSite({
-			name: siteName,
+			name: getRandomString(),
 		});
 
 		apiHelpers.data.push({id: site.id, type: 'site'});
@@ -160,7 +157,7 @@ test(
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			options: {type: 'content'},
-			title: layoutName,
+			title: getRandomString(),
 		});
 
 		await instanceSettingsPage.goToInstanceSetting(

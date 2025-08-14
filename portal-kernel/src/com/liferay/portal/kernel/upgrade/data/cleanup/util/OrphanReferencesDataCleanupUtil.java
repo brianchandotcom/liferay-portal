@@ -27,6 +27,50 @@ import java.util.List;
  */
 public class OrphanReferencesDataCleanupUtil {
 
+	public static void cleanUpSameTable(
+			String additionalWhereClause, Connection connection,
+			String sourceColumnName, String tableName, String targetColumnName)
+		throws Exception {
+
+		List<String> excludedTableNames = getNormalizedExcludedTableNames(
+			connection);
+
+		if (excludedTableNames.contains(tableName)) {
+			return;
+		}
+
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select ", sourceColumnName, ", count(1) from ", tableName,
+					getWhereClause(
+						connection, additionalWhereClause, sourceColumnName,
+						tableName, new String[] {targetColumnName}, tableName),
+					" group by ", sourceColumnName));
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				StringBundler.concat(
+					"delete from ", tableName, " where ", sourceColumnName,
+					" = ?"));
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			while (resultSet.next()) {
+				Object value = resultSet.getObject(1);
+
+				preparedStatement2.setObject(1, value);
+
+				preparedStatement2.executeUpdate();
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							resultSet.getLong(2), " orphan entries from table ",
+							tableName, " have been deleted because value ",
+							value, " was not found in the origin table ",
+							tableName, " and column ", targetColumnName));
+				}
+			}
+		}
+	}
+
 	public static void cleanUpTable(
 			Connection connection, String sourceAdditionalWhereClause,
 			String sourceColumnName, String sourceTableName,

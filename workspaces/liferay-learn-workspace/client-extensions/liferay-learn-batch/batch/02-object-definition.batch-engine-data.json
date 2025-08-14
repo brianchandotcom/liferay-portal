@@ -2768,11 +2768,11 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Step Type"
+						"en_US": "Type"
 					},
 					"listTypeDefinitionExternalReferenceCode": "P2S3_STEP_TYPES",
 					"localized": false,
-					"name": "stepType",
+					"name": "type",
 					"readOnly": "false",
 					"required": true,
 					"state": false,
@@ -2799,6 +2799,92 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Learning Path Step Create / Edit"
+					},
+					"objectDefinitionExternalReferenceCode": "P2S3_LEARNING_PATH_STEP",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Main"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Step Information"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "name",
+													"priority": 0,
+													"size": 4
+												},
+												{
+													"objectFieldName": "type",
+													"priority": 0,
+													"size": 4
+												},
+												{
+													"objectFieldName": "position",
+													"priority": 0,
+													"size": 4
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "title",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "description",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							],
+							"objectRelationshipId": 0,
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "Courses"
+							},
+							"objectLayoutBoxes": [],
+							"objectRelationshipExternalReferenceCode": "P2S3_COURSE_TO_P2S3_LEARNING_PATH_STEP",
+							"priority": 1
+						},
+						{
+							"name": {
+								"en_US": "External Media"
+							},
+							"objectLayoutBoxes": [],
+							"objectRelationshipExternalReferenceCode": "P2S3_EXTERNAL_MEDIA_TO_P2S3_LEARNING_PATH_STEP",
+							"priority": 4
+						}
+					]
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 Learning Path Steps"
 			},

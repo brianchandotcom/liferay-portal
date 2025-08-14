@@ -4,11 +4,10 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, render, screen, within} from '@testing-library/react';
+import {cleanup, render, screen, within} from '@testing-library/react';
 import React from 'react';
 
 import AssetTypeInfoPanelContent from '../../../../src/main/resources/META-INF/resources/js/main_view/info_panel/AssetTypeInfoPanelContent';
-import {EVENTS} from '../../../../src/main/resources/META-INF/resources/js/main_view/info_panel/util/constants';
 import {DOCUMENT_OBJECT_ENTRY} from './mocks';
 
 describe.skip('CMS Asset Type Info Panel', () => {
@@ -63,14 +62,15 @@ describe.skip('CMS Asset Type Info Panel', () => {
 	});
 
 	it('renders the component for Basic Web Content asset type', async () => {
-		const {container} = render(<AssetTypeInfoPanelContent />);
+		const {container} = render(
+			<AssetTypeInfoPanelContent
+				additionalProps={{}}
+				items={[DOCUMENT_OBJECT_ENTRY]}
+			/>
+		);
 		let href = null;
 
 		expect(container).toBeInTheDocument();
-
-		await act(async () => {
-			Liferay.fire(EVENTS.ASSET_DATA, {items: [DOCUMENT_OBJECT_ENTRY]});
-		});
 
 		const assetElement: HTMLElement | null =
 			container.querySelector('.asset-title');

@@ -10,7 +10,3 @@ export const ASSET_TYPE = {
 	FOLDER: 'folder',
 	KNOWLEDGE_BASES: 'knowledge-bases',
 };
-
-export const EVENTS = {
-	ASSET_DATA: 'asset-data',
-};
